@@ -14,11 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# from java.io.Serializable import (Serializable,)
-# from java.util.Map import (Map,)
+from muntjac.terminal.Terminal import ErrorEvent
 
 
-class ParameterHandler(Serializable):
+class ParameterHandler(object):
     """{@code ParameterHandler} is implemented by classes capable of handling
     external parameters.
 
@@ -49,12 +48,13 @@ class ParameterHandler(Serializable):
         """
         pass
 
-    class ErrorEvent(Terminal.ErrorEvent):
-        """An ErrorEvent implementation for ParameterHandler."""
 
-        def getParameterHandler(self):
-            """Gets the ParameterHandler that caused the error.
+class ErrorEvent(ErrorEvent):
+    """An ErrorEvent implementation for ParameterHandler."""
 
-            @return the ParameterHandler that caused the error
-            """
-            pass
+    def getParameterHandler(self):
+        """Gets the ParameterHandler that caused the error.
+
+        @return the ParameterHandler that caused the error
+        """
+        pass

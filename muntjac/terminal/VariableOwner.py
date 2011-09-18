@@ -76,12 +76,13 @@ class VariableOwner(Serializable):
         """
         pass
 
-    class ErrorEvent(Terminal.ErrorEvent):
-        """VariableOwner error event."""
 
-        def getVariableOwner(self):
-            """Gets the source VariableOwner.
+class ErrorEvent(Terminal.ErrorEvent):
+    """VariableOwner error event."""
 
-            @return the variable owner.
-            """
-            pass
+    def getVariableOwner(self):
+        """Gets the source VariableOwner.
+
+        @return the variable owner.
+        """
+        pass

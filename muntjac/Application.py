@@ -14,29 +14,533 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR, PREINC,)
-from com.vaadin.terminal.URIHandler import (URIHandler,)
-from com.vaadin.terminal.SystemError import (SystemError,)
-from com.vaadin.terminal.Terminal import (ErrorListener, Terminal,)
-from com.vaadin.terminal.ParameterHandler import (ErrorEvent,)
-# from java.io.Serializable import (Serializable,)
-# from java.net.SocketException import (SocketException,)
-# from java.net.URL import (URL,)
-# from java.util.Collection import (Collection,)
-# from java.util.Collections import (Collections,)
-# from java.util.Enumeration import (Enumeration,)
-# from java.util.EventListener import (EventListener,)
-# from java.util.EventObject import (EventObject,)
-# from java.util.Hashtable import (Hashtable,)
-# from java.util.Iterator import (Iterator,)
-# from java.util.LinkedList import (LinkedList,)
-# from java.util.Locale import (Locale,)
-# from java.util.Properties import (Properties,)
-# from java.util.logging.Level import (Level,)
-# from java.util.logging.Logger import (Logger,)
+import logging
+import locale
+
+import muntjac.terminal.gwt.server
+
+from muntjac.terminal.URIHandler import URIHandler
+from muntjac.terminal.SystemError import SystemError
+from muntjac.terminal.Terminal import ErrorListener, Terminal
+from muntjac.terminal.ParameterHandler import ErrorEvent
+from muntjac.terminal.ErrorMessage import ErrorMessage
+from muntjac.util.event import EventObject, EventListener
 
 
-class Application(URIHandler, Terminal, ErrorListener, Serializable):
+class SystemMessages(object):
+    """Contains the system messages used to notify the user about various
+    critical situations that can occur.
+    <p>
+    Customize by overriding the static
+    {@link Application#getSystemMessages()} and returning
+    {@link CustomizedSystemMessages}.
+    </p>
+    <p>
+    The defaults defined in this class are:
+    <ul>
+    <li><b>sessionExpiredURL</b> = null</li>
+    <li><b>sessionExpiredNotificationEnabled</b> = true</li>
+    <li><b>sessionExpiredCaption</b> = ""</li>
+    <li><b>sessionExpiredMessage</b> =
+    "Take note of any unsaved data, and <u>click here</u> to continue."</li>
+    <li><b>communicationErrorURL</b> = null</li>
+    <li><b>communicationErrorNotificationEnabled</b> = true</li>
+    <li><b>communicationErrorCaption</b> = "Communication problem"</li>
+    <li><b>communicationErrorMessage</b> =
+    "Take note of any unsaved data, and <u>click here</u> to continue."</li>
+    <li><b>internalErrorURL</b> = null</li>
+    <li><b>internalErrorNotificationEnabled</b> = true</li>
+    <li><b>internalErrorCaption</b> = "Internal error"</li>
+    <li><b>internalErrorMessage</b> = "Please notify the administrator.<br/>
+    Take note of any unsaved data, and <u>click here</u> to continue."</li>
+    <li><b>outOfSyncURL</b> = null</li>
+    <li><b>outOfSyncNotificationEnabled</b> = true</li>
+    <li><b>outOfSyncCaption</b> = "Out of sync"</li>
+    <li><b>outOfSyncMessage</b> = "Something has caused us to be out of sync
+    with the server.<br/>
+    Take note of any unsaved data, and <u>click here</u> to re-sync."</li>
+    <li><b>cookiesDisabledURL</b> = null</li>
+    <li><b>cookiesDisabledNotificationEnabled</b> = true</li>
+    <li><b>cookiesDisabledCaption</b> = "Cookies disabled"</li>
+    <li><b>cookiesDisabledMessage</b> = "This application requires cookies to
+    function.<br/>
+    Please enable cookies in your browser and <u>click here</u> to try again.
+    </li>
+    </ul>
+    </p>
+    """
+
+    def __init__(self):
+        """Use {@link CustomizedSystemMessages} to customize"""
+
+        self.sessionExpiredURL = None
+        self.sessionExpiredNotificationEnabled = True
+        self.sessionExpiredCaption = 'Session Expired'
+        self.sessionExpiredMessage = 'Take note of any unsaved data, and <u>click here</u> to continue.'
+        self.communicationErrorURL = None
+        self.communicationErrorNotificationEnabled = True
+        self.communicationErrorCaption = 'Communication problem'
+        self.communicationErrorMessage = 'Take note of any unsaved data, and <u>click here</u> to continue.'
+        self.authenticationErrorURL = None
+        self.authenticationErrorNotificationEnabled = True
+        self.authenticationErrorCaption = 'Authentication problem'
+        self.authenticationErrorMessage = 'Take note of any unsaved data, and <u>click here</u> to continue.'
+        self.internalErrorURL = None
+        self.internalErrorNotificationEnabled = True
+        self.internalErrorCaption = 'Internal error'
+        self.internalErrorMessage = 'Please notify the administrator.<br/>Take note of any unsaved data, and <u>click here</u> to continue.'
+        self.outOfSyncURL = None
+        self.outOfSyncNotificationEnabled = True
+        self.outOfSyncCaption = 'Out of sync'
+        self.outOfSyncMessage = 'Something has caused us to be out of sync with the server.<br/>Take note of any unsaved data, and <u>click here</u> to re-sync.'
+        self.cookiesDisabledURL = None
+        self.cookiesDisabledNotificationEnabled = True
+        self.cookiesDisabledCaption = 'Cookies disabled'
+        self.cookiesDisabledMessage = 'This application requires cookies to function.<br/>Please enable cookies in your browser and <u>click here</u> to try again.'
+
+
+    def getSessionExpiredURL(self):
+        """@return null to indicate that the application will be restarted after
+                session expired message has been shown.
+        """
+        return self.sessionExpiredURL
+
+
+    def isSessionExpiredNotificationEnabled(self):
+        """@return true to show session expiration message."""
+        return self.sessionExpiredNotificationEnabled
+
+
+    def getSessionExpiredCaption(self):
+        """@return "" to show no caption."""
+        return self.sessionExpiredCaption if self.sessionExpiredNotificationEnabled else None
+
+
+    def getSessionExpiredMessage(self):
+        """@return
+                "Take note of any unsaved data, and <u>click here</u> to continue."
+        """
+        return self.sessionExpiredMessage if self.sessionExpiredNotificationEnabled else None
+
+
+    def getCommunicationErrorURL(self):
+        """@return null to reload the application after communication error
+                message.
+        """
+        return self.communicationErrorURL
+
+
+    def isCommunicationErrorNotificationEnabled(self):
+        """@return true to show the communication error message."""
+        return self.communicationErrorNotificationEnabled
+
+
+    def getCommunicationErrorCaption(self):
+        """@return "Communication problem\""""
+        return self.communicationErrorCaption if self.communicationErrorNotificationEnabled else None
+
+
+    def getCommunicationErrorMessage(self):
+        """@return
+                "Take note of any unsaved data, and <u>click here</u> to continue."
+        """
+        return self.communicationErrorMessage if self.communicationErrorNotificationEnabled else None
+
+
+    def getAuthenticationErrorURL(self):
+        """@return null to reload the application after authentication error
+                message.
+        """
+        return self.authenticationErrorURL
+
+
+    def isAuthenticationErrorNotificationEnabled(self):
+        """@return true to show the authentication error message."""
+        return self.authenticationErrorNotificationEnabled
+
+
+    def getAuthenticationErrorCaption(self):
+        """@return "Authentication problem\""""
+        return self.authenticationErrorCaption if self.authenticationErrorNotificationEnabled else None
+
+
+    def getAuthenticationErrorMessage(self):
+        """@return
+                "Take note of any unsaved data, and <u>click here</u> to continue."
+        """
+        return self.authenticationErrorMessage if self.authenticationErrorNotificationEnabled else None
+
+
+    def getInternalErrorURL(self):
+        """@return null to reload the current URL after internal error message
+                has been shown.
+        """
+        return self.internalErrorURL
+
+
+    def isInternalErrorNotificationEnabled(self):
+        """@return true to enable showing of internal error message."""
+        return self.internalErrorNotificationEnabled
+
+
+    def getInternalErrorCaption(self):
+        """@return "Internal error\""""
+        return self.internalErrorCaption if self.internalErrorNotificationEnabled else None
+
+
+    def getInternalErrorMessage(self):
+        """@return "Please notify the administrator.<br/>
+                Take note of any unsaved data, and <u>click here</u> to
+                continue."
+        """
+        return self.internalErrorMessage if self.internalErrorNotificationEnabled else None
+
+
+    def getOutOfSyncURL(self):
+        """@return null to reload the application after out of sync message."""
+        return self.outOfSyncURL
+
+
+    def isOutOfSyncNotificationEnabled(self):
+        """@return true to enable showing out of sync message"""
+        return self.outOfSyncNotificationEnabled
+
+
+    def getOutOfSyncCaption(self):
+        """@return "Out of sync\""""
+        return self.outOfSyncCaption if self.outOfSyncNotificationEnabled else None
+
+
+    def getOutOfSyncMessage(self):
+        """@return "Something has caused us to be out of sync with the server.<br/>
+                Take note of any unsaved data, and <u>click here</u> to
+                re-sync."
+        """
+        return self.outOfSyncMessage if self.outOfSyncNotificationEnabled else None
+
+
+    def getCookiesDisabledURL(self):
+        """Returns the URL the user should be redirected to after dismissing the
+        "you have to enable your cookies" message. Typically null.
+
+        @return A URL the user should be redirected to after dismissing the
+                message or null to reload the current URL.
+        """
+        return self.cookiesDisabledURL
+
+
+    def isCookiesDisabledNotificationEnabled(self):
+        """Determines if "cookies disabled" messages should be shown to the end
+        user or not. If the notification is disabled the user will be
+        immediately redirected to the URL returned by
+        {@link #getCookiesDisabledURL()}.
+
+        @return true to show "cookies disabled" messages to the end user,
+                false to redirect to the given URL directly
+        """
+        return self.cookiesDisabledNotificationEnabled
+
+
+    def getCookiesDisabledCaption(self):
+        """Returns the caption of the message shown to the user when cookies are
+        disabled in the browser.
+
+        @return The caption of the "cookies disabled" message
+        """
+        return self.cookiesDisabledCaption if self.cookiesDisabledNotificationEnabled else None
+
+
+    def getCookiesDisabledMessage(self):
+        """Returns the message shown to the user when cookies are disabled in
+        the browser.
+
+        @return The "cookies disabled" message
+        """
+        return self.cookiesDisabledMessage if self.cookiesDisabledNotificationEnabled else None
+
+
+class CustomizedSystemMessages(SystemMessages):
+    """Contains the system messages used to notify the user about various
+    critical situations that can occur.
+    <p>
+    Vaadin gets the SystemMessages from your application by calling a static
+    getSystemMessages() method. By default the
+    Application.getSystemMessages() is used. You can customize this by
+    defining a static MyApplication.getSystemMessages() and returning
+    CustomizedSystemMessages. Note that getSystemMessages() is static -
+    changing the system messages will by default change the message for all
+    users of the application.
+    </p>
+    <p>
+    The default behavior is to show a notification, and restart the
+    application the the user clicks the message. <br/>
+    Instead of restarting the application, you can set a specific URL that
+    the user is taken to.<br/>
+    Setting both caption and message to null will restart the application (or
+    go to the specified URL) without displaying a notification.
+    set*NotificationEnabled(false) will achieve the same thing.
+    </p>
+    <p>
+    The situations are:
+    <li>Session expired: the user session has expired, usually due to
+    inactivity.</li>
+    <li>Communication error: the client failed to contact the server, or the
+    server returned and invalid response.</li>
+    <li>Internal error: unhandled critical server error (e.g out of memory,
+    database crash)
+    <li>Out of sync: the client is not in sync with the server. E.g the user
+    opens two windows showing the same application, but the application does
+    not support this and uses the same Window instance. When the user makes
+    changes in one of the windows - the other window is no longer in sync,
+    and (for instance) pressing a button that is no longer present in the UI
+    will cause a out-of-sync -situation.
+    </p>
+    """
+
+    def setSessionExpiredURL(self, sessionExpiredURL):
+        """Sets the URL to go to when the session has expired.
+
+        @param sessionExpiredURL
+                   the URL to go to, or null to reload current
+        """
+        self.sessionExpiredURL = sessionExpiredURL
+
+
+    def setSessionExpiredNotificationEnabled(self, sessionExpiredNotificationEnabled):
+        """Enables or disables the notification. If disabled, the set URL (or
+        current) is loaded directly when next transaction between server and
+        client happens.
+
+        @param sessionExpiredNotificationEnabled
+                   true = enabled, false = disabled
+        """
+        self.sessionExpiredNotificationEnabled = sessionExpiredNotificationEnabled
+
+
+    def setSessionExpiredCaption(self, sessionExpiredCaption):
+        """Sets the caption of the notification. Set to null for no caption. If
+        both caption and message are null, client automatically forwards to
+        sessionExpiredUrl after timeout timer expires. Timer uses value read
+        from HTTPSession.getMaxInactiveInterval()
+
+        @param sessionExpiredCaption
+                   the caption
+        """
+        self.sessionExpiredCaption = sessionExpiredCaption
+
+
+    def setSessionExpiredMessage(self, sessionExpiredMessage):
+        """Sets the message of the notification. Set to null for no message. If
+        both caption and message are null, client automatically forwards to
+        sessionExpiredUrl after timeout timer expires. Timer uses value read
+        from HTTPSession.getMaxInactiveInterval()
+
+        @param sessionExpiredMessage
+                   the message
+        """
+        self.sessionExpiredMessage = sessionExpiredMessage
+
+
+    def setAuthenticationErrorURL(self, authenticationErrorURL):
+        """Sets the URL to go to when there is a authentication error.
+
+        @param authenticationErrorURL
+                   the URL to go to, or null to reload current
+        """
+        self.authenticationErrorURL = authenticationErrorURL
+
+
+    def setAuthenticationErrorNotificationEnabled(self, authenticationErrorNotificationEnabled):
+        """Enables or disables the notification. If disabled, the set URL (or
+        current) is loaded directly.
+
+        @param authenticationErrorNotificationEnabled
+                   true = enabled, false = disabled
+        """
+        self.authenticationErrorNotificationEnabled = authenticationErrorNotificationEnabled
+
+
+    def setAuthenticationErrorCaption(self, authenticationErrorCaption):
+        """Sets the caption of the notification. Set to null for no caption. If
+        both caption and message is null, the notification is disabled;
+
+        @param authenticationErrorCaption
+                   the caption
+        """
+        self.authenticationErrorCaption = authenticationErrorCaption
+
+
+    def setAuthenticationErrorMessage(self, authenticationErrorMessage):
+        """Sets the message of the notification. Set to null for no message. If
+        both caption and message is null, the notification is disabled;
+
+        @param authenticationErrorMessage
+                   the message
+        """
+        self.authenticationErrorMessage = authenticationErrorMessage
+
+
+    def setCommunicationErrorURL(self, communicationErrorURL):
+        """Sets the URL to go to when there is a communication error.
+
+        @param communicationErrorURL
+                   the URL to go to, or null to reload current
+        """
+        self.communicationErrorURL = communicationErrorURL
+
+
+    def setCommunicationErrorNotificationEnabled(self, communicationErrorNotificationEnabled):
+        """Enables or disables the notification. If disabled, the set URL (or
+        current) is loaded directly.
+
+        @param communicationErrorNotificationEnabled
+                   true = enabled, false = disabled
+        """
+        self.communicationErrorNotificationEnabled = communicationErrorNotificationEnabled
+
+
+    def setCommunicationErrorCaption(self, communicationErrorCaption):
+        """Sets the caption of the notification. Set to null for no caption. If
+        both caption and message is null, the notification is disabled;
+
+        @param communicationErrorCaption
+                   the caption
+        """
+        self.communicationErrorCaption = communicationErrorCaption
+
+
+    def setCommunicationErrorMessage(self, communicationErrorMessage):
+        """Sets the message of the notification. Set to null for no message. If
+        both caption and message is null, the notification is disabled;
+
+        @param communicationErrorMessage
+                   the message
+        """
+        self.communicationErrorMessage = communicationErrorMessage
+
+
+    def setInternalErrorURL(self, internalErrorURL):
+        """Sets the URL to go to when an internal error occurs.
+
+        @param internalErrorURL
+                   the URL to go to, or null to reload current
+        """
+        self.internalErrorURL = internalErrorURL
+
+
+    def setInternalErrorNotificationEnabled(self, internalErrorNotificationEnabled):
+        """Enables or disables the notification. If disabled, the set URL (or
+        current) is loaded directly.
+
+        @param internalErrorNotificationEnabled
+                   true = enabled, false = disabled
+        """
+        self.internalErrorNotificationEnabled = internalErrorNotificationEnabled
+
+
+    def setInternalErrorCaption(self, internalErrorCaption):
+        """Sets the caption of the notification. Set to null for no caption. If
+        both caption and message is null, the notification is disabled;
+
+        @param internalErrorCaption
+                   the caption
+        """
+        self.internalErrorCaption = internalErrorCaption
+
+
+    def setInternalErrorMessage(self, internalErrorMessage):
+        """Sets the message of the notification. Set to null for no message. If
+        both caption and message is null, the notification is disabled;
+
+        @param internalErrorMessage
+                   the message
+        """
+        self.internalErrorMessage = internalErrorMessage
+
+
+    def setOutOfSyncURL(self, outOfSyncURL):
+        """Sets the URL to go to when the client is out-of-sync.
+
+        @param outOfSyncURL
+                   the URL to go to, or null to reload current
+        """
+        self.outOfSyncURL = outOfSyncURL
+
+
+    def setOutOfSyncNotificationEnabled(self, outOfSyncNotificationEnabled):
+        """Enables or disables the notification. If disabled, the set URL (or
+        current) is loaded directly.
+
+        @param outOfSyncNotificationEnabled
+                   true = enabled, false = disabled
+        """
+        self.outOfSyncNotificationEnabled = outOfSyncNotificationEnabled
+
+
+    def setOutOfSyncCaption(self, outOfSyncCaption):
+        """Sets the caption of the notification. Set to null for no caption. If
+        both caption and message is null, the notification is disabled;
+
+        @param outOfSyncCaption
+                   the caption
+        """
+        self.outOfSyncCaption = outOfSyncCaption
+
+
+    def setOutOfSyncMessage(self, outOfSyncMessage):
+        """Sets the message of the notification. Set to null for no message. If
+        both caption and message is null, the notification is disabled;
+
+        @param outOfSyncMessage
+                   the message
+        """
+        self.outOfSyncMessage = outOfSyncMessage
+
+
+    def setCookiesDisabledURL(self, cookiesDisabledURL):
+        """Sets the URL to redirect to when the browser has cookies disabled.
+
+        @param cookiesDisabledURL
+                   the URL to redirect to, or null to reload the current URL
+        """
+        self.cookiesDisabledURL = cookiesDisabledURL
+
+
+    def setCookiesDisabledNotificationEnabled(self, cookiesDisabledNotificationEnabled):
+        """Enables or disables the notification for "cookies disabled" messages.
+        If disabled, the URL returned by {@link #getCookiesDisabledURL()} is
+        loaded directly.
+
+        @param cookiesDisabledNotificationEnabled
+                   true to enable "cookies disabled" messages, false
+                   otherwise
+        """
+        self.cookiesDisabledNotificationEnabled = cookiesDisabledNotificationEnabled
+
+
+    def setCookiesDisabledCaption(self, cookiesDisabledCaption):
+        """Sets the caption of the "cookies disabled" notification. Set to null
+        for no caption. If both caption and message is null, the notification
+        is disabled.
+
+        @param cookiesDisabledCaption
+                   the caption for the "cookies disabled" notification
+        """
+        self.cookiesDisabledCaption = cookiesDisabledCaption
+
+
+    def setCookiesDisabledMessage(self, cookiesDisabledMessage):
+        """Sets the message of the "cookies disabled" notification. Set to null
+        for no message. If both caption and message is null, the notification
+        is disabled.
+
+        @param cookiesDisabledMessage
+                   the message for the "cookies disabled" notification
+        """
+        self.cookiesDisabledMessage = cookiesDisabledMessage
+
+
+class Application(URIHandler, Terminal, ErrorListener):
     """<p>
     Base class required for all Vaadin applications. This class provides all the
     basic services required by Vaadin. These services allow external discovery
@@ -89,53 +593,68 @@ class Application(URIHandler, Terminal, ErrorListener, Serializable):
     @VERSION@
     @since 3.0
     """
-    _logger = Logger.getLogger(Application.getName())
-    # Id use for the next window that is opened. Access to this must be
-    # synchronized.
+    _logger = logging.getLogger(Application.getName())
 
-    _nextWindowId = 1
-    # Application context the application is running in.
-    _context = None
-    # The current user or <code>null</code> if no user has logged in.
-    _user = None
-    # Mapping from window name to window instance.
-    _windows = dict()
-    # Main window of the application.
-    _mainWindow = None
-    # The application's URL.
-    _applicationUrl = None
-    # Name of the theme currently used by the application.
-    _theme = None
-    # Application status.
-    _applicationIsRunning = False
-    # Application properties.
-    _properties = None
-    # Default locale of the application.
-    _locale = None
-    # List of listeners listening user changes.
-    _userChangeListeners = None
-    # Window attach listeners.
-    _windowAttachListeners = None
-    # Window detach listeners.
-    _windowDetachListeners = None
-    # Application resource mapping: key <-> resource.
-    _resourceKeyMap = dict()
-    _keyResourceMap = dict()
-    _lastResourceKeyNumber = 0
-    # URL where the user is redirected to on application close, or null if
-    # application is just closed without redirection.
-
-    _logoutURL = None
     # The default SystemMessages (read-only). Change by overriding
     # getSystemMessages() and returning CustomizedSystemMessages
-
     _DEFAULT_SYSTEM_MESSAGES = SystemMessages()
-    # Application wide error handler which is used by default if an error is
-    # left unhandled.
 
-    def __init__(self, *args, **kwargs):
+
+    def __init__(self):
+
+        # Id use for the next window that is opened. Access to this must be
+        # synchronized.
+        self._nextWindowId = 1
+
+        # Application context the application is running in.
+        self._context = None
+
+        # The current user or <code>null</code> if no user has logged in.
+        self._user = None
+
+        # Mapping from window name to window instance.
+        self._windows = dict()
+
+        # Main window of the application.
+        self._mainWindow = None
+
+        # The application's URL.
+        self._applicationUrl = None
+
+        # Name of the theme currently used by the application.
+        self._theme = None
+
+        # Application status.
+        self._applicationIsRunning = False
+
+        # Application properties.
+        self._properties = dict
+
+        # Default locale of the application.
+        self._locale = None
+
+        # List of listeners listening user changes.
+        self._userChangeListeners = None
+
+        # Window attach listeners.
+        self._windowAttachListeners = None
+
+        # Window detach listeners.
+        self._windowDetachListeners = None
+
+        # Application resource mapping: key <-> resource.
+        self._resourceKeyMap = dict()
+        self._keyResourceMap = dict()
+        self._lastResourceKeyNumber = 0
+
+        # URL where the user is redirected to on application close, or null if
+        # application is just closed without redirection.
+        self._logoutURL = None
+
+        # Application wide error handler which is used by default if an error is
+        # left unhandled.
         self._errorHandler = self
-        super(Application, self).__init__(self, *args, **kwargs)
+
 
     def getWindow(self, name):
         """<p>
@@ -204,9 +723,10 @@ class Application(URIHandler, Terminal, ErrorListener, Serializable):
         # For closed app, do not give any windows
         if not self.isRunning():
             return None
+
         # Gets the window by name
-        window = self._windows[name]
-        return window
+        return self._windows[name]
+
 
     def addWindow(self, window):
         """Adds a new window to the application.
@@ -230,47 +750,60 @@ class Application(URIHandler, Terminal, ErrorListener, Serializable):
                    the new <code>Window</code> to add. If the name of the window
                    is <code>null</code>, an unique name is automatically given
                    for the window.
-        @throws IllegalArgumentException
+        @raise ValueError
                     if a window with the same name as the new window already
                     exists in the application.
-        @throws NullPointerException
+        @raise ValueError
                     if the given <code>Window</code> is <code>null</code>.
         """
         # Nulls can not be added to application
         if window is None:
             return
+
         # Check that one is not adding a sub-window to application
         if window.getParent() is not None:
-            raise self.IllegalArgumentException('Window was already added inside another window' + ' - it can not be added to application also.')
+            raise ValueError('Window was already added inside another window' + ' - it can not be added to application also.')
+
         # Gets the naming proposal from window
         name = window.getName()
+
         # Checks that the application does not already contain
         # window having the same name
         if name is not None and name in self._windows:
+
             # If the window is already added
             if window == self._windows[name]:
                 return
+
             # Otherwise complain
-            raise self.IllegalArgumentException('Window with name \'' + window.getName() + '\' is already present in the application')
+            raise ValueError('Window with name \'' + window.getName() + '\' is already present in the application')
+
         # If the name of the window is null, the window is automatically named
         if name is None:
             accepted = False
             while not accepted:
+
                 # Try another name
-                name = String.valueOf.valueOf(self._nextWindowId)
+                name = str(self._nextWindowId)
                 self._nextWindowId += 1
+
                 if not (name in self._windows):
                     accepted = True
+
             window.setName(name)
+
         # Adds the window to application
-        self._windows.put(name, window)
+        self._windows[name] = window
         window.setApplication(self)
-        self.fireWindowAttachEvent(window)
+
+        self._fireWindowAttachEvent(window)
+
         # If no main window is set, declare the window to be main window
         if self.getMainWindow() is None:
             self._mainWindow = window
 
-    def fireWindowAttachEvent(self, window):
+
+    def _fireWindowAttachEvent(self, window):
         """Send information to all listeners about new Windows associated with this
         application.
 
@@ -279,17 +812,10 @@ class Application(URIHandler, Terminal, ErrorListener, Serializable):
         # Fires the window attach event
         if self._windowAttachListeners is not None:
             listeners = list(self._windowAttachListeners)
-            event = self.WindowAttachEvent(window)
-            _0 = True
-            i = 0
-            while True:
-                if _0 is True:
-                    _0 = False
-                else:
-                    i += 1
-                if not (i < len(listeners)):
-                    break
-                listeners[i].windowAttached(event)
+            event = WindowAttachEvent(window)
+            for l in listeners:
+                l.windowAttached(event)
+
 
     def removeWindow(self, window):
         """Removes the specified window from the application.
@@ -308,32 +834,30 @@ class Application(URIHandler, Terminal, ErrorListener, Serializable):
         @param window
                    the window to be removed.
         """
-        if window is not None and self._windows.contains(window):
+        if window is not None and window in self._windows.values():
+
             # Removes the window from application
-            self._windows.remove(window.getName())
+            del self._windows[window.getName()]
+
             # If the window was main window, clear it
             if self.getMainWindow() == window:
                 self.setMainWindow(None)
+
             # Removes the application from window
             if window.getApplication() == self:
                 window.setApplication(None)
-            self.fireWindowDetachEvent(window)
 
-    def fireWindowDetachEvent(self, window):
+            self._fireWindowDetachEvent(window)
+
+
+    def _fireWindowDetachEvent(self, window):
         # Fires the window detach event
         if self._windowDetachListeners is not None:
             listeners = list(self._windowDetachListeners)
-            event = self.WindowDetachEvent(window)
-            _0 = True
-            i = 0
-            while True:
-                if _0 is True:
-                    _0 = False
-                else:
-                    i += 1
-                if not (i < len(listeners)):
-                    break
-                listeners[i].windowDetached(event)
+            event = WindowDetachEvent(window)
+            for l in listeners:
+                l.windowDetached(event)
+
 
     def getUser(self):
         """Gets the user of the application.
@@ -347,6 +871,7 @@ class Application(URIHandler, Terminal, ErrorListener, Serializable):
         @return the User of the application.
         """
         return self._user
+
 
     def setUser(self, user):
         """<p>
@@ -371,20 +896,14 @@ class Application(URIHandler, Terminal, ErrorListener, Serializable):
         prevUser = self._user
         if (user == prevUser) or (user is not None and user == prevUser):
             return
+
         self._user = user
         if self._userChangeListeners is not None:
             listeners = list(self._userChangeListeners)
-            event = self.UserChangeEvent(self, user, prevUser)
-            _0 = True
-            i = 0
-            while True:
-                if _0 is True:
-                    _0 = False
-                else:
-                    i += 1
-                if not (i < len(listeners)):
-                    break
-                listeners[i].applicationUserChanged(event)
+            event = UserChangeEvent(self, user, prevUser)
+            for l in listeners:
+                l.applicationUserChanged(event)
+
 
     def getURL(self):
         """Gets the URL of the application.
@@ -401,6 +920,7 @@ class Application(URIHandler, Terminal, ErrorListener, Serializable):
         """
         return self._applicationUrl
 
+
     def close(self):
         """Ends the Application.
 
@@ -415,6 +935,7 @@ class Application(URIHandler, Terminal, ErrorListener, Serializable):
         .
         """
         self._applicationIsRunning = False
+
 
     def start(self, applicationUrl, applicationProperties, context):
         """Starts the application on the given URL.
@@ -447,6 +968,7 @@ class Application(URIHandler, Terminal, ErrorListener, Serializable):
         self.init()
         self._applicationIsRunning = True
 
+
     def isRunning(self):
         """Tests if the application is running or if it has been finished.
 
@@ -461,6 +983,7 @@ class Application(URIHandler, Terminal, ErrorListener, Serializable):
         """
         return self._applicationIsRunning
 
+
     def getWindows(self):
         """Gets the set of windows contained by the application.
 
@@ -470,7 +993,8 @@ class Application(URIHandler, Terminal, ErrorListener, Serializable):
 
         @return the Unmodifiable collection of windows.
         """
-        return Collections.unmodifiableCollection(self._windows.values())
+        return self._windows.values()
+
 
     def init(self):
         """<p>
@@ -480,7 +1004,8 @@ class Application(URIHandler, Terminal, ErrorListener, Serializable):
         creating windows and adding components to them.
         </p>
         """
-        pass
+        raise NotImplementedError
+
 
     def getTheme(self):
         """Gets the application's theme. The application's theme is the default
@@ -491,6 +1016,7 @@ class Application(URIHandler, Terminal, ErrorListener, Serializable):
         @return the name of the application's theme.
         """
         return self._theme
+
 
     def setTheme(self, theme):
         """Sets the application's theme.
@@ -505,32 +1031,21 @@ class Application(URIHandler, Terminal, ErrorListener, Serializable):
                    the new theme for this application.
         """
         # Collect list of windows not having the current or future theme
-        toBeUpdated = LinkedList()
+        toBeUpdated = list()
         oldAppTheme = self.getTheme()
-        _0 = True
-        i = self.getWindows()
-        while True:
-            if _0 is True:
-                _0 = False
-            if not i.hasNext():
-                break
-            w = i.next()
+
+        for w in self.getWindows():
             windowTheme = w.getTheme()
-            if (
-                (windowTheme is None) or (not (windowTheme == theme) and windowTheme == oldAppTheme)
-            ):
-                toBeUpdated.add(w)
+            if ((windowTheme is None) or (not (windowTheme == theme) and windowTheme == oldAppTheme)):
+                toBeUpdated.append(w)
+
         # Updates the theme
         self._theme = theme
+
         # Ask windows to update themselves
-        _1 = True
-        i = toBeUpdated
-        while True:
-            if _1 is True:
-                _1 = False
-            if not i.hasNext():
-                break
-            i.next().requestRepaint()
+        for w in toBeUpdated:
+            w.requestRepaint()
+
 
     def getMainWindow(self):
         """Gets the mainWindow of the application.
@@ -547,6 +1062,7 @@ class Application(URIHandler, Terminal, ErrorListener, Serializable):
         """
         return self._mainWindow
 
+
     def setMainWindow(self, mainWindow):
         """<p>
         Sets the mainWindow. If the main window is not explicitly set, the main
@@ -560,6 +1076,7 @@ class Application(URIHandler, Terminal, ErrorListener, Serializable):
         self.addWindow(mainWindow)
         self._mainWindow = mainWindow
 
+
     def getPropertyNames(self):
         """Returns an enumeration of all the names in this application.
 
@@ -571,7 +1088,8 @@ class Application(URIHandler, Terminal, ErrorListener, Serializable):
         @return an enumeration of all the keys in this property list, including
                 the keys in the default property list.
         """
-        return self._properties.propertyNames()
+        return self._properties.keys()
+
 
     def getProperty(self, name):
         """Searches for the property with the specified name in this application.
@@ -584,7 +1102,8 @@ class Application(URIHandler, Terminal, ErrorListener, Serializable):
                    the name of the property.
         @return the value in this property list with the specified key value.
         """
-        return self._properties.getProperty(name)
+        return self._properties[name]
+
 
     def addResource(self, resource):
         """Adds new resource to the application. The resource can be accessed by the
@@ -596,11 +1115,14 @@ class Application(URIHandler, Terminal, ErrorListener, Serializable):
         # Check if the resource is already mapped
         if resource in self._resourceKeyMap:
             return
+
         # Generate key
-        key = String.valueOf.valueOf(PREINC(globals(), locals(), 'self._lastResourceKeyNumber'))
+        key = str(++self._lastResourceKeyNumber)
+
         # Add the resource to mappings
-        self._resourceKeyMap.put(resource, key)
-        self._keyResourceMap.put(key, resource)
+        self._resourceKeyMap[resource] = key
+        self._keyResourceMap[key] = resource
+
 
     def removeResource(self, resource):
         """Removes the resource from the application.
@@ -608,10 +1130,11 @@ class Application(URIHandler, Terminal, ErrorListener, Serializable):
         @param resource
                    the resource to remove.
         """
-        key = self._resourceKeyMap[resource]
+        key = self._resourceKeyMap.get(resource)
         if key is not None:
-            self._resourceKeyMap.remove(resource)
-            self._keyResourceMap.remove(key)
+            del self._resourceKeyMap[resource]
+            del self._keyResourceMap[key]
+
 
     def getRelativeLocation(self, resource):
         """Gets the relative uri of the resource. This method is intended to be
@@ -625,15 +1148,21 @@ class Application(URIHandler, Terminal, ErrorListener, Serializable):
         @return the relative uri of the resource or null if called in a
                 background thread
 
-        @deprecated this method is intended to be used by the terminal only. It
+        @deprecated: this method is intended to be used by the terminal only. It
                     may be removed or moved in the future.
         """
+        raise DeprecationWarning, "this method is intended to be used by the " \
+            "terminal only. It may be removed or moved in the future."
+
         # Gets the key
-        key = self._resourceKeyMap[resource]
+        key = self._resourceKeyMap.get(resource)
+
         # If the resource is not registered, return null
         if key is None:
             return None
+
         return self._context.generateApplicationResourceURL(resource, key)
+
 
     def handleURI(self, context, relativeUri):
         """Application URI handling hub.
@@ -654,10 +1183,17 @@ class Application(URIHandler, Terminal, ErrorListener, Serializable):
                     level {@link Window} (eg.
                     getMainWindow().addUriHanler(handler) instead.
         """
+        raise DeprecationWarning, "this method is called be the terminal " \
+            "implementation only and might be removed or moved in the future. " \
+            "Instead of overriding this method, add your {@link URIHandler} to " \
+            "a top level {@link Window} (eg. getMainWindow().addUriHanler(handler) " \
+            "instead."
+
         if self._context.isApplicationResourceURL(context, relativeUri):
+
             # Handles the resource request
             key = self._context.getURLKey(context, relativeUri)
-            resource = self._keyResourceMap[key]
+            resource = self._keyResourceMap.get(key)
             if resource is not None:
                 stream = resource.getStream()
                 if stream is not None:
@@ -671,6 +1207,7 @@ class Application(URIHandler, Terminal, ErrorListener, Serializable):
         else:
             return None
 
+
     def getLocale(self):
         """Gets the default locale for this application.
 
@@ -681,7 +1218,8 @@ class Application(URIHandler, Terminal, ErrorListener, Serializable):
         """
         if self._locale is not None:
             return self._locale
-        return Locale.getDefault()
+
+        return locale.getdefaultlocale()
 
     def setLocale(self, locale):
         """Sets the default locale for this application.
@@ -694,77 +1232,8 @@ class Application(URIHandler, Terminal, ErrorListener, Serializable):
         """
         self._locale = locale
 
-    class UserChangeEvent(java.util.EventObject):
-        """<p>
-        An event that characterizes a change in the current selection.
-        </p>
-        Application user change event sent when the setUser is called to change
-        the current user of the application.
 
-        @version
-        @VERSION@
-        @since 3.0
-        """
-        # New user of the application.
-        _newUser = None
-        # Previous user of the application.
-        _prevUser = None
-
-        def __init__(self, source, newUser, prevUser):
-            """Constructor for user change event.
-
-            @param source
-                       the application source.
-            @param newUser
-                       the new User.
-            @param prevUser
-                       the previous User.
-            """
-            super(UserChangeEvent, self)(source)
-            self._newUser = newUser
-            self._prevUser = prevUser
-
-        def getNewUser(self):
-            """Gets the new user of the application.
-
-            @return the new User.
-            """
-            return self._newUser
-
-        def getPreviousUser(self):
-            """Gets the previous user of the application.
-
-            @return the previous Vaadin user, if user has not changed ever on
-                    application it returns <code>null</code>
-            """
-            return self._prevUser
-
-        def getApplication(self):
-            """Gets the application where the user change occurred.
-
-            @return the Application.
-            """
-            return self.getSource()
-
-    class UserChangeListener(EventListener, Serializable):
-        """The <code>UserChangeListener</code> interface for listening application
-        user changes.
-
-        @version
-        @VERSION@
-        @since 3.0
-        """
-
-        def applicationUserChanged(self, event):
-            """The <code>applicationUserChanged</code> method Invoked when the
-            application user has changed.
-
-            @param event
-                       the change event.
-            """
-            pass
-
-    def addListener(self, *args):
+    def addListener(self, listener):
         """Adds the user change listener.
 
         This allows one to get notification each time {@link #setUser(Object)} is
@@ -789,28 +1258,26 @@ class Application(URIHandler, Terminal, ErrorListener, Serializable):
         @param listener
                    the window detach listener to add.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            if isinstance(_0[0], UserChangeListener):
-                listener, = _0
-                if self._userChangeListeners is None:
-                    self._userChangeListeners = LinkedList()
-                self._userChangeListeners.add(listener)
-            elif isinstance(_0[0], WindowAttachListener):
-                listener, = _0
-                if self._windowAttachListeners is None:
-                    self._windowAttachListeners = LinkedList()
-                self._windowAttachListeners.add(listener)
-            else:
-                listener, = _0
-                if self._windowDetachListeners is None:
-                    self._windowDetachListeners = LinkedList()
-                self._windowDetachListeners.add(listener)
-        else:
-            raise ARGERROR(1, 1)
+        if isinstance(listener, UserChangeListener):
+            if self._userChangeListeners is None:
+                self._userChangeListeners = list()
+            self._userChangeListeners.append(listener)
 
-    def removeListener(self, *args):
+        elif isinstance(listener, WindowAttachListener):
+            if self._windowAttachListeners is None:
+                self._windowAttachListeners = list()
+            self._windowAttachListeners.append(listener)
+
+        elif isinstance(listener, WindowDetachListener):
+            if self._windowDetachListeners is None:
+                self._windowDetachListeners = list()
+            self._windowDetachListeners.append(listener)
+
+        else:
+            raise TypeError
+
+
+    def removeListener(self, listener):
         """Removes the user change listener.
 
         @param listener
@@ -826,114 +1293,27 @@ class Application(URIHandler, Terminal, ErrorListener, Serializable):
         @param listener
                    the window detach listener to remove.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            if isinstance(_0[0], UserChangeListener):
-                listener, = _0
-                if self._userChangeListeners is None:
-                    return
-                self._userChangeListeners.remove(listener)
-                if self._userChangeListeners.isEmpty():
-                    self._userChangeListeners = None
-            elif isinstance(_0[0], WindowAttachListener):
-                listener, = _0
-                if self._windowAttachListeners is not None:
-                    self._windowAttachListeners.remove(listener)
-                    if self._windowAttachListeners.isEmpty():
-                        self._windowAttachListeners = None
-            else:
-                listener, = _0
-                if self._windowDetachListeners is not None:
-                    self._windowDetachListeners.remove(listener)
-                    if self._windowDetachListeners.isEmpty():
-                        self._windowDetachListeners = None
+        if isinstance(listener, UserChangeListener):
+            if self._userChangeListeners is None:
+                return
+            self._userChangeListeners.remove(listener)
+            if len(self._userChangeListeners) == 0:
+                self._userChangeListeners = None
+
+        elif isinstance(listener, WindowAttachListener):
+            if self._windowAttachListeners is not None:
+                self._windowAttachListeners.remove(listener)
+                if len(self._windowAttachListeners) == 0:
+                    self._windowAttachListeners = None
+
+        elif isinstance(listener, WindowDetachListener):
+            if self._windowDetachListeners is not None:
+                self._windowDetachListeners.remove(listener)
+                if len(self._windowDetachListeners) == 0:
+                    self._windowDetachListeners = None
         else:
-            raise ARGERROR(1, 1)
+            raise TypeError
 
-    class WindowDetachEvent(EventObject):
-        """Window detach event.
-
-        This event is sent each time a window is removed from the application
-        with {@link com.vaadin.Application#removeWindow(Window)}.
-        """
-        _window = None
-
-        def __init__(self, window):
-            """Creates a event.
-
-            @param window
-                       the Detached window.
-            """
-            super(WindowDetachEvent, self)(_Application_this)
-            self._window = window
-
-        def getWindow(self):
-            """Gets the detached window.
-
-            @return the detached window.
-            """
-            return self._window
-
-        def getApplication(self):
-            """Gets the application from which the window was detached.
-
-            @return the Application.
-            """
-            return self.getSource()
-
-    class WindowAttachEvent(EventObject):
-        """Window attach event.
-
-        This event is sent each time a window is attached tothe application with
-        {@link com.vaadin.Application#addWindow(Window)}.
-        """
-        _window = None
-
-        def __init__(self, window):
-            """Creates a event.
-
-            @param window
-                       the Attached window.
-            """
-            super(WindowAttachEvent, self)(_Application_this)
-            self._window = window
-
-        def getWindow(self):
-            """Gets the attached window.
-
-            @return the attached window.
-            """
-            return self._window
-
-        def getApplication(self):
-            """Gets the application to which the window was attached.
-
-            @return the Application.
-            """
-            return self.getSource()
-
-    class WindowAttachListener(Serializable):
-        """Window attach listener interface."""
-
-        def windowAttached(self, event):
-            """Window attached
-
-            @param event
-                       the window attach event.
-            """
-            pass
-
-    class WindowDetachListener(Serializable):
-        """Window detach listener interface."""
-
-        def windowDetached(self, event):
-            """Window detached.
-
-            @param event
-                       the window detach event.
-            """
-            pass
 
     def getLogoutURL(self):
         """Returns the URL user is redirected to on application close. If the URL is
@@ -948,6 +1328,7 @@ class Application(URIHandler, Terminal, ErrorListener, Serializable):
         """
         return self._logoutURL
 
+
     def setLogoutURL(self, logoutURL):
         """Sets the URL user is redirected to on application close. If the URL is
         <code>null</code>, the application is closed normally as defined by the
@@ -959,6 +1340,7 @@ class Application(URIHandler, Terminal, ErrorListener, Serializable):
                    the logoutURL to set.
         """
         self._logoutURL = logoutURL
+
 
     @classmethod
     def getSystemMessages(cls):
@@ -978,6 +1360,7 @@ class Application(URIHandler, Terminal, ErrorListener, Serializable):
         """
         return cls._DEFAULT_SYSTEM_MESSAGES
 
+
     def terminalError(self, event):
         """<p>
         Invoked by the terminal on any exception that occurs in application and
@@ -996,19 +1379,21 @@ class Application(URIHandler, Terminal, ErrorListener, Serializable):
         @see com.vaadin.terminal.Terminal.ErrorListener#terminalError(com.vaadin.terminal.Terminal.ErrorEvent)
         """
         t = event.getThrowable()
-        if isinstance(t, SocketException):
+        if isinstance(t, IOError):  #SocketException
             # Most likely client browser closed socket
-            self._logger.info('SocketException in CommunicationManager.' + ' Most likely client (browser) closed socket.')
+            self._logger.info('SocketException in CommunicationManager.' \
+                              ' Most likely client (browser) closed socket.')
             return
+
         # Finds the original source of the error/exception
         owner = None
-        if isinstance(event, VariableOwner.ErrorEvent):
+        if isinstance(event, muntjac.terminal.VariableOwner.ErrorEvent):
             owner = event.getVariableOwner()
-        elif isinstance(event, URIHandler.ErrorEvent):
+        elif isinstance(event, muntjac.terminal.URIHandler.ErrorEvent):
             owner = event.getURIHandler()
-        elif isinstance(event, ParameterHandler.ErrorEvent):
+        elif isinstance(event, muntjac.terminal.ParameterHandler.ErrorEvent):
             owner = event.getParameterHandler()
-        elif isinstance(event, ChangeVariablesErrorEvent):
+        elif isinstance(event, muntjac.terminal.gwt.server.ChangeVariablesErrorEvent):
             owner = event.getComponent()
         # Shows the error in AbstractComponent
         if isinstance(owner, AbstractComponent):
@@ -1017,7 +1402,8 @@ class Application(URIHandler, Terminal, ErrorListener, Serializable):
             else:
                 owner.setComponentError(SystemError(t))
         # also print the error on console
-        self._logger.log(Level.SEVERE, 'Terminal error:', t)
+        self._logger.critical('Terminal error: ' + str(t))
+
 
     def getContext(self):
         """Gets the application context.
@@ -1039,6 +1425,7 @@ class Application(URIHandler, Terminal, ErrorListener, Serializable):
         """
         return self._context
 
+
     def getVersion(self):
         """Override this method to return correct version number of your
         Application. Version information is delivered for example to Testing
@@ -1048,6 +1435,7 @@ class Application(URIHandler, Terminal, ErrorListener, Serializable):
         """
         return 'NONVERSIONED'
 
+
     def getErrorHandler(self):
         """Gets the application error handler.
 
@@ -1056,6 +1444,7 @@ class Application(URIHandler, Terminal, ErrorListener, Serializable):
         @return Application error handler
         """
         return self._errorHandler
+
 
     def setErrorHandler(self, errorHandler):
         """Sets the application error handler.
@@ -1068,481 +1457,185 @@ class Application(URIHandler, Terminal, ErrorListener, Serializable):
         """
         self._errorHandler = errorHandler
 
-    class SystemMessages(Serializable):
-        """Contains the system messages used to notify the user about various
-        critical situations that can occur.
-        <p>
-        Customize by overriding the static
-        {@link Application#getSystemMessages()} and returning
-        {@link CustomizedSystemMessages}.
-        </p>
-        <p>
-        The defaults defined in this class are:
-        <ul>
-        <li><b>sessionExpiredURL</b> = null</li>
-        <li><b>sessionExpiredNotificationEnabled</b> = true</li>
-        <li><b>sessionExpiredCaption</b> = ""</li>
-        <li><b>sessionExpiredMessage</b> =
-        "Take note of any unsaved data, and <u>click here</u> to continue."</li>
-        <li><b>communicationErrorURL</b> = null</li>
-        <li><b>communicationErrorNotificationEnabled</b> = true</li>
-        <li><b>communicationErrorCaption</b> = "Communication problem"</li>
-        <li><b>communicationErrorMessage</b> =
-        "Take note of any unsaved data, and <u>click here</u> to continue."</li>
-        <li><b>internalErrorURL</b> = null</li>
-        <li><b>internalErrorNotificationEnabled</b> = true</li>
-        <li><b>internalErrorCaption</b> = "Internal error"</li>
-        <li><b>internalErrorMessage</b> = "Please notify the administrator.<br/>
-        Take note of any unsaved data, and <u>click here</u> to continue."</li>
-        <li><b>outOfSyncURL</b> = null</li>
-        <li><b>outOfSyncNotificationEnabled</b> = true</li>
-        <li><b>outOfSyncCaption</b> = "Out of sync"</li>
-        <li><b>outOfSyncMessage</b> = "Something has caused us to be out of sync
-        with the server.<br/>
-        Take note of any unsaved data, and <u>click here</u> to re-sync."</li>
-        <li><b>cookiesDisabledURL</b> = null</li>
-        <li><b>cookiesDisabledNotificationEnabled</b> = true</li>
-        <li><b>cookiesDisabledCaption</b> = "Cookies disabled"</li>
-        <li><b>cookiesDisabledMessage</b> = "This application requires cookies to
-        function.<br/>
-        Please enable cookies in your browser and <u>click here</u> to try again.
-        </li>
-        </ul>
-        </p>
+
+class UserChangeEvent(EventObject):
+    """<p>
+    An event that characterizes a change in the current selection.
+    </p>
+    Application user change event sent when the setUser is called to change
+    the current user of the application.
+
+    @version
+    @VERSION@
+    @since 3.0
+    """
+
+    def __init__(self, source, newUser, prevUser):
+        """Constructor for user change event.
+
+        @param source
+                   the application source.
+        @param newUser
+                   the new User.
+        @param prevUser
+                   the previous User.
         """
-        sessionExpiredURL = None
-        sessionExpiredNotificationEnabled = True
-        sessionExpiredCaption = 'Session Expired'
-        sessionExpiredMessage = 'Take note of any unsaved data, and <u>click here</u> to continue.'
-        communicationErrorURL = None
-        communicationErrorNotificationEnabled = True
-        communicationErrorCaption = 'Communication problem'
-        communicationErrorMessage = 'Take note of any unsaved data, and <u>click here</u> to continue.'
-        authenticationErrorURL = None
-        authenticationErrorNotificationEnabled = True
-        authenticationErrorCaption = 'Authentication problem'
-        authenticationErrorMessage = 'Take note of any unsaved data, and <u>click here</u> to continue.'
-        internalErrorURL = None
-        internalErrorNotificationEnabled = True
-        internalErrorCaption = 'Internal error'
-        internalErrorMessage = 'Please notify the administrator.<br/>Take note of any unsaved data, and <u>click here</u> to continue.'
-        outOfSyncURL = None
-        outOfSyncNotificationEnabled = True
-        outOfSyncCaption = 'Out of sync'
-        outOfSyncMessage = 'Something has caused us to be out of sync with the server.<br/>Take note of any unsaved data, and <u>click here</u> to re-sync.'
-        cookiesDisabledURL = None
-        cookiesDisabledNotificationEnabled = True
-        cookiesDisabledCaption = 'Cookies disabled'
-        cookiesDisabledMessage = 'This application requires cookies to function.<br/>Please enable cookies in your browser and <u>click here</u> to try again.'
+        super(UserChangeEvent, self)(source)
 
-        def __init__(self):
-            """Use {@link CustomizedSystemMessages} to customize"""
-            pass
+        # New user of the application.
+        self._newUser = newUser
 
-        def getSessionExpiredURL(self):
-            """@return null to indicate that the application will be restarted after
-                    session expired message has been shown.
-            """
-            return self.sessionExpiredURL
+        # Previous user of the application.
+        self._prevUser = prevUser
 
-        def isSessionExpiredNotificationEnabled(self):
-            """@return true to show session expiration message."""
-            return self.sessionExpiredNotificationEnabled
 
-        def getSessionExpiredCaption(self):
-            """@return "" to show no caption."""
-            return self.sessionExpiredCaption if self.sessionExpiredNotificationEnabled else None
+    def getNewUser(self):
+        """Gets the new user of the application.
 
-        def getSessionExpiredMessage(self):
-            """@return
-                    "Take note of any unsaved data, and <u>click here</u> to continue."
-            """
-            return self.sessionExpiredMessage if self.sessionExpiredNotificationEnabled else None
-
-        def getCommunicationErrorURL(self):
-            """@return null to reload the application after communication error
-                    message.
-            """
-            return self.communicationErrorURL
-
-        def isCommunicationErrorNotificationEnabled(self):
-            """@return true to show the communication error message."""
-            return self.communicationErrorNotificationEnabled
-
-        def getCommunicationErrorCaption(self):
-            """@return "Communication problem""""
-            return self.communicationErrorCaption if self.communicationErrorNotificationEnabled else None
-
-        def getCommunicationErrorMessage(self):
-            """@return
-                    "Take note of any unsaved data, and <u>click here</u> to continue."
-            """
-            return self.communicationErrorMessage if self.communicationErrorNotificationEnabled else None
-
-        def getAuthenticationErrorURL(self):
-            """@return null to reload the application after authentication error
-                    message.
-            """
-            return self.authenticationErrorURL
-
-        def isAuthenticationErrorNotificationEnabled(self):
-            """@return true to show the authentication error message."""
-            return self.authenticationErrorNotificationEnabled
-
-        def getAuthenticationErrorCaption(self):
-            """@return "Authentication problem""""
-            return self.authenticationErrorCaption if self.authenticationErrorNotificationEnabled else None
-
-        def getAuthenticationErrorMessage(self):
-            """@return
-                    "Take note of any unsaved data, and <u>click here</u> to continue."
-            """
-            return self.authenticationErrorMessage if self.authenticationErrorNotificationEnabled else None
-
-        def getInternalErrorURL(self):
-            """@return null to reload the current URL after internal error message
-                    has been shown.
-            """
-            return self.internalErrorURL
-
-        def isInternalErrorNotificationEnabled(self):
-            """@return true to enable showing of internal error message."""
-            return self.internalErrorNotificationEnabled
-
-        def getInternalErrorCaption(self):
-            """@return "Internal error""""
-            return self.internalErrorCaption if self.internalErrorNotificationEnabled else None
-
-        def getInternalErrorMessage(self):
-            """@return "Please notify the administrator.<br/>
-                    Take note of any unsaved data, and <u>click here</u> to
-                    continue."
-            """
-            return self.internalErrorMessage if self.internalErrorNotificationEnabled else None
-
-        def getOutOfSyncURL(self):
-            """@return null to reload the application after out of sync message."""
-            return self.outOfSyncURL
-
-        def isOutOfSyncNotificationEnabled(self):
-            """@return true to enable showing out of sync message"""
-            return self.outOfSyncNotificationEnabled
-
-        def getOutOfSyncCaption(self):
-            """@return "Out of sync""""
-            return self.outOfSyncCaption if self.outOfSyncNotificationEnabled else None
-
-        def getOutOfSyncMessage(self):
-            """@return "Something has caused us to be out of sync with the server.<br/>
-                    Take note of any unsaved data, and <u>click here</u> to
-                    re-sync."
-            """
-            return self.outOfSyncMessage if self.outOfSyncNotificationEnabled else None
-
-        def getCookiesDisabledURL(self):
-            """Returns the URL the user should be redirected to after dismissing the
-            "you have to enable your cookies" message. Typically null.
-
-            @return A URL the user should be redirected to after dismissing the
-                    message or null to reload the current URL.
-            """
-            return self.cookiesDisabledURL
-
-        def isCookiesDisabledNotificationEnabled(self):
-            """Determines if "cookies disabled" messages should be shown to the end
-            user or not. If the notification is disabled the user will be
-            immediately redirected to the URL returned by
-            {@link #getCookiesDisabledURL()}.
-
-            @return true to show "cookies disabled" messages to the end user,
-                    false to redirect to the given URL directly
-            """
-            return self.cookiesDisabledNotificationEnabled
-
-        def getCookiesDisabledCaption(self):
-            """Returns the caption of the message shown to the user when cookies are
-            disabled in the browser.
-
-            @return The caption of the "cookies disabled" message
-            """
-            return self.cookiesDisabledCaption if self.cookiesDisabledNotificationEnabled else None
-
-        def getCookiesDisabledMessage(self):
-            """Returns the message shown to the user when cookies are disabled in
-            the browser.
-
-            @return The "cookies disabled" message
-            """
-            return self.cookiesDisabledMessage if self.cookiesDisabledNotificationEnabled else None
-
-    class CustomizedSystemMessages(SystemMessages, Serializable):
-        """Contains the system messages used to notify the user about various
-        critical situations that can occur.
-        <p>
-        Vaadin gets the SystemMessages from your application by calling a static
-        getSystemMessages() method. By default the
-        Application.getSystemMessages() is used. You can customize this by
-        defining a static MyApplication.getSystemMessages() and returning
-        CustomizedSystemMessages. Note that getSystemMessages() is static -
-        changing the system messages will by default change the message for all
-        users of the application.
-        </p>
-        <p>
-        The default behavior is to show a notification, and restart the
-        application the the user clicks the message. <br/>
-        Instead of restarting the application, you can set a specific URL that
-        the user is taken to.<br/>
-        Setting both caption and message to null will restart the application (or
-        go to the specified URL) without displaying a notification.
-        set*NotificationEnabled(false) will achieve the same thing.
-        </p>
-        <p>
-        The situations are:
-        <li>Session expired: the user session has expired, usually due to
-        inactivity.</li>
-        <li>Communication error: the client failed to contact the server, or the
-        server returned and invalid response.</li>
-        <li>Internal error: unhandled critical server error (e.g out of memory,
-        database crash)
-        <li>Out of sync: the client is not in sync with the server. E.g the user
-        opens two windows showing the same application, but the application does
-        not support this and uses the same Window instance. When the user makes
-        changes in one of the windows - the other window is no longer in sync,
-        and (for instance) pressing a button that is no longer present in the UI
-        will cause a out-of-sync -situation.
-        </p>
+        @return the new User.
         """
+        return self._newUser
 
-        def setSessionExpiredURL(self, sessionExpiredURL):
-            """Sets the URL to go to when the session has expired.
 
-            @param sessionExpiredURL
-                       the URL to go to, or null to reload current
-            """
-            self.sessionExpiredURL = sessionExpiredURL
+    def getPreviousUser(self):
+        """Gets the previous user of the application.
 
-        def setSessionExpiredNotificationEnabled(self, sessionExpiredNotificationEnabled):
-            """Enables or disables the notification. If disabled, the set URL (or
-            current) is loaded directly when next transaction between server and
-            client happens.
-
-            @param sessionExpiredNotificationEnabled
-                       true = enabled, false = disabled
-            """
-            self.sessionExpiredNotificationEnabled = sessionExpiredNotificationEnabled
-
-        def setSessionExpiredCaption(self, sessionExpiredCaption):
-            """Sets the caption of the notification. Set to null for no caption. If
-            both caption and message are null, client automatically forwards to
-            sessionExpiredUrl after timeout timer expires. Timer uses value read
-            from HTTPSession.getMaxInactiveInterval()
-
-            @param sessionExpiredCaption
-                       the caption
-            """
-            self.sessionExpiredCaption = sessionExpiredCaption
-
-        def setSessionExpiredMessage(self, sessionExpiredMessage):
-            """Sets the message of the notification. Set to null for no message. If
-            both caption and message are null, client automatically forwards to
-            sessionExpiredUrl after timeout timer expires. Timer uses value read
-            from HTTPSession.getMaxInactiveInterval()
-
-            @param sessionExpiredMessage
-                       the message
-            """
-            self.sessionExpiredMessage = sessionExpiredMessage
-
-        def setAuthenticationErrorURL(self, authenticationErrorURL):
-            """Sets the URL to go to when there is a authentication error.
-
-            @param authenticationErrorURL
-                       the URL to go to, or null to reload current
-            """
-            self.authenticationErrorURL = authenticationErrorURL
-
-        def setAuthenticationErrorNotificationEnabled(self, authenticationErrorNotificationEnabled):
-            """Enables or disables the notification. If disabled, the set URL (or
-            current) is loaded directly.
-
-            @param authenticationErrorNotificationEnabled
-                       true = enabled, false = disabled
-            """
-            self.authenticationErrorNotificationEnabled = authenticationErrorNotificationEnabled
-
-        def setAuthenticationErrorCaption(self, authenticationErrorCaption):
-            """Sets the caption of the notification. Set to null for no caption. If
-            both caption and message is null, the notification is disabled;
-
-            @param authenticationErrorCaption
-                       the caption
-            """
-            self.authenticationErrorCaption = authenticationErrorCaption
-
-        def setAuthenticationErrorMessage(self, authenticationErrorMessage):
-            """Sets the message of the notification. Set to null for no message. If
-            both caption and message is null, the notification is disabled;
-
-            @param authenticationErrorMessage
-                       the message
-            """
-            self.authenticationErrorMessage = authenticationErrorMessage
-
-        def setCommunicationErrorURL(self, communicationErrorURL):
-            """Sets the URL to go to when there is a communication error.
-
-            @param communicationErrorURL
-                       the URL to go to, or null to reload current
-            """
-            self.communicationErrorURL = communicationErrorURL
-
-        def setCommunicationErrorNotificationEnabled(self, communicationErrorNotificationEnabled):
-            """Enables or disables the notification. If disabled, the set URL (or
-            current) is loaded directly.
-
-            @param communicationErrorNotificationEnabled
-                       true = enabled, false = disabled
-            """
-            self.communicationErrorNotificationEnabled = communicationErrorNotificationEnabled
-
-        def setCommunicationErrorCaption(self, communicationErrorCaption):
-            """Sets the caption of the notification. Set to null for no caption. If
-            both caption and message is null, the notification is disabled;
-
-            @param communicationErrorCaption
-                       the caption
-            """
-            self.communicationErrorCaption = communicationErrorCaption
-
-        def setCommunicationErrorMessage(self, communicationErrorMessage):
-            """Sets the message of the notification. Set to null for no message. If
-            both caption and message is null, the notification is disabled;
-
-            @param communicationErrorMessage
-                       the message
-            """
-            self.communicationErrorMessage = communicationErrorMessage
-
-        def setInternalErrorURL(self, internalErrorURL):
-            """Sets the URL to go to when an internal error occurs.
-
-            @param internalErrorURL
-                       the URL to go to, or null to reload current
-            """
-            self.internalErrorURL = internalErrorURL
-
-        def setInternalErrorNotificationEnabled(self, internalErrorNotificationEnabled):
-            """Enables or disables the notification. If disabled, the set URL (or
-            current) is loaded directly.
-
-            @param internalErrorNotificationEnabled
-                       true = enabled, false = disabled
-            """
-            self.internalErrorNotificationEnabled = internalErrorNotificationEnabled
-
-        def setInternalErrorCaption(self, internalErrorCaption):
-            """Sets the caption of the notification. Set to null for no caption. If
-            both caption and message is null, the notification is disabled;
-
-            @param internalErrorCaption
-                       the caption
-            """
-            self.internalErrorCaption = internalErrorCaption
-
-        def setInternalErrorMessage(self, internalErrorMessage):
-            """Sets the message of the notification. Set to null for no message. If
-            both caption and message is null, the notification is disabled;
-
-            @param internalErrorMessage
-                       the message
-            """
-            self.internalErrorMessage = internalErrorMessage
-
-        def setOutOfSyncURL(self, outOfSyncURL):
-            """Sets the URL to go to when the client is out-of-sync.
-
-            @param outOfSyncURL
-                       the URL to go to, or null to reload current
-            """
-            self.outOfSyncURL = outOfSyncURL
-
-        def setOutOfSyncNotificationEnabled(self, outOfSyncNotificationEnabled):
-            """Enables or disables the notification. If disabled, the set URL (or
-            current) is loaded directly.
-
-            @param outOfSyncNotificationEnabled
-                       true = enabled, false = disabled
-            """
-            self.outOfSyncNotificationEnabled = outOfSyncNotificationEnabled
-
-        def setOutOfSyncCaption(self, outOfSyncCaption):
-            """Sets the caption of the notification. Set to null for no caption. If
-            both caption and message is null, the notification is disabled;
-
-            @param outOfSyncCaption
-                       the caption
-            """
-            self.outOfSyncCaption = outOfSyncCaption
-
-        def setOutOfSyncMessage(self, outOfSyncMessage):
-            """Sets the message of the notification. Set to null for no message. If
-            both caption and message is null, the notification is disabled;
-
-            @param outOfSyncMessage
-                       the message
-            """
-            self.outOfSyncMessage = outOfSyncMessage
-
-        def setCookiesDisabledURL(self, cookiesDisabledURL):
-            """Sets the URL to redirect to when the browser has cookies disabled.
-
-            @param cookiesDisabledURL
-                       the URL to redirect to, or null to reload the current URL
-            """
-            self.cookiesDisabledURL = cookiesDisabledURL
-
-        def setCookiesDisabledNotificationEnabled(self, cookiesDisabledNotificationEnabled):
-            """Enables or disables the notification for "cookies disabled" messages.
-            If disabled, the URL returned by {@link #getCookiesDisabledURL()} is
-            loaded directly.
-
-            @param cookiesDisabledNotificationEnabled
-                       true to enable "cookies disabled" messages, false
-                       otherwise
-            """
-            self.cookiesDisabledNotificationEnabled = cookiesDisabledNotificationEnabled
-
-        def setCookiesDisabledCaption(self, cookiesDisabledCaption):
-            """Sets the caption of the "cookies disabled" notification. Set to null
-            for no caption. If both caption and message is null, the notification
-            is disabled.
-
-            @param cookiesDisabledCaption
-                       the caption for the "cookies disabled" notification
-            """
-            self.cookiesDisabledCaption = cookiesDisabledCaption
-
-        def setCookiesDisabledMessage(self, cookiesDisabledMessage):
-            """Sets the message of the "cookies disabled" notification. Set to null
-            for no message. If both caption and message is null, the notification
-            is disabled.
-
-            @param cookiesDisabledMessage
-                       the message for the "cookies disabled" notification
-            """
-            self.cookiesDisabledMessage = cookiesDisabledMessage
-
-    class ApplicationError(Terminal, ErrorEvent):
-        """Application error is an error message defined on the application level.
-
-        When an error occurs on the application level, this error message type
-        should be used. This indicates that the problem is caused by the
-        application - not by the user.
+        @return the previous Vaadin user, if user has not changed ever on
+                application it returns <code>null</code>
         """
-        _throwable = None
+        return self._prevUser
 
-        def __init__(self, throwable):
-            self._throwable = throwable
 
-        def getThrowable(self):
-            return self._throwable
+    def getApplication(self):
+        """Gets the application where the user change occurred.
+
+        @return the Application.
+        """
+        return self.getSource()
+
+
+class UserChangeListener(EventListener):
+    """The <code>UserChangeListener</code> interface for listening application
+    user changes.
+
+    @version
+    @VERSION@
+    @since 3.0
+    """
+
+    def applicationUserChanged(self, event):
+        """The <code>applicationUserChanged</code> method Invoked when the
+        application user has changed.
+
+        @param event
+                   the change event.
+        """
+        pass
+
+
+class WindowDetachEvent(EventObject):
+    """Window detach event.
+
+    This event is sent each time a window is removed from the application
+    with {@link com.vaadin.Application#removeWindow(Window)}.
+    """
+
+    def __init__(self, window):
+        """Creates a event.
+
+        @param window
+                   the Detached window.
+        """
+        super(WindowDetachEvent, self)(self)
+        self._window = window
+
+
+    def getWindow(self):
+        """Gets the detached window.
+
+        @return the detached window.
+        """
+        return self._window
+
+
+    def getApplication(self):
+        """Gets the application from which the window was detached.
+
+        @return the Application.
+        """
+        return self.getSource()
+
+
+class WindowAttachEvent(EventObject):
+    """Window attach event.
+
+    This event is sent each time a window is attached tothe application with
+    {@link com.vaadin.Application#addWindow(Window)}.
+    """
+
+    def __init__(self, window):
+        """Creates a event.
+
+        @param window
+                   the Attached window.
+        """
+        super(WindowAttachEvent, self)(self)
+        self._window = window
+
+
+    def getWindow(self):
+        """Gets the attached window.
+
+        @return the attached window.
+        """
+        return self._window
+
+
+    def getApplication(self):
+        """Gets the application to which the window was attached.
+
+        @return the Application.
+        """
+        return self.getSource()
+
+
+class WindowAttachListener(object):
+    """Window attach listener interface."""
+
+
+    def windowAttached(self, event):
+        """Window attached
+
+        @param event
+                   the window attach event.
+        """
+        pass
+
+
+class WindowDetachListener(object):
+    """Window detach listener interface."""
+
+
+    def windowDetached(self, event):
+        """Window detached.
+
+        @param event
+                   the window detach event.
+        """
+        pass
+
+
+class ApplicationError(ErrorEvent):
+    """Application error is an error message defined on the application level.
+
+    When an error occurs on the application level, this error message type
+    should be used. This indicates that the problem is caused by the
+    application - not by the user.
+    """
+
+    def __init__(self, throwable):
+        self._throwable = throwable
+
+
+    def getThrowable(self):
+        return self._throwable

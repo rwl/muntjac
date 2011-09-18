@@ -17,8 +17,10 @@
 # from java.io.Serializable import (Serializable,)
 # from java.net.URL import (URL,)
 
+import muntjac.terminal
 
-class URIHandler(Serializable):
+
+class URIHandler(object):
     """A URIHandler is used for handling URI:s requested by the user and can
     optionally provide a {@link DownloadStream}. If a {@link DownloadStream} is
     returned by {@link #handleURI(URL, String)}, the stream is sent to the
@@ -42,12 +44,13 @@ class URIHandler(Serializable):
         """
         pass
 
-    class ErrorEvent(Terminal.ErrorEvent):
-        """An {@code ErrorEvent} implementation for URIHandler."""
 
-        def getURIHandler(self):
-            """Gets the URIHandler that caused this error.
+class ErrorEvent(muntjac.terminal.Terminal.ErrorEvent):
+    """An {@code ErrorEvent} implementation for URIHandler."""
 
-            @return the URIHandler that caused the error
-            """
-            pass
+    def getURIHandler(self):
+        """Gets the URIHandler that caused this error.
+
+        @return the URIHandler that caused the error
+        """
+        pass

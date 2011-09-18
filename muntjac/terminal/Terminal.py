@@ -14,10 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# from java.io.Serializable import (Serializable,)
 
-
-class Terminal(Serializable):
+class Terminal(object):
     """An interface that provides information about the user's terminal.
     Implementors typically provide additional information using methods not in
     this interface. </p>
@@ -62,20 +60,22 @@ class Terminal(Serializable):
         """
         pass
 
-    class ErrorEvent(Serializable):
-        """An error event implementation for Terminal."""
 
-        def getThrowable(self):
-            """Gets the contained throwable, the cause of the error."""
-            pass
+class ErrorEvent(object):
+    """An error event implementation for Terminal."""
 
-    class ErrorListener(Serializable):
-        """Interface for listening to Terminal errors."""
+    def getThrowable(self):
+        """Gets the contained throwable, the cause of the error."""
+        pass
 
-        def terminalError(self, event):
-            """Invoked when a terminal error occurs.
 
-            @param event
-                       the fired event.
-            """
-            pass
+class ErrorListener(object):
+    """Interface for listening to Terminal errors."""
+
+    def terminalError(self, event):
+        """Invoked when a terminal error occurs.
+
+        @param event
+                   the fired event.
+        """
+        pass
