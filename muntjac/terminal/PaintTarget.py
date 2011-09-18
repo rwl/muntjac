@@ -1,0 +1,467 @@
+# Copyright (C) 2011 Vaadin Ltd
+# Copyright (C) 2011 Richard Lincoln
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+from __pyjamas__ import (ARGERROR,)
+# from com.vaadin.terminal.StreamVariable.StreamingStartEvent import (StreamingStartEvent,)
+# from java.io.Serializable import (Serializable,)
+# from java.util.Map import (Map,)
+
+
+class PaintTarget(Serializable):
+    """This interface defines the methods for painting XML to the UIDL stream.
+
+    @author IT Mill Ltd.
+    @version
+    @VERSION@
+    @since 3.0
+    """
+
+    def addSection(self, sectionTagName, sectionData):
+        """Prints single XMLsection.
+
+        Prints full XML section. The section data is escaped from XML tags and
+        surrounded by XML start and end-tags.
+
+        @param sectionTagName
+                   the name of the tag.
+        @param sectionData
+                   the scetion data.
+        @throws PaintException
+                    if the paint operation failed.
+        """
+        pass
+
+    def startTag(self, *args):
+        """Prints element start tag of a paintable section. Starts a paintable
+        section using the given tag. The PaintTarget may implement a caching
+        scheme, that checks the paintable has actually changed or can a cached
+        version be used instead. This method should call the startTag method.
+        <p>
+        If the Paintable is found in cache and this function returns true it may
+        omit the content and close the tag, in which case cached content should
+        be used.
+        </p>
+
+        @param paintable
+                   the paintable to start.
+        @param tag
+                   the name of the start tag.
+        @return <code>true</code> if paintable found in cache, <code>false</code>
+                otherwise.
+        @throws PaintException
+                    if the paint operation failed.
+        @see #startTag(String)
+        @since 3.1
+        ---
+        Prints element start tag.
+
+        <pre>
+        Todo:
+        Checking of input values
+        </pre>
+
+        @param tagName
+                   the name of the start tag.
+        @throws PaintException
+                    if the paint operation failed.
+        """
+        _0 = args
+        _1 = len(args)
+        if _1 == 1:
+            tagName, = _0
+        elif _1 == 2:
+            paintable, tag = _0
+        else:
+            raise ARGERROR(1, 2)
+
+    def paintReference(self, paintable, referenceName):
+        """Paints a component reference as an attribute to current tag. This method
+        is meant to enable component interactions on client side. With reference
+        the client side component can communicate directly to other component.
+
+        Note! This was experimental api and got replaced by
+        {@link #addAttribute(String, Paintable)} and
+        {@link #addVariable(VariableOwner, String, Paintable)}.
+
+        @param paintable
+                   the Paintable to reference
+        @param referenceName
+        @throws PaintException
+
+        @since 5.2
+        @deprecated use {@link #addAttribute(String, Paintable)} or
+                    {@link #addVariable(VariableOwner, String, Paintable)}
+                    instead
+        """
+        pass
+
+    def endTag(self, tagName):
+        """Prints element end tag.
+
+        If the parent tag is closed before every child tag is closed an
+        PaintException is raised.
+
+        @param tagName
+                   the name of the end tag.
+        @throws PaintException
+                    if the paint operation failed.
+        """
+        pass
+
+    def addAttribute(self, *args):
+        """Adds a boolean attribute to component. Atributes must be added before any
+        content is written.
+
+        @param name
+                   the Attribute name.
+        @param value
+                   the Attribute value.
+
+        @throws PaintException
+                    if the paint operation failed.
+        ---
+        Adds a integer attribute to component. Atributes must be added before any
+        content is written.
+
+        @param name
+                   the Attribute name.
+        @param value
+                   the Attribute value.
+
+        @throws PaintException
+                    if the paint operation failed.
+        ---
+        Adds a resource attribute to component. Atributes must be added before
+        any content is written.
+
+        @param name
+                   the Attribute name
+        @param value
+                   the Attribute value
+
+        @throws PaintException
+                    if the paint operation failed.
+        ---
+        Adds a long attribute to component. Atributes must be added before any
+        content is written.
+
+        @param name
+                   the Attribute name.
+        @param value
+                   the Attribute value.
+
+        @throws PaintException
+                    if the paint operation failed.
+        ---
+        Adds a float attribute to component. Atributes must be added before any
+        content is written.
+
+        @param name
+                   the Attribute name.
+        @param value
+                   the Attribute value.
+
+        @throws PaintException
+                    if the paint operation failed.
+        ---
+        Adds a double attribute to component. Atributes must be added before any
+        content is written.
+
+        @param name
+                   the Attribute name.
+        @param value
+                   the Attribute value.
+
+        @throws PaintException
+                    if the paint operation failed.
+        ---
+        Adds a string attribute to component. Atributes must be added before any
+        content is written.
+
+        @param name
+                   the Boolean attribute name.
+        @param value
+                   the Boolean attribute value.
+
+        @throws PaintException
+                    if the paint operation failed.
+        ---
+        TODO
+
+        @param name
+        @param value
+        @throws PaintException
+        ---
+        Adds a Paintable type attribute. On client side the value will be a
+        terminal specific reference to corresponding component on client side
+        implementation.
+
+        @param name
+                   the name of the attribute
+        @param value
+                   the Paintable to be referenced on client side
+        @throws PaintException
+        """
+        _0 = args
+        _1 = len(args)
+        if _1 == 2:
+            if isinstance(_0[1], Object):
+                string, keys = _0
+            elif isinstance(_0[1], Paintable):
+                name, value = _0
+            elif isinstance(_0[1], Resource):
+                name, value = _0
+            elif isinstance(_0[1], boolean):
+                name, value = _0
+            elif isinstance(_0[1], dict):
+                name, value = _0
+            elif isinstance(_0[1], double):
+                name, value = _0
+            elif isinstance(_0[1], float):
+                name, value = _0
+            elif isinstance(_0[1], int):
+                name, value = _0
+            elif isinstance(_0[1], long):
+                name, value = _0
+            else:
+                name, value = _0
+        else:
+            raise ARGERROR(2, 2)
+
+    def addVariable(self, *args):
+        """Adds details about {@link StreamVariable} to the UIDL stream. Eg. in web
+        terminals Receivers are typically rendered for the client side as URLs,
+        where the client side implementation can do an http post request.
+        <p>
+        The urls in UIDL message may use Vaadin specific protocol. Before
+        actually using the urls on the client side, they should be passed via
+        {@link ApplicationConnection#translateVaadinUri(String)}.
+        <p>
+        Note that in current terminal implementation StreamVariables are cleaned
+        from the terminal only when:
+        <ul>
+        <li>a StreamVariable with same name replaces an old one
+        <li>the variable owner is no more attached
+        <li>the developer signals this by calling
+        {@link StreamingStartEvent#disposeStreamVariable()}
+        </ul>
+        Most commonly a component developer can just ignore this issue, but with
+        strict memory requirements and lots of StreamVariables implementations
+        that reserve a lot of memory this may be a critical issue.
+
+        @param owner
+                   the ReceiverOwner that can track the progress of streaming to
+                   the given StreamVariable
+        @param name
+                   an identifying name for the StreamVariable
+        @param value
+                   the StreamVariable to paint
+
+        @throws PaintException
+                    if the paint operation failed.
+        ---
+        Adds a string type variable.
+
+        @param owner
+                   the Listener for variable changes.
+        @param name
+                   the Variable name.
+        @param value
+                   the Variable initial value.
+
+        @throws PaintException
+                    if the paint operation failed.
+        ---
+        Adds a int type variable.
+
+        @param owner
+                   the Listener for variable changes.
+        @param name
+                   the Variable name.
+        @param value
+                   the Variable initial value.
+
+        @throws PaintException
+                    if the paint operation failed.
+        ---
+        Adds a long type variable.
+
+        @param owner
+                   the Listener for variable changes.
+        @param name
+                   the Variable name.
+        @param value
+                   the Variable initial value.
+
+        @throws PaintException
+                    if the paint operation failed.
+        ---
+        Adds a float type variable.
+
+        @param owner
+                   the Listener for variable changes.
+        @param name
+                   the Variable name.
+        @param value
+                   the Variable initial value.
+
+        @throws PaintException
+                    if the paint operation failed.
+        ---
+        Adds a double type variable.
+
+        @param owner
+                   the Listener for variable changes.
+        @param name
+                   the Variable name.
+        @param value
+                   the Variable initial value.
+
+        @throws PaintException
+                    if the paint operation failed.
+        ---
+        Adds a boolean type variable.
+
+        @param owner
+                   the Listener for variable changes.
+        @param name
+                   the Variable name.
+        @param value
+                   the Variable initial value.
+
+        @throws PaintException
+                    if the paint operation failed.
+        ---
+        Adds a string array type variable.
+
+        @param owner
+                   the Listener for variable changes.
+        @param name
+                   the Variable name.
+        @param value
+                   the Variable initial value.
+
+        @throws PaintException
+                    if the paint operation failed.
+        ---
+        Adds a Paintable type variable. On client side the variable value will be
+        a terminal specific reference to corresponding component on client side
+        implementation. When updated from client side, terminal will map the
+        client side component reference back to a corresponding server side
+        reference.
+
+        @param owner
+                   the Listener for variable changes
+        @param name
+                   the name of the variable
+        @param value
+                   the initial value of the variable
+
+        @throws PaintException
+                    if the paint oparation fails
+        """
+        _0 = args
+        _1 = len(args)
+        if _1 == 3:
+            if isinstance(_0[2], Paintable):
+                owner, name, value = _0
+            elif isinstance(_0[2], StreamVariable):
+                owner, name, value = _0
+            elif isinstance(_0[2], boolean):
+                owner, name, value = _0
+            elif isinstance(_0[2], double):
+                owner, name, value = _0
+            elif isinstance(_0[2], float):
+                owner, name, value = _0
+            elif isinstance(_0[2], int):
+                owner, name, value = _0
+            elif isinstance(_0[2], long):
+                owner, name, value = _0
+            else:
+                owner, name, value = _0
+                owner, name, value = _0
+        else:
+            raise ARGERROR(3, 3)
+
+    def addUploadStreamVariable(self, owner, name):
+        """Adds a upload stream type variable.
+
+        @param owner
+                   the Listener for variable changes.
+        @param name
+                   the Variable name.
+
+        @throws PaintException
+                    if the paint operation failed.
+        """
+        pass
+
+    def addXMLSection(self, sectionTagName, sectionData, namespace):
+        """Prints single XML section.
+        <p>
+        Prints full XML section. The section data must be XML and it is
+        surrounded by XML start and end-tags.
+        </p>
+
+        @param sectionTagName
+                   the tag name.
+        @param sectionData
+                   the section data to be printed.
+        @param namespace
+                   the namespace.
+        @throws PaintException
+                    if the paint operation failed.
+        """
+        pass
+
+    def addUIDL(self, uidl):
+        """Adds UIDL directly. The UIDL must be valid in accordance with the
+        UIDL.dtd
+
+        @param uidl
+                   the UIDL to be added.
+        @throws PaintException
+                    if the paint operation failed.
+        """
+        pass
+
+    def addText(self, text):
+        """Adds text node. All the contents of the text are XML-escaped.
+
+        @param text
+                   the Text to add
+        @throws PaintException
+                    if the paint operation failed.
+        """
+        pass
+
+    def addCharacterData(self, text):
+        """Adds CDATA node to target UIDL-tree.
+
+        @param text
+                   the Character data to add
+        @throws PaintException
+                    if the paint operation failed.
+        @since 3.1
+        """
+        pass
+
+    def getTag(self, paintable):
+        """@return the "tag" string used in communication to present given
+                {@link Paintable} type. Terminal may define how to present
+                paintable.
+        """
+        pass

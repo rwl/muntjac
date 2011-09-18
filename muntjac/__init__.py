@@ -1,0 +1,17 @@
+"""<p>The Vaadin base package. Contains the Application class, the
+starting point of any application that uses Vaadin.</p>
+
+<p>Contains all Vaadin core classes. A Vaadin application is based
+on the {@link com.vaadin.Application} class and deployed as a servlet
+using {@link com.vaadin.terminal.gwt.server.ApplicationServlet} or
+{@link com.vaadin.terminal.gwt.server.GAEApplicationServlet} (for Google
+App Engine).</p>
+
+<p>Vaadin applications can also be deployed as portlets using {@link
+com.vaadin.terminal.gwt.server.ApplicationPortlet} (JSR-168) or {@link
+com.vaadin.terminal.gwt.server.ApplicationPortlet2} (JSR-286).</p>
+
+<p>All classes in Vaadin are serializable unless otherwise noted.
+This allows Vaadin applications to run in cluster and cloud
+environments.</p>
+"""

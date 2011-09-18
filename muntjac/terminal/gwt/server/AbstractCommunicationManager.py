@@ -1,0 +1,1780 @@
+# Copyright (C) 2011 Vaadin Ltd
+# Copyright (C) 2011 Richard Lincoln
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+from __pyjamas__ import (POSTINC,)
+from com.vaadin.terminal.gwt.server.StreamingStartEventImpl import (StreamingStartEventImpl,)
+from com.vaadin.terminal.gwt.server.DragAndDropService import (DragAndDropService,)
+from com.vaadin.terminal.gwt.server.ComponentSizeValidator import (ComponentSizeValidator,)
+from com.vaadin.terminal.gwt.server.JsonPaintTarget import (JsonPaintTarget,)
+from com.vaadin.terminal.gwt.client.ApplicationConnection import (ApplicationConnection,)
+from com.vaadin.terminal.gwt.server.NoOutputStreamException import (NoOutputStreamException,)
+from com.vaadin.terminal.gwt.server.StreamingErrorEventImpl import (StreamingErrorEventImpl,)
+from com.vaadin.terminal.gwt.server.StreamingEndEventImpl import (StreamingEndEventImpl,)
+from com.vaadin.terminal.gwt.server.NoInputStreamException import (NoInputStreamException,)
+from com.vaadin.terminal.gwt.server.AbstractApplicationServlet import (AbstractApplicationServlet, URIHandlerErrorImpl,)
+from com.vaadin.terminal.Paintable import (Paintable, RepaintRequestListener,)
+from com.vaadin.terminal.gwt.server.UploadException import (UploadException,)
+from com.vaadin.terminal.URIHandler import (URIHandler,)
+from com.vaadin.terminal.gwt.server.ChangeVariablesErrorEvent import (ChangeVariablesErrorEvent,)
+# from com.vaadin.terminal.Paintable.RepaintRequestEvent import (RepaintRequestEvent,)
+# from com.vaadin.terminal.Terminal.ErrorEvent import (ErrorEvent,)
+# from com.vaadin.terminal.Terminal.ErrorListener import (ErrorListener,)
+# from com.vaadin.terminal.gwt.server.ComponentSizeValidator.InvalidLayout import (InvalidLayout,)
+# from java.io.BufferedWriter import (BufferedWriter,)
+# from java.io.ByteArrayOutputStream import (ByteArrayOutputStream,)
+# from java.io.CharArrayWriter import (CharArrayWriter,)
+# from java.io.IOException import (IOException,)
+# from java.io.InputStream import (InputStream,)
+# from java.io.InputStreamReader import (InputStreamReader,)
+# from java.io.OutputStream import (OutputStream,)
+# from java.io.OutputStreamWriter import (OutputStreamWriter,)
+# from java.io.PrintWriter import (PrintWriter,)
+# from java.io.Serializable import (Serializable,)
+# from java.lang.reflect.InvocationTargetException import (InvocationTargetException,)
+# from java.lang.reflect.Method import (Method,)
+# from java.net.URL import (URL,)
+# from java.security.GeneralSecurityException import (GeneralSecurityException,)
+# from java.text.DateFormat import (DateFormat,)
+# from java.text.DateFormatSymbols import (DateFormatSymbols,)
+# from java.text.SimpleDateFormat import (SimpleDateFormat,)
+# from java.util.ArrayList import (ArrayList,)
+# from java.util.Calendar import (Calendar,)
+# from java.util.Collection import (Collection,)
+# from java.util.Collections import (Collections,)
+# from java.util.Comparator import (Comparator,)
+# from java.util.GregorianCalendar import (GregorianCalendar,)
+# from java.util.HashMap import (HashMap,)
+# from java.util.HashSet import (HashSet,)
+# from java.util.Iterator import (Iterator,)
+# from java.util.List import (List,)
+# from java.util.Locale import (Locale,)
+# from java.util.Map import (Map,)
+# from java.util.Set import (Set,)
+# from java.util.StringTokenizer import (StringTokenizer,)
+# from java.util.UUID import (UUID,)
+# from java.util.logging.Level import (Level,)
+# from java.util.logging.Logger import (Logger,)
+# from javax.portlet.PortletRequest import (PortletRequest,)
+# from javax.portlet.PortletResponse import (PortletResponse,)
+# from javax.servlet.ServletRequest import (ServletRequest,)
+# from javax.servlet.ServletResponse import (ServletResponse,)
+
+
+class AbstractCommunicationManager(Paintable, RepaintRequestListener, Serializable):
+    """This is a common base class for the server-side implementations of the
+    communication system between the client code (compiled with GWT into
+    JavaScript) and the server side components. Its client side counterpart is
+    {@link ApplicationConnection}.
+
+    A server side component sends its state to the client in a paint request (see
+    {@link Paintable} and {@link PaintTarget} on the server side). The client
+    widget receives these paint requests as calls to
+    {@link com.vaadin.terminal.gwt.client.Paintable#updateFromUIDL()}. The client
+    component communicates back to the server by sending a list of variable
+    changes (see {@link ApplicationConnection#updateVariable()} and
+    {@link VariableOwner#changeVariables(Object, Map)}).
+
+    TODO Document better!
+    """
+    _DASHDASH = '--'
+    _logger = Logger.getLogger(AbstractCommunicationManager.getName())
+
+    class Request(object):
+        """Generic interface of a (HTTP or Portlet) request to the application.
+
+        This is a wrapper interface that allows
+        {@link AbstractCommunicationManager} to use a unified API.
+
+        @see javax.servlet.ServletRequest
+        @see javax.portlet.PortletRequest
+
+        @author peholmst
+        """
+
+        def getSession(self):
+            """Gets a {@link Session} wrapper implementation representing the
+            session for which this request was sent.
+
+            Multiple Vaadin applications can be associated with a single session.
+
+            @return Session
+            """
+            pass
+
+        def isRunningInPortlet(self):
+            """Are the applications in this session running in a portlet or directly
+            as servlets.
+
+            @return true if in a portlet
+            """
+            pass
+
+        def getParameter(self, name):
+            """Get the named HTTP or portlet request parameter.
+
+            @see javax.servlet.ServletRequest#getParameter(String)
+            @see javax.portlet.PortletRequest#getParameter(String)
+
+            @param name
+            @return
+            """
+            pass
+
+        def getContentLength(self):
+            """Returns the length of the request content that can be read from the
+            input stream returned by {@link #getInputStream()}.
+
+            @return content length in bytes
+            """
+            pass
+
+        def getInputStream(self):
+            """Returns an input stream from which the request content can be read.
+            The request content length can be obtained with
+            {@link #getContentLength()} without reading the full stream contents.
+
+            @return
+            @throws IOException
+            """
+            pass
+
+        def getRequestID(self):
+            """Returns the request identifier that identifies the target Vaadin
+            window for the request.
+
+            @return String identifier for the request target window
+            """
+            pass
+
+        def getAttribute(self, name):
+            """@see javax.servlet.ServletRequest#getAttribute(String)
+            @see javax.portlet.PortletRequest#getAttribute(String)
+            """
+            pass
+
+        def setAttribute(self, name, value):
+            """@see javax.servlet.ServletRequest#setAttribute(String, Object)
+            @see javax.portlet.PortletRequest#setAttribute(String, Object)
+            """
+            pass
+
+        def getWrappedRequest(self):
+            """Gets the underlying request object. The request is typically either a
+            {@link ServletRequest} or a {@link PortletRequest}.
+
+            @return wrapped request object
+            """
+            pass
+
+    class Response(object):
+        """Generic interface of a (HTTP or Portlet) response from the application.
+
+        This is a wrapper interface that allows
+        {@link AbstractCommunicationManager} to use a unified API.
+
+        @see javax.servlet.ServletResponse
+        @see javax.portlet.PortletResponse
+
+        @author peholmst
+        """
+
+        def getOutputStream(self):
+            """Gets the output stream to which the response can be written.
+
+            @return
+            @throws IOException
+            """
+            pass
+
+        def setContentType(self, type):
+            """Sets the MIME content type for the response to be communicated to the
+            browser.
+
+            @param type
+            """
+            pass
+
+        def getWrappedResponse(self):
+            """Gets the wrapped response object, usually a class implementing either
+            {@link ServletResponse} or {@link PortletResponse}.
+
+            @return wrapped request object
+            """
+            pass
+
+    class Session(object):
+        """Generic wrapper interface for a (HTTP or Portlet) session.
+
+        Several applications can be associated with a single session.
+
+        TODO Document me!
+
+        @see javax.servlet.http.HttpSession
+        @see javax.portlet.PortletSession
+
+        @author peholmst
+        """
+
+        def isNew(self):
+            pass
+
+        def getAttribute(self, name):
+            pass
+
+        def setAttribute(self, name, o):
+            pass
+
+        def getMaxInactiveInterval(self):
+            pass
+
+        def getWrappedSession(self):
+            pass
+
+    class Callback(object):
+        """TODO Document me!
+
+        @author peholmst
+        """
+
+        def criticalNotification(self, request, response, cap, msg, details, outOfSyncURL):
+            pass
+
+        def getRequestPathInfo(self, request):
+            pass
+
+        def getThemeResourceAsStream(self, themeName, resource):
+            pass
+
+    class UploadInterruptedException(Exception):
+
+        def __init__(self):
+            super(UploadInterruptedException, self)('Upload interrupted by other thread')
+
+    _GET_PARAM_REPAINT_ALL = 'repaintAll'
+    # flag used in the request to indicate that the security token should be
+    # written to the response
+    _WRITE_SECURITY_TOKEN_FLAG = 'writeSecurityToken'
+    # Variable records indexes
+    _VAR_PID = 1
+    _VAR_NAME = 2
+    _VAR_TYPE = 3
+    _VAR_VALUE = 0
+    _VTYPE_PAINTABLE = 'p'
+    _VTYPE_BOOLEAN = 'b'
+    _VTYPE_DOUBLE = 'd'
+    _VTYPE_FLOAT = 'f'
+    _VTYPE_LONG = 'l'
+    _VTYPE_INTEGER = 'i'
+    _VTYPE_STRING = 's'
+    _VTYPE_ARRAY = 'a'
+    _VTYPE_STRINGARRAY = 'c'
+    _VTYPE_MAP = 'm'
+    _VAR_RECORD_SEPARATOR = '\u001e'
+    _VAR_FIELD_SEPARATOR = '\u001f'
+    VAR_BURST_SEPARATOR = '\u001d'
+    VAR_ARRAYITEM_SEPARATOR = '\u001c'
+    _currentlyOpenWindowsInClient = dict()
+    _MAX_BUFFER_SIZE = 64 * 1024
+    # Same as in apache commons file upload library that was previously used.
+    _MAX_UPLOAD_BUFFER_SIZE = 4 * 1024
+    _GET_PARAM_ANALYZE_LAYOUTS = 'analyzeLayouts'
+    _dirtyPaintables = list()
+    _paintableIdMap = dict()
+    _idPaintableMap = dict()
+    _idSequence = 0
+    _application = None
+    # Note that this is only accessed from synchronized block and
+    # thus should be thread-safe.
+    _closingWindowName = None
+    _locales = None
+    _pendingLocalesIndex = None
+    _timeoutInterval = -1
+    _dragAndDropService = None
+    _requestThemeName = None
+    _maxInactiveInterval = None
+    _nextUnusedWindowSuffix = 1
+
+    def __init__(self, application):
+        """TODO New constructor - document me!
+
+        @param application
+        """
+        self._application = application
+        self.requireLocale(str(application.getLocale()))
+
+    def getApplication(self):
+        return self._application
+
+    _LF = '\n'.getBytes()[0]
+    _CRLF = '\r\n'
+    _UTF8 = 'UTF8'
+
+    @classmethod
+    def readLine(cls, stream):
+        bout = ByteArrayOutputStream()
+        readByte = stream.read()
+        while readByte != cls._LF:
+            bout.write(readByte)
+            readByte = stream.read()
+        bytes = bout.toByteArray()
+        return str(bytes, 0, len(bytes) - 1, cls._UTF8)
+
+    def doHandleSimpleMultipartFileUpload(self, request, response, streamVariable, variableName, owner, boundary):
+        """Method used to stream content from a multipart request (either from
+        servlet or portlet request) to given StreamVariable
+
+
+        @param request
+        @param response
+        @param streamVariable
+        @param owner
+        @param boundary
+        @throws IOException
+        """
+        # multipart parsing, supports only one file for request, but that is
+        # fine for our current terminal
+        inputStream = request.getInputStream()
+        contentLength = request.getContentLength()
+        atStart = False
+        firstFileFieldFound = False
+        rawfilename = 'unknown'
+        rawMimeType = 'application/octet-stream'
+        # Read the stream until the actual file starts (empty line). Read
+        # filename and content type from multipart headers.
+
+        while not atStart:
+            readLine = self.readLine(inputStream)
+            contentLength -= len(readLine) + 2
+            if (
+                readLine.startswith('Content-Disposition:') and readLine.find('filename=') > 0
+            ):
+                rawfilename = readLine.replaceAll('.*filename=', '')
+                parenthesis = rawfilename[:1]
+                rawfilename = rawfilename[1:]
+                rawfilename = rawfilename[:rawfilename.find(parenthesis)]
+                firstFileFieldFound = True
+            elif firstFileFieldFound and readLine == '':
+                atStart = True
+            elif readLine.startswith('Content-Type'):
+                rawMimeType = readLine.split(': ')[1]
+        contentLength -= len(boundary) + len(self._CRLF) + (2 * len(self._DASHDASH)) + 2
+        # 2 == CRLF
+        # Reads bytes from the underlying stream. Compares the read bytes to
+        # the boundary string and returns -1 if met.
+        # 
+        # The matching happens so that if the read byte equals to the first
+        # char of boundary string, the stream goes to "buffering mode". In
+        # buffering mode bytes are read until the character does not match the
+        # corresponding from boundary string or the full boundary string is
+        # found.
+        # 
+        # Note, if this is someday needed elsewhere, don't shoot yourself to
+        # foot and split to a top level helper class.
+
+        simpleMultiPartReader = self.SimpleMultiPartInputStream(inputStream, boundary)
+        # Should report only the filename even if the browser sends the path
+        filename = self.removePath(rawfilename)
+        mimeType = rawMimeType
+        # safe cast as in GWT terminal all variable owners are expected to
+        # be components.
+
+        try:
+            component = owner
+            if component.isReadOnly():
+                raise UploadException('Warning: file upload ignored because the componente was read-only')
+            forgetVariable = self.streamToReceiver(simpleMultiPartReader, streamVariable, filename, mimeType, contentLength)
+            if forgetVariable:
+                self.cleanStreamVariable(owner, variableName)
+        except Exception, e:
+            self.handleChangeVariablesError(self._application, owner, e, dict())
+        self.sendUploadResponse(request, response)
+
+    def doHandleXhrFilePost(self, request, response, streamVariable, variableName, owner, contentLength):
+        """Used to stream plain file post (aka XHR2.post(File))
+
+        @param request
+        @param response
+        @param streamVariable
+        @param owner
+        @param contentLength
+        @throws IOException
+        """
+        # These are unknown in filexhr ATM, maybe add to Accept header that
+        # is accessible in portlets
+        filename = 'unknown'
+        mimeType = filename
+        stream = request.getInputStream()
+        # safe cast as in GWT terminal all variable owners are expected to
+        # be components.
+
+        try:
+            component = owner
+            if component.isReadOnly():
+                raise UploadException('Warning: file upload ignored because the component was read-only')
+            forgetVariable = self.streamToReceiver(stream, streamVariable, filename, mimeType, contentLength)
+            if forgetVariable:
+                self.cleanStreamVariable(owner, variableName)
+        except Exception, e:
+            self.handleChangeVariablesError(self._application, owner, e, dict())
+        self.sendUploadResponse(request, response)
+
+    def streamToReceiver(self, in_, streamVariable, filename, type, contentLength):
+        """@param in
+        @param streamVariable
+        @param filename
+        @param type
+        @param contentLength
+        @return true if the streamvariable has informed that the terminal can
+                forget this variable
+        @throws UploadException
+        """
+        if streamVariable is None:
+            raise self.IllegalStateException('StreamVariable for the post not found')
+        application = self.getApplication()
+        out = None
+        totalBytes = 0
+        startedEvent = StreamingStartEventImpl(filename, type, contentLength)
+        # Download interrupted by application code
+        try:
+            streamVariable.streamingStarted(startedEvent)
+            out = streamVariable.getOutputStream()
+            listenProgress = streamVariable.listenProgress()
+            # Gets the output target stream
+            if out is None:
+                raise NoOutputStreamException()
+            if None is in_:
+                # No file, for instance non-existent filename in html upload
+                raise NoInputStreamException()
+            buffer = [None] * self._MAX_UPLOAD_BUFFER_SIZE
+            bytesReadToBuffer = 0
+            while bytesReadToBuffer = in_.read(buffer) > 0:
+                out.write(buffer, 0, bytesReadToBuffer)
+                totalBytes += bytesReadToBuffer
+                if listenProgress:
+                    # update progress if listener set and contentLength
+                    # received
+                    progressEvent = self.StreamingProgressEventImpl(filename, type, contentLength, totalBytes)
+                    streamVariable.onProgress(progressEvent)
+                if streamVariable.isInterrupted():
+                    raise self.UploadInterruptedException()
+            # upload successful
+            out.close()
+            event = StreamingEndEventImpl(filename, type, totalBytes)
+            streamVariable.streamingFinished(event)
+        except UploadInterruptedException, e:
+            self.tryToCloseStream(out)
+            event = StreamingErrorEventImpl(filename, type, contentLength, totalBytes, e)
+            streamVariable.streamingFailed(event)
+            # Note, we are not throwing interrupted exception forward as it is
+            # not a terminal level error like all other exception.
+        except Exception, e:
+            self.tryToCloseStream(out)
+            event = StreamingErrorEventImpl(filename, type, contentLength, totalBytes, e)
+            streamVariable.streamingFailed(event)
+            # throw exception for terminal to be handled (to be passed to
+            # terminalErrorHandler)
+            raise UploadException(e)
+        return startedEvent.isDisposed()
+
+    def tryToCloseStream(self, out):
+        # try to close output stream (e.g. file handle)
+        # NOP
+        try:
+            if out is not None:
+                out.close()
+        except IOException, e1:
+            pass # astStmt: [Stmt([]), None]
+
+    @classmethod
+    def removePath(cls, filename):
+        """Removes any possible path information from the filename and returns the
+        filename. Separators / and \\ are used.
+
+        @param name
+        @return
+        """
+        if filename is not None:
+            filename = filename.replaceAll('^.*[/\\\\]', '')
+        return filename
+
+    def sendUploadResponse(self, request, response):
+        """TODO document
+
+        @param request
+        @param response
+        @throws IOException
+        """
+        response.setContentType('text/html')
+        out = response.getOutputStream()
+        outWriter = PrintWriter(BufferedWriter(OutputStreamWriter(out, 'UTF-8')))
+        outWriter.print_('<html><body>download handled</body></html>')
+        outWriter.flush()
+        out.close()
+
+    def doHandleUidlRequest(self, request, response, callback, window):
+        """Internally process a UIDL request from the client.
+
+        This method calls
+        {@link #handleVariables(Request, Response, Callback, Application, Window)}
+        to process any changes to variables by the client and then repaints
+        affected components using {@link #paintAfterVariableChanges()}.
+
+        Also, some cleanup is done when a request arrives for an application that
+        has already been closed.
+
+        The method handleUidlRequest(...) in subclasses should call this method.
+
+        TODO better documentation
+
+        @param request
+        @param response
+        @param callback
+        @param window
+                   target window for the UIDL request, can be null if target not
+                   found
+        @throws IOException
+        @throws InvalidUIDLSecurityKeyException
+        """
+        self._requestThemeName = request.getParameter('theme')
+        self._maxInactiveInterval = request.getSession().getMaxInactiveInterval()
+        # repaint requested or session has timed out and new one is created
+        repaintAll = request.getParameter(self._GET_PARAM_REPAINT_ALL) is not None
+        # || (request.getSession().isNew()); FIXME What the h*ll is this??
+        out = response.getOutputStream()
+        analyzeLayouts = False
+        if repaintAll:
+            # analyzing can be done only with repaintAll
+            analyzeLayouts = request.getParameter(self._GET_PARAM_ANALYZE_LAYOUTS) is not None
+        outWriter = PrintWriter(BufferedWriter(OutputStreamWriter(out, 'UTF-8')))
+        # The rest of the process is synchronized with the application
+        # in order to guarantee that no parallel variable handling is
+        # made
+        if self._application.isRunning():
+            # Returns if no window found
+            if window is None:
+                # This should not happen, no windows exists but
+                # application is still open.
+                self._logger.warning('Could not get window for application with request ID ' + request.getRequestID())
+                return
+        else:
+            # application has been closed
+            self.endApplication(request, response, self._application)
+            return
+        # Change all variables based on request parameters
+        if (
+            not self.handleVariables(request, response, callback, self._application, window)
+        ):
+            # var inconsistency; the client is probably out-of-sync
+            ci = None
+            # FIXME: Handle exception
+            # Not critical, but something is still wrong; print
+            # stacktrace
+            try:
+                m = self._application.getClass().getMethod('getSystemMessages', None)
+                ci = m.invoke(None, None)
+            except Exception, e2:
+                self._logger.log(Level.WARNING, 'getSystemMessages() failed - continuing', e2)
+            if ci is not None:
+                msg = ci.getOutOfSyncMessage()
+                cap = ci.getOutOfSyncCaption()
+                if (msg is not None) or (cap is not None):
+                    callback.criticalNotification(request, response, cap, msg, None, ci.getOutOfSyncURL())
+                    # will reload page after this
+                    return
+            # No message to show, let's just repaint all.
+            repaintAll = True
+        self.paintAfterVariableChanges(request, response, callback, repaintAll, outWriter, window, analyzeLayouts)
+        if self._closingWindowName is not None:
+            self._currentlyOpenWindowsInClient.remove(self._closingWindowName)
+            self._closingWindowName = None
+        # Finds the window within the application
+        outWriter.close()
+        self._requestThemeName = None
+
+    def paintAfterVariableChanges(self, request, response, callback, repaintAll, outWriter, window, analyzeLayouts):
+        """TODO document
+
+        @param request
+        @param response
+        @param callback
+        @param repaintAll
+        @param outWriter
+        @param window
+        @param analyzeLayouts
+        @throws PaintException
+        @throws IOException
+        """
+        if repaintAll:
+            self.makeAllPaintablesDirty(window)
+        # Removes application if it has stopped during variable changes
+        if not self._application.isRunning():
+            self.endApplication(request, response, self._application)
+            return
+        self.openJsonMessage(outWriter, response)
+        # security key
+        writeSecurityTokenFlag = request.getAttribute(self._WRITE_SECURITY_TOKEN_FLAG)
+        if writeSecurityTokenFlag is not None:
+            seckey = request.getSession().getAttribute(ApplicationConnection.UIDL_SECURITY_TOKEN_ID)
+            if seckey is None:
+                seckey = str(UUID.randomUUID())
+                request.getSession().setAttribute(ApplicationConnection.UIDL_SECURITY_TOKEN_ID, seckey)
+            outWriter.print_('\"' + ApplicationConnection.UIDL_SECURITY_TOKEN_ID + '\":\"')
+            outWriter.print_(seckey)
+            outWriter.print_('\",')
+        # If the browser-window has been closed - we do not need to paint it at
+        # all
+        if window.getName() == self._closingWindowName:
+            outWriter.print_('\"changes\":[]')
+        else:
+            # re-get window - may have been changed
+            newWindow = self.doGetApplicationWindow(request, callback, self._application, window)
+            if newWindow != window:
+                window = newWindow
+                repaintAll = True
+            self.writeUidlResponce(callback, repaintAll, outWriter, window, analyzeLayouts)
+        self.closeJsonMessage(outWriter)
+        outWriter.close()
+
+    def writeUidlResponce(self, callback, repaintAll, outWriter, window, analyzeLayouts):
+        outWriter.print_('\"changes\":[')
+        paintables = None
+        invalidComponentRelativeSizes = None
+        paintTarget = JsonPaintTarget(self, outWriter, not repaintAll)
+        windowCache = self._currentlyOpenWindowsInClient[window.getName()]
+        if windowCache is None:
+            windowCache = self.OpenWindowCache()
+            self._currentlyOpenWindowsInClient.put(window.getName(), windowCache)
+        # Paints components
+        if repaintAll:
+            paintables = list()
+            paintables.add(window)
+            # Reset sent locales
+            self._locales = None
+            self.requireLocale(str(self._application.getLocale()))
+        else:
+            # remove detached components from paintableIdMap so they
+            # can be GC'ed
+            # TODO figure out if we could move this beyond the painting phase,
+            # "respond as fast as possible, then do the cleanup". Beware of
+            # painting the dirty detatched components.
+
+            _0 = True
+            it = self._paintableIdMap.keys()
+            while True:
+                if _0 is True:
+                    _0 = False
+                if not it.hasNext():
+                    break
+                p = it.next()
+                if p.getApplication() is None:
+                    self.unregisterPaintable(p)
+                    self._idPaintableMap.remove(self._paintableIdMap[p])
+                    it.remove()
+                    self._dirtyPaintables.remove(p)
+            paintables = self.getDirtyVisibleComponents(window)
+        if paintables is not None:
+            # We need to avoid painting children before parent.
+            # This is ensured by ordering list by depth in component
+            # tree
+
+            class _0_(Comparator):
+
+                def compare(self, o1, o2):
+                    c1 = o1
+                    c2 = o2
+                    d1 = 0
+                    while c1.getParent() is not None:
+                        d1 += 1
+                        c1 = c1.getParent()
+                    d2 = 0
+                    while c2.getParent() is not None:
+                        d2 += 1
+                        c2 = c2.getParent()
+                    if d1 < d2:
+                        return -1
+                    if d1 > d2:
+                        return 1
+                    return 0
+
+            _0_ = self._0_()
+            Collections.sort(paintables, _0_)
+            _1 = True
+            i = paintables
+            while True:
+                if _1 is True:
+                    _1 = False
+                if not i.hasNext():
+                    break
+                p = i.next()
+                # TODO CLEAN
+                if isinstance(p, Window):
+                    w = p
+                    if w.getTerminal() is None:
+                        w.setTerminal(self._application.getMainWindow().getTerminal())
+                # This does not seem to happen in tk5, but remember this case:
+                # else if (p instanceof Component) { if (((Component)
+                # p).getParent() == null || ((Component) p).getApplication() ==
+                # null) { // Component requested repaint, but is no // longer
+                # attached: skip paintablePainted(p); continue; } }
+
+                # TODO we may still get changes that have been
+                # rendered already (changes with only cached flag)
+                if paintTarget.needsToBePainted(p):
+                    paintTarget.startTag('change')
+                    paintTarget.addAttribute('format', 'uidl')
+                    pid = self.getPaintableId(p)
+                    paintTarget.addAttribute('pid', pid)
+                    p.paint(paintTarget)
+                    paintTarget.endTag('change')
+                self.paintablePainted(p)
+                if analyzeLayouts:
+                    w = p
+                    invalidComponentRelativeSizes = ComponentSizeValidator.validateComponentRelativeSizes(w.getContent(), None, None)
+                    # Also check any existing subwindows
+                    if w.getChildWindows() is not None:
+                        for subWindow in w.getChildWindows():
+                            invalidComponentRelativeSizes = ComponentSizeValidator.validateComponentRelativeSizes(subWindow.getContent(), invalidComponentRelativeSizes, None)
+        paintTarget.close()
+        outWriter.print_(']')
+        # close changes
+        outWriter.print_(', \"meta\" : {')
+        metaOpen = False
+        if repaintAll:
+            metaOpen = True
+            outWriter.write('\"repaintAll\":true')
+            if analyzeLayouts:
+                outWriter.write(', \"invalidLayouts\":')
+                outWriter.write('[')
+                if invalidComponentRelativeSizes is not None:
+                    first = True
+                    for invalidLayout in invalidComponentRelativeSizes:
+                        if not first:
+                            outWriter.write(',')
+                        else:
+                            first = False
+                        invalidLayout.reportErrors(outWriter, self, System.err)
+                outWriter.write(']')
+        ci = None
+        # meta instruction for client to enable auto-forward to
+        # sessionExpiredURL after timer expires.
+        try:
+            m = self._application.getClass().getMethod('getSystemMessages', None)
+            ci = m.invoke(None, None)
+        except NoSuchMethodException, e:
+            self._logger.log(Level.WARNING, 'getSystemMessages() failed - continuing', e)
+        except IllegalArgumentException, e:
+            self._logger.log(Level.WARNING, 'getSystemMessages() failed - continuing', e)
+        except IllegalAccessException, e:
+            self._logger.log(Level.WARNING, 'getSystemMessages() failed - continuing', e)
+        except InvocationTargetException, e:
+            self._logger.log(Level.WARNING, 'getSystemMessages() failed - continuing', e)
+        if (
+            ci is not None and ci.getSessionExpiredMessage() is None and ci.getSessionExpiredCaption() is None and ci.isSessionExpiredNotificationEnabled()
+        ):
+            newTimeoutInterval = self.getTimeoutInterval()
+            if repaintAll or (self._timeoutInterval != newTimeoutInterval):
+                escapedURL = '' if ci.getSessionExpiredURL() is None else ci.getSessionExpiredURL().replace('/', '\\/')
+                if metaOpen:
+                    outWriter.write(',')
+                outWriter.write('\"timedRedirect\":{\"interval\":' + newTimeoutInterval + 15 + ',\"url\":\"' + escapedURL + '\"}')
+                metaOpen = True
+            self._timeoutInterval = newTimeoutInterval
+        outWriter.print_('}, \"resources\" : {')
+        # Precache custom layouts
+        # TODO We should only precache the layouts that are not
+        # cached already (plagiate from usedPaintableTypes)
+        resourceIndex = 0
+        _2 = True
+        i = paintTarget.getUsedResources()
+        while True:
+            if _2 is True:
+                _2 = False
+            if not i.hasNext():
+                break
+            resource = i.next()
+            is_ = None
+            # FIXME: Handle exception
+            try:
+                is_ = callback.getThemeResourceAsStream(self.getTheme(window), resource)
+            except Exception, e:
+                self._logger.log(Level.FINER, 'Failed to get theme resource stream.', e)
+            if is_ is not None:
+                outWriter.print_((', ' if POSTINC(globals(), locals(), 'resourceIndex') > 0 else '') + '\"' + resource + '\" : ')
+                layout = str()
+                # FIXME: Handle exception
+                try:
+                    r = InputStreamReader(is_, 'UTF-8')
+                    buffer = [None] * 20000
+                    charsRead = 0
+                    while charsRead = r.read(buffer) > 0:
+                        layout.__add__(buffer, 0, charsRead)
+                    r.close()
+                except java.io.IOException, e:
+                    self._logger.log(Level.INFO, 'Resource transfer failed', e)
+                outWriter.print_('\"' + JsonPaintTarget.escapeJSON(str(layout)) + '\"')
+            else:
+                # FIXME: Handle exception
+                self._logger.severe('CustomLayout not found: ' + resource)
+        outWriter.print_('}')
+        usedPaintableTypes = paintTarget.getUsedPaintableTypes()
+        typeMappingsOpen = False
+        for class1 in usedPaintableTypes:
+            if windowCache.cache(class1):
+                # client does not know the mapping key for this type, send
+                # mapping to client
+                if not typeMappingsOpen:
+                    typeMappingsOpen = True
+                    outWriter.print_(', \"typeMappings\" : { ')
+                else:
+                    outWriter.print_(' , ')
+                canonicalName = class1.getCanonicalName()
+                outWriter.print_('\"')
+                outWriter.print_(canonicalName)
+                outWriter.print_('\" : ')
+                outWriter.print_(self.getTagForType(class1))
+        if typeMappingsOpen:
+            outWriter.print_(' }')
+        # add any pending locale definitions requested by the client
+        self.printLocaleDeclarations(outWriter)
+        if self._dragAndDropService is not None:
+            self._dragAndDropService.printJSONResponse(outWriter)
+
+    def getTimeoutInterval(self):
+        return self._maxInactiveInterval
+
+    def getTheme(self, window):
+        themeName = window.getTheme()
+        requestThemeName = self.getRequestTheme()
+        if requestThemeName is not None:
+            themeName = requestThemeName
+        if themeName is None:
+            themeName = AbstractApplicationServlet.getDefaultTheme()
+        return themeName
+
+    def getRequestTheme(self):
+        return self._requestThemeName
+
+    def makeAllPaintablesDirty(self, window):
+        # If repaint is requested, clean all ids in this root window
+        _0 = True
+        it = self._idPaintableMap.keys()
+        while True:
+            if _0 is True:
+                _0 = False
+            if not it.hasNext():
+                break
+            c = self._idPaintableMap[it.next()]
+            if self.isChildOf(window, c):
+                it.remove()
+                self._paintableIdMap.remove(c)
+        # clean WindowCache
+        openWindowCache = self._currentlyOpenWindowsInClient[window.getName()]
+        if openWindowCache is not None:
+            openWindowCache.clear()
+
+    def unregisterPaintable(self, p):
+        """Called when communication manager stops listening for repaints for given
+        component.
+
+        @param p
+        """
+        p.removeListener(self)
+
+    def handleVariables(self, request, response, callback, application2, window):
+        """TODO document
+
+        If this method returns false, something was submitted that we did not
+        expect; this is probably due to the client being out-of-sync and sending
+        variable changes for non-existing pids
+
+        @return true if successful, false if there was an inconsistency
+        """
+        success = True
+        changes = self.getRequestPayload(request)
+        if changes is not None:
+            # Manage bursts one by one
+            bursts = changes.split(self.VAR_BURST_SEPARATOR)
+            # Security: double cookie submission pattern unless disabled by
+            # property
+            if (
+                not ('true' == application2.getProperty(AbstractApplicationServlet.SERVLET_PARAMETER_DISABLE_XSRF_PROTECTION))
+            ):
+                if len(bursts) == 1 and 'init' == bursts[0]:
+                    # init request; don't handle any variables, key sent in
+                    # response.
+                    request.setAttribute(self._WRITE_SECURITY_TOKEN_FLAG, True)
+                    return True
+                else:
+                    # ApplicationServlet has stored the security token in the
+                    # session; check that it matched the one sent in the UIDL
+                    sessId = request.getSession().getAttribute(ApplicationConnection.UIDL_SECURITY_TOKEN_ID)
+                    if (sessId is None) or (not (sessId == bursts[0])):
+                        raise self.InvalidUIDLSecurityKeyException('Security key mismatch')
+            _0 = True
+            bi = 1
+            while True:
+                if _0 is True:
+                    _0 = False
+                else:
+                    bi += 1
+                if not (bi < len(bursts)):
+                    break
+                burst = bursts[bi]
+                success = self.handleVariableBurst(request, application2, success, burst)
+                # In case that there were multiple bursts, we know that this is
+                # a special synchronous case for closing window. Thus we are
+                # not interested in sending any UIDL changes back to client.
+                # Still we must clear component tree between bursts to ensure
+                # that no removed components are updated. The painting after
+                # the last burst is handled normally by the calling method.
+                if bi < len(bursts) - 1:
+                    # We will be discarding all changes
+                    outWriter = PrintWriter(CharArrayWriter())
+                    self.paintAfterVariableChanges(request, response, callback, True, outWriter, window, False)
+        # Note that we ignore inconsistencies while handling unload request.
+        # The client can't remove invalid variable changes from the burst, and
+        # we don't have the required logic implemented on the server side. E.g.
+        # a component is removed in a previous burst.
+
+        return success or (self._closingWindowName is not None)
+
+    def handleVariableBurst(self, source, app, success, burst):
+        # extract variables to two dim string array
+        tmp = burst.split(self._VAR_RECORD_SEPARATOR)
+        variableRecords = [None] * 4
+        _0 = True
+        i = 0
+        while True:
+            if _0 is True:
+                _0 = False
+            else:
+                i += 1
+            if not (i < len(tmp)):
+                break
+            variableRecords[i] = tmp[i].split(self._VAR_FIELD_SEPARATOR)
+        _1 = True
+        i = 0
+        while True:
+            if _1 is True:
+                _1 = False
+            else:
+                i += 1
+            if not (i < len(variableRecords)):
+                break
+            variable = variableRecords[i]
+            nextVariable = None
+            if i + 1 < len(variableRecords):
+                nextVariable = variableRecords[i + 1]
+            owner = self.getVariableOwner(variable[self._VAR_PID])
+            if owner is not None and owner.isEnabled():
+                if (
+                    nextVariable is not None and variable[self._VAR_PID] == nextVariable[self._VAR_PID]
+                ):
+                    # we have more than one value changes in row for
+                    # one variable owner, collect em in HashMap
+                    m = dict()
+                    m.put(variable[self._VAR_NAME], self.convertVariableValue(variable[self._VAR_TYPE][0], variable[self._VAR_VALUE]))
+                else:
+                    # use optimized single value map
+                    m = Collections.singletonMap(variable[self._VAR_NAME], self.convertVariableValue(variable[self._VAR_TYPE][0], variable[self._VAR_VALUE]))
+                # collect following variable changes for this owner
+                while (
+                    nextVariable is not None and variable[self._VAR_PID] == nextVariable[self._VAR_PID]
+                ):
+                    i += 1
+                    variable = nextVariable
+                    if i + 1 < len(variableRecords):
+                        nextVariable = variableRecords[i + 1]
+                    else:
+                        nextVariable = None
+                    m.put(variable[self._VAR_NAME], self.convertVariableValue(variable[self._VAR_TYPE][0], variable[self._VAR_VALUE]))
+                try:
+                    owner.changeVariables(source, m)
+                    # Special-case of closing browser-level windows:
+                    # track browser-windows currently open in client
+                    if isinstance(owner, Window) and owner.getParent() is None:
+                        close = m['close']
+                        if close is not None and close.booleanValue():
+                            self._closingWindowName = owner.getName()
+                except Exception, e:
+                    if isinstance(owner, Component):
+                        self.handleChangeVariablesError(app, owner, e, m)
+                    else:
+                        # TODO DragDropService error handling
+                        raise RuntimeError(e)
+            else:
+                # Handle special case where window-close is called
+                # after the window has been removed from the
+                # application or the application has closed
+                if 'close' == variable[self._VAR_NAME] and 'true' == variable[self._VAR_VALUE]:
+                    # Silently ignore this
+                    continue
+                # Ignore variable change
+                msg = 'Warning: Ignoring variable change for '
+                if owner is not None:
+                    msg += 'disabled component ' + owner.getClass()
+                    caption = owner.getCaption()
+                    if caption is not None:
+                        msg += ', caption=' + caption
+                else:
+                    msg += 'non-existent component, VAR_PID=' + variable[self._VAR_PID]
+                    success = False
+                self._logger.warning(msg)
+                continue
+        return success
+
+    def getVariableOwner(self, string):
+        owner = self._idPaintableMap[string]
+        if owner is None and string.startswith('DD'):
+            return self.getDragAndDropService()
+        return owner
+
+    def getDragAndDropService(self):
+        if self._dragAndDropService is None:
+            self._dragAndDropService = DragAndDropService(self)
+        return self._dragAndDropService
+
+    def getRequestPayload(self, request):
+        """Reads the request data from the Request and returns it converted to an
+        UTF-8 string.
+
+        @param request
+        @return
+        @throws IOException
+        """
+        requestLength = request.getContentLength()
+        if requestLength == 0:
+            return None
+        bout = ByteArrayOutputStream() if requestLength <= 0 else ByteArrayOutputStream(requestLength)
+        inputStream = request.getInputStream()
+        buffer = [None] * self._MAX_BUFFER_SIZE
+        while True:
+            read = inputStream.read(buffer)
+            if read == -1:
+                break
+            bout.write(buffer, 0, read)
+        result = str(bout.toByteArray(), 'utf-8')
+        return result
+
+    class ErrorHandlerErrorEvent(ErrorEvent, Serializable):
+        _throwable = None
+
+        def __init__(self, throwable):
+            self._throwable = throwable
+
+        def getThrowable(self):
+            return self._throwable
+
+    def handleChangeVariablesError(self, application, owner, e, m):
+        """Handles an error (exception) that occurred when processing variable
+        changes from the client or a failure of a file upload.
+
+        For {@link AbstractField} components,
+        {@link AbstractField#handleError(com.vaadin.ui.AbstractComponent.ComponentErrorEvent)}
+        is called. In all other cases (or if the field does not handle the
+        error), {@link ErrorListener#terminalError(ErrorEvent)} for the
+        application error handler is called.
+
+        @param application
+        @param owner
+                   component that the error concerns
+        @param e
+                   exception that occurred
+        @param m
+                   map from variable names to values
+        """
+        handled = False
+        errorEvent = ChangeVariablesErrorEvent(owner, e, m)
+        if isinstance(owner, AbstractField):
+            # If there is an error in the component error handler we pass
+            # the that error to the application error handler and continue
+            # processing the actual error
+
+            try:
+                handled = owner.handleError(errorEvent)
+            except Exception, handlerException:
+                application.getErrorHandler().terminalError(self.ErrorHandlerErrorEvent(handlerException))
+                handled = False
+        if not handled:
+            application.getErrorHandler().terminalError(errorEvent)
+
+    def convertVariableValue(self, variableType, strValue):
+        val = None
+        _0 = variableType
+        _1 = False
+        while True:
+            if _0 == self._VTYPE_ARRAY:
+                _1 = True
+                val = self.convertArray(strValue)
+                break
+            if (_1 is True) or (_0 == self._VTYPE_MAP):
+                _1 = True
+                val = self.convertMap(strValue)
+                break
+            if (_1 is True) or (_0 == self._VTYPE_STRINGARRAY):
+                _1 = True
+                val = self.convertStringArray(strValue)
+                break
+            if (_1 is True) or (_0 == self._VTYPE_STRING):
+                _1 = True
+                val = strValue
+                break
+            if (_1 is True) or (_0 == self._VTYPE_INTEGER):
+                _1 = True
+                val = Integer.valueOf.valueOf(strValue)
+                break
+            if (_1 is True) or (_0 == self._VTYPE_LONG):
+                _1 = True
+                val = Long.valueOf.valueOf(strValue)
+                break
+            if (_1 is True) or (_0 == self._VTYPE_FLOAT):
+                _1 = True
+                val = Float.valueOf.valueOf(strValue)
+                break
+            if (_1 is True) or (_0 == self._VTYPE_DOUBLE):
+                _1 = True
+                val = Double.valueOf.valueOf(strValue)
+                break
+            if (_1 is True) or (_0 == self._VTYPE_BOOLEAN):
+                _1 = True
+                val = Boolean.valueOf.valueOf(strValue)
+                break
+            if (_1 is True) or (_0 == self._VTYPE_PAINTABLE):
+                _1 = True
+                val = self._idPaintableMap[strValue]
+                break
+            break
+        return val
+
+    def convertMap(self, strValue):
+        parts = strValue.split(self.VAR_ARRAYITEM_SEPARATOR)
+        map = dict()
+        _0 = True
+        i = 0
+        while True:
+            if _0 is True:
+                _0 = False
+            else:
+                i += 2
+            if not (i < len(parts)):
+                break
+            key = parts[i]
+            if len(key) > 0:
+                variabletype = key[0]
+                value = self.convertVariableValue(variabletype, parts[i + 1])
+                map.put(key[1:], value)
+        return map
+
+    def convertStringArray(self, strValue):
+        # need to return delimiters and filter them out; otherwise empty
+        # strings are lost
+        # an extra empty delimiter at the end is automatically eliminated
+        tokenizer = StringTokenizer(strValue, self.VAR_ARRAYITEM_SEPARATOR, True)
+        tokens = list()
+        prevToken = self.VAR_ARRAYITEM_SEPARATOR
+        while tokenizer.hasMoreTokens():
+            token = tokenizer.nextToken()
+            if not (self.VAR_ARRAYITEM_SEPARATOR == token):
+                tokens.add(token)
+            elif self.VAR_ARRAYITEM_SEPARATOR == prevToken:
+                tokens.add('')
+            prevToken = token
+        return list([None] * len(tokens))
+
+    def convertArray(self, strValue):
+        val = strValue.split(self.VAR_ARRAYITEM_SEPARATOR)
+        if (len(val) == 0) or (len(val) == 1 and len(val[0]) == 0):
+            return [None] * 0
+        values = [None] * len(val)
+        _0 = True
+        i = 0
+        while True:
+            if _0 is True:
+                _0 = False
+            else:
+                i += 1
+            if not (i < len(values)):
+                break
+            string = val[i]
+            # first char of string is type
+            variableType = string[0]
+            values[i] = self.convertVariableValue(variableType, string[1:])
+        return values
+
+    def printLocaleDeclarations(self, outWriter):
+        """Prints the queued (pending) locale definitions to a {@link PrintWriter}
+        in a (UIDL) format that can be sent to the client and used there in
+        formatting dates, times etc.
+
+        @param outWriter
+        """
+        # ----------------------------- Sending Locale sensitive date
+        # -----------------------------
+
+        # Send locale informations to client
+        outWriter.print_(', \"locales\":[')
+        _0 = True
+        while True:
+            if _0 is True:
+                _0 = False
+            else:
+                self._pendingLocalesIndex += 1
+            if not (self._pendingLocalesIndex < len(self._locales)):
+                break
+            l = self.generateLocale(self._locales[self._pendingLocalesIndex])
+            # Locale name
+            outWriter.print_('{\"name\":\"' + str(l) + '\",')
+            # Month names (both short and full)
+            dfs = DateFormatSymbols(l)
+            short_months = dfs.getShortMonths()
+            months = dfs.getMonths()
+            outWriter.print_('\"smn\":[\"' + short_months[0] + '\",\"' + short_months[1] + '\",\"' + short_months[2] + '\",\"' + short_months[3] + '\",\"' + short_months[4] + '\",\"' + short_months[5] + '\",\"' + short_months[6] + '\",\"' + short_months[7] + '\",\"' + short_months[8] + '\",\"' + short_months[9] + '\",\"' + short_months[10] + '\",\"' + short_months[11] + '\"' + '],')
+            outWriter.print_('\"mn\":[\"' + months[0] + '\",\"' + months[1] + '\",\"' + months[2] + '\",\"' + months[3] + '\",\"' + months[4] + '\",\"' + months[5] + '\",\"' + months[6] + '\",\"' + months[7] + '\",\"' + months[8] + '\",\"' + months[9] + '\",\"' + months[10] + '\",\"' + months[11] + '\"' + '],')
+            # Weekday names (both short and full)
+            short_days = dfs.getShortWeekdays()
+            days = dfs.getWeekdays()
+            outWriter.print_('\"sdn\":[\"' + short_days[1] + '\",\"' + short_days[2] + '\",\"' + short_days[3] + '\",\"' + short_days[4] + '\",\"' + short_days[5] + '\",\"' + short_days[6] + '\",\"' + short_days[7] + '\"' + '],')
+            outWriter.print_('\"dn\":[\"' + days[1] + '\",\"' + days[2] + '\",\"' + days[3] + '\",\"' + days[4] + '\",\"' + days[5] + '\",\"' + days[6] + '\",\"' + days[7] + '\"' + '],')
+            # First day of week (0 = sunday, 1 = monday)
+            cal = GregorianCalendar(l)
+            outWriter.print_('\"fdow\":' + (cal.getFirstDayOfWeek() - 1) + ',')
+            # Date formatting (MM/DD/YYYY etc.)
+            dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, l)
+            if not isinstance(dateFormat, SimpleDateFormat):
+                self._logger.warning('Unable to get default date pattern for locale ' + str(l))
+                dateFormat = SimpleDateFormat()
+            df = dateFormat.toPattern()
+            timeStart = df.find('H')
+            if timeStart < 0:
+                timeStart = df.find('h')
+            ampm_first = df.find('a')
+            # E.g. in Korean locale AM/PM is before h:mm
+            # TODO should take that into consideration on client-side as well,
+            # now always h:mm a
+            if ampm_first > 0 and ampm_first < timeStart:
+                timeStart = ampm_first
+            # Hebrew locale has time before the date
+            timeFirst = timeStart == 0
+            if timeFirst:
+                dateStart = df.find(' ')
+                if ampm_first > dateStart:
+                    dateStart = df.find(' ', ampm_first)
+                dateformat = df[dateStart + 1:]
+            else:
+                dateformat = df[:timeStart - 1]
+            outWriter.print_('\"df\":\"' + dateformat.trim() + '\",')
+            # Time formatting (24 or 12 hour clock and AM/PM suffixes)
+            timeformat = df[timeStart:len(df)]
+            # Doesn't return second or milliseconds.
+            # 
+            # We use timeformat to determine 12/24-hour clock
+
+            twelve_hour_clock = timeformat.find('a') > -1
+            # TODO there are other possibilities as well, like 'h' in french
+            # (ignore them, too complicated)
+            hour_min_delimiter = '.' if timeformat.find('.') > -1 else ':'
+            # outWriter.print("\"tf\":\"" + timeformat + "\",");
+            outWriter.print_('\"thc\":' + twelve_hour_clock + ',')
+            outWriter.print_('\"hmd\":\"' + hour_min_delimiter + '\"')
+            if twelve_hour_clock:
+                ampm = dfs.getAmPmStrings()
+                outWriter.print_(',\"ampm\":[\"' + ampm[0] + '\",\"' + ampm[1] + '\"]')
+            outWriter.print_('}')
+            if self._pendingLocalesIndex < len(self._locales) - 1:
+                outWriter.print_(',')
+        outWriter.print_(']')
+        # Close locales
+
+    def doGetApplicationWindow(self, request, callback, application, assumedWindow):
+        """TODO New method - document me!
+
+        @param request
+        @param callback
+        @param application
+        @param assumedWindow
+        @return
+        """
+        window = None
+        # If the client knows which window to use, use it if possible
+        windowClientRequestedName = request.getParameter('windowName')
+        if (
+            assumedWindow is not None and application.getWindows().contains(assumedWindow)
+        ):
+            windowClientRequestedName = assumedWindow.getName()
+        if windowClientRequestedName is not None:
+            window = application.getWindow(windowClientRequestedName)
+            if window is not None:
+                return window
+        # If client does not know what window it wants
+        if window is None and not request.isRunningInPortlet():
+            # This is only supported if the application is running inside a
+            # servlet
+            # Get the path from URL
+            path = callback.getRequestPathInfo(request)
+            # If the path is specified, create name from it.
+            # 
+            # An exception is if UIDL request have come this far. This happens
+            # if main window is refreshed. In that case we always return main
+            # window (infamous hacky support for refreshes if only main window
+            # is used). However we are not returning with main window here (we
+            # will later if things work right), because the code is so cryptic
+            # that nobody really knows what it does.
+
+            pathMayContainWindowName = path is not None and len(path) > 0 and not (path == '/')
+            if pathMayContainWindowName:
+                uidlRequest = path.startswith('/UIDL')
+                if not uidlRequest:
+                    windowUrlName = None
+                    if path[0] == '/':
+                        path = path[1:]
+                    index = path.find('/')
+                    if index < 0:
+                        windowUrlName = path
+                        path = ''
+                    else:
+                        windowUrlName = path[:index]
+                        path = path[index + 1:]
+                    window = application.getWindow(windowUrlName)
+        # By default, use mainwindow
+        if window is None:
+            window = application.getMainWindow()
+            # Return null if no main window was found
+            if window is None:
+                return None
+        # If the requested window is already open, resolve conflict
+        if window.getName() in self._currentlyOpenWindowsInClient:
+            newWindowName = window.getName()
+            while newWindowName in self._currentlyOpenWindowsInClient:
+                newWindowName = window.getName() + '_' + POSTINC(globals(), locals(), 'self._nextUnusedWindowSuffix')
+            window = application.getWindow(newWindowName)
+            # If everything else fails, use main window even in case of
+            # conflicts
+            if window is None:
+                window = application.getMainWindow()
+        return window
+
+    def endApplication(self, request, response, application):
+        """Ends the Application.
+
+        The browser is redirected to the Application logout URL set with
+        {@link Application#setLogoutURL(String)}, or to the application URL if no
+        logout URL is given.
+
+        @param request
+                   the request instance.
+        @param response
+                   the response to write to.
+        @param application
+                   the Application to end.
+        @throws IOException
+                    if the writing failed due to input/output error.
+        """
+        logoutUrl = application.getLogoutURL()
+        if logoutUrl is None:
+            logoutUrl = str(application.getURL())
+        # clients JS app is still running, send a special json file to tell
+        # client that application has quit and where to point browser now
+        # Set the response type
+        out = response.getOutputStream()
+        outWriter = PrintWriter(BufferedWriter(OutputStreamWriter(out, 'UTF-8')))
+        self.openJsonMessage(outWriter, response)
+        outWriter.print_('\"redirect\":{')
+        outWriter.write('\"url\":\"' + logoutUrl + '\"}')
+        self.closeJsonMessage(outWriter)
+        outWriter.flush()
+        outWriter.close()
+        out.flush()
+
+    def closeJsonMessage(self, outWriter):
+        outWriter.print_('}]')
+
+    def openJsonMessage(self, outWriter, response):
+        """Writes the opening of JSON message to be sent to client.
+
+        @param outWriter
+        @param response
+        """
+        # Sets the response type
+        response.setContentType('application/json; charset=UTF-8')
+        # some dirt to prevent cross site scripting
+        outWriter.print_('for(;;);[{')
+
+    def getPaintableId(self, paintable):
+        """Gets the Paintable Id. If Paintable has debug id set it will be used
+        prefixed with "PID_S". Otherwise a sequenced ID is created.
+
+        @param paintable
+        @return the paintable Id.
+        """
+        id = self._paintableIdMap[paintable]
+        if id is None:
+            # use testing identifier as id if set
+            id = paintable.getDebugId()
+            if id is None:
+                id = 'PID' + str(POSTINC(globals(), locals(), 'self._idSequence'))
+            else:
+                id = 'PID_S' + id
+            old = self._idPaintableMap.put(id, paintable)
+            if old is not None and old != paintable:
+                # Two paintables have the same id. We still make sure the old
+                # one is a component which is still attached to the
+                # application. This is just a precaution and should not be
+                # absolutely necessary.
+
+                if isinstance(old, Component) and old.getApplication() is not None:
+                    raise self.IllegalStateException('Two paintables (' + paintable.getClass().getSimpleName() + ',' + old.getClass().getSimpleName() + ') have been assigned the same id: ' + paintable.getDebugId())
+            self._paintableIdMap.put(paintable, id)
+        return id
+
+    def hasPaintableId(self, paintable):
+        return paintable in self._paintableIdMap
+
+    def getDirtyVisibleComponents(self, w):
+        """Returns dirty components which are in given window. Components in an
+        invisible subtrees are omitted.
+
+        @param w
+                   root window for which dirty components is to be fetched
+        @return
+        """
+        resultset = list(self._dirtyPaintables)
+        # The following algorithm removes any components that would be painted
+        # as a direct descendant of other components from the dirty components
+        # list. The result is that each component should be painted exactly
+        # once and any unmodified components will be painted as "cached=true".
+        _0 = True
+        i = self._dirtyPaintables
+        while True:
+            if _0 is True:
+                _0 = False
+            if not i.hasNext():
+                break
+            p = i.next()
+            if isinstance(p, Component):
+                component = p
+                if component.getApplication() is None:
+                    # component is detached after requestRepaint is called
+                    resultset.remove(p)
+                    i.remove()
+                else:
+                    componentsRoot = component.getWindow()
+                    if componentsRoot is None:
+                        # This should not happen unless somebody has overriden
+                        # getApplication or getWindow in an illegal way.
+                        raise self.IllegalStateException('component.getWindow() returned null for a component attached to the application')
+                    if componentsRoot.getParent() is not None:
+                        # this is a subwindow
+                        componentsRoot = componentsRoot.getParent()
+                    if componentsRoot != w:
+                        resultset.remove(p)
+                    elif (
+                        component.getParent() is not None and not component.getParent().isVisible()
+                    ):
+                        # Do not return components in an invisible subtree.
+                        # 
+                        # Components that are invisible in visible subree, must
+                        # be rendered (to let client know that they need to be
+                        # hidden).
+
+                        resultset.remove(p)
+        return resultset
+
+    def repaintRequested(self, event):
+        """@see com.vaadin.terminal.Paintable.RepaintRequestListener#repaintRequested(com.vaadin.terminal.Paintable.RepaintRequestEvent)"""
+        p = event.getPaintable()
+        if not self._dirtyPaintables.contains(p):
+            self._dirtyPaintables.add(p)
+
+    def paintablePainted(self, paintable):
+        """Internally mark a {@link Paintable} as painted and start collecting new
+        repaint requests for it.
+
+        @param paintable
+        """
+        self._dirtyPaintables.remove(paintable)
+        paintable.requestRepaintRequests()
+
+    class URIHandlerErrorImpl(URIHandler, ErrorEvent, Serializable):
+        """Implementation of {@link URIHandler.ErrorEvent} interface."""
+        _owner = None
+        _throwable = None
+
+        def __init__(self, owner, throwable):
+            """@param owner
+            @param throwable
+            """
+            self._owner = owner
+            self._throwable = throwable
+
+        def getThrowable(self):
+            """@see com.vaadin.terminal.Terminal.ErrorEvent#getThrowable()"""
+            return self._throwable
+
+        def getURIHandler(self):
+            """@see com.vaadin.terminal.URIHandler.ErrorEvent#getURIHandler()"""
+            return self._owner
+
+    def requireLocale(self, value):
+        """Queues a locale to be sent to the client (browser) for date and time
+        entry etc. All locale specific information is derived from server-side
+        {@link Locale} instances and sent to the client when needed, eliminating
+        the need to use the {@link Locale} class and all the framework behind it
+        on the client.
+
+        @see Locale#toString()
+
+        @param value
+        """
+        if self._locales is None:
+            self._locales = list()
+            self._locales.add(str(self._application.getLocale()))
+            self._pendingLocalesIndex = 0
+        if not self._locales.contains(value):
+            self._locales.add(value)
+
+    def generateLocale(self, value):
+        """Constructs a {@link Locale} instance to be sent to the client based on a
+        short locale description string.
+
+        @see #requireLocale(String)
+
+        @param value
+        @return
+        """
+        temp = value.split('_')
+        if len(temp) == 1:
+            return Locale(temp[0])
+        elif len(temp) == 2:
+            return Locale(temp[0], temp[1])
+        else:
+            return Locale(temp[0], temp[1], temp[2])
+
+    @classmethod
+    def isChildOf(cls, parent, child):
+        """Helper method to test if a component contains another
+
+        @param parent
+        @param child
+        """
+        p = child.getParent()
+        while p is not None:
+            if parent == p:
+                return True
+            p = p.getParent()
+        return False
+
+    class InvalidUIDLSecurityKeyException(GeneralSecurityException):
+
+        def __init__(self, message):
+            super(InvalidUIDLSecurityKeyException, self)(message)
+
+    def handleURI(self, window, request, response, callback):
+        """Calls the Window URI handler for a request and returns the
+        {@link DownloadStream} returned by the handler.
+
+        If the window is the main window of an application, the (deprecated)
+        {@link Application#handleURI(java.net.URL, String)} is called first to
+        handle {@link ApplicationResource}s, and the window handler is only
+        called if it returns null.
+
+        @param window
+                   the target window of the request
+        @param request
+                   the request instance
+        @param response
+                   the response to write to
+        @return DownloadStream if the request was handled and further processing
+                should be suppressed, null otherwise.
+        @see com.vaadin.terminal.URIHandler
+        """
+        uri = callback.getRequestPathInfo(request)
+        # If no URI is available
+        if uri is None:
+            uri = ''
+        else:
+            # Removes the leading /
+            while uri.startswith('/') and len(uri) > 0:
+                uri = uri[1:]
+        # Handles the uri
+        try:
+            context = self._application.getURL()
+            if window == self._application.getMainWindow():
+                stream = None
+                # Application.handleURI run first. Handles possible
+                # ApplicationResources.
+
+                stream = self._application.handleURI(context, uri)
+                if stream is None:
+                    stream = window.handleURI(context, uri)
+                return stream
+            else:
+                # Resolve the prefix end index
+                index = uri.find('/')
+                if index > 0:
+                    prefix = uri[:index]
+                    windowContext = URL(context, prefix + '/')
+                    windowUri = uri[len(prefix) + 1:] if len(uri) > len(prefix) + 1 else ''
+                    return window.handleURI(windowContext, windowUri)
+                else:
+                    return None
+        except Throwable, t:
+            self._application.getErrorHandler().terminalError(URIHandlerErrorImpl(self._application, t))
+            return None
+
+    _typeToKey = dict()
+    _nextTypeKey = 0
+
+    def getTagForType(self, class1):
+        object = self._typeToKey[class1]
+        if object is None:
+            object = POSTINC(globals(), locals(), 'self._nextTypeKey')
+            self._typeToKey.put(class1, object)
+        return str(object)
+
+    class OpenWindowCache(Serializable):
+        """Helper class for terminal to keep track of data that client is expected
+        to know.
+
+        TODO make customlayout templates (from theme) to be cached here.
+        """
+        _res = set()
+
+        def cache(self, object):
+            """@param paintable
+            @return true if the given class was added to cache
+            """
+            return self._res.add(object)
+
+        def clear(self):
+            self._res.clear()
+
+    def getStreamVariableTargetUrl(self, owner, name, value):
+        pass
+
+    def cleanStreamVariable(self, owner, name):
+        pass
+
+    class SimpleMultiPartInputStream(InputStream):
+        """Stream that extracts content from another stream until the boundary
+        string is encountered.
+
+        Public only for unit tests, should be considered private for all other
+        purposes.
+        """
+        # Counter of how many characters have been matched to boundary string
+        # from the stream
+
+        _matchedCount = -1
+        # Used as pointer when returning bytes after partly matched boundary
+        # string.
+
+        _curBoundaryIndex = 0
+        # The byte found after a "promising start for boundary"
+        _bufferedByte = -1
+        _atTheEnd = False
+        _boundary = None
+        _realInputStream = None
+
+        def __init__(self, realInputStream, boundaryString):
+            self._boundary = self.CRLF + self.DASHDASH + boundaryString.toCharArray()
+            self._realInputStream = realInputStream
+
+        def read(self):
+            if self._atTheEnd:
+                # End boundary reached, nothing more to read
+                return -1
+            elif self._bufferedByte >= 0:
+                # Purge partially matched boundary if there was such
+                return self.getBuffered()
+            elif self._matchedCount != -1:
+                # Special case where last "failed" matching ended with first
+                # character from boundary string
+
+                return self.matchForBoundary()
+            else:
+                fromActualStream = self._realInputStream.read()
+                if fromActualStream == -1:
+                    # unexpected end of stream
+                    raise IOException('The multipart stream ended unexpectedly')
+                if self._boundary[0] == fromActualStream:
+                    # If matches the first character in boundary string, start
+                    # checking if the boundary is fetched.
+
+                    return self.matchForBoundary()
+                return fromActualStream
+
+        def matchForBoundary(self):
+            """Reads the input to expect a boundary string. Expects that the first
+            character has already been matched.
+
+            @return -1 if the boundary was matched, else returns the first byte
+                    from boundary
+            @throws IOException
+            """
+            self._matchedCount = 0
+            # Going to "buffered mode". Read until full boundary match or a
+            # different character.
+
+            while True:
+                self._matchedCount += 1
+                if self._matchedCount == len(self._boundary):
+                    # The whole boundary matched so we have reached the end of
+                    # file
+
+                    self._atTheEnd = True
+                    return -1
+                fromActualStream = self._realInputStream.read()
+                if fromActualStream != self._boundary[self._matchedCount]:
+                    # Did not find full boundary, cache the mismatching byte
+                    # and start returning the partially matched boundary.
+
+                    self._bufferedByte = fromActualStream
+                    return self.getBuffered()
+
+        def getBuffered(self):
+            """Returns the partly matched boundary string and the byte following
+            that.
+
+            @return
+            @throws IOException
+            """
+            if self._matchedCount == 0:
+                # The boundary has been returned, return the buffered byte.
+                b = self._bufferedByte
+                self._bufferedByte = -1
+                self._matchedCount = -1
+            else:
+                b = self._boundary[POSTINC(globals(), locals(), 'self._curBoundaryIndex')]
+                if self._curBoundaryIndex == self._matchedCount:
+                    # The full boundary has been returned, remaining is the
+                    # char that did not match the boundary.
+                    self._curBoundaryIndex = 0
+                    if self._bufferedByte != self._boundary[0]:
+                        # next call for getBuffered will return the
+                        # bufferedByte that came after the partial boundary
+                        # match
+
+                        self._matchedCount = 0
+                    else:
+                        # Special case where buffered byte again matches the
+                        # boundaryString. This could be the start of the real
+                        # end boundary.
+
+                        self._matchedCount = 0
+                        self._bufferedByte = -1
+            if b == -1:
+                raise IOException('The multipart stream ended unexpectedly')
+            return b

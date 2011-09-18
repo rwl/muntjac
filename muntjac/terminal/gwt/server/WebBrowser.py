@@ -1,0 +1,331 @@
+# Copyright (C) 2011 Vaadin Ltd
+# Copyright (C) 2011 Richard Lincoln
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+from com.vaadin.terminal.gwt.client.VBrowserDetails import (VBrowserDetails,)
+from com.vaadin.terminal.Terminal import (Terminal,)
+# from java.util.Date import (Date,)
+# from java.util.Locale import (Locale,)
+
+
+class WebBrowser(Terminal):
+    """Class that provides information about the web browser the user is using.
+    Provides information such as browser name and version, screen resolution and
+    IP address.
+
+    @author IT Mill Ltd.
+    @version @VERSION@
+    """
+    _screenHeight = 0
+    _screenWidth = 0
+    _browserApplication = None
+    _locale = None
+    _address = None
+    _secureConnection = None
+    _timezoneOffset = 0
+    _rawTimezoneOffset = 0
+    _dstSavings = None
+    _dstInEffect = None
+    _touchDevice = None
+    _browserDetails = None
+    _clientServerTimeDelta = None
+
+    def getDefaultTheme(self):
+        """There is no default-theme for this terminal type.
+
+        @return Always returns null.
+        """
+        # (non-Javadoc)
+        # 
+        # @see com.vaadin.terminal.Terminal#getScreenHeight()
+
+        return None
+
+    def getScreenHeight(self):
+        # (non-Javadoc)
+        # 
+        # @see com.vaadin.terminal.Terminal#getScreenWidth()
+
+        return self._screenHeight
+
+    def getScreenWidth(self):
+        return self._screenWidth
+
+    def getBrowserApplication(self):
+        """Get the browser user-agent string.
+
+        @return The raw browser userAgent string
+        """
+        return self._browserApplication
+
+    def getAddress(self):
+        """Gets the IP-address of the web browser. If the application is running
+        inside a portlet, this method will return null.
+
+        @return IP-address in 1.12.123.123 -format
+        """
+        return self._address
+
+    def getLocale(self):
+        """Get the default locate of the browser."""
+        return self._locale
+
+    def isSecureConnection(self):
+        """Is the connection made using HTTPS?"""
+        return self._secureConnection
+
+    def isFirefox(self):
+        """Tests whether the user is using Firefox.
+
+        @return true if the user is using Firefox, false if the user is not using
+                Firefox or if no information on the browser is present
+        """
+        if self._browserDetails is None:
+            return False
+        return self._browserDetails.isFirefox()
+
+    def isIE(self):
+        """Tests whether the user is using Internet Explorer.
+
+        @return true if the user is using Internet Explorer, false if the user is
+                not using Internet Explorer or if no information on the browser
+                is present
+        """
+        if self._browserDetails is None:
+            return False
+        return self._browserDetails.isIE()
+
+    def isSafari(self):
+        """Tests whether the user is using Safari.
+
+        @return true if the user is using Safari, false if the user is not using
+                Safari or if no information on the browser is present
+        """
+        if self._browserDetails is None:
+            return False
+        return self._browserDetails.isSafari()
+
+    def isOpera(self):
+        """Tests whether the user is using Opera.
+
+        @return true if the user is using Opera, false if the user is not using
+                Opera or if no information on the browser is present
+        """
+        if self._browserDetails is None:
+            return False
+        return self._browserDetails.isOpera()
+
+    def isChrome(self):
+        """Tests whether the user is using Chrome.
+
+        @return true if the user is using Chrome, false if the user is not using
+                Chrome or if no information on the browser is present
+        """
+        if self._browserDetails is None:
+            return False
+        return self._browserDetails.isChrome()
+
+    def getBrowserMajorVersion(self):
+        """Gets the major version of the browser the user is using.
+
+        <p>
+        Note that Internet Explorer in IE7 compatibility mode might return 8 in
+        some cases even though it should return 7.
+        </p>
+
+        @return The major version of the browser or -1 if not known.
+        """
+        if self._browserDetails is None:
+            return -1
+        return self._browserDetails.getBrowserMajorVersion()
+
+    def getBrowserMinorVersion(self):
+        """Gets the minor version of the browser the user is using.
+
+        @see #getBrowserMajorVersion()
+
+        @return The minor version of the browser or -1 if not known.
+        """
+        if self._browserDetails is None:
+            return -1
+        return self._browserDetails.getBrowserMinorVersion()
+
+    def isLinux(self):
+        """Tests whether the user is using Linux.
+
+        @return true if the user is using Linux, false if the user is not using
+                Linux or if no information on the browser is present
+        """
+        return self._browserDetails.isLinux()
+
+    def isMacOSX(self):
+        """Tests whether the user is using Mac OS X.
+
+        @return true if the user is using Mac OS X, false if the user is not
+                using Mac OS X or if no information on the browser is present
+        """
+        return self._browserDetails.isMacOSX()
+
+    def isWindows(self):
+        """Tests whether the user is using Windows.
+
+        @return true if the user is using Windows, false if the user is not using
+                Windows or if no information on the browser is present
+        """
+        return self._browserDetails.isWindows()
+
+    def getTimezoneOffset(self):
+        """Returns the browser-reported TimeZone offset in milliseconds from GMT.
+        This includes possible daylight saving adjustments, to figure out which
+        TimeZone the user actually might be in, see
+        {@link #getRawTimezoneOffset()}.
+
+        @see WebBrowser#getRawTimezoneOffset()
+        @return timezone offset in milliseconds, 0 if not available
+        """
+        return self._timezoneOffset
+
+    def getRawTimezoneOffset(self):
+        """Returns the browser-reported TimeZone offset in milliseconds from GMT
+        ignoring possible daylight saving adjustments that may be in effect in
+        the browser.
+        <p>
+        You can use this to figure out which TimeZones the user could actually be
+        in by calling {@link TimeZone#getAvailableIDs(int)}.
+        </p>
+        <p>
+        If {@link #getRawTimezoneOffset()} and {@link #getTimezoneOffset()}
+        returns the same value, the browser is either in a zone that does not
+        currently have daylight saving time, or in a zone that never has daylight
+        saving time.
+        </p>
+
+        @return timezone offset in milliseconds excluding DST, 0 if not available
+        """
+        return self._rawTimezoneOffset
+
+    def getDSTSavings(self):
+        """Gets the difference in minutes between the browser's GMT TimeZone and
+        DST.
+
+        @return the amount of minutes that the TimeZone shifts when DST is in
+                effect
+        """
+        return self._dstSavings
+
+    def isDSTInEffect(self):
+        """Determines whether daylight savings time (DST) is currently in effect in
+        the region of the browser or not.
+
+        @return true if the browser resides at a location that currently is in
+                DST
+        """
+        return self._dstInEffect
+
+    def getCurrentDate(self):
+        """Returns the current date and time of the browser. This will not be
+        entirely accurate due to varying network latencies, but should provide a
+        close-enough value for most cases. Also note that the returned Date
+        object uses servers default time zone, not the clients.
+
+        @return the current date and time of the browser.
+        @see #isDSTInEffect()
+        @see #getDSTSavings()
+        @see #getTimezoneOffset()
+        """
+        return Date(Date().getTime() + self._clientServerTimeDelta)
+
+    def isTouchDevice(self):
+        """@return true if the browser is detected to support touch events"""
+        return self._touchDevice
+
+    def updateClientSideDetails(self, sw, sh, tzo, rtzo, dstSavings, dstInEffect, curDate, touchDevice):
+        """For internal use by AbstractApplicationServlet/AbstractApplicationPortlet
+        only. Updates all properties in the class according to the given
+        information.
+
+        @param sw
+                   Screen width
+        @param sh
+                   Screen height
+        @param tzo
+                   TimeZone offset in minutes from GMT
+        @param rtzo
+                   raw TimeZone offset in minutes from GMT (w/o DST adjustment)
+        @param dstSavings
+                   the difference between the raw TimeZone and DST in minutes
+        @param dstInEffect
+                   is DST currently active in the region or not?
+        @param curDate
+                   the current date in milliseconds since the epoch
+        @param touchDevice
+        """
+        if sw is not None:
+            try:
+                self._screenHeight = int(sh)
+                self._screenWidth = int(sw)
+            except NumberFormatException, e:
+                self._screenHeight = self._screenWidth = 0
+        if tzo is not None:
+            # browser->java conversion: min->ms, reverse sign
+            try:
+                self._timezoneOffset = -int(tzo) * 60 * 1000
+            except NumberFormatException, e:
+                self._timezoneOffset = 0
+                # default gmt+0
+        if rtzo is not None:
+            # browser->java conversion: min->ms, reverse sign
+            try:
+                self._rawTimezoneOffset = -int(rtzo) * 60 * 1000
+            except NumberFormatException, e:
+                self._rawTimezoneOffset = 0
+                # default gmt+0
+        if dstSavings is not None:
+            # browser->java conversion: min->ms
+            try:
+                self._dstSavings = int(dstSavings) * 60 * 1000
+            except NumberFormatException, e:
+                self._dstSavings = 0
+                # default no savings
+        if dstInEffect is not None:
+            self._dstInEffect = Boolean.parseBoolean.parseBoolean(dstInEffect)
+        if curDate is not None:
+            try:
+                curTime = int(curDate)
+                self._clientServerTimeDelta = curTime - Date().getTime()
+            except NumberFormatException, e:
+                self._clientServerTimeDelta = 0
+        self._touchDevice = touchDevice
+
+    def updateRequestDetails(self, locale, address, secureConnection, agent):
+        """For internal use by AbstractApplicationServlet/AbstractApplicationPortlet
+        only. Updates all properties in the class according to the given
+        information.
+
+        @param locale
+                   The browser primary locale
+        @param address
+                   The browser ip address
+        @param secureConnection
+                   true if using an https connection
+        @param agent
+                   Raw userAgent string from the browser
+        """
+        self._locale = locale
+        self._address = address
+        self._secureConnection = secureConnection
+        if agent is not None:
+            self._browserApplication = agent
+            self._browserDetails = VBrowserDetails(agent)

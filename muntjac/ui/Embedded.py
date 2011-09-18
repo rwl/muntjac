@@ -1,0 +1,417 @@
+# Copyright (C) 2011 Vaadin Ltd
+# Copyright (C) 2011 Richard Lincoln
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+from __pyjamas__ import (ARGERROR,)
+from com.vaadin.terminal.gwt.client.ui.VEmbedded import (VEmbedded,)
+from com.vaadin.ui.AbstractComponent import (AbstractComponent,)
+from com.vaadin.terminal.gwt.client.MouseEventDetails import (MouseEventDetails,)
+# from com.vaadin.event.MouseEvents.ClickListener import (ClickListener,)
+# from java.util.HashMap import (HashMap,)
+# from java.util.Iterator import (Iterator,)
+# from java.util.Map import (Map,)
+
+
+class Embedded(AbstractComponent):
+    """Component for embedding external objects.
+
+    @author IT Mill Ltd.
+    @version
+    @VERSION@
+    @since 3.0
+    """
+    _CLICK_EVENT = VEmbedded.CLICK_EVENT_IDENTIFIER
+    # General object type.
+    TYPE_OBJECT = 0
+    # Image types.
+    TYPE_IMAGE = 1
+    # Browser ("iframe") type.
+    TYPE_BROWSER = 2
+    # Type of the object.
+    _type = TYPE_OBJECT
+    # Source of the embedded object.
+    _source = None
+    # Generic object attributes.
+    _mimeType = None
+    _standby = None
+    # Hash of object parameters.
+    _parameters = dict()
+    # Applet or other client side runnable properties.
+    _codebase = None
+    _codetype = None
+    _classId = None
+    _archive = None
+
+    def __init__(self, *args):
+        """Creates a new empty Embedded object.
+        ---
+        Creates a new empty Embedded object with caption.
+
+        @param caption
+        ---
+        Creates a new Embedded object whose contents is loaded from given
+        resource. The dimensions are assumed if possible. The type is guessed
+        from resource.
+
+        @param caption
+        @param source
+                   the Source of the embedded object.
+        """
+        _0 = args
+        _1 = len(args)
+        if _1 == 0:
+            pass # astStmt: [Stmt([]), None]
+        elif _1 == 1:
+            caption, = _0
+            self.setCaption(caption)
+        elif _1 == 2:
+            caption, source = _0
+            self.setCaption(caption)
+            self.setSource(source)
+        else:
+            raise ARGERROR(0, 2)
+
+    def paintContent(self, target):
+        """Invoked when the component state should be painted."""
+        _0 = self._type
+        _1 = False
+        while True:
+            if _0 == self.TYPE_IMAGE:
+                _1 = True
+                target.addAttribute('type', 'image')
+                break
+            if (_1 is True) or (_0 == self.TYPE_BROWSER):
+                _1 = True
+                target.addAttribute('type', 'browser')
+                break
+            if True:
+                _1 = True
+                break
+            break
+        if self.getSource() is not None:
+            target.addAttribute('src', self.getSource())
+        if self._mimeType is not None and not ('' == self._mimeType):
+            target.addAttribute('mimetype', self._mimeType)
+        if self._classId is not None and not ('' == self._classId):
+            target.addAttribute('classid', self._classId)
+        if self._codebase is not None and not ('' == self._codebase):
+            target.addAttribute('codebase', self._codebase)
+        if self._codetype is not None and not ('' == self._codetype):
+            target.addAttribute('codetype', self._codetype)
+        if self._standby is not None and not ('' == self._standby):
+            target.addAttribute('standby', self._standby)
+        if self._archive is not None and not ('' == self._archive):
+            target.addAttribute('archive', self._archive)
+        # Params
+        _2 = True
+        i = self.getParameterNames()
+        while True:
+            if _2 is True:
+                _2 = False
+            if not i.hasNext():
+                break
+            target.startTag('embeddedparam')
+            key = i.next()
+            target.addAttribute('name', key)
+            target.addAttribute('value', self.getParameter(key))
+            target.endTag('embeddedparam')
+
+    def setParameter(self, name, value):
+        """Sets an object parameter. Parameters are optional information, and they
+        are passed to the instantiated object. Parameters are are stored as name
+        value pairs. This overrides the previous value assigned to this
+        parameter.
+
+        @param name
+                   the name of the parameter.
+        @param value
+                   the value of the parameter.
+        """
+        self._parameters.put(name, value)
+        self.requestRepaint()
+
+    def getParameter(self, name):
+        """Gets the value of an object parameter. Parameters are optional
+        information, and they are passed to the instantiated object. Parameters
+        are are stored as name value pairs.
+
+        @return the Value of parameter or null if not found.
+        """
+        return self._parameters[name]
+
+    def removeParameter(self, name):
+        """Removes an object parameter from the list.
+
+        @param name
+                   the name of the parameter to remove.
+        """
+        self._parameters.remove(name)
+        self.requestRepaint()
+
+    def getParameterNames(self):
+        """Gets the embedded object parameter names.
+
+        @return the Iterator of parameters names.
+        """
+        return self._parameters.keys()
+
+    def getCodebase(self):
+        """This attribute specifies the base path used to resolve relative URIs
+        specified by the classid, data, and archive attributes. When absent, its
+        default value is the base URI of the current document.
+
+        @return the code base.
+        """
+        return self._codebase
+
+    def getCodetype(self):
+        """Gets the MIME-Type of the code.
+
+        @return the MIME-Type of the code.
+        """
+        return self._codetype
+
+    def getMimeType(self):
+        """Gets the MIME-Type of the object.
+
+        @return the MIME-Type of the object.
+        """
+        return self._mimeType
+
+    def getStandby(self):
+        """This attribute specifies a message that a user agent may render while
+        loading the object's implementation and data.
+
+        @return The text displayed when loading
+        """
+        return self._standby
+
+    def setCodebase(self, codebase):
+        """This attribute specifies the base path used to resolve relative URIs
+        specified by the classid, data, and archive attributes. When absent, its
+        default value is the base URI of the current document.
+
+        @param codebase
+                   The base path
+        """
+        if (
+            (codebase != self._codebase) or (codebase is not None and not (codebase == self._codebase))
+        ):
+            self._codebase = codebase
+            self.requestRepaint()
+
+    def setCodetype(self, codetype):
+        """This attribute specifies the content type of data expected when
+        downloading the object specified by classid. This attribute is optional
+        but recommended when classid is specified since it allows the user agent
+        to avoid loading information for unsupported content types. When absent,
+        it defaults to the value of the type attribute.
+
+        @param codetype
+                   the codetype to set.
+        """
+        if (
+            (codetype != self._codetype) or (codetype is not None and not (codetype == self._codetype))
+        ):
+            self._codetype = codetype
+            self.requestRepaint()
+
+    def setMimeType(self, mimeType):
+        """Sets the mimeType, the MIME-Type of the object.
+
+        @param mimeType
+                   the mimeType to set.
+        """
+        if (
+            (mimeType != self._mimeType) or (mimeType is not None and not (mimeType == self._mimeType))
+        ):
+            self._mimeType = mimeType
+            if 'application/x-shockwave-flash' == mimeType:
+                # Automatically add wmode transparent as we use lots of
+                # floating layers in Vaadin. If developers need better flash
+                # performance, they can override this value programmatically
+                # back to "window" (the defautl).
+
+                if self.getParameter('wmode') is None:
+                    self.setParameter('wmode', 'transparent')
+            self.requestRepaint()
+
+    def setStandby(self, standby):
+        """This attribute specifies a message that a user agent may render while
+        loading the object's implementation and data.
+
+        @param standby
+                   The text to display while loading
+        """
+        if (
+            (standby != self._standby) or (standby is not None and not (standby == self._standby))
+        ):
+            self._standby = standby
+            self.requestRepaint()
+
+    def getClassId(self):
+        """This attribute may be used to specify the location of an object's
+        implementation via a URI.
+
+        @return the classid.
+        """
+        return self._classId
+
+    def setClassId(self, classId):
+        """This attribute may be used to specify the location of an object's
+        implementation via a URI.
+
+        @param classId
+                   the classId to set.
+        """
+        if (
+            (classId != self._classId) or (classId is not None and not (classId == self._classId))
+        ):
+            self._classId = classId
+            self.requestRepaint()
+
+    def getSource(self):
+        """Gets the resource contained in the embedded object.
+
+        @return the Resource
+        """
+        return self._source
+
+    def getType(self):
+        """Gets the type of the embedded object.
+        <p>
+        This can be one of the following:
+        <ul>
+        <li>TYPE_OBJECT <i>(This is the default)</i>
+        <li>TYPE_IMAGE
+        </ul>
+        </p>
+
+        @return the type.
+        """
+        return self._type
+
+    def setSource(self, source):
+        """Sets the object source resource. The dimensions are assumed if possible.
+        The type is guessed from resource.
+
+        @param source
+                   the source to set.
+        """
+        if source is not None and not (source == self._source):
+            self._source = source
+            mt = source.getMIMEType()
+            if self._mimeType is None:
+                self._mimeType = mt
+            if mt == 'image/svg+xml':
+                self._type = self.TYPE_OBJECT
+            elif mt[:mt.find('/')].equalsIgnoreCase('image'):
+                self._type = self.TYPE_IMAGE
+            else:
+                # Keep previous type
+                pass
+            self.requestRepaint()
+
+    def setType(self, type):
+        """Sets the object type.
+        <p>
+        This can be one of the following:
+        <ul>
+        <li>TYPE_OBJECT <i>(This is the default)</i>
+        <li>TYPE_IMAGE
+        <li>TYPE_BROWSER
+        </ul>
+        </p>
+
+        @param type
+                   the type to set.
+        """
+        if (
+            type != self.TYPE_OBJECT and type != self.TYPE_IMAGE and type != self.TYPE_BROWSER
+        ):
+            raise self.IllegalArgumentException('Unsupported type')
+        if type != self._type:
+            self._type = type
+            self.requestRepaint()
+
+    def getArchive(self):
+        """This attribute may be used to specify a space-separated list of URIs for
+        archives containing resources relevant to the object, which may include
+        the resources specified by the classid and data attributes. Preloading
+        archives will generally result in reduced load times for objects.
+        Archives specified as relative URIs should be interpreted relative to the
+        codebase attribute.
+
+        @return Space-separated list of URIs with resources relevant to the
+                object
+        """
+        return self._archive
+
+    def setArchive(self, archive):
+        """This attribute may be used to specify a space-separated list of URIs for
+        archives containing resources relevant to the object, which may include
+        the resources specified by the classid and data attributes. Preloading
+        archives will generally result in reduced load times for objects.
+        Archives specified as relative URIs should be interpreted relative to the
+        codebase attribute.
+
+        @param archive
+                   Space-separated list of URIs with resources relevant to the
+                   object
+        """
+        if (
+            (archive != self._archive) or (archive is not None and not (archive == self._archive))
+        ):
+            self._archive = archive
+            self.requestRepaint()
+
+    def addListener(self, listener):
+        """Add a click listener to the component. The listener is called whenever
+        the user clicks inside the component. Depending on the content the event
+        may be blocked and in that case no event is fired.
+
+        Use {@link #removeListener(ClickListener)} to remove the listener.
+
+        @param listener
+                   The listener to add
+        """
+        self.addListener(self._CLICK_EVENT, self.ClickEvent, listener, ClickListener.clickMethod)
+
+    def removeListener(self, listener):
+        """Remove a click listener from the component. The listener should earlier
+        have been added using {@link #addListener(ClickListener)}.
+
+        @param listener
+                   The listener to remove
+        """
+        # (non-Javadoc)
+        # 
+        # @see com.vaadin.ui.AbstractComponent#changeVariables(java.lang.Object,
+        # java.util.Map)
+
+        self.removeListener(self._CLICK_EVENT, self.ClickEvent, listener)
+
+    def changeVariables(self, source, variables):
+        super(Embedded, self).changeVariables(source, variables)
+        if self._CLICK_EVENT in variables:
+            self.fireClick(variables[self._CLICK_EVENT])
+
+    def fireClick(self, parameters):
+        """Notifies click-listeners that a mouse click event has occurred.
+
+        @param parameters
+        """
+        mouseDetails = MouseEventDetails.deSerialize(parameters['mouseDetails'])
+        self.fireEvent(self.ClickEvent(self, mouseDetails))
