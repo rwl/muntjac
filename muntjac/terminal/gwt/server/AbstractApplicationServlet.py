@@ -17,6 +17,7 @@
 import time
 import logging
 import mimetypes
+import locale
 
 from os.path import join, exists, getmtime
 
@@ -35,6 +36,8 @@ from muntjac.terminal.gwt.server.SystemMessageException import SystemMessageExce
 from muntjac.terminal.gwt.server.CommunicationManager import CommunicationManager
 from muntjac.terminal.gwt.server.ApplicationServlet import ApplicationServlet
 from muntjac.terminal.gwt.server.JsonPaintTarget import JsonPaintTarget
+from muntjac.terminal.gwt.server.ServletException import ServletException
+from muntjac.terminal.gwt.server.HttpServletRequestListener import HttpServletRequestListener
 
 
 class RequestType(object):
@@ -227,7 +230,7 @@ class AbstractApplicationServlet(Servlet, Constants):
         try:
             rct = self.getApplicationOrSystemProperty(self.SERVLET_PARAMETER_RESOURCE_CACHE_TIME, '3600')
             self._resourceCacheTime = int(rct)
-        except ValueError, nfe:
+        except ValueError:
             self._resourceCacheTime = 3600
             self._logger.warning(self.WARNING_RESOURCE_CACHING_TIME_NOT_NUMERIC)
 
@@ -282,8 +285,6 @@ class AbstractApplicationServlet(Servlet, Constants):
                    the Default to be used.
         @return String value or default if not found
         """
-        val = None
-
         # Try application properties
         val = self.getApplicationProperty(parameterName)
         if val is not None:
@@ -332,7 +333,7 @@ class AbstractApplicationServlet(Servlet, Constants):
                     if the request for the TRACE cannot be handled.
         """
         request = transaction.request()
-        responce = transaction.response()
+        response = transaction.response()
 
         requestType = self.getRequestType(request)
         if not self.ensureCookiesEnabled(requestType, request, response):
@@ -363,7 +364,7 @@ class AbstractApplicationServlet(Servlet, Constants):
             # Session has expired, notify user
             # Notifies transaction end
             if (requestType == self.RequestType.UIDL
-                    and ApplicationConnection.PARAM_UNLOADBURST in request.getParameterMap()
+                    and ApplicationConnection.PARAM_UNLOADBURST in request.fields()
                     and request.getContentLength() < 1
                     and self.getExistingApplication(request, False) is None):
                 self.redirectToApplication(request, response)
@@ -376,7 +377,7 @@ class AbstractApplicationServlet(Servlet, Constants):
 
             # Get or create a WebApplicationContext and an ApplicationManager
             # for the session
-            webApplicationContext = self.getApplicationContext(request.getSession())
+            webApplicationContext = self.getApplicationContext(request.session())
             applicationManager = webApplicationContext.getApplicationManager(application, self)
 
             # Update browser information from the request
@@ -483,14 +484,17 @@ class AbstractApplicationServlet(Servlet, Constants):
 
     def updateBrowserProperties(self, browser, request):
         # request based details updated always
-        browser.updateRequestDetails(request.getLocale(), request.getRemoteAddr(),
-                request.isSecure(), request.getHeader('user-agent'))
-        if request.getParameter('repaintAll') is not None:
-            browser.updateClientSideDetails(request.getParameter('sw'),
-                    request.getParameter('sh'), request.getParameter('tzo'),
-                    request.getParameter('rtzo'), request.getParameter('dstd'),
-                    request.getParameter('dston'), request.getParameter('curdate'),
-                    request.getParameter('td') is not None)
+        browser.updateRequestDetails(locale.getlocale(),  # TODO implement request locale
+                request.environ()['REMOTE_ADDR'],
+                self._isSecure(request),
+                request.header('user-agent'))
+
+        if request.field('repaintAll') is not None:
+            browser.updateClientSideDetails(request.field('sw'),
+                    request.field('sh'), request.field('tzo'),
+                    request.field('rtzo'), request.field('dstd'),
+                    request.field('dston'), request.field('curdate'),
+                    request.field('td') is not None)
 
 
     def getClassLoader(self):
@@ -589,14 +593,8 @@ class AbstractApplicationServlet(Servlet, Constants):
                    Output to write (UTF-8 encoded)
         @throws IOException
         """
-        response.setContentType(contentType)
-        out = response.getOutputStream()
-        # Set the response type
-        outWriter = PrintWriter(BufferedWriter(OutputStreamWriter(out, 'UTF-8')))
-        outWriter.print_(output)
-        outWriter.flush()
-        outWriter.close()
-        out.flush()
+        response.setHeader('Content-type', contentType)
+        response.write(output)
 
 
     def findApplicationInstance(self, request, requestType):
@@ -614,21 +612,25 @@ class AbstractApplicationServlet(Servlet, Constants):
         @throws SessionExpiredException
         """
         requestCanCreateApplication = self.requestCanCreateApplication(request, requestType)
+
         # Find an existing application for this request.
         application = self.getExistingApplication(request, requestCanCreateApplication)
+
         if application is not None:
             # There is an existing application. We can use this as long as the
             # user not specifically requested to close or restart it.
-            restartApplication = request.getParameter(self.URL_PARAMETER_RESTART_APPLICATION) is not None
+            restartApplication = request.field(self.URL_PARAMETER_RESTART_APPLICATION) is not None
 
-            closeApplication = request.getParameter(self.URL_PARAMETER_CLOSE_APPLICATION) is not None
+            closeApplication = request.field(self.URL_PARAMETER_CLOSE_APPLICATION) is not None
 
             if restartApplication:
-                closeApplication(application, request.getSession(False))
+                self.closeApplication(application, request.transaction()._session)
                 return self.createApplication(request)
+
             elif closeApplication:
-                closeApplication(application, request.getSession(False))
+                self.closeApplication(application, request.transaction()._session)
                 return None
+
             else:
                 return application
 
@@ -637,6 +639,7 @@ class AbstractApplicationServlet(Servlet, Constants):
             # If the request is such that it should create a new application if
             # one as not found, we do that.
             return self.createApplication(request)
+
         else:
             # The application was not found and a new one should not be
             # created. Assume the session has expired.
@@ -748,11 +751,11 @@ class AbstractApplicationServlet(Servlet, Constants):
             buffer = [None] * bufferSize
             bytesRead = 0
             out = response.getOutputStream()
-            while bytesRead = data.read(buffer) > 0:
-                out.write(buffer, 0, bytesRead)
-                out.flush()
-            out.close()
-            data.close()
+#            while bytesRead = data.read(buffer) > 0:
+#                out.write(buffer, 0, bytesRead)
+#                out.flush()
+#            out.close()
+#            data.close()
 
 
     def createApplication(self, request):
@@ -766,7 +769,7 @@ class AbstractApplicationServlet(Servlet, Constants):
         @throws MalformedURLException
         """
         newApplication = self.getNewApplication(request)
-        context = self.getApplicationContext(request.getSession())
+        context = self.getApplicationContext(request.session())
         context.addApplication(newApplication)
         return newApplication
 
@@ -836,7 +839,7 @@ class AbstractApplicationServlet(Servlet, Constants):
                 sb.append(c)
         return str(sb)
 
-    _CHAR_BLACKLIST = set(Arrays.asList(['&', '"', '\\'', '<', '>', '(', ')', ';']))
+    _CHAR_BLACKLIST = ['&', '"', '\'', '<', '>', '(', ')', ';']
 
 
     @classmethod
@@ -928,7 +931,7 @@ class AbstractApplicationServlet(Servlet, Constants):
         @return A new Application instance.
         @throws ServletException
         """
-        pass
+        raise NotImplementedError
 
 
     def startApplication(self, request, application, webApplicationContext):
@@ -946,7 +949,8 @@ class AbstractApplicationServlet(Servlet, Constants):
             # Initial locale comes from the request
             locale = request.getLocale()
             application.setLocale(locale)
-            application.start(applicationUrl, self._applicationProperties, webApplicationContext)
+            application.start(applicationUrl, self._applicationProperties,
+                              webApplicationContext)
 
 
     def serveStaticResources(self, request, response):
@@ -971,7 +975,8 @@ class AbstractApplicationServlet(Servlet, Constants):
             return True
 
         elif request.uri().startswith(request.contextPath() + '/VAADIN/'):
-            self.serveStaticResourcesInVAADIN(request.uri()[len(request.contextPath()):], request, response)
+            self.serveStaticResourcesInVAADIN(request.uri()[len(request.contextPath()):],
+                                              request, response)
             return True
 
         return False
@@ -1225,7 +1230,7 @@ class AbstractApplicationServlet(Servlet, Constants):
                     if sending the redirect fails due to an input/output error or
                     a bad application URL
         """
-        applicationUrl = self.getApplicationUrl(request).toExternalForm()
+        applicationUrl = self.getApplicationUrl(request)
         response.sendRedirect(response.encodeRedirectURL(applicationUrl))
 
 
@@ -1582,17 +1587,42 @@ class AbstractApplicationServlet(Servlet, Constants):
                     if the application is denied access to the persistent data
                     store represented by the given URL.
         """
-        reqURL = URL(('https://' if request.isSecure() else 'http://') + request.getServerName() + ('' if (request.isSecure() and request.getServerPort() == 443) or (not request.isSecure() and request.getServerPort() == 80) else ':' + request.getServerPort()) + request.getRequestURI())
-        servletPath = ''
-        if request.getAttribute('javax.servlet.include.servlet_path') is not None:
-            # this is an include request
-            servletPath = str(request.getAttribute('javax.servlet.include.context_path')) + request.getAttribute('javax.servlet.include.servlet_path')
+        reqURL = 'https://' if self._isSecure(request) else 'http://'
+        reqURL += request.environ().get('SERVER_NAME', '')
+        if (self._isSecure(request) and self._getServerPort(request) == 443) or \
+                (not self._isSecure(request) and self._getServerPort(request) == 80):
+            reqURL += ''
         else:
-            servletPath = request.getContextPath() + request.getServletPath()
+            reqURL += ':' + request.environ().get('SERVER_PORT', '')
+        reqURL += request.uri()
+
+        servletPath = ''
+        if request.originalServletPath() is not None:  # FIXME translate
+            # this is an include request
+            servletPath = request.originalContextPath + \
+                    request.originalServletPath()
+        else:
+            servletPath = request.contextPath() + request.servletPath()
+
         if (len(servletPath) == 0) or (servletPath[len(servletPath) - 1] != '/'):
             servletPath = servletPath + '/'
-        u = URL(reqURL, servletPath)
+
+        u = join(reqURL, servletPath)
+
         return u
+
+
+    def _isSecure(self, request):
+        """Check whether the request is a HTTPS connection."""
+        return request.environ().get('HTTPS', '').lower() == 'on'
+
+
+    def _serverPort(self, request):
+        portStr = request.environ().get('SERVER_PORT')
+        if portStr is not None:
+            return int(portStr)
+        else:
+            return None
 
 
     def getExistingApplication(self, request, allowSessionCreation):
@@ -1614,31 +1644,34 @@ class AbstractApplicationServlet(Servlet, Constants):
         @throws SessionExpiredException
         """
         # Ensures that the session is still valid
-        session = request.getSession(allowSessionCreation)
+        if allowSessionCreation:
+            session = request.session()
+        else:
+            session = request.transaction()._session
+
         if session is None:
             raise SessionExpiredException()
+
         context = self.getApplicationContext(session)
+
         # Gets application list for the session.
         applications = context.getApplications()
+
         # Search for the application (using the application URI) from the list
-        _0 = True
-        i = applications
-        while True:
-            if _0 is True:
-                _0 = False
-            if not i.hasNext():
-                break
-            sessionApplication = i.next()
+        for sessionApplication in applications:
             sessionApplicationPath = sessionApplication.getURL().getPath()
             requestApplicationPath = self.getApplicationUrl(request).getPath()
+
             if requestApplicationPath == sessionApplicationPath:
                 # Found a running application
                 if sessionApplication.isRunning():
                     return sessionApplication
+
                 # Application has stopped, so remove it before creating a new
                 # application
                 self.getApplicationContext(session).removeApplication(sessionApplication)
                 break
+
         # Existing application not found
         return None
 
@@ -1730,7 +1763,7 @@ class AbstractApplicationServlet(Servlet, Constants):
 
     def isRepaintAll(self, request):
         return request.field(self.URL_PARAMETER_REPAINT_ALL) is not None and \
-                request.getParameter(self.URL_PARAMETER_REPAINT_ALL) == '1'
+                request.field(self.URL_PARAMETER_REPAINT_ALL) == '1'
 
 
     def closeApplication(self, application, session):
@@ -1758,10 +1791,15 @@ class AbstractApplicationServlet(Servlet, Constants):
         return WebApplicationContext.getApplicationContext(session)
 
 
-    class ParameterHandlerErrorImpl(ParameterHandler, ErrorEvent, Serializable):
+    class ParameterHandlerErrorImpl(ParameterHandler, ErrorEvent):
         """Implementation of ParameterHandler.ErrorEvent interface."""
-        _owner = None
-        _throwable = None
+
+        def __init__(self, owner, throwable):
+            """@param owner
+            @param throwable
+            """
+            self._owner = owner
+            self._throwable = throwable
 
         def getThrowable(self):
             """Gets the contained throwable.
@@ -1778,11 +1816,8 @@ class AbstractApplicationServlet(Servlet, Constants):
             return self._owner
 
 
-    class URIHandlerErrorImpl(URIHandler, ErrorEvent, Serializable):
+    class URIHandlerErrorImpl(URIHandler, ErrorEvent):
         """Implementation of URIHandler.ErrorEvent interface."""
-        _owner = None
-        _throwable = None
-
         def __init__(self, owner, throwable):
             """@param owner
             @param throwable
@@ -1805,8 +1840,7 @@ class AbstractApplicationServlet(Servlet, Constants):
             return self._owner
 
 
-    class RequestError(Terminal, ErrorEvent, Serializable):
-        _throwable = None
+    class RequestError(Terminal, ErrorEvent):
 
         def __init__(self, throwable):
             self._throwable = throwable
