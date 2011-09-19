@@ -336,7 +336,7 @@ class JsonPaintTarget(PaintTarget):
                 _1 = True
                 return '&quot;'
                 # " => &quot;
-            if (_1 is True) or (_0 == '\\''):
+            if (_1 is True) or (_0 == '\''):
                 _1 = True
                 return '&apos;'
                 # ' => &apos;
@@ -601,7 +601,7 @@ class JsonPaintTarget(PaintTarget):
     def flush(self):
         """Method flush."""
         # (non-Javadoc)
-        # 
+        #
         # @see com.vaadin.terminal.PaintTarget#startTag(com.vaadin.terminal
         # .Paintable, java.lang.String)
 
@@ -612,7 +612,7 @@ class JsonPaintTarget(PaintTarget):
 
     def getPaintIdentifier(self, paintable):
         # (non-Javadoc)
-        # 
+        #
         # @see com.vaadin.terminal.PaintTarget#addCharacterData(java.lang.String )
 
         if not self._manager.hasPaintableId(paintable):

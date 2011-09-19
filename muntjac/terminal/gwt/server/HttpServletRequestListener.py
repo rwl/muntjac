@@ -14,15 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# from com.vaadin.service.ApplicationContext.TransactionListener import (TransactionListener,)
-# from java.io.Serializable import (Serializable,)
-# from javax.servlet.Filter import (Filter,)
-# from javax.servlet.http.Cookie import (Cookie,)
-# from javax.servlet.http.HttpServletRequest import (HttpServletRequest,)
-# from javax.servlet.http.HttpServletResponse import (HttpServletResponse,)
 
-
-class HttpServletRequestListener(Serializable):
+class HttpServletRequestListener(object):
     """{@link Application} that implements this interface gets notified of request
     start and end by terminal.
     <p>
