@@ -16,8 +16,12 @@
 
 import time
 import logging
+import mimetypes
+
+from os.path import join, exists, getmtime
 
 from paste.webkit.wkservlet import Servlet
+from paste.deploy import CONFIG
 
 from muntjac.terminal.ParameterHandler import ErrorEvent, ParameterHandler
 from muntjac.terminal.gwt.server.Constants import Constants
@@ -31,6 +35,19 @@ from muntjac.terminal.gwt.server.SystemMessageException import SystemMessageExce
 from muntjac.terminal.gwt.server.CommunicationManager import CommunicationManager
 from muntjac.terminal.gwt.server.ApplicationServlet import ApplicationServlet
 from muntjac.terminal.gwt.server.JsonPaintTarget import JsonPaintTarget
+
+
+class RequestType(object):
+    FILE_UPLOAD = 'FILE_UPLOAD'
+    UIDL = 'UIDL'
+    OTHER = 'OTHER'
+    STATIC_FILE = 'STATIC_FILE'
+    APPLICATION_RESOURCE = 'APPLICATION_RESOURCE'
+    _values = [FILE_UPLOAD, UIDL, OTHER, STATIC_FILE, APPLICATION_RESOURCE]
+
+    @classmethod
+    def values(cls):
+        return cls._values[:]
 
 
 class AbstractApplicationServlet(Servlet, Constants):
@@ -155,13 +172,13 @@ class AbstractApplicationServlet(Servlet, Constants):
 
         # Stores the application parameters into Properties object
         self._applicationProperties = dict()
-        for name in servletConfig.getInitParameterNames():
-            self._applicationProperties[name] = servletConfig.getInitParameter(name)
+        for name in CONFIG:
+            self._applicationProperties[name] = CONFIG[name]
 
         # Overrides with server.xml parameters
-        context = servletConfig.getServletContext()
-        for name in context.getInitParameterNames():
-            self._applicationProperties[name] = context.getInitParameter(name)
+#        context = servletConfig.getServletContext()
+#        for name in context.getInitParameterNames():
+#            self._applicationProperties[name] = context.getInitParameter(name)
 
         self.checkProductionMode()
         self.checkCrossSiteProtection()
@@ -169,7 +186,10 @@ class AbstractApplicationServlet(Servlet, Constants):
 
 
     def checkCrossSiteProtection(self):
-        if (self.getApplicationOrSystemProperty(self.SERVLET_PARAMETER_DISABLE_XSRF_PROTECTION, 'false') == 'true'):
+        if (self.getApplicationOrSystemProperty(
+                self.SERVLET_PARAMETER_DISABLE_XSRF_PROTECTION,
+                'false') == 'true'):
+
             # Print an information/warning message about running with xsrf
             # protection disabled
             self._logger.warning(self.WARNING_XSRF_PROTECTION_DISABLED)
@@ -181,8 +201,9 @@ class AbstractApplicationServlet(Servlet, Constants):
 
         @param request
         """
-        if not (self.VERSION == request.getParameter('wsver')):
-            self._logger.warning(self.WIDGETSET_MISMATCH_INFO % (self.VERSION, request.getParameter('wsver')))
+        if not (self.VERSION == request.field('wsver')):
+            self._logger.warning(self.WIDGETSET_MISMATCH_INFO %
+                                 (self.VERSION, request.field('wsver')))
 
 
     def checkProductionMode(self):
@@ -218,13 +239,13 @@ class AbstractApplicationServlet(Servlet, Constants):
                    the Name or the parameter.
         @return String value or null if not found
         """
-        val = self._applicationProperties.getProperty(parameterName)
+        val = self._applicationProperties.get(parameterName)
         if val is not None:
             return val
 
         # Try lower case application properties for backward compatibility with
         # 3.0.2 and earlier
-        val = self._applicationProperties.getProperty(parameterName.lower())
+        val = self._applicationProperties.get(parameterName.lower())
         return val
 
 
@@ -236,19 +257,19 @@ class AbstractApplicationServlet(Servlet, Constants):
         @return String value or null if not found
         """
         val = None
-        pkg = __class__.__module__.__name__
-        if pkg is not None:
-            pkgName = pkg.getName()
-        else:
-            className = __class__.__name__
-            pkgName = className.rsplit(1)
-
-        val = System.getProperty(pkgName + '.' + parameterName)
-        if val is not None:
-            return val
-
-        # Try lowercased system properties
-        val = System.getProperty(pkgName + '.' + parameterName.lower())
+#        pkg = __class__.__module__.__name__
+#        if pkg is not None:
+#            pkgName = pkg.getName()
+#        else:
+#            className = __class__.__name__
+#            pkgName = className.rsplit(1)
+#
+#        val = System.getProperty(pkgName + '.' + parameterName)
+#        if val is not None:
+#            return val
+#
+#        # Try lowercased system properties
+#        val = System.getProperty(pkgName + '.' + parameterName.lower())
         return val
 
 
@@ -294,7 +315,7 @@ class AbstractApplicationServlet(Servlet, Constants):
         return self._resourceCacheTime
 
 
-    def service(self, request, response):
+    def respond(self, transaction):
         """Receives standard HTTP requests from the public service method and
         dispatches them.
 
@@ -310,11 +331,14 @@ class AbstractApplicationServlet(Servlet, Constants):
         @throws IOException
                     if the request for the TRACE cannot be handled.
         """
+        request = transaction.request()
+        responce = transaction.response()
+
         requestType = self.getRequestType(request)
         if not self.ensureCookiesEnabled(requestType, request, response):
             return
 
-        if requestType == self.RequestType.STATIC_FILE:
+        if requestType == RequestType.STATIC_FILE:
             self.serveStaticResources(request, response)
             return
 
@@ -442,11 +466,11 @@ class AbstractApplicationServlet(Servlet, Constants):
         @return false if cookies are disabled, true otherwise
         @throws IOException
         """
-        if requestType == self.RequestType.UIDL and not self.isRepaintAll(request):
+        if requestType == RequestType.UIDL and not self.isRepaintAll(request):
             # In all other but the first UIDL request a cookie should be
             # returned by the browser.
             # This can be removed if cookieless mode (#3228) is supported
-            if request.getRequestedSessionId() is None:
+            if request.sessionId() is None:
                 # User has cookies disabled
                 self.criticalNotification(request, response,
                             self.getSystemMessages().getCookiesDisabledCaption(),
@@ -937,17 +961,19 @@ class AbstractApplicationServlet(Servlet, Constants):
         @throws ServletException
         """
         # FIXME What does 10 refer to?
-        pathInfo = request.getPathInfo()
+        pathInfo = request.extraURLPath()
+
         if (pathInfo is None) or (len(pathInfo) <= 10):
             return False
-        if (
-            request.getContextPath() is not None and request.getRequestURI().startswith('/VAADIN/')
-        ):
-            self.serveStaticResourcesInVAADIN(request.getRequestURI(), request, response)
+
+        if (request.contextPath() is not None and request.uri().startswith('/VAADIN/')):
+            self.serveStaticResourcesInVAADIN(request.uri(), request, response)
             return True
-        elif request.getRequestURI().startswith(request.getContextPath() + '/VAADIN/'):
-            self.serveStaticResourcesInVAADIN(request.getRequestURI()[len(request.getContextPath()):], request, response)
+
+        elif request.uri().startswith(request.contextPath() + '/VAADIN/'):
+            self.serveStaticResourcesInVAADIN(request.uri()[len(request.contextPath()):], request, response)
             return True
+
         return False
 
 
@@ -961,39 +987,41 @@ class AbstractApplicationServlet(Servlet, Constants):
         @throws IOException
         @throws ServletException
         """
-        sc = self.getServletContext()
-        resourceUrl = sc.getResource(filename)
-        if resourceUrl is None:
-            # try if requested file is found from classloader
-            # strip leading "/" otherwise stream from JAR wont work
-            filename = filename[1:]
-            resourceUrl = self.getClassLoader().getResource(filename)
-            if resourceUrl is None:
-                # cannot serve requested file
-                self._logger.info('Requested resource [' + filename + '] not found from filesystem or through class loader.' + ' Add widgetset and/or theme JAR to your classpath or add files to WebContent/VAADIN folder.')
-                response.setStatus(HttpServletResponse.SC_NOT_FOUND)
-                return
+        sc = request.serverSideContextPath()
+        resourceUrl = join(sc, filename)
+
+        if not exists(resourceUrl):
+            # cannot serve requested file
+            self._logger.info('Requested resource [' + filename + '] not found')
+            response.setStatus(404, 'Requested resource [' + filename + '] not found')
+            return
+
         # Find the modification timestamp
         lastModifiedTime = 0
-        # Failed to find out last modified timestamp. Continue without it.
-        # Set type mime type if we can determine it based on the filename
         try:
-            lastModifiedTime = resourceUrl.openConnection().getLastModified()
+            lastModifiedTime = getmtime(resourceUrl)
             # Remove milliseconds to avoid comparison problems (milliseconds
             # are not returned by the browser in the "If-Modified-Since"
             # header).
             lastModifiedTime = lastModifiedTime - (lastModifiedTime % 1000)
+
             if self.browserHasNewestVersion(request, lastModifiedTime):
-                response.setStatus(HttpServletResponse.SC_NOT_MODIFIED)
+                response.setStatus(304)
                 return
         except Exception, e:
-            self._logger.log(Level.FINEST, 'Failed to find out last modified timestamp. Continuing without it.', e)
-        mimetype = sc.getMimeType(filename)
+            # Failed to find out last modified timestamp. Continue without it.
+            # Set type mime type if we can determine it based on the filename
+            self._logger.log(Level.FINEST,
+                    'Failed to find out last modified timestamp. Continuing without it.', e)
+
+        mimetype = mimetypes.guess_type(filename)
         if mimetype is not None:
-            response.setContentType(mimetype)
+            response.setHeader('Content-type', mimetype)
+
         # Provide modification timestamp to the browser if it is known.
         if lastModifiedTime > 0:
-            response.setDateHeader('Last-Modified', lastModifiedTime)
+            response.setHeader('Last-Modified', lastModifiedTime)
+
             # The browser is allowed to cache for 1 hour without checking if
             # the file has changed. This forces browsers to fetch a new version
             # when the Vaadin version is updated. This will cause more requests
@@ -1001,15 +1029,12 @@ class AbstractApplicationServlet(Servlet, Constants):
             # static files should never be served through the servlet. The
             # cache timeout can be configured by setting the resourceCacheTime
             # parameter in web.xml
+            response.setHeader('Cache-Control', 'max-age: ' + str(self._resourceCacheTime))
 
-            response.setHeader('Cache-Control', 'max-age: ' + String.valueOf.valueOf(self._resourceCacheTime))
         # Write the resource to the client.
-        os = response.getOutputStream()
-        buffer = [None] * self.DEFAULT_BUFFER_SIZE
-        is_ = resourceUrl.openStream()
-        while bytes = is_.read(buffer) >= 0:
-            os.write(buffer, 0, bytes)
-        is_.close()
+        fd = open(resourceUrl, 'rb')
+        self.write(fd.read())
+        fd.close()
 
 
     def browserHasNewestVersion(self, request, resourceLastModifiedTimestamp):
@@ -1047,54 +1072,44 @@ class AbstractApplicationServlet(Servlet, Constants):
         return False
 
 
-    class RequestType(object):
-        FILE_UPLOAD = 'FILE_UPLOAD'
-        UIDL = 'UIDL'
-        OTHER = 'OTHER'
-        STATIC_FILE = 'STATIC_FILE'
-        APPLICATION_RESOURCE = 'APPLICATION_RESOURCE'
-        _values = [FILE_UPLOAD, UIDL, OTHER, STATIC_FILE, APPLICATION_RESOURCE]
-
-        @classmethod
-        def values(cls):
-            return cls._enum_values[:]
-
-
     def getRequestType(self, request):
-        if self.isFileUploadRequest(request):
-            return self.RequestType.FILE_UPLOAD
-        elif self.isUIDLRequest(request):
-            return self.RequestType.UIDL
-        elif self.isStaticResourceRequest(request):
-            return self.RequestType.STATIC_FILE
-        elif self.isApplicationRequest(request):
-            return self.RequestType.APPLICATION_RESOURCE
+        if self._isFileUploadRequest(request):
+            return RequestType.FILE_UPLOAD
+
+        elif self._isUIDLRequest(request):
+            return RequestType.UIDL
+
+        elif self._isStaticResourceRequest(request):
+            return RequestType.STATIC_FILE
+
+        elif self._isApplicationRequest(request):
+            return RequestType.APPLICATION_RESOURCE
+
         elif request.getHeader('FileId') is not None:
-            return self.RequestType.FILE_UPLOAD
+            return RequestType.FILE_UPLOAD
+
         return self.RequestType.OTHER
 
 
-    def isApplicationRequest(self, request):
+    def _isApplicationRequest(self, request):
         path = self.getRequestPathInfo(request)
         if path is not None and path.startswith('/APP/'):
             return True
         return False
 
 
-    def isStaticResourceRequest(self, request):
+    def _isStaticResourceRequest(self, request):
         pathInfo = request.getPathInfo()
         if (pathInfo is None) or (len(pathInfo) <= 10):
             return False
-        if (
-            request.getContextPath() is not None and request.getRequestURI().startswith('/VAADIN/')
-        ):
+        if (request.getContextPath() is not None and request.getRequestURI().startswith('/VAADIN/')):
             return True
         elif request.getRequestURI().startswith(request.getContextPath() + '/VAADIN/'):
             return True
         return False
 
 
-    def isUIDLRequest(self, request):
+    def _isUIDLRequest(self, request):
         pathInfo = self.getRequestPathInfo(request)
         if pathInfo is None:
             return False
@@ -1104,7 +1119,7 @@ class AbstractApplicationServlet(Servlet, Constants):
         return False
 
 
-    def isFileUploadRequest(self, request):
+    def _isFileUploadRequest(self, request):
         pathInfo = self.getRequestPathInfo(request)
         if pathInfo is None:
             return False
@@ -1114,39 +1129,24 @@ class AbstractApplicationServlet(Servlet, Constants):
 
 
     def isOnUnloadRequest(self, request):
-        return request.getParameter(ApplicationConnection.PARAM_UNLOADBURST) is not None
+        return request.field(ApplicationConnection.PARAM_UNLOADBURST) is not None
 
 
     def getSystemMessages(self):
         """Get system messages from the current application class
-
-        @return
         """
-        # This should never happen
-        # This is completely ok and should be silently ignored
-        # This should never happen
-        # This should never happen
         try:
             appCls = self.getApplicationClass()
-            m = appCls.getMethod('getSystemMessages', None)
-            return m.invoke(None, None)
-        except ClassNotFoundException, e:
-            raise SystemMessageException(e)
-        except SecurityException, e:
-            raise SystemMessageException('Application.getSystemMessage() should be static public', e)
-        except NoSuchMethodException, e:
-            pass # astStmt: [Stmt([]), None]
-        except IllegalArgumentException, e:
-            raise SystemMessageException(e)
-        except IllegalAccessException, e:
-            raise SystemMessageException('Application.getSystemMessage() should be static public', e)
-        except InvocationTargetException, e:
-            raise SystemMessageException(e)
+            m = getattr(appCls, 'getSystemMessages')
+            return m()
+        except AttributeError:
+            raise SystemMessageException('Application.getSystemMessage() should be callable', e)
+
         return Application.getSystemMessages()
 
 
     def getApplicationClass(self):
-        pass
+        raise NotImplementedError
 
 
     def getStaticFilesLocation(self, request):
@@ -1711,7 +1711,7 @@ class AbstractApplicationServlet(Servlet, Constants):
         @param request
         @return
         """
-        return request.getPathInfo()
+        return request.extraURLPath()
 
 
     def getResourceLocation(self, theme, resource):
@@ -1729,7 +1729,9 @@ class AbstractApplicationServlet(Servlet, Constants):
 
 
     def isRepaintAll(self, request):
-        return request.getParameter(self.URL_PARAMETER_REPAINT_ALL) is not None and request.getParameter(self.URL_PARAMETER_REPAINT_ALL) == '1'
+        return request.field(self.URL_PARAMETER_REPAINT_ALL) is not None and \
+                request.getParameter(self.URL_PARAMETER_REPAINT_ALL) == '1'
+
 
     def closeApplication(self, application, session):
         if application is None:

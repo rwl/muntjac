@@ -19,7 +19,7 @@ class Constants(object):
 
     NOT_PRODUCTION_MODE_INFO = '\n' \
         '=================================================================\n' \
-        'Vaadin is running in DEBUG MODE.\nAdd productionMode=true to web.xml ' \
+        'Muntjac is running in DEBUG MODE.\nAdd productionMode=true to INI ' \
         'to disable debug features.\nTo show debug window, add ?debug to ' \
         'your application URL.\n' \
         '================================================================='
@@ -32,15 +32,15 @@ class Constants(object):
     WARNING_RESOURCE_CACHING_TIME_NOT_NUMERIC = '\n' \
         '===========================================================\n' \
         'WARNING: resourceCacheTime has been set to a non integer value ' \
-        'in web.xml. The default of 1h will be used.\n' \
+        'in INI. The default of 1h will be used.\n' \
         '==========================================================='
 
     WIDGETSET_MISMATCH_INFO = '\n' \
         '=================================================================\n' \
-        'The widgetset in use does not seem to be built for the Vaadin\n' \
+        'The widgetset in use does not seem to be built for the Muntjac\n' \
         'version in use. This might cause strange problems - a\n' \
         'recompile/deploy is strongly recommended.\n' \
-        ' Vaadin version: %s\n' \
+        ' Muntjac version: %s\n' \
         ' Widgetset version: %s\n' \
         '================================================================='
 
@@ -63,7 +63,7 @@ class Constants(object):
     DEFAULT_THEME_CACHETIME = 1000 * 60 * 60 * 24
     WIDGETSET_DIRECTORY_PATH = 'VAADIN/widgetsets/'
 
-    # Name of the default widget set, used if not specified in web.xml
+    # Name of the default widget set, used if not specified in INI
     DEFAULT_WIDGETSET = 'com.vaadin.terminal.gwt.DefaultWidgetSet'
 
     # Widget set parameter name

@@ -17,14 +17,17 @@
 import logging
 import locale
 
-import muntjac.terminal.gwt.server
-
 from muntjac.terminal.URIHandler import URIHandler
 from muntjac.terminal.SystemError import SystemError
 from muntjac.terminal.Terminal import ErrorListener, Terminal
 from muntjac.terminal.ParameterHandler import ErrorEvent
 from muntjac.terminal.ErrorMessage import ErrorMessage
 from muntjac.util.event import EventObject, EventListener
+
+from muntjac.terminal.VariableOwner import ErrorEvent as VariableOwnerErrorEvent
+from muntjac.terminal.URIHandler import ErrorEvent as URIHandlerErrorEvent
+from muntjac.terminal.ParameterHandler import ErrorEvent as ParameterHandlerErrorEvent
+from muntjac.terminal.gwt.server.ChangeVariablesErrorEvent import ChangeVariablesErrorEvent
 
 
 class SystemMessages(object):
@@ -1387,13 +1390,13 @@ class Application(URIHandler, Terminal, ErrorListener):
 
         # Finds the original source of the error/exception
         owner = None
-        if isinstance(event, muntjac.terminal.VariableOwner.ErrorEvent):
+        if isinstance(event, VariableOwnerErrorEvent):
             owner = event.getVariableOwner()
-        elif isinstance(event, muntjac.terminal.URIHandler.ErrorEvent):
+        elif isinstance(event, URIHandlerErrorEvent):
             owner = event.getURIHandler()
-        elif isinstance(event, muntjac.terminal.ParameterHandler.ErrorEvent):
+        elif isinstance(event, ParameterHandlerErrorEvent):
             owner = event.getParameterHandler()
-        elif isinstance(event, muntjac.terminal.gwt.server.ChangeVariablesErrorEvent):
+        elif isinstance(event, ChangeVariablesErrorEvent):
             owner = event.getComponent()
         # Shows the error in AbstractComponent
         if isinstance(owner, AbstractComponent):
