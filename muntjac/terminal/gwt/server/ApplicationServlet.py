@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from com.vaadin.terminal.gwt.server.AbstractApplicationServlet import (AbstractApplicationServlet,)
+from com.vaadin.terminal.gwt.server.AbstractApplicationServlet import AbstractApplicationServlet
 # from javax.servlet.ServletException import (ServletException,)
 # from javax.servlet.http.HttpServletRequest import (HttpServletRequest,)
 

@@ -14,53 +14,26 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from com.vaadin.terminal.ParameterHandler import (ErrorEvent, ParameterHandler,)
-from com.vaadin.terminal.gwt.server.Constants import (Constants,)
-from com.vaadin.terminal.gwt.server.SessionExpiredException import (SessionExpiredException,)
-from com.vaadin.terminal.gwt.client.ApplicationConnection import (ApplicationConnection,)
-from com.vaadin.terminal.gwt.server.WebApplicationContext import (WebApplicationContext,)
-from com.vaadin.Application import (Application,)
-from com.vaadin.terminal.Terminal import (Terminal,)
-from com.vaadin.terminal.URIHandler import (URIHandler,)
-from com.vaadin.terminal.gwt.server.SystemMessageException import (SystemMessageException,)
-from com.vaadin.terminal.gwt.server.CommunicationManager import (CommunicationManager,)
-from com.vaadin.terminal.gwt.server.ApplicationServlet import (ApplicationServlet,)
-from com.vaadin.terminal.gwt.server.JsonPaintTarget import (JsonPaintTarget,)
-# from java.io.BufferedWriter import (BufferedWriter,)
-# from java.io.IOException import (IOException,)
-# from java.io.InputStream import (InputStream,)
-# from java.io.OutputStream import (OutputStream,)
-# from java.io.OutputStreamWriter import (OutputStreamWriter,)
-# from java.io.PrintWriter import (PrintWriter,)
-# from java.io.Serializable import (Serializable,)
-# from java.lang.reflect.Constructor import (Constructor,)
-# from java.lang.reflect.InvocationTargetException import (InvocationTargetException,)
-# from java.lang.reflect.Method import (Method,)
-# from java.net.MalformedURLException import (MalformedURLException,)
-# from java.net.URL import (URL,)
-# from java.security.GeneralSecurityException import (GeneralSecurityException,)
-# from java.util.Arrays import (Arrays,)
-# from java.util.Collection import (Collection,)
-# from java.util.Date import (Date,)
-# from java.util.Enumeration import (Enumeration,)
-# from java.util.HashSet import (HashSet,)
-# from java.util.Iterator import (Iterator,)
-# from java.util.Locale import (Locale,)
-# from java.util.Map import (Map,)
-# from java.util.Properties import (Properties,)
-# from java.util.logging.Level import (Level,)
-# from java.util.logging.Logger import (Logger,)
-# from javax.servlet.ServletContext import (ServletContext,)
-# from javax.servlet.ServletException import (ServletException,)
-# from javax.servlet.ServletOutputStream import (ServletOutputStream,)
-# from javax.servlet.http.HttpServlet import (HttpServlet,)
-# from javax.servlet.http.HttpServletRequest import (HttpServletRequest,)
-# from javax.servlet.http.HttpServletResponse import (HttpServletResponse,)
-# from javax.servlet.http.HttpSession import (HttpSession,)
 import time
+import logging
+
+from paste.webkit.wkservlet import Servlet
+
+from muntjac.terminal.ParameterHandler import ErrorEvent, ParameterHandler
+from muntjac.terminal.gwt.server.Constants import Constants
+from muntjac.terminal.gwt.server.SessionExpiredException import SessionExpiredException
+from muntjac.terminal.gwt.client.ApplicationConnection import ApplicationConnection
+from muntjac.terminal.gwt.server.WebApplicationContext import WebApplicationContext
+from muntjac.Application import Application
+from muntjac.terminal.Terminal import Terminal
+from muntjac.terminal.URIHandler import URIHandler
+from muntjac.terminal.gwt.server.SystemMessageException import SystemMessageException
+from muntjac.terminal.gwt.server.CommunicationManager import CommunicationManager
+from muntjac.terminal.gwt.server.ApplicationServlet import ApplicationServlet
+from muntjac.terminal.gwt.server.JsonPaintTarget import JsonPaintTarget
 
 
-class AbstractApplicationServlet(HttpServlet, Constants):
+class AbstractApplicationServlet(Servlet, Constants):
     """Abstract implementation of the ApplicationServlet which handles all
     communication between the client and the server.
 
@@ -75,135 +48,132 @@ class AbstractApplicationServlet(HttpServlet, Constants):
     """
     # TODO Move some (all?) of the constants to a separate interface (shared
     # with portlet)
-    _logger = Logger.getLogger(AbstractApplicationServlet.getName())
+    _logger = logging.getLogger(AbstractApplicationServlet.__class__.__name__)
+
     # The version number of this release. For example "6.2.0". Always in the
     # format "major.minor.revision[.build]". The build part is optional. All of
     # major, minor, revision must be integers.
-
     VERSION = None
+
     # Major version number. For example 6 in 6.2.0.
     VERSION_MAJOR = None
+
     # Minor version number. For example 2 in 6.2.0.
     VERSION_MINOR = None
+
     # Version revision number. For example 0 in 6.2.0.
     VERSION_REVISION = None
+
     # Build identifier. For example "nightly-20091123-c9963" in
     # 6.2.0.nightly-20091123-c9963.
-
     VERSION_BUILD = None
+
     # Initialize version numbers from string replaced by build-script.
     if '@VERSION@' == '@' + 'VERSION' + '@':
         VERSION = '9.9.9.INTERNAL-DEBUG-BUILD'
     else:
         VERSION = '@VERSION@'
-    digits = VERSION.split('\\.', 4)
+
+    digits = VERSION.split('.', 4)
     VERSION_MAJOR = int(digits[0])
     VERSION_MINOR = int(digits[1])
     VERSION_REVISION = int(digits[2])
+
     if len(digits) == 4:
         VERSION_BUILD = digits[3]
     else:
         VERSION_BUILD = ''
+
     # If the attribute is present in the request, a html fragment will be
     # written instead of a whole page.
-    # 
+    #
     # It is set to "true" by the {@link ApplicationPortlet} (Portlet 1.0) and
     # read by {@link AbstractApplicationServlet}.
+    REQUEST_FRAGMENT = ApplicationServlet.__class__.__name__ + '.fragment'
 
-    REQUEST_FRAGMENT = ApplicationServlet.getName() + '.fragment'
     # This request attribute forces widgetsets to be loaded from under the
     # specified base path; e.g shared widgetset for all portlets in a portal.
-    # 
+    #
     # It is set by the {@link ApplicationPortlet} (Portlet 1.0) based on
     # {@link Constants.PORTAL_PARAMETER_VAADIN_RESOURCE_PATH} and read by
     # {@link AbstractApplicationServlet}.
+    REQUEST_VAADIN_STATIC_FILE_PATH = ApplicationServlet.__class__.__name__ + '.widgetsetPath'
 
-    REQUEST_VAADIN_STATIC_FILE_PATH = ApplicationServlet.getName() + '.widgetsetPath'
     # This request attribute forces widgetset used; e.g for portlets that can
     # not have different widgetsets.
-    # 
+    #
     # It is set by the {@link ApplicationPortlet} (Portlet 1.0) based on
     # {@link ApplicationPortlet.PORTLET_PARAMETER_WIDGETSET} and read by
     # {@link AbstractApplicationServlet}.
+    REQUEST_WIDGETSET = ApplicationServlet.__class__.__name__ + '.widgetset'
 
-    REQUEST_WIDGETSET = ApplicationServlet.getName() + '.widgetset'
     # This request attribute indicates the shared widgetset (e.g. portal-wide
     # default widgetset).
-    # 
+    #
     # It is set by the {@link ApplicationPortlet} (Portlet 1.0) based on
     # {@link Constants.PORTAL_PARAMETER_VAADIN_WIDGETSET} and read by
     # {@link AbstractApplicationServlet}.
+    REQUEST_SHARED_WIDGETSET = ApplicationServlet.__class__.__name__ + '.sharedWidgetset'
 
-    REQUEST_SHARED_WIDGETSET = ApplicationServlet.getName() + '.sharedWidgetset'
     # If set, do not load the default theme but assume that loading it is
     # handled e.g. by ApplicationPortlet.
-    # 
+    #
     # It is set by the {@link ApplicationPortlet} (Portlet 1.0) based on
     # {@link Constants.PORTAL_PARAMETER_VAADIN_THEME} and read by
     # {@link AbstractApplicationServlet}.
+    REQUEST_DEFAULT_THEME = ApplicationServlet.__class__.__name__ + '.defaultThemeUri'
 
-    REQUEST_DEFAULT_THEME = ApplicationServlet.getName() + '.defaultThemeUri'
     # This request attribute is used to add styles to the main element. E.g
     # "height:500px" generates a style="height:500px" to the main element,
     # useful from some embedding situations (e.g portlet include.)
-    # 
+    #
     # It is typically set by the {@link ApplicationPortlet} (Portlet 1.0) based
     # on {@link ApplicationPortlet.PORTLET_PARAMETER_STYLE} and read by
     # {@link AbstractApplicationServlet}.
+    REQUEST_APPSTYLE = ApplicationServlet.__class__.__name__ + '.style'
 
-    REQUEST_APPSTYLE = ApplicationServlet.getName() + '.style'
-    _applicationProperties = None
-    _productionMode = False
-    _resourcePath = None
-    _resourceCacheTime = 3600
     UPLOAD_URL_PREFIX = 'APP/UPLOAD/'
 
-    def init(self, servletConfig):
+
+    def __init__(self):
+        self._applicationProperties = None
+        self._productionMode = False
+        self._resourcePath = None
+        self._resourceCacheTime = 3600
+
+
+    def awake(self, transaction):
         """Called by the servlet container to indicate to a servlet that the servlet
         is being placed into service.
 
-        @param servletConfig
-                   the object containing the servlet's configuration and
-                   initialization parameters
-        @throws javax.servlet.ServletException
-                    if an exception has occurred that interferes with the
-                    servlet's normal operation.
+        @param transaction
+                   this message is sent to all objects that participate in the
+                   request-response cycle in a top-down fashion, prior to
+                   respond(). Subclasses must invoke super.
         """
-        super(AbstractApplicationServlet, self).init(servletConfig)
+        super(AbstractApplicationServlet, self).awake(transaction)
+
         # Stores the application parameters into Properties object
-        self._applicationProperties = Properties()
-        _0 = True
-        e = servletConfig.getInitParameterNames()
-        while True:
-            if _0 is True:
-                _0 = False
-            if not e.hasMoreElements():
-                break
-            name = e.nextElement()
-            self._applicationProperties.setProperty(name, servletConfig.getInitParameter(name))
+        self._applicationProperties = dict()
+        for name in servletConfig.getInitParameterNames():
+            self._applicationProperties[name] = servletConfig.getInitParameter(name)
+
         # Overrides with server.xml parameters
         context = servletConfig.getServletContext()
-        _1 = True
-        e = context.getInitParameterNames()
-        while True:
-            if _1 is True:
-                _1 = False
-            if not e.hasMoreElements():
-                break
-            name = e.nextElement()
-            self._applicationProperties.setProperty(name, context.getInitParameter(name))
+        for name in context.getInitParameterNames():
+            self._applicationProperties[name] = context.getInitParameter(name)
+
         self.checkProductionMode()
         self.checkCrossSiteProtection()
         self.checkResourceCacheTime()
 
+
     def checkCrossSiteProtection(self):
-        if (
-            self.getApplicationOrSystemProperty(self.SERVLET_PARAMETER_DISABLE_XSRF_PROTECTION, 'false') == 'true'
-        ):
+        if (self.getApplicationOrSystemProperty(self.SERVLET_PARAMETER_DISABLE_XSRF_PROTECTION, 'false') == 'true'):
             # Print an information/warning message about running with xsrf
             # protection disabled
-
             self._logger.warning(self.WARNING_XSRF_PROTECTION_DISABLED)
+
 
     def checkWidgetsetVersion(self, request):
         """Checks that the version reported by the client (widgetset) matches that
@@ -212,24 +182,23 @@ class AbstractApplicationServlet(HttpServlet, Constants):
         @param request
         """
         if not (self.VERSION == request.getParameter('wsver')):
-            self._logger.warning(String.format.format(self.WIDGETSET_MISMATCH_INFO, self.VERSION, request.getParameter('wsver')))
+            self._logger.warning(self.WIDGETSET_MISMATCH_INFO % (self.VERSION, request.getParameter('wsver')))
+
 
     def checkProductionMode(self):
         # Check if the application is in production mode.
         # We are in production mode if Debug=false or productionMode=true
-        if (
-            self.getApplicationOrSystemProperty(self.SERVLET_PARAMETER_DEBUG, 'true') == 'false'
-        ):
+        if (self.getApplicationOrSystemProperty(self.SERVLET_PARAMETER_DEBUG, 'true') == 'false'):
             # "Debug=true" is the old way and should no longer be used
             self._productionMode = True
-        elif (
-            self.getApplicationOrSystemProperty(self.SERVLET_PARAMETER_PRODUCTION_MODE, 'false') == 'true'
-        ):
+        elif (self.getApplicationOrSystemProperty(self.SERVLET_PARAMETER_PRODUCTION_MODE, 'false') == 'true'):
             # "productionMode=true" is the real way to do it
             self._productionMode = True
+
         if not self._productionMode:
             # Print an information/warning message about running in debug mode
             self._logger.warning(self.NOT_PRODUCTION_MODE_INFO)
+
 
     def checkResourceCacheTime(self):
         # Check if the browser caching time has been set in web.xml
@@ -237,9 +206,10 @@ class AbstractApplicationServlet(HttpServlet, Constants):
         try:
             rct = self.getApplicationOrSystemProperty(self.SERVLET_PARAMETER_RESOURCE_CACHE_TIME, '3600')
             self._resourceCacheTime = int(rct)
-        except NumberFormatException, nfe:
+        except ValueError, nfe:
             self._resourceCacheTime = 3600
             self._logger.warning(self.WARNING_RESOURCE_CACHING_TIME_NOT_NUMERIC)
+
 
     def getApplicationProperty(self, parameterName):
         """Gets an application property value.
@@ -251,10 +221,12 @@ class AbstractApplicationServlet(HttpServlet, Constants):
         val = self._applicationProperties.getProperty(parameterName)
         if val is not None:
             return val
+
         # Try lower case application properties for backward compatibility with
         # 3.0.2 and earlier
-        val = self._applicationProperties.getProperty(parameterName.toLowerCase())
+        val = self._applicationProperties.getProperty(parameterName.lower())
         return val
+
 
     def getSystemProperty(self, parameterName):
         """Gets an system property value.
@@ -264,18 +236,21 @@ class AbstractApplicationServlet(HttpServlet, Constants):
         @return String value or null if not found
         """
         val = None
-        pkg = self.getClass().getPackage()
+        pkg = __class__.__module__.__name__
         if pkg is not None:
             pkgName = pkg.getName()
         else:
-            className = self.getClass().getName()
-            pkgName = str(className.toCharArray(), 0, className.rfind('.'))
+            className = __class__.__name__
+            pkgName = className.rsplit(1)
+
         val = System.getProperty(pkgName + '.' + parameterName)
         if val is not None:
             return val
+
         # Try lowercased system properties
-        val = System.getProperty(pkgName + '.' + parameterName.toLowerCase())
+        val = System.getProperty(pkgName + '.' + parameterName.lower())
         return val
+
 
     def getApplicationOrSystemProperty(self, parameterName, defaultValue):
         """Gets an application or system property value.
@@ -287,15 +262,19 @@ class AbstractApplicationServlet(HttpServlet, Constants):
         @return String value or default if not found
         """
         val = None
+
         # Try application properties
         val = self.getApplicationProperty(parameterName)
         if val is not None:
             return val
+
         # Try system properties
         val = self.getSystemProperty(parameterName)
         if val is not None:
             return val
+
         return defaultValue
+
 
     def isProductionMode(self):
         """Returns true if the servlet is running in production mode. Production
@@ -305,6 +284,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
         """
         return self._productionMode
 
+
     def getResourceCacheTime(self):
         """Returns the amount of milliseconds the browser should cache a file.
         Default is 1 hour (3600 ms).
@@ -312,6 +292,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
         @return The amount of milliseconds files are cached in the browser
         """
         return self._resourceCacheTime
+
 
     def service(self, request, response):
         """Receives standard HTTP requests from the public service method and
@@ -332,45 +313,65 @@ class AbstractApplicationServlet(HttpServlet, Constants):
         requestType = self.getRequestType(request)
         if not self.ensureCookiesEnabled(requestType, request, response):
             return
+
         if requestType == self.RequestType.STATIC_FILE:
             self.serveStaticResources(request, response)
             return
+
         if self.isRepaintAll(request):
             # warn if versions do not match
             self.checkWidgetsetVersion(request)
+
         application = None
         transactionStarted = False
         requestStarted = False
+
         try:
-            if (
-                requestType == self.RequestType.UIDL and ApplicationConnection.PARAM_UNLOADBURST in request.getParameterMap() and request.getContentLength() < 1 and self.getExistingApplication(request, False) is None
-            ):
+            # If a duplicate "close application" URL is received for an
+            # application that is not open, redirect to the application's main
+            # page.
+            # This is needed as e.g. Spring Security remembers the last
+            # URL from the application, which is the logout URL, and repeats
+            # it.
+            # We can tell apart a real onunload request from a repeated one
+            # based on the real one having content (at least the UIDL security
+            # key).
+            # Session has expired, notify user
+            # Notifies transaction end
+            if (requestType == self.RequestType.UIDL
+                    and ApplicationConnection.PARAM_UNLOADBURST in request.getParameterMap()
+                    and request.getContentLength() < 1
+                    and self.getExistingApplication(request, False) is None):
                 self.redirectToApplication(request, response)
                 return
+
             # Find out which application this request is related to
             application = self.findApplicationInstance(request, requestType)
             if application is None:
                 return
+
             # Get or create a WebApplicationContext and an ApplicationManager
             # for the session
-
             webApplicationContext = self.getApplicationContext(request.getSession())
             applicationManager = webApplicationContext.getApplicationManager(application, self)
+
             # Update browser information from the request
             self.updateBrowserProperties(webApplicationContext.getBrowser(), request)
+
             # Call application requestStart before Application.init() is called
             # (bypasses the limitation in TransactionListener)
-
             if isinstance(application, HttpServletRequestListener):
                 application.onRequestStart(request, response)
                 requestStarted = True
+
             # Start the newly created application
             self.startApplication(request, application, webApplicationContext)
+
             # Transaction starts. Call transaction listeners. Transaction end
             # is called in the finally block below.
-
             webApplicationContext.startTransaction(application, request)
             transactionStarted = True
+
             # Handle the request
             if requestType == self.RequestType.FILE_UPLOAD:
                 applicationManager.handleFileUpload(request, response)
@@ -380,35 +381,44 @@ class AbstractApplicationServlet(HttpServlet, Constants):
                 window = applicationManager.getApplicationWindow(request, self, application, None)
                 applicationManager.handleUidlRequest(request, response, self, window)
                 return
+
             # Removes application if it has stopped (mayby by thread or
             # transactionlistener)
             if not application.isRunning():
                 self.endApplication(request, response, application)
                 return
+
             # Finds the window within the application
             window = self.getApplicationWindow(request, applicationManager, application)
             if window is None:
                 raise ServletException(self.ERROR_NO_WINDOW_FOUND)
+
             # Sets terminal type for the window, if not already set
             if window.getTerminal() is None:
                 window.setTerminal(webApplicationContext.getBrowser())
+
             # Handle parameters
             parameters = request.getParameterMap()
             if window is not None and parameters is not None:
                 window.handleParameters(parameters)
+
             # Call the URI handlers and if this turns out to be a download
             # request, send the file to the client
-
             if self.handleURI(applicationManager, window, request, response):
                 return
+
             # Send initial AJAX page that kickstarts a Vaadin application
             self.writeAjaxPage(request, response, window, application)
+
         except SessionExpiredException, e:
             self.handleServiceSessionExpired(request, response)
+
         except GeneralSecurityException, e:
             self.handleServiceSecurityException(request, response)
+
         except Throwable, e:
             self.handleServiceException(request, response, application, e)
+
         finally:
             try:
                 if transactionStarted:
@@ -416,17 +426,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
             finally:
                 if requestStarted:
                     application.onRequestEnd(request, response)
-        # If a duplicate "close application" URL is received for an
-        # application that is not open, redirect to the application's main
-        # page.
-        # This is needed as e.g. Spring Security remembers the last
-        # URL from the application, which is the logout URL, and repeats
-        # it.
-        # We can tell apart a real onunload request from a repeated one
-        # based on the real one having content (at least the UIDL security
-        # key).
-        # Session has expired, notify user
-        # Notifies transaction end
+
 
     def ensureCookiesEnabled(self, requestType, request, response):
         """Check that cookie support is enabled in the browser. Only checks UIDL
@@ -448,15 +448,26 @@ class AbstractApplicationServlet(HttpServlet, Constants):
             # This can be removed if cookieless mode (#3228) is supported
             if request.getRequestedSessionId() is None:
                 # User has cookies disabled
-                self.criticalNotification(request, response, self.getSystemMessages().getCookiesDisabledCaption(), self.getSystemMessages().getCookiesDisabledMessage(), None, self.getSystemMessages().getCookiesDisabledURL())
+                self.criticalNotification(request, response,
+                            self.getSystemMessages().getCookiesDisabledCaption(),
+                            self.getSystemMessages().getCookiesDisabledMessage(),
+                            None, self.getSystemMessages().getCookiesDisabledURL())
                 return False
+
         return True
+
 
     def updateBrowserProperties(self, browser, request):
         # request based details updated always
-        browser.updateRequestDetails(request.getLocale(), request.getRemoteAddr(), request.isSecure(), request.getHeader('user-agent'))
+        browser.updateRequestDetails(request.getLocale(), request.getRemoteAddr(),
+                request.isSecure(), request.getHeader('user-agent'))
         if request.getParameter('repaintAll') is not None:
-            browser.updateClientSideDetails(request.getParameter('sw'), request.getParameter('sh'), request.getParameter('tzo'), request.getParameter('rtzo'), request.getParameter('dstd'), request.getParameter('dston'), request.getParameter('curdate'), request.getParameter('td') is not None)
+            browser.updateClientSideDetails(request.getParameter('sw'),
+                    request.getParameter('sh'), request.getParameter('tzo'),
+                    request.getParameter('rtzo'), request.getParameter('dstd'),
+                    request.getParameter('dston'), request.getParameter('curdate'),
+                    request.getParameter('td') is not None)
+
 
     def getClassLoader(self):
         # Gets custom class loader
@@ -471,6 +482,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
             except Exception, e:
                 raise ServletException('Could not find specified class loader: ' + classLoaderName, e)
         return classLoader
+
 
     def criticalNotification(self, request, response, caption, message, details, url):
         """Send a notification to client's application. Used to notify client of
@@ -497,35 +509,51 @@ class AbstractApplicationServlet(HttpServlet, Constants):
                     if the writing failed due to input/output error.
         """
         if self.isUIDLRequest(request):
+
             if caption is not None:
                 caption = '\"' + JsonPaintTarget.escapeJSON(caption) + '\"'
+
             if details is not None:
                 if message is None:
                     message = details
                 else:
                     message += '<br/><br/>' + details
+
             if message is not None:
                 message = '\"' + JsonPaintTarget.escapeJSON(message) + '\"'
+
             if url is not None:
                 url = '\"' + JsonPaintTarget.escapeJSON(url) + '\"'
-            output = 'for(;;);[{\"changes\":[], \"meta\" : {' + '\"appError\": {' + '\"caption\":' + caption + ',' + '\"message\" : ' + message + ',' + '\"url\" : ' + url + '}}, \"resources\": {}, \"locales\":[]}]'
+
+            output = 'for(;;);[{\"changes\":[], \"meta\" : {' \
+                '\"appError\": {' + '\"caption\":' + caption + ',' \
+                '\"message\" : ' + message + ',' + '\"url\" : ' + url + \
+                '}}, \"resources\": {}, \"locales\":[]}]'
+
             self.writeResponse(response, 'application/json; charset=UTF-8', output)
         else:
             # Create an HTML reponse with the error
             output = ''
+
             if url is not None:
                 output += '<a href=\"' + url + '\">'
+
             if caption is not None:
                 output += '<b>' + caption + '</b><br/>'
+
             if message is not None:
                 output += message
                 output += '<br/><br/>'
+
             if details is not None:
                 output += details
                 output += '<br/><br/>'
+
             if url is not None:
                 output += '</a>'
+
             self.writeResponse(response, 'text/html; charset=UTF-8', output)
+
 
     def writeResponse(self, response, contentType, output):
         """Writes the response in {@code output} using the contentType given in
@@ -545,6 +573,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
         outWriter.flush()
         outWriter.close()
         out.flush()
+
 
     def findApplicationInstance(self, request, requestType):
         """Returns the application instance to be used for the request. If an
@@ -566,9 +595,10 @@ class AbstractApplicationServlet(HttpServlet, Constants):
         if application is not None:
             # There is an existing application. We can use this as long as the
             # user not specifically requested to close or restart it.
-
             restartApplication = request.getParameter(self.URL_PARAMETER_RESTART_APPLICATION) is not None
+
             closeApplication = request.getParameter(self.URL_PARAMETER_CLOSE_APPLICATION) is not None
+
             if restartApplication:
                 closeApplication(application, request.getSession(False))
                 return self.createApplication(request)
@@ -577,17 +607,17 @@ class AbstractApplicationServlet(HttpServlet, Constants):
                 return None
             else:
                 return application
+
         # No existing application was found
         if requestCanCreateApplication:
             # If the request is such that it should create a new application if
             # one as not found, we do that.
-
             return self.createApplication(request)
         else:
             # The application was not found and a new one should not be
             # created. Assume the session has expired.
-
             raise SessionExpiredException()
+
 
     def requestCanCreateApplication(self, request, requestType):
         """Check if the request should create an application if an existing
@@ -601,14 +631,15 @@ class AbstractApplicationServlet(HttpServlet, Constants):
             # UIDL request contains valid repaintAll=1 event, the user probably
             # wants to initiate a new application through a custom index.html
             # without using writeAjaxPage.
-
             return True
+
         elif requestType == self.RequestType.OTHER:
             # I.e URIs that are not application resources or static (theme)
             # files.
-
             return True
+
         return False
+
 
     @classmethod
     def getResourcePath(cls, servletContext, path):
@@ -633,6 +664,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
             except Exception, e:
                 cls._logger.log(Level.INFO, 'Could not find resource path ' + path, e)
         return resultPath
+
 
     def handleDownload(self, stream, request, response):
         """Handles the requested URI. An application can add handlers to do special
@@ -698,6 +730,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
             out.close()
             data.close()
 
+
     def createApplication(self, request):
         """Creates a new application and registers it into WebApplicationContext
         (aka session). This is not meant to be overridden. Override
@@ -713,6 +746,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
         context.addApplication(newApplication)
         return newApplication
 
+
     def handleServiceException(self, request, response, application, e):
         # if this was an UIDL request, response UIDL back to client
         if self.getRequestType(request) == self.RequestType.UIDL:
@@ -725,6 +759,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
         else:
             # Re-throw other exceptions
             raise ServletException(e)
+
 
     def getThemeForWindow(self, request, window):
         """Returns the theme for given request/window
@@ -750,6 +785,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
         # The servlet denies them via url parameter.
         themeName = self.stripSpecialChars(themeName)
         return themeName
+
 
     @classmethod
     def stripSpecialChars(cls, themeName):
@@ -778,6 +814,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
 
     _CHAR_BLACKLIST = set(Arrays.asList(['&', '"', '\\'', '<', '>', '(', ')', ';']))
 
+
     @classmethod
     def getDefaultTheme(cls):
         """Returns the default theme. Must never return null.
@@ -785,6 +822,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
         @return
         """
         return cls.DEFAULT_THEME_NAME
+
 
     def handleURI(self, applicationManager, window, request, response):
         """Calls URI handlers for the request. If an URI handler returns a
@@ -806,6 +844,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
             return True
         return False
 
+
     def handleServiceSessionExpired(self, request, response):
         if self.isOnUnloadRequest(request):
             # Request was an unload request (e.g. window close event) and the
@@ -822,7 +861,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
                 # Invalidate session (weird to have session if we're saying
                 # that it's expired, and worse: portal integration will fail
                 # since the session is not created by the portal.
-                # 
+                #
                 # Session must be invalidated before criticalNotification as it
                 # commits the response.
 
@@ -831,6 +870,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
                 self.criticalNotification(request, response, ci.getSessionExpiredCaption(), ci.getSessionExpiredMessage(), None, ci.getSessionExpiredURL())
         except SystemMessageException, ee:
             raise ServletException(ee)
+
 
     def handleServiceSecurityException(self, request, response):
         if self.isOnUnloadRequest(request):
@@ -855,6 +895,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
             raise ServletException(ee)
         self.log('Invalid security key received from ' + request.getRemoteHost())
 
+
     def getNewApplication(self, request):
         """Creates a new application for the given request.
 
@@ -864,6 +905,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
         @throws ServletException
         """
         pass
+
 
     def startApplication(self, request, application, webApplicationContext):
         """Starts the application if it is not already running.
@@ -881,6 +923,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
             locale = request.getLocale()
             application.setLocale(locale)
             application.start(applicationUrl, self._applicationProperties, webApplicationContext)
+
 
     def serveStaticResources(self, request, response):
         """Check if this is a request for a static resource and, if it is, serve the
@@ -906,6 +949,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
             self.serveStaticResourcesInVAADIN(request.getRequestURI()[len(request.getContextPath()):], request, response)
             return True
         return False
+
 
     def serveStaticResourcesInVAADIN(self, filename, request, response):
         """Serve resources from VAADIN directory.
@@ -967,6 +1011,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
             os.write(buffer, 0, bytes)
         is_.close()
 
+
     def browserHasNewestVersion(self, request, resourceLastModifiedTimestamp):
         """Checks if the browser has an up to date cached version of requested
         resource. Currently the check is performed using the "If-Modified-Since"
@@ -1001,6 +1046,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
             pass # astStmt: [Stmt([]), None]
         return False
 
+
     class RequestType(object):
         FILE_UPLOAD = 'FILE_UPLOAD'
         UIDL = 'UIDL'
@@ -1012,6 +1058,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
         @classmethod
         def values(cls):
             return cls._enum_values[:]
+
 
     def getRequestType(self, request):
         if self.isFileUploadRequest(request):
@@ -1026,11 +1073,13 @@ class AbstractApplicationServlet(HttpServlet, Constants):
             return self.RequestType.FILE_UPLOAD
         return self.RequestType.OTHER
 
+
     def isApplicationRequest(self, request):
         path = self.getRequestPathInfo(request)
         if path is not None and path.startswith('/APP/'):
             return True
         return False
+
 
     def isStaticResourceRequest(self, request):
         pathInfo = request.getPathInfo()
@@ -1044,6 +1093,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
             return True
         return False
 
+
     def isUIDLRequest(self, request):
         pathInfo = self.getRequestPathInfo(request)
         if pathInfo is None:
@@ -1053,6 +1103,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
             return True
         return False
 
+
     def isFileUploadRequest(self, request):
         pathInfo = self.getRequestPathInfo(request)
         if pathInfo is None:
@@ -1061,8 +1112,10 @@ class AbstractApplicationServlet(HttpServlet, Constants):
             return True
         return False
 
+
     def isOnUnloadRequest(self, request):
         return request.getParameter(ApplicationConnection.PARAM_UNLOADBURST) is not None
+
 
     def getSystemMessages(self):
         """Get system messages from the current application class
@@ -1091,8 +1144,10 @@ class AbstractApplicationServlet(HttpServlet, Constants):
             raise SystemMessageException(e)
         return Application.getSystemMessages()
 
+
     def getApplicationClass(self):
         pass
+
 
     def getStaticFilesLocation(self, request):
         """Return the URL from where static files, e.g. the widgetset and the theme,
@@ -1113,6 +1168,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
             # TODO remove trailing slash if any?
             return staticFileLocation
         return self.getWebApplicationsStaticFileLocation(request)
+
 
     def getWebApplicationsStaticFileLocation(self, request):
         """The default method to fetch static files location. This method does not
@@ -1144,6 +1200,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
         else:
             return '/' + ctxPath
 
+
     @classmethod
     def removeHeadingOrTrailing(cls, string, what):
         """Remove any heading or trailing "what" from the "string".
@@ -1158,6 +1215,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
             string = string[:-1]
         return string
 
+
     def redirectToApplication(self, request, response):
         """Write a redirect response to the main page of the application.
 
@@ -1169,6 +1227,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
         """
         applicationUrl = self.getApplicationUrl(request).toExternalForm()
         response.sendRedirect(response.encodeRedirectURL(applicationUrl))
+
 
     def writeAjaxPage(self, request, response, window, application):
         """This method writes the html host page (aka kickstart page) that starts
@@ -1259,6 +1318,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
             page.write('</body>\n</html>\n')
         page.close()
 
+
     def getApplicationCSSClassName(self):
         """Returns the application class identifier for use in the application CSS
         class name in the root DIV. The application CSS class name is of form
@@ -1273,6 +1333,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
         except ClassNotFoundException, e:
             self._logger.log(Level.WARNING, 'getApplicationCSSClassName failed', e)
             return 'unknown'
+
 
     def getThemeUri(self, themeName, request):
         """Get the URI for the application theme.
@@ -1297,6 +1358,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
             staticFilePath = self.getWebApplicationsStaticFileLocation(request)
         return staticFilePath + '/' + self.THEME_DIRECTORY_PATH + themeName
 
+
     def writeAjaxPageHtmlMainDiv(self, page, appId, classNames, divStyle, request):
         """Method to write the div element into which that actual Vaadin application
         is rendered.
@@ -1316,6 +1378,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
         page.write('<div class=\"v-app-loading\"></div>')
         page.write('</div>\n')
         page.write('<noscript>' + self.getNoScriptMessage() + '</noscript>')
+
 
     def writeAjaxPageHtmlVaadinScripts(self, window, themeName, application, page, appUrl, themeUri, appId, request):
         """Method to write the script part of the page which loads needed Vaadin
@@ -1422,12 +1485,14 @@ class AbstractApplicationServlet(HttpServlet, Constants):
         page.write('//<![CDATA[\n')
         page.write('setTimeout(\'if (typeof ' + widgetset.replace('.', '_') + ' == \"undefined\") {alert(\"Failed to load the widgetset: ' + widgetsetFilePath + '\")};\',15000);\n' + '//]]>\n</script>\n')
 
+
     def isStandalone(self):
         """@return true if the served application is considered to be the only or
                 main content of the host page. E.g. various embedding solutions
                 should override this to false.
         """
         return True
+
 
     def writeAjaxPageHtmlBodyStart(self, page, request):
         """Method to open the body tag of the html kickstart page.
@@ -1442,6 +1507,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
         @throws IOException
         """
         page.write('\n</head>\n<body scroll=\"auto\" class=\"' + ApplicationConnection.GENERATED_BODY_CLASSNAME + '\">\n')
+
 
     def writeAjaxPageHtmlHeader(self, page, title, themeUri, request):
         """Method to write the contents of head element in html kickstart page.
@@ -1467,6 +1533,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
         page.write('<link rel=\"icon\" type=\"image/vnd.microsoft.icon\" href=\"' + themeUri + '/favicon.ico\" />')
         page.write('<title>' + self.safeEscapeForHtml(title) + '</title>')
 
+
     def writeAjaxPageHtmlHeadStart(self, page, request):
         """Method to write the beginning of the html page.
         <p>
@@ -1484,6 +1551,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
         page.write('<!DOCTYPE html PUBLIC \"-//W3C//DTD ' + 'XHTML 1.0 Transitional//EN\" ' + '\"http://www.w3.org/TR/xhtml1/' + 'DTD/xhtml1-transitional.dtd\">\n')
         page.write('<html xmlns=\"http://www.w3.org/1999/xhtml\"' + '>\n<head>\n')
 
+
     def setAjaxPageHeaders(self, response):
         """Method to set http request headers for the Vaadin kickstart page.
         <p>
@@ -1497,11 +1565,13 @@ class AbstractApplicationServlet(HttpServlet, Constants):
         response.setDateHeader('Expires', 0)
         response.setContentType('text/html; charset=UTF-8')
 
+
     def getNoScriptMessage(self):
         """Returns a message printed for browsers without scripting support or if
         browsers scripting support is disabled.
         """
         return 'You have to enable javascript in your browser to use an application built with Vaadin.'
+
 
     def getApplicationUrl(self, request):
         """Gets the current application URL from request.
@@ -1523,6 +1593,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
             servletPath = servletPath + '/'
         u = URL(reqURL, servletPath)
         return u
+
 
     def getExistingApplication(self, request, allowSessionCreation):
         """Gets the existing application for given request. Looks for application
@@ -1571,6 +1642,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
         # Existing application not found
         return None
 
+
     def endApplication(self, request, response, application):
         """Ends the application.
 
@@ -1590,6 +1662,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
         if session is not None:
             self.getApplicationContext(session).removeApplication(application)
         response.sendRedirect(response.encodeRedirectURL(logoutUrl))
+
 
     def getApplicationWindow(self, request, applicationManager, application):
         """Gets the existing application or create a new one. Get a window within an
@@ -1624,6 +1697,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
             assumedWindow = application.getWindow(windowName)
         return applicationManager.getApplicationWindow(request, self, application, assumedWindow)
 
+
     def getRequestPathInfo(self, request):
         """Returns the path info; note that this _can_ be different than
         request.getPathInfo(). Examples where this might be useful:
@@ -1639,6 +1713,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
         """
         return request.getPathInfo()
 
+
     def getResourceLocation(self, theme, resource):
         """Gets relative location of a theme resource.
 
@@ -1652,6 +1727,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
             return resource.getResourceId()
         return self._resourcePath + theme + '/' + resource.getResourceId()
 
+
     def isRepaintAll(self, request):
         return request.getParameter(self.URL_PARAMETER_REPAINT_ALL) is not None and request.getParameter(self.URL_PARAMETER_REPAINT_ALL) == '1'
 
@@ -1662,6 +1738,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
         if session is not None:
             context = self.getApplicationContext(session)
             context.removeApplication(application)
+
 
     def getApplicationContext(self, session):
         """Gets the application context from an HttpSession. If no context is
@@ -1677,6 +1754,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
         # the whole creation logic should be here. MT 1101
 
         return WebApplicationContext.getApplicationContext(session)
+
 
     class ParameterHandlerErrorImpl(ParameterHandler, ErrorEvent, Serializable):
         """Implementation of ParameterHandler.ErrorEvent interface."""
@@ -1696,6 +1774,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
             @see com.vaadin.terminal.ParameterHandler.ErrorEvent#getParameterHandler()
             """
             return self._owner
+
 
     class URIHandlerErrorImpl(URIHandler, ErrorEvent, Serializable):
         """Implementation of URIHandler.ErrorEvent interface."""
@@ -1723,6 +1802,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
             """
             return self._owner
 
+
     class RequestError(Terminal, ErrorEvent, Serializable):
         _throwable = None
 
@@ -1731,6 +1811,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
 
         def getThrowable(self):
             return self._throwable
+
 
     def createCommunicationManager(self, application):
         """Override this method if you need to use a specialized communicaiton
@@ -1748,6 +1829,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
         @return
         """
         return CommunicationManager(application)
+
 
     @classmethod
     def safeEscapeForHtml(cls, unsafe):
@@ -1776,6 +1858,7 @@ class AbstractApplicationServlet(HttpServlet, Constants):
                 safe.append(c)
                 safe.append(';')
         return str(safe)
+
 
     @classmethod
     def isSafe(cls, c):
