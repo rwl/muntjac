@@ -14,25 +14,35 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (POSTINC,)
-from com.vaadin.terminal.gwt.server.StreamingStartEventImpl import (StreamingStartEventImpl,)
-from com.vaadin.terminal.gwt.server.DragAndDropService import (DragAndDropService,)
-from com.vaadin.terminal.gwt.server.ComponentSizeValidator import (ComponentSizeValidator,)
-from com.vaadin.terminal.gwt.server.JsonPaintTarget import (JsonPaintTarget,)
-from com.vaadin.terminal.gwt.client.ApplicationConnection import (ApplicationConnection,)
-from com.vaadin.terminal.gwt.server.NoOutputStreamException import (NoOutputStreamException,)
-from com.vaadin.terminal.gwt.server.StreamingErrorEventImpl import (StreamingErrorEventImpl,)
-from com.vaadin.terminal.gwt.server.StreamingEndEventImpl import (StreamingEndEventImpl,)
-from com.vaadin.terminal.gwt.server.NoInputStreamException import (NoInputStreamException,)
-from com.vaadin.terminal.gwt.server.AbstractApplicationServlet import (AbstractApplicationServlet, URIHandlerErrorImpl,)
-from com.vaadin.terminal.Paintable import (Paintable, RepaintRequestListener,)
-from com.vaadin.terminal.gwt.server.UploadException import (UploadException,)
-from com.vaadin.terminal.URIHandler import (URIHandler,)
-from com.vaadin.terminal.gwt.server.ChangeVariablesErrorEvent import (ChangeVariablesErrorEvent,)
-# from com.vaadin.terminal.Paintable.RepaintRequestEvent import (RepaintRequestEvent,)
-# from com.vaadin.terminal.Terminal.ErrorEvent import (ErrorEvent,)
-# from com.vaadin.terminal.Terminal.ErrorListener import (ErrorListener,)
-# from com.vaadin.terminal.gwt.server.ComponentSizeValidator.InvalidLayout import (InvalidLayout,)
+import uuid
+import logging
+
+from sys import stderr
+
+from StringIO import StringIO
+
+from muntjac.terminal.gwt.server.StreamingStartEventImpl import StreamingStartEventImpl
+from muntjac.terminal.gwt.server.DragAndDropService import DragAndDropService
+from muntjac.terminal.gwt.server.ComponentSizeValidator import ComponentSizeValidator
+from muntjac.terminal.gwt.server.JsonPaintTarget import JsonPaintTarget
+from muntjac.terminal.gwt.client.ApplicationConnection import ApplicationConnection
+from muntjac.terminal.gwt.server.NoOutputStreamException import NoOutputStreamException
+from muntjac.terminal.gwt.server.StreamingErrorEventImpl import StreamingErrorEventImpl
+from muntjac.terminal.gwt.server.StreamingEndEventImpl import StreamingEndEventImpl
+from muntjac.terminal.gwt.server.NoInputStreamException import NoInputStreamException
+from muntjac.terminal.gwt.server.AbstractApplicationServlet import AbstractApplicationServlet, URIHandlerErrorImpl
+from muntjac.terminal.Paintable import Paintable, RepaintRequestListener
+from muntjac.terminal.gwt.server.UploadException import UploadException
+from muntjac.terminal.URIHandler import URIHandler
+from muntjac.terminal.gwt.server.ChangeVariablesErrorEvent import ChangeVariablesErrorEvent
+from muntjac.ui.Window import Window
+from muntjac.ui.Component import Component
+
+#from muntjac.terminal.Paintable import RepaintRequestEvent
+#from muntjac.terminal.Terminal import ErrorEvent
+#from muntjac.terminal.Terminal import ErrorListener
+#from muntjac.terminal.gwt.server.ComponentSizeValidator import InvalidLayou
+
 # from java.io.BufferedWriter import (BufferedWriter,)
 # from java.io.ByteArrayOutputStream import (ByteArrayOutputStream,)
 # from java.io.CharArrayWriter import (CharArrayWriter,)
@@ -73,7 +83,199 @@ from com.vaadin.terminal.gwt.server.ChangeVariablesErrorEvent import (ChangeVari
 # from javax.servlet.ServletResponse import (ServletResponse,)
 
 
-class AbstractCommunicationManager(Paintable, RepaintRequestListener, Serializable):
+class Request(object):
+    """Generic interface of a (HTTP or Portlet) request to the application.
+
+    This is a wrapper interface that allows
+    {@link AbstractCommunicationManager} to use a unified API.
+
+    @see javax.servlet.ServletRequest
+    @see javax.portlet.PortletRequest
+
+    @author peholmst
+    """
+
+    def getSession(self):
+        """Gets a {@link Session} wrapper implementation representing the
+        session for which this request was sent.
+
+        Multiple Vaadin applications can be associated with a single session.
+
+        @return Session
+        """
+        pass
+
+
+    def isRunningInPortlet(self):
+        """Are the applications in this session running in a portlet or directly
+        as servlets.
+
+        @return true if in a portlet
+        """
+        pass
+
+
+    def getParameter(self, name):
+        """Get the named HTTP or portlet request parameter.
+
+        @see javax.servlet.ServletRequest#getParameter(String)
+        @see javax.portlet.PortletRequest#getParameter(String)
+
+        @param name
+        @return
+        """
+        pass
+
+
+    def getContentLength(self):
+        """Returns the length of the request content that can be read from the
+        input stream returned by {@link #getInputStream()}.
+
+        @return content length in bytes
+        """
+        pass
+
+
+    def getInputStream(self):
+        """Returns an input stream from which the request content can be read.
+        The request content length can be obtained with
+        {@link #getContentLength()} without reading the full stream contents.
+
+        @return
+        @throws IOException
+        """
+        pass
+
+
+    def getRequestID(self):
+        """Returns the request identifier that identifies the target Vaadin
+        window for the request.
+
+        @return String identifier for the request target window
+        """
+        pass
+
+
+    def getAttribute(self, name):
+        """@see javax.servlet.ServletRequest#getAttribute(String)
+        @see javax.portlet.PortletRequest#getAttribute(String)
+        """
+        pass
+
+
+    def setAttribute(self, name, value):
+        """@see javax.servlet.ServletRequest#setAttribute(String, Object)
+        @see javax.portlet.PortletRequest#setAttribute(String, Object)
+        """
+        pass
+
+
+    def getWrappedRequest(self):
+        """Gets the underlying request object. The request is typically either a
+        {@link ServletRequest} or a {@link PortletRequest}.
+
+        @return wrapped request object
+        """
+        pass
+
+
+class Response(object):
+    """Generic interface of a (HTTP or Portlet) response from the application.
+
+    This is a wrapper interface that allows
+    {@link AbstractCommunicationManager} to use a unified API.
+
+    @see javax.servlet.ServletResponse
+    @see javax.portlet.PortletResponse
+
+    @author peholmst
+    """
+
+    def getOutputStream(self):
+        """Gets the output stream to which the response can be written.
+
+        @return
+        @throws IOException
+        """
+        pass
+
+
+    def setContentType(self, typ):
+        """Sets the MIME content type for the response to be communicated to the
+        browser.
+
+        @param typ
+        """
+        pass
+
+
+    def getWrappedResponse(self):
+        """Gets the wrapped response object, usually a class implementing either
+        {@link ServletResponse} or {@link PortletResponse}.
+
+        @return wrapped request object
+        """
+        pass
+
+
+class Session(object):
+    """Generic wrapper interface for a (HTTP or Portlet) session.
+
+    Several applications can be associated with a single session.
+
+    TODO Document me!
+
+    @see javax.servlet.http.HttpSession
+    @see javax.portlet.PortletSession
+
+    @author peholmst
+    """
+
+    def isNew(self):
+        pass
+
+
+    def getAttribute(self, name):
+        pass
+
+
+    def setAttribute(self, name, o):
+        pass
+
+
+    def getMaxInactiveInterval(self):
+        pass
+
+
+    def getWrappedSession(self):
+        pass
+
+
+class Callback(object):
+    """TODO Document me!
+
+    @author peholmst
+    """
+
+    def criticalNotification(self, request, response, cap, msg, details, outOfSyncURL):
+        pass
+
+
+    def getRequestPathInfo(self, request):
+        pass
+
+
+    def getThemeResourceAsStream(self, themeName, resource):
+        pass
+
+
+class UploadInterruptedException(Exception):
+
+    def __init__(self):
+        super(UploadInterruptedException, self)('Upload interrupted by other thread')
+
+
+class AbstractCommunicationManager(Paintable, RepaintRequestListener):
     """This is a common base class for the server-side implementations of the
     communication system between the client code (compiled with GWT into
     JavaScript) and the server side components. Its client side counterpart is
@@ -90,178 +292,7 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener, Serializab
     TODO Document better!
     """
     _DASHDASH = '--'
-    _logger = Logger.getLogger(AbstractCommunicationManager.getName())
-
-    class Request(object):
-        """Generic interface of a (HTTP or Portlet) request to the application.
-
-        This is a wrapper interface that allows
-        {@link AbstractCommunicationManager} to use a unified API.
-
-        @see javax.servlet.ServletRequest
-        @see javax.portlet.PortletRequest
-
-        @author peholmst
-        """
-
-        def getSession(self):
-            """Gets a {@link Session} wrapper implementation representing the
-            session for which this request was sent.
-
-            Multiple Vaadin applications can be associated with a single session.
-
-            @return Session
-            """
-            pass
-
-        def isRunningInPortlet(self):
-            """Are the applications in this session running in a portlet or directly
-            as servlets.
-
-            @return true if in a portlet
-            """
-            pass
-
-        def getParameter(self, name):
-            """Get the named HTTP or portlet request parameter.
-
-            @see javax.servlet.ServletRequest#getParameter(String)
-            @see javax.portlet.PortletRequest#getParameter(String)
-
-            @param name
-            @return
-            """
-            pass
-
-        def getContentLength(self):
-            """Returns the length of the request content that can be read from the
-            input stream returned by {@link #getInputStream()}.
-
-            @return content length in bytes
-            """
-            pass
-
-        def getInputStream(self):
-            """Returns an input stream from which the request content can be read.
-            The request content length can be obtained with
-            {@link #getContentLength()} without reading the full stream contents.
-
-            @return
-            @throws IOException
-            """
-            pass
-
-        def getRequestID(self):
-            """Returns the request identifier that identifies the target Vaadin
-            window for the request.
-
-            @return String identifier for the request target window
-            """
-            pass
-
-        def getAttribute(self, name):
-            """@see javax.servlet.ServletRequest#getAttribute(String)
-            @see javax.portlet.PortletRequest#getAttribute(String)
-            """
-            pass
-
-        def setAttribute(self, name, value):
-            """@see javax.servlet.ServletRequest#setAttribute(String, Object)
-            @see javax.portlet.PortletRequest#setAttribute(String, Object)
-            """
-            pass
-
-        def getWrappedRequest(self):
-            """Gets the underlying request object. The request is typically either a
-            {@link ServletRequest} or a {@link PortletRequest}.
-
-            @return wrapped request object
-            """
-            pass
-
-    class Response(object):
-        """Generic interface of a (HTTP or Portlet) response from the application.
-
-        This is a wrapper interface that allows
-        {@link AbstractCommunicationManager} to use a unified API.
-
-        @see javax.servlet.ServletResponse
-        @see javax.portlet.PortletResponse
-
-        @author peholmst
-        """
-
-        def getOutputStream(self):
-            """Gets the output stream to which the response can be written.
-
-            @return
-            @throws IOException
-            """
-            pass
-
-        def setContentType(self, type):
-            """Sets the MIME content type for the response to be communicated to the
-            browser.
-
-            @param type
-            """
-            pass
-
-        def getWrappedResponse(self):
-            """Gets the wrapped response object, usually a class implementing either
-            {@link ServletResponse} or {@link PortletResponse}.
-
-            @return wrapped request object
-            """
-            pass
-
-    class Session(object):
-        """Generic wrapper interface for a (HTTP or Portlet) session.
-
-        Several applications can be associated with a single session.
-
-        TODO Document me!
-
-        @see javax.servlet.http.HttpSession
-        @see javax.portlet.PortletSession
-
-        @author peholmst
-        """
-
-        def isNew(self):
-            pass
-
-        def getAttribute(self, name):
-            pass
-
-        def setAttribute(self, name, o):
-            pass
-
-        def getMaxInactiveInterval(self):
-            pass
-
-        def getWrappedSession(self):
-            pass
-
-    class Callback(object):
-        """TODO Document me!
-
-        @author peholmst
-        """
-
-        def criticalNotification(self, request, response, cap, msg, details, outOfSyncURL):
-            pass
-
-        def getRequestPathInfo(self, request):
-            pass
-
-        def getThemeResourceAsStream(self, themeName, resource):
-            pass
-
-    class UploadInterruptedException(Exception):
-
-        def __init__(self):
-            super(UploadInterruptedException, self)('Upload interrupted by other thread')
+    _logger = logging.getLogger(__class__.__name__)
 
     _GET_PARAM_REPAINT_ALL = 'repaintAll'
     # flag used in the request to indicate that the security token should be
@@ -286,26 +317,14 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener, Serializab
     _VAR_FIELD_SEPARATOR = '\u001f'
     VAR_BURST_SEPARATOR = '\u001d'
     VAR_ARRAYITEM_SEPARATOR = '\u001c'
-    _currentlyOpenWindowsInClient = dict()
+
     _MAX_BUFFER_SIZE = 64 * 1024
     # Same as in apache commons file upload library that was previously used.
     _MAX_UPLOAD_BUFFER_SIZE = 4 * 1024
     _GET_PARAM_ANALYZE_LAYOUTS = 'analyzeLayouts'
-    _dirtyPaintables = list()
-    _paintableIdMap = dict()
-    _idPaintableMap = dict()
-    _idSequence = 0
-    _application = None
-    # Note that this is only accessed from synchronized block and
-    # thus should be thread-safe.
-    _closingWindowName = None
-    _locales = None
-    _pendingLocalesIndex = None
-    _timeoutInterval = -1
-    _dragAndDropService = None
-    _requestThemeName = None
-    _maxInactiveInterval = None
+
     _nextUnusedWindowSuffix = 1
+
 
     def __init__(self, application):
         """TODO New constructor - document me!
@@ -313,26 +332,54 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener, Serializab
         @param application
         """
         self._application = application
+
+        self._currentlyOpenWindowsInClient = dict()
+
+        self._dirtyPaintables = list()
+
+        self._paintableIdMap = dict()
+
+        self._idPaintableMap = dict()
+
+        self._idSequence = 0
+
+        self._application = None
+
+        # Note that this is only accessed from synchronized block and
+        # thus should be thread-safe.
+        self._closingWindowName = None
+
+        self._locales = None
+
+        self._pendingLocalesIndex = None
+
+        self._timeoutInterval = -1
+
+        self._dragAndDropService = None
+
+        self._requestThemeName = None
+
+        self._maxInactiveInterval = None
+
         self.requireLocale(str(application.getLocale()))
+
 
     def getApplication(self):
         return self._application
 
-    _LF = '\n'.getBytes()[0]
+
+    _LF = '\n'
     _CRLF = '\r\n'
     _UTF8 = 'UTF8'
 
-    @classmethod
-    def readLine(cls, stream):
-        bout = ByteArrayOutputStream()
-        readByte = stream.read()
-        while readByte != cls._LF:
-            bout.write(readByte)
-            readByte = stream.read()
-        bytes = bout.toByteArray()
-        return str(bytes, 0, len(bytes) - 1, cls._UTF8)
 
-    def doHandleSimpleMultipartFileUpload(self, request, response, streamVariable, variableName, owner, boundary):
+    @classmethod
+    def _readLine(cls, stream):
+        return stream.readline()
+
+
+    def doHandleSimpleMultipartFileUpload(self, request, response, streamVariable,
+                                          variableName, owner, boundary):
         """Method used to stream content from a multipart request (either from
         servlet or portlet request) to given StreamVariable
 
@@ -346,21 +393,23 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener, Serializab
         """
         # multipart parsing, supports only one file for request, but that is
         # fine for our current terminal
+
         inputStream = request.getInputStream()
+
         contentLength = request.getContentLength()
+
         atStart = False
         firstFileFieldFound = False
+
         rawfilename = 'unknown'
         rawMimeType = 'application/octet-stream'
+
         # Read the stream until the actual file starts (empty line). Read
         # filename and content type from multipart headers.
-
         while not atStart:
             readLine = self.readLine(inputStream)
             contentLength -= len(readLine) + 2
-            if (
-                readLine.startswith('Content-Disposition:') and readLine.find('filename=') > 0
-            ):
+            if (readLine.startswith('Content-Disposition:') and readLine.find('filename=') > 0):
                 rawfilename = readLine.replaceAll('.*filename=', '')
                 parenthesis = rawfilename[:1]
                 rawfilename = rawfilename[1:]
@@ -370,39 +419,47 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener, Serializab
                 atStart = True
             elif readLine.startswith('Content-Type'):
                 rawMimeType = readLine.split(': ')[1]
-        contentLength -= len(boundary) + len(self._CRLF) + (2 * len(self._DASHDASH)) + 2
-        # 2 == CRLF
+
+        contentLength -= len(boundary) + len(self._CRLF) + (2 * len(self._DASHDASH)) + 2  # 2 == CRLF
+
         # Reads bytes from the underlying stream. Compares the read bytes to
         # the boundary string and returns -1 if met.
-        # 
+        #
         # The matching happens so that if the read byte equals to the first
         # char of boundary string, the stream goes to "buffering mode". In
         # buffering mode bytes are read until the character does not match the
         # corresponding from boundary string or the full boundary string is
         # found.
-        # 
+        #
         # Note, if this is someday needed elsewhere, don't shoot yourself to
         # foot and split to a top level helper class.
-
         simpleMultiPartReader = self.SimpleMultiPartInputStream(inputStream, boundary)
+
         # Should report only the filename even if the browser sends the path
         filename = self.removePath(rawfilename)
         mimeType = rawMimeType
-        # safe cast as in GWT terminal all variable owners are expected to
-        # be components.
 
         try:
+            # safe cast as in GWT terminal all variable owners are expected to
+            # be components.
             component = owner
             if component.isReadOnly():
-                raise UploadException('Warning: file upload ignored because the componente was read-only')
-            forgetVariable = self.streamToReceiver(simpleMultiPartReader, streamVariable, filename, mimeType, contentLength)
+                raise UploadException('Warning: file upload ignored because the component was read-only')
+
+            forgetVariable = self.streamToReceiver(simpleMultiPartReader,
+                                                   streamVariable,
+                                                   filename, mimeType,
+                                                   contentLength)
             if forgetVariable:
                 self.cleanStreamVariable(owner, variableName)
         except Exception, e:
             self.handleChangeVariablesError(self._application, owner, e, dict())
+
         self.sendUploadResponse(request, response)
 
-    def doHandleXhrFilePost(self, request, response, streamVariable, variableName, owner, contentLength):
+
+    def doHandleXhrFilePost(self, request, response, streamVariable, variableName,
+                            owner, contentLength):
         """Used to stream plain file post (aka XHR2.post(File))
 
         @param request
@@ -417,21 +474,25 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener, Serializab
         filename = 'unknown'
         mimeType = filename
         stream = request.getInputStream()
-        # safe cast as in GWT terminal all variable owners are expected to
-        # be components.
 
         try:
+            # safe cast as in GWT terminal all variable owners are expected to
+            # be components.
             component = owner
             if component.isReadOnly():
                 raise UploadException('Warning: file upload ignored because the component was read-only')
-            forgetVariable = self.streamToReceiver(stream, streamVariable, filename, mimeType, contentLength)
+
+            forgetVariable = self.streamToReceiver(stream, streamVariable,
+                                            filename, mimeType, contentLength)
             if forgetVariable:
                 self.cleanStreamVariable(owner, variableName)
         except Exception, e:
             self.handleChangeVariablesError(self._application, owner, e, dict())
+
         self.sendUploadResponse(request, response)
 
-    def streamToReceiver(self, in_, streamVariable, filename, type, contentLength):
+
+    def streamToReceiver(self, in_, streamVariable, filename, typ, contentLength):
         """@param in
         @param streamVariable
         @param filename
@@ -443,60 +504,75 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener, Serializab
         """
         if streamVariable is None:
             raise self.IllegalStateException('StreamVariable for the post not found')
+
         application = self.getApplication()
+
         out = None
         totalBytes = 0
-        startedEvent = StreamingStartEventImpl(filename, type, contentLength)
-        # Download interrupted by application code
+        startedEvent = StreamingStartEventImpl(filename, typ, contentLength)
+
         try:
             streamVariable.streamingStarted(startedEvent)
             out = streamVariable.getOutputStream()
             listenProgress = streamVariable.listenProgress()
+
             # Gets the output target stream
             if out is None:
                 raise NoOutputStreamException()
+
             if None is in_:
                 # No file, for instance non-existent filename in html upload
                 raise NoInputStreamException()
-            buffer = [None] * self._MAX_UPLOAD_BUFFER_SIZE
+
+            bufferSize = self._MAX_UPLOAD_BUFFER_SIZE
             bytesReadToBuffer = 0
-            while bytesReadToBuffer = in_.read(buffer) > 0:
-                out.write(buffer, 0, bytesReadToBuffer)
+            while totalBytes < in_.len:
+                buffer = in_.read(bufferSize)
+                bytesReadToBuffer = in_.pos - bytesReadToBuffer
+
+                out.write(buffer)
                 totalBytes += bytesReadToBuffer
+
                 if listenProgress:
                     # update progress if listener set and contentLength
                     # received
-                    progressEvent = self.StreamingProgressEventImpl(filename, type, contentLength, totalBytes)
+                    progressEvent = self.StreamingProgressEventImpl(filename,
+                                                typ, contentLength, totalBytes)
                     streamVariable.onProgress(progressEvent)
+
                 if streamVariable.isInterrupted():
                     raise self.UploadInterruptedException()
+
             # upload successful
             out.close()
-            event = StreamingEndEventImpl(filename, type, totalBytes)
+            event = StreamingEndEventImpl(filename, typ, totalBytes)
             streamVariable.streamingFinished(event)
         except UploadInterruptedException, e:
+            # Download interrupted by application code
             self.tryToCloseStream(out)
-            event = StreamingErrorEventImpl(filename, type, contentLength, totalBytes, e)
+            event = StreamingErrorEventImpl(filename, typ, contentLength, totalBytes, e)
             streamVariable.streamingFailed(event)
             # Note, we are not throwing interrupted exception forward as it is
             # not a terminal level error like all other exception.
         except Exception, e:
             self.tryToCloseStream(out)
-            event = StreamingErrorEventImpl(filename, type, contentLength, totalBytes, e)
+            event = StreamingErrorEventImpl(filename, typ, contentLength, totalBytes, e)
             streamVariable.streamingFailed(event)
             # throw exception for terminal to be handled (to be passed to
             # terminalErrorHandler)
             raise UploadException(e)
+
         return startedEvent.isDisposed()
 
+
     def tryToCloseStream(self, out):
-        # try to close output stream (e.g. file handle)
-        # NOP
         try:
+            # try to close output stream (e.g. file handle)
             if out is not None:
                 out.close()
-        except IOException, e1:
-            pass # astStmt: [Stmt([]), None]
+        except IOError:
+            pass  # NOP
+
 
     @classmethod
     def removePath(cls, filename):
@@ -508,7 +584,9 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener, Serializab
         """
         if filename is not None:
             filename = filename.replaceAll('^.*[/\\\\]', '')
+
         return filename
+
 
     def sendUploadResponse(self, request, response):
         """TODO document
@@ -519,10 +597,10 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener, Serializab
         """
         response.setContentType('text/html')
         out = response.getOutputStream()
-        outWriter = PrintWriter(BufferedWriter(OutputStreamWriter(out, 'UTF-8')))
-        outWriter.print_('<html><body>download handled</body></html>')
-        outWriter.flush()
+        out.write('<html><body>download handled</body></html>')
+        out.flush()
         out.close()
+
 
     def doHandleUidlRequest(self, request, response, callback, window):
         """Internally process a UIDL request from the client.
@@ -551,14 +629,19 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener, Serializab
         self._requestThemeName = request.getParameter('theme')
         self._maxInactiveInterval = request.getSession().getMaxInactiveInterval()
         # repaint requested or session has timed out and new one is created
+
         repaintAll = request.getParameter(self._GET_PARAM_REPAINT_ALL) is not None
         # || (request.getSession().isNew()); FIXME What the h*ll is this??
         out = response.getOutputStream()
+
         analyzeLayouts = False
         if repaintAll:
             # analyzing can be done only with repaintAll
             analyzeLayouts = request.getParameter(self._GET_PARAM_ANALYZE_LAYOUTS) is not None
-        outWriter = PrintWriter(BufferedWriter(OutputStreamWriter(out, 'UTF-8')))
+
+
+        outWriter = StringIO()
+
         # The rest of the process is synchronized with the application
         # in order to guarantee that no parallel variable handling is
         # made
@@ -567,44 +650,57 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener, Serializab
             if window is None:
                 # This should not happen, no windows exists but
                 # application is still open.
-                self._logger.warning('Could not get window for application with request ID ' + request.getRequestID())
+                self._logger.warning('Could not get window for application with request ID ' \
+                                     + request.getRequestID())
                 return
         else:
             # application has been closed
             self.endApplication(request, response, self._application)
             return
+
         # Change all variables based on request parameters
-        if (
-            not self.handleVariables(request, response, callback, self._application, window)
-        ):
+        if (not self.handleVariables(request, response, callback, self._application,
+                                     window)):
+
             # var inconsistency; the client is probably out-of-sync
             ci = None
-            # FIXME: Handle exception
-            # Not critical, but something is still wrong; print
-            # stacktrace
+
             try:
                 m = self._application.getClass().getMethod('getSystemMessages', None)
                 ci = m.invoke(None, None)
             except Exception, e2:
-                self._logger.log(Level.WARNING, 'getSystemMessages() failed - continuing', e2)
+                # FIXME: Handle exception
+                # Not critical, but something is still wrong; print
+                # stacktrace
+                self._logger.warning('getSystemMessages() failed - continuing')
+
             if ci is not None:
                 msg = ci.getOutOfSyncMessage()
                 cap = ci.getOutOfSyncCaption()
                 if (msg is not None) or (cap is not None):
-                    callback.criticalNotification(request, response, cap, msg, None, ci.getOutOfSyncURL())
+                    callback.criticalNotification(request, response, cap, msg,
+                                                  None, ci.getOutOfSyncURL())
                     # will reload page after this
                     return
+
             # No message to show, let's just repaint all.
             repaintAll = True
-        self.paintAfterVariableChanges(request, response, callback, repaintAll, outWriter, window, analyzeLayouts)
+
+
+        self.paintAfterVariableChanges(request, response, callback, repaintAll,
+                                       outWriter, window, analyzeLayouts)
+
         if self._closingWindowName is not None:
             self._currentlyOpenWindowsInClient.remove(self._closingWindowName)
             self._closingWindowName = None
+
         # Finds the window within the application
         outWriter.close()
         self._requestThemeName = None
 
-    def paintAfterVariableChanges(self, request, response, callback, repaintAll, outWriter, window, analyzeLayouts):
+
+    def paintAfterVariableChanges(self, request, response, callback, repaintAll,
+                                  outWriter, window, analyzeLayouts):
         """TODO document
 
         @param request
@@ -619,111 +715,115 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener, Serializab
         """
         if repaintAll:
             self.makeAllPaintablesDirty(window)
+
         # Removes application if it has stopped during variable changes
         if not self._application.isRunning():
             self.endApplication(request, response, self._application)
             return
+
         self.openJsonMessage(outWriter, response)
+
         # security key
         writeSecurityTokenFlag = request.getAttribute(self._WRITE_SECURITY_TOKEN_FLAG)
+
         if writeSecurityTokenFlag is not None:
             seckey = request.getSession().getAttribute(ApplicationConnection.UIDL_SECURITY_TOKEN_ID)
             if seckey is None:
-                seckey = str(UUID.randomUUID())
+                seckey = str(uuid.uuid4())
                 request.getSession().setAttribute(ApplicationConnection.UIDL_SECURITY_TOKEN_ID, seckey)
-            outWriter.print_('\"' + ApplicationConnection.UIDL_SECURITY_TOKEN_ID + '\":\"')
-            outWriter.print_(seckey)
-            outWriter.print_('\",')
+
+            outWriter.write('\"' + ApplicationConnection.UIDL_SECURITY_TOKEN_ID + '\":\"')
+            outWriter.write(seckey)
+            outWriter.write('\",')
+
+
         # If the browser-window has been closed - we do not need to paint it at
         # all
         if window.getName() == self._closingWindowName:
-            outWriter.print_('\"changes\":[]')
+            outWriter.write('\"changes\":[]')
         else:
             # re-get window - may have been changed
             newWindow = self.doGetApplicationWindow(request, callback, self._application, window)
             if newWindow != window:
                 window = newWindow
                 repaintAll = True
+
             self.writeUidlResponce(callback, repaintAll, outWriter, window, analyzeLayouts)
+
         self.closeJsonMessage(outWriter)
+
         outWriter.close()
+
 
     def writeUidlResponce(self, callback, repaintAll, outWriter, window, analyzeLayouts):
         outWriter.print_('\"changes\":[')
+
         paintables = None
+
         invalidComponentRelativeSizes = None
+
         paintTarget = JsonPaintTarget(self, outWriter, not repaintAll)
+
         windowCache = self._currentlyOpenWindowsInClient[window.getName()]
+
         if windowCache is None:
             windowCache = self.OpenWindowCache()
-            self._currentlyOpenWindowsInClient.put(window.getName(), windowCache)
+            self._currentlyOpenWindowsInClient[window.getName()] = windowCache
+
         # Paints components
         if repaintAll:
             paintables = list()
-            paintables.add(window)
+            paintables.append(window)
+
             # Reset sent locales
             self._locales = None
-            self.requireLocale(str(self._application.getLocale()))
+            self.requireLocale(self._application.getLocale())
         else:
             # remove detached components from paintableIdMap so they
             # can be GC'ed
             # TODO figure out if we could move this beyond the painting phase,
             # "respond as fast as possible, then do the cleanup". Beware of
             # painting the dirty detatched components.
-
-            _0 = True
-            it = self._paintableIdMap.keys()
-            while True:
-                if _0 is True:
-                    _0 = False
-                if not it.hasNext():
-                    break
-                p = it.next()
+            for p in self._paintableIdMap.keys():
                 if p.getApplication() is None:
                     self.unregisterPaintable(p)
-                    self._idPaintableMap.remove(self._paintableIdMap[p])
-                    it.remove()
-                    self._dirtyPaintables.remove(p)
+                    del self._idPaintableMap[self._paintableIdMap[p]]
+#                    it.remove()
+                    del self._dirtyPaintables[p]
+
             paintables = self.getDirtyVisibleComponents(window)
+
         if paintables is not None:
             # We need to avoid painting children before parent.
             # This is ensured by ordering list by depth in component
             # tree
 
-            class _0_(Comparator):
+            def compare(o1, o2):
+                c1 = o1
+                c2 = o2
+                d1 = 0
+                while c1.getParent() is not None:
+                    d1 += 1
+                    c1 = c1.getParent()
+                d2 = 0
+                while c2.getParent() is not None:
+                    d2 += 1
+                    c2 = c2.getParent()
+                if d1 < d2:
+                    return -1
+                if d1 > d2:
+                    return 1
+                return 0
 
-                def compare(self, o1, o2):
-                    c1 = o1
-                    c2 = o2
-                    d1 = 0
-                    while c1.getParent() is not None:
-                        d1 += 1
-                        c1 = c1.getParent()
-                    d2 = 0
-                    while c2.getParent() is not None:
-                        d2 += 1
-                        c2 = c2.getParent()
-                    if d1 < d2:
-                        return -1
-                    if d1 > d2:
-                        return 1
-                    return 0
+            paintables.sort(compare)
 
-            _0_ = self._0_()
-            Collections.sort(paintables, _0_)
-            _1 = True
-            i = paintables
-            while True:
-                if _1 is True:
-                    _1 = False
-                if not i.hasNext():
-                    break
-                p = i.next()
+            for p in paintables:
                 # TODO CLEAN
                 if isinstance(p, Window):
                     w = p
                     if w.getTerminal() is None:
                         w.setTerminal(self._application.getMainWindow().getTerminal())
+
                 # This does not seem to happen in tk5, but remember this case:
                 # else if (p instanceof Component) { if (((Component)
                 # p).getParent() == null || ((Component) p).getApplication() ==
@@ -737,19 +837,26 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener, Serializab
                     paintTarget.addAttribute('format', 'uidl')
                     pid = self.getPaintableId(p)
                     paintTarget.addAttribute('pid', pid)
+
                     p.paint(paintTarget)
+
                     paintTarget.endTag('change')
+
                 self.paintablePainted(p)
+
                 if analyzeLayouts:
                     w = p
                     invalidComponentRelativeSizes = ComponentSizeValidator.validateComponentRelativeSizes(w.getContent(), None, None)
+
                     # Also check any existing subwindows
                     if w.getChildWindows() is not None:
                         for subWindow in w.getChildWindows():
                             invalidComponentRelativeSizes = ComponentSizeValidator.validateComponentRelativeSizes(subWindow.getContent(), invalidComponentRelativeSizes, None)
+
+
         paintTarget.close()
-        outWriter.print_(']')
-        # close changes
+        outWriter.print_(']')  # close changes
+
         outWriter.print_(', \"meta\" : {')
         metaOpen = False
         if repaintAll:
@@ -765,25 +872,21 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener, Serializab
                             outWriter.write(',')
                         else:
                             first = False
-                        invalidLayout.reportErrors(outWriter, self, System.err)
+                        invalidLayout.reportErrors(outWriter, self, stderr)
+
                 outWriter.write(']')
+
+
         ci = None
+        try:
+            m = getattr(self._application, 'getSystemMessages')
+            ci = m()
+        except AttributeError, e:
+            self._logger.warning('getSystemMessages() failed - continuing')
+
         # meta instruction for client to enable auto-forward to
         # sessionExpiredURL after timer expires.
-        try:
-            m = self._application.getClass().getMethod('getSystemMessages', None)
-            ci = m.invoke(None, None)
-        except NoSuchMethodException, e:
-            self._logger.log(Level.WARNING, 'getSystemMessages() failed - continuing', e)
-        except IllegalArgumentException, e:
-            self._logger.log(Level.WARNING, 'getSystemMessages() failed - continuing', e)
-        except IllegalAccessException, e:
-            self._logger.log(Level.WARNING, 'getSystemMessages() failed - continuing', e)
-        except InvocationTargetException, e:
-            self._logger.log(Level.WARNING, 'getSystemMessages() failed - continuing', e)
-        if (
-            ci is not None and ci.getSessionExpiredMessage() is None and ci.getSessionExpiredCaption() is None and ci.isSessionExpiredNotificationEnabled()
-        ):
+        if (ci is not None and ci.getSessionExpiredMessage() is None and ci.getSessionExpiredCaption() is None and ci.isSessionExpiredNotificationEnabled()):
             newTimeoutInterval = self.getTimeoutInterval()
             if repaintAll or (self._timeoutInterval != newTimeoutInterval):
                 escapedURL = '' if ci.getSessionExpiredURL() is None else ci.getSessionExpiredURL().replace('/', '\\/')
@@ -791,44 +894,42 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener, Serializab
                     outWriter.write(',')
                 outWriter.write('\"timedRedirect\":{\"interval\":' + newTimeoutInterval + 15 + ',\"url\":\"' + escapedURL + '\"}')
                 metaOpen = True
+
             self._timeoutInterval = newTimeoutInterval
+
         outWriter.print_('}, \"resources\" : {')
+
         # Precache custom layouts
+
         # TODO We should only precache the layouts that are not
         # cached already (plagiate from usedPaintableTypes)
         resourceIndex = 0
-        _2 = True
-        i = paintTarget.getUsedResources()
-        while True:
-            if _2 is True:
-                _2 = False
-            if not i.hasNext():
-                break
-            resource = i.next()
+        for resource in paintTarget.getUsedResources():
             is_ = None
-            # FIXME: Handle exception
             try:
                 is_ = callback.getThemeResourceAsStream(self.getTheme(window), resource)
             except Exception, e:
-                self._logger.log(Level.FINER, 'Failed to get theme resource stream.', e)
-            if is_ is not None:
-                outWriter.print_((', ' if POSTINC(globals(), locals(), 'resourceIndex') > 0 else '') + '\"' + resource + '\" : ')
-                layout = str()
                 # FIXME: Handle exception
+                self._logger.info('Failed to get theme resource stream.')
+
+            if is_ is not None:
+                outWriter.write((', ' if resourceIndex > 0 else '') + '\"' + resource + '\" : ')
+                resourceIndex += 1  ## TODO check post increment
+                layout = str()
                 try:
-                    r = InputStreamReader(is_, 'UTF-8')
-                    buffer = [None] * 20000
-                    charsRead = 0
-                    while charsRead = r.read(buffer) > 0:
-                        layout.__add__(buffer, 0, charsRead)
-                    r.close()
-                except java.io.IOException, e:
-                    self._logger.log(Level.INFO, 'Resource transfer failed', e)
-                outWriter.print_('\"' + JsonPaintTarget.escapeJSON(str(layout)) + '\"')
+                    layout += is_.getvalue()
+                except IOError, e:
+                # FIXME: Handle exception
+                    self._logger.info('Resource transfer failed: ' + str(e))
+
+                outWriter.write('\"' + JsonPaintTarget.escapeJSON(str(layout)) + '\"')
             else:
                 # FIXME: Handle exception
                 self._logger.severe('CustomLayout not found: ' + resource)
-        outWriter.print_('}')
+
+        outWriter.write('}')
+
+
         usedPaintableTypes = paintTarget.getUsedPaintableTypes()
         typeMappingsOpen = False
         for class1 in usedPaintableTypes:
@@ -837,53 +938,60 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener, Serializab
                 # mapping to client
                 if not typeMappingsOpen:
                     typeMappingsOpen = True
-                    outWriter.print_(', \"typeMappings\" : { ')
+                    outWriter.write(', \"typeMappings\" : { ')
                 else:
-                    outWriter.print_(' , ')
+                    outWriter.write(' , ')
                 canonicalName = class1.getCanonicalName()
-                outWriter.print_('\"')
-                outWriter.print_(canonicalName)
-                outWriter.print_('\" : ')
-                outWriter.print_(self.getTagForType(class1))
+                outWriter.write('\"')
+                outWriter.write(canonicalName)
+                outWriter.write('\" : ')
+                outWriter.write(self.getTagForType(class1))
+
         if typeMappingsOpen:
             outWriter.print_(' }')
+
         # add any pending locale definitions requested by the client
         self.printLocaleDeclarations(outWriter)
+
         if self._dragAndDropService is not None:
             self._dragAndDropService.printJSONResponse(outWriter)
+
 
     def getTimeoutInterval(self):
         return self._maxInactiveInterval
 
+
     def getTheme(self, window):
         themeName = window.getTheme()
         requestThemeName = self.getRequestTheme()
+
         if requestThemeName is not None:
             themeName = requestThemeName
+
         if themeName is None:
             themeName = AbstractApplicationServlet.getDefaultTheme()
+
         return themeName
+
 
     def getRequestTheme(self):
         return self._requestThemeName
 
+
     def makeAllPaintablesDirty(self, window):
         # If repaint is requested, clean all ids in this root window
-        _0 = True
-        it = self._idPaintableMap.keys()
-        while True:
-            if _0 is True:
-                _0 = False
-            if not it.hasNext():
-                break
-            c = self._idPaintableMap[it.next()]
+        for key in self._idPaintableMap.keys():
+            c = self._idPaintableMap[key]
             if self.isChildOf(window, c):
-                it.remove()
-                self._paintableIdMap.remove(c)
+#                it.remove()
+                del self._paintableIdMap[c]
+
         # clean WindowCache
         openWindowCache = self._currentlyOpenWindowsInClient[window.getName()]
+
         if openWindowCache is not None:
             openWindowCache.clear()
+
 
     def unregisterPaintable(self, p):
         """Called when communication manager stops listening for repaints for given
@@ -893,7 +1001,8 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener, Serializab
         """
         p.removeListener(self)
 
-    def handleVariables(self, request, response, callback, application2, window):
+
+    def _handleVariables(self, request, response, callback, application2, window):
         """TODO document
 
         If this method returns false, something was submitted that we did not
@@ -903,15 +1012,16 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener, Serializab
         @return true if successful, false if there was an inconsistency
         """
         success = True
+
         changes = self.getRequestPayload(request)
         if changes is not None:
+
             # Manage bursts one by one
             bursts = changes.split(self.VAR_BURST_SEPARATOR)
+
             # Security: double cookie submission pattern unless disabled by
             # property
-            if (
-                not ('true' == application2.getProperty(AbstractApplicationServlet.SERVLET_PARAMETER_DISABLE_XSRF_PROTECTION))
-            ):
+            if (not ('true' == application2.getProperty(AbstractApplicationServlet.SERVLET_PARAMETER_DISABLE_XSRF_PROTECTION))):
                 if len(bursts) == 1 and 'init' == bursts[0]:
                     # init request; don't handle any variables, key sent in
                     # response.
@@ -921,19 +1031,14 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener, Serializab
                     # ApplicationServlet has stored the security token in the
                     # session; check that it matched the one sent in the UIDL
                     sessId = request.getSession().getAttribute(ApplicationConnection.UIDL_SECURITY_TOKEN_ID)
+
                     if (sessId is None) or (not (sessId == bursts[0])):
                         raise self.InvalidUIDLSecurityKeyException('Security key mismatch')
-            _0 = True
-            bi = 1
-            while True:
-                if _0 is True:
-                    _0 = False
-                else:
-                    bi += 1
-                if not (bi < len(bursts)):
-                    break
+
+            for bi in bursts:
                 burst = bursts[bi]
                 success = self.handleVariableBurst(request, application2, success, burst)
+
                 # In case that there were multiple bursts, we know that this is
                 # a special synchronous case for closing window. Thus we are
                 # not interested in sending any UIDL changes back to client.
@@ -941,9 +1046,12 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener, Serializab
                 # that no removed components are updated. The painting after
                 # the last burst is handled normally by the calling method.
                 if bi < len(bursts) - 1:
+
                     # We will be discarding all changes
-                    outWriter = PrintWriter(CharArrayWriter())
+                    outWriter = StringIO()
+
                     self.paintAfterVariableChanges(request, response, callback, True, outWriter, window, False)
+
         # Note that we ignore inconsistencies while handling unload request.
         # The client can't remove invalid variable changes from the burst, and
         # we don't have the required logic implemented on the server side. E.g.
@@ -951,67 +1059,55 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener, Serializab
 
         return success or (self._closingWindowName is not None)
 
-    def handleVariableBurst(self, source, app, success, burst):
+
+    def _handleVariableBurst(self, source, app, success, burst):
         # extract variables to two dim string array
         tmp = burst.split(self._VAR_RECORD_SEPARATOR)
-        variableRecords = [None] * 4
-        _0 = True
-        i = 0
-        while True:
-            if _0 is True:
-                _0 = False
-            else:
-                i += 1
-            if not (i < len(tmp)):
-                break
+        variableRecords = [None] * len(tmp)
+
+        for i in range(len(tmp)):
             variableRecords[i] = tmp[i].split(self._VAR_FIELD_SEPARATOR)
-        _1 = True
-        i = 0
-        while True:
-            if _1 is True:
-                _1 = False
-            else:
-                i += 1
-            if not (i < len(variableRecords)):
-                break
+
+        for i in range(len(variableRecords)):
             variable = variableRecords[i]
             nextVariable = None
             if i + 1 < len(variableRecords):
                 nextVariable = variableRecords[i + 1]
+
             owner = self.getVariableOwner(variable[self._VAR_PID])
             if owner is not None and owner.isEnabled():
-                if (
-                    nextVariable is not None and variable[self._VAR_PID] == nextVariable[self._VAR_PID]
-                ):
+                m = dict()
+                if (nextVariable is not None and variable[self._VAR_PID] == nextVariable[self._VAR_PID]):
                     # we have more than one value changes in row for
                     # one variable owner, collect em in HashMap
-                    m = dict()
-                    m.put(variable[self._VAR_NAME], self.convertVariableValue(variable[self._VAR_TYPE][0], variable[self._VAR_VALUE]))
+                    m[variable[self._VAR_NAME]] = self.convertVariableValue(variable[self._VAR_TYPE][0], variable[self._VAR_VALUE])
                 else:
                     # use optimized single value map
-                    m = Collections.singletonMap(variable[self._VAR_NAME], self.convertVariableValue(variable[self._VAR_TYPE][0], variable[self._VAR_VALUE]))
+                    m[variable[self._VAR_NAME]] = self.convertVariableValue(variable[self._VAR_TYPE][0], variable[self._VAR_VALUE])
+
                 # collect following variable changes for this owner
-                while (
-                    nextVariable is not None and variable[self._VAR_PID] == nextVariable[self._VAR_PID]
-                ):
+                while (nextVariable is not None and variable[self._VAR_PID] == nextVariable[self._VAR_PID]):
                     i += 1
                     variable = nextVariable
                     if i + 1 < len(variableRecords):
                         nextVariable = variableRecords[i + 1]
                     else:
                         nextVariable = None
-                    m.put(variable[self._VAR_NAME], self.convertVariableValue(variable[self._VAR_TYPE][0], variable[self._VAR_VALUE]))
+
+                    m[variable[self._VAR_NAME]] = self.convertVariableValue(variable[self._VAR_TYPE][0], variable[self._VAR_VALUE])
+
                 try:
                     owner.changeVariables(source, m)
+
                     # Special-case of closing browser-level windows:
                     # track browser-windows currently open in client
                     if isinstance(owner, Window) and owner.getParent() is None:
                         close = m['close']
-                        if close is not None and close.booleanValue():
+                        if close is not None and bool(close):
                             self._closingWindowName = owner.getName()
                 except Exception, e:
                     if isinstance(owner, Component):
-                        self.handleChangeVariablesError(app, owner, e, m)
+                        self._handleChangeVariablesError(app, owner, e, m)
                     else:
                         # TODO DragDropService error handling
                         raise RuntimeError(e)
@@ -1022,19 +1118,24 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener, Serializab
                 if 'close' == variable[self._VAR_NAME] and 'true' == variable[self._VAR_VALUE]:
                     # Silently ignore this
                     continue
+
                 # Ignore variable change
                 msg = 'Warning: Ignoring variable change for '
                 if owner is not None:
-                    msg += 'disabled component ' + owner.getClass()
+                    msg += 'disabled component ' + owner.__class__
                     caption = owner.getCaption()
                     if caption is not None:
                         msg += ', caption=' + caption
                 else:
-                    msg += 'non-existent component, VAR_PID=' + variable[self._VAR_PID]
+                    msg += 'non-existent component, VAR_PID=' \
+                            + variable[self._VAR_PID]
                     success = False
+
                 self._logger.warning(msg)
                 continue
+
         return success
+
 
     def getVariableOwner(self, string):
         owner = self._idPaintableMap[string]
@@ -1042,10 +1143,12 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener, Serializab
             return self.getDragAndDropService()
         return owner
 
+
     def getDragAndDropService(self):
         if self._dragAndDropService is None:
             self._dragAndDropService = DragAndDropService(self)
         return self._dragAndDropService
+
 
     def getRequestPayload(self, request):
         """Reads the request data from the Request and returns it converted to an
@@ -1279,7 +1382,7 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener, Serializab
             # Time formatting (24 or 12 hour clock and AM/PM suffixes)
             timeformat = df[timeStart:len(df)]
             # Doesn't return second or milliseconds.
-            # 
+            #
             # We use timeformat to determine 12/24-hour clock
 
             twelve_hour_clock = timeformat.find('a') > -1
@@ -1325,7 +1428,7 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener, Serializab
             # Get the path from URL
             path = callback.getRequestPathInfo(request)
             # If the path is specified, create name from it.
-            # 
+            #
             # An exception is if UIDL request have come this far. This happens
             # if main window is refreshed. In that case we always return main
             # window (infamous hacky support for refreshes if only main window
@@ -1484,7 +1587,7 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener, Serializab
                         component.getParent() is not None and not component.getParent().isVisible()
                     ):
                         # Do not return components in an invisible subtree.
-                        # 
+                        #
                         # Components that are invisible in visible subree, must
                         # be rendered (to let client know that they need to be
                         # hidden).

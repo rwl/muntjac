@@ -14,11 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.ui.Component import (Component,)
-from com.vaadin.ui.OrderedLayout import (OrderedLayout,)
-from com.vaadin.terminal.Sizeable import (Sizeable,)
-from com.vaadin.ui.CustomComponent import (CustomComponent,)
+from com.vaadin.ui.Component import Component
+from com.vaadin.ui.OrderedLayout import OrderedLayout
+from com.vaadin.terminal.Sizeable import Sizeable
+from com.vaadin.ui.CustomComponent import CustomComponent
 # from com.vaadin.ui.GridLayout.Area import (Area,)
 # from java.io.PrintStream import (PrintStream,)
 # from java.io.PrintWriter import (PrintWriter,)
@@ -118,100 +117,6 @@ class ComponentSizeValidator(Serializable):
         except Exception, e:
             cls._logger.log(Level.FINER, 'An exception occurred while validating sizes.', e)
             return True
-
-    class InvalidLayout(Serializable):
-        _component = None
-        _invalidHeight = None
-        _invalidWidth = None
-        _subErrors = list()
-
-        def __init__(self, component, height, width):
-            self._component = component
-            self._invalidHeight = height
-            self._invalidWidth = width
-
-        def addError(self, error):
-            self._subErrors.add(error)
-
-        def reportErrors(self, clientJSON, communicationManager, serverErrorStream):
-            clientJSON.write('{')
-            parent = self._component.getParent()
-            paintableId = communicationManager.getPaintableId(self._component)
-            clientJSON.print_('id:\"' + paintableId + '\"')
-            if self._invalidHeight:
-                attributes = None
-                msg = ''
-                # set proper error messages
-                if isinstance(parent, AbstractOrderedLayout):
-                    ol = parent
-                    vertical = False
-                    if isinstance(ol, OrderedLayout):
-                        if ol.getOrientation() == OrderedLayout.ORIENTATION_VERTICAL:
-                            vertical = True
-                    elif isinstance(ol, VerticalLayout):
-                        vertical = True
-                    if vertical:
-                        msg = 'Component with relative height inside a VerticalLayout with no height defined.'
-                        attributes = self.getHeightAttributes(self._component)
-                    else:
-                        msg = 'At least one of a HorizontalLayout\'s components must have non relative height if the height of the layout is not defined'
-                        attributes = self.getHeightAttributes(self._component)
-                elif isinstance(parent, GridLayout):
-                    msg = 'At least one of the GridLayout\'s components in each row should have non relative height if the height of the layout is not defined.'
-                    attributes = self.getHeightAttributes(self._component)
-                else:
-                    # default error for non sized parent issue
-                    msg = 'A component with relative height needs a parent with defined height.'
-                    attributes = self.getHeightAttributes(self._component)
-                self.printServerError(msg, attributes, False, serverErrorStream)
-                clientJSON.print_(',\"heightMsg\":\"' + msg + '\"')
-            if self._invalidWidth:
-                attributes = None
-                msg = ''
-                if isinstance(parent, AbstractOrderedLayout):
-                    ol = parent
-                    horizontal = True
-                    if isinstance(ol, OrderedLayout):
-                        if ol.getOrientation() == OrderedLayout.ORIENTATION_VERTICAL:
-                            horizontal = False
-                    elif isinstance(ol, VerticalLayout):
-                        horizontal = False
-                    if horizontal:
-                        msg = 'Component with relative width inside a HorizontalLayout with no width defined'
-                        attributes = self.getWidthAttributes(self._component)
-                    else:
-                        msg = 'At least one of a VerticalLayout\'s components must have non relative width if the width of the layout is not defined'
-                        attributes = self.getWidthAttributes(self._component)
-                elif isinstance(parent, GridLayout):
-                    msg = 'At least one of the GridLayout\'s components in each column should have non relative width if the width of the layout is not defined.'
-                    attributes = self.getWidthAttributes(self._component)
-                else:
-                    # default error for non sized parent issue
-                    msg = 'A component with relative width needs a parent with defined width.'
-                    attributes = self.getWidthAttributes(self._component)
-                clientJSON.print_(',\"widthMsg\":\"' + msg + '\"')
-                self.printServerError(msg, attributes, True, serverErrorStream)
-            if len(self._subErrors) > 0:
-                print 'Sub errors >>'
-                clientJSON.write(', \"subErrors\" : [')
-                first = True
-                for subError in self._subErrors:
-                    if not first:
-                        clientJSON.print_(',')
-                    else:
-                        first = False
-                    subError.reportErrors(clientJSON, communicationManager, serverErrorStream)
-                clientJSON.write(']')
-                print '<< Sub erros'
-            clientJSON.write('}')
-
-    class ComponentInfo(Serializable):
-        _component = None
-        _info = None
-
-        def __init__(self, component, info):
-            self._component = component
-            self._info = info
 
     @classmethod
     def getHeightAttributes(cls, component):
@@ -543,3 +448,98 @@ class ComponentSizeValidator(Serializable):
                 return
             except Exception, e:
                 cls._logger.log(Level.FINER, 'An exception occurred while validating sizes.', e)
+
+
+    class InvalidLayout(Serializable):
+        _component = None
+        _invalidHeight = None
+        _invalidWidth = None
+        _subErrors = list()
+
+        def __init__(self, component, height, width):
+            self._component = component
+            self._invalidHeight = height
+            self._invalidWidth = width
+
+        def addError(self, error):
+            self._subErrors.add(error)
+
+        def reportErrors(self, clientJSON, communicationManager, serverErrorStream):
+            clientJSON.write('{')
+            parent = self._component.getParent()
+            paintableId = communicationManager.getPaintableId(self._component)
+            clientJSON.print_('id:\"' + paintableId + '\"')
+            if self._invalidHeight:
+                attributes = None
+                msg = ''
+                # set proper error messages
+                if isinstance(parent, AbstractOrderedLayout):
+                    ol = parent
+                    vertical = False
+                    if isinstance(ol, OrderedLayout):
+                        if ol.getOrientation() == OrderedLayout.ORIENTATION_VERTICAL:
+                            vertical = True
+                    elif isinstance(ol, VerticalLayout):
+                        vertical = True
+                    if vertical:
+                        msg = 'Component with relative height inside a VerticalLayout with no height defined.'
+                        attributes = self.getHeightAttributes(self._component)
+                    else:
+                        msg = 'At least one of a HorizontalLayout\'s components must have non relative height if the height of the layout is not defined'
+                        attributes = self.getHeightAttributes(self._component)
+                elif isinstance(parent, GridLayout):
+                    msg = 'At least one of the GridLayout\'s components in each row should have non relative height if the height of the layout is not defined.'
+                    attributes = self.getHeightAttributes(self._component)
+                else:
+                    # default error for non sized parent issue
+                    msg = 'A component with relative height needs a parent with defined height.'
+                    attributes = self.getHeightAttributes(self._component)
+                self.printServerError(msg, attributes, False, serverErrorStream)
+                clientJSON.print_(',\"heightMsg\":\"' + msg + '\"')
+            if self._invalidWidth:
+                attributes = None
+                msg = ''
+                if isinstance(parent, AbstractOrderedLayout):
+                    ol = parent
+                    horizontal = True
+                    if isinstance(ol, OrderedLayout):
+                        if ol.getOrientation() == OrderedLayout.ORIENTATION_VERTICAL:
+                            horizontal = False
+                    elif isinstance(ol, VerticalLayout):
+                        horizontal = False
+                    if horizontal:
+                        msg = 'Component with relative width inside a HorizontalLayout with no width defined'
+                        attributes = self.getWidthAttributes(self._component)
+                    else:
+                        msg = 'At least one of a VerticalLayout\'s components must have non relative width if the width of the layout is not defined'
+                        attributes = self.getWidthAttributes(self._component)
+                elif isinstance(parent, GridLayout):
+                    msg = 'At least one of the GridLayout\'s components in each column should have non relative width if the width of the layout is not defined.'
+                    attributes = self.getWidthAttributes(self._component)
+                else:
+                    # default error for non sized parent issue
+                    msg = 'A component with relative width needs a parent with defined width.'
+                    attributes = self.getWidthAttributes(self._component)
+                clientJSON.print_(',\"widthMsg\":\"' + msg + '\"')
+                self.printServerError(msg, attributes, True, serverErrorStream)
+            if len(self._subErrors) > 0:
+                print 'Sub errors >>'
+                clientJSON.write(', \"subErrors\" : [')
+                first = True
+                for subError in self._subErrors:
+                    if not first:
+                        clientJSON.print_(',')
+                    else:
+                        first = False
+                    subError.reportErrors(clientJSON, communicationManager, serverErrorStream)
+                clientJSON.write(']')
+                print '<< Sub erros'
+            clientJSON.write('}')
+
+    class ComponentInfo(Serializable):
+        _component = None
+        _info = None
+
+        def __init__(self, component, info):
+            self._component = component
+            self._info = info

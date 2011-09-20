@@ -14,11 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# from java.io.Serializable import (Serializable,)
-# from java.util.EventObject import (EventObject,)
+from muntjac.util.event import EventListener, EventObject
 
 
-class Paintable(java.util.EventListener, Serializable):
+class Paintable(EventListener):
     """Interface implemented by all classes that can be painted. Classes
     implementing this interface know how to output themselves to a UIDL stream
     and that way describing to the terminal how it should be displayed in the UI.
@@ -75,43 +74,6 @@ class Paintable(java.util.EventListener, Serializable):
         """
         pass
 
-    class RepaintRequestEvent(EventObject):
-        """Repaint request event is thrown when the paintable needs to be repainted.
-        This is typically done when the <code>paint</code> method would return
-        dissimilar UIDL from the previous call of the method.
-        """
-
-        def __init__(self, source):
-            """Constructs a new event.
-
-            @param source
-                       the paintable needing repaint.
-            """
-            super(RepaintRequestEvent, self)(source)
-
-        def getPaintable(self):
-            """Gets the paintable needing repainting.
-
-            @return Paintable for which the <code>paint</code> method will return
-                    dissimilar UIDL from the previous call of the method.
-            """
-            return self.getSource()
-
-    class RepaintRequestListener(Serializable):
-        """Listens repaint requests. The <code>repaintRequested</code> method is
-        called when the paintable needs to be repainted. This is typically done
-        when the <code>paint</code> method would return dissimilar UIDL from the
-        previous call of the method.
-        """
-
-        def repaintRequested(self, event):
-            """Receives repaint request events.
-
-            @param event
-                       the repaint request event specifying the paintable source.
-            """
-            pass
-
     def addListener(self, listener):
         """Adds repaint request listener. In order to assure that no repaint
         requests are missed, the new repaint listener should paint the paintable
@@ -142,5 +104,42 @@ class Paintable(java.util.EventListener, Serializable):
         about implicit repaints (painting the component without actually invoking
         paint method).
         </p>
+        """
+        pass
+
+class RepaintRequestEvent(EventObject):
+    """Repaint request event is thrown when the paintable needs to be repainted.
+    This is typically done when the <code>paint</code> method would return
+    dissimilar UIDL from the previous call of the method.
+    """
+
+    def __init__(self, source):
+        """Constructs a new event.
+
+        @param source
+                   the paintable needing repaint.
+        """
+        super(RepaintRequestEvent, self)(source)
+
+    def getPaintable(self):
+        """Gets the paintable needing repainting.
+
+        @return Paintable for which the <code>paint</code> method will return
+                dissimilar UIDL from the previous call of the method.
+        """
+        return self.getSource()
+
+class RepaintRequestListener(object):
+    """Listens repaint requests. The <code>repaintRequested</code> method is
+    called when the paintable needs to be repainted. This is typically done
+    when the <code>paint</code> method would return dissimilar UIDL from the
+    previous call of the method.
+    """
+
+    def repaintRequested(self, event):
+        """Receives repaint request events.
+
+        @param event
+                   the repaint request event specifying the paintable source.
         """
         pass
