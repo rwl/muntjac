@@ -14,8 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from com.vaadin.terminal.gwt.client.VBrowserDetails import (VBrowserDetails,)
-from com.vaadin.terminal.Terminal import (Terminal,)
+from com.vaadin.terminal.gwt.client.VBrowserDetails import VBrowserDetails
+from com.vaadin.terminal.Terminal import Terminal
 # from java.util.Date import (Date,)
 # from java.util.Locale import (Locale,)
 
@@ -48,14 +48,14 @@ class WebBrowser(Terminal):
         @return Always returns null.
         """
         # (non-Javadoc)
-        # 
+        #
         # @see com.vaadin.terminal.Terminal#getScreenHeight()
 
         return None
 
     def getScreenHeight(self):
         # (non-Javadoc)
-        # 
+        #
         # @see com.vaadin.terminal.Terminal#getScreenWidth()
 
         return self._screenHeight

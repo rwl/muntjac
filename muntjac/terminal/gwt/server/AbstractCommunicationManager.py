@@ -132,6 +132,9 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
 
         self.requireLocale(str(application.getLocale()))
 
+        self._typeToKey = dict()
+        self._nextTypeKey = 0
+
 
     def getApplication(self):
         return self._application
@@ -1588,10 +1591,6 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
         except Exception, t:
             self._application.getErrorHandler().terminalError(URIHandlerErrorImpl(self._application, t))
             return None
-
-
-    _typeToKey = dict()
-    _nextTypeKey = 0
 
 
     def _getTagForType(self, class1):

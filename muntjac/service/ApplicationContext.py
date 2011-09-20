@@ -14,13 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# from java.io.File import (File,)
-# from java.io.Serializable import (Serializable,)
-# from java.net.URL import (URL,)
-# from java.util.Collection import (Collection,)
 
-
-class ApplicationContext(Serializable):
+class ApplicationContext(object):
     """<code>ApplicationContext</code> provides information about the running
     context of the application. Each context is shared by all applications that
     are open for one user. In a web-environment this corresponds to a
@@ -46,6 +41,7 @@ class ApplicationContext(Serializable):
         """
         pass
 
+
     def getApplications(self):
         """Returns a collection of all the applications in this context.
 
@@ -54,6 +50,7 @@ class ApplicationContext(Serializable):
         @return A collection containing all the applications in this context.
         """
         pass
+
 
     def addTransactionListener(self, listener):
         """Adds a transaction listener to this context. The transaction listener is
@@ -66,6 +63,7 @@ class ApplicationContext(Serializable):
         """
         pass
 
+
     def removeTransactionListener(self, listener):
         """Removes a transaction listener from this context.
 
@@ -74,6 +72,7 @@ class ApplicationContext(Serializable):
         @see TransactionListener
         """
         pass
+
 
     def generateApplicationResourceURL(self, resource, urlKey):
         """Generate a URL that can be used as the relative location of e.g. an
@@ -94,6 +93,7 @@ class ApplicationContext(Serializable):
         """
         pass
 
+
     def isApplicationResourceURL(self, context, relativeUri):
         """Tests if a URL is for an application resource (APP/...).
 
@@ -106,6 +106,7 @@ class ApplicationContext(Serializable):
         @return
         """
         pass
+
 
     def getURLKey(self, context, relativeUri):
         """Gets the identifier (key) from an application resource URL. This key is
@@ -124,37 +125,39 @@ class ApplicationContext(Serializable):
         """
         pass
 
-    class TransactionListener(Serializable):
-        """Interface for listening to transaction events. Implement this interface
-        to listen to all transactions between the client and the application.
+
+class TransactionListener(object):
+    """Interface for listening to transaction events. Implement this interface
+    to listen to all transactions between the client and the application.
+    """
+
+    def transactionStart(self, application, transactionData):
+        """Invoked at the beginning of every transaction.
+
+        The transaction is linked to the context, not the application so if
+        you have multiple applications running in the same context you need
+        to check that the request is associated with the application you are
+        interested in. This can be done looking at the application parameter.
+
+        @param application
+                   the Application object.
+        @param transactionData
+                   the Data identifying the transaction.
         """
+        pass
 
-        def transactionStart(self, application, transactionData):
-            """Invoked at the beginning of every transaction.
 
-            The transaction is linked to the context, not the application so if
-            you have multiple applications running in the same context you need
-            to check that the request is associated with the application you are
-            interested in. This can be done looking at the application parameter.
+    def transactionEnd(self, application, transactionData):
+        """Invoked at the end of every transaction.
 
-            @param application
-                       the Application object.
-            @param transactionData
-                       the Data identifying the transaction.
-            """
-            pass
+        The transaction is linked to the context, not the application so if
+        you have multiple applications running in the same context you need
+        to check that the request is associated with the application you are
+        interested in. This can be done looking at the application parameter.
 
-        def transactionEnd(self, application, transactionData):
-            """Invoked at the end of every transaction.
-
-            The transaction is linked to the context, not the application so if
-            you have multiple applications running in the same context you need
-            to check that the request is associated with the application you are
-            interested in. This can be done looking at the application parameter.
-
-            @param applcation
-                       the Application object.
-            @param transactionData
-                       the Data identifying the transaction.
-            """
-            pass
+        @param applcation
+                   the Application object.
+        @param transactionData
+                   the Data identifying the transaction.
+        """
+        pass

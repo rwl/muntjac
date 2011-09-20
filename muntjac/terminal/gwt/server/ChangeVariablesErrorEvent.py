@@ -14,25 +14,24 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# from com.vaadin.ui.AbstractComponent.ComponentErrorEvent import (ComponentErrorEvent,)
-# from java.util.Map import (Map,)
+from muntjac.ui.AbstractComponent.ComponentErrorEvent import ComponentErrorEvent
 
 
 class ChangeVariablesErrorEvent(ComponentErrorEvent):
-    _throwable = None
-    _component = None
-    _variableChanges = None
 
     def __init__(self, component, throwable, variableChanges):
         self._component = component
         self._throwable = throwable
         self._variableChanges = variableChanges
 
+
     def getThrowable(self):
         return self._throwable
 
+
     def getComponent(self):
         return self._component
+
 
     def getVariableChanges(self):
         return self._variableChanges

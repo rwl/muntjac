@@ -14,39 +14,33 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from com.vaadin.service.ApplicationContext import (ApplicationContext,)
-from com.vaadin.terminal.gwt.server.WebBrowser import (WebBrowser,)
-# from java.io.PrintWriter import (PrintWriter,)
-# from java.io.Serializable import (Serializable,)
-# from java.io.StringWriter import (StringWriter,)
-# from java.net.URL import (URL,)
-# from java.util.Collection import (Collection,)
-# from java.util.Collections import (Collections,)
-# from java.util.HashMap import (HashMap,)
-# from java.util.HashSet import (HashSet,)
-# from java.util.LinkedList import (LinkedList,)
-# from java.util.logging.Level import (Level,)
-# from java.util.logging.Logger import (Logger,)
-# from javax.servlet.http.HttpSessionBindingEvent import (HttpSessionBindingEvent,)
-# from javax.servlet.http.HttpSessionBindingListener import (HttpSessionBindingListener,)
+import logging
+
+from muntjac.service.ApplicationContext import ApplicationContext
+from muntjac.terminal.gwt.server.WebBrowser import WebBrowser
 
 
-class AbstractWebApplicationContext(ApplicationContext, HttpSessionBindingListener, Serializable):
+class AbstractWebApplicationContext(ApplicationContext):
     """Base class for web application contexts (including portlet contexts) that
     handles the common tasks.
     """
-    _logger = Logger.getLogger(AbstractWebApplicationContext.getName())
-    listeners = Collections.synchronizedList(LinkedList())
-    applications = set()
-    browser = WebBrowser()
-    applicationToAjaxAppMgrMap = dict()
+    _logger = logging.getLogger(__class__.__name__)
+
+    def __init__(self):
+        self.listeners = list()
+        self.applications = set()
+        self.browser = WebBrowser()
+        self.applicationToAjaxAppMgrMap = dict()
+
 
     def addTransactionListener(self, listener):
         if listener is not None:
-            self.listeners.add(listener)
+            self.listeners.append(listener)
+
 
     def removeTransactionListener(self, listener):
         self.listeners.remove(listener)
+
 
     def startTransaction(self, application, request):
         """Sends a notification that a transaction is starting.
@@ -58,6 +52,7 @@ class AbstractWebApplicationContext(ApplicationContext, HttpSessionBindingListen
         """
         for listener in self.listeners:
             listener.transactionStart(application, request)
+
 
     def endTransaction(self, application, request):
         """Sends a notification that a transaction has ended.
@@ -71,21 +66,20 @@ class AbstractWebApplicationContext(ApplicationContext, HttpSessionBindingListen
         for listener in self.listeners:
             try:
                 listener.transactionEnd(application, request)
-            except RuntimeException, t:
+            except RuntimeError, t:
                 if exceptions is None:
-                    exceptions = LinkedList()
-                exceptions.add(t)
+                    exceptions = list()
+                exceptions.append(t)
+
         # If any runtime exceptions occurred, throw a combined exception
         if exceptions is not None:
             msg = str()
             for e in exceptions:
                 if len(msg) == 0:
-                    msg.__add__('\n\n--------------------------\n\n')
-                msg.__add__(e.getMessage() + '\n')
-                trace = StringWriter()
-                e.printStackTrace(PrintWriter(trace, True))
-                msg.__add__(str(trace))
-            raise RuntimeError(str(msg))
+                    msg += '\n\n--------------------------\n\n'
+                msg += str(e) + '\n'
+            raise RuntimeError(msg)
+
 
     def valueBound(self, arg0):
         """@see javax.servlet.http.HttpSessionBindingListener#valueBound(HttpSessionBindingEvent)"""
@@ -103,12 +97,12 @@ class AbstractWebApplicationContext(ApplicationContext, HttpSessionBindingListen
         # lifetime 1 min but socket write may take longer than 1 min.
         # FIXME: Handle exception
         try:
-            while not self.applications.isEmpty():
-                app = self.applications.next()
+            for app in self.applications:
                 app.close()
                 self.removeApplication(app)
-        except Exception, e:
-            self._logger.log(Level.SEVERE, 'Could not remove application, leaking memory.', e)
+        except Exception:
+            self._logger.critical('Could not remove application, leaking memory.')
+
 
     def getBrowser(self):
         """Get the web browser associated with this application context.
@@ -121,12 +115,15 @@ class AbstractWebApplicationContext(ApplicationContext, HttpSessionBindingListen
         """
         return self.browser
 
+
     def getApplications(self):
-        return Collections.unmodifiableCollection(self.applications)
+        return self.applications
+
 
     def removeApplication(self, application):
         self.applications.remove(application)
         self.applicationToAjaxAppMgrMap.remove(application)
+
 
     def generateApplicationResourceURL(self, resource, mapKey):
         filename = resource.getFilename()
@@ -135,21 +132,26 @@ class AbstractWebApplicationContext(ApplicationContext, HttpSessionBindingListen
         else:
             return 'app://APP/' + mapKey + '/' + filename
 
+
     def isApplicationResourceURL(self, context, relativeUri):
         # If the relative uri is null, we are ready
         if relativeUri is None:
             return False
+
         # Resolves the prefix
         prefix = relativeUri
         index = relativeUri.find('/')
         if index >= 0:
             prefix = relativeUri[:index]
+
         # Handles the resource requests
         return prefix == 'APP'
 
+
     def getURLKey(self, context, relativeUri):
         index = relativeUri.find('/')
-        next = relativeUri.find('/', index + 1)
-        if next < 0:
+        nxt = relativeUri.find('/', index + 1)
+        if nxt < 0:
             return None
-        return relativeUri[index + 1:next]
+
+        return relativeUri[index + 1:nxt]

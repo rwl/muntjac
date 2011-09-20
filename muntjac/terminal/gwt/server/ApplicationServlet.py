@@ -14,23 +14,23 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from com.vaadin.terminal.gwt.server.AbstractApplicationServlet import AbstractApplicationServlet
-# from javax.servlet.ServletException import (ServletException,)
-# from javax.servlet.http.HttpServletRequest import (HttpServletRequest,)
+import sys
+from paste.deploy import CONFIG
+
+from muntjac.terminal.gwt.server.AbstractApplicationServlet import AbstractApplicationServlet
+from muntjac.terminal.gwt.server.ServletException import ServletException
 
 
 class ApplicationServlet(AbstractApplicationServlet):
-    """This servlet connects a Vaadin Application to Web.
+    """This servlet connects a Muntjac Application to Web.
 
     @author IT Mill Ltd.
     @version
     @VERSION@
     @since 5.0
     """
-    # Private fields
-    _applicationClass = None
 
-    def init(self, servletConfig):
+    def awake(self, transaction):
         """Called by the servlet container to indicate to a servlet that the servlet
         is being placed into service.
 
@@ -41,29 +41,34 @@ class ApplicationServlet(AbstractApplicationServlet):
                     if an exception has occurred that interferes with the
                     servlet's normal operation.
         """
-        super(ApplicationServlet, self).init(servletConfig)
+        super(ApplicationServlet, self).awake(transaction)
+
+        self._applicationClass = None
+
         # Loads the application class using the same class loader
         # as the servlet itself
+
         # Gets the application class name
-        applicationClassName = servletConfig.getInitParameter('application')
+        applicationClassName = CONFIG.get('application')
         if applicationClassName is None:
-            raise ServletException('Application not specified in servlet parameters')
+            raise ServletException, 'Application not specified in servlet parameters'
+
         try:
-            self._applicationClass = self.getClassLoader().loadClass(applicationClassName)
-        except ClassNotFoundException, e:
-            raise ServletException('Failed to load application class: ' + applicationClassName)
+            modname, clsname = applicationClassName.rsplit('.', 1)
+            __import__(modname)
+            mod = sys.modules[modname]
+            self._applicationClass = getattr(mod, clsname)
+        except ImportError:
+            raise ServletException, 'Failed to import module: ' + modname
+        except AttributeError:
+            raise ServletException, 'Failed to load application class: ' + clsname
+
 
     def getNewApplication(self, request):
         # Creates a new application instance
-        try:
-            application = self.getApplicationClass()()
-            return application
-        except IllegalAccessException, e:
-            raise ServletException('getNewApplication failed', e)
-        except InstantiationException, e:
-            raise ServletException('getNewApplication failed', e)
-        except ClassNotFoundException, e:
-            raise ServletException('getNewApplication failed', e)
+        application = self.getApplicationClass()()
+        return application
+
 
     def getApplicationClass(self):
         return self._applicationClass

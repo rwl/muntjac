@@ -1,11 +1,21 @@
-# -*- coding: utf-8 -*-
-# from com.vaadin.terminal.StreamVariable.StreamingEndEvent import (StreamingEndEvent,)
-# from com.vaadin.terminal.StreamVariable.StreamingErrorEvent import (StreamingErrorEvent,)
-# from java.io.OutputStream import (OutputStream,)
-# from java.io.Serializable import (Serializable,)
+# Copyright (C) 2011 Vaadin Ltd
+# Copyright (C) 2011 Richard Lincoln
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class StreamVariable(Serializable):
+class StreamVariable(object):
     """StreamVariable is a special kind of variable whose value is streamed to an
     {@link OutputStream} provided by the {@link #getOutputStream()} method. E.g.
     in web terminals {@link StreamVariable} can be used to send large files from
@@ -82,57 +92,65 @@ class StreamVariable(Serializable):
         """
         pass
 
-    class StreamingEvent(Serializable):
 
-        def getFileName(self):
-            """@return the file name of the streamed file if known"""
-            pass
+class StreamingEvent(object):
 
-        def getMimeType(self):
-            """@return the mime type of the streamed file if known"""
-            pass
+    def getFileName(self):
+        """@return the file name of the streamed file if known"""
+        pass
 
-        def getContentLength(self):
-            """@return the length of the stream (in bytes) if known, else -1"""
-            pass
 
-        def getBytesReceived(self):
-            """@return then number of bytes streamed to StreamVariable"""
-            pass
+    def getMimeType(self):
+        """@return the mime type of the streamed file if known"""
+        pass
 
-    class StreamingStartEvent(StreamingEvent):
-        """Event passed to {@link #uploadStarted(StreamingStartEvent)} method before
-        the streaming of the content to {@link StreamVariable} starts.
-        """
 
-        def disposeStreamVariable(self):
-            """The owner of the StreamVariable can call this method to inform the
-            terminal implementation that this StreamVariable will not be used to
-            accept more post.
-            """
-            pass
+    def getContentLength(self):
+        """@return the length of the stream (in bytes) if known, else -1"""
+        pass
 
-    class StreamingProgressEvent(StreamingEvent):
-        """Event passed to {@link #onProgress(StreamingProgressEvent)} method during
-        the streaming progresses.
+
+    def getBytesReceived(self):
+        """@return then number of bytes streamed to StreamVariable"""
+        pass
+
+
+class StreamingStartEvent(StreamingEvent):
+    """Event passed to {@link #uploadStarted(StreamingStartEvent)} method before
+    the streaming of the content to {@link StreamVariable} starts.
+    """
+
+    def disposeStreamVariable(self):
+        """The owner of the StreamVariable can call this method to inform the
+        terminal implementation that this StreamVariable will not be used to
+        accept more post.
         """
         pass
 
-    class StreamingEndEvent(StreamingEvent):
-        """Event passed to {@link #uploadFinished(StreamingEndEvent)} method the
-        contents have been streamed to StreamVariable successfully.
-        """
+
+class StreamingProgressEvent(StreamingEvent):
+    """Event passed to {@link #onProgress(StreamingProgressEvent)} method during
+    the streaming progresses.
+    """
+    pass
+
+
+class StreamingEndEvent(StreamingEvent):
+    """Event passed to {@link #uploadFinished(StreamingEndEvent)} method the
+    contents have been streamed to StreamVariable successfully.
+    """
+    pass
+
+
+class StreamingErrorEvent(StreamingEvent):
+    """Event passed to {@link #uploadFailed(StreamingErrorEvent)} method when
+    the streaming ended before the end of the input. The streaming may fail
+    due an interruption by {@link } or due an other unknown exception in
+    communication. In the latter case the exception is also passed to
+    {@link Application#terminalError(com.vaadin.terminal.Terminal.ErrorEvent)}
+    .
+    """
+
+    def getException(self):
+        """@return the exception that caused the receiving not to finish cleanly"""
         pass
-
-    class StreamingErrorEvent(StreamingEvent):
-        """Event passed to {@link #uploadFailed(StreamingErrorEvent)} method when
-        the streaming ended before the end of the input. The streaming may fail
-        due an interruption by {@link } or due an other unknown exception in
-        communication. In the latter case the exception is also passed to
-        {@link Application#terminalError(com.vaadin.terminal.Terminal.ErrorEvent)}
-        .
-        """
-
-        def getException(self):
-            """@return the exception that caused the receiving not to finish cleanly"""
-            pass

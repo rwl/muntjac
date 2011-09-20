@@ -368,7 +368,7 @@ class AbstractApplicationServlet(Servlet, Constants):
             # Notifies transaction end
             if (requestType == self.RequestType.UIDL
                     and ApplicationConnection.PARAM_UNLOADBURST in request.fields()
-                    and request.getContentLength() < 1
+                    and request.getHeader('Content-Length') < 1
                     and self.getExistingApplication(request, False) is None):
                 self.redirectToApplication(request, response)
                 return
