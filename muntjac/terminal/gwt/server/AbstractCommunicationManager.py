@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import re
 import uuid
 import logging
 
@@ -38,8 +39,9 @@ from muntjac.terminal.gwt.server.ChangeVariablesErrorEvent import ChangeVariable
 from muntjac.ui.Window import Window
 from muntjac.ui.Component import Component
 
+from muntjac.terminal.Terminal import ErrorEvent as TerminalErrorEvent
+from muntjac.ui.AbstractField import AbstractField
 #from muntjac.terminal.Paintable import RepaintRequestEvent
-#from muntjac.terminal.Terminal import ErrorEvent
 #from muntjac.terminal.Terminal import ErrorListener
 #from muntjac.terminal.gwt.server.ComponentSizeValidator import InvalidLayou
 
@@ -1161,27 +1163,12 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
         requestLength = request.getContentLength()
         if requestLength == 0:
             return None
-        bout = ByteArrayOutputStream() if requestLength <= 0 else ByteArrayOutputStream(requestLength)
+
         inputStream = request.getInputStream()
-        buffer = [None] * self._MAX_BUFFER_SIZE
-        while True:
-            read = inputStream.read(buffer)
-            if read == -1:
-                break
-            bout.write(buffer, 0, read)
-        result = str(bout.toByteArray(), 'utf-8')
-        return result
+        return inputStream.getvalue()
 
-    class ErrorHandlerErrorEvent(ErrorEvent, Serializable):
-        _throwable = None
 
-        def __init__(self, throwable):
-            self._throwable = throwable
-
-        def getThrowable(self):
-            return self._throwable
-
-    def handleChangeVariablesError(self, application, owner, e, m):
+    def _handleChangeVariablesError(self, application, owner, e, m):
         """Handles an error (exception) that occurred when processing variable
         changes from the client or a failure of a file upload.
 
@@ -1202,122 +1189,101 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
         handled = False
         errorEvent = ChangeVariablesErrorEvent(owner, e, m)
         if isinstance(owner, AbstractField):
-            # If there is an error in the component error handler we pass
-            # the that error to the application error handler and continue
-            # processing the actual error
-
             try:
                 handled = owner.handleError(errorEvent)
             except Exception, handlerException:
-                application.getErrorHandler().terminalError(self.ErrorHandlerErrorEvent(handlerException))
+                # If there is an error in the component error handler we pass
+                # the that error to the application error handler and continue
+                # processing the actual error
+                application.getErrorHandler().terminalError( ErrorHandlerErrorEvent(handlerException) )
                 handled = False
+
         if not handled:
             application.getErrorHandler().terminalError(errorEvent)
 
-    def convertVariableValue(self, variableType, strValue):
-        val = None
-        _0 = variableType
-        _1 = False
-        while True:
-            if _0 == self._VTYPE_ARRAY:
-                _1 = True
-                val = self.convertArray(strValue)
-                break
-            if (_1 is True) or (_0 == self._VTYPE_MAP):
-                _1 = True
-                val = self.convertMap(strValue)
-                break
-            if (_1 is True) or (_0 == self._VTYPE_STRINGARRAY):
-                _1 = True
-                val = self.convertStringArray(strValue)
-                break
-            if (_1 is True) or (_0 == self._VTYPE_STRING):
-                _1 = True
-                val = strValue
-                break
-            if (_1 is True) or (_0 == self._VTYPE_INTEGER):
-                _1 = True
-                val = Integer.valueOf.valueOf(strValue)
-                break
-            if (_1 is True) or (_0 == self._VTYPE_LONG):
-                _1 = True
-                val = Long.valueOf.valueOf(strValue)
-                break
-            if (_1 is True) or (_0 == self._VTYPE_FLOAT):
-                _1 = True
-                val = Float.valueOf.valueOf(strValue)
-                break
-            if (_1 is True) or (_0 == self._VTYPE_DOUBLE):
-                _1 = True
-                val = Double.valueOf.valueOf(strValue)
-                break
-            if (_1 is True) or (_0 == self._VTYPE_BOOLEAN):
-                _1 = True
-                val = Boolean.valueOf.valueOf(strValue)
-                break
-            if (_1 is True) or (_0 == self._VTYPE_PAINTABLE):
-                _1 = True
-                val = self._idPaintableMap[strValue]
-                break
-            break
+
+    def _convertVariableValue(self, variableType, strValue):
+        # FIXME use dict for switch statement
+        if variableType == self._VTYPE_ARRAY:
+            val = self.convertArray(strValue)
+
+        elif variableType == self._VTYPE_MAP:
+            val = self.convertMap(strValue)
+
+        elif variableType == self._VTYPE_STRINGARRAY:
+            val = self.convertStringArray(strValue)
+
+        elif variableType == self._VTYPE_STRING:
+            val = strValue
+
+        elif variableType == self._VTYPE_INTEGER:
+            val = int(strValue)
+
+        elif variableType == self._VTYPE_LONG:
+            val = long(strValue)
+
+        elif variableType == self._VTYPE_FLOAT:
+            val = float(strValue)
+
+        elif variableType == self._VTYPE_DOUBLE:
+            val = float(strValue)
+
+        elif variableType == self._VTYPE_BOOLEAN:
+            val = bool(strValue)
+
+        elif variableType == self._VTYPE_PAINTABLE:
+            val = self._idPaintableMap[strValue]
+
         return val
 
-    def convertMap(self, strValue):
+
+    def _convertMap(self, strValue):
         parts = strValue.split(self.VAR_ARRAYITEM_SEPARATOR)
-        map = dict()
-        _0 = True
-        i = 0
-        while True:
-            if _0 is True:
-                _0 = False
-            else:
-                i += 2
-            if not (i < len(parts)):
-                break
+        mapp = dict()
+        for i in range(len(parts)):
             key = parts[i]
             if len(key) > 0:
                 variabletype = key[0]
-                value = self.convertVariableValue(variabletype, parts[i + 1])
-                map.put(key[1:], value)
-        return map
+                value = self._convertVariableValue(variabletype, parts[i + 1])
+                mapp[key[1:]] = value
+        return mapp
 
-    def convertStringArray(self, strValue):
+
+    def _convertStringArray(self, strValue):
         # need to return delimiters and filter them out; otherwise empty
         # strings are lost
         # an extra empty delimiter at the end is automatically eliminated
-        tokenizer = StringTokenizer(strValue, self.VAR_ARRAYITEM_SEPARATOR, True)
+        splitter = re.compile('(\\' + self.VAR_ARRAYITEM_SEPARATOR+ '+)')
+
         tokens = list()
         prevToken = self.VAR_ARRAYITEM_SEPARATOR
-        while tokenizer.hasMoreTokens():
-            token = tokenizer.nextToken()
+        for token in splitter.split(strValue):
             if not (self.VAR_ARRAYITEM_SEPARATOR == token):
                 tokens.add(token)
             elif self.VAR_ARRAYITEM_SEPARATOR == prevToken:
                 tokens.add('')
             prevToken = token
-        return list([None] * len(tokens))
 
-    def convertArray(self, strValue):
+        return tokens
+
+
+    def _convertArray(self, strValue):
         val = strValue.split(self.VAR_ARRAYITEM_SEPARATOR)
+
         if (len(val) == 0) or (len(val) == 1 and len(val[0]) == 0):
-            return [None] * 0
+            return []
+
         values = [None] * len(val)
-        _0 = True
-        i = 0
-        while True:
-            if _0 is True:
-                _0 = False
-            else:
-                i += 1
-            if not (i < len(values)):
-                break
-            string = val[i]
+        for i in range(len(values)):
+            strng = val[i]
             # first char of string is type
-            variableType = string[0]
-            values[i] = self.convertVariableValue(variableType, string[1:])
+            variableType = strng[0]
+            values[i] = self._convertVariableValue(variableType, strng[1:])
+
         return values
 
-    def printLocaleDeclarations(self, outWriter):
+
+    def _printLocaleDeclarations(self, outWriter):
         """Prints the queued (pending) locale definitions to a {@link PrintWriter}
         in a (UIDL) format that can be sent to the client and used there in
         formatting dates, times etc.
@@ -1328,38 +1294,49 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
         # -----------------------------
 
         # Send locale informations to client
-        outWriter.print_(', \"locales\":[')
-        _0 = True
-        while True:
-            if _0 is True:
-                _0 = False
-            else:
-                self._pendingLocalesIndex += 1
-            if not (self._pendingLocalesIndex < len(self._locales)):
-                break
-            l = self.generateLocale(self._locales[self._pendingLocalesIndex])
+        outWriter.write(', \"locales\":[')
+
+        while self._pendingLocalesIndex < len(self._locales):
+            l = self._generateLocale(self._locales[self._pendingLocalesIndex])
             # Locale name
-            outWriter.print_('{\"name\":\"' + str(l) + '\",')
+            outWriter.write('{\"name\":\"' + l[0] + '\",')
+
             # Month names (both short and full)
             dfs = DateFormatSymbols(l)
             short_months = dfs.getShortMonths()
             months = dfs.getMonths()
-            outWriter.print_('\"smn\":[\"' + short_months[0] + '\",\"' + short_months[1] + '\",\"' + short_months[2] + '\",\"' + short_months[3] + '\",\"' + short_months[4] + '\",\"' + short_months[5] + '\",\"' + short_months[6] + '\",\"' + short_months[7] + '\",\"' + short_months[8] + '\",\"' + short_months[9] + '\",\"' + short_months[10] + '\",\"' + short_months[11] + '\"' + '],')
-            outWriter.print_('\"mn\":[\"' + months[0] + '\",\"' + months[1] + '\",\"' + months[2] + '\",\"' + months[3] + '\",\"' + months[4] + '\",\"' + months[5] + '\",\"' + months[6] + '\",\"' + months[7] + '\",\"' + months[8] + '\",\"' + months[9] + '\",\"' + months[10] + '\",\"' + months[11] + '\"' + '],')
+            outWriter.write('\"smn\":[\"' \
+                    + short_months[0] + '\",\"' + short_months[1] + '\",\"' \
+                    + short_months[2] + '\",\"' + short_months[3] + '\",\"' \
+                    + short_months[4] + '\",\"' + short_months[5] + '\",\"' \
+                    + short_months[6] + '\",\"' + short_months[7] + '\",\"' \
+                    + short_months[8] + '\",\"' + short_months[9] + '\",\"' \
+                    + short_months[10] + '\",\"' + short_months[11] + '\"' + '],')
+            outWriter.write('\"mn\":[\"' \
+                    + months[0] + '\",\"' + months[1] + '\",\"' \
+                    + months[2] + '\",\"' + months[3] + '\",\"' \
+                    + months[4] + '\",\"' + months[5] + '\",\"' \
+                    + months[6] + '\",\"' + months[7] + '\",\"' \
+                    + months[8] + '\",\"' + months[9] + '\",\"' \
+                    + months[10] + '\",\"' + months[11] + '\"' + '],')
+
             # Weekday names (both short and full)
             short_days = dfs.getShortWeekdays()
             days = dfs.getWeekdays()
             outWriter.print_('\"sdn\":[\"' + short_days[1] + '\",\"' + short_days[2] + '\",\"' + short_days[3] + '\",\"' + short_days[4] + '\",\"' + short_days[5] + '\",\"' + short_days[6] + '\",\"' + short_days[7] + '\"' + '],')
             outWriter.print_('\"dn\":[\"' + days[1] + '\",\"' + days[2] + '\",\"' + days[3] + '\",\"' + days[4] + '\",\"' + days[5] + '\",\"' + days[6] + '\",\"' + days[7] + '\"' + '],')
+
             # First day of week (0 = sunday, 1 = monday)
             cal = GregorianCalendar(l)
             outWriter.print_('\"fdow\":' + (cal.getFirstDayOfWeek() - 1) + ',')
+
             # Date formatting (MM/DD/YYYY etc.)
             dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, l)
             if not isinstance(dateFormat, SimpleDateFormat):
                 self._logger.warning('Unable to get default date pattern for locale ' + str(l))
                 dateFormat = SimpleDateFormat()
             df = dateFormat.toPattern()
+
             timeStart = df.find('H')
             if timeStart < 0:
                 timeStart = df.find('h')
@@ -1378,28 +1355,35 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
                 dateformat = df[dateStart + 1:]
             else:
                 dateformat = df[:timeStart - 1]
-            outWriter.print_('\"df\":\"' + dateformat.trim() + '\",')
+
+            outWriter.write('\"df\":\"' + dateformat.trim() + '\",')
+
             # Time formatting (24 or 12 hour clock and AM/PM suffixes)
             timeformat = df[timeStart:len(df)]
+
             # Doesn't return second or milliseconds.
             #
             # We use timeformat to determine 12/24-hour clock
-
             twelve_hour_clock = timeformat.find('a') > -1
+
             # TODO there are other possibilities as well, like 'h' in french
             # (ignore them, too complicated)
             hour_min_delimiter = '.' if timeformat.find('.') > -1 else ':'
-            # outWriter.print("\"tf\":\"" + timeformat + "\",");
-            outWriter.print_('\"thc\":' + twelve_hour_clock + ',')
-            outWriter.print_('\"hmd\":\"' + hour_min_delimiter + '\"')
+
+            # outWriter.write("\"tf\":\"" + timeformat + "\",");
+            outWriter.write('\"thc\":' + twelve_hour_clock + ',')
+            outWriter.write('\"hmd\":\"' + hour_min_delimiter + '\"')
             if twelve_hour_clock:
                 ampm = dfs.getAmPmStrings()
-                outWriter.print_(',\"ampm\":[\"' + ampm[0] + '\",\"' + ampm[1] + '\"]')
-            outWriter.print_('}')
+                outWriter.write(',\"ampm\":[\"' + ampm[0] + '\",\"' + ampm[1] + '\"]')
+            outWriter.write('}')
             if self._pendingLocalesIndex < len(self._locales) - 1:
-                outWriter.print_(',')
-        outWriter.print_(']')
-        # Close locales
+                outWriter.write(',')
+
+            self._pendingLocalesIndex += 1
+
+        outWriter.write(']')  # Close locales
+
 
     def doGetApplicationWindow(self, request, callback, application, assumedWindow):
         """TODO New method - document me!
@@ -1881,3 +1865,12 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
             if b == -1:
                 raise IOException('The multipart stream ended unexpectedly')
             return b
+
+
+class ErrorHandlerErrorEvent(TerminalErrorEvent):
+
+    def __init__(self, throwable):
+        self._throwable = throwable
+
+    def getThrowable(self):
+        return self._throwable
