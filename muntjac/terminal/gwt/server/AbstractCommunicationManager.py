@@ -21,6 +21,7 @@ import logging
 
 from sys import stderr
 from StringIO import StringIO
+from urlparse import urljoin
 
 from muntjac.terminal.gwt.server.StreamingStartEventImpl import StreamingStartEventImpl
 from muntjac.terminal.gwt.server.DragAndDropService import DragAndDropService
@@ -34,247 +35,13 @@ from muntjac.terminal.gwt.server.NoInputStreamException import NoInputStreamExce
 from muntjac.terminal.gwt.server.AbstractApplicationServlet import AbstractApplicationServlet, URIHandlerErrorImpl
 from muntjac.terminal.Paintable import Paintable, RepaintRequestListener
 from muntjac.terminal.gwt.server.UploadException import UploadException
-from muntjac.terminal.URIHandler import URIHandler
 from muntjac.terminal.gwt.server.ChangeVariablesErrorEvent import ChangeVariablesErrorEvent
 from muntjac.ui.Window import Window
 from muntjac.ui.Component import Component
 
 from muntjac.terminal.Terminal import ErrorEvent as TerminalErrorEvent
+from muntjac.terminal.URIHandler import ErrorEvent as URIHandlerErrorEvent
 from muntjac.ui.AbstractField import AbstractField
-#from muntjac.terminal.Paintable import RepaintRequestEvent
-#from muntjac.terminal.Terminal import ErrorListener
-#from muntjac.terminal.gwt.server.ComponentSizeValidator import InvalidLayou
-
-# from java.io.BufferedWriter import (BufferedWriter,)
-# from java.io.ByteArrayOutputStream import (ByteArrayOutputStream,)
-# from java.io.CharArrayWriter import (CharArrayWriter,)
-# from java.io.IOException import (IOException,)
-# from java.io.InputStream import (InputStream,)
-# from java.io.InputStreamReader import (InputStreamReader,)
-# from java.io.OutputStream import (OutputStream,)
-# from java.io.OutputStreamWriter import (OutputStreamWriter,)
-# from java.io.PrintWriter import (PrintWriter,)
-# from java.io.Serializable import (Serializable,)
-# from java.lang.reflect.InvocationTargetException import (InvocationTargetException,)
-# from java.lang.reflect.Method import (Method,)
-# from java.net.URL import (URL,)
-# from java.security.GeneralSecurityException import (GeneralSecurityException,)
-# from java.text.DateFormat import (DateFormat,)
-# from java.text.DateFormatSymbols import (DateFormatSymbols,)
-# from java.text.SimpleDateFormat import (SimpleDateFormat,)
-# from java.util.ArrayList import (ArrayList,)
-# from java.util.Calendar import (Calendar,)
-# from java.util.Collection import (Collection,)
-# from java.util.Collections import (Collections,)
-# from java.util.Comparator import (Comparator,)
-# from java.util.GregorianCalendar import (GregorianCalendar,)
-# from java.util.HashMap import (HashMap,)
-# from java.util.HashSet import (HashSet,)
-# from java.util.Iterator import (Iterator,)
-# from java.util.List import (List,)
-# from java.util.Locale import (Locale,)
-# from java.util.Map import (Map,)
-# from java.util.Set import (Set,)
-# from java.util.StringTokenizer import (StringTokenizer,)
-# from java.util.UUID import (UUID,)
-# from java.util.logging.Level import (Level,)
-# from java.util.logging.Logger import (Logger,)
-# from javax.portlet.PortletRequest import (PortletRequest,)
-# from javax.portlet.PortletResponse import (PortletResponse,)
-# from javax.servlet.ServletRequest import (ServletRequest,)
-# from javax.servlet.ServletResponse import (ServletResponse,)
-
-
-class Request(object):
-    """Generic interface of a (HTTP or Portlet) request to the application.
-
-    This is a wrapper interface that allows
-    {@link AbstractCommunicationManager} to use a unified API.
-
-    @see javax.servlet.ServletRequest
-    @see javax.portlet.PortletRequest
-
-    @author peholmst
-    """
-
-    def getSession(self):
-        """Gets a {@link Session} wrapper implementation representing the
-        session for which this request was sent.
-
-        Multiple Vaadin applications can be associated with a single session.
-
-        @return Session
-        """
-        pass
-
-
-    def isRunningInPortlet(self):
-        """Are the applications in this session running in a portlet or directly
-        as servlets.
-
-        @return true if in a portlet
-        """
-        pass
-
-
-    def getParameter(self, name):
-        """Get the named HTTP or portlet request parameter.
-
-        @see javax.servlet.ServletRequest#getParameter(String)
-        @see javax.portlet.PortletRequest#getParameter(String)
-
-        @param name
-        @return
-        """
-        pass
-
-
-    def getContentLength(self):
-        """Returns the length of the request content that can be read from the
-        input stream returned by {@link #getInputStream()}.
-
-        @return content length in bytes
-        """
-        pass
-
-
-    def getInputStream(self):
-        """Returns an input stream from which the request content can be read.
-        The request content length can be obtained with
-        {@link #getContentLength()} without reading the full stream contents.
-
-        @return
-        @throws IOException
-        """
-        pass
-
-
-    def getRequestID(self):
-        """Returns the request identifier that identifies the target Vaadin
-        window for the request.
-
-        @return String identifier for the request target window
-        """
-        pass
-
-
-    def getAttribute(self, name):
-        """@see javax.servlet.ServletRequest#getAttribute(String)
-        @see javax.portlet.PortletRequest#getAttribute(String)
-        """
-        pass
-
-
-    def setAttribute(self, name, value):
-        """@see javax.servlet.ServletRequest#setAttribute(String, Object)
-        @see javax.portlet.PortletRequest#setAttribute(String, Object)
-        """
-        pass
-
-
-    def getWrappedRequest(self):
-        """Gets the underlying request object. The request is typically either a
-        {@link ServletRequest} or a {@link PortletRequest}.
-
-        @return wrapped request object
-        """
-        pass
-
-
-class Response(object):
-    """Generic interface of a (HTTP or Portlet) response from the application.
-
-    This is a wrapper interface that allows
-    {@link AbstractCommunicationManager} to use a unified API.
-
-    @see javax.servlet.ServletResponse
-    @see javax.portlet.PortletResponse
-
-    @author peholmst
-    """
-
-    def getOutputStream(self):
-        """Gets the output stream to which the response can be written.
-
-        @return
-        @throws IOException
-        """
-        pass
-
-
-    def setContentType(self, typ):
-        """Sets the MIME content type for the response to be communicated to the
-        browser.
-
-        @param typ
-        """
-        pass
-
-
-    def getWrappedResponse(self):
-        """Gets the wrapped response object, usually a class implementing either
-        {@link ServletResponse} or {@link PortletResponse}.
-
-        @return wrapped request object
-        """
-        pass
-
-
-class Session(object):
-    """Generic wrapper interface for a (HTTP or Portlet) session.
-
-    Several applications can be associated with a single session.
-
-    TODO Document me!
-
-    @see javax.servlet.http.HttpSession
-    @see javax.portlet.PortletSession
-
-    @author peholmst
-    """
-
-    def isNew(self):
-        pass
-
-
-    def getAttribute(self, name):
-        pass
-
-
-    def setAttribute(self, name, o):
-        pass
-
-
-    def getMaxInactiveInterval(self):
-        pass
-
-
-    def getWrappedSession(self):
-        pass
-
-
-class Callback(object):
-    """TODO Document me!
-
-    @author peholmst
-    """
-
-    def criticalNotification(self, request, response, cap, msg, details, outOfSyncURL):
-        pass
-
-
-    def getRequestPathInfo(self, request):
-        pass
-
-
-    def getThemeResourceAsStream(self, themeName, resource):
-        pass
-
-
-class UploadInterruptedException(Exception):
-
-    def __init__(self):
-        super(UploadInterruptedException, self)('Upload interrupted by other thread')
 
 
 class AbstractCommunicationManager(Paintable, RepaintRequestListener):
@@ -507,8 +274,6 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
         if streamVariable is None:
             raise self.IllegalStateException('StreamVariable for the post not found')
 
-        application = self.getApplication()
-
         out = None
         totalBytes = 0
         startedEvent = StreamingStartEventImpl(filename, typ, contentLength)
@@ -529,10 +294,10 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
             bufferSize = self._MAX_UPLOAD_BUFFER_SIZE
             bytesReadToBuffer = 0
             while totalBytes < in_.len:
-                buffer = in_.read(bufferSize)
+                buff = in_.read(bufferSize)
                 bytesReadToBuffer = in_.pos - bytesReadToBuffer
 
-                out.write(buffer)
+                out.write(buff)
                 totalBytes += bytesReadToBuffer
 
                 if listenProgress:
@@ -642,7 +407,7 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
             analyzeLayouts = request.getParameter(self._GET_PARAM_ANALYZE_LAYOUTS) is not None
 
 
-        outWriter = StringIO()
+        outWriter = out
 
         # The rest of the process is synchronized with the application
         # in order to guarantee that no parallel variable handling is
@@ -670,7 +435,7 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
             try:
                 m = self._application.getClass().getMethod('getSystemMessages', None)
                 ci = m.invoke(None, None)
-            except Exception, e2:
+            except Exception:
                 # FIXME: Handle exception
                 # Not critical, but something is still wrong; print
                 # stacktrace
@@ -921,7 +686,7 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
                 try:
                     layout += is_.getvalue()
                 except IOError, e:
-                # FIXME: Handle exception
+                    # FIXME: Handle exception
                     self._logger.info('Resource transfer failed: ' + str(e))
 
                 outWriter.write('\"' + JsonPaintTarget.escapeJSON(str(layout)) + '\"')
@@ -1493,22 +1258,26 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
         @return
         """
         window = None
+
         # If the client knows which window to use, use it if possible
         windowClientRequestedName = request.getParameter('windowName')
-        if (
-            assumedWindow is not None and application.getWindows().contains(assumedWindow)
-        ):
+
+        if (assumedWindow is not None and assumedWindow in application.getWindows()):
             windowClientRequestedName = assumedWindow.getName()
+
         if windowClientRequestedName is not None:
             window = application.getWindow(windowClientRequestedName)
             if window is not None:
                 return window
+
         # If client does not know what window it wants
         if window is None and not request.isRunningInPortlet():
             # This is only supported if the application is running inside a
             # servlet
+
             # Get the path from URL
             path = callback.getRequestPathInfo(request)
+
             # If the path is specified, create name from it.
             #
             # An exception is if UIDL request have come this far. This happens
@@ -1517,8 +1286,8 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
             # is used). However we are not returning with main window here (we
             # will later if things work right), because the code is so cryptic
             # that nobody really knows what it does.
-
             pathMayContainWindowName = path is not None and len(path) > 0 and not (path == '/')
+
             if pathMayContainWindowName:
                 uidlRequest = path.startswith('/UIDL')
                 if not uidlRequest:
@@ -1533,25 +1302,33 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
                         windowUrlName = path[:index]
                         path = path[index + 1:]
                     window = application.getWindow(windowUrlName)
+
         # By default, use mainwindow
         if window is None:
             window = application.getMainWindow()
             # Return null if no main window was found
             if window is None:
                 return None
+
         # If the requested window is already open, resolve conflict
         if window.getName() in self._currentlyOpenWindowsInClient:
             newWindowName = window.getName()
+
             while newWindowName in self._currentlyOpenWindowsInClient:
-                newWindowName = window.getName() + '_' + POSTINC(globals(), locals(), 'self._nextUnusedWindowSuffix')
+                newWindowName = window.getName() + '_' + self._nextUnusedWindowSuffix
+                self._nextUnusedWindowSuffix += 1
+
             window = application.getWindow(newWindowName)
+
             # If everything else fails, use main window even in case of
             # conflicts
             if window is None:
                 window = application.getMainWindow()
+
         return window
 
-    def endApplication(self, request, response, application):
+
+    def _endApplication(self, request, response, application):
         """Ends the Application.
 
         The browser is redirected to the Application logout URL set with
@@ -1569,22 +1346,22 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
         """
         logoutUrl = application.getLogoutURL()
         if logoutUrl is None:
-            logoutUrl = str(application.getURL())
+            logoutUrl = application.getURL()
+
         # clients JS app is still running, send a special json file to tell
         # client that application has quit and where to point browser now
         # Set the response type
-        out = response.getOutputStream()
-        outWriter = PrintWriter(BufferedWriter(OutputStreamWriter(out, 'UTF-8')))
+        outWriter = response.getOutputStream()
         self.openJsonMessage(outWriter, response)
-        outWriter.print_('\"redirect\":{')
+        outWriter.write('\"redirect\":{')
         outWriter.write('\"url\":\"' + logoutUrl + '\"}')
         self.closeJsonMessage(outWriter)
         outWriter.flush()
-        outWriter.close()
-        out.flush()
+
 
     def closeJsonMessage(self, outWriter):
         outWriter.print_('}]')
+
 
     def openJsonMessage(self, outWriter, response):
         """Writes the opening of JSON message to be sent to client.
@@ -1595,7 +1372,8 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
         # Sets the response type
         response.setContentType('application/json; charset=UTF-8')
         # some dirt to prevent cross site scripting
-        outWriter.print_('for(;;);[{')
+        outWriter.write('for(;;);[{')
+
 
     def getPaintableId(self, paintable):
         """Gets the Paintable Id. If Paintable has debug id set it will be used
@@ -1604,15 +1382,16 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
         @param paintable
         @return the paintable Id.
         """
-        id = self._paintableIdMap[paintable]
-        if id is None:
+        idd = self._paintableIdMap[paintable]
+        if idd is None:
             # use testing identifier as id if set
-            id = paintable.getDebugId()
-            if id is None:
-                id = 'PID' + str(POSTINC(globals(), locals(), 'self._idSequence'))
+            ids = paintable.getDebugId()
+            if ids is None:
+                ids = 'PID' + str(self._idSequence)
+                self._idSequence += 1
             else:
-                id = 'PID_S' + id
-            old = self._idPaintableMap.put(id, paintable)
+                idd = 'PID_S' + idd
+            old = self._idPaintableMap[idd] = paintable
             if old is not None and old != paintable:
                 # Two paintables have the same id. We still make sure the old
                 # one is a component which is still attached to the
@@ -1620,14 +1399,21 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
                 # absolutely necessary.
 
                 if isinstance(old, Component) and old.getApplication() is not None:
-                    raise self.IllegalStateException('Two paintables (' + paintable.getClass().getSimpleName() + ',' + old.getClass().getSimpleName() + ') have been assigned the same id: ' + paintable.getDebugId())
-            self._paintableIdMap.put(paintable, id)
+                    raise ValueError('Two paintables (' \
+                            + paintable.getClass().getSimpleName() \
+                            + ',' + old.getClass().getSimpleName() \
+                            + ') have been assigned the same id: ' \
+                            + paintable.getDebugId())
+
+            self._paintableIdMap[paintable] = id
+
         return id
+
 
     def hasPaintableId(self, paintable):
         return paintable in self._paintableIdMap
 
-    def getDirtyVisibleComponents(self, w):
+    def _getDirtyVisibleComponents(self, w):
         """Returns dirty components which are in given window. Components in an
         invisible subtrees are omitted.
 
@@ -1636,33 +1422,31 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
         @return
         """
         resultset = list(self._dirtyPaintables)
+
         # The following algorithm removes any components that would be painted
         # as a direct descendant of other components from the dirty components
         # list. The result is that each component should be painted exactly
         # once and any unmodified components will be painted as "cached=true".
-        _0 = True
-        i = self._dirtyPaintables
-        while True:
-            if _0 is True:
-                _0 = False
-            if not i.hasNext():
-                break
-            p = i.next()
+
+        for p in self._dirtyPaintables:
             if isinstance(p, Component):
                 component = p
                 if component.getApplication() is None:
                     # component is detached after requestRepaint is called
                     resultset.remove(p)
-                    i.remove()
+#                    i.remove()
                 else:
                     componentsRoot = component.getWindow()
                     if componentsRoot is None:
                         # This should not happen unless somebody has overriden
                         # getApplication or getWindow in an illegal way.
-                        raise self.IllegalStateException('component.getWindow() returned null for a component attached to the application')
+                        raise ValueError('component.getWindow() returned null ' \
+                                'for a component attached to the application')
+
                     if componentsRoot.getParent() is not None:
                         # this is a subwindow
                         componentsRoot = componentsRoot.getParent()
+
                     if componentsRoot != w:
                         resultset.remove(p)
                     elif (
@@ -1673,17 +1457,19 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
                         # Components that are invisible in visible subree, must
                         # be rendered (to let client know that they need to be
                         # hidden).
-
                         resultset.remove(p)
+
         return resultset
+
 
     def repaintRequested(self, event):
         """@see com.vaadin.terminal.Paintable.RepaintRequestListener#repaintRequested(com.vaadin.terminal.Paintable.RepaintRequestEvent)"""
         p = event.getPaintable()
-        if not self._dirtyPaintables.contains(p):
-            self._dirtyPaintables.add(p)
+        if p not in self._dirtyPaintables:
+            self._dirtyPaintables.append(p)
 
-    def paintablePainted(self, paintable):
+
+    def _paintablePainted(self, paintable):
         """Internally mark a {@link Paintable} as painted and start collecting new
         repaint requests for it.
 
@@ -1692,25 +1478,6 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
         self._dirtyPaintables.remove(paintable)
         paintable.requestRepaintRequests()
 
-    class URIHandlerErrorImpl(URIHandler, ErrorEvent, Serializable):
-        """Implementation of {@link URIHandler.ErrorEvent} interface."""
-        _owner = None
-        _throwable = None
-
-        def __init__(self, owner, throwable):
-            """@param owner
-            @param throwable
-            """
-            self._owner = owner
-            self._throwable = throwable
-
-        def getThrowable(self):
-            """@see com.vaadin.terminal.Terminal.ErrorEvent#getThrowable()"""
-            return self._throwable
-
-        def getURIHandler(self):
-            """@see com.vaadin.terminal.URIHandler.ErrorEvent#getURIHandler()"""
-            return self._owner
 
     def requireLocale(self, value):
         """Queues a locale to be sent to the client (browser) for date and time
@@ -1725,12 +1492,15 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
         """
         if self._locales is None:
             self._locales = list()
-            self._locales.add(str(self._application.getLocale()))
+            code, _ = self._application.getLocale()
+            self._locales.append(code)
             self._pendingLocalesIndex = 0
-        if not self._locales.contains(value):
-            self._locales.add(value)
 
-    def generateLocale(self, value):
+        if not self._locales.contains(value):
+            self._locales.append(value)
+
+
+    def _generateLocale(self, value):
         """Constructs a {@link Locale} instance to be sent to the client based on a
         short locale description string.
 
@@ -1741,14 +1511,15 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
         """
         temp = value.split('_')
         if len(temp) == 1:
-            return Locale(temp[0])
+            return temp[0]
         elif len(temp) == 2:
-            return Locale(temp[0], temp[1])
+            return (temp[0], temp[1])
         else:
-            return Locale(temp[0], temp[1], temp[2])
+            return (temp[0], temp[1], temp[2])
+
 
     @classmethod
-    def isChildOf(cls, parent, child):
+    def _isChildOf(cls, parent, child):
         """Helper method to test if a component contains another
 
         @param parent
@@ -1761,10 +1532,6 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
             p = p.getParent()
         return False
 
-    class InvalidUIDLSecurityKeyException(GeneralSecurityException):
-
-        def __init__(self, message):
-            super(InvalidUIDLSecurityKeyException, self)(message)
 
     def handleURI(self, window, request, response, callback):
         """Calls the Window URI handler for a request and returns the
@@ -1785,7 +1552,10 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
                 should be suppressed, null otherwise.
         @see com.vaadin.terminal.URIHandler
         """
+        raise DeprecationWarning
+
         uri = callback.getRequestPathInfo(request)
+
         # If no URI is available
         if uri is None:
             uri = ''
@@ -1793,6 +1563,7 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
             # Removes the leading /
             while uri.startswith('/') and len(uri) > 0:
                 uri = uri[1:]
+
         # Handles the uri
         try:
             context = self._application.getURL()
@@ -1800,7 +1571,6 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
                 stream = None
                 # Application.handleURI run first. Handles possible
                 # ApplicationResources.
-
                 stream = self._application.handleURI(context, uri)
                 if stream is None:
                     stream = window.handleURI(context, uri)
@@ -1810,159 +1580,227 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
                 index = uri.find('/')
                 if index > 0:
                     prefix = uri[:index]
-                    windowContext = URL(context, prefix + '/')
+                    windowContext = urljoin(context, prefix + '/')
                     windowUri = uri[len(prefix) + 1:] if len(uri) > len(prefix) + 1 else ''
                     return window.handleURI(windowContext, windowUri)
                 else:
                     return None
-        except Throwable, t:
+        except Exception, t:
             self._application.getErrorHandler().terminalError(URIHandlerErrorImpl(self._application, t))
             return None
+
 
     _typeToKey = dict()
     _nextTypeKey = 0
 
-    def getTagForType(self, class1):
-        object = self._typeToKey[class1]
-        if object is None:
-            object = POSTINC(globals(), locals(), 'self._nextTypeKey')
-            self._typeToKey.put(class1, object)
-        return str(object)
 
-    class OpenWindowCache(Serializable):
-        """Helper class for terminal to keep track of data that client is expected
-        to know.
+    def _getTagForType(self, class1):
+        obj = self._typeToKey.get(class1)
+        if obj is None:
+            obj = self._nextTypeKey
+            self._nextTypeKey += 1
+            self._typeToKey[class1] = object
+        return str(obj)
 
-        TODO make customlayout templates (from theme) to be cached here.
-        """
-        _res = set()
-
-        def cache(self, object):
-            """@param paintable
-            @return true if the given class was added to cache
-            """
-            return self._res.add(object)
-
-        def clear(self):
-            self._res.clear()
 
     def getStreamVariableTargetUrl(self, owner, name, value):
-        pass
+        raise NotImplementedError
+
 
     def cleanStreamVariable(self, owner, name):
+        raise NotImplementedError
+
+
+class Request(object):
+    """Generic interface of a (HTTP or Portlet) request to the application.
+
+    This is a wrapper interface that allows
+    {@link AbstractCommunicationManager} to use a unified API.
+
+    @see javax.servlet.ServletRequest
+    @see javax.portlet.PortletRequest
+
+    @author peholmst
+    """
+
+    def getSession(self):
+        """Gets a {@link Session} wrapper implementation representing the
+        session for which this request was sent.
+
+        Multiple Vaadin applications can be associated with a single session.
+
+        @return Session
+        """
         pass
 
-    class SimpleMultiPartInputStream(InputStream):
-        """Stream that extracts content from another stream until the boundary
-        string is encountered.
 
-        Public only for unit tests, should be considered private for all other
-        purposes.
+    def isRunningInPortlet(self):
+        """Are the applications in this session running in a portlet or directly
+        as servlets.
+
+        @return true if in a portlet
         """
-        # Counter of how many characters have been matched to boundary string
-        # from the stream
+        pass
 
-        _matchedCount = -1
-        # Used as pointer when returning bytes after partly matched boundary
-        # string.
 
-        _curBoundaryIndex = 0
-        # The byte found after a "promising start for boundary"
-        _bufferedByte = -1
-        _atTheEnd = False
-        _boundary = None
-        _realInputStream = None
+    def getParameter(self, name):
+        """Get the named HTTP or portlet request parameter.
 
-        def __init__(self, realInputStream, boundaryString):
-            self._boundary = self.CRLF + self.DASHDASH + boundaryString.toCharArray()
-            self._realInputStream = realInputStream
+        @see javax.servlet.ServletRequest#getParameter(String)
+        @see javax.portlet.PortletRequest#getParameter(String)
 
-        def read(self):
-            if self._atTheEnd:
-                # End boundary reached, nothing more to read
-                return -1
-            elif self._bufferedByte >= 0:
-                # Purge partially matched boundary if there was such
-                return self.getBuffered()
-            elif self._matchedCount != -1:
-                # Special case where last "failed" matching ended with first
-                # character from boundary string
+        @param name
+        @return
+        """
+        pass
 
-                return self.matchForBoundary()
-            else:
-                fromActualStream = self._realInputStream.read()
-                if fromActualStream == -1:
-                    # unexpected end of stream
-                    raise IOException('The multipart stream ended unexpectedly')
-                if self._boundary[0] == fromActualStream:
-                    # If matches the first character in boundary string, start
-                    # checking if the boundary is fetched.
 
-                    return self.matchForBoundary()
-                return fromActualStream
+    def getContentLength(self):
+        """Returns the length of the request content that can be read from the
+        input stream returned by {@link #getInputStream()}.
 
-        def matchForBoundary(self):
-            """Reads the input to expect a boundary string. Expects that the first
-            character has already been matched.
+        @return content length in bytes
+        """
+        pass
 
-            @return -1 if the boundary was matched, else returns the first byte
-                    from boundary
-            @throws IOException
-            """
-            self._matchedCount = 0
-            # Going to "buffered mode". Read until full boundary match or a
-            # different character.
 
-            while True:
-                self._matchedCount += 1
-                if self._matchedCount == len(self._boundary):
-                    # The whole boundary matched so we have reached the end of
-                    # file
+    def getInputStream(self):
+        """Returns an input stream from which the request content can be read.
+        The request content length can be obtained with
+        {@link #getContentLength()} without reading the full stream contents.
 
-                    self._atTheEnd = True
-                    return -1
-                fromActualStream = self._realInputStream.read()
-                if fromActualStream != self._boundary[self._matchedCount]:
-                    # Did not find full boundary, cache the mismatching byte
-                    # and start returning the partially matched boundary.
+        @return
+        @throws IOException
+        """
+        pass
 
-                    self._bufferedByte = fromActualStream
-                    return self.getBuffered()
 
-        def getBuffered(self):
-            """Returns the partly matched boundary string and the byte following
-            that.
+    def getRequestID(self):
+        """Returns the request identifier that identifies the target Vaadin
+        window for the request.
 
-            @return
-            @throws IOException
-            """
-            if self._matchedCount == 0:
-                # The boundary has been returned, return the buffered byte.
-                b = self._bufferedByte
-                self._bufferedByte = -1
-                self._matchedCount = -1
-            else:
-                b = self._boundary[POSTINC(globals(), locals(), 'self._curBoundaryIndex')]
-                if self._curBoundaryIndex == self._matchedCount:
-                    # The full boundary has been returned, remaining is the
-                    # char that did not match the boundary.
-                    self._curBoundaryIndex = 0
-                    if self._bufferedByte != self._boundary[0]:
-                        # next call for getBuffered will return the
-                        # bufferedByte that came after the partial boundary
-                        # match
+        @return String identifier for the request target window
+        """
+        pass
 
-                        self._matchedCount = 0
-                    else:
-                        # Special case where buffered byte again matches the
-                        # boundaryString. This could be the start of the real
-                        # end boundary.
 
-                        self._matchedCount = 0
-                        self._bufferedByte = -1
-            if b == -1:
-                raise IOException('The multipart stream ended unexpectedly')
-            return b
+    def getAttribute(self, name):
+        """@see javax.servlet.ServletRequest#getAttribute(String)
+        @see javax.portlet.PortletRequest#getAttribute(String)
+        """
+        pass
+
+
+    def setAttribute(self, name, value):
+        """@see javax.servlet.ServletRequest#setAttribute(String, Object)
+        @see javax.portlet.PortletRequest#setAttribute(String, Object)
+        """
+        pass
+
+
+    def getWrappedRequest(self):
+        """Gets the underlying request object. The request is typically either a
+        {@link ServletRequest} or a {@link PortletRequest}.
+
+        @return wrapped request object
+        """
+        pass
+
+
+class Response(object):
+    """Generic interface of a (HTTP or Portlet) response from the application.
+
+    This is a wrapper interface that allows
+    {@link AbstractCommunicationManager} to use a unified API.
+
+    @see javax.servlet.ServletResponse
+    @see javax.portlet.PortletResponse
+
+    @author peholmst
+    """
+
+    def getOutputStream(self):
+        """Gets the output stream to which the response can be written.
+
+        @return
+        @throws IOException
+        """
+        pass
+
+
+    def setContentType(self, typ):
+        """Sets the MIME content type for the response to be communicated to the
+        browser.
+
+        @param typ
+        """
+        pass
+
+
+    def getWrappedResponse(self):
+        """Gets the wrapped response object, usually a class implementing either
+        {@link ServletResponse} or {@link PortletResponse}.
+
+        @return wrapped request object
+        """
+        pass
+
+
+class Session(object):
+    """Generic wrapper interface for a (HTTP or Portlet) session.
+
+    Several applications can be associated with a single session.
+
+    TODO Document me!
+
+    @see javax.servlet.http.HttpSession
+    @see javax.portlet.PortletSession
+
+    @author peholmst
+    """
+
+    def isNew(self):
+        pass
+
+
+    def getAttribute(self, name):
+        pass
+
+
+    def setAttribute(self, name, o):
+        pass
+
+
+    def getMaxInactiveInterval(self):
+        pass
+
+
+    def getWrappedSession(self):
+        pass
+
+
+class Callback(object):
+    """TODO Document me!
+
+    @author peholmst
+    """
+
+    def criticalNotification(self, request, response, cap, msg, details, outOfSyncURL):
+        pass
+
+
+    def getRequestPathInfo(self, request):
+        pass
+
+
+    def getThemeResourceAsStream(self, themeName, resource):
+        pass
+
+
+class UploadInterruptedException(Exception):
+
+    def __init__(self):
+        super(UploadInterruptedException, self)('Upload interrupted by other thread')
 
 
 class ErrorHandlerErrorEvent(TerminalErrorEvent):
@@ -1972,3 +1810,170 @@ class ErrorHandlerErrorEvent(TerminalErrorEvent):
 
     def getThrowable(self):
         return self._throwable
+
+
+class URIHandlerErrorImpl(URIHandlerErrorEvent):
+    """Implementation of {@link URIHandler.ErrorEvent} interface."""
+
+    def __init__(self, owner, throwable):
+        """@param owner
+        @param throwable
+        """
+        self._owner = owner
+        self._throwable = throwable
+
+    def getThrowable(self):
+        """@see com.vaadin.terminal.Terminal.ErrorEvent#getThrowable()"""
+        return self._throwable
+
+    def getURIHandler(self):
+        """@see com.vaadin.terminal.URIHandler.ErrorEvent#getURIHandler()"""
+        return self._owner
+
+
+class InvalidUIDLSecurityKeyException(Exception):
+
+    def __init__(self, message):
+        super(InvalidUIDLSecurityKeyException, self)(message)
+
+
+class OpenWindowCache(object):
+    """Helper class for terminal to keep track of data that client is expected
+    to know.
+
+    TODO make customlayout templates (from theme) to be cached here.
+    """
+
+    def cache(self, obj):
+        """@param paintable
+        @return true if the given class was added to cache
+        """
+        self._res = set()
+        return self._res.append(obj)
+
+
+    def clear(self):
+        self._res.clear()
+
+
+class _SimpleMultiPartInputStream(StringIO):
+    """Stream that extracts content from another stream until the boundary
+    string is encountered.
+
+    Public only for unit tests, should be considered private for all other
+    purposes.
+    """
+
+    def __init__(self, realInputStream, boundaryString):
+
+        # Counter of how many characters have been matched to boundary string
+        # from the stream
+        self._matchedCount = -1
+
+        # Used as pointer when returning bytes after partly matched boundary
+        # string.
+        self._curBoundaryIndex = 0
+
+        # The byte found after a "promising start for boundary"
+        self._bufferedByte = -1
+
+        self._atTheEnd = False
+
+        self._boundary = self.CRLF + self.DASHDASH + boundaryString.toCharArray()
+        self._realInputStream = realInputStream
+
+
+    def getvalue(self):
+        if self._atTheEnd:
+
+            # End boundary reached, nothing more to read
+            return -1
+        elif self._bufferedByte >= 0:
+
+            # Purge partially matched boundary if there was such
+            return self.getBuffered()
+        elif self._matchedCount != -1:
+
+            # Special case where last "failed" matching ended with first
+            # character from boundary string
+            return self.matchForBoundary()
+        else:
+
+            fromActualStream = self._realInputStream.read()
+            if fromActualStream == -1:
+
+                # unexpected end of stream
+                raise IOError('The multipart stream ended unexpectedly')
+            if self._boundary[0] == fromActualStream:
+
+                # If matches the first character in boundary string, start
+                # checking if the boundary is fetched.
+                return self.matchForBoundary()
+
+            return fromActualStream
+
+
+    def matchForBoundary(self):
+        """Reads the input to expect a boundary string. Expects that the first
+        character has already been matched.
+
+        @return -1 if the boundary was matched, else returns the first byte
+                from boundary
+        @throws IOException
+        """
+        self._matchedCount = 0
+
+        # Going to "buffered mode". Read until full boundary match or a
+        # different character.
+        while True:
+            self._matchedCount += 1
+            if self._matchedCount == len(self._boundary):
+                # The whole boundary matched so we have reached the end of
+                # file
+                self._atTheEnd = True
+                return -1
+
+            fromActualStream = self._realInputStream.read()
+
+            if fromActualStream != self._boundary[self._matchedCount]:
+                # Did not find full boundary, cache the mismatching byte
+                # and start returning the partially matched boundary.
+                self._bufferedByte = fromActualStream
+                return self.getBuffered()
+
+
+    def getBuffered(self):
+        """Returns the partly matched boundary string and the byte following
+        that.
+
+        @return
+        @throws IOException
+        """
+        if self._matchedCount == 0:
+            # The boundary has been returned, return the buffered byte.
+            b = self._bufferedByte
+            self._bufferedByte = -1
+            self._matchedCount = -1
+        else:
+            b = self._boundary[self._curBoundaryIndex]
+            self._curBoundaryIndex += 1
+            if self._curBoundaryIndex == self._matchedCount:
+                # The full boundary has been returned, remaining is the
+                # char that did not match the boundary.
+                self._curBoundaryIndex = 0
+                if self._bufferedByte != self._boundary[0]:
+                    # next call for getBuffered will return the
+                    # bufferedByte that came after the partial boundary
+                    # match
+                    self._matchedCount = 0
+                else:
+                    # Special case where buffered byte again matches the
+                    # boundaryString. This could be the start of the real
+                    # end boundary.
+                    self._matchedCount = 0
+                    self._bufferedByte = -1
+
+        if b == -1:
+            raise IOError('The multipart stream ended unexpectedly')
+
+        return b
