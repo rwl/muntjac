@@ -16,10 +16,10 @@
 
 import re
 import uuid
+import locale
 import logging
 
 from sys import stderr
-
 from StringIO import StringIO
 
 from muntjac.terminal.gwt.server.StreamingStartEventImpl import StreamingStartEventImpl
@@ -1283,6 +1283,97 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
         return values
 
 
+    def _getMonths(self, code):
+        locSave = locale.getlocale(locale.LC_TIME)
+        locale.setlocale(locale.LC_TIME, code)
+
+        short_months = [
+            locale.nl_langinfo(locale.MON_1),
+            locale.nl_langinfo(locale.MON_2),
+            locale.nl_langinfo(locale.MON_3),
+            locale.nl_langinfo(locale.MON_4),
+            locale.nl_langinfo(locale.MON_5),
+            locale.nl_langinfo(locale.MON_6),
+            locale.nl_langinfo(locale.MON_7),
+            locale.nl_langinfo(locale.MON_8),
+            locale.nl_langinfo(locale.MON_9),
+            locale.nl_langinfo(locale.MON_10),
+            locale.nl_langinfo(locale.MON_11),
+            locale.nl_langinfo(locale.MON_12)
+        ]
+        months = [
+            locale.nl_langinfo(locale.ABMON_1),
+            locale.nl_langinfo(locale.ABMON_2),
+            locale.nl_langinfo(locale.ABMON_3),
+            locale.nl_langinfo(locale.ABMON_4),
+            locale.nl_langinfo(locale.ABMON_5),
+            locale.nl_langinfo(locale.ABMON_6),
+            locale.nl_langinfo(locale.ABMON_7),
+            locale.nl_langinfo(locale.ABMON_8),
+            locale.nl_langinfo(locale.ABMON_9),
+            locale.nl_langinfo(locale.ABMON_10),
+            locale.nl_langinfo(locale.ABMON_11),
+            locale.nl_langinfo(locale.ABMON_12)
+        ]
+
+        locale.setlocale(locale.LC_TIME, locSave)
+
+        return short_months, months
+
+
+    def _getWeekdays(self, code):
+        locSave = locale.getlocale(locale.LC_TIME)
+        locale.setlocale(locale.LC_TIME, code)
+
+        short_days = [
+            locale.nl_langinfo(locale.ABDAY_1),
+            locale.nl_langinfo(locale.ABDAY_2),
+            locale.nl_langinfo(locale.ABDAY_3),
+            locale.nl_langinfo(locale.ABDAY_4),
+            locale.nl_langinfo(locale.ABDAY_5),
+            locale.nl_langinfo(locale.ABDAY_6),
+            locale.nl_langinfo(locale.ABDAY_7)
+        ]
+        days = [
+            locale.nl_langinfo(locale.DAY_1),
+            locale.nl_langinfo(locale.DAY_2),
+            locale.nl_langinfo(locale.DAY_3),
+            locale.nl_langinfo(locale.DAY_4),
+            locale.nl_langinfo(locale.DAY_5),
+            locale.nl_langinfo(locale.DAY_6),
+            locale.nl_langinfo(locale.DAY_7)
+        ]
+
+        locale.setlocale(locale.LC_TIME, locSave)
+
+        return short_days, days
+
+
+    def _getDateFormat(self, code):
+        locSave = locale.getlocale(locale.LC_TIME)
+        locale.setlocale(locale.LC_TIME, code)
+
+        fmt = locale.nl_langinfo(locale.ERA_D_FMT)
+
+        locale.setlocale(locale.LC_TIME, locSave)
+
+        return fmt
+
+
+    def _getAmPmStrings(self, code):
+        locSave = locale.getlocale(locale.LC_TIME)
+        locale.setlocale(locale.LC_TIME, code)
+
+        ampm = [
+            locale.nl_langinfo(locale.AM_STR),
+            locale.nl_langinfo(locale.PM_STR)
+        ]
+
+        locale.setlocale(locale.LC_TIME, locSave)
+
+        return ampm
+
+
     def _printLocaleDeclarations(self, outWriter):
         """Prints the queued (pending) locale definitions to a {@link PrintWriter}
         in a (UIDL) format that can be sent to the client and used there in
@@ -1298,13 +1389,13 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
 
         while self._pendingLocalesIndex < len(self._locales):
             l = self._generateLocale(self._locales[self._pendingLocalesIndex])
+            code = l[0]  # language code
+
             # Locale name
-            outWriter.write('{\"name\":\"' + l[0] + '\",')
+            outWriter.write('{\"name\":\"' + code + '\",')
 
             # Month names (both short and full)
-            dfs = DateFormatSymbols(l)
-            short_months = dfs.getShortMonths()
-            months = dfs.getMonths()
+            short_months, months = self._getMonths(l[0])
             outWriter.write('\"smn\":[\"' \
                     + short_months[0] + '\",\"' + short_months[1] + '\",\"' \
                     + short_months[2] + '\",\"' + short_months[3] + '\",\"' \
@@ -1321,21 +1412,28 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
                     + months[10] + '\",\"' + months[11] + '\"' + '],')
 
             # Weekday names (both short and full)
-            short_days = dfs.getShortWeekdays()
-            days = dfs.getWeekdays()
-            outWriter.print_('\"sdn\":[\"' + short_days[1] + '\",\"' + short_days[2] + '\",\"' + short_days[3] + '\",\"' + short_days[4] + '\",\"' + short_days[5] + '\",\"' + short_days[6] + '\",\"' + short_days[7] + '\"' + '],')
-            outWriter.print_('\"dn\":[\"' + days[1] + '\",\"' + days[2] + '\",\"' + days[3] + '\",\"' + days[4] + '\",\"' + days[5] + '\",\"' + days[6] + '\",\"' + days[7] + '\"' + '],')
+            short_days, days = self._getWeekdays(code)
+            outWriter.write('\"sdn\":[\"' \
+                    + short_days[0] + '\",\"' + short_days[1] + '\",\"' \
+                    + short_days[2] + '\",\"' + short_days[3] + '\",\"' \
+                    + short_days[4] + '\",\"' + short_days[5] + '\",\"' \
+                    + short_days[6] + '\"' + '],')
+            outWriter.write('\"dn\":[\"' \
+                    + days[0] + '\",\"' + days[1] + '\",\"' \
+                    + days[2] + '\",\"' + days[3] + '\",\"' \
+                    + days[4] + '\",\"' + days[5] + '\",\"' \
+                    + days[6] + '\"' + '],')
 
             # First day of week (0 = sunday, 1 = monday)
-            cal = GregorianCalendar(l)
-            outWriter.print_('\"fdow\":' + (cal.getFirstDayOfWeek() - 1) + ',')
+            outWriter.write('\"fdow\":' + (0) + ',')
 
             # Date formatting (MM/DD/YYYY etc.)
-            dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, l)
-            if not isinstance(dateFormat, SimpleDateFormat):
-                self._logger.warning('Unable to get default date pattern for locale ' + str(l))
-                dateFormat = SimpleDateFormat()
-            df = dateFormat.toPattern()
+
+            dateFormat = self._getDateFormat(code)
+            if dateFormat == "":
+                self._logger.warning('Unable to get default date pattern for locale ' + code)
+                dateFormat = locale.nl_langinfo(locale.ERA_D_FMT)
+            df = dateFormat
 
             timeStart = df.find('H')
             if timeStart < 0:
@@ -1356,7 +1454,7 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
             else:
                 dateformat = df[:timeStart - 1]
 
-            outWriter.write('\"df\":\"' + dateformat.trim() + '\",')
+            outWriter.write('\"df\":\"' + dateformat.strip() + '\",')
 
             # Time formatting (24 or 12 hour clock and AM/PM suffixes)
             timeformat = df[timeStart:len(df)]
@@ -1374,7 +1472,7 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
             outWriter.write('\"thc\":' + twelve_hour_clock + ',')
             outWriter.write('\"hmd\":\"' + hour_min_delimiter + '\"')
             if twelve_hour_clock:
-                ampm = dfs.getAmPmStrings()
+                ampm = self._getAmPmStrings(code)
                 outWriter.write(',\"ampm\":[\"' + ampm[0] + '\",\"' + ampm[1] + '\"]')
             outWriter.write('}')
             if self._pendingLocalesIndex < len(self._locales) - 1:
@@ -1382,7 +1480,7 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
 
             self._pendingLocalesIndex += 1
 
-        outWriter.write(']')  # Close locales
+        outWriter.write(']')  # close locales
 
 
     def doGetApplicationWindow(self, request, callback, application, assumedWindow):
