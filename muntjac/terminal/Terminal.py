@@ -33,6 +33,7 @@ class Terminal(object):
         """
         pass
 
+
     def getScreenWidth(self):
         """Gets the width of the terminal screen in pixels. This is the width of the
         screen and not the width available for the application.
@@ -45,6 +46,7 @@ class Terminal(object):
         @return the width of the terminal screen.
         """
         pass
+
 
     def getScreenHeight(self):
         """Gets the height of the terminal screen in pixels. This is the height of

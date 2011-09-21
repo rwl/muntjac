@@ -14,11 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from com.vaadin.terminal.Paintable import (Paintable,)
-# from java.io.Serializable import (Serializable,)
+from muntjac.terminal.Paintable import Paintable
 
 
-class ErrorMessage(Paintable, Serializable):
+class ErrorMessage(Paintable):
     """Interface for rendering error messages to terminal. All the visible errors
     shown to user must implement this interface.
 
@@ -45,6 +44,7 @@ class ErrorMessage(Paintable, Serializable):
         """
         pass
 
+
     def addListener(self, listener):
         """Error messages are inmodifiable and thus listeners are not needed. This
         method should be implemented as empty.
@@ -55,6 +55,7 @@ class ErrorMessage(Paintable, Serializable):
         """
         pass
 
+
     def removeListener(self, listener):
         """Error messages are inmodifiable and thus listeners are not needed. This
         method should be implemented as empty.
@@ -64,6 +65,7 @@ class ErrorMessage(Paintable, Serializable):
         @see com.vaadin.terminal.Paintable#removeListener(Paintable.RepaintRequestListener)
         """
         pass
+
 
     def requestRepaint(self):
         """Error messages are inmodifiable and thus listeners are not needed. This

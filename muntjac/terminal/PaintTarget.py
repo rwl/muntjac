@@ -14,13 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-# from com.vaadin.terminal.StreamVariable.StreamingStartEvent import (StreamingStartEvent,)
-# from java.io.Serializable import (Serializable,)
-# from java.util.Map import (Map,)
 
-
-class PaintTarget(Serializable):
+class PaintTarget(object):
     """This interface defines the methods for painting XML to the UIDL stream.
 
     @author IT Mill Ltd.
@@ -44,7 +39,8 @@ class PaintTarget(Serializable):
         """
         pass
 
-    def startTag(self, *args):
+
+    def startTag(self, paintable, tag=None):
         """Prints element start tag of a paintable section. Starts a paintable
         section using the given tag. The PaintTarget may implement a caching
         scheme, that checks the paintable has actually changed or can a cached
@@ -65,27 +61,9 @@ class PaintTarget(Serializable):
                     if the paint operation failed.
         @see #startTag(String)
         @since 3.1
-        ---
-        Prints element start tag.
-
-        <pre>
-        Todo:
-        Checking of input values
-        </pre>
-
-        @param tagName
-                   the name of the start tag.
-        @throws PaintException
-                    if the paint operation failed.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            tagName, = _0
-        elif _1 == 2:
-            paintable, tag = _0
-        else:
-            raise ARGERROR(1, 2)
+        pass
+
 
     def paintReference(self, paintable, referenceName):
         """Paints a component reference as an attribute to current tag. This method
@@ -108,6 +86,7 @@ class PaintTarget(Serializable):
         """
         pass
 
+
     def endTag(self, tagName):
         """Prints element end tag.
 
@@ -121,6 +100,7 @@ class PaintTarget(Serializable):
         """
         pass
 
+
     def addAttribute(self, *args):
         """Adds a boolean attribute to component. Atributes must be added before any
         content is written.
@@ -132,114 +112,9 @@ class PaintTarget(Serializable):
 
         @throws PaintException
                     if the paint operation failed.
-        ---
-        Adds a integer attribute to component. Atributes must be added before any
-        content is written.
-
-        @param name
-                   the Attribute name.
-        @param value
-                   the Attribute value.
-
-        @throws PaintException
-                    if the paint operation failed.
-        ---
-        Adds a resource attribute to component. Atributes must be added before
-        any content is written.
-
-        @param name
-                   the Attribute name
-        @param value
-                   the Attribute value
-
-        @throws PaintException
-                    if the paint operation failed.
-        ---
-        Adds a long attribute to component. Atributes must be added before any
-        content is written.
-
-        @param name
-                   the Attribute name.
-        @param value
-                   the Attribute value.
-
-        @throws PaintException
-                    if the paint operation failed.
-        ---
-        Adds a float attribute to component. Atributes must be added before any
-        content is written.
-
-        @param name
-                   the Attribute name.
-        @param value
-                   the Attribute value.
-
-        @throws PaintException
-                    if the paint operation failed.
-        ---
-        Adds a double attribute to component. Atributes must be added before any
-        content is written.
-
-        @param name
-                   the Attribute name.
-        @param value
-                   the Attribute value.
-
-        @throws PaintException
-                    if the paint operation failed.
-        ---
-        Adds a string attribute to component. Atributes must be added before any
-        content is written.
-
-        @param name
-                   the Boolean attribute name.
-        @param value
-                   the Boolean attribute value.
-
-        @throws PaintException
-                    if the paint operation failed.
-        ---
-        TODO
-
-        @param name
-        @param value
-        @throws PaintException
-        ---
-        Adds a Paintable type attribute. On client side the value will be a
-        terminal specific reference to corresponding component on client side
-        implementation.
-
-        @param name
-                   the name of the attribute
-        @param value
-                   the Paintable to be referenced on client side
-        @throws PaintException
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 2:
-            if isinstance(_0[1], Object):
-                string, keys = _0
-            elif isinstance(_0[1], Paintable):
-                name, value = _0
-            elif isinstance(_0[1], Resource):
-                name, value = _0
-            elif isinstance(_0[1], boolean):
-                name, value = _0
-            elif isinstance(_0[1], dict):
-                name, value = _0
-            elif isinstance(_0[1], double):
-                name, value = _0
-            elif isinstance(_0[1], float):
-                name, value = _0
-            elif isinstance(_0[1], int):
-                name, value = _0
-            elif isinstance(_0[1], long):
-                name, value = _0
-            else:
-                name, value = _0
-        else:
-            raise ARGERROR(2, 2)
+        pass
+
 
     def addVariable(self, *args):
         """Adds details about {@link StreamVariable} to the UIDL stream. Eg. in web
@@ -272,129 +147,9 @@ class PaintTarget(Serializable):
 
         @throws PaintException
                     if the paint operation failed.
-        ---
-        Adds a string type variable.
-
-        @param owner
-                   the Listener for variable changes.
-        @param name
-                   the Variable name.
-        @param value
-                   the Variable initial value.
-
-        @throws PaintException
-                    if the paint operation failed.
-        ---
-        Adds a int type variable.
-
-        @param owner
-                   the Listener for variable changes.
-        @param name
-                   the Variable name.
-        @param value
-                   the Variable initial value.
-
-        @throws PaintException
-                    if the paint operation failed.
-        ---
-        Adds a long type variable.
-
-        @param owner
-                   the Listener for variable changes.
-        @param name
-                   the Variable name.
-        @param value
-                   the Variable initial value.
-
-        @throws PaintException
-                    if the paint operation failed.
-        ---
-        Adds a float type variable.
-
-        @param owner
-                   the Listener for variable changes.
-        @param name
-                   the Variable name.
-        @param value
-                   the Variable initial value.
-
-        @throws PaintException
-                    if the paint operation failed.
-        ---
-        Adds a double type variable.
-
-        @param owner
-                   the Listener for variable changes.
-        @param name
-                   the Variable name.
-        @param value
-                   the Variable initial value.
-
-        @throws PaintException
-                    if the paint operation failed.
-        ---
-        Adds a boolean type variable.
-
-        @param owner
-                   the Listener for variable changes.
-        @param name
-                   the Variable name.
-        @param value
-                   the Variable initial value.
-
-        @throws PaintException
-                    if the paint operation failed.
-        ---
-        Adds a string array type variable.
-
-        @param owner
-                   the Listener for variable changes.
-        @param name
-                   the Variable name.
-        @param value
-                   the Variable initial value.
-
-        @throws PaintException
-                    if the paint operation failed.
-        ---
-        Adds a Paintable type variable. On client side the variable value will be
-        a terminal specific reference to corresponding component on client side
-        implementation. When updated from client side, terminal will map the
-        client side component reference back to a corresponding server side
-        reference.
-
-        @param owner
-                   the Listener for variable changes
-        @param name
-                   the name of the variable
-        @param value
-                   the initial value of the variable
-
-        @throws PaintException
-                    if the paint oparation fails
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 3:
-            if isinstance(_0[2], Paintable):
-                owner, name, value = _0
-            elif isinstance(_0[2], StreamVariable):
-                owner, name, value = _0
-            elif isinstance(_0[2], boolean):
-                owner, name, value = _0
-            elif isinstance(_0[2], double):
-                owner, name, value = _0
-            elif isinstance(_0[2], float):
-                owner, name, value = _0
-            elif isinstance(_0[2], int):
-                owner, name, value = _0
-            elif isinstance(_0[2], long):
-                owner, name, value = _0
-            else:
-                owner, name, value = _0
-                owner, name, value = _0
-        else:
-            raise ARGERROR(3, 3)
+        pass
+
 
     def addUploadStreamVariable(self, owner, name):
         """Adds a upload stream type variable.
@@ -408,6 +163,7 @@ class PaintTarget(Serializable):
                     if the paint operation failed.
         """
         pass
+
 
     def addXMLSection(self, sectionTagName, sectionData, namespace):
         """Prints single XML section.
@@ -427,6 +183,7 @@ class PaintTarget(Serializable):
         """
         pass
 
+
     def addUIDL(self, uidl):
         """Adds UIDL directly. The UIDL must be valid in accordance with the
         UIDL.dtd
@@ -438,6 +195,7 @@ class PaintTarget(Serializable):
         """
         pass
 
+
     def addText(self, text):
         """Adds text node. All the contents of the text are XML-escaped.
 
@@ -447,6 +205,7 @@ class PaintTarget(Serializable):
                     if the paint operation failed.
         """
         pass
+
 
     def addCharacterData(self, text):
         """Adds CDATA node to target UIDL-tree.
@@ -458,6 +217,7 @@ class PaintTarget(Serializable):
         @since 3.1
         """
         pass
+
 
     def getTag(self, paintable):
         """@return the "tag" string used in communication to present given

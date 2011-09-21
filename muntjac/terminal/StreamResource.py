@@ -14,11 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from com.vaadin.service.FileTypeResolver import (FileTypeResolver,)
-from com.vaadin.terminal.ApplicationResource import (ApplicationResource,)
-from com.vaadin.terminal.DownloadStream import (DownloadStream,)
-# from java.io.InputStream import (InputStream,)
-# from java.io.Serializable import (Serializable,)
+from muntjac.service.FileTypeResolver import FileTypeResolver
+from muntjac.terminal.ApplicationResource import ApplicationResource
+from muntjac.terminal.DownloadStream import DownloadStream
 
 
 class StreamResource(ApplicationResource):
@@ -32,18 +30,6 @@ class StreamResource(ApplicationResource):
     @VERSION@
     @since 3.0
     """
-    # Source stream the downloaded content is fetched from.
-    _streamSource = None
-    # Explicit mime-type.
-    _MIMEType = None
-    # Filename.
-    _filename = None
-    # Application.
-    _application = None
-    # Default buffer size for this stream resource.
-    _bufferSize = 0
-    # Default cache time for this stream resource.
-    _cacheTime = DEFAULT_CACHETIME
 
     def __init__(self, streamSource, filename, application):
         """Creates a new stream resource for downloading from stream.
@@ -55,17 +41,36 @@ class StreamResource(ApplicationResource):
         @param application
                    the Application object.
         """
+        # Source stream the downloaded content is fetched from.
+        self._streamSource = None
+
+        # Explicit mime-type.
+        self._MIMEType = None
+
+        # Filename.
+        self._filename = None
+
+        # Application.
         self._application = application
+
+        # Default buffer size for this stream resource.
+        self._bufferSize = 0
+
+        # Default cache time for this stream resource.
+        self._cacheTime = self.DEFAULT_CACHETIME
+
         self.setFilename(filename)
         self.setStreamSource(streamSource)
         # Register to application
         application.addResource(self)
+
 
     def getMIMEType(self):
         """@see com.vaadin.terminal.Resource#getMIMEType()"""
         if self._MIMEType is not None:
             return self._MIMEType
         return FileTypeResolver.getMIMEType(self._filename)
+
 
     def setMIMEType(self, MIMEType):
         """Sets the mime type of the resource.
@@ -75,6 +80,7 @@ class StreamResource(ApplicationResource):
         """
         self._MIMEType = MIMEType
 
+
     def getStreamSource(self):
         """Returns the source for this <code>StreamResource</code>. StreamSource is
         queried when the resource is about to be streamed to the client.
@@ -82,6 +88,7 @@ class StreamResource(ApplicationResource):
         @return Source of the StreamResource.
         """
         return self._streamSource
+
 
     def setStreamSource(self, streamSource):
         """Sets the source for this <code>StreamResource</code>.
@@ -93,12 +100,14 @@ class StreamResource(ApplicationResource):
         """
         self._streamSource = streamSource
 
+
     def getFilename(self):
         """Gets the filename.
 
         @return the filename.
         """
         return self._filename
+
 
     def setFilename(self, filename):
         """Sets the filename.
@@ -108,9 +117,11 @@ class StreamResource(ApplicationResource):
         """
         self._filename = filename
 
+
     def getApplication(self):
         """@see com.vaadin.terminal.ApplicationResource#getApplication()"""
         return self._application
+
 
     def getStream(self):
         """@see com.vaadin.terminal.ApplicationResource#getStream()"""
@@ -122,22 +133,10 @@ class StreamResource(ApplicationResource):
         ds.setCacheTime(self._cacheTime)
         return ds
 
-    class StreamSource(Serializable):
-        """Interface implemented by the source of a StreamResource.
-
-        @author IT Mill Ltd.
-        @version
-        @VERSION@
-        @since 3.0
-        """
-        # documented in superclass
-
-        def getStream(self):
-            """Returns new input stream that is used for reading the resource."""
-            pass
 
     def getBufferSize(self):
         return self._bufferSize
+
 
     def setBufferSize(self, bufferSize):
         """Sets the size of the download buffer used for this resource.
@@ -148,8 +147,10 @@ class StreamResource(ApplicationResource):
         # documented in superclass
         self._bufferSize = bufferSize
 
+
     def getCacheTime(self):
         return self._cacheTime
+
 
     def setCacheTime(self, cacheTime):
         """Sets the length of cache expiration time.
@@ -165,3 +166,18 @@ class StreamResource(ApplicationResource):
                    the cache time in milliseconds.
         """
         self._cacheTime = cacheTime
+
+
+class StreamSource(object):
+    """Interface implemented by the source of a StreamResource.
+
+    @author IT Mill Ltd.
+    @version
+    @VERSION@
+    @since 3.0
+    """
+    # documented in superclass
+
+    def getStream(self):
+        """Returns new input stream that is used for reading the resource."""
+        pass

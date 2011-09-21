@@ -14,10 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# from java.io.Serializable import (Serializable,)
-# from java.net.URL import (URL,)
-
-import muntjac.terminal
+from muntjac.terminal.Terminal import ErrorEvent as TerminalErrorEvent
 
 
 class URIHandler(object):
@@ -45,7 +42,7 @@ class URIHandler(object):
         pass
 
 
-class ErrorEvent(muntjac.terminal.Terminal.ErrorEvent):
+class ErrorEvent(TerminalErrorEvent):
     """An {@code ErrorEvent} implementation for URIHandler."""
 
     def getURIHandler(self):

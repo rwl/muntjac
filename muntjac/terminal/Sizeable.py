@@ -14,11 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-# from java.io.Serializable import (Serializable,)
 
-
-class Sizeable(Serializable):
+class Sizeable(object):
     """Interface to be implemented by components wishing to display some object that
     may be dynamically resized during runtime.
 
@@ -29,25 +26,34 @@ class Sizeable(Serializable):
     """
     # Unit code representing pixels.
     UNITS_PIXELS = 0
+
     # Unit code representing points (1/72nd of an inch).
     UNITS_POINTS = 1
+
     # Unit code representing picas (12 points).
     UNITS_PICAS = 2
+
     # Unit code representing the font-size of the relevant font.
     UNITS_EM = 3
+
     # Unit code representing the x-height of the relevant font.
     UNITS_EX = 4
+
     # Unit code representing millimeters.
     UNITS_MM = 5
+
     # Unit code representing centimeters.
     UNITS_CM = 6
+
     # Unit code representing inches.
     UNITS_INCH = 7
+
     # Unit code representing in percentage of the containing element defined by
     # terminal.
-
     UNITS_PERCENTAGE = 8
+
     SIZE_UNDEFINED = -1
+
     # Textual representations of units symbols. Supported units and their
     # symbols are:
     # <ul>
@@ -62,7 +68,6 @@ class Sizeable(Serializable):
     # <li>{@link #UNITS_PERCENTAGE}: "%"</li>
     # </ul>
     # These can be used like <code>Sizeable.UNIT_SYMBOLS[UNITS_PIXELS]</code>.
-
     UNIT_SYMBOLS = ['px', 'pt', 'pc', 'em', 'ex', 'mm', 'cm', 'in', '%']
 
     def getWidth(self):
@@ -72,6 +77,7 @@ class Sizeable(Serializable):
         @return width of the object in units specified by widthUnits property.
         """
         pass
+
 
     def setWidth(self, *args):
         """Sets the width of the object. Negative number implies unspecified size
@@ -113,17 +119,8 @@ class Sizeable(Serializable):
                    in CSS style string representation, null or empty string to
                    reset
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            if isinstance(_0[0], float):
-                width, = _0
-            else:
-                width, = _0
-        elif _1 == 2:
-            width, unit = _0
-        else:
-            raise ARGERROR(1, 2)
+        pass
+
 
     def getHeight(self):
         """Gets the height of the object. Negative number implies unspecified size
@@ -132,6 +129,7 @@ class Sizeable(Serializable):
         @return height of the object in units specified by heightUnits property.
         """
         pass
+
 
     def setHeight(self, *args):
         """Sets the height of the object. Negative number implies unspecified size
@@ -172,17 +170,8 @@ class Sizeable(Serializable):
                    {@link #UNITS_MM}, {@link #UNITS_CM}, {@link #UNITS_INCH},
                    {@link #UNITS_PERCENTAGE}.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            if isinstance(_0[0], float):
-                height, = _0
-            else:
-                height, = _0
-        elif _1 == 2:
-            height, unit = _0
-        else:
-            raise ARGERROR(1, 2)
+        pass
+
 
     def getWidthUnits(self):
         """Gets the width property units.
@@ -190,6 +179,7 @@ class Sizeable(Serializable):
         @return units used in width property.
         """
         pass
+
 
     def setWidthUnits(self, units):
         """Sets the width property units.
@@ -202,12 +192,14 @@ class Sizeable(Serializable):
         """
         pass
 
+
     def getHeightUnits(self):
         """Gets the height property units.
 
         @return units used in height property.
         """
         pass
+
 
     def setHeightUnits(self, units):
         """Sets the height property units.
@@ -220,9 +212,11 @@ class Sizeable(Serializable):
         """
         pass
 
+
     def setSizeFull(self):
         """Sets the size to 100% x 100%."""
         pass
+
 
     def setSizeUndefined(self):
         """Clears any size settings."""

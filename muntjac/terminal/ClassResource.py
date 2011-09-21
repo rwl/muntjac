@@ -14,14 +14,12 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.service.FileTypeResolver import (FileTypeResolver,)
-from com.vaadin.terminal.ApplicationResource import (ApplicationResource,)
-from com.vaadin.terminal.DownloadStream import (DownloadStream,)
-# from java.io.Serializable import (Serializable,)
+from muntjac.service.FileTypeResolver import FileTypeResolver
+from muntjac.terminal.ApplicationResource import ApplicationResource
+from muntjac.terminal.DownloadStream import DownloadStream
 
 
-class ClassResource(ApplicationResource, Serializable):
+class ClassResource(ApplicationResource):
     """<code>ClassResource</code> is a named resource accessed with the class
     loader.
 
@@ -34,16 +32,6 @@ class ClassResource(ApplicationResource, Serializable):
     @VERSION@
     @since 3.0
     """
-    # Default buffer size for this stream resource.
-    _bufferSize = 0
-    # Default cache time for this stream resource.
-    _cacheTime = DEFAULT_CACHETIME
-    # Associated class used for indetifying the source of the resource.
-    _associatedClass = None
-    # Name of the resource is relative to the associated class.
-    _resourceName = None
-    # Application used for serving the class.
-    _application = None
 
     def __init__(self, *args):
         """Creates a new application resource instance. The resource id is relative
@@ -63,68 +51,84 @@ class ClassResource(ApplicationResource, Serializable):
         @param application
                    the application this resource will be added to.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 2:
-            resourceName, application = _0
-            self._associatedClass = application.getClass()
+        # Default buffer size for this stream resource.
+        self._bufferSize = 0
+        # Default cache time for this stream resource.
+        self._cacheTime = self.DEFAULT_CACHETIME
+        # Associated class used for indetifying the source of the resource.
+        self._associatedClass = None
+        # Name of the resource is relative to the associated class.
+        self._resourceName = None
+        # Application used for serving the class.
+        self._application = None
+
+        nargs = len(args)
+        if nargs == 2:
+            resourceName, application = nargs
+            self._associatedClass = application.__class__
             self._resourceName = resourceName
             self._application = application
             if resourceName is None:
-                raise self.NullPointerException()
+                raise ValueError
             application.addResource(self)
-        elif _1 == 3:
-            associatedClass, resourceName, application = _0
+        elif nargs == 3:
+            associatedClass, resourceName, application = nargs
             self._associatedClass = associatedClass
             self._resourceName = resourceName
             self._application = application
             if (resourceName is None) or (associatedClass is None):
-                raise self.NullPointerException()
+                raise ValueError
             application.addResource(self)
         else:
-            raise ARGERROR(2, 3)
+            raise ValueError, 'invalid number of arguments'
+
 
     def getMIMEType(self):
         """Gets the MIME type of this resource.
 
-        @see com.vaadin.terminal.Resource#getMIMEType()
+        @see muntjac.terminal.Resource#getMIMEType()
         """
         return FileTypeResolver.getMIMEType(self._resourceName)
+
 
     def getApplication(self):
         """Gets the application of this resource.
 
-        @see com.vaadin.terminal.ApplicationResource#getApplication()
+        @see muntjac.terminal.ApplicationResource#getApplication()
         """
         return self._application
+
 
     def getFilename(self):
         """Gets the virtual filename for this resource.
 
         @return the file name associated to this resource.
-        @see com.vaadin.terminal.ApplicationResource#getFilename()
+        @see muntjac.terminal.ApplicationResource#getFilename()
         """
         index = 0
-        next = 0
-        while (
-            next = self._resourceName.find('/', index) > 0 and next + 1 < len(self._resourceName)
-        ):
-            index = next + 1
+        idx = self._resourceName.find('/', index)
+        while idx > 0 and idx + 1 < len(self._resourceName):
+            index = idx + 1
+            idx = self._resourceName.find('/', index)
         return self._resourceName[index:]
+
 
     def getStream(self):
         """Gets resource as stream.
 
-        @see com.vaadin.terminal.ApplicationResource#getStream()
+        @see muntjac.terminal.ApplicationResource#getStream()
         """
         # documented in superclass
-        ds = DownloadStream(self._associatedClass.getResourceAsStream(self._resourceName), self.getMIMEType(), self.getFilename())
+        ds = DownloadStream(self._associatedClass.getResourceAsStream(self._resourceName),
+                            self.getMIMEType(), self.getFilename())
         ds.setBufferSize(self.getBufferSize())
         ds.setCacheTime(self._cacheTime)
         return ds
 
+
     def getBufferSize(self):
         return self._bufferSize
+
 
     def setBufferSize(self, bufferSize):
         """Sets the size of the download buffer used for this resource.
@@ -135,8 +139,10 @@ class ClassResource(ApplicationResource, Serializable):
         # documented in superclass
         self._bufferSize = bufferSize
 
+
     def getCacheTime(self):
         return self._cacheTime
+
 
     def setCacheTime(self, cacheTime):
         """Sets the length of cache expiration time.

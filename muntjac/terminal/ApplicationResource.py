@@ -14,11 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from com.vaadin.terminal.Resource import (Resource,)
-# from java.io.Serializable import (Serializable,)
+from muntjac.terminal.Resource import Resource
 
 
-class ApplicationResource(Resource, Serializable):
+class ApplicationResource(Resource):
     """This interface must be implemented by classes wishing to provide Application
     resources.
     <p>
@@ -40,9 +39,11 @@ class ApplicationResource(Resource, Serializable):
         """Gets resource as stream."""
         pass
 
+
     def getApplication(self):
         """Gets the application of the resource."""
         pass
+
 
     def getFilename(self):
         """Gets the virtual filename for this resource.
@@ -50,6 +51,7 @@ class ApplicationResource(Resource, Serializable):
         @return the file name associated to this resource.
         """
         pass
+
 
     def getCacheTime(self):
         """Gets the length of cache expiration time.
@@ -63,6 +65,7 @@ class ApplicationResource(Resource, Serializable):
         @return Cache time in milliseconds
         """
         pass
+
 
     def getBufferSize(self):
         """Gets the size of the download buffer used for this resource.

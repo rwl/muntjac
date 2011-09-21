@@ -14,12 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-# from java.io.IOException import (IOException,)
-# from java.io.Serializable import (Serializable,)
 
-
-class PaintException(IOException, Serializable):
+class PaintException(IOError):
     """<code>PaintExcepection</code> is thrown if painting of a component fails.
 
     @author IT Mill Ltd.
@@ -28,7 +24,7 @@ class PaintException(IOException, Serializable):
     @since 3.0
     """
 
-    def __init__(self, *args):
+    def __init__(self, arg):
         """Constructs an instance of <code>PaintExeception</code> with the specified
         detail message.
 
@@ -40,14 +36,4 @@ class PaintException(IOException, Serializable):
         @param exception
                    the original exception.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            if isinstance(_0[0], IOException):
-                exception, = _0
-                super(PaintException, self)(exception.getMessage())
-            else:
-                msg, = _0
-                super(PaintException, self)(msg)
-        else:
-            raise ARGERROR(1, 1)
+        super(PaintException, self)( str(arg) )

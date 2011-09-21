@@ -14,8 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from com.vaadin.service.FileTypeResolver import (FileTypeResolver,)
-from com.vaadin.terminal.Resource import (Resource,)
+from muntjac.service.FileTypeResolver import FileTypeResolver
+from muntjac.terminal.Resource import Resource
 
 
 class ThemeResource(Resource):
@@ -29,8 +29,6 @@ class ThemeResource(Resource):
     @VERSION@
     @since 3.0
     """
-    # Id of the terminal managed resource.
-    _resourceID = None
 
     def __init__(self, resourceId):
         """Creates a resource.
@@ -38,13 +36,20 @@ class ThemeResource(Resource):
         @param resourceId
                    the Id of the resource.
         """
+        # Id of the terminal managed resource.
+        self._resourceID = None
+
         if resourceId is None:
-            raise self.NullPointerException('Resource ID must not be null')
+            raise ValueError, 'Resource ID must not be null'
+
         if len(resourceId) == 0:
-            raise self.IllegalArgumentException('Resource ID can not be empty')
+            raise ValueError, 'Resource ID can not be empty'
+
         if resourceId[0] == '/':
-            raise self.IllegalArgumentException('Resource ID must be relative (can not begin with /)')
+            raise ValueError, 'Resource ID must be relative (can not begin with /)'
+
         self._resourceID = resourceId
+
 
     def equals(self, obj):
         """Tests if the given object equals this Resource.
@@ -57,13 +62,16 @@ class ThemeResource(Resource):
         """
         return isinstance(obj, ThemeResource) and self._resourceID == obj.resourceID
 
+
     def hashCode(self):
         """@see java.lang.Object#hashCode()"""
         return self._resourceID.hashCode()
 
+
     def toString(self):
         """@see java.lang.Object#toString()"""
         return str(self._resourceID)
+
 
     def getResourceId(self):
         """Gets the resource id.
@@ -71,6 +79,7 @@ class ThemeResource(Resource):
         @return the resource id.
         """
         return self._resourceID
+
 
     def getMIMEType(self):
         """@see com.vaadin.terminal.Resource#getMIMEType()"""

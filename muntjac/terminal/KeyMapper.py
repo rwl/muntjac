@@ -14,12 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (PREINC,)
-# from java.io.Serializable import (Serializable,)
-# from java.util.Hashtable import (Hashtable,)
 
-
-class KeyMapper(Serializable):
+class KeyMapper(object):
     """<code>KeyMapper</code> is the simple two-way map for generating textual keys
     for objects and retrieving the objects later with the key.
 
@@ -28,27 +24,33 @@ class KeyMapper(Serializable):
     @VERSION@
     @since 3.0
     """
-    _lastKey = 0
-    _objectKeyMap = dict()
-    _keyObjectMap = dict()
+
+    def __init__(self):
+        self._lastKey = 0
+        self._objectKeyMap = dict()
+        self._keyObjectMap = dict()
+
 
     def key(self, o):
         """Gets key for an object.
 
-        @param o
-                   the object.
+        @param o: the object.
         """
         if o is None:
             return 'null'
+
         # If the object is already mapped, use existing key
-        key = self._objectKeyMap[o]
+        key = self._objectKeyMap.get(o)
         if key is not None:
             return key
+
         # If the object is not yet mapped, map it
-        key = String.valueOf.valueOf(PREINC(globals(), locals(), 'self._lastKey'))
-        self._objectKeyMap.put(o, key)
-        self._keyObjectMap.put(key, o)
+        self._lastKey += 1
+        key = str(self._lastKey)
+        self._objectKeyMap[o] = key
+        self._keyObjectMap[key] = o
         return key
+
 
     def get(self, key):
         """Retrieves object with the key.
@@ -57,7 +59,8 @@ class KeyMapper(Serializable):
                    the name with the desired value.
         @return the object with the key.
         """
-        return self._keyObjectMap[key]
+        return self._keyObjectMap.get(key)
+
 
     def remove(self, removeobj):
         """Removes object from the mapper.
@@ -65,10 +68,11 @@ class KeyMapper(Serializable):
         @param removeobj
                    the object to be removed.
         """
-        key = self._objectKeyMap[removeobj]
+        key = self._objectKeyMap.get(removeobj)
         if key is not None:
-            self._objectKeyMap.remove(removeobj)
-            self._keyObjectMap.remove(key)
+            del self._objectKeyMap[removeobj]
+            del self._keyObjectMap[key]
+
 
     def removeAll(self):
         """Removes all objects from the mapper."""

@@ -14,10 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# from java.io.Serializable import (Serializable,)
 
-
-class Scrollable(Serializable):
+class Scrollable(object):
     """<p>
     This interface is implemented by all visual objects that can be scrolled. The
     unit of scrolling is pixel.
@@ -41,6 +39,7 @@ class Scrollable(Serializable):
         """
         pass
 
+
     def setScrollLeft(self, pixelsScrolled):
         """Sets scroll left offset.
 
@@ -54,6 +53,7 @@ class Scrollable(Serializable):
         """
         pass
 
+
     def getScrollTop(self):
         """Gets scroll top offset.
 
@@ -65,6 +65,7 @@ class Scrollable(Serializable):
         @return Vertical scrolling position in pixels.
         """
         pass
+
 
     def setScrollTop(self, pixelsScrolled):
         """Sets scroll top offset.
@@ -79,6 +80,7 @@ class Scrollable(Serializable):
         """
         pass
 
+
     def isScrollable(self):
         """Is the scrolling enabled.
 
@@ -91,6 +93,7 @@ class Scrollable(Serializable):
                 <code>false</code>.
         """
         pass
+
 
     def setScrollable(self, isScrollingEnabled):
         """Enables or disables scrolling..

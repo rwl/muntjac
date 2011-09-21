@@ -14,13 +14,18 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.terminal.ErrorMessage import (ErrorMessage,)
-# from java.io.PrintWriter import (PrintWriter,)
-# from java.io.StringWriter import (StringWriter,)
+import sys
+import traceback
+
+try:
+    from cStringIO import StringIO
+except ImportError, e:
+    from StringIO import StringIO
+
+from muntjac.terminal.ErrorMessage import ErrorMessage
 
 
-class SystemError(RuntimeError, ErrorMessage):
+class SystemErr(RuntimeError, ErrorMessage):
     """<code>SystemError</code> is a runtime exception caused by error in system.
     The system error can be shown to the user as it implements
     <code>ErrorMessage</code> interface, but contains technical information such
@@ -31,10 +36,6 @@ class SystemError(RuntimeError, ErrorMessage):
     @VERSION@
     @since 3.0
     """
-    # The cause of the system error. The cause is stored separately as JDK 1.3
-    # does not support causes natively.
-
-    _cause = None
 
     def __init__(self, *args):
         """Constructor for SystemError with error message specified.
@@ -54,46 +55,55 @@ class SystemError(RuntimeError, ErrorMessage):
         @param cause
                    the throwable causing the system error.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            if isinstance(_0[0], Throwable):
-                cause, = _0
-                self._cause = cause
+        # The cause of the system error. The cause is stored separately as JDK 1.3
+        # does not support causes natively.
+        self._cause = None
+
+        nargs = len(args)
+        if nargs == 1:
+            if isinstance(args[0], Exception):
+                self._cause = args[0]
             else:
-                message, = _0
-                super(SystemError, self)(message)
-        elif _1 == 2:
-            message, cause = _0
+                super(SystemError, self)(args[0])
+        elif nargs == 2:
+            message, cause = args
             super(SystemError, self)(message)
             self._cause = cause
         else:
-            raise ARGERROR(1, 2)
+            raise ValueError, 'too many arguments'
+
 
     def getErrorLevel(self):
         """@see com.vaadin.terminal.ErrorMessage#getErrorLevel()"""
         return ErrorMessage.SYSTEMERROR
 
+
     def paint(self, target):
         """@see com.vaadin.terminal.Paintable#paint(com.vaadin.terminal.PaintTarget)"""
+
         target.startTag('error')
         target.addAttribute('level', 'system')
-        sb = self.StringBuilder()
+
+        sb = StringIO()
         message = self.getLocalizedMessage()
         if message is not None:
-            sb.append('<h2>')
-            sb.append(message)
-            sb.append('</h2>')
+            sb.write('<h2>')
+            sb.write(message)
+            sb.write('</h2>')
         # Paint the exception
         if self._cause is not None:
-            sb.append('<h3>Exception</h3>')
-            buffer = StringWriter()
-            self._cause.printStackTrace(PrintWriter(buffer))
-            sb.append('<pre>')
-            sb.append(str(buffer))
-            sb.append('</pre>')
-        target.addXMLSection('div', str(sb), 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd')
+            sb.write('<h3>Exception</h3>')
+            buff = StringIO()
+            traceback.print_exception(sys.exc_type, self._cause, sys.exc_traceback, file=buff)
+            sb.write('<pre>')
+            sb.write(buffer.getvalue())
+            sb.write('</pre>')
+            buff.close()
+        target.addXMLSection('div', sb.getvalue(),
+                'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd')
+        sb.close()
         target.endTag('error')
+
 
     def getCause(self):
         """Gets cause for the error.
@@ -104,23 +114,29 @@ class SystemError(RuntimeError, ErrorMessage):
         # Documented in super interface
         return self._cause
 
+
     def addListener(self, listener):
         # Documented in super interface
         pass
+
 
     def removeListener(self, listener):
         # Documented in super interface
         pass
 
+
     def requestRepaint(self):
         # Documented in super interface
         pass
 
+
     def requestRepaintRequests(self):
         pass
+
 
     def getDebugId(self):
         return None
 
-    def setDebugId(self, id):
-        raise self.UnsupportedOperationException('Setting testing id for this Paintable is not implemented')
+
+    def setDebugId(self, idd):
+        raise NotImplementedError, 'Setting testing id for this Paintable is not implemented'

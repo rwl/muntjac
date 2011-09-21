@@ -44,6 +44,7 @@ class StreamVariable(object):
         """
         pass
 
+
     def listenProgress(self):
         """Whether the {@link #onProgress(long, long)} method should be called
         during the upload.
@@ -60,17 +61,21 @@ class StreamVariable(object):
         """
         pass
 
+
     def onProgress(self, event):
         """This method is called by the terminal if {@link #listenProgress()}
         returns true when the streaming starts.
         """
         pass
 
+
     def streamingStarted(self, event):
         pass
 
+
     def streamingFinished(self, event):
         pass
+
 
     def streamingFailed(self, event):
         # Not synchronized to avoid stalls (caused by UIDL requests) while
@@ -78,6 +83,7 @@ class StreamVariable(object):
         # without the restriction.
 
         pass
+
 
     def isInterrupted(self):
         """If this method returns true while the content is being streamed the

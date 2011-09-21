@@ -14,10 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# from java.io.Serializable import (Serializable,)
 
-
-class Resource(Serializable):
+class Resource(object):
     """<code>Resource</code> provided to the client terminal. Support for actually
     displaying the resource type is left to the terminal.
 

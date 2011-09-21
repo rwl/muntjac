@@ -14,11 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# from java.io.Serializable import (Serializable,)
-# from java.util.Map import (Map,)
+from muntjac.terminal.Terminal import ErrorEvent as TerminalErrorEvent
 
 
-class VariableOwner(Serializable):
+class VariableOwner(object):
     """<p>
     Listener interface for UI variable changes. The user communicates with the
     application using the so-called <i>variables</i>. When the user makes a
@@ -45,6 +44,7 @@ class VariableOwner(Serializable):
         """
         pass
 
+
     def isEnabled(self):
         """<p>
         Tests if the variable owner is enabled or not. The terminal should not
@@ -55,6 +55,7 @@ class VariableOwner(Serializable):
                 <code>false</code> if not
         """
         pass
+
 
     def isImmediate(self):
         """<p>
@@ -77,7 +78,7 @@ class VariableOwner(Serializable):
         pass
 
 
-class ErrorEvent(Terminal.ErrorEvent):
+class ErrorEvent(TerminalErrorEvent):
     """VariableOwner error event."""
 
     def getVariableOwner(self):

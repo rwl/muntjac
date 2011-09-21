@@ -14,13 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from com.vaadin.service.FileTypeResolver import (FileTypeResolver,)
-from com.vaadin.terminal.ApplicationResource import (ApplicationResource,)
-from com.vaadin.terminal.DownloadStream import (DownloadStream,)
-# from com.vaadin.terminal.Terminal.ErrorEvent import (ErrorEvent,)
-# from java.io.File import (File,)
-# from java.io.FileInputStream import (FileInputStream,)
-# from java.io.FileNotFoundException import (FileNotFoundException,)
+from muntjac.service.FileTypeResolver import FileTypeResolver
+from muntjac.terminal.ApplicationResource import ApplicationResource
+from muntjac.terminal.DownloadStream import DownloadStream
+from muntjac.terminal.Terminal import ErrorEvent
 
 
 class FileResource(ApplicationResource):
@@ -34,44 +31,47 @@ class FileResource(ApplicationResource):
     @VERSION@
     @since 3.0
     """
-    # Default buffer size for this stream resource.
-    _bufferSize = 0
-    # File where the downloaded content is fetched from.
-    _sourceFile = None
-    # Application.
-    _application = None
-    # Default cache time for this stream resource.
-    _cacheTime = DownloadStream.DEFAULT_CACHETIME
 
     def __init__(self, sourceFile, application):
         """Creates a new file resource for providing given file for client
         terminals.
         """
+        # Default buffer size for this stream resource.
+        self._bufferSize = 0
+        # File where the downloaded content is fetched from.
+        self._sourceFile = None
+        # Application.
+        self._application = None
+        # Default cache time for this stream resource.
+        self._cacheTime = DownloadStream.DEFAULT_CACHETIME
+
         self._application = application
         self.setSourceFile(sourceFile)
         application.addResource(self)
 
+
     def getStream(self):
         """Gets the resource as stream.
 
-        @see com.vaadin.terminal.ApplicationResource#getStream()
+        @see muntjac.terminal.ApplicationResource#getStream()
         """
-        # Log the exception using the application error handler
         try:
-            ds = DownloadStream(FileInputStream(self._sourceFile), self.getMIMEType(), self.getFilename())
-            ds.setParameter('Content-Length', String.valueOf.valueOf(len(self._sourceFile)))
+            ds = DownloadStream(file(self._sourceFile),  # FileInputStream
+                                self.getMIMEType(),
+                                self.getFilename())
+            ds.setParameter('Content-Length', str(len(self._sourceFile)))
             ds.setCacheTime(self._cacheTime)
             return ds
-        except FileNotFoundException, e:
-
-            class _0_(ErrorEvent):
+        except IOError:
+            # Log the exception using the application error handler
+            class Error(ErrorEvent):
 
                 def getThrowable(self):
                     return self.e
 
-            _0_ = self._0_()
-            self.getApplication().getErrorHandler().terminalError(_0_)
+            self.getApplication().getErrorHandler().terminalError(self.Error())
             return None
+
 
     def getSourceFile(self):
         """Gets the source file.
@@ -79,6 +79,7 @@ class FileResource(ApplicationResource):
         @return the source File.
         """
         return self._sourceFile
+
 
     def setSourceFile(self, sourceFile):
         """Sets the source file.
@@ -88,17 +89,21 @@ class FileResource(ApplicationResource):
         """
         self._sourceFile = sourceFile
 
+
     def getApplication(self):
         """@see com.vaadin.terminal.ApplicationResource#getApplication()"""
         return self._application
+
 
     def getFilename(self):
         """@see com.vaadin.terminal.ApplicationResource#getFilename()"""
         return self._sourceFile.getName()
 
+
     def getMIMEType(self):
         """@see com.vaadin.terminal.Resource#getMIMEType()"""
         return FileTypeResolver.getMIMEType(self._sourceFile)
+
 
     def getCacheTime(self):
         """Gets the length of cache expiration time. This gives the adapter the
@@ -109,6 +114,7 @@ class FileResource(ApplicationResource):
         @return Cache time in milliseconds.
         """
         return self._cacheTime
+
 
     def setCacheTime(self, cacheTime):
         """Sets the length of cache expiration time. This gives the adapter the
@@ -122,8 +128,10 @@ class FileResource(ApplicationResource):
         # documented in superclass
         self._cacheTime = cacheTime
 
+
     def getBufferSize(self):
         return self._bufferSize
+
 
     def setBufferSize(self, bufferSize):
         """Sets the size of the download buffer used for this resource.

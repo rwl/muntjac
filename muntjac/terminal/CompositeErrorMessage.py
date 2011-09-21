@@ -14,16 +14,12 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.terminal.ErrorMessage import (ErrorMessage,)
-# from java.io.Serializable import (Serializable,)
-# from java.util.ArrayList import (ArrayList,)
-# from java.util.Collection import (Collection,)
-# from java.util.Iterator import (Iterator,)
-# from java.util.List import (List,)
+import sys
+
+from muntjac.terminal.ErrorMessage import ErrorMessage
 
 
-class CompositeErrorMessage(ErrorMessage, Serializable):
+class CompositeErrorMessage(ErrorMessage):
     """Class for combining multiple error messages together.
 
     @author IT Mill Ltd
@@ -31,59 +27,27 @@ class CompositeErrorMessage(ErrorMessage, Serializable):
     @VERSION@
     @since 3.0
     """
-    # Array of all the errors.
-    _errors = None
-    # Level of the error.
-    _level = None
 
-    def __init__(self, *args):
+    def __init__(self, errorMessages):
         """Constructor for CompositeErrorMessage.
-
-        @param errorMessages
-                   the Array of error messages that are listed togeter. Nulls are
-                   ignored, but at least one message is required.
-        ---
-        Constructor for CompositeErrorMessage.
 
         @param errorMessages
                    the Collection of error messages that are listed together. At
                    least one message is required.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            if isinstance(_0[0], Collection):
-                errorMessages, = _0
-                self._errors = list(len(errorMessages))
-                self._level = Integer.MIN_VALUE.MIN_VALUE
-                _0 = True
-                i = errorMessages
-                while True:
-                    if _0 is True:
-                        _0 = False
-                    if not i.hasNext():
-                        break
-                    self.addErrorMessage(i.next())
-                if len(self._errors) == 0:
-                    raise self.IllegalArgumentException('Composite error message must have at least one error')
-            else:
-                errorMessages, = _0
-                self._errors = list(len(errorMessages))
-                self._level = Integer.MIN_VALUE.MIN_VALUE
-                _0 = True
-                i = 0
-                while True:
-                    if _0 is True:
-                        _0 = False
-                    else:
-                        i += 1
-                    if not (i < len(errorMessages)):
-                        break
-                    self.addErrorMessage(errorMessages[i])
-                if len(self._errors) == 0:
-                    raise self.IllegalArgumentException('Composite error message must have at least one error')
-        else:
-            raise ARGERROR(1, 1)
+        # Array of all the errors.
+        self._errors = None
+        # Level of the error.
+        self._level = None
+
+        self._errors = list()
+        self._level = -sys.maxint - 1
+        for m in errorMessages:
+            self.addErrorMessage(m)
+
+        if len(self._errors) == 0:
+            raise ValueError, 'Composite error message must have at least one error'
+
 
     def getErrorLevel(self):
         """The error level is the largest error level in
@@ -92,6 +56,7 @@ class CompositeErrorMessage(ErrorMessage, Serializable):
         """
         return self._level
 
+
     def addErrorMessage(self, error):
         """Adds a error message into this composite message. Updates the level
         field.
@@ -99,26 +64,29 @@ class CompositeErrorMessage(ErrorMessage, Serializable):
         @param error
                    the error message to be added. Duplicate errors are ignored.
         """
-        if error is not None and not self._errors.contains(error):
-            self._errors.add(error)
+        if error is not None and error not in self._errors:
+            self._errors.append(error)
             l = error.getErrorLevel()
             if l > self._level:
                 self._level = l
+
 
     def iterator(self):
         """Gets Error Iterator.
 
         @return the error iterator.
         """
-        return self._errors
+        return iter(self._errors)
+
 
     def paint(self, target):
-        """@see com.vaadin.terminal.Paintable#paint(com.vaadin.terminal.PaintTarget)"""
+        """@see muntjac.terminal.Paintable#paint(muntjac.terminal.PaintTarget)"""
         # Documented in super interface
         if len(self._errors) == 1:
-            self._errors.next().paint(target)
+            self._errors[0].paint(target)
         else:
             target.startTag('error')
+
             if self._level > 0 and self._level <= ErrorMessage.INFORMATION:
                 target.addAttribute('level', 'info')
             elif self._level <= ErrorMessage.WARNING:
@@ -130,30 +98,30 @@ class CompositeErrorMessage(ErrorMessage, Serializable):
             else:
                 target.addAttribute('level', 'system')
             # Paint all the exceptions
-            _0 = True
-            i = self._errors
-            while True:
-                if _0 is True:
-                    _0 = False
-                if not i.hasNext():
-                    break
-                i.next().paint(target)
+            for error in self._errors:
+                error.paint(target)
+
             target.endTag('error')
+
 
     def addListener(self, listener):
         # Documented in super interface
         pass
 
+
     def removeListener(self, listener):
         # Documented in super interface
         pass
+
 
     def requestRepaint(self):
         # Documented in super interface
         pass
 
+
     def requestRepaintRequests(self):
         pass
+
 
     def toString(self):
         """Returns a comma separated list of the error messages.
@@ -162,22 +130,18 @@ class CompositeErrorMessage(ErrorMessage, Serializable):
         """
         retval = '['
         pos = 0
-        _0 = True
-        i = self._errors
-        while True:
-            if _0 is True:
-                _0 = False
-            if not i.hasNext():
-                break
+        for error in self._errors:
             if pos > 0:
                 retval += ','
             pos += 1
-            retval += str(i.next())
+            retval += str(error)
         retval += ']'
         return retval
+
 
     def getDebugId(self):
         return None
 
-    def setDebugId(self, id):
-        raise self.UnsupportedOperationException('Setting testing id for this Paintable is not implemented')
+
+    def setDebugId(self, idd):
+        raise NotImplementedError, 'Setting testing id for this Paintable is not implemented'

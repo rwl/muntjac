@@ -48,11 +48,13 @@ class Paintable(EventListener):
         """
         pass
 
+
     def requestRepaint(self):
         """Requests that the paintable should be repainted as soon as possible."""
         pass
 
-    def setDebugId(self, id):
+
+    def setDebugId(self, idd):
         """Adds an unique id for component that get's transferred to terminal for
         testing purposes. Keeping identifiers unique throughout the Application
         instance is on programmers responsibility.
@@ -67,12 +69,14 @@ class Paintable(EventListener):
         """
         pass
 
+
     def getDebugId(self):
         """Get's currently set debug identifier
 
         @return current debug id, null if not set
         """
         pass
+
 
     def addListener(self, listener):
         """Adds repaint request listener. In order to assure that no repaint
@@ -84,6 +88,7 @@ class Paintable(EventListener):
         """
         pass
 
+
     def removeListener(self, listener):
         """Removes repaint request listener.
 
@@ -91,6 +96,7 @@ class Paintable(EventListener):
                    the listener to be removed.
         """
         pass
+
 
     def requestRepaintRequests(self):
         """Request sending of repaint events on any further visible changes.
@@ -107,6 +113,7 @@ class Paintable(EventListener):
         """
         pass
 
+
 class RepaintRequestEvent(EventObject):
     """Repaint request event is thrown when the paintable needs to be repainted.
     This is typically done when the <code>paint</code> method would return
@@ -121,6 +128,7 @@ class RepaintRequestEvent(EventObject):
         """
         super(RepaintRequestEvent, self)(source)
 
+
     def getPaintable(self):
         """Gets the paintable needing repainting.
 
@@ -128,6 +136,7 @@ class RepaintRequestEvent(EventObject):
                 dissimilar UIDL from the previous call of the method.
         """
         return self.getSource()
+
 
 class RepaintRequestListener(object):
     """Listens repaint requests. The <code>repaintRequested</code> method is
