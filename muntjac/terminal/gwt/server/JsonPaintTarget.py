@@ -17,6 +17,12 @@
 import logging
 from Queue import LifoQueue
 from muntjac.ui.CustomLayout import CustomLayout
+from muntjac.terminal.Resource import Resource
+from muntjac.terminal.ExternalResource import ExternalResource
+from muntjac.terminal.ApplicationResource import ApplicationResource
+from muntjac.terminal.ThemeResource import ThemeResource
+from muntjac.ui.Alignment import Alignment
+from muntjac.terminal.StreamVariable import StreamVariable
 
 try:
     from cStringIO import StringIO
@@ -304,152 +310,117 @@ class JsonPaintTarget(PaintTarget):
         self._tag.addData('\"' + self.escapeJSON(s) + '\"')
 
 
-    def addAttribute(self, *args):
-        _0 = args
-        _1 = len(args)
-        if _1 == 2:
-            if isinstance(_0[1], Object):
-                name, values = _0
-                if (values is None) or (name is None):
-                    raise self.NullPointerException('Parameters must be non-null strings')
-                buf = self.StringBuilder()
-                buf.append('\"' + name + '\":[')
-                _0 = True
-                i = 0
-                while True:
-                    if _0 is True:
-                        _0 = False
-                    else:
-                        i += 1
-                    if not (i < values.length):
-                        break
-                    if i > 0:
-                        buf.append(',')
-                    buf.append('\"')
-                    buf.append(self.escapeJSON(str(values[i])))
-                    buf.append('\"')
-                buf.append(']')
-                self._tag.addAttribute(str(buf))
-            elif isinstance(_0[1], Paintable):
-                name, value = _0
-                id = self.getPaintIdentifier(value)
-                self.addAttribute(name, id)
-            elif isinstance(_0[1], Resource):
-                name, value = _0
-                if isinstance(value, ExternalResource):
-                    self.addAttribute(name, value.getURL())
-                elif isinstance(value, ApplicationResource):
-                    r = value
-                    a = r.getApplication()
-                    if a is None:
-                        raise PaintException('Application not specified for resorce ' + value.getClass().getName())
-                    uri = a.getRelativeLocation(r)
-                    self.addAttribute(name, uri)
-                elif isinstance(value, ThemeResource):
-                    uri = 'theme://' + value.getResourceId()
-                    self.addAttribute(name, uri)
+    def addAttribute(self, name, value):
+        if isinstance(value, list):
+            values = value
+            # In case of null data output nothing:
+            if (values is None) or (name is None):
+                raise self.NullPointerException('Parameters must be non-null strings')
+            buf = StringIO()
+            buf.write('\"' + name + '\":[')
+            for i in range(len(values)):
+                if i > 0:
+                    buf.write(',')
+                buf.write('\"')
+                buf.write(self.escapeJSON( str(values[i]) ))
+                buf.write('\"')
+            buf.write(']')
+            self._tag.addAttribute(buf.getvalue())
+            buf.close()
+        elif isinstance(value, Paintable):
+            idd = self.getPaintIdentifier(value)
+            self.addAttribute(name, idd)
+        elif isinstance(value, Resource):
+
+            if isinstance(value, ExternalResource):
+                self.addAttribute(name, value.getURL())
+            elif isinstance(value, ApplicationResource):
+                r = value
+                a = r.getApplication()
+                if a is None:
+                    raise PaintException('Application not specified for resource ' \
+                                         + value.getClass().getName())
+                uri = a.getRelativeLocation(r)
+                self.addAttribute(name, uri)
+            elif isinstance(value, ThemeResource):
+                uri = 'theme://' + value.getResourceId()
+                self.addAttribute(name, uri)
+            else:
+                raise PaintException('Ajax adapter does not ' \
+                                     + 'support resources of type: ' \
+                                     + value.getClass().getName())
+        elif isinstance(value, bool):
+            self._tag.addAttribute('\"' + name + '\":' + ('true' if value else 'false'))
+        elif isinstance(value, dict):
+            sb = StringIO()
+            sb.write('\"')
+            sb.write(name)
+            sb.write('\": ')
+            sb.write('{')
+            i = 0
+            for key, mapValue in value.iteritems():
+                sb.write('\"')
+                if isinstance(key, Paintable):
+                    paintable = key
+                    sb.write(self.getPaintIdentifier(paintable))
                 else:
-                    raise PaintException('Ajax adapter does not ' + 'support resources of type: ' + value.getClass().getName())
-            elif isinstance(_0[1], boolean):
-                name, value = _0
-                self._tag.addAttribute('\"' + name + '\":' + ('true' if value else 'false'))
-            elif isinstance(_0[1], dict):
-                name, value = _0
-                sb = self.StringBuilder()
-                sb.append('\"')
-                sb.append(name)
-                sb.append('\": ')
-                sb.append('{')
-                _0 = True
-                it = value.keys()
-                while True:
-                    if _0 is True:
-                        _0 = False
-                    if not it.hasNext():
-                        break
-                    key = it.next()
-                    mapValue = value.get(key)
-                    sb.append('\"')
-                    if isinstance(key, Paintable):
-                        paintable = key
-                        sb.append(self.getPaintIdentifier(paintable))
-                    else:
-                        sb.append(self.escapeJSON(str(key)))
-                    sb.append('\":')
-                    if (
-                        (((isinstance(mapValue, float) or isinstance(mapValue, int)) or isinstance(mapValue, float)) or isinstance(mapValue, bool)) or isinstance(mapValue, Alignment)
-                    ):
-                        sb.append(mapValue)
-                    else:
-                        sb.append('\"')
-                        sb.append(self.escapeJSON(str(mapValue)))
-                        sb.append('\"')
-                    if it.hasNext():
-                        sb.append(',')
-                sb.append('}')
-                self._tag.addAttribute(str(sb))
-            elif isinstance(_0[1], double):
-                name, value = _0
-                self._tag.addAttribute('\"' + name + '\":' + String.valueOf.valueOf(value))
-            elif isinstance(_0[1], float):
-                name, value = _0
-                self._tag.addAttribute('\"' + name + '\":' + String.valueOf.valueOf(value))
-            elif isinstance(_0[1], int):
-                name, value = _0
-                self._tag.addAttribute('\"' + name + '\":' + String.valueOf.valueOf(value))
-            elif isinstance(_0[1], long):
-                name, value = _0
-                self._tag.addAttribute('\"' + name + '\":' + String.valueOf.valueOf(value))
-            else:
-                name, value = _0
-                if (value is None) or (name is None):
-                    raise self.NullPointerException('Parameters must be non-null strings')
-                self._tag.addAttribute('\"' + name + '\": \"' + self.escapeJSON(value) + '\"')
-                if self._customLayoutArgumentsOpen and 'template' == name:
-                    self.getUsedResources().add('layouts/' + value + '.html')
-                if name == 'locale':
-                    self._manager.requireLocale(value)
-        else:
-            raise ARGERROR(2, 2)
+                    sb.write(self.escapeJSON(str(key)))
+                sb.write('\":')
+                if isinstance(mapValue, float) \
+                        or isinstance(mapValue, int) \
+                        or isinstance(mapValue, float) \
+                        or isinstance(mapValue, bool) \
+                        or isinstance(mapValue, Alignment):
+                    sb.write(mapValue)
+                else:
+                    sb.write('\"')
+                    sb.write(self.escapeJSON(str(mapValue)))
+                    sb.write('\"')
+                if i < len(value) - 1:
+                    sb.append(',')
+                i += 1
+            sb.write('}')
+            self._tag.addAttribute(sb.getvalue())
+            sb.close()
+        elif isinstance(value, str):
+            # In case of null data output nothing:
+            if (value is None) or (name is None):
+                raise ValueError, 'Parameters must be non-null strings'
 
-    # In case of null data output nothing:
-    # In case of null data output nothing:
+            self._tag.addAttribute('\"' + name + '\": \"' + self.escapeJSON(value) + '\"')
 
-    def addVariable(self, *args):
-        _0 = args
-        _1 = len(args)
-        if _1 == 3:
-            if isinstance(_0[2], Paintable):
-                owner, name, value = _0
-                self._tag.addVariable(self.StringVariable(owner, name, self.getPaintIdentifier(value)))
-            elif isinstance(_0[2], StreamVariable):
-                owner, name, value = _0
-                url = self._manager.getStreamVariableTargetUrl(owner, name, value)
-                if url is not None:
-                    self.addVariable(owner, name, url)
-                # else { //NOP this was just a cleanup by component }
-            elif isinstance(_0[2], boolean):
-                owner, name, value = _0
-                self._tag.addVariable(self.BooleanVariable(owner, name, value))
-            elif isinstance(_0[2], double):
-                owner, name, value = _0
-                self._tag.addVariable(self.DoubleVariable(owner, name, value))
-            elif isinstance(_0[2], float):
-                owner, name, value = _0
-                self._tag.addVariable(self.FloatVariable(owner, name, value))
-            elif isinstance(_0[2], int):
-                owner, name, value = _0
-                self._tag.addVariable(self.IntVariable(owner, name, value))
-            elif isinstance(_0[2], long):
-                owner, name, value = _0
-                self._tag.addVariable(self.LongVariable(owner, name, value))
-            else:
-                owner, name, value = _0
-                self._tag.addVariable(self.ArrayVariable(owner, name, value))
-                owner, name, value = _0
-                self._tag.addVariable(self.StringVariable(owner, name, self.escapeJSON(value)))
+            if self._customLayoutArgumentsOpen and 'template' == name:
+                self.getUsedResources().add('layouts/' + value + '.html')
+
+            if name == 'locale':
+                self._manager.requireLocale(value)
         else:
-            raise ARGERROR(3, 3)
+            self._tag.addAttribute('\"' + name + '\":' + str(value))
+
+
+    def addVariable(self, owner, name, value):
+        if isinstance(value, Paintable):
+            self._tag.addVariable( StringVariable(owner, name, self.getPaintIdentifier(value)) )
+        elif isinstance(value, StreamVariable):
+            url = self._manager.getStreamVariableTargetUrl(owner, name, value)
+            if url is not None:
+                self.addVariable(owner, name, url)
+            # else { //NOP this was just a cleanup by component }
+        elif isinstance(value, bool):
+            self._tag.addVariable( BooleanVariable(owner, name, value) )
+        elif isinstance(value, float):
+            self._tag.addVariable( DoubleVariable(owner, name, value) )
+#        elif isinstance(value, float):
+#            self._tag.addVariable( FloatVariable(owner, name, value) )
+        elif isinstance(value, int):
+            self._tag.addVariable( IntVariable(owner, name, value) )
+        elif isinstance(value, long):
+            self._tag.addVariable( LongVariable(owner, name, value) )
+        elif isinstance(value, str):
+            self._tag.addVariable( StringVariable(owner, name, self.escapeJSON(value)) )
+        else:  # list
+            self._tag.addVariable( ArrayVariable(owner, name, value) )
+
 
     def addUploadStreamVariable(self, owner, name):
         """Adds a upload stream type variable.
@@ -468,6 +439,7 @@ class JsonPaintTarget(PaintTarget):
         self.addAttribute(self._UIDL_ARG_NAME, name)
         self.endTag('uploadstream')
 
+
     def addSection(self, sectionTagName, sectionData):
         """Prints the single text section.
 
@@ -480,7 +452,9 @@ class JsonPaintTarget(PaintTarget):
         @throws PaintException
                     if the paint operation failed.
         """
-        self._tag.addData('{\"' + sectionTagName + '\":\"' + self.escapeJSON(sectionData) + '\"}')
+        self._tag.addData('{\"' + sectionTagName + '\":\"' \
+                + self.escapeJSON(sectionData) + '\"}')
+
 
     def addUIDL(self, xml):
         """Adds XML directly to UIDL.
@@ -493,11 +467,14 @@ class JsonPaintTarget(PaintTarget):
         # Ensure that the target is open
         if self._closed:
             raise PaintException('Attempted to write to a closed PaintTarget.')
+
         # Make sure that the open start tag is closed before
         # anything is written.
+
         # Escape and write what was given
         if xml is not None:
             self._tag.addData('\"' + self.escapeJSON(xml) + '\"')
+
 
     def addXMLSection(self, sectionTagName, sectionData, namespace):
         """Adds XML section with namespace.
@@ -517,12 +494,17 @@ class JsonPaintTarget(PaintTarget):
         # Ensure that the target is open
         if self._closed:
             raise PaintException('Attempted to write to a closed PaintTarget.')
+
         self.startTag(sectionTagName)
+
         if namespace is not None:
             self.addAttribute('xmlns', namespace)
+
         if sectionData is not None:
             self._tag.addData('\"' + self.escapeJSON(sectionData) + '\"')
+
         self.endTag(sectionTagName)
+
 
     def getUIDL(self):
         """Gets the UIDL already printed to stream. Paint target must be closed
@@ -531,8 +513,10 @@ class JsonPaintTarget(PaintTarget):
         @return the UIDL.
         """
         if self._closed:
-            return str(self._uidlBuffer)
-        raise self.IllegalStateException('Tried to read UIDL from open PaintTarget')
+            return self._uidlBuffer.getvalue()
+
+        raise ValueError, 'Tried to read UIDL from open PaintTarget'
+
 
     def close(self):
         """Closes the paint target. Paint target must be closed before the
@@ -545,31 +529,28 @@ class JsonPaintTarget(PaintTarget):
         """
         if self._tag is not None:
             self._uidlBuffer.write(self._tag.getJSON())
-        self.flush()
+        self._flush()
         self._closed = True
 
-    def flush(self):
-        """Method flush."""
-        # (non-Javadoc)
-        #
-        # @see com.vaadin.terminal.PaintTarget#startTag(com.vaadin.terminal
-        # .Paintable, java.lang.String)
 
+    def _flush(self):
+        """Method flush."""
         self._uidlBuffer.flush()
 
+
     def paintReference(self, paintable, referenceName):
+        raise DeprecationWarning
         self.addAttribute(referenceName, paintable)
 
-    def getPaintIdentifier(self, paintable):
-        # (non-Javadoc)
-        #
-        # @see com.vaadin.terminal.PaintTarget#addCharacterData(java.lang.String )
 
+    def getPaintIdentifier(self, paintable):
         if not self._manager.hasPaintableId(paintable):
             if self._identifiersCreatedDueRefPaint is None:
                 self._identifiersCreatedDueRefPaint = set()
             self._identifiersCreatedDueRefPaint.add(paintable)
+
         return self._manager.getPaintableId(paintable)
+
 
     def addCharacterData(self, text):
         if text is not None:
@@ -578,6 +559,7 @@ class JsonPaintTarget(PaintTarget):
 
     def getUsedResources(self):
         return self._usedResources
+
 
     def needsToBePainted(self, p):
         """Method to check if paintable is already painted into this target.
@@ -597,99 +579,78 @@ class JsonPaintTarget(PaintTarget):
 
     def getTag(self, paintable):
         class1 = self._widgetMappingCache[paintable.getClass()]
+
         if class1 is None:
             # Client widget annotation is searched from component hierarchy to
             # detect the component that presumably has client side
             # implementation. The server side name is used in the
             # transportation, but encoded into integer strings to optimized
             # transferred data.
-
-            class1 = paintable.getClass()
+            class1 = paintable.__class__
             while not self.hasClientWidgetMapping(class1):
-                superclass = class1.getSuperclass()
-                if superclass is not None and Paintable.isAssignableFrom(superclass):
+                superclass = class1.mro()[1] if len(class1.mro()) > 1 else None
+                if superclass is not None and Paintable in superclass.mro():  # FIXME check isAssignableFrom translation
                     class1 = superclass
                 else:
-                    self._logger.warning('No superclass of ' + paintable.getClass().getName() + ' has a @ClientWidget' + ' annotation. Component will not be mapped correctly on client side.')
+                    self._logger.warning('No superclass of ' \
+                            + paintable.getClass().getName() \
+                            + ' has a @ClientWidget' \
+                            + ' annotation. Component will not be mapped correctly on client side.')
                     break
-            self._widgetMappingCache.put(paintable.getClass(), class1)
-        self._usedPaintableTypes.add(class1)
+
+            self._widgetMappingCache[paintable.getClass()] = class1
+
+        self._usedPaintableTypes.append(class1)
         return self._manager.getTagForType(class1)
+
 
     def hasClientWidgetMapping(self, class1):
         try:
             return class1.isAnnotationPresent(self.ClientWidget)
-        except RuntimeException, e:
-            if (
-                e.getStackTrace()[0].getClassName() == 'org.glassfish.web.loader.WebappClassLoader'
-            ):
-                # Glassfish 3 is darn eager to load the value class, even
-                # though we just want to check if the annotation exists.
-                # See #3920, remove this hack when fixed in glassfish
-                # In some situations (depending on class loading order) it
-                # would be enough to return true here, but it is safer to check
-                # the annotation from bytecode
-                name = class1.getName().replace('.', File.separatorChar) + '.class'
-                try:
-                    stream = class1.getClassLoader().getResourceAsStream(name)
-                    bufferedReader = StringIO(InputStreamReader(stream))
-                    try:
-                        atSourcefile = False
-                        while line = bufferedReader.readline() is not None:
-                            if line.startswith('SourceFile'):
-                                atSourcefile = True
-                            if atSourcefile:
-                                if line.contains('ClientWidget'):
-                                    return True
-                            # TODO could optize to quit at the end attribute
-                    except IOException, e1:
-                        self._logger.log(Level.SEVERE, 'An error occurred while finding widget mapping.', e1)
-                    finally:
-                        try:
-                            bufferedReader.close()
-                        except IOException, e1:
-                            self._logger.log(Level.SEVERE, 'Could not close reader.', e1)
-                except Throwable, e2:
-                    self._logger.log(Level.SEVERE, 'An error occurred while finding widget mapping.', e2)
-                return False
-            else:
-                # throw exception forward
-                raise e
+        except RuntimeError, e:
+            self._logger.critical('An error occurred while finding widget mapping.')
+            return False
+
 
     def getUsedPaintableTypes(self):
         return self._usedPaintableTypes
 
 
-class JsonTag(Serializable):
+class JsonTag(object):
     """This is basically a container for UI components variables, that will be
     added at the end of JSON object.
 
     @author mattitahvonen
     """
-    _firstField = False
-    _variables = list()
-    _children = list()
-    _attr = list()
-    _data = self.StringBuilder()
-    childrenArrayOpen = False
-    _childNode = False
-    _tagClosed = False
 
     def __init__(self, tagName):
+
+        self._firstField = False
+        self._variables = list()
+        self._children = list()
+        self._attr = list()
+        self._data = StringIO()
+        self.childrenArrayOpen = False
+        self._childNode = False
+        self._tagClosed = False
+
         self._data.append('[\"' + tagName + '\"')
 
-    def closeTag(self):
+
+    def _closeTag(self):
         if not self._tagClosed:
-            self._data.append(self.attributesAsJsonObject())
-            self._data.append(self.getData())
+            self._data.write(self._attributesAsJsonObject())
+            self._data.write(self.getData())
             # Writes the end (closing) tag
-            self._data.append(']')
+            self._data.write(']')
             self._tagClosed = True
+
 
     def getJSON(self):
         if not self._tagClosed:
-            self.closeTag()
-        return str(self._data)
+            self._closeTag()
+        return self._data.getvalue()
+
 
     def openChildrenArray(self):
         if not self.childrenArrayOpen:
@@ -697,16 +658,20 @@ class JsonTag(Serializable):
             self.childrenArrayOpen = True
             # firstField = true;
 
+
     def closeChildrenArray(self):
         # append("]");
         # firstField = false;
         pass
 
+
     def setChildNode(self, b):
         self._childNode = b
 
+
     def isChildNode(self):
         return self._childNode
+
 
     def startField(self):
         if self._firstField:
@@ -715,151 +680,160 @@ class JsonTag(Serializable):
         else:
             return ','
 
+
     def addData(self, s):
         """@param s
                    json string, object or array
         """
-        self._children.add(s)
+        self._children.append(s)
+
 
     def getData(self):
-        buf = self.StringBuilder()
-        it = self._children
-        while it.hasNext():
+        buf = StringIO()
+        for c in self._children:
             buf.append(self.startField())
-            buf.append(it.next())
-        return str(buf)
+            buf.append(c)
+        result = buf.getvalue()
+        buf.close()
+        return result
+
 
     def addAttribute(self, jsonNode):
-        self._attr.add(jsonNode)
+        self._attr.append(jsonNode)
 
-    def attributesAsJsonObject(self):
-        buf = self.StringBuilder()
-        buf.append(self.startField())
-        buf.append('{')
-        _0 = True
-        iter = self._attr
-        while True:
-            if _0 is True:
-                _0 = False
-            if not iter.hasNext():
-                break
-            element = iter.next()
-            buf.append(element)
-            if iter.hasNext():
-                buf.append(',')
-        buf.append(self.tag.variablesAsJsonObject())
-        buf.append('}')
-        return str(buf)
+
+    def _attributesAsJsonObject(self):
+        buf = StringIO()
+        buf.write(self.startField())
+        buf.write('{')
+        i = 0
+        for element in self._attr:
+            buf.write(element)
+            if i != len(self._attr) - 1:
+                buf.write(',')
+            i += 1
+        buf.write(self.tag._variablesAsJsonObject())
+        buf.write('}')
+        result = buf.getvalue()
+        buf.close()
+        return result
+
 
     def addVariable(self, v):
-        self._variables.add(v)
+        self._variables.append(v)
 
-    def variablesAsJsonObject(self):
+
+    def _variablesAsJsonObject(self):
         if len(self._variables) == 0:
             return ''
-        buf = self.StringBuilder()
-        buf.append(self.startField())
-        buf.append('\"v\":{')
-        iter = self._variables
-        while iter.hasNext():
-            element = iter.next()
-            buf.append(element.getJsonPresentation())
-            if iter.hasNext():
-                buf.append(',')
-        buf.append('}')
-        return str(buf)
+
+        buf = StringIO()
+        buf.write(self.startField())
+        buf.write('\"v\":{')
+        i = 0
+        for element in self._variables:
+            buf.write(element.getJsonPresentation())
+            if i != len(self._variables) - 1:
+                buf.write(',')
+            i += 1
+        buf.write('}')
+        result = buf.getvalue()
+        buf.close()
+        return result
 
 
 class Variable(object):
-    _name = None
 
     def getJsonPresentation(self):
         pass
 
+
 class BooleanVariable(Variable):
-    _value = None
 
     def __init__(self, owner, name, v):
         self._value = v
         self.name = name
+
 
     def getJsonPresentation(self):
-        return '\"' + self.name + '\":' + ('true' if self._value == True else 'false')
+        return '\"' + self.name + '\":' \
+            + ('true' if self._value == True else 'false')
+
 
 class StringVariable(Variable):
-    _value = None
 
     def __init__(self, owner, name, v):
         self._value = v
         self.name = name
+
 
     def getJsonPresentation(self):
         return '\"' + self.name + '\":\"' + self._value + '\"'
 
+
 class IntVariable(Variable):
-    _value = None
 
     def __init__(self, owner, name, v):
         self._value = v
         self.name = name
 
+
     def getJsonPresentation(self):
         return '\"' + self.name + '\":' + self._value
+
 
 class LongVariable(Variable):
-    _value = None
 
     def __init__(self, owner, name, v):
         self._value = v
         self.name = name
 
+
     def getJsonPresentation(self):
         return '\"' + self.name + '\":' + self._value
+
 
 class FloatVariable(Variable):
-    _value = None
 
     def __init__(self, owner, name, v):
         self._value = v
         self.name = name
 
+
     def getJsonPresentation(self):
         return '\"' + self.name + '\":' + self._value
+
 
 class DoubleVariable(Variable):
-    _value = None
 
     def __init__(self, owner, name, v):
         self._value = v
         self.name = name
+
 
     def getJsonPresentation(self):
         return '\"' + self.name + '\":' + self._value
 
+
 class ArrayVariable(Variable):
-    _value = None
 
     def __init__(self, owner, name, v):
         self._value = v
         self.name = name
 
+
     def getJsonPresentation(self):
-        sb = self.StringBuilder()
-        sb.append('\"')
-        sb.append(self.name)
-        sb.append('\":[')
-        _0 = True
-        i = 0
-        while True:
-            if _0 is True:
-                _0 = False
-            if not (i < len(self._value)):
-                break
-            sb.append('\"')
-            sb.append(self.escapeJSON(self._value[i]))
-            sb.append('\"')
-            i += 1
-            if i < len(self._value):
-                sb.append(',')
-        sb.append(']')
-        return str(sb)
+        sb = StringIO()
+        sb.write('\"')
+        sb.write(self.name)
+        sb.write('\":[')
+        for i in range(len(self._value)):
+            sb.write('\"')
+            sb.write( self.escapeJSON(self._value[i]) )
+            sb.write('\"')
+            if i < len(self._value) - 1:
+                sb.write(',')
+        sb.write(']')
+        result = sb.getvalue()
+        sb.close()
+        return result
