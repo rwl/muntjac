@@ -14,32 +14,18 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.terminal.Paintable import (Paintable,)
-from com.vaadin.terminal.PaintTarget import (PaintTarget,)
-from com.vaadin.terminal.PaintException import (PaintException,)
-# from java.io.BufferedReader import (BufferedReader,)
-# from java.io.File import (File,)
-# from java.io.IOException import (IOException,)
-# from java.io.InputStream import (InputStream,)
-# from java.io.InputStreamReader import (InputStreamReader,)
-# from java.io.PrintWriter import (PrintWriter,)
-# from java.io.Serializable import (Serializable,)
-# from java.util.Collection import (Collection,)
-# from java.util.HashMap import (HashMap,)
-# from java.util.HashSet import (HashSet,)
-# from java.util.Iterator import (Iterator,)
-# from java.util.LinkedList import (LinkedList,)
-# from java.util.Map import (Map,)
-# from java.util.Set import (Set,)
-# from java.util.Stack import (Stack,)
-# from java.util.Vector import (Vector,)
-# from java.util.logging.Level import (Level,)
-# from java.util.logging.Logger import (Logger,)
+import logging
+from Queue import LifoQueue
+from muntjac.ui.CustomLayout import CustomLayout
+
 try:
-    from cStringIO import (StringIO,)
+    from cStringIO import StringIO
 except ImportError, e:
-    from StringIO import (StringIO,)
+    from StringIO import StringIO
+
+from muntjac.terminal.Paintable import Paintable
+from muntjac.terminal.PaintTarget import PaintTarget
+from muntjac.terminal.PaintException import PaintException
 
 
 class JsonPaintTarget(PaintTarget):
@@ -53,23 +39,10 @@ class JsonPaintTarget(PaintTarget):
     @VERSION@
     @since 5.0
     """
-    _logger = Logger.getLogger(JsonPaintTarget.getName())
+    _logger = logging.getLogger('.'.join(__package__, __class__.__name__))
+
     # Document type declarations
     _UIDL_ARG_NAME = 'name'
-    _mOpenTags = None
-    _openJsonTags = None
-    _uidlBuffer = None
-    _closed = False
-    _manager = None
-    _changes = 0
-    _usedResources = set()
-    _customLayoutArgumentsOpen = False
-    _tag = None
-    _errorsOpen = None
-    _cacheEnabled = False
-    _paintedComponents = set()
-    _identifiersCreatedDueRefPaint = None
-    _usedPaintableTypes = LinkedList()
 
     def __init__(self, manager, outWriter, cachingRequired):
         """Creates a new XMLPrintWriter, without automatic line flushing.
@@ -85,11 +58,22 @@ class JsonPaintTarget(PaintTarget):
         # Sets the target for UIDL writing
         self._uidlBuffer = outWriter
         # Initialize tag-writing
-        self._mOpenTags = Stack()
-        self._openJsonTags = Stack()
+        self._mOpenTags = LifoQueue()
+        self._openJsonTags = LifoQueue()
         self._cacheEnabled = cachingRequired
 
-    def startTag(self, *args):
+        self._closed = False
+        self._changes = 0
+        self._usedResources = set()
+        self._customLayoutArgumentsOpen = False
+        self._tag = None
+        self._errorsOpen = None
+        self._paintedComponents = set()
+        self._identifiersCreatedDueRefPaint = None
+        self._usedPaintableTypes = list()
+
+
+    def startTag(self, arg, arg2=False):
         """None
         ---
         Prints the element start tag.
@@ -105,42 +89,43 @@ class JsonPaintTarget(PaintTarget):
         @throws PaintException
                     if the paint operation failed.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            tagName, = _0
-            self.startTag(tagName, False)
-        elif _1 == 2:
-            if isinstance(_0[0], Paintable):
-                paintable, tagName = _0
-                self.startTag(tagName, True)
-                isPreviouslyPainted = self._manager.hasPaintableId(paintable) and (self._identifiersCreatedDueRefPaint is None) or (not self._identifiersCreatedDueRefPaint.contains(paintable))
-                id = self._manager.getPaintableId(paintable)
-                paintable.addListener(self._manager)
-                self.addAttribute('id', id)
-                self._paintedComponents.add(paintable)
-                if isinstance(paintable, CustomLayout):
-                    self._customLayoutArgumentsOpen = True
-                return self._cacheEnabled and isPreviouslyPainted
-            else:
-                tagName, isChildNode = _0
-                if tagName is None:
-                    raise self.NullPointerException()
-                # Ensures that the target is open
-                if self._closed:
-                    raise PaintException('Attempted to write to a closed PaintTarget.')
-                if self._tag is not None:
-                    self._openJsonTags.push(self._tag)
-                # Checks tagName and attributes here
-                self._mOpenTags.push(tagName)
-                self._tag = self.JsonTag(tagName)
-                if 'error' == tagName:
-                    self._errorsOpen += 1
-                self._customLayoutArgumentsOpen = False
-        else:
-            raise ARGERROR(1, 2)
+        if isinstance(arg, Paintable):
+            paintable, tagName = arg, arg2
+            self.startTag(tagName, True)
+            isPreviouslyPainted = self._manager.hasPaintableId(paintable) \
+                and (self._identifiersCreatedDueRefPaint is None) \
+                or (paintable not in self._identifiersCreatedDueRefPaint)
+            idd = self._manager.getPaintableId(paintable)
+            paintable.addListener(self._manager)
+            self.addAttribute('id', idd)
+            self._paintedComponents.add(paintable)
 
-    # In case of null data output nothing:
+            if isinstance(paintable, CustomLayout):
+                self._customLayoutArgumentsOpen = True
+
+            return self._cacheEnabled and isPreviouslyPainted
+        else:
+            tagName, _ = arg, arg2
+            if tagName is None:
+                raise self.NullPointerException()
+
+            # Ensures that the target is open
+            if self._closed:
+                raise PaintException('Attempted to write to a closed PaintTarget.')
+
+            if self._tag is not None:
+                self._openJsonTags.put(self._tag)
+
+            # Checks tagName and attributes here
+            self._mOpenTags.put(tagName)
+
+            self._tag = JsonTag(tagName)
+
+            if 'error' == tagName:
+                self._errorsOpen += 1
+
+            self._customLayoutArgumentsOpen = False
+
 
     def endTag(self, tagName):
         """Prints the element end tag.
@@ -155,40 +140,61 @@ class JsonPaintTarget(PaintTarget):
         """
         # In case of null data output nothing:
         if tagName is None:
-            raise self.NullPointerException()
+            raise ValueError
+
         # Ensure that the target is open
         if self._closed:
             raise PaintException('Attempted to write to a closed PaintTarget.')
+
         if len(self._openJsonTags) > 0:
             parent = self._openJsonTags.pop()
+
             lastTag = ''
+
             lastTag = self._mOpenTags.pop()
-            if not tagName.equalsIgnoreCase(lastTag):
-                raise PaintException('Invalid UIDL: wrong ending tag: \'' + tagName + '\' expected: \'' + lastTag + '\'.')
+            if tagName.lower() != lastTag.lower():
+                raise PaintException('Invalid UIDL: wrong ending tag: \'' \
+                        + tagName + '\' expected: \'' + lastTag + '\'.')
+
             # simple hack which writes error uidl structure into attribute
             if 'error' == lastTag:
                 if self._errorsOpen == 1:
-                    parent.addAttribute('\"error\":[\"error\",{}' + self._tag.getData() + ']')
+                    parent.addAttribute('\"error\":[\"error\",{}' \
+                                        + self._tag.getData() + ']')
                 else:
                     # sub error
                     parent.addData(self._tag.getJSON())
+
                 self._errorsOpen -= 1
             else:
                 parent.addData(self._tag.getJSON())
+
             self._tag = parent
         else:
             self._changes += 1
-            self._uidlBuffer.print_((',' if self._changes > 1 else '') + self._tag.getJSON())
+            self._uidlBuffer.write((',' if self._changes > 1 else '') \
+                                   + self._tag.getJSON())
             self._tag = None
 
+
     @classmethod
-    def escapeXML(cls, *args):
+    def escapeXML(cls, xml):
         """Substitutes the XML sensitive characters with predefined XML entities.
 
         @param xml
                    the String to be substituted.
         @return A new string instance where all occurrences of XML sensitive
                 characters are substituted with entities.
+        """
+        if (xml is None) or (len(xml) <= 0):
+            return ''
+
+        return cls._escapeXML(xml)
+
+
+    @classmethod
+    def _escapeXML(cls, xml):
+        """
         ---
         Substitutes the XML sensitive characters with predefined XML entities.
 
@@ -197,37 +203,23 @@ class JsonPaintTarget(PaintTarget):
         @return A new StringBuilder instance where all occurrences of XML
                 sensitive characters are substituted with entities.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            if isinstance(_0[0], StringBuilder):
-                xml, = _0
-                if (xml is None) or (len(xml) <= 0):
-                    return cls.StringBuilder('')
-                result = cls.StringBuilder(len(xml) * 2)
-                _0 = True
-                i = 0
-                while True:
-                    if _0 is True:
-                        _0 = False
-                    else:
-                        i += 1
-                    if not (i < len(xml)):
-                        break
-                    c = xml[i]
-                    s = cls.toXmlChar(c)
-                    if s is not None:
-                        result.append(s)
-                    else:
-                        result.append(c)
-                return result
+        if (xml is None) or (len(xml) <= 0):
+            return ''
+
+        buff = StringIO()#(len(xml) * 2)
+
+        for c in xml:
+            s = cls.toXmlChar(c)
+            if s is not None:
+                buff.write(s)
             else:
-                xml, = _0
-                if (xml is None) or (len(xml) <= 0):
-                    return ''
-                return str(cls.escapeXML(cls.StringBuilder(xml)))
-        else:
-            raise ARGERROR(1, 1)
+                buff.write(c)
+
+        result = buff.getvalue()
+        buff.close()
+
+        return result
+
 
     @classmethod
     def escapeJSON(cls, s):
@@ -241,72 +233,43 @@ class JsonPaintTarget(PaintTarget):
         # also.
         if s is None:
             return ''
-        sb = cls.StringBuilder()
-        _0 = True
-        i = 0
-        while True:
-            if _0 is True:
-                _0 = False
+
+        sb = StringIO()
+        for ch in s:
+            if ch == '"':
+                sb.write('\\\"')
+            elif ch == '\\':
+                sb.write('\\\\')
+            elif ch == '\b':
+                sb.write('\\b')
+            elif ch == '\f':
+                sb.write('\\f')
+            elif ch == '\n':
+                sb.write('\\n')
+            elif ch == '\r':
+                sb.write('\\r')
+            elif ch == '\t':
+                sb.write('\\t')
+            elif ch == '/':
+                sb.write('\\/')
             else:
-                i += 1
-            if not (i < len(s)):
-                break
-            ch = s[i]
-            _1 = ch
-            _2 = False
-            while True:
-                if _1 == '"':
-                    _2 = True
-                    sb.append('\\\"')
-                    break
-                if (_2 is True) or (_1 == '\\'):
-                    _2 = True
-                    sb.append('\\\\')
-                    break
-                if (_2 is True) or (_1 == '\b'):
-                    _2 = True
-                    sb.append('\\b')
-                    break
-                if (_2 is True) or (_1 == '\f'):
-                    _2 = True
-                    sb.append('\\f')
-                    break
-                if (_2 is True) or (_1 == '\n'):
-                    _2 = True
-                    sb.append('\\n')
-                    break
-                if (_2 is True) or (_1 == '\r'):
-                    _2 = True
-                    sb.append('\\r')
-                    break
-                if (_2 is True) or (_1 == '\t'):
-                    _2 = True
-                    sb.append('\\t')
-                    break
-                if (_2 is True) or (_1 == '/'):
-                    _2 = True
-                    sb.append('\\/')
-                    break
-                if True:
-                    _2 = True
-                    if ch >= '\u0000' and ch <= '\u001F':
-                        ss = Integer.toHexString.toHexString(ch)
-                        sb.append('\\u')
-                        _3 = True
-                        k = 0
-                        while True:
-                            if _3 is True:
-                                _3 = False
-                            else:
-                                k += 1
-                            if not (k < 4 - len(ss)):
-                                break
-                            sb.append('0')
-                        sb.append(ss.toUpperCase())
-                    else:
-                        sb.append(ch)
-                break
-        return str(sb)
+                if ch >= '\u0000' and ch <= '\u001F':
+                    ss = hex( int(ch) )
+                    sb.write('\\u')
+                    _3 = True
+                    k = 0
+                    while k < 4 - len(ss):
+                        k += 1
+                        sb.write('0')
+                    sb.write(ss.upper())
+                else:
+                    sb.write(ch)
+
+        result = sb.getvalue()
+        sb.close()
+
+        return result
+
 
     @classmethod
     def toXmlChar(cls, c):
@@ -317,42 +280,29 @@ class JsonPaintTarget(PaintTarget):
         @return String of the entity or null if character is not to be replaced
                 with an entity.
         """
-        _0 = c
-        _1 = False
-        while True:
-            if _0 == '&':
-                _1 = True
-                return '&amp;'
-                # & => &amp;
-            if (_1 is True) or (_0 == '>'):
-                _1 = True
-                return '&gt;'
-                # > => &gt;
-            if (_1 is True) or (_0 == '<'):
-                _1 = True
-                return '&lt;'
-                # < => &lt;
-            if (_1 is True) or (_0 == '"'):
-                _1 = True
-                return '&quot;'
-                # " => &quot;
-            if (_1 is True) or (_0 == '\''):
-                _1 = True
-                return '&apos;'
-                # ' => &apos;
-            if True:
-                _1 = True
-                return None
-            break
+        if c == '&':
+            return '&amp;'   # & => &amp;
+        elif c == '>':
+            return '&gt;'    # > => &gt;
+        elif c == '<':
+            return '&lt;'    # < => &lt;
+        elif c == '"':
+            return '&quot;'  # " => &quot;
+        elif c == '\'':
+            return '&apos;'  # ' => &apos;
+        else:
+            return None
 
-    def addText(self, str):
+
+    def addText(self, s):
         """Prints XML-escaped text.
 
-        @param str
+        @param s
         @throws PaintException
                     if the paint operation failed.
         """
-        self._tag.addData('\"' + self.escapeJSON(str) + '\"')
+        self._tag.addData('\"' + self.escapeJSON(s) + '\"')
+
 
     def addAttribute(self, *args):
         _0 = args
@@ -625,208 +575,6 @@ class JsonPaintTarget(PaintTarget):
         if text is not None:
             self._tag.addData(text)
 
-    class JsonTag(Serializable):
-        """This is basically a container for UI components variables, that will be
-        added at the end of JSON object.
-
-        @author mattitahvonen
-        """
-        _firstField = False
-        _variables = list()
-        _children = list()
-        _attr = list()
-        _data = self.StringBuilder()
-        childrenArrayOpen = False
-        _childNode = False
-        _tagClosed = False
-
-        def __init__(self, tagName):
-            self._data.append('[\"' + tagName + '\"')
-
-        def closeTag(self):
-            if not self._tagClosed:
-                self._data.append(self.attributesAsJsonObject())
-                self._data.append(self.getData())
-                # Writes the end (closing) tag
-                self._data.append(']')
-                self._tagClosed = True
-
-        def getJSON(self):
-            if not self._tagClosed:
-                self.closeTag()
-            return str(self._data)
-
-        def openChildrenArray(self):
-            if not self.childrenArrayOpen:
-                # append("c : [");
-                self.childrenArrayOpen = True
-                # firstField = true;
-
-        def closeChildrenArray(self):
-            # append("]");
-            # firstField = false;
-            pass
-
-        def setChildNode(self, b):
-            self._childNode = b
-
-        def isChildNode(self):
-            return self._childNode
-
-        def startField(self):
-            if self._firstField:
-                self._firstField = False
-                return ''
-            else:
-                return ','
-
-        def addData(self, s):
-            """@param s
-                       json string, object or array
-            """
-            self._children.add(s)
-
-        def getData(self):
-            buf = self.StringBuilder()
-            it = self._children
-            while it.hasNext():
-                buf.append(self.startField())
-                buf.append(it.next())
-            return str(buf)
-
-        def addAttribute(self, jsonNode):
-            self._attr.add(jsonNode)
-
-        def attributesAsJsonObject(self):
-            buf = self.StringBuilder()
-            buf.append(self.startField())
-            buf.append('{')
-            _0 = True
-            iter = self._attr
-            while True:
-                if _0 is True:
-                    _0 = False
-                if not iter.hasNext():
-                    break
-                element = iter.next()
-                buf.append(element)
-                if iter.hasNext():
-                    buf.append(',')
-            buf.append(self.tag.variablesAsJsonObject())
-            buf.append('}')
-            return str(buf)
-
-        def addVariable(self, v):
-            self._variables.add(v)
-
-        def variablesAsJsonObject(self):
-            if len(self._variables) == 0:
-                return ''
-            buf = self.StringBuilder()
-            buf.append(self.startField())
-            buf.append('\"v\":{')
-            iter = self._variables
-            while iter.hasNext():
-                element = iter.next()
-                buf.append(element.getJsonPresentation())
-                if iter.hasNext():
-                    buf.append(',')
-            buf.append('}')
-            return str(buf)
-
-    class Variable(Serializable):
-        _name = None
-
-        def getJsonPresentation(self):
-            pass
-
-    class BooleanVariable(Variable, Serializable):
-        _value = None
-
-        def __init__(self, owner, name, v):
-            self._value = v
-            self.name = name
-
-        def getJsonPresentation(self):
-            return '\"' + self.name + '\":' + ('true' if self._value == True else 'false')
-
-    class StringVariable(Variable, Serializable):
-        _value = None
-
-        def __init__(self, owner, name, v):
-            self._value = v
-            self.name = name
-
-        def getJsonPresentation(self):
-            return '\"' + self.name + '\":\"' + self._value + '\"'
-
-    class IntVariable(Variable, Serializable):
-        _value = None
-
-        def __init__(self, owner, name, v):
-            self._value = v
-            self.name = name
-
-        def getJsonPresentation(self):
-            return '\"' + self.name + '\":' + self._value
-
-    class LongVariable(Variable, Serializable):
-        _value = None
-
-        def __init__(self, owner, name, v):
-            self._value = v
-            self.name = name
-
-        def getJsonPresentation(self):
-            return '\"' + self.name + '\":' + self._value
-
-    class FloatVariable(Variable, Serializable):
-        _value = None
-
-        def __init__(self, owner, name, v):
-            self._value = v
-            self.name = name
-
-        def getJsonPresentation(self):
-            return '\"' + self.name + '\":' + self._value
-
-    class DoubleVariable(Variable, Serializable):
-        _value = None
-
-        def __init__(self, owner, name, v):
-            self._value = v
-            self.name = name
-
-        def getJsonPresentation(self):
-            return '\"' + self.name + '\":' + self._value
-
-    class ArrayVariable(Variable, Serializable):
-        _value = None
-
-        def __init__(self, owner, name, v):
-            self._value = v
-            self.name = name
-
-        def getJsonPresentation(self):
-            sb = self.StringBuilder()
-            sb.append('\"')
-            sb.append(self.name)
-            sb.append('\":[')
-            _0 = True
-            i = 0
-            while True:
-                if _0 is True:
-                    _0 = False
-                if not (i < len(self._value)):
-                    break
-                sb.append('\"')
-                sb.append(self.escapeJSON(self._value[i]))
-                sb.append('\"')
-                i += 1
-                if i < len(self._value):
-                    sb.append(',')
-            sb.append(']')
-            return str(sb)
 
     def getUsedResources(self):
         return self._usedResources
@@ -910,3 +658,208 @@ class JsonPaintTarget(PaintTarget):
 
     def getUsedPaintableTypes(self):
         return self._usedPaintableTypes
+
+
+class JsonTag(Serializable):
+    """This is basically a container for UI components variables, that will be
+    added at the end of JSON object.
+
+    @author mattitahvonen
+    """
+    _firstField = False
+    _variables = list()
+    _children = list()
+    _attr = list()
+    _data = self.StringBuilder()
+    childrenArrayOpen = False
+    _childNode = False
+    _tagClosed = False
+
+    def __init__(self, tagName):
+        self._data.append('[\"' + tagName + '\"')
+
+    def closeTag(self):
+        if not self._tagClosed:
+            self._data.append(self.attributesAsJsonObject())
+            self._data.append(self.getData())
+            # Writes the end (closing) tag
+            self._data.append(']')
+            self._tagClosed = True
+
+    def getJSON(self):
+        if not self._tagClosed:
+            self.closeTag()
+        return str(self._data)
+
+    def openChildrenArray(self):
+        if not self.childrenArrayOpen:
+            # append("c : [");
+            self.childrenArrayOpen = True
+            # firstField = true;
+
+    def closeChildrenArray(self):
+        # append("]");
+        # firstField = false;
+        pass
+
+    def setChildNode(self, b):
+        self._childNode = b
+
+    def isChildNode(self):
+        return self._childNode
+
+    def startField(self):
+        if self._firstField:
+            self._firstField = False
+            return ''
+        else:
+            return ','
+
+    def addData(self, s):
+        """@param s
+                   json string, object or array
+        """
+        self._children.add(s)
+
+    def getData(self):
+        buf = self.StringBuilder()
+        it = self._children
+        while it.hasNext():
+            buf.append(self.startField())
+            buf.append(it.next())
+        return str(buf)
+
+    def addAttribute(self, jsonNode):
+        self._attr.add(jsonNode)
+
+    def attributesAsJsonObject(self):
+        buf = self.StringBuilder()
+        buf.append(self.startField())
+        buf.append('{')
+        _0 = True
+        iter = self._attr
+        while True:
+            if _0 is True:
+                _0 = False
+            if not iter.hasNext():
+                break
+            element = iter.next()
+            buf.append(element)
+            if iter.hasNext():
+                buf.append(',')
+        buf.append(self.tag.variablesAsJsonObject())
+        buf.append('}')
+        return str(buf)
+
+    def addVariable(self, v):
+        self._variables.add(v)
+
+    def variablesAsJsonObject(self):
+        if len(self._variables) == 0:
+            return ''
+        buf = self.StringBuilder()
+        buf.append(self.startField())
+        buf.append('\"v\":{')
+        iter = self._variables
+        while iter.hasNext():
+            element = iter.next()
+            buf.append(element.getJsonPresentation())
+            if iter.hasNext():
+                buf.append(',')
+        buf.append('}')
+        return str(buf)
+
+
+class Variable(object):
+    _name = None
+
+    def getJsonPresentation(self):
+        pass
+
+class BooleanVariable(Variable):
+    _value = None
+
+    def __init__(self, owner, name, v):
+        self._value = v
+        self.name = name
+
+    def getJsonPresentation(self):
+        return '\"' + self.name + '\":' + ('true' if self._value == True else 'false')
+
+class StringVariable(Variable):
+    _value = None
+
+    def __init__(self, owner, name, v):
+        self._value = v
+        self.name = name
+
+    def getJsonPresentation(self):
+        return '\"' + self.name + '\":\"' + self._value + '\"'
+
+class IntVariable(Variable):
+    _value = None
+
+    def __init__(self, owner, name, v):
+        self._value = v
+        self.name = name
+
+    def getJsonPresentation(self):
+        return '\"' + self.name + '\":' + self._value
+
+class LongVariable(Variable):
+    _value = None
+
+    def __init__(self, owner, name, v):
+        self._value = v
+        self.name = name
+
+    def getJsonPresentation(self):
+        return '\"' + self.name + '\":' + self._value
+
+class FloatVariable(Variable):
+    _value = None
+
+    def __init__(self, owner, name, v):
+        self._value = v
+        self.name = name
+
+    def getJsonPresentation(self):
+        return '\"' + self.name + '\":' + self._value
+
+class DoubleVariable(Variable):
+    _value = None
+
+    def __init__(self, owner, name, v):
+        self._value = v
+        self.name = name
+
+    def getJsonPresentation(self):
+        return '\"' + self.name + '\":' + self._value
+
+class ArrayVariable(Variable):
+    _value = None
+
+    def __init__(self, owner, name, v):
+        self._value = v
+        self.name = name
+
+    def getJsonPresentation(self):
+        sb = self.StringBuilder()
+        sb.append('\"')
+        sb.append(self.name)
+        sb.append('\":[')
+        _0 = True
+        i = 0
+        while True:
+            if _0 is True:
+                _0 = False
+            if not (i < len(self._value)):
+                break
+            sb.append('\"')
+            sb.append(self.escapeJSON(self._value[i]))
+            sb.append('\"')
+            i += 1
+            if i < len(self._value):
+                sb.append(',')
+        sb.append(']')
+        return str(sb)

@@ -42,6 +42,7 @@ class HttpServletRequestListener(object):
         """
         pass
 
+
     def onRequestEnd(self, request, response):
         """This method is called at the end of each request.
 

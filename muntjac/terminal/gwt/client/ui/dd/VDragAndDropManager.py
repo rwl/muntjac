@@ -14,9 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.terminal.gwt.client.Util import (Util,)
-from com.vaadin.terminal.gwt.client.MouseEventDetails import (MouseEventDetails,)
+from muntjac.terminal.gwt.client.Util import Util
+from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
 # from com.google.gwt.core.client.Scheduler import (Scheduler,)
 # from com.google.gwt.core.client.Scheduler.RepeatingCommand import (RepeatingCommand,)
 # from com.google.gwt.dom.client.Element import (Element,)
@@ -33,6 +32,18 @@ from com.vaadin.terminal.gwt.client.MouseEventDetails import (MouseEventDetails,
 # from com.google.gwt.user.client.Timer import (Timer,)
 # from com.google.gwt.user.client.ui.RootPanel import (RootPanel,)
 # from com.google.gwt.user.client.ui.Widget import (Widget,)
+
+
+class DragEventType(object):
+    ENTER = 'ENTER'
+    LEAVE = 'LEAVE'
+    OVER = 'OVER'
+    DROP = 'DROP'
+    _values = [ENTER, LEAVE, OVER, DROP]
+
+    @classmethod
+    def values(cls):
+        return cls._values[:]
 
 
 class VDragAndDropManager(object):
@@ -194,17 +205,6 @@ class VDragAndDropManager(object):
                     _3 = True
                     break
                 break
-
-    class DragEventType(object):
-        ENTER = 'ENTER'
-        LEAVE = 'LEAVE'
-        OVER = 'OVER'
-        DROP = 'DROP'
-        _values = [ENTER, LEAVE, OVER, DROP]
-
-        @classmethod
-        def values(cls):
-            return cls._enum_values[:]
 
     _DD_SERVICE = 'DD'
     _instance = None

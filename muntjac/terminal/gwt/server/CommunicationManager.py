@@ -16,8 +16,9 @@
 
 import uuid
 
-from muntjac.terminal.gwt.server.AbstractCommunicationManager import AbstractCommunicationManager, Callback, Request, Response, InvalidUIDLSecurityKeyException,\
-    Session
+from muntjac.terminal.gwt.server.AbstractCommunicationManager import \
+    AbstractCommunicationManager, Callback, Request, Response, \
+    InvalidUIDLSecurityKeyException, Session
 from muntjac.terminal.gwt.server.AbstractApplicationServlet import AbstractApplicationServlet
 
 

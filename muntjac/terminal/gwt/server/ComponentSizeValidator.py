@@ -17,6 +17,8 @@
 import logging
 import traceback
 
+from Queue import LifoQueue
+
 from muntjac.ui.OrderedLayout import OrderedLayout
 from muntjac.terminal.Sizeable import Sizeable
 from muntjac.ui.CustomComponent import CustomComponent
@@ -24,7 +26,6 @@ from muntjac.ui.Panel import Panel
 from muntjac.ui.ComponentContainer import ComponentContainer
 from muntjac.ui.Form import Form
 from muntjac.ui.Window import Window
-from Queue import LifoQueue
 from muntjac.ui.AbstractOrderedLayout import AbstractOrderedLayout
 from muntjac.ui.VerticalLayout import VerticalLayout
 from muntjac.ui.GridLayout import GridLayout
@@ -34,7 +35,7 @@ from muntjac.ui.TabSheet import TabSheet
 
 class ComponentSizeValidator(object):
 
-    _logger = logging.getLogger(__class__.__name__)
+    _logger = logging.getLogger('.'.join(__package__, __class__.__name__))
     _LAYERS_SHOWN = 4
 
     _creationLocations = dict()

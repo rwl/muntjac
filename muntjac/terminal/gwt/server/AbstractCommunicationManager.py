@@ -20,8 +20,12 @@ import locale
 import logging
 
 from sys import stderr
-from StringIO import StringIO
 from urlparse import urljoin
+
+try:
+    from cStringIO import StringIO
+except ImportError, e:
+    from StringIO import StringIO
 
 from muntjac.terminal.gwt.server.StreamingStartEventImpl import StreamingStartEventImpl
 from muntjac.terminal.gwt.server.DragAndDropService import DragAndDropService
@@ -61,7 +65,7 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
     TODO Document better!
     """
     _DASHDASH = '--'
-    _logger = logging.getLogger(__class__.__name__)
+    _logger = logging.getLogger('.'.join(__package__, __class__.__name__))
 
     _GET_PARAM_REPAINT_ALL = 'repaintAll'
     # flag used in the request to indicate that the security token should be

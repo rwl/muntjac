@@ -24,7 +24,7 @@ class AbstractWebApplicationContext(ApplicationContext):
     """Base class for web application contexts (including portlet contexts) that
     handles the common tasks.
     """
-    _logger = logging.getLogger(__class__.__name__)
+    _logger = logging.getLogger('.'.join(__package__, __class__.__name__))
 
     def __init__(self):
         self.listeners = list()

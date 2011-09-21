@@ -14,46 +14,54 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from com.vaadin.event.dd.TargetDetailsImpl import (TargetDetailsImpl,)
-from com.vaadin.terminal.VariableOwner import (VariableOwner,)
-from com.vaadin.terminal.gwt.server.JsonPaintTarget import (JsonPaintTarget,)
-from com.vaadin.event.dd.DragAndDropEvent import (DragAndDropEvent,)
-from com.vaadin.event.TransferableImpl import (TransferableImpl,)
-# from com.vaadin.terminal.gwt.client.ui.dd.VDragAndDropManager.DragEventType import (DragEventType,)
-# from java.io.PrintWriter import (PrintWriter,)
-# from java.util.Map import (Map,)
-# from java.util.logging.Logger import (Logger,)
+import logging
+
+from muntjac.event.dd.TargetDetailsImpl import TargetDetailsImpl
+from muntjac.terminal.VariableOwner import VariableOwner
+from muntjac.terminal.gwt.server.JsonPaintTarget import JsonPaintTarget
+from muntjac.event.dd.DragAndDropEvent import DragAndDropEvent
+from muntjac.event.TransferableImpl import TransferableImpl
+from muntjac.event.dd.DropTarget import DropTarget
+from muntjac.event.dd.DragSource import DragSource
+from muntjac.terminal.gwt.client.ui.dd.VDragAndDropManager import DragEventType
 
 
 class DragAndDropService(VariableOwner):
-    _logger = Logger.getLogger(DragAndDropService.getName())
-    _lastVisitId = None
-    _lastVisitAccepted = False
-    _dragEvent = None
-    _manager = None
-    _acceptCriterion = None
+
+    _logger = logging.getLogger('.'.join(__package__, __class__.__name__))
 
     def __init__(self, manager):
         self._manager = manager
 
+        self._lastVisitId = None
+        self._lastVisitAccepted = False
+        self._dragEvent = None
+        self._acceptCriterion = None
+
+
     def changeVariables(self, source, variables):
-        owner = variables['dhowner']
+        owner = variables.get('dhowner')
+
         # Validate drop handler owner
         if not isinstance(owner, DropTarget):
-            self._logger.severe('DropHandler owner ' + owner + ' must implement DropTarget')
+            self._logger.critical('DropHandler owner ' + owner + ' must implement DropTarget')
             return
+
         # owner cannot be null here
+
         dropTarget = owner
-        self._lastVisitId = variables['visitId']
+        self._lastVisitId = variables.get('visitId')
+
         # request may be dropRequest or request during drag operation (commonly
         # dragover or dragenter)
-        dropRequest = self.isDropRequest(variables)
+        dropRequest = self._isDropRequest(variables)
         if dropRequest:
-            self.handleDropRequest(dropTarget, variables)
+            self._handleDropRequest(dropTarget, variables)
         else:
-            self.handleDragRequest(dropTarget, variables)
+            self._handleDragRequest(dropTarget, variables)
 
-    def handleDropRequest(self, dropTarget, variables):
+
+    def _handleDropRequest(self, dropTarget, variables):
         """Handles a drop request from the VDragAndDropManager.
 
         @param dropTarget
@@ -62,36 +70,42 @@ class DragAndDropService(VariableOwner):
         dropHandler = dropTarget.getDropHandler()
         if dropHandler is None:
             # No dropHandler returned so no drop can be performed.
-            self._logger.fine('DropTarget.getDropHandler() returned null for owner: ' + dropTarget)
+            self._logger.info('DropTarget.getDropHandler() returned null for owner: ' \
+                              + dropTarget)
             return
+
         # Construct the Transferable and the DragDropDetails for the drop
         # operation based on the info passed from the client widgets (drag
         # source for Transferable, drop target for DragDropDetails).
-
-        transferable = self.constructTransferable(dropTarget, variables)
-        dropData = self.constructDragDropDetails(dropTarget, variables)
+        transferable = self._constructTransferable(dropTarget, variables)
+        dropData = self._constructDragDropDetails(dropTarget, variables)
         dropEvent = DragAndDropEvent(transferable, dropData)
         if dropHandler.getAcceptCriterion().accept(dropEvent):
             dropHandler.drop(dropEvent)
 
-    def handleDragRequest(self, dropTarget, variables):
+
+    def _handleDragRequest(self, dropTarget, variables):
         """Handles a drag/move request from the VDragAndDropManager.
 
         @param dropTarget
         @param variables
         """
-        self._lastVisitId = variables['visitId']
+        self._lastVisitId = variables.get('visitId')
+
         self._acceptCriterion = dropTarget.getDropHandler().getAcceptCriterion()
+
         # Construct the Transferable and the DragDropDetails for the drag
         # operation based on the info passed from the client widgets (drag
         # source for Transferable, current target for DragDropDetails).
-
         transferable = self.constructTransferable(dropTarget, variables)
-        dragDropDetails = self.constructDragDropDetails(dropTarget, variables)
+        dragDropDetails = self._constructDragDropDetails(dropTarget, variables)
+
         self._dragEvent = DragAndDropEvent(transferable, dragDropDetails)
+
         self._lastVisitAccepted = self._acceptCriterion.accept(self._dragEvent)
 
-    def constructDragDropDetails(self, dropTarget, variables):
+
+    def _constructDragDropDetails(self, dropTarget, variables):
         """Construct DragDropDetails based on variables from client drop target.
         Uses DragDropDetailsTranslator if available, otherwise a default
         DragDropDetails implementation is used.
@@ -100,39 +114,52 @@ class DragAndDropService(VariableOwner):
         @param variables
         @return
         """
-        rawDragDropDetails = variables['evt']
+        rawDragDropDetails = variables.get('evt')
+
         dropData = dropTarget.translateDropTargetDetails(rawDragDropDetails)
+
         if dropData is None:
             # Create a default DragDropDetails with all the raw variables
             dropData = TargetDetailsImpl(rawDragDropDetails, dropTarget)
+
         return dropData
 
-    def isDropRequest(self, variables):
-        return self.getRequestType(variables) == DragEventType.DROP
 
-    def getRequestType(self, variables):
-        type = variables['type']
-        return DragEventType.values()[type]
+    def _isDropRequest(self, variables):
+        return self._getRequestType(variables) == DragEventType.DROP
 
-    def constructTransferable(self, dropHandlerOwner, variables):
-        sourceComponent = variables['component']
-        variables = variables['tra']
+
+    def _getRequestType(self, variables):
+        typ = variables.get('type')
+        return DragEventType.values().get(typ)
+
+
+    def _constructTransferable(self, dropHandlerOwner, variables):
+        sourceComponent = variables.get('component')
+
+        variables = variables.get('tra')
+
         transferable = None
         if sourceComponent is not None and isinstance(sourceComponent, DragSource):
             transferable = sourceComponent.getTransferable(variables)
+
         if transferable is None:
             transferable = TransferableImpl(sourceComponent, variables)
+
         return transferable
+
 
     def isEnabled(self):
         return True
 
+
     def isImmediate(self):
         return True
 
-    def printJSONResponse(self, outWriter):
-        if self.isDirty():
-            outWriter.print_(', \"dd\":')
+
+    def _printJSONResponse(self, outWriter):
+        if self._isDirty():
+            outWriter.write(', \"dd\":')
             jsonPaintTarget = JsonPaintTarget(self._manager, outWriter, False)
             jsonPaintTarget.startTag('dd')
             jsonPaintTarget.addAttribute('visitId', self._lastVisitId)
@@ -146,7 +173,8 @@ class DragAndDropService(VariableOwner):
             self._acceptCriterion = None
             self._dragEvent = None
 
-    def isDirty(self):
+
+    def _isDirty(self):
         if self._lastVisitId > 0:
             return True
         return False

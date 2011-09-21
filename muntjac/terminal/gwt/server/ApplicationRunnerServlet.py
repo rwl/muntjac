@@ -22,7 +22,7 @@ from muntjac.terminal.gwt.server.ServletException import ServletException
 
 class ApplicationRunnerServlet(AbstractApplicationServlet):
 
-    _logger = logging.getLogger(__class__.__name__)
+    _logger = logging.getLogger('.'.join(__package__, __class__.__name__))
 
     def init(self, servletConfig):
         super(ApplicationRunnerServlet, self).init(servletConfig)

@@ -21,7 +21,11 @@ import locale
 
 from os.path import join, exists, getmtime
 from urlparse import urlparse
-from StringIO import StringIO
+
+try:
+    from cStringIO import StringIO
+except ImportError, e:
+    from StringIO import StringIO
 
 from paste.webkit.wkservlet import Servlet
 from paste.deploy import CONFIG
@@ -70,7 +74,7 @@ class AbstractApplicationServlet(Servlet, Constants):
     """
     # TODO Move some (all?) of the constants to a separate interface (shared
     # with portlet)
-    _logger = logging.getLogger(AbstractApplicationServlet.__class__.__name__)
+    _logger = logging.getLogger('.'.join(__package__, __class__.__name__))
 
     # The version number of this release. For example "6.2.0". Always in the
     # format "major.minor.revision[.build]". The build part is optional. All of
