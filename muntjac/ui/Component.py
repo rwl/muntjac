@@ -722,140 +722,6 @@ class Component(Paintable, VariableOwner, Sizeable, Serializable):
         # Component event framework
         pass
 
-    class Event(EventObject):
-        """Superclass of all component originated events.
-
-        <p>
-        Events are the basis of all user interaction handling in Vaadin. To
-        handle events, you provide a listener object that receives the events of
-        the particular event type.
-        </p>
-
-        <pre>
-        Button button = new Button(&quot;Click Me!&quot;);
-        button.addListener(new Button.ClickListener() {
-            public void buttonClick(ClickEvent event) {
-                getWindow().showNotification(&quot;Thank You!&quot;);
-            }
-        });
-        layout.addComponent(button);
-        </pre>
-
-        <p>
-        Notice that while each of the event types have their corresponding
-        listener types; the listener interfaces are not required to inherit the
-        {@code Component.Listener} interface.
-        </p>
-
-        @see Component.Listener
-        """
-
-        def __init__(self, source):
-            """Constructs a new event with the specified source component.
-
-            @param source
-                       the source component of the event
-            """
-            super(Event, self)(source)
-
-        def getComponent(self):
-            """Gets the component where the event occurred.
-
-            @return the source component of the event
-            """
-            return self.getSource()
-
-    class Listener(EventListener, Serializable):
-        """Listener interface for receiving <code>Component.Event</code>s.
-
-        <p>
-        Listener interfaces are the basis of all user interaction handling in
-        Vaadin. You have or create a listener object that receives the events.
-        All event types have their corresponding listener types; they are not,
-        however, required to inherit the {@code Component.Listener} interface,
-        and they rarely do so.
-        </p>
-
-        <p>
-        This generic listener interface is useful typically when you wish to
-        handle events from different component types in a single listener method
-        ({@code componentEvent()}. If you handle component events in an anonymous
-        listener class, you normally use the component specific listener class,
-        such as {@link com.vaadin.ui.Button.ClickEvent}.
-        </p>
-
-        <pre>
-        class Listening extends CustomComponent implements Listener {
-            Button ok; // Stored for determining the source of an event
-
-            Label status; // For displaying info about the event
-
-            public Listening() {
-                VerticalLayout layout = new VerticalLayout();
-
-                // Some miscellaneous component
-                TextField name = new TextField(&quot;Say it all here&quot;);
-                name.addListener(this);
-                name.setImmediate(true);
-                layout.addComponent(name);
-
-                // Handle button clicks as generic events instead
-                // of Button.ClickEvent events
-                ok = new Button(&quot;OK&quot;);
-                ok.addListener(this);
-                layout.addComponent(ok);
-
-                // For displaying information about an event
-                status = new Label(&quot;&quot;);
-                layout.addComponent(status);
-
-                setCompositionRoot(layout);
-            }
-
-            public void componentEvent(Event event) {
-                // Act according to the source of the event
-                if (event.getSource() == ok
-                        &amp;&amp; event.getClass() == Button.ClickEvent.class)
-                    getWindow().showNotification(&quot;Click!&quot;);
-
-                // Display source component and event class names
-                status.setValue(&quot;Event from &quot; + event.getSource().getClass().getName()
-                        + &quot;: &quot; + event.getClass().getName());
-            }
-        }
-
-        Listening listening = new Listening();
-        layout.addComponent(listening);
-        </pre>
-
-        @see Component#addListener(Listener)
-        """
-
-        def componentEvent(self, event):
-            """Notifies the listener of a component event.
-
-            <p>
-            As the event can typically come from one of many source components,
-            you may need to differentiate between the event source by component
-            reference, class, etc.
-            </p>
-
-            <pre>
-            public void componentEvent(Event event) {
-                // Act according to the source of the event
-                if (event.getSource() == ok &amp;&amp; event.getClass() == Button.ClickEvent.class)
-                    getWindow().showNotification(&quot;Click!&quot;);
-
-                // Display source component and event class names
-                status.setValue(&quot;Event from &quot; + event.getSource().getClass().getName()
-                        + &quot;: &quot; + event.getClass().getName());
-            }
-            </pre>
-
-            @param event
-                       the event that has occured.
-            """
-            pass
 
     def addListener(self, listener):
         """Registers a new (generic) component event listener for the component.
@@ -910,178 +776,314 @@ class Component(Paintable, VariableOwner, Sizeable, Serializable):
         """
         pass
 
-    def removeListener(self, listener):
-        """Removes a previously registered component event listener from this
-        component.
 
-        @param listener
-                   the listener to be removed.
-        @see #addListener(Listener)
+class Event(EventObject):
+    """Superclass of all component originated events.
+
+    <p>
+    Events are the basis of all user interaction handling in Vaadin. To
+    handle events, you provide a listener object that receives the events of
+    the particular event type.
+    </p>
+
+    <pre>
+    Button button = new Button(&quot;Click Me!&quot;);
+    button.addListener(new Button.ClickListener() {
+        public void buttonClick(ClickEvent event) {
+            getWindow().showNotification(&quot;Thank You!&quot;);
+        }
+    });
+    layout.addComponent(button);
+    </pre>
+
+    <p>
+    Notice that while each of the event types have their corresponding
+    listener types; the listener interfaces are not required to inherit the
+    {@code Component.Listener} interface.
+    </p>
+
+    @see Component.Listener
+    """
+
+    def __init__(self, source):
+        """Constructs a new event with the specified source component.
+
+        @param source
+                   the source component of the event
+        """
+        super(Event, self)(source)
+
+    def getComponent(self):
+        """Gets the component where the event occurred.
+
+        @return the source component of the event
+        """
+        return self.getSource()
+
+class Listener(EventListener, Serializable):
+    """Listener interface for receiving <code>Component.Event</code>s.
+
+    <p>
+    Listener interfaces are the basis of all user interaction handling in
+    Vaadin. You have or create a listener object that receives the events.
+    All event types have their corresponding listener types; they are not,
+    however, required to inherit the {@code Component.Listener} interface,
+    and they rarely do so.
+    </p>
+
+    <p>
+    This generic listener interface is useful typically when you wish to
+    handle events from different component types in a single listener method
+    ({@code componentEvent()}. If you handle component events in an anonymous
+    listener class, you normally use the component specific listener class,
+    such as {@link com.vaadin.ui.Button.ClickEvent}.
+    </p>
+
+    <pre>
+    class Listening extends CustomComponent implements Listener {
+        Button ok; // Stored for determining the source of an event
+
+        Label status; // For displaying info about the event
+
+        public Listening() {
+            VerticalLayout layout = new VerticalLayout();
+
+            // Some miscellaneous component
+            TextField name = new TextField(&quot;Say it all here&quot;);
+            name.addListener(this);
+            name.setImmediate(true);
+            layout.addComponent(name);
+
+            // Handle button clicks as generic events instead
+            // of Button.ClickEvent events
+            ok = new Button(&quot;OK&quot;);
+            ok.addListener(this);
+            layout.addComponent(ok);
+
+            // For displaying information about an event
+            status = new Label(&quot;&quot;);
+            layout.addComponent(status);
+
+            setCompositionRoot(layout);
+        }
+
+        public void componentEvent(Event event) {
+            // Act according to the source of the event
+            if (event.getSource() == ok
+                    &amp;&amp; event.getClass() == Button.ClickEvent.class)
+                getWindow().showNotification(&quot;Click!&quot;);
+
+            // Display source component and event class names
+            status.setValue(&quot;Event from &quot; + event.getSource().getClass().getName()
+                    + &quot;: &quot; + event.getClass().getName());
+        }
+    }
+
+    Listening listening = new Listening();
+    layout.addComponent(listening);
+    </pre>
+
+    @see Component#addListener(Listener)
+    """
+
+    def componentEvent(self, event):
+        """Notifies the listener of a component event.
+
+        <p>
+        As the event can typically come from one of many source components,
+        you may need to differentiate between the event source by component
+        reference, class, etc.
+        </p>
+
+        <pre>
+        public void componentEvent(Event event) {
+            // Act according to the source of the event
+            if (event.getSource() == ok &amp;&amp; event.getClass() == Button.ClickEvent.class)
+                getWindow().showNotification(&quot;Click!&quot;);
+
+            // Display source component and event class names
+            status.setValue(&quot;Event from &quot; + event.getSource().getClass().getName()
+                    + &quot;: &quot; + event.getClass().getName());
+        }
+        </pre>
+
+        @param event
+                   the event that has occured.
         """
         pass
 
-    class ErrorEvent(Event):
-        """Class of all component originated error events.
+def removeListener(self, listener):
+    """Removes a previously registered component event listener from this
+    component.
+
+    @param listener
+               the listener to be removed.
+    @see #addListener(Listener)
+    """
+    pass
+
+class ErrorEvent(Event):
+    """Class of all component originated error events.
+
+    <p>
+    The component error event is normally fired by
+    {@link AbstractComponent#setComponentError(ErrorMessage)}. The component
+    errors are set by the framework in some situations and can be set by user
+    code. They are indicated in a component with an error indicator.
+    </p>
+    """
+    _message = None
+
+    def __init__(self, message, component):
+        """Constructs a new event with a specified source component.
+
+        @param message
+                   the error message.
+        @param component
+                   the source component.
+        """
+        super(ErrorEvent, self)(component)
+        self._message = message
+
+    def getErrorMessage(self):
+        """Gets the error message.
+
+        @return the error message.
+        """
+        return self._message
+
+class ErrorListener(EventListener, Serializable):
+    """Listener interface for receiving <code>Component.Errors</code>s."""
+
+    def componentError(self, event):
+        """Notifies the listener of a component error.
+
+        @param event
+                   the event that has occured.
+        """
+        pass
+
+class Focusable(Component):
+    """A sub-interface implemented by components that can obtain input focus.
+    This includes all {@link Field} components as well as some other
+    components, such as {@link Upload}.
+
+    <p>
+    Focus can be set with {@link #focus()}. This interface does not provide
+    an accessor that would allow finding out the currently focused component;
+    focus information can be acquired for some (but not all) {@link Field}
+    components through the {@link com.vaadin.event.FieldEvents.FocusListener}
+    and {@link com.vaadin.event.FieldEvents.BlurListener} interfaces.
+    </p>
+
+    @see FieldEvents
+    """
+
+    def focus(self):
+        """Sets the focus to this component.
+
+        <pre>
+        Form loginBox = new Form();
+        loginBox.setCaption(&quot;Login&quot;);
+        layout.addComponent(loginBox);
+
+        // Create the first field which will be focused
+        TextField username = new TextField(&quot;User name&quot;);
+        loginBox.addField(&quot;username&quot;, username);
+
+        // Set focus to the user name
+        username.focus();
+
+        TextField password = new TextField(&quot;Password&quot;);
+        loginBox.addField(&quot;password&quot;, password);
+
+        Button login = new Button(&quot;Login&quot;);
+        loginBox.getFooter().addComponent(login);
+        </pre>
 
         <p>
-        The component error event is normally fired by
-        {@link AbstractComponent#setComponentError(ErrorMessage)}. The component
-        errors are set by the framework in some situations and can be set by user
-        code. They are indicated in a component with an error indicator.
+        Notice that this interface does not provide an accessor that would
+        allow finding out the currently focused component. Focus information
+        can be acquired for some (but not all) {@link Field} components
+        through the {@link com.vaadin.event.FieldEvents.FocusListener} and
+        {@link com.vaadin.event.FieldEvents.BlurListener} interfaces.
         </p>
+
+        @see com.vaadin.event.FieldEvents
+        @see com.vaadin.event.FieldEvents.FocusEvent
+        @see com.vaadin.event.FieldEvents.FocusListener
+        @see com.vaadin.event.FieldEvents.BlurEvent
+        @see com.vaadin.event.FieldEvents.BlurListener
         """
-        _message = None
+        pass
 
-        def __init__(self, message, component):
-            """Constructs a new event with a specified source component.
+    def getTabIndex(self):
+        """Gets the <i>tabulator index</i> of the {@code Focusable} component.
 
-            @param message
-                       the error message.
-            @param component
-                       the source component.
-            """
-            super(ErrorEvent, self)(component)
-            self._message = message
+        @return tab index set for the {@code Focusable} component
+        @see #setTabIndex(int)
+        """
+        pass
 
-        def getErrorMessage(self):
-            """Gets the error message.
+    def setTabIndex(self, tabIndex):
+        """Sets the <i>tabulator index</i> of the {@code Focusable} component.
+        The tab index property is used to specify the order in which the
+        fields are focused when the user presses the Tab key. Components with
+        a defined tab index are focused sequentially first, and then the
+        components with no tab index.
 
-            @return the error message.
-            """
-            return self._message
+        <pre>
+        Form loginBox = new Form();
+        loginBox.setCaption(&quot;Login&quot;);
+        layout.addComponent(loginBox);
 
-    class ErrorListener(EventListener, Serializable):
-        """Listener interface for receiving <code>Component.Errors</code>s."""
+        // Create the first field which will be focused
+        TextField username = new TextField(&quot;User name&quot;);
+        loginBox.addField(&quot;username&quot;, username);
 
-        def componentError(self, event):
-            """Notifies the listener of a component error.
+        // Set focus to the user name
+        username.focus();
 
-            @param event
-                       the event that has occured.
-            """
-            pass
+        TextField password = new TextField(&quot;Password&quot;);
+        loginBox.addField(&quot;password&quot;, password);
 
-    class Focusable(Component):
-        """A sub-interface implemented by components that can obtain input focus.
-        This includes all {@link Field} components as well as some other
-        components, such as {@link Upload}.
+        Button login = new Button(&quot;Login&quot;);
+        loginBox.getFooter().addComponent(login);
+
+        // An additional component which natural focus order would
+        // be after the button.
+        CheckBox remember = new CheckBox(&quot;Remember me&quot;);
+        loginBox.getFooter().addComponent(remember);
+
+        username.setTabIndex(1);
+        password.setTabIndex(2);
+        remember.setTabIndex(3); // Different than natural place
+        login.setTabIndex(4);
+        </pre>
 
         <p>
-        Focus can be set with {@link #focus()}. This interface does not provide
-        an accessor that would allow finding out the currently focused component;
-        focus information can be acquired for some (but not all) {@link Field}
-        components through the {@link com.vaadin.event.FieldEvents.FocusListener}
-        and {@link com.vaadin.event.FieldEvents.BlurListener} interfaces.
+        After all focusable user interface components are done, the browser
+        can begin again from the component with the smallest tab index, or it
+        can take the focus out of the page, for example, to the location bar.
         </p>
 
-        @see FieldEvents
+        <p>
+        If the tab index is not set (is set to zero), the default tab order
+        is used. The order is somewhat browser-dependent, but generally
+        follows the HTML structure of the page.
+        </p>
+
+        <p>
+        A negative value means that the component is completely removed from
+        the tabulation order and can not be reached by pressing the Tab key
+        at all.
+        </p>
+
+        @param tabIndex
+                   the tab order of this component. Indexes usually start
+                   from 1. Zero means that default tab order should be used.
+                   A negative value means that the field should not be
+                   included in the tabbing sequence.
+        @see #getTabIndex()
         """
-
-        def focus(self):
-            """Sets the focus to this component.
-
-            <pre>
-            Form loginBox = new Form();
-            loginBox.setCaption(&quot;Login&quot;);
-            layout.addComponent(loginBox);
-
-            // Create the first field which will be focused
-            TextField username = new TextField(&quot;User name&quot;);
-            loginBox.addField(&quot;username&quot;, username);
-
-            // Set focus to the user name
-            username.focus();
-
-            TextField password = new TextField(&quot;Password&quot;);
-            loginBox.addField(&quot;password&quot;, password);
-
-            Button login = new Button(&quot;Login&quot;);
-            loginBox.getFooter().addComponent(login);
-            </pre>
-
-            <p>
-            Notice that this interface does not provide an accessor that would
-            allow finding out the currently focused component. Focus information
-            can be acquired for some (but not all) {@link Field} components
-            through the {@link com.vaadin.event.FieldEvents.FocusListener} and
-            {@link com.vaadin.event.FieldEvents.BlurListener} interfaces.
-            </p>
-
-            @see com.vaadin.event.FieldEvents
-            @see com.vaadin.event.FieldEvents.FocusEvent
-            @see com.vaadin.event.FieldEvents.FocusListener
-            @see com.vaadin.event.FieldEvents.BlurEvent
-            @see com.vaadin.event.FieldEvents.BlurListener
-            """
-            pass
-
-        def getTabIndex(self):
-            """Gets the <i>tabulator index</i> of the {@code Focusable} component.
-
-            @return tab index set for the {@code Focusable} component
-            @see #setTabIndex(int)
-            """
-            pass
-
-        def setTabIndex(self, tabIndex):
-            """Sets the <i>tabulator index</i> of the {@code Focusable} component.
-            The tab index property is used to specify the order in which the
-            fields are focused when the user presses the Tab key. Components with
-            a defined tab index are focused sequentially first, and then the
-            components with no tab index.
-
-            <pre>
-            Form loginBox = new Form();
-            loginBox.setCaption(&quot;Login&quot;);
-            layout.addComponent(loginBox);
-
-            // Create the first field which will be focused
-            TextField username = new TextField(&quot;User name&quot;);
-            loginBox.addField(&quot;username&quot;, username);
-
-            // Set focus to the user name
-            username.focus();
-
-            TextField password = new TextField(&quot;Password&quot;);
-            loginBox.addField(&quot;password&quot;, password);
-
-            Button login = new Button(&quot;Login&quot;);
-            loginBox.getFooter().addComponent(login);
-
-            // An additional component which natural focus order would
-            // be after the button.
-            CheckBox remember = new CheckBox(&quot;Remember me&quot;);
-            loginBox.getFooter().addComponent(remember);
-
-            username.setTabIndex(1);
-            password.setTabIndex(2);
-            remember.setTabIndex(3); // Different than natural place
-            login.setTabIndex(4);
-            </pre>
-
-            <p>
-            After all focusable user interface components are done, the browser
-            can begin again from the component with the smallest tab index, or it
-            can take the focus out of the page, for example, to the location bar.
-            </p>
-
-            <p>
-            If the tab index is not set (is set to zero), the default tab order
-            is used. The order is somewhat browser-dependent, but generally
-            follows the HTML structure of the page.
-            </p>
-
-            <p>
-            A negative value means that the component is completely removed from
-            the tabulation order and can not be reached by pressing the Tab key
-            at all.
-            </p>
-
-            @param tabIndex
-                       the tab order of this component. Indexes usually start
-                       from 1. Zero means that default tab order should be used.
-                       A negative value means that the field should not be
-                       included in the tabbing sequence.
-            @see #getTabIndex()
-            """
-            pass
+        pass

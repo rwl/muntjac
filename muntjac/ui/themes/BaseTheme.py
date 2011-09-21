@@ -15,7 +15,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-
 class BaseTheme(object):
     """<p>
     The Base theme is the foundation for all Vaadin themes. Although it is not
@@ -35,16 +34,16 @@ class BaseTheme(object):
     @since 6.3.0
     """
     THEME_NAME = 'base'
+
     # Creates a button that looks like a regular hypertext link but still acts
     # like a normal button.
-
     BUTTON_LINK = 'link'
+
     # Removes extra decorations from the panel.
-    # 
+    #
     # @deprecated Base theme does not implement this style, but it is defined
     #             here since it has been a part of the framework before
     #             multiple themes were available. Use the constant provided by
     #             the theme you're using instead, e.g.
     #             {@link Reindeer#PANEL_LIGHT} or {@link Runo#PANEL_LIGHT}.
-
     PANEL_LIGHT = 'light'
