@@ -14,12 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-
 
 class SystemMessageException(RuntimeError):
-    # Cause of the method exception
-    _cause = None
 
     def __init__(self, *args):
         """Constructs a new <code>SystemMessageException</code> with the specified
@@ -42,21 +38,20 @@ class SystemMessageException(RuntimeError):
         @param cause
                    the cause of the exception.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            if isinstance(_0[0], Throwable):
-                cause, = _0
-                self._cause = cause
+        nargs = len(args)
+        if nargs == 1:
+            if isinstance(args[0], Exception):
+                self._cause = args[0]
             else:
-                msg, = _0
+                msg = args[0]
                 super(SystemMessageException, self)(msg)
-        elif _1 == 2:
-            msg, cause = _0
-            super(SystemMessageException, self)(msg, cause)
+        elif nargs == 2:
+            msg, cause = args
+            super(SystemMessageException, self)(msg)
+            self._cause = cause
         else:
-            raise ARGERROR(1, 2)
+            raise ValueError, 'too many arguments'
+
 
     def getCause(self):
-        """@see java.lang.Throwable#getCause()"""
         return self._cause

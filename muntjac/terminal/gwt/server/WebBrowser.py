@@ -14,10 +14,11 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from com.vaadin.terminal.gwt.client.VBrowserDetails import VBrowserDetails
-from com.vaadin.terminal.Terminal import Terminal
-# from java.util.Date import (Date,)
-# from java.util.Locale import (Locale,)
+from time import time
+from datetime import date
+
+from muntjac.terminal.gwt.client.VBrowserDetails import VBrowserDetails
+from muntjac.terminal.Terminal import Terminal
 
 
 class WebBrowser(Terminal):
@@ -28,40 +29,39 @@ class WebBrowser(Terminal):
     @author IT Mill Ltd.
     @version @VERSION@
     """
-    _screenHeight = 0
-    _screenWidth = 0
-    _browserApplication = None
-    _locale = None
-    _address = None
-    _secureConnection = None
-    _timezoneOffset = 0
-    _rawTimezoneOffset = 0
-    _dstSavings = None
-    _dstInEffect = None
-    _touchDevice = None
-    _browserDetails = None
-    _clientServerTimeDelta = None
+
+    def __init__(self):
+        self._screenHeight = 0
+        self._screenWidth = 0
+        self._browserApplication = None
+        self._locale = None
+        self._address = None
+        self._secureConnection = None
+        self._timezoneOffset = 0
+        self._rawTimezoneOffset = 0
+        self._dstSavings = None
+        self._dstInEffect = None
+        self._touchDevice = None
+
+        self._browserDetails = None
+        self._clientServerTimeDelta = None
+
 
     def getDefaultTheme(self):
         """There is no default-theme for this terminal type.
 
         @return Always returns null.
         """
-        # (non-Javadoc)
-        #
-        # @see com.vaadin.terminal.Terminal#getScreenHeight()
-
         return None
 
-    def getScreenHeight(self):
-        # (non-Javadoc)
-        #
-        # @see com.vaadin.terminal.Terminal#getScreenWidth()
 
+    def getScreenHeight(self):
         return self._screenHeight
+
 
     def getScreenWidth(self):
         return self._screenWidth
+
 
     def getBrowserApplication(self):
         """Get the browser user-agent string.
@@ -69,6 +69,7 @@ class WebBrowser(Terminal):
         @return The raw browser userAgent string
         """
         return self._browserApplication
+
 
     def getAddress(self):
         """Gets the IP-address of the web browser. If the application is running
@@ -78,13 +79,16 @@ class WebBrowser(Terminal):
         """
         return self._address
 
+
     def getLocale(self):
         """Get the default locate of the browser."""
         return self._locale
 
+
     def isSecureConnection(self):
         """Is the connection made using HTTPS?"""
         return self._secureConnection
+
 
     def isFirefox(self):
         """Tests whether the user is using Firefox.
@@ -94,7 +98,9 @@ class WebBrowser(Terminal):
         """
         if self._browserDetails is None:
             return False
+
         return self._browserDetails.isFirefox()
+
 
     def isIE(self):
         """Tests whether the user is using Internet Explorer.
@@ -105,7 +111,9 @@ class WebBrowser(Terminal):
         """
         if self._browserDetails is None:
             return False
+
         return self._browserDetails.isIE()
+
 
     def isSafari(self):
         """Tests whether the user is using Safari.
@@ -115,7 +123,9 @@ class WebBrowser(Terminal):
         """
         if self._browserDetails is None:
             return False
+
         return self._browserDetails.isSafari()
+
 
     def isOpera(self):
         """Tests whether the user is using Opera.
@@ -125,7 +135,9 @@ class WebBrowser(Terminal):
         """
         if self._browserDetails is None:
             return False
+
         return self._browserDetails.isOpera()
+
 
     def isChrome(self):
         """Tests whether the user is using Chrome.
@@ -135,7 +147,9 @@ class WebBrowser(Terminal):
         """
         if self._browserDetails is None:
             return False
+
         return self._browserDetails.isChrome()
+
 
     def getBrowserMajorVersion(self):
         """Gets the major version of the browser the user is using.
@@ -149,7 +163,9 @@ class WebBrowser(Terminal):
         """
         if self._browserDetails is None:
             return -1
+
         return self._browserDetails.getBrowserMajorVersion()
+
 
     def getBrowserMinorVersion(self):
         """Gets the minor version of the browser the user is using.
@@ -160,7 +176,9 @@ class WebBrowser(Terminal):
         """
         if self._browserDetails is None:
             return -1
+
         return self._browserDetails.getBrowserMinorVersion()
+
 
     def isLinux(self):
         """Tests whether the user is using Linux.
@@ -170,6 +188,7 @@ class WebBrowser(Terminal):
         """
         return self._browserDetails.isLinux()
 
+
     def isMacOSX(self):
         """Tests whether the user is using Mac OS X.
 
@@ -178,6 +197,7 @@ class WebBrowser(Terminal):
         """
         return self._browserDetails.isMacOSX()
 
+
     def isWindows(self):
         """Tests whether the user is using Windows.
 
@@ -185,6 +205,7 @@ class WebBrowser(Terminal):
                 Windows or if no information on the browser is present
         """
         return self._browserDetails.isWindows()
+
 
     def getTimezoneOffset(self):
         """Returns the browser-reported TimeZone offset in milliseconds from GMT.
@@ -196,6 +217,7 @@ class WebBrowser(Terminal):
         @return timezone offset in milliseconds, 0 if not available
         """
         return self._timezoneOffset
+
 
     def getRawTimezoneOffset(self):
         """Returns the browser-reported TimeZone offset in milliseconds from GMT
@@ -216,6 +238,7 @@ class WebBrowser(Terminal):
         """
         return self._rawTimezoneOffset
 
+
     def getDSTSavings(self):
         """Gets the difference in minutes between the browser's GMT TimeZone and
         DST.
@@ -225,6 +248,7 @@ class WebBrowser(Terminal):
         """
         return self._dstSavings
 
+
     def isDSTInEffect(self):
         """Determines whether daylight savings time (DST) is currently in effect in
         the region of the browser or not.
@@ -233,6 +257,7 @@ class WebBrowser(Terminal):
                 DST
         """
         return self._dstInEffect
+
 
     def getCurrentDate(self):
         """Returns the current date and time of the browser. This will not be
@@ -245,11 +270,13 @@ class WebBrowser(Terminal):
         @see #getDSTSavings()
         @see #getTimezoneOffset()
         """
-        return Date(Date().getTime() + self._clientServerTimeDelta)
+        return date.fromtimestamp(time() + self._clientServerTimeDelta)
+
 
     def isTouchDevice(self):
         """@return true if the browser is detected to support touch events"""
         return self._touchDevice
+
 
     def updateClientSideDetails(self, sw, sh, tzo, rtzo, dstSavings, dstInEffect, curDate, touchDevice):
         """For internal use by AbstractApplicationServlet/AbstractApplicationPortlet
@@ -276,38 +303,39 @@ class WebBrowser(Terminal):
             try:
                 self._screenHeight = int(sh)
                 self._screenWidth = int(sw)
-            except NumberFormatException, e:
+            except ValueError:
                 self._screenHeight = self._screenWidth = 0
         if tzo is not None:
-            # browser->java conversion: min->ms, reverse sign
             try:
+                # browser->python conversion: min->ms, reverse sign
                 self._timezoneOffset = -int(tzo) * 60 * 1000
-            except NumberFormatException, e:
-                self._timezoneOffset = 0
-                # default gmt+0
+            except ValueError:
+                self._timezoneOffset = 0  # default gmt+0
         if rtzo is not None:
-            # browser->java conversion: min->ms, reverse sign
             try:
+                # browser->python conversion: min->ms, reverse sign
                 self._rawTimezoneOffset = -int(rtzo) * 60 * 1000
-            except NumberFormatException, e:
-                self._rawTimezoneOffset = 0
-                # default gmt+0
+            except ValueError:
+                self._rawTimezoneOffset = 0  # default gmt+0
         if dstSavings is not None:
-            # browser->java conversion: min->ms
             try:
+                # browser->python conversion: min->ms
                 self._dstSavings = int(dstSavings) * 60 * 1000
-            except NumberFormatException, e:
-                self._dstSavings = 0
-                # default no savings
+            except ValueError:
+                self._dstSavings = 0  # default no savings
+
         if dstInEffect is not None:
-            self._dstInEffect = Boolean.parseBoolean.parseBoolean(dstInEffect)
+            self._dstInEffect = bool(dstInEffect)
+
         if curDate is not None:
             try:
                 curTime = int(curDate)
-                self._clientServerTimeDelta = curTime - Date().getTime()
-            except NumberFormatException, e:
+                self._clientServerTimeDelta = curTime - time()
+            except ValueError:
                 self._clientServerTimeDelta = 0
+
         self._touchDevice = touchDevice
+
 
     def updateRequestDetails(self, locale, address, secureConnection, agent):
         """For internal use by AbstractApplicationServlet/AbstractApplicationPortlet
