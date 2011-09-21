@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import sys
 from paste.deploy import CONFIG
 
 from muntjac.terminal.gwt.server.AbstractApplicationServlet import AbstractApplicationServlet
@@ -54,14 +53,11 @@ class ApplicationServlet(AbstractApplicationServlet):
             raise ServletException, 'Application not specified in servlet parameters'
 
         try:
-            modname, clsname = applicationClassName.rsplit('.', 1)
-            __import__(modname)
-            mod = sys.modules[modname]
-            self._applicationClass = getattr(mod, clsname)
+            self._applicationClass = (lambda x: getattr(__import__(x.rsplit('.', 1)[0], fromlist=x.rsplit('.', 1)[0]), x.split('.')[-1]))(applicationClassName)
         except ImportError:
-            raise ServletException, 'Failed to import module: ' + modname
+            raise ServletException, 'Failed to import module: ' + applicationClassName
         except AttributeError:
-            raise ServletException, 'Failed to load application class: ' + clsname
+            raise ServletException, 'Failed to load application class: ' + applicationClassName
 
 
     def getNewApplication(self, request):
