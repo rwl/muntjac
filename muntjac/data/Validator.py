@@ -14,12 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.terminal.ErrorMessage import (ErrorMessage,)
-# from java.io.Serializable import (Serializable,)
+from muntjac.terminal.ErrorMessage import ErrorMessage
 
 
-class Validator(Serializable):
+class Validator(object):
     """Interface that implements a method for validating if an {@link Object} is
     valid or not.
     <p>
@@ -68,101 +66,66 @@ class Validator(Serializable):
         """
         pass
 
-    class InvalidValueException(RuntimeError, ErrorMessage):
-        """Exception that is thrown by a {@link Validator} when a value is invalid.
+class InvalidValueException(RuntimeError, ErrorMessage):
+    """Exception that is thrown by a {@link Validator} when a value is invalid.
 
-        @author IT Mill Ltd.
-        @version
-        @VERSION@
-        @since 3.0
+    @author IT Mill Ltd.
+    @version
+    @VERSION@
+    @since 3.0
+    """
+    # Array of one or more validation errors that are causing this
+    # validation error.
+
+    _causes = None
+
+    def __init__(self, *args):
+        """Constructs a new {@code InvalidValueException} with the specified
+        message.
+
+        @param message
+                   The detail message of the problem.
+        ---
+        Constructs a new {@code InvalidValueException} with a set of causing
+        validation exceptions. The causing validation exceptions are included
+        when the exception is painted to the client.
+
+        @param message
+                   The detail message of the problem.
+        @param causes
+                   One or more {@code InvalidValueException}s that caused
+                   this exception.
         """
-        # Array of one or more validation errors that are causing this
-        # validation error.
+        _0 = args
+        _1 = len(args)
+        if _1 == 1:
+            message, = _0
+            self.__init__(message, [])
+        elif _1 == 2:
+            message, causes = _0
+            super(InvalidValueException, self)(message)
+            if causes is None:
+                raise self.NullPointerException('Possible causes array must not be null')
+            self._causes = causes
+        else:
+            raise ARGERROR(1, 2)
 
-        _causes = None
+    def isInvisible(self):
+        """Check if the error message should be hidden.
 
-        def __init__(self, *args):
-            """Constructs a new {@code InvalidValueException} with the specified
-            message.
+        An empty (null or "") message is invisible unless it contains nested
+        exceptions that are visible.
 
-            @param message
-                       The detail message of the problem.
-            ---
-            Constructs a new {@code InvalidValueException} with a set of causing
-            validation exceptions. The causing validation exceptions are included
-            when the exception is painted to the client.
+        @return true if the error message should be hidden, false otherwise
+        """
+        # (non-Javadoc)
+        #
+        # @see com.vaadin.terminal.ErrorMessage#getErrorLevel()
 
-            @param message
-                       The detail message of the problem.
-            @param causes
-                       One or more {@code InvalidValueException}s that caused
-                       this exception.
-            """
-            _0 = args
-            _1 = len(args)
-            if _1 == 1:
-                message, = _0
-                self.__init__(message, [])
-            elif _1 == 2:
-                message, causes = _0
-                super(InvalidValueException, self)(message)
-                if causes is None:
-                    raise self.NullPointerException('Possible causes array must not be null')
-                self._causes = causes
-            else:
-                raise ARGERROR(1, 2)
-
-        def isInvisible(self):
-            """Check if the error message should be hidden.
-
-            An empty (null or "") message is invisible unless it contains nested
-            exceptions that are visible.
-
-            @return true if the error message should be hidden, false otherwise
-            """
-            # (non-Javadoc)
-            # 
-            # @see com.vaadin.terminal.ErrorMessage#getErrorLevel()
-
-            msg = self.getMessage()
-            if msg is not None and len(msg) > 0:
-                return False
-            if self._causes is not None:
-                _0 = True
-                i = 0
-                while True:
-                    if _0 is True:
-                        _0 = False
-                    else:
-                        i += 1
-                    if not (i < len(self._causes)):
-                        break
-                    if not self._causes[i].isInvisible():
-                        return False
-            return True
-
-        def getErrorLevel(self):
-            # (non-Javadoc)
-            # 
-            # @see
-            # com.vaadin.terminal.Paintable#paint(com.vaadin.terminal.PaintTarget)
-
-            return ErrorMessage.ERROR
-
-        def paint(self, target):
-            # (non-Javadoc)
-            # 
-            # @see
-            # com.vaadin.terminal.ErrorMessage#addListener(com.vaadin.terminal.
-            # Paintable.RepaintRequestListener)
-
-            target.startTag('error')
-            target.addAttribute('level', 'error')
-            # Error message
-            message = self.getLocalizedMessage()
-            if message is not None:
-                target.addText(message)
-            # Paint all the causes
+        msg = self.getMessage()
+        if msg is not None and len(msg) > 0:
+            return False
+        if self._causes is not None:
             _0 = True
             i = 0
             while True:
@@ -172,69 +135,105 @@ class Validator(Serializable):
                     i += 1
                 if not (i < len(self._causes)):
                     break
-                self._causes[i].paint(target)
-            target.endTag('error')
+                if not self._causes[i].isInvisible():
+                    return False
+        return True
 
-        def addListener(self, listener):
-            # (non-Javadoc)
-            # 
-            # @see
-            # com.vaadin.terminal.ErrorMessage#removeListener(com.vaadin.terminal
-            # .Paintable.RepaintRequestListener)
+    def getErrorLevel(self):
+        # (non-Javadoc)
+        #
+        # @see
+        # com.vaadin.terminal.Paintable#paint(com.vaadin.terminal.PaintTarget)
 
-            pass
+        return ErrorMessage.ERROR
 
-        def removeListener(self, listener):
-            # (non-Javadoc)
-            # 
-            # @see com.vaadin.terminal.ErrorMessage#requestRepaint()
+    def paint(self, target):
+        # (non-Javadoc)
+        #
+        # @see
+        # com.vaadin.terminal.ErrorMessage#addListener(com.vaadin.terminal.
+        # Paintable.RepaintRequestListener)
 
-            pass
+        target.startTag('error')
+        target.addAttribute('level', 'error')
+        # Error message
+        message = self.getLocalizedMessage()
+        if message is not None:
+            target.addText(message)
+        # Paint all the causes
+        _0 = True
+        i = 0
+        while True:
+            if _0 is True:
+                _0 = False
+            else:
+                i += 1
+            if not (i < len(self._causes)):
+                break
+            self._causes[i].paint(target)
+        target.endTag('error')
 
-        def requestRepaint(self):
-            # (non-Javadoc)
-            # 
-            # @see com.vaadin.terminal.Paintable#requestRepaintRequests()
+    def addListener(self, listener):
+        # (non-Javadoc)
+        #
+        # @see
+        # com.vaadin.terminal.ErrorMessage#removeListener(com.vaadin.terminal
+        # .Paintable.RepaintRequestListener)
 
-            pass
+        pass
 
-        def requestRepaintRequests(self):
-            # (non-Javadoc)
-            # 
-            # @see com.vaadin.terminal.Paintable#getDebugId()
+    def removeListener(self, listener):
+        # (non-Javadoc)
+        #
+        # @see com.vaadin.terminal.ErrorMessage#requestRepaint()
 
-            pass
+        pass
 
-        def getDebugId(self):
-            # (non-Javadoc)
-            # 
-            # @see com.vaadin.terminal.Paintable#setDebugId(java.lang.String)
+    def requestRepaint(self):
+        # (non-Javadoc)
+        #
+        # @see com.vaadin.terminal.Paintable#requestRepaintRequests()
 
-            return None
+        pass
 
-        def setDebugId(self, id):
-            raise self.UnsupportedOperationException('InvalidValueException cannot have a debug id')
+    def requestRepaintRequests(self):
+        # (non-Javadoc)
+        #
+        # @see com.vaadin.terminal.Paintable#getDebugId()
 
-        def getCauses(self):
-            """Returns the {@code InvalidValueExceptions} that caused this
-            exception.
+        pass
 
-            @return An array containing the {@code InvalidValueExceptions} that
-                    caused this exception. Returns an empty array if this
-                    exception was not caused by other exceptions.
-            """
-            return self._causes
+    def getDebugId(self):
+        # (non-Javadoc)
+        #
+        # @see com.vaadin.terminal.Paintable#setDebugId(java.lang.String)
 
-    class EmptyValueException(Validator.InvalidValueException):
-        """A specific type of {@link InvalidValueException} that indicates that
-        validation failed because the value was empty. What empty means is up to
-        the thrower.
+        return None
 
-        @author IT Mill Ltd.
-        @version
-        @VERSION@
-        @since 5.3.0
+    def setDebugId(self, id):
+        raise self.UnsupportedOperationException('InvalidValueException cannot have a debug id')
+
+    def getCauses(self):
+        """Returns the {@code InvalidValueExceptions} that caused this
+        exception.
+
+        @return An array containing the {@code InvalidValueExceptions} that
+                caused this exception. Returns an empty array if this
+                exception was not caused by other exceptions.
         """
+        return self._causes
 
-        def __init__(self, message):
-            super(EmptyValueException, self)(message)
+
+class EmptyValueException(Validator.InvalidValueException):
+    """A specific type of {@link InvalidValueException} that indicates that
+    validation failed because the value was empty. What empty means is up to
+    the thrower.
+
+    @author IT Mill Ltd.
+    @version
+    @VERSION@
+    @since 5.3.0
+    """
+
+    def __init__(self, message):
+        super(EmptyValueException, self)(message)

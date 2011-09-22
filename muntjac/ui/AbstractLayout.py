@@ -14,13 +14,11 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.ui.Layout import (Layout, MarginHandler, MarginInfo,)
-from com.vaadin.ui.AbstractComponentContainer import (AbstractComponentContainer,)
-from com.vaadin.terminal.gwt.client.MouseEventDetails import (MouseEventDetails,)
-from com.vaadin.terminal.gwt.client.EventId import (EventId,)
-# from com.vaadin.ui.Layout.MarginHandler import (MarginHandler,)
-# from java.util.Map import (Map,)
+from muntjac.ui.Layout import Layout, MarginHandler, MarginInfo
+from muntjac.ui.AbstractComponentContainer import AbstractComponentContainer
+from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
+from muntjac.terminal.gwt.client.EventId import EventId
+from muntjac.event.LayoutEvents import LayoutClickNotifier
 
 
 class AbstractLayout(AbstractComponentContainer, Layout, MarginHandler):
@@ -33,64 +31,49 @@ class AbstractLayout(AbstractComponentContainer, Layout, MarginHandler):
     @since 5.0
     """
     _CLICK_EVENT = EventId.LAYOUT_CLICK
-    margins = MarginInfo(False)
-    # (non-Javadoc)
-    # 
-    # @see com.vaadin.ui.Layout#setMargin(boolean)
+
+    def __init__(self):
+        self.margins = MarginInfo(False)
+
 
     def setMargin(self, *args):
-        # (non-Javadoc)
-        # 
-        # @see com.vaadin.ui.Layout.MarginHandler#getMargin()
-
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            if isinstance(_0[0], MarginInfo):
-                marginInfo, = _0
+        nargs = len(args)
+        if nargs == 1:
+            if isinstance(args[0], MarginInfo):
+                marginInfo, = args
                 self.margins.setMargins(marginInfo)
                 self.requestRepaint()
             else:
-                enabled, = _0
+                enabled, = args
                 self.margins.setMargins(enabled)
                 self.requestRepaint()
-        elif _1 == 4:
-            topEnabled, rightEnabled, bottomEnabled, leftEnabled = _0
-            self.margins.setMargins(topEnabled, rightEnabled, bottomEnabled, leftEnabled)
+        elif nargs == 4:
+            topEnabled, rightEnabled, bottomEnabled, leftEnabled = args
+            self.margins.setMargins(topEnabled,
+                                    rightEnabled,
+                                    bottomEnabled,
+                                    leftEnabled)
             self.requestRepaint()
         else:
-            raise ARGERROR(1, 4)
+            raise ValueError, 'invalid number of arguments'
+
 
     def getMargin(self):
-        # (non-Javadoc)
-        # 
-        # @see com.vaadin.ui.Layout.MarginHandler#setMargin(MarginInfo)
-
         return self.margins
 
-    # (non-Javadoc)
-    # 
-    # @see com.vaadin.ui.Layout#setMargin(boolean, boolean, boolean, boolean)
-
-    # (non-Javadoc)
-    # 
-    # @see com.vaadin.ui.AbstractComponent#paintContent(com.vaadin
-    # .terminal.PaintTarget)
 
     def paintContent(self, target):
         # Add margin info. Defaults to false.
-        # (non-Javadoc)
-        # 
-        # @see com.vaadin.ui.AbstractComponent#changeVariables(java.lang.Object,
-        # java.util.Map)
-
         target.addAttribute('margins', self.margins.getBitMask())
+
 
     def changeVariables(self, source, variables):
         super(AbstractLayout, self).changeVariables(source, variables)
         # not all subclasses use these events
-        if isinstance(self, LayoutClickNotifier) and self._CLICK_EVENT in variables:
+        if isinstance(self, LayoutClickNotifier) \
+                and self._CLICK_EVENT in variables:
             self.fireClick(variables[self._CLICK_EVENT])
+
 
     def fireClick(self, parameters):
         """Fire a layout click event.
@@ -103,8 +86,10 @@ class AbstractLayout(AbstractComponentContainer, Layout, MarginHandler):
                    The parameters received from the client side implementation
         """
         mouseDetails = MouseEventDetails.deSerialize(parameters['mouseDetails'])
-        clickedComponent = parameters['component']
+        clickedComponent = parameters.get('component')
         childComponent = clickedComponent
         while childComponent is not None and childComponent.getParent() != self:
             childComponent = childComponent.getParent()
-        self.fireEvent(self.LayoutClickEvent(self, mouseDetails, clickedComponent, childComponent))
+        self.fireEvent(self.LayoutClickEvent(self, mouseDetails,
+                                             clickedComponent,
+                                             childComponent))

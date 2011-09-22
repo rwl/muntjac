@@ -14,10 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.ui.Component import (Component,)
-# from java.io.Serializable import (Serializable,)
-# from java.util.Iterator import (Iterator,)
+from muntjac.ui.Component import Component, Event
 
 
 class ComponentContainer(Component):
@@ -134,87 +131,91 @@ class ComponentContainer(Component):
         else:
             raise ARGERROR(1, 1)
 
-    class ComponentAttachListener(Serializable):
-        """Component attach listener interface."""
 
-        def componentAttachedToContainer(self, event):
-            """A new component is attached to container.
+class ComponentAttachListener(object):
+    """Component attach listener interface."""
 
-            @param event
-                       the component attach event.
-            """
-            pass
+    def componentAttachedToContainer(self, event):
+        """A new component is attached to container.
 
-    class ComponentDetachListener(Serializable):
-        """Component detach listener interface."""
+        @param event
+                   the component attach event.
+        """
+        pass
 
-        def componentDetachedFromContainer(self, event):
-            """A component has been detached from container.
 
-            @param event
-                       the component detach event.
-            """
-            pass
+class ComponentDetachListener(object):
+    """Component detach listener interface."""
 
-    class ComponentAttachEvent(Component.Event):
-        """Component attach event sent when a component is attached to container."""
-        _component = None
+    def componentDetachedFromContainer(self, event):
+        """A component has been detached from container.
 
-        def __init__(self, container, attachedComponent):
-            """Creates a new attach event.
+        @param event
+                   the component detach event.
+        """
+        pass
 
-            @param container
-                       the component container the component has been detached
-                       to.
-            @param attachedComponent
-                       the component that has been attached.
-            """
-            super(ComponentAttachEvent, self)(container)
-            self._component = attachedComponent
 
-        def getContainer(self):
-            """Gets the component container.
+class ComponentAttachEvent(Event):
+    """Component attach event sent when a component is attached to container."""
+    _component = None
 
-            @param the
-                       component container.
-            """
-            return self.getSource()
+    def __init__(self, container, attachedComponent):
+        """Creates a new attach event.
 
-        def getAttachedComponent(self):
-            """Gets the attached component.
+        @param container
+                   the component container the component has been detached
+                   to.
+        @param attachedComponent
+                   the component that has been attached.
+        """
+        super(ComponentAttachEvent, self)(container)
+        self._component = attachedComponent
 
-            @param the
-                       attach component.
-            """
-            return self._component
+    def getContainer(self):
+        """Gets the component container.
 
-    class ComponentDetachEvent(Component.Event):
-        """Component detach event sent when a component is detached from container."""
-        _component = None
+        @param the
+                   component container.
+        """
+        return self.getSource()
 
-        def __init__(self, container, detachedComponent):
-            """Creates a new detach event.
+    def getAttachedComponent(self):
+        """Gets the attached component.
 
-            @param container
-                       the component container the component has been detached
-                       from.
-            @param detachedComponent
-                       the component that has been detached.
-            """
-            super(ComponentDetachEvent, self)(container)
-            self._component = detachedComponent
+        @param the
+                   attach component.
+        """
+        return self._component
 
-        def getContainer(self):
-            """Gets the component container.
 
-            @param the
-                       component container.
-            """
-            return self.getSource()
+class ComponentDetachEvent(Event):
+    """Component detach event sent when a component is detached from container."""
+    _component = None
 
-        def getDetachedComponent(self):
-            """Gets the detached component.
+    def __init__(self, container, detachedComponent):
+        """Creates a new detach event.
 
-            @return the detached component.
-            """
-            return self._component
+        @param container
+                   the component container the component has been detached
+                   from.
+        @param detachedComponent
+                   the component that has been detached.
+        """
+        super(ComponentDetachEvent, self)(container)
+        self._component = detachedComponent
+
+    def getContainer(self):
+        """Gets the component container.
+
+        @param the
+                   component container.
+        """
+        return self.getSource()
+
+    def getDetachedComponent(self):
+        """Gets the detached component.
+
+        @return the detached component.
+        """
+        return self._component

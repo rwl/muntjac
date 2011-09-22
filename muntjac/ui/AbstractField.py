@@ -14,25 +14,24 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR, POSTINC,)
-from com.vaadin.event.ShortcutListener import (ShortcutListener,)
-from com.vaadin.data.Property import (Property, ReadOnlyStatusChangeEvent, ReadOnlyStatusChangeListener, ReadOnlyStatusChangeNotifier,)
-from com.vaadin.data.Buffered import (Buffered,)
-from com.vaadin.ui.DefaultFieldFactory import (DefaultFieldFactory,)
-from com.vaadin.ui.AbstractComponent import (AbstractComponent,)
-from com.vaadin.data.Validator import (Validator,)
-from com.vaadin.ui.Field import (Field,)
-from com.vaadin.event.Action import (Action, ShortcutNotifier,)
-from com.vaadin.terminal.CompositeErrorMessage import (CompositeErrorMessage,)
-from com.vaadin.event.ActionManager import (ActionManager,)
-# from com.vaadin.data.Validator.InvalidValueException import (InvalidValueException,)
-# from java.io.Serializable import (Serializable,)
-# from java.lang.reflect.Method import (Method,)
-# from java.util.Collection import (Collection,)
-# from java.util.Collections import (Collections,)
-# from java.util.Iterator import (Iterator,)
-# from java.util.LinkedList import (LinkedList,)
-# from java.util.Map import (Map,)
+from muntjac.event.ShortcutListener import ShortcutListener
+
+from muntjac.data.Property import \
+    Property, ReadOnlyStatusChangeEvent, ReadOnlyStatusChangeListener, \
+    ReadOnlyStatusChangeNotifier, ReadOnlyException, ValueChangeNotifier,\
+    ValueChangeListener, ValueChangeEvent
+
+from muntjac.data.Buffered import SourceException
+from muntjac.ui.DefaultFieldFactory import DefaultFieldFactory
+from muntjac.ui.AbstractComponent import AbstractComponent
+from muntjac.data.Validator import EmptyValueException
+from muntjac.ui.Field import Field
+from muntjac.event.Action import Action, ShortcutNotifier
+from muntjac.terminal.CompositeErrorMessage import CompositeErrorMessage
+from muntjac.event.ActionManager import ActionManager
+from muntjac.data.Validator import InvalidValueException
+from muntjac.data.Validatable import Validatable
+from muntjac.ui.Component import Event as ComponentEvent
 
 
 class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeListener, Property, ReadOnlyStatusChangeNotifier, Action, ShortcutNotifier):
@@ -61,75 +60,90 @@ class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeList
     @VERSION@
     @since 3.0
     """
-    # Private members
-    # Value of the abstract field.
-    _value = None
-    # Connected data-source.
-    _dataSource = None
-    # The list of validators.
-    _validators = None
-    # Auto commit mode.
-    _writeThroughMode = True
-    # Reads the value from data-source, when it is not modified.
-    _readThroughMode = True
-    # Is the field modified but not committed.
-    _modified = False
-    # Should value change event propagation from property data source to
-    # listeners of the field be suppressed. This is used internally while the
-    # field makes changes to the property value.
 
-    _suppressValueChangePropagation = False
-    # Current source exception.
-    _currentBufferedSourceException = None
-    # Are the invalid values allowed in fields ?
-    _invalidAllowed = True
-    # Are the invalid values committed ?
-    _invalidCommitted = False
-    # The tab order number of this field.
-    _tabIndex = 0
-    # Required field.
-    _required = False
-    # The error message for the exception that is thrown when the field is
-    # required but empty.
+    def __init__(self):
+        # Value of the abstract field.
+        self._value = None
 
-    _requiredError = ''
-    # Is automatic validation enabled.
-    _validationVisible = True
-    # Keeps track of the Actions added to this component; the actual
-    # handling/notifying is delegated, usually to the containing window.
+        # Connected data-source.
+        self._dataSource = None
 
-    _actionManager = None
-    # Component basics
-    # Paints the field. Don't add a JavaDoc comment here, we use the default
-    # documentation from the implemented interface.
+        # The list of validators.
+        self._validators = None
+
+        # Auto commit mode.
+        self._writeThroughMode = True
+
+        # Reads the value from data-source, when it is not modified.
+        self._readThroughMode = True
+
+        # Is the field modified but not committed.
+        self._modified = False
+
+        # Should value change event propagation from property data source to
+        # listeners of the field be suppressed. This is used internally while the
+        # field makes changes to the property value.
+        self._suppressValueChangePropagation = False
+
+        # Current source exception.
+        self._currentBufferedSourceException = None
+
+        # Are the invalid values allowed in fields ?
+        self._invalidAllowed = True
+
+        # Are the invalid values committed ?
+        self._invalidCommitted = False
+
+        # The tab order number of this field.
+        self._tabIndex = 0
+
+        # Required field.
+        self._required = False
+
+        # The error message for the exception that is thrown when the field is
+        # required but empty.
+        self._requiredError = ''
+
+        # Is automatic validation enabled.
+        self._validationVisible = True
+
+        # Keeps track of the Actions added to this component; the actual
+        # handling/notifying is delegated, usually to the containing window.
+        self._actionManager = None
+
 
     def paintContent(self, target):
-        # The tab ordering number
-        # Gets the field type Don't add a JavaDoc comment here, we use the default
-        # documentation from the implemented interface.
 
+        # The tab ordering number
         if self.getTabIndex() != 0:
             target.addAttribute('tabindex', self.getTabIndex())
+
         # If the field is modified, but not committed, set modified attribute
         if self.isModified():
             target.addAttribute('modified', True)
+
         # Adds the required attribute
         if not self.isReadOnly() and self.isRequired():
             target.addAttribute('required', True)
+
         # Hide the error indicator if needed
-        if (
-            self.isRequired() and self.isEmpty() and self.getComponentError() is None and self.getErrorMessage() is not None
-        ):
+        if self.isRequired() and self.isEmpty() \
+                and self.getComponentError() is None \
+                and self.getErrorMessage() is not None:
             target.addAttribute('hideErrors', True)
+
 
     def getType(self):
         pass
+
 
     def isReadOnly(self):
         """The abstract field is read only also if the data source is in read only
         mode.
         """
-        return super(AbstractField, self).isReadOnly() or (self._dataSource is not None and self._dataSource.isReadOnly())
+        return super(AbstractField, self).isReadOnly() \
+            or (self._dataSource is not None and self._dataSource.isReadOnly())
+
 
     def setReadOnly(self, readOnly):
         """Changes the readonly state and throw read-only status change events.
@@ -139,6 +153,7 @@ class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeList
         super(AbstractField, self).setReadOnly(readOnly)
         self.fireReadOnlyStatusChange()
 
+
     def isInvalidCommitted(self):
         """Tests if the invalid data is committed to datasource.
 
@@ -146,122 +161,134 @@ class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeList
         """
         return self._invalidCommitted
 
+
     def setInvalidCommitted(self, isCommitted):
         """Sets if the invalid data should be committed to datasource.
 
         @see com.vaadin.data.BufferedValidatable#setInvalidCommitted(boolean)
         """
-        # Saves the current value to the data source Don't add a JavaDoc comment
-        # here, we use the default documentation from the implemented interface.
-
         self._invalidCommitted = isCommitted
 
-    def commit(self):
-        # Updates the value from the data source. Don't add a JavaDoc comment here,
-        # we use the default documentation from the implemented interface.
 
+    def commit(self):
+        # Saves the current value to the data source.
         if self._dataSource is not None and not self._dataSource.isReadOnly():
             if self.isInvalidCommitted() or self.isValid():
                 newValue = self.getValue()
                 try:
+
+                    # Commits the value to datasource.
                     self._suppressValueChangePropagation = True
                     self._dataSource.setValue(newValue)
-                except Throwable, e:
-                    self._currentBufferedSourceException = Buffered.SourceException(self, e)
+
+                except Exception, e:
+
+                    # Sets the buffering state.
+                    self._currentBufferedSourceException = SourceException(self, e)
                     self.requestRepaint()
+
                     # Throws the source exception.
                     raise self._currentBufferedSourceException
                 finally:
                     self._suppressValueChangePropagation = False
-                # Commits the value to datasource.
-                # Sets the buffering state.
+
             else:
                 # An invalid value and we don't allow them, throw the exception
                 self.validate()
+
         repaintNeeded = False
+
         # The abstract field is not modified anymore
         if self._modified:
             self._modified = False
             repaintNeeded = True
+
         # If successful, remove set the buffering state to be ok
         if self._currentBufferedSourceException is not None:
             self._currentBufferedSourceException = None
             repaintNeeded = True
+
         if repaintNeeded:
             self.requestRepaint()
 
-    def discard(self):
-        # Has the field been modified since the last commit()? Don't add a JavaDoc
-        # comment here, we use the default documentation from the implemented
-        # interface.
 
+    def discard(self):
+        # Updates the value from the data source.
         if self._dataSource is not None:
             # Gets the correct value from datasource
-            # Discards buffer by overwriting from datasource
-            # Sets the buffering state
             try:
-                newValue = str(self._dataSource) if str == self.getType() else self._dataSource.getValue()
+                # Discards buffer by overwriting from datasource
+                if str == self.getType():
+                    newValue = str(self._dataSource)
+                else:
+                    self._dataSource.getValue()
+
                 # If successful, remove set the buffering state to be ok
                 if self._currentBufferedSourceException is not None:
                     self._currentBufferedSourceException = None
                     self.requestRepaint()
-            except Throwable, e:
-                self._currentBufferedSourceException = Buffered.SourceException(self, e)
+
+            except Exception, e:
+
+                # Sets the buffering state
+                self._currentBufferedSourceException = SourceException(self, e)
                 self.requestRepaint()
+
                 # Throws the source exception
                 raise self._currentBufferedSourceException
+
             wasModified = self.isModified()
             self._modified = False
+
             # If the new value differs from the previous one
-            if (
-                (newValue is None and self._value is not None) or (newValue is not None and not (newValue == self._value))
-            ):
-                # If the value did not change, but the modification status did
+            if (newValue is None and self._value is not None) \
+                    or (newValue is not None and not (newValue == self._value)):
                 self.setInternalValue(newValue)
                 self.fireValueChange(False)
             elif wasModified:
+                # If the value did not change, but the modification status did
                 self.requestRepaint()
 
-    def isModified(self):
-        # Tests if the field is in write-through mode. Don't add a JavaDoc comment
-        # here, we use the default documentation from the implemented interface.
 
+    def isModified(self):
+        # Has the field been modified since the last commit()?
         return self._modified
 
-    def isWriteThrough(self):
-        # Sets the field's write-through mode to the specified status Don't add a
-        # JavaDoc comment here, we use the default documentation from the
-        # implemented interface.
 
+    def isWriteThrough(self):
+        # Tests if the field is in write-through mode.
         return self._writeThroughMode
 
-    def setWriteThrough(self, writeThrough):
-        # Tests if the field is in read-through mode. Don't add a JavaDoc comment
-        # here, we use the default documentation from the implemented interface.
 
+    def setWriteThrough(self, writeThrough):
+        # Sets the field's write-through mode to the specified status
         if self._writeThroughMode == writeThrough:
             return
         self._writeThroughMode = writeThrough
         if self._writeThroughMode:
             self.commit()
 
-    def isReadThrough(self):
-        # Sets the field's read-through mode to the specified status Don't add a
-        # JavaDoc comment here, we use the default documentation from the
-        # implemented interface.
 
+    def isReadThrough(self):
+        # Tests if the field is in read-through mode.
         return self._readThroughMode
 
+
     def setReadThrough(self, readThrough):
-        # Property interface implementation
+        # Sets the field's read-through mode to the specified status
         if self._readThroughMode == readThrough:
             return
         self._readThroughMode = readThrough
-        if (
-            not self.isModified() and self._readThroughMode and self._dataSource is not None
-        ):
-            self.setInternalValue(str(self._dataSource) if str == self.getType() else self._dataSource.getValue())
+
+        if not self.isModified() and self._readThroughMode \
+                and self._dataSource is not None:
+            if str == self.getType():
+                self.setInternalValue(str(self._dataSource))
+            else:
+                self.setInternalValue(self._dataSource.getValue())
+
             self.fireValueChange(False)
+
 
     def toString(self):
         """Returns the value of the Property in human readable textual format.
@@ -272,6 +299,7 @@ class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeList
         if value is None:
             return None
         return str(self.getValue())
+
 
     def getValue(self):
         """Gets the current value of the field.
@@ -299,12 +327,16 @@ class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeList
         @return the current value of the field.
         """
         # Give the value from abstract buffers if the field if possible
-        if (
-            ((self._dataSource is None) or (not self.isReadThrough())) or self.isModified()
-        ):
+        if ((self._dataSource is None) or (not self.isReadThrough())) or self.isModified():
             return self._value
-        newValue = str(self._dataSource) if str == self.getType() else self._dataSource.getValue()
+
+        if str == self.getType():
+            newValue = str(self._dataSource)
+        else:
+            newValue = self._dataSource.getValue()
+
         return newValue
+
 
     def setValue(self, *args):
         """Sets the value of the field.
@@ -323,68 +355,68 @@ class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeList
         @throws Property.ReadOnlyException
         @throws Property.ConversionException
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            newValue, = _0
+        nargs = len(args)
+        if nargs == 1:
+            newValue, = args
             self.setValue(newValue, False)
-        elif _1 == 2:
-            newValue, repaintIsNotNeeded = _0
-            if (
-                (newValue is None and self._value is not None) or (newValue is not None and not (newValue == self._value))
-            ):
+        elif nargs == 2:
+            newValue, repaintIsNotNeeded = args
+            if (newValue is None and self._value is not None) \
+                    or (newValue is not None and not (newValue == self._value)):
+
                 # Read only fields can not be changed
                 if self.isReadOnly():
-                    raise Property.ReadOnlyException()
+                    raise ReadOnlyException()
+
                 # Repaint is needed even when the client thinks that it knows the
                 # new state if validity of the component may change
-                if (
-                    repaintIsNotNeeded and self.isRequired() or (self.getValidators() is not None)
-                ):
+                if repaintIsNotNeeded and self.isRequired() \
+                        or (self.getValidators() is not None):
                     repaintIsNotNeeded = False
+
                 # If invalid values are not allowed, the value must be checked
                 if not self.isInvalidAllowed():
                     v = self.getValidators()
-                    if v is not None:
-                        _0 = True
-                        i = v
-                        while True:
-                            if _0 is True:
-                                _0 = False
-                            if not i.hasNext():
-                                break
-                            i.next().validate(newValue)
+                    for vv in v:
+                        vv.validate(newValue)
+
                 # Changes the value
                 self.setInternalValue(newValue)
                 self._modified = self._dataSource is not None
+
                 # In write through mode , try to commit
-                if (
-                    self.isWriteThrough() and self._dataSource is not None and self.isInvalidCommitted() or self.isValid()
-                ):
+                if self.isWriteThrough() and self._dataSource is not None \
+                        and self.isInvalidCommitted() or self.isValid():
                     try:
+
+                        # Commits the value to datasource
                         self._suppressValueChangePropagation = True
                         self._dataSource.setValue(newValue)
+
                         # The buffer is now unmodified
                         self._modified = False
-                    except Throwable, e:
-                        self._currentBufferedSourceException = Buffered.SourceException(self, e)
+
+                    except Exception, e:
+
+                        # Sets the buffering state
+                        self._currentBufferedSourceException = SourceException(self, e)
                         self.requestRepaint()
+
                         # Throws the source exception
                         raise self._currentBufferedSourceException
                     finally:
                         self._suppressValueChangePropagation = False
-                    # Commits the value to datasource
-                    # Sets the buffering state
+
                 # If successful, remove set the buffering state to be ok
                 if self._currentBufferedSourceException is not None:
                     self._currentBufferedSourceException = None
                     self.requestRepaint()
+
                 # Fires the value change
                 self.fireValueChange(repaintIsNotNeeded)
         else:
-            raise ARGERROR(1, 2)
+            raise ValueError, 'too many arguments'
 
-    # External data source
 
     def getPropertyDataSource(self):
         """Gets the current data source of the field, if any.
@@ -393,6 +425,7 @@ class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeList
                 none defined.
         """
         return self._dataSource
+
 
     def setPropertyDataSource(self, newDataSource):
         """<p>
@@ -422,49 +455,51 @@ class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeList
                    the new data source Property.
         """
         # Saves the old value
-        # Validation
         oldValue = self._value
+
         # Stops listening the old data source changes
-        if (
-            self._dataSource is not None and Property.ValueChangeNotifier.isAssignableFrom(self._dataSource.getClass())
-        ):
+        if self._dataSource is not None \
+                and ValueChangeNotifier in self._dataSource.__class__.__mro__:  # FIXME check isAssignableFrom translation
             self._dataSource.removeListener(self)
-        if (
-            self._dataSource is not None and Property.ReadOnlyStatusChangeNotifier.isAssignableFrom(self._dataSource.getClass())
-        ):
+
+        if self._dataSource is not None \
+                and ReadOnlyStatusChangeNotifier in self._dataSource.__class__.__mro__:
             self._dataSource.removeListener(self)
+
         # Sets the new data source
         self._dataSource = newDataSource
+
         # Gets the value from source
-        # Listens the new data source if possible
         try:
             if self._dataSource is not None:
-                self.setInternalValue(str(self._dataSource) if str == self.getType() else self._dataSource.getValue())
+                if str == self.getType():
+                    self.setInternalValue(str(self._dataSource))
+                else:
+                    self.setInternalValue(self._dataSource.getValue())
             self._modified = False
-        except Throwable, e:
-            self._currentBufferedSourceException = Buffered.SourceException(self, e)
+        except Exception, e:
+            self._currentBufferedSourceException = SourceException(self, e)
             self._modified = True
-        if isinstance(self._dataSource, Property.ValueChangeNotifier):
+
+        # Listens the new data source if possible
+        if isinstance(self._dataSource, ValueChangeNotifier):
             self._dataSource.addListener(self)
-        if isinstance(self._dataSource, Property.ReadOnlyStatusChangeNotifier):
+        if isinstance(self._dataSource, ReadOnlyStatusChangeNotifier):
             self._dataSource.addListener(self)
+
         # Copy the validators from the data source
         if isinstance(self._dataSource, Validatable):
             validators = self._dataSource.getValidators()
             if validators is not None:
-                _0 = True
-                i = validators
-                while True:
-                    if _0 is True:
-                        _0 = False
-                    if not i.hasNext():
-                        break
-                    self.addValidator(i.next())
+                for v in validators:
+                    self.addValidator(v)
+
         # Fires value change if the value has changed
-        if (
-            self._value != oldValue and (self._value is not None and not (self._value == oldValue)) or (self._value is None)
-        ):
+        if self._value != oldValue \
+                and (self._value is not None and not (self._value == oldValue)) \
+                or (self._value is None):
             self.fireValueChange(False)
+
 
     def addValidator(self, validator):
         """Adds a new validator for the field's value. All validators added to a
@@ -474,9 +509,10 @@ class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeList
                    the new validator to be added.
         """
         if self._validators is None:
-            self._validators = LinkedList()
-        self._validators.add(validator)
+            self._validators = list()
+        self._validators.append(validator)
         self.requestRepaint()
+
 
     def getValidators(self):
         """Gets the validators of the field.
@@ -484,9 +520,10 @@ class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeList
         @return the Unmodifiable collection that holds all validators for the
                 field.
         """
-        if (self._validators is None) or self._validators.isEmpty():
+        if (self._validators is None) or len(self._validators) == 0:
             return None
-        return Collections.unmodifiableCollection(self._validators)
+        return self._validators
+
 
     def removeValidator(self, validator):
         """Removes the validator from the field.
@@ -497,6 +534,7 @@ class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeList
         if self._validators is not None:
             self._validators.remove(validator)
         self.requestRepaint()
+
 
     def isValid(self):
         """Tests the current value against registered validators if the field is not
@@ -512,19 +550,17 @@ class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeList
                 return False
             else:
                 return True
+
         if self._validators is None:
             return True
+
         value = self.getValue()
-        _0 = True
-        i = self._validators
-        while True:
-            if _0 is True:
-                _0 = False
-            if not i.hasNext():
-                break
-            if not i.next().isValid(value):
+        for v in self._validators:
+            if not v.isValid(value):
                 return False
+
         return True
+
 
     def validate(self):
         """Checks the validity of the Validatable by validating the field with all
@@ -539,52 +575,49 @@ class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeList
         """
         if self.isEmpty():
             if self.isRequired():
-                raise Validator.EmptyValueException(self._requiredError)
+                raise EmptyValueException(self._requiredError)
             else:
                 return
+
         # If there is no validator, there can not be any errors
         if self._validators is None:
             return
+
         # Initialize temps
         firstError = None
         errors = None
         value = self.getValue()
+
         # Gets all the validation errors
-        _0 = True
-        i = self._validators
-        while True:
-            if _0 is True:
-                _0 = False
-            if not i.hasNext():
-                break
+        for v in self._validators:
             try:
-                i.next().validate(value)
-            except Validator.InvalidValueException, e:
+                v.validate(value)
+            except InvalidValueException, e:
                 if firstError is None:
                     firstError = e
                 else:
                     if errors is None:
-                        errors = LinkedList()
-                        errors.add(firstError)
-                    errors.add(e)
+                        errors = list()
+                        errors.append(firstError)
+                    errors.append(e)
+
         # If there were no error
         if firstError is None:
             return
+
         # If only one error occurred, throw it forwards
         if errors is None:
             raise firstError
+
         # Creates composite validator
         exceptions = [None] * len(errors)
         index = 0
-        _1 = True
-        i = errors
-        while True:
-            if _1 is True:
-                _1 = False
-            if not i.hasNext():
-                break
-            exceptions[POSTINC(globals(), locals(), 'index')] = i.next()
-        raise Validator.InvalidValueException(None, exceptions)
+        for e in errors:
+            exceptions[index] = e
+            index += 1
+
+        raise InvalidValueException(None, exceptions)
+
 
     def isInvalidAllowed(self):
         """Fields allow invalid values by default. In most cases this is wanted,
@@ -594,6 +627,7 @@ class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeList
         @see com.vaadin.data.Validatable#isInvalidAllowed()
         """
         return self._invalidAllowed
+
 
     def setInvalidAllowed(self, invalidAllowed):
         """Fields allow invalid values by default. In most cases this is wanted,
@@ -610,6 +644,7 @@ class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeList
         """
         self._invalidAllowed = invalidAllowed
 
+
     def getErrorMessage(self):
         """Error messages shown by the fields are composites of the error message
         thrown by the superclasses (that is the component error message),
@@ -622,78 +657,61 @@ class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeList
         # the requiredError string. For these fields the exclamation mark will
         # be hidden but the error must still be sent to the client.
 
-        # Value change events
         validationError = None
         if self.isValidationVisible():
             try:
                 self.validate()
-            except Validator.InvalidValueException, e:
+            except InvalidValueException, e:
                 if not e.isInvisible():
                     validationError = e
+
         # Check if there are any systems errors
         superError = super(AbstractField, self).getErrorMessage()
+
         # Return if there are no errors at all
-        if (
-            superError is None and validationError is None and self._currentBufferedSourceException is None
-        ):
+        if superError is None and validationError is None \
+                and self._currentBufferedSourceException is None:
             return None
+
         # Throw combination of the error types
-        return CompositeErrorMessage([superError, validationError, self._currentBufferedSourceException])
+        return CompositeErrorMessage([superError,
+                                      validationError,
+                                      self._currentBufferedSourceException])
 
-    _VALUE_CHANGE_METHOD = None
-    # This should never happen
-    try:
-        _VALUE_CHANGE_METHOD = Property.ValueChangeListener.getDeclaredMethod('valueChange', [Property.ValueChangeEvent])
-    except java.lang.NoSuchMethodException, e:
-        raise java.lang.RuntimeException('Internal error finding methods in AbstractField')
-    # Adds a value change listener for the field. Don't add a JavaDoc comment
-    # here, we use the default documentation from the implemented interface.
 
-    def addListener(self, *args):
-        # Removes a value change listener from the field. Don't add a JavaDoc
-        # comment here, we use the default documentation from the implemented
-        # interface.
+    _VALUE_CHANGE_METHOD = getattr(ValueChangeListener, 'valueChange')  # FIXME getDeclaredMethod translation
 
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            if isinstance(_0[0], Property.ReadOnlyStatusChangeListener):
-                listener, = _0
-                self.addListener(Property.ReadOnlyStatusChangeEvent, listener, self._READ_ONLY_STATUS_CHANGE_METHOD)
-            else:
-                listener, = _0
-                self.addListener(AbstractField.ValueChangeEvent, listener, self._VALUE_CHANGE_METHOD)
+    def addListener(self, listener):
+        # Adds a value change listener for the field.
+        if isinstance(listener, ReadOnlyStatusChangeListener):
+            self.addListener(ReadOnlyStatusChangeEvent, listener,
+                             self._READ_ONLY_STATUS_CHANGE_METHOD)
         else:
-            raise ARGERROR(1, 1)
+            self.addListener(AbstractField.ValueChangeEvent, listener,
+                             self._VALUE_CHANGE_METHOD)
 
-    def removeListener(self, *args):
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            if isinstance(_0[0], Property.ReadOnlyStatusChangeListener):
-                listener, = _0
-                self.removeListener(Property.ReadOnlyStatusChangeEvent, listener, self._READ_ONLY_STATUS_CHANGE_METHOD)
-            else:
-                listener, = _0
-                self.removeListener(AbstractField.ValueChangeEvent, listener, self._VALUE_CHANGE_METHOD)
+
+    def removeListener(self, listener):
+        # Removes a value change listener from the field.
+        if isinstance(listener, ReadOnlyStatusChangeListener):
+            self.removeListener(ReadOnlyStatusChangeEvent, listener,
+                                self._READ_ONLY_STATUS_CHANGE_METHOD)
         else:
-            raise ARGERROR(1, 1)
+            self.removeListener(ValueChangeEvent, listener,
+                                self._VALUE_CHANGE_METHOD)
+
 
     def fireValueChange(self, repaintIsNotNeeded):
         """Emits the value change event. The value contained in the field is
         validated before the event is created.
         """
-        # Read-only status change events
         self.fireEvent(AbstractField.ValueChangeEvent(self))
         if not repaintIsNotNeeded:
             self.requestRepaint()
 
-    _READ_ONLY_STATUS_CHANGE_METHOD = None
-    # This should never happen
-    try:
-        _READ_ONLY_STATUS_CHANGE_METHOD = Property.ReadOnlyStatusChangeListener.getDeclaredMethod('readOnlyStatusChange', [Property.ReadOnlyStatusChangeEvent])
-    except java.lang.NoSuchMethodException, e:
-        raise java.lang.RuntimeException('Internal error finding methods in AbstractField')
+
+    _READ_ONLY_STATUS_CHANGE_METHOD = getattr(ReadOnlyStatusChangeListener, 'readOnlyStatusChange')  # FIXME getDeclaredMethod translation
+
 
     def readOnlyStatusChange(self, event):
         """React to read only status changes of the property by requesting a
@@ -703,43 +721,13 @@ class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeList
         """
         self.requestRepaint()
 
-    class ReadOnlyStatusChangeEvent(Component.Event, Property, ReadOnlyStatusChangeEvent, Serializable):
-        """An <code>Event</code> object specifying the Property whose read-only
-        status has changed.
-
-        @author IT Mill Ltd.
-        @version
-        @VERSION@
-        @since 3.0
-        """
-        # Adds a read-only status change listener for the field. Don't add a
-        # JavaDoc comment here, we use the default documentation from the
-        # implemented interface.
-
-        def __init__(self, source):
-            """New instance of text change event.
-
-            @param source
-                       the Source of the event.
-            """
-            super(ReadOnlyStatusChangeEvent, self)(source)
-
-        def getProperty(self):
-            """Property where the event occurred.
-
-            @return the Source of the event.
-            """
-            return self.getSource()
-
-    # Removes a read-only status change listener from the field. Don't add a
-    # JavaDoc comment here, we use the default documentation from the
-    # implemented interface.
 
     def fireReadOnlyStatusChange(self):
         """Emits the read-only status change event. The value contained in the field
         is validated before the event is created.
         """
         self.fireEvent(AbstractField.ReadOnlyStatusChangeEvent(self))
+
 
     def valueChange(self, event):
         """This method listens to data source value changes and passes the changes
@@ -752,18 +740,20 @@ class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeList
                    the value change event telling the data source contents have
                    changed.
         """
-        if (
-            not self._suppressValueChangePropagation and self.isReadThrough() and not self.isModified()
-        ):
-            self.setInternalValue(event.getProperty().getValue())
+        if not self._suppressValueChangePropagation \
+                and self.isReadThrough() \
+                and not self.isModified():
+            self.setInternalValue( event.getProperty().getValue() )
             self.fireValueChange(False)
+
 
     def changeVariables(self, source, variables):
         super(AbstractField, self).changeVariables(source, variables)
 
+
     def focus(self):
-        """{@inheritDoc}"""
         super(AbstractField, self).focus()
+
 
     @classmethod
     def constructField(cls, propertyType):
@@ -779,22 +769,18 @@ class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeList
                     {@link DefaultFieldFactory#createFieldByPropertyType(Class)}
                     instead
         """
-        # (non-Javadoc)
-        # 
-        # @see com.vaadin.ui.Component.Focusable#getTabIndex()
-
+        raise DeprecationWarning
         return DefaultFieldFactory.createFieldByPropertyType(propertyType)
 
-    def getTabIndex(self):
-        # (non-Javadoc)
-        # 
-        # @see com.vaadin.ui.Component.Focusable#setTabIndex(int)
 
+    def getTabIndex(self):
         return self._tabIndex
+
 
     def setTabIndex(self, tabIndex):
         self._tabIndex = tabIndex
         self.requestRepaint()
+
 
     def setInternalValue(self, newValue):
         """Sets the internal field value. This is purely used by AbstractField to
@@ -809,6 +795,7 @@ class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeList
         if self._validators is not None and not self._validators.isEmpty():
             self.requestRepaint()
 
+
     def attach(self):
         """Notifies the component that it is connected to an application.
 
@@ -818,10 +805,12 @@ class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeList
         if self._actionManager is not None:
             self._actionManager.setViewer(self.getWindow())
 
+
     def detach(self):
         super(AbstractField, self).detach()
         if self._actionManager is not None:
             self._actionManager.setViewer(None)
+
 
     def isRequired(self):
         """Is this field required. Required fields must filled by the user.
@@ -841,6 +830,7 @@ class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeList
         """
         return self._required
 
+
     def setRequired(self, required):
         """Sets the field required. Required fields must filled by the user.
 
@@ -859,6 +849,7 @@ class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeList
         self._required = required
         self.requestRepaint()
 
+
     def setRequiredError(self, requiredMessage):
         """Set the error that is show if this field is required, but empty. When
         setting requiredMessage to be "" or null, no error pop-up or exclamation
@@ -871,8 +862,10 @@ class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeList
         self._requiredError = requiredMessage
         self.requestRepaint()
 
+
     def getRequiredError(self):
         return self._requiredError
+
 
     def isEmpty(self):
         """Is the field empty?
@@ -881,6 +874,7 @@ class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeList
         also treats empty string as "empty".
         """
         return self.getValue() is None
+
 
     def isValidationVisible(self):
         """Is automatic, visible validation enabled?
@@ -894,6 +888,7 @@ class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeList
         @return True, if automatic validation is enabled.
         """
         return self._validationVisible
+
 
     def setValidationVisible(self, validateAutomatically):
         """Enable or disable automatic, visible validation.
@@ -911,14 +906,15 @@ class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeList
             self.requestRepaint()
             self._validationVisible = validateAutomatically
 
+
     def setCurrentBufferedSourceException(self, currentBufferedSourceException):
         """Sets the current buffered source exception.
 
         @param currentBufferedSourceException
         """
-        # Actions
         self._currentBufferedSourceException = currentBufferedSourceException
         self.requestRepaint()
+
 
     def getActionManager(self):
         """Gets the {@link ActionManager} used to manage the
@@ -932,61 +928,91 @@ class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeList
                 self._actionManager.setViewer(self.getWindow())
         return self._actionManager
 
+
     def addShortcutListener(self, shortcut):
         self.getActionManager().addAction(shortcut)
+
 
     def removeShortcutListener(self, shortcut):
         if self._actionManager is not None:
             self._actionManager.removeAction(shortcut)
 
-    class FocusShortcut(ShortcutListener):
-        """A ready-made {@link ShortcutListener} that focuses the given
-        {@link Focusable} (usually a {@link Field}) when the keyboard shortcut is
-        invoked.
+
+class FocusShortcut(ShortcutListener):
+    """A ready-made {@link ShortcutListener} that focuses the given
+    {@link Focusable} (usually a {@link Field}) when the keyboard shortcut is
+    invoked.
+    """
+
+    def __init__(self, *args):
+        """Creates a keyboard shortcut for focusing the given {@link Focusable}
+        using the shorthand notation defined in {@link ShortcutAction}.
+
+        @param focusable
+                   to focused when the shortcut is invoked
+        @param shorthandCaption
+                   caption with keycode and modifiers indicated
+        ---
+        Creates a keyboard shortcut for focusing the given {@link Focusable}.
+
+        @param focusable
+                   to focused when the shortcut is invoked
+        @param keyCode
+                   keycode that invokes the shortcut
+        @param modifiers
+                   modifiers required to invoke the shortcut
+        ---
+        Creates a keyboard shortcut for focusing the given {@link Focusable}.
+
+        @param focusable
+                   to focused when the shortcut is invoked
+        @param keyCode
+                   keycode that invokes the shortcut
         """
-        focusable = None
+        self.focusable = None
 
-        def __init__(self, *args):
-            """Creates a keyboard shortcut for focusing the given {@link Focusable}
-            using the shorthand notation defined in {@link ShortcutAction}.
-
-            @param focusable
-                       to focused when the shortcut is invoked
-            @param shorthandCaption
-                       caption with keycode and modifiers indicated
-            ---
-            Creates a keyboard shortcut for focusing the given {@link Focusable}.
-
-            @param focusable
-                       to focused when the shortcut is invoked
-            @param keyCode
-                       keycode that invokes the shortcut
-            @param modifiers
-                       modifiers required to invoke the shortcut
-            ---
-            Creates a keyboard shortcut for focusing the given {@link Focusable}.
-
-            @param focusable
-                       to focused when the shortcut is invoked
-            @param keyCode
-                       keycode that invokes the shortcut
-            """
-            _0 = args
-            _1 = len(args)
-            if _1 == 2:
-                if isinstance(_0[1], int):
-                    focusable, keyCode = _0
-                    self.__init__(focusable, keyCode, None)
-                else:
-                    focusable, shorthandCaption = _0
-                    super(FocusShortcut, self)(shorthandCaption)
-                    self.focusable = focusable
-            elif _1 == 3:
-                focusable, keyCode, modifiers = _0
-                super(FocusShortcut, self)(None, keyCode, modifiers)
-                self.focusable = focusable
+        nargs = len(args)
+        if nargs == 2:
+            if isinstance(args[1], int):
+                focusable, keyCode = args
+                self.__init__(focusable, keyCode, None)
             else:
-                raise ARGERROR(2, 3)
+                focusable, shorthandCaption = args
+                super(FocusShortcut, self)(shorthandCaption)
+                self.focusable = focusable
+        else:
+            focusable, keyCode = args[:2]
+            modifiers = args[2:]
+            super(FocusShortcut, self)(None, keyCode, modifiers)
+            self.focusable = focusable
 
-        def handleAction(self, sender, target):
-            self.focusable.focus()
+
+    def handleAction(self, sender, target):
+        self.focusable.focus()
+
+
+class ReadOnlyStatusChangeEvent(ComponentEvent, Property, ReadOnlyStatusChangeEvent):
+    """An <code>Event</code> object specifying the Property whose read-only
+    status has changed.
+
+    @author IT Mill Ltd.
+    @version
+    @VERSION@
+    @since 3.0
+    """
+
+    def __init__(self, source):
+        """New instance of text change event.
+
+        @param source
+                   the Source of the event.
+        """
+        super(ReadOnlyStatusChangeEvent, self)(source)
+
+
+    def getProperty(self):
+        """Property where the event occurred.
+
+        @return the Source of the event.
+        """
+        return self.getSource()

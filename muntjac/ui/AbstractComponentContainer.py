@@ -14,15 +14,17 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.ui.AbstractComponent import (AbstractComponent,)
-from com.vaadin.terminal.gwt.server.ComponentSizeValidator import (ComponentSizeValidator,)
-from com.vaadin.ui.ComponentContainer import (ComponentAttachEvent, ComponentAttachListener, ComponentContainer, ComponentDetachEvent, ComponentDetachListener,)
-# from java.lang.reflect.Method import (Method,)
-# from java.util.Collection import (Collection,)
-# from java.util.HashSet import (HashSet,)
-# from java.util.Iterator import (Iterator,)
-# from java.util.LinkedList import (LinkedList,)
+from muntjac.ui.AbstractComponent import AbstractComponent
+
+from muntjac.terminal.gwt.server.ComponentSizeValidator import \
+    ComponentSizeValidator
+
+from muntjac.ui.ComponentContainer import \
+    ComponentAttachEvent, ComponentAttachListener, ComponentContainer, \
+    ComponentDetachEvent, ComponentDetachListener
+from muntjac.ui.Panel import Panel
+from muntjac.ui.Form import Form
+from muntjac.ui.Table import Table
 
 
 class AbstractComponentContainer(AbstractComponent, ComponentContainer):
@@ -41,54 +43,34 @@ class AbstractComponentContainer(AbstractComponent, ComponentContainer):
         """Constructs a new component container."""
         super(AbstractComponentContainer, self)()
 
+
     def removeAllComponents(self):
         """Removes all components from the container. This should probably be
         re-implemented in extending classes for a more powerful implementation.
         """
+        l = list()
+        # Adds all components
+        for c in self.getComponentIterator():
+            l.add(c)
+
+        # Removes all components
+        for c in l:
+            self.removeComponent(c)
+
+
+    def moveComponentsFrom(self, source):
         # Moves all components from an another container into this container. Don't
         # add a JavaDoc comment here, we use the default documentation from
         # implemented interface.
+        components = list()
 
-        l = LinkedList()
-        # Adds all components
-        _0 = True
-        i = self.getComponentIterator()
-        while True:
-            if _0 is True:
-                _0 = False
-            if not i.hasNext():
-                break
-            l.add(i.next())
-        # Removes all component
-        _1 = True
-        i = l
-        while True:
-            if _1 is True:
-                _1 = False
-            if not i.hasNext():
-                break
-            self.removeComponent(i.next())
+        for c in self.getComponentIterator():
+            components.add(c)
 
-    def moveComponentsFrom(self, source):
-        components = LinkedList()
-        _0 = True
-        i = source.getComponentIterator()
-        while True:
-            if _0 is True:
-                _0 = False
-            if not i.hasNext():
-                break
-            components.add(i.next())
-        _1 = True
-        i = components
-        while True:
-            if _1 is True:
-                _1 = False
-            if not i.hasNext():
-                break
-            c = i.next()
+        for c in components:
             source.removeComponent(c)
             self.addComponent(c)
+
 
     def attach(self):
         """Notifies all contained components that the container is attached to a
@@ -97,14 +79,10 @@ class AbstractComponentContainer(AbstractComponent, ComponentContainer):
         @see com.vaadin.ui.Component#attach()
         """
         super(AbstractComponentContainer, self).attach()
-        _0 = True
-        i = self.getComponentIterator()
-        while True:
-            if _0 is True:
-                _0 = False
-            if not i.hasNext():
-                break
-            i.next().attach()
+
+        for c in self.getComponentIterator():
+            c.attach()
+
 
     def detach(self):
         """Notifies all contained components that the container is detached from a
@@ -114,54 +92,33 @@ class AbstractComponentContainer(AbstractComponent, ComponentContainer):
         """
         # Events
         super(AbstractComponentContainer, self).detach()
-        _0 = True
-        i = self.getComponentIterator()
-        while True:
-            if _0 is True:
-                _0 = False
-            if not i.hasNext():
-                break
-            i.next().detach()
 
-    _COMPONENT_ATTACHED_METHOD = None
-    _COMPONENT_DETACHED_METHOD = None
-    # This should never happen
-    try:
-        _COMPONENT_ATTACHED_METHOD = ComponentAttachListener.getDeclaredMethod('componentAttachedToContainer', [ComponentAttachEvent])
-        _COMPONENT_DETACHED_METHOD = ComponentDetachListener.getDeclaredMethod('componentDetachedFromContainer', [ComponentDetachEvent])
-    except java.lang.NoSuchMethodException, e:
-        raise java.lang.RuntimeException('Internal error finding methods in AbstractComponentContainer')
-    # documented in interface
+        for c in self.getComponentIterator():
+            c.detach()
 
-    def addListener(self, *args):
-        # documented in interface
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            if isinstance(_0[0], ComponentAttachListener):
-                listener, = _0
-                self.addListener(ComponentContainer.ComponentAttachEvent, listener, self._COMPONENT_ATTACHED_METHOD)
-            else:
-                listener, = _0
-                self.addListener(ComponentContainer.ComponentDetachEvent, listener, self._COMPONENT_DETACHED_METHOD)
+
+    # FIXME translate getDeclaredMethod
+    _COMPONENT_ATTACHED_METHOD = getattr(ComponentAttachListener, 'componentAttachedToContainer')
+    _COMPONENT_DETACHED_METHOD = getattr(ComponentDetachListener, 'componentDetachedFromContainer')
+
+
+    def addListener(self, listener):
+        if isinstance(listener, ComponentAttachListener):
+            self.addListener(ComponentAttachEvent, listener,
+                             self._COMPONENT_ATTACHED_METHOD)
         else:
-            raise ARGERROR(1, 1)
+            self.addListener(ComponentDetachEvent, listener,
+                             self._COMPONENT_DETACHED_METHOD)
 
-    # documented in interface
 
-    def removeListener(self, *args):
-        # documented in interface
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            if isinstance(_0[0], ComponentAttachListener):
-                listener, = _0
-                self.removeListener(ComponentContainer.ComponentAttachEvent, listener, self._COMPONENT_ATTACHED_METHOD)
-            else:
-                listener, = _0
-                self.removeListener(ComponentContainer.ComponentDetachEvent, listener, self._COMPONENT_DETACHED_METHOD)
+    def removeListener(self, listener):
+        if isinstance(listener, ComponentAttachListener):
+            self.removeListener(ComponentAttachEvent, listener,
+                                self._COMPONENT_ATTACHED_METHOD)
         else:
-            raise ARGERROR(1, 1)
+            self.removeListener(ComponentDetachEvent, listener,
+                                self._COMPONENT_DETACHED_METHOD)
+
 
     def fireComponentAttachEvent(self, component):
         """Fires the component attached event. This should be called by the
@@ -173,6 +130,7 @@ class AbstractComponentContainer(AbstractComponent, ComponentContainer):
         """
         self.fireEvent(ComponentAttachEvent(self, component))
 
+
     def fireComponentDetachEvent(self, component):
         """Fires the component detached event. This should be called by the
         removeComponent methods after the component have been removed from this
@@ -183,6 +141,7 @@ class AbstractComponentContainer(AbstractComponent, ComponentContainer):
         """
         self.fireEvent(ComponentDetachEvent(self, component))
 
+
     def addComponent(self, c):
         """This only implements the events and component parent calls. The extending
         classes must implement component list maintenance and call this method
@@ -192,23 +151,20 @@ class AbstractComponentContainer(AbstractComponent, ComponentContainer):
         """
         if isinstance(c, ComponentContainer):
             # Make sure we're not adding the component inside it's own content
-            _0 = True
             parent = self
-            while True:
-                if _0 is True:
-                    _0 = False
-                else:
-                    parent = parent.getParent()
-                if not (parent is not None):
-                    break
+            while parent is not None:
+                parent = parent.getParent()
                 if parent == c:
-                    raise self.IllegalArgumentException('Component cannot be added inside it\'s own content')
+                    raise ValueError, 'Component cannot be added inside it\'s own content'
+
         if c.getParent() is not None:
             # If the component already has a parent, try to remove it
             oldParent = c.getParent()
             oldParent.removeComponent(c)
+
         c.setParent(self)
         self.fireComponentAttachEvent(c)
+
 
     def removeComponent(self, c):
         """This only implements the events and component parent calls. The extending
@@ -221,84 +177,91 @@ class AbstractComponentContainer(AbstractComponent, ComponentContainer):
             c.setParent(None)
             self.fireComponentDetachEvent(c)
 
+
     def setEnabled(self, enabled):
         super(AbstractComponentContainer, self).setEnabled(enabled)
+
         if self.getParent() is not None and not self.getParent().isEnabled():
             # some ancestor still disabled, don't update children
             return
         else:
             self.requestRepaintAll()
 
+
     def setWidth(self, width, unit):
         # child tree repaints may be needed, due to our fall back support for
         # invalid relative sizes
-
         dirtyChildren = None
         childrenMayBecomeUndefined = False
         if self.getWidth() == self.SIZE_UNDEFINED and width != self.SIZE_UNDEFINED:
             # children currently in invalid state may need repaint
             dirtyChildren = self.getInvalidSizedChildren(False)
-        elif (
-            (width == self.SIZE_UNDEFINED and self.getWidth() != self.SIZE_UNDEFINED) or (unit == self.UNITS_PERCENTAGE and self.getWidthUnits() != self.UNITS_PERCENTAGE and not ComponentSizeValidator.parentCanDefineWidth(self))
-        ):
+        elif (width == self.SIZE_UNDEFINED and self.getWidth() != self.SIZE_UNDEFINED) \
+            or (unit == self.UNITS_PERCENTAGE \
+                and self.getWidthUnits() != self.UNITS_PERCENTAGE \
+                and not ComponentSizeValidator.parentCanDefineWidth(self)):
             # relative width children may get to invalid state if width becomes
             # invalid. Width may also become invalid if units become percentage
             # due to the fallback support
-
             childrenMayBecomeUndefined = True
             dirtyChildren = self.getInvalidSizedChildren(False)
-        super(AbstractComponentContainer, self).setWidth(width, unit)
-        self.repaintChangedChildTrees(dirtyChildren, childrenMayBecomeUndefined, False)
 
-    def repaintChangedChildTrees(self, invalidChildren, childrenMayBecomeUndefined, vertical):
+        super(AbstractComponentContainer, self).setWidth(width, unit)
+        self.repaintChangedChildTrees(dirtyChildren,
+                                      childrenMayBecomeUndefined, False)
+
+
+    def repaintChangedChildTrees(self, invalidChildren,
+                                 childrenMayBecomeUndefined, vertical):
         if childrenMayBecomeUndefined:
             previouslyInvalidComponents = invalidChildren
+
             invalidChildren = self.getInvalidSizedChildren(vertical)
+
             if previouslyInvalidComponents is not None and invalidChildren is not None:
-                _0 = True
-                iterator = invalidChildren
-                while True:
-                    if _0 is True:
-                        _0 = False
-                    if not iterator.hasNext():
-                        break
-                    component = iterator.next()
-                    if previouslyInvalidComponents.contains(component):
+                for component in invalidChildren:
+                    if component in previouslyInvalidComponents:
                         # still invalid don't repaint
-                        iterator.remove()
+                        previouslyInvalidComponents.remove(component)
+
         elif invalidChildren is not None:
             stillInvalidChildren = self.getInvalidSizedChildren(vertical)
+
             if stillInvalidChildren is not None:
                 for component in stillInvalidChildren:
                     # didn't become valid
                     invalidChildren.remove(component)
+
         if invalidChildren is not None:
             self.repaintChildTrees(invalidChildren)
 
+
     def getInvalidSizedChildren(self, vertical):
         components = None
+
         if isinstance(self, Panel):
             p = self
             content = p.getContent()
-            valid = ComponentSizeValidator.checkHeights(content) if vertical else ComponentSizeValidator.checkWidths(content)
+            if vertical:
+                valid = ComponentSizeValidator.checkHeights(content)
+            else:
+                valid = ComponentSizeValidator.checkWidths(content)
             if not valid:
-                components = set(1)
+                components = set()
                 components.add(content)
         else:
-            _0 = True
-            componentIterator = self.getComponentIterator()
-            while True:
-                if _0 is True:
-                    _0 = False
-                if not componentIterator.hasNext():
-                    break
-                component = componentIterator.next()
-                valid = ComponentSizeValidator.checkHeights(component) if vertical else ComponentSizeValidator.checkWidths(component)
+            for component in self.getComponentIterator():
+                if vertical:
+                    valid = ComponentSizeValidator.checkHeights(component)
+                else:
+                    valid = ComponentSizeValidator.checkWidths(component)
                 if not valid:
                     if components is None:
                         components = set()
                     components.add(component)
+
         return components
+
 
     def repaintChildTrees(self, dirtyChildren):
         for c in dirtyChildren:
@@ -308,37 +271,34 @@ class AbstractComponentContainer(AbstractComponent, ComponentContainer):
             else:
                 c.requestRepaint()
 
+
     def setHeight(self, height, unit):
         # child tree repaints may be needed, due to our fall back support for
         # invalid relative sizes
-
         dirtyChildren = None
         childrenMayBecomeUndefined = False
-        if self.getHeight() == self.SIZE_UNDEFINED and height != self.SIZE_UNDEFINED:
+        if self.getHeight() == self.SIZE_UNDEFINED \
+                and height != self.SIZE_UNDEFINED:
             # children currently in invalid state may need repaint
             dirtyChildren = self.getInvalidSizedChildren(True)
-        elif (
-            (height == self.SIZE_UNDEFINED and self.getHeight() != self.SIZE_UNDEFINED) or (unit == self.UNITS_PERCENTAGE and self.getHeightUnits() != self.UNITS_PERCENTAGE and not ComponentSizeValidator.parentCanDefineHeight(self))
-        ):
+        elif (height == self.SIZE_UNDEFINED and self.getHeight() != self.SIZE_UNDEFINED) \
+            or (unit == self.UNITS_PERCENTAGE \
+                and self.getHeightUnits() != self.UNITS_PERCENTAGE \
+                and not ComponentSizeValidator.parentCanDefineHeight(self)):
+
             # relative height children may get to invalid state if height
             # becomes invalid. Height may also become invalid if units become
             # percentage due to the fallback support.
-
             childrenMayBecomeUndefined = True
             dirtyChildren = self.getInvalidSizedChildren(True)
+
         super(AbstractComponentContainer, self).setHeight(height, unit)
         self.repaintChangedChildTrees(dirtyChildren, childrenMayBecomeUndefined, True)
 
+
     def requestRepaintAll(self):
         self.requestRepaint()
-        _0 = True
-        childIterator = self.getComponentIterator()
-        while True:
-            if _0 is True:
-                _0 = False
-            if not childIterator.hasNext():
-                break
-            c = childIterator.next()
+        for c in self.getComponentIterator():
             if isinstance(c, Form):
                 # Form has children in layout, but is not ComponentContainer
                 c.requestRepaint()
