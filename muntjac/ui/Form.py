@@ -14,28 +14,26 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR, POSTINC,)
-from com.vaadin.data.Item import (Editor, Item,)
-from com.vaadin.ui.AbstractField import (AbstractField,)
-from com.vaadin.data.Buffered import (Buffered,)
-from com.vaadin.ui.DefaultFieldFactory import (DefaultFieldFactory,)
-from com.vaadin.data.Validatable import (Validatable,)
-from com.vaadin.ui.FormLayout import (FormLayout,)
-from com.vaadin.ui.HorizontalLayout import (HorizontalLayout,)
-from com.vaadin.data.Validator import (Validator,)
-from com.vaadin.ui.Select import (Select,)
-from com.vaadin.event.Action import (Action, Notifier,)
-from com.vaadin.terminal.CompositeErrorMessage import (CompositeErrorMessage,)
-from com.vaadin.data.util.BeanItem import (BeanItem,)
-from com.vaadin.event.ActionManager import (ActionManager,)
-# from com.vaadin.event.Action.Handler import (Handler,)
-# from com.vaadin.event.Action.ShortcutNotifier import (ShortcutNotifier,)
-# from java.util.Collection import (Collection,)
-# from java.util.Collections import (Collections,)
-# from java.util.HashMap import (HashMap,)
-# from java.util.Iterator import (Iterator,)
-# from java.util.LinkedList import (LinkedList,)
-# from java.util.Map import (Map,)
+from muntjac.data.Item import Editor, Item
+from muntjac.ui.AbstractField import AbstractField
+from muntjac.data.Buffered import Buffered, SourceException
+from muntjac.ui.DefaultFieldFactory import DefaultFieldFactory
+from muntjac.data.Validatable import Validatable
+from muntjac.ui.FormLayout import FormLayout
+from muntjac.ui.HorizontalLayout import HorizontalLayout
+from muntjac.data.Validator import InvalidValueException
+from muntjac.ui.Select import Select
+from muntjac.event.Action import Action, Notifier
+from muntjac.terminal.CompositeErrorMessage import CompositeErrorMessage
+from muntjac.data.util.BeanItem import BeanItem
+from muntjac.event.ActionManager import ActionManager
+from muntjac.data.Property import ValueChangeListener
+from muntjac.ui.AbstractComponent import AbstractComponent
+from muntjac.ui.Field import Field
+from muntjac.ui.CustomLayout import CustomLayout
+from muntjac.ui.ComponentContainer import ComponentContainer
+from muntjac.ui.GridLayout import GridLayout
+from muntjac.ui.FieldFactory import FieldFactory
 
 
 class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Notifier):
@@ -69,50 +67,8 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
     @VERSION@
     @since 3.0
     """
-    _propertyValue = None
-    # Layout of the form.
-    _layout = None
-    # Item connected to this form as datasource.
-    _itemDatasource = None
-    # Ordered list of property ids in this editor.
-    _propertyIds = LinkedList()
-    # Current buffered source exception.
-    _currentBufferedSourceException = None
-    # Is the form in write trough mode.
-    _writeThrough = True
-    # Is the form in read trough mode.
-    _readThrough = True
-    # Mapping from propertyName to corresponding field.
-    _fields = dict()
-    # Form may act as an Item, its own properties are stored here.
-    _ownProperties = dict()
-    # Field factory for this form.
-    _fieldFactory = None
-    # Visible item properties.
-    _visibleItemProperties = None
-    # Form needs to repaint itself if child fields value changes due possible
-    # change in form validity.
-    # 
-    # TODO introduce ValidityChangeEvent (#6239) and start using it instead.
-    # See e.g. DateField#notifyFormOfValidityChange().
 
-    class fieldValueChangeListener(ValueChangeListener):
-
-        def valueChange(self, event):
-            self.requestRepaint()
-
-    _formFooter = None
-    # If this is true, commit implicitly calls setValidationVisible(true).
-    _validationVisibleOnCommit = True
-    # special handling for gridlayout; remember initial cursor pos
-    _gridlayoutCursorX = -1
-    _gridlayoutCursorY = -1
-    # Keeps track of the Actions added to this component, and manages the
-    # painting and handling as well. Note that the extended AbstractField is a
-    # {@link ShortcutNotifier} and has a actionManager that delegates actions
-    # to the containing window. This one does not delegate.
-
-    def __init__(self, *args):
+    def __init__(self, formLayout=None, fieldFactory=None):
         """Constructs a new form with default layout.
 
         <p>
@@ -132,40 +88,92 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
         @param fieldFactory
                    the FieldFactory of the form.
         """
-        self._ownActionManager = ActionManager(self)
-        _0 = args
-        _1 = len(args)
-        if _1 == 0:
-            self.__init__(None)
-            self.setValidationVisible(False)
-        elif _1 == 1:
-            formLayout, = _0
-            self.__init__(formLayout, DefaultFieldFactory.get())
-        elif _1 == 2:
-            formLayout, fieldFactory = _0
-            super(Form, self)()
-            self.setLayout(formLayout)
-            self.setFormFieldFactory(fieldFactory)
-            self.setValidationVisible(False)
-            self.setWidth(100, self.UNITS_PERCENTAGE)
-        else:
-            raise ARGERROR(0, 2)
+        self._propertyValue = None
 
-    # Documented in interface
+        # Layout of the form.
+        self._layout = None
+
+        # Item connected to this form as datasource.
+        self._itemDatasource = None
+
+        # Ordered list of property ids in this editor.
+        self._propertyIds = list()
+
+        # Current buffered source exception.
+        self._currentBufferedSourceException = None
+
+        # Is the form in write trough mode.
+        self._writeThrough = True
+
+        # Is the form in read trough mode.
+        self._readThrough = True
+
+        # Mapping from propertyName to corresponding field.
+        self._fields = dict()
+
+        # Form may act as an Item, its own properties are stored here.
+        self._ownProperties = dict()
+
+        # Field factory for this form.
+        self._fieldFactory = None
+
+        # Visible item properties.
+        self._visibleItemProperties = None
+
+        _formFooter = None
+
+        # If this is true, commit implicitly calls setValidationVisible(true).
+        self._validationVisibleOnCommit = True
+
+        # special handling for gridlayout; remember initial cursor pos
+        self._gridlayoutCursorX = -1
+        self._gridlayoutCursorY = -1
+
+        # Keeps track of the Actions added to this component, and manages the
+        # painting and handling as well. Note that the extended AbstractField is a
+        # {@link ShortcutNotifier} and has a actionManager that delegates actions
+        # to the containing window. This one does not delegate.
+        self._ownActionManager = ActionManager(self)
+
+        if fieldFactory is None:
+            fieldFactory = DefaultFieldFactory.get()
+
+        super(Form, self)()
+        self.setLayout(formLayout)
+        self.setFormFieldFactory(fieldFactory)
+        self.setValidationVisible(False)
+        self.setWidth(100, self.UNITS_PERCENTAGE)
+
+
+    # Form needs to repaint itself if child fields value changes due possible
+    # change in form validity.
+    #
+    # TODO introduce ValidityChangeEvent (#6239) and start using it instead.
+    # See e.g. DateField#notifyFormOfValidityChange().
+    class fieldValueChangeListener(ValueChangeListener):
+
+        def valueChange(self, event):
+            self.requestRepaint()
+
 
     def paintContent(self, target):
         super(Form, self).paintContent(target)
+
         self._layout.paint(target)
         if self._formFooter is not None:
             self._formFooter.paint(target)
+
         if self._ownActionManager is not None:
             self._ownActionManager.paintActions(None, target)
 
+
     def changeVariables(self, source, variables):
         super(Form, self).changeVariables(source, variables)
+
         # Actions
         if self._ownActionManager is not None:
             self._ownActionManager.handleActions(variables, self)
+
 
     def getErrorMessage(self):
         """The error message of a Form is the error of the first field with a
@@ -181,34 +189,32 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
         # getErrorMessage() recursively instead of validate().
         validationError = None
         if self.isValidationVisible():
-            _0 = True
-            i = self._propertyIds
-            while True:
-                if _0 is True:
-                    _0 = False
-                if not i.hasNext():
-                    break
-                f = self._fields[i.next()]
+            for i in self._propertyIds:
+                f = self._fields.get(i)
                 if isinstance(f, AbstractComponent):
                     field = f
+
                     validationError = field.getErrorMessage()
                     if validationError is not None:
                         # Show caption as error for fields with empty errors
                         if '' == str(validationError):
-                            validationError = Validator.InvalidValueException(field.getCaption())
+                            validationError = InvalidValueException(field.getCaption())
                         break
                     elif isinstance(f, Field) and not f.isValid():
                         # Something is wrong with the field, but no proper
                         # error is given. Generate one.
-                        validationError = Validator.InvalidValueException(field.getCaption())
+                        validationError = InvalidValueException(field.getCaption())
                         break
+
         # Return if there are no errors at all
-        if (
-            self.getComponentError() is None and validationError is None and self._currentBufferedSourceException is None
-        ):
+        if self.getComponentError() is None and validationError is None \
+                and self._currentBufferedSourceException is None:
             return None
+
         # Throw combination of the error types
-        return CompositeErrorMessage([self.getComponentError(), validationError, self._currentBufferedSourceException])
+        return CompositeErrorMessage([self.getComponentError(), validationError,
+                                      self._currentBufferedSourceException])
+
 
     def setValidationVisibleOnCommit(self, makeVisible):
         """Controls the making validation visible implicitly on commit.
@@ -227,6 +233,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
         """
         self._validationVisibleOnCommit = makeVisible
 
+
     def isValidationVisibleOnCommit(self):
         """Is validation made automatically visible on commit?
 
@@ -234,182 +241,148 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
 
         @return true if validation is made automatically visible on commit.
         """
-        # Commit changes to the data source Don't add a JavaDoc comment here, we
-        # use the default one from the interface.
-
         return self._validationVisibleOnCommit
 
-    def commit(self):
-        # Discards local changes and refresh values from the data source Don't add
-        # a JavaDoc comment here, we use the default one from the interface.
 
+    def commit(self):
+        # Commit changes to the data source.
         problems = None
+
         # Only commit on valid state if so requested
         if not self.isInvalidCommitted() and not self.isValid():
             # The values are not ok and we are told not to commit invalid
             # values
-
             if self._validationVisibleOnCommit:
                 self.setValidationVisible(True)
+
             # Find the first invalid value and throw the exception
             self.validate()
+
         # Try to commit all
-        _0 = True
-        i = self._propertyIds
-        while True:
-            if _0 is True:
-                _0 = False
-            if not i.hasNext():
-                break
+        for i in self._propertyIds:
             try:
-                f = self._fields[i.next()]
+                f = self._fields.get(i)
                 # Commit only non-readonly fields.
                 if not f.isReadOnly():
                     f.commit()
-            except Buffered.SourceException, e:
+            except SourceException, e:
                 if problems is None:
-                    problems = LinkedList()
+                    problems = list()
                 problems.add(e)
+
         # No problems occurred
         if problems is None:
             if self._currentBufferedSourceException is not None:
                 self._currentBufferedSourceException = None
                 self.requestRepaint()
             return
+
         # Commit problems
         causes = [None] * len(problems)
         index = 0
-        _1 = True
-        i = problems
-        while True:
-            if _1 is True:
-                _1 = False
-            if not i.hasNext():
-                break
-            causes[POSTINC(globals(), locals(), 'index')] = i.next()
-        e = Buffered.SourceException(self, causes)
+        for i in problems:
+            causes[index] = i
+            index += 1
+
+        e = SourceException(self, causes)
         self._currentBufferedSourceException = e
         self.requestRepaint()
         raise e
 
-    def discard(self):
-        # Is the object modified but not committed? Don't add a JavaDoc comment
-        # here, we use the default one from the interface.
 
+    def discard(self):
+        # Discards local changes and refresh values from the data source
         problems = None
+
         # Try to discard all changes
-        _0 = True
-        i = self._propertyIds
-        while True:
-            if _0 is True:
-                _0 = False
-            if not i.hasNext():
-                break
+        for i in self._propertyIds:
             try:
-                self._fields[i.next()].discard()
-            except Buffered.SourceException, e:
+                self._fields.get(i).discard()
+            except SourceException, e:
                 if problems is None:
-                    problems = LinkedList()
+                    problems = list()
                 problems.add(e)
+
         # No problems occurred
         if problems is None:
             if self._currentBufferedSourceException is not None:
                 self._currentBufferedSourceException = None
                 self.requestRepaint()
             return
+
         # Discards problems occurred
         causes = [None] * len(problems)
         index = 0
-        _1 = True
-        i = problems
-        while True:
-            if _1 is True:
-                _1 = False
-            if not i.hasNext():
-                break
-            causes[POSTINC(globals(), locals(), 'index')] = i.next()
-        e = Buffered.SourceException(self, causes)
+        for i in problems:
+            causes[index] = i
+            index += 1
+
+        e = SourceException(self, causes)
         self._currentBufferedSourceException = e
         self.requestRepaint()
         raise e
 
-    def isModified(self):
-        # Is the editor in a read-through mode? Don't add a JavaDoc comment here,
-        # we use the default one from the interface.
 
-        _0 = True
-        i = self._propertyIds
-        while True:
-            if _0 is True:
-                _0 = False
-            if not i.hasNext():
-                break
-            f = self._fields[i.next()]
+    def isModified(self):
+        # Is the object modified but not committed?
+
+        for i in self._propertyIds:
+            f = self._fields.get(i)
             if f is not None and f.isModified():
                 return True
+
         return False
 
-    def isReadThrough(self):
-        # Is the editor in a write-through mode? Don't add a JavaDoc comment here,
-        # we use the default one from the interface.
 
+    def isReadThrough(self):
+        # Is the editor in a read-through mode?
         return self._readThrough
 
-    def isWriteThrough(self):
-        # Sets the editor's read-through mode to the specified status. Don't add a
-        # JavaDoc comment here, we use the default one from the interface.
 
+    def isWriteThrough(self):
+        # Is the editor in a write-through mode?
         return self._writeThrough
 
-    def setReadThrough(self, readThrough):
-        # Sets the editor's read-through mode to the specified status. Don't add a
-        # JavaDoc comment here, we use the default one from the interface.
 
+    def setReadThrough(self, readThrough):
+        # Sets the editor's read-through mode to the specified status.
         if readThrough != self._readThrough:
             self._readThrough = readThrough
-            _0 = True
-            i = self._propertyIds
-            while True:
-                if _0 is True:
-                    _0 = False
-                if not i.hasNext():
-                    break
-                self._fields[i.next()].setReadThrough(readThrough)
+            for i in self._propertyIds:
+                self._fields.get(i).setReadThrough(readThrough)
+
 
     def setWriteThrough(self, writeThrough):
+        # Sets the editor's read-through mode to the specified status.
         if writeThrough != self._writeThrough:
             self._writeThrough = writeThrough
-            _0 = True
-            i = self._propertyIds
-            while True:
-                if _0 is True:
-                    _0 = False
-                if not i.hasNext():
-                    break
-                self._fields[i.next()].setWriteThrough(writeThrough)
+            for i in self._propertyIds:
+                self._fields.get(i).setWriteThrough(writeThrough)
 
-    def addItemProperty(self, id, property):
+
+    def addItemProperty(self, idd, prop):
         """Adds a new property to form and create corresponding field.
 
         @see com.vaadin.data.Item#addItemProperty(Object, Property)
         """
         # Checks inputs
-        if (id is None) or (property is None):
-            raise self.NullPointerException('Id and property must be non-null')
+        if (idd is None) or (prop is None):
+            raise ValueError, 'Id and property must be non-null'
         # Checks that the property id is not reserved
-        if self._propertyIds.contains(id):
+        if self._propertyIds.contains(idd):
             return False
-        self._propertyIds.add(id)
-        self._ownProperties.put(id, property)
+        self._propertyIds.add(idd)
+        self._ownProperties.put(idd, prop)
         # Gets suitable field
-        field = self._fieldFactory.createField(self, id, self)
+        field = self._fieldFactory.createField(self, idd, self)
         if field is None:
             return False
         # Configures the field
-        field.setPropertyDataSource(property)
+        field.setPropertyDataSource(prop)
         # Register and attach the created field
-        self.addField(id, field)
+        self.addField(idd, field)
         return True
+
 
     def addField(self, propertyId, field):
         """Registers the field with the form and adds the field to the form layout.
@@ -432,6 +405,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
         self.attachField(propertyId, field)
         self.requestRepaint()
 
+
     def registerField(self, propertyId, field):
         """Register the field with the form. All registered fields are validated
         when the form is validated and also committed when the form is committed.
@@ -448,11 +422,13 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
         """
         if (propertyId is None) or (field is None):
             return
-        self._fields.put(propertyId, field)
+
+        self._fields[propertyId] = field
         field.addListener(self.fieldValueChangeListener)
-        if not self._propertyIds.contains(propertyId):
+        if propertyId not in self._propertyIds:
             # adding a field directly
             self._propertyIds.addLast(propertyId)
+
         # Update the read and write through status and immediate to match the
         # form.
         # Should this also include invalidCommitted (#3993)?
@@ -460,6 +436,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
         field.setWriteThrough(self._writeThrough)
         if self.isImmediate() and isinstance(field, AbstractComponent):
             field.setImmediate(True)
+
 
     def attachField(self, propertyId, field):
         """Adds the field to the form layout.
@@ -480,12 +457,14 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
         """
         if (propertyId is None) or (field is None):
             return
+
         if isinstance(self._layout, CustomLayout):
             self._layout.addComponent(field, str(propertyId))
         else:
             self._layout.addComponent(field)
 
-    def getItemProperty(self, id):
+
+    def getItemProperty(self, idd):
         """The property identified by the property id.
 
         <p>
@@ -496,15 +475,18 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
 
         @see com.vaadin.data.Item#getItemProperty(Object)
         """
-        field = self._fields[id]
+        field = self._fields.get(idd)
         if field is None:
             # field does not exist or it is not (yet) created for this property
-            return self._ownProperties[id]
-        property = field.getPropertyDataSource()
-        if property is not None:
-            return property
+            return self._ownProperties.get(idd)
+
+        prop = field.getPropertyDataSource()
+
+        if prop is not None:
+            return prop
         else:
             return field
+
 
     def getField(self, propertyId):
         """Gets the field identified by the propertyid.
@@ -512,26 +494,28 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
         @param propertyId
                    the id of the property.
         """
-        # Documented in interface
-        return self._fields[propertyId]
+        return self._fields.get(propertyId)
+
 
     def getItemPropertyIds(self):
-        return Collections.unmodifiableCollection(self._propertyIds)
+        return list(self._propertyIds)
 
-    def removeItemProperty(self, id):
+
+    def removeItemProperty(self, idd):
         """Removes the property and corresponding field from the form.
 
         @see com.vaadin.data.Item#removeItemProperty(Object)
         """
-        self._ownProperties.remove(id)
-        field = self._fields[id]
+        self._ownProperties.remove(idd)
+        field = self._fields.get(idd)
         if field is not None:
-            self._propertyIds.remove(id)
-            self._fields.remove(id)
+            del self._propertyIds[idd]
+            del self._fields[idd]
             self.detachField(field)
             field.removeListener(self.fieldValueChangeListener)
             return True
         return False
+
 
     def detachField(self, field):
         """Called when a form field is detached from a Form. Typically when a new
@@ -548,32 +532,28 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
         if isinstance(p, ComponentContainer):
             p.removeComponent(field)
 
+
     def removeAllProperties(self):
         """Removes all properties and fields from the form.
 
         @return the Success of the operation. Removal of all fields succeeded if
                 (and only if) the return value is <code>true</code>.
         """
-        # Documented in the interface
         properties = list(self._propertyIds)
         success = True
-        _0 = True
-        i = 0
-        while True:
-            if _0 is True:
-                _0 = False
-            else:
-                i += 1
-            if not (i < len(properties)):
-                break
+
+        for i in range(len(properties)):
             if not self.removeItemProperty(properties[i]):
                 success = False
+
         return success
+
 
     def getItemDataSource(self):
         return self._itemDatasource
 
-    def setItemDataSource(self, *args):
+
+    def setItemDataSource(self, newDataSource, propertyIds=None):
         """Sets the item datasource for the form.
 
         <p>
@@ -594,13 +574,9 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
 
         @see com.vaadin.data.Item.Viewer#setItemDataSource(Item)
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            newDataSource, = _0
+        if propertyIds is None:
             self.setItemDataSource(newDataSource, newDataSource.getItemPropertyIds() if newDataSource is not None else None)
-        elif _1 == 2:
-            newDataSource, propertyIds = _0
+        else:
             if isinstance(self._layout, GridLayout):
                 gl = self._layout
                 if self._gridlayoutCursorX == -1:
@@ -611,30 +587,26 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
                     # restore initial cursor
                     gl.setCursorX(self._gridlayoutCursorX)
                     gl.setCursorY(self._gridlayoutCursorY)
+
             # Removes all fields first from the form
             self.removeAllProperties()
+
             # Sets the datasource
             self._itemDatasource = newDataSource
+
             # If the new datasource is null, just set null datasource
             if self._itemDatasource is None:
                 return
+
             # Adds all the properties to this form
-            _0 = True
-            i = propertyIds
-            while True:
-                if _0 is True:
-                    _0 = False
-                if not i.hasNext():
-                    break
-                id = i.next()
-                property = self._itemDatasource.getItemProperty(id)
-                if id is not None and property is not None:
-                    f = self._fieldFactory.createField(self._itemDatasource, id, self)
+            for idd in propertyIds:
+                prop = self._itemDatasource.getItemProperty(idd)
+                if idd is not None and prop is not None:
+                    f = self._fieldFactory.createField(self._itemDatasource, idd, self)
                     if f is not None:
-                        f.setPropertyDataSource(property)
-                        self.addField(id, f)
-        else:
-            raise ARGERROR(1, 2)
+                        f.setPropertyDataSource(prop)
+                        self.addField(idd, f)
+
 
     def getLayout(self):
         """Gets the layout of the form.
@@ -647,6 +619,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
         @return the Layout of the form.
         """
         return self._layout
+
 
     def setLayout(self, newLayout):
         """Sets the layout of the form.
@@ -662,31 +635,28 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
         # Use orderedlayout by default
         if newLayout is None:
             newLayout = FormLayout()
+
         # reset cursor memory
         self._gridlayoutCursorX = -1
         self._gridlayoutCursorY = -1
+
         # Move fields from previous layout
         if self._layout is not None:
             properties = list(self._propertyIds)
-            _0 = True
-            i = 0
-            while True:
-                if _0 is True:
-                    _0 = False
-                else:
-                    i += 1
-                if not (i < len(properties)):
-                    break
-                f = properties[i]
+            for i in range(len(properties)):
+                f = self.getField(properties[i])
                 self.detachField(f)
                 if isinstance(newLayout, CustomLayout):
                     newLayout.addComponent(f, str(properties[i]))
                 else:
                     newLayout.addComponent(f)
+
             self._layout.setParent(None)
+
         # Replace the previous layout
         newLayout.setParent(self)
         self._layout = newLayout
+
 
     def replaceWithSelect(self, propertyId, values, descriptions):
         """Sets the form field to be selectable from static list of changes.
@@ -704,96 +674,88 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
         @return the select property generated
         """
         # Checks the parameters
-        if ((propertyId is None) or (values is None)) or (descriptions is None):
-            raise self.NullPointerException('All parameters must be non-null')
+        if (propertyId is None) or (values is None) or (descriptions is None):
+            raise ValueError, 'All parameters must be non-null'
+
         if len(values) != len(descriptions):
-            raise self.IllegalArgumentException('Value and description list are of different size')
+            raise ValueError, 'Value and description list are of different size'
+
         # Gets the old field
-        oldField = self._fields[propertyId]
+        oldField = self._fields.get(propertyId)
         if oldField is None:
-            raise self.IllegalArgumentException('Field with given propertyid \'' + str(propertyId) + '\' can not be found.')
+            raise ValueError, 'Field with given propertyid \'' \
+                    + str(propertyId) + '\' can not be found.'
+
         value = oldField.getValue() if oldField.getPropertyDataSource() is None else oldField.getPropertyDataSource().getValue()
+
         # Checks that the value exists and check if the select should
         # be forced in multiselect mode
         found = False
         isMultiselect = False
-        _0 = True
         i = 0
-        while True:
-            if _0 is True:
-                _0 = False
-            else:
-                i += 1
-            if not (i < len(values) and not found):
-                break
-            if (values[i] == value) or (value is not None and value == values[i]):
+        while i < len(values) and not found:
+            if (values[i] == value) \
+                    or (value is not None and value == values[i]):
                 found = True
+                i += 1
+
         if value is not None and not found:
-            if isinstance(value, Collection):
-                _1 = True
-                it = value
-                while True:
-                    if _1 is True:
-                        _1 = False
-                    if not it.hasNext():
-                        break
-                    val = it.next()
+            if isinstance(value, list):
+                for val in value:
                     found = False
-                    _2 = True
                     i = 0
-                    while True:
-                        if _2 is True:
-                            _2 = False
-                        else:
-                            i += 1
-                        if not (i < len(values) and not found):
-                            break
+                    while i < len(values) and not found:
                         if (values[i] == val) or (val is not None and val == values[i]):
                             found = True
+                        i += 1
                     if not found:
-                        raise self.IllegalArgumentException('Currently selected value \'' + val + '\' of property \'' + str(propertyId) + '\' was not found')
+                        raise ValueError, 'Currently selected value \'' \
+                            + val + '\' of property \'' \
+                            + str(propertyId) + '\' was not found'
+
                 isMultiselect = True
             else:
-                raise self.IllegalArgumentException('Current value \'' + value + '\' of property \'' + str(propertyId) + '\' was not found')
+                raise ValueError, 'Current value \'' \
+                        + value + '\' of property \'' \
+                        + str(propertyId) + '\' was not found'
+
         # Creates the new field matching to old field parameters
         newField = Select()
         if isMultiselect:
             newField.setMultiSelect(True)
+
         newField.setCaption(oldField.getCaption())
         newField.setReadOnly(oldField.isReadOnly())
         newField.setReadThrough(oldField.isReadThrough())
         newField.setWriteThrough(oldField.isWriteThrough())
+
         # Creates the options list
         newField.addContainerProperty('desc', str, '')
         newField.setItemCaptionPropertyId('desc')
-        _3 = True
-        i = 0
-        while True:
-            if _3 is True:
-                _3 = False
+        for idd in values:
+            if idd is None:
+                idd = newField.addItem()
+                item = newField.getItem(idd)
+                newField.setNullSelectionItemId(idd)
             else:
-                i += 1
-            if not (i < len(values)):
-                break
-            id = values[i]
-            if id is None:
-                id = newField.addItem()
-                item = newField.getItem(id)
-                newField.setNullSelectionItemId(id)
-            else:
-                item = newField.addItem(id)
+                item = newField.addItem(idd)
+
             if item is not None:
                 item.getItemProperty('desc').setValue(str(descriptions[i]))
+
         # Sets the property data source
-        property = oldField.getPropertyDataSource()
+        prop = oldField.getPropertyDataSource()
         oldField.setPropertyDataSource(None)
-        newField.setPropertyDataSource(property)
+        newField.setPropertyDataSource(prop)
+
         # Replaces the old field with new one
         self._layout.replaceComponent(oldField, newField)
-        self._fields.put(propertyId, newField)
+        self._fields[propertyId] = newField
         newField.addListener(self.fieldValueChangeListener)
         oldField.removeListener(self.fieldValueChangeListener)
+
         return newField
+
 
     def attach(self):
         """Notifies the component that it is connected to an application
@@ -805,6 +767,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
         if self._formFooter is not None:
             self._formFooter.attach()
 
+
     def detach(self):
         """Notifies the component that it is detached from the application.
 
@@ -815,21 +778,19 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
         if self._formFooter is not None:
             self._formFooter.detach()
 
+
     def isValid(self):
         """Tests the current value of the object against all registered validators
 
         @see com.vaadin.data.Validatable#isValid()
         """
         valid = True
-        _0 = True
-        i = self._propertyIds
-        while True:
-            if _0 is True:
-                _0 = False
-            if not i.hasNext():
-                break
-            valid &= self._fields[i.next()].isValid()
+
+        for i in self._propertyIds:
+            valid &= self._fields[i].isValid()
+
         return valid and super(Form, self).isValid()
+
 
     def validate(self):
         """Checks the validity of the validatable.
@@ -837,14 +798,9 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
         @see com.vaadin.data.Validatable#validate()
         """
         super(Form, self).validate()
-        _0 = True
-        i = self._propertyIds
-        while True:
-            if _0 is True:
-                _0 = False
-            if not i.hasNext():
-                break
-            self._fields[i.next()].validate()
+        for i in self._propertyIds:
+            self._fields[i].validate()
+
 
     def isInvalidAllowed(self):
         """Checks the validabtable object accept invalid values.
@@ -853,12 +809,14 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
         """
         return True
 
+
     def setInvalidAllowed(self, invalidValueAllowed):
         """Should the validabtable object accept invalid values.
 
         @see com.vaadin.data.Validatable#setInvalidAllowed(boolean)
         """
-        raise self.UnsupportedOperationException()
+        raise NotImplementedError
+
 
     def setReadOnly(self, readOnly):
         """Sets the component's to read-only mode to the specified state.
@@ -866,14 +824,9 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
         @see com.vaadin.ui.Component#setReadOnly(boolean)
         """
         super(Form, self).setReadOnly(readOnly)
-        _0 = True
-        i = self._propertyIds
-        while True:
-            if _0 is True:
-                _0 = False
-            if not i.hasNext():
-                break
-            self._fields[i.next()].setReadOnly(readOnly)
+        for i in self._propertyIds:
+            self._fields[i].setReadOnly(readOnly)
+
 
     def setFieldFactory(self, fieldFactory):
         """Sets the field factory of Form.
@@ -887,7 +840,9 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
         @see FormFieldFactory
         @deprecated use {@link #setFormFieldFactory(FormFieldFactory)} instead
         """
+        raise DeprecationWarning, 'use setFormFieldFactory() instead'
         self._fieldFactory = fieldFactory
+
 
     def setFormFieldFactory(self, fieldFactory):
         """Sets the field factory used by this Form to genarate Fields for
@@ -903,12 +858,14 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
         """
         self._fieldFactory = fieldFactory
 
+
     def getFormFieldFactory(self):
         """Get the field factory of the form.
 
         @return the FormFieldFactory Factory used to create the fields.
         """
         return self._fieldFactory
+
 
     def getFieldFactory(self):
         """Get the field factory of the form.
@@ -922,6 +879,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
             return self._fieldFactory
         return None
 
+
     def getType(self):
         """Gets the field type.
 
@@ -929,7 +887,8 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
         """
         if self.getPropertyDataSource() is not None:
             return self.getPropertyDataSource().getType()
-        return self.Object
+        return object
+
 
     def setInternalValue(self, newValue):
         """Sets the internal value.
@@ -940,12 +899,15 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
         """
         # Stores the old value
         oldValue = self._propertyValue
+
         # Sets the current Value
         super(Form, self).setInternalValue(newValue)
         self._propertyValue = newValue
+
         # Ignores form updating if data object has not changed.
         if oldValue != newValue:
             self.setFormDataSource(newValue, self.getVisibleItemProperties())
+
 
     def getFirstFocusableField(self):
         """Gets the first focusable field in form. If there are enabled,
@@ -955,17 +917,20 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
         @return the Field.
         """
         if self.getItemPropertyIds() is not None:
-            for id in self.getItemPropertyIds():
-                if id is not None:
-                    field = id
+            for idd in self.getItemPropertyIds():
+                if idd is not None:
+                    field = self.getField(idd)
                     if field.isEnabled() and not field.isReadOnly():
                         return field
+
             # fallback: first field if none of the fields is enabled and
             # writable
-            id = self.getItemPropertyIds().next()
-            if id is not None:
-                return id
+            idd = iter( self.getItemPropertyIds() ).next()  # FIXME translate iterator
+            if idd is not None:
+                return self.getField(idd)
+
         return None
+
 
     def setFormDataSource(self, data, properties):
         """Updates the internal form datasource.
@@ -981,6 +946,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
             item = data
         elif data is not None:
             item = BeanItem(data)
+
         # Sets the datasource to form
         if item is not None and properties is not None:
             # Shows only given properties
@@ -989,6 +955,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
             # Shows all properties
             self.setItemDataSource(item)
 
+
     def getVisibleItemProperties(self):
         """Returns the visibleProperties.
 
@@ -996,43 +963,19 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
         """
         return self._visibleItemProperties
 
-    def setVisibleItemProperties(self, *args):
+
+    def setVisibleItemProperties(self, visibleProperties):
         """Sets the visibleProperties.
 
         @param visibleProperties
                    the visibleProperties to set.
-        ---
-        Sets the visibleProperties.
-
-        @param visibleProperties
-                   the visibleProperties to set.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            if isinstance(_0[0], Collection):
-                visibleProperties, = _0
-                self._visibleItemProperties = visibleProperties
-                value = self.getValue()
-                if value is None:
-                    value = self._itemDatasource
-                self.setFormDataSource(value, self.getVisibleItemProperties())
-            else:
-                visibleProperties, = _0
-                v = LinkedList()
-                _0 = True
-                i = 0
-                while True:
-                    if _0 is True:
-                        _0 = False
-                    else:
-                        i += 1
-                    if not (i < visibleProperties.length):
-                        break
-                    v.add(visibleProperties[i])
-                self.setVisibleItemProperties(v)
-        else:
-            raise ARGERROR(1, 1)
+        self._visibleItemProperties = visibleProperties
+        value = self.getValue()
+        if value is None:
+            value = self._itemDatasource
+        self.setFormDataSource(value, self.getVisibleItemProperties())
+
 
     def focus(self):
         """Focuses the first field in the form.
@@ -1043,58 +986,43 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
         if f is not None:
             f.focus()
 
+
     def setTabIndex(self, tabIndex):
         """Sets the Tabulator index of this Focusable component.
 
         @see com.vaadin.ui.Component.Focusable#setTabIndex(int)
         """
         super(Form, self).setTabIndex(tabIndex)
-        _0 = True
-        i = self.getItemPropertyIds()
-        while True:
-            if _0 is True:
-                _0 = False
-            if not i.hasNext():
-                break
-            i.next().setTabIndex(tabIndex)
+        for i in self.getItemPropertyIds():
+            i.setTabIndex(tabIndex)
+
 
     def setImmediate(self, immediate):
         """Setting the form to be immediate also sets all the fields of the form to
         the same state.
         """
         super(Form, self).setImmediate(immediate)
-        _0 = True
-        i = self._fields.values()
-        while True:
-            if _0 is True:
-                _0 = False
-            if not i.hasNext():
-                break
-            f = i.next()
+        for f in self._fields.values():
             if isinstance(f, AbstractComponent):
                 f.setImmediate(immediate)
 
+
     def isEmpty(self):
         """Form is empty if all of its fields are empty."""
-        _0 = True
-        i = self._fields.values()
-        while True:
-            if _0 is True:
-                _0 = False
-            if not i.hasNext():
-                break
-            f = i.next()
+        for f in self._fields.values():
             if isinstance(f, AbstractField):
                 if not f.isEmpty():
                     return False
         return True
+
 
     def addValidator(self, validator):
         """Adding validators directly to form is not supported.
 
         Add the validators to form fields instead.
         """
-        raise self.UnsupportedOperationException()
+        raise NotImplementedError
+
 
     def getFooter(self):
         """Returns a layout that is rendered below normal form contents. This area
@@ -1107,6 +1035,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
             self._formFooter.setParent(self)
         return self._formFooter
 
+
     def setFooter(self, newFormFooter):
         """Sets the layout that is rendered below normal form contens.
 
@@ -1118,14 +1047,15 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
         self._formFooter = newFormFooter
         self._formFooter.setParent(self)
 
+
     def setEnabled(self, enabled):
-        # ACTIONS
         super(Form, self).setEnabled(enabled)
         if self.getParent() is not None and not self.getParent().isEnabled():
             # some ancestor still disabled, don't update children
             return
         else:
             self.getLayout().requestRepaintAll()
+
 
     def getOwnActionManager(self):
         """Gets the {@link ActionManager} responsible for handling {@link Action}s
@@ -1141,20 +1071,25 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
             self._ownActionManager = ActionManager(self)
         return self._ownActionManager
 
+
     def addActionHandler(self, actionHandler):
         self.getOwnActionManager().addActionHandler(actionHandler)
+
 
     def removeActionHandler(self, actionHandler):
         if self._ownActionManager is not None:
             self._ownActionManager.removeActionHandler(actionHandler)
+
 
     def removeAllActionHandlers(self):
         """Removes all action handlers"""
         if self._ownActionManager is not None:
             self._ownActionManager.removeAllActionHandlers()
 
+
     def addAction(self, action):
         self.getOwnActionManager().addAction(action)
+
 
     def removeAction(self, action):
         if self._ownActionManager is not None:

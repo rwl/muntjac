@@ -14,10 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# from java.io.Serializable import (Serializable,)
 
-
-class FormFieldFactory(Serializable):
+class FormFieldFactory(object):
     """Factory interface for creating new Field-instances based on {@link Item},
     property id and uiContext (the component responsible for displaying fields).
     Currently this interface is used by {@link Form}, but might later be used by

@@ -14,14 +14,11 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.terminal.gwt.client.ui.VEmbedded import (VEmbedded,)
-from com.vaadin.ui.AbstractComponent import (AbstractComponent,)
-from com.vaadin.terminal.gwt.client.MouseEventDetails import (MouseEventDetails,)
-# from com.vaadin.event.MouseEvents.ClickListener import (ClickListener,)
-# from java.util.HashMap import (HashMap,)
-# from java.util.Iterator import (Iterator,)
-# from java.util.Map import (Map,)
+from muntjac.terminal.gwt.client.ui.VEmbedded import VEmbedded
+from muntjac.ui.AbstractComponent import AbstractComponent
+from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
+from muntjac.ui.ClientWidget import LoadStyle
+from muntjac.event.MouseEvents import ClickListener, ClickEvent
 
 
 class Embedded(AbstractComponent):
@@ -32,29 +29,22 @@ class Embedded(AbstractComponent):
     @VERSION@
     @since 3.0
     """
+
+    CLIENT_WIDGET = VEmbedded
+    LOAD_STYLE = LoadStyle.EAGER
+
     _CLICK_EVENT = VEmbedded.CLICK_EVENT_IDENTIFIER
+
     # General object type.
     TYPE_OBJECT = 0
+
     # Image types.
     TYPE_IMAGE = 1
+
     # Browser ("iframe") type.
     TYPE_BROWSER = 2
-    # Type of the object.
-    _type = TYPE_OBJECT
-    # Source of the embedded object.
-    _source = None
-    # Generic object attributes.
-    _mimeType = None
-    _standby = None
-    # Hash of object parameters.
-    _parameters = dict()
-    # Applet or other client side runnable properties.
-    _codebase = None
-    _codetype = None
-    _classId = None
-    _archive = None
 
-    def __init__(self, *args):
+    def __init__(self, caption=None, source=None):
         """Creates a new empty Embedded object.
         ---
         Creates a new empty Embedded object with caption.
@@ -69,64 +59,68 @@ class Embedded(AbstractComponent):
         @param source
                    the Source of the embedded object.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 0:
-            pass # astStmt: [Stmt([]), None]
-        elif _1 == 1:
-            caption, = _0
+        # Type of the object.
+        self._type = self.TYPE_OBJECT
+
+        # Source of the embedded object.
+        self._source = None
+
+        # Generic object attributes.
+        self._mimeType = None
+        self._standby = None
+
+        # Hash of object parameters.
+        self._parameters = dict()
+
+        # Applet or other client side runnable properties.
+        self._codebase = None
+        self._codetype = None
+        self._classId = None
+        self._archive = None
+
+        if caption is not None:
             self.setCaption(caption)
-        elif _1 == 2:
-            caption, source = _0
-            self.setCaption(caption)
+        if source is not None:
             self.setSource(source)
-        else:
-            raise ARGERROR(0, 2)
+
 
     def paintContent(self, target):
         """Invoked when the component state should be painted."""
-        _0 = self._type
-        _1 = False
-        while True:
-            if _0 == self.TYPE_IMAGE:
-                _1 = True
-                target.addAttribute('type', 'image')
-                break
-            if (_1 is True) or (_0 == self.TYPE_BROWSER):
-                _1 = True
-                target.addAttribute('type', 'browser')
-                break
-            if True:
-                _1 = True
-                break
-            break
+        test = self._type
+        if test == self.TYPE_IMAGE:
+            target.addAttribute('type', 'image')
+        elif test == self.TYPE_BROWSER:
+            target.addAttribute('type', 'browser')
+
+
         if self.getSource() is not None:
             target.addAttribute('src', self.getSource())
+
         if self._mimeType is not None and not ('' == self._mimeType):
             target.addAttribute('mimetype', self._mimeType)
+
         if self._classId is not None and not ('' == self._classId):
             target.addAttribute('classid', self._classId)
+
         if self._codebase is not None and not ('' == self._codebase):
             target.addAttribute('codebase', self._codebase)
+
         if self._codetype is not None and not ('' == self._codetype):
             target.addAttribute('codetype', self._codetype)
+
         if self._standby is not None and not ('' == self._standby):
             target.addAttribute('standby', self._standby)
+
         if self._archive is not None and not ('' == self._archive):
             target.addAttribute('archive', self._archive)
+
         # Params
-        _2 = True
-        i = self.getParameterNames()
-        while True:
-            if _2 is True:
-                _2 = False
-            if not i.hasNext():
-                break
+        for key in self.getParameterNames():
             target.startTag('embeddedparam')
-            key = i.next()
             target.addAttribute('name', key)
             target.addAttribute('value', self.getParameter(key))
             target.endTag('embeddedparam')
+
 
     def setParameter(self, name, value):
         """Sets an object parameter. Parameters are optional information, and they
@@ -139,8 +133,9 @@ class Embedded(AbstractComponent):
         @param value
                    the value of the parameter.
         """
-        self._parameters.put(name, value)
+        self._parameters[name] = value
         self.requestRepaint()
+
 
     def getParameter(self, name):
         """Gets the value of an object parameter. Parameters are optional
@@ -149,7 +144,8 @@ class Embedded(AbstractComponent):
 
         @return the Value of parameter or null if not found.
         """
-        return self._parameters[name]
+        return self._parameters.get(name)
+
 
     def removeParameter(self, name):
         """Removes an object parameter from the list.
@@ -157,8 +153,9 @@ class Embedded(AbstractComponent):
         @param name
                    the name of the parameter to remove.
         """
-        self._parameters.remove(name)
+        del self._parameters[name]
         self.requestRepaint()
+
 
     def getParameterNames(self):
         """Gets the embedded object parameter names.
@@ -166,6 +163,7 @@ class Embedded(AbstractComponent):
         @return the Iterator of parameters names.
         """
         return self._parameters.keys()
+
 
     def getCodebase(self):
         """This attribute specifies the base path used to resolve relative URIs
@@ -176,6 +174,7 @@ class Embedded(AbstractComponent):
         """
         return self._codebase
 
+
     def getCodetype(self):
         """Gets the MIME-Type of the code.
 
@@ -183,12 +182,14 @@ class Embedded(AbstractComponent):
         """
         return self._codetype
 
+
     def getMimeType(self):
         """Gets the MIME-Type of the object.
 
         @return the MIME-Type of the object.
         """
         return self._mimeType
+
 
     def getStandby(self):
         """This attribute specifies a message that a user agent may render while
@@ -198,6 +199,7 @@ class Embedded(AbstractComponent):
         """
         return self._standby
 
+
     def setCodebase(self, codebase):
         """This attribute specifies the base path used to resolve relative URIs
         specified by the classid, data, and archive attributes. When absent, its
@@ -206,11 +208,11 @@ class Embedded(AbstractComponent):
         @param codebase
                    The base path
         """
-        if (
-            (codebase != self._codebase) or (codebase is not None and not (codebase == self._codebase))
-        ):
+        if (codebase != self._codebase) \
+                or (codebase is not None and not (codebase == self._codebase)):
             self._codebase = codebase
             self.requestRepaint()
+
 
     def setCodetype(self, codetype):
         """This attribute specifies the content type of data expected when
@@ -222,11 +224,11 @@ class Embedded(AbstractComponent):
         @param codetype
                    the codetype to set.
         """
-        if (
-            (codetype != self._codetype) or (codetype is not None and not (codetype == self._codetype))
-        ):
+        if (codetype != self._codetype) \
+                or (codetype is not None and not (codetype == self._codetype)):
             self._codetype = codetype
             self.requestRepaint()
+
 
     def setMimeType(self, mimeType):
         """Sets the mimeType, the MIME-Type of the object.
@@ -234,19 +236,19 @@ class Embedded(AbstractComponent):
         @param mimeType
                    the mimeType to set.
         """
-        if (
-            (mimeType != self._mimeType) or (mimeType is not None and not (mimeType == self._mimeType))
-        ):
+        if (mimeType != self._mimeType) \
+                or (mimeType is not None and not (mimeType == self._mimeType)):
             self._mimeType = mimeType
             if 'application/x-shockwave-flash' == mimeType:
                 # Automatically add wmode transparent as we use lots of
                 # floating layers in Vaadin. If developers need better flash
                 # performance, they can override this value programmatically
                 # back to "window" (the defautl).
-
                 if self.getParameter('wmode') is None:
                     self.setParameter('wmode', 'transparent')
+
             self.requestRepaint()
+
 
     def setStandby(self, standby):
         """This attribute specifies a message that a user agent may render while
@@ -255,11 +257,11 @@ class Embedded(AbstractComponent):
         @param standby
                    The text to display while loading
         """
-        if (
-            (standby != self._standby) or (standby is not None and not (standby == self._standby))
-        ):
+        if (standby != self._standby) \
+                or (standby is not None and not (standby == self._standby)):
             self._standby = standby
             self.requestRepaint()
+
 
     def getClassId(self):
         """This attribute may be used to specify the location of an object's
@@ -269,6 +271,7 @@ class Embedded(AbstractComponent):
         """
         return self._classId
 
+
     def setClassId(self, classId):
         """This attribute may be used to specify the location of an object's
         implementation via a URI.
@@ -276,11 +279,11 @@ class Embedded(AbstractComponent):
         @param classId
                    the classId to set.
         """
-        if (
-            (classId != self._classId) or (classId is not None and not (classId == self._classId))
-        ):
+        if (classId != self._classId) \
+                or (classId is not None and not (classId == self._classId)):
             self._classId = classId
             self.requestRepaint()
+
 
     def getSource(self):
         """Gets the resource contained in the embedded object.
@@ -288,6 +291,7 @@ class Embedded(AbstractComponent):
         @return the Resource
         """
         return self._source
+
 
     def getType(self):
         """Gets the type of the embedded object.
@@ -303,6 +307,7 @@ class Embedded(AbstractComponent):
         """
         return self._type
 
+
     def setSource(self, source):
         """Sets the object source resource. The dimensions are assumed if possible.
         The type is guessed from resource.
@@ -313,18 +318,22 @@ class Embedded(AbstractComponent):
         if source is not None and not (source == self._source):
             self._source = source
             mt = source.getMIMEType()
+
             if self._mimeType is None:
                 self._mimeType = mt
+
             if mt == 'image/svg+xml':
                 self._type = self.TYPE_OBJECT
-            elif mt[:mt.find('/')].equalsIgnoreCase('image'):
+            elif mt[:mt.find('/')].lower() == 'image':
                 self._type = self.TYPE_IMAGE
             else:
                 # Keep previous type
                 pass
+
             self.requestRepaint()
 
-    def setType(self, type):
+
+    def setType(self, typ):
         """Sets the object type.
         <p>
         This can be one of the following:
@@ -339,12 +348,13 @@ class Embedded(AbstractComponent):
                    the type to set.
         """
         if (
-            type != self.TYPE_OBJECT and type != self.TYPE_IMAGE and type != self.TYPE_BROWSER
+            typ != self.TYPE_OBJECT and typ != self.TYPE_IMAGE and typ != self.TYPE_BROWSER
         ):
-            raise self.IllegalArgumentException('Unsupported type')
-        if type != self._type:
-            self._type = type
+            raise self.IllegalArgumentException('Unsupported typ')
+        if typ != self._type:
+            self._type = typ
             self.requestRepaint()
+
 
     def getArchive(self):
         """This attribute may be used to specify a space-separated list of URIs for
@@ -359,6 +369,7 @@ class Embedded(AbstractComponent):
         """
         return self._archive
 
+
     def setArchive(self, archive):
         """This attribute may be used to specify a space-separated list of URIs for
         archives containing resources relevant to the object, which may include
@@ -371,11 +382,11 @@ class Embedded(AbstractComponent):
                    Space-separated list of URIs with resources relevant to the
                    object
         """
-        if (
-            (archive != self._archive) or (archive is not None and not (archive == self._archive))
-        ):
+        if (archive != self._archive) \
+                or (archive is not None and not (archive == self._archive)):
             self._archive = archive
             self.requestRepaint()
+
 
     def addListener(self, listener):
         """Add a click listener to the component. The listener is called whenever
@@ -387,7 +398,8 @@ class Embedded(AbstractComponent):
         @param listener
                    The listener to add
         """
-        self.addListener(self._CLICK_EVENT, self.ClickEvent, listener, ClickListener.clickMethod)
+        self.addListener(self._CLICK_EVENT, ClickEvent, listener, ClickListener.clickMethod)
+
 
     def removeListener(self, listener):
         """Remove a click listener from the component. The listener should earlier
@@ -396,17 +408,14 @@ class Embedded(AbstractComponent):
         @param listener
                    The listener to remove
         """
-        # (non-Javadoc)
-        # 
-        # @see com.vaadin.ui.AbstractComponent#changeVariables(java.lang.Object,
-        # java.util.Map)
+        self.removeListener(self._CLICK_EVENT, ClickEvent, listener)
 
-        self.removeListener(self._CLICK_EVENT, self.ClickEvent, listener)
 
     def changeVariables(self, source, variables):
         super(Embedded, self).changeVariables(source, variables)
         if self._CLICK_EVENT in variables:
             self.fireClick(variables[self._CLICK_EVENT])
+
 
     def fireClick(self, parameters):
         """Notifies click-listeners that a mouse click event has occurred.
@@ -414,4 +423,4 @@ class Embedded(AbstractComponent):
         @param parameters
         """
         mouseDetails = MouseEventDetails.deSerialize(parameters['mouseDetails'])
-        self.fireEvent(self.ClickEvent(self, mouseDetails))
+        self.fireEvent( ClickEvent(self, mouseDetails) )

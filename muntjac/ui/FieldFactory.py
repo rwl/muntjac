@@ -14,9 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.ui.TableFieldFactory import (TableFieldFactory,)
-from com.vaadin.ui.FormFieldFactory import (FormFieldFactory,)
+from muntjac.ui.TableFieldFactory import TableFieldFactory
+from muntjac.ui.FormFieldFactory import FormFieldFactory
 
 
 class FieldFactory(FormFieldFactory, TableFieldFactory):
@@ -48,12 +47,3 @@ class FieldFactory(FormFieldFactory, TableFieldFactory):
                    the component where the field is presented.
         @return Field the field suitable for editing the specified data.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 2:
-            if isinstance(_0[0], Class):
-                type, uiContext = _0
-            else:
-                property, uiContext = _0
-        else:
-            raise ARGERROR(2, 2)

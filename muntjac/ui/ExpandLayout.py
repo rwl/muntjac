@@ -14,8 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.ui.OrderedLayout import (OrderedLayout,)
+from muntjac.ui.OrderedLayout import OrderedLayout
 
 
 class ExpandLayout(OrderedLayout):
@@ -32,19 +31,17 @@ class ExpandLayout(OrderedLayout):
 
     @deprecated Deprecated in favor of the new OrderedLayout
     """
-    _expanded = None
+    raise DeprecationWarning
 
-    def __init__(self, *args):
-        _0 = args
-        _1 = len(args)
-        if _1 == 0:
-            self.__init__(self.ORIENTATION_VERTICAL)
-        elif _1 == 1:
-            orientation, = _0
-            super(ExpandLayout, self)(orientation)
-            self.setSizeFull()
-        else:
-            raise ARGERROR(0, 1)
+    def __init__(self, orientation=None):
+        self._expanded = None
+
+        if orientation is None:
+            self.ORIENTATION_VERTICAL
+
+        super(ExpandLayout, self)(orientation)
+        self.setSizeFull()
+
 
     def expand(self, c):
         """@param c
@@ -54,41 +51,39 @@ class ExpandLayout(OrderedLayout):
             # Ignore error if component has been removed
             try:
                 self.setExpandRatio(self._expanded, 0.0)
-            except IllegalArgumentException, e:
-                pass # astStmt: [Stmt([]), None]
+            except ValueError:
+                pass
+
         self._expanded = c
         if self._expanded is not None:
             self.setExpandRatio(self._expanded, 1.0)
+
         self.requestRepaint()
 
-    def addComponent(self, *args):
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            c, = _0
+
+    def addComponent(self, c, index=None):
+        if index is None:
             super(ExpandLayout, self).addComponent(c)
-            if self._expanded is None:
-                self.expand(c)
-        elif _1 == 2:
-            c, index = _0
-            super(ExpandLayout, self).addComponent(c, index)
-            if self._expanded is None:
-                self.expand(c)
         else:
-            raise ARGERROR(1, 2)
+            super(ExpandLayout, self).addComponent(c, index)
+        if self._expanded is None:
+            self.expand(c)
+
 
     def addComponentAsFirst(self, c):
         super(ExpandLayout, self).addComponentAsFirst(c)
         if self._expanded is None:
             self.expand(c)
 
+
     def removeComponent(self, c):
         super(ExpandLayout, self).removeComponent(c)
         if c == self._expanded:
-            if self.getComponentIterator().hasNext():
+            try:  ## FIXEM implement iterator
                 self.expand(self.getComponentIterator().next())
-            else:
+            except StopIteration:
                 self.expand(None)
+
 
     def replaceComponent(self, oldComponent, newComponent):
         super(ExpandLayout, self).replaceComponent(oldComponent, newComponent)

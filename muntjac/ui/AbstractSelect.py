@@ -1411,7 +1411,7 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
             detail = self.getData('detail')
             if detail is None:
                 return None
-            return VerticalDropLocation.values(detail)
+            return VerticalDropLocation.valueOf(detail)
 
 
 class CaptionChangeListener(Item, PropertySetChangeListener, Property, ValueChangeListener):

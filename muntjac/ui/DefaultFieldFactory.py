@@ -14,15 +14,20 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.data.Item import (Item,)
-from com.vaadin.ui.TableFieldFactory import (TableFieldFactory,)
-from com.vaadin.ui.FormFieldFactory import (FormFieldFactory,)
-from com.vaadin.ui.DateField import (DateField,)
-from com.vaadin.ui.TextField import (TextField,)
-from com.vaadin.ui.CheckBox import (CheckBox,)
-from com.vaadin.ui.Form import (Form,)
-# from java.util.Date import (Date,)
+from datetime import datetime
+
+try:
+    from cStringIO import StringIO
+except ImportError, e:
+    from StringIO import StringIO
+
+from muntjac.data.Item import Item
+from muntjac.ui.TableFieldFactory import TableFieldFactory
+from muntjac.ui.FormFieldFactory import FormFieldFactory
+from muntjac.ui.DateField import DateField
+from muntjac.ui.TextField import TextField
+from muntjac.ui.CheckBox import CheckBox
+from muntjac.ui.Form import Form
 
 
 class DefaultFieldFactory(FormFieldFactory, TableFieldFactory):
@@ -34,7 +39,6 @@ class DefaultFieldFactory(FormFieldFactory, TableFieldFactory):
     There are also some static helper methods available for custom built field
     factories.
     """
-    _instance = DefaultFieldFactory()
 
     @classmethod
     def get(cls):
@@ -42,29 +46,27 @@ class DefaultFieldFactory(FormFieldFactory, TableFieldFactory):
 
         @return an instance of DefaultFieldFactory
         """
-        return cls._instance
+        return INSTANCE
 
-    def __init__(self):
-        pass
 
     def createField(self, *args):
-        _0 = args
-        _1 = len(args)
-        if _1 == 3:
-            item, propertyId, uiContext = _0
-            type = item.getItemProperty(propertyId).getType()
-            field = self.createFieldByPropertyType(type)
+        nargs = len(args)
+        if nargs == 3:
+            item, propertyId, _ = args
+            typ = item.getItemProperty(propertyId).getType()
+            field = self.createFieldByPropertyType(typ)
             field.setCaption(self.createCaptionByPropertyId(propertyId))
             return field
-        elif _1 == 4:
-            container, itemId, propertyId, uiContext = _0
+        elif nargs == 4:
+            container, itemId, propertyId, _ = args
             containerProperty = container.getContainerProperty(itemId, propertyId)
-            type = containerProperty.getType()
-            field = self.createFieldByPropertyType(type)
+            typ = containerProperty.getType()
+            field = self.createFieldByPropertyType(typ)
             field.setCaption(self.createCaptionByPropertyId(propertyId))
             return field
         else:
-            raise ARGERROR(3, 4)
+            raise ValueError, 'invalid number of arguments'
+
 
     @classmethod
     def createCaptionByPropertyId(cls, propertyId):
@@ -75,37 +77,37 @@ class DefaultFieldFactory(FormFieldFactory, TableFieldFactory):
         @return the formatted caption string
         """
         name = str(propertyId)
+
         if len(name) > 0:
-            if (
-                name.find(' ') < 0 and name[0] == cls.Character.toLowerCase(name[0]) and name[0] != cls.Character.toUpperCase(name[0])
-            ):
-                out = str()
-                out.__add__(cls.Character.toUpperCase(name[0]))
+            if name.find(' ') < 0 \
+                    and name[0] == name[0].lower() \
+                    and name[0] != name[0].upper():
+                out = StringIO()
+                out.append(name[0].upper())
                 i = 1
+
                 while i < len(name):
                     j = i
-                    _0 = True
-                    while True:
-                        if _0 is True:
-                            _0 = False
-                        else:
-                            j += 1
-                        if not (j < len(name)):
-                            break
+                    while j < len(name):
                         c = name[j]
-                        if cls.Character.toLowerCase(c) != c and cls.Character.toUpperCase(c) == c:
+                        if c.lower() != c and c.upper() == c:
                             break
+                        j += 1
+
                     if j == len(name):
-                        out.__add__(name[i:])
+                        out.append(name[i:])
                     else:
-                        out.__add__(name[i:j])
-                        out.__add__(' ' + name[j])
+                        out.append(name[i:j])
+                        out.append(' ' + name[j])
                     i = j + 1
-                name = str(out)
+                name = out.getvalue()
+                out.close()
+
         return name
 
+
     @classmethod
-    def createFieldByPropertyType(cls, type):
+    def createFieldByPropertyType(cls, typ):
         """Creates fields based on the property type.
         <p>
         The default field type is {@link TextField}. Other field types generated
@@ -122,17 +124,24 @@ class DefaultFieldFactory(FormFieldFactory, TableFieldFactory):
         @return the most suitable generic {@link Field} for given type
         """
         # Null typed properties can not be edited
-        if type is None:
+        if typ is None:
             return None
+
         # Item field
-        if Item.isAssignableFrom(type):
+        if issubclass(typ, Item):
             return Form()
+
         # Date field
-        if Date.isAssignableFrom(type):
+        if issubclass(typ, datetime):
             df = DateField()
             df.setResolution(DateField.RESOLUTION_DAY)
             return df
+
         # Boolean field
-        if bool.isAssignableFrom(type):
+        if issubclass(typ, bool):
             return CheckBox()
+
         return TextField()
+
+
+INSTANCE = DefaultFieldFactory()
