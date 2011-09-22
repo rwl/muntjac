@@ -14,27 +14,17 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# from com.vaadin.terminal.gwt.client.ui.AlignmentInfo.Bits import (Bits,)
-# from java.io.Serializable import (Serializable,)
+from muntjac.terminal.gwt.client.ui.AlignmentInfo import Bits
 
 
-class Alignment(Serializable):
+class Alignment(object):
     """Class containing information about alignment of a component. Use the
     pre-instantiated classes.
     """
-    TOP_RIGHT = Alignment(Bits.ALIGNMENT_TOP + Bits.ALIGNMENT_RIGHT)
-    TOP_LEFT = Alignment(Bits.ALIGNMENT_TOP + Bits.ALIGNMENT_LEFT)
-    TOP_CENTER = Alignment(Bits.ALIGNMENT_TOP + Bits.ALIGNMENT_HORIZONTAL_CENTER)
-    MIDDLE_RIGHT = Alignment(Bits.ALIGNMENT_VERTICAL_CENTER + Bits.ALIGNMENT_RIGHT)
-    MIDDLE_LEFT = Alignment(Bits.ALIGNMENT_VERTICAL_CENTER + Bits.ALIGNMENT_LEFT)
-    MIDDLE_CENTER = Alignment(Bits.ALIGNMENT_VERTICAL_CENTER + Bits.ALIGNMENT_HORIZONTAL_CENTER)
-    BOTTOM_RIGHT = Alignment(Bits.ALIGNMENT_BOTTOM + Bits.ALIGNMENT_RIGHT)
-    BOTTOM_LEFT = Alignment(Bits.ALIGNMENT_BOTTOM + Bits.ALIGNMENT_LEFT)
-    BOTTOM_CENTER = Alignment(Bits.ALIGNMENT_BOTTOM + Bits.ALIGNMENT_HORIZONTAL_CENTER)
-    _bitMask = None
 
     def __init__(self, bitMask):
         self._bitMask = bitMask
+
 
     def getBitMask(self):
         """Returns a bitmask representation of the alignment value. Used internally
@@ -44,12 +34,14 @@ class Alignment(Serializable):
         """
         return self._bitMask
 
+
     def isTop(self):
         """Checks if component is aligned to the top of the available space.
 
         @return true if aligned top
         """
         return self._bitMask & Bits.ALIGNMENT_TOP == Bits.ALIGNMENT_TOP
+
 
     def isBottom(self):
         """Checks if component is aligned to the bottom of the available space.
@@ -58,6 +50,7 @@ class Alignment(Serializable):
         """
         return self._bitMask & Bits.ALIGNMENT_BOTTOM == Bits.ALIGNMENT_BOTTOM
 
+
     def isLeft(self):
         """Checks if component is aligned to the left of the available space.
 
@@ -65,12 +58,14 @@ class Alignment(Serializable):
         """
         return self._bitMask & Bits.ALIGNMENT_LEFT == Bits.ALIGNMENT_LEFT
 
+
     def isRight(self):
         """Checks if component is aligned to the right of the available space.
 
         @return true if aligned right
         """
         return self._bitMask & Bits.ALIGNMENT_RIGHT == Bits.ALIGNMENT_RIGHT
+
 
     def isMiddle(self):
         """Checks if component is aligned middle (vertically center) of the
@@ -80,6 +75,7 @@ class Alignment(Serializable):
         """
         return self._bitMask & Bits.ALIGNMENT_VERTICAL_CENTER == Bits.ALIGNMENT_VERTICAL_CENTER
 
+
     def isCenter(self):
         """Checks if component is aligned center (horizontally) of the available
         space.
@@ -87,6 +83,7 @@ class Alignment(Serializable):
         @return true if aligned center
         """
         return self._bitMask & Bits.ALIGNMENT_HORIZONTAL_CENTER == Bits.ALIGNMENT_HORIZONTAL_CENTER
+
 
     def getVerticalAlignment(self):
         """Returns string representation of vertical alignment.
@@ -99,6 +96,7 @@ class Alignment(Serializable):
             return 'middle'
         return 'top'
 
+
     def getHorizontalAlignment(self):
         """Returns string representation of horizontal alignment.
 
@@ -110,7 +108,8 @@ class Alignment(Serializable):
             return 'center'
         return 'left'
 
-    def equals(self, obj):
+
+    def __eq__(self, obj):
         if self == obj:
             return True
         if (obj is None) or (obj.getClass() != self.getClass()):
@@ -118,8 +117,22 @@ class Alignment(Serializable):
         a = obj
         return self._bitMask == a.bitMask
 
-    def hashCode(self):
+
+    def __hash__(self):
         return self._bitMask
 
-    def toString(self):
-        return String.valueOf.valueOf(self._bitMask)
+
+    def __str__(self):
+        return str(self._bitMask)
+
+
+# FIXME translate static vars
+Alignment.TOP_RIGHT = Alignment(Bits.ALIGNMENT_TOP + Bits.ALIGNMENT_RIGHT)
+Alignment.TOP_LEFT = Alignment(Bits.ALIGNMENT_TOP + Bits.ALIGNMENT_LEFT)
+Alignment.TOP_CENTER = Alignment(Bits.ALIGNMENT_TOP + Bits.ALIGNMENT_HORIZONTAL_CENTER)
+Alignment.MIDDLE_RIGHT = Alignment(Bits.ALIGNMENT_VERTICAL_CENTER + Bits.ALIGNMENT_RIGHT)
+Alignment.MIDDLE_LEFT = Alignment(Bits.ALIGNMENT_VERTICAL_CENTER + Bits.ALIGNMENT_LEFT)
+Alignment.MIDDLE_CENTER = Alignment(Bits.ALIGNMENT_VERTICAL_CENTER + Bits.ALIGNMENT_HORIZONTAL_CENTER)
+Alignment.BOTTOM_RIGHT = Alignment(Bits.ALIGNMENT_BOTTOM + Bits.ALIGNMENT_RIGHT)
+Alignment.BOTTOM_LEFT = Alignment(Bits.ALIGNMENT_BOTTOM + Bits.ALIGNMENT_LEFT)
+Alignment.BOTTOM_CENTER = Alignment(Bits.ALIGNMENT_BOTTOM + Bits.ALIGNMENT_HORIZONTAL_CENTER)

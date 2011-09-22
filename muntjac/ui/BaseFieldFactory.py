@@ -14,9 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.ui.DefaultFieldFactory import (DefaultFieldFactory,)
-from com.vaadin.ui.FieldFactory import (FieldFactory,)
+from muntjac.ui.DefaultFieldFactory import DefaultFieldFactory
+from muntjac.ui.FieldFactory import FieldFactory
+from muntjac.data.Property import Property
+from muntjac.ui.AbstractComponent import AbstractComponent
 
 
 class BaseFieldFactory(FieldFactory):
@@ -58,20 +59,19 @@ class BaseFieldFactory(FieldFactory):
         @see com.vaadin.ui.FieldFactory#createField(com.vaadin.data.Container,
              java.lang.Object, java.lang.Object, com.vaadin.ui.Component)
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 2:
-            if isinstance(_0[0], Class):
-                type, uiContext = _0
-                return DefaultFieldFactory.createFieldByPropertyType(type)
-            else:
-                property, uiContext = _0
+        nargs = len(args)
+        if nargs == 2:
+            if isinstance(args[0], Property):
+                prop, uiContext = args
                 if property is not None:
-                    return self.createField(property.getType(), uiContext)
+                    return self.createField(prop.getType(), uiContext)
                 else:
                     return None
-        elif _1 == 3:
-            item, propertyId, uiContext = _0
+            else:
+                typ, uiContext = args
+                return DefaultFieldFactory.createFieldByPropertyType(typ)
+        elif nargs == 3:
+            item, propertyId, uiContext = args
             if item is not None and propertyId is not None:
                 f = self.createField(item.getItemProperty(propertyId), uiContext)
                 if isinstance(f, AbstractComponent):
@@ -80,8 +80,8 @@ class BaseFieldFactory(FieldFactory):
                 return f
             else:
                 return None
-        elif _1 == 4:
-            container, itemId, propertyId, uiContext = _0
+        elif nargs == 4:
+            container, itemId, propertyId, uiContext = args
             return self.createField(container.getContainerProperty(itemId, propertyId), uiContext)
         else:
-            raise ARGERROR(2, 4)
+            raise ValueError, 'invalid number of arguments'

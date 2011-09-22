@@ -14,15 +14,11 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from com.vaadin.ui.Alignment import (Alignment,)
-from com.vaadin.ui.Layout import (AlignmentHandler,)
-# from com.vaadin.ui.Layout.AlignmentHandler import (AlignmentHandler,)
-# from java.io.Serializable import (Serializable,)
-# from java.util.HashMap import (HashMap,)
-# from java.util.Map import (Map,)
+from muntjac.ui.Alignment import Alignment
+from muntjac.ui.Layout import AlignmentHandler
 
 
-class AlignmentUtils(Serializable):
+class AlignmentUtils(object):
     """Helper class for setting alignments using a short notation.
 
     Supported notation is:
@@ -41,14 +37,21 @@ class AlignmentUtils(Serializable):
 
     @deprecated {@code AlignmentUtils} has been replaced by {@link Alignment}.
     """
-    _horizontalMask = (AlignmentHandler.ALIGNMENT_LEFT | AlignmentHandler.ALIGNMENT_HORIZONTAL_CENTER) | AlignmentHandler.ALIGNMENT_RIGHT
-    _verticalMask = (AlignmentHandler.ALIGNMENT_TOP | AlignmentHandler.ALIGNMENT_VERTICAL_CENTER) | AlignmentHandler.ALIGNMENT_BOTTOM
+    _horizontalMask = (AlignmentHandler.ALIGNMENT_LEFT \
+                | AlignmentHandler.ALIGNMENT_HORIZONTAL_CENTER) \
+                | AlignmentHandler.ALIGNMENT_RIGHT
+
+    _verticalMask = (AlignmentHandler.ALIGNMENT_TOP \
+                | AlignmentHandler.ALIGNMENT_VERTICAL_CENTER) \
+                | AlignmentHandler.ALIGNMENT_BOTTOM
+
     _alignmentStrings = dict()
 
     @classmethod
     def addMapping(cls, alignment, *values):
         for s in values:
-            cls._alignmentStrings.put(s, alignment)
+            cls._alignmentStrings[s] = alignment
+
 
     addMapping(AlignmentHandler.ALIGNMENT_TOP, 't', 'top')
     addMapping(AlignmentHandler.ALIGNMENT_BOTTOM, 'b', 'bottom')
@@ -56,6 +59,7 @@ class AlignmentUtils(Serializable):
     addMapping(AlignmentHandler.ALIGNMENT_LEFT, 'l', 'left')
     addMapping(AlignmentHandler.ALIGNMENT_RIGHT, 'r', 'right')
     addMapping(AlignmentHandler.ALIGNMENT_HORIZONTAL_CENTER, 'c', 'center')
+
 
     @classmethod
     def setComponentAlignment(cls, parent, component, alignment):
@@ -74,25 +78,33 @@ class AlignmentUtils(Serializable):
         @throws IllegalArgumentException
         """
         if (alignment is None) or (len(alignment) == 0):
-            raise cls.IllegalArgumentException('alignment for setComponentAlignment() cannot be null or empty')
+            raise ValueError, 'alignment for setComponentAlignment() cannot be null or empty'
+
         currentAlignment = parent.getComponentAlignment(component).getBitMask()
+
         if len(alignment) == 1:
             # Use short form "t","l",...
             currentAlignment = cls.parseAlignment(alignment[:1], currentAlignment)
+
         elif len(alignment) == 2:
             # Use short form "tr","lb",...
             currentAlignment = cls.parseAlignment(alignment[:1], currentAlignment)
             currentAlignment = cls.parseAlignment(alignment[1:2], currentAlignment)
+
         else:
             # Alignments are separated by space
             strings = alignment.split(' ')
             if len(strings) > 2:
-                raise cls.IllegalArgumentException('alignment for setComponentAlignment() should not contain more than 2 alignments')
+                raise ValueError, 'alignment for setComponentAlignment() should not contain more than 2 alignments'
+
             for alignmentString in strings:
                 currentAlignment = cls.parseAlignment(alignmentString, currentAlignment)
+
         horizontalAlignment = currentAlignment & cls._horizontalMask
         verticalAlignment = currentAlignment & cls._verticalMask
-        parent.setComponentAlignment(component, Alignment(horizontalAlignment + verticalAlignment))
+        parent.setComponentAlignment(component,
+                Alignment(horizontalAlignment + verticalAlignment))
+
 
     @classmethod
     def parseAlignment(cls, alignmentString, alignment):
@@ -106,17 +118,21 @@ class AlignmentUtils(Serializable):
         @return
         @throws IllegalArgumentException
         """
-        parsed = cls._alignmentStrings[alignmentString.toLowerCase()]
+        parsed = cls._alignmentStrings.get(alignmentString.lower())
+
         if parsed is None:
-            raise cls.IllegalArgumentException('Could not parse alignment string \'' + alignmentString + '\'')
+            raise ValueError, 'Could not parse alignment string \'' + alignmentString + '\''
+
         if parsed & cls._horizontalMask != 0:
             # Get the vertical alignment from the current alignment
             vertical = alignment & cls._verticalMask
             # Add the parsed horizontal alignment
             alignment = vertical | parsed
+
         else:
             # Get the horizontal alignment from the current alignment
             horizontal = alignment & cls._horizontalMask
             # Add the parsed vertical alignment
             alignment = horizontal | parsed
+
         return alignment

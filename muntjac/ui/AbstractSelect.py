@@ -1375,6 +1375,45 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
         return self._captionChangeListener
 
 
+    class AbstractSelectTargetDetails(TargetDetailsImpl):
+        """TargetDetails implementation for subclasses of {@link AbstractSelect}
+        that implement {@link DropTarget}.
+
+        @since 6.3
+        """
+
+        _AbstractSelect_self = self
+
+        def __init__(self, rawVariables):
+            """Constructor that automatically converts itemIdOver key to
+            corresponding item Id
+            """
+            super(AbstractSelect.AbstractSelectTargetDetails, self)(rawVariables, self._AbstractSelect_self)  # FIXME AbstractSelect.this translation
+
+            # The item id over which the drag event happened.
+            self.idOver = None
+
+            # eagar fetch itemid, mapper may be emptied
+            keyover = self.getData('itemIdOver')
+            if keyover is not None:
+                self.idOver = self.itemIdMapper.get(keyover)
+
+
+        def getItemIdOver(self):
+            """If the drag operation is currently over an {@link Item}, this method
+            returns the identifier of that {@link Item}.
+            """
+            return self.idOver
+
+
+        def getDropLocation(self):
+            """Returns a detailed vertical location where the drop happened on Item."""
+            detail = self.getData('detail')
+            if detail is None:
+                return None
+            return VerticalDropLocation.values(detail)
+
+
 class CaptionChangeListener(Item, PropertySetChangeListener, Property, ValueChangeListener):
     """This is a listener helper for Item and Property changes that should cause
     a repaint. It should be attached to all items that are displayed, and the
@@ -1514,43 +1553,6 @@ class AcceptItem(AbstractItemSetCriterion):
     ALL = ContainsDataFlavor('itemId')
 
 
-class AbstractSelectTargetDetails(TargetDetailsImpl):
-    """TargetDetails implementation for subclasses of {@link AbstractSelect}
-    that implement {@link DropTarget}.
-
-    @since 6.3
-    """
-
-    def __init__(self, rawVariables):
-        """Constructor that automatically converts itemIdOver key to
-        corresponding item Id
-        """
-        super(AbstractSelectTargetDetails, self)(rawVariables, _AbstractSelect_this)
-
-        # The item id over which the drag event happened.
-        self.idOver = None
-
-        # eagar fetch itemid, mapper may be emptied
-        keyover = self.getData('itemIdOver')
-        if keyover is not None:
-            self.idOver = self.itemIdMapper.get(keyover)
-
-
-    def getItemIdOver(self):
-        """If the drag operation is currently over an {@link Item}, this method
-        returns the identifier of that {@link Item}.
-        """
-        return self.idOver
-
-
-    def getDropLocation(self):
-        """Returns a detailed vertical location where the drop happened on Item."""
-        detail = self.getData('detail')
-        if detail is None:
-            return None
-        return VerticalDropLocation.values(detail)
-
-
 class VerticalLocationIs(TargetDetailIs):
     """An accept criterion to accept drops only on a specific vertical location
     of an item.
@@ -1558,9 +1560,10 @@ class VerticalLocationIs(TargetDetailIs):
     This accept criterion is currently usable in Tree and Table
     implementations.
     """
-    TOP = VerticalLocationIs(VerticalDropLocation.TOP)
-    BOTTOM = VerticalLocationIs(VerticalDropLocation.BOTTOM)
-    MIDDLE = VerticalLocationIs(VerticalDropLocation.MIDDLE)
 
     def __init__(self, l):
         super(VerticalLocationIs, self)('detail', l.name())
+
+VerticalLocationIs.TOP = VerticalLocationIs(VerticalDropLocation.TOP)  # FIXME VerticalLocationIs translation
+VerticalLocationIs.BOTTOM = VerticalLocationIs(VerticalDropLocation.BOTTOM)
+VerticalLocationIs.MIDDLE = VerticalLocationIs(VerticalDropLocation.MIDDLE)
