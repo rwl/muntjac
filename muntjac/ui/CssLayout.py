@@ -14,12 +14,12 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.ui.AbstractLayout import (AbstractLayout,)
-from com.vaadin.terminal.gwt.client.EventId import (EventId,)
-# from java.util.HashMap import (HashMap,)
-# from java.util.Iterator import (Iterator,)
-# from java.util.LinkedList import (LinkedList,)
+from muntjac.ui.AbstractLayout import AbstractLayout
+from muntjac.terminal.gwt.client.EventId import EventId
+from muntjac.event.LayoutEvents import LayoutClickNotifier, \
+    LayoutClickEvent, LayoutClickListener
+from muntjac.terminal.gwt.client.ui.VCssLayout import VCssLayout
+from muntjac.ui.ClientWidget import LoadStyle
 
 
 class CssLayout(AbstractLayout, LayoutClickNotifier):
@@ -62,11 +62,14 @@ class CssLayout(AbstractLayout, LayoutClickNotifier):
 
     @since 6.1 brought in from "FastLayouts" incubator project
     """
-    _CLICK_EVENT = EventId.LAYOUT_CLICK
-    # Custom layout slots containing the components.
-    components = LinkedList()
 
-    def addComponent(self, *args):
+    CLIENT_WIDGET = VCssLayout
+    LOAD_STYLE = LoadStyle.DEFERRED
+
+    _CLICK_EVENT = EventId.LAYOUT_CLICK
+
+
+    def addComponent(self, c, index=None):
         """Add a component into this container. The component is added to the right
         or under the previous component.
 
@@ -81,28 +84,26 @@ class CssLayout(AbstractLayout, LayoutClickNotifier):
                    the Index of the component position. The components currently
                    in and after the position are shifted forwards.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            c, = _0
+        # Custom layout slots containing the components.
+        self.components = list()
+
+        if index is None:
             self.components.add(c)
             try:
                 super(CssLayout, self).addComponent(c)
                 self.requestRepaint()
-            except IllegalArgumentException, e:
-                self.components.remove(c)
-                raise e
-        elif _1 == 2:
-            c, index = _0
-            self.components.add(index, c)
-            try:
-                super(CssLayout, self).addComponent(c)
-                self.requestRepaint()
-            except IllegalArgumentException, e:
+            except ValueError, e:
                 self.components.remove(c)
                 raise e
         else:
-            raise ARGERROR(1, 2)
+            self.components.insert(index, c)
+            try:
+                super(CssLayout, self).addComponent(c)
+                self.requestRepaint()
+            except ValueError, e:
+                self.components.remove(c)
+                raise e
+
 
     def addComponentAsFirst(self, c):
         """Adds a component into this container. The component is added to the left
@@ -111,13 +112,14 @@ class CssLayout(AbstractLayout, LayoutClickNotifier):
         @param c
                    the component to be added.
         """
-        self.components.addFirst(c)
+        self.components.insert(0, c)
         try:
             super(CssLayout, self).addComponent(c)
             self.requestRepaint()
-        except IllegalArgumentException, e:
+        except ValueError, e:
             self.components.remove(c)
             raise e
+
 
     def removeComponent(self, c):
         """Removes the component from this container.
@@ -129,6 +131,7 @@ class CssLayout(AbstractLayout, LayoutClickNotifier):
         super(CssLayout, self).removeComponent(c)
         self.requestRepaint()
 
+
     def getComponentIterator(self):
         """Gets the component container iterator for going trough all the components
         in the container.
@@ -137,6 +140,7 @@ class CssLayout(AbstractLayout, LayoutClickNotifier):
         """
         return self.components
 
+
     def getComponentCount(self):
         """Gets the number of contained components. Consistent with the iterator
         returned by {@link #getComponentIterator()}.
@@ -144,6 +148,7 @@ class CssLayout(AbstractLayout, LayoutClickNotifier):
         @return the number of contained components
         """
         return len(self.components)
+
 
     def paintContent(self, target):
         """Paints the content of this component.
@@ -163,9 +168,10 @@ class CssLayout(AbstractLayout, LayoutClickNotifier):
             if componentCssString is not None:
                 if componentCss is None:
                     componentCss = dict()
-                componentCss.put(c, componentCssString)
+                componentCss[c] = componentCssString
         if componentCss is not None:
             target.addAttribute('css', componentCss)
+
 
     def getCss(self, c):
         """Returns styles to be applied to given component. Override this method to
@@ -185,27 +191,25 @@ class CssLayout(AbstractLayout, LayoutClickNotifier):
                    the component
         @return css rules to be applied to component
         """
-        # Documented in superclass
         return None
 
+
     def replaceComponent(self, oldComponent, newComponent):
+
         # Gets the locations
         oldLocation = -1
         newLocation = -1
         location = 0
-        _0 = True
-        i = self.components
-        while True:
-            if _0 is True:
-                _0 = False
-            if not i.hasNext():
-                break
-            component = i.next()
+
+        for component in self.components:
             if component == oldComponent:
                 oldLocation = location
+
             if component == newComponent:
                 newLocation = location
+
             location += 1
+
         if oldLocation == -1:
             self.addComponent(newComponent)
         elif newLocation == -1:
@@ -214,18 +218,21 @@ class CssLayout(AbstractLayout, LayoutClickNotifier):
         else:
             if oldLocation > newLocation:
                 self.components.remove(oldComponent)
-                self.components.add(newLocation, oldComponent)
+                self.components.append(newLocation, oldComponent)
                 self.components.remove(newComponent)
-                self.components.add(oldLocation, newComponent)
+                self.components.append(oldLocation, newComponent)
             else:
                 self.components.remove(newComponent)
-                self.components.add(oldLocation, newComponent)
+                self.components.append(oldLocation, newComponent)
                 self.components.remove(oldComponent)
-                self.components.add(newLocation, oldComponent)
+                self.components.append(newLocation, oldComponent)
             self.requestRepaint()
 
+
     def addListener(self, listener):
-        self.addListener(self._CLICK_EVENT, self.LayoutClickEvent, listener, self.LayoutClickListener.clickMethod)
+        self.addListener(self._CLICK_EVENT, LayoutClickEvent, listener,
+                         LayoutClickListener.clickMethod)
+
 
     def removeListener(self, listener):
-        self.removeListener(self._CLICK_EVENT, self.LayoutClickEvent, listener)
+        self.removeListener(self._CLICK_EVENT, LayoutClickEvent, listener)

@@ -36,6 +36,7 @@ class ComponentContainer(Component):
         """
         pass
 
+
     def removeComponent(self, c):
         """Removes the component from this container.
 
@@ -44,9 +45,11 @@ class ComponentContainer(Component):
         """
         pass
 
+
     def removeAllComponents(self):
         """Removes all components from this container."""
         pass
+
 
     def replaceComponent(self, oldComponent, newComponent):
         """Replaces the component in the container with another one without changing
@@ -68,6 +71,7 @@ class ComponentContainer(Component):
         """
         pass
 
+
     def getComponentIterator(self):
         """Gets an iterator to the collection of contained components. Using this
         iterator it is possible to step through all components contained in this
@@ -77,6 +81,7 @@ class ComponentContainer(Component):
         """
         pass
 
+
     def requestRepaintAll(self):
         """Causes a repaint of this component, and all components below it.
 
@@ -84,6 +89,7 @@ class ComponentContainer(Component):
         descendant depends on the state of a ancestor.
         """
         pass
+
 
     def moveComponentsFrom(self, source):
         """Moves all components from an another container into this container. The
@@ -95,7 +101,8 @@ class ComponentContainer(Component):
         """
         pass
 
-    def addListener(self, *args):
+
+    def addListener(self, listener):
         """Listens the component attach events.
 
         @param listener
@@ -103,17 +110,9 @@ class ComponentContainer(Component):
         ---
         Listens the component detach events.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            if isinstance(_0[0], ComponentAttachListener):
-                listener, = _0
-            else:
-                listener, = _0
-        else:
-            raise ARGERROR(1, 1)
 
-    def removeListener(self, *args):
+
+    def removeListener(self, listener):
         """Stops the listening component attach events.
 
         @param listener
@@ -121,15 +120,6 @@ class ComponentContainer(Component):
         ---
         Stops the listening component detach events.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            if isinstance(_0[0], ComponentAttachListener):
-                listener, = _0
-            else:
-                listener, = _0
-        else:
-            raise ARGERROR(1, 1)
 
 
 class ComponentAttachListener(object):
@@ -158,7 +148,6 @@ class ComponentDetachListener(object):
 
 class ComponentAttachEvent(Event):
     """Component attach event sent when a component is attached to container."""
-    _component = None
 
     def __init__(self, container, attachedComponent):
         """Creates a new attach event.
@@ -172,6 +161,7 @@ class ComponentAttachEvent(Event):
         super(ComponentAttachEvent, self)(container)
         self._component = attachedComponent
 
+
     def getContainer(self):
         """Gets the component container.
 
@@ -179,6 +169,7 @@ class ComponentAttachEvent(Event):
                    component container.
         """
         return self.getSource()
+
 
     def getAttachedComponent(self):
         """Gets the attached component.
@@ -191,7 +182,6 @@ class ComponentAttachEvent(Event):
 
 class ComponentDetachEvent(Event):
     """Component detach event sent when a component is detached from container."""
-    _component = None
 
     def __init__(self, container, detachedComponent):
         """Creates a new detach event.
@@ -205,6 +195,7 @@ class ComponentDetachEvent(Event):
         super(ComponentDetachEvent, self)(container)
         self._component = detachedComponent
 
+
     def getContainer(self):
         """Gets the component container.
 
@@ -212,6 +203,7 @@ class ComponentDetachEvent(Event):
                    component container.
         """
         return self.getSource()
+
 
     def getDetachedComponent(self):
         """Gets the detached component.

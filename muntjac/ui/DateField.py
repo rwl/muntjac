@@ -14,18 +14,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.event.FieldEvents import (BlurEvent, BlurListener, BlurNotifier, FieldEvents, FocusEvent, FocusListener, FocusNotifier,)
-from com.vaadin.ui.AbstractField import (AbstractField,)
-from com.vaadin.data.Property import (Property,)
-from com.vaadin.terminal.gwt.client.ui.VDateField import (VDateField,)
-# from java.text.ParseException import (ParseException,)
-# from java.text.SimpleDateFormat import (SimpleDateFormat,)
-# from java.util.Calendar import (Calendar,)
-# from java.util.Collection import (Collection,)
-# from java.util.Date import (Date,)
-# from java.util.Locale import (Locale,)
-# from java.util.Map import (Map,)
+from muntjac.event.FieldEvents import BlurEvent, BlurListener, BlurNotifier, \
+    FieldEvents, FocusEvent, FocusListener, FocusNotifier
+
+from muntjac.ui.AbstractField import AbstractField
+from muntjac.data.Property import Property
+from muntjac.terminal.gwt.client.ui.VDateField import VDateField
+from muntjac.terminal.gwt.client.ui.VPopupCalendar import VPopupCalendar
+from muntjac.ui.ClientWidget import LoadStyle
 
 
 class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNotifier):
@@ -48,40 +44,37 @@ class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNoti
     @VERSION@
     @since 3.0
     """
-    # Private members
+
+    CLIENT_WIDGET = VPopupCalendar
+    LOAD_STYLE = LoadStyle.EAGER
+
     # Resolution identifier: milliseconds.
     RESOLUTION_MSEC = 0
+
     # Resolution identifier: seconds.
     RESOLUTION_SEC = 1
+
     # Resolution identifier: minutes.
     RESOLUTION_MIN = 2
+
     # Resolution identifier: hours.
     RESOLUTION_HOUR = 3
+
     # Resolution identifier: days.
     RESOLUTION_DAY = 4
+
     # Resolution identifier: months.
     RESOLUTION_MONTH = 5
+
     # Resolution identifier: years.
     RESOLUTION_YEAR = 6
+
     # Specified smallest modifiable unit.
     _resolution = RESOLUTION_MSEC
+
     # Specified largest modifiable unit.
     _largestModifiable = RESOLUTION_YEAR
-    # The internal calendar to be used in java.utl.Date conversions.
-    _calendar = None
-    # Overridden format string
-    _dateFormat = None
-    _lenient = False
-    _dateString = None
-    # Was the last entered string parsable? If this flag is false, datefields
-    # internal validator does not pass.
 
-    _uiHasValidDateString = True
-    # Determines if week numbers are shown in the date selector.
-    _showISOWeekNumbers = False
-    _currentParseErrorMessage = None
-    _defaultParseErrorMessage = 'Date format not recognized'
-    # Constructors
 
     def __init__(self, *args):
         """Constructs an empty <code>DateField</code> with no caption.
@@ -116,39 +109,61 @@ class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNoti
         @param value
                    the Date value.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 0:
-            pass # astStmt: [Stmt([]), None]
-        elif _1 == 1:
-            if isinstance(_0[0], Property):
-                dataSource, = _0
+        # The internal calendar to be used in java.utl.Date conversions.
+        self._calendar = None
+
+        # Overridden format string
+        self._dateFormat = None
+
+        self._lenient = False
+
+        self._dateString = None
+
+        # Was the last entered string parsable? If this flag is false, datefields
+        # internal validator does not pass.
+        self._uiHasValidDateString = True
+
+        # Determines if week numbers are shown in the date selector.
+        self._showISOWeekNumbers = False
+
+        self._currentParseErrorMessage = None
+
+        self._defaultParseErrorMessage = 'Date format not recognized'
+
+
+        args = args
+        nargs = len(args)
+        if nargs == 0:
+            pass
+        elif nargs == 1:
+            if isinstance(args[0], Property):
+                dataSource, = args
                 if not Date.isAssignableFrom(dataSource.getType()):
-                    raise self.IllegalArgumentException('Can\'t use ' + dataSource.getType().getName() + ' typed property as datasource')
+                    raise ValueError, 'Can\'t use ' \
+                            + dataSource.getType().getName() \
+                            + ' typed property as datasource'
                 self.setPropertyDataSource(dataSource)
             else:
-                caption, = _0
+                caption, = args
                 self.setCaption(caption)
-        elif _1 == 2:
-            if isinstance(_0[1], Date):
-                caption, value = _0
+        elif nargs == 2:
+            if isinstance(args[1], datetime):
+                caption, value = args
                 self.setValue(value)
                 self.setCaption(caption)
             else:
-                caption, dataSource = _0
+                caption, dataSource = args
                 self.__init__(dataSource)
                 self.setCaption(caption)
         else:
-            raise ARGERROR(0, 2)
+            raise ValueError, 'too many arguments'
+
 
     # Component basic features
-    # Paints this component. Don't add a JavaDoc comment here, we use the
-    # default documentation from implemented interface.
 
     def paintContent(self, target):
-        # Invoked when a variable of the component changes. Don't add a JavaDoc
-        # comment here, we use the default documentation from implemented
-        # interface.
+        # Paints this component. Don't add a JavaDoc comment here, we use the
+        # default documentation from implemented interface.
 
         super(DateField, self).paintContent(target)
         # Adds the locale as attribute
@@ -210,6 +225,10 @@ class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNoti
                 break
 
     def changeVariables(self, source, variables):
+        # Invoked when a variable of the component changes. Don't add a JavaDoc
+        # comment here, we use the default documentation from implemented
+        # interface.
+
         super(DateField, self).changeVariables(source, variables)
         if (
             not self.isReadOnly() and ((((((('year' in variables) or ('month' in variables)) or ('day' in variables)) or ('hour' in variables)) or ('min' in variables)) or ('sec' in variables)) or ('msec' in variables)) or ('dateString' in variables)
@@ -292,7 +311,7 @@ class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNoti
                     # also checks the parsingSucceeded flag, we must also
                     # notify the form (if this is used in one) that the
                     # validity of this field has changed.
-                    # 
+                    #
                     # Normally fields validity doesn't change without value
                     # change and form depends on this implementation detail.
 
@@ -337,7 +356,7 @@ class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNoti
 
     def getType(self):
         # (non-Javadoc)
-        # 
+        #
         # @see com.vaadin.ui.AbstractField#setValue(java.lang.Object, boolean)
 
         return Date
@@ -357,7 +376,7 @@ class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNoti
             # datefields validity may change although the logical value does
             # not change. This is an issue for Form which expects that validity
             # of Fields cannot change unless actual value changes.
-            # 
+            #
             # So we check if this field is inside a form and the form has
             # registered this as a field. In this case we repaint the form.
             # Without this hacky solution the form might not be able to clean

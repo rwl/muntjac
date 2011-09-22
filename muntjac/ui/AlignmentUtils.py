@@ -37,6 +37,9 @@ class AlignmentUtils(object):
 
     @deprecated {@code AlignmentUtils} has been replaced by {@link Alignment}.
     """
+
+    raise DeprecationWarning
+
     _horizontalMask = (AlignmentHandler.ALIGNMENT_LEFT \
                 | AlignmentHandler.ALIGNMENT_HORIZONTAL_CENTER) \
                 | AlignmentHandler.ALIGNMENT_RIGHT

@@ -21,12 +21,17 @@ from muntjac.event.LayoutEvents import LayoutClickEvent
 from muntjac.event.LayoutEvents import LayoutClickListener
 from muntjac.event.LayoutEvents import LayoutClickNotifier
 from muntjac.terminal.Sizeable import Sizeable
+from muntjac.terminal.gwt.client.ui.VAbsoluteLayout import VAbsoluteLayout
+from muntjac.ui.ClientWidget import LoadStyle
 
 
 class AbsoluteLayout(AbstractLayout, LayoutClickNotifier):
     """AbsoluteLayout is a layout implementation that mimics html absolute
     positioning.
     """
+
+    CLIENT_WIDGET = VAbsoluteLayout
+    LOAD_STYLE = LoadStyle.DEFERRED
 
     _CLICK_EVENT = EventId.LAYOUT_CLICK
 

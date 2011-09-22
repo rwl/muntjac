@@ -14,12 +14,16 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.ui.Button import (Button,)
-# from java.lang.reflect.Method import (Method,)
+from muntjac.ui.Button import Button, ClickListener
+from muntjac.data.Property import Property
+from muntjac.terminal.gwt.client.ui.VCheckBox import VCheckBox
+from muntjac.ui.ClientWidget import LoadStyle
 
 
 class CheckBox(Button):
+
+    CLIENT_WIDGET = VCheckBox
+    LOAD_STYLE = LoadStyle.DEFERRED
 
     def __init__(self, *args):
         """Creates a new switch button.
@@ -68,33 +72,36 @@ class CheckBox(Button):
         @param caption
                    the Button caption.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 0:
+        nargs = len(args)
+        if nargs == 0:
             self.setSwitchMode(True)
-        elif _1 == 1:
-            caption, = _0
+        elif nargs == 1:
+            caption, = args
             super(CheckBox, self)(caption, False)
-        elif _1 == 2:
-            if isinstance(_0[1], ClickListener):
-                caption, listener = _0
+        elif nargs == 2:
+            if isinstance(args[1], ClickListener):
+                caption, listener = args
                 super(CheckBox, self)(caption, listener)
                 self.setSwitchMode(True)
-            elif isinstance(_0[1], Property):
-                caption, dataSource = _0
+            elif isinstance(args[1], Property):
+                caption, dataSource = args
                 super(CheckBox, self)(caption, dataSource)
                 self.setSwitchMode(True)
             else:
-                caption, initialState = _0
+                caption, initialState = args
                 super(CheckBox, self)(caption, initialState)
-        elif _1 == 3:
-            caption, target, methodName = _0
+        elif nargs == 3:
+            caption, target, methodName = args
             super(CheckBox, self)(caption, target, methodName)
             self.setSwitchMode(True)
         else:
-            raise ARGERROR(0, 3)
+            raise ValueError, 'too many arguments'
+
 
     def setSwitchMode(self, switchMode):
+        raise DeprecationWarning
+
         if self.switchMode and not switchMode:
-            raise self.UnsupportedOperationException('CheckBox is always in switch mode (consider using a Button)')
+            raise NotImplementedError, 'CheckBox is always in switch mode (consider using a Button)'
+
         super(CheckBox, self).setSwitchMode(True)

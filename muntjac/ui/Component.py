@@ -14,17 +14,13 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from com.vaadin.terminal.VariableOwner import (VariableOwner,)
-from com.vaadin.terminal.Sizeable import (Sizeable,)
-from com.vaadin.terminal.Paintable import (Paintable,)
-# from java.io.Serializable import (Serializable,)
-# from java.util.Collection import (Collection,)
-# from java.util.EventListener import (EventListener,)
-# from java.util.EventObject import (EventObject,)
-# from java.util.Locale import (Locale,)
+from muntjac.terminal.VariableOwner import VariableOwner
+from muntjac.terminal.Sizeable import Sizeable
+from muntjac.terminal.Paintable import Paintable
+from muntjac.util.event import EventObject, EventListener
 
 
-class Component(Paintable, VariableOwner, Sizeable, Serializable):
+class Component(Paintable, VariableOwner, Sizeable):
     """{@code Component} is the top-level interface that is and must be implemented
     by all Vaadin components. {@code Component} is paired with
     {@link AbstractComponent}, which provides a default implementation for all
@@ -78,6 +74,7 @@ class Component(Paintable, VariableOwner, Sizeable, Serializable):
         @see #removeStyleName(String)
         """
         pass
+
 
     def setStyleName(self, style):
         """Sets one or more user-defined style names of the component, replacing any
@@ -133,6 +130,7 @@ class Component(Paintable, VariableOwner, Sizeable, Serializable):
         """
         pass
 
+
     def addStyleName(self, style):
         """Adds a style name to component. The style name will be rendered as a HTML
         class name, which can be used in a CSS definition.
@@ -176,6 +174,7 @@ class Component(Paintable, VariableOwner, Sizeable, Serializable):
         """
         pass
 
+
     def removeStyleName(self, style):
         """Removes the given style name from component.
 
@@ -194,6 +193,7 @@ class Component(Paintable, VariableOwner, Sizeable, Serializable):
         """
         pass
 
+
     def isEnabled(self):
         """Tests whether the component is enabled or not. A user can not interact
         with disabled components. Disabled components are rendered in a style
@@ -210,6 +210,7 @@ class Component(Paintable, VariableOwner, Sizeable, Serializable):
         @see VariableOwner#isEnabled()
         """
         pass
+
 
     def setEnabled(self, enabled):
         """Enables or disables the component. The user can not interact disabled
@@ -242,6 +243,7 @@ class Component(Paintable, VariableOwner, Sizeable, Serializable):
         """
         pass
 
+
     def isVisible(self):
         """Tests the <i>visibility</i> property of the component.
 
@@ -273,6 +275,7 @@ class Component(Paintable, VariableOwner, Sizeable, Serializable):
         """
         pass
 
+
     def setVisible(self, visible):
         """Sets the visibility of the component.
 
@@ -302,6 +305,7 @@ class Component(Paintable, VariableOwner, Sizeable, Serializable):
         """
         pass
 
+
     def getParent(self):
         """Gets the parent component of the component.
 
@@ -315,6 +319,7 @@ class Component(Paintable, VariableOwner, Sizeable, Serializable):
         @see #setParent(Component)
         """
         pass
+
 
     def setParent(self, parent):
         """Sets the parent component of the component.
@@ -347,6 +352,7 @@ class Component(Paintable, VariableOwner, Sizeable, Serializable):
         """
         pass
 
+
     def isReadOnly(self):
         """Tests whether the component is in the read-only mode. The user can not
         change the value of a read-only component. As only {@link Field}
@@ -376,6 +382,7 @@ class Component(Paintable, VariableOwner, Sizeable, Serializable):
         @see #setReadOnly(boolean)
         """
         pass
+
 
     def setReadOnly(self, readOnly):
         """Sets the read-only mode of the component to the specified mode. The user
@@ -411,6 +418,7 @@ class Component(Paintable, VariableOwner, Sizeable, Serializable):
         """
         pass
 
+
     def getCaption(self):
         """Gets the caption of the component.
 
@@ -424,6 +432,7 @@ class Component(Paintable, VariableOwner, Sizeable, Serializable):
         @see #setCaption(String)
         """
         pass
+
 
     def setCaption(self, caption):
         """Sets the caption of the component.
@@ -482,6 +491,7 @@ class Component(Paintable, VariableOwner, Sizeable, Serializable):
         """
         pass
 
+
     def getIcon(self):
         """Gets the icon resource of the component.
 
@@ -494,6 +504,7 @@ class Component(Paintable, VariableOwner, Sizeable, Serializable):
         @see #setIcon(Resource)
         """
         pass
+
 
     def setIcon(self, icon):
         """Sets the icon of the component.
@@ -554,6 +565,7 @@ class Component(Paintable, VariableOwner, Sizeable, Serializable):
         """
         pass
 
+
     def getWindow(self):
         """Gets the parent window of the component.
 
@@ -573,6 +585,7 @@ class Component(Paintable, VariableOwner, Sizeable, Serializable):
         """
         pass
 
+
     def getApplication(self):
         """Gets the application object to which the component is attached.
 
@@ -589,6 +602,7 @@ class Component(Paintable, VariableOwner, Sizeable, Serializable):
         @see #attach()
         """
         pass
+
 
     def attach(self):
         """Notifies the component that it is connected to an application.
@@ -655,6 +669,7 @@ class Component(Paintable, VariableOwner, Sizeable, Serializable):
         """
         pass
 
+
     def detach(self):
         """Notifies the component that it is detached from the application.
 
@@ -671,6 +686,7 @@ class Component(Paintable, VariableOwner, Sizeable, Serializable):
         </p>
         """
         pass
+
 
     def getLocale(self):
         """Gets the locale of the component.
@@ -694,6 +710,7 @@ class Component(Paintable, VariableOwner, Sizeable, Serializable):
                 attached to an application.
         """
         pass
+
 
     def childRequestedRepaint(self, alreadyNotified):
         """The child components of the component must call this method when they
@@ -719,7 +736,6 @@ class Component(Paintable, VariableOwner, Sizeable, Serializable):
                    and pass it forward. A {@code null} parameter is interpreted
                    as an empty collection.
         """
-        # Component event framework
         pass
 
 
@@ -777,6 +793,17 @@ class Component(Paintable, VariableOwner, Sizeable, Serializable):
         pass
 
 
+    def removeListener(self, listener):
+        """Removes a previously registered component event listener from this
+        component.
+
+        @param listener
+                   the listener to be removed.
+        @see #addListener(Listener)
+        """
+        pass
+
+
 class Event(EventObject):
     """Superclass of all component originated events.
 
@@ -813,6 +840,7 @@ class Event(EventObject):
         """
         super(Event, self)(source)
 
+
     def getComponent(self):
         """Gets the component where the event occurred.
 
@@ -820,7 +848,8 @@ class Event(EventObject):
         """
         return self.getSource()
 
-class Listener(EventListener, Serializable):
+
+class Listener(EventListener):
     """Listener interface for receiving <code>Component.Event</code>s.
 
     <p>
@@ -912,15 +941,6 @@ class Listener(EventListener, Serializable):
         """
         pass
 
-def removeListener(self, listener):
-    """Removes a previously registered component event listener from this
-    component.
-
-    @param listener
-               the listener to be removed.
-    @see #addListener(Listener)
-    """
-    pass
 
 class ErrorEvent(Event):
     """Class of all component originated error events.
@@ -932,7 +952,6 @@ class ErrorEvent(Event):
     code. They are indicated in a component with an error indicator.
     </p>
     """
-    _message = None
 
     def __init__(self, message, component):
         """Constructs a new event with a specified source component.
@@ -945,6 +964,7 @@ class ErrorEvent(Event):
         super(ErrorEvent, self)(component)
         self._message = message
 
+
     def getErrorMessage(self):
         """Gets the error message.
 
@@ -952,7 +972,8 @@ class ErrorEvent(Event):
         """
         return self._message
 
-class ErrorListener(EventListener, Serializable):
+
+class ErrorListener(EventListener):
     """Listener interface for receiving <code>Component.Errors</code>s."""
 
     def componentError(self, event):
@@ -962,6 +983,7 @@ class ErrorListener(EventListener, Serializable):
                    the event that has occured.
         """
         pass
+
 
 class Focusable(Component):
     """A sub-interface implemented by components that can obtain input focus.
@@ -1017,6 +1039,7 @@ class Focusable(Component):
         """
         pass
 
+
     def getTabIndex(self):
         """Gets the <i>tabulator index</i> of the {@code Focusable} component.
 
@@ -1024,6 +1047,7 @@ class Focusable(Component):
         @see #setTabIndex(int)
         """
         pass
+
 
     def setTabIndex(self, tabIndex):
         """Sets the <i>tabulator index</i> of the {@code Focusable} component.

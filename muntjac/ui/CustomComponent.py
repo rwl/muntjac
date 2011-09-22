@@ -14,10 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.ui.AbstractComponentContainer import (AbstractComponentContainer,)
-# from java.io.Serializable import (Serializable,)
-# from java.util.Iterator import (Iterator,)
+from muntjac.ui.AbstractComponentContainer import AbstractComponentContainer
+from muntjac.terminal.gwt.client.ui.VCustomComponent import VCustomComponent
+from muntjac.ui.ClientWidget import LoadStyle
 
 
 class CustomComponent(AbstractComponentContainer):
@@ -34,12 +33,12 @@ class CustomComponent(AbstractComponentContainer):
     @VERSION@
     @since 3.0
     """
-    # The root component implementing the custom component.
-    _root = None
-    # Type of the component.
-    _componentType = None
 
-    def __init__(self, *args):
+    CLIENT_WIDGET = VCustomComponent
+    LOAD_STYLE = LoadStyle.EAGER
+
+
+    def __init__(self, compositionRoot=None):
         """Constructs a new custom component.
 
         <p>
@@ -59,17 +58,18 @@ class CustomComponent(AbstractComponentContainer):
         @param compositionRoot
                    the root of the composition component tree.
         """
+        # The root component implementing the custom component.
+        self._root = None
+
+        # Type of the component.
+        self._componentType = None
+
         # expand horizontally by default
-        _0 = args
-        _1 = len(args)
-        if _1 == 0:
-            self.setWidth(100, self.UNITS_PERCENTAGE)
-        elif _1 == 1:
-            compositionRoot, = _0
-            self.__init__()
+        self.setWidth(100, self.UNITS_PERCENTAGE)
+
+        if compositionRoot is not None:
             self.setCompositionRoot(compositionRoot)
-        else:
-            raise ARGERROR(0, 1)
+
 
     def getCompositionRoot(self):
         """Returns the composition root.
@@ -77,6 +77,7 @@ class CustomComponent(AbstractComponentContainer):
         @return the Component Composition root.
         """
         return self._root
+
 
     def setCompositionRoot(self, compositionRoot):
         """Sets the compositions root.
@@ -88,23 +89,31 @@ class CustomComponent(AbstractComponentContainer):
         @param compositionRoot
                    the root of the composition component tree.
         """
-        # Basic component features ------------------------------------------
         if compositionRoot != self._root:
             if self._root is not None:
                 # remove old component
                 super(CustomComponent, self).removeComponent(self._root)
+
             if compositionRoot is not None:
                 # set new component
                 super(CustomComponent, self).addComponent(compositionRoot)
+
             self._root = compositionRoot
             self.requestRepaint()
 
+
     def paintContent(self, target):
         if self._root is None:
-            raise self.IllegalStateException('Composition root must be set to' + ' non-null value before the ' + self.getClass().getName() + ' can be painted')
+            raise ValueError, 'Composition root must be set to' \
+                    + ' non-null value before the ' \
+                    + self.getClass().getName() \
+                    + ' can be painted'
+
         if self.getComponentType() is not None:
             target.addAttribute('type', self.getComponentType())
+
         self._root.paint(target)
+
 
     def getComponentType(self):
         """Gets the component type.
@@ -117,6 +126,7 @@ class CustomComponent(AbstractComponentContainer):
         @return the component type.
         """
         return self._componentType
+
 
     def setComponentType(self, componentType):
         """Sets the component type.
@@ -131,21 +141,10 @@ class CustomComponent(AbstractComponentContainer):
         """
         self._componentType = componentType
 
-    class ComponentIterator(Iterator, Serializable):
-        _first = self.getCompositionRoot() is not None
-
-        def hasNext(self):
-            return self._first
-
-        def next(self):
-            self._first = False
-            return self.root
-
-        def remove(self):
-            raise self.UnsupportedOperationException()
 
     def getComponentIterator(self):
-        return self.ComponentIterator()
+        return ComponentIterator(self)
+
 
     def getComponentCount(self):
         """Gets the number of contained components. Consistent with the iterator
@@ -155,13 +154,15 @@ class CustomComponent(AbstractComponentContainer):
         """
         return 1 if self._root is not None else 0
 
+
     def replaceComponent(self, oldComponent, newComponent):
         """This method is not supported by CustomComponent.
 
         @see com.vaadin.ui.ComponentContainer#replaceComponent(com.vaadin.ui.Component,
              com.vaadin.ui.Component)
         """
-        raise self.UnsupportedOperationException()
+        raise NotImplementedError
+
 
     def addComponent(self, c):
         """This method is not supported by CustomComponent. Use
@@ -170,25 +171,47 @@ class CustomComponent(AbstractComponentContainer):
 
         @see com.vaadin.ui.AbstractComponentContainer#addComponent(com.vaadin.ui.Component)
         """
-        raise self.UnsupportedOperationException()
+        raise NotImplementedError
+
 
     def moveComponentsFrom(self, source):
         """This method is not supported by CustomComponent.
 
         @see com.vaadin.ui.AbstractComponentContainer#moveComponentsFrom(com.vaadin.ui.ComponentContainer)
         """
-        raise self.UnsupportedOperationException()
+        raise NotImplementedError
+
 
     def removeAllComponents(self):
         """This method is not supported by CustomComponent.
 
         @see com.vaadin.ui.AbstractComponentContainer#removeAllComponents()
         """
-        raise self.UnsupportedOperationException()
+        raise NotImplementedError
+
 
     def removeComponent(self, c):
         """This method is not supported by CustomComponent.
 
         @see com.vaadin.ui.AbstractComponentContainer#removeComponent(com.vaadin.ui.Component)
         """
-        raise self.UnsupportedOperationException()
+        raise NotImplementedError
+
+
+class ComponentIterator(object):  # FIXME implement iterator
+
+    def __init__(self, c):
+        self._first = c.getCompositionRoot() is not None
+
+
+    def hasNext(self):
+        return self._first
+
+
+    def __iter__(self):
+        self._first = False
+        return self.root
+
+
+    def remove(self):
+        raise NotImplementedError
