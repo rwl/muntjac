@@ -14,14 +14,21 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import locale
+
+from time import mktime
+from datetime import datetime
+
 from muntjac.event.FieldEvents import BlurEvent, BlurListener, BlurNotifier, \
     FieldEvents, FocusEvent, FocusListener, FocusNotifier
 
 from muntjac.ui.AbstractField import AbstractField
-from muntjac.data.Property import Property
+from muntjac.data.Property import Property, ConversionException
 from muntjac.terminal.gwt.client.ui.VDateField import VDateField
 from muntjac.terminal.gwt.client.ui.VPopupCalendar import VPopupCalendar
 from muntjac.ui.ClientWidget import LoadStyle
+from muntjac.ui.Form import Form
+from muntjac.data.Validator import InvalidValueException
 
 
 class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNotifier):
@@ -138,9 +145,9 @@ class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNoti
         elif nargs == 1:
             if isinstance(args[0], Property):
                 dataSource, = args
-                if not Date.isAssignableFrom(dataSource.getType()):
+                if not issubclass(dataSource.getType(), datetime):
                     raise ValueError, 'Can\'t use ' \
-                            + dataSource.getType().getName() \
+                            + dataSource.getType().__name__ \
                             + ' typed property as datasource'
                 self.setPropertyDataSource(dataSource)
             else:
@@ -166,63 +173,54 @@ class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNoti
         # default documentation from implemented interface.
 
         super(DateField, self).paintContent(target)
+
         # Adds the locale as attribute
         l = self.getLocale()
         if l is not None:
             target.addAttribute('locale', str(l))
+
         if self.getDateFormat() is not None:
             target.addAttribute('format', self._dateFormat)
+
         if not self.isLenient():
             target.addAttribute('strict', True)
+
         target.addAttribute(VDateField.WEEK_NUMBERS, self.isShowISOWeekNumbers())
         target.addAttribute('parsable', self._uiHasValidDateString)
+
         # TODO communicate back the invalid date string? E.g. returning back to
         # app or refresh.
 
         # Gets the calendar
         calendar = self.getCalendar()
         currentDate = self.getValue()
-        _0 = True
+
         r = self._resolution
-        while True:
-            if _0 is True:
-                _0 = False
-            else:
-                r += 1
-            if not (r <= self._largestModifiable):
-                break
-            _1 = r
-            _2 = False
-            while True:
-                if _1 == self.RESOLUTION_MSEC:
-                    _2 = True
-                    target.addVariable(self, 'msec', calendar.get(Calendar.MILLISECOND) if currentDate is not None else -1)
-                    break
-                if (_2 is True) or (_1 == self.RESOLUTION_SEC):
-                    _2 = True
-                    target.addVariable(self, 'sec', calendar.get(Calendar.SECOND) if currentDate is not None else -1)
-                    break
-                if (_2 is True) or (_1 == self.RESOLUTION_MIN):
-                    _2 = True
-                    target.addVariable(self, 'min', calendar.get(Calendar.MINUTE) if currentDate is not None else -1)
-                    break
-                if (_2 is True) or (_1 == self.RESOLUTION_HOUR):
-                    _2 = True
-                    target.addVariable(self, 'hour', calendar.get(Calendar.HOUR_OF_DAY) if currentDate is not None else -1)
-                    break
-                if (_2 is True) or (_1 == self.RESOLUTION_DAY):
-                    _2 = True
-                    target.addVariable(self, 'day', calendar.get(Calendar.DAY_OF_MONTH) if currentDate is not None else -1)
-                    break
-                if (_2 is True) or (_1 == self.RESOLUTION_MONTH):
-                    _2 = True
-                    target.addVariable(self, 'month', calendar.get(Calendar.MONTH) + 1 if currentDate is not None else -1)
-                    break
-                if (_2 is True) or (_1 == self.RESOLUTION_YEAR):
-                    _2 = True
-                    target.addVariable(self, 'year', calendar.get(Calendar.YEAR) if currentDate is not None else -1)
-                    break
-                break
+        while r <= self._largestModifiable:
+
+            if r == self.RESOLUTION_MSEC:
+                target.addVariable(self, 'msec', calendar.microsecond / 1e03 if currentDate is not None else -1)
+
+            elif r == self.RESOLUTION_SEC:
+                target.addVariable(self, 'sec', calendar.second if currentDate is not None else -1)
+
+            elif r == self.RESOLUTION_MIN:
+                target.addVariable(self, 'min', calendar.minute if currentDate is not None else -1)
+
+            elif r == self.RESOLUTION_HOUR:
+                target.addVariable(self, 'hour', calendar.hour if currentDate is not None else -1)
+
+            elif r == self.RESOLUTION_DAY:
+                target.addVariable(self, 'day', calendar.day if currentDate is not None else -1)
+
+            elif r == self.RESOLUTION_MONTH:
+                target.addVariable(self, 'month', calendar.month + 1 if currentDate is not None else -1)
+
+            elif r == self.RESOLUTION_YEAR:
+                target.addVariable(self, 'year', calendar.year if currentDate is not None else -1)
+
+            r += 1
+
 
     def changeVariables(self, source, variables):
         # Invoked when a variable of the component changes. Don't add a JavaDoc
@@ -230,83 +228,91 @@ class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNoti
         # interface.
 
         super(DateField, self).changeVariables(source, variables)
-        if (
-            not self.isReadOnly() and ((((((('year' in variables) or ('month' in variables)) or ('day' in variables)) or ('hour' in variables)) or ('min' in variables)) or ('sec' in variables)) or ('msec' in variables)) or ('dateString' in variables)
-        ):
+        if not self.isReadOnly() \
+                and (('year' in variables) \
+                    or ('month' in variables) \
+                    or ('day' in variables) \
+                    or ('hour' in variables) \
+                    or ('min' in variables) \
+                    or ('sec' in variables) \
+                    or ('msec' in variables) \
+                    or ('dateString' in variables)):
+
             # Old and new dates
             oldDate = self.getValue()
             newDate = None
+
             # this enables analyzing invalid input on the server
-            newDateString = variables['dateString']
+            newDateString = variables.get('dateString')
             self._dateString = newDateString
+
             # Gets the new date in parts
             # Null values are converted to negative values.
-            year = -1 if variables['year'] is None else variables['year'].intValue() if 'year' in variables else -1
-            month = -1 if variables['month'] is None else variables['month'].intValue() - 1 if 'month' in variables else -1
-            day = -1 if variables['day'] is None else variables['day'].intValue() if 'day' in variables else -1
-            hour = -1 if variables['hour'] is None else variables['hour'].intValue() if 'hour' in variables else -1
-            min = -1 if variables['min'] is None else variables['min'].intValue() if 'min' in variables else -1
-            sec = -1 if variables['sec'] is None else variables['sec'].intValue() if 'sec' in variables else -1
-            msec = -1 if variables['msec'] is None else variables['msec'].intValue() if 'msec' in variables else -1
+            year  = -1 if variables.get('year')  is None else int(variables.get('year'))      if 'year'  in variables else -1
+            month = -1 if variables.get('month') is None else int(variables.get('month')) - 1 if 'month' in variables else -1
+            day   = -1 if variables.get('day')   is None else int(variables.get('day'))       if 'day'   in variables else -1
+            hour  = -1 if variables.get('hour')  is None else int(variables.get('hour'))      if 'hour'  in variables else -1
+            minn  = -1 if variables.get('min')   is None else int(variables.get('min'))       if 'min'   in variables else -1
+            sec   = -1 if variables.get('sec')   is None else int(variables.get('sec'))       if 'sec'   in variables else -1
+            msec  = -1 if variables.get('msec')  is None else int(variables.get('msec'))      if 'msec'  in variables else -1
+
             # If all of the components is < 0 use the previous value
-            if (
-                year < 0 and month < 0 and day < 0 and hour < 0 and min < 0 and sec < 0 and msec < 0
-            ):
+            if year < 0 and month < 0 and day < 0 and hour < 0 and min < 0 \
+                    and sec < 0 and msec < 0:
                 newDate = None
             else:
                 # Clone the calendar for date operation
                 cal = self.getCalendar()
+
                 # Make sure that meaningful values exists
                 # Use the previous value if some of the variables
                 # have not been changed.
-                year = cal.get(Calendar.YEAR) if year < 0 else year
-                month = cal.get(Calendar.MONTH) if month < 0 else month
-                day = cal.get(Calendar.DAY_OF_MONTH) if day < 0 else day
-                hour = cal.get(Calendar.HOUR_OF_DAY) if hour < 0 else hour
-                min = cal.get(Calendar.MINUTE) if min < 0 else min
-                sec = cal.get(Calendar.SECOND) if sec < 0 else sec
-                msec = cal.get(Calendar.MILLISECOND) if msec < 0 else msec
-                # Sets the calendar fields
-                cal.set(Calendar.YEAR, year)
-                cal.set(Calendar.MONTH, month)
-                cal.set(Calendar.DAY_OF_MONTH, day)
-                cal.set(Calendar.HOUR_OF_DAY, hour)
-                cal.set(Calendar.MINUTE, min)
-                cal.set(Calendar.SECOND, sec)
-                cal.set(Calendar.MILLISECOND, msec)
-                # Assigns the date
-                newDate = cal.getTime()
-            if (
-                newDate is None and self._dateString is not None and not ('' == self._dateString)
-            ):
-                # Datefield now contains some text that could't be parsed
-                # into date.
+                year = cal.year if year < 0 else year
+                month = cal.month if month < 0 else month
+                day = cal.day if day < 0 else day
+                hour = cal.hour if hour < 0 else hour
+                minn = cal.minute if minn < 0 else minn
+                sec = cal.second if sec < 0 else sec
+                msec = cal.microsecond / 1e03 if msec < 0 else msec
 
+                # Sets the calendar fields
+                cal = datetime(year, month, day, hour, minn, sec, msec * 1e03)
+
+                # Assigns the date
+                newDate = mktime(cal.timetuple())
+                ## FIXME use: timestamp = (dt - datetime(1970, 1, 1, tzinfo=timezone.utc)) / timedelta(seconds=1)
+
+            if newDate is None and self._dateString is not None \
+                    and not ('' == self._dateString):
                 try:
                     parsedDate = self.handleUnparsableDateString(self._dateString)
                     self.setValue(parsedDate, True)
+
                     # Ensure the value is sent to the client if the value is
                     # set to the same as the previous (#4304). Does not repaint
                     # if handleUnparsableDateString throws an exception. In
                     # this case the invalid text remains in the DateField.
-
                     self.requestRepaint()
                 except ConversionException, e:
+
+                    # Datefield now contains some text that could't be parsed
+                    # into date.
                     if oldDate is not None:
                         # Set the logic value to null.
                         self.setValue(None)
                         # Reset the dateString (overridden to null by setValue)
                         self._dateString = newDateString
+
                     # Saves the localized message of parse error. This can be
                     # overridden in handleUnparsableDateString. The message
                     # will later be used to show a validation error.
-
                     self._currentParseErrorMessage = e.getLocalizedMessage()
+
                     # The value of the DateField should be null if an invalid
                     # value has been given. Not using setValue() since we do
                     # not want to cause the client side value to change.
-
                     self._uiHasValidDateString = False
+
                     # Because of our custom implementation of isValid(), that
                     # also checks the parsingSucceeded flag, we must also
                     # notify the form (if this is used in one) that the
@@ -314,12 +320,12 @@ class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNoti
                     #
                     # Normally fields validity doesn't change without value
                     # change and form depends on this implementation detail.
-
                     self.notifyFormOfValidityChange()
+
                     self.requestRepaint()
-            elif newDate != oldDate and (newDate is None) or (not (newDate == oldDate)):
-                self.setValue(newDate, True)
-                # Don't require a repaint, client
+            elif newDate != oldDate \
+                    and (newDate is None or (not (newDate == oldDate))):
+                self.setValue(newDate, True)  # Don't require a repaint, client
                 # updates itself
             elif not self._uiHasValidDateString:
                 # oldDate ==
@@ -327,10 +333,13 @@ class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNoti
                 # Empty value set, previously contained unparsable date string,
                 # clear related internal fields
                 self.setValue(None)
+
         if FocusEvent.EVENT_ID in variables:
             self.fireEvent(FocusEvent(self))
+
         if BlurEvent.EVENT_ID in variables:
             self.fireEvent(BlurEvent(self))
+
 
     def handleUnparsableDateString(self, dateString):
         """This method is called to handle a non-empty date string from the client
@@ -347,31 +356,26 @@ class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNoti
         @throws Property.ConversionException
                     to keep the old value and indicate an error
         """
-        # Property features
-        # Gets the edited property's type. Don't add a JavaDoc comment here, we use
-        # the default documentation from implemented interface.
-
         self._currentParseErrorMessage = None
-        raise Property.ConversionException(self.getParseErrorMessage())
+        raise ConversionException(self.getParseErrorMessage())
+
 
     def getType(self):
-        # (non-Javadoc)
-        #
-        # @see com.vaadin.ui.AbstractField#setValue(java.lang.Object, boolean)
+        # Gets the edited property's type.
+        return datetime
 
-        return Date
 
     def setValue(self, newValue, repaintIsNotNeeded):
+
         # First handle special case when the client side component have a date
         # string but value is null (e.g. unparsable date string typed in by the
         # user). No value changes should happen, but we need to do some
         # internal housekeeping.
-
         if newValue is None and not self._uiHasValidDateString:
             # Side-effects of setInternalValue clears possible previous strings
             # and flags about invalid input.
-
             self.setInternalValue(None)
+
             # Due to DateField's special implementation of isValid(),
             # datefields validity may change although the logical value does
             # not change. This is an issue for Form which expects that validity
@@ -383,21 +387,21 @@ class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNoti
             # validation errors etc. We could avoid this by firing an extra
             # value change event, but feels like at least as bad solution as
             # this.
-
             self.notifyFormOfValidityChange()
             self.requestRepaint()
             return
-        if (newValue is None) or isinstance(newValue, Date):
+
+        if (newValue is None) or isinstance(newValue, datetime):
             super(DateField, self).setValue(newValue, repaintIsNotNeeded)
         else:
             # Try to parse the given string value to Date
             try:
-                parser = SimpleDateFormat()
-                val = parser.parse(str(newValue))
+                val = datetime.strptime(str(newValue), locale.D_T_FMT)
                 super(DateField, self).setValue(val, repaintIsNotNeeded)
-            except ParseException, e:
+            except ValueError:
                 self._uiHasValidDateString = False
-                raise Property.ConversionException(self.getParseErrorMessage())
+                raise ConversionException(self.getParseErrorMessage())
+
 
     def notifyFormOfValidityChange(self):
         """Detects if this field is used in a Form (logically) and if so, notifies
@@ -415,7 +419,6 @@ class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNoti
                         # this datefield is logically in a form. Do the same
                         # thing as form does in its value change listener that
                         # it registers to all fields.
-
                         f.requestRepaint()
                         formFound = True
                         break
@@ -423,15 +426,17 @@ class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNoti
                 break
             parenOfDateField = parenOfDateField.getParent()
 
+
     def setPropertyDataSource(self, newDataSource):
         """Sets the DateField datasource. Datasource type must assignable to Date.
 
         @see com.vaadin.data.Property.Viewer#setPropertyDataSource(Property)
         """
-        if (newDataSource is None) or Date.isAssignableFrom(newDataSource.getType()):
+        if (newDataSource is None) or issubclass(newDataSource.getType(), datetime):
             super(DateField, self).setPropertyDataSource(newDataSource)
         else:
-            raise self.IllegalArgumentException('DateField only supports Date properties')
+            raise ValueError, 'DateField only supports Date properties'
+
 
     def setInternalValue(self, newValue):
         # Also set the internal dateString
@@ -439,12 +444,15 @@ class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNoti
             self._dateString = str(newValue)
         else:
             self._dateString = None
+
         if not self._uiHasValidDateString:
             # clear component error and parsing flag
             self.setComponentError(None)
             self._uiHasValidDateString = True
             self._currentParseErrorMessage = None
+
         super(DateField, self).setInternalValue(newValue)
+
 
     def getResolution(self):
         """Gets the resolution.
@@ -452,6 +460,7 @@ class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNoti
         @return int
         """
         return self._resolution
+
 
     def setResolution(self, resolution):
         """Sets the resolution of the DateField.
@@ -461,6 +470,7 @@ class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNoti
         """
         self._resolution = resolution
         self.requestRepaint()
+
 
     def getCalendar(self):
         """Returns new instance calendar used in Date conversions.
@@ -476,14 +486,16 @@ class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNoti
         """
         # Makes sure we have an calendar instance
         if self._calendar is None:
-            self._calendar = Calendar.getInstance()
+            self._calendar = datetime.now()
         # Clone the instance
-        newCal = self._calendar.clone()
+        ## FIXME use: timestamp = (dt - datetime(1970, 1, 1)) / timedelta(seconds=1)
+        newCal = datetime.fromtimestamp( mktime(self._calendar.timetuple()) )
         # Assigns the current time tom calendar.
         currentDate = self.getValue()
         if currentDate is not None:
             newCal.setTime(currentDate)
         return newCal
+
 
     def setDateFormat(self, dateFormat):
         """Sets formatting used by some component implementations. See
@@ -501,6 +513,7 @@ class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNoti
         self._dateFormat = dateFormat
         self.requestRepaint()
 
+
     def getDateFormat(self):
         """Returns a format string used to format date value on client side or null
         if default formatting from {@link Component#getLocale()} is used.
@@ -508,6 +521,7 @@ class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNoti
         @return the dateFormat
         """
         return self._dateFormat
+
 
     def setLenient(self, lenient):
         """Specifies whether or not date/time interpretation in component is to be
@@ -523,6 +537,7 @@ class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNoti
         self._lenient = lenient
         self.requestRepaint()
 
+
     def isLenient(self):
         """Returns whether date/time interpretation is to be lenient.
 
@@ -533,31 +548,22 @@ class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNoti
         """
         return self._lenient
 
-    def addListener(self, *args):
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            if isinstance(_0[0], BlurListener):
-                listener, = _0
-                self.addListener(BlurEvent.EVENT_ID, BlurEvent, listener, BlurListener.blurMethod)
-            else:
-                listener, = _0
-                self.addListener(FocusEvent.EVENT_ID, FocusEvent, listener, FocusListener.focusMethod)
-        else:
-            raise ARGERROR(1, 1)
 
-    def removeListener(self, *args):
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            if isinstance(_0[0], BlurListener):
-                listener, = _0
-                self.removeListener(BlurEvent.EVENT_ID, BlurEvent, listener)
-            else:
-                listener, = _0
-                self.removeListener(FocusEvent.EVENT_ID, FocusEvent, listener)
+    def addListener(self, listener):
+        if isinstance(listener, BlurListener):
+            self.addListener(BlurEvent.EVENT_ID, BlurEvent, listener,
+                             BlurListener.blurMethod)
         else:
-            raise ARGERROR(1, 1)
+            self.addListener(FocusEvent.EVENT_ID, FocusEvent, listener,
+                             FocusListener.focusMethod)
+
+
+    def removeListener(self, listener):
+        if isinstance(listener, BlurListener):
+            self.removeListener(BlurEvent.EVENT_ID, BlurEvent, listener)
+        else:
+            self.removeListener(FocusEvent.EVENT_ID, FocusEvent, listener)
+
 
     def isShowISOWeekNumbers(self):
         """Checks whether ISO 8601 week numbers are shown in the date selector.
@@ -565,6 +571,7 @@ class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNoti
         @return true if week numbers are shown, false otherwise.
         """
         return self._showISOWeekNumbers
+
 
     def setShowISOWeekNumbers(self, showWeekNumbers):
         """Sets the visibility of ISO 8601 week numbers in the date selector. ISO
@@ -577,6 +584,7 @@ class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNoti
         self._showISOWeekNumbers = showWeekNumbers
         self.requestRepaint()
 
+
     def isValid(self):
         """Tests the current value against registered validators if the field is not
         empty. Note that DateField is considered empty (value == null) and
@@ -587,14 +595,15 @@ class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNoti
         """
         return self._uiHasValidDateString and super(DateField, self).isValid()
 
+
     def validate(self):
         # To work properly in form we must throw exception if there is
         # currently a parsing error in the datefield. Parsing error is kind of
         # an internal validator.
-
         if not self._uiHasValidDateString:
             raise self.UnparsableDateString(self._currentParseErrorMessage)
         super(DateField, self).validate()
+
 
     def getParseErrorMessage(self):
         """Return the error message that is shown if the user inputted value can't
@@ -611,6 +620,7 @@ class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNoti
         """
         return self._defaultParseErrorMessage
 
+
     def setParseErrorMessage(self, parsingErrorMessage):
         """Sets the default error message used if the DateField cannot parse the
         text input by user to a Date field. Note that if the
@@ -623,7 +633,8 @@ class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNoti
         """
         self._defaultParseErrorMessage = parsingErrorMessage
 
-    class UnparsableDateString(Validator.InvalidValueException):
 
-        def __init__(self, message):
-            super(UnparsableDateString, self)(message)
+class UnparsableDateString(InvalidValueException):
+
+    def __init__(self, message):
+        super(UnparsableDateString, self)(message)
