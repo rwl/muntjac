@@ -24,4 +24,4 @@ class VerticalDropLocation(object):
 
     @classmethod
     def values(cls):
-        return cls._enum_values[:]
+        return cls._values[:]

@@ -83,94 +83,94 @@ class Item(Serializable):
         """
         pass
 
-    class Viewer(Serializable):
-        """Interface implemented by viewer classes capable of using an Item as a
-        data source.
+class Viewer(Serializable):
+    """Interface implemented by viewer classes capable of using an Item as a
+    data source.
+    """
+
+    def setItemDataSource(self, newDataSource):
+        """Sets the Item that serves as the data source of the viewer.
+
+        @param newDataSource
+                   The new data source Item
         """
-
-        def setItemDataSource(self, newDataSource):
-            """Sets the Item that serves as the data source of the viewer.
-
-            @param newDataSource
-                       The new data source Item
-            """
-            pass
-
-        def getItemDataSource(self):
-            """Gets the Item serving as the data source of the viewer.
-
-            @return data source Item
-            """
-            pass
-
-    class Editor(Item.Viewer, Serializable):
-        """Interface implemented by the <code>Editor</code> classes capable of
-        editing the Item. Implementing this interface means that the Item serving
-        as the data source of the editor can be modified through it.
-        <p>
-        Note : Not implementing the <code>Item.Editor</code> interface does not
-        restrict the class from editing the contents of an internally.
-        </p>
-        """
-        # Property set change event
         pass
 
-    class PropertySetChangeEvent(Serializable):
-        """An <code>Event</code> object specifying the Item whose contents has been
-        changed through the <code>Property</code> interface.
-        <p>
-        Note: The values stored in the Properties may change without triggering
-        this event.
-        </p>
+    def getItemDataSource(self):
+        """Gets the Item serving as the data source of the viewer.
+
+        @return data source Item
         """
+        pass
 
-        def getItem(self):
-            """Retrieves the Item whose contents has been modified.
+class Editor(Item.Viewer, Serializable):
+    """Interface implemented by the <code>Editor</code> classes capable of
+    editing the Item. Implementing this interface means that the Item serving
+    as the data source of the editor can be modified through it.
+    <p>
+    Note : Not implementing the <code>Item.Editor</code> interface does not
+    restrict the class from editing the contents of an internally.
+    </p>
+    """
+    # Property set change event
+    pass
 
-            @return source Item of the event
-            """
-            pass
+class PropertySetChangeEvent(Serializable):
+    """An <code>Event</code> object specifying the Item whose contents has been
+    changed through the <code>Property</code> interface.
+    <p>
+    Note: The values stored in the Properties may change without triggering
+    this event.
+    </p>
+    """
 
-    class PropertySetChangeListener(Serializable):
-        """The listener interface for receiving <code>PropertySetChangeEvent</code>
-        objects.
+    def getItem(self):
+        """Retrieves the Item whose contents has been modified.
+
+        @return source Item of the event
         """
+        pass
 
-        def itemPropertySetChange(self, event):
-            """Notifies this listener that the Item's property set has changed.
+class PropertySetChangeListener(Serializable):
+    """The listener interface for receiving <code>PropertySetChangeEvent</code>
+    objects.
+    """
 
-            @param event
-                       Property set change event object
-            """
-            pass
+    def itemPropertySetChange(self, event):
+        """Notifies this listener that the Item's property set has changed.
 
-    class PropertySetChangeNotifier(Serializable):
-        """The interface for adding and removing <code>PropertySetChangeEvent</code>
-        listeners. By implementing this interface a class explicitly announces
-        that it will generate a <code>PropertySetChangeEvent</code> when its
-        Property set is modified.
-        <p>
-        Note : The general Java convention is not to explicitly declare that a
-        class generates events, but to directly define the
-        <code>addListener</code> and <code>removeListener</code> methods. That
-        way the caller of these methods has no real way of finding out if the
-        class really will send the events, or if it just defines the methods to
-        be able to implement an interface.
-        </p>
+        @param event
+                   Property set change event object
         """
+        pass
 
-        def addListener(self, listener):
-            """Registers a new property set change listener for this Item.
+class PropertySetChangeNotifier(Serializable):
+    """The interface for adding and removing <code>PropertySetChangeEvent</code>
+    listeners. By implementing this interface a class explicitly announces
+    that it will generate a <code>PropertySetChangeEvent</code> when its
+    Property set is modified.
+    <p>
+    Note : The general Java convention is not to explicitly declare that a
+    class generates events, but to directly define the
+    <code>addListener</code> and <code>removeListener</code> methods. That
+    way the caller of these methods has no real way of finding out if the
+    class really will send the events, or if it just defines the methods to
+    be able to implement an interface.
+    </p>
+    """
 
-            @param listener
-                       The new Listener to be registered.
-            """
-            pass
+    def addListener(self, listener):
+        """Registers a new property set change listener for this Item.
 
-        def removeListener(self, listener):
-            """Removes a previously registered property set change listener.
+        @param listener
+                   The new Listener to be registered.
+        """
+        pass
 
-            @param listener
-                       Listener to be removed.
-            """
-            pass
+    def removeListener(self, listener):
+        """Removes a previously registered property set change listener.
+
+        @param listener
+                   Listener to be removed.
+        """
+        pass
