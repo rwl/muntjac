@@ -14,8 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.ui.AbstractSplitPanel import (AbstractSplitPanel,)
+from muntjac.ui.AbstractSplitPanel import AbstractSplitPanel
+from muntjac.terminal.gwt.client.ui.VSplitPanelHorizontal import VSplitPanelHorizontal
+from muntjac.ui.ClientWidget import LoadStyle
 
 
 class SplitPanel(AbstractSplitPanel):
@@ -31,15 +32,18 @@ class SplitPanel(AbstractSplitPanel):
     @deprecated in 6.5. Use {@link HorizontalSplitPanel} or
                 {@link VerticalSplitPanel} instead.
     """
-    # Predefined orientations
+
+    CLIENT_WIDGET = VSplitPanelHorizontal
+    LOAD_STYLE = LoadStyle.EAGER
+
     # Components are to be laid out vertically.
     ORIENTATION_VERTICAL = 0
+
     # Components are to be laid out horizontally.
     ORIENTATION_HORIZONTAL = 1
-    # Orientation of the layout.
-    _orientation = None
 
-    def __init__(self, *args):
+
+    def __init__(self, orientation=None):
         """Creates a new split panel. The orientation of the panels is
         <code>ORIENTATION_VERTICAL</code>.
         ---
@@ -49,18 +53,14 @@ class SplitPanel(AbstractSplitPanel):
         @param orientation
                    the Orientation of the layout.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 0:
-            super(SplitPanel, self)()
+        # Orientation of the layout.
+        if orientation is None:
             self._orientation = self.ORIENTATION_VERTICAL
-            self.setSizeFull()
-        elif _1 == 1:
-            orientation, = _0
-            self.__init__()
-            self.setOrientation(orientation)
         else:
-            raise ARGERROR(0, 1)
+            self.setOrientation(orientation)
+
+        self.setSizeFull()
+
 
     def paintContent(self, target):
         """Paints the content of this component.
@@ -74,12 +74,14 @@ class SplitPanel(AbstractSplitPanel):
         if self._orientation == self.ORIENTATION_VERTICAL:
             target.addAttribute('vertical', True)
 
+
     def getOrientation(self):
         """Gets the orientation of the split panel.
 
         @return the Value of property orientation.
         """
         return self._orientation
+
 
     def setOrientation(self, orientation):
         """Sets the orientation of the split panel.
@@ -88,9 +90,9 @@ class SplitPanel(AbstractSplitPanel):
                    the New value of property orientation.
         """
         # Checks the validity of the argument
-        if (
-            (orientation < self.ORIENTATION_VERTICAL) or (orientation > self.ORIENTATION_HORIZONTAL)
-        ):
-            raise self.IllegalArgumentException()
+        if orientation < self.ORIENTATION_VERTICAL \
+                or orientation > self.ORIENTATION_HORIZONTAL:
+            raise ValueError
+
         self._orientation = orientation
         self.requestRepaint()

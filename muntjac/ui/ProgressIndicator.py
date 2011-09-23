@@ -14,13 +14,17 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.data.util.ObjectProperty import (ObjectProperty,)
-from com.vaadin.ui.AbstractField import (AbstractField,)
-from com.vaadin.data.Property import (Property, ValueChangeListener, Viewer,)
+from muntjac.data.util.ObjectProperty import ObjectProperty
+from muntjac.ui.AbstractField import AbstractField
+from muntjac.terminal.gwt.client.ui.VProgressIndicator import VProgressIndicator
+from muntjac.ui.ClientWidget import LoadStyle
+
+from muntjac.data.Property import \
+    Property, ValueChangeListener, Viewer, ValueChangeNotifier
 
 
-class ProgressIndicator(AbstractField, Property, Property, Viewer, Property, ValueChangeListener):
+class ProgressIndicator(AbstractField, Property, Property, Viewer,
+                        Property, ValueChangeListener):
     """<code>ProgressIndicator</code> is component that shows user state of a
     process (like long computing or file upload)
 
@@ -34,15 +38,17 @@ class ProgressIndicator(AbstractField, Property, Property, Viewer, Property, Val
     @VERSION@
     @since 4
     """
+
+    CLIENT_WIDGET = VProgressIndicator
+    LOAD_STYLE = LoadStyle.EAGER
+
     # Content mode, where the label contains only plain text. The getValue()
     # result is coded to XML when painting.
-
     CONTENT_TEXT = 0
+
     # Content mode, where the label contains preformatted text.
     CONTENT_PREFORMATTED = 1
-    _indeterminate = False
-    _dataSource = None
-    _pollingInterval = 1000
+
 
     def __init__(self, *args):
         """Creates an a new ProgressIndicator.
@@ -56,19 +62,23 @@ class ProgressIndicator(AbstractField, Property, Property, Viewer, Property, Val
 
         @param contentSource
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 0:
-            self.setPropertyDataSource(ObjectProperty(float(0), float))
-        elif _1 == 1:
-            if isinstance(_0[0], Property):
-                contentSource, = _0
+        self._indeterminate = False
+        self._dataSource = None
+        self._pollingInterval = 1000
+
+        nargs = len(args)
+        if nargs == 0:
+            self.setPropertyDataSource(ObjectProperty(0.0, float))
+        elif nargs == 1:
+            if isinstance(args[0], Property):
+                contentSource, = args
                 self.setPropertyDataSource(contentSource)
             else:
-                value, = _0
+                value, = args
                 self.setPropertyDataSource(ObjectProperty(value, float))
         else:
-            raise ARGERROR(0, 1)
+            raise ValueError, 'too many arguments'
+
 
     def setReadOnly(self, readOnly):
         """Sets the component to read-only. Readonly is not used in
@@ -78,8 +88,10 @@ class ProgressIndicator(AbstractField, Property, Property, Viewer, Property, Val
                    True to enable read-only mode, False to disable it.
         """
         if self._dataSource is None:
-            raise self.IllegalStateException('Datasource must be se')
+            raise ValueError, 'Datasource must be set'
+
         self._dataSource.setReadOnly(readOnly)
+
 
     def isReadOnly(self):
         """Is the component read-only ? Readonly is not used in ProgressIndicator -
@@ -88,8 +100,10 @@ class ProgressIndicator(AbstractField, Property, Property, Viewer, Property, Val
         @return True if the component is in read only mode.
         """
         if self._dataSource is None:
-            raise self.IllegalStateException('Datasource must be se')
+            raise ValueError, 'Datasource must be set'
+
         return self._dataSource.isReadOnly()
+
 
     def paintContent(self, target):
         """Paints the content of this component.
@@ -103,6 +117,7 @@ class ProgressIndicator(AbstractField, Property, Property, Viewer, Property, Val
         target.addAttribute('pollinginterval', self._pollingInterval)
         target.addAttribute('state', str(self.getValue()))
 
+
     def getValue(self):
         """Gets the value of the ProgressIndicator. Value of the ProgressIndicator
         is Float between 0 and 1.
@@ -111,8 +126,10 @@ class ProgressIndicator(AbstractField, Property, Property, Viewer, Property, Val
         @see com.vaadin.ui.AbstractField#getValue()
         """
         if self._dataSource is None:
-            raise self.IllegalStateException('Datasource must be set')
+            raise ValueError, 'Datasource must be set'
+
         return self._dataSource.getValue()
+
 
     def setValue(self, newValue):
         """Sets the value of the ProgressIndicator. Value of the ProgressIndicator
@@ -123,20 +140,26 @@ class ProgressIndicator(AbstractField, Property, Property, Viewer, Property, Val
         @see com.vaadin.ui.AbstractField#setValue(java.lang.Object)
         """
         if self._dataSource is None:
-            raise self.IllegalStateException('Datasource must be set')
+            raise ValueError, 'Datasource must be set'
+
         self._dataSource.setValue(newValue)
 
-    def toString(self):
+
+    def __str__(self):
         """@see com.vaadin.ui.AbstractField#toString()"""
         if self._dataSource is None:
-            raise self.IllegalStateException('Datasource must be set')
+            raise ValueError, 'Datasource must be set'
+
         return str(self._dataSource)
+
 
     def getType(self):
         """@see com.vaadin.ui.AbstractField#getType()"""
         if self._dataSource is None:
-            raise self.IllegalStateException('Datasource must be set')
+            raise ValueError, 'Datasource must be set'
+
         return self._dataSource.getType()
+
 
     def getPropertyDataSource(self):
         """Gets the viewing data-source property.
@@ -146,6 +169,7 @@ class ProgressIndicator(AbstractField, Property, Property, Viewer, Property, Val
         """
         return self._dataSource
 
+
     def setPropertyDataSource(self, newDataSource):
         """Sets the property as data-source for viewing.
 
@@ -154,17 +178,18 @@ class ProgressIndicator(AbstractField, Property, Property, Viewer, Property, Val
         @see com.vaadin.ui.AbstractField#setPropertyDataSource(com.vaadin.data.Property)
         """
         # Stops listening the old data source changes
-        if (
-            self._dataSource is not None and Property.ValueChangeNotifier.isAssignableFrom(self._dataSource.getClass())
-        ):
+        if self._dataSource is not None \
+                and issubclass(self._dataSource.getClass(), ValueChangeNotifier):
             self._dataSource.removeListener(self)
+
         # Sets the new data source
         self._dataSource = newDataSource
+
         # Listens the new data source if possible
-        if (
-            self._dataSource is not None and Property.ValueChangeNotifier.isAssignableFrom(self._dataSource.getClass())
-        ):
+        if self._dataSource is not None \
+                and issubclass(self._dataSource.getClass(), ValueChangeNotifier):
             self._dataSource.addListener(self)
+
 
     def getContentMode(self):
         """Gets the mode of ProgressIndicator.
@@ -172,6 +197,7 @@ class ProgressIndicator(AbstractField, Property, Property, Viewer, Property, Val
         @return true if in indeterminate mode.
         """
         return self._indeterminate
+
 
     def setIndeterminate(self, newValue):
         """Sets wheter or not the ProgressIndicator is indeterminate.
@@ -182,12 +208,14 @@ class ProgressIndicator(AbstractField, Property, Property, Viewer, Property, Val
         self._indeterminate = newValue
         self.requestRepaint()
 
+
     def isIndeterminate(self):
         """Gets whether or not the ProgressIndicator is indeterminate.
 
         @return true to set to indeterminate mode.
         """
         return self._indeterminate
+
 
     def setPollingInterval(self, newValue):
         """Sets the interval that component checks for progress.
@@ -197,6 +225,7 @@ class ProgressIndicator(AbstractField, Property, Property, Viewer, Property, Val
         """
         self._pollingInterval = newValue
         self.requestRepaint()
+
 
     def getPollingInterval(self):
         """Gets the interval that component checks for progress.
