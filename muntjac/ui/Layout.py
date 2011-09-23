@@ -16,6 +16,7 @@
 
 from muntjac.ui.ComponentContainer import ComponentContainer
 from muntjac.terminal.gwt.client.ui.VMarginInfo import VMarginInfo
+from muntjac.terminal.gwt.client.ui.AlignmentInfo import Bits
 
 
 class Layout(ComponentContainer):
@@ -48,14 +49,7 @@ class Layout(ComponentContainer):
         @param bottom
         @param left
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            enabled, = _0
-        elif _1 == 4:
-            top, right, bottom, left = _0
-        else:
-            raise ARGERROR(1, 4)
+
 
 class AlignmentHandler(object):
     """AlignmentHandler is most commonly an advanced {@link Layout} that can
@@ -64,33 +58,33 @@ class AlignmentHandler(object):
     # Contained component should be aligned horizontally to the left.
     #
     # @deprecated Use of {@link Alignment} class and its constants
+    ALIGNMENT_LEFT = Bits.ALIGNMENT_LEFT
 
-    ALIGNMENT_LEFT = self.Bits.ALIGNMENT_LEFT
     # Contained component should be aligned horizontally to the right.
     #
     # @deprecated Use of {@link Alignment} class and its constants
+    ALIGNMENT_RIGHT = Bits.ALIGNMENT_RIGHT
 
-    ALIGNMENT_RIGHT = self.Bits.ALIGNMENT_RIGHT
     # Contained component should be aligned vertically to the top.
     #
     # @deprecated Use of {@link Alignment} class and its constants
+    ALIGNMENT_TOP = Bits.ALIGNMENT_TOP
 
-    ALIGNMENT_TOP = self.Bits.ALIGNMENT_TOP
     # Contained component should be aligned vertically to the bottom.
     #
     # @deprecated Use of {@link Alignment} class and its constants
+    ALIGNMENT_BOTTOM = Bits.ALIGNMENT_BOTTOM
 
-    ALIGNMENT_BOTTOM = self.Bits.ALIGNMENT_BOTTOM
     # Contained component should be horizontally aligned to center.
     #
     # @deprecated Use of {@link Alignment} class and its constants
+    ALIGNMENT_HORIZONTAL_CENTER = Bits.ALIGNMENT_HORIZONTAL_CENTER
 
-    ALIGNMENT_HORIZONTAL_CENTER = self.Bits.ALIGNMENT_HORIZONTAL_CENTER
     # Contained component should be vertically aligned to center.
     #
     # @deprecated Use of {@link Alignment} class and its constants
+    ALIGNMENT_VERTICAL_CENTER = Bits.ALIGNMENT_VERTICAL_CENTER
 
-    ALIGNMENT_VERTICAL_CENTER = self.Bits.ALIGNMENT_VERTICAL_CENTER
 
     def setComponentAlignment(self, *args):
         """Set alignment for one contained component in this layout. Alignment
@@ -120,14 +114,7 @@ class AlignmentHandler(object):
         @param alignment
                    the Alignment value to be set
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 2:
-            childComponent, alignment = _0
-        elif _1 == 3:
-            childComponent, horizontalAlignment, verticalAlignment = _0
-        else:
-            raise ARGERROR(2, 3)
+
 
     def getComponentAlignment(self, childComponent):
         """Returns the current Alignment of given component.
@@ -136,6 +123,7 @@ class AlignmentHandler(object):
         @return the {@link Alignment}
         """
         pass
+
 
 class SpacingHandler(object):
     """This type of layout supports automatic addition of space between its
@@ -164,6 +152,7 @@ class SpacingHandler(object):
         """
         pass
 
+
     def isSpacingEnabled(self):
         """@return true if spacing between child components within this layout
                 is enabled, false otherwise
@@ -171,11 +160,13 @@ class SpacingHandler(object):
         """
         pass
 
+
     def isSpacing(self):
         """@return true if spacing between child components within this layout
                 is enabled, false otherwise
         """
         pass
+
 
 class MarginHandler(object):
     """This type of layout supports automatic addition of margins (space around
@@ -206,16 +197,8 @@ class MarginHandler(object):
         """@return MarginInfo containing the currently enabled margins."""
         pass
 
+
 class MarginInfo(VMarginInfo):
 
     def __init__(self, *args):
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            enabled, = _0
-            super(MarginInfo, self)(enabled, enabled, enabled, enabled)
-        elif _1 == 4:
-            top, right, bottom, left = _0
-            super(MarginInfo, self)(top, right, bottom, left)
-        else:
-            raise ARGERROR(1, 4)
+        pass

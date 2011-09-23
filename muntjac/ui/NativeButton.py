@@ -14,8 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.ui.Button import (Button,)
+from muntjac.ui.Button import Button, ClickListener
+from muntjac.data.Property import Property
 
 
 class NativeButton(Button):
@@ -37,25 +37,24 @@ class NativeButton(Button):
         @param dataSource
         @deprecated use the {@link CheckBox} component instead
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 0:
+        nargs = len(args)
+        if nargs == 0:
             super(NativeButton, self)()
-        elif _1 == 1:
-            caption, = _0
+        elif nargs == 1:
+            caption, = args
             super(NativeButton, self)(caption)
-        elif _1 == 2:
-            if isinstance(_0[1], ClickListener):
-                caption, listener = _0
+        elif nargs == 2:
+            if isinstance(args[1], ClickListener):
+                caption, listener = args
                 super(NativeButton, self)(caption, listener)
-            elif isinstance(_0[1], Property):
-                caption, dataSource = _0
+            elif isinstance(args[1], Property):
+                caption, dataSource = args
                 super(NativeButton, self)(caption, dataSource)
             else:
-                caption, initialState = _0
+                caption, initialState = args
                 super(NativeButton, self)(caption, initialState)
-        elif _1 == 3:
-            caption, target, methodName = _0
+        elif nargs == 3:
+            caption, target, methodName = args
             super(NativeButton, self)(caption, target, methodName)
         else:
-            raise ARGERROR(0, 3)
+            raise ValueError, 'too many arguments'

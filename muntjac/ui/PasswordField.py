@@ -14,14 +14,19 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.ui.AbstractTextField import (AbstractTextField,)
+from muntjac.ui.AbstractTextField import AbstractTextField
+from muntjac.data.Property import Property
+from muntjac.terminal.gwt.client.ui.VPasswordField import VPasswordField
+from muntjac.ui.ClientWidget import LoadStyle
 
 
 class PasswordField(AbstractTextField):
     """A field that is used to enter secret text information like passwords. The
     entered text is not displayed on the screen.
     """
+
+    CLIENT_WIDGET = VPasswordField
+    LOAD_STYLE = LoadStyle.EAGER
 
     def __init__(self, *args):
         """Constructs an empty PasswordField.
@@ -50,26 +55,25 @@ class PasswordField(AbstractTextField):
         @param caption
                    the caption for the field
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 0:
+        nargs = len(args)
+        if nargs == 0:
             self.setValue('')
-        elif _1 == 1:
-            if isinstance(_0[0], Property):
-                dataSource, = _0
+        elif nargs == 1:
+            if isinstance(args[0], Property):
+                dataSource, = args
                 self.setPropertyDataSource(dataSource)
             else:
-                caption, = _0
+                caption, = args
                 self.__init__()
                 self.setCaption(caption)
-        elif _1 == 2:
-            if isinstance(_0[1], Property):
-                caption, dataSource = _0
+        elif nargs == 2:
+            if isinstance(args[1], Property):
+                caption, dataSource = args
                 self.__init__(dataSource)
                 self.setCaption(caption)
             else:
-                caption, value = _0
+                caption, value = args
                 self.setValue(value)
                 self.setCaption(caption)
         else:
-            raise ARGERROR(0, 2)
+            raise ValueError, 'too many arguments'

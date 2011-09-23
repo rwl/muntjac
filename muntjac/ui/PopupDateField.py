@@ -14,9 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.ui.DateField import (DateField,)
-# from java.util.Date import (Date,)
+from muntjac.ui.DateField import DateField
+from muntjac.data.Property import Property
 
 
 class PopupDateField(DateField):
@@ -32,34 +31,36 @@ class PopupDateField(DateField):
     @VERSION@
     @since 5.0
     """
-    _inputPrompt = None
 
     def __init__(self, *args):
-        _0 = args
-        _1 = len(args)
-        if _1 == 0:
+        self._inputPrompt = None
+
+        nargs = len(args)
+        if nargs == 0:
             super(PopupDateField, self)()
-        elif _1 == 1:
-            if isinstance(_0[0], Property):
-                dataSource, = _0
+        elif nargs == 1:
+            if isinstance(args[0], Property):
+                dataSource, = args
                 super(PopupDateField, self)(dataSource)
             else:
-                caption, = _0
+                caption, = args
                 super(PopupDateField, self)(caption)
-        elif _1 == 2:
-            if isinstance(_0[1], Date):
-                caption, value = _0
-                super(PopupDateField, self)(caption, value)
-            else:
-                caption, dataSource = _0
+        elif nargs == 2:
+            if isinstance(args[1], Property):
+                caption, dataSource = args
                 super(PopupDateField, self)(caption, dataSource)
+            else:
+                caption, value = args
+                super(PopupDateField, self)(caption, value)
         else:
-            raise ARGERROR(0, 2)
+            raise ValueError, 'too many arguments'
+
 
     def paintContent(self, target):
         super(PopupDateField, self).paintContent(target)
         if self._inputPrompt is not None:
             target.addAttribute('prompt', self._inputPrompt)
+
 
     def getInputPrompt(self):
         """Gets the current input prompt.
@@ -68,6 +69,7 @@ class PopupDateField(DateField):
         @return the current input prompt, or null if not enabled
         """
         return self._inputPrompt
+
 
     def setInputPrompt(self, inputPrompt):
         """Sets the input prompt - a textual prompt that is displayed when the field

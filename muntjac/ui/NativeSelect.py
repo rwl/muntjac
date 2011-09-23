@@ -14,9 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.ui.AbstractSelect import (AbstractSelect,)
-# from java.util.Collection import (Collection,)
+from muntjac.ui.AbstractSelect import AbstractSelect
+from muntjac.data.Container import Container
 
 
 class NativeSelect(AbstractSelect):
@@ -25,26 +24,28 @@ class NativeSelect(AbstractSelect):
     "native" select without all the bells-and-whistles of the ComboBox is a
     better choice.
     """
-    # width in characters, mimics TextField
-    _columns = 0
 
     def __init__(self, *args):
-        _0 = args
-        _1 = len(args)
-        if _1 == 0:
+        # width in characters, mimics TextField
+        self._columns = 0
+
+        args = args
+        nargs = len(args)
+        if nargs == 0:
             super(NativeSelect, self)()
-        elif _1 == 1:
-            caption, = _0
+        elif nargs == 1:
+            caption, = args
             super(NativeSelect, self)(caption)
-        elif _1 == 2:
-            if isinstance(_0[1], Collection):
-                caption, options = _0
-                super(NativeSelect, self)(caption, options)
-            else:
-                caption, dataSource = _0
+        elif nargs == 2:
+            if isinstance(args[1], Container):
+                caption, dataSource = args
                 super(NativeSelect, self)(caption, dataSource)
+            else:
+                caption, options = args
+                super(NativeSelect, self)(caption, options)
         else:
-            raise ARGERROR(0, 2)
+            raise ValueError, 'too many arguments'
+
 
     def setColumns(self, columns):
         """Sets the number of columns in the editor. If the number of columns is set
@@ -56,24 +57,30 @@ class NativeSelect(AbstractSelect):
         """
         if columns < 0:
             columns = 0
+
         if self._columns != columns:
             self._columns = columns
             self.requestRepaint()
 
+
     def getColumns(self):
         return self._columns
+
 
     def paintContent(self, target):
         target.addAttribute('type', 'native')
         # Adds the number of columns
         if self._columns != 0:
             target.addAttribute('cols', self._columns)
+
         super(NativeSelect, self).paintContent(target)
+
 
     def setMultiSelect(self, multiSelect):
         if multiSelect == True:
-            raise self.UnsupportedOperationException('Multiselect not supported')
+            raise NotImplementedError, 'Multiselect not supported'
+
 
     def setNewItemsAllowed(self, allowNewOptions):
         if allowNewOptions == True:
-            raise self.UnsupportedOperationException('newItemsAllowed not supported')
+            raise NotImplementedError, 'newItemsAllowed not supported'

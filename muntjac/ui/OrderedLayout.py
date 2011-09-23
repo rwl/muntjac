@@ -14,8 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.ui.AbstractOrderedLayout import (AbstractOrderedLayout,)
+from muntjac.ui.AbstractOrderedLayout import AbstractOrderedLayout
+from muntjac.terminal.gwt.client.ui.VOrderedLayout import VOrderedLayout
+from muntjac.ui.ClientWidget import LoadStyle
 
 
 class OrderedLayout(AbstractOrderedLayout):
@@ -33,15 +34,18 @@ class OrderedLayout(AbstractOrderedLayout):
                 OrderedLayout but AbstractOrderedLayout (which also OrderedLayout
                 extends).
     """
-    # Predefined orientations
+
+    CLIENT_WIDGET = VOrderedLayout
+    LOAD_STYLE = LoadStyle.EAGER
+
     # Components are to be laid out vertically.
     ORIENTATION_VERTICAL = 0
+
     # Components are to be laid out horizontally.
     ORIENTATION_HORIZONTAL = 1
-    # Orientation of the layout.
-    _orientation = None
 
-    def __init__(self, *args):
+
+    def __init__(self, orientation=None):
         """Creates a new ordered layout. The order of the layout is
         <code>ORIENTATION_VERTICAL</code>.
 
@@ -55,17 +59,16 @@ class OrderedLayout(AbstractOrderedLayout):
 
         @deprecated Use VerticalLayout/HorizontalLayout instead.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 0:
-            self.__init__(self.ORIENTATION_VERTICAL)
-        elif _1 == 1:
-            orientation, = _0
-            self._orientation = orientation
-            if orientation == self.ORIENTATION_VERTICAL:
-                self.setWidth(100, self.UNITS_PERCENTAGE)
-        else:
-            raise ARGERROR(0, 1)
+        # Orientation of the layout.
+        self._orientation = None
+
+        if orientation is None:
+            orientation = self.ORIENTATION_VERTICAL
+
+        self._orientation = orientation
+        if orientation == self.ORIENTATION_VERTICAL:
+            self.setWidth(100, self.UNITS_PERCENTAGE)
+
 
     def getOrientation(self):
         """Gets the orientation of the container.
@@ -74,7 +77,8 @@ class OrderedLayout(AbstractOrderedLayout):
         """
         return self._orientation
 
-    def setOrientation(self, *args):
+
+    def setOrientation(self, orientation, needsRepaint=True):
         """Sets the orientation of this OrderedLayout. This method should only be
         used before initial paint.
 
@@ -88,27 +92,19 @@ class OrderedLayout(AbstractOrderedLayout):
 
         @param orientation
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            orientation, = _0
-            self.setOrientation(orientation, True)
-        elif _1 == 2:
-            orientation, needsRepaint = _0
-            if (
-                (orientation < self.ORIENTATION_VERTICAL) or (orientation > self.ORIENTATION_HORIZONTAL)
-            ):
-                raise self.IllegalArgumentException()
-            self._orientation = orientation
-            if needsRepaint:
-                self.requestRepaint()
-        else:
-            raise ARGERROR(1, 2)
+        # Checks the validity of the argument
+        if orientation < self.ORIENTATION_VERTICAL \
+                or orientation > self.ORIENTATION_HORIZONTAL:
+            raise ValueError()
 
-    # Checks the validity of the argument
+        self._orientation = orientation
+        if needsRepaint:
+            self.requestRepaint()
+
 
     def paintContent(self, target):
         super(OrderedLayout, self).paintContent(target)
+
         # Adds the orientation attributes (the default is vertical)
         if self._orientation == self.ORIENTATION_HORIZONTAL:
             target.addAttribute('orientation', 'horizontal')
