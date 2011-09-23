@@ -14,7 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from com.vaadin.ui.AbstractOrderedLayout import (AbstractOrderedLayout,)
+from muntjac.ui.AbstractOrderedLayout import AbstractOrderedLayout
+from muntjac.terminal.gwt.client.ui.VHorizontalLayout import VHorizontalLayout
+from muntjac.ui.ClientWidget import LoadStyle
 
 
 class HorizontalLayout(AbstractOrderedLayout):
@@ -28,6 +30,9 @@ class HorizontalLayout(AbstractOrderedLayout):
     @VERSION@
     @since 5.3
     """
+
+    CLIENT_WIDGET = VHorizontalLayout
+    LOAD_STYLE = LoadStyle.EAGER
 
     def __init__(self):
         pass

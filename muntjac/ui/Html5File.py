@@ -1,30 +1,44 @@
-# -*- coding: utf-8 -*-
-# from java.io.Serializable import (Serializable,)
+# Copyright (C) 2011 Vaadin Ltd
+# Copyright (C) 2011 Richard Lincoln
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class Html5File(Serializable):
+class Html5File(object):
     """{@link DragAndDropWrapper} can receive also files from client computer if
     appropriate HTML 5 features are supported on client side. This class wraps
     information about dragged file on server side.
     """
-    _name = None
-    _size = None
-    _streamVariable = None
-    _type = None
 
     def __init__(self, name, size, mimeType):
         self._name = name
         self._size = size
         self._type = mimeType
+        self._streamVariable = None
+
 
     def getFileName(self):
         return self._name
 
+
     def getFileSize(self):
         return self._size
 
+
     def getType(self):
         return self._type
+
 
     def setStreamVariable(self, streamVariable):
         """Sets the {@link StreamVariable} that into which the file contents will be
@@ -43,6 +57,7 @@ class Html5File(Serializable):
                    writes the file contents as it arrives.
         """
         self._streamVariable = streamVariable
+
 
     def getStreamVariable(self):
         return self._streamVariable

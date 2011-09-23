@@ -14,16 +14,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.ui.DateField import (DateField,)
-# from java.util.Date import (Date,)
+from datetime import datetime
+
+from muntjac.ui.DateField import DateField
+from muntjac.data.Property import Property
 
 
 class InlineDateField(DateField):
-    """<p>
-    A date entry component, which displays the actual date selector inline.
-
-    </p>
+    """A date entry component, which displays the actual date selector inline.
 
     @see DateField
     @see PopupDateField
@@ -34,23 +32,22 @@ class InlineDateField(DateField):
     """
 
     def __init__(self, *args):
-        _0 = args
-        _1 = len(args)
-        if _1 == 0:
+        nargs = len(args)
+        if nargs == 0:
             super(InlineDateField, self)()
-        elif _1 == 1:
-            if isinstance(_0[0], Property):
-                dataSource, = _0
+        elif nargs == 1:
+            if isinstance(args[0], Property):
+                dataSource, = args
                 super(InlineDateField, self)(dataSource)
             else:
-                caption, = _0
+                caption, = args
                 super(InlineDateField, self)(caption)
-        elif _1 == 2:
-            if isinstance(_0[1], Date):
-                caption, value = _0
+        elif nargs == 2:
+            if isinstance(args[1], datetime):
+                caption, value = args
                 super(InlineDateField, self)(caption, value)
             else:
-                caption, dataSource = _0
+                caption, dataSource = args
                 super(InlineDateField, self)(caption, dataSource)
         else:
-            raise ARGERROR(0, 2)
+            raise ValueError, 'too many arguments'
