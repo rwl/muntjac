@@ -14,8 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.ui.AbstractTextField import (AbstractTextField,)
+from muntjac.ui.AbstractTextField import AbstractTextField
+from muntjac.terminal.gwt.client.ui.VTextField import VTextField
+from muntjac.ui.ClientWidget import LoadStyle
+from muntjac.data.Property import Property
 
 
 class TextField(AbstractTextField):
@@ -38,16 +40,10 @@ class TextField(AbstractTextField):
     @VERSION@
     @since 3.0
     """
-    # Tells if input is used to enter sensitive information that is not echoed
-    # to display. Typically passwords.
 
-    _secret = False
-    # Number of visible rows in a multiline TextField. Value 0 implies a
-    # single-line text-editor.
+    CLIENT_WIDGET = VTextField
+    LOAD_STYLE = LoadStyle.EAGER
 
-    _rows = 0
-    # Tells if word-wrapping should be used in multiline mode.
-    _wordwrap = True
 
     def __init__(self, *args):
         """Constructs an empty <code>TextField</code> with no caption.
@@ -82,29 +78,40 @@ class TextField(AbstractTextField):
         @param text
                    the initial text content of the editor.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 0:
+        # Tells if input is used to enter sensitive information that is not echoed
+        # to display. Typically passwords.
+        self._secret = False
+
+        # Number of visible rows in a multiline TextField. Value 0 implies a
+        # single-line text-editor.
+        self._rows = 0
+
+        # Tells if word-wrapping should be used in multiline mode.
+        self._wordwrap = True
+
+        nargs = len(args)
+        if nargs == 0:
             self.setValue('')
-        elif _1 == 1:
-            if isinstance(_0[0], Property):
-                dataSource, = _0
+        elif nargs == 1:
+            if isinstance(args[0], Property):
+                dataSource, = args
                 self.setPropertyDataSource(dataSource)
             else:
-                caption, = _0
+                caption, = args
                 self.__init__()
                 self.setCaption(caption)
-        elif _1 == 2:
-            if isinstance(_0[1], Property):
-                caption, dataSource = _0
+        elif nargs == 2:
+            if isinstance(args[1], Property):
+                caption, dataSource = args
                 self.__init__(dataSource)
                 self.setCaption(caption)
             else:
-                caption, value = _0
+                caption, value = args
                 self.setValue(value)
                 self.setCaption(caption)
         else:
-            raise ARGERROR(0, 2)
+            raise ValueError, 'too many arguments'
+
 
     def isSecret(self):
         """Gets the secret property. If a field is used to enter secret information
@@ -116,7 +123,10 @@ class TextField(AbstractTextField):
         @deprecated Starting from 6.5 use {@link PasswordField} instead for
                     secret text input.
         """
+        raise DeprecationWarning, 'use PasswordField instead for secret text input.'
+
         return self._secret
+
 
     def setSecret(self, secret):
         """Sets the secret property on and off. If a field is used to enter secret
@@ -128,22 +138,29 @@ class TextField(AbstractTextField):
         @deprecated Starting from 6.5 use {@link PasswordField} instead for
                     secret text input.
         """
+        raise DeprecationWarning, 'use PasswordField instead for secret text input.'
+
         if self._secret != secret:
             self._secret = secret
             self.requestRepaint()
 
+
     def paintContent(self, target):
         if self.isSecret():
             target.addAttribute('secret', True)
+
         rows = self.getRows()
         if rows != 0:
             target.addAttribute('rows', rows)
             target.addAttribute('multiline', True)
+
             if not self.isWordwrap():
                 # Wordwrap is only painted if turned off to minimize
                 # communications
                 target.addAttribute('wordwrap', False)
+
         super(TextField, self).paintContent(target)
+
 
     def getRows(self):
         """Gets the number of rows in the editor. If the number of rows is set to 0,
@@ -154,7 +171,10 @@ class TextField(AbstractTextField):
         @deprecated Starting from 6.5 use {@link TextArea} for a multi-line text
                     input.
         """
+        raise DeprecationWarning, 'use TextArea for a multi-line text input.'
+
         return self._rows
+
 
     def setRows(self, rows):
         """Sets the number of rows in the editor.
@@ -165,11 +185,15 @@ class TextField(AbstractTextField):
         @deprecated Starting from 6.5 use {@link TextArea} for a multi-line text
                     input.
         """
+        raise DeprecationWarning, 'use TextArea for a multi-line text input.'
+
         if rows < 0:
             rows = 0
+
         if self._rows != rows:
             self._rows = rows
             self.requestRepaint()
+
 
     def isWordwrap(self):
         """Tests if the editor is in word-wrap mode.
@@ -179,7 +203,9 @@ class TextField(AbstractTextField):
         @deprecated Starting from 6.5 use {@link TextArea} for a multi-line text
                     input.
         """
+        raise DeprecationWarning, 'use TextArea for a multi-line text input.'
         return self._wordwrap
+
 
     def setWordwrap(self, wordwrap):
         """Sets the editor's word-wrap mode on or off.
@@ -191,11 +217,13 @@ class TextField(AbstractTextField):
         @deprecated Starting from 6.5 use {@link TextArea} for a multi-line text
                     input.
         """
+        raise DeprecationWarning, 'use TextArea for a multi-line text input.'
         if self._wordwrap != wordwrap:
             self._wordwrap = wordwrap
             self.requestRepaint()
 
-    def setHeight(self, *args):
+
+    def setHeight(self, height, unit=None):
         """Sets the height of the {@link TextField} instance.
 
         <p>
@@ -228,22 +256,14 @@ class TextField(AbstractTextField):
 
         @see com.vaadin.ui.AbstractComponent#setHeight(java.lang.String)
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            height, = _0
+        if unit is None:
+            # will call setHeight(float, int) the actually does the magic. Method
+            # is overridden just to document side-effects.
             super(TextField, self).setHeight(height)
-        elif _1 == 2:
-            height, unit = _0
+        else:
             super(TextField, self).setHeight(height, unit)
-            if height > 1 and self.getClass() == TextField:
+            if height > 1 and self.__class__ == TextField:
                 # In html based terminals we most commonly want to make component
                 # to be textarea if height is defined. Setting row field above 0
                 # will render component as textarea.
-
                 self.setRows(2)
-        else:
-            raise ARGERROR(1, 2)
-
-    # will call setHeight(float, int) the actually does the magic. Method
-    # is overridden just to document side-effects.

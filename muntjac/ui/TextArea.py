@@ -14,17 +14,19 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.ui.AbstractTextField import (AbstractTextField,)
+from muntjac.ui.AbstractTextField import AbstractTextField
+from muntjac.terminal.gwt.client.ui.VTextArea import VTextArea
+from muntjac.ui.ClientWidget import LoadStyle
+from muntjac.data.Property import Property
 
 
 class TextArea(AbstractTextField):
     """A text field that supports multi line editing."""
+
+    CLIENT_WIDGET = VTextArea
+    LOAD_STYLE = LoadStyle.EAGER
+
     _DEFAULT_ROWS = 5
-    # Number of visible rows in the text area.
-    _rows = _DEFAULT_ROWS
-    # Tells if word-wrapping should be used in the text area.
-    _wordwrap = True
 
     def __init__(self, *args):
         """Constructs an empty TextArea.
@@ -53,30 +55,35 @@ class TextArea(AbstractTextField):
         @param value
                    the value for the field
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 0:
+        # Number of visible rows in the text area.
+        self._rows = self._DEFAULT_ROWS
+        # Tells if word-wrapping should be used in the text area.
+        self._wordwrap = True
+
+        nargs = len(args)
+        if nargs == 0:
             self.setValue('')
-        elif _1 == 1:
-            if isinstance(_0[0], Property):
-                dataSource, = _0
+        elif nargs == 1:
+            if isinstance(args[0], Property):
+                dataSource, = args
                 self.__init__()
                 self.setPropertyDataSource(dataSource)
             else:
-                caption, = _0
+                caption, = args
                 self.__init__()
                 self.setCaption(caption)
-        elif _1 == 2:
-            if isinstance(_0[1], Property):
-                caption, dataSource = _0
+        elif nargs == 2:
+            if isinstance(args[1], Property):
+                caption, dataSource = args
                 self.__init__(dataSource)
                 self.setCaption(caption)
             else:
-                caption, value = _0
+                caption, value = args
                 self.__init__(caption)
                 self.setValue(value)
         else:
-            raise ARGERROR(0, 2)
+            raise ValueError, 'too many arguments'
+
 
     def setRows(self, rows):
         """Sets the number of rows in the text area.
@@ -86,9 +93,11 @@ class TextArea(AbstractTextField):
         """
         if rows < 0:
             rows = 0
+
         if self._rows != rows:
             self._rows = rows
             self.requestRepaint()
+
 
     def getRows(self):
         """Gets the number of rows in the text area.
@@ -96,6 +105,7 @@ class TextArea(AbstractTextField):
         @return number of explicitly set rows.
         """
         return self._rows
+
 
     def setWordwrap(self, wordwrap):
         """Sets the text area's word-wrap mode on or off.
@@ -108,6 +118,7 @@ class TextArea(AbstractTextField):
             self._wordwrap = wordwrap
             self.requestRepaint()
 
+
     def isWordwrap(self):
         """Tests if the text area is in word-wrap mode.
 
@@ -116,9 +127,12 @@ class TextArea(AbstractTextField):
         """
         return self._wordwrap
 
+
     def paintContent(self, target):
         super(TextArea, self).paintContent(target)
+
         target.addAttribute('rows', self.getRows())
+
         if not self.isWordwrap():
             # Wordwrap is only painted if turned off to minimize communications
             target.addAttribute('wordwrap', False)
