@@ -54,6 +54,7 @@ class Validator(object):
         """
         pass
 
+
     def isValid(self, value):
         """Tests if the given value is valid. This method must be symmetric with
         {@link #validate(Object)} so that {@link #validate(Object)} throws an
@@ -66,6 +67,7 @@ class Validator(object):
         """
         pass
 
+
 class InvalidValueException(RuntimeError, ErrorMessage):
     """Exception that is thrown by a {@link Validator} when a value is invalid.
 
@@ -74,12 +76,8 @@ class InvalidValueException(RuntimeError, ErrorMessage):
     @VERSION@
     @since 3.0
     """
-    # Array of one or more validation errors that are causing this
-    # validation error.
 
-    _causes = None
-
-    def __init__(self, *args):
+    def __init__(self, message, causes=None):
         """Constructs a new {@code InvalidValueException} with the specified
         message.
 
@@ -96,19 +94,15 @@ class InvalidValueException(RuntimeError, ErrorMessage):
                    One or more {@code InvalidValueException}s that caused
                    this exception.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            message, = _0
-            self.__init__(message, [])
-        elif _1 == 2:
-            message, causes = _0
-            super(InvalidValueException, self)(message)
-            if causes is None:
-                raise self.NullPointerException('Possible causes array must not be null')
+        super(InvalidValueException, self)(message)
+
+        # Array of one or more validation errors that are causing this
+        # validation error.
+        if causes is not None:
             self._causes = causes
         else:
-            raise ARGERROR(1, 2)
+            self._causes = list()
+
 
     def isInvisible(self):
         """Check if the error message should be hidden.
@@ -118,100 +112,62 @@ class InvalidValueException(RuntimeError, ErrorMessage):
 
         @return true if the error message should be hidden, false otherwise
         """
-        # (non-Javadoc)
-        #
-        # @see com.vaadin.terminal.ErrorMessage#getErrorLevel()
-
         msg = self.getMessage()
+
         if msg is not None and len(msg) > 0:
             return False
+
         if self._causes is not None:
-            _0 = True
-            i = 0
-            while True:
-                if _0 is True:
-                    _0 = False
-                else:
-                    i += 1
-                if not (i < len(self._causes)):
-                    break
+            for i in range(len(self._causes)):
                 if not self._causes[i].isInvisible():
                     return False
+
         return True
 
-    def getErrorLevel(self):
-        # (non-Javadoc)
-        #
-        # @see
-        # com.vaadin.terminal.Paintable#paint(com.vaadin.terminal.PaintTarget)
 
+    def getErrorLevel(self):
         return ErrorMessage.ERROR
 
-    def paint(self, target):
-        # (non-Javadoc)
-        #
-        # @see
-        # com.vaadin.terminal.ErrorMessage#addListener(com.vaadin.terminal.
-        # Paintable.RepaintRequestListener)
 
+    def paint(self, target):
         target.startTag('error')
         target.addAttribute('level', 'error')
+
         # Error message
         message = self.getLocalizedMessage()
         if message is not None:
             target.addText(message)
+
         # Paint all the causes
-        _0 = True
-        i = 0
-        while True:
-            if _0 is True:
-                _0 = False
-            else:
-                i += 1
-            if not (i < len(self._causes)):
-                break
+        for i in range(len(self._causes)):
             self._causes[i].paint(target)
+
         target.endTag('error')
 
-    def addListener(self, listener):
-        # (non-Javadoc)
-        #
-        # @see
-        # com.vaadin.terminal.ErrorMessage#removeListener(com.vaadin.terminal
-        # .Paintable.RepaintRequestListener)
 
+    def addListener(self, listener):
         pass
+
 
     def removeListener(self, listener):
-        # (non-Javadoc)
-        #
-        # @see com.vaadin.terminal.ErrorMessage#requestRepaint()
-
         pass
+
 
     def requestRepaint(self):
-        # (non-Javadoc)
-        #
-        # @see com.vaadin.terminal.Paintable#requestRepaintRequests()
-
         pass
+
 
     def requestRepaintRequests(self):
-        # (non-Javadoc)
-        #
-        # @see com.vaadin.terminal.Paintable#getDebugId()
-
         pass
 
-    def getDebugId(self):
-        # (non-Javadoc)
-        #
-        # @see com.vaadin.terminal.Paintable#setDebugId(java.lang.String)
 
+    def getDebugId(self):
         return None
 
-    def setDebugId(self, id):
-        raise self.UnsupportedOperationException('InvalidValueException cannot have a debug id')
+
+    def setDebugId(self, idd):
+        raise NotImplementedError, 'InvalidValueException cannot have a debug id'
+
 
     def getCauses(self):
         """Returns the {@code InvalidValueExceptions} that caused this

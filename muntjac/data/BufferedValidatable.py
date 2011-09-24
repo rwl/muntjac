@@ -14,12 +14,11 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from com.vaadin.data.Validatable import (Validatable,)
-from com.vaadin.data.Buffered import (Buffered,)
-# from java.io.Serializable import (Serializable,)
+from muntjac.data.Validatable import Validatable
+from muntjac.data.Buffered import Buffered
 
 
-class BufferedValidatable(Buffered, Validatable, Serializable):
+class BufferedValidatable(Buffered, Validatable):
     """<p>
     This interface defines the combination of <code>Validatable</code> and
     <code>Buffered</code> interfaces. The combination of the interfaces defines
@@ -37,6 +36,7 @@ class BufferedValidatable(Buffered, Validatable, Serializable):
         <code>false</code>.
         """
         pass
+
 
     def setInvalidCommitted(self, isCommitted):
         """Sets if the invalid data should be committed to datasource. The default

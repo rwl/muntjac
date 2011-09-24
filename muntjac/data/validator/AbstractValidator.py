@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from com.vaadin.data.Validator import (InvalidValueException, Validator,)
+from muntjac.data.Validator import InvalidValueException, Validator
 
 
 class AbstractValidator(Validator):
@@ -33,10 +33,6 @@ class AbstractValidator(Validator):
     @VERSION@
     @since 5.4
     """
-    # Error message that is included in an {@link InvalidValueException} if
-    # such is thrown.
-
-    _errorMessage = None
 
     def __init__(self, errorMessage):
         """Constructs a validator with the given error message.
@@ -45,12 +41,16 @@ class AbstractValidator(Validator):
                    the message to be included in an {@link InvalidValueException}
                    (with "{0}" replaced by the value that failed validation).
         """
+        # Error message that is included in an {@link InvalidValueException} if
+        # such is thrown.
         self._errorMessage = errorMessage
+
 
     def validate(self, value):
         if not self.isValid(value):
-            message = self._errorMessage.replace('{0}', String.valueOf.valueOf(value))
+            message = self._errorMessage.replace('{0}', str(value))
             raise InvalidValueException(message)
+
 
     def getErrorMessage(self):
         """Returns the message to be included in the exception in case the value
@@ -60,6 +60,7 @@ class AbstractValidator(Validator):
                 {@link #setErrorMessage(String)}.
         """
         return self._errorMessage
+
 
     def setErrorMessage(self, errorMessage):
         """Sets the message to be included in the exception in case the value does

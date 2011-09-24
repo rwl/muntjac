@@ -82,6 +82,7 @@ class Property(object):
         """
         pass
 
+
     def toString(self):
         """Returns the value of the Property in human readable textual format. The
         return value should be assignable to the <code>setValue</code> method if
@@ -139,7 +140,7 @@ class ReadOnlyException(RuntimeError):
     @since 3.0
     """
 
-    def __init__(self, *args):
+    def __init__(self, msg=None):
         """Constructs a new <code>ReadOnlyException</code> without a detail
         message.
         ---
@@ -149,15 +150,9 @@ class ReadOnlyException(RuntimeError):
         @param msg
                    the detail message
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 0:
-            pass # astStmt: [Stmt([]), None]
-        elif _1 == 1:
-            msg, = _0
+        if msg is not None:
             super(ReadOnlyException, self)(msg)
-        else:
-            raise ARGERROR(0, 1)
+
 
 class ConversionException(RuntimeError):
     """An exception that signals that the value passed to the
@@ -194,22 +189,8 @@ class ConversionException(RuntimeError):
         @param cause
                    The cause of the the conversion failure
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 0:
-            pass # astStmt: [Stmt([]), None]
-        elif _1 == 1:
-            if isinstance(_0[0], Throwable):
-                cause, = _0
-                super(ConversionException, self)(cause)
-            else:
-                msg, = _0
-                super(ConversionException, self)(msg)
-        elif _1 == 2:
-            message, cause = _0
-            super(ConversionException, self)(message, cause)
-        else:
-            raise ARGERROR(0, 2)
+        super(ConversionException, self)(args)
+
 
 class Viewer(object):
     """Interface implemented by the viewer classes capable of using a Property
@@ -229,12 +210,14 @@ class Viewer(object):
         """
         pass
 
+
     def getPropertyDataSource(self):
         """Gets the Property serving as the data source of the viewer.
 
         @return the Property serving as the viewers data source
         """
         pass
+
 
 class Editor(Viewer):
     """Interface implemented by the editor classes capable of editing the
@@ -252,8 +235,8 @@ class Editor(Viewer):
     @VERSION@
     @since 3.0
     """
-    # Value change event
     pass
+
 
 class ValueChangeEvent(object):
     """An <code>Event</code> object specifying the Property whose value has been
@@ -272,6 +255,7 @@ class ValueChangeEvent(object):
         """
         pass
 
+
 class ValueChangeListener(object):
     """The <code>listener</code> interface for receiving
     <code>ValueChangeEvent</code> objects.
@@ -289,6 +273,7 @@ class ValueChangeListener(object):
                    value change event object
         """
         pass
+
 
 class ValueChangeNotifier(object):
     """The interface for adding and removing <code>ValueChangeEvent</code>
@@ -309,7 +294,6 @@ class ValueChangeNotifier(object):
     @VERSION@
     @since 3.0
     """
-    # ReadOnly Status change event
 
     def addListener(self, listener):
         """Registers a new value change listener for this Property.
@@ -319,6 +303,7 @@ class ValueChangeNotifier(object):
         """
         pass
 
+
     def removeListener(self, listener):
         """Removes a previously registered value change listener.
 
@@ -326,6 +311,7 @@ class ValueChangeNotifier(object):
                    listener to be removed
         """
         pass
+
 
 class ReadOnlyStatusChangeEvent(object):
     """An <code>Event</code> object specifying the Property whose read-only
@@ -343,6 +329,7 @@ class ReadOnlyStatusChangeEvent(object):
         @return source Property of the event.
         """
         pass
+
 
 class ReadOnlyStatusChangeListener(object):
     """The listener interface for receiving
@@ -362,6 +349,7 @@ class ReadOnlyStatusChangeListener(object):
                    Read-only status change event object
         """
         pass
+
 
 class ReadOnlyStatusChangeNotifier(object):
     """The interface for adding and removing
@@ -390,6 +378,7 @@ class ReadOnlyStatusChangeNotifier(object):
                    the new Listener to be registered
         """
         pass
+
 
     def removeListener(self, listener):
         """Removes a previously registered read-only status change listener.

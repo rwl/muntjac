@@ -14,9 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.terminal.SystemError import SystemError
+import sys
+
+from muntjac.terminal.SystemError import SystemErr
 from muntjac.terminal.ErrorMessage import ErrorMessage
-# from muntjac.data.Validator.InvalidValueException import InvalidValueException
 
 
 class Buffered(object):
@@ -143,6 +144,7 @@ class Buffered(object):
         """
         pass
 
+
 class SourceException(RuntimeError, ErrorMessage):
     """An exception that signals that one or more exceptions occurred while a
     buffered object tried to access its data source or if there is a problem
@@ -153,12 +155,8 @@ class SourceException(RuntimeError, ErrorMessage):
     @VERSION@
     @since 3.0
     """
-    # Source class implementing the buffered interface
-    _source = None
-    # Original cause of the source exception
-    _causes = []
 
-    def __init__(self, *args):
+    def __init__(self, source, cause=None):
         """Creates a source exception that does not include a cause.
 
         @param source
@@ -178,20 +176,17 @@ class SourceException(RuntimeError, ErrorMessage):
         @param causes
                    the original causes for this exception.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            source, = _0
-            self._source = source
-        elif _1 == 2:
-            source, cause = _0
-            self._source = source
+        # Source class implementing the buffered interface
+        self._source = source
+
+        # Original cause of the source exception
+        self._causes = list()
+
+        if isinstance(cause, list):
+            self._causes = cause
+        elif cause is not None:
             self._causes = [cause]
-            source, causes = _0
-            self._source = source
-            self._causes = causes
-        else:
-            raise ARGERROR(1, 2)
+
 
     def getCause(self):
         """Gets the cause of the exception.
@@ -206,6 +201,7 @@ class SourceException(RuntimeError, ErrorMessage):
             return None
         return self._causes[0]
 
+
     def getCauses(self):
         """Gets all the causes for this exception.
 
@@ -213,12 +209,14 @@ class SourceException(RuntimeError, ErrorMessage):
         """
         return self._causes
 
+
     def getSource(self):
         """Gets a source of the exception.
 
         @return the Buffered object which generated this exception.
         """
         return self._source
+
 
     def getErrorLevel(self):
         """Gets the error level of this buffered source exception. The level of
@@ -231,70 +229,63 @@ class SourceException(RuntimeError, ErrorMessage):
 
         @see com.vaadin.terminal.ErrorMessage#getErrorLevel()
         """
-        # Documented in super interface
-        level = Integer.MIN_VALUE.MIN_VALUE
-        _0 = True
-        i = 0
-        while True:
-            if _0 is True:
-                _0 = False
-            else:
-                i += 1
-            if not (i < len(self._causes)):
-                break
+        level = -sys.maxint - 1
+
+        for i in range(len(self._causes)):
             causeLevel = self._causes[i].getErrorLevel() if isinstance(self._causes[i], ErrorMessage) else ErrorMessage.ERROR
             if causeLevel > level:
                 level = causeLevel
-        return ErrorMessage.ERROR if level == Integer.MIN_VALUE.MIN_VALUE else level
+        return ErrorMessage.ERROR if level == -sys.maxint - 1 else level
+
 
     def paint(self, target):
-        # Documented in super interface
         target.startTag('error')
         level = self.getErrorLevel()
+
         if level > 0 and level <= ErrorMessage.INFORMATION:
             target.addAttribute('level', 'info')
+
         elif level <= ErrorMessage.WARNING:
             target.addAttribute('level', 'warning')
+
         elif level <= ErrorMessage.ERROR:
             target.addAttribute('level', 'error')
+
         elif level <= ErrorMessage.CRITICAL:
             target.addAttribute('level', 'critical')
+
         else:
             target.addAttribute('level', 'system')
+
         # Paint all the exceptions
-        _0 = True
-        i = 0
-        while True:
-            if _0 is True:
-                _0 = False
-            else:
-                i += 1
-            if not (i < len(self._causes)):
-                break
+        for i in range(len(self._causes)):
             if isinstance(self._causes[i], ErrorMessage):
                 self._causes[i].paint(target)
             else:
-                SystemError(self._causes[i]).paint(target)
+                SystemErr(self._causes[i]).paint(target)
+
         target.endTag('error')
 
+
     def addListener(self, listener):
-        # Documented in super interface
         pass
+
 
     def removeListener(self, listener):
-        # Documented in super interface
         pass
 
+
     def requestRepaint(self):
-        # Documented in super interface
         pass
+
 
     def requestRepaintRequests(self):
         pass
 
+
     def getDebugId(self):
-        # TODO Auto-generated method stub
         return None
 
-    def setDebugId(self, id):
-        raise self.UnsupportedOperationException('Setting testing id for this Paintable is not implemented')
+
+    def setDebugId(self, idd):
+        raise NotImplementedError, 'Setting testing id for this Paintable is not implemented'

@@ -14,13 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.data.validator.AbstractValidator import (AbstractValidator,)
-from com.vaadin.data.Validator import (Validator,)
-# from java.util.Collection import (Collection,)
-# from java.util.HashSet import (HashSet,)
-# from java.util.LinkedList import (LinkedList,)
-# from java.util.List import (List,)
+from muntjac.data.validator.AbstractValidator import AbstractValidator
+from muntjac.data.Validator import InvalidValueException
 
 
 class CompositeValidator(AbstractValidator):
@@ -35,41 +30,39 @@ class CompositeValidator(AbstractValidator):
     @VERSION@
     @since 3.0
     """
+
     # The validators are combined with <code>AND</code> clause: validity of the
     # composite implies validity of the all validators it is composed of must
     # be valid.
-
     MODE_AND = 0
+
     # The validators are combined with <code>OR</code> clause: validity of the
     # composite implies that some of validators it is composed of must be
     # valid.
-
     MODE_OR = 1
+
     # The validators are combined with and clause: validity of the composite
     # implies validity of the all validators it is composed of
-
     MODE_DEFAULT = MODE_AND
-    # Operation mode.
-    _mode = MODE_DEFAULT
-    # List of contained validators.
-    _validators = LinkedList()
 
-    def __init__(self, *args):
+    def __init__(self, mode=None, errorMessage=None):
         """Construct a composite validator in <code>AND</code> mode without error
         message.
         ---
         Constructs a composite validator in given mode.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 0:
+        # Operation mode.
+        self._mode = self.MODE_DEFAULT
+
+        # List of contained validators.
+        self._validators = list()
+
+        if mode is None:
             super(CompositeValidator, self)('')
-        elif _1 == 2:
-            mode, errorMessage = _0
+        else:
             super(CompositeValidator, self)(errorMessage)
             self.setMode(mode)
-        else:
-            raise ARGERROR(0, 2)
+
 
     def validate(self, value):
         """Validates the given value.
@@ -90,33 +83,29 @@ class CompositeValidator(AbstractValidator):
         @throws Validator.InvalidValueException
                     if the value is not valid.
         """
-        _0 = self._mode
-        _1 = False
-        while True:
-            if _0 == self.MODE_AND:
-                _1 = True
-                for validator in self._validators:
-                    validator.validate(value)
-                return
-            if (_1 is True) or (_0 == self.MODE_OR):
-                _1 = True
-                first = None
-                for v in self._validators:
-                    try:
-                        v.validate(value)
-                        return
-                    except Validator.InvalidValueException, e:
-                        if first is None:
-                            first = e
-                if first is None:
+        if self._mode == self.MODE_AND:
+            for validator in self._validators:
+                validator.validate(value)
+            return
+        elif self._mode == self.MODE_OR:
+            first = None
+            for v in self._validators:
+                try:
+                    v.validate(value)
                     return
-                em = self.getErrorMessage()
-                if em is not None:
-                    raise Validator.InvalidValueException(em)
-                else:
-                    raise first
-            break
-        raise self.IllegalStateException('The validator is in unsupported operation mode')
+                except InvalidValueException, e:
+                    if first is None:
+                        first = e
+            if first is None:
+                return
+            em = self.getErrorMessage()
+            if em is not None:
+                raise InvalidValueException(em)
+            else:
+                raise first
+
+        raise ValueError, 'The validator is in unsupported operation mode'
+
 
     def isValid(self, value):
         """Checks the validity of the the given value. The value is valid, if:
@@ -128,23 +117,20 @@ class CompositeValidator(AbstractValidator):
         @param value
                    the value to check.
         """
-        _0 = self._mode
-        _1 = False
-        while True:
-            if _0 == self.MODE_AND:
-                _1 = True
-                for v in self._validators:
-                    if not v.isValid(value):
-                        return False
-                return True
-            if (_1 is True) or (_0 == self.MODE_OR):
-                _1 = True
-                for v in self._validators:
-                    if v.isValid(value):
-                        return True
-                return False
-            break
-        raise self.IllegalStateException('The valitor is in unsupported operation mode')
+        if self._mode == self.MODE_AND:
+            for v in self._validators:
+                if not v.isValid(value):
+                    return False
+            return True
+
+        elif self._mode == self.MODE_OR:
+            for v in self._validators:
+                if v.isValid(value):
+                    return True
+            return False
+
+        raise ValueError, 'The valitor is in unsupported operation mode'
+
 
     def getMode(self):
         """Gets the mode of the validator.
@@ -153,6 +139,7 @@ class CompositeValidator(AbstractValidator):
                 <code>MODE_OR</code>.
         """
         return self._mode
+
 
     def setMode(self, mode):
         """Sets the mode of the validator. The valid modes are:
@@ -165,8 +152,10 @@ class CompositeValidator(AbstractValidator):
                    the mode to set.
         """
         if mode != self.MODE_AND and mode != self.MODE_OR:
-            raise self.IllegalArgumentException('Mode ' + mode + ' unsupported')
+            raise ValueError, 'Mode ' + mode + ' unsupported'
+
         self._mode = mode
+
 
     def getErrorMessage(self):
         """Gets the error message for the composite validator. If the error message
@@ -174,8 +163,11 @@ class CompositeValidator(AbstractValidator):
         """
         if super(CompositeValidator, self).getErrorMessage() is not None:
             return super(CompositeValidator, self).getErrorMessage()
+
         # TODO Return composite error message
+
         return None
+
 
     def addValidator(self, validator):
         """Adds validator to the interface.
@@ -186,7 +178,9 @@ class CompositeValidator(AbstractValidator):
         """
         if validator is None:
             return
-        self._validators.add(validator)
+
+        self._validators.append(validator)
+
 
     def removeValidator(self, validator):
         """Removes a validator from the composite.
@@ -196,6 +190,7 @@ class CompositeValidator(AbstractValidator):
                    set of data field values.
         """
         self._validators.remove(validator)
+
 
     def getSubValidators(self, validatorType):
         """Gets sub-validators by class.
@@ -217,12 +212,17 @@ class CompositeValidator(AbstractValidator):
         """
         if self._mode != self.MODE_AND:
             return None
+
         found = set()
         for v in self._validators:
-            if validatorType.isAssignableFrom(v.getClass()):
+            if issubclass(v.__class__, validatorType):
                 found.add(v)
-            if isinstance(v, CompositeValidator) and v.getMode() == self.MODE_AND:
+
+            if isinstance(v, CompositeValidator) \
+                    and v.getMode() == self.MODE_AND:
                 c = v.getSubValidators(validatorType)
                 if c is not None:
-                    found.addAll(c)
-        return None if found.isEmpty() else found
+                    for cc in c:
+                        found.add(cc)
+
+        return None if len(found) == 0 else found

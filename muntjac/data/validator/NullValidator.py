@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from com.vaadin.data.Validator import (Validator,)
+from muntjac.data.Validator import Validator, InvalidValueException
 
 
 class NullValidator(Validator):
@@ -26,8 +26,6 @@ class NullValidator(Validator):
     @VERSION@
     @since 3.0
     """
-    _onlyNullAllowed = None
-    _errorMessage = None
 
     def __init__(self, errorMessage, onlyNullAllowed):
         """Creates a new NullValidator.
@@ -37,8 +35,12 @@ class NullValidator(Validator):
         @param onlyNullAllowed
                    Are only nulls allowed?
         """
+        self._onlyNullAllowed = None
+        self._errorMessage = None
+
         self.setErrorMessage(errorMessage)
         self.setNullAllowed(onlyNullAllowed)
+
 
     def validate(self, value):
         """Validates the data given in value.
@@ -48,10 +50,10 @@ class NullValidator(Validator):
         @throws Validator.InvalidValueException
                     if the value was invalid.
         """
-        if (
-            (self._onlyNullAllowed and value is not None) or (not self._onlyNullAllowed and value is None)
-        ):
-            raise Validator.InvalidValueException(self._errorMessage)
+        if (self._onlyNullAllowed and value is not None) \
+                or (not self._onlyNullAllowed and value is None):
+            raise InvalidValueException(self._errorMessage)
+
 
     def isValid(self, value):
         """Tests if the given value is valid.
@@ -62,11 +64,13 @@ class NullValidator(Validator):
         """
         return value is None if self._onlyNullAllowed else value is not None
 
+
     def isNullAllowed(self):
         """Returns <code>true</code> if nulls are allowed otherwise
         <code>false</code>.
         """
         return self._onlyNullAllowed
+
 
     def setNullAllowed(self, onlyNullAllowed):
         """Sets if nulls (and only nulls) are to be allowed.
@@ -77,12 +81,14 @@ class NullValidator(Validator):
         """
         self._onlyNullAllowed = onlyNullAllowed
 
+
     def getErrorMessage(self):
         """Gets the error message that is displayed in case the value is invalid.
 
         @return the Error Message.
         """
         return self._errorMessage
+
 
     def setErrorMessage(self, errorMessage):
         """Sets the error message to be displayed on invalid value.

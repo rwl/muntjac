@@ -14,11 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# from java.io.Serializable import (Serializable,)
-# from java.util.Collection import (Collection,)
 
-
-class Item(Serializable):
+class Item(object):
     """<p>
     Provides a mechanism for handling a set of Properties, each associated to a
     locally unique non-null identifier. The interface is split into subinterfaces
@@ -31,7 +28,7 @@ class Item(Serializable):
     @since 3.0
     """
 
-    def getItemProperty(self, id):
+    def getItemProperty(self, idd):
         """Gets the Property corresponding to the given Property ID stored in the
         Item. If the Item does not contain the Property, <code>null</code> is
         returned.
@@ -42,6 +39,7 @@ class Item(Serializable):
         """
         pass
 
+
     def getItemPropertyIds(self):
         """Gets the collection of IDs of all Properties stored in the Item.
 
@@ -50,7 +48,8 @@ class Item(Serializable):
         """
         pass
 
-    def addItemProperty(self, id, property):
+
+    def addItemProperty(self, idd, prop):
         """Tries to add a new Property into the Item.
 
         <p>
@@ -68,7 +67,8 @@ class Item(Serializable):
         """
         pass
 
-    def removeItemProperty(self, id):
+
+    def removeItemProperty(self, idd):
         """Removes the Property identified by ID from the Item.
 
         <p>
@@ -83,7 +83,8 @@ class Item(Serializable):
         """
         pass
 
-class Viewer(Serializable):
+
+class Viewer(object):
     """Interface implemented by viewer classes capable of using an Item as a
     data source.
     """
@@ -96,6 +97,7 @@ class Viewer(Serializable):
         """
         pass
 
+
     def getItemDataSource(self):
         """Gets the Item serving as the data source of the viewer.
 
@@ -103,7 +105,8 @@ class Viewer(Serializable):
         """
         pass
 
-class Editor(Item.Viewer, Serializable):
+
+class Editor(Viewer):
     """Interface implemented by the <code>Editor</code> classes capable of
     editing the Item. Implementing this interface means that the Item serving
     as the data source of the editor can be modified through it.
@@ -112,10 +115,10 @@ class Editor(Item.Viewer, Serializable):
     restrict the class from editing the contents of an internally.
     </p>
     """
-    # Property set change event
     pass
 
-class PropertySetChangeEvent(Serializable):
+
+class PropertySetChangeEvent(object):
     """An <code>Event</code> object specifying the Item whose contents has been
     changed through the <code>Property</code> interface.
     <p>
@@ -131,7 +134,8 @@ class PropertySetChangeEvent(Serializable):
         """
         pass
 
-class PropertySetChangeListener(Serializable):
+
+class PropertySetChangeListener(object):
     """The listener interface for receiving <code>PropertySetChangeEvent</code>
     objects.
     """
@@ -144,7 +148,8 @@ class PropertySetChangeListener(Serializable):
         """
         pass
 
-class PropertySetChangeNotifier(Serializable):
+
+class PropertySetChangeNotifier(object):
     """The interface for adding and removing <code>PropertySetChangeEvent</code>
     listeners. By implementing this interface a class explicitly announces
     that it will generate a <code>PropertySetChangeEvent</code> when its
@@ -166,6 +171,7 @@ class PropertySetChangeNotifier(Serializable):
                    The new Listener to be registered.
         """
         pass
+
 
     def removeListener(self, listener):
         """Removes a previously registered property set change listener.

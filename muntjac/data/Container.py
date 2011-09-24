@@ -89,6 +89,7 @@ class Container(object):
         """
         pass
 
+
     def getContainerPropertyIds(self):
         """Gets the ID's of all Properties stored in the Container. The ID's cannot
         be modified through the returned collection.
@@ -96,6 +97,7 @@ class Container(object):
         @return unmodifiable collection of Property IDs
         """
         pass
+
 
     def getItemIds(self):
         """Gets the ID's of all visible (after filtering and sorting) Items stored
@@ -113,6 +115,7 @@ class Container(object):
         """
         pass
 
+
     def getContainerProperty(self, itemId, propertyId):
         """Gets the Property identified by the given itemId and propertyId from the
         Container. If the Container does not contain the item or it is filtered
@@ -127,6 +130,7 @@ class Container(object):
         """
         pass
 
+
     def getType(self, propertyId):
         """Gets the data type of all Properties identified by the given Property ID.
 
@@ -135,6 +139,7 @@ class Container(object):
         @return data type of the Properties
         """
         pass
+
 
     def size(self):
         """Gets the number of visible Items in the Container.
@@ -145,6 +150,7 @@ class Container(object):
         @return number of Items in the Container
         """
         pass
+
 
     def containsId(self, itemId):
         """Tests if the Container contains the specified Item.
@@ -160,7 +166,8 @@ class Container(object):
         """
         pass
 
-    def addItem(self, *args):
+
+    def addItem(self, itemId=None):
         """Creates a new Item with the given ID in the Container.
 
         <p>
@@ -198,14 +205,8 @@ class Container(object):
                     if adding an item without an explicit item ID is not
                     supported by the container
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 0:
-            pass # astStmt: [Stmt([]), None]
-        elif _1 == 1:
-            itemId, = _0
-        else:
-            raise ARGERROR(0, 1)
+        pass
+
 
     def removeItem(self, itemId):
         """Removes the Item identified by <code>ItemId</code> from the Container.
@@ -228,7 +229,8 @@ class Container(object):
         """
         pass
 
-    def addContainerProperty(self, propertyId, type, defaultValue):
+
+    def addContainerProperty(self, propertyId, typ, defaultValue):
         """Adds a new Property to all Items in the Container. The Property ID, data
         type and default value of the new Property are given as parameters.
 
@@ -248,6 +250,7 @@ class Container(object):
         """
         pass
 
+
     def removeContainerProperty(self, propertyId):
         """Removes a Property specified by the given Property ID from the Container.
         Note that the Property will be removed from all Items in the Container.
@@ -264,6 +267,7 @@ class Container(object):
         """
         pass
 
+
     def removeAllItems(self):
         """Removes all Items from the Container.
 
@@ -278,6 +282,7 @@ class Container(object):
                     if the container does not support removing all items
         """
         pass
+
 
 class Ordered(Container):
     """Interface for Container classes whose {@link Item}s can be traversed in
@@ -307,6 +312,7 @@ class Ordered(Container):
         """
         pass
 
+
     def prevItemId(self, itemId):
         """Gets the ID of the Item preceding the Item that corresponds to
         <code>itemId</code>. If the given Item is the first or not found in
@@ -318,6 +324,7 @@ class Ordered(Container):
         """
         pass
 
+
     def firstItemId(self):
         """Gets the ID of the first Item in the Container.
 
@@ -325,12 +332,14 @@ class Ordered(Container):
         """
         pass
 
+
     def lastItemId(self):
         """Gets the ID of the last Item in the Container..
 
         @return ID of the last visible Item in the Container
         """
         pass
+
 
     def isFirstId(self, itemId):
         """Tests if the Item corresponding to the given Item ID is the first
@@ -343,6 +352,7 @@ class Ordered(Container):
         """
         pass
 
+
     def isLastId(self, itemId):
         """Tests if the Item corresponding to the given Item ID is the last Item
         in the Container.
@@ -352,7 +362,8 @@ class Ordered(Container):
         """
         pass
 
-    def addItemAfter(self, *args):
+
+    def addItemAfter(self, previousItemId, newItemId=None):
         """Adds a new item after the given item.
         <p>
         Adding an item after null item adds the item as first item of the
@@ -386,14 +397,8 @@ class Ordered(Container):
         @throws UnsupportedOperationException
                     if the operation is not supported by the container
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            previousItemId, = _0
-        elif _1 == 2:
-            previousItemId, newItemId = _0
-        else:
-            raise ARGERROR(1, 2)
+        pass
+
 
 class Sortable(Ordered):
     """Interface for Container classes whose {@link Item}s can be sorted.
@@ -442,6 +447,7 @@ class Sortable(Ordered):
         """
         pass
 
+
     def getSortableContainerPropertyIds(self):
         """Gets the container property IDs which can be used to sort the items.
 
@@ -449,6 +455,7 @@ class Sortable(Ordered):
                 container
         """
         pass
+
 
 class Indexed(Ordered):
     """Interface for Container classes whose {@link Item}s can be accessed by
@@ -473,6 +480,7 @@ class Indexed(Ordered):
         """
         pass
 
+
     def getIdByIndex(self, index):
         """Gets the ID of an Item by an index number.
 
@@ -483,7 +491,8 @@ class Indexed(Ordered):
         """
         pass
 
-    def addItemAt(self, *args):
+
+    def addItemAt(self, index, newItemId=None):
         """Adds a new item at given index (in the filtered view).
         <p>
         The indices of the item currently in the given position and all the
@@ -526,14 +535,8 @@ class Indexed(Ordered):
         @throws UnsupportedOperationException
                     if the operation is not supported by the container
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            index, = _0
-        elif _1 == 2:
-            index, newItemId = _0
-        else:
-            raise ARGERROR(1, 2)
+        pass
+
 
 class Hierarchical(Container):
     """<p>
@@ -561,6 +564,7 @@ class Hierarchical(Container):
         """
         pass
 
+
     def getParent(self, itemId):
         """Gets the ID of the parent Item of the specified Item.
 
@@ -571,6 +575,7 @@ class Hierarchical(Container):
         """
         pass
 
+
     def rootItemIds(self):
         """Gets the IDs of all Items in the container that don't have a parent.
         Such items are called <code>root</code> Items. The returned
@@ -580,6 +585,7 @@ class Hierarchical(Container):
                 containing IDs of all root elements of the container
         """
         pass
+
 
     def setParent(self, itemId, newParentId):
         """<p>
@@ -605,6 +611,7 @@ class Hierarchical(Container):
         """
         pass
 
+
     def areChildrenAllowed(self, itemId):
         """Tests if the Item with given ID can have children.
 
@@ -616,6 +623,7 @@ class Hierarchical(Container):
                 it's not found from the container or it can't have children.
         """
         pass
+
 
     def setChildrenAllowed(self, itemId, areChildrenAllowed):
         """<p>
@@ -646,6 +654,7 @@ class Hierarchical(Container):
         """
         pass
 
+
     def isRoot(self, itemId):
         """Tests if the Item specified with <code>itemId</code> is a root Item.
         The hierarchical container can have more than one root and must have
@@ -658,6 +667,7 @@ class Hierarchical(Container):
                 <code>false</code> if not
         """
         pass
+
 
     def hasChildren(self, itemId):
         """<p>
@@ -679,6 +689,7 @@ class Hierarchical(Container):
         """
         pass
 
+
     def removeItem(self, itemId):
         """<p>
         Removes the Item identified by <code>ItemId</code> from the
@@ -696,7 +707,8 @@ class Hierarchical(Container):
         """
         pass
 
-class SimpleFilterable(Container, Serializable):
+
+class SimpleFilterable(Container):
     """Interface that is implemented by containers which allow reducing their
     visible contents based on a set of filters. This interface has been
     renamed from {@link Filterable}, and implementing the new
@@ -762,9 +774,11 @@ class SimpleFilterable(Container, Serializable):
         """
         pass
 
+
     def removeAllContainerFilters(self):
         """Remove all filters from all properties."""
         pass
+
 
     def removeContainerFilters(self, propertyId):
         """Remove all filters from the given property.
@@ -774,7 +788,8 @@ class SimpleFilterable(Container, Serializable):
         """
         pass
 
-class Filter(Serializable):
+
+class Filter(object):
     """Filter interface for container filtering.
 
     If a filter does not support in-memory filtering,
@@ -810,6 +825,7 @@ class Filter(Serializable):
         """
         pass
 
+
     def appliesToProperty(self, propertyId):
         """Check if a change in the value of a property can affect the filtering
         result. May always return true, at the cost of performance.
@@ -823,7 +839,8 @@ class Filter(Serializable):
         """
         pass
 
-class Filterable(Container, Serializable):
+
+class Filterable(Container):
     """Interface that is implemented by containers which allow reducing their
     visible contents based on a set of filters.
     <p>
@@ -864,7 +881,7 @@ class Filterable(Container, Serializable):
     @since 6.6
     """
 
-    def addContainerFilter(self, filter):
+    def addContainerFilter(self, fltr):
         """Adds a filter for the container.
 
         If a container has multiple filters, only items accepted by all
@@ -875,7 +892,8 @@ class Filterable(Container, Serializable):
         """
         pass
 
-    def removeContainerFilter(self, filter):
+
+    def removeContainerFilter(self, fltr):
         """Removes a filter from the container.
 
         This requires that the equals() method considers the filters as
@@ -883,11 +901,13 @@ class Filterable(Container, Serializable):
         """
         pass
 
+
     def removeAllContainerFilters(self):
         """Remove all active filters from the container."""
         pass
 
-class Viewer(Serializable):
+
+class Viewer(object):
     """Interface implemented by viewer classes capable of using a Container as a
     data source.
     """
@@ -900,6 +920,7 @@ class Viewer(Serializable):
         """
         pass
 
+
     def getContainerDataSource(self):
         """Gets the Container serving as the data source of the viewer.
 
@@ -907,7 +928,8 @@ class Viewer(Serializable):
         """
         pass
 
-class Editor(Container.Viewer, Serializable):
+
+class Editor(Viewer):
     """<p>
     Interface implemented by the editor classes supporting editing the
     Container. Implementing this interface means that the Container serving
@@ -919,10 +941,10 @@ class Editor(Container.Viewer, Serializable):
     internally.
     </p>
     """
-    # Contents change event
     pass
 
-class ItemSetChangeEvent(Serializable):
+
+class ItemSetChangeEvent(object):
     """An <code>Event</code> object specifying the Container whose Item set has
     changed (items added, removed or reordered).
 
@@ -936,7 +958,8 @@ class ItemSetChangeEvent(Serializable):
         """
         pass
 
-class ItemSetChangeListener(Serializable):
+
+class ItemSetChangeListener(object):
     """Container Item set change listener interface.
 
     An item set change refers to addition, removal or reordering of items in
@@ -952,7 +975,8 @@ class ItemSetChangeListener(Serializable):
         """
         pass
 
-class ItemSetChangeNotifier(Serializable):
+
+class ItemSetChangeNotifier(object):
     """The interface for adding and removing <code>ItemSetChangeEvent</code>
     listeners. By implementing this interface a class explicitly announces
     that it will generate a <code>ItemSetChangeEvent</code> when its contents
@@ -970,7 +994,6 @@ class ItemSetChangeNotifier(Serializable):
     be able to implement an interface.
     </p>
     """
-    # Property set change event
 
     def addListener(self, listener):
         """Adds an Item set change listener for the object.
@@ -980,6 +1003,7 @@ class ItemSetChangeNotifier(Serializable):
         """
         pass
 
+
     def removeListener(self, listener):
         """Removes the Item set change listener from the object.
 
@@ -988,7 +1012,8 @@ class ItemSetChangeNotifier(Serializable):
         """
         pass
 
-class PropertySetChangeEvent(Serializable):
+
+class PropertySetChangeEvent(object):
     """An <code>Event</code> object specifying the Container whose Property set
     has changed.
 
@@ -1005,7 +1030,8 @@ class PropertySetChangeEvent(Serializable):
         """
         pass
 
-class PropertySetChangeListener(Serializable):
+
+class PropertySetChangeListener(object):
     """The listener interface for receiving <code>PropertySetChangeEvent</code>
     objects.
 
@@ -1024,7 +1050,8 @@ class PropertySetChangeListener(Serializable):
         """
         pass
 
-class PropertySetChangeNotifier(Serializable):
+
+class PropertySetChangeNotifier(object):
     """<p>
     The interface for adding and removing <code>PropertySetChangeEvent</code>
     listeners. By implementing this interface a class explicitly announces
@@ -1056,6 +1083,7 @@ class PropertySetChangeNotifier(Serializable):
                    The new Listener to be registered
         """
         pass
+
 
     def removeListener(self, listener):
         """Removes a previously registered Property set change listener.

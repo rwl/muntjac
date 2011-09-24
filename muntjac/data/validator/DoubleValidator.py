@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from com.vaadin.data.validator.AbstractStringValidator import (AbstractStringValidator,)
+from muntjac.data.validator.AbstractStringValidator import AbstractStringValidator
 
 
 class DoubleValidator(AbstractStringValidator):
@@ -37,9 +37,10 @@ class DoubleValidator(AbstractStringValidator):
         """
         super(DoubleValidator, self)(errorMessage)
 
+
     def isValidString(self, value):
         try:
-            Double.parseDouble.parseDouble(value)
+            float(value)
             return True
-        except Exception, e:
+        except ValueError:
             return False

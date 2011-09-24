@@ -18,7 +18,7 @@ import logging
 import locale
 
 from muntjac.terminal.URIHandler import URIHandler
-from muntjac.terminal.SystemError import SystemError
+from muntjac.terminal.SystemError import SystemErr
 from muntjac.terminal.Terminal import ErrorListener, Terminal
 from muntjac.terminal.ParameterHandler import ErrorEvent
 from muntjac.terminal.ErrorMessage import ErrorMessage
@@ -1403,7 +1403,7 @@ class Application(URIHandler, Terminal, ErrorListener):
             if isinstance(t, ErrorMessage):
                 owner.setComponentError(t)
             else:
-                owner.setComponentError(SystemError(t))
+                owner.setComponentError( SystemErr(t) )
         # also print the error on console
         self._logger.critical('Terminal error: ' + str(t))
 

@@ -14,8 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.data.validator.AbstractValidator import (AbstractValidator,)
+from muntjac.data.validator.AbstractValidator import AbstractValidator
 
 
 class StringLengthValidator(AbstractValidator):
@@ -27,11 +26,8 @@ class StringLengthValidator(AbstractValidator):
     @VERSION@
     @since 3.0
     """
-    _minLength = -1
-    _maxLength = -1
-    _allowNull = True
 
-    def __init__(self, *args):
+    def __init__(self, errorMessage, minLength=None, maxLength=None, allowNull=None):
         """Creates a new StringLengthValidator with a given error message.
 
         @param errorMessage
@@ -50,19 +46,18 @@ class StringLengthValidator(AbstractValidator):
                    Are null strings permissible? This can be handled better by
                    setting a field as required or not.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            errorMessage, = _0
+        self._minLength = -1
+        self._maxLength = -1
+        self._allowNull = True
+
+        if minLength is None:
             super(StringLengthValidator, self)(errorMessage)
-        elif _1 == 4:
-            errorMessage, minLength, maxLength, allowNull = _0
+        else:
             self.__init__(errorMessage)
             self.setMinLength(minLength)
             self.setMaxLength(maxLength)
             self.setNullAllowed(allowNull)
-        else:
-            raise ARGERROR(1, 4)
+
 
     def isValid(self, value):
         """Checks if the given value is valid.
@@ -73,15 +68,18 @@ class StringLengthValidator(AbstractValidator):
         """
         if value is None:
             return self._allowNull
+
         s = str(value)
         if s is None:
             return self._allowNull
-        len = len(s)
-        if (
-            (self._minLength >= 0 and len < self._minLength) or (self._maxLength >= 0 and len > self._maxLength)
-        ):
+
+        length = len(s)
+        if (self._minLength >= 0 and length < self._minLength) \
+                or (self._maxLength >= 0 and length > self._maxLength):
             return False
+
         return True
+
 
     def isNullAllowed(self):
         """Returns <code>true</code> if null strings are allowed.
@@ -91,12 +89,14 @@ class StringLengthValidator(AbstractValidator):
         """
         return self._allowNull
 
+
     def getMaxLength(self):
         """Gets the maximum permissible length of the string.
 
         @return the maximum length of the string.
         """
         return self._maxLength
+
 
     def getMinLength(self):
         """Gets the minimum permissible length of the string.
@@ -105,11 +105,13 @@ class StringLengthValidator(AbstractValidator):
         """
         return self._minLength
 
+
     def setNullAllowed(self, allowNull):
         """Sets whether null-strings are to be allowed. This can be better handled
         by setting a field as required or not.
         """
         self._allowNull = allowNull
+
 
     def setMaxLength(self, maxLength):
         """Sets the maximum permissible length of the string.
@@ -119,7 +121,9 @@ class StringLengthValidator(AbstractValidator):
         """
         if maxLength < -1:
             maxLength = -1
+
         self._maxLength = maxLength
+
 
     def setMinLength(self, minLength):
         """Sets the minimum permissible length.
@@ -129,4 +133,5 @@ class StringLengthValidator(AbstractValidator):
         """
         if minLength < -1:
             minLength = -1
+
         self._minLength = minLength

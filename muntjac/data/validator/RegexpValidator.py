@@ -14,10 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.data.validator.AbstractStringValidator import (AbstractStringValidator,)
-# from java.util.regex.Matcher import (Matcher,)
-# from java.util.regex.Pattern import (Pattern,)
+import re
+
+from muntjac.data.validator.AbstractStringValidator import AbstractStringValidator
 
 
 class RegexpValidator(AbstractStringValidator):
@@ -38,9 +37,6 @@ class RegexpValidator(AbstractStringValidator):
     @VERSION@
     @since 5.4
     """
-    _pattern = None
-    _complete = None
-    _matcher = None
 
     def __init__(self, *args):
         """Creates a validator for checking that the regular expression matches the
@@ -62,34 +58,26 @@ class RegexpValidator(AbstractStringValidator):
         @param errorMessage
                    the message to display in case the value does not validate.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 2:
-            regexp, errorMessage = _0
+        self._pattern = None
+        self._complete = None
+        self._matcher = None
+
+        args = args
+        nargs = len(args)
+        if nargs == 2:
+            regexp, errorMessage = args
             self.__init__(regexp, True, errorMessage)
-        elif _1 == 3:
-            regexp, complete, errorMessage = _0
+        elif nargs == 3:
+            regexp, complete, errorMessage = args
             super(RegexpValidator, self)(errorMessage)
-            self._pattern = Pattern.compile(regexp)
+            self._pattern = re.compile(regexp)  # FIXME check re use
             self._complete = complete
         else:
-            raise ARGERROR(2, 3)
+            raise ValueError, 'invalid number of arguments'
+
 
     def isValidString(self, value):
         if self._complete:
-            return self.getMatcher(value).matches()
+            return self._pattern.match(value)
         else:
-            return self.getMatcher(value).find()
-
-    def getMatcher(self, value):
-        """Get a new or reused matcher for the pattern
-
-        @param value
-                   the string to find matches in
-        @return Matcher for the string
-        """
-        if self._matcher is None:
-            self._matcher = self._pattern.matcher(value)
-        else:
-            self._matcher.reset(value)
-        return self._matcher
+            return self._pattern.search(value)  # FIXME check re use

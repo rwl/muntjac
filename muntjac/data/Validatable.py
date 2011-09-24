@@ -14,11 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# from java.io.Serializable import (Serializable,)
-# from java.util.Collection import (Collection,)
 
-
-class Validatable(Serializable):
+class Validatable(object):
     """<p>
     Interface for validatable objects. Defines methods to verify if the object's
     value is valid or not, and to add, remove and list registered validators of
@@ -45,6 +42,7 @@ class Validatable(Serializable):
         """
         pass
 
+
     def removeValidator(self, validator):
         """<p>
         Removes a previously registered validator from the object. The specified
@@ -57,6 +55,7 @@ class Validatable(Serializable):
         """
         pass
 
+
     def getValidators(self):
         """<p>
         Lists all validators currently registered for the object. If no
@@ -66,6 +65,7 @@ class Validatable(Serializable):
         @return collection of validators or <code>null</code>
         """
         pass
+
 
     def isValid(self):
         """<p>
@@ -81,6 +81,7 @@ class Validatable(Serializable):
         """
         pass
 
+
     def validate(self):
         """<p>
         Checks the validity of the validatable. If the validatable is valid this
@@ -93,6 +94,7 @@ class Validatable(Serializable):
         """
         pass
 
+
     def isInvalidAllowed(self):
         """<p>
         Checks the validabtable object accept invalid values.The default value is
@@ -100,6 +102,7 @@ class Validatable(Serializable):
         </p>
         """
         pass
+
 
     def setInvalidAllowed(self, invalidValueAllowed):
         """<p>
