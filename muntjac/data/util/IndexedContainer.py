@@ -98,7 +98,7 @@ class IndexedContainer(AbstractInMemoryContainer, Container, PropertySetChangeNo
 
     def getUnfilteredItem(self, itemId):
         # (non-Javadoc)
-        # 
+        #
         # @see com.vaadin.data.Container#getContainerPropertyIds()
 
         if itemId is not None and itemId in self._items:
@@ -116,7 +116,7 @@ class IndexedContainer(AbstractInMemoryContainer, Container, PropertySetChangeNo
         @return Type of the requested Property
         """
         # (non-Javadoc)
-        # 
+        #
         # @see com.vaadin.data.Container#getContainerProperty(java.lang.Object,
         # java.lang.Object)
 
@@ -124,7 +124,7 @@ class IndexedContainer(AbstractInMemoryContainer, Container, PropertySetChangeNo
 
     def getContainerProperty(self, itemId, propertyId):
         # (non-Javadoc)
-        # 
+        #
         # @see com.vaadin.data.Container#addContainerProperty(java.lang.Object,
         # java.lang.Class, java.lang.Object)
 
@@ -135,7 +135,7 @@ class IndexedContainer(AbstractInMemoryContainer, Container, PropertySetChangeNo
     def addContainerProperty(self, propertyId, type, defaultValue):
         # Fails, if nulls are given
         # (non-Javadoc)
-        # 
+        #
         # @see com.vaadin.data.Container#removeAllItems()
 
         if (propertyId is None) or (type is None):
@@ -167,7 +167,7 @@ class IndexedContainer(AbstractInMemoryContainer, Container, PropertySetChangeNo
 
     def removeAllItems(self):
         # (non-Javadoc)
-        # 
+        #
         # @see com.vaadin.data.Container#addItem()
 
         origSize = len(self)
@@ -183,7 +183,7 @@ class IndexedContainer(AbstractInMemoryContainer, Container, PropertySetChangeNo
     def addItem(self, *args):
         # Creates a new id
         # (non-Javadoc)
-        # 
+        #
         # @see com.vaadin.data.Container#addItem(java.lang.Object)
 
         _0 = args
@@ -214,7 +214,7 @@ class IndexedContainer(AbstractInMemoryContainer, Container, PropertySetChangeNo
                    data table of added item
         """
         # (non-Javadoc)
-        # 
+        #
         # @see com.vaadin.data.Container#removeItem(java.lang.Object)
 
         if self._defaultPropertyValues is not None:
@@ -223,7 +223,7 @@ class IndexedContainer(AbstractInMemoryContainer, Container, PropertySetChangeNo
 
     def removeItem(self, itemId):
         # (non-Javadoc)
-        # 
+        #
         # @see com.vaadin.data.Container#removeContainerProperty(java.lang.Object )
 
         if (itemId is None) or (self._items.remove(itemId) is None):
@@ -243,7 +243,7 @@ class IndexedContainer(AbstractInMemoryContainer, Container, PropertySetChangeNo
         # Fails if the Property is not present
         # Container.Ordered methods
         # (non-Javadoc)
-        # 
+        #
         # @see com.vaadin.data.Container.Ordered#addItemAfter(java.lang.Object,
         # java.lang.Object)
 
@@ -269,7 +269,7 @@ class IndexedContainer(AbstractInMemoryContainer, Container, PropertySetChangeNo
 
     def addItemAfter(self, *args):
         # (non-Javadoc)
-        # 
+        #
         # @see com.vaadin.data.Container.Ordered#addItemAfter(java.lang.Object)
 
         _0 = args
@@ -289,12 +289,12 @@ class IndexedContainer(AbstractInMemoryContainer, Container, PropertySetChangeNo
 
     # Creates a new id
     # (non-Javadoc)
-    # 
+    #
     # @see com.vaadin.data.Container.Indexed#addItemAt(int, java.lang.Object)
 
     def addItemAt(self, *args):
         # (non-Javadoc)
-        # 
+        #
         # @see com.vaadin.data.Container.Indexed#addItemAt(int)
 
         _0 = args
@@ -330,48 +330,6 @@ class IndexedContainer(AbstractInMemoryContainer, Container, PropertySetChangeNo
         self._items.put(newItemId, t)
         self.addDefaultValues(t)
 
-    class ItemSetChangeEvent(BaseItemSetChangeEvent):
-        """An <code>event</code> object specifying the list whose Item set has
-        changed.
-
-        @author IT Mill Ltd.
-        @version
-        @VERSION@
-        @since 3.0
-        """
-        _addedItemIndex = None
-
-        def __init__(self, source, addedItemIndex):
-            super(ItemSetChangeEvent, self)(source)
-            self._addedItemIndex = addedItemIndex
-
-        def getAddedItemIndex(self):
-            """Iff one item is added, gives its index.
-
-            @return -1 if either multiple items are changed or some other change
-                    than add is done.
-            """
-            return self._addedItemIndex
-
-    class PropertyValueChangeEvent(EventObject, Property, ValueChangeEvent, Serializable):
-        """An <code>event</code> object specifying the Property in a list whose
-        value has changed.
-
-        @author IT Mill Ltd.
-        @version
-        @VERSION@
-        @since 3.0
-        """
-
-        def __init__(self, source):
-            # (non-Javadoc)
-            # 
-            # @see com.vaadin.data.Property.ValueChangeEvent#getProperty()
-
-            super(PropertyValueChangeEvent, self)(source)
-
-        def getProperty(self):
-            return self.getSource()
 
     def addListener(self, *args):
         _0 = args
@@ -390,7 +348,7 @@ class IndexedContainer(AbstractInMemoryContainer, Container, PropertySetChangeNo
 
     def removeListener(self, *args):
         # (non-Javadoc)
-        # 
+        #
         # @see com.vaadin.data.Property.ValueChangeNotifier#addListener(com.
         # vaadin.data.Property.ValueChangeListener)
 
@@ -408,7 +366,7 @@ class IndexedContainer(AbstractInMemoryContainer, Container, PropertySetChangeNo
             raise ARGERROR(1, 1)
 
     # (non-Javadoc)
-    # 
+    #
     # @see com.vaadin.data.Property.ValueChangeNotifier#removeListener(com
     # .vaadin.data.Property.ValueChangeListener)
 
@@ -502,11 +460,11 @@ class IndexedContainer(AbstractInMemoryContainer, Container, PropertySetChangeNo
         # Internal Item and Property implementations
         # A class implementing the com.vaadin.data.Item interface to be contained
         # in the list.
-        # 
+        #
         # @author IT Mill Ltd.
-        # 
+        #
         # @version @VERSION@
-        # 
+        #
         # @since 3.0
 
         if (
@@ -524,6 +482,89 @@ class IndexedContainer(AbstractInMemoryContainer, Container, PropertySetChangeNo
             if self._singlePropertyValueChangeListeners.isEmpty():
                 self._singlePropertyValueChangeListeners = None
 
+
+    def sort(self, propertyId, ascending):
+        # (non-Javadoc)
+        #
+        # @see com.vaadin.data.Container.Sortable#getSortableContainerPropertyIds
+        # ()
+
+        self.sortContainer(propertyId, ascending)
+
+    def getSortableContainerPropertyIds(self):
+        return self.getSortablePropertyIds()
+
+    def getItemSorter(self):
+        return super(IndexedContainer, self).getItemSorter()
+
+    def setItemSorter(self, itemSorter):
+        super(IndexedContainer, self).setItemSorter(itemSorter)
+
+    def clone(self):
+        """Supports cloning of the IndexedContainer cleanly.
+
+        @throws CloneNotSupportedException
+                    if an object cannot be cloned. .
+
+        @deprecated cloning support might be removed from IndexedContainer in the
+                    future
+        """
+        # Creates the clone
+        nc = IndexedContainer()
+        # Clone the shallow properties
+        nc.setAllItemIds(self.getAllItemIds().clone() if self.getAllItemIds() is not None else None)
+        nc.setItemSetChangeListeners(LinkedList(self.getItemSetChangeListeners()) if self.getItemSetChangeListeners() is not None else None)
+        nc.propertyIds = self._propertyIds.clone() if self._propertyIds is not None else None
+        nc.setPropertySetChangeListeners(LinkedList(self.getPropertySetChangeListeners()) if self.getPropertySetChangeListeners() is not None else None)
+        nc.propertyValueChangeListeners = self._propertyValueChangeListeners.clone() if self._propertyValueChangeListeners is not None else None
+        nc.readOnlyProperties = self._readOnlyProperties.clone() if self._readOnlyProperties is not None else None
+        nc.singlePropertyValueChangeListeners = self._singlePropertyValueChangeListeners.clone() if self._singlePropertyValueChangeListeners is not None else None
+        nc.types = self._types.clone() if self._types is not None else None
+        nc.setFilters(self.getFilters().clone())
+        nc.setFilteredItemIds(None if self.getFilteredItemIds() is None else self.getFilteredItemIds().clone())
+        # Clone property-values
+        if self._items is None:
+            nc.items = None
+        else:
+            nc.items = dict()
+            _0 = True
+            i = self._items.keys()
+            while True:
+                if _0 is True:
+                    _0 = False
+                if not i.hasNext():
+                    break
+                id = i.next()
+                it = self._items[id]
+                nc.items.put(id, it.clone())
+        return nc
+
+    def addContainerFilter(self, *args):
+        _0 = args
+        _1 = len(args)
+        if _1 == 1:
+            filter, = _0
+            self.addFilter(filter)
+        elif _1 == 4:
+            propertyId, filterString, ignoreCase, onlyMatchPrefix = _0
+            # the filter instance created here is always valid for in-memory
+            # containers
+            try:
+                self.addFilter(SimpleStringFilter(propertyId, filterString, ignoreCase, onlyMatchPrefix))
+            except UnsupportedFilterException, e:
+                pass # astStmt: [Stmt([]), None]
+        else:
+            raise ARGERROR(1, 4)
+
+    def removeAllContainerFilters(self):
+        self.removeAllFilters()
+
+    def removeContainerFilters(self, propertyId):
+        self.removeFilters(propertyId)
+
+    def removeContainerFilter(self, filter):
+        self.removeFilter(filter)
+
     class IndexedContainerItem(Item):
         # Item ID in the host container for this Item.
         _itemId = None
@@ -537,7 +578,7 @@ class IndexedContainer(AbstractInMemoryContainer, Container, PropertySetChangeNo
             """
             # Gets the item contents from the host
             # (non-Javadoc)
-            # 
+            #
             # @see com.vaadin.data.Item#getItemProperty(java.lang.Object)
 
             if itemId is None:
@@ -617,235 +658,196 @@ class IndexedContainer(AbstractInMemoryContainer, Container, PropertySetChangeNo
             """
             raise self.UnsupportedOperationException('Indexed container item does not support property removal')
 
-    class IndexedContainerProperty(Property, Property, ValueChangeNotifier):
-        """A class implementing the {@link Property} interface to be contained in
-        the {@link IndexedContainerItem} contained in the
-        {@link IndexedContainer}.
+class IndexedContainerProperty(Property, Property, ValueChangeNotifier):
+    """A class implementing the {@link Property} interface to be contained in
+    the {@link IndexedContainerItem} contained in the
+    {@link IndexedContainer}.
 
-        @author IT Mill Ltd.
+    @author IT Mill Ltd.
 
-        @version
-        @VERSION@
-        @since 3.0
+    @version
+    @VERSION@
+    @since 3.0
+    """
+    # ID of the Item, where this property resides.
+    # (non-Javadoc)
+    #
+    # @see com.vaadin.data.Container.Sortable#sort(java.lang.Object[],
+    # boolean[])
+
+    _itemId = None
+    # Id of the Property.
+    _propertyId = None
+
+    def __init__(self, itemId, propertyId):
+        """Constructs a new {@link IndexedContainerProperty} object.
+
+        @param itemId
+                   the ID of the Item to connect the new Property to.
+        @param propertyId
+                   the Property ID of the new Property.
+        @param host
+                   the list that contains the Item to contain the new
+                   Property.
         """
-        # ID of the Item, where this property resides.
         # (non-Javadoc)
-        # 
-        # @see com.vaadin.data.Container.Sortable#sort(java.lang.Object[],
-        # boolean[])
+        #
+        # @see com.vaadin.data.Property#getType()
 
-        _itemId = None
-        # Id of the Property.
-        _propertyId = None
+        if (itemId is None) or (propertyId is None):
+            # Null ids are not accepted
+            raise self.NullPointerException('Container item or property ids can not be null')
+        self._propertyId = propertyId
+        self._itemId = itemId
 
-        def __init__(self, itemId, propertyId):
-            """Constructs a new {@link IndexedContainerProperty} object.
-
-            @param itemId
-                       the ID of the Item to connect the new Property to.
-            @param propertyId
-                       the Property ID of the new Property.
-            @param host
-                       the list that contains the Item to contain the new
-                       Property.
-            """
-            # (non-Javadoc)
-            # 
-            # @see com.vaadin.data.Property#getType()
-
-            if (itemId is None) or (propertyId is None):
-                # Null ids are not accepted
-                raise self.NullPointerException('Container item or property ids can not be null')
-            self._propertyId = propertyId
-            self._itemId = itemId
-
-        def getType(self):
-            # (non-Javadoc)
-            # 
-            # @see com.vaadin.data.Property#getValue()
-
-            return self.types[self._propertyId]
-
-        def getValue(self):
-            # (non-Javadoc)
-            # 
-            # @see com.vaadin.data.Property#isReadOnly()
-
-            return self.items[self._itemId].get(self._propertyId)
-
-        def isReadOnly(self):
-            # (non-Javadoc)
-            # 
-            # @see com.vaadin.data.Property#setReadOnly(boolean)
-
-            return self in self.readOnlyProperties
-
-        def setReadOnly(self, newStatus):
-            # (non-Javadoc)
-            # 
-            # @see com.vaadin.data.Property#setValue(java.lang.Object)
-
-            if newStatus:
-                self.readOnlyProperties.add(self)
-            else:
-                self.readOnlyProperties.remove(self)
-
-        def setValue(self, newValue):
-            # Gets the Property set
-            propertySet = self.items[self._itemId]
-            # Support null values on all types
-            if newValue is None:
-                propertySet.remove(self._propertyId)
-            elif self.getType().isAssignableFrom(newValue.getClass()):
-                propertySet.put(self._propertyId, newValue)
-            else:
-                # Gets the string constructor
-                try:
-                    constr = self.getType().getConstructor([str])
-                    # Creates new object from the string
-                    propertySet.put(self._propertyId, constr([str(newValue)]))
-                except java.lang.Exception, e:
-                    raise Property.ConversionException('Conversion for value \'' + newValue + '\' of class ' + newValue.getClass().getName() + ' to ' + self.getType().getName() + ' failed', e)
-            # update the container filtering if this property is being filtered
-            if self.isPropertyFiltered(self._propertyId):
-                self.filterAll()
-            self.firePropertyValueChange(self)
-
-        def toString(self):
-            """Returns the value of the Property in human readable textual format.
-            The return value should be assignable to the <code>setValue</code>
-            method if the Property is not in read-only mode.
-
-            @return <code>String</code> representation of the value stored in the
-                    Property
-            """
-            value = self.getValue()
-            if value is None:
-                return None
-            return str(value)
-
-        def hashCode(self):
-            """Calculates a integer hash-code for the Property that's unique inside
-            the Item containing the Property. Two different Properties inside the
-            same Item contained in the same list always have different
-            hash-codes, though Properties in different Items may have identical
-            hash-codes.
-
-            @return A locally unique hash-code as integer
-            """
-            return self._itemId.hashCode() ^ self._propertyId.hashCode()
-
-        def equals(self, obj):
-            """Tests if the given object is the same as the this object. Two
-            Properties got from an Item with the same ID are equal.
-
-            @param obj
-                       an object to compare with this object
-            @return <code>true</code> if the given object is the same as this
-                    object, <code>false</code> if not
-            """
-            # (non-Javadoc)
-            # 
-            # @see com.vaadin.data.Property.ValueChangeNotifier#addListener(
-            # com.vaadin.data.Property.ValueChangeListener)
-
-            if (obj is None) or (not (obj.getClass() == self.IndexedContainerProperty)):
-                return False
-            lp = obj
-            return lp.getHost() == self.getHost() and lp.propertyId == self._propertyId and lp.itemId == self._itemId
-
-        def addListener(self, listener):
-            # (non-Javadoc)
-            # 
-            # @see com.vaadin.data.Property.ValueChangeNotifier#removeListener
-            # (com.vaadin.data.Property.ValueChangeListener)
-
-            self.addSinglePropertyChangeListener(self._propertyId, self._itemId, listener)
-
-        def removeListener(self, listener):
-            self.removeSinglePropertyChangeListener(self._propertyId, self._itemId, listener)
-
-        def getHost(self):
-            return _IndexedContainer_this
-
-    def sort(self, propertyId, ascending):
+    def getType(self):
         # (non-Javadoc)
-        # 
-        # @see com.vaadin.data.Container.Sortable#getSortableContainerPropertyIds
-        # ()
+        #
+        # @see com.vaadin.data.Property#getValue()
 
-        self.sortContainer(propertyId, ascending)
+        return self.types[self._propertyId]
 
-    def getSortableContainerPropertyIds(self):
-        return self.getSortablePropertyIds()
+    def getValue(self):
+        # (non-Javadoc)
+        #
+        # @see com.vaadin.data.Property#isReadOnly()
 
-    def getItemSorter(self):
-        return super(IndexedContainer, self).getItemSorter()
+        return self.items[self._itemId].get(self._propertyId)
 
-    def setItemSorter(self, itemSorter):
-        super(IndexedContainer, self).setItemSorter(itemSorter)
+    def isReadOnly(self):
+        # (non-Javadoc)
+        #
+        # @see com.vaadin.data.Property#setReadOnly(boolean)
 
-    def clone(self):
-        """Supports cloning of the IndexedContainer cleanly.
+        return self in self.readOnlyProperties
 
-        @throws CloneNotSupportedException
-                    if an object cannot be cloned. .
+    def setReadOnly(self, newStatus):
+        # (non-Javadoc)
+        #
+        # @see com.vaadin.data.Property#setValue(java.lang.Object)
 
-        @deprecated cloning support might be removed from IndexedContainer in the
-                    future
-        """
-        # Creates the clone
-        nc = IndexedContainer()
-        # Clone the shallow properties
-        nc.setAllItemIds(self.getAllItemIds().clone() if self.getAllItemIds() is not None else None)
-        nc.setItemSetChangeListeners(LinkedList(self.getItemSetChangeListeners()) if self.getItemSetChangeListeners() is not None else None)
-        nc.propertyIds = self._propertyIds.clone() if self._propertyIds is not None else None
-        nc.setPropertySetChangeListeners(LinkedList(self.getPropertySetChangeListeners()) if self.getPropertySetChangeListeners() is not None else None)
-        nc.propertyValueChangeListeners = self._propertyValueChangeListeners.clone() if self._propertyValueChangeListeners is not None else None
-        nc.readOnlyProperties = self._readOnlyProperties.clone() if self._readOnlyProperties is not None else None
-        nc.singlePropertyValueChangeListeners = self._singlePropertyValueChangeListeners.clone() if self._singlePropertyValueChangeListeners is not None else None
-        nc.types = self._types.clone() if self._types is not None else None
-        nc.setFilters(self.getFilters().clone())
-        nc.setFilteredItemIds(None if self.getFilteredItemIds() is None else self.getFilteredItemIds().clone())
-        # Clone property-values
-        if self._items is None:
-            nc.items = None
+        if newStatus:
+            self.readOnlyProperties.add(self)
         else:
-            nc.items = dict()
-            _0 = True
-            i = self._items.keys()
-            while True:
-                if _0 is True:
-                    _0 = False
-                if not i.hasNext():
-                    break
-                id = i.next()
-                it = self._items[id]
-                nc.items.put(id, it.clone())
-        return nc
+            self.readOnlyProperties.remove(self)
 
-    def addContainerFilter(self, *args):
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            filter, = _0
-            self.addFilter(filter)
-        elif _1 == 4:
-            propertyId, filterString, ignoreCase, onlyMatchPrefix = _0
-            # the filter instance created here is always valid for in-memory
-            # containers
+    def setValue(self, newValue):
+        # Gets the Property set
+        propertySet = self.items[self._itemId]
+        # Support null values on all types
+        if newValue is None:
+            propertySet.remove(self._propertyId)
+        elif self.getType().isAssignableFrom(newValue.getClass()):
+            propertySet.put(self._propertyId, newValue)
+        else:
+            # Gets the string constructor
             try:
-                self.addFilter(SimpleStringFilter(propertyId, filterString, ignoreCase, onlyMatchPrefix))
-            except UnsupportedFilterException, e:
-                pass # astStmt: [Stmt([]), None]
-        else:
-            raise ARGERROR(1, 4)
+                constr = self.getType().getConstructor([str])
+                # Creates new object from the string
+                propertySet.put(self._propertyId, constr([str(newValue)]))
+            except java.lang.Exception, e:
+                raise Property.ConversionException('Conversion for value \'' + newValue + '\' of class ' + newValue.getClass().getName() + ' to ' + self.getType().getName() + ' failed', e)
+        # update the container filtering if this property is being filtered
+        if self.isPropertyFiltered(self._propertyId):
+            self.filterAll()
+        self.firePropertyValueChange(self)
 
-    def removeAllContainerFilters(self):
-        self.removeAllFilters()
+    def toString(self):
+        """Returns the value of the Property in human readable textual format.
+        The return value should be assignable to the <code>setValue</code>
+        method if the Property is not in read-only mode.
 
-    def removeContainerFilters(self, propertyId):
-        self.removeFilters(propertyId)
+        @return <code>String</code> representation of the value stored in the
+                Property
+        """
+        value = self.getValue()
+        if value is None:
+            return None
+        return str(value)
 
-    def removeContainerFilter(self, filter):
-        self.removeFilter(filter)
+    def hashCode(self):
+        """Calculates a integer hash-code for the Property that's unique inside
+        the Item containing the Property. Two different Properties inside the
+        same Item contained in the same list always have different
+        hash-codes, though Properties in different Items may have identical
+        hash-codes.
+
+        @return A locally unique hash-code as integer
+        """
+        return self._itemId.hashCode() ^ self._propertyId.hashCode()
+
+    def equals(self, obj):
+        """Tests if the given object is the same as the this object. Two
+        Properties got from an Item with the same ID are equal.
+
+        @param obj
+                   an object to compare with this object
+        @return <code>true</code> if the given object is the same as this
+                object, <code>false</code> if not
+        """
+        # (non-Javadoc)
+        #
+        # @see com.vaadin.data.Property.ValueChangeNotifier#addListener(
+        # com.vaadin.data.Property.ValueChangeListener)
+
+        if (obj is None) or (not (obj.getClass() == self.IndexedContainerProperty)):
+            return False
+        lp = obj
+        return lp.getHost() == self.getHost() and lp.propertyId == self._propertyId and lp.itemId == self._itemId
+
+    def addListener(self, listener):
+        # (non-Javadoc)
+        #
+        # @see com.vaadin.data.Property.ValueChangeNotifier#removeListener
+        # (com.vaadin.data.Property.ValueChangeListener)
+
+        self.addSinglePropertyChangeListener(self._propertyId, self._itemId, listener)
+
+    def removeListener(self, listener):
+        self.removeSinglePropertyChangeListener(self._propertyId, self._itemId, listener)
+
+    def getHost(self):
+        return _IndexedContainer_this
+
+class ItemSetChangeEvent(BaseItemSetChangeEvent):
+    """An <code>event</code> object specifying the list whose Item set has
+    changed.
+
+    @author IT Mill Ltd.
+    @version
+    @VERSION@
+    @since 3.0
+    """
+    _addedItemIndex = None
+
+    def __init__(self, source, addedItemIndex):
+        super(ItemSetChangeEvent, self)(source)
+        self._addedItemIndex = addedItemIndex
+
+    def getAddedItemIndex(self):
+        """Iff one item is added, gives its index.
+
+        @return -1 if either multiple items are changed or some other change
+                than add is done.
+        """
+        return self._addedItemIndex
+
+class PropertyValueChangeEvent(EventObject, Property, ValueChangeEvent, Serializable):
+    """An <code>event</code> object specifying the Property in a list whose
+    value has changed.
+
+    @author IT Mill Ltd.
+    @version
+    @VERSION@
+    @since 3.0
+    """
+
+    def __init__(self, source):
+        # (non-Javadoc)
+        #
+        # @see com.vaadin.data.Property.ValueChangeEvent#getProperty()
+
+        super(PropertyValueChangeEvent, self)(source)
+
+    def getProperty(self):
+        return self.getSource()

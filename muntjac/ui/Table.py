@@ -19,26 +19,37 @@ import logging
 from muntjac.event.dd.DropTarget import DropTarget
 from muntjac.terminal.gwt.client.ui.VScrollTable import VScrollTable
 from muntjac.terminal.KeyMapper import KeyMapper
-from muntjac.data.Container import Container, Ordered, Sortable, Indexed,\
-    ItemSetChangeNotifier
+from muntjac.data.Container import \
+    Container, Ordered, Sortable, Indexed,\
+    ItemSetChangeNotifier, PropertySetChangeNotifier
 from muntjac.event.Action import Action
 from muntjac.ui.DefaultFieldFactory import DefaultFieldFactory
-from muntjac.event.dd.acceptcriteria.ServerSideCriterion import ServerSideCriterion
+from muntjac.event.dd.acceptcriteria.ServerSideCriterion import \
+    ServerSideCriterion
 from muntjac.event.dd.DragSource import DragSource
 from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
-from muntjac.ui.Component import Component
-from muntjac.ui.AbstractSelect import AbstractSelect, MultiSelectMode
-from muntjac.event.ItemClickEvent import ItemClickEvent, ItemClickNotifier, ItemClickSource
-from muntjac.data.util.ContainerOrderedWrapper import ContainerOrderedWrapper
+from muntjac.ui.Component import Component, Event as ComponentEvent
+from muntjac.ui.AbstractSelect import AbstractSelect, MultiSelectMode,\
+    AbstractSelectTargetDetails
+from muntjac.event.ItemClickEvent import \
+    ItemClickEvent, ItemClickNotifier, ItemClickSource
+from muntjac.data.util.ContainerOrderedWrapper import \
+    ContainerOrderedWrapper
 from muntjac.event.DataBoundTransferable import DataBoundTransferable
-from muntjac.data.util.IndexedContainer import IndexedContainer
+from muntjac.data.util.IndexedContainer import ItemSetChangeEvent,\
+    IndexedContainer
 from muntjac.ui.ClientWidget import LoadStyle
 from muntjac.data.Property import ValueChangeNotifier
 from muntjac.ui.Field import Field
+from muntjac.ui.FieldFactory import FieldFactory
+from muntjac.ui.Form import Form
+from muntjac.ui.ComponentContainer import ComponentContainer
+from muntjac.event.MouseEvents import ClickEvent
 
 
 class TableDragMode(object):
     """Modes that Table support as drag sourse."""
+
     # Table does not start drag and drop events. HTM5 style events started
     # by browser may still happen.
     NONE = 'NONE'
@@ -1519,7 +1530,7 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
 
         # Assures that the data source is ordered by making unordered
         # containers ordered by wrapping them
-        if isinstance(newDataSource, Container.Ordered):
+        if isinstance(newDataSource, Ordered):
             super(Table, self).setContainerDataSource(newDataSource)
         else:
             super(Table, self).setContainerDataSource( ContainerOrderedWrapper(newDataSource) )
@@ -1638,135 +1649,141 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
              java.util.Map)
         """
         clientNeedsContentRefresh = False
+
         self.handleClickEvent(variables)
+
         self.handleColumnResizeEvent(variables)
+
         self.handleColumnWidthUpdates(variables)
+
         self.disableContentRefreshing()
+
         if not self.isSelectable() and 'selected' in variables:
             # Not-selectable is a special case, AbstractSelect does not support
             # TODO could be optimized.
-            # The AbstractSelect cannot handle the multiselection properly, instead
-            # we handle it ourself
-
             variables = dict(variables)
-            variables.remove('selected')
-        elif (
-            self.isSelectable() and self.isMultiSelect() and 'selected' in variables and self._multiSelectMode == self.MultiSelectMode.DEFAULT
-        ):
+            del variables['selected']
+
+        # The AbstractSelect cannot handle the multiselection properly, instead
+        # we handle it ourself
+        elif self.isSelectable() \
+                and self.isMultiSelect() \
+                and 'selected' in variables \
+                and self._multiSelectMode == self.MultiSelectMode.DEFAULT:
             self.handleSelectedItems(variables)
             variables = dict(variables)
-            variables.remove('selected')
+            del variables['selected']
+
         super(Table, self).changeVariables(source, variables)
+
         # Client might update the pagelength if Table height is fixed
         if 'pagelength' in variables:
             # Sets pageLength directly to avoid repaint that setter causes
-            self._pageLength = variables['pagelength']
+            self._pageLength = variables.get('pagelength')
+
         # Page start index
         if 'firstvisible' in variables:
-            value = variables['firstvisible']
+            value = variables.get('firstvisible')
             if value is not None:
-                self.setCurrentPageFirstItemIndex(value.intValue(), False)
+                self.setCurrentPageFirstItemIndex(int(value), False)
+
         # Sets requested firstrow and rows for the next paint
-        if ('reqfirstrow' in variables) or ('reqrows' in variables):
-            # FIXME: Handle exception
+        if 'reqfirstrow' in variables or 'reqrows' in variables:
+
+            try:
+                self._firstToBeRenderedInClient = int(variables.get('firstToBeRendered'))
+                self._lastToBeRenderedInClient = int(variables.get('lastToBeRendered'))
+            except Exception:
+                # FIXME: Handle exception
+                self._logger.info('Could not parse the first and/or last rows.')
+
             # respect suggested rows only if table is not otherwise updated
             # (row caches emptied by other event)
-            try:
-                self._firstToBeRenderedInClient = variables['firstToBeRendered'].intValue()
-                self._lastToBeRenderedInClient = variables['lastToBeRendered'].intValue()
-            except Exception, e:
-                self._logger.log(Level.FINER, 'Could not parse the first and/or last rows.', e)
             if not self._containerChangeToBeRendered:
-                value = variables['reqfirstrow']
+                value = variables.get('reqfirstrow')
                 if value is not None:
-                    self._reqFirstRowToPaint = value.intValue()
-                value = variables['reqrows']
+                    self._reqFirstRowToPaint = int(value)
+                value = variables.get('reqrows')
                 if value is not None:
-                    self._reqRowsToPaint = value.intValue()
+                    self._reqRowsToPaint = int(value)
                     # sanity check
-                    if self._reqFirstRowToPaint + self._reqRowsToPaint > len(self):
-                        self._reqRowsToPaint = len(self) - self._reqFirstRowToPaint
+                    if self._reqFirstRowToPaint + self._reqRowsToPaint > self.size():
+                        self._reqRowsToPaint = self.size() - self._reqFirstRowToPaint
+
             clientNeedsContentRefresh = True
+
         if not self._sortDisabled:
             # Sorting
             doSort = False
             if 'sortcolumn' in variables:
-                colId = variables['sortcolumn']
-                if colId is not None and not ('' == colId) and not ('null' == colId):
-                    id = self._columnIdMap.get(colId)
-                    self.setSortContainerPropertyId(id, False)
+                colId = variables.get('sortcolumn')
+                if colId is not None \
+                        and not ('' == colId) \
+                        and not ('null' == colId):
+                    idd = self._columnIdMap.get(colId)
+                    self.setSortContainerPropertyId(idd, False)
                     doSort = True
+
             if 'sortascending' in variables:
-                state = variables['sortascending'].booleanValue()
+                state = bool(variables.get('sortascending'))
                 if state != self._sortAscending:
                     self.setSortAscending(state, False)
                     doSort = True
+
             if doSort:
                 self.sort()
                 self.resetPageBuffer()
+
         # Dynamic column hide/show and order
         # Update visible columns
         if self.isColumnCollapsingAllowed():
             if 'collapsedcolumns' in variables:
-                # FIXME: Handle exception
                 try:
-                    ids = variables['collapsedcolumns']
-                    _0 = True
-                    it = self._visibleColumns
-                    while True:
-                        if _0 is True:
-                            _0 = False
-                        if not it.hasNext():
-                            break
-                        self.setColumnCollapsed(it.next(), False)
-                    _1 = True
-                    i = 0
-                    while True:
-                        if _1 is True:
-                            _1 = False
-                        else:
-                            i += 1
-                        if not (i < len(ids)):
-                            break
-                        self.setColumnCollapsed(self._columnIdMap.get(str(ids[i])), True)
-                except Exception, e:
-                    self._logger.log(Level.FINER, 'Could not determine column collapsing state', e)
+                    ids = variables.get('collapsedcolumns')
+                    for col in self._visibleColumns:
+                        self.setColumnCollapsed(col, False)
+
+                    for i in range(len(ids)):
+                        self.setColumnCollapsed(self._columnIdMap.get( str(ids[i]) ), True)
+                except Exception:
+                    # FIXME: Handle exception
+                    self._logger.info('Could not determine column collapsing state')
+
                 clientNeedsContentRefresh = True
+
         if self.isColumnReorderingAllowed():
             if 'columnorder' in variables:
-                # FIXME: Handle exception
                 try:
                     ids = variables['columnorder']
                     # need a real Object[], ids can be a String[]
                     idsTemp = [None] * len(ids)
-                    _2 = True
-                    i = 0
-                    while True:
-                        if _2 is True:
-                            _2 = False
-                        else:
-                            i += 1
-                        if not (i < len(ids)):
-                            break
-                        idsTemp[i] = self._columnIdMap.get(str(ids[i]))
+                    for i in range(len(ids)):
+                        idsTemp[i] = self._columnIdMap.get( str(ids[i]) )
+
                     self.setColumnOrder(idsTemp)
-                    if self.hasListeners(self.ColumnReorderEvent):
-                        self.fireEvent(self.ColumnReorderEvent(self))
-                except Exception, e:
-                    self._logger.log(Level.FINER, 'Could not determine column reordering state', e)
+                    if self.hasListeners( ColumnReorderEvent ):
+                        self.fireEvent( ColumnReorderEvent(self) )
+                except Exception:
+                    # FIXME: Handle exception
+                    self._logger.info('Could not determine column reordering state')
+
                 clientNeedsContentRefresh = True
+
         self.enableContentRefreshing(clientNeedsContentRefresh)
+
         # Actions
         if 'action' in variables:
-            st = StringTokenizer(variables['action'], ',')
-            if st.countTokens() == 2:
-                itemId = self.itemIdMapper.get(st.nextToken())
-                action = self._actionMapper.get(st.nextToken())
-                if (
-                    action is not None and (itemId is None) or self.containsId(itemId) and self._actionHandlers is not None
-                ):
+            st = variables.get('action').split(',')  # FIXME implement StringTokenizer
+            if len(st) == 2:
+                itemId = self.itemIdMapper.get(st[0].strip())
+                action = self._actionMapper.get(st[1].strip())
+                if action is not None \
+                        and (itemId is None) \
+                        or self.containsId(itemId) \
+                        and self._actionHandlers is not None:
                     for ah in self._actionHandlers:
                         ah.handleAction(action, self, itemId)
+
 
     def handleClickEvent(self, variables):
         """Handles click event
@@ -1775,33 +1792,37 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         """
         # Item click event
         if 'clickEvent' in variables:
-            # Header click event
-            key = variables['clickedKey']
+            key = variables.get('clickedKey')
             itemId = self.itemIdMapper.get(key)
             propertyId = None
-            colkey = variables['clickedColKey']
+            colkey = variables.get('clickedColKey')
             # click is not necessary on a property
             if colkey is not None:
                 propertyId = self._columnIdMap.get(colkey)
-            evt = MouseEventDetails.deSerialize(variables['clickEvent'])
+
+            evt = MouseEventDetails.deSerialize(variables.get('clickEvent'))
             item = self.getItem(itemId)
             if item is not None:
-                self.fireEvent(ItemClickEvent(self, item, itemId, propertyId, evt))
+                self.fireEvent( ItemClickEvent(self, item, itemId, propertyId, evt) )
+
+        # Header click event
         elif 'headerClickEvent' in variables:
-            # Footer click event
-            details = MouseEventDetails.deSerialize(variables['headerClickEvent'])
-            cid = variables['headerClickCID']
+            details = MouseEventDetails.deSerialize(variables.get('headerClickEvent'))
+            cid = variables.get('headerClickCID')
             propertyId = None
             if cid is not None:
                 propertyId = self._columnIdMap.get(str(cid))
-            self.fireEvent(self.HeaderClickEvent(self, propertyId, details))
+            self.fireEvent( HeaderClickEvent(self, propertyId, details) )
+
+        # Footer click event
         elif 'footerClickEvent' in variables:
-            details = MouseEventDetails.deSerialize(variables['footerClickEvent'])
-            cid = variables['footerClickCID']
+            details = MouseEventDetails.deSerialize(variables.get('footerClickEvent'))
+            cid = variables.get('footerClickCID')
             propertyId = None
             if cid is not None:
                 propertyId = self._columnIdMap.get(str(cid))
-            self.fireEvent(self.FooterClickEvent(self, propertyId, details))
+            self.fireEvent( FooterClickEvent(self, propertyId, details) )
+
 
     def handleColumnResizeEvent(self, variables):
         """Handles the column resize event sent by the client.
@@ -1809,38 +1830,50 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         @param variables
         """
         if 'columnResizeEventColumn' in variables:
-            cid = variables['columnResizeEventColumn']
+            cid = variables.get('columnResizeEventColumn')
             propertyId = None
             if cid is not None:
-                propertyId = self._columnIdMap.get(str(cid))
-                prev = variables['columnResizeEventPrev']
+                propertyId = self._columnIdMap.get( str(cid) )
+
+                prev = variables.get('columnResizeEventPrev')
                 previousWidth = -1
                 if prev is not None:
-                    previousWidth = Integer.valueOf.valueOf(str(prev))
-                curr = variables['columnResizeEventCurr']
+                    previousWidth = int( str(prev) )
+
+                curr = variables.get('columnResizeEventCurr')
                 currentWidth = -1
                 if curr is not None:
-                    currentWidth = Integer.valueOf.valueOf(str(curr))
-                self.fireColumnResizeEvent(propertyId, previousWidth, currentWidth)
+                    currentWidth = int( str(curr) )
+
+                self.fireColumnResizeEvent(propertyId,
+                                           previousWidth,
+                                           currentWidth)
+
 
     def fireColumnResizeEvent(self, propertyId, previousWidth, currentWidth):
         # Update the sizes on the server side. If a column previously had a
         # expand ratio and the user resized the column then the expand ratio
         # will be turned into a static pixel size.
-
         self.setColumnWidth(propertyId, currentWidth)
-        self.fireEvent(self.ColumnResizeEvent(self, propertyId, previousWidth, currentWidth))
+
+        self.fireEvent( ColumnResizeEvent(self,
+                                          propertyId,
+                                          previousWidth,
+                                          currentWidth) )
+
 
     def handleColumnWidthUpdates(self, variables):
         if 'columnWidthUpdates' in variables:
-            events = variables['columnWidthUpdates']
-            for str in events:
-                eventDetails = str.split(':')
-                propertyId = self._columnIdMap.get(eventDetails[0])
+            events = variables.get('columnWidthUpdates')
+            for string in events:
+                eventDetails = string.split(':')
+                propertyId = self._columnIdMap.get( eventDetails[0] )
                 if propertyId is None:
                     propertyId = self._ROW_HEADER_FAKE_PROPERTY_ID
-                width = Integer.valueOf.valueOf(eventDetails[1])
+
+                width = int( eventDetails[1] )
                 self.setColumnWidth(propertyId, width)
+
 
     def disableContentRefreshing(self):
         """Go to mode where content updates are not done. This is due we want to
@@ -1853,101 +1886,109 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         self._isContentRefreshesEnabled = False
         return wasDisabled
 
+
     def enableContentRefreshing(self, refreshContent):
         """Go to mode where content content refreshing has effect.
 
         @param refreshContent
                    true if content refresh needs to be done
         """
-        # (non-Javadoc)
-        #
-        # @see com.vaadin.ui.AbstractSelect#paintContent(com.vaadin.
-        # terminal.PaintTarget)
-
         self._isContentRefreshesEnabled = True
         if refreshContent:
             self.refreshRenderedCells()
             # Ensure that client gets a response
             self.requestRepaint()
 
+
     def paintContent(self, target):
+
         # The tab ordering number
         if self.getTabIndex() > 0:
             target.addAttribute('tabindex', self.getTabIndex())
+
         if self._dragMode != self.TableDragMode.NONE:
-            target.addAttribute('dragmode', self._dragMode.ordinal())
+            target.addAttribute('dragmode', TableDragMode.values().index(self._dragMode))  # ordinal()
+
         if self._multiSelectMode != self.MultiSelectMode.DEFAULT:
-            target.addAttribute('multiselectmode', self._multiSelectMode.ordinal())
+            target.addAttribute('multiselectmode', MultiSelectMode.values().index(self._multiSelectMode))  # ordinal()
+
         # Initialize temps
         colids = self.getVisibleColumns()
         cols = len(colids)
         first = self.getCurrentPageFirstItemIndex()
-        total = len(self)
+        total = self.size()
         pagelen = self.getPageLength()
         colHeadMode = self.getColumnHeaderMode()
         colheads = colHeadMode != self.COLUMN_HEADER_MODE_HIDDEN
         cells = self.getVisibleCells()
         iseditable = self.isEditable()
+
         if self._reqRowsToPaint >= 0:
             rows = self._reqRowsToPaint
         else:
-            rows = cells[0].length
+            rows = cells[0].length  # FIXME check indexing
+
             if self.alwaysRecalculateColumnWidths:
                 # TODO experimental feature for now: tell the client to
                 # recalculate column widths.
                 # We'll only do this for paints that do not originate from
                 # table scroll/cache requests (i.e when reqRowsToPaint<0)
                 target.addAttribute('recalcWidths', True)
-        if (
-            not self.isNullSelectionAllowed() and self.getNullSelectionItemId() is not None and self.containsId(self.getNullSelectionItemId())
-        ):
+
+        if not self.isNullSelectionAllowed() \
+                and self.getNullSelectionItemId() is not None \
+                and self.containsId(self.getNullSelectionItemId()):
             total -= 1
             rows -= 1
+
         # selection support
-        selectedKeys = LinkedList()
+        selectedKeys = list()
         if self.isMultiSelect():
-            sel = set(self.getValue())
+            sel = set( self.getValue() )
             vids = self.getVisibleItemIds()
-            _0 = True
-            it = vids
-            while True:
-                if _0 is True:
-                    _0 = False
-                if not it.hasNext():
-                    break
-                id = it.next()
-                if id in sel:
-                    selectedKeys.add(self.itemIdMapper.key(id))
+            for idd in vids:
+                if idd in sel:
+                    selectedKeys.append( self.itemIdMapper.key(idd) )
+
         else:
             value = self.getValue()
             if value is None:
                 value = self.getNullSelectionItemId()
             if value is not None:
-                selectedKeys.add(self.itemIdMapper.key(value))
+                selectedKeys.append( self.itemIdMapper.key(value) )
+
         # Table attributes
         if self.isSelectable():
             target.addAttribute('selectmode', 'multi' if self.isMultiSelect() else 'single')
         else:
             target.addAttribute('selectmode', 'none')
+
         if self._cacheRate != self._CACHE_RATE_DEFAULT:
             target.addAttribute('cr', self._cacheRate)
+
         target.addAttribute('cols', cols)
         target.addAttribute('rows', rows)
+
         if not self.isNullSelectionAllowed():
             target.addAttribute('nsa', False)
+
         target.addAttribute('firstrow', self._reqFirstRowToPaint if self._reqFirstRowToPaint >= 0 else self._firstToBeRenderedInClient)
         target.addAttribute('totalrows', total)
+
         if pagelen != 0:
             target.addAttribute('pagelength', pagelen)
+
         if colheads:
             target.addAttribute('colheaders', True)
+
         if self.rowHeadersAreEnabled():
             target.addAttribute('rowheaders', True)
+
         target.addAttribute('colfooters', self._columnFootersVisible)
+
         # Body actions - Actions which has the target null and can be invoked
         # by right clicking on the table body.
-
-        actionSet = LinkedHashSet()
+        actionSet = set()
         if self._actionHandlers is not None:
             keys = list()
             for ah in self._actionHandlers:
@@ -1955,93 +1996,84 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
                 # the body item
                 aa = ah.getActions(None, self)
                 if aa is not None:
-                    _1 = True
-                    ai = 0
-                    while True:
-                        if _1 is True:
-                            _1 = False
-                        else:
-                            ai += 1
-                        if not (ai < len(aa)):
-                            break
+                    for ai in range(len(aa)):
                         key = self._actionMapper.key(aa[ai])
-                        actionSet.add(aa[ai])
-                        keys.add(key)
-            target.addAttribute('alb', list(keys))
+                        actionSet.add( aa[ai] )
+                        keys.append(key)
+
+            target.addAttribute('alb', keys)
+
         # Visible column order
         sortables = self.getSortableContainerPropertyIds()
         visibleColOrder = list()
-        _2 = True
-        it = self._visibleColumns
-        while True:
-            if _2 is True:
-                _2 = False
-            if not it.hasNext():
-                break
-            columnId = it.next()
+        for columnId in self._visibleColumns:
             if not self.isColumnCollapsed(columnId):
-                visibleColOrder.add(self._columnIdMap.key(columnId))
+                visibleColOrder.append( self._columnIdMap.key(columnId) )
+
         target.addAttribute('vcolorder', list(visibleColOrder))
+
         # Rows
         selectable = self.isSelectable()
         iscomponent = [None] * len(self._visibleColumns)
         iscomponentIndex = 0
-        _3 = True
-        it = self._visibleColumns
-        while True:
-            if _3 is True:
-                _3 = False
-            if not (it.hasNext() and iscomponentIndex < len(iscomponent)):
+        it = iter( self._visibleColumns )
+        while iscomponentIndex < len(iscomponent):
+            try:
+                columnId = it.next()
+                if columnId in self._columnGenerators:
+                    iscomponent[iscomponentIndex] = True
+                else:
+                    colType = self.getType(columnId)
+                    iscomponent[iscomponentIndex] = colType is not None and issubclass(colType, Component)
+                iscomponentIndex += 1
+            except StopIteration:
                 break
-            columnId = it.next()
-            if columnId in self._columnGenerators:
-                iscomponent[POSTINC(globals(), locals(), 'iscomponentIndex')] = True
-            else:
-                colType = self.getType(columnId)
-                iscomponent[POSTINC(globals(), locals(), 'iscomponentIndex')] = colType is not None and Component.isAssignableFrom(colType)
         target.startTag('rows')
+
         # cells array contains all that are supposed to be visible on client,
         # but we'll start from the one requested by client
         start = 0
         if self._reqFirstRowToPaint != -1 and self._firstToBeRenderedInClient != -1:
             start = self._reqFirstRowToPaint - self._firstToBeRenderedInClient
-        end = cells[0].length
+
+        end = len(cells[0])  # FIXME check indexing
         if self._reqRowsToPaint != -1:
             end = start + self._reqRowsToPaint
+
         # sanity check
-        if (
-            self._lastToBeRenderedInClient != -1 and self._lastToBeRenderedInClient < end
-        ):
+        if self._lastToBeRenderedInClient != -1 \
+                and self._lastToBeRenderedInClient < end:
             end = self._lastToBeRenderedInClient + 1
-        if (start > cells[self.CELL_ITEMID].length) or (start < 0):
+
+        if start > len(cells[self.CELL_ITEMID]) or start < 0:
             start = 0
-        _4 = True
-        indexInRowbuffer = start
-        while True:
-            if _4 is True:
-                _4 = False
-            else:
-                indexInRowbuffer += 1
-            if not (indexInRowbuffer < end):
-                break
+
+        for indexInRowbuffer in range(start, end):
             itemId = cells[self.CELL_ITEMID][indexInRowbuffer]
-            if (
-                not self.isNullSelectionAllowed() and self.getNullSelectionItemId() is not None and itemId == self.getNullSelectionItemId()
-            ):
+            if not self.isNullSelectionAllowed() \
+                    and self.getNullSelectionItemId() is not None \
+                    and itemId == self.getNullSelectionItemId():
                 # Remove null selection item if null selection is not allowed
                 continue
-            self.paintRow(target, cells, iseditable, actionSet, iscomponent, indexInRowbuffer, itemId)
+
+            self.paintRow(target, cells, iseditable, actionSet,
+                          iscomponent, indexInRowbuffer, itemId)
         target.endTag('rows')
+
         # The select variable is only enabled if selectable
         if selectable:
-            target.addVariable(self, 'selected', list([None] * len(selectedKeys)))
+            target.addVariable(self, 'selected', selectedKeys)
+
         # The cursors are only shown on pageable table
         if (first != 0) or (self.getPageLength() > 0):
             target.addVariable(self, 'firstvisible', first)
+
         # Sorting
-        if isinstance(self.getContainerDataSource(), Container.Sortable):
-            target.addVariable(self, 'sortcolumn', self._columnIdMap.key(self._sortContainerPropertyId))
+        if isinstance(self.getContainerDataSource(), Sortable):
+            target.addVariable(self, 'sortcolumn',
+                    self._columnIdMap.key(self._sortContainerPropertyId))
             target.addVariable(self, 'sortascending', self._sortAscending)
+
         # Resets and paints "to be painted next" variables. Also reset
         # pageBuffer
         self._reqFirstRowToPaint = -1
@@ -2049,81 +2081,62 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         self._containerChangeToBeRendered = False
         target.addVariable(self, 'reqrows', self._reqRowsToPaint)
         target.addVariable(self, 'reqfirstrow', self._reqFirstRowToPaint)
+
         # Actions
-        if not actionSet.isEmpty():
+        if len(actionSet) > 0:
             target.addVariable(self, 'action', '')
             target.startTag('actions')
-            _5 = True
-            it = actionSet
-            while True:
-                if _5 is True:
-                    _5 = False
-                if not it.hasNext():
-                    break
-                a = it.next()
+            for a in actionSet:
                 target.startTag('action')
+
                 if a.getCaption() is not None:
                     target.addAttribute('caption', a.getCaption())
+
                 if a.getIcon() is not None:
                     target.addAttribute('icon', a.getIcon())
+
                 target.addAttribute('key', self._actionMapper.key(a))
                 target.endTag('action')
+
             target.endTag('actions')
+
         if self._columnReorderingAllowed:
             colorder = [None] * len(self._visibleColumns)
             i = 0
-            _6 = True
-            it = self._visibleColumns
-            while True:
-                if _6 is True:
-                    _6 = False
-                if not (it.hasNext() and i < len(colorder)):
+            it = iter(self._visibleColumns)
+            while i < len(colorder):
+                try:
+                    colorder[i] = self._columnIdMap.key(it.next())
+                    i += 1
+                except StopIteration:
                     break
-                colorder[POSTINC(globals(), locals(), 'i')] = self._columnIdMap.key(it.next())
             target.addVariable(self, 'columnorder', colorder)
+
         # Available columns
         if self._columnCollapsingAllowed:
             ccs = set()
-            _7 = True
-            i = self._visibleColumns
-            while True:
-                if _7 is True:
-                    _7 = False
-                if not i.hasNext():
-                    break
-                o = i.next()
+            for o in self._visibleColumns:
                 if self.isColumnCollapsed(o):
                     ccs.add(o)
             collapsedkeys = [None] * len(ccs)
             nextColumn = 0
-            _8 = True
-            it = self._visibleColumns
-            while True:
-                if _8 is True:
-                    _8 = False
-                if not (it.hasNext() and nextColumn < len(collapsedkeys)):
-                    break
+            it = iter( self._visibleColumns )
+            while nextColumn < len(collapsedkeys):
                 columnId = it.next()
                 if self.isColumnCollapsed(columnId):
-                    collapsedkeys[POSTINC(globals(), locals(), 'nextColumn')] = self._columnIdMap.key(columnId)
+                    collapsedkeys[nextColumn] = self._columnIdMap.key(columnId)
+                    nextColumn += 1
             target.addVariable(self, 'collapsedcolumns', collapsedkeys)
+
         target.startTag('visiblecolumns')
         if self.rowHeadersAreEnabled():
             target.startTag('column')
             target.addAttribute('cid', self._ROW_HEADER_COLUMN_KEY)
             self.paintColumnWidth(target, self._ROW_HEADER_FAKE_PROPERTY_ID)
             target.endTag('column')
+
         i = 0
-        _9 = True
-        it = self._visibleColumns
-        while True:
-            if _9 is True:
-                _9 = False
-            else:
-                i += 1
-            if not it.hasNext():
-                break
-            columnId = it.next()
+        for columnId in self._visibleColumns:
             if columnId is not None:
                 target.startTag('column')
                 target.addAttribute('cid', self._columnIdMap.key(columnId))
@@ -2133,57 +2146,63 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
                 target.addAttribute('fcaption', foot if foot is not None else '')
                 if self.isColumnCollapsed(columnId):
                     target.addAttribute('collapsed', True)
+
                 if colheads:
                     if self.getColumnIcon(columnId) is not None:
                         target.addAttribute('icon', self.getColumnIcon(columnId))
+
                     if sortables.contains(columnId):
                         target.addAttribute('sortable', True)
+
                 if not (self.ALIGN_LEFT == self.getColumnAlignment(columnId)):
                     target.addAttribute('align', self.getColumnAlignment(columnId))
+
                 self.paintColumnWidth(target, columnId)
                 target.endTag('column')
+
         target.endTag('visiblecolumns')
+
         if self._dropHandler is not None:
             self._dropHandler.getAcceptCriterion().paint(target)
+
 
     def paintColumnWidth(self, target, columnId):
         if columnId in self._columnWidths:
             if self.getColumnWidth(columnId) > -1:
-                target.addAttribute('width', String.valueOf.valueOf(self.getColumnWidth(columnId)))
+                target.addAttribute('width', str(self.getColumnWidth(columnId)))
             else:
                 target.addAttribute('er', self.getColumnExpandRatio(columnId))
+
 
     def rowHeadersAreEnabled(self):
         return self.getRowHeaderMode() != self.ROW_HEADER_MODE_HIDDEN
 
-    def paintRow(self, target, cells, iseditable, actionSet, iscomponent, indexInRowbuffer, itemId):
+
+    def paintRow(self, target, cells, iseditable, actionSet, iscomponent,
+                 indexInRowbuffer, itemId):
         target.startTag('tr')
-        self.paintRowAttributes(target, cells, actionSet, indexInRowbuffer, itemId)
+
+        self.paintRowAttributes(target, cells, actionSet,
+                                indexInRowbuffer, itemId)
+
         # cells
         currentColumn = 0
-        _0 = True
-        it = self._visibleColumns
-        while True:
-            if _0 is True:
-                _0 = False
-            else:
-                currentColumn += 1
-            if not it.hasNext():
-                break
-            columnId = it.next()
+        for columnId in self._visibleColumns:
             if (columnId is None) or self.isColumnCollapsed(columnId):
                 continue
+
             # For each cell, if a cellStyleGenerator is specified, get the
             # specific style for the cell. If there is any, add it to the
             # target.
-
             if self._cellStyleGenerator is not None:
                 cellStyle = self._cellStyleGenerator.getStyle(itemId, columnId)
                 if cellStyle is not None and not (cellStyle == ''):
-                    target.addAttribute('style-' + self._columnIdMap.key(columnId), cellStyle)
-            if (
-                iscomponent[currentColumn] or iseditable and Component.isInstance(cells[self.CELL_FIRSTCOL + currentColumn][indexInRowbuffer])
-            ):
+                    target.addAttribute('style-' + self._columnIdMap.key(columnId),
+                                        cellStyle)
+
+            if iscomponent[currentColumn] \
+                    or iseditable \
+                    and isinstance(Component, cells[self.CELL_FIRSTCOL + currentColumn][indexInRowbuffer]):
                 c = cells[self.CELL_FIRSTCOL + currentColumn][indexInRowbuffer]
                 if c is None:
                     target.addText('')
@@ -2191,7 +2210,9 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
                     c.paint(target)
             else:
                 target.addText(cells[self.CELL_FIRSTCOL + currentColumn][indexInRowbuffer])
+
         target.endTag('tr')
+
 
     def paintRowAttributes(self, *args):
         """None
@@ -2203,58 +2224,56 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         @param itemId
         """
         # tr attributes
-        _0 = args
-        _1 = len(args)
-        if _1 == 2:
-            target, itemId = _0
-        elif _1 == 5:
-            target, cells, actionSet, indexInRowbuffer, itemId = _0
+        nargs = len(args)
+        if nargs == 2:
+            target, itemId = args
+        elif nargs == 5:
+            target, cells, actionSet, indexInRowbuffer, itemId = args
+
             self.paintRowIcon(target, cells, indexInRowbuffer)
             self.paintRowHeader(target, cells, indexInRowbuffer)
+
             target.addAttribute('key', int(str(cells[self.CELL_KEY][indexInRowbuffer])))
+
             if self.isSelected(itemId):
                 target.addAttribute('selected', True)
+
             # Actions
             if self._actionHandlers is not None:
                 keys = list()
                 for ah in self._actionHandlers:
                     aa = ah.getActions(itemId, self)
                     if aa is not None:
-                        _0 = True
-                        ai = 0
-                        while True:
-                            if _0 is True:
-                                _0 = False
-                            else:
-                                ai += 1
-                            if not (ai < len(aa)):
-                                break
+                        for ai in range(len(aa)):
                             key = self._actionMapper.key(aa[ai])
                             actionSet.add(aa[ai])
-                            keys.add(key)
-                target.addAttribute('al', list(keys))
+                            keys.append(key)
+                target.addAttribute('al', keys)
+
             # For each row, if a cellStyleGenerator is specified, get the specific
             # style for the cell, using null as propertyId. If there is any, add it
             # to the target.
-
             if self._cellStyleGenerator is not None:
                 rowStyle = self._cellStyleGenerator.getStyle(itemId, None)
                 if rowStyle is not None and not (rowStyle == ''):
                     target.addAttribute('rowstyle', rowStyle)
+
             self.paintRowAttributes(target, itemId)
         else:
-            raise ARGERROR(2, 5)
+            raise ValueError, 'invalid number of arguments'
+
 
     def paintRowHeader(self, target, cells, indexInRowbuffer):
         if self.rowHeadersAreEnabled():
             if cells[self.CELL_HEADER][indexInRowbuffer] is not None:
                 target.addAttribute('caption', cells[self.CELL_HEADER][indexInRowbuffer])
 
+
     def paintRowIcon(self, target, cells, indexInRowbuffer):
-        if (
-            self.rowHeadersAreEnabled() and cells[self.CELL_ICON][indexInRowbuffer] is not None
-        ):
+        if self.rowHeadersAreEnabled() \
+                and cells[self.CELL_ICON][indexInRowbuffer] is not None:
             target.addAttribute('icon', cells[self.CELL_ICON][indexInRowbuffer])
+
 
     def getVisibleCells(self):
         """Gets the cached visible table contents.
@@ -2265,7 +2284,8 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
             self.refreshRenderedCells()
         return self._pageBuffer
 
-    def getPropertyValue(self, rowId, colId, property):
+
+    def getPropertyValue(self, rowId, colId, prop):
         """Gets the value of property.
 
         By default if the table is editable the fieldFactory is used to create
@@ -2282,16 +2302,19 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         @see #setTableFieldFactory(TableFieldFactory)
         """
         if self.isEditable() and self._fieldFactory is not None:
-            f = self._fieldFactory.createField(self.getContainerDataSource(), rowId, colId, self)
+            f = self._fieldFactory.createField(self.getContainerDataSource(),
+                                               rowId, colId, self)
             if f is not None:
                 # Remember that we have made this association so we can remove
                 # it when the component is removed
-                self._associatedProperties.put(f, property)
-                f.setPropertyDataSource(property)
+                self._associatedProperties[f] = prop
+                f.setPropertyDataSource(prop)
                 return f
-        return self.formatPropertyValue(rowId, colId, property)
 
-    def formatPropertyValue(self, rowId, colId, property):
+        return self.formatPropertyValue(rowId, colId, prop)
+
+
+    def formatPropertyValue(self, rowId, colId, prop):
         """Formats table cell property values. By default the property.toString()
         and return a empty string for null properties.
 
@@ -2305,9 +2328,10 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         @since 3.1
         """
         # Action container
-        if property is None:
+        if prop is None:
             return ''
-        return str(property)
+        return str(prop)
+
 
     def addActionHandler(self, actionHandler):
         """Registers a new action handler for this container
@@ -2315,12 +2339,15 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         @see com.vaadin.event.Action.Container#addActionHandler(Action.Handler)
         """
         if actionHandler is not None:
+
             if self._actionHandlers is None:
-                self._actionHandlers = LinkedList()
+                self._actionHandlers = list()
                 self._actionMapper = KeyMapper()
-            if not self._actionHandlers.contains(actionHandler):
-                self._actionHandlers.add(actionHandler)
+
+            if actionHandler not in self._actionHandlers:
+                self._actionHandlers.append(actionHandler)
                 self.requestRepaint()
+
 
     def removeActionHandler(self, actionHandler):
         """Removes a previously registered action handler for the contents of this
@@ -2328,21 +2355,24 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
 
         @see com.vaadin.event.Action.Container#removeActionHandler(Action.Handler)
         """
-        if (
-            self._actionHandlers is not None and self._actionHandlers.contains(actionHandler)
-        ):
+        if self._actionHandlers is not None \
+                and actionHandler in self._actionHandlers:
             self._actionHandlers.remove(actionHandler)
-            if self._actionHandlers.isEmpty():
+            if len(self._actionHandlers) == 0:
                 self._actionHandlers = None
                 self._actionMapper = None
             self.requestRepaint()
 
+
     def removeAllActionHandlers(self):
         """Removes all action handlers"""
-        # Property value change listening support
         self._actionHandlers = None
         self._actionMapper = None
         self.requestRepaint()
+
+
+    # Property value change listening support
+
 
     def valueChange(self, event):
         """Notifies this listener that the Property's value has changed.
@@ -2353,11 +2383,14 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         """
         if event.getProperty() == self:
             super(Table, self).valueChange(event)
+
         else:
             self.resetPageBuffer()
             self.refreshRenderedCells()
             self._containerChangeToBeRendered = True
+
         self.requestRepaint()
+
 
     def resetPageBuffer(self):
         self._firstToBeRenderedInClient = -1
@@ -2366,22 +2399,20 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         self._reqRowsToPaint = -1
         self._pageBuffer = None
 
+
     def attach(self):
         """Notifies the component that it is connected to an application.
 
         @see com.vaadin.ui.Component#attach()
         """
         super(Table, self).attach()
+
         self.refreshRenderedCells()
+
         if self._visibleComponents is not None:
-            _0 = True
-            i = self._visibleComponents
-            while True:
-                if _0 is True:
-                    _0 = False
-                if not i.hasNext():
-                    break
-                i.next().attach()
+            for c in self._visibleComponents:
+                c.attach()
+
 
     def detach(self):
         """Notifies the component that it is detached from the application
@@ -2389,15 +2420,11 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         @see com.vaadin.ui.Component#detach()
         """
         super(Table, self).detach()
+
         if self._visibleComponents is not None:
-            _0 = True
-            i = self._visibleComponents
-            while True:
-                if _0 is True:
-                    _0 = False
-                if not i.hasNext():
-                    break
-                i.next().detach()
+            for c in self._visibleComponents:
+                c.detach()
+
 
     def removeAllItems(self):
         """Removes all Items from the Container.
@@ -2408,6 +2435,7 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         self._currentPageFirstItemIndex = 0
         return super(Table, self).removeAllItems()
 
+
     def removeItem(self, itemId):
         """Removes the Item identified by <code>ItemId</code> from the Container.
 
@@ -2415,25 +2443,31 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         """
         nextItemId = self.nextItemId(itemId)
         ret = super(Table, self).removeItem(itemId)
-        if ret and itemId is not None and itemId == self._currentPageFirstItemId:
+        if ret and itemId is not None \
+                and itemId == self._currentPageFirstItemId:
             self._currentPageFirstItemId = nextItemId
-        if not isinstance(self.items, Container.ItemSetChangeNotifier):
+
+        if not isinstance(self.items, ItemSetChangeNotifier):
             self.resetPageBuffer()
             self.refreshRenderedCells()
+
         return ret
+
 
     def removeContainerProperty(self, propertyId):
         """Removes a Property specified by the given Property ID from the Container.
 
         @see com.vaadin.data.Container#removeContainerProperty(Object)
         """
+
         # If a visible property is removed, remove the corresponding column
         self._visibleColumns.remove(propertyId)
-        self._columnAlignments.remove(propertyId)
-        self._columnIcons.remove(propertyId)
-        self._columnHeaders.remove(propertyId)
-        self._columnFooters.remove(propertyId)
+        del self._columnAlignments[propertyId]
+        del self._columnIcons[propertyId]
+        del self._columnHeaders[propertyId]
+        del self._columnFooters[propertyId]
         return super(Table, self).removeContainerProperty(propertyId)
+
 
     def addContainerProperty(self, *args):
         """Adds a new property to the table and show it as a visible column.
@@ -2468,34 +2502,35 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         @see com.vaadin.data.Container#addContainerProperty(Object, Class,
              Object)
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 3:
-            propertyId, type, defaultValue = _0
+        args = args
+        nargs = len(args)
+        if nargs == 3:
+            propertyId, typ, defaultValue = args
             visibleColAdded = False
             if not self._visibleColumns.contains(propertyId):
                 self._visibleColumns.add(propertyId)
                 visibleColAdded = True
-            if not super(Table, self).addContainerProperty(propertyId, type, defaultValue):
+            if not super(Table, self).addContainerProperty(propertyId, typ, defaultValue):
                 if visibleColAdded:
                     self._visibleColumns.remove(propertyId)
                 return False
-            if not isinstance(self.items, Container.PropertySetChangeNotifier):
+            if not isinstance(self.items, PropertySetChangeNotifier):
                 self.resetPageBuffer()
                 self.refreshRenderedCells()
             return True
-        elif _1 == 6:
-            propertyId, type, defaultValue, columnHeader, columnIcon, columnAlignment = _0
-            if not self.addContainerProperty(propertyId, type, defaultValue):
+        elif nargs == 6:
+            propertyId, typ, defaultValue, columnHeader, columnIcon, columnAlignment = args
+            if not self.addContainerProperty(propertyId, typ, defaultValue):
                 return False
             self.setColumnAlignment(propertyId, columnAlignment)
             self.setColumnHeader(propertyId, columnHeader)
             self.setColumnIcon(propertyId, columnIcon)
             return True
         else:
-            raise ARGERROR(3, 6)
+            raise ValueError, 'invalid number of arguments'
 
-    def addGeneratedColumn(self, id, generatedColumn):
+
+    def addGeneratedColumn(self, idd, generatedColumn):
         """Adds a generated column to the Table.
         <p>
         A generated column is a column that exists only in the Table, not as a
@@ -2526,18 +2561,19 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
                    the {@link ColumnGenerator} to use for this column
         """
         if generatedColumn is None:
-            raise self.IllegalArgumentException('Can not add null as a GeneratedColumn')
-        if id in self._columnGenerators:
-            raise self.IllegalArgumentException('Can not add the same GeneratedColumn twice, id:' + id)
+            raise ValueError, 'Can not add null as a GeneratedColumn'
+        if idd in self._columnGenerators:
+            raise ValueError, 'Can not add the same GeneratedColumn twice, id:' + idd
         else:
-            self._columnGenerators.put(id, generatedColumn)
+            self._columnGenerators[idd] = generatedColumn
             # add to visible column list unless already there (overriding
             # column from DS)
+            if idd not in self._visibleColumns:
+                self._visibleColumns.append(idd)
 
-            if not self._visibleColumns.contains(id):
-                self._visibleColumns.add(id)
             self.resetPageBuffer()
             self.refreshRenderedCells()
+
 
     def getColumnGenerator(self, columnId):
         """Returns the ColumnGenerator used to generate the given column.
@@ -2546,7 +2582,8 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
                    The id of the generated column
         @return The ColumnGenerator used for the given columnId or null.
         """
-        return self._columnGenerators[columnId]
+        return self._columnGenerators.get(columnId)
+
 
     def removeGeneratedColumn(self, columnId):
         """Removes a generated column previously added with addGeneratedColumn.
@@ -2556,16 +2593,17 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         @return true if the column could be removed (existed in the Table)
         """
         if columnId in self._columnGenerators:
-            self._columnGenerators.remove(columnId)
+            del self._columnGenerators[columnId]
             # remove column from visibleColumns list unless it exists in
             # container (generator previously overrode this column)
-            if not self.items.getContainerPropertyIds().contains(columnId):
+            if columnId not in self.items.getContainerPropertyIds():
                 self._visibleColumns.remove(columnId)
             self.resetPageBuffer()
             self.refreshRenderedCells()
             return True
         else:
             return False
+
 
     def getVisibleItemIds(self):
         """Returns item identifiers of the items which are currently rendered on the
@@ -2581,19 +2619,14 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
 
         @see com.vaadin.ui.Select#getVisibleItemIds()
         """
-        visible = LinkedList()
+        visible = list()
         cells = self.getVisibleCells()
-        _0 = True
-        i = 0
-        while True:
-            if _0 is True:
-                _0 = False
-            else:
-                i += 1
-            if not (i < cells[self.CELL_ITEMID].length):
-                break
-            visible.add(cells[self.CELL_ITEMID][i])
+
+        for i in range(len(cells[self.CELL_ITEMID])):
+            visible.append(cells[self.CELL_ITEMID][i])
+
         return visible
+
 
     def containerItemSetChange(self, event):
         """Container datasource item set change. Table must flush its buffers on
@@ -2602,19 +2635,25 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         @see com.vaadin.data.Container.ItemSetChangeListener#containerItemSetChange(com.vaadin.data.Container.ItemSetChangeEvent)
         """
         super(Table, self).containerItemSetChange(event)
-        if isinstance(event, IndexedContainer.ItemSetChangeEvent):
+
+        if isinstance(event, ItemSetChangeEvent):
             evt = event
             # if the event is not a global one and the added item is outside
             # the visible/buffered area, no need to do anything
-            if (
-                evt.getAddedItemIndex() != -1 and self._firstToBeRenderedInClient >= 0 and self._lastToBeRenderedInClient >= 0 and (self._firstToBeRenderedInClient > evt.getAddedItemIndex()) or (self._lastToBeRenderedInClient < evt.getAddedItemIndex())
-            ):
+            if evt.getAddedItemIndex() != -1 \
+                    and self._firstToBeRenderedInClient >= 0 \
+                    and self._lastToBeRenderedInClient >= 0 \
+                    and (self._firstToBeRenderedInClient > evt.getAddedItemIndex()) \
+                    or (self._lastToBeRenderedInClient < evt.getAddedItemIndex()):
                 return
+
         # ensure that page still has first item in page, ignore buffer refresh
         # (forced in this method)
         self.setCurrentPageFirstItemIndex(self.getCurrentPageFirstItemIndex(), False)
+
         self.resetPageBuffer()
         self.refreshRenderedCells()
+
 
     def containerPropertySetChange(self, event):
         """Container datasource property set change. Table must flush its buffers on
@@ -2624,34 +2663,25 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         """
         self.disableContentRefreshing()
         super(Table, self).containerPropertySetChange(event)
+
         # sanitetize visibleColumns. note that we are not adding previously
         # non-existing properties as columns
         containerPropertyIds = self.getContainerDataSource().getContainerPropertyIds()
-        newVisibleColumns = LinkedList(self._visibleColumns)
-        _0 = True
-        iterator = newVisibleColumns
-        while True:
-            if _0 is True:
-                _0 = False
-            if not iterator.hasNext():
-                break
-            id = iterator.next()
-            if not (containerPropertyIds.contains(id) or (id in self._columnGenerators)):
-                iterator.remove()
+        newVisibleColumns = list(self._visibleColumns)
+
+        for idd in newVisibleColumns:
+            if idd not in containerPropertyIds or (idd in self._columnGenerators):
+                newVisibleColumns.remove()
         self.setVisibleColumns(list(newVisibleColumns))
+
         # same for collapsed columns
-        _1 = True
-        iterator = self._collapsedColumns
-        while True:
-            if _1 is True:
-                _1 = False
-            if not iterator.hasNext():
-                break
-            id = iterator.next()
-            if not (containerPropertyIds.contains(id) or (id in self._columnGenerators)):
-                iterator.remove()
+        for idd in self._collapsedColumns:
+            if idd not in containerPropertyIds or (id in self._columnGenerators):
+                self._collapsedColumns.remove()
+
         self.resetPageBuffer()
         self.enableContentRefreshing(True)
+
 
     def setNewItemsAllowed(self, allowNewOptions):
         """Adding new items is not supported.
@@ -2661,7 +2691,8 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         @see com.vaadin.ui.Select#setNewItemsAllowed(boolean)
         """
         if allowNewOptions:
-            raise self.UnsupportedOperationException()
+            raise NotImplementedError
+
 
     def nextItemId(self, itemId):
         """Gets the ID of the Item following the Item that corresponds to itemId.
@@ -2669,6 +2700,7 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         @see com.vaadin.data.Container.Ordered#nextItemId(java.lang.Object)
         """
         return self.items.nextItemId(itemId)
+
 
     def prevItemId(self, itemId):
         """Gets the ID of the Item preceding the Item that corresponds to the
@@ -2678,6 +2710,7 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         """
         return self.items.prevItemId(itemId)
 
+
     def firstItemId(self):
         """Gets the ID of the first Item in the Container.
 
@@ -2685,12 +2718,14 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         """
         return self.items.firstItemId()
 
+
     def lastItemId(self):
         """Gets the ID of the last Item in the Container.
 
         @see com.vaadin.data.Container.Ordered#lastItemId()
         """
         return self.items.lastItemId()
+
 
     def isFirstId(self, itemId):
         """Tests if the Item corresponding to the given Item ID is the first Item in
@@ -2700,6 +2735,7 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         """
         return self.items.isFirstId(itemId)
 
+
     def isLastId(self, itemId):
         """Tests if the Item corresponding to the given Item ID is the last Item in
         the Container.
@@ -2708,7 +2744,8 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         """
         return self.items.isLastId(itemId)
 
-    def addItemAfter(self, *args):
+
+    def addItemAfter(self, previousItemId, newItemId=None):
         """Adds new item after the given item.
 
         @see com.vaadin.data.Container.Ordered#addItemAfter(java.lang.Object)
@@ -2718,24 +2755,17 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         @see com.vaadin.data.Container.Ordered#addItemAfter(java.lang.Object,
              java.lang.Object)
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            previousItemId, = _0
-            itemId = self.items.addItemAfter(previousItemId)
-            if not isinstance(self.items, Container.ItemSetChangeNotifier):
-                self.resetPageBuffer()
-                self.refreshRenderedCells()
-            return itemId
-        elif _1 == 2:
-            previousItemId, newItemId = _0
-            item = self.items.addItemAfter(previousItemId, newItemId)
-            if not isinstance(self.items, Container.ItemSetChangeNotifier):
-                self.resetPageBuffer()
-                self.refreshRenderedCells()
-            return item
+        if newItemId is None:
+            item = self.items.addItemAfter(previousItemId)
         else:
-            raise ARGERROR(1, 2)
+            item = self.items.addItemAfter(previousItemId, newItemId)
+
+        if not isinstance(self.items, ItemSetChangeNotifier):
+            self.resetPageBuffer()
+            self.refreshRenderedCells()
+
+        return item
+
 
     def setTableFieldFactory(self, fieldFactory):
         """Sets the TableFieldFactory that is used to create editor for table cells.
@@ -2750,6 +2780,7 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         """
         self._fieldFactory = fieldFactory
 
+
     def getTableFieldFactory(self):
         """Gets the TableFieldFactory that is used to create editor for table cells.
 
@@ -2759,6 +2790,7 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         @see #isEditable
         """
         return self._fieldFactory
+
 
     def getFieldFactory(self):
         """Gets the FieldFactory that is used to create editor for table cells.
@@ -2771,7 +2803,9 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         """
         if isinstance(self._fieldFactory, FieldFactory):
             return self._fieldFactory
+
         return None
+
 
     def setFieldFactory(self, fieldFactory):
         """Sets the FieldFactory that is used to create editor for table cells.
@@ -2790,6 +2824,7 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         self.resetPageBuffer()
         self.refreshRenderedCells()
 
+
     def isEditable(self):
         """Is table editable.
 
@@ -2805,6 +2840,7 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         @see FieldFactory
         """
         return self._editable
+
 
     def setEditable(self, editable):
         """Sets the editable property.
@@ -2826,6 +2862,7 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         self.resetPageBuffer()
         self.refreshRenderedCells()
 
+
     def sort(self, *args):
         """Sorts the table.
 
@@ -2841,25 +2878,25 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
                     if the container data source does not implement
                     Container.Sortable
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 0:
+        nargs = len(args)
+        if nargs == 0:
             if self.getSortContainerPropertyId() is None:
                 return
             self.sort([self._sortContainerPropertyId], [self._sortAscending])
-        elif _1 == 2:
-            propertyId, ascending = _0
+        elif nargs == 2:
+            propertyId, ascending = args
             c = self.getContainerDataSource()
-            if isinstance(c, Container.Sortable):
+            if isinstance(c, Sortable):
                 pageIndex = self.getCurrentPageFirstItemIndex()
                 c.sort(propertyId, ascending)
                 self.setCurrentPageFirstItemIndex(pageIndex)
                 self.resetPageBuffer()
                 self.refreshRenderedCells()
             elif c is not None:
-                raise self.UnsupportedOperationException('Underlying Data does not allow sorting')
+                raise NotImplementedError, 'Underlying Data does not allow sorting'
         else:
-            raise ARGERROR(0, 2)
+            raise ValueError, 'invalid number of arguments'
+
 
     def getSortableContainerPropertyIds(self):
         """Gets the container property IDs, which can be used to sort the item.
@@ -2867,10 +2904,11 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         @see com.vaadin.data.Container.Sortable#getSortableContainerPropertyIds()
         """
         c = self.getContainerDataSource()
-        if isinstance(c, Container.Sortable) and not self.isSortDisabled():
+        if isinstance(c, Sortable) and not self.isSortDisabled():
             return c.getSortableContainerPropertyIds()
         else:
-            return LinkedList()
+            return list()
+
 
     def getSortContainerPropertyId(self):
         """Gets the currently sorted column property ID.
@@ -2879,7 +2917,8 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         """
         return self._sortContainerPropertyId
 
-    def setSortContainerPropertyId(self, *args):
+
+    def setSortContainerPropertyId(self, propertyId, doSort=True):
         """Sets the currently sorted column property id.
 
         @param propertyId
@@ -2891,23 +2930,16 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         @param propertyId
         @param doSort
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            propertyId, = _0
-            self.setSortContainerPropertyId(propertyId, True)
-        elif _1 == 2:
-            propertyId, doSort = _0
-            if (
-                (self._sortContainerPropertyId is not None and not (self._sortContainerPropertyId == propertyId)) or (self._sortContainerPropertyId is None and propertyId is not None)
-            ):
-                self._sortContainerPropertyId = propertyId
-                if doSort:
-                    self.sort()
-                    # Assures the visual refresh
-                    self.refreshRenderedCells()
-        else:
-            raise ARGERROR(1, 2)
+        if (self._sortContainerPropertyId is not None \
+            and not (self._sortContainerPropertyId == propertyId)) \
+                or (self._sortContainerPropertyId is None \
+                    and propertyId is not None):
+            self._sortContainerPropertyId = propertyId
+            if doSort:
+                self.sort()
+                # Assures the visual refresh
+                self.refreshRenderedCells()
+
 
     def isSortAscending(self):
         """Is the table currently sorted in ascending order.
@@ -2916,7 +2948,8 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         """
         return self._sortAscending
 
-    def setSortAscending(self, *args):
+
+    def setSortAscending(self, ascending, doSort=True):
         """Sets the table in ascending order.
 
         @param ascending
@@ -2929,21 +2962,13 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         @param ascending
         @param doSort
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            ascending, = _0
-            self.setSortAscending(ascending, True)
-        elif _1 == 2:
-            ascending, doSort = _0
-            if self._sortAscending != ascending:
-                self._sortAscending = ascending
-                if doSort:
-                    self.sort()
-            # Assures the visual refresh
-            self.refreshRenderedCells()
-        else:
-            raise ARGERROR(1, 2)
+        if self._sortAscending != ascending:
+            self._sortAscending = ascending
+            if doSort:
+                self.sort()
+        # Assures the visual refresh
+        self.refreshRenderedCells()
+
 
     def isSortDisabled(self):
         """Is sorting disabled altogether.
@@ -2954,6 +2979,7 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         @return True iff sorting is disabled.
         """
         return self._sortDisabled
+
 
     def setSortDisabled(self, sortDisabled):
         """Disables the sorting altogether.
@@ -2968,6 +2994,7 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
             self._sortDisabled = sortDisabled
             self.refreshRenderedCells()
 
+
     def setLazyLoading(self, useLazyLoading):
         """Table does not support lazy options loading mode. Setting this true will
         throw UnsupportedOperationException.
@@ -2975,28 +3002,8 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         @see com.vaadin.ui.Select#setLazyLoading(boolean)
         """
         if useLazyLoading:
-            raise self.UnsupportedOperationException('Lazy options loading is not supported by Table.')
+            raise NotImplementedError, 'Lazy options loading is not supported by Table.'
 
-    class ColumnGenerator(Serializable):
-        """Used to create "generated columns"; columns that exist only in the Table,
-        not in the underlying Container. Implement this interface and pass it to
-        Table.addGeneratedColumn along with an id for the column to be generated.
-        """
-
-        def generateCell(self, source, itemId, columnId):
-            """Called by Table when a cell in a generated column needs to be
-            generated.
-
-            @param source
-                       the source Table
-            @param itemId
-                       the itemId (aka rowId) for the of the cell to be generated
-            @param columnId
-                       the id for the generated column (as specified in
-                       addGeneratedColumn)
-            @return
-            """
-            pass
 
     def setCellStyleGenerator(self, cellStyleGenerator):
         """Set cell style generator for Table.
@@ -3007,32 +3014,13 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         self._cellStyleGenerator = cellStyleGenerator
         self.requestRepaint()
 
+
     def getCellStyleGenerator(self):
         """Get the current cell style generator."""
         return self._cellStyleGenerator
 
-    class CellStyleGenerator(Serializable):
-        """Allow to define specific style on cells (and rows) contents. Implements
-        this interface and pass it to Table.setCellStyleGenerator. Row styles are
-        generated when porpertyId is null. The CSS class name that will be added
-        to the cell content is <tt>v-table-cell-content-[style name]</tt>, and
-        the row style will be <tt>v-table-row-[style name]</tt>.
-        """
 
-        def getStyle(self, itemId, propertyId):
-            """Called by Table when a cell (and row) is painted.
-
-            @param itemId
-                       The itemId of the painted cell
-            @param propertyId
-                       The propertyId of the cell, null when getting row style
-            @return The style name to add to this cell or row. (the CSS class
-                    name will be v-table-cell-content-[style name], or
-                    v-table-row-[style name] for rows)
-            """
-            pass
-
-    def addListener(self, *args):
+    def addListener(self, listener):
         """None
         ---
         Adds a header click listener which handles the click events when the user
@@ -3067,28 +3055,19 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         @param listener
                    The listener to attach to the Table
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            if isinstance(_0[0], ColumnReorderListener):
-                listener, = _0
-                self.addListener(VScrollTable.COLUMN_REORDER_EVENT_ID, self.ColumnReorderEvent, listener, self.ColumnReorderEvent.METHOD)
-            elif isinstance(_0[0], ColumnResizeListener):
-                listener, = _0
-                self.addListener(VScrollTable.COLUMN_RESIZE_EVENT_ID, self.ColumnResizeEvent, listener, self.ColumnResizeEvent.COLUMN_RESIZE_METHOD)
-            elif isinstance(_0[0], FooterClickListener):
-                listener, = _0
-                self.addListener(VScrollTable.FOOTER_CLICK_EVENT_ID, self.FooterClickEvent, listener, self.FooterClickEvent.FOOTER_CLICK_METHOD)
-            elif isinstance(_0[0], HeaderClickListener):
-                listener, = _0
-                self.addListener(VScrollTable.HEADER_CLICK_EVENT_ID, self.HeaderClickEvent, listener, self.HeaderClickEvent.HEADER_CLICK_METHOD)
-            else:
-                listener, = _0
-                self.addListener(VScrollTable.ITEM_CLICK_EVENT_ID, ItemClickEvent, listener, ItemClickEvent.ITEM_CLICK_METHOD)
+        if isinstance(listener, ColumnReorderListener):
+            self.addListener(VScrollTable.COLUMN_REORDER_EVENT_ID, self.ColumnReorderEvent, listener, self.ColumnReorderEvent.METHOD)
+        elif isinstance(listener, ColumnResizeListener):
+            self.addListener(VScrollTable.COLUMN_RESIZE_EVENT_ID, self.ColumnResizeEvent, listener, self.ColumnResizeEvent.COLUMN_RESIZE_METHOD)
+        elif isinstance(listener, FooterClickListener):
+            self.addListener(VScrollTable.FOOTER_CLICK_EVENT_ID, self.FooterClickEvent, listener, self.FooterClickEvent.FOOTER_CLICK_METHOD)
+        elif isinstance(listener, HeaderClickListener):
+            self.addListener(VScrollTable.HEADER_CLICK_EVENT_ID, self.HeaderClickEvent, listener, self.HeaderClickEvent.HEADER_CLICK_METHOD)
         else:
-            raise ARGERROR(1, 1)
+            self.addListener(VScrollTable.ITEM_CLICK_EVENT_ID, ItemClickEvent, listener, ItemClickEvent.ITEM_CLICK_METHOD)
 
-    def removeListener(self, *args):
+
+    def removeListener(self, listener):
         """None
         ---
         Removes a header click listener
@@ -3111,27 +3090,18 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         @param listener
                    The listener to remove
         """
-        # Identical to AbstractCompoenentContainer.setEnabled();
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            if isinstance(_0[0], ColumnReorderListener):
-                listener, = _0
-                self.removeListener(VScrollTable.COLUMN_REORDER_EVENT_ID, self.ColumnReorderEvent, listener)
-            elif isinstance(_0[0], ColumnResizeListener):
-                listener, = _0
-                self.removeListener(VScrollTable.COLUMN_RESIZE_EVENT_ID, self.ColumnResizeEvent, listener)
-            elif isinstance(_0[0], FooterClickListener):
-                listener, = _0
-                self.removeListener(VScrollTable.FOOTER_CLICK_EVENT_ID, self.FooterClickEvent, listener)
-            elif isinstance(_0[0], HeaderClickListener):
-                listener, = _0
-                self.removeListener(VScrollTable.HEADER_CLICK_EVENT_ID, self.HeaderClickEvent, listener)
-            else:
-                listener, = _0
-                self.removeListener(VScrollTable.ITEM_CLICK_EVENT_ID, ItemClickEvent, listener)
+
+        if isinstance(listener, ColumnReorderListener):
+            self.removeListener(VScrollTable.COLUMN_REORDER_EVENT_ID, self.ColumnReorderEvent, listener)
+        elif isinstance(listener, ColumnResizeListener):
+            self.removeListener(VScrollTable.COLUMN_RESIZE_EVENT_ID, self.ColumnResizeEvent, listener)
+        elif isinstance(listener, FooterClickListener):
+            self.removeListener(VScrollTable.FOOTER_CLICK_EVENT_ID, self.FooterClickEvent, listener)
+        elif isinstance(listener, HeaderClickListener):
+            self.removeListener(VScrollTable.HEADER_CLICK_EVENT_ID, self.HeaderClickEvent, listener)
         else:
-            raise ARGERROR(1, 1)
+            self.removeListener(VScrollTable.ITEM_CLICK_EVENT_ID, ItemClickEvent, listener)
+
 
     def setEnabled(self, enabled):
         # Virtually identical to AbstractCompoenentContainer.setEnabled();
@@ -3142,17 +3112,11 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         else:
             self.requestRepaintAll()
 
+
     def requestRepaintAll(self):
         self.requestRepaint()
         if self._visibleComponents is not None:
-            _0 = True
-            childIterator = self._visibleComponents
-            while True:
-                if _0 is True:
-                    _0 = False
-                if not childIterator.hasNext():
-                    break
-                c = childIterator.next()
+            for c in self._visibleComponents:
                 if isinstance(c, Form):
                     # Form has children in layout, but is not
                     # ComponentContainer
@@ -3165,6 +3129,7 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
                 else:
                     c.requestRepaint()
 
+
     def setDragMode(self, newDragMode):
         """Sets the drag start mode of the Table. Drag start mode controls how Table
         behaves as a drag source.
@@ -3174,51 +3139,30 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         self._dragMode = newDragMode
         self.requestRepaint()
 
+
     def getDragMode(self):
         """@return the current start mode of the Table. Drag start mode controls how
                 Table behaves as a drag source.
         """
         return self._dragMode
 
-    class TableTransferable(DataBoundTransferable):
-        """Concrete implementation of {@link DataBoundTransferable} for data
-        transferred from a table.
-
-        @see {@link DataBoundTransferable}.
-
-        @since 6.3
-        """
-
-        def __init__(self, rawVariables):
-            super(TableTransferable, self)(_Table_this, rawVariables)
-            object = rawVariables['itemId']
-            if object is not None:
-                self.setData('itemId', self.itemIdMapper.get(object))
-            object = rawVariables['propertyId']
-            if object is not None:
-                self.setData('propertyId', self.columnIdMap.get(object))
-
-        def getItemId(self):
-            return self.getData('itemId')
-
-        def getPropertyId(self):
-            return self.getData('propertyId')
-
-        def getSourceComponent(self):
-            return super(TableTransferable, self).getSourceComponent()
 
     def getTransferable(self, rawVariables):
-        transferable = self.TableTransferable(rawVariables)
+        transferable = TableTransferable(rawVariables, self)
         return transferable
+
 
     def getDropHandler(self):
         return self._dropHandler
 
+
     def setDropHandler(self, dropHandler):
         self._dropHandler = dropHandler
 
+
     def translateDropTargetDetails(self, clientVariables):
-        return self.AbstractSelectTargetDetails(clientVariables)
+        return AbstractSelectTargetDetails(clientVariables, self)  # FIXME _AbstractSelect_self
+
 
     def setMultiSelectMode(self, mode):
         """Sets the behavior of how the multi-select mode should behave when the
@@ -3234,6 +3178,7 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         self._multiSelectMode = mode
         self.requestRepaint()
 
+
     def getMultiSelectMode(self):
         """Returns the select mode in which multi-select is used.
 
@@ -3241,182 +3186,6 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         """
         return self._multiSelectMode
 
-    class TableDropCriterion(ServerSideCriterion):
-        """Lazy loading accept criterion for Table. Accepted target rows are loaded
-        from server once per drag and drop operation. Developer must override one
-        method that decides on which rows the currently dragged data can be
-        dropped.
-
-        <p>
-        Initially pretty much no data is sent to client. On first required
-        criterion check (per drag request) the client side data structure is
-        initialized from server and no subsequent requests requests are needed
-        during that drag and drop operation.
-        """
-        _table = None
-        _allowedItemIds = None
-        # (non-Javadoc)
-        #
-        # @see
-        # com.vaadin.event.dd.acceptcriteria.ServerSideCriterion#getIdentifier
-        # ()
-
-        def getIdentifier(self):
-            # (non-Javadoc)
-            #
-            # @see
-            # com.vaadin.event.dd.acceptcriteria.AcceptCriterion#accepts(com.vaadin
-            # .event.dd.DragAndDropEvent)
-
-            return self.TableDropCriterion.getCanonicalName()
-
-        def accept(self, dragEvent):
-            # (non-Javadoc)
-            #
-            # @see
-            # com.vaadin.event.dd.acceptcriteria.AcceptCriterion#paintResponse(
-            # com.vaadin.terminal.PaintTarget)
-
-            dropTargetData = dragEvent.getTargetDetails()
-            self._table = dragEvent.getTargetDetails().getTarget()
-            visibleItemIds = list(self._table.getPageLength())
-            len(visibleItemIds)
-            id = self._table.getCurrentPageFirstItemId()
-            _0 = True
-            i = 0
-            while True:
-                if _0 is True:
-                    _0 = False
-                else:
-                    i += 1
-                if not (i < self._table.getPageLength() and id is not None):
-                    break
-                visibleItemIds.add(id)
-                id = self._table.nextItemId(id)
-            self._allowedItemIds = self.getAllowedItemIds(dragEvent, self._table, visibleItemIds)
-            return dropTargetData.getItemIdOver() in self._allowedItemIds
-
-        def paintResponse(self, target):
-            # send allowed nodes to client so subsequent requests can be
-            # avoided
-
-            array = list(self._allowedItemIds)
-            _0 = True
-            i = 0
-            while True:
-                if _0 is True:
-                    _0 = False
-                else:
-                    i += 1
-                if not (i < len(array)):
-                    break
-                key = self._table.itemIdMapper.key(array[i])
-                array[i] = key
-            target.addAttribute('allowedIds', array)
-
-        def getAllowedItemIds(self, dragEvent, table, visibleItemIds):
-            """@param dragEvent
-            @param table
-                       the table for which the allowed item identifiers are
-                       defined
-            @param visibleItemIds
-                       the list of currently rendered item identifiers, accepted
-                       item id's need to be detected only for these visible items
-            @return the set of identifiers for items on which the dragEvent will
-                    be accepted
-            """
-            pass
-
-    class HeaderClickEvent(ClickEvent):
-        """Click event fired when clicking on the Table headers. The event includes
-        a reference the the Table the event originated from, the property id of
-        the column which header was pressed and details about the mouse event
-        itself.
-        """
-        HEADER_CLICK_METHOD = None
-        # Set the header click method
-        # This should never happen
-        try:
-            HEADER_CLICK_METHOD = self.HeaderClickListener.getDeclaredMethod('headerClick', [self.HeaderClickEvent])
-        except java.lang.NoSuchMethodException, e:
-            raise java.lang.RuntimeException(e)
-        # The property id of the column which header was pressed
-        _columnPropertyId = None
-
-        def __init__(self, source, propertyId, details):
-            super(HeaderClickEvent, self)(source, details)
-            self._columnPropertyId = propertyId
-
-        def getPropertyId(self):
-            """Gets the property id of the column which header was pressed
-
-            @return The column propety id
-            """
-            return self._columnPropertyId
-
-    class FooterClickEvent(ClickEvent):
-        """Click event fired when clicking on the Table footers. The event includes
-        a reference the the Table the event originated from, the property id of
-        the column which header was pressed and details about the mouse event
-        itself.
-        """
-        FOOTER_CLICK_METHOD = None
-        # Set the header click method
-        # This should never happen
-        try:
-            FOOTER_CLICK_METHOD = self.FooterClickListener.getDeclaredMethod('footerClick', [self.FooterClickEvent])
-        except java.lang.NoSuchMethodException, e:
-            raise java.lang.RuntimeException(e)
-        # The property id of the column which header was pressed
-        _columnPropertyId = None
-
-        def __init__(self, source, propertyId, details):
-            """Constructor
-
-            @param source
-                       The source of the component
-            @param propertyId
-                       The propertyId of the column
-            @param details
-                       The mouse details of the click
-            """
-            super(FooterClickEvent, self)(source, details)
-            self._columnPropertyId = propertyId
-
-        def getPropertyId(self):
-            """Gets the property id of the column which header was pressed
-
-            @return The column propety id
-            """
-            return self._columnPropertyId
-
-    class HeaderClickListener(Serializable):
-        """Interface for the listener for column header mouse click events. The
-        headerClick method is called when the user presses a header column cell.
-        """
-
-        def headerClick(self, event):
-            """Called when a user clicks a header column cell
-
-            @param event
-                       The event which contains information about the column and
-                       the mouse click event
-            """
-            pass
-
-    class FooterClickListener(Serializable):
-        """Interface for the listener for column footer mouse click events. The
-        footerClick method is called when the user presses a footer column cell.
-        """
-
-        def footerClick(self, event):
-            """Called when a user clicks a footer column cell
-
-            @param event
-                       The event which contains information about the column and
-                       the mouse click event
-            """
-            pass
 
     def getColumnFooter(self, propertyId):
         """Gets the footer caption beneath the rows
@@ -3425,7 +3194,8 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
                    The propertyId of the column *
         @return The caption of the footer or NULL if not set
         """
-        return self._columnFooters[propertyId]
+        return self._columnFooters.get(propertyId)
+
 
     def setColumnFooter(self, propertyId, footer):
         """Sets the column footer caption. The column footer caption is the text
@@ -3438,9 +3208,10 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
                    The caption of the footer
         """
         if footer is None:
-            self._columnFooters.remove(propertyId)
+            del self._columnFooters[propertyId]
         else:
-            self._columnFooters.put(propertyId, footer)
+            self._columnFooters[propertyId] = footer
+
         self.requestRepaint()
 
     def setFooterVisible(self, visible):
@@ -3457,6 +3228,7 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         # Assures the visual refresh
         self.refreshRenderedCells()
 
+
     def isFooterVisible(self):
         """Is the footer currently visible?
 
@@ -3464,95 +3236,306 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         """
         return self._columnFootersVisible
 
-    class ColumnResizeEvent(Component.Event):
-        """This event is fired when a column is resized. The event contains the
-        columns property id which was fired, the previous width of the column and
-        the width of the column after the resize.
+
+class ColumnGenerator(object):
+    """Used to create "generated columns"; columns that exist only in the Table,
+    not in the underlying Container. Implement this interface and pass it to
+    Table.addGeneratedColumn along with an id for the column to be generated.
+    """
+
+    def generateCell(self, source, itemId, columnId):
+        """Called by Table when a cell in a generated column needs to be
+        generated.
+
+        @param source
+                   the source Table
+        @param itemId
+                   the itemId (aka rowId) for the of the cell to be generated
+        @param columnId
+                   the id for the generated column (as specified in
+                   addGeneratedColumn)
+        @return
         """
-        COLUMN_RESIZE_METHOD = None
-        # This should never happen
-        try:
-            COLUMN_RESIZE_METHOD = self.ColumnResizeListener.getDeclaredMethod('columnResize', [self.ColumnResizeEvent])
-        except java.lang.NoSuchMethodException, e:
-            raise java.lang.RuntimeException(e)
-        _previousWidth = None
-        _currentWidth = None
-        _columnPropertyId = None
+        pass
 
-        def __init__(self, source, propertyId, previous, current):
-            """Constructor
 
-            @param source
-                       The source of the event
-            @param propertyId
-                       The columns property id
-            @param previous
-                       The width in pixels of the column before the resize event
-            @param current
-                       The width in pixels of the column after the resize event
-            """
-            super(ColumnResizeEvent, self)(source)
-            self._previousWidth = previous
-            self._currentWidth = current
-            self._columnPropertyId = propertyId
+class CellStyleGenerator(object):
+    """Allow to define specific style on cells (and rows) contents. Implements
+    this interface and pass it to Table.setCellStyleGenerator. Row styles are
+    generated when porpertyId is null. The CSS class name that will be added
+    to the cell content is <tt>v-table-cell-content-[style name]</tt>, and
+    the row style will be <tt>v-table-row-[style name]</tt>.
+    """
 
-        def getPropertyId(self):
-            """Get the column property id of the column that was resized.
+    def getStyle(self, itemId, propertyId):
+        """Called by Table when a cell (and row) is painted.
 
-            @return The column property id
-            """
-            return self._columnPropertyId
+        @param itemId
+                   The itemId of the painted cell
+        @param propertyId
+                   The propertyId of the cell, null when getting row style
+        @return The style name to add to this cell or row. (the CSS class
+                name will be v-table-cell-content-[style name], or
+                v-table-row-[style name] for rows)
+        """
+        pass
 
-        def getPreviousWidth(self):
-            """Get the width in pixels of the column before the resize event
 
-            @return Width in pixels
-            """
-            return self._previousWidth
+class TableTransferable(DataBoundTransferable):
+    """Concrete implementation of {@link DataBoundTransferable} for data
+    transferred from a table.
 
-        def getCurrentWidth(self):
-            """Get the width in pixels of the column after the resize event
+    @see {@link DataBoundTransferable}.
 
-            @return Width in pixels
-            """
-            return self._currentWidth
+    @since 6.3
+    """
 
-    class ColumnResizeListener(Serializable):
-        """Interface for listening to column resize events."""
+    def __init__(self, rawVariables, _Table_this):
+        super(TableTransferable, self)(_Table_this, rawVariables)
+        obj = rawVariables.get('itemId')
+        if obj is not None:
+            self.setData('itemId', self.itemIdMapper.get(object))
 
-        def columnResize(self, event):
-            """This method is triggered when the column has been resized
+        obj = rawVariables.get('propertyId')
+        if obj is not None:
+            self.setData('propertyId', self.columnIdMap.get(object))
 
-            @param event
-                       The event which contains the column property id, the
-                       previous width of the column and the current width of the
-                       column
-            """
-            pass
 
-    class ColumnReorderEvent(Component.Event):
-        """This event is fired when a columns are reordered by the end user user."""
-        METHOD = None
-        # This should never happen
-        try:
-            METHOD = self.ColumnReorderListener.getDeclaredMethod('columnReorder', [self.ColumnReorderEvent])
-        except java.lang.NoSuchMethodException, e:
-            raise java.lang.RuntimeException(e)
+    def getItemId(self):
+        return self.getData('itemId')
 
-        def __init__(self, source):
-            """Constructor
 
-            @param source
-                       The source of the event
-            """
-            super(ColumnReorderEvent, self)(source)
+    def getPropertyId(self):
+        return self.getData('propertyId')
 
-    class ColumnReorderListener(Serializable):
-        """Interface for listening to column reorder events."""
 
-        def columnReorder(self, event):
-            """This method is triggered when the column has been reordered
+    def getSourceComponent(self):
+        return super(TableTransferable, self).getSourceComponent()
 
-            @param event
-            """
-            pass
+
+class TableDropCriterion(ServerSideCriterion):
+    """Lazy loading accept criterion for Table. Accepted target rows are loaded
+    from server once per drag and drop operation. Developer must override one
+    method that decides on which rows the currently dragged data can be
+    dropped.
+
+    <p>
+    Initially pretty much no data is sent to client. On first required
+    criterion check (per drag request) the client side data structure is
+    initialized from server and no subsequent requests requests are needed
+    during that drag and drop operation.
+    """
+
+    def __init__(self):
+        self._table = None
+        self._allowedItemIds = None
+
+
+    def getIdentifier(self):
+        return TableDropCriterion.getCanonicalName()  # FIXME getCanonicalName
+
+
+    def accept(self, dragEvent):
+        dropTargetData = dragEvent.getTargetDetails()
+        self._table = dragEvent.getTargetDetails().getTarget()
+        visibleItemIds = list(self._table.getPageLength())
+        len(visibleItemIds)
+        idd = self._table.getCurrentPageFirstItemId()
+        i = 0
+        while i < self._table.getPageLength() and idd is not None:
+            visibleItemIds.append(idd)
+            idd = self._table.nextItemId(idd)
+            i += 1
+        self._allowedItemIds = self.getAllowedItemIds(dragEvent, self._table, visibleItemIds)
+        return dropTargetData.getItemIdOver() in self._allowedItemIds
+
+
+    def paintResponse(self, target):
+        # send allowed nodes to client so subsequent requests can be
+        # avoided
+        arry = list(self._allowedItemIds)
+        for i in range(len(arry)):
+            key = self._table.itemIdMapper.key( arry[i] )
+            arry[i] = key
+
+        target.addAttribute('allowedIds', arry)
+
+
+    def getAllowedItemIds(self, dragEvent, table, visibleItemIds):
+        """@param dragEvent
+        @param table
+                   the table for which the allowed item identifiers are
+                   defined
+        @param visibleItemIds
+                   the list of currently rendered item identifiers, accepted
+                   item id's need to be detected only for these visible items
+        @return the set of identifiers for items on which the dragEvent will
+                be accepted
+        """
+        pass
+
+
+class HeaderClickListener(object):
+    """Interface for the listener for column header mouse click events. The
+    headerClick method is called when the user presses a header column cell.
+    """
+
+    def headerClick(self, event):
+        """Called when a user clicks a header column cell
+
+        @param event
+                   The event which contains information about the column and
+                   the mouse click event
+        """
+        pass
+
+
+class HeaderClickEvent(ClickEvent):
+    """Click event fired when clicking on the Table headers. The event includes
+    a reference the the Table the event originated from, the property id of
+    the column which header was pressed and details about the mouse event
+    itself.
+    """
+    HEADER_CLICK_METHOD = getattr(HeaderClickListener, 'headerClick')
+
+    def __init__(self, source, propertyId, details):
+        super(HeaderClickEvent, self)(source, details)
+        self._columnPropertyId = propertyId
+
+    def getPropertyId(self):
+        """Gets the property id of the column which header was pressed
+
+        @return The column propety id
+        """
+        return self._columnPropertyId
+
+
+class FooterClickListener(object):
+    """Interface for the listener for column footer mouse click events. The
+    footerClick method is called when the user presses a footer column cell.
+    """
+
+    def footerClick(self, event):
+        """Called when a user clicks a footer column cell
+
+        @param event
+                   The event which contains information about the column and
+                   the mouse click event
+        """
+        pass
+
+
+class FooterClickEvent(ClickEvent):
+    """Click event fired when clicking on the Table footers. The event includes
+    a reference the the Table the event originated from, the property id of
+    the column which header was pressed and details about the mouse event
+    itself.
+    """
+
+    FOOTER_CLICK_METHOD = getattr(FooterClickListener, 'footerClick')
+
+    def __init__(self, source, propertyId, details):
+        """Constructor
+
+        @param source
+                   The source of the component
+        @param propertyId
+                   The propertyId of the column
+        @param details
+                   The mouse details of the click
+        """
+        super(FooterClickEvent, self)(source, details)
+        self._columnPropertyId = propertyId
+
+    def getPropertyId(self):
+        """Gets the property id of the column which header was pressed
+
+        @return The column propety id
+        """
+        return self._columnPropertyId
+
+
+class ColumnResizeListener(object):
+    """Interface for listening to column resize events."""
+
+    def columnResize(self, event):
+        """This method is triggered when the column has been resized
+
+        @param event
+                   The event which contains the column property id, the
+                   previous width of the column and the current width of the
+                   column
+        """
+        pass
+
+
+class ColumnResizeEvent(ComponentEvent):
+    """This event is fired when a column is resized. The event contains the
+    columns property id which was fired, the previous width of the column and
+    the width of the column after the resize.
+    """
+
+    COLUMN_RESIZE_METHOD = getattr(ColumnResizeListener, 'columnResize')
+
+    def __init__(self, source, propertyId, previous, current):
+        """Constructor
+
+        @param source
+                   The source of the event
+        @param propertyId
+                   The columns property id
+        @param previous
+                   The width in pixels of the column before the resize event
+        @param current
+                   The width in pixels of the column after the resize event
+        """
+        super(ColumnResizeEvent, self)(source)
+        self._previousWidth = previous
+        self._currentWidth = current
+        self._columnPropertyId = propertyId
+
+    def getPropertyId(self):
+        """Get the column property id of the column that was resized.
+
+        @return The column property id
+        """
+        return self._columnPropertyId
+
+    def getPreviousWidth(self):
+        """Get the width in pixels of the column before the resize event
+
+        @return Width in pixels
+        """
+        return self._previousWidth
+
+    def getCurrentWidth(self):
+        """Get the width in pixels of the column after the resize event
+
+        @return Width in pixels
+        """
+        return self._currentWidth
+
+
+class ColumnReorderListener(object):
+    """Interface for listening to column reorder events."""
+
+    def columnReorder(self, event):
+        """This method is triggered when the column has been reordered
+
+        @param event
+        """
+        pass
+
+
+class ColumnReorderEvent(ComponentEvent):
+    """This event is fired when a columns are reordered by the end user user."""
+
+    METHOD = getattr(ColumnReorderListener, 'columnReorder')
+
+    def __init__(self, source):
+        """Constructor
+
+        @param source
+                   The source of the event
+        """
+        super(ColumnReorderEvent, self)(source)

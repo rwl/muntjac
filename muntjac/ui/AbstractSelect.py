@@ -1375,43 +1375,41 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
         return self._captionChangeListener
 
 
-    class AbstractSelectTargetDetails(TargetDetailsImpl):
-        """TargetDetails implementation for subclasses of {@link AbstractSelect}
-        that implement {@link DropTarget}.
+class AbstractSelectTargetDetails(TargetDetailsImpl):
+    """TargetDetails implementation for subclasses of {@link AbstractSelect}
+    that implement {@link DropTarget}.
 
-        @since 6.3
+    @since 6.3
+    """
+
+    def __init__(self, rawVariables, _AbstractSelect_self):
+        """Constructor that automatically converts itemIdOver key to
+        corresponding item Id
         """
+        super(AbstractSelect.AbstractSelectTargetDetails, self)(rawVariables, self._AbstractSelect_self)  # FIXME AbstractSelect.this translation
 
-        _AbstractSelect_self = self
+        # The item id over which the drag event happened.
+        self.idOver = None
 
-        def __init__(self, rawVariables):
-            """Constructor that automatically converts itemIdOver key to
-            corresponding item Id
-            """
-            super(AbstractSelect.AbstractSelectTargetDetails, self)(rawVariables, self._AbstractSelect_self)  # FIXME AbstractSelect.this translation
-
-            # The item id over which the drag event happened.
-            self.idOver = None
-
-            # eagar fetch itemid, mapper may be emptied
-            keyover = self.getData('itemIdOver')
-            if keyover is not None:
-                self.idOver = self.itemIdMapper.get(keyover)
+        # eagar fetch itemid, mapper may be emptied
+        keyover = self.getData('itemIdOver')
+        if keyover is not None:
+            self.idOver = self.itemIdMapper.get(keyover)
 
 
-        def getItemIdOver(self):
-            """If the drag operation is currently over an {@link Item}, this method
-            returns the identifier of that {@link Item}.
-            """
-            return self.idOver
+    def getItemIdOver(self):
+        """If the drag operation is currently over an {@link Item}, this method
+        returns the identifier of that {@link Item}.
+        """
+        return self.idOver
 
 
-        def getDropLocation(self):
-            """Returns a detailed vertical location where the drop happened on Item."""
-            detail = self.getData('detail')
-            if detail is None:
-                return None
-            return VerticalDropLocation.valueOf(detail)
+    def getDropLocation(self):
+        """Returns a detailed vertical location where the drop happened on Item."""
+        detail = self.getData('detail')
+        if detail is None:
+            return None
+        return VerticalDropLocation.valueOf(detail)
 
 
 class CaptionChangeListener(Item, PropertySetChangeListener, Property, ValueChangeListener):
