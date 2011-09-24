@@ -76,9 +76,6 @@ class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNoti
     # Resolution identifier: years.
     RESOLUTION_YEAR = 6
 
-    # Specified smallest modifiable unit.
-    _resolution = RESOLUTION_MSEC
-
     # Specified largest modifiable unit.
     _largestModifiable = RESOLUTION_YEAR
 
@@ -137,6 +134,8 @@ class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNoti
 
         self._defaultParseErrorMessage = 'Date format not recognized'
 
+        # Specified smallest modifiable unit.
+        self._resolution = self.RESOLUTION_MSEC
 
         args = args
         nargs = len(args)
