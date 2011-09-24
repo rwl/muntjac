@@ -69,53 +69,56 @@ class ItemClickEvent(ClickEvent, Serializable):
     except java.lang.NoSuchMethodException, e:
         raise java.lang.RuntimeException()
 
-    class ItemClickListener(Serializable):
 
-        def itemClick(self, event):
-            pass
+class ItemClickListener(Serializable):
 
-    class ItemClickSource(ItemClickNotifier):
-        """Components implementing
+    def itemClick(self, event):
+        pass
 
-        @link {@link Container} interface may support emitting
-              {@link ItemClickEvent}s.
 
-        @deprecated Use {@link ItemClickNotifier} instead. ItemClickSource was
-                    deprecated in version 6.5.
+class ItemClickSource(ItemClickNotifier):
+    """Components implementing
+
+    @link {@link Container} interface may support emitting
+          {@link ItemClickEvent}s.
+
+    @deprecated Use {@link ItemClickNotifier} instead. ItemClickSource was
+                deprecated in version 6.5.
+    """
+    pass
+
+
+class ItemClickNotifier(Serializable):
+    """The interface for adding and removing <code>ItemClickEvent</code>
+    listeners. By implementing this interface a class explicitly announces
+    that it will generate an <code>ItemClickEvent</code> when one of its
+    items is clicked.
+    <p>
+    Note: The general Java convention is not to explicitly declare that a
+    class generates events, but to directly define the
+    <code>addListener</code> and <code>removeListener</code> methods. That
+    way the caller of these methods has no real way of finding out if the
+    class really will send the events, or if it just defines the methods to
+    be able to implement an interface.
+    </p>
+
+    @since 6.5
+    @see ItemClickListener
+    @see ItemClickEvent
+    """
+
+    def addListener(self, listener):
+        """Register a listener to handle {@link ItemClickEvent}s.
+
+        @param listener
+                   ItemClickListener to be registered
         """
         pass
 
-    class ItemClickNotifier(Serializable):
-        """The interface for adding and removing <code>ItemClickEvent</code>
-        listeners. By implementing this interface a class explicitly announces
-        that it will generate an <code>ItemClickEvent</code> when one of its
-        items is clicked.
-        <p>
-        Note: The general Java convention is not to explicitly declare that a
-        class generates events, but to directly define the
-        <code>addListener</code> and <code>removeListener</code> methods. That
-        way the caller of these methods has no real way of finding out if the
-        class really will send the events, or if it just defines the methods to
-        be able to implement an interface.
-        </p>
+    def removeListener(self, listener):
+        """Removes an ItemClickListener.
 
-        @since 6.5
-        @see ItemClickListener
-        @see ItemClickEvent
+        @param listener
+                   ItemClickListener to be removed
         """
-
-        def addListener(self, listener):
-            """Register a listener to handle {@link ItemClickEvent}s.
-
-            @param listener
-                       ItemClickListener to be registered
-            """
-            pass
-
-        def removeListener(self, listener):
-            """Removes an ItemClickListener.
-
-            @param listener
-                       ItemClickListener to be removed
-            """
-            pass
+        pass
