@@ -14,20 +14,18 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.ui.AbstractSelect import (AbstractSelect,)
-from com.vaadin.terminal.gwt.client.ui.VTwinColSelect import (VTwinColSelect,)
-# from java.util.Collection import (Collection,)
+from muntjac.ui.AbstractSelect import AbstractSelect
+from muntjac.terminal.gwt.client.ui.VTwinColSelect import VTwinColSelect
+from muntjac.ui.ClientWidget import LoadStyle
 
 
 class TwinColSelect(AbstractSelect):
     """Multiselect component with two lists: left side for available items and right
     side for selected items.
     """
-    _columns = 0
-    _rows = 0
-    _leftColumnCaption = None
-    _rightColumnCaption = None
+
+    CLIENT_WIDGET = VTwinColSelect
+    LOAD_STYLE = LoadStyle.EAGER
 
     def __init__(self, *args):
         """None
@@ -40,26 +38,13 @@ class TwinColSelect(AbstractSelect):
         @param caption
         @param options
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 0:
-            super(TwinColSelect, self)()
-            self.setMultiSelect(True)
-        elif _1 == 1:
-            caption, = _0
-            super(TwinColSelect, self)(caption)
-            self.setMultiSelect(True)
-        elif _1 == 2:
-            if isinstance(_0[1], Collection):
-                caption, options = _0
-                super(TwinColSelect, self)(caption, options)
-                self.setMultiSelect(True)
-            else:
-                caption, dataSource = _0
-                super(TwinColSelect, self)(caption, dataSource)
-                self.setMultiSelect(True)
-        else:
-            raise ARGERROR(0, 2)
+        self._columns = 0
+        self._rows = 0
+        self._leftColumnCaption = None
+        self._rightColumnCaption = None
+
+        super(TwinColSelect, self)(args)
+
 
     def setColumns(self, columns):
         """Sets the number of columns in the editor. If the number of columns is set
@@ -79,11 +64,14 @@ class TwinColSelect(AbstractSelect):
             self._columns = columns
             self.requestRepaint()
 
+
     def getColumns(self):
         return self._columns
 
+
     def getRows(self):
         return self._rows
+
 
     def setRows(self, rows):
         """Sets the number of rows in the editor. If the number of rows is set to 0,
@@ -105,22 +93,28 @@ class TwinColSelect(AbstractSelect):
             self._rows = rows
             self.requestRepaint()
 
+
     def paintContent(self, target):
         target.addAttribute('type', 'twincol')
         # Adds the number of columns
         if self._columns != 0:
             target.addAttribute('cols', self._columns)
+
         # Adds the number of rows
         if self._rows != 0:
             target.addAttribute('rows', self._rows)
+
         # Right and left column captions and/or icons (if set)
         lc = self.getLeftColumnCaption()
         rc = self.getRightColumnCaption()
         if lc is not None:
             target.addAttribute(VTwinColSelect.ATTRIBUTE_LEFT_CAPTION, lc)
+
         if rc is not None:
             target.addAttribute(VTwinColSelect.ATTRIBUTE_RIGHT_CAPTION, rc)
+
         super(TwinColSelect, self).paintContent(target)
+
 
     def setRightColumnCaption(self, rightColumnCaption):
         """Sets the text shown above the right column.
@@ -131,12 +125,14 @@ class TwinColSelect(AbstractSelect):
         self._rightColumnCaption = rightColumnCaption
         self.requestRepaint()
 
+
     def getRightColumnCaption(self):
         """Returns the text shown above the right column.
 
         @return The text shown or null if not set.
         """
         return self._rightColumnCaption
+
 
     def setLeftColumnCaption(self, leftColumnCaption):
         """Sets the text shown above the left column.
@@ -146,6 +142,7 @@ class TwinColSelect(AbstractSelect):
         """
         self._leftColumnCaption = leftColumnCaption
         self.requestRepaint()
+
 
     def getLeftColumnCaption(self):
         """Returns the text shown above the left column.

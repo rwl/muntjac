@@ -22,6 +22,16 @@ class Alignment(object):
     pre-instantiated classes.
     """
 
+    TOP_RIGHT = None
+    TOP_LEFT = None
+    TOP_CENTER = None
+    MIDDLE_RIGHT = None
+    MIDDLE_LEFT = None
+    MIDDLE_CENTER = None
+    BOTTOM_RIGHT = None
+    BOTTOM_LEFT = None
+    BOTTOM_CENTER = None
+
     def __init__(self, bitMask):
         self._bitMask = bitMask
 

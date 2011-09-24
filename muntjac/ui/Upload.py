@@ -14,17 +14,105 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.ui.Component import (Component,)
-from com.vaadin.ui.AbstractComponent import (AbstractComponent,)
-# from com.vaadin.terminal.StreamVariable.StreamingProgressEvent import (StreamingProgressEvent,)
-# from java.io.OutputStream import (OutputStream,)
-# from java.io.Serializable import (Serializable,)
-# from java.lang.reflect.Method import (Method,)
-# from java.util.Collections import (Collections,)
-# from java.util.Iterator import (Iterator,)
-# from java.util.LinkedHashSet import (LinkedHashSet,)
-# from java.util.Map import (Map,)
+from muntjac.ui.Component import Component, Focusable, Event as ComponentEvent
+from muntjac.ui.AbstractComponent import AbstractComponent
+from muntjac.terminal.gwt.client.ui.VUpload import VUpload
+from muntjac.ui.ClientWidget import LoadStyle
+
+from muntjac.terminal.StreamVariable import \
+    StreamingProgressEvent, StreamVariable
+
+from muntjac.terminal.gwt.server.NoInputStreamException import \
+    NoInputStreamException
+
+from muntjac.terminal.gwt.server.NoOutputStreamException import \
+    NoOutputStreamException
+
+
+class StartedListener(object):
+    """Receives the events when the upload starts.
+
+    @author IT Mill Ltd.
+    @version
+    @VERSION@
+    @since 5.0
+    """
+
+    def uploadStarted(self, event):
+        """Upload has started.
+
+        @param event
+                   the Upload started event.
+        """
+        pass
+
+
+class FinishedListener(object):
+    """Receives the events when the uploads are ready.
+
+    @author IT Mill Ltd.
+    @version
+    @VERSION@
+    @since 3.0
+    """
+
+    def uploadFinished(self, event):
+        """Upload has finished.
+
+        @param event
+                   the Upload finished event.
+        """
+        pass
+
+
+class FailedListener(object):
+    """Receives events when the uploads are finished, but unsuccessful.
+
+    @author IT Mill Ltd.
+    @version
+    @VERSION@
+    @since 3.0
+    """
+
+    def uploadFailed(self, event):
+        """Upload has finished unsuccessfully.
+
+        @param event
+                   the Upload failed event.
+        """
+        pass
+
+
+class SucceededListener(object):
+    """Receives events when the uploads are successfully finished.
+
+    @author IT Mill Ltd.
+    @version
+    @VERSION@
+    @since 3.0
+    """
+
+    def uploadSucceeded(self, event):
+        """Upload successfull..
+
+        @param event
+                   the Upload successfull event.
+        """
+        pass
+
+
+class ProgressListener(object):
+    """ProgressListener receives events to track progress of upload."""
+
+    def updateProgress(self, readBytes, contentLength):
+        """Updates progress to listener
+
+        @param readBytes
+                   bytes transferred
+        @param contentLength
+                   total size of file currently being uploaded, -1 if unknown
+        """
+        pass
 
 
 class Upload(AbstractComponent, Component, Focusable):
@@ -67,41 +155,54 @@ class Upload(AbstractComponent, Component, Focusable):
     @VERSION@
     @since 3.0
     """
-    # Should the field be focused on next repaint?
-    _focus = False
-    # The tab order number of this field.
-    _tabIndex = 0
-    # The output of the upload is redirected to this receiver.
-    _receiver = None
-    _isUploading = None
-    _contentLength = -1
-    _totalBytes = None
-    _buttonCaption = 'Upload'
-    # ProgressListeners to which information about progress is sent during
-    # upload
 
-    _progressListeners = None
-    _interrupted = False
-    _notStarted = None
-    _nextid = None
-    # Flag to indicate that submitting file has been requested.
-    _forceSubmit = None
+    CLIENT_WIDGET = VUpload
+    LOAD_STYLE = LoadStyle.LAZY
 
-    def __init__(self, *args):
+
+    def __init__(self, caption=None, uploadReceiver=None):
         """Creates a new instance of Upload.
 
         The receiver must be set before performing an upload.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 0:
-            pass # astStmt: [Stmt([]), None]
-        elif _1 == 2:
-            caption, uploadReceiver = _0
+        # Should the field be focused on next repaint?
+        self._focus = False
+
+        # The tab order number of this field.
+        self._tabIndex = 0
+
+        # The output of the upload is redirected to this receiver.
+        self._receiver = None
+
+        self._isUploading = None
+
+        self._contentLength = -1
+
+        self._totalBytes = None
+
+        self._buttonCaption = 'Upload'
+
+        # ProgressListeners to which information about progress is sent
+        # during upload
+        self._progressListeners = None
+
+        self._interrupted = False
+
+        self._notStarted = None
+
+        self._nextid = None
+
+        # Flag to indicate that submitting file has been requested.
+        self._forceSubmit = None
+
+        if caption:
             self.setCaption(caption)
+
+        if uploadReceiver is not None:
             self._receiver = uploadReceiver
-        else:
-            raise ARGERROR(0, 2)
+
+        self._streamVariable = None
+
 
     def changeVariables(self, source, variables):
         """Invoked when the value of a variable has changed.
@@ -110,12 +211,13 @@ class Upload(AbstractComponent, Component, Focusable):
              java.util.Map)
         """
         if 'pollForStart' in variables:
-            id = variables['pollForStart']
-            if not self._isUploading and id == self._nextid:
+            idd = variables.get('pollForStart')
+            if not self._isUploading and idd == self._nextid:
                 self._notStarted = True
                 self.requestRepaint()
             else:
                 pass
+
 
     def paintContent(self, target):
         """Paints the content of this component.
@@ -129,321 +231,38 @@ class Upload(AbstractComponent, Component, Focusable):
             target.addAttribute('notStarted', True)
             self._notStarted = False
             return
+
         if self._forceSubmit:
             target.addAttribute('forceSubmit', True)
             self._forceSubmit = True
             return
+
         # The field should be focused
         if self._focus:
             target.addAttribute('focus', True)
+
         # The tab ordering number
         if self._tabIndex >= 0:
             target.addAttribute('tabindex', self._tabIndex)
+
         target.addAttribute('state', self._isUploading)
+
         if self._buttonCaption is not None:
             target.addAttribute('buttoncaption', self._buttonCaption)
+
         target.addAttribute('nextid', self._nextid)
+
         # Post file to this strean variable
         target.addVariable(self, 'action', self.getStreamVariable())
 
-    class Receiver(Serializable):
-        """Interface that must be implemented by the upload receivers to provide the
-        Upload component an output stream to write the uploaded data.
 
-        @author IT Mill Ltd.
-        @version
-        @VERSION@
-        @since 3.0
-        """
-        # Upload events
+    _UPLOAD_FINISHED_METHOD = getattr(FinishedListener, 'uploadFinished')
+    _UPLOAD_FAILED_METHOD = getattr(FailedListener, 'uploadFailed')
+    _UPLOAD_SUCCEEDED_METHOD = getattr(StartedListener, 'uploadStarted')
+    _UPLOAD_STARTED_METHOD = getattr(SucceededListener, 'uploadSucceeded')
 
-        def receiveUpload(self, filename, mimeType):
-            """Invoked when a new upload arrives.
 
-            @param filename
-                       the desired filename of the upload, usually as specified
-                       by the client.
-            @param mimeType
-                       the MIME type of the uploaded file.
-            @return Stream to which the uploaded file should be written.
-            """
-            pass
-
-    _UPLOAD_FINISHED_METHOD = None
-    _UPLOAD_FAILED_METHOD = None
-    _UPLOAD_SUCCEEDED_METHOD = None
-    _UPLOAD_STARTED_METHOD = None
-    # This should never happen
-    try:
-        _UPLOAD_FINISHED_METHOD = self.FinishedListener.getDeclaredMethod('uploadFinished', [self.FinishedEvent])
-        _UPLOAD_FAILED_METHOD = self.FailedListener.getDeclaredMethod('uploadFailed', [self.FailedEvent])
-        _UPLOAD_STARTED_METHOD = self.StartedListener.getDeclaredMethod('uploadStarted', [self.StartedEvent])
-        _UPLOAD_SUCCEEDED_METHOD = self.SucceededListener.getDeclaredMethod('uploadSucceeded', [self.SucceededEvent])
-    except java.lang.NoSuchMethodException, e:
-        raise java.lang.RuntimeException('Internal error finding methods in Upload')
-
-    class FinishedEvent(Component.Event):
-        """Upload.FinishedEvent is sent when the upload receives a file, regardless
-        of whether the reception was successful or failed. If you wish to
-        distinguish between the two cases, use either SucceededEvent or
-        FailedEvent, which are both subclasses of the FinishedEvent.
-
-        @author IT Mill Ltd.
-        @version
-        @VERSION@
-        @since 3.0
-        """
-        # Length of the received file.
-        _length = None
-        # MIME type of the received file.
-        _type = None
-        # Received file name.
-        _filename = None
-
-        def __init__(self, source, filename, MIMEType, length):
-            """@param source
-                       the source of the file.
-            @param filename
-                       the received file name.
-            @param MIMEType
-                       the MIME type of the received file.
-            @param length
-                       the length of the received file.
-            """
-            super(FinishedEvent, self)(source)
-            self._type = MIMEType
-            self._filename = filename
-            self._length = length
-
-        def getUpload(self):
-            """Uploads where the event occurred.
-
-            @return the Source of the event.
-            """
-            return self.getSource()
-
-        def getFilename(self):
-            """Gets the file name.
-
-            @return the filename.
-            """
-            return self._filename
-
-        def getMIMEType(self):
-            """Gets the MIME Type of the file.
-
-            @return the MIME type.
-            """
-            return self._type
-
-        def getLength(self):
-            """Gets the length of the file.
-
-            @return the length.
-            """
-            return self._length
-
-    class FailedEvent(FinishedEvent):
-        """Upload.FailedEvent event is sent when the upload is received, but the
-        reception is interrupted for some reason.
-
-        @author IT Mill Ltd.
-        @version
-        @VERSION@
-        @since 3.0
-        """
-        _reason = None
-
-        def __init__(self, *args):
-            """@param source
-            @param filename
-            @param MIMEType
-            @param length
-            @param exception
-            ---
-            @param source
-            @param filename
-            @param MIMEType
-            @param length
-            @param exception
-            """
-            _0 = args
-            _1 = len(args)
-            if _1 == 4:
-                source, filename, MIMEType, length = _0
-                super(FailedEvent, self)(source, filename, MIMEType, length)
-            elif _1 == 5:
-                source, filename, MIMEType, length, reason = _0
-                self.__init__(source, filename, MIMEType, length)
-                self._reason = reason
-            else:
-                raise ARGERROR(4, 5)
-
-        def getReason(self):
-            """Gets the exception that caused the failure.
-
-            @return the exception that caused the failure, null if n/a
-            """
-            return self._reason
-
-    class NoOutputStreamEvent(FailedEvent):
-        """FailedEvent that indicates that an output stream could not be obtained."""
-
-        def __init__(self, source, filename, MIMEType, length):
-            """@param source
-            @param filename
-            @param MIMEType
-            @param length
-            """
-            super(NoOutputStreamEvent, self)(source, filename, MIMEType, length)
-
-    class NoInputStreamEvent(FailedEvent):
-        """FailedEvent that indicates that an input stream could not be obtained."""
-
-        def __init__(self, source, filename, MIMEType, length):
-            """@param source
-            @param filename
-            @param MIMEType
-            @param length
-            """
-            super(NoInputStreamEvent, self)(source, filename, MIMEType, length)
-
-    class SucceededEvent(FinishedEvent):
-        """Upload.SucceededEvent event is sent when the upload is received
-        successfully.
-
-        @author IT Mill Ltd.
-        @version
-        @VERSION@
-        @since 3.0
-        """
-
-        def __init__(self, source, filename, MIMEType, length):
-            """@param source
-            @param filename
-            @param MIMEType
-            @param length
-            """
-            super(SucceededEvent, self)(source, filename, MIMEType, length)
-
-    class StartedEvent(Component.Event):
-        """Upload.StartedEvent event is sent when the upload is started to received.
-
-        @author IT Mill Ltd.
-        @version
-        @VERSION@
-        @since 5.0
-        """
-        _filename = None
-        _type = None
-        # Length of the received file.
-        _length = None
-
-        def __init__(self, source, filename, MIMEType, contentLength):
-            """@param source
-            @param filename
-            @param MIMEType
-            @param length
-            """
-            super(StartedEvent, self)(source)
-            self._filename = filename
-            self._type = MIMEType
-            self._length = contentLength
-
-        def getUpload(self):
-            """Uploads where the event occurred.
-
-            @return the Source of the event.
-            """
-            return self.getSource()
-
-        def getFilename(self):
-            """Gets the file name.
-
-            @return the filename.
-            """
-            return self._filename
-
-        def getMIMEType(self):
-            """Gets the MIME Type of the file.
-
-            @return the MIME type.
-            """
-            return self._type
-
-        def getContentLength(self):
-            """@return the length of the file that is being uploaded"""
-            return self._length
-
-    class StartedListener(Serializable):
-        """Receives the events when the upload starts.
-
-        @author IT Mill Ltd.
-        @version
-        @VERSION@
-        @since 5.0
-        """
-
-        def uploadStarted(self, event):
-            """Upload has started.
-
-            @param event
-                       the Upload started event.
-            """
-            pass
-
-    class FinishedListener(Serializable):
-        """Receives the events when the uploads are ready.
-
-        @author IT Mill Ltd.
-        @version
-        @VERSION@
-        @since 3.0
-        """
-
-        def uploadFinished(self, event):
-            """Upload has finished.
-
-            @param event
-                       the Upload finished event.
-            """
-            pass
-
-    class FailedListener(Serializable):
-        """Receives events when the uploads are finished, but unsuccessful.
-
-        @author IT Mill Ltd.
-        @version
-        @VERSION@
-        @since 3.0
-        """
-
-        def uploadFailed(self, event):
-            """Upload has finished unsuccessfully.
-
-            @param event
-                       the Upload failed event.
-            """
-            pass
-
-    class SucceededListener(Serializable):
-        """Receives events when the uploads are successfully finished.
-
-        @author IT Mill Ltd.
-        @version
-        @VERSION@
-        @since 3.0
-        """
-
-        def uploadSucceeded(self, event):
-            """Upload successfull..
-
-            @param event
-                       the Upload successfull event.
-            """
-            pass
-
-    def addListener(self, *args):
+    def addListener(self, listener):
         """Adds the upload started event listener.
 
         @param listener
@@ -469,30 +288,25 @@ class Upload(AbstractComponent, Component, Focusable):
         @param listener
                    the Listener to be added.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            if isinstance(_0[0], FailedListener):
-                listener, = _0
-                self.addListener(self.FailedEvent, listener, self._UPLOAD_FAILED_METHOD)
-            elif isinstance(_0[0], FinishedListener):
-                listener, = _0
-                self.addListener(self.FinishedEvent, listener, self._UPLOAD_FINISHED_METHOD)
-            elif isinstance(_0[0], ProgressListener):
-                listener, = _0
-                if self._progressListeners is None:
-                    self._progressListeners = LinkedHashSet()
-                self._progressListeners.add(listener)
-            elif isinstance(_0[0], StartedListener):
-                listener, = _0
-                self.addListener(self.StartedEvent, listener, self._UPLOAD_STARTED_METHOD)
-            else:
-                listener, = _0
-                self.addListener(self.SucceededEvent, listener, self._UPLOAD_SUCCEEDED_METHOD)
-        else:
-            raise ARGERROR(1, 1)
+        if isinstance(listener, FailedListener):
+            self.addListener(FailedEvent, listener, self._UPLOAD_FAILED_METHOD)
 
-    def removeListener(self, *args):
+        elif isinstance(listener, FinishedListener):
+            self.addListener(FinishedEvent, listener, self._UPLOAD_FINISHED_METHOD)
+
+        elif isinstance(listener, ProgressListener):
+            if self._progressListeners is None:
+                self._progressListeners = set()
+            self._progressListeners.add(listener)
+
+        elif isinstance(listener, StartedListener):
+            self.addListener(StartedEvent, listener, self._UPLOAD_STARTED_METHOD)
+
+        else:
+            self.addListener(SucceededEvent, listener, self._UPLOAD_SUCCEEDED_METHOD)
+
+
+    def removeListener(self, listener):
         """Removes the upload started event listener.
 
         @param listener
@@ -518,27 +332,22 @@ class Upload(AbstractComponent, Component, Focusable):
         @param listener
                    the Listener to be removed.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            if isinstance(_0[0], FailedListener):
-                listener, = _0
-                self.removeListener(self.FailedEvent, listener, self._UPLOAD_FAILED_METHOD)
-            elif isinstance(_0[0], FinishedListener):
-                listener, = _0
-                self.removeListener(self.FinishedEvent, listener, self._UPLOAD_FINISHED_METHOD)
-            elif isinstance(_0[0], ProgressListener):
-                listener, = _0
-                if self._progressListeners is not None:
-                    self._progressListeners.remove(listener)
-            elif isinstance(_0[0], StartedListener):
-                listener, = _0
-                self.removeListener(self.StartedEvent, listener, self._UPLOAD_STARTED_METHOD)
-            else:
-                listener, = _0
-                self.removeListener(self.SucceededEvent, listener, self._UPLOAD_SUCCEEDED_METHOD)
+        if isinstance(listener, FailedListener):
+            self.removeListener(FailedEvent, listener, self._UPLOAD_FAILED_METHOD)
+
+        elif isinstance(listener, FinishedListener):
+            self.removeListener(FinishedEvent, listener, self._UPLOAD_FINISHED_METHOD)
+
+        elif isinstance(listener, ProgressListener):
+            if self._progressListeners is not None:
+                self._progressListeners.remove(listener)
+
+        elif isinstance(listener, StartedListener):
+            self.removeListener(StartedEvent, listener, self._UPLOAD_STARTED_METHOD)
+
         else:
-            raise ARGERROR(1, 1)
+            self.removeListener(SucceededEvent, listener, self._UPLOAD_SUCCEEDED_METHOD)
+
 
     def fireStarted(self, filename, MIMEType):
         """Emit upload received event.
@@ -547,31 +356,29 @@ class Upload(AbstractComponent, Component, Focusable):
         @param MIMEType
         @param length
         """
-        self.fireEvent(Upload.StartedEvent(self, filename, MIMEType, self._contentLength))
+        self.fireEvent( StartedEvent(self, filename, MIMEType, self._contentLength) )
 
-    def fireUploadInterrupted(self, *args):
+
+    def fireUploadInterrupted(self, filename, MIMEType, length, e=None):
         """Emits the upload failed event.
 
         @param filename
         @param MIMEType
         @param length
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 3:
-            filename, MIMEType, length = _0
-            self.fireEvent(Upload.FailedEvent(self, filename, MIMEType, length))
-        elif _1 == 4:
-            filename, MIMEType, length, e = _0
-            self.fireEvent(Upload.FailedEvent(self, filename, MIMEType, length, e))
+        if e is None:
+            self.fireEvent( FailedEvent(self, filename, MIMEType, length) )
         else:
-            raise ARGERROR(3, 4)
+            self.fireEvent( FailedEvent(self, filename, MIMEType, length, e) )
+
 
     def fireNoInputStream(self, filename, MIMEType, length):
-        self.fireEvent(Upload.NoInputStreamEvent(self, filename, MIMEType, length))
+        self.fireEvent( NoInputStreamEvent(self, filename, MIMEType, length) )
+
 
     def fireNoOutputStream(self, filename, MIMEType, length):
-        self.fireEvent(Upload.NoOutputStreamEvent(self, filename, MIMEType, length))
+        self.fireEvent( NoOutputStreamEvent(self, filename, MIMEType, length) )
+
 
     def fireUploadSuccess(self, filename, MIMEType, length):
         """Emits the upload success event.
@@ -580,7 +387,8 @@ class Upload(AbstractComponent, Component, Focusable):
         @param MIMEType
         @param length
         """
-        self.fireEvent(Upload.SucceededEvent(self, filename, MIMEType, length))
+        self.fireEvent( SucceededEvent(self, filename, MIMEType, length) )
+
 
     def fireUpdateProgress(self, totalBytes, contentLength):
         """Emits the progress event.
@@ -593,15 +401,9 @@ class Upload(AbstractComponent, Component, Focusable):
         # this is implemented differently than other listeners to maintain
         # backwards compatibility
         if self._progressListeners is not None:
-            _0 = True
-            it = self._progressListeners
-            while True:
-                if _0 is True:
-                    _0 = False
-                if not it.hasNext():
-                    break
-                l = it.next()
+            for l in self._progressListeners:
                 l.updateProgress(totalBytes, contentLength)
+
 
     def getReceiver(self):
         """Returns the current receiver.
@@ -609,6 +411,7 @@ class Upload(AbstractComponent, Component, Focusable):
         @return the StreamVariable.
         """
         return self._receiver
+
 
     def setReceiver(self, receiver):
         """Sets the receiver.
@@ -618,9 +421,11 @@ class Upload(AbstractComponent, Component, Focusable):
         """
         self._receiver = receiver
 
+
     def focus(self):
         """{@inheritDoc}"""
         super(Upload, self).focus()
+
 
     def getTabIndex(self):
         """Gets the Tabulator index of this Focusable component.
@@ -629,12 +434,14 @@ class Upload(AbstractComponent, Component, Focusable):
         """
         return self._tabIndex
 
+
     def setTabIndex(self, tabIndex):
         """Sets the Tabulator index of this Focusable component.
 
         @see com.vaadin.ui.Component.Focusable#setTabIndex(int)
         """
         self._tabIndex = tabIndex
+
 
     def startUpload(self):
         """Go into upload state. This is to prevent double uploading on same
@@ -646,9 +453,11 @@ class Upload(AbstractComponent, Component, Focusable):
         because it is used by another class.
         """
         if self._isUploading:
-            raise self.IllegalStateException('uploading already started')
+            raise ValueError, 'uploading already started'
+
         self._isUploading = True
         self._nextid += 1
+
 
     def interruptUpload(self):
         """Interrupts the upload currently being received. The interruption will be
@@ -657,6 +466,7 @@ class Upload(AbstractComponent, Component, Focusable):
         """
         if self._isUploading:
             self._interrupted = True
+
 
     def endUpload(self):
         """Go into state where new uploading can begin.
@@ -669,8 +479,10 @@ class Upload(AbstractComponent, Component, Focusable):
         self._interrupted = False
         self.requestRepaint()
 
+
     def isUploading(self):
         return self._isUploading
+
 
     def getBytesRead(self):
         """Gets read bytes of the file currently being uploaded.
@@ -678,6 +490,7 @@ class Upload(AbstractComponent, Component, Focusable):
         @return bytes
         """
         return self._totalBytes
+
 
     def getUploadSize(self):
         """Returns size of file currently being uploaded. Value sane only during
@@ -687,6 +500,7 @@ class Upload(AbstractComponent, Component, Focusable):
         """
         return self._contentLength
 
+
     def setProgressListener(self, progressListener):
         """This method is deprecated, use addListener(ProgressListener) instead.
 
@@ -694,6 +508,7 @@ class Upload(AbstractComponent, Component, Focusable):
         @param progressListener
         """
         self.addListener(progressListener)
+
 
     def getProgressListener(self):
         """This method is deprecated.
@@ -706,22 +521,11 @@ class Upload(AbstractComponent, Component, Focusable):
         else:
             return self._progressListeners.next()
 
-    class ProgressListener(Serializable):
-        """ProgressListener receives events to track progress of upload."""
-
-        def updateProgress(self, readBytes, contentLength):
-            """Updates progress to listener
-
-            @param readBytes
-                       bytes transferred
-            @param contentLength
-                       total size of file currently being uploaded, -1 if unknown
-            """
-            pass
 
     def getButtonCaption(self):
         """@return String to be rendered into button that fires uploading"""
         return self._buttonCaption
+
 
     def setButtonCaption(self, buttonCaption):
         """In addition to the actual file chooser, upload components have button
@@ -748,6 +552,7 @@ class Upload(AbstractComponent, Component, Focusable):
         self._buttonCaption = buttonCaption
         self.requestRepaint()
 
+
     def submitUpload(self):
         """Forces the upload the send selected file to the server.
         <p>
@@ -768,64 +573,306 @@ class Upload(AbstractComponent, Component, Focusable):
         self.requestRepaint()
         self._forceSubmit = True
 
-    def requestRepaint(self):
-        # Handle to terminal via Upload monitors and controls the upload during it
-        # is being streamed.
 
+    def requestRepaint(self):
         self._forceSubmit = False
         super(Upload, self).requestRepaint()
 
-    _streamVariable = None
 
     def getStreamVariable(self):
+        # Handle to terminal via Upload monitors and controls the upload during it
+        # is being streamed.
         if self._streamVariable is None:
 
-            class _0_(com.vaadin.terminal.StreamVariable):
-                _lastStartedEvent = None
+            class InnerStreamVariable(StreamVariable):  # FIXME inner class
+
+                def __init__(self, upload):
+                    self._upload = upload
+                    self._lastStartedEvent = None
+
 
                 def listenProgress(self):
-                    return self.progressListeners is not None and not self.progressListeners.isEmpty()
+                    return self._upload.progressListeners is not None and len(self._upload.progressListeners) > 0
+
 
                 def onProgress(self, event):
-                    self.fireUpdateProgress(event.getBytesReceived(), event.getContentLength())
+                    self._upload.fireUpdateProgress(event.getBytesReceived(), event.getContentLength())
+
 
                 def isInterrupted(self):
                     return self.interrupted
 
+
                 def getOutputStream(self):
-                    receiveUpload = self.receiver.receiveUpload(self._lastStartedEvent.getFileName(), self._lastStartedEvent.getMimeType())
+                    receiveUpload = self._upload.receiver.receiveUpload(self._lastStartedEvent.getFileName(),
+                                                                        self._lastStartedEvent.getMimeType())
                     self._lastStartedEvent = None
                     return receiveUpload
 
+
                 def streamingStarted(self, event):
                     self.startUpload()
-                    self.contentLength = event.getContentLength()
-                    self.fireStarted(event.getFileName(), event.getMimeType())
+                    self._upload.contentLength = event.getContentLength()
+                    self._upload.fireStarted(event.getFileName(), event.getMimeType())
                     self._lastStartedEvent = event
 
+
                 def streamingFinished(self, event):
-                    self.fireUploadSuccess(event.getFileName(), event.getMimeType(), event.getContentLength())
-                    self.endUpload()
-                    self.requestRepaint()
+                    self._upload.fireUploadSuccess(event.getFileName(),
+                                                   event.getMimeType(),
+                                                   event.getContentLength())
+                    self._upload.endUpload()
+                    self._upload.requestRepaint()
+
 
                 def streamingFailed(self, event):
                     exception = event.getException()
                     if isinstance(exception, NoInputStreamException):
-                        self.fireNoInputStream(event.getFileName(), event.getMimeType(), 0)
-                    elif isinstance(exception, NoOutputStreamException):
-                        self.fireNoOutputStream(event.getFileName(), event.getMimeType(), 0)
-                    else:
-                        self.fireUploadInterrupted(event.getFileName(), event.getMimeType(), 0, exception)
-                    self.endUpload()
+                        self._upload.fireNoInputStream(event.getFileName(),
+                                                       event.getMimeType(), 0)
 
-            _0_ = self._0_()
-            self._streamVariable = _0_
+                    elif isinstance(exception, NoOutputStreamException):
+                        self._upload.fireNoOutputStream(event.getFileName(),
+                                                        event.getMimeType(), 0)
+                    else:
+                        self._upload.fireUploadInterrupted(event.getFileName(),
+                                                           event.getMimeType(),
+                                                           0, exception)
+                    self._upload.endUpload()
+
+            self._streamVariable = InnerStreamVariable(self)
+
         return self._streamVariable
 
+
     def getListeners(self, eventType):
-        if StreamingProgressEvent.isAssignableFrom(eventType):
+        if issubclass(eventType, StreamingProgressEvent):
             if self._progressListeners is None:
-                return Collections.EMPTY_LIST
+                return list()
             else:
-                return Collections.unmodifiableCollection(self._progressListeners)
+                return list(self._progressListeners)
+
         return super(Upload, self).getListeners(eventType)
+
+
+class Receiver(object):
+    """Interface that must be implemented by the upload receivers to provide the
+    Upload component an output stream to write the uploaded data.
+
+    @author IT Mill Ltd.
+    @version
+    @VERSION@
+    @since 3.0
+    """
+    # Upload events
+
+    def receiveUpload(self, filename, mimeType):
+        """Invoked when a new upload arrives.
+
+        @param filename
+                   the desired filename of the upload, usually as specified
+                   by the client.
+        @param mimeType
+                   the MIME type of the uploaded file.
+        @return Stream to which the uploaded file should be written.
+        """
+        pass
+
+
+class FinishedEvent(ComponentEvent):
+    """Upload.FinishedEvent is sent when the upload receives a file, regardless
+    of whether the reception was successful or failed. If you wish to
+    distinguish between the two cases, use either SucceededEvent or
+    FailedEvent, which are both subclasses of the FinishedEvent.
+
+    @author IT Mill Ltd.
+    @version
+    @VERSION@
+    @since 3.0
+    """
+
+    def __init__(self, source, filename, MIMEType, length):
+        """@param source
+                   the source of the file.
+        @param filename
+                   the received file name.
+        @param MIMEType
+                   the MIME type of the received file.
+        @param length
+                   the length of the received file.
+        """
+        super(FinishedEvent, self)(source)
+
+        # MIME type of the received file.
+        self._type = MIMEType
+
+        # Received file name.
+        self._filename = filename
+
+        # Length of the received file.
+        self._length = length
+
+
+    def getUpload(self):
+        """Uploads where the event occurred.
+
+        @return the Source of the event.
+        """
+        return self.getSource()
+
+
+    def getFilename(self):
+        """Gets the file name.
+
+        @return the filename.
+        """
+        return self._filename
+
+
+    def getMIMEType(self):
+        """Gets the MIME Type of the file.
+
+        @return the MIME type.
+        """
+        return self._type
+
+
+    def getLength(self):
+        """Gets the length of the file.
+
+        @return the length.
+        """
+        return self._length
+
+
+class FailedEvent(FinishedEvent):
+    """Upload.FailedEvent event is sent when the upload is received, but the
+    reception is interrupted for some reason.
+
+    @author IT Mill Ltd.
+    @version
+    @VERSION@
+    @since 3.0
+    """
+
+    def __init__(self, source, filename, MIMEType, length, reason=None):
+        """@param source
+        @param filename
+        @param MIMEType
+        @param length
+        @param exception
+        ---
+        @param source
+        @param filename
+        @param MIMEType
+        @param length
+        @param exception
+        """
+        super(FailedEvent, self)(source, filename, MIMEType, length)
+
+        self._reason = reason
+
+
+    def getReason(self):
+        """Gets the exception that caused the failure.
+
+        @return the exception that caused the failure, null if n/a
+        """
+        return self._reason
+
+
+class NoOutputStreamEvent(FailedEvent):
+    """FailedEvent that indicates that an output stream could not be obtained."""
+
+    def __init__(self, source, filename, MIMEType, length):
+        """@param source
+        @param filename
+        @param MIMEType
+        @param length
+        """
+        super(NoOutputStreamEvent, self)(source, filename, MIMEType, length)
+
+
+class NoInputStreamEvent(FailedEvent):
+    """FailedEvent that indicates that an input stream could not be obtained."""
+
+    def __init__(self, source, filename, MIMEType, length):
+        """@param source
+        @param filename
+        @param MIMEType
+        @param length
+        """
+        super(NoInputStreamEvent, self)(source, filename, MIMEType, length)
+
+
+class SucceededEvent(FinishedEvent):
+    """Upload.SucceededEvent event is sent when the upload is received
+    successfully.
+
+    @author IT Mill Ltd.
+    @version
+    @VERSION@
+    @since 3.0
+    """
+
+    def __init__(self, source, filename, MIMEType, length):
+        """@param source
+        @param filename
+        @param MIMEType
+        @param length
+        """
+        super(SucceededEvent, self)(source, filename, MIMEType, length)
+
+
+class StartedEvent(ComponentEvent):
+    """Upload.StartedEvent event is sent when the upload is started to received.
+
+    @author IT Mill Ltd.
+    @version
+    @VERSION@
+    @since 5.0
+    """
+
+    def __init__(self, source, filename, MIMEType, contentLength):
+        """@param source
+        @param filename
+        @param MIMEType
+        @param length
+        """
+        super(StartedEvent, self)(source)
+
+        self._filename = filename
+
+        self._type = MIMEType
+
+        # Length of the received file.
+        self._length = contentLength
+
+
+    def getUpload(self):
+        """Uploads where the event occurred.
+
+        @return the Source of the event.
+        """
+        return self.getSource()
+
+
+    def getFilename(self):
+        """Gets the file name.
+
+        @return the filename.
+        """
+        return self._filename
+
+
+    def getMIMEType(self):
+        """Gets the MIME Type of the file.
+
+        @return the MIME type.
+        """
+        return self._type
+
+
+    def getContentLength(self):
+        """@return the length of the file that is being uploaded"""
+        return self._length

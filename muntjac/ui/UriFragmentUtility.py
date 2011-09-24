@@ -14,11 +14,17 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.ui.AbstractComponent import (AbstractComponent,)
-# from java.io.Serializable import (Serializable,)
-# from java.lang.reflect.Method import (Method,)
-# from java.util.Map import (Map,)
+from muntjac.ui.AbstractComponent import AbstractComponent
+from muntjac.ui.Component import Event as ComponentEvent
+from muntjac.terminal.gwt.client.ui.VUriFragmentUtility import VUriFragmentUtility
+from muntjac.ui.ClientWidget import LoadStyle
+
+
+class FragmentChangedListener(object):
+    """Listener that listens changes in URI fragment."""
+
+    def fragmentChanged(self, source):
+        pass
 
 
 class UriFragmentUtility(AbstractComponent):
@@ -29,57 +35,37 @@ class UriFragmentUtility(AbstractComponent):
     bookmarking a program state and back button.
     """
 
-    class FragmentChangedListener(Serializable):
-        """Listener that listens changes in URI fragment."""
+    CLIENT_WIDGET = VUriFragmentUtility
+    LOAD_STYLE = LoadStyle.EAGER
 
-        def fragmentChanged(self, source):
-            pass
+    _FRAGMENT_CHANGED_METHOD = getattr(FragmentChangedListener, 'fragmentChanged')
 
-    class FragmentChangedEvent(Component.Event):
-        """Event fired when uri fragment changes."""
-
-        def __init__(self, source):
-            """Creates a new instance of UriFragmentReader change event.
-
-            @param source
-                       the Source of the event.
-            """
-            super(FragmentChangedEvent, self)(source)
-
-        def getUriFragmentUtility(self):
-            """Gets the UriFragmentReader where the event occurred.
-
-            @return the Source of the event.
-            """
-            return self.getSource()
-
-    _FRAGMENT_CHANGED_METHOD = None
-    # This should never happen
-    try:
-        _FRAGMENT_CHANGED_METHOD = FragmentChangedListener.getDeclaredMethod('fragmentChanged', [FragmentChangedEvent])
-    except java.lang.NoSuchMethodException, e:
-        raise java.lang.RuntimeException('Internal error finding methods in FragmentChangedListener')
 
     def addListener(self, listener):
-        self.addListener(self.FragmentChangedEvent, listener, self._FRAGMENT_CHANGED_METHOD)
+        self.addListener(FragmentChangedEvent, listener, self._FRAGMENT_CHANGED_METHOD)
+
 
     def removeListener(self, listener):
-        self.removeListener(self.FragmentChangedEvent, listener, self._FRAGMENT_CHANGED_METHOD)
+        self.removeListener(FragmentChangedEvent, listener, self._FRAGMENT_CHANGED_METHOD)
 
-    _fragment = None
 
     def __init__(self):
+        self._fragment = None
+
         # immediate by default
         self.setImmediate(True)
+
 
     def paintContent(self, target):
         super(UriFragmentUtility, self).paintContent(target)
         target.addVariable(self, 'fragment', self._fragment)
 
+
     def changeVariables(self, source, variables):
         super(UriFragmentUtility, self).changeVariables(source, variables)
-        self._fragment = variables['fragment']
-        self.fireEvent(self.FragmentChangedEvent(self))
+        self._fragment = variables.get('fragment')
+        self.fireEvent( FragmentChangedEvent(self) )
+
 
     def getFragment(self):
         """Gets currently set URI fragment.
@@ -94,7 +80,8 @@ class UriFragmentUtility(AbstractComponent):
         """
         return self._fragment
 
-    def setFragment(self, *args):
+
+    def setFragment(self, newFragment, fireEvent=True):
         """Sets URI fragment. Optionally fires a {@link FragmentChangedEvent}
 
         @param newFragment
@@ -111,19 +98,31 @@ class UriFragmentUtility(AbstractComponent):
         @see FragmentChangedEvent
         @see FragmentChangedListener
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            newFragment, = _0
-            self.setFragment(newFragment, True)
-        elif _1 == 2:
-            newFragment, fireEvent = _0
-            if (
-                (newFragment is None and self._fragment is not None) or (newFragment is not None and not (newFragment == self._fragment))
-            ):
+        if (newFragment is None and self._fragment is not None) \
+                or (newFragment is not None \
+                    and not (newFragment == self._fragment)):
                 self._fragment = newFragment
                 if fireEvent:
-                    fireEvent(self.FragmentChangedEvent(self))
+                    fireEvent( FragmentChangedEvent(self) )
+
                 self.requestRepaint()
-        else:
-            raise ARGERROR(1, 2)
+
+
+class FragmentChangedEvent(ComponentEvent):
+    """Event fired when uri fragment changes."""
+
+    def __init__(self, source):
+        """Creates a new instance of UriFragmentReader change event.
+
+        @param source
+                   the Source of the event.
+        """
+        super(FragmentChangedEvent, self)(source)
+
+
+    def getUriFragmentUtility(self):
+        """Gets the UriFragmentReader where the event occurred.
+
+        @return the Source of the event.
+        """
+        return self.getSource()
