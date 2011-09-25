@@ -14,15 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.data.Item import (Item,)
-from com.vaadin.data.util.ObjectProperty import (ObjectProperty,)
-from com.vaadin.data.Container import (Container, Indexed, Ordered,)
-# from java.sql.Connection import (Connection,)
-# from java.sql.ResultSet import (ResultSet,)
-# from java.sql.ResultSetMetaData import (ResultSetMetaData,)
-# from java.sql.SQLException import (SQLException,)
-# from java.sql.Statement import (Statement,)
+from muntjac.data.Item import Item
+from muntjac.data.util.ObjectProperty import ObjectProperty
+from muntjac.data.Container import Container, Indexed, Ordered
 
 
 class QueryContainer(Container, Container, Ordered, Container, Indexed):
@@ -54,19 +48,12 @@ class QueryContainer(Container, Container, Ordered, Container, Indexed):
 
     @deprecated will be removed in the future, use the SQLContainer add-on
     """
+
     # default ResultSet type
-    DEFAULT_RESULTSET_TYPE = ResultSet.TYPE_SCROLL_INSENSITIVE
+#    DEFAULT_RESULTSET_TYPE = ResultSet.TYPE_SCROLL_INSENSITIVE
+
     # default ResultSet concurrency
-    DEFAULT_RESULTSET_CONCURRENCY = ResultSet.CONCUR_READ_ONLY
-    _resultSetType = DEFAULT_RESULTSET_TYPE
-    _resultSetConcurrency = DEFAULT_RESULTSET_CONCURRENCY
-    _queryStatement = None
-    _connection = None
-    _result = None
-    _propertyIds = None
-    _propertyTypes = dict()
-    _size = -1
-    _statement = None
+#    DEFAULT_RESULTSET_CONCURRENCY = ResultSet.CONCUR_READ_ONLY
 
     def __init__(self, *args):
         """Constructs new <code>QueryContainer</code> with the specified
@@ -94,6 +81,16 @@ class QueryContainer(Container, Container, Ordered, Container, Indexed):
         @throws SQLException
                     when database operation fails
         """
+        self._resultSetType = self.DEFAULT_RESULTSET_TYPE
+        self._resultSetConcurrency = self.DEFAULT_RESULTSET_CONCURRENCY
+        self._queryStatement = None
+        self._connection = None
+        self._result = None
+        self._propertyIds = None
+        self._propertyTypes = dict()
+        self._size = -1
+        self._statement = None
+
         _0 = args
         _1 = len(args)
         if _1 == 2:
@@ -107,7 +104,7 @@ class QueryContainer(Container, Container, Ordered, Container, Indexed):
             self._resultSetConcurrency = resultSetConcurrency
             self.init()
         else:
-            raise ARGERROR(2, 4)
+            raise ValueError
 
     def init(self):
         """Fills the Container with the items and properties. Invoked by the
@@ -120,7 +117,7 @@ class QueryContainer(Container, Container, Ordered, Container, Indexed):
         self.refresh()
         metadata = self._result.getMetaData()
         count = metadata.getColumnCount()
-        list = list(count)
+        l = list(count)
         _0 = True
         i = 1
         while True:
@@ -131,10 +128,11 @@ class QueryContainer(Container, Container, Ordered, Container, Indexed):
             if not (i <= count):
                 break
             columnName = metadata.getColumnName(i)
-            list.add(columnName)
+            l.add(columnName)
             p = self.getContainerProperty(int(1), columnName)
             self._propertyTypes.put(columnName, self.Object if p is None else p.getType())
-        self._propertyIds = Collections.unmodifiableCollection(list)
+        self._propertyIds = list(l)
+
 
     def refresh(self):
         """<p>
@@ -153,6 +151,7 @@ class QueryContainer(Container, Container, Ordered, Container, Indexed):
         self._result.last()
         self._size = self._result.getRow()
 
+
     def close(self):
         """Releases and nullifies the <code>statement</code>.
 
@@ -163,14 +162,16 @@ class QueryContainer(Container, Container, Ordered, Container, Indexed):
             self._statement.close()
         self._statement = None
 
-    def getItem(self, id):
+
+    def getItem(self, idd):
         """Gets the Item with the given Item ID from the Container.
 
         @param id
                    ID of the Item to retrieve
         @return Item Id.
         """
-        return self.Row(id)
+        return self.Row(idd)
+
 
     def getContainerPropertyIds(self):
         """Gets the collection of propertyId from the Container.
@@ -178,6 +179,7 @@ class QueryContainer(Container, Container, Ordered, Container, Indexed):
         @return Collection of Property ID.
         """
         return self._propertyIds
+
 
     def getItemIds(self):
         """Gets an collection of all the item IDs in the container.
@@ -216,11 +218,11 @@ class QueryContainer(Container, Container, Ordered, Container, Indexed):
         try:
             self._result.absolute(itemId.intValue())
             value = self._result.getObject(propertyId)
-        except Exception, e:
+        except Exception:
             return None
         return ObjectProperty(value if value is not None else str(''))
 
-    def getType(self, id):
+    def getType(self, idd):
         """Gets the data type of all properties identified by the given type ID.
 
         @param id
@@ -228,7 +230,8 @@ class QueryContainer(Container, Container, Ordered, Container, Indexed):
 
         @return data type of the Properties
         """
-        return self._propertyTypes[id]
+        return self._propertyTypes[idd]
+
 
     def size(self):
         """Gets the number of items in the container.
@@ -237,7 +240,7 @@ class QueryContainer(Container, Container, Ordered, Container, Indexed):
         """
         return self._size
 
-    def containsId(self, id):
+    def containsId(self, idd):
         """Tests if the list contains the specified Item.
 
         @param id
@@ -274,12 +277,12 @@ class QueryContainer(Container, Container, Ordered, Container, Indexed):
         _0 = args
         _1 = len(args)
         if _1 == 0:
-            raise self.UnsupportedOperationException()
+            raise NotImplementedError
         elif _1 == 1:
-            itemId, = _0
-            raise self.UnsupportedOperationException()
+            raise NotImplementedError
         else:
-            raise ARGERROR(0, 1)
+            raise ValueError
+
 
     def removeItem(self, itemId):
         """Removes the Item identified by ItemId from the Container.
@@ -291,9 +294,9 @@ class QueryContainer(Container, Container, Ordered, Container, Indexed):
         @throws UnsupportedOperationException
                     if the removeItem method is not supported.
         """
-        raise self.UnsupportedOperationException()
+        raise NotImplementedError
 
-    def addContainerProperty(self, propertyId, type, defaultValue):
+    def addContainerProperty(self, propertyId, typ, defaultValue):
         """Adds new Property to all Items in the Container.
 
         @param propertyId
@@ -307,7 +310,8 @@ class QueryContainer(Container, Container, Ordered, Container, Indexed):
         @throws UnsupportedOperationException
                     if the addContainerProperty method is not supported.
         """
-        raise self.UnsupportedOperationException()
+        raise NotImplementedError
+
 
     def removeContainerProperty(self, propertyId):
         """Removes a Property specified by the given Property ID from the Container.
@@ -319,7 +323,8 @@ class QueryContainer(Container, Container, Ordered, Container, Indexed):
         @throws UnsupportedOperationException
                     if the removeContainerProperty method is not supported.
         """
-        raise self.UnsupportedOperationException()
+        raise NotImplementedError
+
 
     def removeAllItems(self):
         """Removes all Items from the Container.
@@ -329,7 +334,8 @@ class QueryContainer(Container, Container, Ordered, Container, Indexed):
         @throws UnsupportedOperationException
                     if the removeAllItems method is not supported.
         """
-        raise self.UnsupportedOperationException()
+        raise NotImplementedError
+
 
     def addItemAfter(self, *args):
         """Adds new item after the given item.
@@ -354,13 +360,12 @@ class QueryContainer(Container, Container, Ordered, Container, Indexed):
         _0 = args
         _1 = len(args)
         if _1 == 1:
-            previousItemId, = _0
-            raise self.UnsupportedOperationException()
+            raise NotImplementedError
         elif _1 == 2:
-            previousItemId, newItemId = _0
-            raise self.UnsupportedOperationException()
+            raise NotImplementedError
         else:
-            raise ARGERROR(1, 2)
+            raise ValueError
+
 
     def firstItemId(self):
         """Returns id of first item in the Container.
@@ -371,7 +376,8 @@ class QueryContainer(Container, Container, Ordered, Container, Indexed):
             return None
         return int(1)
 
-    def isFirstId(self, id):
+
+    def isFirstId(self, idd):
         """Returns <code>true</code> if given id is first id at first index.
 
         @param id
@@ -379,13 +385,14 @@ class QueryContainer(Container, Container, Ordered, Container, Indexed):
         """
         return self._size > 0 and isinstance(id, int) and id.intValue() == 1
 
-    def isLastId(self, id):
+    def isLastId(self, idd):
         """Returns <code>true</code> if given id is last id at last index.
 
         @param id
                    ID of an Item in the Container
         """
         return self._size > 0 and isinstance(id, int) and id.intValue() == self._size
+
 
     def lastItemId(self):
         """Returns id of last item in the Container.
@@ -396,7 +403,8 @@ class QueryContainer(Container, Container, Ordered, Container, Indexed):
             return None
         return int(self._size)
 
-    def nextItemId(self, id):
+
+    def nextItemId(self, idd):
         """Returns id of next item in container at next index.
 
         @param id
@@ -410,7 +418,8 @@ class QueryContainer(Container, Container, Ordered, Container, Indexed):
             return None
         return int(i + 1)
 
-    def prevItemId(self, id):
+
+    def prevItemId(self, idd):
         """Returns id of previous item in container at previous index.
 
         @param id
@@ -424,61 +433,6 @@ class QueryContainer(Container, Container, Ordered, Container, Indexed):
             return None
         return int(i - 1)
 
-    class Row(Item):
-        """The <code>Row</code> class implements methods of Item.
-
-        @author IT Mill Ltd.
-        @version
-        @since 4.0
-        """
-        _id = None
-
-        def __init__(self, rowId):
-            self._id = rowId
-
-        def addItemProperty(self, id, property):
-            """Adds the item property.
-
-            @param id
-                       ID of the new Property.
-            @param property
-                       Property to be added and associated with ID.
-            @return <code>true</code> if the operation succeeded;
-                    <code>false</code> otherwise.
-            @throws UnsupportedOperationException
-                        if the addItemProperty method is not supported.
-            """
-            raise self.UnsupportedOperationException()
-
-        def getItemProperty(self, propertyId):
-            """Gets the property corresponding to the given property ID stored in
-            the Item.
-
-            @param propertyId
-                       identifier of the Property to get
-            @return the Property with the given ID or <code>null</code>
-            """
-            return self.getContainerProperty(self._id, propertyId)
-
-        def getItemPropertyIds(self):
-            """Gets the collection of property IDs stored in the Item.
-
-            @return unmodifiable collection containing IDs of the Properties
-                    stored the Item.
-            """
-            return self.propertyIds
-
-        def removeItemProperty(self, id):
-            """Removes given item property.
-
-            @param id
-                       ID of the Property to be removed.
-            @return <code>true</code> if the item property is removed;
-                    <code>false</code> otherwise.
-            @throws UnsupportedOperationException
-                        if the removeItemProperty is not supported.
-            """
-            raise self.UnsupportedOperationException()
 
     def finalize(self):
         """Closes the statement.
@@ -487,8 +441,8 @@ class QueryContainer(Container, Container, Ordered, Container, Indexed):
         """
         try:
             self.close()
-        except SQLException, ignored:
-            pass # astStmt: [Stmt([]), None]
+        except Exception:  # SQLException
+            pass
 
     def addItemAt(self, *args):
         """Adds the given item at the position of given index.
@@ -514,13 +468,12 @@ class QueryContainer(Container, Container, Ordered, Container, Indexed):
         _0 = args
         _1 = len(args)
         if _1 == 1:
-            index, = _0
-            raise self.UnsupportedOperationException()
+            raise NotImplementedError
         elif _1 == 2:
-            index, newItemId = _0
-            raise self.UnsupportedOperationException()
+            raise NotImplementedError
         else:
-            raise ARGERROR(1, 2)
+            raise ValueError
+
 
     def getIdByIndex(self, index):
         """Gets the Index id in the container.
@@ -533,7 +486,7 @@ class QueryContainer(Container, Container, Ordered, Container, Indexed):
             return None
         return int(index + 1)
 
-    def indexOfId(self, id):
+    def indexOfId(self, idd):
         """Gets the index of the Item corresponding to id in the container.
 
         @param id
@@ -547,3 +500,60 @@ class QueryContainer(Container, Container, Ordered, Container, Indexed):
         if (i >= self._size) or (i < 1):
             return -1
         return i - 1
+
+
+class Row(Item):
+    """The <code>Row</code> class implements methods of Item.
+
+    @author IT Mill Ltd.
+    @version
+    @since 4.0
+    """
+    _id = None
+
+    def __init__(self, rowId):
+        self._id = rowId
+
+    def addItemProperty(self, idd, prop):
+        """Adds the item property.
+
+        @param id
+                   ID of the new Property.
+        @param property
+                   Property to be added and associated with ID.
+        @return <code>true</code> if the operation succeeded;
+                <code>false</code> otherwise.
+        @throws UnsupportedOperationException
+                    if the addItemProperty method is not supported.
+        """
+        raise NotImplementedError
+
+    def getItemProperty(self, propertyId):
+        """Gets the property corresponding to the given property ID stored in
+        the Item.
+
+        @param propertyId
+                   identifier of the Property to get
+        @return the Property with the given ID or <code>null</code>
+        """
+        return self.getContainerProperty(self._id, propertyId)
+
+    def getItemPropertyIds(self):
+        """Gets the collection of property IDs stored in the Item.
+
+        @return unmodifiable collection containing IDs of the Properties
+                stored the Item.
+        """
+        return self.propertyIds
+
+    def removeItemProperty(self, idd):
+        """Removes given item property.
+
+        @param id
+                   ID of the Property to be removed.
+        @return <code>true</code> if the item property is removed;
+                <code>false</code> otherwise.
+        @throws UnsupportedOperationException
+                    if the removeItemProperty is not supported.
+        """
+        raise NotImplementedError

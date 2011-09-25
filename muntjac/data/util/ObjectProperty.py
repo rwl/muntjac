@@ -14,10 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.data.util.AbstractProperty import (AbstractProperty,)
-from com.vaadin.data.Property import (Property,)
-# from java.lang.reflect.Constructor import (Constructor,)
+from muntjac.data.util.AbstractProperty import AbstractProperty
+from muntjac.data.Property import ReadOnlyException, ConversionException
 
 
 class ObjectProperty(AbstractProperty):
@@ -30,10 +28,6 @@ class ObjectProperty(AbstractProperty):
     @VERSION@
     @since 3.0
     """
-    # The value contained by the Property.
-    _value = None
-    # Data type of the Property's value.
-    _type = None
 
     def __init__(self, *args):
         """Creates a new instance of ObjectProperty with the given value. The type
@@ -69,6 +63,12 @@ class ObjectProperty(AbstractProperty):
         @param readOnly
                    Sets the read-only mode.
         """
+        # The value contained by the Property.
+        self._value = None
+
+        # Data type of the Property's value.
+        self._type = None
+
         # the cast is safe, because an object of type T has class Class<T>
         _0 = args
         _1 = len(args)
@@ -76,17 +76,16 @@ class ObjectProperty(AbstractProperty):
             value, = _0
             self.__init__(value, value.getClass())
         elif _1 == 2:
-            value, type = _0
-            self._type = type
+            value, typ = _0
+            self._type = typ
             self.setValue(value)
         elif _1 == 3:
-            value, type, readOnly = _0
-            self.__init__(value, type)
+            value, typ, readOnly = _0
+            self.__init__(value, typ)
             self.setReadOnly(readOnly)
         else:
-            raise ARGERROR(1, 3)
+            raise ValueError
 
-    # Set the values
 
     def getType(self):
         """Returns the type of the ObjectProperty. The methods <code>getValue</code>
@@ -99,12 +98,14 @@ class ObjectProperty(AbstractProperty):
         """
         return self._type
 
+
     def getValue(self):
         """Gets the value stored in the Property.
 
         @return the value stored in the Property
         """
         return self._value
+
 
     def setValue(self, newValue):
         """Sets the value of the property. This method supports setting from
@@ -121,7 +122,7 @@ class ObjectProperty(AbstractProperty):
         """
         # Checks the mode
         if self.isReadOnly():
-            raise Property.ReadOnlyException()
+            raise ReadOnlyException()
         # Tries to assign the compatible value directly
         if (newValue is None) or self._type.isAssignableFrom(newValue.getClass()):
             value = newValue
@@ -132,6 +133,6 @@ class ObjectProperty(AbstractProperty):
                 constr = self.getType().getConstructor([str])
                 # Creates new object from the string
                 value = constr([str(newValue)])
-            except java.lang.Exception, e:
-                raise Property.ConversionException(e)
+            except Exception, e:
+                raise ConversionException(e)
         self.fireValueChange()

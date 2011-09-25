@@ -14,14 +14,11 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.data.util.AbstractProperty import (AbstractProperty,)
-from com.vaadin.data.Property import (Property,)
-from com.vaadin.util.SerializerHelper import (SerializerHelper,)
-# from java.io.IOException import (IOException,)
-# from java.lang.reflect.Constructor import (Constructor,)
-# from java.lang.reflect.InvocationTargetException import (InvocationTargetException,)
-# from java.lang.reflect.Method import (Method,)
+import logging
+
+from muntjac.data.util.AbstractProperty import AbstractProperty
+from muntjac.data.Property import ReadOnlyException, ConversionException
+from muntjac.util.SerializerHelper import SerializerHelper
 
 
 class MethodProperty(AbstractProperty):
@@ -56,25 +53,10 @@ class MethodProperty(AbstractProperty):
     @VERSION@
     @since 3.0
     """
-    # Special serialization to handle method references
-    _logger = Logger.getLogger(MethodProperty.getName())
-    # The object that includes the property the MethodProperty is bound to.
-    _instance = None
-    # Argument arrays for the getter and setter methods.
-    _setArgs = None
-    _getArgs = None
-    # The getter and setter methods.
-    _setMethod = None
-    _getMethod = None
-    # Index of the new value in the argument list for the setter method. If the
-    # setter method requires several parameters, this index tells which one is
-    # the actual value to change.
 
-    _setArgumentIndex = None
-    # Type of the property.
-    _type = None
-    # Special serialization to handle method references
+    _logger = logging.getLogger(MethodProperty.getName())
 
+    # Special serialization to handle method references
     def writeObject(self, out):
         out.defaultWriteObject()
         SerializerHelper.writeClass(out, self._type)
@@ -94,6 +76,8 @@ class MethodProperty(AbstractProperty):
             out.writeObject(None)
             out.writeObject(None)
 
+
+    # Special serialization to handle method references
     def readObject(self, in_):
         in_.defaultReadObject()
         try:
@@ -114,10 +98,9 @@ class MethodProperty(AbstractProperty):
                 self._getMethod = self._instance.getClass().getMethod(name, paramTypes)
             else:
                 self._getMethod = None
-        except SecurityException, e:
-            self._logger.log(Level.SEVERE, 'Internal deserialization error', e)
-        except NoSuchMethodException, e:
-            self._logger.log(Level.SEVERE, 'Internal deserialization error', e)
+        except Exception:  # SecurityException, NoSuchMethodException
+            self._logger.critical('Internal deserialization error')
+
 
     def __init__(self, *args):
         """<p>
@@ -256,6 +239,25 @@ class MethodProperty(AbstractProperty):
                    replaced with <code>newValue</code> when
                    {@link #setValue(Object newValue)} is called.
         """
+        # The object that includes the property the MethodProperty is bound to.
+        self._instance = None
+
+        # Argument arrays for the getter and setter methods.
+        self._setArgs = None
+        self._getArgs = None
+
+        # The getter and setter methods.
+        self._setMethod = None
+        self._getMethod = None
+
+        # Index of the new value in the argument list for the setter method. If the
+        # setter method requires several parameters, this index tells which one is
+        # the actual value to change.
+        self._setArgumentIndex = None
+
+        # Type of the property.
+        self._type = None
+
         _0 = args
         _1 = len(args)
         if _1 == 2:
@@ -272,7 +274,7 @@ class MethodProperty(AbstractProperty):
             # In case the get method is found, resolve the type
             try:
                 self._getMethod = self.initGetterMethod(beanPropertyName, beanClass)
-            except java.lang.NoSuchMethodException, ignored:
+            except Exception:  # NoSuchMethodException
                 raise self.MethodException(self, 'Bean property ' + beanPropertyName + ' can not be found')
             returnType = self._getMethod.getReturnType()
             # Finds the set method
@@ -280,8 +282,8 @@ class MethodProperty(AbstractProperty):
             # Gets the return type from get method
             try:
                 self._setMethod = beanClass.getMethod('set' + beanPropertyName, [returnType])
-            except java.lang.NoSuchMethodException, skipped:
-                pass # astStmt: [Stmt([]), None]
+            except Exception:  # NoSuchMethodException
+                pass
             if returnType.isPrimitive():
                 self._type = self.convertPrimitiveType(returnType)
                 if self._type.isPrimitive():
@@ -291,31 +293,31 @@ class MethodProperty(AbstractProperty):
             self.setArguments([], [None], 0)
             self._instance = instance
         elif _1 == 4:
-            if isinstance(_0[2], Method):
-                type, instance, getMethod, setMethod = _0
-                self.__init__(type, instance, getMethod, setMethod, [], [None], 0)
+            if isinstance(_0[2], None):  # Method
+                typ, instance, getMethod, setMethod = _0
+                self.__init__(typ, instance, getMethod, setMethod, [], [None], 0)
             else:
-                type, instance, getMethodName, setMethodName = _0
-                self.__init__(type, instance, getMethodName, setMethodName, [], [None], 0)
+                typ, instance, getMethodName, setMethodName = _0
+                self.__init__(typ, instance, getMethodName, setMethodName, [], [None], 0)
         elif _1 == 7:
-            if isinstance(_0[2], Method):
-                type, instance, getMethod, setMethod, getArgs, setArgs, setArgumentIndex = _0
+            if isinstance(_0[2], None):  # Method
+                typ, instance, getMethod, setMethod, getArgs, setArgs, setArgumentIndex = _0
                 if getMethod is None:
-                    raise self.MethodException(self, 'Property GET-method cannot not be null: ' + type)
+                    raise self.MethodException(self, 'Property GET-method cannot not be null: ' + typ)
                 if setMethod is not None:
                     if setArgs is None:
                         raise self.IndexOutOfBoundsException('The setArgs can not be null')
                     if (setArgumentIndex < 0) or (setArgumentIndex >= len(setArgs)):
                         raise self.IndexOutOfBoundsException('The setArgumentIndex must be >= 0 and < setArgs.length')
                 # Gets the return type from get method
-                type = self.convertPrimitiveType(type)
+                typ = self.convertPrimitiveType(typ)
                 self._getMethod = getMethod
                 self._setMethod = setMethod
                 self.setArguments(getArgs, setArgs, setArgumentIndex)
                 self._instance = instance
-                self._type = type
+                self._type = typ
             else:
-                type, instance, getMethodName, setMethodName, getArgs, setArgs, setArgumentIndex = _0
+                typ, instance, getMethodName, setMethodName, getArgs, setArgs, setArgumentIndex = _0
                 if setMethodName is not None and setArgs is None:
                     raise self.IndexOutOfBoundsException('The setArgs can not be null')
                 if (
@@ -323,7 +325,7 @@ class MethodProperty(AbstractProperty):
                 ):
                     raise self.IndexOutOfBoundsException('The setArgumentIndex must be >= 0 and < setArgs.length')
                 # Set type
-                self._type = type
+                self._type = typ
                 # Find set and get -methods
                 m = instance.getClass().getMethods()
                 # Finds get method
@@ -342,7 +344,7 @@ class MethodProperty(AbstractProperty):
                         # name does not match, try next method
                         continue
                     # Tests return type
-                    if not (type == m[i].getReturnType()):
+                    if not (typ == m[i].getReturnType()):
                         continue
                     # Tests the parameter types
                     c = m[i].getParameterTypes()
@@ -409,9 +411,7 @@ class MethodProperty(AbstractProperty):
                 self.setArguments(getArgs, setArgs, setArgumentIndex)
                 self._instance = instance
         else:
-            raise ARGERROR(2, 7)
-
-    # Check the setargs and setargs index
+            raise ValueError
 
     @classmethod
     def initGetterMethod(cls, propertyName, beanClass):
@@ -429,34 +429,35 @@ class MethodProperty(AbstractProperty):
         getMethod = None
         try:
             getMethod = beanClass.getMethod('get' + propertyName, [])
-        except java.lang.NoSuchMethodException, ignored:
+        except Exception:  # NoSuchMethodException
             try:
                 getMethod = beanClass.getMethod('is' + propertyName, [])
-            except java.lang.NoSuchMethodException, ignoredAsWell:
+            except Exception:  # NoSuchMethodException
                 getMethod = beanClass.getMethod('are' + propertyName, [])
         return getMethod
 
     @classmethod
-    def convertPrimitiveType(cls, type):
-        # Gets the return type from get method
-        if type.isPrimitive():
-            if type == Boolean.TYPE.TYPE:
-                type = bool
-            elif type == Integer.TYPE.TYPE:
-                type = int
-            elif type == Float.TYPE.TYPE:
-                type = float
-            elif type == Double.TYPE.TYPE:
-                type = float
-            elif type == Byte.TYPE.TYPE:
-                type = int
-            elif type == cls.Character.TYPE:
-                type = cls.Character
-            elif type == Short.TYPE.TYPE:
-                type = int
-            elif type == Long.TYPE.TYPE:
-                type = long
-        return type
+    def convertPrimitiveType(cls, typ):
+        # Gets the return typ from get method
+        if typ.isPrimitive():
+            if typ == bool:
+                typ = bool
+            elif typ == int:
+                typ = int
+            elif typ == float:
+                typ = float
+            elif typ == float:
+                typ = float
+            elif typ == str:  # Byte
+                typ = int
+            elif typ == str:  # Character
+                typ = str
+            elif typ == int:  # Short
+                typ = int
+            elif typ == long: # Long
+                typ = long
+        return typ
+
 
     def getType(self):
         """Returns the type of the Property. The methods <code>getValue</code> and
@@ -469,6 +470,7 @@ class MethodProperty(AbstractProperty):
         """
         return self._type
 
+
     def isReadOnly(self):
         """Tests if the object is in read-only mode. In read-only mode calls to
         <code>setValue</code> will throw <code>ReadOnlyException</code> and will
@@ -479,6 +481,7 @@ class MethodProperty(AbstractProperty):
         """
         return super(MethodProperty, self).isReadOnly() or (self._setMethod is None)
 
+
     def getValue(self):
         """Gets the value stored in the Property. The value is resolved by calling
         the specified getter method with the argument specified at instantiation.
@@ -487,8 +490,9 @@ class MethodProperty(AbstractProperty):
         """
         try:
             return self._getMethod.invoke(self._instance, self._getArgs)
-        except Throwable, e:
+        except Exception, e:
             raise self.MethodException(self, e)
+
 
     def setArguments(self, getArgs, setArgs, setArgumentIndex):
         """<p>
@@ -528,6 +532,7 @@ class MethodProperty(AbstractProperty):
             self._setArgs[i] = setArgs[i]
         self._setArgumentIndex = setArgumentIndex
 
+
     def setValue(self, newValue):
         """Sets the value of the property. This method supports setting from
         <code>String</code>s if either <code>String</code> is directly assignable
@@ -544,13 +549,14 @@ class MethodProperty(AbstractProperty):
         """
         # Checks the mode
         if self.isReadOnly():
-            raise Property.ReadOnlyException()
+            raise ReadOnlyException()
         value = self.convertValue(newValue, self._type)
         self.invokeSetMethod(value)
         self.fireValueChange()
 
+
     @classmethod
-    def convertValue(cls, value, type):
+    def convertValue(cls, value, typ):
         """Convert a value to the given type, using a constructor of the type that
         takes a single String parameter (toString() for the value) if necessary.
 
@@ -560,16 +566,17 @@ class MethodProperty(AbstractProperty):
                    type into which the value should be converted
         @return converted value
         """
-        if (None is value) or type.isAssignableFrom(value.getClass()):
+        if (None is value) or typ.isAssignableFrom(value.getClass()):
             return value
         # convert using a string constructor
         # Gets the string constructor
         try:
-            constr = type.getConstructor([str])
+            constr = typ.getConstructor([str])
             # Create a new object from the string
             return constr([str(value)])
-        except java.lang.Exception, e:
-            raise Property.ConversionException(e)
+        except Exception, e:
+            raise ConversionException(e)
+
 
     def invokeSetMethod(self, value):
         """Internal method to actually call the setter method of the wrapped
@@ -595,75 +602,12 @@ class MethodProperty(AbstractProperty):
                         break
                     args[i] = value if i == self._setArgumentIndex else self._setArgs[i]
                 self._setMethod.invoke(self._instance, args)
-        except InvocationTargetException, e:
+        except Exception, e:  # InvocationTargetException
             targetException = e.getTargetException()
             raise self.MethodException(self, targetException)
         except Exception, e:
             raise self.MethodException(self, e)
 
-    class MethodException(RuntimeError):
-        """<code>Exception</code> object that signals that there were problems
-        calling or finding the specified getter or setter methods of the
-        property.
-
-        @author IT Mill Ltd.
-        @version
-        @VERSION@
-        @since 3.0
-        """
-        # Exceptions cannot be parameterized, ever.
-        # The method property from which the exception originates from
-        _property = None
-        # Cause of the method exception
-        _cause = None
-
-        def __init__(self, *args):
-            """Constructs a new <code>MethodException</code> with the specified
-            detail message.
-
-            @param property
-                       the property.
-            @param msg
-                       the detail message.
-            ---
-            Constructs a new <code>MethodException</code> from another exception.
-
-            @param property
-                       the property.
-            @param cause
-                       the cause of the exception.
-            """
-            _0 = args
-            _1 = len(args)
-            if _1 == 2:
-                if isinstance(_0[1], Throwable):
-                    property, cause = _0
-                    self._property = property
-                    self._cause = cause
-                else:
-                    property, msg = _0
-                    super(MethodException, self)(msg)
-                    self._property = property
-            else:
-                raise ARGERROR(2, 2)
-
-        def getCause(self):
-            """@see java.lang.Throwable#getCause()"""
-            return self._cause
-
-        def getMethodProperty(self):
-            """Gets the method property this exception originates from.
-
-            @return MethodProperty or null if not a valid MethodProperty
-            """
-            return self._property if isinstance(self._property, MethodProperty) else None
-
-        def getProperty(self):
-            """Gets the method property this exception originates from.
-
-            @return Property from which the exception originates
-            """
-            return self._property
 
     def fireValueChange(self):
         """Sends a value change event to all registered listeners.
@@ -672,3 +616,71 @@ class MethodProperty(AbstractProperty):
         versions.
         """
         super(MethodProperty, self).fireValueChange()
+
+
+class MethodException(RuntimeError):
+    """<code>Exception</code> object that signals that there were problems
+    calling or finding the specified getter or setter methods of the
+    property.
+
+    @author IT Mill Ltd.
+    @version
+    @VERSION@
+    @since 3.0
+    """
+
+    def __init__(self, *args):
+        """Constructs a new <code>MethodException</code> with the specified
+        detail message.
+
+        @param property
+                   the property.
+        @param msg
+                   the detail message.
+        ---
+        Constructs a new <code>MethodException</code> from another exception.
+
+        @param property
+                   the property.
+        @param cause
+                   the cause of the exception.
+        """
+        # The method property from which the exception originates from
+        self._property = None
+        # Cause of the method exception
+        self._cause = None
+
+        _0 = args
+        _1 = len(args)
+        if _1 == 2:
+            if isinstance(_0[1], Exception):
+                prop, cause = _0
+                self._property = prop
+                self._cause = cause
+            else:
+                prop, msg = _0
+                super(MethodException, self)(msg)
+                self._property = prop
+        else:
+            raise ValueError
+
+
+    def getCause(self):
+        """@see java.lang.Throwable#getCause()"""
+        return self._cause
+
+
+    def getMethodProperty(self):
+        """Gets the method property this exception originates from.
+
+        @return MethodProperty or null if not a valid MethodProperty
+        """
+        return self._property if isinstance(self._property, MethodProperty) else None
+
+
+    def getProperty(self):
+        """Gets the method property this exception originates from.
+
+        @return Property from which the exception originates
+        """
+        return self._property

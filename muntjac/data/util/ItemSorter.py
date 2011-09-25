@@ -14,10 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# from java.io.Serializable import (Serializable,)
 
-
-class ItemSorter(Comparator, Cloneable, Serializable):
+class ItemSorter(object):  # FIXME Comparator, Cloneable, Serializable
     """An item comparator which is compatible with the {@link Sortable} interface.
     The <code>ItemSorter</code> interface can be used in <code>Sortable</code>
     implementations to provide a custom sorting method.
@@ -45,6 +43,7 @@ class ItemSorter(Comparator, Cloneable, Serializable):
                    information.
         """
         pass
+
 
     def compare(self, itemId1, itemId2):
         """Compares its two arguments for order. Returns a negative integer, zero,

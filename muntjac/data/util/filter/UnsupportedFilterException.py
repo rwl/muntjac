@@ -1,9 +1,21 @@
-# -*- coding: utf-8 -*-
-from __pyjamas__ import (ARGERROR,)
-# from java.io.Serializable import (Serializable,)
+# Copyright (C) 2011 Vaadin Ltd
+# Copyright (C) 2011 Richard Lincoln
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class UnsupportedFilterException(RuntimeError, Serializable):
+class UnsupportedFilterException(RuntimeError):
     """Exception for cases where a container does not support a specific type of
     filters.
 
@@ -19,7 +31,7 @@ class UnsupportedFilterException(RuntimeError, Serializable):
         _0 = args
         _1 = len(args)
         if _1 == 0:
-            pass # astStmt: [Stmt([]), None]
+            pass
         elif _1 == 1:
             if isinstance(_0[0], Exception):
                 cause, = _0
@@ -31,4 +43,4 @@ class UnsupportedFilterException(RuntimeError, Serializable):
             message, cause = _0
             super(UnsupportedFilterException, self)(message, cause)
         else:
-            raise ARGERROR(0, 2)
+            raise ValueError

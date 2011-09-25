@@ -14,10 +14,12 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from com.vaadin.data.Item import (Item, PropertySetChangeEvent, PropertySetChangeNotifier,)
+from muntjac.data.Item import \
+    Item, PropertySetChangeEvent, PropertySetChangeNotifier
+from muntjac.util.event import EventObject
 
 
-class PropertysetItem(Item, Item, PropertySetChangeNotifier, Cloneable):
+class PropertysetItem(Item, Item, PropertySetChangeNotifier):  # Cloneable
     """Class for handling a set of identified Properties. The elements contained in
     a </code>MapItem</code> can be referenced using locally unique identifiers.
     The class supports listeners who are interested in changes to the Property
@@ -28,16 +30,19 @@ class PropertysetItem(Item, Item, PropertySetChangeNotifier, Cloneable):
     @VERSION@
     @since 3.0
     """
-    # Private representation of the item
-    # Mapping from property id to property.
-    _map = dict()
-    # List of all property ids to maintain the order.
-    _list = LinkedList()
-    # List of property set modification listeners.
-    _propertySetChangeListeners = None
-    # Item methods
 
-    def getItemProperty(self, id):
+    def __init__(self):
+        # Mapping from property id to property.
+        self._map = dict()
+
+        # List of all property ids to maintain the order.
+        self._list = list()
+
+        # List of property set modification listeners.
+        self._propertySetChangeListeners = None
+
+
+    def getItemProperty(self, idd):
         """Gets the Property corresponding to the given Property ID stored in the
         Item. If the Item does not contain the Property, <code>null</code> is
         returned.
@@ -46,7 +51,8 @@ class PropertysetItem(Item, Item, PropertySetChangeNotifier, Cloneable):
                    the identifier of the Property to get.
         @return the Property with the given ID or <code>null</code>
         """
-        return self._map[id]
+        return self._map[idd]
+
 
     def getItemPropertyIds(self):
         """Gets the collection of IDs of all Properties stored in the Item.
@@ -54,10 +60,10 @@ class PropertysetItem(Item, Item, PropertySetChangeNotifier, Cloneable):
         @return unmodifiable collection containing IDs of the Properties stored
                 the Item
         """
-        # Item.Managed methods
-        return Collections.unmodifiableCollection(self._list)
+        return list(self._list)
 
-    def removeItemProperty(self, id):
+
+    def removeItemProperty(self, idd):
         """Removes the Property identified by ID from the Item. This functionality
         is optional. If the method is not implemented, the method always returns
         <code>false</code>.
@@ -68,14 +74,15 @@ class PropertysetItem(Item, Item, PropertySetChangeNotifier, Cloneable):
                 if not
         """
         # Cant remove missing properties
-        if self._map.remove(id) is None:
+        if self._map.remove(idd) is None:
             return False
-        self._list.remove(id)
+        self._list.remove(idd)
         # Send change events
         self.fireItemPropertySetChange()
         return True
 
-    def addItemProperty(self, id, property):
+
+    def addItemProperty(self, idd, prop):
         """Tries to add a new Property into the Item.
 
         @param id
@@ -86,17 +93,18 @@ class PropertysetItem(Item, Item, PropertySetChangeNotifier, Cloneable):
                 if not
         """
         # Null ids are not accepted
-        if id is None:
+        if idd is None:
             raise self.NullPointerException('Item property id can not be null')
         # Cant add a property twice
-        if id in self._map:
+        if idd in self._map:
             return False
         # Put the property to map
-        self._map.put(id, property)
-        self._list.add(id)
+        self._map.put(idd, property)
+        self._list.add(idd)
         # Send event
         self.fireItemPropertySetChange()
         return True
+
 
     def toString(self):
         """Gets the <code>String</code> representation of the contents of the Item.
@@ -121,25 +129,6 @@ class PropertysetItem(Item, Item, PropertySetChangeNotifier, Cloneable):
                 retValue += ' '
         return retValue
 
-    class PropertySetChangeEvent(EventObject, Item, PropertySetChangeEvent):
-        """An <code>event</code> object specifying an Item whose Property set has
-        changed.
-
-        @author IT Mill Ltd.
-        @version
-        @VERSION@
-        @since 3.0
-        """
-
-        def __init__(self, source):
-            super(PropertySetChangeEvent, self)(source)
-
-        def getItem(self):
-            """Gets the Item whose Property set has changed.
-
-            @return source object of the event as an <code>Item</code>
-            """
-            return self.getSource()
 
     def addListener(self, listener):
         """Registers a new property set change listener for this Item.
@@ -148,7 +137,7 @@ class PropertysetItem(Item, Item, PropertySetChangeNotifier, Cloneable):
                    the new Listener to be registered.
         """
         if self._propertySetChangeListeners is None:
-            self._propertySetChangeListeners = LinkedList()
+            self._propertySetChangeListeners = list()
         self._propertySetChangeListeners.add(listener)
 
     def removeListener(self, listener):
@@ -177,12 +166,13 @@ class PropertysetItem(Item, Item, PropertySetChangeNotifier, Cloneable):
                 l[i].itemPropertySetChange(event)
 
     def getListeners(self, eventType):
-        if Item.PropertySetChangeEvent.isAssignableFrom(eventType):
+        if issubclass(eventType, PropertySetChangeEvent):
             if self._propertySetChangeListeners is None:
-                return Collections.EMPTY_LIST
+                return list()
             else:
-                return Collections.unmodifiableCollection(self._propertySetChangeListeners)
-        return Collections.EMPTY_LIST
+                return list(self._propertySetChangeListeners)
+        return list()
+
 
     def clone(self):
         """Creates and returns a copy of this object.
@@ -206,7 +196,7 @@ class PropertysetItem(Item, Item, PropertySetChangeNotifier, Cloneable):
         @see java.lang.Object#clone()
         """
         # (non-Javadoc)
-        # 
+        #
         # @see java.lang.Object#equals(java.lang.Object)
 
         npsi = PropertysetItem()
@@ -217,7 +207,7 @@ class PropertysetItem(Item, Item, PropertySetChangeNotifier, Cloneable):
 
     def equals(self, obj):
         # (non-Javadoc)
-        # 
+        #
         # @see java.lang.Object#hashCode()
 
         if (obj is None) or (not isinstance(obj, PropertysetItem)):
@@ -246,3 +236,25 @@ class PropertysetItem(Item, Item, PropertySetChangeNotifier, Cloneable):
 
     def hashCode(self):
         return ((0 if self._list is None else self._list.hashCode()) ^ (0 if self._map is None else self._map.hashCode())) ^ (0 if (self._propertySetChangeListeners is None) or self._propertySetChangeListeners.isEmpty() else self._propertySetChangeListeners.hashCode())
+
+
+class PropertySetChangeEvent(EventObject, Item, PropertySetChangeEvent):
+    """An <code>event</code> object specifying an Item whose Property set has
+    changed.
+
+    @author IT Mill Ltd.
+    @version
+    @VERSION@
+    @since 3.0
+    """
+
+    def __init__(self, source):
+        super(PropertySetChangeEvent, self)(source)
+
+
+    def getItem(self):
+        """Gets the Item whose Property set has changed.
+
+        @return source object of the event as an <code>Item</code>
+        """
+        return self.getSource()

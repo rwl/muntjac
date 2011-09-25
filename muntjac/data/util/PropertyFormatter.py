@@ -14,12 +14,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.data.util.AbstractProperty import (AbstractProperty,)
-from com.vaadin.data.Property import (ConversionException, Property, ReadOnlyStatusChangeListener, ValueChangeListener,)
+from muntjac.data.util.AbstractProperty import AbstractProperty
+from muntjac.data.Property import \
+    ConversionException, Property, ReadOnlyStatusChangeListener, \
+    ValueChangeListener, ValueChangeNotifier
 
 
-class PropertyFormatter(AbstractProperty, Property, ValueChangeListener, Property, ReadOnlyStatusChangeListener):
+class PropertyFormatter(AbstractProperty, Property, ValueChangeListener,
+                        Property, ReadOnlyStatusChangeListener):
     """Formatting proxy for a {@link Property}.
 
     <p>
@@ -46,8 +48,6 @@ class PropertyFormatter(AbstractProperty, Property, ValueChangeListener, Propert
     @author IT Mill Ltd.
     @since 5.3.0
     """
-    # Datasource that stores the actual value.
-    _dataSource = None
 
     def __init__(self, *args):
         """Construct a new {@code PropertyFormatter} that is not connected to any
@@ -61,6 +61,9 @@ class PropertyFormatter(AbstractProperty, Property, ValueChangeListener, Propert
         @param propertyDataSource
                    to connect this property to.
         """
+        # Datasource that stores the actual value.
+        self._dataSource = None
+
         _0 = args
         _1 = len(args)
         if _1 == 0:
@@ -69,7 +72,8 @@ class PropertyFormatter(AbstractProperty, Property, ValueChangeListener, Propert
             propertyDataSource, = _0
             self.setPropertyDataSource(propertyDataSource)
         else:
-            raise ARGERROR(0, 1)
+            raise ValueError
+
 
     def getPropertyDataSource(self):
         """Gets the current data source of the formatter, if any.
@@ -78,6 +82,7 @@ class PropertyFormatter(AbstractProperty, Property, ValueChangeListener, Propert
                 none defined.
         """
         return self._dataSource
+
 
     def setPropertyDataSource(self, newDataSource):
         """Sets the specified Property as the data source for the formatter.
@@ -91,21 +96,20 @@ class PropertyFormatter(AbstractProperty, Property, ValueChangeListener, Propert
         @param newDataSource
                    the new data source Property.
         """
-        # Documented in the interface
         readOnly = False
         prevValue = None
         if self._dataSource is not None:
-            if isinstance(self._dataSource, Property.ValueChangeNotifier):
+            if isinstance(self._dataSource, ValueChangeNotifier):
                 self._dataSource.removeListener(self)
-            if isinstance(self._dataSource, Property.ReadOnlyStatusChangeListener):
+            if isinstance(self._dataSource, ReadOnlyStatusChangeListener):
                 self._dataSource.removeListener(self)
             readOnly = self.isReadOnly()
             prevValue = str(self)
         self._dataSource = newDataSource
         if self._dataSource is not None:
-            if isinstance(self._dataSource, Property.ValueChangeNotifier):
+            if isinstance(self._dataSource, ValueChangeNotifier):
                 self._dataSource.addListener(self)
-            if isinstance(self._dataSource, Property.ReadOnlyStatusChangeListener):
+            if isinstance(self._dataSource, ReadOnlyStatusChangeListener):
                 self._dataSource.addListener(self)
         if self.isReadOnly() != readOnly:
             self.fireReadOnlyStatusChange()
@@ -115,8 +119,10 @@ class PropertyFormatter(AbstractProperty, Property, ValueChangeListener, Propert
         ):
             self.fireValueChange()
 
+
     def getType(self):
         return str
+
 
     def getValue(self):
         """Get the formatted value.
@@ -125,6 +131,7 @@ class PropertyFormatter(AbstractProperty, Property, ValueChangeListener, Propert
                 String given by format().
         """
         return str(self)
+
 
     def toString(self):
         """Get the formatted value.
@@ -137,11 +144,13 @@ class PropertyFormatter(AbstractProperty, Property, ValueChangeListener, Propert
             return None
         return self.format(value)
 
+
     def isReadOnly(self):
         """Reflects the read-only status of the datasource."""
         return False if self._dataSource is None else self._dataSource.isReadOnly()
 
-    def format(self, value):
+
+    def format(self, value):  #@PydevCodeAnalysisIgnore
         """This method must be implemented to format the values received from
         DataSource.
 
@@ -152,6 +161,7 @@ class PropertyFormatter(AbstractProperty, Property, ValueChangeListener, Propert
         @return
         """
         pass
+
 
     def parse(self, formattedValue):
         """Parse string and convert it to format compatible with datasource.
@@ -167,6 +177,7 @@ class PropertyFormatter(AbstractProperty, Property, ValueChangeListener, Propert
         """
         pass
 
+
     def setReadOnly(self, newStatus):
         """Sets the Property's read-only mode to the specified status.
 
@@ -175,6 +186,7 @@ class PropertyFormatter(AbstractProperty, Property, ValueChangeListener, Propert
         """
         if self._dataSource is not None:
             self._dataSource.setReadOnly(newStatus)
+
 
     def setValue(self, newValue):
         if self._dataSource is None:
@@ -194,12 +206,14 @@ class PropertyFormatter(AbstractProperty, Property, ValueChangeListener, Propert
                 else:
                     raise ConversionException(e)
 
+
     def valueChange(self, event):
         """Listens for changes in the datasource.
 
         This should not be called directly.
         """
         self.fireValueChange()
+
 
     def readOnlyStatusChange(self, event):
         """Listens for changes in the datasource.

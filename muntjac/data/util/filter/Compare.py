@@ -1,4 +1,33 @@
-# -*- coding: utf-8 -*-
+# Copyright (C) 2011 Vaadin Ltd
+# Copyright (C) 2011 Richard Lincoln
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+from muntjac.data.Container import Filter
+
+
+class Operation(object):
+    EQUAL = 'EQUAL'
+    GREATER = 'GREATER'
+    LESS = 'LESS'
+    GREATER_OR_EQUAL = 'GREATER_OR_EQUAL'
+    LESS_OR_EQUAL = 'LESS_OR_EQUAL'
+    _values = [EQUAL, GREATER, LESS, GREATER_OR_EQUAL, LESS_OR_EQUAL]
+
+    @classmethod
+    def values(cls):
+        return cls._values[:]
 
 
 class Compare(Filter):
@@ -15,170 +44,6 @@ class Compare(Filter):
 
     @since 6.6
     """
-
-    class Operation(object):
-        EQUAL = 'EQUAL'
-        GREATER = 'GREATER'
-        LESS = 'LESS'
-        GREATER_OR_EQUAL = 'GREATER_OR_EQUAL'
-        LESS_OR_EQUAL = 'LESS_OR_EQUAL'
-        _values = [EQUAL, GREATER, LESS, GREATER_OR_EQUAL, LESS_OR_EQUAL]
-
-        @classmethod
-        def values(cls):
-            return cls._enum_values[:]
-
-    _propertyId = None
-    _operation = None
-    _value = None
-
-    class Equal(Compare):
-        """A {@link Compare} filter that accepts items for which the identified
-        property value is equal to <code>value</code>.
-
-        For in-memory filters, equals() is used for the comparison. For other
-        containers, the comparison implementation is container dependent and may
-        use e.g. database comparison operations.
-
-        @since 6.6
-        """
-
-        def __init__(self, propertyId, value):
-            """Construct a filter that accepts items for which the identified
-            property value is equal to <code>value</code>.
-
-            For in-memory filters, equals() is used for the comparison. For other
-            containers, the comparison implementation is container dependent and
-            may use e.g. database comparison operations.
-
-            @param propertyId
-                       the identifier of the property whose value to compare
-                       against value, not null
-            @param value
-                       the value to compare against - null values may or may not
-                       be supported depending on the container
-            """
-            super(Equal, self)(propertyId, value, self.Operation.EQUAL)
-
-    class Greater(Compare):
-        """A {@link Compare} filter that accepts items for which the identified
-        property value is greater than <code>value</code>.
-
-        For in-memory filters, the values must implement {@link Comparable} and
-        {@link Comparable#compareTo(Object)} is used for the comparison. For
-        other containers, the comparison implementation is container dependent
-        and may use e.g. database comparison operations.
-
-        @since 6.6
-        """
-
-        def __init__(self, propertyId, value):
-            """Construct a filter that accepts items for which the identified
-            property value is greater than <code>value</code>.
-
-            For in-memory filters, the values must implement {@link Comparable}
-            and {@link Comparable#compareTo(Object)} is used for the comparison.
-            For other containers, the comparison implementation is container
-            dependent and may use e.g. database comparison operations.
-
-            @param propertyId
-                       the identifier of the property whose value to compare
-                       against value, not null
-            @param value
-                       the value to compare against - null values may or may not
-                       be supported depending on the container
-            """
-            super(Greater, self)(propertyId, value, self.Operation.GREATER)
-
-    class Less(Compare):
-        """A {@link Compare} filter that accepts items for which the identified
-        property value is less than <code>value</code>.
-
-        For in-memory filters, the values must implement {@link Comparable} and
-        {@link Comparable#compareTo(Object)} is used for the comparison. For
-        other containers, the comparison implementation is container dependent
-        and may use e.g. database comparison operations.
-
-        @since 6.6
-        """
-
-        def __init__(self, propertyId, value):
-            """Construct a filter that accepts items for which the identified
-            property value is less than <code>value</code>.
-
-            For in-memory filters, the values must implement {@link Comparable}
-            and {@link Comparable#compareTo(Object)} is used for the comparison.
-            For other containers, the comparison implementation is container
-            dependent and may use e.g. database comparison operations.
-
-            @param propertyId
-                       the identifier of the property whose value to compare
-                       against value, not null
-            @param value
-                       the value to compare against - null values may or may not
-                       be supported depending on the container
-            """
-            super(Less, self)(propertyId, value, self.Operation.LESS)
-
-    class GreaterOrEqual(Compare):
-        """A {@link Compare} filter that accepts items for which the identified
-        property value is greater than or equal to <code>value</code>.
-
-        For in-memory filters, the values must implement {@link Comparable} and
-        {@link Comparable#compareTo(Object)} is used for the comparison. For
-        other containers, the comparison implementation is container dependent
-        and may use e.g. database comparison operations.
-
-        @since 6.6
-        """
-
-        def __init__(self, propertyId, value):
-            """Construct a filter that accepts items for which the identified
-            property value is greater than or equal to <code>value</code>.
-
-            For in-memory filters, the values must implement {@link Comparable}
-            and {@link Comparable#compareTo(Object)} is used for the comparison.
-            For other containers, the comparison implementation is container
-            dependent and may use e.g. database comparison operations.
-
-            @param propertyId
-                       the identifier of the property whose value to compare
-                       against value, not null
-            @param value
-                       the value to compare against - null values may or may not
-                       be supported depending on the container
-            """
-            super(GreaterOrEqual, self)(propertyId, value, self.Operation.GREATER_OR_EQUAL)
-
-    class LessOrEqual(Compare):
-        """A {@link Compare} filter that accepts items for which the identified
-        property value is less than or equal to <code>value</code>.
-
-        For in-memory filters, the values must implement {@link Comparable} and
-        {@link Comparable#compareTo(Object)} is used for the comparison. For
-        other containers, the comparison implementation is container dependent
-        and may use e.g. database comparison operations.
-
-        @since 6.6
-        """
-
-        def __init__(self, propertyId, value):
-            """Construct a filter that accepts items for which the identified
-            property value is less than or equal to <code>value</code>.
-
-            For in-memory filters, the values must implement {@link Comparable}
-            and {@link Comparable#compareTo(Object)} is used for the comparison.
-            For other containers, the comparison implementation is container
-            dependent and may use e.g. database comparison operations.
-
-            @param propertyId
-                       the identifier of the property whose value to compare
-                       against value, not null
-            @param value
-                       the value to compare against - null values may or may not
-                       be supported depending on the container
-            """
-            super(LessOrEqual, self)(propertyId, value, self.Operation.LESS_OR_EQUAL)
 
     def __init__(self, propertyId, value, operation):
         """Constructor for a {@link Compare} filter that compares the value of an
@@ -211,6 +76,7 @@ class Compare(Filter):
         self._value = value
         self._operation = operation
 
+
     def passesFilter(self, itemId, item):
         p = item.getItemProperty(self.getPropertyId())
         if None is p:
@@ -238,19 +104,22 @@ class Compare(Filter):
         # all cases should have been processed above
         return False
 
+
     def compareValue(self, value1):
         if None is self._value:
             return 0 if None is value1 else -1
         elif None is value1:
             return 1
-        elif (
-            isinstance(self.getValue(), Comparable) and value1.getClass().isAssignableFrom(self.getValue().getClass())
-        ):
-            return -self.getValue().compareTo(value1)
+#        elif (
+#            isinstance(self.getValue(), Comparable) and value1.getClass().isAssignableFrom(self.getValue().getClass())
+#        ):
+#            return -self.getValue().compareTo(value1)
         raise self.IllegalArgumentException('Could not compare the arguments: ' + value1 + ', ' + self.getValue())
+
 
     def appliesToProperty(self, propertyId):
         return self.getPropertyId() == propertyId
+
 
     def equals(self, obj):
         # Only objects of the same class can be equal
@@ -266,8 +135,10 @@ class Compare(Filter):
             return False
         return None is o.getValue() if None is self.getValue() else self.getValue() == o.getValue()
 
+
     def hashCode(self):
         return (self.getPropertyId().hashCode() if None is not self.getPropertyId() else 0) ^ (self.getValue().hashCode() if None is not self.getValue() else 0)
+
 
     def getPropertyId(self):
         """Returns the property id of the property to compare against the fixed
@@ -277,6 +148,7 @@ class Compare(Filter):
         """
         return self._propertyId
 
+
     def getOperation(self):
         """Returns the comparison operation.
 
@@ -284,9 +156,163 @@ class Compare(Filter):
         """
         return self._operation
 
+
     def getValue(self):
         """Returns the value to compare the property against.
 
         @return comparison reference value
         """
         return self._value
+
+
+class Equal(Compare):
+    """A {@link Compare} filter that accepts items for which the identified
+    property value is equal to <code>value</code>.
+
+    For in-memory filters, equals() is used for the comparison. For other
+    containers, the comparison implementation is container dependent and may
+    use e.g. database comparison operations.
+
+    @since 6.6
+    """
+
+    def __init__(self, propertyId, value):
+        """Construct a filter that accepts items for which the identified
+        property value is equal to <code>value</code>.
+
+        For in-memory filters, equals() is used for the comparison. For other
+        containers, the comparison implementation is container dependent and
+        may use e.g. database comparison operations.
+
+        @param propertyId
+                   the identifier of the property whose value to compare
+                   against value, not null
+        @param value
+                   the value to compare against - null values may or may not
+                   be supported depending on the container
+        """
+        super(Equal, self)(propertyId, value, Operation.EQUAL)
+
+
+class Greater(Compare):
+    """A {@link Compare} filter that accepts items for which the identified
+    property value is greater than <code>value</code>.
+
+    For in-memory filters, the values must implement {@link Comparable} and
+    {@link Comparable#compareTo(Object)} is used for the comparison. For
+    other containers, the comparison implementation is container dependent
+    and may use e.g. database comparison operations.
+
+    @since 6.6
+    """
+
+    def __init__(self, propertyId, value):
+        """Construct a filter that accepts items for which the identified
+        property value is greater than <code>value</code>.
+
+        For in-memory filters, the values must implement {@link Comparable}
+        and {@link Comparable#compareTo(Object)} is used for the comparison.
+        For other containers, the comparison implementation is container
+        dependent and may use e.g. database comparison operations.
+
+        @param propertyId
+                   the identifier of the property whose value to compare
+                   against value, not null
+        @param value
+                   the value to compare against - null values may or may not
+                   be supported depending on the container
+        """
+        super(Greater, self)(propertyId, value, Operation.GREATER)
+
+
+class Less(Compare):
+    """A {@link Compare} filter that accepts items for which the identified
+    property value is less than <code>value</code>.
+
+    For in-memory filters, the values must implement {@link Comparable} and
+    {@link Comparable#compareTo(Object)} is used for the comparison. For
+    other containers, the comparison implementation is container dependent
+    and may use e.g. database comparison operations.
+
+    @since 6.6
+    """
+
+    def __init__(self, propertyId, value):
+        """Construct a filter that accepts items for which the identified
+        property value is less than <code>value</code>.
+
+        For in-memory filters, the values must implement {@link Comparable}
+        and {@link Comparable#compareTo(Object)} is used for the comparison.
+        For other containers, the comparison implementation is container
+        dependent and may use e.g. database comparison operations.
+
+        @param propertyId
+                   the identifier of the property whose value to compare
+                   against value, not null
+        @param value
+                   the value to compare against - null values may or may not
+                   be supported depending on the container
+        """
+        super(Less, self)(propertyId, value, Operation.LESS)
+
+
+class GreaterOrEqual(Compare):
+    """A {@link Compare} filter that accepts items for which the identified
+    property value is greater than or equal to <code>value</code>.
+
+    For in-memory filters, the values must implement {@link Comparable} and
+    {@link Comparable#compareTo(Object)} is used for the comparison. For
+    other containers, the comparison implementation is container dependent
+    and may use e.g. database comparison operations.
+
+    @since 6.6
+    """
+
+    def __init__(self, propertyId, value):
+        """Construct a filter that accepts items for which the identified
+        property value is greater than or equal to <code>value</code>.
+
+        For in-memory filters, the values must implement {@link Comparable}
+        and {@link Comparable#compareTo(Object)} is used for the comparison.
+        For other containers, the comparison implementation is container
+        dependent and may use e.g. database comparison operations.
+
+        @param propertyId
+                   the identifier of the property whose value to compare
+                   against value, not null
+        @param value
+                   the value to compare against - null values may or may not
+                   be supported depending on the container
+        """
+        super(GreaterOrEqual, self)(propertyId, value, Operation.GREATER_OR_EQUAL)
+
+
+class LessOrEqual(Compare):
+    """A {@link Compare} filter that accepts items for which the identified
+    property value is less than or equal to <code>value</code>.
+
+    For in-memory filters, the values must implement {@link Comparable} and
+    {@link Comparable#compareTo(Object)} is used for the comparison. For
+    other containers, the comparison implementation is container dependent
+    and may use e.g. database comparison operations.
+
+    @since 6.6
+    """
+
+    def __init__(self, propertyId, value):
+        """Construct a filter that accepts items for which the identified
+        property value is less than or equal to <code>value</code>.
+
+        For in-memory filters, the values must implement {@link Comparable}
+        and {@link Comparable#compareTo(Object)} is used for the comparison.
+        For other containers, the comparison implementation is container
+        dependent and may use e.g. database comparison operations.
+
+        @param propertyId
+                   the identifier of the property whose value to compare
+                       against value, not null
+            @param value
+                       the value to compare against - null values may or may not
+                       be supported depending on the container
+        """
+        super(LessOrEqual, self)(propertyId, value, Operation.LESS_OR_EQUAL)

@@ -1,5 +1,20 @@
-# -*- coding: utf-8 -*-
-# from java.util.Arrays import (Arrays,)
+# Copyright (C) 2011 Vaadin Ltd
+# Copyright (C) 2011 Richard Lincoln
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+from muntjac.data.Container import Filter
 
 
 class AbstractJunctionFilter(Filter):
@@ -13,7 +28,8 @@ class AbstractJunctionFilter(Filter):
     filters = None
 
     def __init__(self, *filters):
-        self.filters = Collections.unmodifiableCollection(Arrays.asList(filters))
+        self.filters = list(filters)
+
 
     def getFilters(self):
         """Returns an unmodifiable collection of the sub-filters of this composite
@@ -22,6 +38,7 @@ class AbstractJunctionFilter(Filter):
         @return
         """
         return self.filters
+
 
     def appliesToProperty(self, propertyId):
         """Returns true if a change in the named property may affect the filtering
@@ -32,8 +49,8 @@ class AbstractJunctionFilter(Filter):
         If there are no sub-filters, false is returned - override in subclasses
         to change this behavior.
         """
-        for filter in self.getFilters():
-            if filter.appliesToProperty(propertyId):
+        for fltr in self.getFilters():
+            if fltr.appliesToProperty(propertyId):
                 return True
         return False
 
