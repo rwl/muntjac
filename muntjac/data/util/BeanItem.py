@@ -14,17 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.data.util.PropertysetItem import (PropertysetItem,)
-from com.vaadin.data.util.MethodPropertyDescriptor import (MethodPropertyDescriptor,)
-# from java.beans.BeanInfo import (BeanInfo,)
-# from java.beans.IntrospectionException import (IntrospectionException,)
-# from java.beans.Introspector import (Introspector,)
-# from java.beans.PropertyDescriptor import (PropertyDescriptor,)
-# from java.lang.reflect.Method import (Method,)
-# from java.util.Arrays import (Arrays,)
-# from java.util.LinkedHashMap import (LinkedHashMap,)
-# from java.util.Map import (Map,)
+from muntjac.data.util.PropertysetItem import PropertysetItem
+from muntjac.data.util.MethodPropertyDescriptor import MethodPropertyDescriptor
 
 
 class BeanItem(PropertysetItem):
@@ -35,8 +26,6 @@ class BeanItem(PropertysetItem):
     @VERSION@
     @since 3.0
     """
-    # The bean which this Item is based on.
-    _bean = None
 
     def __init__(self, *args):
         """<p>
@@ -99,32 +88,32 @@ class BeanItem(PropertysetItem):
         @param propertyIds
                    ids of the properties.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            bean, = _0
-            self.__init__(bean, self.getPropertyDescriptors(bean.getClass()))
-        elif _1 == 2:
-            if isinstance(_0[1], Collection):
-                bean, propertyIds = _0
-                self._bean = bean
-                # Create bean information
-                pds = self.getPropertyDescriptors(bean.getClass())
-                # Add all the bean properties as MethodProperties to this Item
-                for id in propertyIds:
-                    pd = pds.get(id)
-                    if pd is not None:
-                        self.addItemProperty(pd.getName(), pd.createProperty(bean))
-            elif isinstance(_0[1], dict):
-                bean, propertyDescriptors = _0
+        # The bean which this Item is based on.
+        self._bean = None
+
+        nargs = len(args)
+        if nargs == 1:
+            bean, = args
+            self.__init__(bean, self.getPropertyDescriptors(bean.__class__))
+        elif nargs == 2:
+            if isinstance(args[1], dict):
+                bean, propertyDescriptors = args
                 self._bean = bean
                 for pd in propertyDescriptors.values():
                     self.addItemProperty(pd.getName(), pd.createProperty(bean))
             else:
-                bean, propertyIds = _0
-                self.__init__(bean, Arrays.asList(propertyIds))
+                bean, propertyIds = args
+                self._bean = bean
+                # Create bean information
+                pds = self.getPropertyDescriptors(bean.__class__)
+                # Add all the bean properties as MethodProperties to this Item
+                for idd in propertyIds:
+                    pd = pds.get(idd)
+                    if pd is not None:
+                        self.addItemProperty(pd.getName(), pd.createProperty(bean))
         else:
-            raise ARGERROR(1, 2)
+            raise ValueError, 'invalid number of arguments'
+
 
     @classmethod
     def getPropertyDescriptors(cls, beanClass):
@@ -142,7 +131,8 @@ class BeanItem(PropertysetItem):
                    the Java Bean class to get properties for.
         @return an ordered map from property names to property descriptors
         """
-        pdMap = LinkedHashMap()
+        pdMap = dict()
+
         # Try to introspect, if it fails, we just have an empty Item
         try:
             propertyDescriptors = cls.getBeanPropertyDescriptor(beanClass)
@@ -150,12 +140,17 @@ class BeanItem(PropertysetItem):
             # later entries on the list overwrite earlier ones
             for pd in propertyDescriptors:
                 getMethod = pd.getReadMethod()
-                if getMethod is not None and getMethod.getDeclaringClass() != cls.Object:
-                    vaadinPropertyDescriptor = MethodPropertyDescriptor(pd.getName(), pd.getPropertyType(), pd.getReadMethod(), pd.getWriteMethod())
-                    pdMap.put(pd.getName(), vaadinPropertyDescriptor)
-        except java.beans.IntrospectionException, ignored:
-            pass # astStmt: [Stmt([]), None]
+                if getMethod is not None and getMethod.__class__() != cls.Object:  # FIXME getDeclaringClass
+                    vaadinPropertyDescriptor = MethodPropertyDescriptor(pd.getName(),
+                                                                        pd.getPropertyType(),
+                                                                        pd.getReadMethod(),
+                                                                        pd.getWriteMethod())
+                    pdMap[pd.getName()] = vaadinPropertyDescriptor
+        except Exception:  ## FIXME IntrospectionException
+            pass
+
         return pdMap
+
 
     @classmethod
     def getBeanPropertyDescriptor(cls, beanClass):
@@ -176,16 +171,18 @@ class BeanItem(PropertysetItem):
         """
         # Oracle bug 4275879: Introspector does not consider superinterfaces of
         # an interface
-        if beanClass.isInterface():
+        if beanClass.isInterface():  # FIXEM isInterface
             propertyDescriptors = list()
             for cls in beanClass.getInterfaces():
                 propertyDescriptors.addAll(cls.getBeanPropertyDescriptor(cls))
-            info = Introspector.getBeanInfo(beanClass)
-            propertyDescriptors.addAll(Arrays.asList(info.getPropertyDescriptors()))
+#            info = Introspector.getBeanInfo(beanClass)
+#            propertyDescriptors.addAll(Arrays.asList(info.getPropertyDescriptors()))
             return propertyDescriptors
         else:
-            info = Introspector.getBeanInfo(beanClass)
-            return Arrays.asList(info.getPropertyDescriptors())
+#            info = Introspector.getBeanInfo(beanClass)  # FIXME Introspector
+#            return Arrays.asList(info.getPropertyDescriptors())
+            pass
+
 
     def getBean(self):
         """Gets the underlying JavaBean object.

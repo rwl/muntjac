@@ -14,8 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.data.util.AbstractBeanContainer import (AbstractBeanContainer,)
+from muntjac.data.util.AbstractBeanContainer import AbstractBeanContainer,\
+    BeanIdResolver
 
 
 class BeanItemContainer(AbstractBeanContainer):
@@ -54,22 +54,6 @@ class BeanItemContainer(AbstractBeanContainer):
     @since 5.4
     """
 
-    class IdentityBeanIdResolver(BeanIdResolver):
-        """Bean identity resolver that returns the bean itself as its item
-        identifier.
-
-        This corresponds to the old behavior of {@link BeanItemContainer}, and
-        requires suitable (identity-based) equals() and hashCode() methods on the
-        beans.
-
-        @param <BT>
-
-        @since 6.5
-        """
-
-        def getIdForBean(self, bean):
-            return bean
-
     def __init__(self, *args):
         """Constructs a {@code BeanItemContainer} for beans of the given type.
 
@@ -106,27 +90,25 @@ class BeanItemContainer(AbstractBeanContainer):
         @throws IllegalArgumentException
                     If {@code type} is null
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            if isinstance(_0[0], Class):
-                type, = _0
-                super(BeanItemContainer, self)(type)
-                super(BeanItemContainer, self).setBeanIdResolver(self.IdentityBeanIdResolver())
-            else:
-                collection, = _0
+        args = args
+        nargs = len(args)
+        if nargs == 1:
+            if isinstance(args[0], list):
+                collection, = args
                 self.__init__(self.getBeanClassForCollection(collection), collection)
-        elif _1 == 2:
-            type, collection = _0
-            super(BeanItemContainer, self)(type)
+            else:
+                typ, = args
+                super(BeanItemContainer, self)(typ)
+                super(BeanItemContainer, self).setBeanIdResolver(self.IdentityBeanIdResolver())
+        elif nargs == 2:
+            typ, collection = args
+            super(BeanItemContainer, self)(typ)
             super(BeanItemContainer, self).setBeanIdResolver(self.IdentityBeanIdResolver())
             if collection is not None:
                 self.addAll(collection)
         else:
-            raise ARGERROR(1, 2)
+            raise ValueError, 'invalid number of arguments'
 
-    # must assume the class is BT
-    # the class information is erased by the compiler
 
     @classmethod
     def getBeanClassForCollection(cls, collection):
@@ -138,9 +120,10 @@ class BeanItemContainer(AbstractBeanContainer):
         @return
         @throws IllegalArgumentException
         """
-        if (collection is None) or collection.isEmpty():
-            raise cls.IllegalArgumentException('The collection passed to BeanItemContainer constructor must not be null or empty. Use the other BeanItemContainer constructor.')
-        return collection.next().getClass()
+        if (collection is None) or len(collection) == 0:
+            raise ValueError, 'The collection passed to BeanItemContainer constructor must not be null or empty. Use the other BeanItemContainer constructor.'
+        return collection.next().__class__  # FIXEM iterator
+
 
     def addAll(self, collection):
         """Adds all the beans from a {@link Collection} in one go. More efficient
@@ -150,6 +133,7 @@ class BeanItemContainer(AbstractBeanContainer):
                    The collection of beans to add. Must not be null.
         """
         super(BeanItemContainer, self).addAll(collection)
+
 
     def addItemAfter(self, previousItemId, newItemId):
         """Adds the bean after the given bean.
@@ -165,6 +149,7 @@ class BeanItemContainer(AbstractBeanContainer):
         """
         return super(BeanItemContainer, self).addBeanAfter(previousItemId, newItemId)
 
+
     def addItemAt(self, index, newItemId):
         """Adds a new bean at the given index.
 
@@ -178,6 +163,7 @@ class BeanItemContainer(AbstractBeanContainer):
         """
         return super(BeanItemContainer, self).addBeanAt(index, newItemId)
 
+
     def addItem(self, itemId):
         """Adds the bean to the Container.
 
@@ -186,6 +172,7 @@ class BeanItemContainer(AbstractBeanContainer):
         @see com.vaadin.data.Container#addItem(Object)
         """
         return super(BeanItemContainer, self).addBean(itemId)
+
 
     def addBean(self, bean):
         """Adds the bean to the Container.
@@ -196,6 +183,24 @@ class BeanItemContainer(AbstractBeanContainer):
         """
         return self.addItem(bean)
 
+
     def setBeanIdResolver(self, beanIdResolver):
         """Unsupported in BeanItemContainer."""
-        raise self.UnsupportedOperationException('BeanItemContainer always uses an IdentityBeanIdResolver')
+        raise NotImplementedError, 'BeanItemContainer always uses an IdentityBeanIdResolver'
+
+
+class IdentityBeanIdResolver(BeanIdResolver):
+    """Bean identity resolver that returns the bean itself as its item
+    identifier.
+
+    This corresponds to the old behavior of {@link BeanItemContainer}, and
+    requires suitable (identity-based) equals() and hashCode() methods on the
+    beans.
+
+    @param <BT>
+
+    @since 6.5
+    """
+
+    def getIdForBean(self, bean):
+        return bean

@@ -1,7 +1,22 @@
-# -*- coding: utf-8 -*-
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.data.Container import (Container, ItemSetChangeEvent, PropertySetChangeEvent,)
-# from java.io.Serializable import (Serializable,)
+# Copyright (C) 2011 Vaadin Ltd
+# Copyright (C) 2011 Richard Lincoln
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+from muntjac.data.Container import Container, ItemSetChangeEvent, PropertySetChangeEvent,\
+    ItemSetChangeListener
+from muntjac.util.event import EventObject
 
 
 class AbstractContainer(Container):
@@ -18,43 +33,16 @@ class AbstractContainer(Container):
 
     @since 6.6
     """
-    # List of all Property set change event listeners.
-    _propertySetChangeListeners = None
-    # List of all container Item set change event listeners.
-    _itemSetChangeListeners = None
 
-    class BasePropertySetChangeEvent(EventObject, Container, PropertySetChangeEvent, Serializable):
-        """An <code>event</code> object specifying the container whose Property set
-        has changed.
+    def __init__(self):
+        # List of all Property set change event listeners.
+        self._propertySetChangeListeners = None
 
-        This class does not provide information about which properties were
-        concerned by the change, but subclasses can provide additional
-        information about the changes.
-        """
+        # List of all container Item set change event listeners.
+        self._itemSetChangeListeners = None
 
-        def __init__(self, source):
-            super(BasePropertySetChangeEvent, self)(source)
 
-        def getContainer(self):
-            return self.getSource()
-
-    class BaseItemSetChangeEvent(EventObject, Container, ItemSetChangeEvent, Serializable):
-        """An <code>event</code> object specifying the container whose Item set has
-        changed.
-
-        This class does not provide information about the exact changes
-        performed, but subclasses can add provide additional information about
-        the changes.
-        """
-        # PropertySetChangeNotifier
-
-        def __init__(self, source):
-            super(BaseItemSetChangeEvent, self)(source)
-
-        def getContainer(self):
-            return self.getSource()
-
-    def addListener(self, *args):
+    def addListener(self, listener):
         """Implementation of the corresponding method in
         {@link PropertySetChangeNotifier}, override with the corresponding public
         method and implement the interface to use this.
@@ -67,23 +55,17 @@ class AbstractContainer(Container):
 
         @see ItemSetChangeNotifier#addListener(com.vaadin.data.Container.ItemSetChangeListener)
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            if isinstance(_0[0], Container.ItemSetChangeListener):
-                listener, = _0
-                if self.getItemSetChangeListeners() is None:
-                    self.setItemSetChangeListeners(LinkedList())
-                self.getItemSetChangeListeners().add(listener)
-            else:
-                listener, = _0
-                if self.getPropertySetChangeListeners() is None:
-                    self.setPropertySetChangeListeners(LinkedList())
-                self.getPropertySetChangeListeners().add(listener)
+        if isinstance(listener, ItemSetChangeListener):
+            if self.getItemSetChangeListeners() is None:
+                self.setItemSetChangeListeners(list())
+            self.getItemSetChangeListeners().append(listener)
         else:
-            raise ARGERROR(1, 1)
+            if self.getPropertySetChangeListeners() is None:
+                self.setPropertySetChangeListeners(list())
+            self.getPropertySetChangeListeners().append(listener)
 
-    def removeListener(self, *args):
+
+    def removeListener(self, listener):
         """Implementation of the corresponding method in
         {@link PropertySetChangeNotifier}, override with the corresponding public
         method and implement the interface to use this.
@@ -97,22 +79,15 @@ class AbstractContainer(Container):
 
         @see ItemSetChangeNotifier#removeListener(com.vaadin.data.Container.ItemSetChangeListener)
         """
-        # ItemSetChangeNotifier
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            if isinstance(_0[0], Container.ItemSetChangeListener):
-                listener, = _0
-                if self.getItemSetChangeListeners() is not None:
-                    self.getItemSetChangeListeners().remove(listener)
-            else:
-                listener, = _0
-                if self.getPropertySetChangeListeners() is not None:
-                    self.getPropertySetChangeListeners().remove(listener)
+        if isinstance(listener, ItemSetChangeListener):
+            if self.getItemSetChangeListeners() is not None:
+                self.getItemSetChangeListeners().remove(listener)
         else:
-            raise ARGERROR(1, 1)
+            if self.getPropertySetChangeListeners() is not None:
+                self.getPropertySetChangeListeners().remove(listener)
 
-    def fireContainerPropertySetChange(self, *args):
+
+    def fireContainerPropertySetChange(self, event=None):
         """Sends a simple Property set change event to all interested listeners.
         ---
         Sends a Property set change event to all interested listeners.
@@ -125,28 +100,16 @@ class AbstractContainer(Container):
                    the property change event to send, optionally with additional
                    information
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 0:
-            self.fireContainerPropertySetChange(self.BasePropertySetChangeEvent(self))
-        elif _1 == 1:
-            event, = _0
-            if self.getPropertySetChangeListeners() is not None:
-                l = list(self.getPropertySetChangeListeners())
-                _0 = True
-                i = 0
-                while True:
-                    if _0 is True:
-                        _0 = False
-                    else:
-                        i += 1
-                    if not (i < len(l)):
-                        break
-                    l[i].containerPropertySetChange(event)
-        else:
-            raise ARGERROR(0, 1)
+        if event is None:
+            event = BasePropertySetChangeEvent(self)
 
-    def fireItemSetChange(self, *args):
+        if self.getPropertySetChangeListeners() is not None:
+            l = list(self.getPropertySetChangeListeners())
+            for listener in l:
+                listener.containerPropertySetChange(event)
+
+
+    def fireItemSetChange(self, event=None):
         """Sends a simple Item set change event to all interested listeners,
         indicating that anything in the contents may have changed (items added,
         removed etc.).
@@ -157,26 +120,14 @@ class AbstractContainer(Container):
                    the item set change event to send, optionally with additional
                    information
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 0:
-            self.fireItemSetChange(self.BaseItemSetChangeEvent(self))
-        elif _1 == 1:
-            event, = _0
-            if self.getItemSetChangeListeners() is not None:
-                l = list(self.getItemSetChangeListeners())
-                _0 = True
-                i = 0
-                while True:
-                    if _0 is True:
-                        _0 = False
-                    else:
-                        i += 1
-                    if not (i < len(l)):
-                        break
-                    l[i].containerItemSetChange(event)
-        else:
-            raise ARGERROR(0, 1)
+        if event is None:
+            event = BaseItemSetChangeEvent(self)
+
+        if self.getItemSetChangeListeners() is not None:
+            l = list(self.getItemSetChangeListeners())
+            for listener in l:
+                listener.containerItemSetChange(event)
+
 
     def setPropertySetChangeListeners(self, propertySetChangeListeners):
         """Sets the property set change listener collection. For internal use only.
@@ -185,11 +136,13 @@ class AbstractContainer(Container):
         """
         self._propertySetChangeListeners = propertySetChangeListeners
 
+
     def getPropertySetChangeListeners(self):
         """Returns the property set change listener collection. For internal use
         only.
         """
         return self._propertySetChangeListeners
+
 
     def setItemSetChangeListeners(self, itemSetChangeListeners):
         """Sets the item set change listener collection. For internal use only.
@@ -198,19 +151,57 @@ class AbstractContainer(Container):
         """
         self._itemSetChangeListeners = itemSetChangeListeners
 
+
     def getItemSetChangeListeners(self):
         """Returns the item set change listener collection. For internal use only."""
         return self._itemSetChangeListeners
 
+
     def getListeners(self, eventType):
-        if Container.PropertySetChangeEvent.isAssignableFrom(eventType):
+        if issubclass(eventType, PropertySetChangeEvent):
             if self._propertySetChangeListeners is None:
-                return Collections.EMPTY_LIST
+                return list()
             else:
-                return Collections.unmodifiableCollection(self._propertySetChangeListeners)
-        elif Container.ItemSetChangeEvent.isAssignableFrom(eventType):
+                return list(self._propertySetChangeListeners)
+
+        elif issubclass(eventType, ItemSetChangeEvent):
             if self._itemSetChangeListeners is None:
-                return Collections.EMPTY_LIST
+                return list()
             else:
-                return Collections.unmodifiableCollection(self._itemSetChangeListeners)
-        return Collections.EMPTY_LIST
+                return list(self._itemSetChangeListeners)
+
+        return list
+
+
+class BasePropertySetChangeEvent(EventObject, Container, PropertySetChangeEvent):
+    """An <code>event</code> object specifying the container whose Property set
+    has changed.
+
+    This class does not provide information about which properties were
+    concerned by the change, but subclasses can provide additional
+    information about the changes.
+    """
+
+    def __init__(self, source):
+        super(BasePropertySetChangeEvent, self)(source)
+
+
+    def getContainer(self):
+        return self.getSource()
+
+
+class BaseItemSetChangeEvent(EventObject, Container, ItemSetChangeEvent):
+    """An <code>event</code> object specifying the container whose Item set has
+    changed.
+
+    This class does not provide information about the exact changes
+    performed, but subclasses can add provide additional information about
+    the changes.
+    """
+
+    def __init__(self, source):
+        super(BaseItemSetChangeEvent, self)(source)
+
+
+    def getContainer(self):
+        return self.getSource()

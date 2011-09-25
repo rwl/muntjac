@@ -14,13 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.data.util.ItemSorter import (ItemSorter,)
-# from com.vaadin.data.Container.Sortable import (Sortable,)
-# from java.io.Serializable import (Serializable,)
-# from java.util.ArrayList import (ArrayList,)
-# from java.util.Comparator import (Comparator,)
-# from java.util.List import (List,)
+from muntjac.data.util.ItemSorter import ItemSorter
 
 
 class DefaultItemSorter(ItemSorter):
@@ -34,12 +28,8 @@ class DefaultItemSorter(ItemSorter):
     values. The comparator can be set using the constructor. If no comparator is
     provided a default comparator is used.
     """
-    _sortPropertyIds = None
-    _sortDirections = None
-    _container = None
-    _propertyValueComparator = None
 
-    def __init__(self, *args):
+    def __init__(self, propertyValueComparator=None):
         """Constructs a DefaultItemSorter using the default <code>Comparator</code>
         for comparing <code>Property</code>values.
         ---
@@ -51,27 +41,23 @@ class DefaultItemSorter(ItemSorter):
                    The comparator to use when comparing individual
                    <code>Property</code> values
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 0:
-            self.__init__(self.DefaultPropertyValueComparator())
-        elif _1 == 1:
-            propertyValueComparator, = _0
-            self._propertyValueComparator = propertyValueComparator
+        self._sortPropertyIds = None
+        self._sortDirections = None
+        self._container = None
+        self._propertyValueComparator = None
+
+        if propertyValueComparator is None:
+            self.__init__( DefaultPropertyValueComparator() )
         else:
-            raise ARGERROR(0, 1)
+            self._propertyValueComparator = propertyValueComparator
 
-    # (non-Javadoc)
-    # 
-    # @see com.vaadin.data.util.ItemSorter#compare(java.lang.Object,
-    # java.lang.Object)
 
-    def compare(self, o1, o2):
+    def __cmp__(self, o1, o2):  # FIXME Comparator
         item1 = self._container.getItem(o1)
         item2 = self._container.getItem(o2)
+
         # Items can be null if the container is filtered. Null is considered
         # "less" than not-null.
-
         if item1 is None:
             if item2 is None:
                 return 0
@@ -79,20 +65,18 @@ class DefaultItemSorter(ItemSorter):
                 return 1
         elif item2 is None:
             return -1
-        _0 = True
-        i = 0
-        while True:
-            if _0 is True:
-                _0 = False
-            else:
-                i += 1
-            if not (i < len(self._sortPropertyIds)):
-                break
-            result = self.compareProperty(self._sortPropertyIds[i], self._sortDirections[i], item1, item2)
+
+        for i in range(len(self._sortPropertyIds)):
+            result = self.compareProperty(self._sortPropertyIds[i],
+                                          self._sortDirections[i],
+                                          item1, item2)
+
             # If order can be decided
             if result != 0:
                 return result
+
         return 0
+
 
     def compareProperty(self, propertyId, sortDirection, item1, item2):
         """Compares the property indicated by <code>propertyId</code> in the items
@@ -118,77 +102,61 @@ class DefaultItemSorter(ItemSorter):
                 property value in the second item. Negated if
                 {@code sortDirection} is false.
         """
-        # Get the properties to compare
-        # (non-Javadoc)
-        # 
-        # @see
-        # com.vaadin.data.util.ItemSorter#setSortProperties(com.vaadin.data.Container
-        # .Sortable, java.lang.Object[], boolean[])
-
         property1 = item1.getItemProperty(propertyId)
         property2 = item2.getItemProperty(propertyId)
+
         # Get the values to compare
         value1 = None if property1 is None else property1.getValue()
         value2 = None if property2 is None else property2.getValue()
+
         # Result of the comparison
         r = 0
         if sortDirection:
-            r = self._propertyValueComparator.compare(value1, value2)
+            r = self._propertyValueComparator.compare(value1, value2)  # FIXME Comparator
         else:
             r = self._propertyValueComparator.compare(value2, value1)
+
         return r
+
 
     def setSortProperties(self, container, propertyId, ascending):
         self._container = container
+
         # Removes any non-sortable property ids
         ids = list()
         orders = list()
         sortable = container.getSortableContainerPropertyIds()
-        _0 = True
-        i = 0
-        while True:
-            if _0 is True:
-                _0 = False
-            else:
-                i += 1
-            if not (i < len(propertyId)):
-                break
-            if sortable.contains(propertyId[i]):
+
+        for i in range(len(propertyId)):
+            if propertyId[i] in sortable:
                 ids.add(propertyId[i])
-                orders.add(Boolean.valueOf.valueOf(ascending[i] if i < len(ascending) else True))
+                orders.add( bool(ascending[i] if i < len(ascending) else True) )
         self._sortPropertyIds = list(ids)
         self._sortDirections = [None] * len(orders)
-        _1 = True
-        i = 0
-        while True:
-            if _1 is True:
-                _1 = False
-            else:
-                i += 1
-            if not (i < len(self._sortDirections)):
-                break
-            self._sortDirections[i] = orders[i].booleanValue()
+        for i in range(len(self._sortDirections)):
+            self._sortDirections[i] = bool( orders[i] )
 
-    class DefaultPropertyValueComparator(Comparator, Serializable):
-        """Provides a default comparator used for comparing {@link Property} values.
-        The <code>DefaultPropertyValueComparator</code> assumes all objects it
-        compares can be cast to Comparable.
-        """
 
-        def compare(self, o1, o2):
+class DefaultPropertyValueComparator(object):
+    """Provides a default comparator used for comparing {@link Property} values.
+    The <code>DefaultPropertyValueComparator</code> assumes all objects it
+    compares can be cast to Comparable.
+    """
+
+    def __cmp__(self, o1, o2):  # FIXME Comparator
+        r = 0
+        # Normal non-null comparison
+        if o1 is not None and o2 is not None:
+            # Assume the objects can be cast to Comparable, throw
+            # ClassCastException otherwise.
+            r = o1.compareTo(o2)
+        elif o1 == o2:
+            # Objects are equal if both are null
             r = 0
-            # Normal non-null comparison
-            if o1 is not None and o2 is not None:
-                # Assume the objects can be cast to Comparable, throw
-                # ClassCastException otherwise.
-                r = o1.compareTo(o2)
-            elif o1 == o2:
-                # Objects are equal if both are null
-                r = 0
-            elif o1 is None:
-                r = -1
-                # null is less than non-null
-            else:
-                r = 1
-                # non-null is greater than null
-            return r
+        elif o1 is None:
+            r = -1
+            # null is less than non-null
+        else:
+            r = 1
+            # non-null is greater than null
+        return r

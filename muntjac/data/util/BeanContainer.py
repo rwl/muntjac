@@ -1,5 +1,20 @@
-# -*- coding: utf-8 -*-
-from com.vaadin.data.util.AbstractBeanContainer import (AbstractBeanContainer,)
+# Copyright (C) 2011 Vaadin Ltd
+# Copyright (C) 2011 Richard Lincoln
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+from muntjac.data.util.AbstractBeanContainer import AbstractBeanContainer
 
 
 class BeanContainer(AbstractBeanContainer):
@@ -55,8 +70,9 @@ class BeanContainer(AbstractBeanContainer):
     @since 6.5
     """
 
-    def __init__(self, type):
-        super(BeanContainer, self)(type)
+    def __init__(self, typ):
+        super(BeanContainer, self)(typ)
+
 
     def addItem(self, itemId, bean):
         """Adds the bean to the Container.
@@ -68,6 +84,7 @@ class BeanContainer(AbstractBeanContainer):
         else:
             return None
 
+
     def addItemAfter(self, previousItemId, newItemId, bean):
         """Adds the bean after the given item id.
 
@@ -77,6 +94,7 @@ class BeanContainer(AbstractBeanContainer):
             return super(BeanContainer, self).addItemAfter(previousItemId, newItemId, bean)
         else:
             return None
+
 
     def addItemAt(self, index, newItemId, bean):
         """Adds a new bean at the given index.
@@ -98,6 +116,7 @@ class BeanContainer(AbstractBeanContainer):
         else:
             return None
 
+
     def setBeanIdProperty(self, propertyId):
         """Sets the bean id resolver to use a property of the beans as the
         identifier.
@@ -107,22 +126,22 @@ class BeanContainer(AbstractBeanContainer):
         """
         self.setBeanIdResolver(self.createBeanPropertyResolver(propertyId))
 
+
     def setBeanIdResolver(self, beanIdResolver):
-        # overridden to make public
         super(BeanContainer, self).setBeanIdResolver(beanIdResolver)
 
+
     def addBean(self, bean):
-        # overridden to make public
         return super(BeanContainer, self).addBean(bean)
 
+
     def addBeanAfter(self, previousItemId, bean):
-        # overridden to make public
         return super(BeanContainer, self).addBeanAfter(previousItemId, bean)
 
+
     def addBeanAt(self, index, bean):
-        # overridden to make public
         return super(BeanContainer, self).addBeanAt(index, bean)
 
+
     def addAll(self, collection):
-        # overridden to make public
         super(BeanContainer, self).addAll(collection)

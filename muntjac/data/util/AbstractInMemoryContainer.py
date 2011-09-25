@@ -1,13 +1,28 @@
-# -*- coding: utf-8 -*-
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.data.util.DefaultItemSorter import (DefaultItemSorter,)
-from com.vaadin.data.Container import (Container, Indexed, ItemSetChangeNotifier,)
-from com.vaadin.data.util.AbstractContainer import (AbstractContainer,)
-from com.vaadin.data.util.ListSet import (ListSet,)
-# from com.vaadin.data.Container.ItemSetChangeNotifier import (ItemSetChangeNotifier,)
+# Copyright (C) 2011 Vaadin Ltd
+# Copyright (C) 2011 Richard Lincoln
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+from muntjac.data.util.DefaultItemSorter import DefaultItemSorter
+from muntjac.data.Container import Container, Indexed, ItemSetChangeNotifier,\
+    Sortable
+from muntjac.data.util.AbstractContainer import AbstractContainer
+from muntjac.data.util.ListSet import ListSet
 
 
-class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier, Container, Indexed):
+class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier,
+                                Container, Indexed):
     """Abstract {@link Container} class that handles common functionality for
     in-memory containers. Concrete in-memory container classes can either inherit
     this class, inherit {@link AbstractContainer}, or implement the
@@ -69,40 +84,43 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier, Contai
 
     @since 6.6
     """
-    # An ordered {@link List} of all item identifiers in the container,
-    # including those that have been filtered out.
-    # 
-    # Must not be null.
-
-    _allItemIds = None
-    # An ordered {@link List} of item identifiers in the container after
-    # filtering, excluding those that have been filtered out.
-    # 
-    # This is what the external API of the {@link Container} interface and its
-    # subinterfaces shows (e.g. {@link #size()}, {@link #nextItemId(Object)}).
-    # 
-    # If null, the full item id list is used instead.
-
-    _filteredItemIds = None
-    # Filters that are applied to the container to limit the items visible in
-    # it
-
-    _filters = set()
-    # The item sorter which is used for sorting the container.
-    _itemSorter = DefaultItemSorter()
-    # Constructors
 
     def __init__(self):
         """Constructor for an abstract in-memory container."""
+
+        # An ordered {@link List} of all item identifiers in the container,
+        # including those that have been filtered out.
+        #
+        # Must not be null.
+        self._allItemIds = None
+
+        # An ordered {@link List} of item identifiers in the container after
+        # filtering, excluding those that have been filtered out.
+        #
+        # This is what the external API of the {@link Container} interface and its
+        # subinterfaces shows (e.g. {@link #size()}, {@link #nextItemId(Object)}).
+        #
+        # If null, the full item id list is used instead.
+        self._filteredItemIds = None
+
+        # Filters that are applied to the container to limit the items visible in
+        # it
+        self._filters = set()
+
+        # The item sorter which is used for sorting the container.
+        self._itemSorter = DefaultItemSorter()
+
         # Container interface methods with more specific return class
         # default implementation, can be overridden
-        self.setAllItemIds(ListSet())
+        self.setAllItemIds( ListSet() )
+
 
     def getItem(self, itemId):
         if self.containsId(itemId):
             return self.getUnfilteredItem(itemId)
         else:
             return None
+
 
     def getUnfilteredItem(self, itemId):
         """Get an item even if filtered out.
@@ -112,27 +130,32 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier, Contai
         @param itemId
         @return
         """
-        # cannot override getContainerPropertyIds() and getItemIds(): if subclass
-        # uses Object as ITEMIDCLASS or PROPERTYIDCLASS, Collection<Object> cannot
-        # be cast to Collection<MyInterface>
-        # public abstract Collection<PROPERTYIDCLASS> getContainerPropertyIds();
-        # public abstract Collection<ITEMIDCLASS> getItemIds();
-        # Container interface method implementations
         pass
+
+
+    # cannot override getContainerPropertyIds() and getItemIds(): if subclass
+    # uses Object as ITEMIDCLASS or PROPERTYIDCLASS, Collection<Object> cannot
+    # be cast to Collection<MyInterface>
+    # public abstract Collection<PROPERTYIDCLASS> getContainerPropertyIds();
+    # public abstract Collection<ITEMIDCLASS> getItemIds();
+    # Container interface method implementations
+
 
     def size(self):
         return len(self.getVisibleItemIds())
+
 
     def containsId(self, itemId):
         # only look at visible items after filtering
         if itemId is None:
             return False
         else:
-            return self.getVisibleItemIds().contains(itemId)
+            return itemId in self.getVisibleItemIds()
+
 
     def getItemIds(self):
-        # Container.Ordered
-        return Collections.unmodifiableCollection(self.getVisibleItemIds())
+        return list(self.getVisibleItemIds())
+
 
     def nextItemId(self, itemId):
         index = self.indexOfId(itemId)
@@ -142,6 +165,7 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier, Contai
             # out of bounds
             return None
 
+
     def prevItemId(self, itemId):
         index = self.indexOfId(itemId)
         if index > 0:
@@ -150,11 +174,13 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier, Contai
             # out of bounds
             return None
 
+
     def firstItemId(self):
         if len(self) > 0:
             return self.getIdByIndex(0)
         else:
             return None
+
 
     def lastItemId(self):
         if len(self) > 0:
@@ -162,79 +188,64 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier, Contai
         else:
             return None
 
+
     def isFirstId(self, itemId):
         if itemId is None:
             return False
+
         return itemId == self.firstItemId()
 
+
     def isLastId(self, itemId):
-        # Container.Indexed
         if itemId is None:
             return False
+
         return itemId == self.lastItemId()
+
 
     def getIdByIndex(self, index):
         return self.getVisibleItemIds().get(index)
 
+
     def indexOfId(self, itemId):
-        # methods that are unsupported by default, override to support
         return self.getVisibleItemIds().index(itemId)
 
-    def addItemAt(self, *args):
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            index, = _0
-            raise self.UnsupportedOperationException('Adding items not supported. Override the relevant addItem*() methods if required as specified in AbstractInMemoryContainer javadoc.')
-        elif _1 == 2:
-            index, newItemId = _0
-            raise self.UnsupportedOperationException('Adding items not supported. Override the relevant addItem*() methods if required as specified in AbstractInMemoryContainer javadoc.')
-        else:
-            raise ARGERROR(1, 2)
 
-    def addItemAfter(self, *args):
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            previousItemId, = _0
-            raise self.UnsupportedOperationException('Adding items not supported. Override the relevant addItem*() methods if required as specified in AbstractInMemoryContainer javadoc.')
-        elif _1 == 2:
-            previousItemId, newItemId = _0
-            raise self.UnsupportedOperationException('Adding items not supported. Override the relevant addItem*() methods if required as specified in AbstractInMemoryContainer javadoc.')
-        else:
-            raise ARGERROR(1, 2)
+    def addItemAt(self, index, newItemId=None):
+        raise NotImplementedError, 'Adding items not supported. Override the relevant addItem*() methods if required as specified in AbstractInMemoryContainer javadoc.'
 
-    def addItem(self, *args):
-        _0 = args
-        _1 = len(args)
-        if _1 == 0:
-            raise self.UnsupportedOperationException('Adding items not supported. Override the relevant addItem*() methods if required as specified in AbstractInMemoryContainer javadoc.')
-        elif _1 == 1:
-            itemId, = _0
-            raise self.UnsupportedOperationException('Adding items not supported. Override the relevant addItem*() methods if required as specified in AbstractInMemoryContainer javadoc.')
-        else:
-            raise ARGERROR(0, 1)
+
+    def addItemAfter(self, previousItemId, newItemId=None):
+        raise NotImplementedError, 'Adding items not supported. Override the relevant addItem*() methods if required as specified in AbstractInMemoryContainer javadoc.'
+
+
+    def addItem(self, itemId=None):
+        raise NotImplementedError, 'Adding items not supported. Override the relevant addItem*() methods if required as specified in AbstractInMemoryContainer javadoc.'
+
 
     def removeItem(self, itemId):
-        raise self.UnsupportedOperationException('Removing items not supported. Override the removeItem() method if required as specified in AbstractInMemoryContainer javadoc.')
+        raise NotImplementedError, 'Removing items not supported. Override the removeItem() method if required as specified in AbstractInMemoryContainer javadoc.'
+
 
     def removeAllItems(self):
-        raise self.UnsupportedOperationException('Removing items not supported. Override the removeAllItems() method if required as specified in AbstractInMemoryContainer javadoc.')
+        raise NotImplementedError, 'Removing items not supported. Override the removeAllItems() method if required as specified in AbstractInMemoryContainer javadoc.'
 
-    def addContainerProperty(self, propertyId, type, defaultValue):
-        raise self.UnsupportedOperationException('Adding container properties not supported. Override the addContainerProperty() method if required.')
+
+    def addContainerProperty(self, propertyId, typ, defaultValue):
+        raise NotImplementedError, 'Adding container properties not supported. Override the addContainerProperty() method if required.'
+
 
     def removeContainerProperty(self, propertyId):
-        # ItemSetChangeNotifier
-        raise self.UnsupportedOperationException('Removing container properties not supported. Override the addContainerProperty() method if required.')
+        raise NotImplementedError, 'Removing container properties not supported. Override the addContainerProperty() method if required.'
+
 
     def addListener(self, listener):
         super(AbstractInMemoryContainer, self).addListener(listener)
 
+
     def removeListener(self, listener):
-        # internal methods
-        # Filtering support
         super(AbstractInMemoryContainer, self).removeListener(listener)
+
 
     def filterAll(self):
         """Filter the view to recreate the visible item list from the unfiltered
@@ -243,6 +254,7 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier, Contai
         """
         if self.doFilterContainer(not self.getFilters().isEmpty()):
             self.fireItemSetChange()
+
 
     def doFilterContainer(self, hasFilters):
         """Filters the data in the container and updates internal data structures.
@@ -259,29 +271,37 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier, Contai
             changed = len(self.getAllItemIds()) != len(self.getVisibleItemIds())
             self.setFilteredItemIds(None)
             return changed
+
         # Reset filtered list
         originalFilteredItemIds = self.getFilteredItemIds()
         wasUnfiltered = False
         if originalFilteredItemIds is None:
-            originalFilteredItemIds = Collections.emptyList()
+            originalFilteredItemIds = list()
             wasUnfiltered = True
+
         self.setFilteredItemIds(ListSet())
+
         # Filter
         equal = True
-        origIt = originalFilteredItemIds
-        _0 = True
-        i = self.getAllItemIds()
-        while True:
-            if _0 is True:
-                _0 = False
-            if not i.hasNext():
-                break
-            id = i.next()
-            if self.passesFilters(id):
+        origIt = iter(originalFilteredItemIds)
+        for idd in self.getAllItemIds():
+            if self.passesFilters(idd):
                 # filtered list comes from the full list, can use ==
-                equal = equal and origIt.hasNext() and origIt.next() == id
-                self.getFilteredItemIds().add(id)
-        return ((wasUnfiltered and not self.getAllItemIds().isEmpty()) or (not equal)) or origIt.hasNext()
+                try:
+                    equal = equal and origIt.next() == idd  # FIXME hasNext
+                except StopIteration:
+                    equal = False
+
+                self.getFilteredItemIds().append(idd)
+
+        try:
+            origIt.next()
+            result = True
+        except StopIteration:
+            result = (wasUnfiltered and len(self.getAllItemIds() > 0)) or (not equal)  # FIXME hasNext
+
+        return result
+
 
     def passesFilters(self, itemId):
         """Checks if the given itemId passes the filters set for the container. The
@@ -294,16 +314,17 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier, Contai
                 false otherwise.
         """
         item = self.getUnfilteredItem(itemId)
-        if self.getFilters().isEmpty():
+        if len(self.getFilters()) == 0:
             return True
-        i = self.getFilters()
-        while i.hasNext():
-            f = i.next()
+
+        for f in self.getFilters():
             if not f.passesFilter(itemId, item):
                 return False
+
         return True
 
-    def addFilter(self, filter):
+
+    def addFilter(self, fltr):
         """Adds a container filter and re-filter the view.
 
         The filter must implement Filter and its sub-filters (if any) must also
@@ -322,28 +343,23 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier, Contai
         @throws UnsupportedFilterException
                     if the filter is detected as not supported by the container
         """
-        self.getFilters().add(filter)
+        self.getFilters().add(fltr)
         self.filterAll()
 
-    def removeFilter(self, filter):
+
+    def removeFilter(self, fltr):
         """Remove a specific container filter and re-filter the view (if necessary).
 
         This can be used to implement
         {@link Filterable#removeContainerFilter(com.vaadin.data.Container.Filter)}
         .
         """
-        _0 = True
-        iterator = self.getFilters()
-        while True:
-            if _0 is True:
-                _0 = False
-            if not iterator.hasNext():
-                break
-            f = iterator.next()
-            if f == filter:
-                iterator.remove()
+        for f in self.getFilters():
+            if f == fltr:
+                self.getFilters().remove()
                 self.filterAll()
                 return
+
 
     def removeAllFilters(self):
         """Remove all container filters for all properties and re-filter the view.
@@ -351,10 +367,12 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier, Contai
         This can be used to implement
         {@link Filterable#removeAllContainerFilters()}.
         """
-        if self.getFilters().isEmpty():
+        if len(self.getFilters()) == 0:
             return
+
         self.getFilters().clear()
         self.filterAll()
+
 
     def isPropertyFiltered(self, propertyId):
         """Checks if there is a filter that applies to a given property.
@@ -362,14 +380,15 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier, Contai
         @param propertyId
         @return true if there is an active filter for the property
         """
-        if self.getFilters().isEmpty() or (propertyId is None):
+        if len(self.getFilters()) == 0 or (propertyId is None):
             return False
-        i = self.getFilters()
-        while i.hasNext():
-            f = i.next()
+
+        for f in self.getFilters():
             if f.appliesToProperty(propertyId):
                 return True
+
         return False
+
 
     def removeFilters(self, propertyId):
         """Remove all container filters for a given property identifier and
@@ -382,25 +401,21 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier, Contai
         @param propertyId
         @return Collection<Filter> removed filters
         """
-        # sorting
-        if self.getFilters().isEmpty() or (propertyId is None):
-            return Collections.emptyList()
-        removedFilters = LinkedList()
-        _0 = True
-        iterator = self.getFilters()
-        while True:
-            if _0 is True:
-                _0 = False
-            if not iterator.hasNext():
-                break
-            f = iterator.next()
+        if len(self.getFilters()) == 0 or (propertyId is None):
+            return list()
+
+        removedFilters = list()
+        for f in self.getFilters():
             if f.appliesToProperty(propertyId):
-                removedFilters.add(f)
-                iterator.remove()
-        if not removedFilters.isEmpty():
+                removedFilters.append(f)
+                self.getFilters().remove()
+
+        if len(removedFilters) > 0:
             self.filterAll()
             return removedFilters
-        return Collections.emptyList()
+
+        return list()
+
 
     def getItemSorter(self):
         """Returns the ItemSorter used for comparing items in a sort. See
@@ -409,6 +424,7 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier, Contai
         @return The ItemSorter used for comparing two items in a sort.
         """
         return self._itemSorter
+
 
     def setItemSorter(self, itemSorter):
         """Sets the ItemSorter used for comparing items in a sort. The
@@ -422,6 +438,7 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier, Contai
         """
         self._itemSorter = itemSorter
 
+
     def sortContainer(self, propertyId, ascending):
         """Sort base implementation to be used to implement {@link Sortable}.
 
@@ -432,16 +449,20 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier, Contai
              boolean[])
         """
         if not isinstance(self, Sortable):
-            raise self.UnsupportedOperationException('Cannot sort a Container that does not implement Sortable')
+            raise NotImplementedError, 'Cannot sort a Container that does not implement Sortable'
+
         # Set up the item sorter for the sort operation
         self.getItemSorter().setSortProperties(self, propertyId, ascending)
+
         # Perform the actual sort
         self.doSort()
+
         # Post sort updates
         if self.isFiltered():
             self.filterAll()
         else:
             self.fireItemSetChange()
+
 
     def doSort(self):
         """Perform the sorting of the data structures in the container. This is
@@ -450,21 +471,22 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier, Contai
         <code>Collections.sort(aCollection, getItemSorter())</code> on all arrays
         (containing item ids) that need to be sorted.
         """
-        Collections.sort(self.getAllItemIds(), self.getItemSorter())
+        sorted(self.getAllItemIds(), key=self.getItemSorter())  # FIXME sort
+
 
     def getSortablePropertyIds(self):
         """Returns the sortable property identifiers for the container. Can be used
         to implement {@link Sortable#getSortableContainerPropertyIds()}.
         """
-        # removing items
-        sortables = LinkedList()
+        sortables = list()
+
         for propertyId in self.getContainerPropertyIds():
             propertyType = self.getType(propertyId)
-            if (
-                self.Comparable.isAssignableFrom(propertyType) or propertyType.isPrimitive()
-            ):
-                sortables.add(propertyId)
+            if hasattr(propertyType, '__eq__') or isinstance(propertyType, (int, float, bool)):  # FIXME Comparable isPrimitive
+                sortables.append(propertyId)
+
         return sortables
+
 
     def internalRemoveAllItems(self):
         """Removes all items from the internal data structures of this class. This
@@ -478,6 +500,7 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier, Contai
         if self.isFiltered():
             self.getFilteredItemIds().clear()
 
+
     def internalRemoveItem(self, itemId):
         """Removes a single item from the internal data structures of this class.
         This can be used to implement {@link #removeItem(Object)} in subclasses.
@@ -490,13 +513,15 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier, Contai
         @return true if an item was successfully removed, false if failed to
                 remove or no such item
         """
-        # adding items
         if itemId is None:
             return False
+
         result = self.getAllItemIds().remove(itemId)
         if result and self.isFiltered():
             self.getFilteredItemIds().remove(itemId)
+
         return result
+
 
     def internalAddAt(self, position, itemId, item):
         """Adds the bean to all internal data structures at the given position.
@@ -522,20 +547,23 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier, Contai
 
         @return ITEMCLASS if the item was added successfully, null otherwise
         """
-        if (
-            (((position < 0) or (position > len(self.getAllItemIds()))) or (itemId is None)) or (item is None)
-        ):
+        if position < 0 or position > len(self.getAllItemIds()) \
+                or itemId is None or item is None:
             return None
+
         # Make sure that the item has not been added previously
-        if self.getAllItemIds().contains(itemId):
+        if itemId in self.getAllItemIds():
             return None
+
         # "filteredList" will be updated in filterAll() which should be invoked
         # by the caller after calling this method.
         self.getAllItemIds().add(position, itemId)
         self.registerNewItem(position, itemId, item)
+
         return item
 
-    def internalAddItemAtEnd(self, newItemId, item, filter):
+
+    def internalAddItemAtEnd(self, newItemId, item, fltr):
         """Add an item at the end of the container, and perform filtering if
         necessary. An event is fired if the filtered view changes.
 
@@ -550,15 +578,18 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier, Contai
         @return item added or null if no item was added
         """
         newItem = self.internalAddAt(len(self.getAllItemIds()), newItemId, item)
-        if newItem is not None and filter:
+
+        if newItem is not None and fltr:
             # TODO filter only this item, use fireItemAdded()
             self.filterAll()
             if not self.isFiltered():
                 # TODO hack: does not detect change in filterAll() in this case
                 self.fireItemAdded(self.indexOfId(newItemId), newItemId, item)
+
         return newItem
 
-    def internalAddItemAfter(self, previousItemId, newItemId, item, filter):
+
+    def internalAddItemAfter(self, previousItemId, newItemId, item, fltr):
         """Add an item after a given (visible) item, and perform filtering. An event
         is fired if the filtered view changes.
 
@@ -582,16 +613,20 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier, Contai
         if previousItemId is None:
             newItem = self.internalAddAt(0, newItemId, item)
         elif self.containsId(previousItemId):
-            newItem = self.internalAddAt(self.getAllItemIds().index(previousItemId) + 1, newItemId, item)
-        if newItem is not None and filter:
+            newItem = self.internalAddAt(self.getAllItemIds().index(previousItemId) + 1,
+                                         newItemId, item)
+
+        if newItem is not None and fltr:
             # TODO filter only this item, use fireItemAdded()
             self.filterAll()
             if not self.isFiltered():
                 # TODO hack: does not detect change in filterAll() in this case
                 self.fireItemAdded(self.indexOfId(newItemId), newItemId, item)
+
         return newItem
 
-    def internalAddItemAt(self, index, newItemId, item, filter):
+
+    def internalAddItemAt(self, index, newItemId, item, fltr):
         """Add an item at a given (visible after filtering) item index, and perform
         filtering. An event is fired if the filtered view changes.
 
@@ -611,10 +646,12 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier, Contai
             return None
         elif index == 0:
             # add before any item, visible or not
-            return self.internalAddItemAfter(None, newItemId, item, filter)
+            return self.internalAddItemAfter(None, newItemId, item, fltr)
         else:
             # if index==size(), adds immediately after last visible item
-            return self.internalAddItemAfter(self.getIdByIndex(index - 1), newItemId, item, filter)
+            return self.internalAddItemAfter(self.getIdByIndex(index - 1),
+                                             newItemId, item, fltr)
+
 
     def registerNewItem(self, position, itemId, item):
         """Registers a new item as having been added to the container. This can
@@ -629,8 +666,8 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier, Contai
         @param itemId
         @param item
         """
-        # item set change notifications
         pass
+
 
     def fireItemAdded(self, position, itemId, item):
         """Notify item set change listeners that an item has been added to the
@@ -648,6 +685,7 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier, Contai
         """
         self.fireItemSetChange()
 
+
     def fireItemRemoved(self, position, itemId):
         """Notify item set change listeners that an item has been removed from the
         container.
@@ -662,8 +700,8 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier, Contai
                    id of the removed item, of type {@link Object} to satisfy
                    {@link Container#removeItem(Object)} API
         """
-        # visible and filtered item identifier lists
         self.fireItemSetChange()
+
 
     def getVisibleItemIds(self):
         """Returns the internal list of visible item identifiers after filtering.
@@ -675,12 +713,14 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier, Contai
         else:
             return self.getAllItemIds()
 
+
     def isFiltered(self):
         """Returns true is the container has active filters.
 
         @return true if the container is currently filtered
         """
         return self._filteredItemIds is not None
+
 
     def setFilteredItemIds(self, filteredItemIds):
         """Internal helper method to set the internal list of filtered item
@@ -690,6 +730,7 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier, Contai
         @param filteredItemIds
         """
         self._filteredItemIds = filteredItemIds
+
 
     def getFilteredItemIds(self):
         """Internal helper method to get the internal list of filtered item
@@ -701,6 +742,7 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier, Contai
         """
         return self._filteredItemIds
 
+
     def setAllItemIds(self, allItemIds):
         """Internal helper method to set the internal list of all item identifiers.
         Should not be used outside this class except for implementing clone(),
@@ -710,6 +752,7 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier, Contai
         """
         self._allItemIds = allItemIds
 
+
     def getAllItemIds(self):
         """Internal helper method to get the internal list of all item identifiers.
         Avoid using this method outside this class, may disappear in future
@@ -718,6 +761,7 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier, Contai
         @return List<ITEMIDTYPE>
         """
         return self._allItemIds
+
 
     def setFilters(self, filters):
         """Set the internal collection of filters without performing filtering.
@@ -730,6 +774,7 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier, Contai
         @param filters
         """
         self._filters = filters
+
 
     def getFilters(self):
         """Returns the internal collection of filters. The returned collection
