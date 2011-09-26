@@ -14,10 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# from java.io.IOException import (IOException,)
-# from java.io.ObjectInputStream import (ObjectInputStream,)
-# from java.io.ObjectOutputStream import (ObjectOutputStream,)
-
 
 class SerializerHelper(object):
     """Helper class for performing serialization. Most of the methods are here are
@@ -40,9 +36,10 @@ class SerializerHelper(object):
                     Rethrows any IOExceptions from the ObjectOutputStream
         """
         if cls is None:
-            out.writeObject(None)
+            out.writeObject(None)  # FIXME ObjectOutputStream
         else:
             out.writeObject(cls.getName())
+
 
     @classmethod
     def writeClassArray(cls, out, classes):
@@ -58,20 +55,14 @@ class SerializerHelper(object):
                     Rethrows any IOExceptions from the ObjectOutputStream
         """
         if classes is None:
-            out.writeObject(None)
+            out.writeObject(None)  # FIXME ObjectOutputStream
         else:
             classNames = [None] * len(classes)
-            _0 = True
-            i = 0
-            while True:
-                if _0 is True:
-                    _0 = False
-                else:
-                    i += 1
-                if not (i < len(classes)):
-                    break
+            for i in range(len(classes)):
                 classNames[i] = classes[i].getName()
+
             out.writeObject(classNames)
+
 
     @classmethod
     def readClassArray(cls, in_):
@@ -87,26 +78,19 @@ class SerializerHelper(object):
         @throws IOException
                     Rethrows IOExceptions from the ObjectInputStream
         """
-        # List of primitive classes. Google App Engine has problems
-        # serializing/deserializing these (#3064).
-
-        classNames = in_.readObject()
+        classNames = in_.readObject()  # FIXME ObjectInputStream
         if classNames is None:
             return None
         classes = [None] * len(classNames)
-        _0 = True
-        i = 0
-        while True:
-            if _0 is True:
-                _0 = False
-            else:
-                i += 1
-            if not (i < len(classNames)):
-                break
+        for i in range(len(classNames)):
             classes[i] = cls.resolveClass(classNames[i])
+
         return classes
 
-    _primitiveClasses = [PrimitiveType, PrimitiveType, PrimitiveType, PrimitiveType, PrimitiveType, PrimitiveType, PrimitiveType, PrimitiveType]
+    # List of primitive classes. Google App Engine has problems
+    # serializing/deserializing these (#3064).
+    _primitiveClasses = [int, long, float, bool]
+
 
     @classmethod
     def resolveClass(cls, className):
@@ -121,7 +105,9 @@ class SerializerHelper(object):
         for c in cls._primitiveClasses:
             if className == c.getName():
                 return c
+
         return (lambda x: getattr(__import__(x.rsplit('.', 1)[0], fromlist=x.rsplit('.', 1)[0]), x.split('.')[-1]))(className)
+
 
     @classmethod
     def readClass(cls, in_):
