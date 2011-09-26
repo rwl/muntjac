@@ -14,8 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.terminal.gwt.client.Util import (Util,)
+from muntjac.terminal.gwt.client.Util import Util
 # from com.google.gwt.dom.client.NativeEvent import (NativeEvent,)
 # from java.io.Serializable import (Serializable,)
 

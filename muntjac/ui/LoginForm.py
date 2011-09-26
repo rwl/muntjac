@@ -13,8 +13,6 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from muntjac.terminal.ApplicationResource import ApplicationResource
-from muntjac.terminal.URIHandler import URIHandler
 
 try:
     from cStringIO import StringIO
@@ -22,11 +20,14 @@ except ImportError, e:
     from StringIO import StringIO
 
 from muntjac.ui.Component import Event
-from muntjac.terminal.gwt.client.ApplicationConnection import ApplicationConnection
 from muntjac.ui.Embedded import Embedded
-from muntjac.terminal.DownloadStream import DownloadStream
 from muntjac.ui.CustomComponent import CustomComponent
+from muntjac.terminal.ApplicationResource import ApplicationResource
+from muntjac.terminal.URIHandler import URIHandler
+from muntjac.terminal.DownloadStream import DownloadStream
 from muntjac.terminal.ParameterHandler import ParameterHandler
+
+from muntjac.terminal.gwt.client.ApplicationConnection import ApplicationConnection
 
 
 class LoginEvent(Event):

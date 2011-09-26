@@ -16,8 +16,9 @@
 
 from muntjac.ui.AbstractTextField import AbstractTextField
 from muntjac.data.Property import Property
-from muntjac.terminal.gwt.client.ui.VPasswordField import VPasswordField
-from muntjac.ui.ClientWidget import LoadStyle
+
+#from muntjac.terminal.gwt.client.ui.VPasswordField import VPasswordField
+#from muntjac.ui.ClientWidget import LoadStyle
 
 
 class PasswordField(AbstractTextField):
@@ -25,8 +26,8 @@ class PasswordField(AbstractTextField):
     entered text is not displayed on the screen.
     """
 
-    CLIENT_WIDGET = VPasswordField
-    LOAD_STYLE = LoadStyle.EAGER
+#    CLIENT_WIDGET = VPasswordField
+#    LOAD_STYLE = LoadStyle.EAGER
 
     def __init__(self, *args):
         """Constructs an empty PasswordField.

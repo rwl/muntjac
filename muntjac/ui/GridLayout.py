@@ -24,10 +24,12 @@ from muntjac.ui.AbstractLayout import AbstractLayout
 from muntjac.ui.Layout import AlignmentHandler, Layout, SpacingHandler
 from muntjac.ui.AlignmentUtils import AlignmentUtils
 from muntjac.terminal.gwt.client.EventId import EventId
+
 from muntjac.event.LayoutEvents import LayoutClickNotifier, LayoutClickEvent,\
     LayoutClickListener
-from muntjac.terminal.gwt.client.ui.VGridLayout import VGridLayout
-from muntjac.ui.ClientWidget import LoadStyle
+
+#from muntjac.terminal.gwt.client.ui.VGridLayout import VGridLayout
+#from muntjac.ui.ClientWidget import LoadStyle
 
 
 class GridLayout(AbstractLayout, Layout, AlignmentHandler, Layout,
@@ -52,8 +54,8 @@ class GridLayout(AbstractLayout, Layout, AlignmentHandler, Layout,
     @since 3.0
     """
 
-    CLIENT_WIDGET = VGridLayout
-    LOAD_STYLE = LoadStyle.EAGER
+#    CLIENT_WIDGET = VGridLayout
+#    LOAD_STYLE = LoadStyle.EAGER
 
     _CLICK_EVENT = EventId.LAYOUT_CLICK
     _ALIGNMENT_DEFAULT = Alignment.TOP_LEFT

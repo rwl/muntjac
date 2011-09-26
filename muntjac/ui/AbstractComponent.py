@@ -16,12 +16,13 @@
 
 import re
 
-from muntjac.ui.Component import Component, Listener, Event as ComponentEvent
+from muntjac.ui.Component import \
+    Component, Listener, Focusable, Event as ComponentEvent
+
 from muntjac.event.MethodEventSource import MethodEventSource
 from muntjac.terminal.gwt.server.ComponentSizeValidator import ComponentSizeValidator
 from muntjac.event.EventRouter import EventRouter
 from muntjac.terminal.Terminal import ErrorEvent as TerminalErrorEvent
-from muntjac.terminal.gwt.client.Focusable import Focusable
 from muntjac.terminal.Paintable import RepaintRequestEvent
 
 

@@ -15,8 +15,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.ui.OrderedLayout import OrderedLayout
-from muntjac.terminal.gwt.client.ui.VFormLayout import VFormLayout
-from muntjac.ui.ClientWidget import LoadStyle
+
+#from muntjac.terminal.gwt.client.ui.VFormLayout import VFormLayout
+#from muntjac.ui.ClientWidget import LoadStyle
 
 
 class FormLayout(OrderedLayout):
@@ -34,8 +35,8 @@ class FormLayout(OrderedLayout):
     bottom are by default on.
     """
 
-    CLIENT_WIDGET = VFormLayout
-    LOAD_STYLE = LoadStyle.EAGER
+#    CLIENT_WIDGET = VFormLayout
+#    LOAD_STYLE = LoadStyle.EAGER
 
     def __init__(self):
         super(FormLayout, self)()

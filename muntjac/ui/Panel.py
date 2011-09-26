@@ -17,18 +17,18 @@
 from muntjac.terminal.Scrollable import Scrollable
 from muntjac.event.ActionManager import ActionManager
 from muntjac.event.Action import Action, Notifier
-from muntjac.terminal.gwt.client.ui.VPanel import VPanel
 from muntjac.ui.AbstractComponentContainer import AbstractComponentContainer
-from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
 from muntjac.ui.VerticalLayout import VerticalLayout
 
 from muntjac.ui.ComponentContainer import \
     ComponentContainer, ComponentAttachListener, ComponentDetachListener
 
 from muntjac.ui.Component import Focusable
-from muntjac.ui.ClientWidget import LoadStyle
 from muntjac.ui.Layout import Layout
 from muntjac.event.MouseEvents import ClickEvent, ClickListener
+
+from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
+from muntjac.terminal.gwt.client.ui.VPanel import VPanel
 
 
 class Panel(AbstractComponentContainer, Scrollable, ComponentContainer,
@@ -42,10 +42,11 @@ class Panel(AbstractComponentContainer, Scrollable, ComponentContainer,
     @since 3.0
     """
 
-    CLIENT_WIDGET = VPanel
-    LOAD_STYLE = LoadStyle.EAGER
+#    CLIENT_WIDGET = VPanel
+#    LOAD_STYLE = LoadStyle.EAGER
 
     _CLICK_EVENT = VPanel.CLICK_EVENT_IDENTIFIER
+
     # Removes extra decorations from the Panel.
     #
     # @deprecated this style is no longer part of the core framework and this

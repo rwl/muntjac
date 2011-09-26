@@ -15,8 +15,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.ui.AbstractSelect import AbstractSelect
+
 from muntjac.terminal.gwt.client.ui.VTwinColSelect import VTwinColSelect
-from muntjac.ui.ClientWidget import LoadStyle
 
 
 class TwinColSelect(AbstractSelect):
@@ -24,8 +24,8 @@ class TwinColSelect(AbstractSelect):
     side for selected items.
     """
 
-    CLIENT_WIDGET = VTwinColSelect
-    LOAD_STYLE = LoadStyle.EAGER
+#    CLIENT_WIDGET = VTwinColSelect
+#    LOAD_STYLE = LoadStyle.EAGER
 
     def __init__(self, *args):
         """None

@@ -15,6 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.ui.ComponentContainer import ComponentContainer
+
 from muntjac.terminal.gwt.client.ui.VMarginInfo import VMarginInfo
 from muntjac.terminal.gwt.client.ui.AlignmentInfo import Bits
 

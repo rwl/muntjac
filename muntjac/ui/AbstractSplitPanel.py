@@ -17,9 +17,10 @@
 from muntjac.event.ComponentEventListener import ComponentEventListener
 from muntjac.ui.VerticalLayout import VerticalLayout
 from muntjac.ui.AbstractLayout import AbstractLayout
-from muntjac.terminal.gwt.client.ui.VSplitPanel import VSplitPanel
 from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
 from muntjac.event.MouseEvents import ClickEvent as MouseClickEvent
+
+from muntjac.terminal.gwt.client.ui.VSplitPanel import VSplitPanel
 
 
 class ComponentIterator(object):  # FIXME implement iterator

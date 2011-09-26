@@ -15,11 +15,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-
 class VerticalDropLocation(object):
+
     TOP = 'TOP'
     BOTTOM = 'BOTTOM'
     MIDDLE = 'MIDDLE'
+
     _values = [TOP, BOTTOM, MIDDLE]
 
     @classmethod

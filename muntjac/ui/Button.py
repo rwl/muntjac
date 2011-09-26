@@ -23,8 +23,9 @@ from muntjac.event.ShortcutListener import ShortcutListener
 from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
 from muntjac.data.Property import Property
 from muntjac.ui.Component import Event as ComponentEvent
-from muntjac.ui.ClientWidget import LoadStyle
-from muntjac.terminal.gwt.client.ui.VButton import VButton
+
+#from muntjac.ui.ClientWidget import LoadStyle
+#from muntjac.terminal.gwt.client.ui.VButton import VButton
 
 
 class Button(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNotifier):
@@ -36,8 +37,8 @@ class Button(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNotifie
     @since 3.0
     """
 
-    CLIENT_WIDGET = VButton  # FIXME annotate
-    LOAD_STYLE = LoadStyle.EAGER
+#    CLIENT_WIDGET = VButton  # FIXME annotate
+#    LOAD_STYLE = LoadStyle.EAGER
 
     def __init__(self, *args):
         """Creates a new push button. The value of the push button is false and it

@@ -21,8 +21,9 @@ from muntjac.event.LayoutEvents import LayoutClickEvent
 from muntjac.event.LayoutEvents import LayoutClickListener
 from muntjac.event.LayoutEvents import LayoutClickNotifier
 from muntjac.terminal.Sizeable import Sizeable
-from muntjac.terminal.gwt.client.ui.VAbsoluteLayout import VAbsoluteLayout
-from muntjac.ui.ClientWidget import LoadStyle
+
+#from muntjac.terminal.gwt.client.ui.VAbsoluteLayout import VAbsoluteLayout
+#from muntjac.ui.ClientWidget import LoadStyle
 
 
 class AbsoluteLayout(AbstractLayout, LayoutClickNotifier):
@@ -30,8 +31,8 @@ class AbsoluteLayout(AbstractLayout, LayoutClickNotifier):
     positioning.
     """
 
-    CLIENT_WIDGET = VAbsoluteLayout
-    LOAD_STYLE = LoadStyle.DEFERRED
+#    CLIENT_WIDGET = VAbsoluteLayout
+#    LOAD_STYLE = LoadStyle.DEFERRED
 
     _CLICK_EVENT = EventId.LAYOUT_CLICK
 

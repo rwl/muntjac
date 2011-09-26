@@ -15,9 +15,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.ui.AbstractLayout import AbstractLayout
-from muntjac.terminal.gwt.client.ui.VCustomLayout import VCustomLayout
-from muntjac.ui.ClientWidget import LoadStyle
 from muntjac.ui.Component import Component
+
+#from muntjac.terminal.gwt.client.ui.VCustomLayout import VCustomLayout
+#from muntjac.ui.ClientWidget import LoadStyle
 
 
 class CustomLayout(AbstractLayout):
@@ -50,8 +51,8 @@ class CustomLayout(AbstractLayout):
     @since 3.0
     """
 
-    CLIENT_WIDGET = VCustomLayout
-    LOAD_STYLE = LoadStyle.EAGER
+#    CLIENT_WIDGET = VCustomLayout
+#    LOAD_STYLE = LoadStyle.EAGER
 
     _BUFFER_SIZE = 10000
 

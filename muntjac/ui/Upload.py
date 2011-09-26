@@ -16,8 +16,6 @@
 
 from muntjac.ui.Component import Component, Focusable, Event as ComponentEvent
 from muntjac.ui.AbstractComponent import AbstractComponent
-from muntjac.terminal.gwt.client.ui.VUpload import VUpload
-from muntjac.ui.ClientWidget import LoadStyle
 
 from muntjac.terminal.StreamVariable import \
     StreamingProgressEvent, StreamVariable
@@ -27,6 +25,9 @@ from muntjac.terminal.gwt.server.NoInputStreamException import \
 
 from muntjac.terminal.gwt.server.NoOutputStreamException import \
     NoOutputStreamException
+
+#from muntjac.terminal.gwt.client.ui.VUpload import VUpload
+#from muntjac.ui.ClientWidget import LoadStyle
 
 
 class StartedListener(object):
@@ -156,8 +157,8 @@ class Upload(AbstractComponent, Component, Focusable):
     @since 3.0
     """
 
-    CLIENT_WIDGET = VUpload
-    LOAD_STYLE = LoadStyle.LAZY
+#    CLIENT_WIDGET = VUpload
+#    LOAD_STYLE = LoadStyle.LAZY
 
 
     def __init__(self, caption=None, uploadReceiver=None):

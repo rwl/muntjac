@@ -15,16 +15,17 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.ui.AbstractTextField import AbstractTextField
-from muntjac.terminal.gwt.client.ui.VTextArea import VTextArea
-from muntjac.ui.ClientWidget import LoadStyle
 from muntjac.data.Property import Property
+
+#from muntjac.terminal.gwt.client.ui.VTextArea import VTextArea
+#from muntjac.ui.ClientWidget import LoadStyle
 
 
 class TextArea(AbstractTextField):
     """A text field that supports multi line editing."""
 
-    CLIENT_WIDGET = VTextArea
-    LOAD_STYLE = LoadStyle.EAGER
+#    CLIENT_WIDGET = VTextArea
+#    LOAD_STYLE = LoadStyle.EAGER
 
     _DEFAULT_ROWS = 5
 

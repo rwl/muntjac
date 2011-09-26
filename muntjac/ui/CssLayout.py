@@ -18,8 +18,9 @@ from muntjac.ui.AbstractLayout import AbstractLayout
 from muntjac.terminal.gwt.client.EventId import EventId
 from muntjac.event.LayoutEvents import LayoutClickNotifier, \
     LayoutClickEvent, LayoutClickListener
-from muntjac.terminal.gwt.client.ui.VCssLayout import VCssLayout
-from muntjac.ui.ClientWidget import LoadStyle
+
+#from muntjac.terminal.gwt.client.ui.VCssLayout import VCssLayout
+#from muntjac.ui.ClientWidget import LoadStyle
 
 
 class CssLayout(AbstractLayout, LayoutClickNotifier):
@@ -63,8 +64,8 @@ class CssLayout(AbstractLayout, LayoutClickNotifier):
     @since 6.1 brought in from "FastLayouts" incubator project
     """
 
-    CLIENT_WIDGET = VCssLayout
-    LOAD_STYLE = LoadStyle.DEFERRED
+#    CLIENT_WIDGET = VCssLayout
+#    LOAD_STYLE = LoadStyle.DEFERRED
 
     _CLICK_EVENT = EventId.LAYOUT_CLICK
 

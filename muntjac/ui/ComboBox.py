@@ -15,9 +15,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.ui.Select import Select
-from muntjac.terminal.gwt.client.ui.VFilterSelect import VFilterSelect
 from muntjac.data.Container import Container
-from muntjac.ui.ClientWidget import LoadStyle
+
+#from muntjac.ui.ClientWidget import LoadStyle
+#from muntjac.terminal.gwt.client.ui.VFilterSelect import VFilterSelect
 
 
 class ComboBox(Select):
@@ -28,8 +29,8 @@ class ComboBox(Select):
     can not turn on multi-select mode.
     """
 
-    CLIENT_WIDGET = VFilterSelect  # FIXME use annotation
-    LOAD_STYLE = LoadStyle.DEFERRED
+#    CLIENT_WIDGET = VFilterSelect  # FIXME use annotation
+#    LOAD_STYLE = LoadStyle.DEFERRED
 
 
     def __init__(self, *args):

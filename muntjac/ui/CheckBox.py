@@ -16,14 +16,15 @@
 
 from muntjac.ui.Button import Button, ClickListener
 from muntjac.data.Property import Property
-from muntjac.terminal.gwt.client.ui.VCheckBox import VCheckBox
-from muntjac.ui.ClientWidget import LoadStyle
+
+#from muntjac.terminal.gwt.client.ui.VCheckBox import VCheckBox
+#from muntjac.ui.ClientWidget import LoadStyle
 
 
 class CheckBox(Button):
 
-    CLIENT_WIDGET = VCheckBox
-    LOAD_STYLE = LoadStyle.DEFERRED
+#    CLIENT_WIDGET = VCheckBox
+#    LOAD_STYLE = LoadStyle.DEFERRED
 
     def __init__(self, *args):
         """Creates a new switch button.

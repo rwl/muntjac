@@ -15,8 +15,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.ui.AbstractOrderedLayout import AbstractOrderedLayout
-from muntjac.terminal.gwt.client.ui.VOrderedLayout import VOrderedLayout
-from muntjac.ui.ClientWidget import LoadStyle
+
+#from muntjac.terminal.gwt.client.ui.VOrderedLayout import VOrderedLayout
+#from muntjac.ui.ClientWidget import LoadStyle
 
 
 class OrderedLayout(AbstractOrderedLayout):
@@ -35,8 +36,8 @@ class OrderedLayout(AbstractOrderedLayout):
                 extends).
     """
 
-    CLIENT_WIDGET = VOrderedLayout
-    LOAD_STYLE = LoadStyle.EAGER
+#    CLIENT_WIDGET = VOrderedLayout
+#    LOAD_STYLE = LoadStyle.EAGER
 
     # Components are to be laid out vertically.
     ORIENTATION_VERTICAL = 0

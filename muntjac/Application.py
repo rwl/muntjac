@@ -17,17 +17,17 @@
 import logging
 import locale
 
+from muntjac.util.event import EventObject, EventListener
 from muntjac.terminal.URIHandler import URIHandler
 from muntjac.terminal.SystemError import SystemErr
 from muntjac.terminal.Terminal import ErrorListener, Terminal
 from muntjac.terminal.ParameterHandler import ErrorEvent
 from muntjac.terminal.ErrorMessage import ErrorMessage
-from muntjac.util.event import EventObject, EventListener
-
 from muntjac.terminal.VariableOwner import ErrorEvent as VariableOwnerErrorEvent
 from muntjac.terminal.URIHandler import ErrorEvent as URIHandlerErrorEvent
 from muntjac.terminal.ParameterHandler import ErrorEvent as ParameterHandlerErrorEvent
 from muntjac.terminal.gwt.server.ChangeVariablesErrorEvent import ChangeVariablesErrorEvent
+from muntjac.ui.AbstractComponent import AbstractComponent
 
 
 class SystemMessages(object):

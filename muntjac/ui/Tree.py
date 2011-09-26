@@ -17,7 +17,6 @@
 from collections import deque
 from Queue import LifoQueue
 
-from muntjac.terminal.gwt.client.ui.VTree import VTree
 from muntjac.event.dd.acceptcriteria.TargetDetailIs import TargetDetailIs
 from muntjac.event.dd.DropTarget import DropTarget
 from muntjac.data.util.ContainerHierarchicalWrapper import ContainerHierarchicalWrapper
@@ -28,14 +27,17 @@ from muntjac.event.dd.acceptcriteria.ServerSideCriterion import ServerSideCriter
 from muntjac.event.dd.DragSource import DragSource
 from muntjac.event.dd.acceptcriteria.ClientSideCriterion import ClientSideCriterion
 from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
-from muntjac.ui.AbstractSelect import AbstractSelect, MultiSelectMode,\
-    AbstractSelectTargetDetails
 from muntjac.event.ItemClickEvent import ItemClickEvent, ItemClickNotifier, ItemClickSource
 from muntjac.event.DataBoundTransferable import DataBoundTransferable
 from muntjac.data.util.IndexedContainer import IndexedContainer
-from muntjac.terminal.gwt.client.ui.dd.VerticalDropLocation import VerticalDropLocation
 from muntjac.ui.ClientWidget import LoadStyle
 from muntjac.ui.Component import Event as ComponentEvent
+
+from muntjac.ui.AbstractSelect import \
+    AbstractSelect, MultiSelectMode, AbstractSelectTargetDetails
+
+from muntjac.terminal.gwt.client.ui.VTree import VTree
+from muntjac.terminal.gwt.client.ui.dd.VerticalDropLocation import VerticalDropLocation
 
 
 class TreeDragMode(object):

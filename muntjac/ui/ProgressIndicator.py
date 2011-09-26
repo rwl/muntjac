@@ -16,8 +16,9 @@
 
 from muntjac.data.util.ObjectProperty import ObjectProperty
 from muntjac.ui.AbstractField import AbstractField
-from muntjac.terminal.gwt.client.ui.VProgressIndicator import VProgressIndicator
-from muntjac.ui.ClientWidget import LoadStyle
+
+#from muntjac.terminal.gwt.client.ui.VProgressIndicator import VProgressIndicator
+#from muntjac.ui.ClientWidget import LoadStyle
 
 from muntjac.data.Property import \
     Property, ValueChangeListener, Viewer, ValueChangeNotifier
@@ -39,8 +40,8 @@ class ProgressIndicator(AbstractField, Property, Property, Viewer,
     @since 4
     """
 
-    CLIENT_WIDGET = VProgressIndicator
-    LOAD_STYLE = LoadStyle.EAGER
+#    CLIENT_WIDGET = VProgressIndicator
+#    LOAD_STYLE = LoadStyle.EAGER
 
     # Content mode, where the label contains only plain text. The getValue()
     # result is coded to XML when painting.

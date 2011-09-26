@@ -16,8 +16,9 @@
 
 from muntjac.ui.AbstractField import AbstractField
 from muntjac.data.Property import Property
-from muntjac.terminal.gwt.client.ui.richtextarea.VRichTextArea import VRichTextArea
-from muntjac.ui.ClientWidget import LoadStyle
+
+#from muntjac.terminal.gwt.client.ui.richtextarea.VRichTextArea import VRichTextArea
+#from muntjac.ui.ClientWidget import LoadStyle
 
 
 class RichTextArea(AbstractField):
@@ -28,8 +29,8 @@ class RichTextArea(AbstractField):
     into length of field.
     """
 
-    CLIENT_WIDGET = VRichTextArea
-    LOAD_STYLE = LoadStyle.LAZY
+#    CLIENT_WIDGET = VRichTextArea
+#    LOAD_STYLE = LoadStyle.LAZY
 
     def __init__(self, *args):
         """Constructs an empty <code>RichTextArea</code> with no caption.

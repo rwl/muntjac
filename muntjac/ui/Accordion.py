@@ -15,8 +15,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.ui.TabSheet import TabSheet
-from muntjac.terminal.gwt.client.ui.VAccordion import VAccordion
-from muntjac.ui.ClientWidget import LoadStyle
+
+#from muntjac.terminal.gwt.client.ui.VAccordion import VAccordion
+#from muntjac.ui.ClientWidget import LoadStyle
 
 
 class Accordion(TabSheet):
@@ -31,5 +32,5 @@ class Accordion(TabSheet):
     @see TabSheet
     """
 
-    CLIENT_WIDGET = VAccordion
-    LOAD_STYLE = LoadStyle.DEFERRED
+#    CLIENT_WIDGET = VAccordion
+#    LOAD_STYLE = LoadStyle.DEFERRED

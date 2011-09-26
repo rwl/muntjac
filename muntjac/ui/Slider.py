@@ -15,8 +15,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.ui.AbstractField import AbstractField
-from muntjac.terminal.gwt.client.ui.VSlider import VSlider
-from muntjac.ui.ClientWidget import LoadStyle
+
+#from muntjac.terminal.gwt.client.ui.VSlider import VSlider
+#from muntjac.ui.ClientWidget import LoadStyle
 
 
 class Slider(AbstractField):
@@ -56,8 +57,8 @@ class Slider(AbstractField):
     @author IT Mill Ltd.
     """
 
-    CLIENT_WIDGET = VSlider
-    LOAD_STYLE = LoadStyle.LAZY
+#    CLIENT_WIDGET = VSlider
+#    LOAD_STYLE = LoadStyle.LAZY
 
 
     ORIENTATION_HORIZONTAL = 0

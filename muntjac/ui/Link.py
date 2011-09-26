@@ -16,8 +16,9 @@
 
 from muntjac.ui.AbstractComponent import AbstractComponent
 from muntjac.ui.Window import Window
-from muntjac.terminal.gwt.client.ui.VLink import VLink
-from muntjac.ui.ClientWidget import LoadStyle
+
+#from muntjac.terminal.gwt.client.ui.VLink import VLink
+#from muntjac.ui.ClientWidget import LoadStyle
 
 
 class Link(AbstractComponent):
@@ -29,8 +30,8 @@ class Link(AbstractComponent):
     @since 3.0
     """
 
-    CLIENT_WIDGET = VLink
-    LOAD_STYLE = LoadStyle.EAGER
+#    CLIENT_WIDGET = VLink
+#    LOAD_STYLE = LoadStyle.EAGER
 
     # Target window border type constant: No window border
     TARGET_BORDER_NONE = Window.BORDER_NONE

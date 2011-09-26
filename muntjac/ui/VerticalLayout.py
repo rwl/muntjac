@@ -15,8 +15,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.ui.AbstractOrderedLayout import AbstractOrderedLayout
-from muntjac.terminal.gwt.client.ui.VVerticalLayout import VVerticalLayout
-from muntjac.ui.ClientWidget import LoadStyle
+
+#from muntjac.terminal.gwt.client.ui.VVerticalLayout import VVerticalLayout
+#from muntjac.ui.ClientWidget import LoadStyle
 
 
 class VerticalLayout(AbstractOrderedLayout):
@@ -32,8 +33,8 @@ class VerticalLayout(AbstractOrderedLayout):
     @since 5.3
     """
 
-    CLIENT_WIDGET = VVerticalLayout
-    LOAD_STYLE = LoadStyle.EAGER
+#    CLIENT_WIDGET = VVerticalLayout
+#    LOAD_STYLE = LoadStyle.EAGER
 
     def __init__(self):
         self.setWidth('100%')

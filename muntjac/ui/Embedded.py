@@ -14,11 +14,11 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.terminal.gwt.client.ui.VEmbedded import VEmbedded
 from muntjac.ui.AbstractComponent import AbstractComponent
 from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
-from muntjac.ui.ClientWidget import LoadStyle
 from muntjac.event.MouseEvents import ClickListener, ClickEvent
+
+from muntjac.terminal.gwt.client.ui.VEmbedded import VEmbedded
 
 
 class Embedded(AbstractComponent):
@@ -30,8 +30,8 @@ class Embedded(AbstractComponent):
     @since 3.0
     """
 
-    CLIENT_WIDGET = VEmbedded
-    LOAD_STYLE = LoadStyle.EAGER
+#    CLIENT_WIDGET = VEmbedded
+#    LOAD_STYLE = LoadStyle.EAGER
 
     _CLICK_EVENT = VEmbedded.CLICK_EVENT_IDENTIFIER
 

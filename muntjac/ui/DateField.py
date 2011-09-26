@@ -24,12 +24,12 @@ from muntjac.event.FieldEvents import BlurEvent, BlurListener, BlurNotifier, \
 
 from muntjac.ui.AbstractField import AbstractField
 from muntjac.data.Property import Property, ConversionException
-from muntjac.terminal.gwt.client.ui.VDateField import VDateField
-from muntjac.terminal.gwt.client.ui.VPopupCalendar import VPopupCalendar
-from muntjac.ui.ClientWidget import LoadStyle
 from muntjac.ui.Form import Form
 from muntjac.data.Validator import InvalidValueException
+from muntjac.terminal.gwt.client.ui.VDateField import VDateField
 
+#from muntjac.terminal.gwt.client.ui.VPopupCalendar import VPopupCalendar
+#from muntjac.ui.ClientWidget import LoadStyle
 
 class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNotifier):
     """<p>
@@ -52,8 +52,8 @@ class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNoti
     @since 3.0
     """
 
-    CLIENT_WIDGET = VPopupCalendar
-    LOAD_STYLE = LoadStyle.EAGER
+#    CLIENT_WIDGET = VPopupCalendar
+#    LOAD_STYLE = LoadStyle.EAGER
 
     # Resolution identifier: milliseconds.
     RESOLUTION_MSEC = 0

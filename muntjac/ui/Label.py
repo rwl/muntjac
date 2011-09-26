@@ -21,14 +21,14 @@ except ImportError, e:
 
 from muntjac.data.util.ObjectProperty import ObjectProperty
 from muntjac.ui.AbstractComponent import AbstractComponent
+from muntjac.ui.Component import Event as ComponentEvent
 
 from muntjac.data.Property import \
     Property, ValueChangeListener, ValueChangeNotifier, Viewer, \
     ValueChangeEvent as PropertyValueChangeEvent
 
-from muntjac.ui.ClientWidget import LoadStyle
-from muntjac.terminal.gwt.client.ui.VLabel import VLabel
-from muntjac.ui.Component import Event as ComponentEvent
+#from muntjac.ui.ClientWidget import LoadStyle
+#from muntjac.terminal.gwt.client.ui.VLabel import VLabel
 
 
 class Label(AbstractComponent, Property, Property, Viewer, Property,
@@ -58,8 +58,8 @@ class Label(AbstractComponent, Property, Property, Viewer, Property,
     @since 3.0
     """
 
-    CLIENT_WIDGET = VLabel
-    LOAD_STYLE = LoadStyle.EAGER
+#    CLIENT_WIDGET = VLabel
+#    LOAD_STYLE = LoadStyle.EAGER
 
     # Content mode, where the label contains only plain text. The getValue()
     # result is coded to XML when painting.

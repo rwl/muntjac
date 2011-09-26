@@ -17,9 +17,8 @@
 from Queue import LifoQueue
 
 from muntjac.ui.AbstractComponent import AbstractComponent
+
 from muntjac.terminal.gwt.client.ui.VMenuBar import VMenuBar
-from muntjac.ui.ClientWidget import LoadStyle
-from muntjac.terminal.gwt.client.ui.MenuItem import MenuItem
 
 
 class MenuBar(AbstractComponent):
@@ -30,8 +29,8 @@ class MenuBar(AbstractComponent):
     </p>
     """
 
-    CLIENT_WIDGET = VMenuBar
-    LOAD_STYLE = LoadStyle.LAZY
+#    CLIENT_WIDGET = VMenuBar
+#    LOAD_STYLE = LoadStyle.LAZY
 
     def __init__(self):
         """Constructs an empty, horizontal menu"""

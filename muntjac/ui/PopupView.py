@@ -16,8 +16,9 @@
 
 from muntjac.ui.AbstractComponentContainer import AbstractComponentContainer
 from muntjac.ui.Component import Event as ComponentEvent
-from muntjac.terminal.gwt.client.ui.VPopupView import VPopupView
-from muntjac.ui.ClientWidget import LoadStyle
+
+#from muntjac.terminal.gwt.client.ui.VPopupView import VPopupView
+#from muntjac.ui.ClientWidget import LoadStyle
 
 
 class PopupVisibilityListener(object):
@@ -73,8 +74,8 @@ class PopupView(AbstractComponentContainer):
     @author IT Mill Ltd.
     """
 
-    CLIENT_WIDGET = VPopupView
-    LOAD_STYLE = LoadStyle.EAGER
+#    CLIENT_WIDGET = VPopupView
+#    LOAD_STYLE = LoadStyle.EAGER
 
     _POPUP_VISIBILITY_METHOD = getattr(PopupVisibilityListener, 'popupVisibilityChange')
 

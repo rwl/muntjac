@@ -15,8 +15,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.ui.AbstractSplitPanel import AbstractSplitPanel
-from muntjac.terminal.gwt.client.ui.VSplitPanelVertical import VSplitPanelVertical
-from muntjac.ui.ClientWidget import LoadStyle
+
+#from muntjac.terminal.gwt.client.ui.VSplitPanelVertical import VSplitPanelVertical
+#from muntjac.ui.ClientWidget import LoadStyle
 
 
 class VerticalSplitPanel(AbstractSplitPanel):
@@ -36,8 +37,8 @@ class VerticalSplitPanel(AbstractSplitPanel):
     </pre>
     """
 
-    CLIENT_WIDGET = VSplitPanelVertical
-    LOAD_STYLE = LoadStyle.EAGER
+#    CLIENT_WIDGET = VSplitPanelVertical
+#    LOAD_STYLE = LoadStyle.EAGER
 
     def __init__(self):
         super(VerticalSplitPanel, self)()

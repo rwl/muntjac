@@ -17,34 +17,40 @@
 import logging
 
 from muntjac.event.dd.DropTarget import DropTarget
-from muntjac.terminal.gwt.client.ui.VScrollTable import VScrollTable
 from muntjac.terminal.KeyMapper import KeyMapper
-from muntjac.data.Container import \
-    Container, Ordered, Sortable, Indexed,\
-    ItemSetChangeNotifier, PropertySetChangeNotifier
 from muntjac.event.Action import Action
 from muntjac.ui.DefaultFieldFactory import DefaultFieldFactory
-from muntjac.event.dd.acceptcriteria.ServerSideCriterion import \
-    ServerSideCriterion
 from muntjac.event.dd.DragSource import DragSource
 from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
 from muntjac.ui.Component import Component, Event as ComponentEvent
-from muntjac.ui.AbstractSelect import AbstractSelect, MultiSelectMode,\
-    AbstractSelectTargetDetails
-from muntjac.event.ItemClickEvent import \
-    ItemClickEvent, ItemClickNotifier, ItemClickSource
-from muntjac.data.util.ContainerOrderedWrapper import \
-    ContainerOrderedWrapper
 from muntjac.event.DataBoundTransferable import DataBoundTransferable
-from muntjac.data.util.IndexedContainer import ItemSetChangeEvent,\
-    IndexedContainer
-from muntjac.ui.ClientWidget import LoadStyle
 from muntjac.data.Property import ValueChangeNotifier
 from muntjac.ui.Field import Field
 from muntjac.ui.FieldFactory import FieldFactory
 from muntjac.ui.Form import Form
 from muntjac.ui.ComponentContainer import ComponentContainer
 from muntjac.event.MouseEvents import ClickEvent
+
+from muntjac.data.Container import \
+    Container, Ordered, Sortable, Indexed,\
+    ItemSetChangeNotifier, PropertySetChangeNotifier
+
+from muntjac.event.dd.acceptcriteria.ServerSideCriterion import \
+    ServerSideCriterion
+
+from muntjac.ui.AbstractSelect import \
+    AbstractSelect, MultiSelectMode, AbstractSelectTargetDetails
+
+from muntjac.event.ItemClickEvent import \
+    ItemClickEvent, ItemClickNotifier, ItemClickSource
+
+from muntjac.data.util.ContainerOrderedWrapper import \
+    ContainerOrderedWrapper
+
+from muntjac.data.util.IndexedContainer import \
+    ItemSetChangeEvent, IndexedContainer
+
+from muntjac.terminal.gwt.client.ui.VScrollTable import VScrollTable
 
 
 class TableDragMode(object):
@@ -95,8 +101,8 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
     @since 3.0
     """
 
-    CLIENT_WIDGET = VScrollTable
-    LOAD_STYLE = LoadStyle.EAGER
+#    CLIENT_WIDGET = VScrollTable
+#    LOAD_STYLE = LoadStyle.EAGER
 
     _logger = logging.getLogger(__class__.__name__)
 

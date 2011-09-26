@@ -19,17 +19,18 @@ from muntjac.event.FieldEvents import \
     FocusListener, FocusNotifier
 
 from muntjac.ui.AbstractSelect import AbstractSelect
-from muntjac.terminal.gwt.client.ui.VOptionGroup import VOptionGroup
-from muntjac.ui.ClientWidget import LoadStyle
 from muntjac.data.Container import Container
+
+#from muntjac.terminal.gwt.client.ui.VOptionGroup import VOptionGroup
+#from muntjac.ui.ClientWidget import LoadStyle
 
 
 class OptionGroup(AbstractSelect, FieldEvents, BlurNotifier,
                   FieldEvents, FocusNotifier):
     """Configures select to be used as an option group."""
 
-    CLIENT_WIDGET = VOptionGroup
-    LOAD_STYLE = LoadStyle.EAGER
+#    CLIENT_WIDGET = VOptionGroup
+#    LOAD_STYLE = LoadStyle.EAGER
 
     def __init__(self, *args):
         self._disabledItemIds = set()

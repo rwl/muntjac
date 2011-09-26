@@ -16,8 +16,9 @@
 
 from muntjac.ui.AbstractComponent import AbstractComponent
 from muntjac.ui.Component import Event as ComponentEvent
-from muntjac.terminal.gwt.client.ui.VUriFragmentUtility import VUriFragmentUtility
-from muntjac.ui.ClientWidget import LoadStyle
+
+#from muntjac.terminal.gwt.client.ui.VUriFragmentUtility import VUriFragmentUtility
+#from muntjac.ui.ClientWidget import LoadStyle
 
 
 class FragmentChangedListener(object):
@@ -35,8 +36,8 @@ class UriFragmentUtility(AbstractComponent):
     bookmarking a program state and back button.
     """
 
-    CLIENT_WIDGET = VUriFragmentUtility
-    LOAD_STYLE = LoadStyle.EAGER
+#    CLIENT_WIDGET = VUriFragmentUtility
+#    LOAD_STYLE = LoadStyle.EAGER
 
     _FRAGMENT_CHANGED_METHOD = getattr(FragmentChangedListener, 'fragmentChanged')
 

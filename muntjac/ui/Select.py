@@ -21,8 +21,9 @@ from muntjac.event.FieldEvents import \
 from muntjac.ui.AbstractSelect import AbstractSelect, Filtering
 from muntjac.data.util.filter.SimpleStringFilter import SimpleStringFilter
 from muntjac.data.Container import Container, Filterable, Indexed
-from muntjac.terminal.gwt.client.ui.VFilterSelect import VFilterSelect
-from muntjac.ui.ClientWidget import LoadStyle
+
+#from muntjac.terminal.gwt.client.ui.VFilterSelect import VFilterSelect
+#from muntjac.ui.ClientWidget import LoadStyle
 
 
 class Select(AbstractSelect, AbstractSelect, Filtering, FieldEvents,
@@ -45,8 +46,8 @@ class Select(AbstractSelect, AbstractSelect, Filtering, FieldEvents,
     @since 3.0
     """
 
-    CLIENT_WIDGET = VFilterSelect
-    LOAD_STYLE = LoadStyle.LAZY
+#    CLIENT_WIDGET = VFilterSelect
+#    LOAD_STYLE = LoadStyle.LAZY
 
     def __init__(self, *args):
         # Holds value of property pageLength. 0 disables paging.

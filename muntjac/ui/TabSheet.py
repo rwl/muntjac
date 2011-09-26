@@ -16,11 +16,12 @@
 
 from muntjac.ui.AbstractComponentContainer import AbstractComponentContainer
 from muntjac.terminal.KeyMapper import KeyMapper
-from muntjac.terminal.gwt.client.ui.VTabsheet import VTabsheet
-from muntjac.ui.ClientWidget import LoadStyle
 from muntjac.ui.Component import Component, Event as ComponentEvent
 from muntjac.terminal.Paintable import RepaintRequestListener
 from muntjac.terminal.gwt.server.CommunicationManager import CommunicationManager
+
+#from muntjac.terminal.gwt.client.ui.VTabsheet import VTabsheet
+#from muntjac.ui.ClientWidget import LoadStyle
 
 
 class SelectedTabChangeListener(object):
@@ -74,8 +75,8 @@ class TabSheet(AbstractComponentContainer):
     @since 3.0
     """
 
-    CLIENT_WIDGET = VTabsheet
-    LOAD_STYLE = LoadStyle.EAGER
+#    CLIENT_WIDGET = VTabsheet
+#    LOAD_STYLE = LoadStyle.EAGER
 
 
     def __init__(self):

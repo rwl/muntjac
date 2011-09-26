@@ -15,8 +15,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.ui.AbstractSplitPanel import AbstractSplitPanel
-from muntjac.terminal.gwt.client.ui.VSplitPanelHorizontal import VSplitPanelHorizontal
-from muntjac.ui.ClientWidget import LoadStyle
+
+#from muntjac.terminal.gwt.client.ui.VSplitPanelHorizontal import VSplitPanelHorizontal
+#from muntjac.ui.ClientWidget import LoadStyle
 
 
 class SplitPanel(AbstractSplitPanel):
@@ -33,8 +34,8 @@ class SplitPanel(AbstractSplitPanel):
                 {@link VerticalSplitPanel} instead.
     """
 
-    CLIENT_WIDGET = VSplitPanelHorizontal
-    LOAD_STYLE = LoadStyle.EAGER
+#    CLIENT_WIDGET = VSplitPanelHorizontal
+#    LOAD_STYLE = LoadStyle.EAGER
 
     # Components are to be laid out vertically.
     ORIENTATION_VERTICAL = 0

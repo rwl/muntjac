@@ -15,8 +15,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.ui.AbstractComponentContainer import AbstractComponentContainer
-from muntjac.terminal.gwt.client.ui.VCustomComponent import VCustomComponent
-from muntjac.ui.ClientWidget import LoadStyle
+
+#from muntjac.terminal.gwt.client.ui.VCustomComponent import VCustomComponent
+#from muntjac.ui.ClientWidget import LoadStyle
 
 
 class CustomComponent(AbstractComponentContainer):
@@ -34,8 +35,8 @@ class CustomComponent(AbstractComponentContainer):
     @since 3.0
     """
 
-    CLIENT_WIDGET = VCustomComponent
-    LOAD_STYLE = LoadStyle.EAGER
+#    CLIENT_WIDGET = VCustomComponent
+#    LOAD_STYLE = LoadStyle.EAGER
 
 
     def __init__(self, compositionRoot=None):
