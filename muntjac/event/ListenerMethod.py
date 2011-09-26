@@ -14,19 +14,13 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-# from java.io.IOException import (IOException,)
-# from java.io.NotSerializableException import (NotSerializableException,)
-# from java.io.Serializable import (Serializable,)
-# from java.lang.reflect.Method import (Method,)
-# from java.util.Arrays import (Arrays,)
-# from java.util.EventListener import (EventListener,)
-# from java.util.EventObject import (EventObject,)
-# from java.util.logging.Level import (Level,)
-# from java.util.logging.Logger import (Logger,)
+import logging
+
+from muntjac.util.event import EventListener
+from muntjac.data.util.MethodProperty import MethodException
 
 
-class ListenerMethod(EventListener, Serializable):
+class ListenerMethod(EventListener):
     """<p>
     One registered event listener. This class contains the listener object
     reference, listened event type, the trigger method to call when the event
@@ -52,39 +46,27 @@ class ListenerMethod(EventListener, Serializable):
     @VERSION@
     @since 3.0
     """
-    # Special serialization to handle method references
-    _logger = Logger.getLogger(ListenerMethod.getName())
-    # Type of the event that should trigger this listener. Also the subclasses
-    # of this class are accepted to trigger the listener.
 
-    _eventType = None
-    # The object containing the trigger method.
-    _target = None
-    # The trigger method to call when an event passing the given criteria
-    # fires.
+    _logger = logging.getLogger(ListenerMethod.getName())
 
-    _method = None
-    # Optional argument set to pass to the trigger method.
-    _arguments = None
-    # Optional index to <code>arguments</code> that point out which one should
-    # be replaced with the triggering event object and thus be passed to the
-    # trigger method.
-
-    _eventArgumentIndex = None
-    # Special serialization to handle method references
 
     def writeObject(self, out):
+        # Special serialization to handle method references
         try:
             out.defaultWriteObject()
             name = self._method.getName()
             paramTypes = self._method.getParameterTypes()
             out.writeObject(name)
             out.writeObject(paramTypes)
-        except NotSerializableException, e:
-            self._logger.warning('Error in serialization of the application: Class ' + self._target.getClass().getName() + ' must implement serialization.')
+        except Exception, e:  # FIXME NotSerializableException
+            self._logger.warning('Error in serialization of the application: Class ' \
+                                 + self._target.__class__.__name__ \
+                                 + ' must implement serialization.')
             raise e
 
+
     def readObject(self, in_):
+        # Special serialization to handle method references
         in_.defaultReadObject()
         try:
             name = in_.readObject()
@@ -92,44 +74,34 @@ class ListenerMethod(EventListener, Serializable):
             # We can not use getMethod directly as we want to support anonymous
             # inner classes
             self._method = self.findHighestMethod(self._target.getClass(), name, paramTypes)
-        except SecurityException, e:
-            self._logger.log(Level.SEVERE, 'Internal deserialization error', e)
+        except Exception:  # FIXME SecurityException
+            self._logger.critical('Internal deserialization error')
+
 
     @classmethod
     def findHighestMethod(cls, cls, method, paramTypes):
         ifaces = cls.getInterfaces()
-        _0 = True
-        i = 0
-        while True:
-            if _0 is True:
-                _0 = False
-            else:
-                i += 1
-            if not (i < len(ifaces)):
-                break
+        for i in range(len(ifaces)):
             ifaceMethod = cls.findHighestMethod(ifaces[i], method, paramTypes)
             if ifaceMethod is not None:
                 return ifaceMethod
+
         if cls.getSuperclass() is not None:
             parentMethod = cls.findHighestMethod(cls.getSuperclass(), method, paramTypes)
             if parentMethod is not None:
                 return parentMethod
+
         methods = cls.getMethods()
-        _1 = True
-        i = 0
-        while True:
-            if _1 is True:
-                _1 = False
-            else:
-                i += 1
-            if not (i < len(methods)):
-                break
+        for i in range(len(methods)):
             # we ignore parameter types for now - you need to add this
             if methods[i].getName() == method:
                 return methods[i]
+
         return None
 
-    def __init__(self, *args):
+
+    def __init__(self, eventType, target, method, arguments=None,
+                 eventArgumentIndex=None):
         """<p>
         Constructs a new event listener from a trigger method, it's arguments and
         the argument index specifying which one is replaced with the event object
@@ -291,143 +263,137 @@ class ListenerMethod(EventListener, Serializable):
                     unless exactly one match <code>methodName</code> is found in
                     <code>target</code>.
         """
-        # Checks that the object is of correct type
-        _0 = args
-        _1 = len(args)
-        if _1 == 3:
-            if isinstance(_0[2], Method):
-                eventType, target, method = _0
-                if not method.getDeclaringClass().isAssignableFrom(target.getClass()):
-                    raise java.lang.IllegalArgumentException()
-                self._eventType = eventType
-                self._target = target
-                self._method = method
-                self._eventArgumentIndex = -1
-                params = method.getParameterTypes()
-                if len(params) == 0:
-                    self._arguments = [None] * 0
-                elif len(params) == 1 and params[0].isAssignableFrom(eventType):
-                    self._arguments = [None]
-                    self._eventArgumentIndex = 0
-                else:
-                    raise self.IllegalArgumentException()
-            else:
-                eventType, target, methodName = _0
-                methods = target.getClass().getMethods()
-                method = None
-                _0 = True
-                i = 0
-                while True:
-                    if _0 is True:
-                        _0 = False
-                    else:
-                        i += 1
-                    if not (i < len(methods)):
-                        break
-                    if methods[i].getName() == methodName:
-                        method = methods[i]
-                if method is None:
-                    raise self.IllegalArgumentException()
-                self._eventType = eventType
-                self._target = target
-                self._method = method
-                self._eventArgumentIndex = -1
-                params = method.getParameterTypes()
-                if len(params) == 0:
-                    self._arguments = [None] * 0
-                elif len(params) == 1 and params[0].isAssignableFrom(eventType):
-                    self._arguments = [None]
-                    self._eventArgumentIndex = 0
-                else:
-                    raise self.IllegalArgumentException()
-        elif _1 == 4:
-            if isinstance(_0[2], Method):
-                eventType, target, method, arguments = _0
-                if not method.getDeclaringClass().isAssignableFrom(target.getClass()):
-                    raise java.lang.IllegalArgumentException()
-                self._eventType = eventType
-                self._target = target
-                self._method = method
-                self._arguments = arguments
-                self._eventArgumentIndex = -1
-            else:
-                eventType, target, methodName, arguments = _0
-                methods = target.getClass().getMethods()
-                method = None
-                _0 = True
-                i = 0
-                while True:
-                    if _0 is True:
-                        _0 = False
-                    else:
-                        i += 1
-                    if not (i < len(methods)):
-                        break
-                    if methods[i].getName() == methodName:
-                        method = methods[i]
-                if method is None:
-                    raise self.IllegalArgumentException()
-                self._eventType = eventType
-                self._target = target
-                self._method = method
-                self._arguments = arguments
-                self._eventArgumentIndex = -1
-        elif _1 == 5:
-            if isinstance(_0[2], Method):
-                eventType, target, method, arguments, eventArgumentIndex = _0
-                if not method.getDeclaringClass().isAssignableFrom(target.getClass()):
-                    raise java.lang.IllegalArgumentException()
-                # Checks that the event argument is null
-                if eventArgumentIndex >= 0 and arguments[eventArgumentIndex] is not None:
-                    raise java.lang.IllegalArgumentException()
-                # Checks the event type is supported by the method
-                if (
-                    eventArgumentIndex >= 0 and not method.getParameterTypes()[eventArgumentIndex].isAssignableFrom(eventType)
-                ):
-                    raise java.lang.IllegalArgumentException()
-                self._eventType = eventType
-                self._target = target
-                self._method = method
-                self._arguments = arguments
-                self._eventArgumentIndex = eventArgumentIndex
-            else:
-                eventType, target, methodName, arguments, eventArgumentIndex = _0
-                methods = target.getClass().getMethods()
-                method = None
-                _0 = True
-                i = 0
-                while True:
-                    if _0 is True:
-                        _0 = False
-                    else:
-                        i += 1
-                    if not (i < len(methods)):
-                        break
-                    if methods[i].getName() == methodName:
-                        method = methods[i]
-                if method is None:
-                    raise self.IllegalArgumentException()
-                # Checks that the event argument is null
-                if eventArgumentIndex >= 0 and arguments[eventArgumentIndex] is not None:
-                    raise java.lang.IllegalArgumentException()
-                # Checks the event type is supported by the method
-                if (
-                    eventArgumentIndex >= 0 and not method.getParameterTypes()[eventArgumentIndex].isAssignableFrom(eventType)
-                ):
-                    raise java.lang.IllegalArgumentException()
-                self._eventType = eventType
-                self._target = target
-                self._method = method
-                self._arguments = arguments
-                self._eventArgumentIndex = eventArgumentIndex
-        else:
-            raise ARGERROR(3, 5)
+        # Type of the event that should trigger this listener. Also the subclasses
+        # of this class are accepted to trigger the listener.
+        self._eventType = None
 
-    # Finds the correct method
-    # Check that the object is of correct type
-    # Find the correct method
-    # Checks that the object is of correct type
-    # Finds the correct method
+        # The object containing the trigger method.
+        self._target = None
+
+        # The trigger method to call when an event passing the given criteria
+        # fires.
+        self._method = None
+
+        # Optional argument set to pass to the trigger method.
+        self._arguments = None
+
+        # Optional index to <code>arguments</code> that point out which one should
+        # be replaced with the triggering event object and thus be passed to the
+        # trigger method.
+        self._eventArgumentIndex = None
+
+
+        # Checks that the object is of correct type
+        if arguments is None:
+            if isinstance(method, basestring):
+                methodName = method
+                methods = target.__class__.getMethods()  # FIXME getMethods
+                for i in range(len(methods)):
+                    if methods[i].getName() == methodName:
+                        method = methods[i]
+
+                if method is None:
+                    raise ValueError
+
+                self._eventType = eventType
+                self._target = target
+                self._method = method
+                self._eventArgumentIndex = -1
+
+                params = method.getParameterTypes()
+
+                if len(params) == 0:
+                    self._arguments = [None] * 0
+                elif len(params) == 1 and issubclass(eventType, params[0]):
+                    self._arguments = [None]
+                    self._eventArgumentIndex = 0
+                else:
+                    raise ValueError
+            else:
+                if not issubclass(target.__class__, method.getDeclaringClass()):  # FIXME getDeclaringClass
+                    raise ValueError
+
+                self._eventType = eventType
+                self._target = target
+                self._method = method
+                self._eventArgumentIndex = -1
+
+                params = method.getParameterTypes()
+                if len(params) == 0:
+                    self._arguments = [None] * 0
+                elif len(params) == 1 and issubclass(eventType, params[0]):
+                    self._arguments = [None]
+                    self._eventArgumentIndex = 0
+                else:
+                    raise ValueError
+        elif eventArgumentIndex is None:
+            if isinstance(method, basestring):
+                methodName = method
+                methods = target.__class__.getMethods()  # FIXME getMethods
+                for i in range(len(methods)):
+                    if methods[i].getName() == methodName:
+                        method = methods[i]
+                if method is None:
+                    raise ValueError
+
+                self._eventType = eventType
+                self._target = target
+                self._method = method
+                self._arguments = arguments
+                self._eventArgumentIndex = -1
+            else:
+                if not issubclass(target.__class__, method.getDeclaringClass()):  # FIXME getDeclaringClass
+                    raise ValueError
+
+                self._eventType = eventType
+                self._target = target
+                self._method = method
+                self._arguments = arguments
+                self._eventArgumentIndex = -1
+        else:
+            if isinstance(method, basestring):
+                methodName = method
+                methods = target.__class__.getMethods()  # FIXME getMethods
+                for i in range(len(methods)):
+                    if methods[i].getName() == methodName:
+                        method = methods[i]
+
+                if method is None:
+                    raise ValueError
+
+                # Checks that the event argument is null
+                if eventArgumentIndex >= 0 and arguments[eventArgumentIndex] is not None:
+                    raise ValueError
+
+                # Checks the event type is supported by the method
+                if eventArgumentIndex >= 0 \
+                        and not issubclass(eventType, method.getParameterTypes()[eventArgumentIndex]):
+                    raise ValueError
+
+                self._eventType = eventType
+                self._target = target
+                self._method = method
+                self._arguments = arguments
+                self._eventArgumentIndex = eventArgumentIndex
+            else:
+                if not issubclass(target.__class__, method.getDeclaringClass()):
+                    raise ValueError
+
+                # Checks that the event argument is null
+                if eventArgumentIndex >= 0 and arguments[eventArgumentIndex] is not None:
+                    raise ValueError
+
+                # Checks the event type is supported by the method
+                if eventArgumentIndex >= 0 \
+                        and not issubclass(eventType, method.getParameterTypes()[eventArgumentIndex]):
+                    raise ValueError
+
+                self._eventType = eventType
+                self._target = target
+                self._method = method
+                self._arguments = arguments
+                self._eventArgumentIndex = eventArgumentIndex
+
 
     def receiveEvent(self, event):
         """Receives one event from the <code>EventRouter</code> and calls the
@@ -441,36 +407,29 @@ class ListenerMethod(EventListener, Serializable):
                    event will not be passed to the trigger method.
         """
         # Only send events supported by the method
-        if self._eventType.isAssignableFrom(event.getClass()):
-            # This should never happen
-            # An exception was thrown by the invocation target. Throw it
-            # forwards.
+        if issubclass(event.__class__, self._eventType):
             try:
                 if self._eventArgumentIndex >= 0:
                     if self._eventArgumentIndex == 0 and len(self._arguments) == 1:
-                        self._method.invoke(self._target, [event])
+                        self._method(self._target, [event])  # FIXME invoke
                     else:
                         arg = [None] * len(self._arguments)
-                        _0 = True
-                        i = 0
-                        while True:
-                            if _0 is True:
-                                _0 = False
-                            else:
-                                i += 1
-                            if not (i < len(arg)):
-                                break
+                        for i in range(len(arg)):
                             arg[i] = self._arguments[i]
-                        arg[self._eventArgumentIndex] = event
-                        self._method.invoke(self._target, arg)
-                else:
-                    self._method.invoke(self._target, self._arguments)
-            except java.lang.IllegalAccessException, e:
-                raise java.lang.RuntimeException('Internal error - please report', e)
-            except java.lang.reflect.InvocationTargetException, e:
-                raise self.MethodException('Invocation of method ' + self._method + ' failed.', e.getTargetException())
 
-    def matches(self, *args):
+                        arg[self._eventArgumentIndex] = event
+                        self._method(self._target, arg)  # FIXME invoke
+                else:
+                    self._method(self._target, self._arguments)  # FIXME invoke
+            except Exception:  # IllegalAccessException
+                raise RuntimeError, 'Internal error - please report'
+            except Exception:  # FIXME InvocationTargetException
+                raise MethodException, 'Invocation of method ' \
+                        + self._method \
+                        + ' failed.'
+
+
+    def matches(self, eventType, target, method=None):
         """Checks if the given object and event match with the ones stored in this
         listener.
 
@@ -501,93 +460,39 @@ class ListenerMethod(EventListener, Serializable):
                 the event type stored in this object and <code>method</code>
                 equals with the method stored in this object
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 2:
-            eventType, target = _0
+        if method is None:
             return self._target == target and eventType == self._eventType
-        elif _1 == 3:
-            eventType, target, method = _0
-            return self._target == target and eventType == self._eventType and method == self._method
         else:
-            raise ARGERROR(2, 3)
+            return self._target == target and eventType == self._eventType and method == self._method
+
 
     def hashCode(self):
-        hash = 7
-        hash = (31 * hash) + self._eventArgumentIndex
-        hash = (31 * hash) + (0 if self._eventType is None else self._eventType.hashCode())
-        hash = (31 * hash) + (0 if self._target is None else self._target.hashCode())
-        hash = (31 * hash) + (0 if self._method is None else self._method.hashCode())
+        hsh = 7
+        hsh = (31 * hsh) + self._eventArgumentIndex
+        hsh = (31 * hsh) + (0 if self._eventType is None else self._eventType.hashCode())
+        hsh = (31 * hsh) + (0 if self._target is None else self._target.hashCode())
+        hsh = (31 * hsh) + (0 if self._method is None else self._method.hashCode())
         return hash
 
-#    @Override
-#    public boolean equals(Object obj) {
-#
-#        if (this == obj) {
-#            return true;
-#        }
-#
-#        // return false if obj is a subclass (do not use instanceof check)
-#        if ((obj == null) || (obj.getClass() != getClass())) {
-#            return false;
-#        }
-#
-#        // obj is of same class, test it further
-#        ListenerMethod t = (ListenerMethod) obj;
-#
-#        return eventArgumentIndex == t.eventArgumentIndex
-#                && (eventType == t.eventType || (eventType != null && eventType
-#                        .equals(t.eventType)))
-#                && (target == t.target || (target != null && target
-#                        .equals(t.target)))
-#                && (method == t.method || (method != null && method
-#                        .equals(t.method)))
-#                && (arguments == t.arguments || (Arrays.equals(arguments,
-#                        t.arguments)));
-#    }
 
-    class MethodException(RuntimeError, Serializable):
-        """Exception that wraps an exception thrown by an invoked method. When
-        <code>ListenerMethod</code> invokes the target method, it may throw
-        arbitrary exception. The original exception is wrapped into
-        MethodException instance and rethrown by the <code>ListenerMethod</code>.
+    def equals(self, obj):
 
-        @author IT Mill Ltd.
-        @version
-        @VERSION@
-        @since 3.0
-        """
-        _cause = None
-        _message = None
+        if self == obj:
+            return True
 
-        def __init__(self, message, cause):
-            super(MethodException, self)(message)
-            self._cause = cause
+        # return false if obj is a subclass (do not use instanceof check)
+        if (obj is None) or (obj.__class__ != self.__class__):
+            return False
 
-        def getCause(self):
-            """Retrieves the cause of this throwable or <code>null</code> if the
-            cause does not exist or not known.
+        # obj is of same class, test it further
+        t = obj
 
-            @return the cause of this throwable or <code>null</code> if the cause
-                    is nonexistent or unknown.
-            @see java.lang.Throwable#getCause()
-            """
-            return self._cause
+        return self._eventArgumentIndex == t.eventArgumentIndex \
+                and (self._eventType == t.eventType or (self._eventType != None and self._eventType == t.eventType)) \
+                and (self._target == t.target or (self._target != None and self._target == t.target)) \
+                and (self._method == t.method or (self._method != None and self._method == t.method)) \
+                and (self._arguments == t.arguments or (self._arguments == t.arguments))  # FIXME Arrays.equals
 
-        def getMessage(self):
-            """Returns the error message string of this throwable object.
-
-            @return the error message.
-            @see java.lang.Throwable#getMessage()
-            """
-            return self._message
-
-        def toString(self):
-            """@see java.lang.Throwable#toString()"""
-            msg = str(super(MethodException, self))
-            if self._cause is not None:
-                msg += '\nCause: ' + str(self._cause)
-            return msg
 
     def isType(self, eventType):
         """Compares the type of this ListenerMethod to the given type
@@ -599,6 +504,7 @@ class ListenerMethod(EventListener, Serializable):
         """
         return self._eventType == eventType
 
+
     def isOrExtendsType(self, eventType):
         """Compares the type of this ListenerMethod to the given type
 
@@ -607,7 +513,8 @@ class ListenerMethod(EventListener, Serializable):
         @return true if this event type can be assigned to the given type, false
                 otherwise
         """
-        return eventType.isAssignableFrom(self._eventType)
+        return issubclass(self._eventType, eventType)
+
 
     def getTarget(self):
         """Returns the target object which contains the trigger method.
@@ -615,3 +522,48 @@ class ListenerMethod(EventListener, Serializable):
         @return The target object
         """
         return self._target
+
+
+class MethodException(RuntimeError):
+    """Exception that wraps an exception thrown by an invoked method. When
+    <code>ListenerMethod</code> invokes the target method, it may throw
+    arbitrary exception. The original exception is wrapped into
+    MethodException instance and rethrown by the <code>ListenerMethod</code>.
+
+    @author IT Mill Ltd.
+    @version
+    @VERSION@
+    @since 3.0
+    """
+
+    def __init__(self, message, cause):
+        super(MethodException, self)(message)
+        self._cause = cause
+
+
+    def getCause(self):
+        """Retrieves the cause of this throwable or <code>null</code> if the
+        cause does not exist or not known.
+
+        @return the cause of this throwable or <code>null</code> if the cause
+                is nonexistent or unknown.
+        @see java.lang.Throwable#getCause()
+        """
+        return self._cause
+
+
+    def getMessage(self):
+        """Returns the error message string of this throwable object.
+
+        @return the error message.
+        @see java.lang.Throwable#getMessage()
+        """
+        return self._message
+
+
+    def toString(self):
+        """@see java.lang.Throwable#toString()"""
+        msg = str(super(MethodException, self))
+        if self._cause is not None:
+            msg += '\nCause: ' + str(self._cause)
+        return msg

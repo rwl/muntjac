@@ -14,7 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from com.vaadin.event.dd.acceptcriteria.ClientSideCriterion import (ClientSideCriterion,)
+from muntjac.event.dd.acceptcriteria.ClientSideCriterion import \
+    ClientSideCriterion
 
 
 class And(ClientSideCriterion):
@@ -25,8 +26,6 @@ class And(ClientSideCriterion):
 
     @since 6.3
     """
-    _serialVersionUID = -5242574480825471748L
-    criteria = None
 
     def __init__(self, *criteria):
         """@param criteria
@@ -34,10 +33,12 @@ class And(ClientSideCriterion):
         """
         self.criteria = criteria
 
+
     def paintContent(self, target):
         super(And, self).paintContent(target)
         for crit in self.criteria:
             crit.paint(target)
+
 
     def accept(self, dragEvent):
         for crit in self.criteria:

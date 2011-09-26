@@ -14,16 +14,17 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from com.vaadin.terminal.gwt.client.EventId import (EventId,)
-from com.vaadin.event.ComponentEventListener import (ComponentEventListener,)
-from com.vaadin.ui.Field.ValueChangeEvent import (ValueChangeEvent,)
+from muntjac.terminal.gwt.client.EventId import EventId
+from muntjac.event.ComponentEventListener import ComponentEventListener
+from muntjac.ui.Component import Event as ComponentEvent
+
 
 class FieldEvents(object):
     """Interface that serves as a wrapper for {@link Field} related events."""
     pass
 
 
-class FocusNotifier(Serializable):
+class FocusNotifier(object):
     """The interface for adding and removing <code>FocusEvent</code> listeners.
     By implementing this interface a class explicitly announces that it will
     generate a <code>FocusEvent</code> when it receives keyboard focus.
@@ -51,6 +52,7 @@ class FocusNotifier(Serializable):
         """
         pass
 
+
     def removeListener(self, listener):
         """Removes a <code>FocusListener</code> from the Component.
 
@@ -60,7 +62,8 @@ class FocusNotifier(Serializable):
         """
         pass
 
-class BlurNotifier(Serializable):
+
+class BlurNotifier(object):
     """The interface for adding and removing <code>BlurEvent</code> listeners.
     By implementing this interface a class explicitly announces that it will
     generate a <code>BlurEvent</code> when it loses keyboard focus.
@@ -88,6 +91,7 @@ class BlurNotifier(Serializable):
         """
         pass
 
+
     def removeListener(self, listener):
         """Removes a <code>BlurListener</code> from the Component.
 
@@ -97,7 +101,8 @@ class BlurNotifier(Serializable):
         """
         pass
 
-class FocusEvent(Component.Event):
+
+class FocusEvent(ComponentEvent):
     """<code>FocusEvent</code> class for holding additional event information.
     Fired when a <code>Field</code> receives keyboard focus.
 
@@ -109,6 +114,7 @@ class FocusEvent(Component.Event):
     def __init__(self, source):
         super(FocusEvent, self)(source)
 
+
 class FocusListener(ComponentEventListener):
     """<code>FocusListener</code> interface for listening for
     <code>FocusEvent</code> fired by a <code>Field</code>.
@@ -116,7 +122,6 @@ class FocusListener(ComponentEventListener):
     @see FocusEvent
     @since 6.2
     """
-    focusMethod = ReflectTools.findMethod(FocusListener, 'focus', FocusEvent)
 
     def focus(self, event):
         """Component has been focused
@@ -126,17 +131,22 @@ class FocusListener(ComponentEventListener):
         """
         pass
 
-class BlurEvent(Component.Event):
+    focusMethod = focus
+
+
+class BlurEvent(ComponentEvent):
     """<code>BlurEvent</code> class for holding additional event information.
     Fired when a <code>Field</code> loses keyboard focus.
 
     @since 6.2
     """
+
     # Identifier for event that can be used in {@link EventRouter}
     EVENT_ID = EventId.BLUR
 
     def __init__(self, source):
         super(BlurEvent, self)(source)
+
 
 class BlurListener(ComponentEventListener):
     """<code>BlurListener</code> interface for listening for
@@ -145,7 +155,6 @@ class BlurListener(ComponentEventListener):
     @see BlurEvent
     @since 6.2
     """
-    blurMethod = ReflectTools.findMethod(BlurListener, 'blur', BlurEvent)
 
     def blur(self, event):
         """Component has been blurred
@@ -155,7 +164,10 @@ class BlurListener(ComponentEventListener):
         """
         pass
 
-class TextChangeEvent(Component.Event):
+    blurMethod = blur
+
+
+class TextChangeEvent(ComponentEvent):
     """TextChangeEvents are fired when the user is editing the text content of a
     field. Most commonly text change events are triggered by typing text with
     keyboard, but e.g. pasting content from clip board to a text field also
@@ -184,23 +196,24 @@ class TextChangeEvent(Component.Event):
     def __init__(self, source):
         super(TextChangeEvent, self)(source)
 
+
     def getText(self):
         """@return the text content of the field after the
                 {@link TextChangeEvent}
         """
         pass
 
+
     def getCursorPosition(self):
         """@return the cursor position during after the {@link TextChangeEvent}"""
         pass
+
 
 class TextChangeListener(ComponentEventListener):
     """A listener for {@link TextChangeEvent}s.
 
     @since 6.5
     """
-    EVENT_ID = 'ie'
-    EVENT_METHOD = ReflectTools.findMethod(TextChangeListener, 'textChange', TextChangeEvent)
 
     def textChange(self, event):
         """This method is called repeatedly while the text is edited by a user.
@@ -210,7 +223,11 @@ class TextChangeListener(ComponentEventListener):
         """
         pass
 
-class TextChangeNotifier(Serializable):
+    EVENT_ID = 'ie'
+    EVENT_METHOD = textChange
+
+
+class TextChangeNotifier(object):
     """An interface implemented by a {@link Field} supporting
     {@link TextChangeEvent}s. An example a {@link TextField} supports
     {@link TextChangeListener}s.
@@ -218,6 +235,7 @@ class TextChangeNotifier(Serializable):
 
     def addListener(self, listener):
         pass
+
 
     def removeListener(self, listener):
         pass

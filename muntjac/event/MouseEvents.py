@@ -16,6 +16,7 @@
 
 from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
 from muntjac.event.ComponentEventListener import ComponentEventListener
+from muntjac.ui.Component import Event as ComponentEvent
 
 
 class MouseEvents(object):
@@ -30,7 +31,7 @@ class MouseEvents(object):
     pass
 
 
-class ClickEvent(Component.Event):
+class ClickEvent(ComponentEvent):
     """Class for holding information about a mouse click event. A
     {@link ClickEvent} is fired when the user clicks on a
     <code>Component</code>.
@@ -44,14 +45,15 @@ class ClickEvent(Component.Event):
     @VERSION@
     @since 6.2
     """
+
     BUTTON_LEFT = MouseEventDetails.BUTTON_LEFT
     BUTTON_MIDDLE = MouseEventDetails.BUTTON_MIDDLE
     BUTTON_RIGHT = MouseEventDetails.BUTTON_RIGHT
-    _details = None
 
     def __init__(self, source, mouseEventDetails):
         super(ClickEvent, self)(source)
         self._details = mouseEventDetails
+
 
     def getButton(self):
         """Returns an identifier describing which mouse button the user pushed.
@@ -63,6 +65,7 @@ class ClickEvent(Component.Event):
         """
         return self._details.getButton()
 
+
     def getClientX(self):
         """Returns the mouse position (x coordinate) when the click took place.
         The position is relative to the browser client area.
@@ -71,6 +74,7 @@ class ClickEvent(Component.Event):
         """
         return self._details.getClientX()
 
+
     def getClientY(self):
         """Returns the mouse position (y coordinate) when the click took place.
         The position is relative to the browser client area.
@@ -78,6 +82,7 @@ class ClickEvent(Component.Event):
         @return The mouse cursor y position
         """
         return self._details.getClientY()
+
 
     def getRelativeX(self):
         """Returns the relative mouse position (x coordinate) when the click
@@ -88,6 +93,7 @@ class ClickEvent(Component.Event):
         """
         return self._details.getRelativeX()
 
+
     def getRelativeY(self):
         """Returns the relative mouse position (y coordinate) when the click
         took place. The position is relative to the clicked component.
@@ -97,6 +103,7 @@ class ClickEvent(Component.Event):
         """
         return self._details.getRelativeY()
 
+
     def isDoubleClick(self):
         """Checks if the event is a double click event.
 
@@ -104,12 +111,14 @@ class ClickEvent(Component.Event):
         """
         return self._details.isDoubleClick()
 
+
     def isAltKey(self):
         """Checks if the Alt key was down when the mouse event took place.
 
         @return true if Alt was down when the event occured, false otherwise
         """
         return self._details.isAltKey()
+
 
     def isCtrlKey(self):
         """Checks if the Ctrl key was down when the mouse event took place.
@@ -119,6 +128,7 @@ class ClickEvent(Component.Event):
         """
         return self._details.isCtrlKey()
 
+
     def isMetaKey(self):
         """Checks if the Meta key was down when the mouse event took place.
 
@@ -127,6 +137,7 @@ class ClickEvent(Component.Event):
         """
         return self._details.isMetaKey()
 
+
     def isShiftKey(self):
         """Checks if the Shift key was down when the mouse event took place.
 
@@ -134,6 +145,7 @@ class ClickEvent(Component.Event):
                 otherwise
         """
         return self._details.isShiftKey()
+
 
     def getButtonName(self):
         """Returns a human readable string representing which button has been
@@ -146,6 +158,7 @@ class ClickEvent(Component.Event):
         """
         return self._details.getButtonName()
 
+
 class ClickListener(ComponentEventListener):
     """Interface for listening for a {@link ClickEvent} fired by a
     {@link Component}.
@@ -156,7 +169,6 @@ class ClickListener(ComponentEventListener):
     @VERSION@
     @since 6.2
     """
-    clickMethod = ReflectTools.findMethod(ClickListener, 'click', ClickEvent)
 
     def click(self, event):
         """Called when a {@link Component} has been clicked. A reference to the
@@ -167,7 +179,10 @@ class ClickListener(ComponentEventListener):
         """
         pass
 
-class DoubleClickEvent(Component.Event):
+    clickMethod = click
+
+
+class DoubleClickEvent(ComponentEvent):
     """Class for holding additional event information for DoubleClick events.
     Fired when the user double-clicks on a <code>Component</code>.
 
@@ -181,6 +196,7 @@ class DoubleClickEvent(Component.Event):
     def __init__(self, source):
         super(DoubleClickEvent, self)(source)
 
+
 class DoubleClickListener(ComponentEventListener):
     """Interface for listening for a {@link DoubleClickEvent} fired by a
     {@link Component}.
@@ -191,7 +207,6 @@ class DoubleClickListener(ComponentEventListener):
     @VERSION@
     @since 6.2
     """
-    doubleClickMethod = ReflectTools.findMethod(DoubleClickListener, 'doubleClick', DoubleClickEvent)
 
     def doubleClick(self, event):
         """Called when a {@link Component} has been double clicked. A reference
@@ -201,3 +216,5 @@ class DoubleClickListener(ComponentEventListener):
                    An event containing information about the double click.
         """
         pass
+
+    doubleClickMethod = doubleClick

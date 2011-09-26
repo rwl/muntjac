@@ -14,7 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from com.vaadin.event.dd.acceptcriteria.ClientSideCriterion import (ClientSideCriterion,)
+from muntjac.event.dd.acceptcriteria.ClientSideCriterion import ClientSideCriterion
+from muntjac.event.TransferableImpl import TransferableImpl
 
 
 class SourceIsTarget(ClientSideCriterion):
@@ -26,11 +27,11 @@ class SourceIsTarget(ClientSideCriterion):
 
     @since 6.3
     """
-    _serialVersionUID = -451399314705532584L
-    _instance = SourceIsTarget()
+    _instance = None
 
     def __init__(self):
         pass
+
 
     def accept(self, dragEvent):
         if isinstance(dragEvent.getTransferable(), TransferableImpl):
@@ -39,6 +40,10 @@ class SourceIsTarget(ClientSideCriterion):
             return sourceComponent == target
         return False
 
+
     @classmethod
     def get(cls):
         return cls._instance
+
+
+SourceIsTarget._instance = SourceIsTarget()

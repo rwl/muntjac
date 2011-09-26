@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from com.vaadin.event.dd.acceptcriteria.ClientSideCriterion import (ClientSideCriterion,)
+from muntjac.event.dd.acceptcriteria.ClientSideCriterion import ClientSideCriterion
 
 
 class Not(ClientSideCriterion):
@@ -22,15 +22,15 @@ class Not(ClientSideCriterion):
 
     @since 6.3
     """
-    _serialVersionUID = 1131422338558613244L
-    _acceptCriterion = None
 
     def __init__(self, acceptCriterion):
         self._acceptCriterion = acceptCriterion
 
+
     def paintContent(self, target):
         super(Not, self).paintContent(target)
         self._acceptCriterion.paint(target)
+
 
     def accept(self, dragEvent):
         return not self._acceptCriterion.accept(dragEvent)

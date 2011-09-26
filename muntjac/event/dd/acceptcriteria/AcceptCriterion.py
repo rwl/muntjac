@@ -14,10 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# from java.io.Serializable import (Serializable,)
 
-
-class AcceptCriterion(Serializable):
+class AcceptCriterion(object):
     """Criterion that can be used create policy to accept/discard dragged content
     (presented by {@link Transferable}).
 
@@ -50,8 +48,10 @@ class AcceptCriterion(Serializable):
         """
         pass
 
+
     def paint(self, target):
         pass
+
 
     def paintResponse(self, target):
         """This needs to be implemented iff criterion does some lazy server side
@@ -63,6 +63,7 @@ class AcceptCriterion(Serializable):
         @throws PaintException
         """
         pass
+
 
     def accept(self, dragEvent):
         """Validates the data in event to be appropriate for the

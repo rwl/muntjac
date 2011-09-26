@@ -14,11 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# from com.vaadin.ui.Tree.TreeTargetDetails import (TreeTargetDetails,)
-# from java.io.Serializable import (Serializable,)
 
-
-class TargetDetails(Serializable):
+class TargetDetails(object):
     """TargetDetails wraps drop target related information about
     {@link DragAndDropEvent}.
     <p>
@@ -37,6 +34,7 @@ class TargetDetails(Serializable):
         @return The data associated with the key
         """
         pass
+
 
     def getTarget(self):
         """@return the drop target on which the {@link DragAndDropEvent} happened."""

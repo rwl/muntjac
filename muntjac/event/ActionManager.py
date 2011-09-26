@@ -1,87 +1,105 @@
-# -*- coding: utf-8 -*-
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.event.Action import (Action, Container, Handler, Notifier,)
-# from com.vaadin.event.Action.Container import (Container,)
-# from com.vaadin.event.Action.Handler import (Handler,)
-# from java.util.HashSet import (HashSet,)
-# from java.util.Map import (Map,)
+# Copyright (C) 2011 Vaadin Ltd
+# Copyright (C) 2011 Richard Lincoln
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+from muntjac.event.Action import Action, Container, Handler, Notifier, Listener
+from muntjac.terminal.KeyMapper import KeyMapper
+from muntjac.event.ShortcutAction import ShortcutAction
 
 
-class ActionManager(Action, Container, Action, Handler, Action, Notifier):
-    """Javadoc TODO
-
-    Notes:
+class ActionManager(Action, Container, Handler, Notifier):
+    """Notes:
     <p>
     Empties the keymapper for each repaint to avoid leaks; can cause problems in
     the future if the client assumes key don't change. (if lazyloading, one must
     not cache results)
     </p>
     """
-    _serialVersionUID = 1641868163608066491L
-    # List of action handlers
-    ownActions = None
-    # List of action handlers
-    actionHandlers = None
-    # Action mapper
-    actionMapper = None
-    viewer = None
-    _clientHasActions = False
 
-    def __init__(self, *args):
-        _0 = args
-        _1 = len(args)
-        if _1 == 0:
-            pass # astStmt: [Stmt([]), None]
-        elif _1 == 1:
-            viewer, = _0
-            self.viewer = viewer
-        else:
-            raise ARGERROR(0, 1)
+    def __init__(self, viewer=None):
+        # List of action handlers
+        self.ownActions = None
+
+        # List of action handlers
+        self.actionHandlers = None
+
+        # Action mapper
+        self.actionMapper = None
+
+        self._clientHasActions = False
+
+        self.viewer = viewer
+
 
     def requestRepaint(self):
         if self.viewer is not None:
             self.viewer.requestRepaint()
 
+
     def setViewer(self, viewer):
         if viewer == self.viewer:
             return
+
         if self.viewer is not None:
             self.viewer.removeActionHandler(self)
-        self.requestRepaint()
-        # this goes to the old viewer
+
+        self.requestRepaint()  # this goes to the old viewer
         if viewer is not None:
             viewer.addActionHandler(self)
+
         self.viewer = viewer
-        self.requestRepaint()
-        # this goes to the new viewer
+        self.requestRepaint()  # this goes to the new viewer
+
 
     def addAction(self, action):
         if self.ownActions is None:
             self.ownActions = set()
+
         if self.ownActions.add(action):
             self.requestRepaint()
+
 
     def removeAction(self, action):
         if self.ownActions is not None:
             if self.ownActions.remove(action):
                 self.requestRepaint()
 
+
     def addActionHandler(self, actionHandler):
         if actionHandler == self:
             # don't add the actionHandler to itself
             return
+
         if actionHandler is not None:
             if self.actionHandlers is None:
                 self.actionHandlers = set()
-            if self.actionHandlers.add(actionHandler):
+
+            if actionHandler not in self.actionHandlers:
+                self.actionHandlers.add(actionHandler)
                 self.requestRepaint()
 
+
     def removeActionHandler(self, actionHandler):
-        if self.actionHandlers is not None and actionHandler in self.actionHandlers:
+        if self.actionHandlers is not None \
+                and actionHandler in self.actionHandlers:
             if self.actionHandlers.remove(actionHandler):
                 self.requestRepaint()
-            if self.actionHandlers.isEmpty():
+
+            if len(self.actionHandlers) == 0:
                 self.actionHandlers = None
+
 
     def removeAllActionHandlers(self):
         if self.actionHandlers is not None:
@@ -90,99 +108,95 @@ class ActionManager(Action, Container, Action, Handler, Action, Notifier):
 
 
 
-#    public void paintActions(Object actionTarget, PaintTarget paintTarget)
-#            throws PaintException {
-#
-#        actionMapper = null;
-#
-#        HashSet<Action> actions = new HashSet<Action>();
-#        if (actionHandlers != null) {
-#            for (Action.Handler handler : actionHandlers) {
-#                Action[] as = handler.getActions(actionTarget, viewer);
-#                if (as != null) {
-#                    for (Action action : as) {
-#                        actions.add(action);
-#                    }
-#                }
-#            }
-#        }
-#        if (ownActions != null) {
-#            actions.addAll(ownActions);
-#        }
-#
-#        /*
-#         * Must repaint whenever there are actions OR if all actions have been
-#         * removed but still exist on client side
-#         */
-#        if (!actions.isEmpty() || clientHasActions) {
-#            actionMapper = new KeyMapper();
-#
-#            paintTarget.addVariable(viewer, "action", "");
-#            paintTarget.startTag("actions");
-#
-#            for (final Action a : actions) {
-#                paintTarget.startTag("action");
-#                final String akey = actionMapper.key(a);
-#                paintTarget.addAttribute("key", akey);
-#                if (a.getCaption() != null) {
-#                    paintTarget.addAttribute("caption", a.getCaption());
-#                }
-#                if (a.getIcon() != null) {
-#                    paintTarget.addAttribute("icon", a.getIcon());
-#                }
-#                if (a instanceof ShortcutAction) {
-#                    final ShortcutAction sa = (ShortcutAction) a;
-#                    paintTarget.addAttribute("kc", sa.getKeyCode());
-#                    final int[] modifiers = sa.getModifiers();
-#                    if (modifiers != null) {
-#                        final String[] smodifiers = new String[modifiers.length];
-#                        for (int i = 0; i < modifiers.length; i++) {
-#                            smodifiers[i] = String.valueOf(modifiers[i]);
-#                        }
-#                        paintTarget.addAttribute("mk", smodifiers);
-#                    }
-#                }
-#                paintTarget.endTag("action");
-#            }
-#
-#            paintTarget.endTag("actions");
-#        }
-#
-#        /*
-#         * Update flag for next repaint so we know if we need to paint empty
-#         * actions or not (must send actions is client had actions before and
-#         * all actions were removed).
-#         */
-#        clientHasActions = !actions.isEmpty();
-#    }
+    def paintActions(self, actionTarget, paintTarget):
+
+        actionMapper = None
+
+        actions = set()
+        if self.actionHandlers is not None:
+            for handler in self.actionHandlers:
+                ac = handler.getActions(actionTarget, self.viewer)
+                if ac is not None:
+                    for action in ac:
+                        actions.add(action)
+
+        if self.ownActions is not None:
+            actions.union(self.ownActions)
+
+
+        # Must repaint whenever there are actions OR if all actions have been
+        # removed but still exist on client side
+        if len(actions) > 0 or self._clientHasActions:
+            actionMapper = KeyMapper()
+
+            paintTarget.addVariable(self.viewer, "action", "")
+            paintTarget.startTag("actions")
+
+            for a in actions:
+                paintTarget.startTag("action")
+                akey = actionMapper.key(a)
+                paintTarget.addAttribute("key", akey);
+                if a.getCaption() is not None:
+                    paintTarget.addAttribute("caption", a.getCaption())
+
+                if a.getIcon() is not None:
+                    paintTarget.addAttribute("icon", a.getIcon())
+
+                if isinstance(a, ShortcutAction):
+                    sa = a
+                    paintTarget.addAttribute("kc", sa.getKeyCode())
+                    modifiers = sa.getModifiers()
+                    if modifiers is not None:
+                        smodifiers = [None] * len(modifiers)
+                        for i in range(len(modifiers)):
+                            smodifiers[i] = str(modifiers[i])
+
+                        paintTarget.addAttribute("mk", smodifiers)
+
+
+                paintTarget.endTag("action")
+
+
+            paintTarget.endTag("actions")
+
+        # Update flag for next repaint so we know if we need to paint empty
+        # actions or not (must send actions is client had actions before and
+        # all actions were removed).
+        self._clientHasActions = len(actions) > 0
+
 
     def handleActions(self, variables, sender):
         if 'action' in variables and self.actionMapper is not None:
-            key = variables['action']
+            key = variables.get('action')
             action = self.actionMapper.get(key)
-            target = variables['actiontarget']
+            target = variables.get('actiontarget')
             if action is not None:
                 self.handleAction(action, sender, target)
+
 
     def getActions(self, target, sender):
         actions = set()
         if self.ownActions is not None:
             for a in self.ownActions:
                 actions.add(a)
+
         if self.actionHandlers is not None:
             for h in self.actionHandlers:
                 as_ = h.getActions(target, sender)
                 if as_ is not None:
                     for a in as_:
                         actions.add(a)
-        return list([None] * len(actions))
+
+        return [None] * len(actions)
+
 
     def handleAction(self, action, sender, target):
         if self.actionHandlers is not None:
-            array = list([None] * len(self.actionHandlers))
-            for handler in array:
+            arry = [None] * len(self.actionHandlers)
+            for handler in arry:
                 handler.handleAction(action, sender, target)
-        if (
-            self.ownActions is not None and action in self.ownActions and isinstance(action, Action.Listener)
-        ):
+
+        if self.ownActions is not None \
+                and action in self.ownActions \
+                and isinstance(action, Listener):
             action.handleAction(sender, target)

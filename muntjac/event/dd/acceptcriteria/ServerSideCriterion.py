@@ -14,11 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from com.vaadin.event.dd.acceptcriteria.AcceptCriterion import (AcceptCriterion,)
-# from java.io.Serializable import (Serializable,)
+from muntjac.event.dd.acceptcriteria.AcceptCriterion import AcceptCriterion
 
 
-class ServerSideCriterion(Serializable, AcceptCriterion):
+class ServerSideCriterion(AcceptCriterion):
     """Parent class for criteria which are verified on the server side during a drag
     operation to accept/discard dragged content (presented by
     {@link Transferable}).
@@ -35,10 +34,10 @@ class ServerSideCriterion(Serializable, AcceptCriterion):
 
     @since 6.3
     """
-    _serialVersionUID = 2128510128911628902L
 
     def isClientSideVerifiable(self):
         return False
+
 
     def paint(self, target):
         target.startTag('-ac')
@@ -46,11 +45,14 @@ class ServerSideCriterion(Serializable, AcceptCriterion):
         self.paintContent(target)
         target.endTag('-ac')
 
+
     def paintContent(self, target):
         pass
+
 
     def paintResponse(self, target):
         pass
 
+
     def getIdentifier(self):
-        return ServerSideCriterion.getCanonicalName()
+        return ServerSideCriterion.__class__.__name__  # getCanonicalName

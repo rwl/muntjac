@@ -14,8 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.tools.ReflectTools import ReflectTools
 from muntjac.event.ComponentEventListener import ComponentEventListener
+from muntjac.event.MouseEvents import ClickEvent
 
 
 class LayoutEvents(object):
@@ -24,8 +24,6 @@ class LayoutEvents(object):
 
 class LayoutClickListener(ComponentEventListener):
 
-    clickMethod = ReflectTools.findMethod(LayoutClickListener, 'layoutClick', LayoutClickEvent)
-
     def layoutClick(self, event):
         """Layout has been clicked
 
@@ -33,6 +31,8 @@ class LayoutClickListener(ComponentEventListener):
                    Component click event.
         """
         pass
+
+    clickMethod = layoutClick
 
 
 class LayoutClickNotifier(object):
@@ -73,6 +73,7 @@ class LayoutClickNotifier(object):
         """
         pass
 
+
     def removeListener(self, listener):
         """Removes an LayoutClickListener.
 
@@ -81,18 +82,18 @@ class LayoutClickNotifier(object):
         """
         pass
 
+
 class LayoutClickEvent(ClickEvent):
     """An event fired when the layout has been clicked. The event contains
     information about the target layout (component) and the child component
     that was clicked. If no child component was found it is set to null.
     """
-    _clickedComponent = None
-    _childComponent = None
 
     def __init__(self, source, mouseEventDetails, clickedComponent, childComponent):
         super(LayoutClickEvent, self)(source, mouseEventDetails)
         self._clickedComponent = clickedComponent
         self._childComponent = childComponent
+
 
     def getClickedComponent(self):
         """Returns the component that was clicked, which is somewhere inside the
@@ -104,6 +105,7 @@ class LayoutClickEvent(ClickEvent):
         @return clicked {@link Component}, null if none found
         """
         return self._clickedComponent
+
 
     def getChildComponent(self):
         """Returns the direct child component of the layout which contains the

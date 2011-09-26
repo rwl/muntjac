@@ -14,8 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from com.vaadin.event.TransferableImpl import (TransferableImpl,)
-# from java.util.Map import (Map,)
+from muntjac.event.TransferableImpl import TransferableImpl
+from muntjac.data.Container import Viewer
 
 
 class DataBoundTransferable(TransferableImpl):
@@ -36,12 +36,14 @@ class DataBoundTransferable(TransferableImpl):
     def __init__(self, sourceComponent, rawVariables):
         super(DataBoundTransferable, self)(sourceComponent, rawVariables)
 
+
     def getItemId(self):
         """Returns the identifier of the item being transferred.
 
         @return item identifier
         """
         pass
+
 
     def getPropertyId(self):
         """Returns the optional property identifier that the transfer concerns.
@@ -52,6 +54,7 @@ class DataBoundTransferable(TransferableImpl):
         """
         pass
 
+
     def getSourceContainer(self):
         """Returns the container data source from which the transfer occurs.
 
@@ -61,7 +64,7 @@ class DataBoundTransferable(TransferableImpl):
         @return Container
         """
         sourceComponent = self.getSourceComponent()
-        if isinstance(sourceComponent, Container.Viewer):
+        if isinstance(sourceComponent, Viewer):
             return sourceComponent.getContainerDataSource()
         else:
             # this should not happen

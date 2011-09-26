@@ -14,10 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# from java.io.Serializable import (Serializable,)
 
-
-class DropHandler(Serializable):
+class DropHandler(object):
     """DropHandlers contain the actual business logic for drag and drop operations.
     <p>
     The {@link #drop(DragAndDropEvent)} method is used to receive the transferred
@@ -39,6 +37,7 @@ class DropHandler(Serializable):
                    the event related to this drop
         """
         pass
+
 
     def getAcceptCriterion(self):
         """Returns the {@link AcceptCriterion} used to evaluate whether the

@@ -14,10 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.event.dd.TargetDetails import (TargetDetails,)
-# from java.util.HashMap import (HashMap,)
-# from java.util.Map import (Map,)
+from muntjac.event.dd.TargetDetails import TargetDetails
 
 
 class TargetDetailsImpl(TargetDetails):
@@ -26,27 +23,25 @@ class TargetDetailsImpl(TargetDetails):
 
     @since 6.3
     """
-    _data = dict()
-    _dropTarget = None
 
-    def __init__(self, *args):
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            rawDropData, = _0
-            self._data.putAll(rawDropData)
-        elif _1 == 2:
-            rawDropData, dropTarget = _0
-            self.__init__(rawDropData)
-            self._dropTarget = dropTarget
-        else:
-            raise ARGERROR(1, 2)
+    def __init__(self, rawDropData, dropTarget=None):
+        self._data = dict()
+
+        self._data.update(rawDropData)
+        self._dropTarget = dropTarget
+
 
     def getData(self, key):
-        return self._data[key]
+        return self._data.get(key)
+
 
     def setData(self, key, value):
-        return self._data.put(key, value)
+        if key in self._data:
+            return self._data[key]
+        else:
+            self._data[key] = value
+            return None
+
 
     def getTarget(self):
         return self._dropTarget

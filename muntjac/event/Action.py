@@ -25,12 +25,8 @@ class Action(object):
     @VERSION@
     @since 3.0
     """
-    # Action title.
-    _caption = None
-    # Action icon.
-    _icon = None
 
-    def __init__(self, *args):
+    def __init__(self, caption, icon=None):
         """Constructs a new action with the given caption.
 
         @param caption
@@ -43,17 +39,12 @@ class Action(object):
         @param icon
                    the icon for the new action.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            caption, = _0
-            self._caption = caption
-        elif _1 == 2:
-            caption, icon = _0
-            self._caption = caption
-            self._icon = icon
-        else:
-            raise ARGERROR(1, 2)
+        # Action title.
+        self._caption = caption
+
+        # Action icon.
+        self._icon = icon
+
 
     def getCaption(self):
         """Returns the action's caption.
@@ -61,6 +52,7 @@ class Action(object):
         @return the action's caption as a <code>String</code>.
         """
         return self._caption
+
 
     def getIcon(self):
         """Returns the action's icon.
@@ -77,6 +69,7 @@ class Action(object):
                    the caption to set.
         """
         self._caption = caption
+
 
     def setIcon(self, icon):
         """Sets the icon.
@@ -108,6 +101,7 @@ class Container(object):
         """
         pass
 
+
     def removeActionHandler(self, actionHandler):
         """Removes a previously registered action handler for the contents of
         this container.
@@ -137,6 +131,7 @@ class Notifier(Container):
 
     def addAction(self, action):
         pass
+
 
     def removeAction(self, action):
         pass
@@ -173,6 +168,7 @@ class Handler(object):
         @return the list of Action
         """
         pass
+
 
     def handleAction(self, action, sender, target):
         """Handles an action for the given target. The handler method may just

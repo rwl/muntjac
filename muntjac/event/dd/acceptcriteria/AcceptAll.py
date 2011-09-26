@@ -14,7 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from com.vaadin.event.dd.acceptcriteria.ClientSideCriterion import (ClientSideCriterion,)
+from muntjac.event.dd.acceptcriteria.ClientSideCriterion import \
+    ClientSideCriterion
 
 
 class AcceptAll(ClientSideCriterion):
@@ -25,8 +26,8 @@ class AcceptAll(ClientSideCriterion):
 
     @since 6.3
     """
-    _serialVersionUID = 7406683402153141461L
-    _singleton = AcceptAll()
+
+    _singleton = None
 
     def __init__(self):
         pass
@@ -35,5 +36,8 @@ class AcceptAll(ClientSideCriterion):
     def get(cls):
         return cls._singleton
 
+
     def accept(self, dragEvent):
         return True
+
+AcceptAll._singleton = AcceptAll()

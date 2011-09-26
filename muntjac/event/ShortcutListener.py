@@ -1,30 +1,43 @@
-# -*- coding: utf-8 -*-
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.event.Action import (Listener,)
-from com.vaadin.event.ShortcutAction import (ShortcutAction,)
-# from com.vaadin.event.Action.Listener import (Listener,)
+# Copyright (C) 2011 Vaadin Ltd
+# Copyright (C) 2011 Richard Lincoln
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+from muntjac.event.Action import Listener
+from muntjac.event.ShortcutAction import ShortcutAction
 
 
 class ShortcutListener(ShortcutAction, Listener):
-    _serialVersionUID = 1L
 
     def __init__(self, *args):
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            shorthandCaption, = _0
+
+        nargs = len(args)
+        if nargs == 1:
+            shorthandCaption, = args
             super(ShortcutListener, self)(shorthandCaption)
-        elif _1 == 2:
-            shorthandCaption, modifierKeys = _0
+        elif nargs == 2:
+            shorthandCaption, modifierKeys = args
             super(ShortcutListener, self)(shorthandCaption, modifierKeys)
-        elif _1 == 3:
-            caption, keyCode, modifierKeys = _0
+        elif nargs == 3:
+            caption, keyCode, modifierKeys = args
             super(ShortcutListener, self)(caption, keyCode, modifierKeys)
-        elif _1 == 4:
-            caption, icon, keyCode, modifierKeys = _0
+        elif nargs == 4:
+            caption, icon, keyCode, modifierKeys = args
             super(ShortcutListener, self)(caption, icon, keyCode, modifierKeys)
         else:
-            raise ARGERROR(1, 4)
+            raise ValueError
+
 
     def handleAction(self, sender, target):
         pass

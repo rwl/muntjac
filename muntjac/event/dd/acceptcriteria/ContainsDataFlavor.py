@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from com.vaadin.event.dd.acceptcriteria.ClientSideCriterion import (ClientSideCriterion,)
+from muntjac.event.dd.acceptcriteria.ClientSideCriterion import ClientSideCriterion
 
 
 class ContainsDataFlavor(ClientSideCriterion):
@@ -24,24 +24,26 @@ class ContainsDataFlavor(ClientSideCriterion):
 
     @since 6.3
     """
-    _dataFlavorId = None
 
-    def __init__(self, dataFlawor):
+    def __init__(self, dataFlavor):
         """Constructs a new instance of {@link ContainsDataFlavor}.
 
-        @param dataFlawor
+        @param dataFlavor
                    the type of data that will be checked from
                    {@link Transferable}
         """
-        self._dataFlavorId = dataFlawor
+        self._dataFlavorId = dataFlavor
+
 
     def paintContent(self, target):
         super(ContainsDataFlavor, self).paintContent(target)
         target.addAttribute('p', self._dataFlavorId)
 
+
     def accept(self, dragEvent):
-        return dragEvent.getTransferable().getDataFlavors().contains(self._dataFlavorId)
+        return self._dataFlavorId in dragEvent.getTransferable().getDataFlavors()
+
 
     def getIdentifier(self):
         # extending classes use client side implementation from this class
-        return ContainsDataFlavor.getCanonicalName()
+        return ContainsDataFlavor.__class__.__name__  # FIXME getCanonicalName

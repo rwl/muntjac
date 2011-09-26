@@ -14,11 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from com.vaadin.event.dd.acceptcriteria.AcceptCriterion import (AcceptCriterion,)
-# from java.io.Serializable import (Serializable,)
+from muntjac.event.dd.acceptcriteria.AcceptCriterion import AcceptCriterion
 
 
-class ClientSideCriterion(Serializable, AcceptCriterion):
+class ClientSideCriterion(AcceptCriterion):
     """Parent class for criteria that can be completely validated on client side.
     All classes that provide criteria that can be completely validated on client
     side should extend this class.
@@ -30,17 +29,10 @@ class ClientSideCriterion(Serializable, AcceptCriterion):
 
     @since 6.3
     """
-    # All criteria that extend this must be completely validatable on client
-    # side.
-    # 
-    # (non-Javadoc)
-    # 
-    # @see
-    # com.vaadin.event.dd.acceptCriteria.AcceptCriterion#isClientSideVerifiable
-    # ()
 
     def isClientSideVerifiable(self):
         return True
+
 
     def paint(self, target):
         target.startTag('-ac')
@@ -48,11 +40,14 @@ class ClientSideCriterion(Serializable, AcceptCriterion):
         self.paintContent(target)
         target.endTag('-ac')
 
+
     def paintContent(self, target):
         pass
 
+
     def getIdentifier(self):
         return self.getClass().getCanonicalName()
+
 
     def paintResponse(self, target):
         # NOP, nothing to do as this is client side verified criterion

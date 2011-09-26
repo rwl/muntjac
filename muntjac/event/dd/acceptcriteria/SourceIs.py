@@ -14,7 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from com.vaadin.event.dd.acceptcriteria.ClientSideCriterion import (ClientSideCriterion,)
+from muntjac.event.dd.acceptcriteria.ClientSideCriterion import ClientSideCriterion
+from muntjac.event.TransferableImpl import TransferableImpl
 
 
 class SourceIs(ClientSideCriterion):
@@ -23,24 +24,17 @@ class SourceIs(ClientSideCriterion):
 
     @since 6.3
     """
-    _component = None
 
     def __init__(self, *component):
         self._component = component
 
+
     def paintContent(self, target):
         super(SourceIs, self).paintContent(target)
         target.addAttribute('c', len(self._component))
-        _0 = True
-        i = 0
-        while True:
-            if _0 is True:
-                _0 = False
-            else:
-                i += 1
-            if not (i < len(self._component)):
-                break
-            target.addAttribute('component' + i, self._component[i])
+        for i, c in enumerate(self._component):
+            target.addAttribute('component' + i, c)
+
 
     def accept(self, dragEvent):
         if isinstance(dragEvent.getTransferable(), TransferableImpl):

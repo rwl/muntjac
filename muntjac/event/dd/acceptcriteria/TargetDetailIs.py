@@ -14,8 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.event.dd.acceptcriteria.ClientSideCriterion import (ClientSideCriterion,)
+from muntjac.event.dd.acceptcriteria.ClientSideCriterion import ClientSideCriterion
 
 
 class TargetDetailIs(ClientSideCriterion):
@@ -26,11 +25,8 @@ class TargetDetailIs(ClientSideCriterion):
 
            TODO add support for other basic data types that we support in UIDL.
     """
-    _serialVersionUID = 763165450054331246L
-    _propertyName = None
-    _value = None
 
-    def __init__(self, *args):
+    def __init__(self, dataFlavor, value):
         """Constructs a criterion which ensures that the value there is a value in
         {@link TargetDetails} that equals the reference value.
 
@@ -40,19 +36,9 @@ class TargetDetailIs(ClientSideCriterion):
                    the reference value to which the drop target detail will be
                    compared
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 2:
-            if isinstance(_0[1], bool):
-                dataFlavor, true1 = _0
-                self._propertyName = dataFlavor
-                self._value = true1
-            else:
-                dataFlavor, value = _0
-                self._propertyName = dataFlavor
-                self._value = value
-        else:
-            raise ARGERROR(2, 2)
+        self._propertyName = dataFlavor
+        self._value = value
+
 
     def paintContent(self, target):
         super(TargetDetailIs, self).paintContent(target)
@@ -63,9 +49,11 @@ class TargetDetailIs(ClientSideCriterion):
         elif isinstance(self._value, str):
             target.addAttribute('v', self._value)
 
+
     def accept(self, dragEvent):
         data = dragEvent.getTargetDetails().getData(self._propertyName)
         return self._value == data
+
 
     def getIdentifier(self):
         # sub classes by default use VDropDetailEquals a client implementation

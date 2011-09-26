@@ -18,7 +18,7 @@
 # from java.util.Collection import (Collection,)
 
 
-class Transferable(Serializable):
+class Transferable(object):
     """Transferable wraps the data that is to be imported into another component.
     Currently Transferable is only used for drag and drop.
 
@@ -40,6 +40,7 @@ class Transferable(Serializable):
         """
         pass
 
+
     def setData(self, dataFlavor, value):
         """Stores data of given data flavor to Transferable. Possibly existing value
         of the same data flavor will be replaced.
@@ -51,11 +52,13 @@ class Transferable(Serializable):
         """
         pass
 
+
     def getDataFlavors(self):
         """@return a collection of data flavors ( data types ) available in this
                 Transferable
         """
         pass
+
 
     def getSourceComponent(self):
         """@return the component that created the Transferable or null if the source

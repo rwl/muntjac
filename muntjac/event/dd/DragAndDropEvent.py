@@ -14,10 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# from java.io.Serializable import (Serializable,)
 
-
-class DragAndDropEvent(Serializable):
+class DragAndDropEvent(object):
     """DragAndDropEvent wraps information related to drag and drop operation. It is
     passed by terminal implementation for
     {@link DropHandler#drop(DragAndDropEvent)} and
@@ -29,18 +27,18 @@ class DragAndDropEvent(Serializable):
 
     @since 6.3
     """
-    _transferable = None
-    _dropTargetDetails = None
 
     def __init__(self, transferable, dropTargetDetails):
         self._transferable = transferable
         self._dropTargetDetails = dropTargetDetails
+
 
     def getTransferable(self):
         """@return the Transferable instance representing the data dragged in this
                 drag and drop event
         """
         return self._transferable
+
 
     def getTargetDetails(self):
         """@return the TargetDetails containing drop target related details of drag

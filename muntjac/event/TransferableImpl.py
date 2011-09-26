@@ -14,32 +14,31 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from com.vaadin.event.Transferable import (Transferable,)
-# from java.util.Collection import (Collection,)
-# from java.util.HashMap import (HashMap,)
-# from java.util.Map import (Map,)
+from muntjac.event.Transferable import Transferable
 
 
 class TransferableImpl(Transferable):
-    """TODO Javadoc!
+    """TODO docs
 
     @since 6.3
     """
-    _rawVariables = dict()
-    _sourceComponent = None
 
     def __init__(self, sourceComponent, rawVariables):
         self._sourceComponent = sourceComponent
         self._rawVariables = rawVariables
 
+
     def getSourceComponent(self):
         return self._sourceComponent
 
+
     def getData(self, dataFlavor):
-        return self._rawVariables[dataFlavor]
+        return self._rawVariables.get(dataFlavor)
+
 
     def setData(self, dataFlavor, value):
-        self._rawVariables.put(dataFlavor, value)
+        self._rawVariables[dataFlavor] = value
+
 
     def getDataFlavors(self):
         return self._rawVariables.keys()

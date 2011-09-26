@@ -14,11 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.event.Action import (Action,)
-# from java.io.Serializable import (Serializable,)
-# from java.util.regex.Matcher import (Matcher,)
-# from java.util.regex.Pattern import (Pattern,)
+import re
+
+from muntjac.event.Action import Action
 
 
 class ShortcutAction(Action):
@@ -47,8 +45,38 @@ class ShortcutAction(Action):
     @version
     @since 4.0.1
     """
-    _keyCode = None
-    _modifiers = None
+
+    # Used in the caption shorthand notation to indicate the ALT modifier.
+    SHORTHAND_CHAR_ALT = '&'
+
+    # Used in the caption shorthand notation to indicate the SHIFT modifier.
+    SHORTHAND_CHAR_SHIFT = '_'
+
+    # Used in the caption shorthand notation to indicate the CTRL modifier.
+    SHORTHAND_CHAR_CTRL = '^'
+
+    # regex-quote (escape) the characters
+    _SHORTHAND_ALT = re.escape(SHORTHAND_CHAR_ALT)
+    _SHORTHAND_SHIFT = re.escape(SHORTHAND_CHAR_SHIFT)
+    _SHORTHAND_CTRL = re.escape(SHORTHAND_CHAR_CTRL)
+
+    # Used for replacing escaped chars, e.g && with &
+    _SHORTHAND_ESCAPE = re.compile('(' + _SHORTHAND_ALT + '?)' \
+            + _SHORTHAND_ALT + '|(' + _SHORTHAND_SHIFT + '?)' \
+            + _SHORTHAND_SHIFT + '|(' + _SHORTHAND_CTRL + '?)' \
+            + _SHORTHAND_CTRL)
+
+    # Used for removing escaped chars, only leaving real shorthands
+    _SHORTHAND_REMOVE = re.compile('([' + _SHORTHAND_ALT + '|' \
+            + _SHORTHAND_SHIFT + '|' + _SHORTHAND_CTRL + '])\\1')
+
+    # Mnemonic char, optionally followed by another, and optionally a third
+    _SHORTHANDS = re.compile('(' + _SHORTHAND_ALT + '|' + _SHORTHAND_SHIFT \
+            + '|' + _SHORTHAND_CTRL + ')(?!\\1)(?:(' + _SHORTHAND_ALT \
+            + '|' + _SHORTHAND_SHIFT + '|' + _SHORTHAND_CTRL \
+            + ')(?!\\1|\\2))?(?:(' + _SHORTHAND_ALT + '|' + _SHORTHAND_SHIFT \
+            + '|' + _SHORTHAND_CTRL + ')(?!\\1|\\2|\\3))?.')
+
 
     def __init__(self, *args):
         """Creates a shortcut that reacts to the given {@link KeyCode} and
@@ -112,87 +140,65 @@ class ShortcutAction(Action):
         @param shorthandCaption
         @param modifierKeys
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            shorthandCaption, = _0
+        self._keyCode = None
+        self._modifiers = None
+
+        args = args
+        nargs = len(args)
+        if nargs == 1:
+            shorthandCaption, = args
             self.__init__(shorthandCaption, None)
-        elif _1 == 2:
-            shorthandCaption, modifierKeys = _0
-            super(ShortcutAction, self)(self._SHORTHAND_ESCAPE.matcher(shorthandCaption).replaceAll('$1$2$3'))
+        elif nargs == 2:
+            shorthandCaption, modifierKeys = args
+
+            # && -> & etc
+            super(ShortcutAction, self)(self._SHORTHAND_ESCAPE.sub(shorthandCaption, '$1$2$3'))
+
             # replace escaped chars with something that won't accidentally match
-            shorthandCaption = self._SHORTHAND_REMOVE.matcher(shorthandCaption).replaceAll('\u001A')
-            matcher = self._SHORTHANDS.matcher(shorthandCaption)
-            if matcher.find():
-                match = matcher.group()
+            shorthandCaption = self._SHORTHAND_REMOVE.sub(shorthandCaption, '\u001A')
+
+            m = self._SHORTHANDS.search(shorthandCaption)  # FIXME check regex
+            if m is not None:
+                match = m.group()
+
                 # KeyCode from last char in match, uppercase
-                self._keyCode = self.Character.toUpperCase(matcher.group()[len(match) - 1])
+                self._keyCode = m.group()[len(match) - 1].upper()
+
                 # Given modifiers override this indicated in the caption
                 if modifierKeys is not None:
                     self._modifiers = modifierKeys
                 else:
                     # Read modifiers from caption
                     mod = [None] * (len(match) - 1)
-                    _0 = True
-                    i = 0
-                    while True:
-                        if _0 is True:
-                            _0 = False
-                        else:
-                            i += 1
-                        if not (i < len(mod)):
-                            break
+                    for i in range(len(mod)):
                         kc = match[i]
-                        _1 = kc
-                        _2 = False
-                        while True:
-                            if _1 == self.SHORTHAND_CHAR_ALT:
-                                _2 = True
-                                mod[i] = self.ModifierKey.ALT
-                                break
-                            if (_2 is True) or (_1 == self.SHORTHAND_CHAR_CTRL):
-                                _2 = True
-                                mod[i] = self.ModifierKey.CTRL
-                                break
-                            if (_2 is True) or (_1 == self.SHORTHAND_CHAR_SHIFT):
-                                _2 = True
-                                mod[i] = self.ModifierKey.SHIFT
-                                break
-                            break
+
+                        if kc == self.SHORTHAND_CHAR_ALT:
+                            mod[i] = self.ModifierKey.ALT
+
+                        elif kc == self.SHORTHAND_CHAR_CTRL:
+                            mod[i] = self.ModifierKey.CTRL
+
+                        elif kc == self.SHORTHAND_CHAR_SHIFT:
+                            mod[i] = self.ModifierKey.SHIFT
+
                     self._modifiers = mod
             else:
                 self._keyCode = -1
                 self._modifiers = modifierKeys
-        elif _1 == 3:
-            caption, kc, m = _0
+        elif nargs == 3:
+            caption, kc, m = args
             super(ShortcutAction, self)(caption)
             self._keyCode = kc
             self._modifiers = m
-        elif _1 == 4:
-            caption, icon, kc, m = _0
+        elif nargs == 4:
+            caption, icon, kc, m = args
             super(ShortcutAction, self)(caption, icon)
             self._keyCode = kc
             self._modifiers = m
         else:
-            raise ARGERROR(1, 4)
+            raise ValueError, 'invalid number of arguments'
 
-    # Used in the caption shorthand notation to indicate the ALT modifier.
-    SHORTHAND_CHAR_ALT = '&'
-    # Used in the caption shorthand notation to indicate the SHIFT modifier.
-    SHORTHAND_CHAR_SHIFT = '_'
-    # Used in the caption shorthand notation to indicate the CTRL modifier.
-    SHORTHAND_CHAR_CTRL = '^'
-    # regex-quote (escape) the characters
-    _SHORTHAND_ALT = Pattern.quote(str(SHORTHAND_CHAR_ALT))
-    _SHORTHAND_SHIFT = Pattern.quote(str(SHORTHAND_CHAR_SHIFT))
-    _SHORTHAND_CTRL = Pattern.quote(str(SHORTHAND_CHAR_CTRL))
-    # Used for replacing escaped chars, e.g && with &
-    _SHORTHAND_ESCAPE = Pattern.compile('(' + _SHORTHAND_ALT + '?)' + _SHORTHAND_ALT + '|(' + _SHORTHAND_SHIFT + '?)' + _SHORTHAND_SHIFT + '|(' + _SHORTHAND_CTRL + '?)' + _SHORTHAND_CTRL)
-    # Used for removing escaped chars, only leaving real shorthands
-    _SHORTHAND_REMOVE = Pattern.compile('([' + _SHORTHAND_ALT + '|' + _SHORTHAND_SHIFT + '|' + _SHORTHAND_CTRL + '])\\1')
-    # Mnemonic char, optionally followed by another, and optionally a third
-    _SHORTHANDS = Pattern.compile('(' + _SHORTHAND_ALT + '|' + _SHORTHAND_SHIFT + '|' + _SHORTHAND_CTRL + ')(?!\\1)(?:(' + _SHORTHAND_ALT + '|' + _SHORTHAND_SHIFT + '|' + _SHORTHAND_CTRL + ')(?!\\1|\\2))?(?:(' + _SHORTHAND_ALT + '|' + _SHORTHAND_SHIFT + '|' + _SHORTHAND_CTRL + ')(?!\\1|\\2|\\3))?.')
-    # && -> & etc
 
     def getKeyCode(self):
         """Get the {@link KeyCode} that this shortcut reacts to (in combination with
@@ -202,6 +208,7 @@ class ShortcutAction(Action):
         """
         return self._keyCode
 
+
     def getModifiers(self):
         """Get the {@link ModifierKey}s required for the shortcut to react.
 
@@ -209,8 +216,10 @@ class ShortcutAction(Action):
         """
         return self._modifiers
 
+
 class KeyCode(object):
     """Key codes that can be used for shortcuts"""
+
     ENTER = 13
     ESCAPE = 27
     PAGE_UP = 33
@@ -275,8 +284,10 @@ class KeyCode(object):
     NUM9 = 57
     SPACEBAR = 32
 
+
 class ModifierKey(object):
     """Modifier key constants"""
+
     SHIFT = 16
     CTRL = 17
     ALT = 18

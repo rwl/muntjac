@@ -14,13 +14,16 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from com.vaadin.event.MouseEvents import (ClickEvent,)
-# from com.vaadin.event.MouseEvents.ClickEvent import (ClickEvent,)
-# from java.io.Serializable import (Serializable,)
-# from java.lang.reflect.Method import (Method,)
+from muntjac.event.MouseEvents import ClickEvent
 
 
-class ItemClickEvent(ClickEvent, Serializable):
+class ItemClickListener(object):
+
+    def itemClick(self, event):
+        pass
+
+
+class ItemClickEvent(ClickEvent):
     """Click event fired by a {@link Component} implementing
     {@link com.vaadin.data.Container} interface. ItemClickEvents happens on an
     {@link Item} rendered somehow on terminal. Event may also contain a specific
@@ -28,15 +31,13 @@ class ItemClickEvent(ClickEvent, Serializable):
 
     @since 5.3
     """
-    _item = None
-    _itemId = None
-    _propertyId = None
 
     def __init__(self, source, item, itemId, propertyId, details):
         super(ItemClickEvent, self)(source, details)
         self._item = item
         self._itemId = itemId
         self._propertyId = propertyId
+
 
     def getItem(self):
         """Gets the item on which the click event occurred.
@@ -45,12 +46,14 @@ class ItemClickEvent(ClickEvent, Serializable):
         """
         return self._item
 
+
     def getItemId(self):
         """Gets a possible identifier in source for clicked Item
 
         @return
         """
         return self._itemId
+
 
     def getPropertyId(self):
         """Returns property on which click event occurred. Returns null if source
@@ -62,33 +65,10 @@ class ItemClickEvent(ClickEvent, Serializable):
         """
         return self._propertyId
 
-    ITEM_CLICK_METHOD = None
-    # This should never happen
-    try:
-        ITEM_CLICK_METHOD = ItemClickListener.getDeclaredMethod('itemClick', [ItemClickEvent])
-    except java.lang.NoSuchMethodException, e:
-        raise java.lang.RuntimeException()
+    ITEM_CLICK_METHOD = getattr(ItemClickListener, 'itemClick')
 
 
-class ItemClickListener(Serializable):
-
-    def itemClick(self, event):
-        pass
-
-
-class ItemClickSource(ItemClickNotifier):
-    """Components implementing
-
-    @link {@link Container} interface may support emitting
-          {@link ItemClickEvent}s.
-
-    @deprecated Use {@link ItemClickNotifier} instead. ItemClickSource was
-                deprecated in version 6.5.
-    """
-    pass
-
-
-class ItemClickNotifier(Serializable):
+class ItemClickNotifier(object):
     """The interface for adding and removing <code>ItemClickEvent</code>
     listeners. By implementing this interface a class explicitly announces
     that it will generate an <code>ItemClickEvent</code> when one of its
@@ -115,6 +95,7 @@ class ItemClickNotifier(Serializable):
         """
         pass
 
+
     def removeListener(self, listener):
         """Removes an ItemClickListener.
 
@@ -122,3 +103,15 @@ class ItemClickNotifier(Serializable):
                    ItemClickListener to be removed
         """
         pass
+
+
+class ItemClickSource(ItemClickNotifier):
+    """Components implementing
+
+    @link {@link Container} interface may support emitting
+          {@link ItemClickEvent}s.
+
+    @deprecated Use {@link ItemClickNotifier} instead. ItemClickSource was
+                deprecated in version 6.5.
+    """
+    pass
