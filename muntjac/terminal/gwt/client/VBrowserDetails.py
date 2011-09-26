@@ -1,8 +1,21 @@
-# -*- coding: utf-8 -*-
-# from java.io.Serializable import (Serializable,)
+# Copyright (C) 2011 Vaadin Ltd
+# Copyright (C) 2011 Richard Lincoln
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class VBrowserDetails(Serializable):
+class VBrowserDetails(object):
     """Class that parses the user agent string from the browser and provides
     information about the browser. Used internally by {@link BrowserInfo} and
     {@link WebBrowser}. Should not be used directly.
@@ -11,20 +24,6 @@ class VBrowserDetails(Serializable):
     @version @VERSION@
     @since 6.3
     """
-    _isGecko = False
-    _isWebKit = False
-    _isPresto = False
-    _isSafari = False
-    _isChrome = False
-    _isFirefox = False
-    _isOpera = False
-    _isIE = False
-    _isWindows = False
-    _isMacOSX = False
-    _isLinux = False
-    _browserEngineVersion = -1
-    _browserMajorVersion = -1
-    _browserMinorVersion = -1
 
     def __init__(self, userAgent):
         """Create an instance based on the given user agent.
@@ -32,7 +31,23 @@ class VBrowserDetails(Serializable):
         @param userAgent
                    User agent as provided by the browser.
         """
-        userAgent = userAgent.toLowerCase()
+        self._isGecko = False
+        self._isWebKit = False
+        self._isPresto = False
+        self._isSafari = False
+        self._isChrome = False
+        self._isFirefox = False
+        self._isOpera = False
+        self._isIE = False
+        self._isWindows = False
+        self._isMacOSX = False
+        self._isLinux = False
+        self._browserEngineVersion = -1
+        self._browserMajorVersion = -1
+        self._browserMinorVersion = -1
+
+        userAgent = userAgent.lower()
+
         # browser engine name
         self._isGecko = userAgent.find('gecko') != -1 and userAgent.find('webkit') == -1
         self._isWebKit = userAgent.find('applewebkit') != -1
@@ -43,24 +58,24 @@ class VBrowserDetails(Serializable):
         self._isOpera = userAgent.find('opera') != -1
         self._isIE = userAgent.find('msie') != -1 and not self._isOpera and userAgent.find('webtv') == -1
         self._isFirefox = userAgent.find(' firefox/') != -1
+
         # Rendering engine version
-        # Browser engine version parsing failed
-        # Browser version
         try:
             if self._isGecko:
                 rvPos = userAgent.find('rv:')
                 if rvPos >= 0:
                     tmp = userAgent[rvPos + 3:]
-                    tmp = tmp.replaceFirst('(\\.[0-9]+).+', '$1')
-                    self._browserEngineVersion = self.float(tmp)
+                    tmp = tmp.replace('(\\.[0-9]+).+', '$1', count=1)
+                    self._browserEngineVersion = float(tmp)
             elif self._isWebKit:
                 tmp = userAgent[userAgent.find('webkit/') + 7:]
-                tmp = tmp.replaceFirst('([0-9]+)[^0-9].+', '$1')
-                self._browserEngineVersion = self.float(tmp)
-        except Exception, e:
+                tmp = tmp.replace('([0-9]+)[^0-9].+', '$1', count=1)
+                self._browserEngineVersion = float(tmp)
+        except Exception:
+            # Browser engine version parsing failed
             print 'Browser engine version parsing failed for: ' + userAgent
-        # Browser version parsing failed
-        # Operating system
+
+        # Browser version
         try:
             if self._isIE:
                 ieVersionString = userAgent[userAgent.find('msie ') + 5:]
@@ -68,53 +83,63 @@ class VBrowserDetails(Serializable):
                 self.parseVersionString(ieVersionString)
             elif self._isFirefox:
                 i = userAgent.find(' firefox/') + 9
-                self.parseVersionString(self.safeSubstring(userAgent, i, i + 5))
+                self.parseVersionString( self.safeSubstring(userAgent, i, i + 5) )
             elif self._isChrome:
                 i = userAgent.find(' chrome/') + 8
-                self.parseVersionString(self.safeSubstring(userAgent, i, i + 5))
+                self.parseVersionString( self.safeSubstring(userAgent, i, i + 5) )
             elif self._isSafari:
                 i = userAgent.find(' version/') + 9
-                self.parseVersionString(self.safeSubstring(userAgent, i, i + 5))
+                self.parseVersionString( self.safeSubstring(userAgent, i, i + 5) )
             elif self._isOpera:
                 i = userAgent.find(' version/')
                 if i != -1:
                     # Version present in Opera 10 and newer
-                    i += 9
-                    # " version/".length
+                    i += 9  # " version/".length
                 else:
                     i = userAgent.find('opera/') + 6
                 self.parseVersionString(self.safeSubstring(userAgent, i, i + 5))
-        except Exception, e:
+        except Exception:
+            # Browser version parsing failed
             print 'Browser version parsing failed for: ' + userAgent
-        if userAgent.contains('windows '):
+
+        # Operating system
+        if 'windows ' in userAgent:
             self._isWindows = True
-        elif userAgent.contains('linux'):
+        elif 'linux' in userAgent:
             self._isLinux = True
-        elif (
-            (userAgent.contains('macintosh') or userAgent.contains('mac osx')) or userAgent.contains('mac os x')
-        ):
+        elif 'macintosh' in userAgent \
+                or 'mac osx' in userAgent \
+                or 'mac os x' in userAgent:
             self._isMacOSX = True
+
 
     def parseVersionString(self, versionString):
         idx = versionString.find('.')
         if idx < 0:
             idx = len(versionString)
+
         self._browserMajorVersion = int(self.safeSubstring(versionString, 0, idx))
+
         idx2 = versionString.find('.', idx + 1)
         if idx2 < 0:
             idx2 = len(versionString)
-        # leave the minor version unmodified (-1 = unknown)
+
+
         try:
-            self._browserMinorVersion = int(self.safeSubstring(versionString, idx + 1, idx2).replaceAll('[^0-9].*', ''))
-        except NumberFormatException, e:
-            pass # astStmt: [Stmt([]), None]
+            self._browserMinorVersion = int(self.safeSubstring(versionString, idx + 1, idx2).replace('[^0-9].*', ''))
+        except ValueError:
+            pass  # leave the minor version unmodified (-1 = unknown)
+
 
     def safeSubstring(self, string, beginIndex, endIndex):
         if beginIndex < 0:
             beginIndex = 0
-        if (endIndex < 0) or (endIndex > len(string)):
+
+        if endIndex < 0 or endIndex > len(string):
             endIndex = len(string)
+
         return string[beginIndex:endIndex]
+
 
     def isFirefox(self):
         """Tests if the browser is Firefox.
@@ -123,12 +148,14 @@ class VBrowserDetails(Serializable):
         """
         return self._isFirefox
 
+
     def isGecko(self):
         """Tests if the browser is using the Gecko engine
 
         @return true if it is Gecko, false otherwise
         """
         return self._isGecko
+
 
     def isWebKit(self):
         """Tests if the browser is using the WebKit engine
@@ -137,12 +164,14 @@ class VBrowserDetails(Serializable):
         """
         return self._isWebKit
 
+
     def isPresto(self):
         """Tests if the browser is using the Presto engine
 
         @return true if it is Presto, false otherwise
         """
         return self._isPresto
+
 
     def isSafari(self):
         """Tests if the browser is Safari.
@@ -151,12 +180,14 @@ class VBrowserDetails(Serializable):
         """
         return self._isSafari
 
+
     def isChrome(self):
         """Tests if the browser is Chrome.
 
         @return true if it is Chrome, false otherwise
         """
         return self._isChrome
+
 
     def isOpera(self):
         """Tests if the browser is Opera.
@@ -165,12 +196,14 @@ class VBrowserDetails(Serializable):
         """
         return self._isOpera
 
+
     def isIE(self):
         """Tests if the browser is Internet Explorer.
 
         @return true if it is Internet Explorer, false otherwise
         """
         return self._isIE
+
 
     def getBrowserEngineVersion(self):
         """Returns the version of the browser engine. For WebKit this is an integer
@@ -179,6 +212,7 @@ class VBrowserDetails(Serializable):
         @return The version of the browser engine
         """
         return self._browserEngineVersion
+
 
     def getBrowserMajorVersion(self):
         """Returns the browser major version e.g., 3 for Firefox 3.5, 4 for Chrome
@@ -192,6 +226,7 @@ class VBrowserDetails(Serializable):
         """
         return self._browserMajorVersion
 
+
     def getBrowserMinorVersion(self):
         """Returns the browser minor version e.g., 5 for Firefox 3.5.
 
@@ -200,6 +235,7 @@ class VBrowserDetails(Serializable):
         @return The minor version of the browser, or -1 if not known/parsed.
         """
         return self._browserMinorVersion
+
 
     def setIEMode(self, documentMode):
         """Sets the version for IE based on the documentMode. This is used to return
@@ -212,6 +248,7 @@ class VBrowserDetails(Serializable):
         self._browserMajorVersion = documentMode
         self._browserMinorVersion = 0
 
+
     def isWindows(self):
         """Tests if the browser is run on Windows.
 
@@ -219,12 +256,14 @@ class VBrowserDetails(Serializable):
         """
         return self._isWindows
 
+
     def isMacOSX(self):
         """Tests if the browser is run on Mac OSX.
 
         @return true if run on Mac OSX, false otherwise
         """
         return self._isMacOSX
+
 
     def isLinux(self):
         """Tests if the browser is run on Linux.
