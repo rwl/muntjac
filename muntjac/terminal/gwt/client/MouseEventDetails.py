@@ -14,16 +14,16 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.terminal.gwt.client.Event import Event
-from muntjac.terminal.gwt.client.Util import Util
+#from com.google.gwt.user.client.Event import Event
+#from muntjac.terminal.gwt.client.Util import Util
 
 
 class MouseEventDetails(object):
     """Helper class to store and transfer mouse event details."""
 
-    BUTTON_LEFT = Event.BUTTON_LEFT
-    BUTTON_MIDDLE = Event.BUTTON_MIDDLE
-    BUTTON_RIGHT = Event.BUTTON_RIGHT
+    BUTTON_LEFT = 1  # Event.BUTTON_LEFT
+    BUTTON_MIDDLE = 4  # Event.BUTTON_MIDDLE
+    BUTTON_RIGHT = 2  # Event.BUTTON_RIGHT
 
     def __init__(self, evt=None, relativeToElement=None):
         self._DELIM = ','
@@ -43,9 +43,10 @@ class MouseEventDetails(object):
         elif relativeToElement is None:
             self.__init__(evt, None)
         else:
-            self._type = self.Event.getTypeInt(evt.getType())
-            self._clientX = Util.getTouchOrMouseClientX(evt)
-            self._clientY = Util.getTouchOrMouseClientY(evt)
+            raise NotImplementedError
+#            self._type = Event.getTypeInt(evt.getType())  # FIXME com.google.gwt.user.client.Event
+#            self._clientX = Util.getTouchOrMouseClientX(evt)
+#            self._clientY = Util.getTouchOrMouseClientY(evt)
             self._button = evt.getButton()
             self._altKey = evt.getAltKey()
             self._ctrlKey = evt.getCtrlKey()
@@ -72,16 +73,16 @@ class MouseEventDetails(object):
     def deSerialize(cls, serializedString):
         instance = MouseEventDetails()
         fields = serializedString.split(',')
-        instance.button = int(fields[0])
-        instance.clientX = int(fields[1])
-        instance.clientY = int(fields[2])
-        instance.altKey = bool(fields[3])
-        instance.ctrlKey = bool(fields[4])
-        instance.metaKey = bool(fields[5])
-        instance.shiftKey = bool(fields[6])
-        instance.type = int(fields[7])
-        instance.relativeX = int(fields[8])
-        instance.relativeY = int(fields[9])
+        instance._button = int(fields[0])
+        instance._clientX = int(fields[1])
+        instance._clientY = int(fields[2])
+        instance._altKey = bool(fields[3])
+        instance._ctrlKey = bool(fields[4])
+        instance._metaKey = bool(fields[5])
+        instance._shiftKey = bool(fields[6])
+        instance._type = int(fields[7])
+        instance._relativeX = int(fields[8])
+        instance._relativeY = int(fields[9])
         return instance
 
 
