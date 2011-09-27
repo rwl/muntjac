@@ -392,8 +392,8 @@ class AbstractApplicationServlet(Servlet, Constants):
                                                                 self)
 
             # Update browser information from the request
-            self.updateBrowserProperties(webApplicationContext.getBrowser(),
-                                         request)
+            self.updateBrowserProperties(
+                    webApplicationContext.getBrowser(), request)
 
             # Call application requestStart before Application.init()
             # (bypasses the limitation in TransactionListener)
@@ -416,14 +416,10 @@ class AbstractApplicationServlet(Servlet, Constants):
             elif requestType == RequestType.UIDL:
                 # Handles AJAX UIDL requests
                 window = \
-                    applicationManager.getApplicationWindow(request,
-                                                            self,
-                                                            application,
-                                                            None)
-                applicationManager.handleUidlRequest(request,
-                                                     response,
-                                                     self,
-                                                     window)
+                    applicationManager.getApplicationWindow(
+                            request, self, application, None)
+                applicationManager.handleUidlRequest(
+                        request, response, self, window)
                 return
 
             # Removes application if it has stopped (mayby by thread or
@@ -433,9 +429,8 @@ class AbstractApplicationServlet(Servlet, Constants):
                 return
 
             # Finds the window within the application
-            window = self.getApplicationWindow(request,
-                                               applicationManager,
-                                               application)
+            window = self.getApplicationWindow(
+                    request, applicationManager, application)
             if window is None:
                 raise ServletException(self.ERROR_NO_WINDOW_FOUND)
 
@@ -467,8 +462,8 @@ class AbstractApplicationServlet(Servlet, Constants):
             # Notifies transaction end
             try:
                 if transactionStarted:
-                    application.getContext().endTransaction(application,
-                                                            request)
+                    application.getContext().endTransaction(
+                            application, request)
             finally:
                 if requestStarted:
                     application.onRequestEnd(request, response)
@@ -570,9 +565,8 @@ class AbstractApplicationServlet(Servlet, Constants):
                 '\"message\" : ' + message + ',' + '\"url\" : ' + url +
                 '}}, \"resources\": {}, \"locales\":[]}]')
 
-            self.writeResponse(response,
-                               'application/json; charset=UTF-8',
-                               output)
+            self.writeResponse(
+                    response, 'application/json; charset=UTF-8', output)
         else:
             # Create an HTML response with the error
             output = ''
@@ -626,9 +620,8 @@ class AbstractApplicationServlet(Servlet, Constants):
                 self.requestCanCreateApplication(request, requestType)
 
         # Find an existing application for this request.
-        application = \
-                self.getExistingApplication(request,
-                                            requestCanCreateApplication)
+        application = self.getExistingApplication(
+                request, requestCanCreateApplication)
 
         if application is not None:
             # There is an existing application. We can use this as long as the
@@ -643,14 +636,14 @@ class AbstractApplicationServlet(Servlet, Constants):
 
             if restartApplication:
                 # avoid session creation
-                self.closeApplication(application,
-                                      request.transaction()._session)
+                self.closeApplication(
+                        application, request.transaction()._session)
                 return self.createApplication(request)
 
             elif closeApplication:
                 # avoid session creation
-                self.closeApplication(application,
-                                      request.transaction()._session)
+                self.closeApplication(
+                        application, request.transaction()._session)
                 return None
 
             else:
@@ -805,10 +798,10 @@ class AbstractApplicationServlet(Servlet, Constants):
             ci = self.getSystemMessages()
 
             self.criticalNotification(request, response,
-                                      ci.getInternalErrorCaption(),
-                                      ci.getInternalErrorMessage(),
-                                      None,
-                                      ci.getInternalErrorURL())
+                    ci.getInternalErrorCaption(),
+                    ci.getInternalErrorMessage(),
+                    None, ci.getInternalErrorURL())
+
             if application is not None:
                 application.getErrorHandler().terminalError(RequestError(e))
             else:
@@ -889,10 +882,8 @@ class AbstractApplicationServlet(Servlet, Constants):
         @throws IOException
         """
         # Handles the URI
-        download = applicationManager.handleURI(window,
-                                                request,
-                                                response,
-                                                self)
+        download = applicationManager.handleURI(
+                window, request, response, self)
 
         # A download request
         if download is not None:
@@ -926,10 +917,9 @@ class AbstractApplicationServlet(Servlet, Constants):
 
                 # send uidl redirect
                 self.criticalNotification(request, response,
-                                          ci.getSessionExpiredCaption(),
-                                          ci.getSessionExpiredMessage(),
-                                          None,
-                                          ci.getSessionExpiredURL())
+                        ci.getSessionExpiredCaption(),
+                        ci.getSessionExpiredMessage(),
+                        None, ci.getSessionExpiredURL())
         except SystemMessageException, ee:
             raise ServletException(ee)
 
@@ -949,10 +939,10 @@ class AbstractApplicationServlet(Servlet, Constants):
             else:
                 # send uidl redirect
                 self.criticalNotification(request, response,
-                                          ci.getCommunicationErrorCaption(),
-                                          ci.getCommunicationErrorMessage(),
-                                          self.INVALID_SECURITY_KEY_MSG,
-                                          ci.getCommunicationErrorURL())
+                        ci.getCommunicationErrorCaption(),
+                        ci.getCommunicationErrorMessage(),
+                        self.INVALID_SECURITY_KEY_MSG,
+                        ci.getCommunicationErrorURL())
                 # Invalidate session. Portal integration will fail otherwise
                 # since the session is not created by the portal.
                 request.session().invalidate()
@@ -1017,8 +1007,8 @@ class AbstractApplicationServlet(Servlet, Constants):
             return True
 
         elif request.uri().startswith(contextPath + '/VAADIN/'):
-            self.serveStaticResourcesInVAADIN(request.uri()[len(contextPath):],
-                                              request, response)
+            self.serveStaticResourcesInVAADIN(
+                    request.uri()[len(contextPath):], request, response)
             return True
 
         return False
@@ -1205,8 +1195,8 @@ class AbstractApplicationServlet(Servlet, Constants):
             m = getattr(appCls, 'getSystemMessages')
             return m()
         except AttributeError:
-            raise SystemMessageException('Application.getSystemMessage() '
-                                         'should be callable')
+            raise SystemMessageException(
+                    'Application.getSystemMessage() should be callable')
 
         return Application.getSystemMessages()
 
@@ -1386,14 +1376,8 @@ class AbstractApplicationServlet(Servlet, Constants):
             hashCode = -hashCode
         appId = appId + '-' + hashCode
 
-        self.writeAjaxPageHtmlVaadinScripts(window,
-                                            themeName,
-                                            application,
-                                            page,
-                                            appUrl,
-                                            themeUri,
-                                            appId,
-                                            request)
+        self.writeAjaxPageHtmlVaadinScripts(window, themeName, application,
+                page, appUrl, themeUri, appId, request)
 
         # - Add classnames;
         #      .v-app
@@ -1417,11 +1401,8 @@ class AbstractApplicationServlet(Servlet, Constants):
             divStyle = ('style=\"'
                     + request.getAttribute(self.REQUEST_APPSTYLE) + '\"')
 
-        self.writeAjaxPageHtmlMainDiv(page,
-                                      appId,
-                                      classNames,
-                                      divStyle,
-                                      request)
+        self.writeAjaxPageHtmlMainDiv(page, appId, classNames,
+                divStyle, request)
 
         if not fragment:
             page.write('</body>\n</html>\n')
@@ -1495,9 +1476,8 @@ class AbstractApplicationServlet(Servlet, Constants):
         page.write('<noscript>' + self.getNoScriptMessage() + '</noscript>')
 
 
-    def writeAjaxPageHtmlVaadinScripts(self, window, themeName,
-                                       application, page, appUrl,
-                                       themeUri, appId, request):
+    def writeAjaxPageHtmlVaadinScripts(self, window, themeName, application,
+                page, appUrl, themeUri, appId, request):
         """Method to write the script part of the page which loads needed
         Vaadin scripts and themes.
 
@@ -1522,9 +1502,8 @@ class AbstractApplicationServlet(Servlet, Constants):
             # Use the value from configuration or DEFAULT_WIDGETSET.
             # If no shared widgetset is specified, the default widgetset is
             # assumed to be in the servlet/portlet itself.
-            requestWidgetset = \
-                self.getApplicationOrSystemProperty(self.PARAMETER_WIDGETSET,
-                                                    self.DEFAULT_WIDGETSET)
+            requestWidgetset = self.getApplicationOrSystemProperty(
+                    self.PARAMETER_WIDGETSET, self.DEFAULT_WIDGETSET)
 
         if requestWidgetset is not None:
             widgetset = requestWidgetset
@@ -1909,9 +1888,7 @@ class AbstractApplicationServlet(Servlet, Constants):
             assumedWindow = application.getWindow(windowName)
 
         return applicationManager.getApplicationWindow(request,
-                                                       self,
-                                                       application,
-                                                       assumedWindow)
+                self, application, assumedWindow)
 
 
     def getRequestPathInfo(self, request):
@@ -2018,8 +1995,9 @@ class AbstractApplicationServlet(Servlet, Constants):
     @classmethod
     def isSafe(cls, c):
         # alphanum or A-Z or a-z
-        return (c > 47 and c < 58) or (c > 64 and c < 91) \
-                or (c > 96 and c < 123)
+        return ((c > 47 and c < 58)
+                or (c > 64 and c < 91)
+                or (c > 96 and c < 123))
 
 
 class ParameterHandlerErrorImpl(ParameterHandlerErrorEvent):

@@ -260,23 +260,18 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
                         'because the component was read-only')
 
             forgetVariable = self.streamToReceiver(simpleMultiPartReader,
-                                                   streamVariable,
-                                                   filename,
-                                                   mimeType,
-                                                   contentLength)
+                    streamVariable, filename, mimeType, contentLength)
             if forgetVariable:
                 self.cleanStreamVariable(owner, variableName)
         except Exception, e:
             self.handleChangeVariablesError(self._application,
-                                            owner,
-                                            e,
-                                            dict())
+                    owner, e, dict())
 
         self.sendUploadResponse(request, response)
 
 
-    def doHandleXhrFilePost(self, request, response, streamVariable,
-                            variableName, owner, contentLength):
+    def doHandleXhrFilePost(self, request, response,
+                streamVariable, variableName, owner, contentLength):
         """Used to stream plain file post (aka XHR2.post(File))
 
         @param request
@@ -301,23 +296,18 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
                                       'because the component was read-only')
 
             forgetVariable = self.streamToReceiver(stream,
-                                                   streamVariable,
-                                                   filename,
-                                                   mimeType,
-                                                   contentLength)
+                    streamVariable, filename, mimeType, contentLength)
             if forgetVariable:
                 self.cleanStreamVariable(owner, variableName)
         except Exception, e:
-            self.handleChangeVariablesError(self._application,
-                                            owner,
-                                            e,
-                                            dict())
+            self.handleChangeVariablesError(
+                    self._application, owner, e, dict())
 
         self.sendUploadResponse(request, response)
 
 
-    def streamToReceiver(self, in_, streamVariable, filename,
-                         typ, contentLength):
+    def streamToReceiver(self, in_, streamVariable,
+                filename, typ, contentLength):
         """@param in
         @param streamVariable
         @param filename
@@ -360,9 +350,7 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
                     # update progress if listener set and contentLength
                     # received
                     progressEvent = StreamingProgressEventImpl(filename,
-                                                               typ,
-                                                               contentLength,
-                                                               totalBytes)
+                            typ, contentLength, totalBytes)
                     streamVariable.onProgress(progressEvent)
 
                 if streamVariable.isInterrupted():
@@ -376,20 +364,14 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
             # Download interrupted by application code
             self.tryToCloseStream(out)
             event = StreamingErrorEventImpl(filename,
-                                            typ,
-                                            contentLength,
-                                            totalBytes,
-                                            e)
+                    typ, contentLength, totalBytes, e)
             streamVariable.streamingFailed(event)
             # Note, we are not throwing interrupted exception forward as
             # it is not a terminal level error like all other exception.
         except Exception, e:
             self.tryToCloseStream(out)
             event = StreamingErrorEventImpl(filename,
-                                            typ,
-                                            contentLength,
-                                            totalBytes,
-                                            e)
+                    typ, contentLength, totalBytes, e)
             streamVariable.streamingFailed(event)
             # throw exception for terminal to be handled (to be passed
             # to terminalErrorHandler)
@@ -497,11 +479,8 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
             return
 
         # Change all variables based on request parameters
-        if not self.handleVariables(request,
-                                    response,
-                                    callback,
-                                    self._application,
-                                    window):
+        if not self.handleVariables(request, response,
+                callback, self._application, window):
 
             # var inconsistency; the client is probably out-of-sync
             ci = None
@@ -518,25 +497,16 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
                 msg = ci.getOutOfSyncMessage()
                 cap = ci.getOutOfSyncCaption()
                 if msg is not None or cap is not None:
-                    callback.criticalNotification(request,
-                                                  response,
-                                                  cap,
-                                                  msg,
-                                                  None,
-                                                  ci.getOutOfSyncURL())
+                    callback.criticalNotification(request, response,
+                           cap, msg, None, ci.getOutOfSyncURL())
                     # will reload page after this
                     return
 
             # No message to show, let's just repaint all.
             repaintAll = True
 
-        self.paintAfterVariableChanges(request,
-                                       response,
-                                       callback,
-                                       repaintAll,
-                                       outWriter,
-                                       window,
-                                       analyzeLayouts)
+        self.paintAfterVariableChanges(request, response,
+                callback, repaintAll, outWriter, window, analyzeLayouts)
 
         if self._closingWindowName is not None:
             del self._currentlyOpenWindowsInClient[self._closingWindowName]
@@ -547,9 +517,8 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
         self._requestThemeName = None
 
 
-    def paintAfterVariableChanges(self, request, response,
-                                  callback, repaintAll, outWriter,
-                                  window, analyzeLayouts):
+    def paintAfterVariableChanges(self, request, response, callback,
+                repaintAll, outWriter, window, analyzeLayouts):
         """TODO document
 
         @param request
@@ -596,18 +565,13 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
         else:
             # re-get window - may have been changed
             newWindow = self.doGetApplicationWindow(request,
-                                                    callback,
-                                                    self._application,
-                                                    window)
+                    callback, self._application, window)
             if newWindow != window:
                 window = newWindow
                 repaintAll = True
 
-            self.writeUidlResponce(callback,
-                                   repaintAll,
-                                   outWriter,
-                                   window,
-                                   analyzeLayouts)
+            self.writeUidlResponce(callback, repaintAll,
+                    outWriter, window, analyzeLayouts)
 
         self.closeJsonMessage(outWriter)
 
@@ -907,8 +871,8 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
                 if len(bursts) == 1 and 'init' == bursts[0]:
                     # init request; don't handle any variables, key sent in
                     # response.
-                    request.setAttribute(self._WRITE_SECURITY_TOKEN_FLAG,
-                                         True)
+                    request.setAttribute(
+                            self._WRITE_SECURITY_TOKEN_FLAG, True)
                     return True
                 else:
                     # ApplicationServlet has stored the security token in the
@@ -922,9 +886,7 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
 
             for bi, burst in enumerate(bursts):
                 success = self.handleVariableBurst(request,
-                                                   application2,
-                                                   success,
-                                                   burst)
+                        application2, success, burst)
 
                 # In case that there were multiple bursts, we know that this
                 # is a special synchronous case for closing window. Thus we
@@ -936,13 +898,8 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
                 if bi < len(bursts) - 1:
                     # We will be discarding all changes
                     outWriter = cStringIO()
-                    self.paintAfterVariableChanges(request,
-                                                   response,
-                                                   callback,
-                                                   True,
-                                                   outWriter,
-                                                   window,
-                                                   False)
+                    self.paintAfterVariableChanges(request, response,
+                            callback, True, outWriter, window, False)
 
         # Note that we ignore inconsistencies while handling unload request.
         # The client can't remove invalid variable changes from the burst, and
@@ -1410,8 +1367,7 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
             # will later if things work right), because the code is so cryptic
             # that nobody really knows what it does.
             pathMayContainWindowName = (path is not None
-                                        and len(path) > 0
-                                        and not (path == '/'))
+                    and len(path) > 0 and not (path == '/'))
 
             if pathMayContainWindowName:
                 uidlRequest = path.startswith('/UIDL')
@@ -1441,7 +1397,7 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
 
             while newWindowName in self._currentlyOpenWindowsInClient:
                 newWindowName = (window.getName()
-                                 + '_' + self._nextUnusedWindowSuffix)
+                        + '_' + self._nextUnusedWindowSuffix)
                 self._nextUnusedWindowSuffix += 1
 
             window = application.getWindow(newWindowName)
@@ -1569,9 +1525,8 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
                     if componentsRoot is None:
                         # This should not happen unless somebody has overriden
                         # getApplication or getWindow in an illegal way.
-                        raise ValueError('component.getWindow() returned '
-                                         'null for a component attached '
-                                         'to the application')
+                        raise ValueError('component.getWindow() returned null '
+                                'for a component attached to the application')
 
                     if componentsRoot.getParent() is not None:
                         # this is a subwindow
