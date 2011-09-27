@@ -15,3 +15,5 @@ com.vaadin.terminal.gwt.server.ApplicationPortlet2} (JSR-286).</p>
 This allows Vaadin applications to run in cluster and cloud
 environments.</p>
 """
+
+from muntjac.Application import Application
