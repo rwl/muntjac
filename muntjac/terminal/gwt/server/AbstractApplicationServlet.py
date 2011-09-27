@@ -64,7 +64,8 @@ from muntjac.terminal.ParameterHandler import \
     ErrorEvent as ParameterHandlerErrorEvent
 
 from muntjac.terminal.gwt.server.util import \
-    contextPath, originalContextPath, getUrlPath, getServletPath, getLocale
+    contextPath, originalContextPath, getUrlPath, getServletPath, getLocale,\
+    isSecure, serverPort, serverName
 
 
 class RequestType(object):
@@ -779,7 +780,7 @@ class AbstractApplicationServlet(Servlet, Constants):
             data.close()
 
 
-    def _createApplication(self, request):
+    def createApplication(self, request):
         """Creates a new application and registers it into
         WebApplicationContext (aka session). This is not meant to be
         overridden. Override getNewApplication to create the application
@@ -798,7 +799,7 @@ class AbstractApplicationServlet(Servlet, Constants):
         return newApplication
 
 
-    def _handleServiceException(self, request, response, application, e):
+    def handleServiceException(self, request, response, application, e):
         # if this was an UIDL request, response UIDL back to client
         if self.getRequestType(request) == RequestType.UIDL:
             ci = self.getSystemMessages()
@@ -902,7 +903,7 @@ class AbstractApplicationServlet(Servlet, Constants):
         return False
 
 
-    def _handleServiceSessionExpired(self, request, response):
+    def handleServiceSessionExpired(self, request, response):
         if self.isOnUnloadRequest(request):
             # Request was an unload request (e.g. window close event) and
             # the client expects no response if it fails.
@@ -933,7 +934,7 @@ class AbstractApplicationServlet(Servlet, Constants):
             raise ServletException(ee)
 
 
-    def _handleServiceSecurityException(self, request, response):
+    def handleServiceSecurityException(self, request, response):
         if self.isOnUnloadRequest(request):
             # Request was an unload request (e.g. window close event) and the
             # client expects no response if it fails.
@@ -1122,16 +1123,16 @@ class AbstractApplicationServlet(Servlet, Constants):
 
 
     def getRequestType(self, request):
-        if self._isFileUploadRequest(request):
+        if self.isFileUploadRequest(request):
             return RequestType.FILE_UPLOAD
 
-        elif self._isUIDLRequest(request):
+        elif self.isUIDLRequest(request):
             return RequestType.UIDL
 
-        elif self._isStaticResourceRequest(request):
+        elif self.isStaticResourceRequest(request):
             return RequestType.STATIC_FILE
 
-        elif self._isApplicationRequest(request):
+        elif self.isApplicationRequest(request):
             return RequestType.APPLICATION_RESOURCE
 
         elif request.getHeader('FileId') is not None:
@@ -1140,7 +1141,7 @@ class AbstractApplicationServlet(Servlet, Constants):
         return self.RequestType.OTHER
 
 
-    def _isApplicationRequest(self, request):
+    def isApplicationRequest(self, request):
         path = self.getRequestPathInfo(request)
 
         if path is not None and path.startswith('/APP/'):
@@ -1149,7 +1150,7 @@ class AbstractApplicationServlet(Servlet, Constants):
         return False
 
 
-    def _isStaticResourceRequest(self, request):
+    def isStaticResourceRequest(self, request):
         pathInfo = request.getPathInfo()
 
         if (pathInfo is None) or (len(pathInfo) <= 10):
@@ -1165,7 +1166,7 @@ class AbstractApplicationServlet(Servlet, Constants):
         return False
 
 
-    def _isUIDLRequest(self, request):
+    def isUIDLRequest(self, request):
         pathInfo = self.getRequestPathInfo(request)
 
         if pathInfo is None:
@@ -1179,7 +1180,7 @@ class AbstractApplicationServlet(Servlet, Constants):
         return False
 
 
-    def _isFileUploadRequest(self, request):
+    def isFileUploadRequest(self, request):
         pathInfo = self.getRequestPathInfo(request)
 
         if pathInfo is None:
@@ -1769,18 +1770,15 @@ class AbstractApplicationServlet(Servlet, Constants):
                     if the application is denied access to the persistent
                     data store represented by the given URL.
         """
-        reqURL = 'https://' if self._isSecure(request) else 'http://'
-        reqURL += request.environ().get('SERVER_NAME', '')
-        if (self._isSecure(request)
-                and self._getServerPort(request) == 443
-            or (not self._isSecure(request)
-                and self._getServerPort(request) == 80)):
+        reqURL = 'https://' if isSecure(request) else 'http://'
+        reqURL += serverName(request)
+        if (isSecure(request) and serverPort(request) == 443
+                or (not isSecure(request) and serverPort(request) == 80)):
             reqURL += ''
         else:
-            reqURL += ':' + request.environ().get('SERVER_PORT', '')
+            reqURL += ':' + serverPort(request)
         reqURL += request.uri()
 
-        servletPath = ''
         # FIXME: implement include requests
         if request.field('javax.servlet.include.servlet_path') is not None:
             # this is an include request
@@ -1795,19 +1793,6 @@ class AbstractApplicationServlet(Servlet, Constants):
             servletPath = servletPath + '/'
 
         return urljoin(reqURL, servletPath)
-
-
-    def _isSecure(self, request):
-        """Check whether the request is a HTTPS connection."""
-        return request.environ().get('HTTPS', '').lower() == 'on'
-
-
-    def _serverPort(self, request):
-        portStr = request.environ().get('SERVER_PORT')
-        if portStr is not None:
-            return int(portStr)
-        else:
-            return None
 
 
     def getExistingApplication(self, request, allowSessionCreation):

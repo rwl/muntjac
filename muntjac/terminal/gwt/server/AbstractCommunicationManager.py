@@ -21,11 +21,12 @@ import logging
 
 from sys import stderr
 from urlparse import urljoin
-from muntjac.terminal.gwt.server.StreamingProgressEventImpl import StreamingProgressEventImpl
 
 try:
-    from cStringIO import StringIO
+    from cStringIO import StringIO as cStringIO
+    from StringIO import StringIO
 except ImportError, e:
+    from StringIO import StringIO as cStringIO
     from StringIO import StringIO
 
 from muntjac.util.name import clsname
@@ -70,6 +71,9 @@ from muntjac.terminal.gwt.server.AbstractApplicationServlet import \
 from muntjac.terminal.gwt.server.ChangeVariablesErrorEvent import \
     ChangeVariablesErrorEvent
 
+from muntjac.terminal.gwt.server.StreamingProgressEventImpl import \
+    StreamingProgressEventImpl
+
 
 class AbstractCommunicationManager(Paintable, RepaintRequestListener):
     """This is a common base class for the server-side implementations of
@@ -90,7 +94,7 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
 
     _DASHDASH = '--'
 
-    _logger = None
+    _logger = None  # @see: end of class definition
 
     _GET_PARAM_REPAINT_ALL = 'repaintAll'
 
@@ -241,7 +245,7 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
         # Note, if this is someday needed elsewhere, don't shoot yourself to
         # foot and split to a top level helper class.
         simpleMultiPartReader = \
-                _SimpleMultiPartInputStream(inputStream, boundary)
+                SimpleMultiPartInputStream(inputStream, boundary, self)
 
         # Should report only the filename even if the browser sends the path
         filename = self.removePath(rawfilename)
@@ -345,7 +349,7 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
 
             bufferSize = self._MAX_UPLOAD_BUFFER_SIZE
             bytesReadToBuffer = 0
-            while totalBytes < in_.len:
+            while totalBytes < len(in_):
                 buff = in_.read(bufferSize)
                 bytesReadToBuffer = in_.pos - bytesReadToBuffer
 
@@ -434,15 +438,14 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
     def doHandleUidlRequest(self, request, response, callback, window):
         """Internally process a UIDL request from the client.
 
-        This method calls
-        {@link #handleVariables(Request, Response, Callback, Application, Window)}
+        This method calls {@link #handleVariables()}
         to process any changes to variables by the client and then repaints
         affected components using {@link #paintAfterVariableChanges()}.
 
-        Also, some cleanup is done when a request arrives for an application that
-        has already been closed.
+        Also, some cleanup is done when a request arrives for an application
+        that has already been closed.
 
-        The method handleUidlRequest(...) in subclasses should call this method.
+        The method handleUidlRequest() in subclasses should call this method.
 
         TODO better documentation
 
@@ -450,8 +453,8 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
         @param response
         @param callback
         @param window
-                   target window for the UIDL request, can be null if target not
-                   found
+                   target window for the UIDL request, can be null if target
+                   not found
         @throws IOException
         @throws InvalidUIDLSecurityKeyException
         """
@@ -544,8 +547,9 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
         self._requestThemeName = None
 
 
-    def paintAfterVariableChanges(self, request, response, callback, repaintAll,
-                                  outWriter, window, analyzeLayouts):
+    def paintAfterVariableChanges(self, request, response,
+                                  callback, repaintAll, outWriter,
+                                  window, analyzeLayouts):
         """TODO document
 
         @param request
@@ -869,8 +873,8 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
 
 
     def unregisterPaintable(self, p):
-        """Called when communication manager stops listening for repaints for given
-        component.
+        """Called when communication manager stops listening for repaints
+        for given component.
 
         @param p
         """
@@ -931,7 +935,7 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
                 # calling method.
                 if bi < len(bursts) - 1:
                     # We will be discarding all changes
-                    outWriter = StringIO()
+                    outWriter = cStringIO()
                     self.paintAfterVariableChanges(request,
                                                    response,
                                                    callback,
@@ -1047,8 +1051,8 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
 
 
     def getRequestPayload(self, request):
-        """Reads the request data from the Request and returns it converted to an
-        UTF-8 string.
+        """Reads the request data from the Request and returns it converted
+        to an UTF-8 string.
 
         @param request
         @return
@@ -1066,8 +1070,7 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
         """Handles an error (exception) that occurred when processing variable
         changes from the client or a failure of a file upload.
 
-        For {@link AbstractField} components,
-        {@link AbstractField#handleError(com.vaadin.ui.AbstractComponent.ComponentErrorEvent)}
+        For {@link AbstractField} components, AbstractField.handleError()
         is called. In all other cases (or if the field does not handle the
         error), {@link ErrorListener#terminalError(ErrorEvent)} for the
         application error handler is called.
@@ -1255,20 +1258,17 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
 
 
     def _printLocaleDeclarations(self, outWriter):
-        """Prints the queued (pending) locale definitions to a {@link PrintWriter}
+        """Prints the queued (pending) locale definitions to a PrintWriter
         in a (UIDL) format that can be sent to the client and used there in
         formatting dates, times etc.
 
         @param outWriter
         """
-        # ----------------------------- Sending Locale sensitive date
-        # -----------------------------
-
         # Send locale informations to client
         outWriter.write(', \"locales\":[')
 
         while self._pendingLocalesIndex < len(self._locales):
-            l = self._generateLocale(self._locales[self._pendingLocalesIndex])
+            l = self.generateLocale(self._locales[self._pendingLocalesIndex])
             code = l[0]  # language code
 
             # Locale name
@@ -1276,33 +1276,37 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
 
             # Month names (both short and full)
             short_months, months = self._getMonths(l[0])
-            outWriter.write('\"smn\":[\"' \
-                    + short_months[0] + '\",\"' + short_months[1] + '\",\"' \
-                    + short_months[2] + '\",\"' + short_months[3] + '\",\"' \
-                    + short_months[4] + '\",\"' + short_months[5] + '\",\"' \
-                    + short_months[6] + '\",\"' + short_months[7] + '\",\"' \
-                    + short_months[8] + '\",\"' + short_months[9] + '\",\"' \
-                    + short_months[10] + '\",\"' + short_months[11] + '\"' + '],')
-            outWriter.write('\"mn\":[\"' \
-                    + months[0] + '\",\"' + months[1] + '\",\"' \
-                    + months[2] + '\",\"' + months[3] + '\",\"' \
-                    + months[4] + '\",\"' + months[5] + '\",\"' \
-                    + months[6] + '\",\"' + months[7] + '\",\"' \
-                    + months[8] + '\",\"' + months[9] + '\",\"' \
-                    + months[10] + '\",\"' + months[11] + '\"' + '],')
+            outWriter.write('\"smn\":[\"'
+                    + short_months[0] + '\",\"' + short_months[1] + '\",\"'
+                    + short_months[2] + '\",\"' + short_months[3] + '\",\"'
+                    + short_months[4] + '\",\"' + short_months[5] + '\",\"'
+                    + short_months[6] + '\",\"' + short_months[7] + '\",\"'
+                    + short_months[8] + '\",\"' + short_months[9] + '\",\"'
+                    + short_months[10] + '\",\"' + short_months[11] + '\"'
+                    + '],')
+            outWriter.write('\"mn\":[\"'
+                    + months[0] + '\",\"' + months[1] + '\",\"'
+                    + months[2] + '\",\"' + months[3] + '\",\"'
+                    + months[4] + '\",\"' + months[5] + '\",\"'
+                    + months[6] + '\",\"' + months[7] + '\",\"'
+                    + months[8] + '\",\"' + months[9] + '\",\"'
+                    + months[10] + '\",\"' + months[11] + '\"'
+                    + '],')
 
             # Weekday names (both short and full)
             short_days, days = self._getWeekdays(code)
-            outWriter.write('\"sdn\":[\"' \
-                    + short_days[0] + '\",\"' + short_days[1] + '\",\"' \
-                    + short_days[2] + '\",\"' + short_days[3] + '\",\"' \
-                    + short_days[4] + '\",\"' + short_days[5] + '\",\"' \
-                    + short_days[6] + '\"' + '],')
-            outWriter.write('\"dn\":[\"' \
-                    + days[0] + '\",\"' + days[1] + '\",\"' \
-                    + days[2] + '\",\"' + days[3] + '\",\"' \
-                    + days[4] + '\",\"' + days[5] + '\",\"' \
-                    + days[6] + '\"' + '],')
+            outWriter.write('\"sdn\":[\"'
+                    + short_days[0] + '\",\"' + short_days[1] + '\",\"'
+                    + short_days[2] + '\",\"' + short_days[3] + '\",\"'
+                    + short_days[4] + '\",\"' + short_days[5] + '\",\"'
+                    + short_days[6] + '\"'
+                    + '],')
+            outWriter.write('\"dn\":[\"'
+                    + days[0] + '\",\"' + days[1] + '\",\"'
+                    + days[2] + '\",\"' + days[3] + '\",\"'
+                    + days[4] + '\",\"' + days[5] + '\",\"'
+                    + days[6] + '\"'
+                    + '],')
 
             # First day of week (0 = sunday, 1 = monday)
             outWriter.write('\"fdow\":' + (0) + ',')
@@ -1311,7 +1315,8 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
 
             dateFormat = self._getDateFormat(code)
             if dateFormat == "":
-                self._logger.warning('Unable to get default date pattern for locale ' + code)
+                self._logger.warning('Unable to get default date '
+                                     'pattern for locale ' + code)
                 dateFormat = locale.nl_langinfo(locale.ERA_D_FMT)
             df = dateFormat
 
@@ -1353,7 +1358,8 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
             outWriter.write('\"hmd\":\"' + hour_min_delimiter + '\"')
             if twelve_hour_clock:
                 ampm = self._getAmPmStrings(code)
-                outWriter.write(',\"ampm\":[\"' + ampm[0] + '\",\"' + ampm[1] + '\"]')
+                outWriter.write(',\"ampm\":[\"' + ampm[0] + '\",\"'
+                                + ampm[1] + '\"]')
             outWriter.write('}')
             if self._pendingLocalesIndex < len(self._locales) - 1:
                 outWriter.write(',')
@@ -1363,7 +1369,8 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
         outWriter.write(']')  # close locales
 
 
-    def doGetApplicationWindow(self, request, callback, application, assumedWindow):
+    def doGetApplicationWindow(self, request, callback, application,
+                               assumedWindow):
         """TODO New method - document me!
 
         @param request
@@ -1377,7 +1384,8 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
         # If the client knows which window to use, use it if possible
         windowClientRequestedName = request.getParameter('windowName')
 
-        if (assumedWindow is not None and assumedWindow in application.getWindows()):
+        if (assumedWindow is not None
+                and assumedWindow in application.getWindows()):
             windowClientRequestedName = assumedWindow.getName()
 
         if windowClientRequestedName is not None:
@@ -1401,7 +1409,9 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
             # is used). However we are not returning with main window here (we
             # will later if things work right), because the code is so cryptic
             # that nobody really knows what it does.
-            pathMayContainWindowName = path is not None and len(path) > 0 and not (path == '/')
+            pathMayContainWindowName = (path is not None
+                                        and len(path) > 0
+                                        and not (path == '/'))
 
             if pathMayContainWindowName:
                 uidlRequest = path.startswith('/UIDL')
@@ -1430,7 +1440,8 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
             newWindowName = window.getName()
 
             while newWindowName in self._currentlyOpenWindowsInClient:
-                newWindowName = window.getName() + '_' + self._nextUnusedWindowSuffix
+                newWindowName = (window.getName()
+                                 + '_' + self._nextUnusedWindowSuffix)
                 self._nextUnusedWindowSuffix += 1
 
             window = application.getWindow(newWindowName)
@@ -1443,12 +1454,12 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
         return window
 
 
-    def _endApplication(self, request, response, application):
+    def endApplication(self, request, response, application):
         """Ends the Application.
 
         The browser is redirected to the Application logout URL set with
-        {@link Application#setLogoutURL(String)}, or to the application URL if no
-        logout URL is given.
+        {@link Application#setLogoutURL(String)}, or to the application URL
+        if no logout URL is given.
 
         @param request
                    the request instance.
@@ -1475,7 +1486,7 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
 
 
     def closeJsonMessage(self, outWriter):
-        outWriter.print_('}]')
+        outWriter.write('}]')
 
 
     def openJsonMessage(self, outWriter, response):
@@ -1491,29 +1502,31 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
 
 
     def getPaintableId(self, paintable):
-        """Gets the Paintable Id. If Paintable has debug id set it will be used
-        prefixed with "PID_S". Otherwise a sequenced ID is created.
+        """Gets the Paintable Id. If Paintable has debug id set it will be
+        used prefixed with "PID_S". Otherwise a sequenced ID is created.
 
         @param paintable
         @return the paintable Id.
         """
-        idd = self._paintableIdMap[paintable]
+        idd = self._paintableIdMap.get(paintable)
         if idd is None:
             # use testing identifier as id if set
             ids = paintable.getDebugId()
             if ids is None:
                 ids = 'PID' + str(self._idSequence)
-                self._idSequence += 1
+                self._idSequence += 1  # post increment
             else:
                 idd = 'PID_S' + idd
+
             old = self._idPaintableMap[idd] = paintable
             if old is not None and old != paintable:
-                # Two paintables have the same id. We still make sure the old
-                # one is a component which is still attached to the
+                # Two paintables have the same id. We still make sure the
+                # old one is a component which is still attached to the
                 # application. This is just a precaution and should not be
                 # absolutely necessary.
 
-                if isinstance(old, Component) and old.getApplication() is not None:
+                if (isinstance(old, Component)
+                        and old.getApplication() is not None):
                     raise ValueError('Two paintables (' \
                             + paintable.getClass().getSimpleName() \
                             + ',' + old.getClass().getSimpleName() \
@@ -1528,9 +1541,10 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
     def hasPaintableId(self, paintable):
         return paintable in self._paintableIdMap
 
+
     def _getDirtyVisibleComponents(self, w):
-        """Returns dirty components which are in given window. Components in an
-        invisible subtrees are omitted.
+        """Returns dirty components which are in given window. Components
+        in an invisible subtrees are omitted.
 
         @param w
                    root window for which dirty components is to be fetched
@@ -1549,14 +1563,15 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
                 if component.getApplication() is None:
                     # component is detached after requestRepaint is called
                     resultset.remove(p)
-#                    i.remove()
+                    self._dirtyPaintables.remove(p)
                 else:
                     componentsRoot = component.getWindow()
                     if componentsRoot is None:
                         # This should not happen unless somebody has overriden
                         # getApplication or getWindow in an illegal way.
-                        raise ValueError('component.getWindow() returned null ' \
-                                'for a component attached to the application')
+                        raise ValueError('component.getWindow() returned '
+                                         'null for a component attached '
+                                         'to the application')
 
                     if componentsRoot.getParent() is not None:
                         # this is a subwindow
@@ -1564,9 +1579,8 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
 
                     if componentsRoot != w:
                         resultset.remove(p)
-                    elif (
-                        component.getParent() is not None and not component.getParent().isVisible()
-                    ):
+                    elif (component.getParent() is not None
+                            and not component.getParent().isVisible()):
                         # Do not return components in an invisible subtree.
                         #
                         # Components that are invisible in visible subree, must
@@ -1578,15 +1592,15 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
 
 
     def repaintRequested(self, event):
-        """@see com.vaadin.terminal.Paintable.RepaintRequestListener#repaintRequested(com.vaadin.terminal.Paintable.RepaintRequestEvent)"""
+        """@see RepaintRequestListener.repaintRequested()"""
         p = event.getPaintable()
         if p not in self._dirtyPaintables:
             self._dirtyPaintables.append(p)
 
 
-    def _paintablePainted(self, paintable):
-        """Internally mark a {@link Paintable} as painted and start collecting new
-        repaint requests for it.
+    def paintablePainted(self, paintable):
+        """Internally mark a {@link Paintable} as painted and start
+        collecting new repaint requests for it.
 
         @param paintable
         """
@@ -1595,46 +1609,45 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
 
 
     def requireLocale(self, value):
-        """Queues a locale to be sent to the client (browser) for date and time
-        entry etc. All locale specific information is derived from server-side
-        {@link Locale} instances and sent to the client when needed, eliminating
-        the need to use the {@link Locale} class and all the framework behind it
-        on the client.
-
-        @see Locale#toString()
+        """Queues a locale to be sent to the client (browser) for date and
+        time entry etc. All locale specific information is derived from
+        server-side {@link Locale} instances and sent to the client when
+        needed, eliminating the need to use the {@link Locale} class and all
+        the framework behind it on the client.
 
         @param value
         """
         if self._locales is None:
             self._locales = list()
-            code, _ = self._application.getLocale()
+            code = self._application.getLocale()
             self._locales.append(code)
             self._pendingLocalesIndex = 0
 
-        if not self._locales.contains(value):
+        if value not in self._locales:
             self._locales.append(value)
 
 
-    def _generateLocale(self, value):
-        """Constructs a {@link Locale} instance to be sent to the client based on a
-        short locale description string.
+    def generateLocale(self, value):
+        """Constructs a {@link Locale} instance to be sent to the client
+        based on a short locale description string.
 
         @see #requireLocale(String)
 
         @param value
         @return
         """
-        temp = value.split('_')
-        if len(temp) == 1:
-            return temp[0]
-        elif len(temp) == 2:
-            return (temp[0], temp[1])
-        else:
-            return (temp[0], temp[1], temp[2])
+#        temp = value.split('_')
+#        if len(temp) == 1:
+#            return temp[0]
+#        elif len(temp) == 2:
+#            return (temp[0], temp[1])
+#        else:
+#            return (temp[0], temp[1], temp[2])
+        return value
 
 
     @classmethod
-    def _isChildOf(cls, parent, child):
+    def isChildOf(cls, parent, child):
         """Helper method to test if a component contains another
 
         @param parent
@@ -1653,9 +1666,9 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
         {@link DownloadStream} returned by the handler.
 
         If the window is the main window of an application, the (deprecated)
-        {@link Application#handleURI(java.net.URL, String)} is called first to
-        handle {@link ApplicationResource}s, and the window handler is only
-        called if it returns null.
+        {@link Application#handleURI(java.net.URL, String)} is called first
+        to handle {@link ApplicationResource}s, and the window handler is
+        only called if it returns null.
 
         @param window
                    the target window of the request
@@ -1663,8 +1676,8 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
                    the request instance
         @param response
                    the response to write to
-        @return DownloadStream if the request was handled and further processing
-                should be suppressed, null otherwise.
+        @return DownloadStream if the request was handled and further
+                    processing should be suppressed, null otherwise.
         @see com.vaadin.terminal.URIHandler
         """
         raise DeprecationWarning
@@ -1696,12 +1709,16 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
                 if index > 0:
                     prefix = uri[:index]
                     windowContext = urljoin(context, prefix + '/')
-                    windowUri = uri[len(prefix) + 1:] if len(uri) > len(prefix) + 1 else ''
+                    if len(uri) > len(prefix) + 1:
+                        windowUri = uri[len(prefix) + 1:]
+                    else:
+                        windowUri = ''
                     return window.handleURI(windowContext, windowUri)
                 else:
                     return None
         except Exception, t:
-            self._application.getErrorHandler().terminalError(URIHandlerErrorImpl(self._application, t))
+            event = URIHandlerErrorImpl(self._application, t)
+            self._application.getErrorHandler().terminalError(event)
             return None
 
 
@@ -1750,8 +1767,8 @@ class Request(object):
 
 
     def isRunningInPortlet(self):
-        """Are the applications in this session running in a portlet or directly
-        as servlets.
+        """Are the applications in this session running in a portlet or
+        directly as servlets.
 
         @return true if in a portlet
         """
@@ -1814,8 +1831,8 @@ class Request(object):
 
 
     def getWrappedRequest(self):
-        """Gets the underlying request object. The request is typically either a
-        {@link ServletRequest} or a {@link PortletRequest}.
+        """Gets the underlying request object. The request is typically either
+        a {@link ServletRequest} or a {@link PortletRequest}.
 
         @return wrapped request object
         """
@@ -1844,8 +1861,8 @@ class Response(object):
 
 
     def setContentType(self, typ):
-        """Sets the MIME content type for the response to be communicated to the
-        browser.
+        """Sets the MIME content type for the response to be communicated
+        to the browser.
 
         @param typ
         """
@@ -1853,8 +1870,8 @@ class Response(object):
 
 
     def getWrappedResponse(self):
-        """Gets the wrapped response object, usually a class implementing either
-        {@link ServletResponse} or {@link PortletResponse}.
+        """Gets the wrapped response object, usually a class implementing
+        either {@link ServletResponse} or {@link PortletResponse}.
 
         @return wrapped request object
         """
@@ -1900,7 +1917,8 @@ class Callback(object):
     @author peholmst
     """
 
-    def criticalNotification(self, request, response, cap, msg, details, outOfSyncURL):
+    def criticalNotification(self, request, response, cap, msg,
+                             details, outOfSyncURL):
         pass
 
 
@@ -1915,13 +1933,15 @@ class Callback(object):
 class UploadInterruptedException(Exception):
 
     def __init__(self):
-        super(UploadInterruptedException, self)('Upload interrupted by other thread')
+        msg = 'Upload interrupted by other thread'
+        super(UploadInterruptedException, self)(msg)
 
 
 class ErrorHandlerErrorEvent(TerminalErrorEvent):
 
     def __init__(self, throwable):
         self._throwable = throwable
+
 
     def getThrowable(self):
         return self._throwable
@@ -1937,9 +1957,11 @@ class URIHandlerErrorImpl(URIHandlerErrorEvent):
         self._owner = owner
         self._throwable = throwable
 
+
     def getThrowable(self):
         """@see com.vaadin.terminal.Terminal.ErrorEvent#getThrowable()"""
         return self._throwable
+
 
     def getURIHandler(self):
         """@see com.vaadin.terminal.URIHandler.ErrorEvent#getURIHandler()"""
@@ -1953,8 +1975,8 @@ class InvalidUIDLSecurityKeyException(Exception):
 
 
 class OpenWindowCache(object):
-    """Helper class for terminal to keep track of data that client is expected
-    to know.
+    """Helper class for terminal to keep track of data that client is
+    expected to know.
 
     TODO make customlayout templates (from theme) to be cached here.
     """
@@ -1971,7 +1993,7 @@ class OpenWindowCache(object):
         self._res.clear()
 
 
-class _SimpleMultiPartInputStream(StringIO):
+class SimpleMultiPartInputStream(StringIO):  # FIXME InputStream
     """Stream that extracts content from another stream until the boundary
     string is encountered.
 
@@ -1979,7 +2001,8 @@ class _SimpleMultiPartInputStream(StringIO):
     purposes.
     """
 
-    def __init__(self, realInputStream, boundaryString):
+    def __init__(self, realInputStream, boundaryString, manager):
+        super(SimpleMultiPartInputStream, self).__init__()
 
         # Counter of how many characters have been matched to boundary string
         # from the stream
@@ -1994,7 +2017,8 @@ class _SimpleMultiPartInputStream(StringIO):
 
         self._atTheEnd = False
 
-        self._boundary = self.CRLF + self.DASHDASH + boundaryString.toCharArray()
+        self._boundary = manager.CRLF + manager.DASHDASH + boundaryString
+
         self._realInputStream = realInputStream
 
 

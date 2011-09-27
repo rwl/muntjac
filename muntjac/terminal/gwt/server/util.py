@@ -54,6 +54,23 @@ def getLocale(request):
     return l
 
 
+def serverName(request):
+    return request.environ().get('SERVER_NAME', '')
+
+
+def isSecure(request):
+    """Check whether the request is a HTTPS connection."""
+    return request.environ().get('HTTPS', '').lower() == 'on'
+
+
+def serverPort(request):
+    portStr = request.environ().get('SERVER_PORT')
+    if portStr is not None:
+        return int(portStr)
+    else:
+        return None
+
+
 def getUrlPath(url):
     """
     @param url: URL of the form scheme://netloc/path;parameters?query#fragment
