@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import re
+
 
 class VBrowserDetails(object):
     """Class that parses the user agent string from the browser and provides
@@ -65,11 +67,11 @@ class VBrowserDetails(object):
                 rvPos = userAgent.find('rv:')
                 if rvPos >= 0:
                     tmp = userAgent[rvPos + 3:]
-                    tmp = tmp.replace('(\\.[0-9]+).+', '$1', count=1)
+                    tmp = re.sub('(\\.[0-9]+).+', '$1', tmp, count=1)
                     self._browserEngineVersion = float(tmp)
             elif self._isWebKit:
                 tmp = userAgent[userAgent.find('webkit/') + 7:]
-                tmp = tmp.replace('([0-9]+)[^0-9].+', '$1', count=1)
+                tmp = re.sub('([0-9]+)[^0-9].+', '$1', tmp, count=1)
                 self._browserEngineVersion = float(tmp)
         except Exception:
             # Browser engine version parsing failed
@@ -126,7 +128,11 @@ class VBrowserDetails(object):
 
 
         try:
-            self._browserMinorVersion = int(self.safeSubstring(versionString, idx + 1, idx2).replace('[^0-9].*', ''))
+            self._browserMinorVersion = \
+                    int( re.sub('[^0-9].*', '',
+                                self.safeSubstring(versionString,
+                                                   idx + 1,
+                                                   idx2)) )
         except ValueError:
             pass  # leave the minor version unmodified (-1 = unknown)
 

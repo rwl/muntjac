@@ -186,7 +186,7 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
             readLine = self.readLine(inputStream)
             contentLength -= len(readLine) + 2
             if (readLine.startswith('Content-Disposition:') and readLine.find('filename=') > 0):
-                rawfilename = readLine.replaceAll('.*filename=', '')
+                rawfilename = readLine.replace('.*filename=', '')
                 parenthesis = rawfilename[:1]
                 rawfilename = rawfilename[1:]
                 rawfilename = rawfilename[:rawfilename.find(parenthesis)]
@@ -357,7 +357,7 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
         @return
         """
         if filename is not None:
-            filename = filename.replaceAll('^.*[/\\\\]', '')
+            filename = re.sub('^.*[/\\\\]', '', filename)
 
         return filename
 

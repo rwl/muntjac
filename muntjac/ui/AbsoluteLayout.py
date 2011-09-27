@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import re
+
 from muntjac.ui.AbstractLayout import AbstractLayout
 from muntjac.terminal.gwt.client.EventId import EventId
 
@@ -201,7 +203,7 @@ class ComponentPosition(object):
                 else:
                     value = ''
 
-                unit = value.replaceAll('[0-9\\.\\-]+', '')
+                unit = re.sub('[0-9\\.\\-]+', '', value)
                 if not (unit == ''):
                     value = value[:value.find(unit)].strip()
 
