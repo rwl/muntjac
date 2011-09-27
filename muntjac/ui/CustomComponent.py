@@ -199,7 +199,7 @@ class CustomComponent(AbstractComponentContainer):
         raise NotImplementedError
 
 
-class ComponentIterator(object):  # FIXME implement iterator
+class ComponentIterator(object):  # FIXME: implement iterator
 
     def __init__(self, c):
         self._first = c.getCompositionRoot() is not None

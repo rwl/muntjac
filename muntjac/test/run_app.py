@@ -1,3 +1,6 @@
+
+import sys
+import logging
 import webbrowser
 
 from os.path import dirname
@@ -5,6 +8,9 @@ from os.path import dirname
 from paste.deploy import loadapp
 from paste.httpserver import serve
 
+logging.basicConfig(stream=sys.stdout,
+                    level=logging.DEBUG,
+                    format="%(levelname)s: %(message)s")
 
 wsgi_app = loadapp('config:conf.ini',
                    relative_to=dirname(__file__))

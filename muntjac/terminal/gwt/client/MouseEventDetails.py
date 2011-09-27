@@ -44,7 +44,7 @@ class MouseEventDetails(object):
             self.__init__(evt, None)
         else:
             raise NotImplementedError
-#            self._type = Event.getTypeInt(evt.getType())  # FIXME com.google.gwt.user.client.Event
+#            self._type = Event.getTypeInt(evt.getType())  # FIXME: com.google.gwt.user.client.Event
 #            self._clientX = Util.getTouchOrMouseClientX(evt)
 #            self._clientY = Util.getTouchOrMouseClientY(evt)
             self._button = evt.getButton()

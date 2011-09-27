@@ -56,7 +56,7 @@ class EventRouter(MethodEventSource):
                         return
         else:
             if isinstance(method, basestring):
-                methods = target.__class__.getMethods()  ## FIXME getMethods
+                methods = target.__class__.getMethods()  ## FIXME: getMethods
                 method = None
                 for i in range(len(methods)):
                     if methods[i].getName() == method:

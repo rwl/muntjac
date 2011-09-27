@@ -288,7 +288,7 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier,
             if self.passesFilters(idd):
                 # filtered list comes from the full list, can use ==
                 try:
-                    equal = equal and origIt.next() == idd  # FIXME hasNext
+                    equal = equal and origIt.next() == idd  # FIXME: hasNext
                 except StopIteration:
                     equal = False
 
@@ -298,7 +298,7 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier,
             origIt.next()
             result = True
         except StopIteration:
-            result = (wasUnfiltered and len(self.getAllItemIds() > 0)) or (not equal)  # FIXME hasNext
+            result = (wasUnfiltered and len(self.getAllItemIds() > 0)) or (not equal)  # FIXME: hasNext
 
         return result
 
@@ -471,7 +471,7 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier,
         <code>Collections.sort(aCollection, getItemSorter())</code> on all arrays
         (containing item ids) that need to be sorted.
         """
-        sorted(self.getAllItemIds(), key=self.getItemSorter())  # FIXME sort
+        sorted(self.getAllItemIds(), key=self.getItemSorter())  # FIXME: sort
 
 
     def getSortablePropertyIds(self):
@@ -482,7 +482,7 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier,
 
         for propertyId in self.getContainerPropertyIds():
             propertyType = self.getType(propertyId)
-            if hasattr(propertyType, '__eq__') or isinstance(propertyType, (int, float, bool)):  # FIXME Comparable isPrimitive
+            if hasattr(propertyType, '__eq__') or isinstance(propertyType, (int, float, bool)):  # FIXME: Comparable isPrimitive
                 sortables.append(propertyId)
 
         return sortables

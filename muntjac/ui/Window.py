@@ -666,7 +666,7 @@ class Window(Panel, URIHandler, ParameterHandler, FocusNotifier, BlurNotifier):
             return None
 
         try:
-            return urljoin(self._application.getURL(), self.getName() + '/')  # FIXME URL
+            return urljoin(self._application.getURL(), self.getName() + '/')  # FIXME: URL
         except Exception:
             raise RuntimeError('Internal problem getting window URL, please report')
 

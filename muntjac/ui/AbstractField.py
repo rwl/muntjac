@@ -459,7 +459,7 @@ class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeList
 
         # Stops listening the old data source changes
         if self._dataSource is not None \
-                and ValueChangeNotifier in self._dataSource.__class__.__mro__:  # FIXME check isAssignableFrom translation
+                and ValueChangeNotifier in self._dataSource.__class__.__mro__:  # FIXME: check isAssignableFrom translation
             self._dataSource.removeListener(self)
 
         if self._dataSource is not None \
@@ -679,7 +679,7 @@ class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeList
                                       self._currentBufferedSourceException])
 
 
-    _VALUE_CHANGE_METHOD = getattr(ValueChangeListener, 'valueChange')  # FIXME getDeclaredMethod translation
+    _VALUE_CHANGE_METHOD = getattr(ValueChangeListener, 'valueChange')  # FIXME: getDeclaredMethod translation
 
     def addListener(self, listener):
         # Adds a value change listener for the field.
@@ -710,7 +710,7 @@ class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeList
             self.requestRepaint()
 
 
-    _READ_ONLY_STATUS_CHANGE_METHOD = getattr(ReadOnlyStatusChangeListener, 'readOnlyStatusChange')  # FIXME getDeclaredMethod translation
+    _READ_ONLY_STATUS_CHANGE_METHOD = getattr(ReadOnlyStatusChangeListener, 'readOnlyStatusChange')  # FIXME: getDeclaredMethod translation
 
 
     def readOnlyStatusChange(self, event):

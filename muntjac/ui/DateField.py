@@ -279,7 +279,7 @@ class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNoti
 
                 # Assigns the date
                 newDate = mktime(cal.timetuple())
-                ## FIXME use: timestamp = (dt - datetime(1970, 1, 1, tzinfo=timezone.utc)) / timedelta(seconds=1)
+                ## FIXME: use: timestamp = (dt - datetime(1970, 1, 1, tzinfo=timezone.utc)) / timedelta(seconds=1)
 
             if newDate is None and self._dateString is not None \
                     and not ('' == self._dateString):
@@ -487,7 +487,7 @@ class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNoti
         if self._calendar is None:
             self._calendar = datetime.now()
         # Clone the instance
-        ## FIXME use: timestamp = (dt - datetime(1970, 1, 1)) / timedelta(seconds=1)
+        ## FIXME: use: timestamp = (dt - datetime(1970, 1, 1)) / timedelta(seconds=1)
         newCal = datetime.fromtimestamp( mktime(self._calendar.timetuple()) )
         # Assigns the current time tom calendar.
         currentDate = self.getValue()

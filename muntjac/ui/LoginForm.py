@@ -34,7 +34,7 @@ class LoginEvent(Event):
     """This event is sent when login form is submitted."""
     _params = None
 
-    def __init__(self, params, _LoginForm_this):  # FIXME translate inner class
+    def __init__(self, params, _LoginForm_this):  # FIXME: translate inner class
         super(LoginEvent, self)(_LoginForm_this)
         self._params = params
 
@@ -99,7 +99,7 @@ class LoginForm(CustomComponent):
         self.setCompositionRoot(self._iframe)
         self.addStyleName('v-loginform')
 
-        self.loginPage = LoginPage(self)  # FIXME translate inner classes
+        self.loginPage = LoginPage(self)  # FIXME: translate inner classes
         self.parameterHandler = ParameterHandler()
         self.uriHandler = UriHandler()
 
@@ -178,7 +178,7 @@ class LoginForm(CustomComponent):
         super(LoginForm, self).detach()
 
 
-    _ON_LOGIN_METHOD = getattr(LoginListener, 'onLogin')  # FIXME translate getDeclaredMethod
+    _ON_LOGIN_METHOD = getattr(LoginListener, 'onLogin')  # FIXME: translate getDeclaredMethod
     _UNDEFINED_HEIGHT = '140px'
     _UNDEFINED_WIDTH = '200px'
 

@@ -28,7 +28,7 @@ class LoadStyle(object):
     LAZY = 'LAZY'
 
 
-class ClientWidget(object):  # FIXME implement annotation
+class ClientWidget(object):  # FIXME: implement annotation
     """Annotation defining the default client side counterpart in GWT terminal for
     {@link Component}.
     <p>

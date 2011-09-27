@@ -34,7 +34,7 @@ class FileItem(Item):
     # The wrapped file.
     _file = None
 
-    def __init__(self, lf, container):  # FIXME inner class
+    def __init__(self, lf, container):  # FIXME: inner class
         """Constructs a FileItem from a existing file."""
         self._file = lf
         self._container = container
@@ -243,7 +243,7 @@ class FilesystemContainer(Container, Hierarchical):
             self.__init__(root)
             self.setRecursive(recursive)
         elif nargs == 3:
-            if isinstance(args[1], None):  ## FIXME FilenameFilter
+            if isinstance(args[1], None):  ## FIXME: FilenameFilter
                 root, fltr, recursive = args
                 self.__init__(root)
                 self.setFilter(fltr)
@@ -284,7 +284,7 @@ class FilesystemContainer(Container, Hierarchical):
         @return <code>true</code> if the specified Item is a directory,
                 <code>false</code> otherwise.
         """
-        return isinstance(itemId, file) and itemId.canRead() and itemId.isDirectory()  # FIXME File
+        return isinstance(itemId, file) and itemId.canRead() and itemId.isDirectory()  # FIXME: File
 
 
     def getChildren(self, itemId):
@@ -664,7 +664,7 @@ class FilesystemContainer(Container, Hierarchical):
         raise NotImplementedError, 'File system container does not support this operation'
 
 
-class FileExtensionFilter(object):  # FIXME FilenameFilter
+class FileExtensionFilter(object):  # FIXME: FilenameFilter
     """Generic file extension filter for displaying only files having certain
     extension.
 

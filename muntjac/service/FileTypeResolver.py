@@ -246,7 +246,7 @@ class FileTypeResolver(object):
             if fd is None:
                 raise ValueError, 'File can not be null'
             # Directories
-            if file.isDirectory():  # FIXME isDirectory
+            if file.isDirectory():  # FIXME: isDirectory
                 # Drives
                 if file.getParentFile() is None:
                     return 'inode/drive'

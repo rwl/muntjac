@@ -29,7 +29,7 @@ class ComboBox(Select):
     can not turn on multi-select mode.
     """
 
-#    CLIENT_WIDGET = VFilterSelect  # FIXME use annotation
+#    CLIENT_WIDGET = VFilterSelect  # FIXME: use annotation
 #    LOAD_STYLE = LoadStyle.DEFERRED
 
 

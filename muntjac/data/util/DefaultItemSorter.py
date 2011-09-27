@@ -52,7 +52,7 @@ class DefaultItemSorter(ItemSorter):
             self._propertyValueComparator = propertyValueComparator
 
 
-    def __cmp__(self, o1, o2):  # FIXME Comparator
+    def __cmp__(self, o1, o2):  # FIXME: Comparator
         item1 = self._container.getItem(o1)
         item2 = self._container.getItem(o2)
 
@@ -112,7 +112,7 @@ class DefaultItemSorter(ItemSorter):
         # Result of the comparison
         r = 0
         if sortDirection:
-            r = self._propertyValueComparator.compare(value1, value2)  # FIXME Comparator
+            r = self._propertyValueComparator.compare(value1, value2)  # FIXME: Comparator
         else:
             r = self._propertyValueComparator.compare(value2, value1)
 
@@ -143,7 +143,7 @@ class DefaultPropertyValueComparator(object):
     compares can be cast to Comparable.
     """
 
-    def __cmp__(self, o1, o2):  # FIXME Comparator
+    def __cmp__(self, o1, o2):  # FIXME: Comparator
         r = 0
         # Normal non-null comparison
         if o1 is not None and o2 is not None:

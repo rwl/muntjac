@@ -391,10 +391,10 @@ class ContainerOrderedWrapper(Container, Ordered, Container,
         # implemented interface.
         if isinstance(listener, ItemSetChangeListener):
             if isinstance(self._container, ItemSetChangeNotifier):
-                self._container.addListener( PiggybackListener(listener, self) )  # FIXME inner class
+                self._container.addListener( PiggybackListener(listener, self) )  # FIXME: inner class
         else:
             if isinstance(self._container, PropertySetChangeNotifier):
-                self._container.addListener( PiggybackListener(listener, self) )  # FIXME inner class
+                self._container.addListener( PiggybackListener(listener, self) )  # FIXME: inner class
 
 
     def removeListener(self, listener):
@@ -406,10 +406,10 @@ class ContainerOrderedWrapper(Container, Ordered, Container,
         # interface.
         if isinstance(listener, ItemSetChangeListener):
             if isinstance(self._container, ItemSetChangeNotifier):
-                self._container.removeListener( PiggybackListener(listener, self) )  # FIXME inner class
+                self._container.removeListener( PiggybackListener(listener, self) )  # FIXME: inner class
         else:
             if isinstance(self._container, PropertySetChangeNotifier):
-                self._container.removeListener( PiggybackListener(listener, self) )  # FIXME inner class
+                self._container.removeListener( PiggybackListener(listener, self) )  # FIXME: inner class
 
 
     def addItemAfter(self, previousItemId, newItemId=None):
@@ -442,7 +442,7 @@ class PiggybackListener(Container, PropertySetChangeListener, Container,
     listener so that the correct listener gets removed.
     """
 
-    def __init__(self, realListener, wrapper):  # FIXME inner class
+    def __init__(self, realListener, wrapper):  # FIXME: inner class
         self._listener = realListener
         self._wrapper = wrapper
 

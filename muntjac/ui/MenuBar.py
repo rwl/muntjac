@@ -140,7 +140,7 @@ class MenuBar(AbstractComponent):
                 found = clickedId.intValue() == tmpItem.getId()
 
                 if tmpItem.hasChildren():
-                    itr = iter(tmpItem.getChildren())  # FIXME translate iterator
+                    itr = iter(tmpItem.getChildren())  # FIXME: translate iterator
                     while itr.hasNext():
                         items.put(itr.next())
 
@@ -363,7 +363,7 @@ class MenuItem(object):
     multiple MenuItems to a MenuItem and create a sub-menu.
     """
 
-    def __init__(self, caption, icon, command, menu):  ## FIXME implement nested class
+    def __init__(self, caption, icon, command, menu):  ## FIXME: implement nested class
         """Constructs a new menu item that can optionally have an icon and a
         command associated with it. Icon and command can be null, but a
         caption must be given.
@@ -462,7 +462,7 @@ class MenuItem(object):
                 raise ValueError, 'Caption cannot be null'
             if self._itsChildren is None:
                 self._itsChildren = list()
-            newItem = MenuItem(caption, icon, command, self._menu)  # FIXME implement nested class
+            newItem = MenuItem(caption, icon, command, self._menu)  # FIXME: implement nested class
             # The only place where the parent is set
             newItem.setParent(self)
             self._itsChildren.add(newItem)
@@ -495,7 +495,7 @@ class MenuItem(object):
 
         if self.hasChildren() and itemToAddBefore in self._itsChildren:
             index = self._itsChildren.index(itemToAddBefore)
-            newItem = MenuItem(caption, icon, command, self._menu)  # FIXME implement nested class
+            newItem = MenuItem(caption, icon, command, self._menu)  # FIXME: implement nested class
             newItem.setParent(self)
             self._itsChildren.add(index, newItem)
         else:

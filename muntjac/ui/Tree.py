@@ -356,7 +356,7 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
 
         # Actions
         if 'action' in variables:
-            st = variables.get('action').split(',')  # FIXME StringTokenizer
+            st = variables.get('action').split(',')  # FIXME: StringTokenizer
             if len(st) == 2:
                 itemId = self.itemIdMapper.get(st[0].strip())
                 action = self._actionMapper.get(st[1].strip())
@@ -1120,7 +1120,7 @@ class TreeDropCriterion(ServerSideCriterion):
 
 
     def getIdentifier(self):
-        return TreeDropCriterion.__class__.__name__  # FIXME getCanonicalName
+        return TreeDropCriterion.__class__.__name__  # FIXME: getCanonicalName
 
 
     def accept(self, dragEvent):

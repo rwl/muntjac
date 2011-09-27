@@ -97,7 +97,7 @@ class AbstractComponentContainer(AbstractComponent, ComponentContainer):
             c.detach()
 
 
-    # FIXME translate getDeclaredMethod
+    # FIXME: translate getDeclaredMethod
     _COMPONENT_ATTACHED_METHOD = getattr(ComponentAttachListener, 'componentAttachedToContainer')
     _COMPONENT_DETACHED_METHOD = getattr(ComponentDetachListener, 'componentDetachedFromContainer')
 

@@ -136,7 +136,7 @@ class Alignment(object):
         return str(self._bitMask)
 
 
-# FIXME translate static vars
+# FIXME: translate static vars
 Alignment.TOP_RIGHT = Alignment(Bits.ALIGNMENT_TOP + Bits.ALIGNMENT_RIGHT)
 Alignment.TOP_LEFT = Alignment(Bits.ALIGNMENT_TOP + Bits.ALIGNMENT_LEFT)
 Alignment.TOP_CENTER = Alignment(Bits.ALIGNMENT_TOP + Bits.ALIGNMENT_HORIZONTAL_CENTER)

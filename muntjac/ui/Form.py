@@ -925,7 +925,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
 
             # fallback: first field if none of the fields is enabled and
             # writable
-            idd = iter( self.getItemPropertyIds() ).next()  # FIXME translate iterator
+            idd = iter( self.getItemPropertyIds() ).next()  # FIXME: translate iterator
             if idd is not None:
                 return self.getField(idd)
 

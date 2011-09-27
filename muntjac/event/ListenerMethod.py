@@ -58,7 +58,7 @@ class ListenerMethod(EventListener):
             paramTypes = self._method.getParameterTypes()
             out.writeObject(name)
             out.writeObject(paramTypes)
-        except Exception, e:  # FIXME NotSerializableException
+        except Exception, e:  # FIXME: NotSerializableException
             self._logger.warning('Error in serialization of the application: Class ' \
                                  + self._target.__class__.__name__ \
                                  + ' must implement serialization.')
@@ -74,7 +74,7 @@ class ListenerMethod(EventListener):
             # We can not use getMethod directly as we want to support anonymous
             # inner classes
             self._method = self.findHighestMethod(self._target.getClass(), name, paramTypes)
-        except Exception:  # FIXME SecurityException
+        except Exception:  # FIXME: SecurityException
             self._logger.critical('Internal deserialization error')
 
 
@@ -287,7 +287,7 @@ class ListenerMethod(EventListener):
         if arguments is None:
             if isinstance(method, basestring):
                 methodName = method
-                methods = target.__class__.getMethods()  # FIXME getMethods
+                methods = target.__class__.getMethods()  # FIXME: getMethods
                 for i in range(len(methods)):
                     if methods[i].getName() == methodName:
                         method = methods[i]
@@ -310,7 +310,7 @@ class ListenerMethod(EventListener):
                 else:
                     raise ValueError
             else:
-                if not issubclass(target.__class__, method.getDeclaringClass()):  # FIXME getDeclaringClass
+                if not issubclass(target.__class__, method.getDeclaringClass()):  # FIXME: getDeclaringClass
                     raise ValueError
 
                 self._eventType = eventType
@@ -329,7 +329,7 @@ class ListenerMethod(EventListener):
         elif eventArgumentIndex is None:
             if isinstance(method, basestring):
                 methodName = method
-                methods = target.__class__.getMethods()  # FIXME getMethods
+                methods = target.__class__.getMethods()  # FIXME: getMethods
                 for i in range(len(methods)):
                     if methods[i].getName() == methodName:
                         method = methods[i]
@@ -342,7 +342,7 @@ class ListenerMethod(EventListener):
                 self._arguments = arguments
                 self._eventArgumentIndex = -1
             else:
-                if not issubclass(target.__class__, method.getDeclaringClass()):  # FIXME getDeclaringClass
+                if not issubclass(target.__class__, method.getDeclaringClass()):  # FIXME: getDeclaringClass
                     raise ValueError
 
                 self._eventType = eventType
@@ -353,7 +353,7 @@ class ListenerMethod(EventListener):
         else:
             if isinstance(method, basestring):
                 methodName = method
-                methods = target.__class__.getMethods()  # FIXME getMethods
+                methods = target.__class__.getMethods()  # FIXME: getMethods
                 for i in range(len(methods)):
                     if methods[i].getName() == methodName:
                         method = methods[i]
@@ -411,19 +411,19 @@ class ListenerMethod(EventListener):
             try:
                 if self._eventArgumentIndex >= 0:
                     if self._eventArgumentIndex == 0 and len(self._arguments) == 1:
-                        self._method(self._target, [event])  # FIXME invoke
+                        self._method(self._target, [event])  # FIXME: invoke
                     else:
                         arg = [None] * len(self._arguments)
                         for i in range(len(arg)):
                             arg[i] = self._arguments[i]
 
                         arg[self._eventArgumentIndex] = event
-                        self._method(self._target, arg)  # FIXME invoke
+                        self._method(self._target, arg)  # FIXME: invoke
                 else:
-                    self._method(self._target, self._arguments)  # FIXME invoke
+                    self._method(self._target, self._arguments)  # FIXME: invoke
             except Exception:  # IllegalAccessException
                 raise RuntimeError, 'Internal error - please report'
-            except Exception:  # FIXME InvocationTargetException
+            except Exception:  # FIXME: InvocationTargetException
                 raise MethodException, 'Invocation of method ' \
                         + self._method \
                         + ' failed.'
@@ -491,7 +491,7 @@ class ListenerMethod(EventListener):
                 and (self._eventType == t.eventType or (self._eventType != None and self._eventType == t.eventType)) \
                 and (self._target == t.target or (self._target != None and self._target == t.target)) \
                 and (self._method == t.method or (self._method != None and self._method == t.method)) \
-                and (self._arguments == t.arguments or (self._arguments == t.arguments))  # FIXME Arrays.equals
+                and (self._arguments == t.arguments or (self._arguments == t.arguments))  # FIXME: Arrays.equals
 
 
     def isType(self, eventType):

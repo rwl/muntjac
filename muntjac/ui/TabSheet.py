@@ -665,7 +665,7 @@ class TabSheet(AbstractComponentContainer):
             self.requestRepaint()
 
 
-    _SELECTED_TAB_CHANGE_METHOD = getattr(SelectedTabChangeListener, 'selectedTabChange')  # FIXME getDeclaredMethod
+    _SELECTED_TAB_CHANGE_METHOD = getattr(SelectedTabChangeListener, 'selectedTabChange')  # FIXME: getDeclaredMethod
 
 
     def addListener(self, listener):

@@ -504,7 +504,7 @@ class AbstractBeanContainer(AbstractInMemoryContainer, Filterable,
                    property identifier, which must map to a getter in BEANTYPE
         @return created resolver
         """
-        return PropertyBasedBeanIdResolver(propertyId, self)  # FIXME inner class
+        return PropertyBasedBeanIdResolver(propertyId, self)  # FIXME: inner class
 
 
     def addListener(self, listener):
@@ -612,7 +612,7 @@ class PropertyBasedBeanIdResolver(BeanIdResolver):
     an object of type IDTYPE.
     """
 
-    def __init__(self, propertyId, container):  # FIXME inner class
+    def __init__(self, propertyId, container):  # FIXME: inner class
         self._container = container
 
         if propertyId is None:
@@ -622,7 +622,7 @@ class PropertyBasedBeanIdResolver(BeanIdResolver):
 
 
     def getIdForBean(self, bean):
-        pd = self._container._model.get(self._propertyId)  # FIXME inner class
+        pd = self._container._model.get(self._propertyId)  # FIXME: inner class
         if None is pd:
             raise ValueError, 'Property ' + self._propertyId + ' not found'
 

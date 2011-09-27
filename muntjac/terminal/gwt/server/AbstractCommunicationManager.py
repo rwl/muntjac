@@ -405,7 +405,7 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
         # repaint requested or session has timed out and new one is created
 
         repaintAll = request.getParameter(self._GET_PARAM_REPAINT_ALL) is not None
-        # || (request.getSession().isNew()); FIXME What the h*ll is this??
+        # || (request.getSession().isNew()); FIXME: What the h*ll is this??
         out = response.getOutputStream()
 
         analyzeLayouts = False
@@ -975,7 +975,7 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
 
 
     def _convertVariableValue(self, variableType, strValue):
-        # FIXME use dict for switch statement
+        # FIXME: use dict for switch statement
         if variableType == self._VTYPE_ARRAY:
             val = self.convertArray(strValue)
 

@@ -488,9 +488,9 @@ class HierarchicalContainer(IndexedContainer, Container, Hierarchical):
 
     def doSort(self):
         super(HierarchicalContainer, self).doSort()
-        sorted(self._roots, key=self.getItemSorter())  # FIXME sort
+        sorted(self._roots, key=self.getItemSorter())  # FIXME: sort
         for childList in self._children.values():
-            sorted(childList, key=self.getItemSorter())  # FIXME sort
+            sorted(childList, key=self.getItemSorter())  # FIXME: sort
 
 
     def isIncludeParentsWhenFiltering(self):

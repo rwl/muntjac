@@ -36,7 +36,7 @@ class SerializerHelper(object):
                     Rethrows any IOExceptions from the ObjectOutputStream
         """
         if cls is None:
-            out.writeObject(None)  # FIXME ObjectOutputStream
+            out.writeObject(None)  # FIXME: ObjectOutputStream
         else:
             out.writeObject(cls.getName())
 
@@ -55,7 +55,7 @@ class SerializerHelper(object):
                     Rethrows any IOExceptions from the ObjectOutputStream
         """
         if classes is None:
-            out.writeObject(None)  # FIXME ObjectOutputStream
+            out.writeObject(None)  # FIXME: ObjectOutputStream
         else:
             classNames = [None] * len(classes)
             for i in range(len(classes)):
@@ -78,7 +78,7 @@ class SerializerHelper(object):
         @throws IOException
                     Rethrows IOExceptions from the ObjectInputStream
         """
-        classNames = in_.readObject()  # FIXME ObjectInputStream
+        classNames = in_.readObject()  # FIXME: ObjectInputStream
         if classNames is None:
             return None
         classes = [None] * len(classNames)

@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class ItemSorter(object):  # FIXME Comparator, Cloneable, Serializable
+class ItemSorter(object):  # FIXME: Comparator, Cloneable, Serializable
     """An item comparator which is compatible with the {@link Sortable} interface.
     The <code>ItemSorter</code> interface can be used in <code>Sortable</code>
     implementations to provide a custom sorting method.

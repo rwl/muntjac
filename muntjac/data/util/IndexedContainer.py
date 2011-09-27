@@ -276,7 +276,7 @@ class IndexedContainer(AbstractInMemoryContainer, Container,
 
         @return
         """
-        while True:  # FIXME do statement
+        while True:  # FIXME: do statement
             idd = int(self._nextGeneratedItemId)
             self._nextGeneratedItemId += 1
             if idd not in self._items:
@@ -428,7 +428,7 @@ class IndexedContainer(AbstractInMemoryContainer, Container,
         nc = IndexedContainer()
 
         # Clone the shallow properties
-        nc.setAllItemIds(self.getAllItemIds().clone() if self.getAllItemIds() is not None else None)  # FIXME clone
+        nc.setAllItemIds(self.getAllItemIds().clone() if self.getAllItemIds() is not None else None)  # FIXME: clone
         nc.setItemSetChangeListeners(list(self.getItemSetChangeListeners()) if self.getItemSetChangeListeners() is not None else None)
         nc.propertyIds = self._propertyIds.clone() if self._propertyIds is not None else None
         nc.setPropertySetChangeListeners(list(self.getPropertySetChangeListeners()) if self.getPropertySetChangeListeners() is not None else None)
@@ -481,7 +481,7 @@ class IndexedContainer(AbstractInMemoryContainer, Container,
 
 class IndexedContainerItem(Item):
 
-    def __init__(self, itemId, container):  # FIXME inner class
+    def __init__(self, itemId, container):  # FIXME: inner class
         """Constructs a new ListItem instance and connects it to a host
         container.
 
@@ -586,7 +586,7 @@ class IndexedContainerProperty(Property, ValueChangeNotifier):
     @since 3.0
     """
 
-    def __init__(self, itemId, propertyId, container):  # FIXME inner class
+    def __init__(self, itemId, propertyId, container):  # FIXME: inner class
         """Constructs a new {@link IndexedContainerProperty} object.
 
         @param itemId
@@ -641,7 +641,7 @@ class IndexedContainerProperty(Property, ValueChangeNotifier):
         else:
             try:
                 # Gets the string constructor
-                constr = self.getType().getConstructor([str])  # FIXME getConstructor
+                constr = self.getType().getConstructor([str])  # FIXME: getConstructor
                 # Creates new object from the string
                 propertySet.put(self._propertyId, constr([str(newValue)]))
             except Exception:

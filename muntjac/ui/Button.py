@@ -37,7 +37,7 @@ class Button(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNotifie
     @since 3.0
     """
 
-#    CLIENT_WIDGET = VButton  # FIXME annotate
+#    CLIENT_WIDGET = VButton  # FIXME: annotate
 #    LOAD_STYLE = LoadStyle.EAGER
 
     def __init__(self, *args):
@@ -242,7 +242,7 @@ class Button(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNotifie
         return bool
 
 
-    _BUTTON_CLICK_METHOD = buttonClick  # FIXME translate getDeclaredMethod
+    _BUTTON_CLICK_METHOD = buttonClick  # FIXME: translate getDeclaredMethod
 
     # Button style with no decorations. Looks like a link, acts like a button
     #

@@ -423,9 +423,9 @@ class ComponentSizeValidator(object):
             elif ((isinstance(parent, SplitPanel) \
                     or isinstance(parent, TabSheet)) \
                     or isinstance(parent, CustomComponent)):
-                # FIXME Could we use com.vaadin package name here and
+                # FIXME: Could we use com.vaadin package name here and
                 # fail for all component containers?
-                # FIXME Actually this should be moved to containers so it can
+                # FIXME: Actually this should be moved to containers so it can
                 # be implemented for custom containers
                 # TODO vertical splitpanel with another non relative component?
                 return False
@@ -470,7 +470,7 @@ class ComponentSizeValidator(object):
         traceLines = traceback.extract_stack()
         for traceElement in traceLines:
             try:
-                # FIXME reduce map sizes
+                # FIXME: reduce map sizes
 #                className = traceElement.getClassName()
 #                if className.startswith('java.') or className.startswith('sun.'):
 #                    continue

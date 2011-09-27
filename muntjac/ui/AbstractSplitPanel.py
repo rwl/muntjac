@@ -23,7 +23,7 @@ from muntjac.event.MouseEvents import ClickEvent as MouseClickEvent
 from muntjac.terminal.gwt.client.ui.VSplitPanel import VSplitPanel
 
 
-class ComponentIterator(object):  # FIXME implement iterator
+class ComponentIterator(object):  # FIXME: implement iterator
     """Modifiable and Serializable Iterator for the components, used by
     {@link AbstractSplitPanel#getComponentIterator()}.
     """
@@ -372,7 +372,7 @@ class SplitterClickListener(ComponentEventListener):
         """
         pass
 
-    clickMethod = splitterClick  # FIXME translate findMethod
+    clickMethod = splitterClick  # FIXME: translate findMethod
 
 
 class SplitterClickEvent(MouseClickEvent):

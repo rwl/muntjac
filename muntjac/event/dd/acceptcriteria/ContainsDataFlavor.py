@@ -46,4 +46,4 @@ class ContainsDataFlavor(ClientSideCriterion):
 
     def getIdentifier(self):
         # extending classes use client side implementation from this class
-        return ContainsDataFlavor.__class__.__name__  # FIXME getCanonicalName
+        return ContainsDataFlavor.__class__.__name__  # FIXME: getCanonicalName

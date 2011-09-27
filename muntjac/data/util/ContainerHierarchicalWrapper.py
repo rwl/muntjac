@@ -129,14 +129,14 @@ class ContainerHierarchicalWrapper(Container, Hierarchical, Container,
                         s.add(id)
 
                 arry = list(self._roots)
-                sorted(arry, key=basedOnOrderFromWrappedContainer)  # FIXME sort
+                sorted(arry, key=basedOnOrderFromWrappedContainer)  # FIXME: sort
                 self._roots = set()
                 for a in arry:
                     self._roots.add(a)
 
                 for obj in self._children.keys():
                     object2 = self._children[obj]
-                    sorted(object2, key=basedOnOrderFromWrappedContainer)  # FIXME sort
+                    sorted(object2, key=basedOnOrderFromWrappedContainer)  # FIXME: sort
 
 
     def removeFromHierarchyWrapper(self, itemId):
@@ -549,10 +549,10 @@ class ContainerHierarchicalWrapper(Container, Hierarchical, Container,
         # implemented interface.
         if isinstance(listener, ItemSetChangeListener):
             if isinstance(self._container, ItemSetChangeNotifier):
-                self._container.addListener( PiggybackListener(listener, self) )  # FIXME inner class
+                self._container.addListener( PiggybackListener(listener, self) )  # FIXME: inner class
         else:
             if isinstance(self._container, PropertySetChangeNotifier):
-                self._container.addListener( PiggybackListener(listener, self) )  # FIXME inner class
+                self._container.addListener( PiggybackListener(listener, self) )  # FIXME: inner class
 
 
     def removeListener(self, listener):
@@ -564,10 +564,10 @@ class ContainerHierarchicalWrapper(Container, Hierarchical, Container,
         # interface.
             if isinstance(listener, ItemSetChangeListener):
                 if isinstance(self._container, ItemSetChangeNotifier):
-                    self._container.removeListener( PiggybackListener(listener, self) )  # FIXME inner class
+                    self._container.removeListener( PiggybackListener(listener, self) )  # FIXME: inner class
             else:
                 if isinstance(self._container, PropertySetChangeNotifier):
-                    self._container.removeListener( PiggybackListener(listener, self) )  # FIXME inner class
+                    self._container.removeListener( PiggybackListener(listener, self) )  # FIXME: inner class
 
 
 class PiggybackListener(Container, PropertySetChangeListener, Container,
@@ -577,7 +577,7 @@ class PiggybackListener(Container, PropertySetChangeListener, Container,
     listener so that the correct listener gets removed.
     """
 
-    def __init__(self, realListener, wrapper):  # FIXME inner class
+    def __init__(self, realListener, wrapper):  # FIXME: inner class
         self._listener = realListener
         self._wrapper = wrapper
 
@@ -610,7 +610,7 @@ class ListedItemsFirstComparator(object):
         self._itemIds = itemIds
 
 
-    def __cmp__(self, o1, o2):  # FIXME Comparator
+    def __cmp__(self, o1, o2):  # FIXME: Comparator
         if o1 == o2:
             return 0
         for idd in self._itemIds:

@@ -70,7 +70,7 @@ class RegexpValidator(AbstractStringValidator):
         elif nargs == 3:
             regexp, complete, errorMessage = args
             super(RegexpValidator, self)(errorMessage)
-            self._pattern = re.compile(regexp)  # FIXME check re use
+            self._pattern = re.compile(regexp)  # FIXME: check re use
             self._complete = complete
         else:
             raise ValueError, 'invalid number of arguments'
@@ -80,4 +80,4 @@ class RegexpValidator(AbstractStringValidator):
         if self._complete:
             return self._pattern.match(value)
         else:
-            return self._pattern.search(value)  # FIXME check re use
+            return self._pattern.search(value)  # FIXME: check re use

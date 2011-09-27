@@ -589,7 +589,7 @@ class JsonPaintTarget(PaintTarget):
             class1 = paintable.__class__
             while not self.hasClientWidgetMapping(class1):
                 superclass = class1.mro()[1] if len(class1.mro()) > 1 else None
-                if superclass is not None and Paintable in superclass.mro():  # FIXME check isAssignableFrom translation
+                if superclass is not None and Paintable in superclass.mro():  # FIXME: check isAssignableFrom translation
                     class1 = superclass
                 else:
                     self._logger.warning('No superclass of ' \

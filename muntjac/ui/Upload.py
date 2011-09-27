@@ -585,7 +585,7 @@ class Upload(AbstractComponent, Component, Focusable):
         # is being streamed.
         if self._streamVariable is None:
 
-            class InnerStreamVariable(StreamVariable):  # FIXME inner class
+            class InnerStreamVariable(StreamVariable):  # FIXME: inner class
 
                 def __init__(self, upload):
                     self._upload = upload

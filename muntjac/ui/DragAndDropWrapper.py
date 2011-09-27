@@ -230,7 +230,7 @@ class DragStartMode(object):
         return cls._values[:]
 
 
-class ProxyReceiver(StreamVariable):  # FIXME nested classes
+class ProxyReceiver(StreamVariable):  # FIXME: nested classes
 
     def __init__(self, fd):
         self._file = fd

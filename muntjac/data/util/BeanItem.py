@@ -140,13 +140,13 @@ class BeanItem(PropertysetItem):
             # later entries on the list overwrite earlier ones
             for pd in propertyDescriptors:
                 getMethod = pd.getReadMethod()
-                if getMethod is not None and getMethod.__class__() != cls.Object:  # FIXME getDeclaringClass
+                if getMethod is not None and getMethod.__class__() != cls.Object:  # FIXME: getDeclaringClass
                     vaadinPropertyDescriptor = MethodPropertyDescriptor(pd.getName(),
                                                                         pd.getPropertyType(),
                                                                         pd.getReadMethod(),
                                                                         pd.getWriteMethod())
                     pdMap[pd.getName()] = vaadinPropertyDescriptor
-        except Exception:  ## FIXME IntrospectionException
+        except Exception:  ## FIXME: IntrospectionException
             pass
 
         return pdMap
@@ -179,7 +179,7 @@ class BeanItem(PropertysetItem):
 #            propertyDescriptors.addAll(Arrays.asList(info.getPropertyDescriptors()))
             return propertyDescriptors
         else:
-#            info = Introspector.getBeanInfo(beanClass)  # FIXME Introspector
+#            info = Introspector.getBeanInfo(beanClass)  # FIXME: Introspector
 #            return Arrays.asList(info.getPropertyDescriptors())
             pass
 

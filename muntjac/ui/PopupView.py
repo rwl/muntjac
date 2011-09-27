@@ -109,7 +109,7 @@ class PopupView(AbstractComponentContainer):
         elif nargs == 2:
             small, large = args
 
-            class InnerContent(PopupView.Content):  # FIXME inner class
+            class InnerContent(PopupView.Content):  # FIXME: inner class
 
                 def getMinimizedValueAsHTML(self):
                     return small

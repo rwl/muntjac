@@ -157,7 +157,7 @@ class ShortcutAction(Action):
             # replace escaped chars with something that won't accidentally match
             shorthandCaption = self._SHORTHAND_REMOVE.sub(shorthandCaption, '\u001A')
 
-            m = self._SHORTHANDS.search(shorthandCaption)  # FIXME check regex
+            m = self._SHORTHANDS.search(shorthandCaption)  # FIXME: check regex
             if m is not None:
                 match = m.group()
 

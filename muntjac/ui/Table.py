@@ -1247,9 +1247,9 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
                         or issubclass(self.getType(colids[i]), Component)
 
             if self._pageBuffer is not None \
-                    and self._pageBuffer[self.CELL_ITEMID].length > 0:  # FIXME check indexing
+                    and self._pageBuffer[self.CELL_ITEMID].length > 0:  # FIXME: check indexing
                 firstIndexNotInCache = self._pageBufferFirstIndex \
-                        + self._pageBuffer[self.CELL_ITEMID].length  # FIXME check indexing
+                        + self._pageBuffer[self.CELL_ITEMID].length  # FIXME: check indexing
             else:
                 firstIndexNotInCache = -1
 
@@ -1779,7 +1779,7 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
 
         # Actions
         if 'action' in variables:
-            st = variables.get('action').split(',')  # FIXME implement StringTokenizer
+            st = variables.get('action').split(',')  # FIXME: implement StringTokenizer
             if len(st) == 2:
                 itemId = self.itemIdMapper.get(st[0].strip())
                 action = self._actionMapper.get(st[1].strip())
@@ -1932,7 +1932,7 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         if self._reqRowsToPaint >= 0:
             rows = self._reqRowsToPaint
         else:
-            rows = cells[0].length  # FIXME check indexing
+            rows = cells[0].length  # FIXME: check indexing
 
             if self.alwaysRecalculateColumnWidths:
                 # TODO experimental feature for now: tell the client to
@@ -2042,7 +2042,7 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         if self._reqFirstRowToPaint != -1 and self._firstToBeRenderedInClient != -1:
             start = self._reqFirstRowToPaint - self._firstToBeRenderedInClient
 
-        end = len(cells[0])  # FIXME check indexing
+        end = len(cells[0])  # FIXME: check indexing
         if self._reqRowsToPaint != -1:
             end = start + self._reqRowsToPaint
 
@@ -3167,7 +3167,7 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
 
 
     def translateDropTargetDetails(self, clientVariables):
-        return AbstractSelectTargetDetails(clientVariables, self)  # FIXME _AbstractSelect_self
+        return AbstractSelectTargetDetails(clientVariables, self)  # FIXME: _AbstractSelect_self
 
 
     def setMultiSelectMode(self, mode):
@@ -3338,7 +3338,7 @@ class TableDropCriterion(ServerSideCriterion):
 
 
     def getIdentifier(self):
-        return TableDropCriterion.getCanonicalName()  # FIXME getCanonicalName
+        return TableDropCriterion.getCanonicalName()  # FIXME: getCanonicalName
 
 
     def accept(self, dragEvent):

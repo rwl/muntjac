@@ -550,7 +550,7 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
 
                 if newValue is None:
                     super(AbstractSelect, self).setValue(set(), repaintIsNotNeeded)
-                elif list in newValue.__class__.__mro__:  # FIXME translate isAssignableFrom
+                elif list in newValue.__class__.__mro__:  # FIXME: translate isAssignableFrom
                     super(AbstractSelect, self).setValue(set(newValue), repaintIsNotNeeded)
 
             elif (newValue is None) or self.items.containsId(newValue):
@@ -805,7 +805,7 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
                 else:
                     # Set the single select to contain only the first
                     # selected value in the multiselect
-                    self.setValue(iter(s).next())  # FIXME translate iterator
+                    self.setValue(iter(s).next())  # FIXME: translate iterator
 
             self.requestRepaint()
 
@@ -1063,7 +1063,7 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
             self._itemIconPropertyId = None
         elif not self.getContainerPropertyIds().contains(propertyId):
             raise ValueError, 'Property id not found in the container'
-        elif Resource in self.getType(propertyId).__mro__:  # FIXME translate isAssignableFrom
+        elif Resource in self.getType(propertyId).__mro__:  # FIXME: translate isAssignableFrom
             self._itemIconPropertyId = propertyId
         else:
             raise ValueError, 'Property type must be assignable to Resource'
@@ -1206,12 +1206,12 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
 
 
     def getListeners(self, eventType):
-        if ItemSetChangeEvent in eventType.__mro__:  # FIXME translate isAssignableFrom
+        if ItemSetChangeEvent in eventType.__mro__:  # FIXME: translate isAssignableFrom
             if self._itemSetEventListeners is None:
                 return list()
             else:
                 return self._itemSetEventListeners  # unmodifiable
-        elif PropertySetChangeEvent in eventType.__mro__:  # FIXME translate isAssignableFrom
+        elif PropertySetChangeEvent in eventType.__mro__:  # FIXME: translate isAssignableFrom
             if self._propertySetEventListeners is None:
                 return list()
             else:
@@ -1386,7 +1386,7 @@ class AbstractSelectTargetDetails(TargetDetailsImpl):
         """Constructor that automatically converts itemIdOver key to
         corresponding item Id
         """
-        super(AbstractSelect.AbstractSelectTargetDetails, self)(rawVariables, self._AbstractSelect_self)  # FIXME AbstractSelect.this translation
+        super(AbstractSelect.AbstractSelectTargetDetails, self)(rawVariables, self._AbstractSelect_self)  # FIXME: AbstractSelect.this translation
 
         # The item id over which the drag event happened.
         self.idOver = None
@@ -1562,6 +1562,6 @@ class VerticalLocationIs(TargetDetailIs):
     def __init__(self, l):
         super(VerticalLocationIs, self)('detail', l.name())
 
-VerticalLocationIs.TOP = VerticalLocationIs(VerticalDropLocation.TOP)  # FIXME VerticalLocationIs translation
+VerticalLocationIs.TOP = VerticalLocationIs(VerticalDropLocation.TOP)  # FIXME: VerticalLocationIs translation
 VerticalLocationIs.BOTTOM = VerticalLocationIs(VerticalDropLocation.BOTTOM)
 VerticalLocationIs.MIDDLE = VerticalLocationIs(VerticalDropLocation.MIDDLE)

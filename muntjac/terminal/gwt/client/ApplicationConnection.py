@@ -21,3 +21,5 @@ class ApplicationConnection(object):
     GENERATED_BODY_CLASSNAME = 'v-generated-body'
 
     UIDL_SECURITY_TOKEN_ID = 'Vaadin-Security-Key'
+
+    PARAM_UNLOADBURST = 'onunloadburst'
