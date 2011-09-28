@@ -20,7 +20,7 @@ from muntjac.data.Property import Property, ValueChangeEvent,\
     ValueChangeNotifier, ValueChangeListener, Editor
 
 
-class Field(IComponent, BufferedValidatable, Property, ValueChangeNotifier,
+class IField(IComponent, BufferedValidatable, Property, ValueChangeNotifier,
             ValueChangeListener, Editor, IFocusable):
     """@author IT Mill Ltd."""
 
@@ -29,11 +29,11 @@ class Field(IComponent, BufferedValidatable, Property, ValueChangeNotifier,
 
         @param caption
         """
-        pass
+        raise NotImplementedError
 
 
     def getDescription(self):
-        pass
+        raise NotImplementedError
 
 
     def setDescription(self, caption):
@@ -41,7 +41,7 @@ class Field(IComponent, BufferedValidatable, Property, ValueChangeNotifier,
 
         @param caption
         """
-        pass
+        raise NotImplementedError
 
 
     def isRequired(self):
@@ -53,7 +53,7 @@ class Field(IComponent, BufferedValidatable, Property, ValueChangeNotifier,
                 <code>false</code>.
         @since 3.1
         """
-        pass
+        raise NotImplementedError
 
 
     def setRequired(self, required):
@@ -63,7 +63,7 @@ class Field(IComponent, BufferedValidatable, Property, ValueChangeNotifier,
                    Is the field required.
         @since 3.1
         """
-        pass
+        raise NotImplementedError
 
 
     def setRequiredError(self, requiredMessage):
@@ -73,7 +73,7 @@ class Field(IComponent, BufferedValidatable, Property, ValueChangeNotifier,
                    Error message.
         @since 5.2.6
         """
-        pass
+        raise NotImplementedError
 
 
     def getRequiredError(self):
@@ -83,11 +83,11 @@ class Field(IComponent, BufferedValidatable, Property, ValueChangeNotifier,
         @return Error message.
         @since 5.2.6
         """
-        pass
+        raise NotImplementedError
 
 
 class ValueChangeEvent(ComponentEvent, Property, ValueChangeEvent):
-    """An <code>Event</code> object specifying the Field whose value has been
+    """An <code>Event</code> object specifying the IField whose value has been
     changed.
 
     @author IT Mill Ltd.

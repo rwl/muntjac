@@ -16,15 +16,15 @@
 
 from muntjac.ui.Alignment import Alignment
 from muntjac.ui.AbstractLayout import AbstractLayout
-from muntjac.ui.Layout import AlignmentHandler, Layout, SpacingHandler
+from muntjac.ui.ILayout import IAlignmentHandler, ILayout, ISpacingHandler
 from muntjac.terminal.gwt.client.EventId import EventId
 
 from muntjac.event.LayoutEvents import \
     LayoutClickNotifier, LayoutClickListener, LayoutClickEvent
 
 
-class AbstractOrderedLayout(AbstractLayout, Layout, AlignmentHandler,
-                            Layout, SpacingHandler, LayoutClickNotifier):
+class AbstractOrderedLayout(AbstractLayout, ILayout, IAlignmentHandler,
+                            ILayout, ISpacingHandler, LayoutClickNotifier):
 
     _CLICK_EVENT = EventId.LAYOUT_CLICK
     ALIGNMENT_DEFAULT = Alignment.TOP_LEFT

@@ -27,7 +27,7 @@ class Runo(BaseTheme):
 
     # Button styles
     #
-    #      *************************************************************************
+    #      ********************************************************************
 
     # Small sized button, use for context specific actions for example
     BUTTON_SMALL = 'small'
@@ -42,21 +42,21 @@ class Runo(BaseTheme):
 
     # Panel styles
     #
-    #      *************************************************************************
+    #      ********************************************************************
 
     # Removes borders and background color from the panel
     PANEL_LIGHT = 'light'
 
     # TabSheet styles
     #
-    #      *************************************************************************
+    #      ********************************************************************
 
     # Smaller tabs, no border and background for content area
     TABSHEET_SMALL = 'light'
 
     # SplitPanel styles
     #
-    #      *************************************************************************
+    #      ********************************************************************
 
     # Reduces the width/height of the split handle. Useful when you don't want
     # the split handle to touch the sides of the containing layout.
@@ -68,7 +68,7 @@ class Runo(BaseTheme):
 
     # Label styles
     #
-    #      *************************************************************************
+    #      ********************************************************************
 
     # Largest title/header size. Use for main sections in your application.
     LABEL_H1 = 'h1'
@@ -84,7 +84,7 @@ class Runo(BaseTheme):
 
     # Layout styles
     #
-    #      *************************************************************************
+    #      ********************************************************************
 
     # An alternative background color for layouts. Use on top of white
     # background (e.g. inside Panels, TabSheets and sub-windows).
@@ -106,14 +106,14 @@ class Runo(BaseTheme):
 
     # TextField styles
     #
-    #      *************************************************************************
+    #      ********************************************************************
 
     # Small sized text field with small font
     TEXTFIELD_SMALL = 'small'
 
     # Table styles
     #
-    #      *************************************************************************
+    #      ********************************************************************
 
     # Smaller header and item fonts.
     TABLE_SMALL = 'small'
@@ -124,7 +124,7 @@ class Runo(BaseTheme):
 
     # Accordion styles
     #
-    #      *************************************************************************
+    #      ********************************************************************
 
     # A detached looking accordion, providing space around its captions and
     # content. Doesn't necessarily need a Panel or other container to wrap it
@@ -133,7 +133,7 @@ class Runo(BaseTheme):
 
     # Window styles
     #
-    #      *************************************************************************
+    #      ********************************************************************
 
     # Smaller header and a darker background color for the window. Useful for
     # smaller dialog-like windows.

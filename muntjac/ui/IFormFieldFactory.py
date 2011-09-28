@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class FormFieldFactory(object):
+class IFormFieldFactory(object):
     """Factory interface for creating new Field-instances based on {@link Item},
     property id and uiContext (the component responsible for displaying fields).
     Currently this interface is used by {@link Form}, but might later be used by
@@ -44,4 +44,4 @@ class FormFieldFactory(object):
                    creating it.
         @return Field the field suitable for editing the specified data.
         """
-        pass
+        raise NotImplementedError

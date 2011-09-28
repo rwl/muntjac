@@ -14,15 +14,15 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.ui.Layout import Layout, MarginHandler, MarginInfo
+from muntjac.ui.ILayout import ILayout, IMarginHandler, MarginInfo
 from muntjac.ui.AbstractComponentContainer import AbstractComponentContainer
 from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
 from muntjac.terminal.gwt.client.EventId import EventId
 from muntjac.event.LayoutEvents import LayoutClickNotifier
 
 
-class AbstractLayout(AbstractComponentContainer, Layout, MarginHandler):
-    """An abstract class that defines default implementation for the {@link Layout}
+class AbstractLayout(AbstractComponentContainer, ILayout, IMarginHandler):
+    """An abstract class that defines default implementation for the {@link ILayout}
     interface.
 
     @author IT Mill Ltd.

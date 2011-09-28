@@ -17,7 +17,7 @@
 from muntjac.ui.IComponent import IComponent, Event
 
 
-class ComponentContainer(IComponent):
+class IComponentContainer(IComponent):
     """Extension to the {@link IComponent} interface which adds to it the capacity to
     contain other components. All UI elements that can have child elements
     implement this interface.
@@ -33,7 +33,7 @@ class ComponentContainer(IComponent):
         @param c
                    the component to be added.
         """
-        pass
+        raise NotImplementedError
 
 
     def removeComponent(self, c):
@@ -42,12 +42,12 @@ class ComponentContainer(IComponent):
         @param c
                    the component to be removed.
         """
-        pass
+        raise NotImplementedError
 
 
     def removeAllComponents(self):
         """Removes all components from this container."""
-        pass
+        raise NotImplementedError
 
 
     def replaceComponent(self, oldComponent, newComponent):
@@ -68,7 +68,7 @@ class ComponentContainer(IComponent):
         @param newComponent
                    the new component to be replaced.
         """
-        pass
+        raise NotImplementedError
 
 
     def getComponentIterator(self):
@@ -78,7 +78,7 @@ class ComponentContainer(IComponent):
 
         @return the component iterator.
         """
-        pass
+        raise NotImplementedError
 
 
     def requestRepaintAll(self):
@@ -87,7 +87,7 @@ class ComponentContainer(IComponent):
         This should only be used in special cases, e.g when the state of a
         descendant depends on the state of a ancestor.
         """
-        pass
+        raise NotImplementedError
 
 
     def moveComponentsFrom(self, source):
@@ -98,7 +98,7 @@ class ComponentContainer(IComponent):
                    the container which contains the components that are to be
                    moved to this container.
         """
-        pass
+        raise NotImplementedError
 
 
     def addListener(self, listener):
@@ -121,7 +121,7 @@ class ComponentContainer(IComponent):
         """
 
 
-class ComponentAttachListener(object):
+class IComponentAttachListener(object):
     """IComponent attach listener interface."""
 
     def componentAttachedToContainer(self, event):
@@ -130,10 +130,10 @@ class ComponentAttachListener(object):
         @param event
                    the component attach event.
         """
-        pass
+        raise NotImplementedError
 
 
-class ComponentDetachListener(object):
+class IComponentDetachListener(object):
     """IComponent detach listener interface."""
 
     def componentDetachedFromContainer(self, event):
@@ -142,7 +142,7 @@ class ComponentDetachListener(object):
         @param event
                    the component detach event.
         """
-        pass
+        raise NotImplementedError
 
 
 class ComponentAttachEvent(Event):

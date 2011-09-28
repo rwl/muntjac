@@ -51,7 +51,7 @@ class LoginEvent(Event):
             return None
 
 
-class LoginListener(object):
+class ILoginListener(object):
     """Login listener is a class capable to listen LoginEvents sent from
     LoginBox
     """
@@ -70,7 +70,7 @@ class LoginForm(CustomComponent):
     like all those UI elements created by Vaadin.
     <p>
     For developer it is easy to use: add component to a desired place in you UI
-    and add LoginListener to validate form input. Behind the curtain LoginForm
+    and add ILoginListener to validate form input. Behind the curtain LoginForm
     creates an iframe with static html that browsers detect.
     <p>
     Login form is by default 100% width and height, so consider using it inside a
@@ -178,13 +178,13 @@ class LoginForm(CustomComponent):
         super(LoginForm, self).detach()
 
 
-    _ON_LOGIN_METHOD = getattr(LoginListener, 'onLogin')  # FIXME: translate getDeclaredMethod
+    _ON_LOGIN_METHOD = getattr(ILoginListener, 'onLogin')  # FIXME: translate getDeclaredMethod
     _UNDEFINED_HEIGHT = '140px'
     _UNDEFINED_WIDTH = '200px'
 
 
     def addListener(self, listener):
-        """Adds LoginListener to handle login logic
+        """Adds ILoginListener to handle login logic
 
         @param listener
         """
@@ -192,7 +192,7 @@ class LoginForm(CustomComponent):
 
 
     def removeListener(self, listener):
-        """Removes LoginListener
+        """Removes ILoginListener
 
         @param listener
         """

@@ -670,12 +670,12 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
         @param listener
                    the Listener to be added.
         """
-        if isinstance(listener, CollapseListener):
+        if isinstance(listener, ICollapseListener):
             self.addListener(CollapseEvent, listener,
-                             CollapseListener.COLLAPSE_METHOD)
-        elif isinstance(listener, ExpandListener):
+                             ICollapseListener.COLLAPSE_METHOD)
+        elif isinstance(listener, IExpandListener):
             self.addListener(ExpandEvent, listener,
-                             ExpandListener.EXPAND_METHOD)
+                             IExpandListener.EXPAND_METHOD)
         else:
             self.addListener(VTree.ITEM_CLICK_EVENT_ID, ItemClickEvent,
                              listener, ItemClickEvent.ITEM_CLICK_METHOD)
@@ -692,12 +692,12 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
         @param listener
                    the Listener to be removed.
         """
-        if isinstance(listener, CollapseListener):
+        if isinstance(listener, ICollapseListener):
             self.removeListener(CollapseEvent, listener,
-                                CollapseListener.COLLAPSE_METHOD)
-        elif isinstance(listener, ExpandListener):
+                                ICollapseListener.COLLAPSE_METHOD)
+        elif isinstance(listener, IExpandListener):
             self.removeListener(ExpandEvent, listener,
-                                ExpandListener.EXPAND_METHOD)
+                                IExpandListener.EXPAND_METHOD)
         else:
             self.removeListener(VTree.ITEM_CLICK_EVENT_ID, ItemClickEvent, listener)
 
@@ -816,7 +816,7 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
 
 
     def setItemStyleGenerator(self, itemStyleGenerator):
-        """Sets the {@link ItemStyleGenerator} to be used with this tree.
+        """Sets the {@link IItemStyleGenerator} to be used with this tree.
 
         @param itemStyleGenerator
                    item style generator or null to remove generator
@@ -827,8 +827,8 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
 
 
     def getItemStyleGenerator(self):
-        """@return the current {@link ItemStyleGenerator} for this tree. Null if
-                {@link ItemStyleGenerator} is not set.
+        """@return the current {@link IItemStyleGenerator} for this tree. Null if
+                {@link IItemStyleGenerator} is not set.
         """
         return self._itemStyleGenerator
 
@@ -917,7 +917,7 @@ class ExpandEvent(ComponentEvent):
         return self._expandedItemId
 
 
-class ExpandListener(object):
+class IExpandListener(object):
     """Expand event listener.
 
     @author IT Mill Ltd.
@@ -931,9 +931,9 @@ class ExpandListener(object):
         @param event
                    the Expand event.
         """
-        pass
+        raise NotImplementedError
 
-ExpandListener.EXPAND_METHOD = getattr(ExpandListener, 'nodeExpand')  # FIXME
+IExpandListener.EXPAND_METHOD = getattr(IExpandListener, 'nodeExpand')  # FIXME
 
 
 class CollapseEvent(ComponentEvent):
@@ -963,7 +963,7 @@ class CollapseEvent(ComponentEvent):
         return self._collapsedItemId
 
 
-class CollapseListener(object):
+class ICollapseListener(object):
     """Collapse event listener.
 
     @author IT Mill Ltd.
@@ -977,13 +977,13 @@ class CollapseListener(object):
         @param event
                    the Collapse event.
         """
-        pass
+        raise NotImplementedError
 
-CollapseListener.COLLAPSE_METHOD = getattr(CollapseListener, 'nodeCollapse')  # FIXME
+ICollapseListener.COLLAPSE_METHOD = getattr(ICollapseListener, 'nodeCollapse')  # FIXME
 
 
-class ItemStyleGenerator(object):
-    """ItemStyleGenerator can be used to add custom styles to tree items. The
+class IItemStyleGenerator(object):
+    """IItemStyleGenerator can be used to add custom styles to tree items. The
     CSS class name that will be added to the cell content is
     <tt>v-tree-node-[style name]</tt>.
     """
@@ -996,7 +996,7 @@ class ItemStyleGenerator(object):
         @return The style name to add to this item. (the CSS class name will
                 be v-tree-node-[style name]
         """
-        pass
+        raise NotImplementedError
 
 
 class TreeTargetDetails(AbstractSelectTargetDetails):

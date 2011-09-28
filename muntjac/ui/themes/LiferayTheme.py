@@ -23,14 +23,14 @@ class LiferayTheme(BaseTheme):
 
     # Panel styles
     #
-    #      *************************************************************************
+    #      ********************************************************************
 
     # Removes borders and background from the panel
     PANEL_LIGHT = 'light'
 
     # SplitPanel styles
     #
-    #      *************************************************************************
+    #      ********************************************************************
 
     # Reduces the split handle to a minimal size (1 pixel)
     SPLITPANEL_SMALL = 'small'

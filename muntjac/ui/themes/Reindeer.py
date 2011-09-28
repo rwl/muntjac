@@ -23,7 +23,7 @@ class Reindeer(BaseTheme):
 
     # Label styles
     #
-    #      *************************************************************************
+    #      ********************************************************************
 
     # Large font for main application headings
     LABEL_H1 = 'h1'
@@ -39,7 +39,7 @@ class Reindeer(BaseTheme):
 
     # Button styles
     #
-    #      *************************************************************************
+    #      ********************************************************************
 
     # Default action style for buttons (the button that should get activated
     # when the user presses 'enter' in a form). Use sparingly, only one default
@@ -54,28 +54,28 @@ class Reindeer(BaseTheme):
 
     # TextField styles
     #
-    #      *************************************************************************
+    #      ********************************************************************
 
     # Small sized text field with small font
     TEXTFIELD_SMALL = 'small'
 
     # Panel styles
     #
-    #      *************************************************************************
+    #      ********************************************************************
 
     # Removes borders and background color from the panel
     PANEL_LIGHT = 'light'
 
     # SplitPanel styles
     #
-    #      *************************************************************************
+    #      ********************************************************************
 
     # Reduces the split handle to a minimal size (1 pixel)
     SPLITPANEL_SMALL = 'small'
 
     # TabSheet styles
     #
-    #      *************************************************************************
+    #      ********************************************************************
 
     # Removes borders from the default tab sheet style.
     TABSHEET_BORDERLESS = 'borderless'
@@ -100,7 +100,7 @@ class Reindeer(BaseTheme):
 
     # Table styles
     #
-    #      *************************************************************************
+    #      ********************************************************************
 
     # Removes borders from the table
     TABLE_BORDERLESS = 'borderless'
@@ -110,7 +110,7 @@ class Reindeer(BaseTheme):
 
     # Layout styles
     #
-    #      *************************************************************************
+    #      ********************************************************************
 
     # Changes the background of a layout to white. Applies to
     # {@link VerticalLayout}, {@link HorizontalLayout}, {@link GridLayout},
@@ -144,7 +144,7 @@ class Reindeer(BaseTheme):
 
     # Window styles
     #
-    #      *************************************************************************
+    #      ********************************************************************
 
     # Makes the whole window white and increases the font size of the title.
     WINDOW_LIGHT = 'light'

@@ -14,19 +14,19 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.ui.TableFieldFactory import TableFieldFactory
-from muntjac.ui.FormFieldFactory import FormFieldFactory
+from muntjac.ui.ITableFieldFactory import ITableFieldFactory
+from muntjac.ui.IFormFieldFactory import IFormFieldFactory
 
 
-class FieldFactory(FormFieldFactory, TableFieldFactory):
+class IFieldFactory(IFormFieldFactory, ITableFieldFactory):
     """Factory for creating new Field-instances based on type, datasource and/or
     context.
 
     @author IT Mill Ltd.
     @version @VERSION@
     @since 3.1
-    @deprecated FieldFactory was split into two lighter interfaces in 6.0 Use
-                FormFieldFactory or TableFieldFactory or both instead.
+    @deprecated IFieldFactory was split into two lighter interfaces in 6.0 Use
+                IFormFieldFactory or ITableFieldFactory or both instead.
     """
 
     def createField(self, *args):
@@ -46,3 +46,4 @@ class FieldFactory(FormFieldFactory, TableFieldFactory):
                    the component where the field is presented.
         @return Field the field suitable for editing the specified data.
         """
+        raise NotImplementedError

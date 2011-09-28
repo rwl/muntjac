@@ -22,17 +22,17 @@ except ImportError, e:
     from StringIO import StringIO
 
 from muntjac.data.Item import Item
-from muntjac.ui.TableFieldFactory import TableFieldFactory
-from muntjac.ui.FormFieldFactory import FormFieldFactory
+from muntjac.ui.ITableFieldFactory import ITableFieldFactory
+from muntjac.ui.IFormFieldFactory import IFormFieldFactory
 from muntjac.ui.DateField import DateField
 from muntjac.ui.TextField import TextField
 from muntjac.ui.CheckBox import CheckBox
 from muntjac.ui.Form import Form
 
 
-class DefaultFieldFactory(FormFieldFactory, TableFieldFactory):
-    """This class contains a basic implementation for both {@link FormFieldFactory}
-    and {@link TableFieldFactory}. The class is singleton, use {@link #get()}
+class DefaultFieldFactory(IFormFieldFactory, ITableFieldFactory):
+    """This class contains a basic implementation for both {@link IFormFieldFactory}
+    and {@link ITableFieldFactory}. The class is singleton, use {@link #get()}
     method to get reference to the instance.
 
     <p>

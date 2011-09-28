@@ -21,7 +21,7 @@ except ImportError, e:
 
 from muntjac.ui.Alignment import Alignment
 from muntjac.ui.AbstractLayout import AbstractLayout
-from muntjac.ui.Layout import AlignmentHandler, Layout, SpacingHandler
+from muntjac.ui.ILayout import IAlignmentHandler, ILayout, ISpacingHandler
 from muntjac.ui.AlignmentUtils import AlignmentUtils
 from muntjac.terminal.gwt.client.EventId import EventId
 
@@ -32,8 +32,8 @@ from muntjac.event.LayoutEvents import LayoutClickNotifier, LayoutClickEvent,\
 #from muntjac.ui.ClientWidget import LoadStyle
 
 
-class GridLayout(AbstractLayout, Layout, AlignmentHandler, Layout,
-                 SpacingHandler, LayoutClickNotifier):
+class GridLayout(AbstractLayout, ILayout, IAlignmentHandler, ILayout,
+                 ISpacingHandler, LayoutClickNotifier):
     """<p>
     A container that consists of components with certain coordinates (cell
     position) on a grid. It also maintains cursor for adding component in left to

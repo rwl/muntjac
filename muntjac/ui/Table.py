@@ -25,10 +25,10 @@ from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
 from muntjac.ui.IComponent import IComponent, Event as ComponentEvent
 from muntjac.event.DataBoundTransferable import DataBoundTransferable
 from muntjac.data.Property import ValueChangeNotifier
-from muntjac.ui.Field import Field
-from muntjac.ui.FieldFactory import FieldFactory
+from muntjac.ui.IField import IField
+from muntjac.ui.IFieldFactory import IFieldFactory
 from muntjac.ui.Form import Form
-from muntjac.ui.ComponentContainer import ComponentContainer
+from muntjac.ui.IComponentContainer import IComponentContainer
 from muntjac.event.MouseEvents import ClickEvent
 
 from muntjac.data.Container import \
@@ -1407,7 +1407,7 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         component.setParent(None)
         # Also remove property data sources to unregister listeners keeping the
         # fields in memory.
-        if isinstance(component, Field):
+        if isinstance(component, IField):
             field = component
             associatedProperty = self._associatedProperties.pop(component, None)
             if associatedProperty is not None \
@@ -2563,7 +2563,7 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         @param id
                    the id of the column to be added
         @param generatedColumn
-                   the {@link ColumnGenerator} to use for this column
+                   the {@link IColumnGenerator} to use for this column
         """
         if generatedColumn is None:
             raise ValueError, 'Can not add null as a GeneratedColumn'
@@ -2581,11 +2581,11 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
 
 
     def getColumnGenerator(self, columnId):
-        """Returns the ColumnGenerator used to generate the given column.
+        """Returns the IColumnGenerator used to generate the given column.
 
         @param columnId
                    The id of the generated column
-        @return The ColumnGenerator used for the given columnId or null.
+        @return The IColumnGenerator used for the given columnId or null.
         """
         return self._columnGenerators.get(columnId)
 
@@ -2789,33 +2789,33 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
     def getTableFieldFactory(self):
         """Gets the TableFieldFactory that is used to create editor for table cells.
 
-        The FieldFactory is only used if the Table is editable.
+        The IFieldFactory is only used if the Table is editable.
 
-        @return TableFieldFactory used to create the Field instances.
+        @return TableFieldFactory used to create the IField instances.
         @see #isEditable
         """
         return self._fieldFactory
 
 
     def getFieldFactory(self):
-        """Gets the FieldFactory that is used to create editor for table cells.
+        """Gets the IFieldFactory that is used to create editor for table cells.
 
-        The FieldFactory is only used if the Table is editable.
+        The IFieldFactory is only used if the Table is editable.
 
-        @return FieldFactory used to create the Field instances.
+        @return IFieldFactory used to create the IField instances.
         @see #isEditable
         @deprecated use {@link #getTableFieldFactory()} instead
         """
-        if isinstance(self._fieldFactory, FieldFactory):
+        if isinstance(self._fieldFactory, IFieldFactory):
             return self._fieldFactory
 
         return None
 
 
     def setFieldFactory(self, fieldFactory):
-        """Sets the FieldFactory that is used to create editor for table cells.
+        """Sets the IFieldFactory that is used to create editor for table cells.
 
-        The FieldFactory is only used if the Table is editable. By default the
+        The IFieldFactory is only used if the Table is editable. By default the
         BaseFieldFactory is used.
 
         @param fieldFactory
@@ -2833,16 +2833,16 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
     def isEditable(self):
         """Is table editable.
 
-        If table is editable a editor of type Field is created for each table
-        cell. The assigned FieldFactory is used to create the instances.
+        If table is editable a editor of type IField is created for each table
+        cell. The assigned IFieldFactory is used to create the instances.
 
         To provide custom editors for table cells create a class implementins the
-        FieldFactory interface, and assign it to table, and set the editable
+        IFieldFactory interface, and assign it to table, and set the editable
         property to true.
 
         @return true if table is editable, false oterwise.
-        @see Field
-        @see FieldFactory
+        @see IField
+        @see IFieldFactory
         """
         return self._editable
 
@@ -2850,17 +2850,17 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
     def setEditable(self, editable):
         """Sets the editable property.
 
-        If table is editable a editor of type Field is created for each table
-        cell. The assigned FieldFactory is used to create the instances.
+        If table is editable a editor of type IField is created for each table
+        cell. The assigned IFieldFactory is used to create the instances.
 
         To provide custom editors for table cells create a class implementins the
-        FieldFactory interface, and assign it to table, and set the editable
+        IFieldFactory interface, and assign it to table, and set the editable
         property to true.
 
         @param editable
                    true if table should be editable by user.
-        @see Field
-        @see FieldFactory
+        @see IField
+        @see IFieldFactory
         """
         self._editable = editable
         # Assure visual refresh
@@ -3060,13 +3060,13 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         @param listener
                    The listener to attach to the Table
         """
-        if isinstance(listener, ColumnReorderListener):
+        if isinstance(listener, IColumnReorderListener):
             self.addListener(VScrollTable.COLUMN_REORDER_EVENT_ID, self.ColumnReorderEvent, listener, self.ColumnReorderEvent.METHOD)
-        elif isinstance(listener, ColumnResizeListener):
+        elif isinstance(listener, IColumnResizeListener):
             self.addListener(VScrollTable.COLUMN_RESIZE_EVENT_ID, self.ColumnResizeEvent, listener, self.ColumnResizeEvent.COLUMN_RESIZE_METHOD)
-        elif isinstance(listener, FooterClickListener):
+        elif isinstance(listener, IFooterClickListener):
             self.addListener(VScrollTable.FOOTER_CLICK_EVENT_ID, self.FooterClickEvent, listener, self.FooterClickEvent.FOOTER_CLICK_METHOD)
-        elif isinstance(listener, HeaderClickListener):
+        elif isinstance(listener, IHeaderClickListener):
             self.addListener(VScrollTable.HEADER_CLICK_EVENT_ID, self.HeaderClickEvent, listener, self.HeaderClickEvent.HEADER_CLICK_METHOD)
         else:
             self.addListener(VScrollTable.ITEM_CLICK_EVENT_ID, ItemClickEvent, listener, ItemClickEvent.ITEM_CLICK_METHOD)
@@ -3096,13 +3096,13 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
                    The listener to remove
         """
 
-        if isinstance(listener, ColumnReorderListener):
+        if isinstance(listener, IColumnReorderListener):
             self.removeListener(VScrollTable.COLUMN_REORDER_EVENT_ID, self.ColumnReorderEvent, listener)
-        elif isinstance(listener, ColumnResizeListener):
+        elif isinstance(listener, IColumnResizeListener):
             self.removeListener(VScrollTable.COLUMN_RESIZE_EVENT_ID, self.ColumnResizeEvent, listener)
-        elif isinstance(listener, FooterClickListener):
+        elif isinstance(listener, IFooterClickListener):
             self.removeListener(VScrollTable.FOOTER_CLICK_EVENT_ID, self.FooterClickEvent, listener)
-        elif isinstance(listener, HeaderClickListener):
+        elif isinstance(listener, IHeaderClickListener):
             self.removeListener(VScrollTable.HEADER_CLICK_EVENT_ID, self.HeaderClickEvent, listener)
         else:
             self.removeListener(VScrollTable.ITEM_CLICK_EVENT_ID, ItemClickEvent, listener)
@@ -3124,12 +3124,12 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
             for c in self._visibleComponents:
                 if isinstance(c, Form):
                     # Form has children in layout, but is not
-                    # ComponentContainer
+                    # IComponentContainer
                     c.requestRepaint()
                     c.getLayout().requestRepaintAll()
                 elif isinstance(c, Table):
                     c.requestRepaintAll()
-                elif isinstance(c, ComponentContainer):
+                elif isinstance(c, IComponentContainer):
                     c.requestRepaintAll()
                 else:
                     c.requestRepaint()
@@ -3242,7 +3242,7 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         return self._columnFootersVisible
 
 
-class ColumnGenerator(object):
+class IColumnGenerator(object):
     """Used to create "generated columns"; columns that exist only in the Table,
     not in the underlying Container. Implement this interface and pass it to
     Table.addGeneratedColumn along with an id for the column to be generated.
@@ -3261,10 +3261,10 @@ class ColumnGenerator(object):
                    addGeneratedColumn)
         @return
         """
-        pass
+        raise NotImplementedError
 
 
-class CellStyleGenerator(object):
+class ICellStyleGenerator(object):
     """Allow to define specific style on cells (and rows) contents. Implements
     this interface and pass it to Table.setCellStyleGenerator. Row styles are
     generated when porpertyId is null. The CSS class name that will be added
@@ -3283,7 +3283,7 @@ class CellStyleGenerator(object):
                 name will be v-table-cell-content-[style name], or
                 v-table-row-[style name] for rows)
         """
-        pass
+        raise NotImplementedError
 
 
 class TableTransferable(DataBoundTransferable):
@@ -3380,7 +3380,7 @@ class TableDropCriterion(ServerSideCriterion):
         pass
 
 
-class HeaderClickListener(object):
+class IHeaderClickListener(object):
     """Interface for the listener for column header mouse click events. The
     headerClick method is called when the user presses a header column cell.
     """
@@ -3392,7 +3392,7 @@ class HeaderClickListener(object):
                    The event which contains information about the column and
                    the mouse click event
         """
-        pass
+        raise NotImplementedError
 
 
 class HeaderClickEvent(ClickEvent):
@@ -3401,7 +3401,7 @@ class HeaderClickEvent(ClickEvent):
     the column which header was pressed and details about the mouse event
     itself.
     """
-    HEADER_CLICK_METHOD = getattr(HeaderClickListener, 'headerClick')
+    HEADER_CLICK_METHOD = getattr(IHeaderClickListener, 'headerClick')
 
     def __init__(self, source, propertyId, details):
         super(HeaderClickEvent, self)(source, details)
@@ -3415,7 +3415,7 @@ class HeaderClickEvent(ClickEvent):
         return self._columnPropertyId
 
 
-class FooterClickListener(object):
+class IFooterClickListener(object):
     """Interface for the listener for column footer mouse click events. The
     footerClick method is called when the user presses a footer column cell.
     """
@@ -3427,7 +3427,7 @@ class FooterClickListener(object):
                    The event which contains information about the column and
                    the mouse click event
         """
-        pass
+        raise NotImplementedError
 
 
 class FooterClickEvent(ClickEvent):
@@ -3437,7 +3437,7 @@ class FooterClickEvent(ClickEvent):
     itself.
     """
 
-    FOOTER_CLICK_METHOD = getattr(FooterClickListener, 'footerClick')
+    FOOTER_CLICK_METHOD = getattr(IFooterClickListener, 'footerClick')
 
     def __init__(self, source, propertyId, details):
         """Constructor
@@ -3460,7 +3460,7 @@ class FooterClickEvent(ClickEvent):
         return self._columnPropertyId
 
 
-class ColumnResizeListener(object):
+class IColumnResizeListener(object):
     """Interface for listening to column resize events."""
 
     def columnResize(self, event):
@@ -3471,7 +3471,7 @@ class ColumnResizeListener(object):
                    previous width of the column and the current width of the
                    column
         """
-        pass
+        raise NotImplementedError
 
 
 class ColumnResizeEvent(ComponentEvent):
@@ -3480,7 +3480,7 @@ class ColumnResizeEvent(ComponentEvent):
     the width of the column after the resize.
     """
 
-    COLUMN_RESIZE_METHOD = getattr(ColumnResizeListener, 'columnResize')
+    COLUMN_RESIZE_METHOD = getattr(IColumnResizeListener, 'columnResize')
 
     def __init__(self, source, propertyId, previous, current):
         """Constructor
@@ -3521,7 +3521,7 @@ class ColumnResizeEvent(ComponentEvent):
         return self._currentWidth
 
 
-class ColumnReorderListener(object):
+class IColumnReorderListener(object):
     """Interface for listening to column reorder events."""
 
     def columnReorder(self, event):
@@ -3529,13 +3529,13 @@ class ColumnReorderListener(object):
 
         @param event
         """
-        pass
+        raise NotImplementedError
 
 
 class ColumnReorderEvent(ComponentEvent):
     """This event is fired when a columns are reordered by the end user user."""
 
-    METHOD = getattr(ColumnReorderListener, 'columnReorder')
+    METHOD = getattr(IColumnReorderListener, 'columnReorder')
 
     def __init__(self, source):
         """Constructor

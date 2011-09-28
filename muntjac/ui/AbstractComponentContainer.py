@@ -19,17 +19,17 @@ from muntjac.ui.AbstractComponent import AbstractComponent
 from muntjac.terminal.gwt.server.ComponentSizeValidator import \
     ComponentSizeValidator
 
-from muntjac.ui.ComponentContainer import \
-    ComponentAttachEvent, ComponentAttachListener, ComponentContainer, \
-    ComponentDetachEvent, ComponentDetachListener
+from muntjac.ui.IComponentContainer import \
+    ComponentAttachEvent, IComponentAttachListener, IComponentContainer, \
+    ComponentDetachEvent, IComponentDetachListener
 from muntjac.ui.Panel import Panel
 from muntjac.ui.Form import Form
 from muntjac.ui.Table import Table
 
 
-class AbstractComponentContainer(AbstractComponent, ComponentContainer):
+class AbstractComponentContainer(AbstractComponent, IComponentContainer):
     """Extension to {@link AbstractComponent} that defines the default
-    implementation for the methods in {@link ComponentContainer}. Basic UI
+    implementation for the methods in {@link IComponentContainer}. Basic UI
     components that need to contain other components inherit this class to easily
     qualify as a component container.
 
@@ -97,12 +97,12 @@ class AbstractComponentContainer(AbstractComponent, ComponentContainer):
 
 
     # FIXME: translate getDeclaredMethod
-    _COMPONENT_ATTACHED_METHOD = getattr(ComponentAttachListener, 'componentAttachedToContainer')
-    _COMPONENT_DETACHED_METHOD = getattr(ComponentDetachListener, 'componentDetachedFromContainer')
+    _COMPONENT_ATTACHED_METHOD = getattr(IComponentAttachListener, 'componentAttachedToContainer')
+    _COMPONENT_DETACHED_METHOD = getattr(IComponentDetachListener, 'componentDetachedFromContainer')
 
 
     def addListener(self, listener):
-        if isinstance(listener, ComponentAttachListener):
+        if isinstance(listener, IComponentAttachListener):
             self.addListener(ComponentAttachEvent, listener,
                              self._COMPONENT_ATTACHED_METHOD)
         else:
@@ -111,7 +111,7 @@ class AbstractComponentContainer(AbstractComponent, ComponentContainer):
 
 
     def removeListener(self, listener):
-        if isinstance(listener, ComponentAttachListener):
+        if isinstance(listener, IComponentAttachListener):
             self.removeListener(ComponentAttachEvent, listener,
                                 self._COMPONENT_ATTACHED_METHOD)
         else:
@@ -146,9 +146,9 @@ class AbstractComponentContainer(AbstractComponent, ComponentContainer):
         classes must implement component list maintenance and call this method
         after component list maintenance.
 
-        @see com.vaadin.ui.ComponentContainer#addComponent(Component)
+        @see com.vaadin.ui.IComponentContainer#addComponent(Component)
         """
-        if isinstance(c, ComponentContainer):
+        if isinstance(c, IComponentContainer):
             # Make sure we're not adding the component inside it's own content
             parent = self
             while parent is not None:
@@ -170,7 +170,7 @@ class AbstractComponentContainer(AbstractComponent, ComponentContainer):
         classes must implement component list maintenance and call this method
         before component list maintenance.
 
-        @see com.vaadin.ui.ComponentContainer#removeComponent(Component)
+        @see com.vaadin.ui.IComponentContainer#removeComponent(Component)
         """
         if c.getParent() == self:
             c.setParent(None)
@@ -264,7 +264,7 @@ class AbstractComponentContainer(AbstractComponent, ComponentContainer):
 
     def repaintChildTrees(self, dirtyChildren):
         for c in dirtyChildren:
-            if isinstance(c, ComponentContainer):
+            if isinstance(c, IComponentContainer):
                 cc = c
                 cc.requestRepaintAll()
             else:
@@ -299,12 +299,12 @@ class AbstractComponentContainer(AbstractComponent, ComponentContainer):
         self.requestRepaint()
         for c in self.getComponentIterator():
             if isinstance(c, Form):
-                # Form has children in layout, but is not ComponentContainer
+                # Form has children in layout, but is not IComponentContainer
                 c.requestRepaint()
                 c.getLayout().requestRepaintAll()
             elif isinstance(c, Table):
                 c.requestRepaintAll()
-            elif isinstance(c, ComponentContainer):
+            elif isinstance(c, IComponentContainer):
                 c.requestRepaintAll()
             else:
                 c.requestRepaint()

@@ -14,14 +14,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.ui.ComponentContainer import ComponentContainer
+from muntjac.ui.IComponentContainer import IComponentContainer
 
 from muntjac.terminal.gwt.client.ui.VMarginInfo import VMarginInfo
 from muntjac.terminal.gwt.client.ui.AlignmentInfo import Bits
 
 
-class Layout(ComponentContainer):
-    """Extension to the {@link ComponentContainer} interface which adds the
+class ILayout(IComponentContainer):
+    """Extension to the {@link IComponentContainer} interface which adds the
     layouting control to the elements in the container. This is required by the
     various layout components to enable them to place other components in
     specific locations in the UI.
@@ -49,10 +49,11 @@ class Layout(ComponentContainer):
         @param bottom
         @param left
         """
+        raise NotImplementedError
 
 
-class AlignmentHandler(object):
-    """AlignmentHandler is most commonly an advanced {@link Layout} that can
+class IAlignmentHandler(object):
+    """IAlignmentHandler is most commonly an advanced {@link ILayout} that can
     align its components.
     """
     # Contained component should be aligned horizontally to the left.
@@ -114,6 +115,7 @@ class AlignmentHandler(object):
         @param alignment
                    the Alignment value to be set
         """
+        raise NotImplementedError
 
 
     def getComponentAlignment(self, childComponent):
@@ -122,10 +124,10 @@ class AlignmentHandler(object):
         @param childComponent
         @return the {@link Alignment}
         """
-        pass
+        raise NotImplementedError
 
 
-class SpacingHandler(object):
+class ISpacingHandler(object):
     """This type of layout supports automatic addition of space between its
     components.
     """
@@ -150,7 +152,7 @@ class SpacingHandler(object):
                    true if spacing should be turned on, false if it should be
                    turned off
         """
-        pass
+        raise NotImplementedError
 
 
     def isSpacingEnabled(self):
@@ -158,17 +160,17 @@ class SpacingHandler(object):
                 is enabled, false otherwise
         @deprecated Use {@link #isSpacing()} instead.
         """
-        pass
+        raise NotImplementedError
 
 
     def isSpacing(self):
         """@return true if spacing between child components within this layout
                 is enabled, false otherwise
         """
-        pass
+        raise NotImplementedError
 
 
-class MarginHandler(object):
+class IMarginHandler(object):
     """This type of layout supports automatic addition of margins (space around
     its components).
     """
@@ -191,11 +193,12 @@ class MarginHandler(object):
         @param marginInfo
                    MarginInfo object containing the new margins.
         """
-        pass
+        raise NotImplementedError
+
 
     def getMargin(self):
         """@return MarginInfo containing the currently enabled margins."""
-        pass
+        raise NotImplementedError
 
 
 class MarginInfo(VMarginInfo):

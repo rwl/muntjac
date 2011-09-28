@@ -15,14 +15,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class TableFieldFactory(object):
+class ITableFieldFactory(object):
     """Factory interface for creating new Field-instances based on Container
     (datasource), item id, property id and uiContext (the component responsible
     for displaying fields). Currently this interface is used by {@link Table},
     but might later be used by some other components for {@link Field}
     generation.
-
-    <p>
 
     @author IT Mill Ltd.
     @version @VERSION@
@@ -46,4 +44,4 @@ class TableFieldFactory(object):
         @return A field suitable for editing the specified data or null if the
                 property should not be editable.
         """
-        pass
+        raise NotImplementedError

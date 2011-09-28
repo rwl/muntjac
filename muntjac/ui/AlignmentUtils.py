@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.ui.Alignment import Alignment
-from muntjac.ui.Layout import AlignmentHandler
+from muntjac.ui.ILayout import IAlignmentHandler
 
 
 class AlignmentUtils(object):
@@ -40,13 +40,13 @@ class AlignmentUtils(object):
 
     raise DeprecationWarning
 
-    _horizontalMask = (AlignmentHandler.ALIGNMENT_LEFT \
-                | AlignmentHandler.ALIGNMENT_HORIZONTAL_CENTER) \
-                | AlignmentHandler.ALIGNMENT_RIGHT
+    _horizontalMask = (IAlignmentHandler.ALIGNMENT_LEFT \
+                | IAlignmentHandler.ALIGNMENT_HORIZONTAL_CENTER) \
+                | IAlignmentHandler.ALIGNMENT_RIGHT
 
-    _verticalMask = (AlignmentHandler.ALIGNMENT_TOP \
-                | AlignmentHandler.ALIGNMENT_VERTICAL_CENTER) \
-                | AlignmentHandler.ALIGNMENT_BOTTOM
+    _verticalMask = (IAlignmentHandler.ALIGNMENT_TOP \
+                | IAlignmentHandler.ALIGNMENT_VERTICAL_CENTER) \
+                | IAlignmentHandler.ALIGNMENT_BOTTOM
 
     _alignmentStrings = dict()
 
@@ -56,12 +56,12 @@ class AlignmentUtils(object):
             cls._alignmentStrings[s] = alignment
 
 
-    addMapping(AlignmentHandler.ALIGNMENT_TOP, 't', 'top')
-    addMapping(AlignmentHandler.ALIGNMENT_BOTTOM, 'b', 'bottom')
-    addMapping(AlignmentHandler.ALIGNMENT_VERTICAL_CENTER, 'm', 'middle')
-    addMapping(AlignmentHandler.ALIGNMENT_LEFT, 'l', 'left')
-    addMapping(AlignmentHandler.ALIGNMENT_RIGHT, 'r', 'right')
-    addMapping(AlignmentHandler.ALIGNMENT_HORIZONTAL_CENTER, 'c', 'center')
+    addMapping(IAlignmentHandler.ALIGNMENT_TOP, 't', 'top')
+    addMapping(IAlignmentHandler.ALIGNMENT_BOTTOM, 'b', 'bottom')
+    addMapping(IAlignmentHandler.ALIGNMENT_VERTICAL_CENTER, 'm', 'middle')
+    addMapping(IAlignmentHandler.ALIGNMENT_LEFT, 'l', 'left')
+    addMapping(IAlignmentHandler.ALIGNMENT_RIGHT, 'r', 'right')
+    addMapping(IAlignmentHandler.ALIGNMENT_HORIZONTAL_CENTER, 'c', 'center')
 
 
     @classmethod

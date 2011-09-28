@@ -28,7 +28,7 @@ from muntjac.ui.OrderedLayout import OrderedLayout
 from muntjac.terminal.ISizeable import ISizeable
 from muntjac.ui.CustomComponent import CustomComponent
 from muntjac.ui.Panel import Panel
-from muntjac.ui.ComponentContainer import ComponentContainer
+from muntjac.ui.IComponentContainer import IComponentContainer
 from muntjac.ui.Form import Form
 from muntjac.ui.Window import Window
 from muntjac.ui.AbstractOrderedLayout import AbstractOrderedLayout
@@ -77,7 +77,7 @@ class ComponentSizeValidator(object):
             errors = cls.validateComponentRelativeSizes(panel.getContent(),
                     errors, parent)
 
-        elif isinstance(component, ComponentContainer):
+        elif isinstance(component, IComponentContainer):
             lo = component
             for c in lo.getComponentIterator():
                 errors = cls.validateComponentRelativeSizes(c, errors, parent)

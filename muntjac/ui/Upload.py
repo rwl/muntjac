@@ -28,7 +28,7 @@ from muntjac.terminal.gwt.server.Exceptions import \
 #from muntjac.ui.ClientWidget import LoadStyle
 
 
-class StartedListener(object):
+class IStartedListener(object):
     """Receives the events when the upload starts.
 
     @author IT Mill Ltd.
@@ -42,10 +42,10 @@ class StartedListener(object):
         @param event
                    the Upload started event.
         """
-        pass
+        raise NotImplementedError
 
 
-class FinishedListener(object):
+class IFinishedListener(object):
     """Receives the events when the uploads are ready.
 
     @author IT Mill Ltd.
@@ -59,10 +59,10 @@ class FinishedListener(object):
         @param event
                    the Upload finished event.
         """
-        pass
+        raise NotImplementedError
 
 
-class FailedListener(object):
+class IFailedListener(object):
     """Receives events when the uploads are finished, but unsuccessful.
 
     @author IT Mill Ltd.
@@ -76,10 +76,10 @@ class FailedListener(object):
         @param event
                    the Upload failed event.
         """
-        pass
+        raise NotImplementedError
 
 
-class SucceededListener(object):
+class ISucceededListener(object):
     """Receives events when the uploads are successfully finished.
 
     @author IT Mill Ltd.
@@ -93,11 +93,11 @@ class SucceededListener(object):
         @param event
                    the Upload successfull event.
         """
-        pass
+        raise NotImplementedError
 
 
-class ProgressListener(object):
-    """ProgressListener receives events to track progress of upload."""
+class IProgressListener(object):
+    """IProgressListener receives events to track progress of upload."""
 
     def updateProgress(self, readBytes, contentLength):
         """Updates progress to listener
@@ -107,7 +107,7 @@ class ProgressListener(object):
         @param contentLength
                    total size of file currently being uploaded, -1 if unknown
         """
-        pass
+        raise NotImplementedError
 
 
 class Upload(AbstractComponent, IComponent, IFocusable):
@@ -119,21 +119,21 @@ class Upload(AbstractComponent, IComponent, IFocusable):
 
     <p>
     The Upload component needs a java.io.OutputStream to write the uploaded data.
-    You need to implement the Upload.Receiver interface and return the output
+    You need to implement the Upload.IReceiver interface and return the output
     stream in the receiveUpload() method.
 
     <p>
     You can get an event regarding starting (StartedEvent), progress
     (ProgressEvent), and finishing (FinishedEvent) of upload by implementing
-    StartedListener, ProgressListener, and FinishedListener, respectively. The
-    FinishedListener is called for both failed and succeeded uploads. If you wish
-    to separate between these two cases, you can use SucceededListener
-    (SucceededEvenet) and FailedListener (FailedEvent).
+    IStartedListener, IProgressListener, and IFinishedListener, respectively. The
+    IFinishedListener is called for both failed and succeeded uploads. If you wish
+    to separate between these two cases, you can use ISucceededListener
+    (SucceededEvenet) and IFailedListener (FailedEvent).
 
     <p>
     The upload component does not itself show upload progress, but you can use
     the ProgressIndicator for providing progress feedback by implementing
-    ProgressListener and updating the indicator in updateProgress().
+    IProgressListener and updating the indicator in updateProgress().
 
     <p>
     Setting upload component immediate initiates the upload as soon as a file is
@@ -250,10 +250,10 @@ class Upload(AbstractComponent, IComponent, IFocusable):
         target.addVariable(self, 'action', self.getStreamVariable())
 
 
-    _UPLOAD_FINISHED_METHOD = getattr(FinishedListener, 'uploadFinished')
-    _UPLOAD_FAILED_METHOD = getattr(FailedListener, 'uploadFailed')
-    _UPLOAD_SUCCEEDED_METHOD = getattr(StartedListener, 'uploadStarted')
-    _UPLOAD_STARTED_METHOD = getattr(SucceededListener, 'uploadSucceeded')
+    _UPLOAD_FINISHED_METHOD = getattr(IFinishedListener, 'uploadFinished')
+    _UPLOAD_FAILED_METHOD = getattr(IFailedListener, 'uploadFailed')
+    _UPLOAD_SUCCEEDED_METHOD = getattr(IStartedListener, 'uploadStarted')
+    _UPLOAD_STARTED_METHOD = getattr(ISucceededListener, 'uploadSucceeded')
 
 
     def addListener(self, listener):
@@ -282,18 +282,18 @@ class Upload(AbstractComponent, IComponent, IFocusable):
         @param listener
                    the Listener to be added.
         """
-        if isinstance(listener, FailedListener):
+        if isinstance(listener, IFailedListener):
             self.addListener(FailedEvent, listener, self._UPLOAD_FAILED_METHOD)
 
-        elif isinstance(listener, FinishedListener):
+        elif isinstance(listener, IFinishedListener):
             self.addListener(FinishedEvent, listener, self._UPLOAD_FINISHED_METHOD)
 
-        elif isinstance(listener, ProgressListener):
+        elif isinstance(listener, IProgressListener):
             if self._progressListeners is None:
                 self._progressListeners = set()
             self._progressListeners.add(listener)
 
-        elif isinstance(listener, StartedListener):
+        elif isinstance(listener, IStartedListener):
             self.addListener(StartedEvent, listener, self._UPLOAD_STARTED_METHOD)
 
         else:
@@ -326,17 +326,17 @@ class Upload(AbstractComponent, IComponent, IFocusable):
         @param listener
                    the Listener to be removed.
         """
-        if isinstance(listener, FailedListener):
+        if isinstance(listener, IFailedListener):
             self.removeListener(FailedEvent, listener, self._UPLOAD_FAILED_METHOD)
 
-        elif isinstance(listener, FinishedListener):
+        elif isinstance(listener, IFinishedListener):
             self.removeListener(FinishedEvent, listener, self._UPLOAD_FINISHED_METHOD)
 
-        elif isinstance(listener, ProgressListener):
+        elif isinstance(listener, IProgressListener):
             if self._progressListeners is not None:
                 self._progressListeners.remove(listener)
 
-        elif isinstance(listener, StartedListener):
+        elif isinstance(listener, IStartedListener):
             self.removeListener(StartedEvent, listener, self._UPLOAD_STARTED_METHOD)
 
         else:
@@ -496,9 +496,9 @@ class Upload(AbstractComponent, IComponent, IFocusable):
 
 
     def setProgressListener(self, progressListener):
-        """This method is deprecated, use addListener(ProgressListener) instead.
+        """This method is deprecated, use addListener(IProgressListener) instead.
 
-        @deprecated Use addListener(ProgressListener) instead.
+        @deprecated Use addListener(IProgressListener) instead.
         @param progressListener
         """
         self.addListener(progressListener)
@@ -649,7 +649,7 @@ class Upload(AbstractComponent, IComponent, IFocusable):
         return super(Upload, self).getListeners(eventType)
 
 
-class Receiver(object):
+class IReceiver(object):
     """Interface that must be implemented by the upload receivers to provide the
     Upload component an output stream to write the uploaded data.
 
@@ -669,7 +669,7 @@ class Receiver(object):
                    the MIME type of the uploaded file.
         @return Stream to which the uploaded file should be written.
         """
-        pass
+        raise NotImplementedError
 
 
 class FinishedEvent(ComponentEvent):

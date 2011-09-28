@@ -30,15 +30,15 @@ from muntjac.event.FieldEvents import \
     FocusListener
 
 
-class CloseListener(object):
+class ICloseListener(object):
     """An interface used for listening to Window close events. Add the
-    CloseListener to a browser level window or a sub window and
-    {@link CloseListener#windowClose(CloseEvent)} will be called whenever the
+    ICloseListener to a browser level window or a sub window and
+    {@link ICloseListener#windowClose(CloseEvent)} will be called whenever the
     user closes the window.
 
     <p>
     Since Vaadin 6.5, removing windows using {@link #removeWindow(Window)}
-    does fire the CloseListener.
+    does fire the ICloseListener.
     </p>
     """
 
@@ -50,17 +50,17 @@ class CloseListener(object):
         @param e
                    Event containing
         """
-        pass
+        raise NotImplementedError
 
 
-class ResizeListener(object):
+class IResizeListener(object):
     """Listener for window resize events.
 
     @see com.vaadin.ui.Window.ResizeEvent
     """
 
     def windowResized(self, e):
-        pass
+        raise NotImplementedError
 
 
 class Window(Panel, IUriHandler, IParameterHandler, FocusNotifier, BlurNotifier):
@@ -851,7 +851,7 @@ class Window(Panel, IUriHandler, IParameterHandler, FocusNotifier, BlurNotifier)
         <p>
         To explicitly close a sub-window, use {@link #removeWindow(Window)}. To
         react to a window being closed (after it is closed), register a
-        {@link CloseListener}.
+        {@link ICloseListener}.
         </p>
         """
         parent = self.getParent()
@@ -940,26 +940,26 @@ class Window(Panel, IUriHandler, IParameterHandler, FocusNotifier, BlurNotifier)
             self.requestRepaint()
 
 
-    _WINDOW_CLOSE_METHOD = getattr(CloseListener, 'windowClose')
+    _WINDOW_CLOSE_METHOD = getattr(ICloseListener, 'windowClose')
 
 
     def addListener(self, listener):
-        """Adds a CloseListener to the window.
+        """Adds a ICloseListener to the window.
 
-        For a sub window the CloseListener is fired when the user closes it
+        For a sub window the ICloseListener is fired when the user closes it
         (clicks on the close button).
 
-        For a browser level window the CloseListener is fired when the browser
+        For a browser level window the ICloseListener is fired when the browser
         level window is closed. Note that closing a browser level window does not
         mean it will be destroyed.
 
         <p>
         Since Vaadin 6.5, removing windows using {@link #removeWindow(Window)}
-        does fire the CloseListener.
+        does fire the ICloseListener.
         </p>
 
         @param listener
-                   the CloseListener to add.
+                   the ICloseListener to add.
         ---
         Add a resize listener.
 
@@ -979,7 +979,7 @@ class Window(Panel, IUriHandler, IParameterHandler, FocusNotifier, BlurNotifier)
         """
         if isinstance(listener, BlurListener):
             self.addListener(BlurEvent.EVENT_ID, BlurEvent, listener, BlurListener.blurMethod)
-        elif isinstance(listener, CloseListener):
+        elif isinstance(listener, ICloseListener):
             self.addListener(CloseEvent, listener, self._WINDOW_CLOSE_METHOD)
         elif isinstance(listener, FocusListener):
             self.addListener(FocusEvent.EVENT_ID, FocusEvent, listener, FocusListener.focusMethod)
@@ -988,14 +988,14 @@ class Window(Panel, IUriHandler, IParameterHandler, FocusNotifier, BlurNotifier)
 
 
     def removeListener(self, listener):
-        """Removes the CloseListener from the window.
+        """Removes the ICloseListener from the window.
 
         <p>
-        For more information on CloseListeners see {@link CloseListener}.
+        For more information on CloseListeners see {@link ICloseListener}.
         </p>
 
         @param listener
-                   the CloseListener to remove.
+                   the ICloseListener to remove.
         ---
         Remove a resize listener.
 
@@ -1003,7 +1003,7 @@ class Window(Panel, IUriHandler, IParameterHandler, FocusNotifier, BlurNotifier)
         """
         if isinstance(listener, BlurListener):
             self.removeListener(BlurEvent.EVENT_ID, BlurEvent, listener)
-        elif isinstance(listener, CloseListener):
+        elif isinstance(listener, ICloseListener):
             self.removeListener(CloseEvent, listener, self._WINDOW_CLOSE_METHOD)
         elif isinstance(listener, FocusListener):
             self.removeListener(FocusEvent.EVENT_ID, FocusEvent, listener)
@@ -1016,7 +1016,7 @@ class Window(Panel, IUriHandler, IParameterHandler, FocusNotifier, BlurNotifier)
         self.fireEvent( CloseEvent(self) )
 
 
-    _WINDOW_RESIZE_METHOD = getattr(ResizeListener, 'windowResized')
+    _WINDOW_RESIZE_METHOD = getattr(IResizeListener, 'windowResized')
 
 
     def fireResize(self):
@@ -1069,7 +1069,7 @@ class Window(Panel, IUriHandler, IParameterHandler, FocusNotifier, BlurNotifier)
     def removeWindow(self, window):
         """Remove the given subwindow from this window.
 
-        Since Vaadin 6.5, {@link CloseListener}s are called also when explicitly
+        Since Vaadin 6.5, {@link ICloseListener}s are called also when explicitly
         removing a window by calling this method.
 
         Since Vaadin 6.5, returns a boolean indicating if the window was removed

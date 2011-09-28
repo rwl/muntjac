@@ -21,11 +21,11 @@ from muntjac.ui.IComponent import Event as ComponentEvent
 #from muntjac.ui.ClientWidget import LoadStyle
 
 
-class FragmentChangedListener(object):
+class IFragmentChangedListener(object):
     """Listener that listens changes in URI fragment."""
 
     def fragmentChanged(self, source):
-        pass
+        raise NotImplementedError
 
 
 class UriFragmentUtility(AbstractComponent):
@@ -39,7 +39,7 @@ class UriFragmentUtility(AbstractComponent):
 #    CLIENT_WIDGET = VUriFragmentUtility
 #    LOAD_STYLE = LoadStyle.EAGER
 
-    _FRAGMENT_CHANGED_METHOD = getattr(FragmentChangedListener, 'fragmentChanged')
+    _FRAGMENT_CHANGED_METHOD = getattr(IFragmentChangedListener, 'fragmentChanged')
 
 
     def addListener(self, listener):
@@ -71,7 +71,7 @@ class UriFragmentUtility(AbstractComponent):
     def getFragment(self):
         """Gets currently set URI fragment.
         <p>
-        To listen changes in fragment, hook a {@link FragmentChangedListener}.
+        To listen changes in fragment, hook a {@link IFragmentChangedListener}.
         <p>
         Note that initial URI fragment that user used to enter the application
         will be read after application init. It fires FragmentChangedEvent only
@@ -90,14 +90,14 @@ class UriFragmentUtility(AbstractComponent):
         @param fireEvent
                    true to fire event
         @see FragmentChangedEvent
-        @see FragmentChangedListener
+        @see IFragmentChangedListener
         ---
         Sets URI fragment. This method fires a {@link FragmentChangedEvent}
 
         @param newFragment
                    id of the new fragment
         @see FragmentChangedEvent
-        @see FragmentChangedListener
+        @see IFragmentChangedListener
         """
         if (newFragment is None and self._fragment is not None) \
                 or (newFragment is not None \

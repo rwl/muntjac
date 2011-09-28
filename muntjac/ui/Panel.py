@@ -20,20 +20,20 @@ from muntjac.event.Action import Action, Notifier
 from muntjac.ui.AbstractComponentContainer import AbstractComponentContainer
 from muntjac.ui.VerticalLayout import VerticalLayout
 
-from muntjac.ui.ComponentContainer import \
-    ComponentContainer, ComponentAttachListener, ComponentDetachListener
+from muntjac.ui.IComponentContainer import \
+    IComponentContainer, IComponentAttachListener, IComponentDetachListener
 
 from muntjac.ui.IComponent import IFocusable
-from muntjac.ui.Layout import Layout
+from muntjac.ui.ILayout import ILayout
 from muntjac.event.MouseEvents import ClickEvent, ClickListener
 
 from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
 from muntjac.terminal.gwt.client.ui.VPanel import VPanel
 
 
-class Panel(AbstractComponentContainer, IScrollable, ComponentContainer,
-            ComponentAttachListener, ComponentContainer,
-            ComponentDetachListener, Action, Notifier, IFocusable):
+class Panel(AbstractComponentContainer, IScrollable, IComponentContainer,
+            IComponentAttachListener, IComponentContainer,
+            IComponentDetachListener, Action, Notifier, IFocusable):
     """Panel - a simple single component container.
 
     @author IT Mill Ltd.
@@ -102,7 +102,7 @@ class Panel(AbstractComponentContainer, IScrollable, ComponentContainer,
         if nargs == 0:
             self.__init__(None)
         elif nargs == 1:
-            if isinstance(args[0], ComponentContainer):
+            if isinstance(args[0], IComponentContainer):
                 content, = args
                 self.setContent(content)
                 self.setWidth(100, self.UNITS_PERCENTAGE)
@@ -121,14 +121,14 @@ class Panel(AbstractComponentContainer, IScrollable, ComponentContainer,
         """Gets the current layout of the panel.
 
         @return the Current layout of the panel.
-        @deprecated A Panel can now contain a ComponentContainer which is not
-                    necessarily a Layout. Use {@link #getContent()} instead.
+        @deprecated A Panel can now contain a IComponentContainer which is not
+                    necessarily a ILayout. Use {@link #getContent()} instead.
         """
-        if isinstance(self._content, Layout):
+        if isinstance(self._content, ILayout):
             return self._content
         elif self._content is None:
             return None
-        raise ValueError, 'Panel does not contain a Layout. Use getContent() instead of getLayout().'
+        raise ValueError, 'Panel does not contain a ILayout. Use getContent() instead of getLayout().'
 
 
     def setLayout(self, newLayout):
@@ -138,13 +138,13 @@ class Panel(AbstractComponentContainer, IScrollable, ComponentContainer,
         default.
 
         Components from old layout are not moved to new layout by default
-        (changed in 5.2.2). Use function in Layout interface manually.
+        (changed in 5.2.2). Use function in ILayout interface manually.
 
         @param newLayout
                    the New layout of the panel.
-        @deprecated A Panel can now contain a ComponentContainer which is not
-                    necessarily a Layout. Use
-                    {@link #setContent(ComponentContainer)} instead.
+        @deprecated A Panel can now contain a IComponentContainer which is not
+                    necessarily a ILayout. Use
+                    {@link #setContent(IComponentContainer)} instead.
         """
         self.setContent(newLayout)
 
@@ -196,7 +196,7 @@ class Panel(AbstractComponentContainer, IScrollable, ComponentContainer,
 
 
     def createDefaultContent(self):
-        """Create a ComponentContainer which is added by default to the Panel if
+        """Create a IComponentContainer which is added by default to the Panel if
         user does not specify any content.
 
         @return
@@ -256,7 +256,7 @@ class Panel(AbstractComponentContainer, IScrollable, ComponentContainer,
         components in the container.
 
         @return the Iterator of the components inside the container.
-        @see com.vaadin.ui.ComponentContainer#getComponentIterator()
+        @see com.vaadin.ui.IComponentContainer#getComponentIterator()
         """
         return self._content.getComponentIterator()
 
@@ -362,7 +362,7 @@ class Panel(AbstractComponentContainer, IScrollable, ComponentContainer,
     def componentAttachedToContainer(self, event):
         """A new component is attached to container.
 
-        @see com.vaadin.ui.ComponentContainer.ComponentAttachListener#componentAttachedToContainer(com.vaadin.ui.ComponentContainer.ComponentAttachEvent)
+        @see com.vaadin.ui.IComponentContainer.IComponentAttachListener#componentAttachedToContainer(com.vaadin.ui.IComponentContainer.ComponentAttachEvent)
         """
         if event.getContainer() == self._content:
             self.fireComponentAttachEvent(event.getAttachedComponent())
@@ -371,7 +371,7 @@ class Panel(AbstractComponentContainer, IScrollable, ComponentContainer,
     def componentDetachedFromContainer(self, event):
         """A component has been detached from container.
 
-        @see com.vaadin.ui.ComponentContainer.ComponentDetachListener#componentDetachedFromContainer(com.vaadin.ui.ComponentContainer.ComponentDetachEvent)
+        @see com.vaadin.ui.IComponentContainer.IComponentDetachListener#componentDetachedFromContainer(com.vaadin.ui.IComponentContainer.ComponentDetachEvent)
         """
         if event.getContainer() == self._content:
             self.fireComponentDetachEvent(event.getDetachedComponent())
@@ -401,7 +401,7 @@ class Panel(AbstractComponentContainer, IScrollable, ComponentContainer,
     def removeAllComponents(self):
         """Removes all components from this container.
 
-        @see com.vaadin.ui.ComponentContainer#removeAllComponents()
+        @see com.vaadin.ui.IComponentContainer#removeAllComponents()
         """
         self._content.removeAllComponents()
 

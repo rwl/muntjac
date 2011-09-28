@@ -29,18 +29,18 @@ from muntjac.data.util.BeanItem import BeanItem
 from muntjac.event.ActionManager import ActionManager
 from muntjac.data.Property import ValueChangeListener
 from muntjac.ui.AbstractComponent import AbstractComponent
-from muntjac.ui.Field import Field
+from muntjac.ui.IField import IField
 from muntjac.ui.CustomLayout import CustomLayout
-from muntjac.ui.ComponentContainer import ComponentContainer
+from muntjac.ui.IComponentContainer import IComponentContainer
 from muntjac.ui.GridLayout import GridLayout
-from muntjac.ui.FieldFactory import FieldFactory
+from muntjac.ui.IFieldFactory import IFieldFactory
 
 
 class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Notifier):
     """Form component provides easy way of creating and managing sets fields.
 
     <p>
-    <code>Form</code> is a container for fields implementing {@link Field}
+    <code>Form</code> is a container for fields implementing {@link IField}
     interface. It provides support for any layouts and provides buffering
     interface for easy connection of commit and discard buttons. All the form
     fields can be customized by adding validators, setting captions and icons,
@@ -85,7 +85,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
         @param formLayout
                    the layout of the form.
         @param fieldFactory
-                   the FieldFactory of the form.
+                   the IFieldFactory of the form.
         """
         self._propertyValue = None
 
@@ -113,7 +113,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
         # Form may act as an Item, its own properties are stored here.
         self._ownProperties = dict()
 
-        # Field factory for this form.
+        # IField factory for this form.
         self._fieldFactory = None
 
         # Visible item properties.
@@ -199,7 +199,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
                         if '' == str(validationError):
                             validationError = InvalidValueException(field.getCaption())
                         break
-                    elif isinstance(f, Field) and not f.isValid():
+                    elif isinstance(f, IField) and not f.isValid():
                         # Something is wrong with the field, but no proper
                         # error is given. Generate one.
                         validationError = InvalidValueException(field.getCaption())
@@ -392,7 +392,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
 
         <p>
         This field is added to the layout using the
-        {@link #attachField(Object, Field)} method.
+        {@link #attachField(Object, IField)} method.
         </p>
 
         @param propertyId
@@ -417,7 +417,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
         @param propertyId
                    the Property id of the field.
         @param field
-                   the Field that should be registered
+                   the IField that should be registered
         """
         if (propertyId is None) or (field is None):
             return
@@ -528,7 +528,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
                    the field to be detached from the forms layout.
         """
         p = field.getParent()
-        if isinstance(p, ComponentContainer):
+        if isinstance(p, IComponentContainer):
             p.removeComponent(field)
 
 
@@ -682,7 +682,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
         # Gets the old field
         oldField = self._fields.get(propertyId)
         if oldField is None:
-            raise ValueError, 'Field with given propertyid \'' \
+            raise ValueError, 'IField with given propertyid \'' \
                     + str(propertyId) + '\' can not be found.'
 
         value = oldField.getValue() if oldField.getPropertyDataSource() is None else oldField.getPropertyDataSource().getValue()
@@ -830,12 +830,12 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
     def setFieldFactory(self, fieldFactory):
         """Sets the field factory of Form.
 
-        <code>FieldFactory</code> is used to create fields for form properties.
-        By default the form uses BaseFieldFactory to create Field instances.
+        <code>IFieldFactory</code> is used to create fields for form properties.
+        By default the form uses BaseFieldFactory to create IField instances.
 
         @param fieldFactory
                    the New factory used to create the fields.
-        @see Field
+        @see IField
         @see FormFieldFactory
         @deprecated use {@link #setFormFieldFactory(FormFieldFactory)} instead
         """
@@ -852,7 +852,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
 
         @param fieldFactory
                    the new factory used to create the fields.
-        @see Field
+        @see IField
         @see FormFieldFactory
         """
         self._fieldFactory = fieldFactory
@@ -869,12 +869,12 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
     def getFieldFactory(self):
         """Get the field factory of the form.
 
-        @return the FieldFactory Factory used to create the fields.
+        @return the IFieldFactory Factory used to create the fields.
         @deprecated Use {@link #getFormFieldFactory()} instead. Set the
                     FormFieldFactory using
                     {@link #setFormFieldFactory(FormFieldFactory)}.
         """
-        if isinstance(self._fieldFactory, FieldFactory):
+        if isinstance(self._fieldFactory, IFieldFactory):
             return self._fieldFactory
         return None
 
@@ -892,7 +892,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
     def setInternalValue(self, newValue):
         """Sets the internal value.
 
-        This is relevant when the Form is used as Field.
+        This is relevant when the Form is used as IField.
 
         @see com.vaadin.ui.AbstractField#setInternalValue(java.lang.Object)
         """
@@ -913,7 +913,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
         non-read-only fields, the first one of them is returned. Otherwise, the
         field for the first property (or null if none) is returned.
 
-        @return the Field.
+        @return the IField.
         """
         if self.getItemPropertyIds() is not None:
             for idd in self.getItemPropertyIds():

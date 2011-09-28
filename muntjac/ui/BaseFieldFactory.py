@@ -15,12 +15,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.ui.DefaultFieldFactory import DefaultFieldFactory
-from muntjac.ui.FieldFactory import FieldFactory
+from muntjac.ui.IFieldFactory import IFieldFactory
 from muntjac.data.Property import Property
 from muntjac.ui.AbstractComponent import AbstractComponent
 
 
-class BaseFieldFactory(FieldFactory):
+class BaseFieldFactory(IFieldFactory):
     """Default implementation of the the following Field types are used by default:
     <p>
     <b>Boolean</b>: Button(switchMode:true).<br/>
@@ -45,17 +45,17 @@ class BaseFieldFactory(FieldFactory):
         @param uiContext
                    the context where the Field is presented.
 
-        @see com.vaadin.ui.FieldFactory#createField(Class, Component)
+        @see com.vaadin.ui.IFieldFactory#createField(Class, Component)
         ---
         Creates the field based on the datasource property.
 
-        @see com.vaadin.ui.FieldFactory#createField(Property, Component)
+        @see com.vaadin.ui.IFieldFactory#createField(Property, Component)
         ---
         Creates the field based on the item and property id.
 
-        @see com.vaadin.ui.FieldFactory#createField(Item, Object, Component)
+        @see com.vaadin.ui.IFieldFactory#createField(Item, Object, Component)
         ---
-        @see com.vaadin.ui.FieldFactory#createField(com.vaadin.data.Container,
+        @see com.vaadin.ui.IFieldFactory#createField(com.vaadin.data.Container,
              java.lang.Object, java.lang.Object, com.vaadin.ui.Component)
         """
         nargs = len(args)

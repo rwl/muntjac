@@ -25,7 +25,7 @@ from muntjac.data.Buffered import SourceException
 from muntjac.ui.DefaultFieldFactory import DefaultFieldFactory
 from muntjac.ui.AbstractComponent import AbstractComponent
 from muntjac.data.Validator import EmptyValueException
-from muntjac.ui.Field import Field
+from muntjac.ui.IField import IField
 from muntjac.event.Action import Action, ShortcutNotifier
 from muntjac.terminal.CompositeErrorMessage import CompositeErrorMessage
 from muntjac.event.ActionManager import ActionManager
@@ -34,7 +34,7 @@ from muntjac.data.Validatable import Validatable
 from muntjac.ui.IComponent import Event as ComponentEvent
 
 
-class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeListener, Property, ReadOnlyStatusChangeNotifier, Action, ShortcutNotifier):
+class AbstractField(AbstractComponent, IField, Property, ReadOnlyStatusChangeListener, Property, ReadOnlyStatusChangeNotifier, Action, ShortcutNotifier):
     """<p>
     Abstract field component for implementing buffered property editors. The
     field may hold an internal value, or it may be connected to any data source
@@ -45,7 +45,7 @@ class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeList
 
     <p>
     AbstractField also provides the {@link com.vaadin.data.Buffered} interface
-    for buffering the data source value. By default the Field is in write
+    for buffering the data source value. By default the IField is in write
     through-mode and {@link #setWriteThrough(boolean)}should be called to enable
     buffering.
     </p>
@@ -783,7 +783,7 @@ class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeList
 
     def setInternalValue(self, newValue):
         """Sets the internal field value. This is purely used by AbstractField to
-        change the internal Field value. It does not trigger valuechange events.
+        change the internal IField value. It does not trigger valuechange events.
         It can be overridden by the inheriting classes to update all dependent
         variables.
 
@@ -917,7 +917,7 @@ class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeList
 
     def getActionManager(self):
         """Gets the {@link ActionManager} used to manage the
-        {@link ShortcutListener}s added to this {@link Field}.
+        {@link ShortcutListener}s added to this {@link IField}.
 
         @return the ActionManager in use
         """
@@ -939,7 +939,7 @@ class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeList
 
 class FocusShortcut(ShortcutListener):
     """A ready-made {@link ShortcutListener} that focuses the given
-    {@link Focusable} (usually a {@link Field}) when the keyboard shortcut is
+    {@link Focusable} (usually a {@link IField}) when the keyboard shortcut is
     invoked.
     """
 
