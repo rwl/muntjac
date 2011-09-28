@@ -17,7 +17,7 @@
 from muntjac.data.Property import \
     Property, ReadOnlyStatusChangeEvent, ReadOnlyStatusChangeNotifier, \
     ValueChangeEvent, ValueChangeNotifier, ReadOnlyStatusChangeListener
-from muntjac.util.event import EventObject
+from muntjac.event import EventObject
 
 
 class AbstractProperty(Property, Property, ValueChangeNotifier, Property,

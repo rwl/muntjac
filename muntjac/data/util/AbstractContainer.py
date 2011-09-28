@@ -16,7 +16,7 @@
 
 from muntjac.data.Container import Container, ItemSetChangeEvent, PropertySetChangeEvent,\
     ItemSetChangeListener
-from muntjac.util.event import EventObject
+from muntjac.event import EventObject
 
 
 class AbstractContainer(Container):

@@ -30,7 +30,7 @@ from muntjac.data.Container import \
     SimpleFilterable, Sortable, PropertySetChangeListener
 from muntjac.data.util.filter.UnsupportedFilterException import UnsupportedFilterException
 from muntjac.data.util.AbstractContainer import BaseItemSetChangeEvent
-from muntjac.util.event import EventObject
+from muntjac.event import EventObject
 
 # item type is really IndexedContainerItem, but using Item not to show it in
 # public API

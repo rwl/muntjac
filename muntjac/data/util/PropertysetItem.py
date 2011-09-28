@@ -16,7 +16,7 @@
 
 from muntjac.data.Item import \
     Item, PropertySetChangeEvent, PropertySetChangeNotifier
-from muntjac.util.event import EventObject
+from muntjac.event import EventObject
 
 
 class PropertysetItem(Item, Item, PropertySetChangeNotifier):  # Cloneable

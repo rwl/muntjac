@@ -18,7 +18,7 @@ import logging
 
 from Queue import LifoQueue
 from muntjac.terminal.gwt.server.util import getSuperClass
-from muntjac.util.name import clsname
+from muntjac.terminal import clsname
 
 try:
     from cStringIO import StringIO

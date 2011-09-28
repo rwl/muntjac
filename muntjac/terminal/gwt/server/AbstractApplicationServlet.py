@@ -31,7 +31,7 @@ except ImportError, e:
 from paste.webkit.wkservlet import Servlet
 from paste.deploy import CONFIG
 
-from muntjac.util.name import clsname
+from muntjac.terminal import clsname
 from muntjac.Application import Application
 
 from muntjac.terminal.gwt.server.Constants import Constants

@@ -17,7 +17,7 @@
 import logging
 import locale
 
-from muntjac.util.event import EventObject, IEventListener
+from muntjac.event import EventObject, IEventListener
 from muntjac.terminal.IUriHandler import IUriHandler
 from muntjac.terminal.SystemError import SystemErr
 from muntjac.terminal.ITerminal import IErrorListener, ITerminal

@@ -18,7 +18,7 @@ from muntjac.terminal.gwt.server.util import getResourcePath
 
 from muntjac.terminal.gwt.server.AbstractWebApplicationContext import \
         AbstractWebApplicationContext
-from muntjac.util.name import clsname
+from muntjac.terminal import clsname
 
 
 class WebApplicationContext(AbstractWebApplicationContext):
