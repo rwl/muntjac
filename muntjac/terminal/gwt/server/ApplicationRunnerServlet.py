@@ -19,7 +19,7 @@ import logging
 
 from paste.deploy import CONFIG
 
-from muntjac.terminal.gwt.server.ServletException import ServletException
+from muntjac.terminal.gwt.server.Exceptions import ServletException
 
 from muntjac.terminal.gwt.server.AbstractApplicationServlet import \
     AbstractApplicationServlet

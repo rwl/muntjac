@@ -14,17 +14,15 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.ui.Component import Component, Focusable, Event as ComponentEvent
 from muntjac.ui.AbstractComponent import AbstractComponent
+
+from muntjac.ui.Component import Component, Focusable, Event as ComponentEvent
 
 from muntjac.terminal.StreamVariable import \
     StreamingProgressEvent, StreamVariable
 
-from muntjac.terminal.gwt.server.NoInputStreamException import \
-    NoInputStreamException
-
-from muntjac.terminal.gwt.server.NoOutputStreamException import \
-    NoOutputStreamException
+from muntjac.terminal.gwt.server.Exceptions import \
+    NoInputStreamException, NoOutputStreamException
 
 #from muntjac.terminal.gwt.client.ui.VUpload import VUpload
 #from muntjac.ui.ClientWidget import LoadStyle

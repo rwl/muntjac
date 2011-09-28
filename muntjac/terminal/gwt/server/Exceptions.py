@@ -18,25 +18,8 @@
 class SystemMessageException(RuntimeError):
 
     def __init__(self, *args):
-        """Constructs a new <code>SystemMessageException</code> with the specified
-        detail message.
-
-        @param msg
-                   the detail message.
-        ---
-        Constructs a new <code>SystemMessageException</code> with the specified
-        detail message and cause.
-
-        @param msg
-                   the detail message.
-        @param cause
-                   the cause of the exception.
-        ---
-        Constructs a new <code>SystemMessageException</code> from another
-        exception.
-
-        @param cause
-                   the cause of the exception.
+        """Constructs a new <code>SystemMessageException</code> with
+        the specified detail message and/or cause.
         """
         nargs = len(args)
         if nargs == 1:
@@ -55,3 +38,30 @@ class SystemMessageException(RuntimeError):
 
     def getCause(self):
         return self._cause
+
+
+class UploadException(Exception):
+
+    def __init__(self, arg):
+        if isinstance(arg, Exception):
+            e = arg
+            super(UploadException, self)('Upload failed', e)
+        else:
+            msg = arg
+            super(UploadException, self)(msg)
+
+
+class NoInputStreamException(Exception):
+    pass
+
+
+class NoOutputStreamException(Exception):
+    pass
+
+
+class ServletException(Exception):
+    pass
+
+
+class SessionExpiredException(Exception):
+    pass

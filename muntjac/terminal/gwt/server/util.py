@@ -95,5 +95,10 @@ def getResourceAsStream(servlet, path):
     return stream
 
 
+def getResourcePath(session, path):
+    # FIXME: make relative to context root
+    return path
+
+
 def getSuperClass(cls):
     return cls.__mro__[1] if len(cls.__mro__) > 1 else None

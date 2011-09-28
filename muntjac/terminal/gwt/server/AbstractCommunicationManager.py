@@ -32,7 +32,7 @@ except ImportError, e:
 from muntjac.util.name import clsname
 
 from muntjac.terminal.gwt.server.JsonPaintTarget import JsonPaintTarget
-from muntjac.terminal.gwt.server.UploadException import UploadException
+from muntjac.terminal.gwt.server.Exceptions import UploadException
 from muntjac.terminal.Paintable import Paintable, RepaintRequestListener
 from muntjac.terminal.Terminal import ErrorEvent as TerminalErrorEvent
 from muntjac.terminal.URIHandler import ErrorEvent as URIHandlerErrorEvent
@@ -41,8 +41,8 @@ from muntjac.ui.Window import Window
 from muntjac.ui.Component import Component
 from muntjac.ui.AbstractField import AbstractField
 
-from muntjac.terminal.gwt.server.StreamingStartEventImpl import \
-    StreamingStartEventImpl
+from muntjac.terminal.gwt.server.StreamingEvents import \
+    StreamingStartEventImpl, StreamingErrorEventImpl, StreamingEndEventImpl
 
 from muntjac.terminal.gwt.server.DragAndDropService import \
     DragAndDropService
@@ -53,17 +53,8 @@ from muntjac.terminal.gwt.server.ComponentSizeValidator import \
 from muntjac.terminal.gwt.client.ApplicationConnection import \
     ApplicationConnection
 
-from muntjac.terminal.gwt.server.NoOutputStreamException import \
-    NoOutputStreamException
-
-from muntjac.terminal.gwt.server.StreamingErrorEventImpl import \
-    StreamingErrorEventImpl
-
-from muntjac.terminal.gwt.server.StreamingEndEventImpl import \
-    StreamingEndEventImpl
-
-from muntjac.terminal.gwt.server.NoInputStreamException import \
-    NoInputStreamException
+from muntjac.terminal.gwt.server.Exceptions import \
+    NoInputStreamException, NoOutputStreamException
 
 from muntjac.terminal.gwt.server.AbstractApplicationServlet import \
     AbstractApplicationServlet, URIHandlerErrorImpl
@@ -71,7 +62,7 @@ from muntjac.terminal.gwt.server.AbstractApplicationServlet import \
 from muntjac.terminal.gwt.server.ChangeVariablesErrorEvent import \
     ChangeVariablesErrorEvent
 
-from muntjac.terminal.gwt.server.StreamingProgressEventImpl import \
+from muntjac.terminal.gwt.server.StreamingEvents import \
     StreamingProgressEventImpl
 
 

@@ -22,9 +22,9 @@ from muntjac.terminal.Terminal import Terminal
 
 
 class WebBrowser(Terminal):
-    """Class that provides information about the web browser the user is using.
-    Provides information such as browser name and version, screen resolution and
-    IP address.
+    """Class that provides information about the web browser the user is
+    using. Provides information such as browser name and version, screen
+    resolution and IP address.
 
     @author IT Mill Ltd.
     @version @VERSION@
@@ -72,8 +72,8 @@ class WebBrowser(Terminal):
 
 
     def getAddress(self):
-        """Gets the IP-address of the web browser. If the application is running
-        inside a portlet, this method will return null.
+        """Gets the IP-address of the web browser. If the application is
+        running inside a portlet, this method will return null.
 
         @return IP-address in 1.12.123.123 -format
         """
@@ -93,8 +93,8 @@ class WebBrowser(Terminal):
     def isFirefox(self):
         """Tests whether the user is using Firefox.
 
-        @return true if the user is using Firefox, false if the user is not using
-                Firefox or if no information on the browser is present
+        @return true if the user is using Firefox, false if the user is not
+                using Firefox or if no information on the browser is present
         """
         if self._browserDetails is None:
             return False
@@ -105,9 +105,9 @@ class WebBrowser(Terminal):
     def isIE(self):
         """Tests whether the user is using Internet Explorer.
 
-        @return true if the user is using Internet Explorer, false if the user is
-                not using Internet Explorer or if no information on the browser
-                is present
+        @return true if the user is using Internet Explorer, false if the
+                user is not using Internet Explorer or if no information on
+                the browser is present
         """
         if self._browserDetails is None:
             return False
@@ -118,8 +118,8 @@ class WebBrowser(Terminal):
     def isSafari(self):
         """Tests whether the user is using Safari.
 
-        @return true if the user is using Safari, false if the user is not using
-                Safari or if no information on the browser is present
+        @return true if the user is using Safari, false if the user is not
+                using Safari or if no information on the browser is present
         """
         if self._browserDetails is None:
             return False
@@ -130,8 +130,8 @@ class WebBrowser(Terminal):
     def isOpera(self):
         """Tests whether the user is using Opera.
 
-        @return true if the user is using Opera, false if the user is not using
-                Opera or if no information on the browser is present
+        @return true if the user is using Opera, false if the user is not
+                using Opera or if no information on the browser is present
         """
         if self._browserDetails is None:
             return False
@@ -142,8 +142,8 @@ class WebBrowser(Terminal):
     def isChrome(self):
         """Tests whether the user is using Chrome.
 
-        @return true if the user is using Chrome, false if the user is not using
-                Chrome or if no information on the browser is present
+        @return true if the user is using Chrome, false if the user is not
+                using Chrome or if no information on the browser is present
         """
         if self._browserDetails is None:
             return False
@@ -154,10 +154,8 @@ class WebBrowser(Terminal):
     def getBrowserMajorVersion(self):
         """Gets the major version of the browser the user is using.
 
-        <p>
-        Note that Internet Explorer in IE7 compatibility mode might return 8 in
-        some cases even though it should return 7.
-        </p>
+        Note that Internet Explorer in IE7 compatibility mode might
+        return 8 in some cases even though it should return 7.
 
         @return The major version of the browser or -1 if not known.
         """
@@ -183,8 +181,8 @@ class WebBrowser(Terminal):
     def isLinux(self):
         """Tests whether the user is using Linux.
 
-        @return true if the user is using Linux, false if the user is not using
-                Linux or if no information on the browser is present
+        @return true if the user is using Linux, false if the user is not
+                using Linux or if no information on the browser is present
         """
         return self._browserDetails.isLinux()
 
@@ -201,16 +199,16 @@ class WebBrowser(Terminal):
     def isWindows(self):
         """Tests whether the user is using Windows.
 
-        @return true if the user is using Windows, false if the user is not using
-                Windows or if no information on the browser is present
+        @return true if the user is using Windows, false if the user is not
+                using Windows or if no information on the browser is present
         """
         return self._browserDetails.isWindows()
 
 
     def getTimezoneOffset(self):
-        """Returns the browser-reported TimeZone offset in milliseconds from GMT.
-        This includes possible daylight saving adjustments, to figure out which
-        TimeZone the user actually might be in, see
+        """Returns the browser-reported TimeZone offset in milliseconds from
+        GMT. This includes possible daylight saving adjustments, to figure
+        out which TimeZone the user actually might be in, see
         {@link #getRawTimezoneOffset()}.
 
         @see WebBrowser#getRawTimezoneOffset()
@@ -220,28 +218,27 @@ class WebBrowser(Terminal):
 
 
     def getRawTimezoneOffset(self):
-        """Returns the browser-reported TimeZone offset in milliseconds from GMT
-        ignoring possible daylight saving adjustments that may be in effect in
-        the browser.
-        <p>
-        You can use this to figure out which TimeZones the user could actually be
-        in by calling {@link TimeZone#getAvailableIDs(int)}.
-        </p>
-        <p>
+        """Returns the browser-reported TimeZone offset in milliseconds
+        from GMT ignoring possible daylight saving adjustments that may
+        be in effect in the browser.
+
+        You can use this to figure out which TimeZones the user could actually
+        be in by calling {@link TimeZone#getAvailableIDs(int)}.
+
         If {@link #getRawTimezoneOffset()} and {@link #getTimezoneOffset()}
         returns the same value, the browser is either in a zone that does not
-        currently have daylight saving time, or in a zone that never has daylight
-        saving time.
-        </p>
+        currently have daylight saving time, or in a zone that never has
+        daylight saving time.
 
-        @return timezone offset in milliseconds excluding DST, 0 if not available
+        @return timezone offset in milliseconds excluding DST, 0 if not
+                available
         """
         return self._rawTimezoneOffset
 
 
     def getDSTSavings(self):
-        """Gets the difference in minutes between the browser's GMT TimeZone and
-        DST.
+        """Gets the difference in minutes between the browser's GMT TimeZone
+        and DST.
 
         @return the amount of minutes that the TimeZone shifts when DST is in
                 effect
@@ -250,8 +247,8 @@ class WebBrowser(Terminal):
 
 
     def isDSTInEffect(self):
-        """Determines whether daylight savings time (DST) is currently in effect in
-        the region of the browser or not.
+        """Determines whether daylight savings time (DST) is currently in
+        effect in the region of the browser or not.
 
         @return true if the browser resides at a location that currently is in
                 DST
@@ -261,8 +258,8 @@ class WebBrowser(Terminal):
 
     def getCurrentDate(self):
         """Returns the current date and time of the browser. This will not be
-        entirely accurate due to varying network latencies, but should provide a
-        close-enough value for most cases. Also note that the returned Date
+        entirely accurate due to varying network latencies, but should provide
+        a close-enough value for most cases. Also note that the returned Date
         object uses servers default time zone, not the clients.
 
         @return the current date and time of the browser.
@@ -278,10 +275,10 @@ class WebBrowser(Terminal):
         return self._touchDevice
 
 
-    def updateClientSideDetails(self, sw, sh, tzo, rtzo, dstSavings, dstInEffect, curDate, touchDevice):
-        """For internal use by AbstractApplicationServlet/AbstractApplicationPortlet
-        only. Updates all properties in the class according to the given
-        information.
+    def updateClientSideDetails(self, sw, sh, tzo, rtzo, dstSavings,
+                dstInEffect, curDate, touchDevice):
+        """For internal use by AbstractApplicationServlet only. Updates all
+        properties in the class according to the given information.
 
         @param sw
                    Screen width
@@ -338,9 +335,8 @@ class WebBrowser(Terminal):
 
 
     def updateRequestDetails(self, locale, address, secureConnection, agent):
-        """For internal use by AbstractApplicationServlet/AbstractApplicationPortlet
-        only. Updates all properties in the class according to the given
-        information.
+        """For internal use by AbstractApplicationServlet only. Updates all
+        properties in the class according to the given information.
 
         @param locale
                    The browser primary locale

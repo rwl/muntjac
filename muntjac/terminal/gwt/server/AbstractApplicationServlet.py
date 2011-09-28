@@ -36,23 +36,20 @@ from muntjac.Application import Application
 
 from muntjac.terminal.gwt.server.Constants import Constants
 from muntjac.terminal.gwt.server.JsonPaintTarget import JsonPaintTarget
-from muntjac.terminal.gwt.server.ServletException import ServletException
+from muntjac.terminal.gwt.server.Exceptions import ServletException
 from muntjac.terminal.gwt.server.ApplicationServlet import ApplicationServlet
 
 from muntjac.terminal.URIHandler import ErrorEvent as URIHandlerErrorEvent
 from muntjac.terminal.Terminal import ErrorEvent as TerminalErrorEvent
 
-from muntjac.terminal.gwt.server.SessionExpiredException import \
-    SessionExpiredException
+from muntjac.terminal.gwt.server.Exceptions import \
+    SessionExpiredException, SystemMessageException
 
 from muntjac.terminal.gwt.client.ApplicationConnection import \
     ApplicationConnection
 
 from muntjac.terminal.gwt.server.WebApplicationContext import \
     WebApplicationContext
-
-from muntjac.terminal.gwt.server.SystemMessageException import \
-    SystemMessageException
 
 from muntjac.terminal.gwt.server.CommunicationManager import \
     CommunicationManager

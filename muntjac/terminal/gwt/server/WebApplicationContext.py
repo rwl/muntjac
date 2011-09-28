@@ -14,15 +14,18 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.terminal.gwt.server.AbstractWebApplicationContext import AbstractWebApplicationContext
-from muntjac.terminal.gwt.server.ApplicationServlet import ApplicationServlet
+from muntjac.terminal.gwt.server.util import getResourcePath
+
+from muntjac.terminal.gwt.server.AbstractWebApplicationContext import \
+        AbstractWebApplicationContext
+from muntjac.util.name import clsname
 
 
 class WebApplicationContext(AbstractWebApplicationContext):
     """Web application context for Vaadin applications.
 
-    This is automatically added as a {@link HttpSessionBindingListener} when
-    added to a {@link HttpSession}.
+    This is automatically added as a {@link HttpSessionBindingListener}
+    when added to a {@link HttpSession}.
 
     @author IT Mill Ltd.
     @version
@@ -32,34 +35,40 @@ class WebApplicationContext(AbstractWebApplicationContext):
 
     def __init__(self):
         """Creates a new Web Application Context."""
+
         self.session = None
         self._reinitializingSession = False
-        # Stores a reference to the currentRequest. Null it not inside a request.
+
+        # Stores a reference to the currentRequest. None it not inside
+        # a request.
         self._currentRequest = None
 
 
     def startTransaction(self, application, request):
         self._currentRequest = request
-        super(WebApplicationContext, self).startTransaction(application, request)
+        super(WebApplicationContext, self).startTransaction(application,
+                request)
 
 
     def endTransaction(self, application, request):
-        super(WebApplicationContext, self).endTransaction(application, request)
+        super(WebApplicationContext, self).endTransaction(application,
+                request)
         self._currentRequest = None
 
 
     def valueUnbound(self, event):
         if not self._reinitializingSession:
-            # Avoid closing the application if we are only reinitializing the
-            # session. Closing the application would cause the state to be lost
-            # and a new application to be created, which is not what we want.
+            # Avoid closing the application if we are only reinitializing
+            # the session. Closing the application would cause the state
+            # to be lost and a new application to be created, which is not
+            # what we want.
             super(WebApplicationContext, self).valueUnbound(event)
 
 
     def reinitializeSession(self):
-        """Discards the current session and creates a new session with the same
-        contents. The purpose of this is to introduce a new session key in order
-        to avoid session fixation attacks.
+        """Discards the current session and creates a new session with
+        the same contents. The purpose of this is to introduce a new
+        session key in order to avoid session fixation attacks.
         """
         oldSession = self.getHttpSession()
         # Stores all attributes (security key, reference to this context
@@ -74,12 +83,12 @@ class WebApplicationContext(AbstractWebApplicationContext):
         self._reinitializingSession = False
 
         # Create a new session
-        newSession = self._currentRequest.getSession()
+        newSession = self._currentRequest.session()
 
         # Restores all attributes (security key, reference to this context
         # instance)
-        for name in attrs.keys():
-            newSession.setAttribute(name, attrs.get(name))
+        for name, val in attrs.iteritems():
+            newSession.setValue(name, val)
 
         # Update the "current session" variable
         self.session = newSession
@@ -90,7 +99,7 @@ class WebApplicationContext(AbstractWebApplicationContext):
 
         @see com.vaadin.service.ApplicationContext#getBaseDirectory()
         """
-        realPath = ApplicationServlet.getResourcePath(self.session.getServletContext(), '/')
+        realPath = getResourcePath(self.session, '/')
         if realPath is None:
             return None
         return realPath
@@ -112,10 +121,10 @@ class WebApplicationContext(AbstractWebApplicationContext):
                    the HTTP session.
         @return the application context for HttpSession.
         """
-        cx = session.value(WebApplicationContext.__class__.__name__)
+        cx = session.value( clsname(WebApplicationContext) )
         if cx is None:
             cx = WebApplicationContext()
-            session.setValue(WebApplicationContext.__class__.__name__, cx)
+            session.setValue(clsname(WebApplicationContext), cx)
         if cx.session is None:
             cx.session = session
         return cx
@@ -135,6 +144,7 @@ class WebApplicationContext(AbstractWebApplicationContext):
         @return CommunicationManager
         """
         mgr = self.applicationToAjaxAppMgrMap.get(application)
+
         if mgr is None:
             # Creates new manager
             mgr = servlet.createCommunicationManager(application)
