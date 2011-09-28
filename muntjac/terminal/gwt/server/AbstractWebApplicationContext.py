@@ -124,7 +124,7 @@ class AbstractWebApplicationContext(ApplicationContext):
 
     def removeApplication(self, application):
         self.applications.remove(application)
-        self.applicationToAjaxAppMgrMap.remove(application)
+        del self.applicationToAjaxAppMgrMap[application]
 
 
     def generateApplicationResourceURL(self, resource, mapKey):
