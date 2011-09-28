@@ -15,8 +15,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.event.FieldEvents import \
-    BlurEvent, BlurListener, BlurNotifier, FieldEvents, FocusEvent, \
-    FocusListener, FocusNotifier
+    BlurEvent, IBlurListener, IBlurNotifier, FocusEvent, \
+    IFocusListener, IFocusNotifier
 
 from muntjac.ui.AbstractSelect import AbstractSelect
 from muntjac.data.Container import Container
@@ -25,8 +25,7 @@ from muntjac.data.Container import Container
 #from muntjac.ui.ClientWidget import LoadStyle
 
 
-class OptionGroup(AbstractSelect, FieldEvents, BlurNotifier,
-                  FieldEvents, FocusNotifier):
+class OptionGroup(AbstractSelect, IBlurNotifier, IFocusNotifier):
     """Configures select to be used as an option group."""
 
 #    CLIENT_WIDGET = VOptionGroup
@@ -75,14 +74,14 @@ class OptionGroup(AbstractSelect, FieldEvents, BlurNotifier,
 
 
     def addListener(self, listener):
-        if isinstance(listener, BlurListener):
-            self.addListener(BlurEvent.EVENT_ID, BlurEvent, listener, BlurListener.blurMethod)
+        if isinstance(listener, IBlurListener):
+            self.addListener(BlurEvent.EVENT_ID, BlurEvent, listener, IBlurListener.blurMethod)
         else:
-            self.addListener(FocusEvent.EVENT_ID, FocusEvent, listener, FocusListener.focusMethod)
+            self.addListener(FocusEvent.EVENT_ID, FocusEvent, listener, IFocusListener.focusMethod)
 
 
     def removeListener(self, listener):
-        if isinstance(listener, BlurListener):
+        if isinstance(listener, IBlurListener):
             self.removeListener(BlurEvent.EVENT_ID, BlurEvent, listener)
         else:
             self.removeListener(FocusEvent.EVENT_ID, FocusEvent, listener)

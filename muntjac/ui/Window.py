@@ -26,8 +26,8 @@ from urlparse import urljoin
 from muntjac.ui.IComponent import Event as ComponentEvent
 
 from muntjac.event.FieldEvents import \
-    FocusNotifier, BlurNotifier, FocusEvent, BlurEvent, BlurListener, \
-    FocusListener
+    IFocusNotifier, IBlurNotifier, FocusEvent, BlurEvent, IBlurListener, \
+    IFocusListener
 
 
 class ICloseListener(object):
@@ -63,7 +63,7 @@ class IResizeListener(object):
         raise NotImplementedError
 
 
-class Window(Panel, IUriHandler, IParameterHandler, FocusNotifier, BlurNotifier):
+class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifier):
     """A component that represents an application (browser native) window or a sub
     window.
     <p>
@@ -970,20 +970,20 @@ class Window(Panel, IUriHandler, IParameterHandler, FocusNotifier, BlurNotifier)
         windows. Also note that Window is not considered focused if its contained
         component currently has focus.
 
-        @see com.vaadin.event.FieldEvents.FocusNotifier#addListener(com.vaadin.event.FieldEvents.FocusListener)
+        @see com.vaadin.event.FieldEvents.IFocusNotifier#addListener(com.vaadin.event.FieldEvents.IFocusListener)
         ---
         Note, that focus/blur listeners in Window class are only supported by sub
         windows. Also note that Window is not considered focused if its contained
         component currently has focus.
 
-        @see com.vaadin.event.FieldEvents.BlurNotifier#addListener(com.vaadin.event.FieldEvents.BlurListener)
+        @see com.vaadin.event.FieldEvents.IBlurNotifier#addListener(com.vaadin.event.FieldEvents.IBlurListener)
         """
-        if isinstance(listener, BlurListener):
-            self.addListener(BlurEvent.EVENT_ID, BlurEvent, listener, BlurListener.blurMethod)
+        if isinstance(listener, IBlurListener):
+            self.addListener(BlurEvent.EVENT_ID, BlurEvent, listener, IBlurListener.blurMethod)
         elif isinstance(listener, ICloseListener):
             self.addListener(CloseEvent, listener, self._WINDOW_CLOSE_METHOD)
-        elif isinstance(listener, FocusListener):
-            self.addListener(FocusEvent.EVENT_ID, FocusEvent, listener, FocusListener.focusMethod)
+        elif isinstance(listener, IFocusListener):
+            self.addListener(FocusEvent.EVENT_ID, FocusEvent, listener, IFocusListener.focusMethod)
         else:
             self.addListener(ResizeEvent, listener, self._WINDOW_RESIZE_METHOD)
 
@@ -1002,11 +1002,11 @@ class Window(Panel, IUriHandler, IParameterHandler, FocusNotifier, BlurNotifier)
 
         @param listener
         """
-        if isinstance(listener, BlurListener):
+        if isinstance(listener, IBlurListener):
             self.removeListener(BlurEvent.EVENT_ID, BlurEvent, listener)
         elif isinstance(listener, ICloseListener):
             self.removeListener(CloseEvent, listener, self._WINDOW_CLOSE_METHOD)
-        elif isinstance(listener, FocusListener):
+        elif isinstance(listener, IFocusListener):
             self.removeListener(FocusEvent.EVENT_ID, FocusEvent, listener)
         else:
             self.removeListener(ResizeEvent, listener)

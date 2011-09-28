@@ -16,14 +16,14 @@
 
 import logging
 
-from muntjac.service.ApplicationContext import ApplicationContext
+from muntjac.service.IApplicationContext import IApplicationContext
 from muntjac.terminal.gwt.server.WebBrowser import WebBrowser
 
 
 logger = logging.getLogger(__name__)
 
 
-class AbstractWebApplicationContext(ApplicationContext):
+class AbstractWebApplicationContext(IApplicationContext):
     """Base class for web application contexts (including portlet contexts)
     that handles the common tasks.
     """

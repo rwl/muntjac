@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class MethodEventSource(object):
+class IMethodEventSource(object):
     """<p>
     Interface for classes supporting registration of methods as event receivers.
     </p>
@@ -85,7 +85,7 @@ class MethodEventSource(object):
                     unless <code>method</code> has exactly one match in
                     <code>object</code>
         """
-        pass
+        raise NotImplementedError
 
 
     def removeListener(self, eventType, obj, method):
@@ -151,4 +151,4 @@ class MethodEventSource(object):
                    the name of the method owned by <code>target</code> that's
                    registered to listen to events of type <code>eventType</code>.
         """
-        pass
+        raise NotImplementedError

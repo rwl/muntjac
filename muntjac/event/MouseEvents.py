@@ -15,20 +15,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
-from muntjac.event.ComponentEventListener import ComponentEventListener
+from muntjac.event.IComponentEventListener import IComponentEventListener
 from muntjac.ui.IComponent import Event as ComponentEvent
-
-
-class MouseEvents(object):
-    """Interface that serves as a wrapper for mouse related events.
-
-    @author IT Mill Ltd.
-    @author Richard Lincoln
-    @see ClickListener
-    @version @VERSION@
-    @since 6.2
-    """
-    pass
 
 
 class ClickEvent(ComponentEvent):
@@ -159,7 +147,7 @@ class ClickEvent(ComponentEvent):
         return self._details.getButtonName()
 
 
-class ClickListener(ComponentEventListener):
+class IClickListener(IComponentEventListener):
     """Interface for listening for a {@link ClickEvent} fired by a
     {@link Component}.
 
@@ -177,7 +165,7 @@ class ClickListener(ComponentEventListener):
         @param event
                    An event containing information about the click.
         """
-        pass
+        raise NotImplementedError
 
     clickMethod = click
 
@@ -197,7 +185,7 @@ class DoubleClickEvent(ComponentEvent):
         super(DoubleClickEvent, self)(source)
 
 
-class DoubleClickListener(ComponentEventListener):
+class IDoubleClickListener(IComponentEventListener):
     """Interface for listening for a {@link DoubleClickEvent} fired by a
     {@link Component}.
 
@@ -215,6 +203,6 @@ class DoubleClickListener(ComponentEventListener):
         @param event
                    An event containing information about the double click.
         """
-        pass
+        raise NotImplementedError
 
     doubleClickMethod = doubleClick

@@ -14,11 +14,11 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.event.dd.TargetDetails import TargetDetails
+from muntjac.event.dd.ITargetDetails import ITargetDetails
 
 
-class TargetDetailsImpl(TargetDetails):
-    """A HashMap backed implementation of {@link TargetDetails} for terminal
+class TargetDetailsImpl(ITargetDetails):
+    """A HashMap backed implementation of {@link ITargetDetails} for terminal
     implementation and for extension.
 
     @since 6.3

@@ -17,8 +17,8 @@
 from muntjac.ui.IComponent import IComponent
 
 
-class DragSource(IComponent):
-    """DragSource is a {@link IComponent} that builds a {@link Transferable} for a
+class IDragSource(IComponent):
+    """IDragSource is a {@link IComponent} that builds a {@link Transferable} for a
     drag and drop operation.
     <p>
     In Vaadin the drag and drop operation practically starts from client side
@@ -33,7 +33,7 @@ class DragSource(IComponent):
     """
 
     def getTransferable(self, rawVariables):
-        """DragSource may convert data added by client side component to meaningful
+        """IDragSource may convert data added by client side component to meaningful
         values for server side developer or add other data based on it.
 
         <p>
@@ -52,4 +52,4 @@ class DragSource(IComponent):
         @return the {@link Transferable} instance that will be passed to
                 {@link DropHandler} (and/or {@link AcceptCriterion})
         """
-        pass
+        raise NotImplementedError

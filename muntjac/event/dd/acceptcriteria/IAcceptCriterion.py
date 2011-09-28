@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class AcceptCriterion(object):
+class IAcceptCriterion(object):
     """Criterion that can be used create policy to accept/discard dragged content
     (presented by {@link Transferable}).
 
@@ -46,11 +46,11 @@ class AcceptCriterion(object):
         operations between criteria), so this cannot be based on a marker
         interface.
         """
-        pass
+        raise NotImplementedError
 
 
     def paint(self, target):
-        pass
+        raise NotImplementedError
 
 
     def paintResponse(self, target):
@@ -62,7 +62,7 @@ class AcceptCriterion(object):
         @param target
         @throws PaintException
         """
-        pass
+        raise NotImplementedError
 
 
     def accept(self, dragEvent):
@@ -75,4 +75,4 @@ class AcceptCriterion(object):
         @param dragEvent
         @return
         """
-        pass
+        raise NotImplementedError

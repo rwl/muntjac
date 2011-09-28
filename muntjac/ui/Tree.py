@@ -18,15 +18,15 @@ from collections import deque
 from Queue import LifoQueue
 
 from muntjac.event.dd.acceptcriteria.TargetDetailIs import TargetDetailIs
-from muntjac.event.dd.DropTarget import DropTarget
+from muntjac.event.dd.IDropTarget import IDropTarget
+from muntjac.event.dd.IDragSource import IDragSource
 from muntjac.terminal.KeyMapper import KeyMapper
 from muntjac.data.Container import Container, Hierarchical
 from muntjac.event.Action import Action
 from muntjac.event.dd.acceptcriteria.ServerSideCriterion import ServerSideCriterion
-from muntjac.event.dd.DragSource import DragSource
 from muntjac.event.dd.acceptcriteria.ClientSideCriterion import ClientSideCriterion
 from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
-from muntjac.event.ItemClickEvent import ItemClickEvent, ItemClickNotifier, ItemClickSource
+from muntjac.event.ItemClickEvent import ItemClickEvent, IItemClickNotifier, IItemClickSource
 from muntjac.event.DataBoundTransferable import DataBoundTransferable
 from muntjac.ui.ClientWidget import LoadStyle
 from muntjac.ui.IComponent import Event as ComponentEvent
@@ -57,7 +57,7 @@ class TreeDragMode(object):
 
 
 class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
-           ItemClickSource, ItemClickNotifier, DragSource, DropTarget):
+           IItemClickSource, IItemClickNotifier, IDragSource, IDropTarget):
     """Tree component. A Tree can be used to select an item (or multiple
     items) from a hierarchical set of items.
 
@@ -860,7 +860,7 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
 
 
     def setDragMode(self, dragMode):
-        """Sets the drag mode that controls how Tree behaves as a {@link DragSource}
+        """Sets the drag mode that controls how Tree behaves as a {@link IDragSource}
         .
 
         @param dragMode
@@ -871,7 +871,7 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
 
     def getDragMode(self):
         """@return the drag mode that controls how Tree behaves as a
-                {@link DragSource}.
+                {@link IDragSource}.
 
         @see TreeDragMode
         """

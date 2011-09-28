@@ -14,12 +14,12 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.event.Action import Action, Container, Handler, Notifier, IListener
+from muntjac.event.Action import Action, IContainer, IHandler, INotifier, IListener
 from muntjac.terminal.KeyMapper import KeyMapper
 from muntjac.event.ShortcutAction import ShortcutAction
 
 
-class ActionManager(Action, Container, Handler, Notifier):
+class ActionManager(Action, IContainer, IHandler, INotifier):
     """Notes:
     <p>
     Empties the keymapper for each repaint to avoid leaks; can cause problems in

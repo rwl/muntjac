@@ -15,8 +15,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.event.FieldEvents import \
-    BlurEvent, BlurListener, BlurNotifier, FieldEvents, FocusEvent, \
-    FocusListener, FocusNotifier
+    BlurEvent, IBlurListener, IBlurNotifier, FocusEvent, \
+    IFocusListener, IFocusNotifier
 
 from muntjac.ui.AbstractSelect import AbstractSelect, Filtering
 from muntjac.data.util.filter.SimpleStringFilter import SimpleStringFilter
@@ -26,8 +26,8 @@ from muntjac.data.Container import Container, Filterable, Indexed
 #from muntjac.ui.ClientWidget import LoadStyle
 
 
-class Select(AbstractSelect, AbstractSelect, Filtering, FieldEvents,
-             BlurNotifier, FieldEvents, FocusNotifier):
+class Select(AbstractSelect, AbstractSelect, Filtering,
+             IBlurNotifier, IFocusNotifier):
     """<p>
     A class representing a selection of items the user has selected in a UI. The
     set of choices is presented as a set of {@link com.vaadin.data.Item}s in a
@@ -644,14 +644,14 @@ class Select(AbstractSelect, AbstractSelect, Filtering, FieldEvents,
 
 
     def addListener(self, listener):
-        if isinstance(listener, BlurListener):
-            self.addListener(BlurEvent.EVENT_ID, BlurEvent, listener, BlurListener.blurMethod)
+        if isinstance(listener, IBlurListener):
+            self.addListener(BlurEvent.EVENT_ID, BlurEvent, listener, IBlurListener.blurMethod)
         else:
-            self.addListener(FocusEvent.EVENT_ID, FocusEvent, listener, FocusListener.focusMethod)
+            self.addListener(FocusEvent.EVENT_ID, FocusEvent, listener, IFocusListener.focusMethod)
 
 
     def removeListener(self, listener):
-        if isinstance(listener, BlurListener):
+        if isinstance(listener, IBlurListener):
             self.removeListener(BlurEvent.EVENT_ID, BlurEvent, listener)
         else:
             self.removeListener(FocusEvent.EVENT_ID, FocusEvent, listener)

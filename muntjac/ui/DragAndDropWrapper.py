@@ -17,7 +17,8 @@
 from muntjac.terminal.gwt.client.ui.dd.VerticalDropLocation import \
     VerticalDropLocation
 
-from muntjac.event.dd.DragSource import DragSource
+from muntjac.event.dd.IDragSource import IDragSource
+from muntjac.event.dd.IDropTarget import IDropTarget
 from muntjac.ui.Html5File import Html5File
 from muntjac.event.TransferableImpl import TransferableImpl
 from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
@@ -28,7 +29,6 @@ from muntjac.terminal.IStreamVariable import \
 
 from muntjac.event.dd.TargetDetailsImpl import TargetDetailsImpl
 from muntjac.ui.CustomComponent import CustomComponent
-from muntjac.event.dd.DropTarget import DropTarget
 
 from muntjac.terminal.gwt.client.ui.dd.HorizontalDropLocation import \
     HorizontalDropLocation
@@ -39,7 +39,7 @@ from muntjac.terminal.gwt.client.ui.dd.HorizontalDropLocation import \
 #    VDragAndDropWrapper
 
 
-class DragAndDropWrapper(CustomComponent, DropTarget, DragSource):
+class DragAndDropWrapper(CustomComponent, IDropTarget, IDragSource):
 
 #    CLIENT_WIDGET = VDragAndDropWrapper
 #    LOAD_STYLE = LoadStyle.EAGER

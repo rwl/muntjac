@@ -14,35 +14,32 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# from java.io.Serializable import (Serializable,)
-# from java.util.Collection import (Collection,)
 
-
-class Transferable(object):
-    """Transferable wraps the data that is to be imported into another component.
-    Currently Transferable is only used for drag and drop.
+class ITransferable(object):
+    """ITransferable wraps the data that is to be imported into another component.
+    Currently ITransferable is only used for drag and drop.
 
     @since 6.3
     """
 
     def getData(self, dataFlavor):
-        """Returns the data from Transferable by its data flavor (aka data type).
+        """Returns the data from ITransferable by its data flavor (aka data type).
         Data types can be any string keys, but MIME types like "text/plain" are
         commonly used.
         <p>
-        Note, implementations of {@link Transferable} often provide a better
+        Note, implementations of {@link ITransferable} often provide a better
         typed API for accessing data.
 
         @param dataFlavor
-                   the data flavor to be returned from Transferable
-        @return the data stored in the Transferable or null if Transferable
+                   the data flavor to be returned from ITransferable
+        @return the data stored in the ITransferable or null if ITransferable
                 contains no data for given data flavour
         """
-        pass
+        raise NotImplementedError
 
 
     def setData(self, dataFlavor, value):
-        """Stores data of given data flavor to Transferable. Possibly existing value
+        """Stores data of given data flavor to ITransferable. Possibly existing value
         of the same data flavor will be replaced.
 
         @param dataFlavor
@@ -50,18 +47,18 @@ class Transferable(object):
         @param value
                    the new value of the data flavor
         """
-        pass
+        raise NotImplementedError
 
 
     def getDataFlavors(self):
         """@return a collection of data flavors ( data types ) available in this
-                Transferable
+                ITransferable
         """
-        pass
+        raise NotImplementedError
 
 
     def getSourceComponent(self):
-        """@return the component that created the Transferable or null if the source
+        """@return the component that created the ITransferable or null if the source
                 component is unknown
         """
-        pass
+        raise NotImplementedError

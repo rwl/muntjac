@@ -16,7 +16,7 @@
 
 from muntjac.ui.AbstractComponent import AbstractComponent
 from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
-from muntjac.event.MouseEvents import ClickListener, ClickEvent
+from muntjac.event.MouseEvents import IClickListener, ClickEvent
 
 from muntjac.terminal.gwt.client.ui.VEmbedded import VEmbedded
 
@@ -398,7 +398,7 @@ class Embedded(AbstractComponent):
         @param listener
                    The listener to add
         """
-        self.addListener(self._CLICK_EVENT, ClickEvent, listener, ClickListener.clickMethod)
+        self.addListener(self._CLICK_EVENT, ClickEvent, listener, IClickListener.clickMethod)
 
 
     def removeListener(self, listener):

@@ -18,14 +18,14 @@ from muntjac.ui.AbstractField import AbstractField
 from muntjac.terminal.gwt.client.ui.VTextField import VTextField
 
 from muntjac.event.FieldEvents import BlurEvent
-from muntjac.event.FieldEvents import BlurListener
-from muntjac.event.FieldEvents import BlurNotifier
+from muntjac.event.FieldEvents import IBlurListener
+from muntjac.event.FieldEvents import IBlurNotifier
 from muntjac.event.FieldEvents import FocusEvent
-from muntjac.event.FieldEvents import FocusListener
-from muntjac.event.FieldEvents import FocusNotifier
+from muntjac.event.FieldEvents import IFocusListener
+from muntjac.event.FieldEvents import IFocusNotifier
 from muntjac.event.FieldEvents import TextChangeEvent
-from muntjac.event.FieldEvents import TextChangeListener
-from muntjac.event.FieldEvents import TextChangeNotifier
+from muntjac.event.FieldEvents import ITextChangeListener
+from muntjac.event.FieldEvents import ITextChangeNotifier
 
 
 class TextChangeEventMode(object):
@@ -64,7 +64,7 @@ class TextChangeEventMode(object):
         return cls._values[:]
 
 
-class AbstractTextField(AbstractField, BlurNotifier, FocusNotifier, TextChangeNotifier):
+class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier, ITextChangeNotifier):
 
     def __init__(self):
         super(AbstractTextField, self).__init__()
@@ -475,28 +475,28 @@ class AbstractTextField(AbstractField, BlurNotifier, FocusNotifier, TextChangeNo
 
 
     def addListener(self, listener):
-        if isinstance(listener, BlurListener):
+        if isinstance(listener, IBlurListener):
             self.addListener(BlurEvent.EVENT_ID, BlurEvent, listener,
-                             BlurListener.blurMethod)
+                             IBlurListener.blurMethod)
 
-        elif isinstance(listener, FocusListener):
+        elif isinstance(listener, IFocusListener):
             self.addListener(FocusEvent.EVENT_ID, FocusEvent, listener,
-                             FocusListener.focusMethod)
+                             IFocusListener.focusMethod)
 
         else:
-            self.addListener(TextChangeListener.EVENT_ID, TextChangeEvent,
-                             listener, TextChangeListener.EVENT_METHOD)
+            self.addListener(ITextChangeListener.EVENT_ID, TextChangeEvent,
+                             listener, ITextChangeListener.EVENT_METHOD)
 
 
     def removeListener(self, listener):
-        if isinstance(listener, BlurListener):
+        if isinstance(listener, IBlurListener):
             self.removeListener(BlurEvent.EVENT_ID, BlurEvent, listener)
 
-        elif isinstance(listener, FocusListener):
+        elif isinstance(listener, IFocusListener):
             self.removeListener(FocusEvent.EVENT_ID, FocusEvent, listener)
 
         else:
-            self.removeListener(TextChangeListener.EVENT_ID, TextChangeEvent,
+            self.removeListener(ITextChangeListener.EVENT_ID, TextChangeEvent,
                                 listener)
 
 

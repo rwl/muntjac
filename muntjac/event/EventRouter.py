@@ -14,11 +14,11 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.event.MethodEventSource import MethodEventSource
+from muntjac.event.IMethodEventSource import IMethodEventSource
 from muntjac.event.ListenerMethod import ListenerMethod
 
 
-class EventRouter(MethodEventSource):
+class EventRouter(IMethodEventSource):
     """<code>EventRouter</code> class implementing the inheritable event listening
     model. For more information on the event model see the
     {@link com.vaadin.event package documentation}.

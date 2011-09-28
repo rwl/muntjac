@@ -20,11 +20,11 @@ from muntjac.ui.ILayout import IAlignmentHandler, ILayout, ISpacingHandler
 from muntjac.terminal.gwt.client.EventId import EventId
 
 from muntjac.event.LayoutEvents import \
-    LayoutClickNotifier, LayoutClickListener, LayoutClickEvent
+    ILayoutClickNotifier, ILayoutClickListener, LayoutClickEvent
 
 
 class AbstractOrderedLayout(AbstractLayout, ILayout, IAlignmentHandler,
-                            ILayout, ISpacingHandler, LayoutClickNotifier):
+                            ILayout, ISpacingHandler, ILayoutClickNotifier):
 
     _CLICK_EVENT = EventId.LAYOUT_CLICK
     ALIGNMENT_DEFAULT = Alignment.TOP_LEFT
@@ -270,7 +270,7 @@ class AbstractOrderedLayout(AbstractLayout, ILayout, IAlignmentHandler,
 
     def addListener(self, listener):
         self.addListener(self._CLICK_EVENT, self.LayoutClickEvent,
-                         listener, LayoutClickListener.clickMethod)
+                         listener, ILayoutClickListener.clickMethod)
 
 
     def removeListener(self, listener):

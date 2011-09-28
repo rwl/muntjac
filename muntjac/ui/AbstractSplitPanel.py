@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.event.ComponentEventListener import ComponentEventListener
+from muntjac.event.IComponentEventListener import IComponentEventListener
 from muntjac.ui.VerticalLayout import VerticalLayout
 from muntjac.ui.AbstractLayout import AbstractLayout
 from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
@@ -355,7 +355,7 @@ class AbstractSplitPanel(AbstractLayout):
         self.removeListener(self._SPLITTER_CLICK_EVENT, SplitterClickEvent, listener)
 
 
-class SplitterClickListener(ComponentEventListener):
+class SplitterClickListener(IComponentEventListener):
     """<code>SplitterClickListener</code> interface for listening for
     <code>SplitterClickEvent</code> fired by a <code>SplitPanel</code>.
 

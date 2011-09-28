@@ -15,16 +15,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.terminal.gwt.client.EventId import EventId
-from muntjac.event.ComponentEventListener import ComponentEventListener
+from muntjac.event.IComponentEventListener import IComponentEventListener
 from muntjac.ui.IComponent import Event as ComponentEvent
 
 
-class FieldEvents(object):
-    """Interface that serves as a wrapper for {@link Field} related events."""
-    pass
-
-
-class FocusNotifier(object):
+class IFocusNotifier(object):
     """The interface for adding and removing <code>FocusEvent</code> listeners.
     By implementing this interface a class explicitly announces that it will
     generate a <code>FocusEvent</code> when it receives keyboard focus.
@@ -38,32 +33,32 @@ class FocusNotifier(object):
     </p>
 
     @since 6.2
-    @see FocusListener
+    @see IFocusListener
     @see FocusEvent
     """
 
     def addListener(self, listener):
-        """Adds a <code>FocusListener</code> to the Component which gets fired
+        """Adds a <code>IFocusListener</code> to the Component which gets fired
         when a <code>Field</code> receives keyboard focus.
 
         @param listener
-        @see FocusListener
+        @see IFocusListener
         @since 6.2
         """
-        pass
+        raise NotImplementedError
 
 
     def removeListener(self, listener):
-        """Removes a <code>FocusListener</code> from the Component.
+        """Removes a <code>IFocusListener</code> from the Component.
 
         @param listener
-        @see FocusListener
+        @see IFocusListener
         @since 6.2
         """
-        pass
+        raise NotImplementedError
 
 
-class BlurNotifier(object):
+class IBlurNotifier(object):
     """The interface for adding and removing <code>BlurEvent</code> listeners.
     By implementing this interface a class explicitly announces that it will
     generate a <code>BlurEvent</code> when it loses keyboard focus.
@@ -77,29 +72,29 @@ class BlurNotifier(object):
     </p>
 
     @since 6.2
-    @see BlurListener
+    @see IBlurListener
     @see BlurEvent
     """
 
     def addListener(self, listener):
-        """Adds a <code>BlurListener</code> to the Component which gets fired
+        """Adds a <code>IBlurListener</code> to the Component which gets fired
         when a <code>Field</code> loses keyboard focus.
 
         @param listener
-        @see BlurListener
+        @see IBlurListener
         @since 6.2
         """
-        pass
+        raise NotImplementedError
 
 
     def removeListener(self, listener):
-        """Removes a <code>BlurListener</code> from the Component.
+        """Removes a <code>IBlurListener</code> from the Component.
 
         @param listener
-        @see BlurListener
+        @see IBlurListener
         @since 6.2
         """
-        pass
+        raise NotImplementedError
 
 
 class FocusEvent(ComponentEvent):
@@ -115,8 +110,8 @@ class FocusEvent(ComponentEvent):
         super(FocusEvent, self)(source)
 
 
-class FocusListener(ComponentEventListener):
-    """<code>FocusListener</code> interface for listening for
+class IFocusListener(IComponentEventListener):
+    """<code>IFocusListener</code> interface for listening for
     <code>FocusEvent</code> fired by a <code>Field</code>.
 
     @see FocusEvent
@@ -129,7 +124,7 @@ class FocusListener(ComponentEventListener):
         @param event
                    Component focus event.
         """
-        pass
+        raise NotImplementedError
 
     focusMethod = focus
 
@@ -148,8 +143,8 @@ class BlurEvent(ComponentEvent):
         super(BlurEvent, self)(source)
 
 
-class BlurListener(ComponentEventListener):
-    """<code>BlurListener</code> interface for listening for
+class IBlurListener(IComponentEventListener):
+    """<code>IBlurListener</code> interface for listening for
     <code>BlurEvent</code> fired by a <code>Field</code>.
 
     @see BlurEvent
@@ -162,7 +157,7 @@ class BlurListener(ComponentEventListener):
         @param event
                    Component blur event.
         """
-        pass
+        raise NotImplementedError
 
     blurMethod = blur
 
@@ -181,14 +176,14 @@ class TextChangeEvent(ComponentEvent):
     ValueChangeEvents are also fired if the field value is set by the
     application code.
     <p>
-    The {@link TextChangeNotifier}s implementation may decide when exactly
+    The {@link ITextChangeNotifier}s implementation may decide when exactly
     TextChangeEvents are fired. TextChangeEvents are not necessary fire for
     example on each key press, but buffered with a small delay. The
     {@link TextField} component supports different modes for triggering
     TextChangeEvents.
 
-    @see TextChangeListener
-    @see TextChangeNotifier
+    @see ITextChangeListener
+    @see ITextChangeNotifier
     @see TextField#setTextChangeEventMode(com.vaadin.ui.TextField.TextChangeEventMode)
     @since 6.5
     """
@@ -209,7 +204,7 @@ class TextChangeEvent(ComponentEvent):
         pass
 
 
-class TextChangeListener(ComponentEventListener):
+class ITextChangeListener(IComponentEventListener):
     """A listener for {@link TextChangeEvent}s.
 
     @since 6.5
@@ -221,21 +216,21 @@ class TextChangeListener(ComponentEventListener):
         @param event
                    the event providing details of the text change
         """
-        pass
+        raise NotImplementedError
 
     EVENT_ID = 'ie'
     EVENT_METHOD = textChange
 
 
-class TextChangeNotifier(object):
+class ITextChangeNotifier(object):
     """An interface implemented by a {@link Field} supporting
     {@link TextChangeEvent}s. An example a {@link TextField} supports
-    {@link TextChangeListener}s.
+    {@link ITextChangeListener}s.
     """
 
     def addListener(self, listener):
-        pass
+        raise NotImplementedError
 
 
     def removeListener(self, listener):
-        pass
+        raise NotImplementedError

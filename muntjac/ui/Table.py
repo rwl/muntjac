@@ -16,11 +16,11 @@
 
 import logging
 
-from muntjac.event.dd.DropTarget import DropTarget
+from muntjac.event.dd.IDropTarget import IDropTarget
+from muntjac.event.dd.IDragSource import IDragSource
 from muntjac.terminal.KeyMapper import KeyMapper
 from muntjac.event.Action import Action
 from muntjac.ui.DefaultFieldFactory import DefaultFieldFactory
-from muntjac.event.dd.DragSource import DragSource
 from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
 from muntjac.ui.IComponent import IComponent, Event as ComponentEvent
 from muntjac.event.DataBoundTransferable import DataBoundTransferable
@@ -42,7 +42,7 @@ from muntjac.ui.AbstractSelect import \
     AbstractSelect, MultiSelectMode, AbstractSelectTargetDetails
 
 from muntjac.event.ItemClickEvent import \
-    ItemClickEvent, ItemClickNotifier, ItemClickSource
+    ItemClickEvent, IItemClickNotifier, IItemClickSource
 
 from muntjac.data.util.IndexedContainer import \
     ItemSetChangeEvent, IndexedContainer
@@ -74,7 +74,7 @@ class TableDragMode(object):
 
 
 class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
-            Sortable, ItemClickSource, ItemClickNotifier, DragSource, DropTarget):
+            Sortable, IItemClickSource, IItemClickNotifier, IDragSource, IDropTarget):
     """<p>
     <code>Table</code> is used for representing data or components in a pageable
     and selectable table.

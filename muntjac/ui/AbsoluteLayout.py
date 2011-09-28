@@ -20,15 +20,15 @@ from muntjac.ui.AbstractLayout import AbstractLayout
 from muntjac.terminal.gwt.client.EventId import EventId
 
 from muntjac.event.LayoutEvents import LayoutClickEvent
-from muntjac.event.LayoutEvents import LayoutClickListener
-from muntjac.event.LayoutEvents import LayoutClickNotifier
+from muntjac.event.LayoutEvents import ILayoutClickListener
+from muntjac.event.LayoutEvents import ILayoutClickNotifier
 from muntjac.terminal.ISizeable import ISizeable
 
 #from muntjac.terminal.gwt.client.ui.VAbsoluteLayout import VAbsoluteLayout
 #from muntjac.ui.ClientWidget import LoadStyle
 
 
-class AbsoluteLayout(AbstractLayout, LayoutClickNotifier):
+class AbsoluteLayout(AbstractLayout, ILayoutClickNotifier):
     """AbsoluteLayout is a layout implementation that mimics html absolute
     positioning.
     """
@@ -146,7 +146,7 @@ class AbsoluteLayout(AbstractLayout, LayoutClickNotifier):
 
     def addListener(self, listener):
         self.addListener(self._CLICK_EVENT, LayoutClickEvent, listener,
-                         LayoutClickListener.clickMethod)
+                         ILayoutClickListener.clickMethod)
 
 
     def removeListener(self, listener):

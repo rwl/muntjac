@@ -21,8 +21,8 @@ from muntjac.terminal.IVariableOwner import IVariableOwner
 from muntjac.terminal.gwt.server.JsonPaintTarget import JsonPaintTarget
 from muntjac.event.dd.DragAndDropEvent import DragAndDropEvent
 from muntjac.event.TransferableImpl import TransferableImpl
-from muntjac.event.dd.DropTarget import DropTarget
-from muntjac.event.dd.DragSource import DragSource
+from muntjac.event.dd.IDropTarget import IDropTarget
+from muntjac.event.dd.IDragSource import IDragSource
 from muntjac.terminal.gwt.client.ui.dd.VDragAndDropManager import DragEventType
 
 
@@ -44,9 +44,9 @@ class DragAndDropService(IVariableOwner):
         owner = variables.get('dhowner')
 
         # Validate drop handler owner
-        if not isinstance(owner, DropTarget):
+        if not isinstance(owner, IDropTarget):
             logger.critical('DropHandler owner ' + owner
-                    + ' must implement DropTarget')
+                    + ' must implement IDropTarget')
             return
 
         # owner cannot be null here
@@ -72,7 +72,7 @@ class DragAndDropService(IVariableOwner):
         dropHandler = dropTarget.getDropHandler()
         if dropHandler is None:
             # No dropHandler returned so no drop can be performed.
-            logger.info('DropTarget.getDropHandler() returned null '
+            logger.info('IDropTarget.getDropHandler() returned null '
                     'for owner: ' + dropTarget)
             return
 
@@ -146,7 +146,7 @@ class DragAndDropService(IVariableOwner):
 
         transferable = None
         if (sourceComponent is not None
-                and isinstance(sourceComponent, DragSource)):
+                and isinstance(sourceComponent, IDragSource)):
             transferable = sourceComponent.getTransferable(variables)
 
         if transferable is None:

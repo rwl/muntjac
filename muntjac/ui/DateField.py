@@ -19,8 +19,8 @@ import locale
 from time import mktime
 from datetime import datetime
 
-from muntjac.event.FieldEvents import BlurEvent, BlurListener, BlurNotifier, \
-    FieldEvents, FocusEvent, FocusListener, FocusNotifier
+from muntjac.event.FieldEvents import BlurEvent, IBlurListener, IBlurNotifier, \
+    FocusEvent, IFocusListener, IFocusNotifier
 
 from muntjac.ui.AbstractField import AbstractField
 from muntjac.data.Property import Property, ConversionException
@@ -31,7 +31,7 @@ from muntjac.terminal.gwt.client.ui.VDateField import VDateField
 #from muntjac.terminal.gwt.client.ui.VPopupCalendar import VPopupCalendar
 #from muntjac.ui.ClientWidget import LoadStyle
 
-class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNotifier):
+class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
     """<p>
     A date editor component that can be bound to any {@link Property} that is
     compatible with <code>java.util.Date</code>.
@@ -549,16 +549,16 @@ class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNoti
 
 
     def addListener(self, listener):
-        if isinstance(listener, BlurListener):
+        if isinstance(listener, IBlurListener):
             self.addListener(BlurEvent.EVENT_ID, BlurEvent, listener,
-                             BlurListener.blurMethod)
+                             IBlurListener.blurMethod)
         else:
             self.addListener(FocusEvent.EVENT_ID, FocusEvent, listener,
-                             FocusListener.focusMethod)
+                             IFocusListener.focusMethod)
 
 
     def removeListener(self, listener):
-        if isinstance(listener, BlurListener):
+        if isinstance(listener, IBlurListener):
             self.removeListener(BlurEvent.EVENT_ID, BlurEvent, listener)
         else:
             self.removeListener(FocusEvent.EVENT_ID, FocusEvent, listener)

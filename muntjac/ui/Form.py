@@ -23,7 +23,7 @@ from muntjac.ui.FormLayout import FormLayout
 from muntjac.ui.HorizontalLayout import HorizontalLayout
 from muntjac.data.Validator import InvalidValueException
 from muntjac.ui.Select import Select
-from muntjac.event.Action import Action, Notifier
+from muntjac.event.Action import Action, INotifier
 from muntjac.terminal.CompositeErrorMessage import CompositeErrorMessage
 from muntjac.event.ActionManager import ActionManager
 from muntjac.data.Property import ValueChangeListener
@@ -35,7 +35,7 @@ from muntjac.ui.GridLayout import GridLayout
 from muntjac.ui.IFieldFactory import IFieldFactory
 
 
-class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Notifier):
+class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, INotifier):
     """Form component provides easy way of creating and managing sets fields.
 
     <p>

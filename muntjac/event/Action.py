@@ -80,7 +80,7 @@ class Action(object):
         self._icon = icon
 
 
-class Container(object):
+class IContainer(object):
     """Interface implemented by all components where actions can be registered.
     This means that the components lets others to register as action handlers
     to it. When the component receives an action targeting its contents it
@@ -99,7 +99,7 @@ class Container(object):
         @param actionHandler
                    the new handler to be added.
         """
-        pass
+        raise NotImplementedError
 
 
     def removeActionHandler(self, actionHandler):
@@ -109,7 +109,7 @@ class Container(object):
         @param actionHandler
                    the handler to be removed.
         """
-        pass
+        raise NotImplementedError
 
 
 class IListener(object):
@@ -120,34 +120,34 @@ class IListener(object):
     """
 
     def handleAction(self, sender, target):
-        pass
+        raise NotImplementedError
 
 
-class Notifier(Container):
+class INotifier(IContainer):
     """Action.Containers implementing this support an easier way of adding
     single Actions than the more involved Action.Handler. The added actions
     must be Action.Listeners, thus handling the action themselves.
     """
 
     def addAction(self, action):
-        pass
+        raise NotImplementedError
 
 
     def removeAction(self, action):
-        pass
+        raise NotImplementedError
 
 
 class ShortcutNotifier(object):
 
     def addShortcutListener(self, shortcut):
-        pass
+        raise NotImplementedError
 
 
     def removeShortcutListener(self, shortcut):
-        pass
+        raise NotImplementedError
 
 
-class Handler(object):
+class IHandler(object):
     """Interface implemented by classes who wish to handle actions.
 
     @author IT Mill Ltd.
@@ -167,7 +167,7 @@ class Handler(object):
                    is the action container.
         @return the list of Action
         """
-        pass
+        raise NotImplementedError
 
 
     def handleAction(self, action, sender, target):
@@ -183,4 +183,4 @@ class Handler(object):
                    the target of the action. For item containers this is the
                    item id.
         """
-        pass
+        raise NotImplementedError

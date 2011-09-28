@@ -17,10 +17,10 @@
 from muntjac.event.MouseEvents import ClickEvent
 
 
-class ItemClickListener(object):
+class IItemClickListener(object):
 
     def itemClick(self, event):
-        pass
+        raise NotImplementedError
 
 
 class ItemClickEvent(ClickEvent):
@@ -65,10 +65,10 @@ class ItemClickEvent(ClickEvent):
         """
         return self._propertyId
 
-    ITEM_CLICK_METHOD = getattr(ItemClickListener, 'itemClick')
+    ITEM_CLICK_METHOD = getattr(IItemClickListener, 'itemClick')
 
 
-class ItemClickNotifier(object):
+class IItemClickNotifier(object):
     """The interface for adding and removing <code>ItemClickEvent</code>
     listeners. By implementing this interface a class explicitly announces
     that it will generate an <code>ItemClickEvent</code> when one of its
@@ -88,12 +88,12 @@ class ItemClickNotifier(object):
     """
 
     def addListener(self, listener):
-        """Register a listener to handle {@link ItemClickEvent}s.
+        """Register a listener to handle {@link ItemClickEvent}s.FieldEvents,
 
         @param listener
                    ItemClickListener to be registered
         """
-        pass
+        raise NotImplementedError
 
 
     def removeListener(self, listener):
@@ -102,10 +102,10 @@ class ItemClickNotifier(object):
         @param listener
                    ItemClickListener to be removed
         """
-        pass
+        raise NotImplementedError
 
 
-class ItemClickSource(ItemClickNotifier):
+class IItemClickSource(IItemClickNotifier):
     """Components implementing
 
     @link {@link Container} interface may support emitting
@@ -114,4 +114,4 @@ class ItemClickSource(ItemClickNotifier):
     @deprecated Use {@link ItemClickNotifier} instead. ItemClickSource was
                 deprecated in version 6.5.
     """
-    pass
+    raise NotImplementedError

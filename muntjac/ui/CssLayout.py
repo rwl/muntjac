@@ -16,14 +16,14 @@
 
 from muntjac.ui.AbstractLayout import AbstractLayout
 from muntjac.terminal.gwt.client.EventId import EventId
-from muntjac.event.LayoutEvents import LayoutClickNotifier, \
-    LayoutClickEvent, LayoutClickListener
+from muntjac.event.LayoutEvents import ILayoutClickNotifier, \
+    LayoutClickEvent, ILayoutClickListener
 
 #from muntjac.terminal.gwt.client.ui.VCssLayout import VCssLayout
 #from muntjac.ui.ClientWidget import LoadStyle
 
 
-class CssLayout(AbstractLayout, LayoutClickNotifier):
+class CssLayout(AbstractLayout, ILayoutClickNotifier):
     """CssLayout is a layout component that can be used in browser environment only.
     It simply renders components and their captions into a same div element.
     Component layout can then be adjusted with css.
@@ -232,7 +232,7 @@ class CssLayout(AbstractLayout, LayoutClickNotifier):
 
     def addListener(self, listener):
         self.addListener(self._CLICK_EVENT, LayoutClickEvent, listener,
-                         LayoutClickListener.clickMethod)
+                         ILayoutClickListener.clickMethod)
 
 
     def removeListener(self, listener):

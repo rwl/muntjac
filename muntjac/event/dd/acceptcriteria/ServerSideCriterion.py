@@ -14,22 +14,22 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.event.dd.acceptcriteria.AcceptCriterion import AcceptCriterion
+from muntjac.event.dd.acceptcriteria.IAcceptCriterion import IAcceptCriterion
 
 
-class ServerSideCriterion(AcceptCriterion):
+class ServerSideCriterion(IAcceptCriterion):
     """Parent class for criteria which are verified on the server side during a drag
     operation to accept/discard dragged content (presented by
     {@link Transferable}).
     <p>
     Subclasses should implement the
-    {@link AcceptCriterion#accept(com.vaadin.event.dd.DragAndDropEvent)} method.
+    {@link IAcceptCriterion#accept(com.vaadin.event.dd.DragAndDropEvent)} method.
     <p>
     As all server side state can be used to make a decision, this is more
     flexible than {@link ClientSideCriterion}. However, this does require
     additional requests from the browser to the server during a drag operation.
 
-    @see AcceptCriterion
+    @see IAcceptCriterion
     @see ClientSideCriterion
 
     @since 6.3

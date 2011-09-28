@@ -19,14 +19,14 @@ import re
 from muntjac.ui.IComponent import \
     IComponent, IListener, IFocusable, Event as ComponentEvent
 
-from muntjac.event.MethodEventSource import MethodEventSource
+from muntjac.event.IMethodEventSource import IMethodEventSource
 from muntjac.terminal.gwt.server.ComponentSizeValidator import ComponentSizeValidator
 from muntjac.event.EventRouter import EventRouter
 from muntjac.terminal.ITerminal import IErrorEvent as TerminalErrorEvent
 from muntjac.terminal.IPaintable import RepaintRequestEvent
 
 
-class AbstractComponent(IComponent, MethodEventSource):
+class AbstractComponent(IComponent, IMethodEventSource):
     """An abstract class that defines default implementation for the
     {@link IComponent} interface. Basic UI components that are not derived from an
     external component can inherit this class to easily qualify as Vaadin

@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class DropHandler(object):
+class IDropHandler(object):
     """DropHandlers contain the actual business logic for drag and drop operations.
     <p>
     The {@link #drop(DragAndDropEvent)} method is used to receive the transferred
@@ -36,13 +36,13 @@ class DropHandler(object):
         @param event
                    the event related to this drop
         """
-        pass
+        raise NotImplementedError
 
 
     def getAcceptCriterion(self):
         """Returns the {@link AcceptCriterion} used to evaluate whether the
         {@link Transferable} will be handed over to
-        {@link DropHandler#drop(DragAndDropEvent)} method. If client side can't
+        {@link IDropHandler#drop(DragAndDropEvent)} method. If client side can't
         verify the {@link AcceptCriterion}, the same criteria may be tested also
         prior to actual drop - during the drag operation.
         <p>
@@ -60,4 +60,4 @@ class DropHandler(object):
 
         @return the {@link AcceptCriterion}
         """
-        pass
+        raise NotImplementedError

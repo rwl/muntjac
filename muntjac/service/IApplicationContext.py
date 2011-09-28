@@ -15,8 +15,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class ApplicationContext(object):
-    """<code>ApplicationContext</code> provides information about the running
+class IApplicationContext(object):
+    """<code>IApplicationContext</code> provides information about the running
     context of the application. Each context is shared by all applications that
     are open for one user. In a web-environment this corresponds to a
     HttpSession.
@@ -39,7 +39,7 @@ class ApplicationContext(object):
         @return The application base directory or null if the application has no
                 base directory.
         """
-        pass
+        raise NotImplementedError
 
 
     def getApplications(self):
@@ -49,7 +49,7 @@ class ApplicationContext(object):
 
         @return A collection containing all the applications in this context.
         """
-        pass
+        raise NotImplementedError
 
 
     def addTransactionListener(self, listener):
@@ -59,9 +59,9 @@ class ApplicationContext(object):
 
         The transaction listener must not be null.
 
-        @see com.vaadin.service.ApplicationContext#addTransactionListener(com.vaadin.service.ApplicationContext.TransactionListener)
+        @see com.vaadin.service.IApplicationContext#addTransactionListener(com.vaadin.service.IApplicationContext.ITransactionListener)
         """
-        pass
+        raise NotImplementedError
 
 
     def removeTransactionListener(self, listener):
@@ -69,9 +69,9 @@ class ApplicationContext(object):
 
         @param listener
                    the listener to be removed.
-        @see TransactionListener
+        @see ITransactionListener
         """
-        pass
+        raise NotImplementedError
 
 
     def generateApplicationResourceURL(self, resource, urlKey):
@@ -91,7 +91,7 @@ class ApplicationContext(object):
                    a key for the resource that can later be extracted from a URL
                    with {@link #getURLKey(URL, String)}
         """
-        pass
+        raise NotImplementedError
 
 
     def isApplicationResourceURL(self, context, relativeUri):
@@ -105,7 +105,7 @@ class ApplicationContext(object):
         @param relativeUri
         @return
         """
-        pass
+        raise NotImplementedError
 
 
     def getURLKey(self, context, relativeUri):
@@ -123,10 +123,10 @@ class ApplicationContext(object):
         @param relativeUri
         @return
         """
-        pass
+        raise NotImplementedError
 
 
-class TransactionListener(object):
+class ITransactionListener(object):
     """Interface for listening to transaction events. Implement this interface
     to listen to all transactions between the client and the application.
     """
@@ -144,7 +144,7 @@ class TransactionListener(object):
         @param transactionData
                    the Data identifying the transaction.
         """
-        pass
+        raise NotImplementedError
 
 
     def transactionEnd(self, application, transactionData):
@@ -160,4 +160,4 @@ class TransactionListener(object):
         @param transactionData
                    the Data identifying the transaction.
         """
-        pass
+        raise NotImplementedError

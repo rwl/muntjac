@@ -25,15 +25,15 @@ from muntjac.ui.ILayout import IAlignmentHandler, ILayout, ISpacingHandler
 from muntjac.ui.AlignmentUtils import AlignmentUtils
 from muntjac.terminal.gwt.client.EventId import EventId
 
-from muntjac.event.LayoutEvents import LayoutClickNotifier, LayoutClickEvent,\
-    LayoutClickListener
+from muntjac.event.LayoutEvents import ILayoutClickNotifier, LayoutClickEvent,\
+    ILayoutClickListener
 
 #from muntjac.terminal.gwt.client.ui.VGridLayout import VGridLayout
 #from muntjac.ui.ClientWidget import LoadStyle
 
 
 class GridLayout(AbstractLayout, ILayout, IAlignmentHandler, ILayout,
-                 ISpacingHandler, LayoutClickNotifier):
+                 ISpacingHandler, ILayoutClickNotifier):
     """<p>
     A container that consists of components with certain coordinates (cell
     position) on a grid. It also maintains cursor for adding component in left to
@@ -932,7 +932,7 @@ class GridLayout(AbstractLayout, ILayout, IAlignmentHandler, ILayout,
 
     def addListener(self, listener):
         self.addListener(self._CLICK_EVENT, LayoutClickEvent, listener,
-                         LayoutClickListener.clickMethod)
+                         ILayoutClickListener.clickMethod)
 
 
     def removeListener(self, listener):

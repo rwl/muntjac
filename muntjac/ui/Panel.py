@@ -16,7 +16,7 @@
 
 from muntjac.terminal.IScrollable import IScrollable
 from muntjac.event.ActionManager import ActionManager
-from muntjac.event.Action import Action, Notifier
+from muntjac.event.Action import Action, INotifier
 from muntjac.ui.AbstractComponentContainer import AbstractComponentContainer
 from muntjac.ui.VerticalLayout import VerticalLayout
 
@@ -25,7 +25,7 @@ from muntjac.ui.IComponentContainer import \
 
 from muntjac.ui.IComponent import IFocusable
 from muntjac.ui.ILayout import ILayout
-from muntjac.event.MouseEvents import ClickEvent, ClickListener
+from muntjac.event.MouseEvents import ClickEvent, IClickListener
 
 from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
 from muntjac.terminal.gwt.client.ui.VPanel import VPanel
@@ -33,7 +33,7 @@ from muntjac.terminal.gwt.client.ui.VPanel import VPanel
 
 class Panel(AbstractComponentContainer, IScrollable, IComponentContainer,
             IComponentAttachListener, IComponentContainer,
-            IComponentDetachListener, Action, Notifier, IFocusable):
+            IComponentDetachListener, Action, INotifier, IFocusable):
     """Panel - a simple single component container.
 
     @author IT Mill Ltd.
@@ -449,7 +449,7 @@ class Panel(AbstractComponentContainer, IScrollable, IComponentContainer,
                    The listener to add
         """
         self.addListener(self._CLICK_EVENT, ClickEvent, listener,
-                         ClickListener.clickMethod)
+                         IClickListener.clickMethod)
 
 
     def removeListener(self, listener):

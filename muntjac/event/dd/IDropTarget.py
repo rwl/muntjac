@@ -17,8 +17,8 @@
 from muntjac.ui.IComponent import IComponent
 
 
-class DropTarget(IComponent):
-    """DropTarget is an interface for components supporting drop operations. A
+class IDropTarget(IComponent):
+    """IDropTarget is an interface for components supporting drop operations. A
     component that wants to receive drop events should implement this interface
     and provide a {@link DropHandler} which will handle the actual drop event.
 
@@ -29,7 +29,7 @@ class DropTarget(IComponent):
         """@return the drop hanler that will receive the dragged data or null if
                 drops are not currently accepted
         """
-        pass
+        raise NotImplementedError
 
 
     def translateDropTargetDetails(self, clientVariables):
@@ -46,4 +46,4 @@ class DropTarget(IComponent):
         @return A DropTargetDetails object with the translated data or null to
                 use a default implementation.
         """
-        pass
+        raise NotImplementedError

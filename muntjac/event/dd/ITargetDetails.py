@@ -14,31 +14,28 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.event.ITransferable import ITransferable
 
-
-class TransferableImpl(ITransferable):
-    """TODO docs
+class ITargetDetails(object):
+    """ITargetDetails wraps drop target related information about
+    {@link DragAndDropEvent}.
+    <p>
+    When a ITargetDetails object is used in {@link DropHandler} it is often
+    preferable to cast the ITargetDetails to an implementation provided by
+    DropTarget like {@link TreeTargetDetails}. They often provide a better typed,
+    drop target specific API.
 
     @since 6.3
     """
 
-    def __init__(self, sourceComponent, rawVariables):
-        self._sourceComponent = sourceComponent
-        self._rawVariables = rawVariables
+    def getData(self, key):
+        """Gets target data associated with the given string key
+
+        @param key
+        @return The data associated with the key
+        """
+        raise NotImplementedError
 
 
-    def getSourceComponent(self):
-        return self._sourceComponent
-
-
-    def getData(self, dataFlavor):
-        return self._rawVariables.get(dataFlavor)
-
-
-    def setData(self, dataFlavor, value):
-        self._rawVariables[dataFlavor] = value
-
-
-    def getDataFlavors(self):
-        return self._rawVariables.keys()
+    def getTarget(self):
+        """@return the drop target on which the {@link DragAndDropEvent} happened."""
+        raise NotImplementedError

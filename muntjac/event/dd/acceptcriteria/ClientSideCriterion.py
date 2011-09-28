@@ -14,17 +14,17 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.event.dd.acceptcriteria.AcceptCriterion import AcceptCriterion
+from muntjac.event.dd.acceptcriteria.IAcceptCriterion import IAcceptCriterion
 
 
-class ClientSideCriterion(AcceptCriterion):
+class ClientSideCriterion(IAcceptCriterion):
     """Parent class for criteria that can be completely validated on client side.
     All classes that provide criteria that can be completely validated on client
     side should extend this class.
 
     It is recommended that subclasses of ClientSideCriterion re-validate the
     condition on the server side in
-    {@link AcceptCriterion#accept(com.vaadin.event.dd.DragAndDropEvent)} after
+    {@link IAcceptCriterion#accept(com.vaadin.event.dd.DragAndDropEvent)} after
     the client side validation has accepted a transfer.
 
     @since 6.3

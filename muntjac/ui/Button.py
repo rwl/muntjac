@@ -15,8 +15,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.event.FieldEvents import \
-    BlurEvent, BlurListener, BlurNotifier, FieldEvents, FocusEvent, \
-    FocusListener, FocusNotifier
+    BlurEvent, IBlurListener, IBlurNotifier, FocusEvent, \
+    IFocusListener, IFocusNotifier
 
 from muntjac.ui.AbstractField import AbstractField
 from muntjac.event.ShortcutListener import ShortcutListener
@@ -28,7 +28,7 @@ from muntjac.ui.IComponent import Event as ComponentEvent
 #from muntjac.terminal.gwt.client.ui.VButton import VButton
 
 
-class Button(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNotifier):
+class Button(AbstractField, IBlurNotifier, IFocusNotifier):
     """A generic button component.
 
     @author IT Mill Ltd.
@@ -256,9 +256,9 @@ class Button(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNotifie
         @param listener
                    the Listener to be added.
         """
-        if isinstance(listener, BlurListener):
+        if isinstance(listener, IBlurListener):
             self.addListener(BlurEvent.EVENT_ID, BlurEvent, listener,
-                             BlurListener.blurMethod)
+                             IBlurListener.blurMethod)
 
         elif isinstance(listener, ClickListener):
             self.addListener(self.ClickEvent, listener,
@@ -266,7 +266,7 @@ class Button(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNotifie
 
         else:
             self.addListener(FocusEvent.EVENT_ID, FocusEvent, listener,
-                             FocusListener.focusMethod)
+                             IFocusListener.focusMethod)
 
 
     def removeListener(self, listener):
@@ -275,7 +275,7 @@ class Button(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNotifie
         @param listener
                    the Listener to be removed.
         """
-        if isinstance(listener, BlurListener):
+        if isinstance(listener, IBlurListener):
             self.removeListener(BlurEvent.EVENT_ID, BlurEvent, listener)
 
         elif isinstance(listener, ClickListener):

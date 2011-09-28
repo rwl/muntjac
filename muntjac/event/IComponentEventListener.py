@@ -14,28 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
-class TargetDetails(object):
-    """TargetDetails wraps drop target related information about
-    {@link DragAndDropEvent}.
-    <p>
-    When a TargetDetails object is used in {@link DropHandler} it is often
-    preferable to cast the TargetDetails to an implementation provided by
-    DropTarget like {@link TreeTargetDetails}. They often provide a better typed,
-    drop target specific API.
-
-    @since 6.3
-    """
-
-    def getData(self, key):
-        """Gets target data associated with the given string key
-
-        @param key
-        @return The data associated with the key
-        """
-        pass
+from muntjac.event import IEventListener
 
 
-    def getTarget(self):
-        """@return the drop target on which the {@link DragAndDropEvent} happened."""
-        pass
+class IComponentEventListener(IEventListener):
+    pass

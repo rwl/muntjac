@@ -14,15 +14,11 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.event.ComponentEventListener import ComponentEventListener
+from muntjac.event.IComponentEventListener import IComponentEventListener
 from muntjac.event.MouseEvents import ClickEvent
 
 
-class LayoutEvents(object):
-    pass
-
-
-class LayoutClickListener(ComponentEventListener):
+class ILayoutClickListener(IComponentEventListener):
 
     def layoutClick(self, event):
         """Layout has been clicked
@@ -30,12 +26,12 @@ class LayoutClickListener(ComponentEventListener):
         @param event
                    Component click event.
         """
-        pass
+        raise NotImplementedError
 
     clickMethod = layoutClick
 
 
-class LayoutClickNotifier(object):
+class ILayoutClickNotifier(object):
     """The interface for adding and removing <code>LayoutClickEvent</code>
     listeners. By implementing this interface a class explicitly announces
     that it will generate a <code>LayoutClickEvent</code> when a component
@@ -71,7 +67,7 @@ class LayoutClickNotifier(object):
         @param listener
                    The listener to add
         """
-        pass
+        raise NotImplementedError
 
 
     def removeListener(self, listener):
@@ -80,7 +76,7 @@ class LayoutClickNotifier(object):
         @param listener
                    LayoutClickListener to be removed
         """
-        pass
+        raise NotImplementedError
 
 
 class LayoutClickEvent(ClickEvent):
