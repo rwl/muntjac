@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from os.path import getsize, basename
+
 from muntjac.service.FileTypeResolver import FileTypeResolver
 from muntjac.terminal.ApplicationResource import ApplicationResource
 from muntjac.terminal.DownloadStream import DownloadStream
@@ -21,10 +23,11 @@ from muntjac.terminal.Terminal import ErrorEvent
 
 
 class FileResource(ApplicationResource):
-    """<code>FileResources</code> are files or directories on local filesystem. The
-    files and directories are served through URI:s to the client terminal and
-    thus must be registered to an URI context before they can be used. The
-    resource is automatically registered to the application when it is created.
+    """<code>FileResources</code> are files or directories on local
+    filesystem. The files and directories are served through URI:s to
+    the client terminal and thus must be registered to an URI context
+    before they can be used. The resource is automatically registered
+    to the application when it is created.
 
     @author IT Mill Ltd.
     @version @VERSION@
@@ -32,15 +35,18 @@ class FileResource(ApplicationResource):
     """
 
     def __init__(self, sourceFile, application):
-        """Creates a new file resource for providing given file for client
-        terminals.
+        """Creates a new file resource for providing given file for
+        client terminals.
         """
         # Default buffer size for this stream resource.
         self._bufferSize = 0
+
         # File where the downloaded content is fetched from.
         self._sourceFile = None
+
         # Application.
         self._application = None
+
         # Default cache time for this stream resource.
         self._cacheTime = DownloadStream.DEFAULT_CACHETIME
 
@@ -55,10 +61,11 @@ class FileResource(ApplicationResource):
         @see muntjac.terminal.ApplicationResource#getStream()
         """
         try:
-            ds = DownloadStream(file(self._sourceFile),  # FileInputStream
+            ds = DownloadStream(file(self._sourceFile, 'rb'),
                                 self.getMIMEType(),
                                 self.getFilename())
-            ds.setParameter('Content-Length', str(len(self._sourceFile)))
+            length = str( getsize(self._sourceFile) )
+            ds.setParameter('Content-Length', length)
             ds.setCacheTime(self._cacheTime)
             return ds
         except IOError:
@@ -68,7 +75,7 @@ class FileResource(ApplicationResource):
                 def getThrowable(self):
                     return self.e
 
-            self.getApplication().getErrorHandler().terminalError(self.Error())
+            self.getApplication().getErrorHandler().terminalError( Error() )
             return None
 
 
@@ -96,7 +103,7 @@ class FileResource(ApplicationResource):
 
     def getFilename(self):
         """@see com.vaadin.terminal.ApplicationResource#getFilename()"""
-        return self._sourceFile.getName()
+        return basename(self._sourceFile)
 
 
     def getMIMEType(self):
@@ -105,10 +112,10 @@ class FileResource(ApplicationResource):
 
 
     def getCacheTime(self):
-        """Gets the length of cache expiration time. This gives the adapter the
-        possibility cache streams sent to the client. The caching may be made in
-        adapter or at the client if the client supports caching. Default is
-        <code>DownloadStream.DEFAULT_CACHETIME</code>.
+        """Gets the length of cache expiration time. This gives the adapter
+        the possibility cache streams sent to the client. The caching may be
+        made in adapter or at the client if the client supports caching.
+        Default is <code>DownloadStream.DEFAULT_CACHETIME</code>.
 
         @return Cache time in milliseconds.
         """
@@ -116,15 +123,14 @@ class FileResource(ApplicationResource):
 
 
     def setCacheTime(self, cacheTime):
-        """Sets the length of cache expiration time. This gives the adapter the
-        possibility cache streams sent to the client. The caching may be made in
-        adapter or at the client if the client supports caching. Zero or negavive
-        value disbales the caching of this stream.
+        """Sets the length of cache expiration time. This gives the adapter
+        the possibility cache streams sent to the client. The caching may be
+        made in adapter or at the client if the client supports caching. Zero
+        or negavive value disbales the caching of this stream.
 
         @param cacheTime
                    the cache time in milliseconds.
         """
-        # documented in superclass
         self._cacheTime = cacheTime
 
 

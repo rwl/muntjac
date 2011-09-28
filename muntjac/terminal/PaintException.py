@@ -16,7 +16,8 @@
 
 
 class PaintException(IOError):
-    """<code>PaintExcepection</code> is thrown if painting of a component fails.
+    """<code>PaintExcepection</code> is thrown if painting of a
+    component fails.
 
     @author IT Mill Ltd.
     @version @VERSION@
@@ -24,13 +25,14 @@ class PaintException(IOError):
     """
 
     def __init__(self, arg):
-        """Constructs an instance of <code>PaintExeception</code> with the specified
-        detail message.
+        """Constructs an instance of <code>PaintExeception</code>
+        with the specified detail message.
 
         @param msg
                    the detail message.
         ---
-        Constructs an instance of <code>PaintExeception</code> from IOException.
+        Constructs an instance of <code>PaintExeception</code>
+        from IOException.
 
         @param exception
                    the original exception.

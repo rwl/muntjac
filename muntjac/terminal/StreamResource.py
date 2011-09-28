@@ -20,10 +20,10 @@ from muntjac.terminal.DownloadStream import DownloadStream
 
 
 class StreamResource(ApplicationResource):
-    """<code>StreamResource</code> is a resource provided to the client directly by
-    the application. The strean resource is fetched from URI that is most often
-    in the context of the application or window. The resource is automatically
-    registered to window in creation.
+    """<code>StreamResource</code> is a resource provided to the client
+    directly by the application. The strean resource is fetched from URI
+    that is most often in the context of the application or window. The
+    resource is automatically registered to window in creation.
 
     @author IT Mill Ltd.
     @version @VERSION@
@@ -81,8 +81,9 @@ class StreamResource(ApplicationResource):
 
 
     def getStreamSource(self):
-        """Returns the source for this <code>StreamResource</code>. StreamSource is
-        queried when the resource is about to be streamed to the client.
+        """Returns the source for this <code>StreamResource</code>.
+        StreamSource is queried when the resource is about to be streamed
+        to the client.
 
         @return Source of the StreamResource.
         """
@@ -91,8 +92,8 @@ class StreamResource(ApplicationResource):
 
     def setStreamSource(self, streamSource):
         """Sets the source for this <code>StreamResource</code>.
-        <code>StreamSource</code> is queried when the resource is about to be
-        streamed to the client.
+        <code>StreamSource</code> is queried when the resource is
+        about to be streamed to the client.
 
         @param streamSource
                    the source to set.
@@ -127,7 +128,8 @@ class StreamResource(ApplicationResource):
         ss = self.getStreamSource()
         if ss is None:
             return None
-        ds = DownloadStream(ss.getStream(), self.getMIMEType(), self.getFilename())
+        ds = DownloadStream(ss.getStream(), self.getMIMEType(),
+                self.getFilename())
         ds.setBufferSize(self.getBufferSize())
         ds.setCacheTime(self._cacheTime)
         return ds
@@ -143,7 +145,6 @@ class StreamResource(ApplicationResource):
         @param bufferSize
                    the size of the buffer in bytes.
         """
-        # documented in superclass
         self._bufferSize = bufferSize
 
 
@@ -154,12 +155,10 @@ class StreamResource(ApplicationResource):
     def setCacheTime(self, cacheTime):
         """Sets the length of cache expiration time.
 
-        <p>
-        This gives the adapter the possibility cache streams sent to the client.
-        The caching may be made in adapter or at the client if the client
-        supports caching. Zero or negavive value disbales the caching of this
-        stream.
-        </p>
+        This gives the adapter the possibility cache streams sent to
+        the client. The caching may be made in adapter or at the client
+        if the client supports caching. Zero or negavive value disbales
+        the caching of this stream.
 
         @param cacheTime
                    the cache time in milliseconds.
@@ -174,7 +173,6 @@ class StreamSource(object):
     @version @VERSION@
     @since 3.0
     """
-    # documented in superclass
 
     def getStream(self):
         """Returns new input stream that is used for reading the resource."""

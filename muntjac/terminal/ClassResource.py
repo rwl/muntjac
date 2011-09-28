@@ -20,8 +20,8 @@ from muntjac.terminal.DownloadStream import DownloadStream
 
 
 class ClassResource(ApplicationResource):
-    """<code>ClassResource</code> is a named resource accessed with the class
-    loader.
+    """<code>ClassResource</code> is a named resource accessed with the
+    class loader.
 
     This can be used to access resources such as icons, files, etc.
 
@@ -33,16 +33,14 @@ class ClassResource(ApplicationResource):
     """
 
     def __init__(self, *args):
-        """Creates a new application resource instance. The resource id is relative
-        to the location of the application class.
+        """Creates a new application resource instance. The resource id is
+        relative to the location of the application class.
 
         @param resourceName
                    the Unique identifier of the resource within the application.
         @param application
                    the application this resource will be added to.
         ---
-        Creates a new application resource instance.
-
         @param associatedClass
                    the class of the which the resource is associated.
         @param resourceName
@@ -52,12 +50,16 @@ class ClassResource(ApplicationResource):
         """
         # Default buffer size for this stream resource.
         self._bufferSize = 0
+
         # Default cache time for this stream resource.
         self._cacheTime = self.DEFAULT_CACHETIME
+
         # Associated class used for indetifying the source of the resource.
         self._associatedClass = None
+
         # Name of the resource is relative to the associated class.
         self._resourceName = None
+
         # Application used for serving the class.
         self._application = None
 
@@ -117,9 +119,9 @@ class ClassResource(ApplicationResource):
 
         @see muntjac.terminal.ApplicationResource#getStream()
         """
-        # documented in superclass
-        ds = DownloadStream(self._associatedClass.getResourceAsStream(self._resourceName),
-                            self.getMIMEType(), self.getFilename())
+        ds = DownloadStream(
+                self._associatedClass.getResourceAsStream(self._resourceName),
+                self.getMIMEType(), self.getFilename())
         ds.setBufferSize(self.getBufferSize())
         ds.setCacheTime(self._cacheTime)
         return ds
@@ -135,7 +137,6 @@ class ClassResource(ApplicationResource):
         @param bufferSize
                    the size of the buffer in bytes.
         """
-        # documented in superclass
         self._bufferSize = bufferSize
 
 
@@ -146,12 +147,10 @@ class ClassResource(ApplicationResource):
     def setCacheTime(self, cacheTime):
         """Sets the length of cache expiration time.
 
-        <p>
-        This gives the adapter the possibility cache streams sent to the client.
-        The caching may be made in adapter or at the client if the client
-        supports caching. Zero or negavive value disbales the caching of this
-        stream.
-        </p>
+        This gives the adapter the possibility cache streams sent to the
+        client. The caching may be made in adapter or at the client if the
+        client supports caching. Zero or negavive value disbales the caching
+        of this stream.
 
         @param cacheTime
                    the cache time in milliseconds.

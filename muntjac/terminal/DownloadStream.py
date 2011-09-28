@@ -23,10 +23,9 @@ class DownloadStream(object):
     @version @VERSION@
     @since 3.0
     """
-    # Maximum cache time.
+
     MAX_CACHETIME = sys.maxint
 
-    # Default cache time.
     DEFAULT_CACHETIME = 1000 * 60 * 60 * 24
 
     def __init__(self, stream, contentType, fileName):
@@ -95,10 +94,10 @@ class DownloadStream(object):
 
 
     def setParameter(self, name, value):
-        """Sets a paramater for download stream. Parameters are optional information
-        about the downloadable stream and their meaning depends on the used
-        adapter. For example in WebAdapter they are interpreted as HTTP response
-        headers.
+        """Sets a paramater for download stream. Parameters are optional
+        information about the downloadable stream and their meaning depends
+        on the used adapter. For example in WebAdapter they are interpreted
+        as HTTP response headers.
 
         If the parameters by this name exists, the old value is replaced.
 
@@ -113,10 +112,10 @@ class DownloadStream(object):
 
 
     def getParameter(self, name):
-        """Gets a paramater for download stream. Parameters are optional information
-        about the downloadable stream and their meaning depends on the used
-        adapter. For example in WebAdapter they are interpreted as HTTP response
-        headers.
+        """Gets a paramater for download stream. Parameters are optional
+        information about the downloadable stream and their meaning depends
+        on the used adapter. For example in WebAdapter they are interpreted
+        as HTTP response headers.
 
         @param name
                    the Name of the parameter to set.
@@ -139,9 +138,9 @@ class DownloadStream(object):
 
     def getCacheTime(self):
         """Gets length of cache expiration time. This gives the adapter the
-        possibility cache streams sent to the client. The caching may be made in
-        adapter or at the client if the client supports caching. Default is
-        <code>DEFAULT_CACHETIME</code>.
+        possibility cache streams sent to the client. The caching may be made
+        in adapter or at the client if the client supports caching. Default
+        is <code>DEFAULT_CACHETIME</code>.
 
         @return Cache time in milliseconds
         """
@@ -150,9 +149,9 @@ class DownloadStream(object):
 
     def setCacheTime(self, cacheTime):
         """Sets length of cache expiration time. This gives the adapter the
-        possibility cache streams sent to the client. The caching may be made in
-        adapter or at the client if the client supports caching. Zero or negavive
-        value disbales the caching of this stream.
+        possibility cache streams sent to the client. The caching may be made
+        in adapter or at the client if the client supports caching. Zero or
+        negavive value disbales the caching of this stream.
 
         @param cacheTime
                    the cache time in milliseconds.

@@ -16,8 +16,8 @@
 
 
 class Sizeable(object):
-    """Interface to be implemented by components wishing to display some object that
-    may be dynamically resized during runtime.
+    """Interface to be implemented by components wishing to display some
+    object that may be dynamically resized during runtime.
 
     @author IT Mill Ltd.
     @version @VERSION@
@@ -47,14 +47,14 @@ class Sizeable(object):
     # Unit code representing inches.
     UNITS_INCH = 7
 
-    # Unit code representing in percentage of the containing element defined by
-    # terminal.
+    # Unit code representing in percentage of the containing element
+    # defined by terminal.
     UNITS_PERCENTAGE = 8
 
     SIZE_UNDEFINED = -1
 
-    # Textual representations of units symbols. Supported units and their
-    # symbols are:
+    # Textual representations of units symbols. Supported units and
+    # their symbols are:
     # <ul>
     # <li>{@link #UNITS_PIXELS}: "px"</li>
     # <li>{@link #UNITS_POINTS}: "pt"</li>
@@ -69,9 +69,10 @@ class Sizeable(object):
     # These can be used like <code>Sizeable.UNIT_SYMBOLS[UNITS_PIXELS]</code>.
     UNIT_SYMBOLS = ['px', 'pt', 'pc', 'em', 'ex', 'mm', 'cm', 'in', '%']
 
+
     def getWidth(self):
-        """Gets the width of the object. Negative number implies unspecified size
-        (terminal is free to set the size).
+        """Gets the width of the object. Negative number implies unspecified
+        size (terminal is free to set the size).
 
         @return width of the object in units specified by widthUnits property.
         """
@@ -79,19 +80,19 @@ class Sizeable(object):
 
 
     def setWidth(self, *args):
-        """Sets the width of the object. Negative number implies unspecified size
-        (terminal is free to set the size).
+        """Sets the width of the object. Negative number implies unspecified
+        size (terminal is free to set the size).
 
         @param width
                    the width of the object in units specified by widthUnits
                    property.
-        @deprecated Consider using {@link #setWidth(String)} instead. This method
-                    works, but is error-prone since the unit must be set
-                    separately (and components might have different default
-                    unit).
+        @deprecated Consider using {@link #setWidth(String)} instead. This
+                    method works, but is error-prone since the unit must be
+                    set separately (and components might have different
+                    default unit).
         ---
-        Sets the width of the object. Negative number implies unspecified size
-        (terminal is free to set the size).
+        Sets the width of the object. Negative number implies unspecified
+        size (terminal is free to set the size).
 
         @param width
                    the width of the object.
@@ -104,51 +105,52 @@ class Sizeable(object):
         ---
         Sets the width of the component using String presentation.
 
-        String presentation is similar to what is used in Cascading Style Sheets.
-        Size can be length or percentage of available size.
+        String presentation is similar to what is used in Cascading Style
+        Sheets. Size can be length or percentage of available size.
 
-        The empty string ("") or null will unset the width and set the units to
-        pixels.
+        The empty string ("") or null will unset the width and set the units
+        to pixels.
 
         See <a
         href="http://www.w3.org/TR/REC-CSS2/syndata.html#value-def-length">CSS
         specification</a> for more details.
 
         @param width
-                   in CSS style string representation, null or empty string to
-                   reset
+                   in CSS style string representation, null or empty string
+                   to reset
         """
         pass
 
 
     def getHeight(self):
-        """Gets the height of the object. Negative number implies unspecified size
-        (terminal is free to set the size).
+        """Gets the height of the object. Negative number implies unspecified
+        size (terminal is free to set the size).
 
-        @return height of the object in units specified by heightUnits property.
+        @return height of the object in units specified by heightUnits
+                property.
         """
         pass
 
 
     def setHeight(self, *args):
-        """Sets the height of the object. Negative number implies unspecified size
-        (terminal is free to set the size).
+        """Sets the height of the object. Negative number implies unspecified
+        size (terminal is free to set the size).
 
         @param height
                    the height of the object in units specified by heightUnits
                    property.
         @deprecated Consider using {@link #setHeight(String)} or
                     {@link #setHeight(float, int)} instead. This method works,
-                    but is error-prone since the unit must be set separately (and
-                    components might have different default unit).
+                    but is error-prone since the unit must be set separately
+                    (and components might have different default unit).
         ---
         Sets the height of the component using String presentation.
 
-        String presentation is similar to what is used in Cascading Style Sheets.
-        Size can be length or percentage of available size.
+        String presentation is similar to what is used in Cascading Style
+        Sheets. Size can be length or percentage of available size.
 
-        The empty string ("") or null will unset the height and set the units to
-        pixels.
+        The empty string ("") or null will unset the height and set the units
+        to pixels.
 
         See <a
         href="http://www.w3.org/TR/REC-CSS2/syndata.html#value-def-length">CSS
@@ -157,8 +159,8 @@ class Sizeable(object):
         @param height
                    in CSS style string representation
         ---
-        Sets the height of the object. Negative number implies unspecified size
-        (terminal is free to set the size).
+        Sets the height of the object. Negative number implies unspecified
+        size (terminal is free to set the size).
 
         @param height
                    the height of the object.
@@ -186,8 +188,8 @@ class Sizeable(object):
         @param units
                    the units used in width property.
         @deprecated Consider setting width and unit simultaneously using
-                    {@link #setWidth(String)} or {@link #setWidth(float, int)},
-                    which is less error-prone.
+                    {@link #setWidth(width)} or
+                    {@link #setWidth(width, unit)}, which is less error-prone.
         """
         pass
 
@@ -206,8 +208,8 @@ class Sizeable(object):
         @param units
                    the units used in height property.
         @deprecated Consider setting height and unit simultaneously using
-                    {@link #setHeight(String)} or {@link #setHeight(float, int)},
-                    which is less error-prone.
+                    {@link #setHeight(width)} or
+                    {@link #setHeight(width, unit)}, which is less error-prone.
         """
         pass
 

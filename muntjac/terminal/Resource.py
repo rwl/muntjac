@@ -16,8 +16,8 @@
 
 
 class Resource(object):
-    """<code>Resource</code> provided to the client terminal. Support for actually
-    displaying the resource type is left to the terminal.
+    """<code>Resource</code> provided to the client terminal. Support for
+    actually displaying the resource type is left to the terminal.
 
     @author IT Mill Ltd.
     @version @VERSION@

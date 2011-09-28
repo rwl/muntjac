@@ -21,16 +21,14 @@ class ParameterHandler(object):
     """{@code ParameterHandler} is implemented by classes capable of handling
     external parameters.
 
-    <p>
-    What parameters are provided depend on what the {@link Terminal} provides and
-    if the application is deployed as a servlet or portlet. URL GET parameters
-    are typically provided to the {@link #handleParameters(Map)} method.
-    </p>
-    <p>
+    What parameters are provided depend on what the {@link Terminal} provides
+    and if the application is deployed as a servlet or portlet. URL GET
+    parameters are typically provided to the {@link #handleParameters(Map)}
+    method.
+
     A {@code ParameterHandler} must be registered to a {@code Window} using
     {@link Window#addParameterHandler(ParameterHandler)} to be called when
     parameters are available.
-    </p>
 
     @author IT Mill Ltd.
     @version @VERSION@
@@ -42,8 +40,8 @@ class ParameterHandler(object):
         {@link String} and the values are {@link String} arrays.
 
         @param parameters
-                   an unmodifiable map which contains the parameter names and
-                   values
+                   an unmodifiable map which contains the parameter names
+                   and values
         """
         pass
 

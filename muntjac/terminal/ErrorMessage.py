@@ -18,21 +18,26 @@ from muntjac.terminal.Paintable import Paintable
 
 
 class ErrorMessage(Paintable):
-    """Interface for rendering error messages to terminal. All the visible errors
-    shown to user must implement this interface.
+    """Interface for rendering error messages to terminal. All the
+    visible errors shown to user must implement this interface.
 
     @author IT Mill Ltd.
     @version @VERSION@
     @since 3.0
     """
+
     # Error code for system errors and bugs.
     SYSTEMERROR = 5000
+
     # Error code for critical error messages.
     CRITICAL = 4000
+
     # Error code for regular error messages.
     ERROR = 3000
+
     # Error code for warning messages.
     WARNING = 2000
+
     # Error code for informational messages.
     INFORMATION = 1000
 
@@ -45,30 +50,30 @@ class ErrorMessage(Paintable):
 
 
     def addListener(self, listener):
-        """Error messages are inmodifiable and thus listeners are not needed. This
-        method should be implemented as empty.
+        """Error messages are inmodifiable and thus listeners are not needed.
+        This method should be implemented as empty.
 
         @param listener
                    the listener to be added.
-        @see com.vaadin.terminal.Paintable#addListener(Paintable.RepaintRequestListener)
+        @see com.vaadin.terminal.Paintable#addListener(listener)
         """
         pass
 
 
     def removeListener(self, listener):
-        """Error messages are inmodifiable and thus listeners are not needed. This
-        method should be implemented as empty.
+        """Error messages are inmodifiable and thus listeners are not needed.
+        This method should be implemented as empty.
 
         @param listener
                    the listener to be removed.
-        @see com.vaadin.terminal.Paintable#removeListener(Paintable.RepaintRequestListener)
+        @see com.vaadin.terminal.Paintable#removeListener(listener)
         """
         pass
 
 
     def requestRepaint(self):
-        """Error messages are inmodifiable and thus listeners are not needed. This
-        method should be implemented as empty.
+        """Error messages are inmodifiable and thus listeners are not needed.
+        This method should be implemented as empty.
 
         @see com.vaadin.terminal.Paintable#requestRepaint()
         """

@@ -19,9 +19,9 @@ from muntjac.terminal.Resource import Resource
 
 
 class ExternalResource(Resource):
-    """<code>ExternalResource</code> implements source for resources fetched from
-    location specified by URL:s. The resources are fetched directly by the client
-    terminal and are not fetched trough the terminal adapter.
+    """<code>ExternalResource</code> implements source for resources fetched
+    from location specified by URL:s. The resources are fetched directly by
+    the client terminal and are not fetched trough the terminal adapter.
 
     @author IT Mill Ltd.
     @version @VERSION@
@@ -29,7 +29,8 @@ class ExternalResource(Resource):
     """
 
     def __init__(self, sourceURL, mimeType=None):
-        """Creates a new download component for downloading directly from given URL.
+        """Creates a new download component for downloading directly from
+        given URL.
 
         @param sourceURL
                    the source URL.
@@ -64,7 +65,7 @@ class ExternalResource(Resource):
         @see com.vaadin.terminal.Resource#getMIMEType()
         """
         if self._mimeType is None:
-            self._mimeType = FileTypeResolver.getMIMEType( self.getURL() )
+            self._mimeType = FileTypeResolver.getMIMEType(self.getURL())
         return self._mimeType
 
 

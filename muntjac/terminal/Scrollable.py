@@ -16,10 +16,8 @@
 
 
 class Scrollable(object):
-    """<p>
-    This interface is implemented by all visual objects that can be scrolled. The
-    unit of scrolling is pixel.
-    </p>
+    """This interface is implemented by all visual objects that can be
+    scrolled. The unit of scrolling is pixel.
 
     @author IT Mill Ltd.
     @version @VERSION@
@@ -29,10 +27,8 @@ class Scrollable(object):
     def getScrollLeft(self):
         """Gets scroll left offset.
 
-        <p>
         Scrolling offset is the number of pixels this scrollable has been
         scrolled right.
-        </p>
 
         @return Horizontal scrolling position in pixels.
         """
@@ -42,10 +38,8 @@ class Scrollable(object):
     def setScrollLeft(self, pixelsScrolled):
         """Sets scroll left offset.
 
-        <p>
         Scrolling offset is the number of pixels this scrollable has been
         scrolled right.
-        </p>
 
         @param pixelsScrolled
                    the xOffset.
@@ -56,10 +50,8 @@ class Scrollable(object):
     def getScrollTop(self):
         """Gets scroll top offset.
 
-        <p>
         Scrolling offset is the number of pixels this scrollable has been
         scrolled down.
-        </p>
 
         @return Vertical scrolling position in pixels.
         """
@@ -69,10 +61,8 @@ class Scrollable(object):
     def setScrollTop(self, pixelsScrolled):
         """Sets scroll top offset.
 
-        <p>
         Scrolling offset is the number of pixels this scrollable has been
         scrolled down.
-        </p>
 
         @param pixelsScrolled
                    the yOffset.
@@ -83,10 +73,8 @@ class Scrollable(object):
     def isScrollable(self):
         """Is the scrolling enabled.
 
-        <p>
         Enabling scrolling allows the user to scroll the scrollable view
         interactively
-        </p>
 
         @return <code>true</code> if the scrolling is allowed, otherwise
                 <code>false</code>.
@@ -97,10 +85,8 @@ class Scrollable(object):
     def setScrollable(self, isScrollingEnabled):
         """Enables or disables scrolling..
 
-        <p>
         Enabling scrolling allows the user to scroll the scrollable view
         interactively
-        </p>
 
         @param isScrollingEnabled
                    true if the scrolling is allowed.

@@ -16,8 +16,8 @@
 
 
 class KeyMapper(object):
-    """<code>KeyMapper</code> is the simple two-way map for generating textual keys
-    for objects and retrieving the objects later with the key.
+    """<code>KeyMapper</code> is the simple two-way map for generating
+    textual keys for objects and retrieving the objects later with the key.
 
     @author IT Mill Ltd.
     @version @VERSION@

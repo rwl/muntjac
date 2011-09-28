@@ -31,11 +31,12 @@ class CompositeErrorMessage(ErrorMessage):
         """Constructor for CompositeErrorMessage.
 
         @param errorMessages
-                   the Collection of error messages that are listed together. At
-                   least one message is required.
+                   the Collection of error messages that are listed
+                   together. At least one message is required.
         """
         # Array of all the errors.
         self._errors = None
+
         # Level of the error.
         self._level = None
 
@@ -45,7 +46,8 @@ class CompositeErrorMessage(ErrorMessage):
             self.addErrorMessage(m)
 
         if len(self._errors) == 0:
-            raise ValueError, 'Composite error message must have at least one error'
+            raise ValueError, \
+                    'Composite error message must have at least one error'
 
 
     def getErrorLevel(self):
@@ -79,8 +81,7 @@ class CompositeErrorMessage(ErrorMessage):
 
 
     def paint(self, target):
-        """@see muntjac.terminal.Paintable#paint(muntjac.terminal.PaintTarget)"""
-        # Documented in super interface
+        """@see muntjac.terminal.Paintable#paint(target)"""
         if len(self._errors) == 1:
             self._errors[0].paint(target)
         else:
@@ -88,14 +89,19 @@ class CompositeErrorMessage(ErrorMessage):
 
             if self._level > 0 and self._level <= ErrorMessage.INFORMATION:
                 target.addAttribute('level', 'info')
+
             elif self._level <= ErrorMessage.WARNING:
                 target.addAttribute('level', 'warning')
+
             elif self._level <= ErrorMessage.ERROR:
                 target.addAttribute('level', 'error')
+
             elif self._level <= ErrorMessage.CRITICAL:
                 target.addAttribute('level', 'critical')
+
             else:
                 target.addAttribute('level', 'system')
+
             # Paint all the exceptions
             for error in self._errors:
                 error.paint(target)
@@ -104,17 +110,14 @@ class CompositeErrorMessage(ErrorMessage):
 
 
     def addListener(self, listener):
-        # Documented in super interface
         pass
 
 
     def removeListener(self, listener):
-        # Documented in super interface
         pass
 
 
     def requestRepaint(self):
-        # Documented in super interface
         pass
 
 
@@ -122,7 +125,7 @@ class CompositeErrorMessage(ErrorMessage):
         pass
 
 
-    def toString(self):
+    def __str__(self):
         """Returns a comma separated list of the error messages.
 
         @return String, comma separated list of error messages.
@@ -143,4 +146,5 @@ class CompositeErrorMessage(ErrorMessage):
 
 
     def setDebugId(self, idd):
-        raise NotImplementedError, 'Setting testing id for this Paintable is not implemented'
+        raise NotImplementedError, \
+                'Setting testing id for this Paintable is not implemented'

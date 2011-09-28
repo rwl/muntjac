@@ -19,8 +19,9 @@ from muntjac.util.event import EventListener, EventObject
 
 class Paintable(EventListener):
     """Interface implemented by all classes that can be painted. Classes
-    implementing this interface know how to output themselves to a UIDL stream
-    and that way describing to the terminal how it should be displayed in the UI.
+    implementing this interface know how to output themselves to a UIDL
+    stream and that way describing to the terminal how it should be displayed
+    in the UI.
 
     @author IT Mill Ltd.
     @version @VERSION@
@@ -28,20 +29,16 @@ class Paintable(EventListener):
     """
 
     def paint(self, target):
-        """<p>
-        Paints the Paintable into a UIDL stream. This method creates the UIDL
-        sequence describing it and outputs it to the given UIDL stream.
-        </p>
+        """Paints the Paintable into a UIDL stream. This method creates the
+        UIDL sequence describing it and outputs it to the given UIDL stream.
 
-        <p>
         It is called when the contents of the component should be painted in
         response to the component first being shown or having been altered so
         that its visual representation is changed.
-        </p>
 
         @param target
-                   the target UIDL stream where the component should paint itself
-                   to.
+                   the target UIDL stream where the component should paint
+                   itself to.
         @throws PaintException
                     if the paint operation failed.
         """
@@ -49,19 +46,20 @@ class Paintable(EventListener):
 
 
     def requestRepaint(self):
-        """Requests that the paintable should be repainted as soon as possible."""
+        """Requests that the paintable should be repainted as soon as
+        possible."""
         pass
 
 
     def setDebugId(self, idd):
-        """Adds an unique id for component that get's transferred to terminal for
-        testing purposes. Keeping identifiers unique throughout the Application
-        instance is on programmers responsibility.
-        <p>
-        Note, that with the current terminal implementation the identifier cannot
-        be changed while the component is visible. This means that the identifier
-        should be set before the component is painted for the first time and kept
-        the same while visible in the client.
+        """Adds an unique id for component that get's transferred to terminal
+        for testing purposes. Keeping identifiers unique throughout the
+        Application instance is on programmers responsibility.
+
+        Note, that with the current terminal implementation the identifier
+        cannot be changed while the component is visible. This means that the
+        identifier should be set before the component is painted for the first
+        time and kept the same while visible in the client.
 
         @param id
                    A short (< 20 chars) alphanumeric id
@@ -79,8 +77,8 @@ class Paintable(EventListener):
 
     def addListener(self, listener):
         """Adds repaint request listener. In order to assure that no repaint
-        requests are missed, the new repaint listener should paint the paintable
-        right after adding itself as listener.
+        requests are missed, the new repaint listener should paint the
+        paintable right after adding itself as listener.
 
         @param listener
                    the listener to be added.
@@ -99,24 +97,23 @@ class Paintable(EventListener):
 
     def requestRepaintRequests(self):
         """Request sending of repaint events on any further visible changes.
-        Normally the paintable only send up to one repaint request for listeners
-        after paint as the paintable as the paintable assumes that the listeners
-        already know about the repaint need. This method resets the assumtion.
-        Paint implicitly does the assumtion reset functionality implemented by
-        this method.
-        <p>
+        Normally the paintable only send up to one repaint request for
+        listeners after paint as the paintable as the paintable assumes that
+        the listeners already know about the repaint need. This method resets
+        the assumtion. Paint implicitly does the assumtion reset functionality
+        implemented by this method.
+
         This method is normally used only by the terminals to note paintables
-        about implicit repaints (painting the component without actually invoking
-        paint method).
-        </p>
+        about implicit repaints (painting the component without actually
+        invoking paint method).
         """
         pass
 
 
 class RepaintRequestEvent(EventObject):
-    """Repaint request event is thrown when the paintable needs to be repainted.
-    This is typically done when the <code>paint</code> method would return
-    dissimilar UIDL from the previous call of the method.
+    """Repaint request event is thrown when the paintable needs to be
+    repainted. This is typically done when the <code>paint</code> method
+    would return dissimilar UIDL from the previous call of the method.
     """
 
     def __init__(self, source):
