@@ -17,7 +17,6 @@
 import logging
 
 from muntjac.event import IEventListener
-from muntjac.data.util.MethodProperty import MethodException
 
 
 class ListenerMethod(IEventListener):

@@ -44,9 +44,6 @@ from muntjac.ui.AbstractSelect import \
 from muntjac.event.ItemClickEvent import \
     ItemClickEvent, ItemClickNotifier, ItemClickSource
 
-from muntjac.data.util.ContainerOrderedWrapper import \
-    ContainerOrderedWrapper
-
 from muntjac.data.util.IndexedContainer import \
     ItemSetChangeEvent, IndexedContainer
 
@@ -1538,7 +1535,8 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         if isinstance(newDataSource, Ordered):
             super(Table, self).setContainerDataSource(newDataSource)
         else:
-            super(Table, self).setContainerDataSource( ContainerOrderedWrapper(newDataSource) )
+            raise NotImplementedError
+            #super(Table, self).setContainerDataSource( ContainerOrderedWrapper(newDataSource) )
 
         # Resets page position
         self._currentPageFirstItemId = None

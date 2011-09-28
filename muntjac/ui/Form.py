@@ -25,7 +25,6 @@ from muntjac.data.Validator import InvalidValueException
 from muntjac.ui.Select import Select
 from muntjac.event.Action import Action, Notifier
 from muntjac.terminal.CompositeErrorMessage import CompositeErrorMessage
-from muntjac.data.util.BeanItem import BeanItem
 from muntjac.event.ActionManager import ActionManager
 from muntjac.data.Property import ValueChangeListener
 from muntjac.ui.AbstractComponent import AbstractComponent
@@ -944,7 +943,8 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
         if isinstance(data, Item):
             item = data
         elif data is not None:
-            item = BeanItem(data)
+            raise NotImplementedError
+            #item = BeanItem(data)
 
         # Sets the datasource to form
         if item is not None and properties is not None:

@@ -19,7 +19,6 @@ from Queue import LifoQueue
 
 from muntjac.event.dd.acceptcriteria.TargetDetailIs import TargetDetailIs
 from muntjac.event.dd.DropTarget import DropTarget
-from muntjac.data.util.ContainerHierarchicalWrapper import ContainerHierarchicalWrapper
 from muntjac.terminal.KeyMapper import KeyMapper
 from muntjac.data.Container import Container, Hierarchical
 from muntjac.event.Action import Action
@@ -29,7 +28,6 @@ from muntjac.event.dd.acceptcriteria.ClientSideCriterion import ClientSideCriter
 from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
 from muntjac.event.ItemClickEvent import ItemClickEvent, ItemClickNotifier, ItemClickSource
 from muntjac.event.DataBoundTransferable import DataBoundTransferable
-from muntjac.data.util.IndexedContainer import IndexedContainer
 from muntjac.ui.ClientWidget import LoadStyle
 from muntjac.ui.IComponent import Event as ComponentEvent
 
@@ -649,14 +647,16 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
         if newDataSource is None:
             # Note: using wrapped IndexedContainer to match constructor (super
             # creates an IndexedContainer, which is then wrapped).
-            newDataSource = ContainerHierarchicalWrapper(IndexedContainer())
+            raise NotImplementedError
+            #newDataSource = ContainerHierarchicalWrapper(IndexedContainer())
 
         # Assure that the data source is ordered by making unordered
         # containers ordered by wrapping them
         if issubclass(newDataSource.__class__, Hierarchical):
             super(Tree, self).setContainerDataSource(newDataSource)
         else:
-            super(Tree, self).setContainerDataSource(ContainerHierarchicalWrapper(newDataSource))
+            raise NotImplementedError
+            #super(Tree, self).setContainerDataSource(ContainerHierarchicalWrapper(newDataSource))
 
 
     def addListener(self, listener):
