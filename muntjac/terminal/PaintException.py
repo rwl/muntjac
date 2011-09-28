@@ -20,6 +20,7 @@ class PaintException(IOError):
     component fails.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """

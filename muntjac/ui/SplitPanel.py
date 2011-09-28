@@ -27,6 +27,7 @@ class SplitPanel(AbstractSplitPanel):
     components (possibly containers) which are split by divider element.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 5.0
     @deprecated in 6.5. Use {@link HorizontalSplitPanel} or

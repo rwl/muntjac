@@ -20,6 +20,7 @@ class IResource(object):
     actually displaying the resource type is left to the terminal.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """

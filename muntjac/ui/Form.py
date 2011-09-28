@@ -62,6 +62,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
     </p>
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """

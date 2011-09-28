@@ -23,6 +23,7 @@ class VBrowserDetails(object):
     {@link WebBrowser}. Should not be used directly.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 6.3
     """

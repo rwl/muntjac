@@ -28,6 +28,7 @@ class VerticalLayout(AbstractOrderedLayout):
     is by default 100% wide.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 5.3
     """

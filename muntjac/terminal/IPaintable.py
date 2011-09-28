@@ -24,6 +24,7 @@ class IPaintable(IEventListener):
     in the UI.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """

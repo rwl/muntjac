@@ -55,6 +55,7 @@ class Slider(AbstractField):
     </code>
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     """
 
 #    CLIENT_WIDGET = VSlider
@@ -414,6 +415,7 @@ class ValueOutOfBoundsException(Exception):
     """ValueOutOfBoundsException
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     """
 
     def __init__(self, valueOutOfBounds):

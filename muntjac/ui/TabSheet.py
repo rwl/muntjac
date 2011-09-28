@@ -30,6 +30,7 @@ class ISelectedTabChangeListener(object):
     tabsheet.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
 
     @version @VERSION@
     @since 3.0
@@ -69,6 +70,7 @@ class TabSheet(AbstractComponentContainer):
     time they are shown, but this may change in future releases.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -740,6 +742,7 @@ class SelectedTabChangeEvent(ComponentEvent):
     tab in the tab sheet is changed.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """

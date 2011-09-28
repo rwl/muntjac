@@ -24,6 +24,7 @@ class ObjectProperty(AbstractProperty):
     interface.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """

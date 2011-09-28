@@ -41,6 +41,7 @@ class Select(AbstractSelect, AbstractSelect, Filtering, FieldEvents,
     </p>
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """

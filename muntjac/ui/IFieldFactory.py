@@ -23,6 +23,7 @@ class IFieldFactory(IFormFieldFactory, ITableFieldFactory):
     context.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.1
     @deprecated IFieldFactory was split into two lighter interfaces in 6.0 Use

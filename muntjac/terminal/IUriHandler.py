@@ -24,6 +24,7 @@ class IUriHandler(object):
     client.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """

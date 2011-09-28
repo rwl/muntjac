@@ -25,6 +25,7 @@ class IVariableOwner(object):
     may then process those changes.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """

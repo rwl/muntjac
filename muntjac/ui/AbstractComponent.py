@@ -33,6 +33,7 @@ class AbstractComponent(IComponent, MethodEventSource):
     components. Most components in Vaadin do just that.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """

@@ -26,6 +26,7 @@ class InlineDateField(DateField):
     @see DateField
     @see PopupDateField
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 5.0
     """

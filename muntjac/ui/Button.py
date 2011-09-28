@@ -32,6 +32,7 @@ class Button(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNotifie
     """A generic button component.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -401,6 +402,7 @@ class ClickEvent(ComponentEvent):
     """Click event. This event is thrown, when the button is clicked.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -534,6 +536,7 @@ class ClickListener(object):
     {@link Component}.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """

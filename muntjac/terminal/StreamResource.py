@@ -26,6 +26,7 @@ class StreamResource(IApplicationResource):
     resource is automatically registered to window in creation.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -170,6 +171,7 @@ class StreamSource(object):
     """Interface implemented by the source of a StreamResource.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """

@@ -26,6 +26,7 @@ class EmailValidator(RegexpValidator):
     information.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 5.4
     """

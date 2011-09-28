@@ -28,6 +28,7 @@ class ClassResource(IApplicationResource):
     @see java.lang.Class#getResource(java.lang.String)
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """

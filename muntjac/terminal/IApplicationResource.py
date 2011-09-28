@@ -27,6 +27,7 @@ class IApplicationResource(IResource):
     common resources for an application.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """

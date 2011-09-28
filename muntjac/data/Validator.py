@@ -37,6 +37,7 @@ class Validator(object):
     </p>
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -71,6 +72,7 @@ class InvalidValueException(RuntimeError, IErrorMessage):
     """Exception that is thrown by a {@link Validator} when a value is invalid.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -184,6 +186,7 @@ class EmptyValueException(Validator.InvalidValueException):
     the thrower.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 5.3.0
     """

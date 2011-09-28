@@ -28,6 +28,7 @@ class WebApplicationContext(AbstractWebApplicationContext):
     when added to a {@link HttpSession}.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.1
     """

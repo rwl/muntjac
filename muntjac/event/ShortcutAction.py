@@ -42,6 +42,7 @@ class ShortcutAction(Action):
     </p>
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version
     @since 4.0.1
     """

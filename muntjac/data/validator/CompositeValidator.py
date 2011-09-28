@@ -26,6 +26,7 @@ class CompositeValidator(AbstractValidator):
     <code>AND</code> and <code>OR</code>.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """

@@ -27,6 +27,7 @@ class ApplicationServlet(AbstractApplicationServlet):
     """This servlet connects a Muntjac Application to Web.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 5.0
     """

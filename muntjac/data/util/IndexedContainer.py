@@ -54,6 +54,7 @@ class IndexedContainer(AbstractInMemoryContainer, Container,
     @see com.vaadin.data.Container
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -579,6 +580,7 @@ class IndexedContainerProperty(Property, ValueChangeNotifier):
     {@link IndexedContainer}.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
 
     @version @VERSION@
     @since 3.0
@@ -718,6 +720,7 @@ class ItemSetChangeEvent(BaseItemSetChangeEvent):
     changed.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -741,6 +744,7 @@ class PropertyValueChangeEvent(EventObject, Property, ValueChangeEvent):
     value has changed.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """

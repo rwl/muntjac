@@ -20,6 +20,7 @@ class KeyMapper(object):
     textual keys for objects and retrieving the objects later with the key.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """

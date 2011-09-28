@@ -93,6 +93,7 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
     </p>
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """

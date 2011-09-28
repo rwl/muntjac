@@ -31,6 +31,7 @@ class IParameterHandler(object):
     parameters are available.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """

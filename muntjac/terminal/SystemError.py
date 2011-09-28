@@ -32,6 +32,7 @@ class SystemErr(RuntimeError, IErrorMessage):
     such as stack trace and exception.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """

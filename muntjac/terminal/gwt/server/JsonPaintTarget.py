@@ -47,6 +47,7 @@ class JsonPaintTarget(IPaintTarget):
     attributes, variables, etc.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 5.0
     """

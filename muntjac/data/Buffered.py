@@ -48,6 +48,7 @@ class Buffered(object):
     </p>
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -150,6 +151,7 @@ class SourceException(RuntimeError, IErrorMessage):
     in processing a data source.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """

@@ -62,6 +62,7 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
     items) from a hierarchical set of items.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -894,6 +895,7 @@ class ExpandEvent(ComponentEvent):
     the node.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -921,6 +923,7 @@ class IExpandListener(object):
     """Expand event listener.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -940,6 +943,7 @@ class CollapseEvent(ComponentEvent):
     """Collapse event
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -967,6 +971,7 @@ class ICollapseListener(object):
     """Collapse event listener.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """

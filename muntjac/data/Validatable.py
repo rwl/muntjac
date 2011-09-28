@@ -23,6 +23,7 @@ class Validatable(object):
     </p>
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     @see com.vaadin.data.Validator

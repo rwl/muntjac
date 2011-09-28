@@ -19,6 +19,7 @@ class VTextField(object):
     """This class represents a basic text input field with one row.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     """
 
     VAR_CUR_TEXT = 'curText'

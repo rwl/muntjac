@@ -104,6 +104,7 @@ class Window(Panel, IUriHandler, IParameterHandler, FocusNotifier, BlurNotifier)
     </p>
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """

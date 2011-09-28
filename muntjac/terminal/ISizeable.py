@@ -20,6 +20,7 @@ class ISizeable(object):
     object that may be dynamically resized during runtime.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """

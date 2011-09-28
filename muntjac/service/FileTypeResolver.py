@@ -25,6 +25,7 @@ class FileTypeResolver(object):
     </p>
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """

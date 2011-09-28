@@ -23,6 +23,7 @@ class ITableFieldFactory(object):
     generation.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 6.0
     @see FormFieldFactory

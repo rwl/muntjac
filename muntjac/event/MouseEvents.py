@@ -23,6 +23,7 @@ class MouseEvents(object):
     """Interface that serves as a wrapper for mouse related events.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @see ClickListener
     @version @VERSION@
     @since 6.2
@@ -39,6 +40,7 @@ class ClickEvent(ComponentEvent):
     Correct values for all event details cannot be guaranteed.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @see ClickListener
     @version @VERSION@
     @since 6.2
@@ -163,6 +165,7 @@ class ClickListener(ComponentEventListener):
 
     @see ClickEvent
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 6.2
     """
@@ -185,6 +188,7 @@ class DoubleClickEvent(ComponentEvent):
 
     @see ClickEvent
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 6.2
     """
@@ -199,6 +203,7 @@ class DoubleClickListener(ComponentEventListener):
 
     @see DoubleClickEvent
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 6.2
     """

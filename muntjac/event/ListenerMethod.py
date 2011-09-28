@@ -41,6 +41,7 @@ class ListenerMethod(IEventListener):
     </p>
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -529,6 +530,7 @@ class MethodException(RuntimeError):
     MethodException instance and rethrown by the <code>ListenerMethod</code>.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """

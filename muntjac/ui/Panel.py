@@ -37,6 +37,7 @@ class Panel(AbstractComponentContainer, IScrollable, IComponentContainer,
     """Panel - a simple single component container.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """

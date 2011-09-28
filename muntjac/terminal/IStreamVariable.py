@@ -29,6 +29,7 @@ class IStreamVariable(object):
     manually.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 6.5
     @see PaintTarget#addVariable(VariableOwner, String, IStreamVariable)

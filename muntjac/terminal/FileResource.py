@@ -30,6 +30,7 @@ class FileResource(IApplicationResource):
     to the application when it is created.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """

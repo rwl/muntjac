@@ -27,6 +27,7 @@ class WebBrowser(ITerminal):
     resolution and IP address.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     """
 

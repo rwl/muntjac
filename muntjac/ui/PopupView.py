@@ -72,6 +72,7 @@ class PopupView(AbstractComponentContainer):
     used to deliver contents to this component.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     """
 
 #    CLIENT_WIDGET = VPopupView

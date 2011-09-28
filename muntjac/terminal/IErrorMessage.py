@@ -22,6 +22,7 @@ class IErrorMessage(IPaintable):
     visible errors shown to user must implement this interface.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """

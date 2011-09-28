@@ -21,6 +21,7 @@ class Action(object):
     unregistration.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -87,6 +88,7 @@ class Container(object):
     action.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -149,6 +151,7 @@ class Handler(object):
     """Interface implemented by classes who wish to handle actions.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """

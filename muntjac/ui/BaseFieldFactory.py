@@ -30,6 +30,7 @@ class BaseFieldFactory(IFieldFactory):
     <p>
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.1
     @deprecated use {@link DefaultFieldFactory} or own implementations on

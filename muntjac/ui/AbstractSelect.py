@@ -135,6 +135,7 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
     </p>
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 5.0
     """

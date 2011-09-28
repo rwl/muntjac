@@ -24,6 +24,7 @@ class ExternalResource(IResource):
     the client terminal and are not fetched trough the terminal adapter.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """

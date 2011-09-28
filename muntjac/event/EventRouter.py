@@ -24,6 +24,7 @@ class EventRouter(MethodEventSource):
     {@link com.vaadin.event package documentation}.
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """

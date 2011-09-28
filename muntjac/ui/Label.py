@@ -53,6 +53,7 @@ class Label(AbstractComponent, Property, Property, Viewer, Property,
     </p>
 
     @author IT Mill Ltd.
+    @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
