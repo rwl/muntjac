@@ -136,14 +136,14 @@ class ApplicationRunnerServlet(AbstractApplicationServlet):
     def getApplicationClass(self):
         appClass = None
 
-        baseName = self.getApplicationRunnerApplicationClassName(self._request)  #@PydevCodeAnalysisIgnore
+        baseName = self.getApplicationRunnerApplicationClassName(self._request)
 
         try:
             appClass = loadClass(baseName)
             return appClass
         except Exception:
             if self._defaultPackages is not None:
-                for _ in range(len(self._defaultPackages)):
+                for i in range(len(self._defaultPackages)):
                     try:
                         clsName = self._defaultPackages[i] + '.' + baseName
                         appClass = loadClass(clsName)
