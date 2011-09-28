@@ -26,21 +26,21 @@ except ImportError, e:
     from StringIO import StringIO
 
 from muntjac.ui.CustomLayout import CustomLayout
-from muntjac.terminal.Resource import Resource
+from muntjac.terminal.IResource import IResource
 from muntjac.terminal.ExternalResource import ExternalResource
-from muntjac.terminal.ApplicationResource import ApplicationResource
+from muntjac.terminal.IApplicationResource import IApplicationResource
 from muntjac.terminal.ThemeResource import ThemeResource
 from muntjac.ui.Alignment import Alignment
-from muntjac.terminal.StreamVariable import StreamVariable
-from muntjac.terminal.Paintable import Paintable
-from muntjac.terminal.PaintTarget import PaintTarget
+from muntjac.terminal.IStreamVariable import IStreamVariable
+from muntjac.terminal.IPaintable import IPaintable
+from muntjac.terminal.IPaintTarget import IPaintTarget
 from muntjac.terminal.PaintException import PaintException
 
 
 logger = logging.getLogger(__name__)
 
 
-class JsonPaintTarget(PaintTarget):
+class JsonPaintTarget(IPaintTarget):
     """User Interface Description Language Target.
 
     TODO document better: role of this class, UIDL format,
@@ -102,7 +102,7 @@ class JsonPaintTarget(PaintTarget):
         @throws PaintException
                     if the paint operation failed.
         """
-        if isinstance(arg, Paintable):
+        if isinstance(arg, IPaintable):
             paintable, tagName = arg, arg2
             self.startTag(tagName, True)
             isPreviouslyPainted = (self._manager.hasPaintableId(paintable)
@@ -125,7 +125,7 @@ class JsonPaintTarget(PaintTarget):
             # Ensures that the target is open
             if self._closed:
                 raise PaintException, \
-                        'Attempted to write to a closed PaintTarget.'
+                        'Attempted to write to a closed IPaintTarget.'
 
             if self._tag is not None:
                 self._openJsonTags.put(self._tag)
@@ -158,7 +158,7 @@ class JsonPaintTarget(PaintTarget):
 
         # Ensure that the target is open
         if self._closed:
-            raise PaintException, 'Attempted to write to a closed PaintTarget.'
+            raise PaintException, 'Attempted to write to a closed IPaintTarget.'
 
         if len(self._openJsonTags) > 0:
             parent = self._openJsonTags.pop()
@@ -323,14 +323,14 @@ class JsonPaintTarget(PaintTarget):
             buf.write(']')
             self._tag.addAttribute(buf.getvalue())
             buf.close()
-        elif isinstance(value, Paintable):
+        elif isinstance(value, IPaintable):
             idd = self.getPaintIdentifier(value)
             self.addAttribute(name, idd)
-        elif isinstance(value, Resource):
+        elif isinstance(value, IResource):
 
             if isinstance(value, ExternalResource):
                 self.addAttribute(name, value.getURL())
-            elif isinstance(value, ApplicationResource):
+            elif isinstance(value, IApplicationResource):
                 r = value
                 a = r.getApplication()
                 if a is None:
@@ -356,7 +356,7 @@ class JsonPaintTarget(PaintTarget):
             i = 0
             for key, mapValue in value.iteritems():
                 sb.write('\"')
-                if isinstance(key, Paintable):
+                if isinstance(key, IPaintable):
                     paintable = key
                     sb.write( self.getPaintIdentifier(paintable) )
                 else:
@@ -396,10 +396,10 @@ class JsonPaintTarget(PaintTarget):
 
 
     def addVariable(self, owner, name, value):
-        if isinstance(value, Paintable):
+        if isinstance(value, IPaintable):
             var = StringVariable(owner, name, self.getPaintIdentifier(value))
             self._tag.addVariable(var)
-        elif isinstance(value, StreamVariable):
+        elif isinstance(value, IStreamVariable):
             url = self._manager.getStreamVariableTargetUrl(owner, name, value)
             if url is not None:
                 self.addVariable(owner, name, url)
@@ -465,7 +465,7 @@ class JsonPaintTarget(PaintTarget):
         """
         # Ensure that the target is open
         if self._closed:
-            raise PaintException, 'Attempted to write to a closed PaintTarget.'
+            raise PaintException, 'Attempted to write to a closed IPaintTarget.'
 
         # Make sure that the open start tag is closed before
         # anything is written.
@@ -487,12 +487,12 @@ class JsonPaintTarget(PaintTarget):
         @throws PaintException
                     if the paint operation failed.
 
-        @see com.vaadin.terminal.PaintTarget#addXMLSection(String, String,
+        @see com.vaadin.terminal.IPaintTarget#addXMLSection(String, String,
              String)
         """
         # Ensure that the target is open
         if self._closed:
-            raise PaintException, 'Attempted to write to a closed PaintTarget.'
+            raise PaintException, 'Attempted to write to a closed IPaintTarget.'
 
         self.startTag(sectionTagName)
 
@@ -514,7 +514,7 @@ class JsonPaintTarget(PaintTarget):
         if self._closed:
             return self._uidlBuffer.getvalue()
 
-        raise ValueError, 'Tried to read UIDL from open PaintTarget'
+        raise ValueError, 'Tried to read UIDL from open IPaintTarget'
 
 
     def close(self):
@@ -590,7 +590,7 @@ class JsonPaintTarget(PaintTarget):
             class1 = paintable.__class__
             while not self.hasClientWidgetMapping(class1):
                 superclass = getSuperClass(class1)
-                if superclass is not None and issubclass(class1, Paintable):
+                if superclass is not None and issubclass(class1, IPaintable):
                     class1 = superclass
                 else:
                     logger.warning(('No superclass of '

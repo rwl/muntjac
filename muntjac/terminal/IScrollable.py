@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class Scrollable(object):
+class IScrollable(object):
     """This interface is implemented by all visual objects that can be
     scrolled. The unit of scrolling is pixel.
 
@@ -32,7 +32,7 @@ class Scrollable(object):
 
         @return Horizontal scrolling position in pixels.
         """
-        pass
+        raise NotImplementedError
 
 
     def setScrollLeft(self, pixelsScrolled):
@@ -44,7 +44,7 @@ class Scrollable(object):
         @param pixelsScrolled
                    the xOffset.
         """
-        pass
+        raise NotImplementedError
 
 
     def getScrollTop(self):
@@ -55,7 +55,7 @@ class Scrollable(object):
 
         @return Vertical scrolling position in pixels.
         """
-        pass
+        raise NotImplementedError
 
 
     def setScrollTop(self, pixelsScrolled):
@@ -67,7 +67,7 @@ class Scrollable(object):
         @param pixelsScrolled
                    the yOffset.
         """
-        pass
+        raise NotImplementedError
 
 
     def isScrollable(self):
@@ -79,7 +79,7 @@ class Scrollable(object):
         @return <code>true</code> if the scrolling is allowed, otherwise
                 <code>false</code>.
         """
-        pass
+        raise NotImplementedError
 
 
     def setScrollable(self, isScrollingEnabled):
@@ -91,4 +91,4 @@ class Scrollable(object):
         @param isScrollingEnabled
                    true if the scrolling is allowed.
         """
-        pass
+        raise NotImplementedError

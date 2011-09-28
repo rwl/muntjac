@@ -14,11 +14,11 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.terminal.StreamVariable import StreamingEvent
+from muntjac.terminal.IStreamVariable import IStreamingEvent
 
 
-class AbstractStreamingEvent(StreamingEvent):
-    """Abstract base class for StreamingEvent implementations."""
+class AbstractStreamingEvent(IStreamingEvent):
+    """Abstract base class for IStreamingEvent implementations."""
 
     def __init__(self, filename, typ, length, bytesReceived):
         self._filename = filename

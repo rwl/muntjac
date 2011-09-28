@@ -22,7 +22,7 @@ from muntjac.ui.AbstractField import AbstractField
 from muntjac.event.ShortcutListener import ShortcutListener
 from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
 from muntjac.data.Property import Property
-from muntjac.ui.Component import Event as ComponentEvent
+from muntjac.ui.IComponent import Event as ComponentEvent
 
 #from muntjac.ui.ClientWidget import LoadStyle
 #from muntjac.terminal.gwt.client.ui.VButton import VButton

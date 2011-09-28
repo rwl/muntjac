@@ -14,11 +14,11 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.event.Action import Listener
+from muntjac.event.Action import IListener
 from muntjac.event.ShortcutAction import ShortcutAction
 
 
-class ShortcutListener(ShortcutAction, Listener):
+class ShortcutListener(ShortcutAction, IListener):
 
     def __init__(self, *args):
 

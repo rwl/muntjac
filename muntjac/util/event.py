@@ -10,5 +10,5 @@ class EventObject(object):
         return self._source
 
 
-class EventListener(object):
+class IEventListener(object):
     pass

@@ -16,14 +16,14 @@
 
 from muntjac.event.ShortcutListener import ShortcutListener
 from muntjac.ui.Panel import Panel
-from muntjac.terminal.URIHandler import URIHandler
+from muntjac.terminal.URIHandler import IUriHandler
 from muntjac.terminal.gwt.client.ui.VView import VView
-from muntjac.terminal.ParameterHandler import ParameterHandler
-from muntjac.terminal.Sizeable import Sizeable
+from muntjac.terminal.ParameterHandler import IParameterHandler
+from muntjac.terminal.Sizeable import ISizeable
 from muntjac.terminal.gwt.client.ui.VWindow import VWindow
 from muntjac.ui.ClientWidget import LoadStyle
 from urlparse import urljoin
-from muntjac.ui.Component import Event as ComponentEvent
+from muntjac.ui.IComponent import Event as ComponentEvent
 
 from muntjac.event.FieldEvents import \
     FocusNotifier, BlurNotifier, FocusEvent, BlurEvent, BlurListener, \
@@ -63,7 +63,7 @@ class ResizeListener(object):
         pass
 
 
-class Window(Panel, URIHandler, ParameterHandler, FocusNotifier, BlurNotifier):
+class Window(Panel, IUriHandler, IParameterHandler, FocusNotifier, BlurNotifier):
     """A component that represents an application (browser native) window or a sub
     window.
     <p>
@@ -322,7 +322,7 @@ class Window(Panel, URIHandler, ParameterHandler, FocusNotifier, BlurNotifier):
 
     def handleURI(self, context, relativeUri):
         """<b>Application window only</b>. Handles an URI by passing the URI to all
-        URI handlers defined using {@link #addURIHandler(URIHandler)}. All URI
+        URI handlers defined using {@link #addURIHandler(IUriHandler)}. All URI
         handlers are called for each URI but no more than one handler may return
         a {@link DownloadStream}. If more than one stream is returned a
         {@code RuntimeException} is thrown.
@@ -395,13 +395,13 @@ class Window(Panel, URIHandler, ParameterHandler, FocusNotifier, BlurNotifier):
 
     def handleParameters(self, parameters):
         """<b>Application window only</b>. Handles parameters by passing the
-        parameters to all {@code ParameterHandler}s defined using
-        {@link #addParameterHandler(ParameterHandler)}. All
-        {@code ParameterHandler}s are called for each set of parameters.
+        parameters to all {@code IParameterHandler}s defined using
+        {@link #addParameterHandler(IParameterHandler)}. All
+        {@code IParameterHandler}s are called for each set of parameters.
 
         @param parameters
                    a map containing the parameter names and values
-        @see ParameterHandler#handleParameters(Map)
+        @see IParameterHandler#handleParameters(Map)
         """
         if self._parameterHandlerList is not None:
             handlers = list(self._parameterHandlerList)
@@ -494,10 +494,10 @@ class Window(Panel, URIHandler, ParameterHandler, FocusNotifier, BlurNotifier):
             target.addAttribute('main', True)
 
         if self.getContent() is not None:
-            if self.getContent().getHeightUnits() == Sizeable.UNITS_PERCENTAGE:
+            if self.getContent().getHeightUnits() == ISizeable.UNITS_PERCENTAGE:
                 target.addAttribute('layoutRelativeHeight', True)
 
-            if self.getContent().getWidthUnits() == Sizeable.UNITS_PERCENTAGE:
+            if self.getContent().getWidthUnits() == ISizeable.UNITS_PERCENTAGE:
                 target.addAttribute('layoutRelativeWidth', True)
 
         # Open requested resource

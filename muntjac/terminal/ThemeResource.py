@@ -15,10 +15,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.service.FileTypeResolver import FileTypeResolver
-from muntjac.terminal.Resource import Resource
+from muntjac.terminal.IResource import IResource
 
 
-class ThemeResource(Resource):
+class ThemeResource(IResource):
     """<code>ThemeResource</code> is a named theme dependant resource
     provided and managed by a theme. The actual resource contents are
     dynamically resolved to comply with the used theme by the terminal
@@ -40,20 +40,20 @@ class ThemeResource(Resource):
         self._resourceID = None
 
         if resourceId is None:
-            raise ValueError, 'Resource ID must not be null'
+            raise ValueError, 'IResource ID must not be null'
 
         if len(resourceId) == 0:
-            raise ValueError, 'Resource ID can not be empty'
+            raise ValueError, 'IResource ID can not be empty'
 
         if resourceId[0] == '/':
             raise ValueError, \
-                    'Resource ID must be relative (can not begin with /)'
+                    'IResource ID must be relative (can not begin with /)'
 
         self._resourceID = resourceId
 
 
     def __eq__(self, obj):
-        """Tests if the given object equals this Resource.
+        """Tests if the given object equals this IResource.
 
         @param obj
                    the object to be tested for equality.
@@ -86,5 +86,5 @@ class ThemeResource(Resource):
 
 
     def getMIMEType(self):
-        """@see com.vaadin.terminal.Resource#getMIMEType()"""
+        """@see com.vaadin.terminal.IResource#getMIMEType()"""
         return FileTypeResolver.getMIMEType(self.getResourceId())

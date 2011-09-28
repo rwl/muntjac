@@ -14,11 +14,11 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.terminal.Terminal import ErrorEvent
+from muntjac.terminal.ITerminal import IErrorEvent as ITerminalErrorEvent
 
 
-class ParameterHandler(object):
-    """{@code ParameterHandler} is implemented by classes capable of handling
+class IParameterHandler(object):
+    """{@code IParameterHandler} is implemented by classes capable of handling
     external parameters.
 
     What parameters are provided depend on what the {@link Terminal} provides
@@ -26,8 +26,8 @@ class ParameterHandler(object):
     parameters are typically provided to the {@link #handleParameters(Map)}
     method.
 
-    A {@code ParameterHandler} must be registered to a {@code Window} using
-    {@link Window#addParameterHandler(ParameterHandler)} to be called when
+    A {@code IParameterHandler} must be registered to a {@code Window} using
+    {@link Window#addParameterHandler(IParameterHandler)} to be called when
     parameters are available.
 
     @author IT Mill Ltd.
@@ -43,15 +43,15 @@ class ParameterHandler(object):
                    an unmodifiable map which contains the parameter names
                    and values
         """
-        pass
+        raise NotImplementedError
 
 
-class ErrorEvent(ErrorEvent):
-    """An ErrorEvent implementation for ParameterHandler."""
+class IErrorEvent(ITerminalErrorEvent):
+    """An IErrorEvent implementation for IParameterHandler."""
 
     def getParameterHandler(self):
-        """Gets the ParameterHandler that caused the error.
+        """Gets the IParameterHandler that caused the error.
 
-        @return the ParameterHandler that caused the error
+        @return the IParameterHandler that caused the error
         """
-        pass
+        raise NotImplementedError

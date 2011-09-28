@@ -21,7 +21,7 @@ from muntjac.ui.AbstractField import AbstractField
 from muntjac.data.Item import Item
 from muntjac.terminal.gwt.client.ui.dd.VerticalDropLocation import VerticalDropLocation
 from muntjac.event.dd.acceptcriteria.ContainsDataFlavor import ContainsDataFlavor
-from muntjac.terminal.Resource import Resource
+from muntjac.terminal.IResource import IResource
 from muntjac.terminal.KeyMapper import KeyMapper
 from muntjac.event.dd.acceptcriteria.ClientSideCriterion import ClientSideCriterion
 from muntjac.event.dd.acceptcriteria.TargetDetailIs import TargetDetailIs
@@ -922,7 +922,7 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
             return None
 
         icon = ip.getValue()
-        if isinstance(icon, Resource):
+        if isinstance(icon, IResource):
             return icon
 
         return None
@@ -1038,7 +1038,7 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
         <p>
         If the property id is set to a valid value, each item is given an icon
         got from the given property of the items. The type of the property must
-        be assignable to Resource.
+        be assignable to IResource.
         </p>
 
         <p>
@@ -1062,10 +1062,10 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
             self._itemIconPropertyId = None
         elif not self.getContainerPropertyIds().contains(propertyId):
             raise ValueError, 'Property id not found in the container'
-        elif Resource in self.getType(propertyId).__mro__:  # FIXME: translate isAssignableFrom
+        elif IResource in self.getType(propertyId).__mro__:  # FIXME: translate isAssignableFrom
             self._itemIconPropertyId = propertyId
         else:
-            raise ValueError, 'Property type must be assignable to Resource'
+            raise ValueError, 'Property type must be assignable to IResource'
 
         self.requestRepaint()
 

@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.terminal.Scrollable import Scrollable
+from muntjac.terminal.IScrollable import IScrollable
 from muntjac.event.ActionManager import ActionManager
 from muntjac.event.Action import Action, Notifier
 from muntjac.ui.AbstractComponentContainer import AbstractComponentContainer
@@ -23,7 +23,7 @@ from muntjac.ui.VerticalLayout import VerticalLayout
 from muntjac.ui.ComponentContainer import \
     ComponentContainer, ComponentAttachListener, ComponentDetachListener
 
-from muntjac.ui.Component import Focusable
+from muntjac.ui.IComponent import IFocusable
 from muntjac.ui.Layout import Layout
 from muntjac.event.MouseEvents import ClickEvent, ClickListener
 
@@ -31,9 +31,9 @@ from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
 from muntjac.terminal.gwt.client.ui.VPanel import VPanel
 
 
-class Panel(AbstractComponentContainer, Scrollable, ComponentContainer,
+class Panel(AbstractComponentContainer, IScrollable, ComponentContainer,
             ComponentAttachListener, ComponentContainer,
-            ComponentDetachListener, Action, Notifier, Focusable):
+            ComponentDetachListener, Action, Notifier, IFocusable):
     """Panel - a simple single component container.
 
     @author IT Mill Ltd.
@@ -483,5 +483,5 @@ class Panel(AbstractComponentContainer, Scrollable, ComponentContainer,
 
 
     def focus(self):
-        """Moves keyboard focus to the component. {@see Focusable#focus()}"""
+        """Moves keyboard focus to the component. {@see IFocusable#focus()}"""
         super(Panel, self).focus()

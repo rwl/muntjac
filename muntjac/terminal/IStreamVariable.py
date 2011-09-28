@@ -15,10 +15,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class StreamVariable(object):
-    """StreamVariable is a special kind of variable whose value is streamed
+class IStreamVariable(object):
+    """IStreamVariable is a special kind of variable whose value is streamed
     to an {@link OutputStream} provided by the {@link #getOutputStream()}
-    method. E.g. in web terminals {@link StreamVariable} can be used to send
+    method. E.g. in web terminals {@link IStreamVariable} can be used to send
     large files from browsers to the server without consuming large amounts
     of memory.
 
@@ -31,18 +31,18 @@ class StreamVariable(object):
     @author IT Mill Ltd.
     @version @VERSION@
     @since 6.5
-    @see PaintTarget#addVariable(VariableOwner, String, StreamVariable)
+    @see PaintTarget#addVariable(VariableOwner, String, IStreamVariable)
     """
 
     def getOutputStream(self):
         """Invoked by the terminal when a new upload arrives, after
-        {@link #streamingStarted(StreamingStartEvent)} method has been called.
+        {@link #streamingStarted(IStreamingStartEvent)} method has been called.
         The terminal implementation will write the streamed variable to the
         returned output stream.
 
         @return Stream to which the uploaded file should be written.
         """
-        pass
+        raise NotImplementedError
 
 
     def listenProgress(self):
@@ -52,33 +52,33 @@ class StreamVariable(object):
         {@link #onProgress(long, long)} is called in a synchronized block
         when the content is being received. This is potentially bit slow,
         so we are calling that method only if requested. The value is
-        requested after the {@link #uploadStarted(StreamingStartEvent)}
+        requested after the {@link #uploadStarted(IStreamingStartEvent)}
         event, but not after reading each buffer.
 
-        @return true if this {@link StreamVariable} wants to by notified
+        @return true if this {@link IStreamVariable} wants to by notified
                 during the upload of the progress of streaming.
-        @see #onProgress(StreamingProgressEvent)
+        @see #onProgress(IStreamingProgressEvent)
         """
-        pass
+        raise NotImplementedError
 
 
     def onProgress(self, event):
         """This method is called by the terminal if {@link #listenProgress()}
         returns true when the streaming starts.
         """
-        pass
+        raise NotImplementedError
 
 
     def streamingStarted(self, event):
-        pass
+        raise NotImplementedError
 
 
     def streamingFinished(self, event):
-        pass
+        raise NotImplementedError
 
 
     def streamingFailed(self, event):
-        pass
+        raise NotImplementedError
 
 
     def isInterrupted(self):
@@ -93,60 +93,60 @@ class StreamVariable(object):
         @return true if the streaming should be interrupted as soon as
                 possible.
         """
-        pass
+        raise NotImplementedError
 
 
-class StreamingEvent(object):
+class IStreamingEvent(object):
 
     def getFileName(self):
         """@return the file name of the streamed file if known"""
-        pass
+        raise NotImplementedError
 
 
     def getMimeType(self):
         """@return the mime type of the streamed file if known"""
-        pass
+        raise NotImplementedError
 
 
     def getContentLength(self):
         """@return the length of the stream (in bytes) if known, else -1"""
-        pass
+        raise NotImplementedError
 
 
     def getBytesReceived(self):
-        """@return then number of bytes streamed to StreamVariable"""
-        pass
+        """@return then number of bytes streamed to IStreamVariable"""
+        raise NotImplementedError
 
 
-class StreamingStartEvent(StreamingEvent):
-    """Event passed to {@link #uploadStarted(StreamingStartEvent)} method
-    before the streaming of the content to {@link StreamVariable} starts.
+class IStreamingStartEvent(IStreamingEvent):
+    """Event passed to {@link #uploadStarted(IStreamingStartEvent)} method
+    before the streaming of the content to {@link IStreamVariable} starts.
     """
 
     def disposeStreamVariable(self):
-        """The owner of the StreamVariable can call this method to inform
-        the terminal implementation that this StreamVariable will not be
+        """The owner of the IStreamVariable can call this method to inform
+        the terminal implementation that this IStreamVariable will not be
         used to accept more post.
         """
-        pass
+        raise NotImplementedError
 
 
-class StreamingProgressEvent(StreamingEvent):
-    """Event passed to {@link #onProgress(StreamingProgressEvent)} method
+class IStreamingProgressEvent(IStreamingEvent):
+    """Event passed to {@link #onProgress(IStreamingProgressEvent)} method
     during the streaming progresses.
     """
-    pass
+    raise NotImplementedError
 
 
-class StreamingEndEvent(StreamingEvent):
-    """Event passed to {@link #uploadFinished(StreamingEndEvent)} method
-    the contents have been streamed to StreamVariable successfully.
+class IStreamingEndEvent(IStreamingEvent):
+    """Event passed to {@link #uploadFinished(IStreamingEndEvent)} method
+    the contents have been streamed to IStreamVariable successfully.
     """
-    pass
+    raise NotImplementedError
 
 
-class StreamingErrorEvent(StreamingEvent):
-    """Event passed to {@link #uploadFailed(StreamingErrorEvent)} method
+class IStreamingErrorEvent(IStreamingEvent):
+    """Event passed to {@link #uploadFailed(IStreamingErrorEvent)} method
     when the streaming ended before the end of the input. The streaming may
     fail due an interruption by {@link } or due an other unknown exception
     in communication. In the latter case the exception is also passed to
@@ -156,4 +156,4 @@ class StreamingErrorEvent(StreamingEvent):
     def getException(self):
         """@return the exception that caused the receiving not to finish
         cleanly"""
-        pass
+        raise NotImplementedError

@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.ui.AbstractLayout import AbstractLayout
-from muntjac.ui.Component import Component
+from muntjac.ui.IComponent import IComponent
 
 #from muntjac.terminal.gwt.client.ui.VCustomLayout import VCustomLayout
 #from muntjac.ui.ClientWidget import LoadStyle
@@ -129,7 +129,7 @@ class CustomLayout(AbstractLayout):
         @param location
                    the Location identifier of the component.
         """
-        if isinstance(arg, Component):
+        if isinstance(arg, IComponent):
             c = arg
             if c is None:
                 return
@@ -168,7 +168,7 @@ class CustomLayout(AbstractLayout):
         @param location
                    the name of the location where the requested component
                    resides.
-        @return the Component in the given location or null if not found.
+        @return the IComponent in the given location or null if not found.
         """
         return self._slots.get(location)
 

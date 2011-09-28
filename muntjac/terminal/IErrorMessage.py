@@ -14,10 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.terminal.Paintable import Paintable
+from muntjac.terminal.IPaintable import IPaintable
 
 
-class ErrorMessage(Paintable):
+class IErrorMessage(IPaintable):
     """Interface for rendering error messages to terminal. All the
     visible errors shown to user must implement this interface.
 
@@ -46,7 +46,7 @@ class ErrorMessage(Paintable):
 
         @return the level of error as an integer.
         """
-        pass
+        raise NotImplementedError
 
 
     def addListener(self, listener):
@@ -55,9 +55,9 @@ class ErrorMessage(Paintable):
 
         @param listener
                    the listener to be added.
-        @see com.vaadin.terminal.Paintable#addListener(listener)
+        @see com.vaadin.terminal.IPaintable#addListener(listener)
         """
-        pass
+        raise NotImplementedError
 
 
     def removeListener(self, listener):
@@ -66,15 +66,15 @@ class ErrorMessage(Paintable):
 
         @param listener
                    the listener to be removed.
-        @see com.vaadin.terminal.Paintable#removeListener(listener)
+        @see com.vaadin.terminal.IPaintable#removeListener(listener)
         """
-        pass
+        raise NotImplementedError
 
 
     def requestRepaint(self):
         """Error messages are inmodifiable and thus listeners are not needed.
         This method should be implemented as empty.
 
-        @see com.vaadin.terminal.Paintable#requestRepaint()
+        @see com.vaadin.terminal.IPaintable#requestRepaint()
         """
-        pass
+        raise NotImplementedError

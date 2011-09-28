@@ -31,7 +31,7 @@ from muntjac.event.ItemClickEvent import ItemClickEvent, ItemClickNotifier, Item
 from muntjac.event.DataBoundTransferable import DataBoundTransferable
 from muntjac.data.util.IndexedContainer import IndexedContainer
 from muntjac.ui.ClientWidget import LoadStyle
-from muntjac.ui.Component import Event as ComponentEvent
+from muntjac.ui.IComponent import Event as ComponentEvent
 
 from muntjac.ui.AbstractSelect import \
     AbstractSelect, MultiSelectMode, AbstractSelectTargetDetails

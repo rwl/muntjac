@@ -22,7 +22,7 @@ from muntjac.event.Action import Action
 from muntjac.ui.DefaultFieldFactory import DefaultFieldFactory
 from muntjac.event.dd.DragSource import DragSource
 from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
-from muntjac.ui.Component import Component, Event as ComponentEvent
+from muntjac.ui.IComponent import IComponent, Event as ComponentEvent
 from muntjac.event.DataBoundTransferable import DataBoundTransferable
 from muntjac.data.Property import ValueChangeNotifier
 from muntjac.ui.Field import Field
@@ -1243,7 +1243,7 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
             iscomponent = [None] * cols
             for i in range(cols):
                 iscomponent[i] = (colids[i] in self._columnGenerators) \
-                        or issubclass(self.getType(colids[i]), Component)
+                        or issubclass(self.getType(colids[i]), IComponent)
 
             if self._pageBuffer is not None \
                     and self._pageBuffer[self.CELL_ITEMID].length > 0:  # FIXME: check indexing
@@ -1289,7 +1289,7 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
                                 indexInOldBuffer = index - self._pageBufferFirstIndex
                                 value = self._pageBuffer[self.CELL_FIRSTCOL + j][indexInOldBuffer]
                                 if (not isGenerated and iscomponent[j]) \
-                                        or (not isinstance(value, Component)):
+                                        or (not isinstance(value, IComponent)):
                                     self.listenProperty(p, oldListenedProperties)
 
                             elif isGenerated:
@@ -1302,20 +1302,20 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
 
                             elif p is not None:
                                 value = self.getPropertyValue(idd, colids[j], p)
-                                # If returned value is Component (via
+                                # If returned value is IComponent (via
                                 # fieldfactory or overridden
                                 # getPropertyValue) we excpect it to listen
                                 # property value changes. Otherwise if
                                 # property emits value change events, table
                                 # will start to listen them and refresh
                                 # content when needed.
-                                if not isinstance(value, Component):
+                                if not isinstance(value, IComponent):
                                     self.listenProperty(p, oldListenedProperties)
 
                             else:
                                 value = self.getPropertyValue(idd, colids[j], None)
 
-                        if isinstance(value, Component):
+                        if isinstance(value, IComponent):
                             if (oldVisibleComponents is None) \
                                     or (not (value in oldVisibleComponents)):
                                 value.setParent(self)
@@ -1390,7 +1390,7 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
 
 
     def unregisterComponent(self, component):
-        """This method cleans up a Component that has been generated when Table is
+        """This method cleans up a IComponent that has been generated when Table is
         in editable mode. The component needs to be detached from its parent and
         if it is a field, it needs to be detached from its property data source
         in order to allow garbage collection to take care of removing the unused
@@ -1644,7 +1644,7 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
         return ids
 
 
-    # Component basics
+    # IComponent basics
 
 
     def changeVariables(self, source, variables):
@@ -2029,7 +2029,7 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
                     iscomponent[iscomponentIndex] = True
                 else:
                     colType = self.getType(columnId)
-                    iscomponent[iscomponentIndex] = colType is not None and issubclass(colType, Component)
+                    iscomponent[iscomponentIndex] = colType is not None and issubclass(colType, IComponent)
                 iscomponentIndex += 1
             except StopIteration:
                 break
@@ -2207,7 +2207,7 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
 
             if iscomponent[currentColumn] \
                     or iseditable \
-                    and isinstance(Component, cells[self.CELL_FIRSTCOL + currentColumn][indexInRowbuffer]):
+                    and isinstance(IComponent, cells[self.CELL_FIRSTCOL + currentColumn][indexInRowbuffer]):
                 c = cells[self.CELL_FIRSTCOL + currentColumn][indexInRowbuffer]
                 if c is None:
                     target.addText('')
@@ -2303,7 +2303,7 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
                    the Id of the column.
         @param property
                    the Property to be presented.
-        @return Object Either formatted value or Component for field.
+        @return Object Either formatted value or IComponent for field.
         @see #setTableFieldFactory(TableFieldFactory)
         """
         if self.isEditable() and self._fieldFactory is not None:
@@ -2408,7 +2408,7 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
     def attach(self):
         """Notifies the component that it is connected to an application.
 
-        @see com.vaadin.ui.Component#attach()
+        @see com.vaadin.ui.IComponent#attach()
         """
         super(Table, self).attach()
 
@@ -2422,7 +2422,7 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
     def detach(self):
         """Notifies the component that it is detached from the application
 
-        @see com.vaadin.ui.Component#detach()
+        @see com.vaadin.ui.IComponent#detach()
         """
         super(Table, self).detach()
 

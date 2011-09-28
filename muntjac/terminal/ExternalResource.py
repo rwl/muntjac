@@ -15,10 +15,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.service.FileTypeResolver import FileTypeResolver
-from muntjac.terminal.Resource import Resource
+from muntjac.terminal.IResource import IResource
 
 
-class ExternalResource(Resource):
+class ExternalResource(IResource):
     """<code>ExternalResource</code> implements source for resources fetched
     from location specified by URL:s. The resources are fetched directly by
     the client terminal and are not fetched trough the terminal adapter.
@@ -62,7 +62,7 @@ class ExternalResource(Resource):
     def getMIMEType(self):
         """Gets the MIME type of the resource.
 
-        @see com.vaadin.terminal.Resource#getMIMEType()
+        @see com.vaadin.terminal.IResource#getMIMEType()
         """
         if self._mimeType is None:
             self._mimeType = FileTypeResolver.getMIMEType(self.getURL())

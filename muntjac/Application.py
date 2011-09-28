@@ -17,15 +17,15 @@
 import logging
 import locale
 
-from muntjac.util.event import EventObject, EventListener
-from muntjac.terminal.URIHandler import URIHandler
+from muntjac.util.event import EventObject, IEventListener
+from muntjac.terminal.IUriHandler import IUriHandler
 from muntjac.terminal.SystemError import SystemErr
-from muntjac.terminal.Terminal import ErrorListener, Terminal
-from muntjac.terminal.ParameterHandler import ErrorEvent
-from muntjac.terminal.ErrorMessage import ErrorMessage
-from muntjac.terminal.VariableOwner import ErrorEvent as VariableOwnerErrorEvent
-from muntjac.terminal.URIHandler import ErrorEvent as URIHandlerErrorEvent
-from muntjac.terminal.ParameterHandler import ErrorEvent as ParameterHandlerErrorEvent
+from muntjac.terminal.ITerminal import IErrorListener, ITerminal
+from muntjac.terminal.IParameterHandler import IErrorEvent
+from muntjac.terminal.IErrorMessage import IErrorMessage
+from muntjac.terminal.IVariableOwner import IErrorEvent as VariableOwnerErrorEvent
+from muntjac.terminal.IUriHandler import IErrorEvent as URIHandlerErrorEvent
+from muntjac.terminal.IParameterHandler import IErrorEvent as ParameterHandlerErrorEvent
 from muntjac.terminal.gwt.server.ChangeVariablesErrorEvent import ChangeVariablesErrorEvent
 from muntjac.ui.AbstractComponent import AbstractComponent
 
@@ -543,7 +543,7 @@ class CustomizedSystemMessages(SystemMessages):
         self.cookiesDisabledMessage = cookiesDisabledMessage
 
 
-class Application(URIHandler, Terminal, ErrorListener):
+class Application(IUriHandler, ITerminal, IErrorListener):
     """<p>
     Base class required for all Vaadin applications. This class provides all the
     basic services required by Vaadin. These services allow external discovery
@@ -587,7 +587,7 @@ class Application(URIHandler, Terminal, ErrorListener):
     found out, the window itself is queried for a preferred theme. If the window
     does not prefer a specific theme, the application containing the window is
     queried. If neither the application prefers a theme, the default theme for
-    the {@link com.vaadin.terminal.Terminal terminal} is used. The terminal
+    the {@link com.vaadin.terminal.ITerminal terminal} is used. The terminal
     always defines a default theme.
     </p>
 
@@ -1181,13 +1181,13 @@ class Application(URIHandler, Terminal, ErrorListener):
 
         @deprecated this method is called be the terminal implementation only and
                     might be removed or moved in the future. Instead of
-                    overriding this method, add your {@link URIHandler} to a top
+                    overriding this method, add your {@link IUriHandler} to a top
                     level {@link Window} (eg.
                     getMainWindow().addUriHanler(handler) instead.
         """
         raise DeprecationWarning, "this method is called be the terminal " \
             "implementation only and might be removed or moved in the future. " \
-            "Instead of overriding this method, add your {@link URIHandler} to " \
+            "Instead of overriding this method, add your {@link IUriHandler} to " \
             "a top level {@link Window} (eg. getMainWindow().addUriHanler(handler) " \
             "instead."
 
@@ -1378,7 +1378,7 @@ class Application(URIHandler, Terminal, ErrorListener):
 
         @param event
                    the change event.
-        @see com.vaadin.terminal.Terminal.ErrorListener#terminalError(com.vaadin.terminal.Terminal.ErrorEvent)
+        @see com.vaadin.terminal.ITerminal.IErrorListener#terminalError(com.vaadin.terminal.ITerminal.IErrorEvent)
         """
         t = event.getThrowable()
         if isinstance(t, IOError):  #SocketException
@@ -1399,12 +1399,12 @@ class Application(URIHandler, Terminal, ErrorListener):
             owner = event.getComponent()
         # Shows the error in AbstractComponent
         if isinstance(owner, AbstractComponent):
-            if isinstance(t, ErrorMessage):
+            if isinstance(t, IErrorMessage):
                 owner.setComponentError(t)
             else:
                 owner.setComponentError( SystemErr(t) )
         # also print the error on console
-        self._logger.critical('Terminal error: ' + str(t))
+        self._logger.critical('ITerminal error: ' + str(t))
 
 
     def getContext(self):
@@ -1515,7 +1515,7 @@ class UserChangeEvent(EventObject):
         return self.getSource()
 
 
-class UserChangeListener(EventListener):
+class UserChangeListener(IEventListener):
     """The <code>UserChangeListener</code> interface for listening application
     user changes.
 
@@ -1625,7 +1625,7 @@ class WindowDetachListener(object):
         pass
 
 
-class ApplicationError(ErrorEvent):
+class ApplicationError(IErrorEvent):
     """Application error is an error message defined on the application level.
 
     When an error occurs on the application level, this error message type

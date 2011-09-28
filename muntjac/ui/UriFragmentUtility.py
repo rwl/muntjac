@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.ui.AbstractComponent import AbstractComponent
-from muntjac.ui.Component import Event as ComponentEvent
+from muntjac.ui.IComponent import Event as ComponentEvent
 
 #from muntjac.terminal.gwt.client.ui.VUriFragmentUtility import VUriFragmentUtility
 #from muntjac.ui.ClientWidget import LoadStyle

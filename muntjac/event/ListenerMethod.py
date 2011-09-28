@@ -16,11 +16,11 @@
 
 import logging
 
-from muntjac.util.event import EventListener
+from muntjac.util.event import IEventListener
 from muntjac.data.util.MethodProperty import MethodException
 
 
-class ListenerMethod(EventListener):
+class ListenerMethod(IEventListener):
     """<p>
     One registered event listener. This class contains the listener object
     reference, listened event type, the trigger method to call when the event

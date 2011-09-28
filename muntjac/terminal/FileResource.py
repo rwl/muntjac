@@ -17,12 +17,12 @@
 from os.path import getsize, basename
 
 from muntjac.service.FileTypeResolver import FileTypeResolver
-from muntjac.terminal.ApplicationResource import ApplicationResource
+from muntjac.terminal.IApplicationResource import IApplicationResource
 from muntjac.terminal.DownloadStream import DownloadStream
-from muntjac.terminal.Terminal import ErrorEvent
+from muntjac.terminal.ITerminal import IErrorEvent
 
 
-class FileResource(ApplicationResource):
+class FileResource(IApplicationResource):
     """<code>FileResources</code> are files or directories on local
     filesystem. The files and directories are served through URI:s to
     the client terminal and thus must be registered to an URI context
@@ -58,7 +58,7 @@ class FileResource(ApplicationResource):
     def getStream(self):
         """Gets the resource as stream.
 
-        @see muntjac.terminal.ApplicationResource#getStream()
+        @see muntjac.terminal.IApplicationResource#getStream()
         """
         try:
             ds = DownloadStream(file(self._sourceFile, 'rb'),
@@ -70,7 +70,7 @@ class FileResource(ApplicationResource):
             return ds
         except IOError:
             # Log the exception using the application error handler
-            class Error(ErrorEvent):
+            class Error(IErrorEvent):
 
                 def getThrowable(self):
                     return self.e
@@ -97,12 +97,12 @@ class FileResource(ApplicationResource):
 
 
     def getApplication(self):
-        """@see com.vaadin.terminal.ApplicationResource#getApplication()"""
+        """@see com.vaadin.terminal.IApplicationResource#getApplication()"""
         return self._application
 
 
     def getFilename(self):
-        """@see com.vaadin.terminal.ApplicationResource#getFilename()"""
+        """@see com.vaadin.terminal.IApplicationResource#getFilename()"""
         return basename(self._sourceFile)
 
 

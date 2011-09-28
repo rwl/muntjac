@@ -14,10 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.terminal.ErrorMessage import ErrorMessage
+from muntjac.terminal.IErrorMessage import IErrorMessage
 
 
-class UserError(ErrorMessage):
+class UserError(IErrorMessage):
     """<code>UserError</code> is a controlled error occurred in
     application. User errors are occur in normal usage of the
     application and guide the user.
@@ -32,8 +32,8 @@ class UserError(ErrorMessage):
     # Content mode, where the error contains preformatted text.
     CONTENT_PREFORMATTED = 1
 
-    # Formatted content mode, where the contents is XML restricted to the UIDL
-    # 1.0 formatting markups.
+    # Formatted content mode, where the contents is XML restricted
+    # to the UIDL 1.0 formatting markups.
     CONTENT_UIDL = 2
 
     def __init__(self, message, contentMode=None, errorLevel=None):
@@ -58,7 +58,7 @@ class UserError(ErrorMessage):
         self._msg = message
 
         # Error level.
-        self._level = ErrorMessage.ERROR
+        self._level = IErrorMessage.ERROR
 
         if contentMode is not None:
             # Check the parameters
@@ -89,16 +89,16 @@ class UserError(ErrorMessage):
         target.startTag('error')
 
         # Error level
-        if self._level >= ErrorMessage.SYSTEMERROR:
+        if self._level >= IErrorMessage.SYSTEMERROR:
             target.addAttribute('level', 'system')
 
-        elif self._level >= ErrorMessage.CRITICAL:
+        elif self._level >= IErrorMessage.CRITICAL:
             target.addAttribute('level', 'critical')
 
-        elif self._level >= ErrorMessage.ERROR:
+        elif self._level >= IErrorMessage.ERROR:
             target.addAttribute('level', 'error')
 
-        elif self._level >= ErrorMessage.WARNING:
+        elif self._level >= IErrorMessage.WARNING:
             target.addAttribute('level', 'warning')
 
         else:

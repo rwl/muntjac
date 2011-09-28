@@ -16,19 +16,19 @@
 
 import re
 
-from muntjac.ui.Component import \
-    Component, Listener, Focusable, Event as ComponentEvent
+from muntjac.ui.IComponent import \
+    IComponent, IListener, IFocusable, Event as ComponentEvent
 
 from muntjac.event.MethodEventSource import MethodEventSource
 from muntjac.terminal.gwt.server.ComponentSizeValidator import ComponentSizeValidator
 from muntjac.event.EventRouter import EventRouter
-from muntjac.terminal.Terminal import ErrorEvent as TerminalErrorEvent
-from muntjac.terminal.Paintable import RepaintRequestEvent
+from muntjac.terminal.ITerminal import IErrorEvent as TerminalErrorEvent
+from muntjac.terminal.IPaintable import RepaintRequestEvent
 
 
-class AbstractComponent(Component, MethodEventSource):
+class AbstractComponent(IComponent, MethodEventSource):
     """An abstract class that defines default implementation for the
-    {@link Component} interface. Basic UI components that are not derived from an
+    {@link IComponent} interface. Basic UI components that are not derived from an
     external component can inherit this class to easily qualify as Vaadin
     components. Most components in Vaadin do just that.
 
@@ -38,7 +38,7 @@ class AbstractComponent(Component, MethodEventSource):
     """
 
     def __init__(self):
-        """Constructs a new Component."""
+        """Constructs a new IComponent."""
         # Style names.
         self._styles = None
 
@@ -83,7 +83,7 @@ class AbstractComponent(Component, MethodEventSource):
         # Locale of this component.
         self._locale = None
 
-        # The component should receive focus (if {@link Focusable}) when attached.
+        # The component should receive focus (if {@link IFocusable}) when attached.
         self._delayedFocus = None
         # List of repaint request listeners or null if not listened at all.
         self._repaintRequestListeners = None
@@ -241,7 +241,7 @@ class AbstractComponent(Component, MethodEventSource):
         """Sets the locale of this component.
 
         <pre>
-        // Component for which the locale is meaningful
+        // IComponent for which the locale is meaningful
         InlineDateField date = new InlineDateField(&quot;Datum&quot;);
 
         // German language specified with ISO 639-1 language
@@ -330,7 +330,7 @@ class AbstractComponent(Component, MethodEventSource):
         @param immediate
                    the boolean value specifying if the component should be in the
                    immediate mode after the call.
-        @see Component#isImmediate()
+        @see IComponent#isImmediate()
         """
         self._immediate = immediate
         self.requestRepaint()
@@ -477,7 +477,7 @@ class AbstractComponent(Component, MethodEventSource):
         """Sets the component's error message. The message may contain certain XML
         tags, for more information see
 
-        @link Component.ErrorMessage#ErrorMessage(String, int)
+        @link IComponent.ErrorMessage#ErrorMessage(String, int)
 
         @param componentError
                    the new <code>ErrorMessage</code> of the component.
@@ -531,8 +531,8 @@ class AbstractComponent(Component, MethodEventSource):
 
 
     def focus(self):
-        """Sets the focus for this component if the component is {@link Focusable}."""
-        if isinstance(self, Focusable):
+        """Sets the focus for this component if the component is {@link IFocusable}."""
+        if isinstance(self, IFocusable):
             app = self.getApplication()
             if app is not None:
                 self.getWindow().setFocusedComponent(self)
@@ -764,7 +764,7 @@ class AbstractComponent(Component, MethodEventSource):
         <p>
         Note: Using this method is discouraged because it cannot be checked
         during compilation. Use {@link #addListener(Class, Object, Method)} or
-        {@link #addListener(com.vaadin.ui.Component.Listener)} instead.
+        {@link #addListener(com.vaadin.ui.IComponent.IListener)} instead.
         </p>
 
         @param eventType
@@ -777,7 +777,7 @@ class AbstractComponent(Component, MethodEventSource):
         """
         nargs = len(args)
         if nargs == 1:
-            if isinstance(args[0], Listener):
+            if isinstance(args[0], IListener):
                 listener = args[0]
                 self.addListener(ComponentEvent, listener,
                                  self._COMPONENT_EVENT_METHOD)
@@ -918,7 +918,7 @@ class AbstractComponent(Component, MethodEventSource):
         """
         nargs = len(args)
         if nargs == 1:
-            if isinstance(args[0], Listener):
+            if isinstance(args[0], IListener):
                 listener = [0]
                 self.removeListener(ComponentEvent, listener,
                                     self._COMPONENT_EVENT_METHOD)
@@ -964,7 +964,7 @@ class AbstractComponent(Component, MethodEventSource):
         pass
 
 
-    _COMPONENT_EVENT_METHOD = getattr(Listener, 'componentEvent')
+    _COMPONENT_EVENT_METHOD = getattr(IListener, 'componentEvent')
 
 
     def hasListeners(self, eventType):

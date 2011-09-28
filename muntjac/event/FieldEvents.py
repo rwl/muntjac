@@ -16,7 +16,7 @@
 
 from muntjac.terminal.gwt.client.EventId import EventId
 from muntjac.event.ComponentEventListener import ComponentEventListener
-from muntjac.ui.Component import Event as ComponentEvent
+from muntjac.ui.IComponent import Event as ComponentEvent
 
 
 class FieldEvents(object):

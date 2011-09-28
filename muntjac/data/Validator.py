@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.terminal.ErrorMessage import ErrorMessage
+from muntjac.terminal.IErrorMessage import IErrorMessage
 
 
 class Validator(object):
@@ -67,7 +67,7 @@ class Validator(object):
         pass
 
 
-class InvalidValueException(RuntimeError, ErrorMessage):
+class InvalidValueException(RuntimeError, IErrorMessage):
     """Exception that is thrown by a {@link Validator} when a value is invalid.
 
     @author IT Mill Ltd.
@@ -124,7 +124,7 @@ class InvalidValueException(RuntimeError, ErrorMessage):
 
 
     def getErrorLevel(self):
-        return ErrorMessage.ERROR
+        return IErrorMessage.ERROR
 
 
     def paint(self, target):

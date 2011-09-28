@@ -15,8 +15,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class Resource(object):
-    """<code>Resource</code> provided to the client terminal. Support for
+class IResource(object):
+    """<code>IResource</code> provided to the client terminal. Support for
     actually displaying the resource type is left to the terminal.
 
     @author IT Mill Ltd.
@@ -29,4 +29,4 @@ class Resource(object):
 
         @return the MIME type of the resource.
         """
-        pass
+        raise NotImplementedError

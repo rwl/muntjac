@@ -14,11 +14,11 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.ui.Component import Component, Event
+from muntjac.ui.IComponent import IComponent, Event
 
 
-class ComponentContainer(Component):
-    """Extension to the {@link Component} interface which adds to it the capacity to
+class ComponentContainer(IComponent):
+    """Extension to the {@link IComponent} interface which adds to it the capacity to
     contain other components. All UI elements that can have child elements
     implement this interface.
 
@@ -59,7 +59,7 @@ class ComponentContainer(Component):
         component overtakes the position of the old component. If the old
         component is not in the container, the new component is added to the
         container. If the both component are already in the container, their
-        positions are swapped. Component attach and detach events should be taken
+        positions are swapped. IComponent attach and detach events should be taken
         care as with add and remove.
         </p>
 
@@ -122,7 +122,7 @@ class ComponentContainer(Component):
 
 
 class ComponentAttachListener(object):
-    """Component attach listener interface."""
+    """IComponent attach listener interface."""
 
     def componentAttachedToContainer(self, event):
         """A new component is attached to container.
@@ -134,7 +134,7 @@ class ComponentAttachListener(object):
 
 
 class ComponentDetachListener(object):
-    """Component detach listener interface."""
+    """IComponent detach listener interface."""
 
     def componentDetachedFromContainer(self, event):
         """A component has been detached from container.
@@ -146,7 +146,7 @@ class ComponentDetachListener(object):
 
 
 class ComponentAttachEvent(Event):
-    """Component attach event sent when a component is attached to container."""
+    """IComponent attach event sent when a component is attached to container."""
 
     def __init__(self, container, attachedComponent):
         """Creates a new attach event.
@@ -180,7 +180,7 @@ class ComponentAttachEvent(Event):
 
 
 class ComponentDetachEvent(Event):
-    """Component detach event sent when a component is detached from container."""
+    """IComponent detach event sent when a component is detached from container."""
 
     def __init__(self, container, detachedComponent):
         """Creates a new detach event.

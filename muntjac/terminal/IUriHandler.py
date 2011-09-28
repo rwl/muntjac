@@ -14,11 +14,11 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.terminal.Terminal import ErrorEvent as TerminalErrorEvent
+from muntjac.terminal.ITerminal import IErrorEvent as ITerminalErrorEvent
 
 
-class URIHandler(object):
-    """A URIHandler is used for handling URI:s requested by the user and can
+class IUriHandler(object):
+    """A IUriHandler is used for handling URI:s requested by the user and can
     optionally provide a {@link DownloadStream}. If a {@link DownloadStream}
     is returned by {@link #handleURI(URL, String)}, the stream is sent to the
     client.
@@ -41,12 +41,12 @@ class URIHandler(object):
         pass
 
 
-class ErrorEvent(TerminalErrorEvent):
-    """An {@code ErrorEvent} implementation for URIHandler."""
+class IErrorEvent(ITerminalErrorEvent):
+    """An {@code IErrorEvent} implementation for IUriHandler."""
 
     def getURIHandler(self):
-        """Gets the URIHandler that caused this error.
+        """Gets the IUriHandler that caused this error.
 
-        @return the URIHandler that caused the error
+        @return the IUriHandler that caused the error
         """
         pass

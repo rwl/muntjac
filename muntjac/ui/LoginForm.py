@@ -19,13 +19,13 @@ try:
 except ImportError, e:
     from StringIO import StringIO
 
-from muntjac.ui.Component import Event
+from muntjac.ui.IComponent import Event
 from muntjac.ui.Embedded import Embedded
 from muntjac.ui.CustomComponent import CustomComponent
-from muntjac.terminal.ApplicationResource import ApplicationResource
-from muntjac.terminal.URIHandler import URIHandler
+from muntjac.terminal.IApplicationResource import IApplicationResource
+from muntjac.terminal.IUriHandler import IUriHandler
 from muntjac.terminal.DownloadStream import DownloadStream
-from muntjac.terminal.ParameterHandler import ParameterHandler
+from muntjac.terminal.IParameterHandler import IParameterHandler
 
 from muntjac.terminal.gwt.client.ApplicationConnection import ApplicationConnection
 
@@ -100,7 +100,7 @@ class LoginForm(CustomComponent):
         self.addStyleName('v-loginform')
 
         self.loginPage = LoginPage(self)  # FIXME: translate inner classes
-        self.parameterHandler = ParameterHandler()
+        self.parameterHandler = IParameterHandler()
         self.uriHandler = UriHandler()
 
 
@@ -270,7 +270,7 @@ class LoginForm(CustomComponent):
 
 
 
-class LoginPage(ApplicationResource):
+class LoginPage(IApplicationResource):
 
     def __init__(self, _LoginForm_this_):
         self._LoginForm_this_ = _LoginForm_this_
@@ -302,7 +302,7 @@ class LoginPage(ApplicationResource):
         return "text/html; charset=utf-8"
 
 
-class ParamHandler(ParameterHandler):
+class ParamHandler(IParameterHandler):
 
     def handleParameters(self, parameters):
         if 'username' in parameters:
@@ -323,7 +323,7 @@ class ParamHandler(ParameterHandler):
             self.fireEvent(event)
 
 
-class UriHandler(URIHandler):
+class UriHandler(IUriHandler):
 
     def __init__(self):
         self._responce = '<html><body>Login form handeled.' \

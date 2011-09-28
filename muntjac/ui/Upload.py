@@ -16,10 +16,10 @@
 
 from muntjac.ui.AbstractComponent import AbstractComponent
 
-from muntjac.ui.Component import Component, Focusable, Event as ComponentEvent
+from muntjac.ui.IComponent import IComponent, IFocusable, Event as ComponentEvent
 
-from muntjac.terminal.StreamVariable import \
-    StreamingProgressEvent, StreamVariable
+from muntjac.terminal.IStreamVariable import \
+    IStreamingProgressEvent, IStreamVariable
 
 from muntjac.terminal.gwt.server.Exceptions import \
     NoInputStreamException, NoOutputStreamException
@@ -110,8 +110,8 @@ class ProgressListener(object):
         pass
 
 
-class Upload(AbstractComponent, Component, Focusable):
-    """Component for uploading files from client to server.
+class Upload(AbstractComponent, IComponent, IFocusable):
+    """IComponent for uploading files from client to server.
 
     <p>
     The visible component consists of a file name input box and a browse button
@@ -402,7 +402,7 @@ class Upload(AbstractComponent, Component, Focusable):
     def getReceiver(self):
         """Returns the current receiver.
 
-        @return the StreamVariable.
+        @return the IStreamVariable.
         """
         return self._receiver
 
@@ -422,17 +422,17 @@ class Upload(AbstractComponent, Component, Focusable):
 
 
     def getTabIndex(self):
-        """Gets the Tabulator index of this Focusable component.
+        """Gets the Tabulator index of this IFocusable component.
 
-        @see com.vaadin.ui.Component.Focusable#getTabIndex()
+        @see com.vaadin.ui.IComponent.IFocusable#getTabIndex()
         """
         return self._tabIndex
 
 
     def setTabIndex(self, tabIndex):
-        """Sets the Tabulator index of this Focusable component.
+        """Sets the Tabulator index of this IFocusable component.
 
-        @see com.vaadin.ui.Component.Focusable#setTabIndex(int)
+        @see com.vaadin.ui.IComponent.IFocusable#setTabIndex(int)
         """
         self._tabIndex = tabIndex
 
@@ -578,7 +578,7 @@ class Upload(AbstractComponent, Component, Focusable):
         # is being streamed.
         if self._streamVariable is None:
 
-            class InnerStreamVariable(StreamVariable):  # FIXME: inner class
+            class InnerStreamVariable(IStreamVariable):  # FIXME: inner class
 
                 def __init__(self, upload):
                     self._upload = upload
@@ -640,7 +640,7 @@ class Upload(AbstractComponent, Component, Focusable):
 
 
     def getListeners(self, eventType):
-        if issubclass(eventType, StreamingProgressEvent):
+        if issubclass(eventType, IStreamingProgressEvent):
             if self._progressListeners is None:
                 return list()
             else:

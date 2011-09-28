@@ -15,11 +15,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.service.FileTypeResolver import FileTypeResolver
-from muntjac.terminal.ApplicationResource import ApplicationResource
+from muntjac.terminal.IApplicationResource import IApplicationResource
 from muntjac.terminal.DownloadStream import DownloadStream
 
 
-class StreamResource(ApplicationResource):
+class StreamResource(IApplicationResource):
     """<code>StreamResource</code> is a resource provided to the client
     directly by the application. The strean resource is fetched from URI
     that is most often in the context of the application or window. The
@@ -119,12 +119,12 @@ class StreamResource(ApplicationResource):
 
 
     def getApplication(self):
-        """@see com.vaadin.terminal.ApplicationResource#getApplication()"""
+        """@see com.vaadin.terminal.IApplicationResource#getApplication()"""
         return self._application
 
 
     def getStream(self):
-        """@see com.vaadin.terminal.ApplicationResource#getStream()"""
+        """@see com.vaadin.terminal.IApplicationResource#getStream()"""
         ss = self.getStreamSource()
         if ss is None:
             return None

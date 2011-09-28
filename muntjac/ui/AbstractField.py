@@ -31,7 +31,7 @@ from muntjac.terminal.CompositeErrorMessage import CompositeErrorMessage
 from muntjac.event.ActionManager import ActionManager
 from muntjac.data.Validator import InvalidValueException
 from muntjac.data.Validatable import Validatable
-from muntjac.ui.Component import Event as ComponentEvent
+from muntjac.ui.IComponent import Event as ComponentEvent
 
 
 class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeListener, Property, ReadOnlyStatusChangeNotifier, Action, ShortcutNotifier):

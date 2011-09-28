@@ -14,15 +14,15 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.terminal.VariableOwner import VariableOwner
-from muntjac.terminal.Sizeable import Sizeable
-from muntjac.terminal.Paintable import Paintable
-from muntjac.util.event import EventObject, EventListener
+from muntjac.terminal.IVariableOwner import IVariableOwner
+from muntjac.terminal.ISizeable import ISizeable
+from muntjac.terminal.IPaintable import IPaintable
+from muntjac.util.event import EventObject, IEventListener
 
 
-class Component(Paintable, VariableOwner, Sizeable):
-    """{@code Component} is the top-level interface that is and must be implemented
-    by all Vaadin components. {@code Component} is paired with
+class IComponent(IPaintable, IVariableOwner, ISizeable):
+    """{@code IComponent} is the top-level interface that is and must be implemented
+    by all Vaadin components. {@code IComponent} is paired with
     {@link AbstractComponent}, which provides a default implementation for all
     the methods defined in this interface.
 
@@ -35,9 +35,9 @@ class Component(Paintable, VariableOwner, Sizeable):
 
     <p>
     The {@link #getParent()} method allows retrieving the parent component of a
-    component. While there is a {@link #setParent(Component) setParent()}, you
+    component. While there is a {@link #setParent(IComponent) setParent()}, you
     rarely need it as you normally add components with the
-    {@link ComponentContainer#addComponent(Component) addComponent()} method of
+    {@link ComponentContainer#addComponent(IComponent) addComponent()} method of
     the layout or other {@code ComponentContainer}, which automatically sets the
     parent.
     </p>
@@ -72,7 +72,7 @@ class Component(Paintable, VariableOwner, Sizeable):
         @see #addStyleName(String)
         @see #removeStyleName(String)
         """
-        pass
+        raise NotImplementedError
 
 
     def setStyleName(self, style):
@@ -116,7 +116,7 @@ class Component(Paintable, VariableOwner, Sizeable):
 
         <p>
         This method will trigger a
-        {@link com.vaadin.terminal.Paintable.RepaintRequestEvent
+        {@link com.vaadin.terminal.IPaintable.RepaintRequestEvent
         RepaintRequestEvent}.
         </p>
 
@@ -127,7 +127,7 @@ class Component(Paintable, VariableOwner, Sizeable):
         @see #addStyleName(String)
         @see #removeStyleName(String)
         """
-        pass
+        raise NotImplementedError
 
 
     def addStyleName(self, style):
@@ -161,7 +161,7 @@ class Component(Paintable, VariableOwner, Sizeable):
 
         <p>
         This method will trigger a
-        {@link com.vaadin.terminal.Paintable.RepaintRequestEvent
+        {@link com.vaadin.terminal.IPaintable.RepaintRequestEvent
         RepaintRequestEvent}.
         </p>
 
@@ -171,7 +171,7 @@ class Component(Paintable, VariableOwner, Sizeable):
         @see #setStyleName(String)
         @see #removeStyleName(String)
         """
-        pass
+        raise NotImplementedError
 
 
     def removeStyleName(self, style):
@@ -190,7 +190,7 @@ class Component(Paintable, VariableOwner, Sizeable):
         @see #setStyleName(String)
         @see #addStyleName(String)
         """
-        pass
+        raise NotImplementedError
 
 
     def isEnabled(self):
@@ -206,9 +206,9 @@ class Component(Paintable, VariableOwner, Sizeable):
 
         @return <code>true</code> if the component and its parent are enabled,
                 <code>false</code> otherwise.
-        @see VariableOwner#isEnabled()
+        @see IVariableOwner#isEnabled()
         """
-        pass
+        raise NotImplementedError
 
 
     def setEnabled(self, enabled):
@@ -231,7 +231,7 @@ class Component(Paintable, VariableOwner, Sizeable):
 
         <p>
         This method will trigger a
-        {@link com.vaadin.terminal.Paintable.RepaintRequestEvent
+        {@link com.vaadin.terminal.IPaintable.RepaintRequestEvent
         RepaintRequestEvent} for the component and, if it is a
         {@link ComponentContainer}, for all its children recursively.
         </p>
@@ -240,7 +240,7 @@ class Component(Paintable, VariableOwner, Sizeable):
                    a boolean value specifying if the component should be enabled
                    or not
         """
-        pass
+        raise NotImplementedError
 
 
     def isVisible(self):
@@ -272,7 +272,7 @@ class Component(Paintable, VariableOwner, Sizeable):
         @see #setVisible(boolean)
         @see #attach()
         """
-        pass
+        raise NotImplementedError
 
 
     def setVisible(self, visible):
@@ -302,7 +302,7 @@ class Component(Paintable, VariableOwner, Sizeable):
                    visible after the call or not.
         @see #isVisible()
         """
-        pass
+        raise NotImplementedError
 
 
     def getParent(self):
@@ -315,9 +315,9 @@ class Component(Paintable, VariableOwner, Sizeable):
         </p>
 
         @return the parent component
-        @see #setParent(Component)
+        @see #setParent(IComponent)
         """
-        pass
+        raise NotImplementedError
 
 
     def setParent(self, parent):
@@ -333,7 +333,7 @@ class Component(Paintable, VariableOwner, Sizeable):
 
         <p>
         This method is rarely called directly. The
-        {@link ComponentContainer#addComponent(Component)} method is normally
+        {@link ComponentContainer#addComponent(IComponent)} method is normally
         used for adding components to a container and it will call this method
         implicitly.
         </p>
@@ -349,7 +349,7 @@ class Component(Paintable, VariableOwner, Sizeable):
                     if a parent is given even though the component already has a
                     parent
         """
-        pass
+        raise NotImplementedError
 
 
     def isReadOnly(self):
@@ -380,7 +380,7 @@ class Component(Paintable, VariableOwner, Sizeable):
                 read-only mode, <code>false</code> if not.
         @see #setReadOnly(boolean)
         """
-        pass
+        raise NotImplementedError
 
 
     def setReadOnly(self, readOnly):
@@ -407,7 +407,7 @@ class Component(Paintable, VariableOwner, Sizeable):
 
         <p>
         This method will trigger a
-        {@link com.vaadin.terminal.Paintable.RepaintRequestEvent
+        {@link com.vaadin.terminal.IPaintable.RepaintRequestEvent
         RepaintRequestEvent}.
         </p>
 
@@ -415,7 +415,7 @@ class Component(Paintable, VariableOwner, Sizeable):
                    a boolean value specifying whether the component is put
                    read-only mode or not
         """
-        pass
+        raise NotImplementedError
 
 
     def getCaption(self):
@@ -430,7 +430,7 @@ class Component(Paintable, VariableOwner, Sizeable):
                 not set.
         @see #setCaption(String)
         """
-        pass
+        raise NotImplementedError
 
 
     def setCaption(self, caption):
@@ -478,7 +478,7 @@ class Component(Paintable, VariableOwner, Sizeable):
 
         <p>
         This method will trigger a
-        {@link com.vaadin.terminal.Paintable.RepaintRequestEvent
+        {@link com.vaadin.terminal.IPaintable.RepaintRequestEvent
         RepaintRequestEvent}. A reimplementation should call the superclass
         implementation.
         </p>
@@ -488,7 +488,7 @@ class Component(Paintable, VariableOwner, Sizeable):
                    {@code null}, no caption is shown and it does not normally
                    take any space
         """
-        pass
+        raise NotImplementedError
 
 
     def getIcon(self):
@@ -502,7 +502,7 @@ class Component(Paintable, VariableOwner, Sizeable):
                 component has no icon
         @see #setIcon(Resource)
         """
-        pass
+        raise NotImplementedError
 
 
     def setIcon(self, icon):
@@ -522,12 +522,12 @@ class Component(Paintable, VariableOwner, Sizeable):
         </p>
 
         <pre>
-        // Component with an icon from a custom theme
+        // IComponent with an icon from a custom theme
         TextField name = new TextField(&quot;Name&quot;);
         name.setIcon(new ThemeResource(&quot;icons/user.png&quot;));
         layout.addComponent(name);
 
-        // Component with an icon from another theme ('runo')
+        // IComponent with an icon from another theme ('runo')
         Button ok = new Button(&quot;OK&quot;);
         ok.setIcon(new ThemeResource(&quot;../runo/icons/16/ok.png&quot;));
         layout.addComponent(ok);
@@ -553,7 +553,7 @@ class Component(Paintable, VariableOwner, Sizeable):
         </p>
 
         This method will trigger a
-        {@link com.vaadin.terminal.Paintable.RepaintRequestEvent
+        {@link com.vaadin.terminal.IPaintable.RepaintRequestEvent
         RepaintRequestEvent}.
 
         @param icon
@@ -562,7 +562,7 @@ class Component(Paintable, VariableOwner, Sizeable):
         @see #getIcon()
         @see #setCaption(String)
         """
-        pass
+        raise NotImplementedError
 
 
     def getWindow(self):
@@ -582,7 +582,7 @@ class Component(Paintable, VariableOwner, Sizeable):
         @return the parent window of the component or <code>null</code> if it is
                 not attached to a window or is itself a window
         """
-        pass
+        raise NotImplementedError
 
 
     def getApplication(self):
@@ -600,14 +600,14 @@ class Component(Paintable, VariableOwner, Sizeable):
         @return the parent application of the component or <code>null</code>.
         @see #attach()
         """
-        pass
+        raise NotImplementedError
 
 
     def attach(self):
         """Notifies the component that it is connected to an application.
 
         <p>
-        The caller of this method is {@link #setParent(Component)} if the parent
+        The caller of this method is {@link #setParent(IComponent)} if the parent
         is itself already attached to the application. If not, the parent will
         call the {@link #attach()} for all its children when it is attached to
         the application. This method is always called before the component is
@@ -640,7 +640,7 @@ class Component(Paintable, VariableOwner, Sizeable):
         component from a container triggers calling the {@link #detach()} method.
         If the parent of an added component is already connected to the
         application, the {@code attach()} is called immediately from
-        {@link #setParent(Component)}.
+        {@link #setParent(IComponent)}.
         </p>
 
         <pre>
@@ -666,7 +666,7 @@ class Component(Paintable, VariableOwner, Sizeable):
 
         @see #getApplication()
         """
-        pass
+        raise NotImplementedError
 
 
     def detach(self):
@@ -678,13 +678,13 @@ class Component(Paintable, VariableOwner, Sizeable):
         </p>
 
         <p>
-        The caller of this method is {@link #setParent(Component)} if the parent
+        The caller of this method is {@link #setParent(IComponent)} if the parent
         is in the application. When the parent is detached from the application
         it is its response to call {@link #detach()} for all the children and to
         detach itself from the terminal.
         </p>
         """
-        pass
+        raise NotImplementedError
 
 
     def getLocale(self):
@@ -708,7 +708,7 @@ class Component(Paintable, VariableOwner, Sizeable):
                 none of its parents has a locale set and the component is not yet
                 attached to an application.
         """
-        pass
+        raise NotImplementedError
 
 
     def childRequestedRepaint(self, alreadyNotified):
@@ -735,14 +735,14 @@ class Component(Paintable, VariableOwner, Sizeable):
                    and pass it forward. A {@code null} parameter is interpreted
                    as an empty collection.
         """
-        pass
+        raise NotImplementedError
 
 
     def addListener(self, listener):
         """Registers a new (generic) component event listener for the component.
 
         <pre>
-        class Listening extends CustomComponent implements Listener {
+        class Listening extends CustomComponent implements IListener {
             // Stored for determining the source of an event
             Button ok;
 
@@ -785,11 +785,11 @@ class Component(Paintable, VariableOwner, Sizeable):
         </pre>
 
         @param listener
-                   the new Listener to be registered.
-        @see Component.Event
-        @see #removeListener(Listener)
+                   the new IListener to be registered.
+        @see IComponent.Event
+        @see #removeListener(IListener)
         """
-        pass
+        raise NotImplementedError
 
 
     def removeListener(self, listener):
@@ -798,9 +798,9 @@ class Component(Paintable, VariableOwner, Sizeable):
 
         @param listener
                    the listener to be removed.
-        @see #addListener(Listener)
+        @see #addListener(IListener)
         """
-        pass
+        raise NotImplementedError
 
 
 class Event(EventObject):
@@ -825,10 +825,10 @@ class Event(EventObject):
     <p>
     Notice that while each of the event types have their corresponding
     listener types; the listener interfaces are not required to inherit the
-    {@code Component.Listener} interface.
+    {@code IComponent.IListener} interface.
     </p>
 
-    @see Component.Listener
+    @see IComponent.IListener
     """
 
     def __init__(self, source):
@@ -848,14 +848,14 @@ class Event(EventObject):
         return self.getSource()
 
 
-class Listener(EventListener):
-    """Listener interface for receiving <code>Component.Event</code>s.
+class IListener(IEventListener):
+    """IListener interface for receiving <code>IComponent.Event</code>s.
 
     <p>
-    Listener interfaces are the basis of all user interaction handling in
+    IListener interfaces are the basis of all user interaction handling in
     Vaadin. You have or create a listener object that receives the events.
     All event types have their corresponding listener types; they are not,
-    however, required to inherit the {@code Component.Listener} interface,
+    however, required to inherit the {@code IComponent.IListener} interface,
     and they rarely do so.
     </p>
 
@@ -868,7 +868,7 @@ class Listener(EventListener):
     </p>
 
     <pre>
-    class Listening extends CustomComponent implements Listener {
+    class Listening extends CustomComponent implements IListener {
         Button ok; // Stored for determining the source of an event
 
         Label status; // For displaying info about the event
@@ -911,7 +911,7 @@ class Listener(EventListener):
     layout.addComponent(listening);
     </pre>
 
-    @see Component#addListener(Listener)
+    @see IComponent#addListener(IListener)
     """
 
     def componentEvent(self, event):
@@ -938,10 +938,10 @@ class Listener(EventListener):
         @param event
                    the event that has occured.
         """
-        pass
+        raise NotImplementedError
 
 
-class ErrorEvent(Event):
+class IErrorEvent(Event):
     """Class of all component originated error events.
 
     <p>
@@ -960,7 +960,7 @@ class ErrorEvent(Event):
         @param component
                    the source component.
         """
-        super(ErrorEvent, self)(component)
+        super(IErrorEvent, self)(component)
         self._message = message
 
 
@@ -972,8 +972,8 @@ class ErrorEvent(Event):
         return self._message
 
 
-class ErrorListener(EventListener):
-    """Listener interface for receiving <code>Component.Errors</code>s."""
+class IErrorListener(IEventListener):
+    """IListener interface for receiving <code>IComponent.Errors</code>s."""
 
     def componentError(self, event):
         """Notifies the listener of a component error.
@@ -981,10 +981,10 @@ class ErrorListener(EventListener):
         @param event
                    the event that has occured.
         """
-        pass
+        raise NotImplementedError
 
 
-class Focusable(Component):
+class IFocusable(IComponent):
     """A sub-interface implemented by components that can obtain input focus.
     This includes all {@link Field} components as well as some other
     components, such as {@link Upload}.
@@ -1036,20 +1036,20 @@ class Focusable(Component):
         @see com.vaadin.event.FieldEvents.BlurEvent
         @see com.vaadin.event.FieldEvents.BlurListener
         """
-        pass
+        raise NotImplementedError
 
 
     def getTabIndex(self):
-        """Gets the <i>tabulator index</i> of the {@code Focusable} component.
+        """Gets the <i>tabulator index</i> of the {@code IFocusable} component.
 
-        @return tab index set for the {@code Focusable} component
+        @return tab index set for the {@code IFocusable} component
         @see #setTabIndex(int)
         """
-        pass
+        raise NotImplementedError
 
 
     def setTabIndex(self, tabIndex):
-        """Sets the <i>tabulator index</i> of the {@code Focusable} component.
+        """Sets the <i>tabulator index</i> of the {@code IFocusable} component.
         The tab index property is used to specify the order in which the
         fields are focused when the user presses the Tab key. Components with
         a defined tab index are focused sequentially first, and then the
@@ -1109,4 +1109,4 @@ class Focusable(Component):
                    included in the tabbing sequence.
         @see #getTabIndex()
         """
-        pass
+        raise NotImplementedError

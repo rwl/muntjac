@@ -21,7 +21,7 @@ except ImportError, e:
 
 from muntjac.data.util.ObjectProperty import ObjectProperty
 from muntjac.ui.AbstractComponent import AbstractComponent
-from muntjac.ui.Component import Event as ComponentEvent
+from muntjac.ui.IComponent import Event as ComponentEvent
 
 from muntjac.data.Property import \
     Property, ValueChangeListener, ValueChangeNotifier, Viewer, \

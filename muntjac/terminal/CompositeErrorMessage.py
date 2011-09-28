@@ -16,10 +16,10 @@
 
 import sys
 
-from muntjac.terminal.ErrorMessage import ErrorMessage
+from muntjac.terminal.IErrorMessage import IErrorMessage
 
 
-class CompositeErrorMessage(ErrorMessage):
+class CompositeErrorMessage(IErrorMessage):
     """Class for combining multiple error messages together.
 
     @author IT Mill Ltd
@@ -53,7 +53,7 @@ class CompositeErrorMessage(ErrorMessage):
     def getErrorLevel(self):
         """The error level is the largest error level in
 
-        @see com.vaadin.terminal.ErrorMessage#getErrorLevel()
+        @see com.vaadin.terminal.IErrorMessage#getErrorLevel()
         """
         return self._level
 
@@ -87,16 +87,16 @@ class CompositeErrorMessage(ErrorMessage):
         else:
             target.startTag('error')
 
-            if self._level > 0 and self._level <= ErrorMessage.INFORMATION:
+            if self._level > 0 and self._level <= IErrorMessage.INFORMATION:
                 target.addAttribute('level', 'info')
 
-            elif self._level <= ErrorMessage.WARNING:
+            elif self._level <= IErrorMessage.WARNING:
                 target.addAttribute('level', 'warning')
 
-            elif self._level <= ErrorMessage.ERROR:
+            elif self._level <= IErrorMessage.ERROR:
                 target.addAttribute('level', 'error')
 
-            elif self._level <= ErrorMessage.CRITICAL:
+            elif self._level <= IErrorMessage.CRITICAL:
                 target.addAttribute('level', 'critical')
 
             else:

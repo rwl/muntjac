@@ -16,8 +16,8 @@
 
 from muntjac.ui.AbstractComponentContainer import AbstractComponentContainer
 from muntjac.terminal.KeyMapper import KeyMapper
-from muntjac.ui.Component import Component, Event as ComponentEvent
-from muntjac.terminal.Paintable import RepaintRequestListener
+from muntjac.ui.IComponent import IComponent, Event as ComponentEvent
+from muntjac.terminal.IPaintable import IRepaintRequestListener
 from muntjac.terminal.gwt.server.CommunicationManager import CommunicationManager
 
 #from muntjac.terminal.gwt.client.ui.VTabsheet import VTabsheet
@@ -52,7 +52,7 @@ class TabSheet(AbstractComponentContainer):
     visibility, enabledness, closability etc.) is kept in separate {@link Tab}
     instances.
 
-    Tabs added with {@link #addComponent(Component)} get the caption and the icon
+    Tabs added with {@link #addComponent(IComponent)} get the caption and the icon
     of the component at the time when the component is created, and these are not
     automatically updated after tab creation.
 
@@ -165,18 +165,18 @@ class TabSheet(AbstractComponentContainer):
 
     def removeTab(self, tab):
         """Removes a {@link Tab} and the component associated with it, as previously
-        added with {@link #addTab(Component)},
-        {@link #addTab(Component, String, Resource)} or
-        {@link #addComponent(Component)}.
+        added with {@link #addTab(IComponent)},
+        {@link #addTab(IComponent, String, Resource)} or
+        {@link #addComponent(IComponent)}.
         <p>
         If the tab was selected, the first eligible (visible and enabled)
         remaining tab is selected.
         </p>
 
-        @see #addTab(Component)
-        @see #addTab(Component, String, Resource)
-        @see #addComponent(Component)
-        @see #removeComponent(Component)
+        @see #addTab(IComponent)
+        @see #addTab(IComponent, String, Resource)
+        @see #addComponent(IComponent)
+        @see #removeComponent(IComponent)
         @param tab
                    the Tab to remove
         """
@@ -184,10 +184,10 @@ class TabSheet(AbstractComponentContainer):
 
 
     def addComponent(self, c):
-        """Adds a new tab into TabSheet. Component caption and icon are copied to
+        """Adds a new tab into TabSheet. IComponent caption and icon are copied to
         the tab metadata at creation time.
 
-        @see #addTab(Component)
+        @see #addTab(IComponent)
 
         @param c
                    the component to be added.
@@ -236,7 +236,7 @@ class TabSheet(AbstractComponentContainer):
                    the position at where the the tab should be added.
         @return the created {@link Tab}
         ---
-        Adds a new tab into TabSheet. Component caption and icon are copied to
+        Adds a new tab into TabSheet. IComponent caption and icon are copied to
         the tab metadata at creation time.
 
         If the tab sheet already contains the component, its tab is returned.
@@ -245,7 +245,7 @@ class TabSheet(AbstractComponentContainer):
                    the component to be added onto tab - should not be null.
         @return the created {@link Tab}
         ---
-        Adds a new tab into TabSheet. Component caption and icon are copied to
+        Adds a new tab into TabSheet. IComponent caption and icon are copied to
         the tab metadata at creation time.
 
         If the tab sheet already contains the component, its tab is returned.
@@ -414,7 +414,7 @@ class TabSheet(AbstractComponentContainer):
 
         @param c
                    the component in the tab
-        @deprecated Use {@link #getTab(Component)} and {@link Tab#getCaption()}
+        @deprecated Use {@link #getTab(IComponent)} and {@link Tab#getCaption()}
                     instead.
         """
         info = self._tabs.get(c)
@@ -431,7 +431,7 @@ class TabSheet(AbstractComponentContainer):
                    the component in the tab
         @param caption
                    the caption to set.
-        @deprecated Use {@link #getTab(Component)} and
+        @deprecated Use {@link #getTab(IComponent)} and
                     {@link Tab#setCaption(String)} instead.
         """
         info = self._tabs.get(c)
@@ -446,7 +446,7 @@ class TabSheet(AbstractComponentContainer):
 
         @param c
                    the component in the tab
-        @deprecated Use {@link #getTab(Component)} and {@link Tab#getIcon()}
+        @deprecated Use {@link #getTab(IComponent)} and {@link Tab#getIcon()}
                     instead.
         """
         info = self._tabs.get(c)
@@ -464,7 +464,7 @@ class TabSheet(AbstractComponentContainer):
                    the component in the tab
         @param icon
                    the icon to set
-        @deprecated Use {@link #getTab(Component)} and
+        @deprecated Use {@link #getTab(IComponent)} and
                     {@link Tab#setIcon(Resource)} instead.
         """
         info = self._tabs.get(c)
@@ -488,7 +488,7 @@ class TabSheet(AbstractComponentContainer):
                    the position of the tab
         @return
         """
-        if isinstance(arg, Component):
+        if isinstance(arg, IComponent):
             c = arg
             return self._tabs.get(c)
         else:
@@ -681,7 +681,7 @@ class TabSheet(AbstractComponentContainer):
         @param listener
                    the Listener to be removed.
         """
-        if isinstance(listener, RepaintRequestListener):
+        if isinstance(listener, IRepaintRequestListener):
             super(TabSheet, self).removeListener(listener)
             if isinstance(listener, CommunicationManager):
                 # clean the paintedTabs here instead of detach to avoid subtree
@@ -702,7 +702,7 @@ class TabSheet(AbstractComponentContainer):
         e.g. show a confirmation dialogue before removing the tab.
 
         To remove the tab, if you provide your own close handler, you must call
-        {@link #removeComponent(Component)} yourself.
+        {@link #removeComponent(IComponent)} yourself.
 
         The default CloseHandler for TabSheet will only remove the tab.
 
@@ -769,7 +769,7 @@ class Tab(object):
     in the tab.
 
     Tabs are identified by the component contained on them in most cases, and
-    the meta-data can be obtained with {@link TabSheet#getTab(Component)}.
+    the meta-data can be obtained with {@link TabSheet#getTab(IComponent)}.
     """
 
     def isVisible(self):

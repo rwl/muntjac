@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class Sizeable(object):
+class ISizeable(object):
     """Interface to be implemented by components wishing to display some
     object that may be dynamically resized during runtime.
 
@@ -66,7 +66,7 @@ class Sizeable(object):
     # <li>{@link #UNITS_INCH}: "in"</li>
     # <li>{@link #UNITS_PERCENTAGE}: "%"</li>
     # </ul>
-    # These can be used like <code>Sizeable.UNIT_SYMBOLS[UNITS_PIXELS]</code>.
+    # These can be used like <code>ISizeable.UNIT_SYMBOLS[UNITS_PIXELS]</code>.
     UNIT_SYMBOLS = ['px', 'pt', 'pc', 'em', 'ex', 'mm', 'cm', 'in', '%']
 
 
@@ -76,7 +76,7 @@ class Sizeable(object):
 
         @return width of the object in units specified by widthUnits property.
         """
-        pass
+        raise NotImplementedError
 
 
     def setWidth(self, *args):
@@ -119,7 +119,7 @@ class Sizeable(object):
                    in CSS style string representation, null or empty string
                    to reset
         """
-        pass
+        raise NotImplementedError
 
 
     def getHeight(self):
@@ -129,7 +129,7 @@ class Sizeable(object):
         @return height of the object in units specified by heightUnits
                 property.
         """
-        pass
+        raise NotImplementedError
 
 
     def setHeight(self, *args):
@@ -171,7 +171,7 @@ class Sizeable(object):
                    {@link #UNITS_MM}, {@link #UNITS_CM}, {@link #UNITS_INCH},
                    {@link #UNITS_PERCENTAGE}.
         """
-        pass
+        raise NotImplementedError
 
 
     def getWidthUnits(self):
@@ -179,7 +179,7 @@ class Sizeable(object):
 
         @return units used in width property.
         """
-        pass
+        raise NotImplementedError
 
 
     def setWidthUnits(self, units):
@@ -191,7 +191,7 @@ class Sizeable(object):
                     {@link #setWidth(width)} or
                     {@link #setWidth(width, unit)}, which is less error-prone.
         """
-        pass
+        raise NotImplementedError
 
 
     def getHeightUnits(self):
@@ -199,7 +199,7 @@ class Sizeable(object):
 
         @return units used in height property.
         """
-        pass
+        raise NotImplementedError
 
 
     def setHeightUnits(self, units):
@@ -211,14 +211,14 @@ class Sizeable(object):
                     {@link #setHeight(width)} or
                     {@link #setHeight(width, unit)}, which is less error-prone.
         """
-        pass
+        raise NotImplementedError
 
 
     def setSizeFull(self):
         """Sets the size to 100% x 100%."""
-        pass
+        raise NotImplementedError
 
 
     def setSizeUndefined(self):
         """Clears any size settings."""
-        pass
+        raise NotImplementedError

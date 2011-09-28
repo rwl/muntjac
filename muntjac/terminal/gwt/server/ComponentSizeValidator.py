@@ -25,7 +25,7 @@ except ImportError, e:
     from StringIO import StringIO
 
 from muntjac.ui.OrderedLayout import OrderedLayout
-from muntjac.terminal.Sizeable import Sizeable
+from muntjac.terminal.ISizeable import ISizeable
 from muntjac.ui.CustomComponent import CustomComponent
 from muntjac.ui.Panel import Panel
 from muntjac.ui.ComponentContainer import ComponentContainer
@@ -196,7 +196,7 @@ class ComponentSizeValidator(object):
             width += 'MAIN WINDOW'
         elif component.getWidth() >= 0:
             width += 'ABSOLUTE, ' + component.getWidth() + ' ' \
-                + Sizeable.UNIT_SYMBOLS[ component.getWidthUnits() ]
+                + ISizeable.UNIT_SYMBOLS[ component.getWidthUnits() ]
         else:
             width += 'UNDEFINED'
 
@@ -212,7 +212,7 @@ class ComponentSizeValidator(object):
             height += 'MAIN WINDOW'
         elif component.getHeight() > 0:
             height += 'ABSOLUTE, ' + component.getHeight() + ' ' \
-                + Sizeable.UNIT_SYMBOLS[ component.getHeightUnits() ]
+                + ISizeable.UNIT_SYMBOLS[ component.getHeightUnits() ]
         else:
             height += 'UNDEFINED'
 
@@ -344,7 +344,7 @@ class ComponentSizeValidator(object):
 
     @classmethod
     def hasRelativeHeight(cls, component):
-        return (component.getHeightUnits() == Sizeable.UNITS_PERCENTAGE
+        return (component.getHeightUnits() == ISizeable.UNITS_PERCENTAGE
                 and component.getHeight() > 0)
 
 
@@ -373,7 +373,7 @@ class ComponentSizeValidator(object):
     @classmethod
     def hasRelativeWidth(cls, paintable):
         return (paintable.getWidth() > 0
-                and paintable.getWidthUnits() == Sizeable.UNITS_PERCENTAGE)
+                and paintable.getWidthUnits() == ISizeable.UNITS_PERCENTAGE)
 
 
     @classmethod

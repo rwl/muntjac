@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.event.Action import Action, Container, Handler, Notifier, Listener
+from muntjac.event.Action import Action, Container, Handler, Notifier, IListener
 from muntjac.terminal.KeyMapper import KeyMapper
 from muntjac.event.ShortcutAction import ShortcutAction
 
@@ -198,5 +198,5 @@ class ActionManager(Action, Container, Handler, Notifier):
 
         if self.ownActions is not None \
                 and action in self.ownActions \
-                and isinstance(action, Listener):
+                and isinstance(action, IListener):
             action.handleAction(sender, target)

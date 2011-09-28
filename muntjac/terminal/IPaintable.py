@@ -14,10 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.util.event import EventListener, EventObject
+from muntjac.util.event import IEventListener, EventObject
 
 
-class Paintable(EventListener):
+class IPaintable(IEventListener):
     """Interface implemented by all classes that can be painted. Classes
     implementing this interface know how to output themselves to a UIDL
     stream and that way describing to the terminal how it should be displayed
@@ -29,7 +29,7 @@ class Paintable(EventListener):
     """
 
     def paint(self, target):
-        """Paints the Paintable into a UIDL stream. This method creates the
+        """Paints the IPaintable into a UIDL stream. This method creates the
         UIDL sequence describing it and outputs it to the given UIDL stream.
 
         It is called when the contents of the component should be painted in
@@ -42,13 +42,13 @@ class Paintable(EventListener):
         @throws PaintException
                     if the paint operation failed.
         """
-        pass
+        raise NotImplementedError
 
 
     def requestRepaint(self):
         """Requests that the paintable should be repainted as soon as
         possible."""
-        pass
+        raise NotImplementedError
 
 
     def setDebugId(self, idd):
@@ -64,7 +64,7 @@ class Paintable(EventListener):
         @param id
                    A short (< 20 chars) alphanumeric id
         """
-        pass
+        raise NotImplementedError
 
 
     def getDebugId(self):
@@ -72,7 +72,7 @@ class Paintable(EventListener):
 
         @return current debug id, null if not set
         """
-        pass
+        raise NotImplementedError
 
 
     def addListener(self, listener):
@@ -83,7 +83,7 @@ class Paintable(EventListener):
         @param listener
                    the listener to be added.
         """
-        pass
+        raise NotImplementedError
 
 
     def removeListener(self, listener):
@@ -92,7 +92,7 @@ class Paintable(EventListener):
         @param listener
                    the listener to be removed.
         """
-        pass
+        raise NotImplementedError
 
 
     def requestRepaintRequests(self):
@@ -107,7 +107,7 @@ class Paintable(EventListener):
         about implicit repaints (painting the component without actually
         invoking paint method).
         """
-        pass
+        raise NotImplementedError
 
 
 class RepaintRequestEvent(EventObject):
@@ -128,13 +128,13 @@ class RepaintRequestEvent(EventObject):
     def getPaintable(self):
         """Gets the paintable needing repainting.
 
-        @return Paintable for which the <code>paint</code> method will return
+        @return IPaintable for which the <code>paint</code> method will return
                 dissimilar UIDL from the previous call of the method.
         """
         return self.getSource()
 
 
-class RepaintRequestListener(object):
+class IRepaintRequestListener(object):
     """Listens repaint requests. The <code>repaintRequested</code> method is
     called when the paintable needs to be repainted. This is typically done
     when the <code>paint</code> method would return dissimilar UIDL from the
@@ -147,4 +147,4 @@ class RepaintRequestListener(object):
         @param event
                    the repaint request event specifying the paintable source.
         """
-        pass
+        raise NotImplementedError

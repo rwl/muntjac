@@ -18,10 +18,10 @@ from time import time
 from datetime import date
 
 from muntjac.terminal.gwt.client.VBrowserDetails import VBrowserDetails
-from muntjac.terminal.Terminal import Terminal
+from muntjac.terminal.ITerminal import ITerminal
 
 
-class WebBrowser(Terminal):
+class WebBrowser(ITerminal):
     """Class that provides information about the web browser the user is
     using. Provides information such as browser name and version, screen
     resolution and IP address.

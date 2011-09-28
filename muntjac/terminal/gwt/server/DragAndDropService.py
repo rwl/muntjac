@@ -17,7 +17,7 @@
 import logging
 
 from muntjac.event.dd.TargetDetailsImpl import TargetDetailsImpl
-from muntjac.terminal.VariableOwner import VariableOwner
+from muntjac.terminal.IVariableOwner import IVariableOwner
 from muntjac.terminal.gwt.server.JsonPaintTarget import JsonPaintTarget
 from muntjac.event.dd.DragAndDropEvent import DragAndDropEvent
 from muntjac.event.TransferableImpl import TransferableImpl
@@ -29,7 +29,7 @@ from muntjac.terminal.gwt.client.ui.dd.VDragAndDropManager import DragEventType
 logger = logging.getLogger(__name__)
 
 
-class DragAndDropService(VariableOwner):
+class DragAndDropService(IVariableOwner):
 
     def __init__(self, manager):
         self._manager = manager

@@ -33,12 +33,12 @@ from muntjac.util.name import clsname
 
 from muntjac.terminal.gwt.server.JsonPaintTarget import JsonPaintTarget
 from muntjac.terminal.gwt.server.Exceptions import UploadException
-from muntjac.terminal.Paintable import Paintable, RepaintRequestListener
-from muntjac.terminal.Terminal import ErrorEvent as TerminalErrorEvent
-from muntjac.terminal.URIHandler import ErrorEvent as URIHandlerErrorEvent
+from muntjac.terminal.IPaintable import IPaintable, IRepaintRequestListener
+from muntjac.terminal.ITerminal import IErrorEvent as TerminalErrorEvent
+from muntjac.terminal.IUriHandler import IErrorEvent as URIHandlerErrorEvent
 
 from muntjac.ui.Window import Window
-from muntjac.ui.Component import Component
+from muntjac.ui.IComponent import IComponent
 from muntjac.ui.AbstractField import AbstractField
 
 from muntjac.terminal.gwt.server.StreamingEvents import \
@@ -69,16 +69,16 @@ from muntjac.terminal.gwt.server.StreamingEvents import \
 logger = logging.getLogger(__file__)
 
 
-class AbstractCommunicationManager(Paintable, RepaintRequestListener):
+class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
     """This is a common base class for the server-side implementations of
     the communication system between the client code (compiled with GWT
     into JavaScript) and the server side components. Its client side
     counterpart is {@link ApplicationConnection}.
 
     A server side component sends its state to the client in a paint request
-    (see {@link Paintable} and {@link PaintTarget} on the server side). The
+    (see {@link IPaintable} and {@link PaintTarget} on the server side). The
     client widget receives these paint requests as calls to
-    {@link com.vaadin.terminal.gwt.client.Paintable#updateFromUIDL()}. The
+    {@link com.vaadin.terminal.gwt.client.IPaintable#updateFromUIDL()}. The
     client component communicates back to the server by sending a list of
     variable changes (see {@link ApplicationConnection#updateVariable()} and
     {@link VariableOwner#changeVariables(Object, Map)}).
@@ -639,9 +639,9 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
                             self._application.getMainWindow().getTerminal())
 
                 # This does not seem to happen in tk5, but remember this case:
-                # else if (p instanceof Component) { if (((Component)
-                # p).getParent() == null || ((Component) p).getApplication() ==
-                # null) { // Component requested repaint, but is no // longer
+                # else if (p instanceof IComponent) { if (((IComponent)
+                # p).getParent() == null || ((IComponent) p).getApplication() ==
+                # null) { // IComponent requested repaint, but is no // longer
                 # attached: skip paintablePainted(p); continue; } }
 
                 # TODO we may still get changes that have been
@@ -954,7 +954,7 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
                         if close is not None and bool(close):
                             self._closingWindowName = owner.getName()
                 except Exception, e:
-                    if isinstance(owner, Component):
+                    if isinstance(owner, IComponent):
                         self._handleChangeVariablesError(app, owner, e, m)
                     else:
                         # TODO DragDropService error handling
@@ -1021,7 +1021,7 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
 
         For {@link AbstractField} components, AbstractField.handleError()
         is called. In all other cases (or if the field does not handle the
-        error), {@link ErrorListener#terminalError(ErrorEvent)} for the
+        error), {@link ErrorListener#terminalError(IErrorEvent)} for the
         application error handler is called.
 
         @param application
@@ -1448,7 +1448,7 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
 
 
     def getPaintableId(self, paintable):
-        """Gets the Paintable Id. If Paintable has debug id set it will be
+        """Gets the IPaintable Id. If IPaintable has debug id set it will be
         used prefixed with "PID_S". Otherwise a sequenced ID is created.
 
         @param paintable
@@ -1471,7 +1471,7 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
                 # application. This is just a precaution and should not be
                 # absolutely necessary.
 
-                if (isinstance(old, Component)
+                if (isinstance(old, IComponent)
                         and old.getApplication() is not None):
                     raise ValueError('Two paintables (' \
                             + paintable.getClass().getSimpleName() \
@@ -1504,7 +1504,7 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
         # once and any unmodified components will be painted as "cached=true".
 
         for p in self._dirtyPaintables:
-            if isinstance(p, Component):
+            if isinstance(p, IComponent):
                 component = p
                 if component.getApplication() is None:
                     # component is detached after requestRepaint is called
@@ -1537,14 +1537,14 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
 
 
     def repaintRequested(self, event):
-        """@see RepaintRequestListener.repaintRequested()"""
+        """@see IRepaintRequestListener.repaintRequested()"""
         p = event.getPaintable()
         if p not in self._dirtyPaintables:
             self._dirtyPaintables.append(p)
 
 
     def paintablePainted(self, paintable):
-        """Internally mark a {@link Paintable} as painted and start
+        """Internally mark a {@link IPaintable} as painted and start
         collecting new repaint requests for it.
 
         @param paintable
@@ -1889,7 +1889,7 @@ class ErrorHandlerErrorEvent(TerminalErrorEvent):
 
 
 class URIHandlerErrorImpl(URIHandlerErrorEvent):
-    """Implementation of {@link URIHandler.ErrorEvent} interface."""
+    """Implementation of {@link URIHandler.IErrorEvent} interface."""
 
     def __init__(self, owner, throwable):
         """@param owner
@@ -1900,12 +1900,12 @@ class URIHandlerErrorImpl(URIHandlerErrorEvent):
 
 
     def getThrowable(self):
-        """@see com.vaadin.terminal.Terminal.ErrorEvent#getThrowable()"""
+        """@see com.vaadin.terminal.Terminal.IErrorEvent#getThrowable()"""
         return self._throwable
 
 
     def getURIHandler(self):
-        """@see com.vaadin.terminal.URIHandler.ErrorEvent#getURIHandler()"""
+        """@see com.vaadin.terminal.URIHandler.IErrorEvent#getURIHandler()"""
         return self._owner
 
 

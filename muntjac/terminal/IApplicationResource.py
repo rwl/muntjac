@@ -14,14 +14,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.terminal.Resource import Resource
+from muntjac.terminal.IResource import IResource
 
 
-class ApplicationResource(Resource):
+class IApplicationResource(IResource):
     """This interface must be implemented by classes wishing to provide
     Application resources.
 
-    <code>ApplicationResource</code> are a set of named resources (pictures,
+    <code>IApplicationResource</code> are a set of named resources (pictures,
     sounds, etc) associated with some specific application. Having named
     application resources provides a convenient method for having inter-theme
     common resources for an application.
@@ -35,12 +35,12 @@ class ApplicationResource(Resource):
 
     def getStream(self):
         """Gets resource as stream."""
-        pass
+        raise NotImplementedError
 
 
     def getApplication(self):
         """Gets the application of the resource."""
-        pass
+        raise NotImplementedError
 
 
     def getFilename(self):
@@ -48,7 +48,7 @@ class ApplicationResource(Resource):
 
         @return the file name associated to this resource.
         """
-        pass
+        raise NotImplementedError
 
 
     def getCacheTime(self):
@@ -60,7 +60,7 @@ class ApplicationResource(Resource):
 
         @return Cache time in milliseconds
         """
-        pass
+        raise NotImplementedError
 
 
     def getBufferSize(self):
@@ -71,4 +71,4 @@ class ApplicationResource(Resource):
 
         @return int the size of the buffer in bytes.
         """
-        pass
+        raise NotImplementedError

@@ -14,14 +14,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.ui.Component import Component, Focusable, Event as ComponentEvent
+from muntjac.ui.IComponent import IComponent, IFocusable, Event as ComponentEvent
 from muntjac.data.BufferedValidatable import BufferedValidatable
 from muntjac.data.Property import Property, ValueChangeEvent,\
     ValueChangeNotifier, ValueChangeListener, Editor
 
 
-class Field(Component, BufferedValidatable, Property, ValueChangeNotifier,
-            ValueChangeListener, Editor, Focusable):
+class Field(IComponent, BufferedValidatable, Property, ValueChangeNotifier,
+            ValueChangeListener, Editor, IFocusable):
     """@author IT Mill Ltd."""
 
     def setCaption(self, caption):

@@ -22,7 +22,7 @@ from muntjac.terminal.gwt.client.EventId import EventId
 from muntjac.event.LayoutEvents import LayoutClickEvent
 from muntjac.event.LayoutEvents import LayoutClickListener
 from muntjac.event.LayoutEvents import LayoutClickNotifier
-from muntjac.terminal.Sizeable import Sizeable
+from muntjac.terminal.ISizeable import ISizeable
 
 #from muntjac.terminal.gwt.client.ui.VAbsoluteLayout import VAbsoluteLayout
 #from muntjac.ui.ClientWidget import LoadStyle
@@ -234,7 +234,7 @@ class ComponentPosition(object):
                    The string to parse the unit from
         @return The found unit
         """
-        for i in range(len(Sizeable.UNIT_SYMBOLS)):
+        for i in range(len(ISizeable.UNIT_SYMBOLS)):
             if self.UNIT_SYMBOLS[i] == string:
                 return i
         return 0  # defaults to px (eg. top:0;)
@@ -247,16 +247,16 @@ class ComponentPosition(object):
         """
         s = ''
         if self._topValue is not None:
-            s += 'top:' + self._topValue + Sizeable.UNIT_SYMBOLS[self._topUnits] + ';'
+            s += 'top:' + self._topValue + ISizeable.UNIT_SYMBOLS[self._topUnits] + ';'
 
         if self._rightValue is not None:
-            s += 'right:' + self._rightValue + Sizeable.UNIT_SYMBOLS[self._rightUnits] + ';'
+            s += 'right:' + self._rightValue + ISizeable.UNIT_SYMBOLS[self._rightUnits] + ';'
 
         if self._bottomValue is not None:
-            s += 'bottom:' + self._bottomValue + Sizeable.UNIT_SYMBOLS[self._bottomUnits] + ';'
+            s += 'bottom:' + self._bottomValue + ISizeable.UNIT_SYMBOLS[self._bottomUnits] + ';'
 
         if self._leftValue is not None:
-            s += 'left:' + self._leftValue + Sizeable.UNIT_SYMBOLS[self._leftUnits] + ';'
+            s += 'left:' + self._leftValue + ISizeable.UNIT_SYMBOLS[self._leftUnits] + ';'
 
         if self._zIndex >= 0:
             s += 'z-index:' + self._zIndex + ';'
@@ -423,7 +423,7 @@ class ComponentPosition(object):
     def getTopUnits(self):
         """Gets the unit for the 'top' attribute
 
-        @return See {@link Sizeable} UNIT_SYMBOLS for a description of the
+        @return See {@link ISizeable} UNIT_SYMBOLS for a description of the
                 available units.
         """
         return self._topUnits
@@ -433,7 +433,7 @@ class ComponentPosition(object):
         """Sets the unit for the 'top' attribute
 
         @param topUnits
-                   See {@link Sizeable} UNIT_SYMBOLS for a description of the
+                   See {@link ISizeable} UNIT_SYMBOLS for a description of the
                    available units.
         """
         self._topUnits = topUnits
@@ -443,7 +443,7 @@ class ComponentPosition(object):
     def getRightUnits(self):
         """Gets the unit for the 'right' attribute
 
-        @return See {@link Sizeable} UNIT_SYMBOLS for a description of the
+        @return See {@link ISizeable} UNIT_SYMBOLS for a description of the
                 available units.
         """
         return self._rightUnits
@@ -453,7 +453,7 @@ class ComponentPosition(object):
         """Sets the unit for the 'right' attribute
 
         @param rightUnits
-                   See {@link Sizeable} UNIT_SYMBOLS for a description of the
+                   See {@link ISizeable} UNIT_SYMBOLS for a description of the
                    available units.
         """
         self._rightUnits = rightUnits
@@ -463,7 +463,7 @@ class ComponentPosition(object):
     def getBottomUnits(self):
         """Gets the unit for the 'bottom' attribute
 
-        @return See {@link Sizeable} UNIT_SYMBOLS for a description of the
+        @return See {@link ISizeable} UNIT_SYMBOLS for a description of the
                 available units.
         """
         return self._bottomUnits
@@ -473,7 +473,7 @@ class ComponentPosition(object):
         """Sets the unit for the 'bottom' attribute
 
         @param bottomUnits
-                   See {@link Sizeable} UNIT_SYMBOLS for a description of the
+                   See {@link ISizeable} UNIT_SYMBOLS for a description of the
                    available units.
         """
         self._bottomUnits = bottomUnits
@@ -483,7 +483,7 @@ class ComponentPosition(object):
     def getLeftUnits(self):
         """Gets the unit for the 'left' attribute
 
-        @return See {@link Sizeable} UNIT_SYMBOLS for a description of the
+        @return See {@link ISizeable} UNIT_SYMBOLS for a description of the
                 available units.
         """
         return self._leftUnits
@@ -493,7 +493,7 @@ class ComponentPosition(object):
         """Sets the unit for the 'left' attribute
 
         @param leftUnits
-                   See {@link Sizeable} UNIT_SYMBOLS for a description of the
+                   See {@link ISizeable} UNIT_SYMBOLS for a description of the
                    available units.
         """
         self._leftUnits = leftUnits

@@ -110,7 +110,7 @@ class Container(object):
         pass
 
 
-class Listener(object):
+class IListener(object):
     """An Action that implements this interface can be added to an
     Action.Notifier (or NotifierProxy) via the <code>addAction()</code>
     -method, which in many cases is easier than implementing the

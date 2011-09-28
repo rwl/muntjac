@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class PaintTarget(object):
+class IPaintTarget(object):
     """This interface defines the methods for painting XML to the UIDL
     stream.
 
@@ -37,12 +37,12 @@ class PaintTarget(object):
         @throws PaintException
                     if the paint operation failed.
         """
-        pass
+        raise NotImplementedError
 
 
     def startTag(self, paintable, tag=None):
         """Prints element start tag of a paintable section. Starts a paintable
-        section using the given tag. The PaintTarget may implement a caching
+        section using the given tag. The IPaintTarget may implement a caching
         scheme, that checks the paintable has actually changed or can a cached
         version be used instead. This method should call the startTag method.
 
@@ -60,7 +60,7 @@ class PaintTarget(object):
                     if the paint operation failed.
         @since 3.1
         """
-        pass
+        raise NotImplementedError
 
 
     def paintReference(self, paintable, referenceName):
@@ -83,7 +83,7 @@ class PaintTarget(object):
                     {@link #addVariable(VariableOwner, String, Paintable)}
                     instead
         """
-        pass
+        raise NotImplementedError
 
 
     def endTag(self, tagName):
@@ -97,11 +97,11 @@ class PaintTarget(object):
         @throws PaintException
                     if the paint operation failed.
         """
-        pass
+        raise NotImplementedError
 
 
     def addAttribute(self, *args):
-        """Adds a boolean attribute to component. Atributes must be added
+        """Adds a boolean attribute to component. Attributes must be added
         before any content is written.
 
         @param name
@@ -112,7 +112,7 @@ class PaintTarget(object):
         @throws PaintException
                     if the paint operation failed.
         """
-        pass
+        raise NotImplementedError
 
 
     def addVariable(self, *args):
@@ -149,7 +149,7 @@ class PaintTarget(object):
         @throws PaintException
                     if the paint operation failed.
         """
-        pass
+        raise NotImplementedError
 
 
     def addUploadStreamVariable(self, owner, name):
@@ -163,7 +163,7 @@ class PaintTarget(object):
         @throws PaintException
                     if the paint operation failed.
         """
-        pass
+        raise NotImplementedError
 
 
     def addXMLSection(self, sectionTagName, sectionData, namespace):
@@ -181,7 +181,7 @@ class PaintTarget(object):
         @throws PaintException
                     if the paint operation failed.
         """
-        pass
+        raise NotImplementedError
 
 
     def addUIDL(self, uidl):
@@ -193,7 +193,7 @@ class PaintTarget(object):
         @throws PaintException
                     if the paint operation failed.
         """
-        pass
+        raise NotImplementedError
 
 
     def addText(self, text):
@@ -204,7 +204,7 @@ class PaintTarget(object):
         @throws PaintException
                     if the paint operation failed.
         """
-        pass
+        raise NotImplementedError
 
 
     def addCharacterData(self, text):
@@ -216,7 +216,7 @@ class PaintTarget(object):
                     if the paint operation failed.
         @since 3.1
         """
-        pass
+        raise NotImplementedError
 
 
     def getTag(self, paintable):
@@ -224,4 +224,4 @@ class PaintTarget(object):
                 {@link Paintable} type. Terminal may define how to present
                 paintable.
         """
-        pass
+        raise NotImplementedError

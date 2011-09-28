@@ -15,11 +15,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.service.FileTypeResolver import FileTypeResolver
-from muntjac.terminal.ApplicationResource import ApplicationResource
+from muntjac.terminal.IApplicationResource import IApplicationResource
 from muntjac.terminal.DownloadStream import DownloadStream
 
 
-class ClassResource(ApplicationResource):
+class ClassResource(IApplicationResource):
     """<code>ClassResource</code> is a named resource accessed with the
     class loader.
 
@@ -95,7 +95,7 @@ class ClassResource(ApplicationResource):
     def getApplication(self):
         """Gets the application of this resource.
 
-        @see muntjac.terminal.ApplicationResource#getApplication()
+        @see muntjac.terminal.IApplicationResource#getApplication()
         """
         return self._application
 
@@ -104,7 +104,7 @@ class ClassResource(ApplicationResource):
         """Gets the virtual filename for this resource.
 
         @return the file name associated to this resource.
-        @see muntjac.terminal.ApplicationResource#getFilename()
+        @see muntjac.terminal.IApplicationResource#getFilename()
         """
         index = 0
         idx = self._resourceName.find('/', index)
@@ -117,7 +117,7 @@ class ClassResource(ApplicationResource):
     def getStream(self):
         """Gets resource as stream.
 
-        @see muntjac.terminal.ApplicationResource#getStream()
+        @see muntjac.terminal.IApplicationResource#getStream()
         """
         ds = DownloadStream(
                 self._associatedClass.getResourceAsStream(self._resourceName),

@@ -18,7 +18,7 @@ from datetime import datetime
 
 from muntjac.data.Item import Item
 from muntjac.service.FileTypeResolver import FileTypeResolver
-from muntjac.terminal.Resource import Resource
+from muntjac.terminal.IResource import IResource
 from muntjac.data.util.MethodProperty import MethodProperty
 from muntjac.data.Container import Container, Hierarchical
 
@@ -529,7 +529,7 @@ class FilesystemContainer(Container, Hierarchical):
             return str
 
         if propertyId == self.PROPERTY_ICON:
-            return Resource
+            return IResource
 
         if propertyId == self.PROPERTY_SIZE:
             return long

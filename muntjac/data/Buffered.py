@@ -17,7 +17,7 @@
 import sys
 
 from muntjac.terminal.SystemError import SystemErr
-from muntjac.terminal.ErrorMessage import ErrorMessage
+from muntjac.terminal.IErrorMessage import IErrorMessage
 
 
 class Buffered(object):
@@ -144,7 +144,7 @@ class Buffered(object):
         pass
 
 
-class SourceException(RuntimeError, ErrorMessage):
+class SourceException(RuntimeError, IErrorMessage):
     """An exception that signals that one or more exceptions occurred while a
     buffered object tried to access its data source or if there is a problem
     in processing a data source.
@@ -225,31 +225,31 @@ class SourceException(RuntimeError, ErrorMessage):
         are of level <code>ERROR</code>.
         </p>
 
-        @see com.vaadin.terminal.ErrorMessage#getErrorLevel()
+        @see com.vaadin.terminal.IErrorMessage#getErrorLevel()
         """
         level = -sys.maxint - 1
 
         for i in range(len(self._causes)):
-            causeLevel = self._causes[i].getErrorLevel() if isinstance(self._causes[i], ErrorMessage) else ErrorMessage.ERROR
+            causeLevel = self._causes[i].getErrorLevel() if isinstance(self._causes[i], IErrorMessage) else IErrorMessage.ERROR
             if causeLevel > level:
                 level = causeLevel
-        return ErrorMessage.ERROR if level == -sys.maxint - 1 else level
+        return IErrorMessage.ERROR if level == -sys.maxint - 1 else level
 
 
     def paint(self, target):
         target.startTag('error')
         level = self.getErrorLevel()
 
-        if level > 0 and level <= ErrorMessage.INFORMATION:
+        if level > 0 and level <= IErrorMessage.INFORMATION:
             target.addAttribute('level', 'info')
 
-        elif level <= ErrorMessage.WARNING:
+        elif level <= IErrorMessage.WARNING:
             target.addAttribute('level', 'warning')
 
-        elif level <= ErrorMessage.ERROR:
+        elif level <= IErrorMessage.ERROR:
             target.addAttribute('level', 'error')
 
-        elif level <= ErrorMessage.CRITICAL:
+        elif level <= IErrorMessage.CRITICAL:
             target.addAttribute('level', 'critical')
 
         else:
@@ -257,7 +257,7 @@ class SourceException(RuntimeError, ErrorMessage):
 
         # Paint all the exceptions
         for i in range(len(self._causes)):
-            if isinstance(self._causes[i], ErrorMessage):
+            if isinstance(self._causes[i], IErrorMessage):
                 self._causes[i].paint(target)
             else:
                 SystemErr(self._causes[i]).paint(target)

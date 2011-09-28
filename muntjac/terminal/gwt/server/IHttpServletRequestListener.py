@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class HttpServletRequestListener(object):
+class IHttpServletRequestListener(object):
     """{@link Application} that implements this interface gets notified
     of request start and end by terminal.
 
@@ -40,7 +40,7 @@ class HttpServletRequestListener(object):
         @param request
         @param response
         """
-        pass
+        raise NotImplementedError
 
 
     def onRequestEnd(self, request, response):
@@ -49,4 +49,4 @@ class HttpServletRequestListener(object):
         @param request
         @param response
         """
-        pass
+        raise NotImplementedError

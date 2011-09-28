@@ -14,22 +14,22 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.terminal.StreamVariable import \
-    StreamingEndEvent, StreamingErrorEvent, StreamingProgressEvent, \
-    StreamingStartEvent
+from muntjac.terminal.IStreamVariable import \
+    IStreamingEndEvent, IStreamingErrorEvent, IStreamingProgressEvent, \
+    IStreamingStartEvent
 
 from muntjac.terminal.gwt.server.AbstractStreamingEvent import \
     AbstractStreamingEvent
 
 
-class StreamingEndEventImpl(AbstractStreamingEvent, StreamingEndEvent):
+class StreamingEndEventImpl(AbstractStreamingEvent, IStreamingEndEvent):
 
     def __init__(self, filename, typ, totalBytes):
         super(StreamingEndEventImpl, self)(filename, typ, totalBytes,
                 totalBytes)
 
 
-class StreamingErrorEventImpl(AbstractStreamingEvent, StreamingErrorEvent):
+class StreamingErrorEventImpl(AbstractStreamingEvent, IStreamingErrorEvent):
 
     def __init__(self, filename, typ, contentLength, bytesReceived, exception):
         super(StreamingErrorEventImpl, self)(filename, typ, contentLength,
@@ -42,14 +42,14 @@ class StreamingErrorEventImpl(AbstractStreamingEvent, StreamingErrorEvent):
 
 
 class StreamingProgressEventImpl(AbstractStreamingEvent,
-            StreamingProgressEvent):
+            IStreamingProgressEvent):
 
     def __init__(self, filename, typ, contentLength, bytesReceived):
         super(StreamingProgressEventImpl, self)(filename, typ, contentLength,
                 bytesReceived)
 
 
-class StreamingStartEventImpl(AbstractStreamingEvent, StreamingStartEvent):
+class StreamingStartEventImpl(AbstractStreamingEvent, IStreamingStartEvent):
 
     def __init__(self, filename, typ, contentLength):
         super(StreamingStartEventImpl, self)(filename, typ, contentLength, 0)

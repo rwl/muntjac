@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class Terminal(object):
+class ITerminal(object):
     """An interface that provides information about the user's terminal.
     Implementors typically provide additional information using methods
     not in this interface.
@@ -31,7 +31,7 @@ class Terminal(object):
         @return the name of the theme that is used by default by this
                 terminal.
         """
-        pass
+        raise NotImplementedError
 
 
     def getScreenWidth(self):
@@ -45,7 +45,7 @@ class Terminal(object):
 
         @return the width of the terminal screen.
         """
-        pass
+        raise NotImplementedError
 
 
     def getScreenHeight(self):
@@ -58,19 +58,19 @@ class Terminal(object):
 
         @return the height of the terminal screen.
         """
-        pass
+        raise NotImplementedError
 
 
-class ErrorEvent(object):
-    """An error event implementation for Terminal."""
+class IErrorEvent(object):
+    """An error event implementation for ITerminal."""
 
     def getThrowable(self):
         """Gets the contained throwable, the cause of the error."""
         pass
 
 
-class ErrorListener(object):
-    """Interface for listening to Terminal errors."""
+class IErrorListener(object):
+    """Interface for listening to ITerminal errors."""
 
     def terminalError(self, event):
         """Invoked when a terminal error occurs.

@@ -39,8 +39,8 @@ from muntjac.terminal.gwt.server.JsonPaintTarget import JsonPaintTarget
 from muntjac.terminal.gwt.server.Exceptions import ServletException
 from muntjac.terminal.gwt.server.ApplicationServlet import ApplicationServlet
 
-from muntjac.terminal.URIHandler import ErrorEvent as URIHandlerErrorEvent
-from muntjac.terminal.Terminal import ErrorEvent as TerminalErrorEvent
+from muntjac.terminal.IUriHandler import IErrorEvent as URIHandlerErrorEvent
+from muntjac.terminal.ITerminal import IErrorEvent as TerminalErrorEvent
 
 from muntjac.terminal.gwt.server.Exceptions import \
     SessionExpiredException, SystemMessageException
@@ -54,11 +54,11 @@ from muntjac.terminal.gwt.server.WebApplicationContext import \
 from muntjac.terminal.gwt.server.CommunicationManager import \
     CommunicationManager
 
-from muntjac.terminal.gwt.server.HttpServletRequestListener import \
-    HttpServletRequestListener
+from muntjac.terminal.gwt.server.IHttpServletRequestListener import \
+    IHttpServletRequestListener
 
-from muntjac.terminal.ParameterHandler import \
-    ErrorEvent as ParameterHandlerErrorEvent
+from muntjac.terminal.IParameterHandler import \
+    IErrorEvent as ParameterHandlerErrorEvent
 
 from muntjac.terminal.gwt.server.util import \
     getContextPath, originalContextPath, getUrlPath, getServletPath, \
@@ -393,7 +393,7 @@ class AbstractApplicationServlet(Servlet, Constants):
 
             # Call application requestStart before Application.init()
             # (bypasses the limitation in TransactionListener)
-            if isinstance(application, HttpServletRequestListener):
+            if isinstance(application, IHttpServletRequestListener):
                 application.onRequestStart(request, response)
                 requestStarted = True
 
@@ -1997,7 +1997,7 @@ class AbstractApplicationServlet(Servlet, Constants):
 
 
 class ParameterHandlerErrorImpl(ParameterHandlerErrorEvent):
-    """Implementation of ParameterHandler.ErrorEvent interface."""
+    """Implementation of ParameterHandler.IErrorEvent interface."""
 
     def __init__(self, owner, throwable):
         """@param owner
@@ -2010,7 +2010,7 @@ class ParameterHandlerErrorImpl(ParameterHandlerErrorEvent):
     def getThrowable(self):
         """Gets the contained throwable.
 
-        @see com.vaadin.terminal.Terminal.ErrorEvent#getThrowable()
+        @see com.vaadin.terminal.Terminal.IErrorEvent#getThrowable()
         """
         return self._throwable
 
@@ -2018,13 +2018,13 @@ class ParameterHandlerErrorImpl(ParameterHandlerErrorEvent):
     def getParameterHandler(self):
         """Gets the source ParameterHandler.
 
-        @see ErrorEvent.getParameterHandler()
+        @see IErrorEvent.getParameterHandler()
         """
         return self._owner
 
 
 class URIHandlerErrorImpl(URIHandlerErrorEvent):
-    """Implementation of URIHandler.ErrorEvent interface."""
+    """Implementation of URIHandler.IErrorEvent interface."""
     def __init__(self, owner, throwable):
         """@param owner
         @param throwable
@@ -2036,7 +2036,7 @@ class URIHandlerErrorImpl(URIHandlerErrorEvent):
     def getThrowable(self):
         """Gets the contained throwable.
 
-        @see com.vaadin.terminal.Terminal.ErrorEvent#getThrowable()
+        @see com.vaadin.terminal.Terminal.IErrorEvent#getThrowable()
         """
         return self._throwable
 
@@ -2044,7 +2044,7 @@ class URIHandlerErrorImpl(URIHandlerErrorEvent):
     def getURIHandler(self):
         """Gets the source URIHandler.
 
-        @see com.vaadin.terminal.URIHandler.ErrorEvent#getURIHandler()
+        @see com.vaadin.terminal.URIHandler.IErrorEvent#getURIHandler()
         """
         return self._owner
 

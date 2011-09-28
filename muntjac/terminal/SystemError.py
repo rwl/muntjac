@@ -22,13 +22,13 @@ try:
 except ImportError, e:
     from StringIO import StringIO
 
-from muntjac.terminal.ErrorMessage import ErrorMessage
+from muntjac.terminal.ErrorMessage import IErrorMessage
 
 
-class SystemErr(RuntimeError, ErrorMessage):
+class SystemErr(RuntimeError, IErrorMessage):
     """<code>SystemError</code> is a runtime exception caused by error in
     system. The system error can be shown to the user as it implements
-    <code>ErrorMessage</code> interface, but contains technical information
+    <code>IErrorMessage</code> interface, but contains technical information
     such as stack trace and exception.
 
     @author IT Mill Ltd.
@@ -72,8 +72,8 @@ class SystemErr(RuntimeError, ErrorMessage):
 
 
     def getErrorLevel(self):
-        """@see com.vaadin.terminal.ErrorMessage#getErrorLevel()"""
-        return ErrorMessage.SYSTEMERROR
+        """@see com.vaadin.terminal.IErrorMessage#getErrorLevel()"""
+        return IErrorMessage.SYSTEMERROR
 
 
     def paint(self, target):

@@ -14,11 +14,11 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.ui.Component import Component
+from muntjac.ui.IComponent import IComponent
 
 
-class DragSource(Component):
-    """DragSource is a {@link Component} that builds a {@link Transferable} for a
+class DragSource(IComponent):
+    """DragSource is a {@link IComponent} that builds a {@link Transferable} for a
     drag and drop operation.
     <p>
     In Vaadin the drag and drop operation practically starts from client side

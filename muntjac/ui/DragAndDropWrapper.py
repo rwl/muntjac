@@ -22,9 +22,9 @@ from muntjac.ui.Html5File import Html5File
 from muntjac.event.TransferableImpl import TransferableImpl
 from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
 
-from muntjac.terminal.StreamVariable import \
-    StreamVariable, StreamingEndEvent, StreamingErrorEvent, \
-    StreamingProgressEvent, StreamingStartEvent
+from muntjac.terminal.IStreamVariable import \
+    IStreamVariable, IStreamingEndEvent, IStreamingErrorEvent, \
+    IStreamingProgressEvent, IStreamingStartEvent
 
 from muntjac.event.dd.TargetDetailsImpl import TargetDetailsImpl
 from muntjac.ui.CustomComponent import CustomComponent
@@ -230,7 +230,7 @@ class DragStartMode(object):
         return cls._values[:]
 
 
-class ProxyReceiver(StreamVariable):  # FIXME: nested classes
+class ProxyReceiver(IStreamVariable):  # FIXME: nested classes
 
     def __init__(self, fd):
         self._file = fd
@@ -276,8 +276,8 @@ class ProxyReceiver(StreamVariable):  # FIXME: nested classes
         return self._file.getStreamVariable().isInterrupted()
 
 
-class ReceivingEventWrapper(StreamingErrorEvent, StreamingEndEvent,
-                            StreamingStartEvent, StreamingProgressEvent):
+class ReceivingEventWrapper(IStreamingErrorEvent, IStreamingEndEvent,
+                            IStreamingStartEvent, IStreamingProgressEvent):
     # With XHR2 file posts we can't provide as much information from the
     # terminal as with multipart request. This helper class wraps the
     # terminal event and provides the lacking information from the
@@ -304,7 +304,7 @@ class ReceivingEventWrapper(StreamingErrorEvent, StreamingEndEvent,
         return self._ProxyReceiver_this
 
     def getException(self):
-        if isinstance(self._wrappedEvent, StreamingErrorEvent):
+        if isinstance(self._wrappedEvent, IStreamingErrorEvent):
             return self._wrappedEvent.getException()
         return None
 

@@ -14,10 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.ui.Component import Component
+from muntjac.ui.IComponent import IComponent
 
 
-class DropTarget(Component):
+class DropTarget(IComponent):
     """DropTarget is an interface for components supporting drop operations. A
     component that wants to receive drop events should implement this interface
     and provide a {@link DropHandler} which will handle the actual drop event.
