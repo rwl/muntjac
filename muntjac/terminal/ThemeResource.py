@@ -19,10 +19,11 @@ from muntjac.terminal.Resource import Resource
 
 
 class ThemeResource(Resource):
-    """<code>ThemeResource</code> is a named theme dependant resource provided and
-    managed by a theme. The actual resource contents are dynamically resolved to
-    comply with the used theme by the terminal adapter. This is commonly used to
-    provide static images, flash, java-applets, etc for the terminals.
+    """<code>ThemeResource</code> is a named theme dependant resource
+    provided and managed by a theme. The actual resource contents are
+    dynamically resolved to comply with the used theme by the terminal
+    adapter. This is commonly used to provide static images, flash,
+    java-applets, etc for the terminals.
 
     @author IT Mill Ltd.
     @version @VERSION@
@@ -45,30 +46,34 @@ class ThemeResource(Resource):
             raise ValueError, 'Resource ID can not be empty'
 
         if resourceId[0] == '/':
-            raise ValueError, 'Resource ID must be relative (can not begin with /)'
+            raise ValueError, \
+                    'Resource ID must be relative (can not begin with /)'
 
         self._resourceID = resourceId
 
 
-    def equals(self, obj):
+    def __eq__(self, obj):
         """Tests if the given object equals this Resource.
 
         @param obj
                    the object to be tested for equality.
         @return <code>true</code> if the given object equals this Icon,
                 <code>false</code> if not.
-        @see java.lang.Object#equals(Object)
         """
-        return isinstance(obj, ThemeResource) and self._resourceID == obj.resourceID
+        return (isinstance(obj, ThemeResource)
+                and self._resourceID == obj.resourceID)
 
 
-    def hashCode(self):
-        """@see java.lang.Object#hashCode()"""
-        return self._resourceID.hashCode()
+    def __ne__(self, obj):
+        return (not isinstance(obj, ThemeResource)
+                or self._resourceID != obj.resourceID)
 
 
-    def toString(self):
-        """@see java.lang.Object#toString()"""
+    def __hash__(self):
+        return hash(self._resourceID)
+
+
+    def __str__(self):
         return str(self._resourceID)
 
 

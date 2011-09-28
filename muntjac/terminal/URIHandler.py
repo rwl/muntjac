@@ -19,8 +19,8 @@ from muntjac.terminal.Terminal import ErrorEvent as TerminalErrorEvent
 
 class URIHandler(object):
     """A URIHandler is used for handling URI:s requested by the user and can
-    optionally provide a {@link DownloadStream}. If a {@link DownloadStream} is
-    returned by {@link #handleURI(URL, String)}, the stream is sent to the
+    optionally provide a {@link DownloadStream}. If a {@link DownloadStream}
+    is returned by {@link #handleURI(URL, String)}, the stream is sent to the
     client.
 
     @author IT Mill Ltd.
@@ -29,8 +29,8 @@ class URIHandler(object):
     """
 
     def handleURI(self, context, relativeUri):
-        """Handles a given URI. If the URI handler to emit a downloadable stream it
-        should return a {@code DownloadStream} object.
+        """Handles a given URI. If the URI handler to emit a downloadable
+        stream it should return a {@code DownloadStream} object.
 
         @param context
                    the base URL

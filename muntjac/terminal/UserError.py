@@ -18,8 +18,9 @@ from muntjac.terminal.ErrorMessage import ErrorMessage
 
 
 class UserError(ErrorMessage):
-    """<code>UserError</code> is a controlled error occurred in application. User
-    errors are occur in normal usage of the application and guide the user.
+    """<code>UserError</code> is a controlled error occurred in
+    application. User errors are occur in normal usage of the
+    application and guide the user.
 
     @author IT Mill Ltd.
     @version @VERSION@
@@ -52,14 +53,16 @@ class UserError(ErrorMessage):
         """
         # Content mode.
         self._mode = self.CONTENT_TEXT
+
         # Message in content mode.
         self._msg = message
+
         # Error level.
         self._level = ErrorMessage.ERROR
 
         if contentMode is not None:
             # Check the parameters
-            if (contentMode < 0) or (contentMode > 2):
+            if contentMode < 0 or contentMode > 2:
                 raise ValueError, 'Unsupported content mode: ' + contentMode
             self._mode = contentMode
             self._level = errorLevel
@@ -88,20 +91,26 @@ class UserError(ErrorMessage):
         # Error level
         if self._level >= ErrorMessage.SYSTEMERROR:
             target.addAttribute('level', 'system')
+
         elif self._level >= ErrorMessage.CRITICAL:
             target.addAttribute('level', 'critical')
+
         elif self._level >= ErrorMessage.ERROR:
             target.addAttribute('level', 'error')
+
         elif self._level >= ErrorMessage.WARNING:
             target.addAttribute('level', 'warning')
+
         else:
             target.addAttribute('level', 'info')
 
         # Paint the message
         if self._mode == self.CONTENT_TEXT:
             target.addText(self._msg)
+
         elif self._mode == self.CONTENT_UIDL:
             target.addUIDL(self._msg)
+
         elif self._mode == self.CONTENT_PREFORMATTED:
             target.startTag('pre')
             target.addText(self._msg)
@@ -114,7 +123,7 @@ class UserError(ErrorMessage):
         pass
 
 
-    def toString(self):
+    def __str__(self):
         return self._msg
 
 
@@ -123,4 +132,5 @@ class UserError(ErrorMessage):
 
 
     def setDebugId(self, idd):
-        raise NotImplementedError, 'Setting testing id for this Paintable is not implemented'
+        raise NotImplementedError, \
+                'Setting testing id for this Paintable is not implemented'

@@ -17,8 +17,8 @@
 
 class Terminal(object):
     """An interface that provides information about the user's terminal.
-    Implementors typically provide additional information using methods not in
-    this interface. </p>
+    Implementors typically provide additional information using methods
+    not in this interface.
 
     @author IT Mill Ltd.
     @version @VERSION@
@@ -28,19 +28,20 @@ class Terminal(object):
     def getDefaultTheme(self):
         """Gets the name of the default theme for this terminal.
 
-        @return the name of the theme that is used by default by this terminal.
+        @return the name of the theme that is used by default by this
+                terminal.
         """
         pass
 
 
     def getScreenWidth(self):
-        """Gets the width of the terminal screen in pixels. This is the width of the
-        screen and not the width available for the application.
-        <p>
+        """Gets the width of the terminal screen in pixels. This is the
+        width of the screen and not the width available for the application.
+
         Note that the screen width is typically not available in the
-        {@link com.vaadin.Application#init()} method as this is called before the
-        browser has a chance to report the screen size to the server.
-        </p>
+        {@link com.vaadin.Application#init()} method as this is called
+        before the browser has a chance to report the screen size to the
+        server.
 
         @return the width of the terminal screen.
         """
@@ -48,14 +49,12 @@ class Terminal(object):
 
 
     def getScreenHeight(self):
-        """Gets the height of the terminal screen in pixels. This is the height of
-        the screen and not the height available for the application.
+        """Gets the height of the terminal screen in pixels. This is the
+        height of the screen and not the height available for the application.
 
-        <p>
         Note that the screen height is typically not available in the
-        {@link com.vaadin.Application#init()} method as this is called before the
-        browser has a chance to report the screen size to the server.
-        </p>
+        {@link com.vaadin.Application#init()} method as this is called before
+        the browser has a chance to report the screen size to the server.
 
         @return the height of the terminal screen.
         """

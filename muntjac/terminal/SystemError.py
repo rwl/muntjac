@@ -26,10 +26,10 @@ from muntjac.terminal.ErrorMessage import ErrorMessage
 
 
 class SystemErr(RuntimeError, ErrorMessage):
-    """<code>SystemError</code> is a runtime exception caused by error in system.
-    The system error can be shown to the user as it implements
-    <code>ErrorMessage</code> interface, but contains technical information such
-    as stack trace and exception.
+    """<code>SystemError</code> is a runtime exception caused by error in
+    system. The system error can be shown to the user as it implements
+    <code>ErrorMessage</code> interface, but contains technical information
+    such as stack trace and exception.
 
     @author IT Mill Ltd.
     @version @VERSION@
@@ -54,8 +54,7 @@ class SystemErr(RuntimeError, ErrorMessage):
         @param cause
                    the throwable causing the system error.
         """
-        # The cause of the system error. The cause is stored separately as JDK 1.3
-        # does not support causes natively.
+        # The cause of the system error.
         self._cause = None
 
         nargs = len(args)
@@ -63,10 +62,10 @@ class SystemErr(RuntimeError, ErrorMessage):
             if isinstance(args[0], Exception):
                 self._cause = args[0]
             else:
-                super(SystemError, self)(args[0])
+                super(SystemErr, self)(args[0])
         elif nargs == 2:
             message, cause = args
-            super(SystemError, self)(message)
+            super(SystemErr, self)(message)
             self._cause = cause
         else:
             raise ValueError, 'too many arguments'
@@ -78,7 +77,7 @@ class SystemErr(RuntimeError, ErrorMessage):
 
 
     def paint(self, target):
-        """@see com.vaadin.terminal.Paintable#paint(com.vaadin.terminal.PaintTarget)"""
+        """@see com.vaadin.terminal.Paintable#paint(target)"""
 
         target.startTag('error')
         target.addAttribute('level', 'system')
@@ -93,11 +92,12 @@ class SystemErr(RuntimeError, ErrorMessage):
         if self._cause is not None:
             sb.write('<h3>Exception</h3>')
             buff = StringIO()
-            traceback.print_exception(sys.exc_type, self._cause, sys.exc_traceback, file=buff)
+            traceback.print_exception(sys.exc_type, self._cause,
+                    sys.last_traceback, file=buff)  #@PydevCodeAnalysisIgnore
             sb.write('<pre>')
-            sb.write(buffer.getvalue())
-            sb.write('</pre>')
+            sb.write(buff.getvalue())
             buff.close()
+            sb.write('</pre>')
         target.addXMLSection('div', sb.getvalue(),
                 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd')
         sb.close()
@@ -110,22 +110,18 @@ class SystemErr(RuntimeError, ErrorMessage):
         @return the cause.
         @see java.lang.Throwable#getCause()
         """
-        # Documented in super interface
         return self._cause
 
 
     def addListener(self, listener):
-        # Documented in super interface
         pass
 
 
     def removeListener(self, listener):
-        # Documented in super interface
         pass
 
 
     def requestRepaint(self):
-        # Documented in super interface
         pass
 
 
@@ -138,4 +134,5 @@ class SystemErr(RuntimeError, ErrorMessage):
 
 
     def setDebugId(self, idd):
-        raise NotImplementedError, 'Setting testing id for this Paintable is not implemented'
+        raise NotImplementedError, \
+                'Setting testing id for this Paintable is not implemented'
