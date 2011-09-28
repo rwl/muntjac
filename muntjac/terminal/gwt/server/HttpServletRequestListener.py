@@ -16,26 +16,26 @@
 
 
 class HttpServletRequestListener(object):
-    """{@link Application} that implements this interface gets notified of request
-    start and end by terminal.
-    <p>
+    """{@link Application} that implements this interface gets notified
+    of request start and end by terminal.
+
     Interface can be used for several helper tasks including:
     <ul>
     <li>Opening and closing database connections
     <li>Implementing {@link ThreadLocal}
     <li>Setting/Getting {@link Cookie}
     </ul>
-    <p>
-    Alternatives for implementing similar features are are Servlet {@link Filter}
-    s and {@link TransactionListener}s in Vaadin.
+
+    Alternatives for implementing similar features are are Servlet
+    {@link Filter}s and {@link TransactionListener}s in Vaadin.
 
     @since 6.2
     @see PortletRequestListener
     """
 
     def onRequestStart(self, request, response):
-        """This method is called before {@link Terminal} applies the request to
-        Application.
+        """This method is called before {@link Terminal} applies the
+        request to Application.
 
         @param request
         @param response

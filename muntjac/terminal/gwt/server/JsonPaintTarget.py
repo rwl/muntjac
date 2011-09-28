@@ -15,7 +15,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import logging
+
 from Queue import LifoQueue
+from muntjac.terminal.gwt.server.util import getSuperClass
+from muntjac.util.name import clsname
+
+try:
+    from cStringIO import StringIO
+except ImportError, e:
+    from StringIO import StringIO
+
 from muntjac.ui.CustomLayout import CustomLayout
 from muntjac.terminal.Resource import Resource
 from muntjac.terminal.ExternalResource import ExternalResource
@@ -23,31 +32,26 @@ from muntjac.terminal.ApplicationResource import ApplicationResource
 from muntjac.terminal.ThemeResource import ThemeResource
 from muntjac.ui.Alignment import Alignment
 from muntjac.terminal.StreamVariable import StreamVariable
-
-try:
-    from cStringIO import StringIO
-except ImportError, e:
-    from StringIO import StringIO
-
 from muntjac.terminal.Paintable import Paintable
 from muntjac.terminal.PaintTarget import PaintTarget
 from muntjac.terminal.PaintException import PaintException
 
 
+logger = logging.getLogger(__name__)
+
+
 class JsonPaintTarget(PaintTarget):
     """User Interface Description Language Target.
 
-    TODO document better: role of this class, UIDL format, attributes, variables,
-    etc.
+    TODO document better: role of this class, UIDL format,
+    attributes, variables, etc.
 
     @author IT Mill Ltd.
     @version
     @VERSION@
     @since 5.0
     """
-    _logger = logging.getLogger('.'.join(__package__, __class__.__name__))
 
-    # Document type declarations
     _UIDL_ARG_NAME = 'name'
 
     def __init__(self, manager, outWriter, cachingRequired):
@@ -61,11 +65,15 @@ class JsonPaintTarget(PaintTarget):
                     if the paint operation failed.
         """
         self._manager = manager
+
         # Sets the target for UIDL writing
         self._uidlBuffer = outWriter
+
         # Initialize tag-writing
         self._mOpenTags = LifoQueue()
+
         self._openJsonTags = LifoQueue()
+
         self._cacheEnabled = cachingRequired
 
         self._closed = False
@@ -98,9 +106,9 @@ class JsonPaintTarget(PaintTarget):
         if isinstance(arg, Paintable):
             paintable, tagName = arg, arg2
             self.startTag(tagName, True)
-            isPreviouslyPainted = self._manager.hasPaintableId(paintable) \
-                and (self._identifiersCreatedDueRefPaint is None) \
-                or (paintable not in self._identifiersCreatedDueRefPaint)
+            isPreviouslyPainted = (self._manager.hasPaintableId(paintable)
+                and (self._identifiersCreatedDueRefPaint is None
+                or paintable not in self._identifiersCreatedDueRefPaint))
             idd = self._manager.getPaintableId(paintable)
             paintable.addListener(self._manager)
             self.addAttribute('id', idd)
@@ -113,11 +121,12 @@ class JsonPaintTarget(PaintTarget):
         else:
             tagName, _ = arg, arg2
             if tagName is None:
-                raise self.NullPointerException()
+                raise ValueError
 
             # Ensures that the target is open
             if self._closed:
-                raise PaintException('Attempted to write to a closed PaintTarget.')
+                raise PaintException, \
+                        'Attempted to write to a closed PaintTarget.'
 
             if self._tag is not None:
                 self._openJsonTags.put(self._tag)
@@ -125,7 +134,7 @@ class JsonPaintTarget(PaintTarget):
             # Checks tagName and attributes here
             self._mOpenTags.put(tagName)
 
-            self._tag = JsonTag(tagName)
+            self._tag = JsonTag(tagName, self)
 
             if 'error' == tagName:
                 self._errorsOpen += 1
@@ -150,7 +159,7 @@ class JsonPaintTarget(PaintTarget):
 
         # Ensure that the target is open
         if self._closed:
-            raise PaintException('Attempted to write to a closed PaintTarget.')
+            raise PaintException, 'Attempted to write to a closed PaintTarget.'
 
         if len(self._openJsonTags) > 0:
             parent = self._openJsonTags.pop()
@@ -159,14 +168,14 @@ class JsonPaintTarget(PaintTarget):
 
             lastTag = self._mOpenTags.pop()
             if tagName.lower() != lastTag.lower():
-                raise PaintException('Invalid UIDL: wrong ending tag: \'' \
+                raise PaintException, ('Invalid UIDL: wrong ending tag: \''
                         + tagName + '\' expected: \'' + lastTag + '\'.')
 
             # simple hack which writes error uidl structure into attribute
             if 'error' == lastTag:
                 if self._errorsOpen == 1:
-                    parent.addAttribute('\"error\":[\"error\",{}' \
-                                        + self._tag.getData() + ']')
+                    parent.addAttribute(('\"error\":[\"error\",{}'
+                            + self._tag.getData() + ']'))
                 else:
                     # sub error
                     parent.addData(self._tag.getJSON())
@@ -178,21 +187,22 @@ class JsonPaintTarget(PaintTarget):
             self._tag = parent
         else:
             self._changes += 1
-            self._uidlBuffer.write((',' if self._changes > 1 else '') \
-                                   + self._tag.getJSON())
+            self._uidlBuffer.write((',' if self._changes > 1 else '')
+                    + self._tag.getJSON())
             self._tag = None
 
 
     @classmethod
     def escapeXML(cls, xml):
-        """Substitutes the XML sensitive characters with predefined XML entities.
+        """Substitutes the XML sensitive characters with predefined XML
+        entities.
 
         @param xml
-                   the String to be substituted.
-        @return A new string instance where all occurrences of XML sensitive
-                characters are substituted with entities.
+                the String to be substituted.
+        @return A new string instance where all occurrences of XML
+                sensitive characters are substituted with entities.
         """
-        if (xml is None) or (len(xml) <= 0):
+        if xml is None or len(xml) <= 0:
             return ''
 
         return cls._escapeXML(xml)
@@ -205,14 +215,14 @@ class JsonPaintTarget(PaintTarget):
         Substitutes the XML sensitive characters with predefined XML entities.
 
         @param xml
-                   the String to be substituted.
+                the String to be substituted.
         @return A new StringBuilder instance where all occurrences of XML
                 sensitive characters are substituted with entities.
         """
-        if (xml is None) or (len(xml) <= 0):
+        if xml is None or len(xml) <= 0:
             return ''
 
-        buff = StringIO()#(len(xml) * 2)
+        buff = StringIO()  #(len(xml) * 2)
 
         for c in xml:
             s = cls.toXmlChar(c)
@@ -223,7 +233,6 @@ class JsonPaintTarget(PaintTarget):
 
         result = buff.getvalue()
         buff.close()
-
         return result
 
 
@@ -231,8 +240,7 @@ class JsonPaintTarget(PaintTarget):
     def escapeJSON(cls, s):
         """Escapes the given string so it can safely be used as a JSON string.
 
-        @param s
-                   The string to escape
+        @param s The string to escape
         @return Escaped version of the string
         """
         # FIXME: Move this method to another class as other classes use it
@@ -241,39 +249,33 @@ class JsonPaintTarget(PaintTarget):
             return ''
 
         sb = StringIO()
-        for ch in s:
-            if ch == '"':
-                sb.write('\\\"')
-            elif ch == '\\':
-                sb.write('\\\\')
-            elif ch == '\b':
-                sb.write('\\b')
-            elif ch == '\f':
-                sb.write('\\f')
-            elif ch == '\n':
-                sb.write('\\n')
-            elif ch == '\r':
-                sb.write('\\r')
-            elif ch == '\t':
-                sb.write('\\t')
-            elif ch == '/':
-                sb.write('\\/')
+
+        d = {
+            '"':  lambda ch: sb.write('\\\"'),
+            '\\': lambda ch: sb.write('\\\\'),
+            '\b': lambda ch: sb.write('\\b'),
+            '\f': lambda ch: sb.write('\\f'),
+            '\n': lambda ch: sb.write('\\n'),
+            '\r': lambda ch: sb.write('\\r'),
+            '\t': lambda ch: sb.write('\\t'),
+            '/' : lambda ch: sb.write('\\/')
+        }
+
+        def default(ch):
+            if ch >= '\u0000' and ch <= '\u001F':
+                ss = hex( int(ch) )
+                sb.write('\\u')
+                for _ in range(4 - len(ss)):
+                    sb.write('0')
+                sb.write( ss.upper() )
             else:
-                if ch >= '\u0000' and ch <= '\u001F':
-                    ss = hex( int(ch) )
-                    sb.write('\\u')
-                    _3 = True
-                    k = 0
-                    while k < 4 - len(ss):
-                        k += 1
-                        sb.write('0')
-                    sb.write(ss.upper())
-                else:
-                    sb.write(ch)
+                sb.write(ch)
+
+        for c in s:
+            d.get(c, default)(c)
 
         result = sb.getvalue()
         sb.close()
-
         return result
 
 
@@ -282,22 +284,17 @@ class JsonPaintTarget(PaintTarget):
         """Substitutes a XML sensitive character with predefined XML entity.
 
         @param c
-                   the Character to be replaced with an entity.
-        @return String of the entity or null if character is not to be replaced
-                with an entity.
+                the Character to be replaced with an entity.
+        @return String of the entity or null if character is not to be
+                replaced with an entity.
         """
-        if c == '&':
-            return '&amp;'   # & => &amp;
-        elif c == '>':
-            return '&gt;'    # > => &gt;
-        elif c == '<':
-            return '&lt;'    # < => &lt;
-        elif c == '"':
-            return '&quot;'  # " => &quot;
-        elif c == '\'':
-            return '&apos;'  # ' => &apos;
-        else:
-            return None
+        return {
+            '&': '&amp;',   # & => &amp;
+            '>': '&gt;',    # > => &gt;
+            '<': '&lt;',    # < => &lt;
+            '"': '&quot;',  # " => &quot;
+            "'": '&apos;'   # ' => &apos;
+        }.get(c)
 
 
     def addText(self, s):
@@ -314,8 +311,8 @@ class JsonPaintTarget(PaintTarget):
         if isinstance(value, list):
             values = value
             # In case of null data output nothing:
-            if (values is None) or (name is None):
-                raise self.NullPointerException('Parameters must be non-null strings')
+            if values is None or name is None:
+                raise ValueError, 'Parameters must be non-null strings'
             buf = StringIO()
             buf.write('\"' + name + '\":[')
             for i in range(len(values)):
@@ -338,19 +335,19 @@ class JsonPaintTarget(PaintTarget):
                 r = value
                 a = r.getApplication()
                 if a is None:
-                    raise PaintException('Application not specified for resource ' \
-                                         + value.getClass().getName())
+                    raise PaintException, ('Application not specified '
+                            'for resource ' + value.__class__.__name__)
                 uri = a.getRelativeLocation(r)
                 self.addAttribute(name, uri)
             elif isinstance(value, ThemeResource):
                 uri = 'theme://' + value.getResourceId()
                 self.addAttribute(name, uri)
             else:
-                raise PaintException('Ajax adapter does not ' \
-                                     + 'support resources of type: ' \
-                                     + value.getClass().getName())
+                raise PaintException, ('Ajax adapter does not support '
+                        'resources of type: ' + value.__class__.__name__)
         elif isinstance(value, bool):
-            self._tag.addAttribute('\"' + name + '\":' + ('true' if value else 'false'))
+            self._tag.addAttribute(('\"' + name + '\":'
+                    + ('true' if value else 'false')))
         elif isinstance(value, dict):
             sb = StringIO()
             sb.write('\"')
@@ -362,9 +359,9 @@ class JsonPaintTarget(PaintTarget):
                 sb.write('\"')
                 if isinstance(key, Paintable):
                     paintable = key
-                    sb.write(self.getPaintIdentifier(paintable))
+                    sb.write( self.getPaintIdentifier(paintable) )
                 else:
-                    sb.write(self.escapeJSON(str(key)))
+                    sb.write( self.escapeJSON(str(key)) )
                 sb.write('\":')
                 if isinstance(mapValue, float) \
                         or isinstance(mapValue, int) \
@@ -374,7 +371,7 @@ class JsonPaintTarget(PaintTarget):
                     sb.write(mapValue)
                 else:
                     sb.write('\"')
-                    sb.write(self.escapeJSON(str(mapValue)))
+                    sb.write( self.escapeJSON(str(mapValue)) )
                     sb.write('\"')
                 if i < len(value) - 1:
                     sb.append(',')
@@ -387,7 +384,8 @@ class JsonPaintTarget(PaintTarget):
             if (value is None) or (name is None):
                 raise ValueError, 'Parameters must be non-null strings'
 
-            self._tag.addAttribute('\"' + name + '\": \"' + self.escapeJSON(value) + '\"')
+            self._tag.addAttribute(('\"' + name + '\": \"'
+                    + self.escapeJSON(value) + '\"'))
 
             if self._customLayoutArgumentsOpen and 'template' == name:
                 self.getUsedResources().add('layouts/' + value + '.html')
@@ -400,7 +398,8 @@ class JsonPaintTarget(PaintTarget):
 
     def addVariable(self, owner, name, value):
         if isinstance(value, Paintable):
-            self._tag.addVariable( StringVariable(owner, name, self.getPaintIdentifier(value)) )
+            var = StringVariable(owner, name, self.getPaintIdentifier(value))
+            self._tag.addVariable(var)
         elif isinstance(value, StreamVariable):
             url = self._manager.getStreamVariableTargetUrl(owner, name, value)
             if url is not None:
@@ -417,7 +416,8 @@ class JsonPaintTarget(PaintTarget):
         elif isinstance(value, long):
             self._tag.addVariable( LongVariable(owner, name, value) )
         elif isinstance(value, str):
-            self._tag.addVariable( StringVariable(owner, name, self.escapeJSON(value)) )
+            var = StringVariable(owner, name, self.escapeJSON(value))
+            self._tag.addVariable(var)
         else:  # list
             self._tag.addVariable( ArrayVariable(owner, name, value) )
 
@@ -452,8 +452,8 @@ class JsonPaintTarget(PaintTarget):
         @throws PaintException
                     if the paint operation failed.
         """
-        self._tag.addData('{\"' + sectionTagName + '\":\"' \
-                + self.escapeJSON(sectionData) + '\"}')
+        self._tag.addData(('{\"' + sectionTagName + '\":\"'
+                + self.escapeJSON(sectionData) + '\"}'))
 
 
     def addUIDL(self, xml):
@@ -466,7 +466,7 @@ class JsonPaintTarget(PaintTarget):
         """
         # Ensure that the target is open
         if self._closed:
-            raise PaintException('Attempted to write to a closed PaintTarget.')
+            raise PaintException, 'Attempted to write to a closed PaintTarget.'
 
         # Make sure that the open start tag is closed before
         # anything is written.
@@ -493,7 +493,7 @@ class JsonPaintTarget(PaintTarget):
         """
         # Ensure that the target is open
         if self._closed:
-            raise PaintException('Attempted to write to a closed PaintTarget.')
+            raise PaintException, 'Attempted to write to a closed PaintTarget.'
 
         self.startTag(sectionTagName)
 
@@ -507,8 +507,8 @@ class JsonPaintTarget(PaintTarget):
 
 
     def getUIDL(self):
-        """Gets the UIDL already printed to stream. Paint target must be closed
-        before the <code>getUIDL</code> can be called.
+        """Gets the UIDL already printed to stream. Paint target must be
+        closed before the <code>getUIDL</code> can be called.
 
         @return the UIDL.
         """
@@ -520,9 +520,9 @@ class JsonPaintTarget(PaintTarget):
 
     def close(self):
         """Closes the paint target. Paint target must be closed before the
-        <code>getUIDL</code> can be called. Subsequent attempts to write to paint
-        target. If the target was already closed, call to this function is
-        ignored. will generate an exception.
+        <code>getUIDL</code> can be called. Subsequent attempts to write to
+        paint target. If the target was already closed, call to this function
+        is ignored. will generate an exception.
 
         @throws PaintException
                     if the paint operation failed.
@@ -565,51 +565,49 @@ class JsonPaintTarget(PaintTarget):
         """Method to check if paintable is already painted into this target.
 
         @param p
-        @return true if is not yet painted into this target and is connected to
-                app
+        @return true if is not yet painted into this target and is connected
+                to app
         """
-        if self._paintedComponents.contains(p):
+        if p in self._paintedComponents:
             return False
         elif p.getApplication() is None:
             return False
         else:
             return True
 
+
     _widgetMappingCache = dict()
 
+
     def getTag(self, paintable):
-        class1 = self._widgetMappingCache[paintable.getClass()]
+        class1 = self._widgetMappingCache.get(paintable.__class__)
 
         if class1 is None:
-            # Client widget annotation is searched from component hierarchy to
-            # detect the component that presumably has client side
+            # Client widget annotation is searched from component hierarchy
+            # to detect the component that presumably has client side
             # implementation. The server side name is used in the
             # transportation, but encoded into integer strings to optimized
             # transferred data.
             class1 = paintable.__class__
             while not self.hasClientWidgetMapping(class1):
-                superclass = class1.mro()[1] if len(class1.mro()) > 1 else None
-                if superclass is not None and Paintable in superclass.mro():  # FIXME: check isAssignableFrom translation
+                superclass = getSuperClass(class1)
+                if superclass is not None and issubclass(class1, Paintable):
                     class1 = superclass
                 else:
-                    self._logger.warning('No superclass of ' \
-                            + paintable.getClass().getName() \
-                            + ' has a @ClientWidget' \
-                            + ' annotation. Component will not be mapped correctly on client side.')
+                    logger.warning(('No superclass of '
+                            + clsname(paintable.__class__)
+                            + ' has a @ClientWidget annotation. Component '
+                            'will not be mapped correctly on client side.'))
                     break
 
-            self._widgetMappingCache[paintable.getClass()] = class1
+            self._widgetMappingCache[paintable.__class__] = class1
 
         self._usedPaintableTypes.append(class1)
         return self._manager.getTagForType(class1)
 
 
     def hasClientWidgetMapping(self, class1):
-        try:
-            return class1.isAnnotationPresent(self.ClientWidget)
-        except RuntimeError, e:
-            self._logger.critical('An error occurred while finding widget mapping.')
-            return False
+        return hasattr(class1, 'CLIENT_WIDGET')  # isAnnotationPresent
 
 
     def getUsedPaintableTypes(self):
@@ -617,24 +615,26 @@ class JsonPaintTarget(PaintTarget):
 
 
 class JsonTag(object):
-    """This is basically a container for UI components variables, that will be
-    added at the end of JSON object.
+    """This is basically a container for UI components variables, that
+    will be added at the end of JSON object.
 
     @author mattitahvonen
     """
 
-    def __init__(self, tagName):
+    def __init__(self, tagName, target):
 
         self._firstField = False
         self._variables = list()
         self._children = list()
         self._attr = list()
-        self._data = StringIO()
+        self._data = StringIO()  # FIXME ensure close
         self.childrenArrayOpen = False
         self._childNode = False
         self._tagClosed = False
 
         self._data.append('[\"' + tagName + '\"')
+
+        self._target = target
 
 
     def _closeTag(self):
@@ -682,17 +682,15 @@ class JsonTag(object):
 
 
     def addData(self, s):
-        """@param s
-                   json string, object or array
-        """
+        """@param s json string, object or array"""
         self._children.append(s)
 
 
     def getData(self):
         buf = StringIO()
         for c in self._children:
-            buf.append(self.startField())
-            buf.append(c)
+            buf.write(self.startField())
+            buf.write(c)
         result = buf.getvalue()
         buf.close()
         return result
@@ -706,13 +704,11 @@ class JsonTag(object):
         buf = StringIO()
         buf.write(self.startField())
         buf.write('{')
-        i = 0
-        for element in self._attr:
+        for i, element in enumerate(self._attr):
             buf.write(element)
             if i != len(self._attr) - 1:
                 buf.write(',')
-            i += 1
-        buf.write(self.tag._variablesAsJsonObject())
+        buf.write(self._target._tag._variablesAsJsonObject())
         buf.write('}')
         result = buf.getvalue()
         buf.close()
@@ -730,12 +726,10 @@ class JsonTag(object):
         buf = StringIO()
         buf.write(self.startField())
         buf.write('\"v\":{')
-        i = 0
-        for element in self._variables:
+        for i, element in enumerate(self._variables):
             buf.write(element.getJsonPresentation())
             if i != len(self._variables) - 1:
                 buf.write(',')
-            i += 1
         buf.write('}')
         result = buf.getvalue()
         buf.close()

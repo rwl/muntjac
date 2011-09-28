@@ -64,8 +64,11 @@ from muntjac.terminal.ParameterHandler import \
     ErrorEvent as ParameterHandlerErrorEvent
 
 from muntjac.terminal.gwt.server.util import \
-    contextPath, originalContextPath, getUrlPath, getServletPath, getLocale,\
-    isSecure, serverPort, serverName
+    getContextPath, originalContextPath, getUrlPath, getServletPath, \
+    getLocale, isSecure, serverPort, serverName, getPathInfo
+
+
+logger = logging.getLogger(__name__)
 
 
 class RequestType(object):
@@ -95,8 +98,6 @@ class AbstractApplicationServlet(Servlet, Constants):
     @VERSION@
     @since 6.0
     """
-
-    _logger = logging.getLogger('.'.join(__package__, __class__.__name__))
 
     # The version number of this release. For example "6.2.0". Always in the
     # format "major.minor.revision[.build]". The build part is optional. All of
@@ -224,7 +225,7 @@ class AbstractApplicationServlet(Servlet, Constants):
                 'false') == 'true':
             # Print an information/warning message about running with xsrf
             # protection disabled
-            self._logger.warning(self.WARNING_XSRF_PROTECTION_DISABLED)
+            logger.warning(self.WARNING_XSRF_PROTECTION_DISABLED)
 
 
     def checkWidgetsetVersion(self, request):
@@ -234,8 +235,8 @@ class AbstractApplicationServlet(Servlet, Constants):
         @param request
         """
         if not (self.VERSION == request.field('wsver')):
-            self._logger.warning(self.WIDGETSET_MISMATCH_INFO %
-                                 (self.VERSION, request.field('wsver')))
+            logger.warning(self.WIDGETSET_MISMATCH_INFO %
+                           (self.VERSION, request.field('wsver')))
 
 
     def checkProductionMode(self):
@@ -253,7 +254,7 @@ class AbstractApplicationServlet(Servlet, Constants):
 
         if not self._productionMode:
             # Print an information/warning message about running in debug mode
-            self._logger.warning(self.NOT_PRODUCTION_MODE_INFO)
+            logger.warning(self.NOT_PRODUCTION_MODE_INFO)
 
 
     def checkResourceCacheTime(self):
@@ -265,8 +266,7 @@ class AbstractApplicationServlet(Servlet, Constants):
             self._resourceCacheTime = int(rct)
         except ValueError:
             self._resourceCacheTime = 3600
-            self._logger.warning(
-                    self.WARNING_RESOURCE_CACHING_TIME_NOT_NUMERIC)
+            logger.warning(self.WARNING_RESOURCE_CACHING_TIME_NOT_NUMERIC)
 
 
     def getApplicationProperty(self, parameterName):
@@ -704,7 +704,7 @@ class AbstractApplicationServlet(Servlet, Constants):
 #                resultPath = components[2] + components[4]  # path + query
 #            except Exception:
 #                # FIXME: Handle exception
-#                cls._logger.info('Could not find resource path ' + path)
+#                logger.info('Could not find resource path ' + path)
 #
 #        return resultPath
 
@@ -949,8 +949,8 @@ class AbstractApplicationServlet(Servlet, Constants):
         except SystemMessageException, ee:
             raise ServletException(ee)
 
-        self._logger.error('Invalid security key received from '
-                           + request.getRemoteHost())
+        logger.error('Invalid security key received from '
+                     + request.getRemoteHost())
 
 
     def getNewApplication(self, request):
@@ -997,11 +997,11 @@ class AbstractApplicationServlet(Servlet, Constants):
         @throws ServletException
         """
         # FIXME: What does 10 refer to?
-        pathInfo = request.extraURLPath()  # PATH_INFO
+        pathInfo = getPathInfo(request)
         if (pathInfo is None) or (len(pathInfo) <= 10):
             return False
 
-        contextPath = contextPath(request)
+        contextPath = getContextPath(request)
         if (contextPath is not None and request.uri().startswith('/VAADIN/')):
             self.serveStaticResourcesInVAADIN(request.uri(), request, response)
             return True
@@ -1025,12 +1025,12 @@ class AbstractApplicationServlet(Servlet, Constants):
         @throws ServletException
         """
         #sc = self.getServletContext()  # FIXME: ServletContext
-        resourceUrl = join(contextPath(request), filename)
+        resourceUrl = join(getContextPath(request), filename)
 
         if not exists(resourceUrl):
             # cannot serve requested file
             msg = 'Requested resource [' + filename + '] not found'
-            self._logger.info(msg)
+            logger.info(msg)
             response.setStatus(404, msg)
             return
 
@@ -1049,8 +1049,8 @@ class AbstractApplicationServlet(Servlet, Constants):
         except Exception:
             # Failed to find out last modified timestamp. Continue without it.
             # Set type mime type if we can determine it based on the filename
-            self._logger.info('Failed to find out last modified timestamp. '
-                              + 'Continuing without it.')
+            logger.info('Failed to find out last modified timestamp. '
+                        + 'Continuing without it.')
 
         mimetype, _ = mimetypes.guess_type(filename)
         if mimetype is not None:
@@ -1146,7 +1146,7 @@ class AbstractApplicationServlet(Servlet, Constants):
         if (pathInfo is None) or (len(pathInfo) <= 10):
             return False
 
-        contextPath = contextPath(request)
+        contextPath = getContextPath(request)
         if (contextPath is not None and request.uri().startswith('/VAADIN/')):
             return True
 
@@ -1248,7 +1248,7 @@ class AbstractApplicationServlet(Servlet, Constants):
         # from request
 
         # if context is specified add it to widgetsetUrl
-        ctxPath = contextPath(request)
+        ctxPath = getContextPath(request)
 
         # FIXME: ctxPath.length() == 0 condition is probably unnecessary and
         # might even be wrong.
@@ -1424,7 +1424,7 @@ class AbstractApplicationServlet(Servlet, Constants):
         try:
             return self.getApplicationClass().__name__
         except Exception, e:  # ClassNotFoundException
-            self._logger.warning('getApplicationCSSClassName failed')
+            logger.warning('getApplicationCSSClassName failed')
             return 'unknown'
 
 
@@ -1766,7 +1766,7 @@ class AbstractApplicationServlet(Servlet, Constants):
             #servletPath = (request.originalContextPath
             #        + request.originalServletPath())
         else:
-            servletPath = contextPath(request) + getServletPath(request)
+            servletPath = getContextPath(request) + getServletPath(request)
 
         if len(servletPath) == 0 or servletPath[len(servletPath) - 1] != '/':
             servletPath = servletPath + '/'
@@ -1904,7 +1904,7 @@ class AbstractApplicationServlet(Servlet, Constants):
         @param request
         @return
         """
-        return request.extraURLPath()
+        return getPathInfo(request)
 
 
     def getResourceLocation(self, theme, resource):

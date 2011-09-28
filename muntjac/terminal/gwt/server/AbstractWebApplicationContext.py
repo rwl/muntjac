@@ -20,11 +20,13 @@ from muntjac.service.ApplicationContext import ApplicationContext
 from muntjac.terminal.gwt.server.WebBrowser import WebBrowser
 
 
+logger = logging.getLogger(__name__)
+
+
 class AbstractWebApplicationContext(ApplicationContext):
-    """Base class for web application contexts (including portlet contexts) that
-    handles the common tasks.
+    """Base class for web application contexts (including portlet contexts)
+    that handles the common tasks.
     """
-    _logger = logging.getLogger('.'.join(__package__, __class__.__name__))
 
     def __init__(self):
         self.listeners = list()
@@ -82,34 +84,34 @@ class AbstractWebApplicationContext(ApplicationContext):
 
 
     def valueBound(self, arg0):
-        """@see javax.servlet.http.HttpSessionBindingListener#valueBound(HttpSessionBindingEvent)"""
-        # We are not interested in bindings
-        pass
+        """@see HttpSessionBindingListener.valueBound()"""
+        pass  # We are not interested in bindings
+
 
     def valueUnbound(self, event):
-        """@see javax.servlet.http.HttpSessionBindingListener#valueUnbound(HttpSessionBindingEvent)"""
-        # If we are going to be unbound from the session, the session must be
-        # closing
-        # This should never happen but is possible with rare
-        # configurations (e.g. robustness tests). If you have one
-        # thread doing HTTP socket write and another thread trying to
-        # remove same application here. Possible if you got e.g. session
-        # lifetime 1 min but socket write may take longer than 1 min.
-        # FIXME: Handle exception
+        """@see HttpSessionBindingListener.valueUnbound()"""
+        # If we are going to be unbound from the session, the session
+        # must be closing.
         try:
             for app in self.applications:
                 app.close()
                 self.removeApplication(app)
         except Exception:
-            self._logger.critical('Could not remove application, leaking memory.')
+            # This should never happen but is possible with rare
+            # configurations (e.g. robustness tests). If you have one
+            # thread doing HTTP socket write and another thread trying to
+            # remove same application here. Possible if you got e.g. session
+            # lifetime 1 min but socket write may take longer than 1 min.
+            # FIXME: Handle exception
+            logger.critical('Could not remove application, leaking memory.')
 
 
     def getBrowser(self):
         """Get the web browser associated with this application context.
 
         Because application context is related to the http session and server
-        maintains one session per browser-instance, each context has exactly one
-        web browser associated with it.
+        maintains one session per browser-instance, each context has exactly
+        one web browser associated with it.
 
         @return
         """

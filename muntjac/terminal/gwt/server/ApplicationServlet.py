@@ -16,8 +16,11 @@
 
 from paste.deploy import CONFIG
 
-from muntjac.terminal.gwt.server.AbstractApplicationServlet import AbstractApplicationServlet
 from muntjac.terminal.gwt.server.ServletException import ServletException
+from muntjac.terminal.gwt.server.util import loadClass
+
+from muntjac.terminal.gwt.server.AbstractApplicationServlet import \
+    AbstractApplicationServlet
 
 
 class ApplicationServlet(AbstractApplicationServlet):
@@ -30,8 +33,8 @@ class ApplicationServlet(AbstractApplicationServlet):
     """
 
     def awake(self, transaction):
-        """Called by the servlet container to indicate to a servlet that the servlet
-        is being placed into service.
+        """Called by the servlet container to indicate to a servlet that
+        the servlet is being placed into service.
 
         @param servletConfig
                    the object containing the servlet's configuration and
@@ -50,19 +53,25 @@ class ApplicationServlet(AbstractApplicationServlet):
         # Gets the application class name
         applicationClassName = CONFIG.get('application')
         if applicationClassName is None:
-            raise ServletException, 'Application not specified in servlet parameters'
+            raise ServletException, ('Application not specified '
+                    'in servlet parameters')
 
         try:
-            self._applicationClass = (lambda x: getattr(__import__(x.rsplit('.', 1)[0], fromlist=x.rsplit('.', 1)[0]), x.split('.')[-1]))(applicationClassName)
+            self._applicationClass = loadClass(applicationClassName)
         except ImportError:
-            raise ServletException, 'Failed to import module: ' + applicationClassName
+            raise ServletException, ('Failed to import module: '
+                    + applicationClassName)
         except AttributeError:
-            raise ServletException, 'Failed to load application class: ' + applicationClassName
+            raise ServletException, ('Failed to load application class: '
+                    + applicationClassName)
 
 
     def getNewApplication(self, request):
         # Creates a new application instance
-        application = self.getApplicationClass()()
+        try:
+            application = self.getApplicationClass()()
+        except TypeError:
+            raise ServletException, "getNewApplication failed"
         return application
 
 

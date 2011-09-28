@@ -19,6 +19,11 @@ import traceback
 
 from Queue import LifoQueue
 
+try:
+    from cStringIO import StringIO
+except ImportError, e:
+    from StringIO import StringIO
+
 from muntjac.ui.OrderedLayout import OrderedLayout
 from muntjac.terminal.Sizeable import Sizeable
 from muntjac.ui.CustomComponent import CustomComponent
@@ -33,9 +38,11 @@ from muntjac.ui.SplitPanel import SplitPanel
 from muntjac.ui.TabSheet import TabSheet
 
 
+logger = logging.getLogger(__name__)
+
+
 class ComponentSizeValidator(object):
 
-    _logger = logging.getLogger('.'.join(__package__, __class__.__name__))
     _LAYERS_SHOWN = 4
 
     _creationLocations = dict()
@@ -44,8 +51,8 @@ class ComponentSizeValidator(object):
 
     @classmethod
     def validateComponentRelativeSizes(cls, component, errors, parent):
-        """Recursively checks given component and its subtree for invalid layout
-        setups. Prints errors to std err stream.
+        """Recursively checks given component and its subtree for invalid
+        layout setups. Prints errors to std err stream.
 
         @param component
                    component to check
@@ -64,33 +71,33 @@ class ComponentSizeValidator(object):
                     errors = list()
                 errors.append(error)
             parent = error
+
         if isinstance(component, Panel):
             panel = component
-            errors = cls.validateComponentRelativeSizes(panel.getContent(), errors, parent)
+            errors = cls.validateComponentRelativeSizes(panel.getContent(),
+                    errors, parent)
 
         elif isinstance(component, ComponentContainer):
             lo = component
-            it = lo.getComponentIterator()
-            while True:
-                try:
-                    errors = cls.validateComponentRelativeSizes(it.next(), errors, parent)
-                except StopIteration:
-                    break
+            for c in lo.getComponentIterator():
+                errors = cls.validateComponentRelativeSizes(c, errors, parent)
 
         elif isinstance(component, Form):
             form = component
             if form.getLayout() is not None:
-                errors = cls.validateComponentRelativeSizes(form.getLayout(), errors, parent)
+                errors = cls.validateComponentRelativeSizes(form.getLayout(),
+                        errors, parent)
             if form.getFooter() is not None:
-                errors = cls.validateComponentRelativeSizes(form.getFooter(), errors, parent)
+                errors = cls.validateComponentRelativeSizes(form.getFooter(),
+                        errors, parent)
 
         return errors
 
 
     @classmethod
     def printServerError(cls, msg, attributes, widthError, errorStream):
-        err = str()
-        err += 'Vaadin DEBUG\n'
+        err = StringIO()
+        err.write('Vaadin DEBUG\n')
 
         indent = str()
         if attributes is not None:
@@ -98,13 +105,16 @@ class ComponentSizeValidator(object):
                 attributes.pop()
             while not attributes.empty():
                 ci = attributes.pop()
-                cls.showComponent(ci.component, ci.info, err, indent, widthError)
+                cls.showComponent(ci.component, ci.info, err, indent,
+                        widthError)
 
-        err += 'Layout problem detected: '
-        err += msg
-        err += '\n'
-        err += 'Relative sizes were replaced by undefined sizes, components may not render as expected.\n'
-        errorStream.write(err)
+        err.write('Layout problem detected: ')
+        err.write(msg)
+        err.write('\n')
+        err.write('Relative sizes were replaced by undefined sizes, '
+                'components may not render as expected.\n')
+        errorStream.write(err.getvalue())
+        err.close()
 
 
     @classmethod
@@ -121,7 +131,7 @@ class ComponentSizeValidator(object):
 
             return cls.parentCanDefineHeight(component)
         except Exception:
-            cls._logger.info('An exception occurred while validating sizes.')
+            logger.info('An exception occurred while validating sizes.')
             return True
 
 
@@ -139,19 +149,22 @@ class ComponentSizeValidator(object):
 
             return cls.parentCanDefineWidth(component)
         except Exception:
-            cls._logger.info('An exception occurred while validating sizes.')
+            logger.info('An exception occurred while validating sizes.')
             return True
 
 
     @classmethod
     def getHeightAttributes(cls, component):
         attributes = LifoQueue()
-        attributes.put( ComponentInfo(component, cls.getHeightString(component)) )
+        info = ComponentInfo(component, cls.getHeightString(component))
+        attributes.put(info)
         parent = component.getParent()
-        attributes.put( ComponentInfo(parent, cls.getHeightString(parent)) )
+        info = ComponentInfo(parent, cls.getHeightString(parent))
+        attributes.put(info)
 
         while parent is not None:
-            attributes.put( ComponentInfo(parent, cls.getHeightString(parent)) )
+            info = ComponentInfo(parent, cls.getHeightString(parent))
+            attributes.put(info)
             parent = parent.getParent()
 
         return attributes
@@ -160,12 +173,15 @@ class ComponentSizeValidator(object):
     @classmethod
     def getWidthAttributes(cls, component):
         attributes = LifoQueue()
-        attributes.put( ComponentInfo(component, cls.getWidthString(component)) )
+        info = ComponentInfo(component, cls.getWidthString(component))
+        attributes.put(info)
         parent = component.getParent()
-        attributes.put( ComponentInfo(parent, cls.getWidthString(parent)) )
+        info = ComponentInfo(parent, cls.getWidthString(parent))
+        attributes.put(info)
 
         while parent is not None:
-            attributes.put( ComponentInfo(parent, cls.getWidthString(parent)) )
+            info = ComponentInfo(parent, cls.getWidthString(parent))
+            attributes.put(info)
             parent = parent.getParent()
 
         return attributes
@@ -237,7 +253,8 @@ class ComponentSizeValidator(object):
             err.write(' (')
             err.write(attribute)
             if sizeLoc is not None:
-                err.write(', set at (' + sizeLoc.file + ':' + sizeLoc.lineNumber + ')')
+                err.write(', set at (' + sizeLoc.file
+                        + ':' + sizeLoc.lineNumber + ')')
             err.write(')')
 
         err.write('\n')
@@ -245,13 +262,9 @@ class ComponentSizeValidator(object):
 
     @classmethod
     def hasNonRelativeHeightComponent(cls, ol):
-        it = ol.getComponentIterator()
-        while True:
-            try:
-                if not cls.hasRelativeHeight(it.next()):
-                    return True
-            except StopIteration:
-                break
+        for c in ol.getComponentIterator():
+            if not cls.hasRelativeHeight(c):
+                return True
         return False
 
 
@@ -273,7 +286,8 @@ class ComponentSizeValidator(object):
             if isinstance(parent, AbstractOrderedLayout):
                 horizontal = True
                 if isinstance(parent, OrderedLayout):
-                    horizontal = parent.getOrientation() == OrderedLayout.ORIENTATION_HORIZONTAL
+                    horizontal = (parent.getOrientation() ==
+                            OrderedLayout.ORIENTATION_HORIZONTAL)
                 elif isinstance(parent, VerticalLayout):
                     horizontal = False
 
@@ -303,18 +317,18 @@ class ComponentSizeValidator(object):
                     # Other components define row height
                     return True
 
-            if (((isinstance(parent, Panel) \
-                    or isinstance(parent, SplitPanel)) \
-                    or isinstance(parent, TabSheet)) \
-                    or isinstance(parent, CustomComponent)):
+            if isinstance(parent, Panel) \
+                    or isinstance(parent, SplitPanel) \
+                    or isinstance(parent, TabSheet) \
+                    or isinstance(parent, CustomComponent):
                 # height undefined, we know how how component works and no
                 # exceptions
                 # TODO horiz SplitPanel ??
                 return False
             else:
                 # We cannot generally know if undefined component can serve
-                # space for children (like CustomLayout or component built by
-                # third party) so we assume they can
+                # space for children (like CustomLayout or component built
+                # by third party) so we assume they can
                 return True
 
         elif cls.hasRelativeHeight(parent):
@@ -330,23 +344,17 @@ class ComponentSizeValidator(object):
 
     @classmethod
     def hasRelativeHeight(cls, component):
-        return component.getHeightUnits() == Sizeable.UNITS_PERCENTAGE \
-                and component.getHeight() > 0
+        return (component.getHeightUnits() == Sizeable.UNITS_PERCENTAGE
+                and component.getHeight() > 0)
 
 
     @classmethod
     def hasNonRelativeWidthComponent(cls, arg):
         if isinstance(arg, AbstractOrderedLayout):
             ol = arg
-            it = ol.getComponentIterator()
-
-            while True:
-                try:
-                    if not cls.hasRelativeWidth(it.next()):
-                        return True
-                except StopIteration:
-                    break
-
+            for c in ol.getComponentIterator():
+                if not cls.hasRelativeWidth(c):
+                    return True
             return False
         else:
             form = arg
@@ -364,8 +372,8 @@ class ComponentSizeValidator(object):
 
     @classmethod
     def hasRelativeWidth(cls, paintable):
-        return paintable.getWidth() > 0 \
-            and paintable.getWidthUnits() == Sizeable.UNITS_PERCENTAGE
+        return (paintable.getWidth() > 0
+                and paintable.getWidthUnits() == Sizeable.UNITS_PERCENTAGE)
 
 
     @classmethod
@@ -388,11 +396,12 @@ class ComponentSizeValidator(object):
                 ol = parent
                 horizontal = True
                 if isinstance(ol, OrderedLayout):
-                    if ol.getOrientation() == OrderedLayout.ORIENTATION_VERTICAL:
+                    if (ol.getOrientation()
+                            == OrderedLayout.ORIENTATION_VERTICAL):
                         horizontal = False
                 elif isinstance(ol, VerticalLayout):
                     horizontal = False
-                if not horizontal and cls.hasNonRelativeWidthComponent(ol):
+                if (not horizontal) and cls.hasNonRelativeWidthComponent(ol):
                     # valid situation, other components defined width
                     return True
                 else:
@@ -402,10 +411,11 @@ class ComponentSizeValidator(object):
                 componentArea = gl.getComponentArea(component)
                 columnHasWidth = False
                 col = componentArea.getColumn1()
-                while not columnHasWidth and col <= componentArea.getColumn2():
+                while ((not columnHasWidth)
+                       and col <= componentArea.getColumn2()):
                     col += 1
                     row = 0
-                    while not columnHasWidth and row < gl.getRows():
+                    while (not columnHasWidth) and row < gl.getRows():
                         row += 1
                         c = gl.getComponent(col, row)
                         if c is not None:
@@ -417,21 +427,23 @@ class ComponentSizeValidator(object):
                     # Other components define column width
                     return True
             elif isinstance(parent, Form):
-                # If some other part of the form is not relative it determines
-                # the component width
+                # If some other part of the form is not relative it
+                # determines the component width
                 return cls.hasNonRelativeWidthComponent(parent)
-            elif ((isinstance(parent, SplitPanel) \
-                    or isinstance(parent, TabSheet)) \
+            elif (isinstance(parent, SplitPanel)
+                    or isinstance(parent, TabSheet)
                     or isinstance(parent, CustomComponent)):
                 # FIXME: Could we use com.vaadin package name here and
                 # fail for all component containers?
-                # FIXME: Actually this should be moved to containers so it can
-                # be implemented for custom containers
-                # TODO vertical splitpanel with another non relative component?
+                # FIXME: Actually this should be moved to containers so
+                # it can be implemented for custom containers
+                # TODO vertical splitpanel with another non relative
+                # component?
                 return False
             elif isinstance(parent, Window):
                 # Sub window can define width based on caption
-                if parent.getCaption() is not None and not (parent.getCaption() == ''):
+                if (parent.getCaption() is not None
+                        and not (parent.getCaption() == '')):
                     return True
                 else:
                     return False
@@ -452,34 +464,36 @@ class ComponentSizeValidator(object):
 
     @classmethod
     def setCreationLocation(cls, obj):
-        cls._setLocation(cls._creationLocations, obj)
+        cls.setLocation(cls._creationLocations, obj)
 
 
     @classmethod
     def setWidthLocation(cls, obj):
-        cls._setLocation(cls._widthLocations, obj)
+        cls.setLocation(cls._widthLocations, obj)
 
 
     @classmethod
     def setHeightLocation(cls, obj):
-        cls._setLocation(cls._heightLocations, obj)
+        cls.setLocation(cls._heightLocations, obj)
 
 
     @classmethod
-    def _setLocation(cls, mapp, obj):
+    def setLocation(cls, mapp, obj):
         traceLines = traceback.extract_stack()
         for traceElement in traceLines:
             try:
                 # FIXME: reduce map sizes
-#                className = traceElement.getClassName()
-#                if className.startswith('java.') or className.startswith('sun.'):
+
+#                clsName = traceElement.getClassName()
+#                if clsName.startswith('java.') or clsName.startswith('sun.'):
 #                    continue
 #
-#                clss = (lambda x: getattr(__import__(x.rsplit('.', 1)[0], fromlist=x.rsplit('.', 1)[0]), x.split('.')[-1]))(className)
+#                clss = loadClass(clsName)
 #                if (clss == ComponentSizeValidator) or (clss == Thread):
 #                    continue
 #
-#                if (Component in clss.mro() and not CustomComponent in clss.mro()):
+#                if (Component in clss.mro()
+#                        and not CustomComponent in clss.mro()):
 #                    continue
 
                 cl = FileLocation(traceElement)
@@ -487,7 +501,7 @@ class ComponentSizeValidator(object):
                 return
             except Exception:
                 # TODO Auto-generated catch block
-                cls._logger.info('An exception occurred while validating sizes.')
+                logger.info('An exception occurred while validating sizes.')
 
 
 class FileLocation(object):
@@ -514,7 +528,8 @@ class InvalidLayout(object):
         self._subErrors.append(error)
 
 
-    def reportErrors(self, clientJSON, communicationManager, serverErrorStream):
+    def reportErrors(self, clientJSON, communicationManager,
+                serverErrorStream):
         clientJSON.write('{')
 
         parent = self._component.getParent()
@@ -531,24 +546,35 @@ class InvalidLayout(object):
                 vertical = False
 
                 if isinstance(ol, OrderedLayout):
-                    if ol.getOrientation() == OrderedLayout.ORIENTATION_VERTICAL:
+                    if (ol.getOrientation()
+                            == OrderedLayout.ORIENTATION_VERTICAL):
                         vertical = True
                 elif isinstance(ol, VerticalLayout):
                     vertical = True
 
                 if vertical:
-                    msg = 'Component with relative height inside a VerticalLayout with no height defined.'
-                    attributes = ComponentSizeValidator.getHeightAttributes(self._component)
+                    msg = ('Component with relative height inside a '
+                            'VerticalLayout with no height defined.')
+                    attributes = ComponentSizeValidator.getHeightAttributes(
+                            self._component)
                 else:
-                    msg = 'At least one of a HorizontalLayout\'s components must have non relative height if the height of the layout is not defined'
-                    attributes = ComponentSizeValidator.getHeightAttributes(self._component)
+                    msg = ('At least one of a HorizontalLayout\'s components '
+                           'must have non relative height if the height of '
+                           'the layout is not defined')
+                    attributes = ComponentSizeValidator.getHeightAttributes(
+                            self._component)
             elif isinstance(parent, GridLayout):
-                msg = 'At least one of the GridLayout\'s components in each row should have non relative height if the height of the layout is not defined.'
-                attributes = ComponentSizeValidator.getHeightAttributes(self._component)
+                msg = ('At least one of the GridLayout\'s components in '
+                        'each row should have non relative height if the '
+                        'height of the layout is not defined.')
+                attributes = ComponentSizeValidator.getHeightAttributes(
+                        self._component)
             else:
                 # default error for non sized parent issue
-                msg = 'A component with relative height needs a parent with defined height.'
-                attributes = ComponentSizeValidator.getHeightAttributes(self._component)
+                msg = ('A component with relative height needs a parent '
+                        'with defined height.')
+                attributes = ComponentSizeValidator.getHeightAttributes(
+                        self._component)
 
             self.printServerError(msg, attributes, False, serverErrorStream)
             clientJSON.write(',\"heightMsg\":\"' + msg + '\"')
@@ -561,25 +587,35 @@ class InvalidLayout(object):
                 horizontal = True
 
                 if isinstance(ol, OrderedLayout):
-                    if ol.getOrientation() == OrderedLayout.ORIENTATION_VERTICAL:
+                    if (ol.getOrientation()
+                            == OrderedLayout.ORIENTATION_VERTICAL):
                         horizontal = False
                 elif isinstance(ol, VerticalLayout):
                     horizontal = False
 
                 if horizontal:
-                    msg = 'Component with relative width inside a HorizontalLayout with no width defined'
-                    attributes = ComponentSizeValidator.getWidthAttributes(self._component)
+                    msg = ('Component with relative width inside a '
+                           'HorizontalLayout with no width defined')
+                    attributes = ComponentSizeValidator.getWidthAttributes(
+                            self._component)
                 else:
-                    msg = 'At least one of a VerticalLayout\'s components must have non relative width if the width of the layout is not defined'
-                    attributes = ComponentSizeValidator.getWidthAttributes(self._component)
+                    msg = ('At least one of a VerticalLayout\'s components '
+                            'must have non relative width if the width of '
+                            'the layout is not defined')
+                    attributes = ComponentSizeValidator.getWidthAttributes(
+                            self._component)
 
             elif isinstance(parent, GridLayout):
-                msg = 'At least one of the GridLayout\'s components in each column should have non relative width if the width of the layout is not defined.'
-                attributes = ComponentSizeValidator.getWidthAttributes(self._component)
+                msg = ('At least one of the GridLayout\'s components in each '
+                       'column should have non relative width if the width '
+                       'of the layout is not defined.')
+                attributes = ComponentSizeValidator.getWidthAttributes(
+                        self._component)
 
             else:
                 # default error for non sized parent issue
-                msg = 'A component with relative width needs a parent with defined width.'
+                msg = ('A component with relative width needs a parent '
+                       'with defined width.')
                 attributes = self.getWidthAttributes(self._component)
 
             clientJSON.write(',\"widthMsg\":\"' + msg + '\"')
@@ -591,12 +627,13 @@ class InvalidLayout(object):
             first = True
             for subError in self._subErrors:
                 if not first:
-                    clientJSON.print_(',')
+                    clientJSON.write(',')
                 else:
                     first = False
-                subError.reportErrors(clientJSON, communicationManager, serverErrorStream)
+                subError.reportErrors(clientJSON, communicationManager,
+                        serverErrorStream)
             clientJSON.write(']')
-            print '<< Sub erros'
+            serverErrorStream.write('<< Sub erros\n')
 
         clientJSON.write('}')
 

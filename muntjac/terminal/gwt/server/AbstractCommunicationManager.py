@@ -75,6 +75,9 @@ from muntjac.terminal.gwt.server.StreamingProgressEventImpl import \
     StreamingProgressEventImpl
 
 
+logger = logging.getLogger(__file__)
+
+
 class AbstractCommunicationManager(Paintable, RepaintRequestListener):
     """This is a common base class for the server-side implementations of
     the communication system between the client code (compiled with GWT
@@ -93,8 +96,6 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
     """
 
     _DASHDASH = '--'
-
-    _logger = None  # @see: end of class definition
 
     _GET_PARAM_REPAINT_ALL = 'repaintAll'
 
@@ -470,8 +471,8 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
             if window is None:
                 # This should not happen, no windows exists but
                 # application is still open.
-                self._logger.warning('Could not get window for application '
-                        'with request ID ' + request.getRequestID())
+                logger.warning('Could not get window for application '
+                               'with request ID ' + request.getRequestID())
                 return
         else:
             # application has been closed
@@ -491,7 +492,7 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
                 # FIXME: Handle exception
                 # Not critical, but something is still wrong;
                 # print stacktrace
-                self._logger.warning('getSystemMessages() failed - continuing')
+                logger.warning('getSystemMessages() failed - continuing')
 
             if ci is not None:
                 msg = ci.getOutOfSyncMessage()
@@ -712,7 +713,7 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
             m = getattr(self._application, 'getSystemMessages')
             ci = m()
         except AttributeError, e:
-            self._logger.warning('getSystemMessages() failed - continuing')
+            logger.warning('getSystemMessages() failed - continuing')
 
         # meta instruction for client to enable auto-forward to
         # sessionExpiredURL after timer expires.
@@ -751,7 +752,7 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
                                                         resource)
             except Exception, e:
                 # FIXME: Handle exception
-                self._logger.info('Failed to get theme resource stream.')
+                logger.info('Failed to get theme resource stream.')
 
             if is_ is not None:
                 outWriter.write((', ' if resourceIndex > 0 else '')
@@ -762,14 +763,14 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
                     layout = is_.getvalue()
                 except IOError, e:
                     # FIXME: Handle exception
-                    self._logger.info('Resource transfer failed: ' + str(e))
+                    logger.info('Resource transfer failed: ' + str(e))
 
                 outWriter.write('\"'
                         + JsonPaintTarget.escapeJSON(layout)
                         + '\"')
             else:
                 # FIXME: Handle exception
-                self._logger.critical('CustomLayout not found: ' + resource)
+                logger.critical('CustomLayout not found: ' + resource)
 
         outWriter.write('}')
 
@@ -988,7 +989,7 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
                             + variable[self._VAR_PID])
                     success = False
 
-                self._logger.warning(msg)
+                logger.warning(msg)
                 continue
 
         return success
@@ -1061,20 +1062,18 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
 
     def _convertVariableValue(self, variableType, strValue):
 
-        val = {
-            self._VTYPE_ARRAY: lambda: self.convertArray(strValue),
-            self._VTYPE_MAP: lambda: self.convertMap(strValue),
-            self._VTYPE_STRINGARRAY: lambda: self.convertStringArray(strValue),
-            self._VTYPE_STRING: lambda: strValue,
-            self._VTYPE_INTEGER: lambda: int(strValue),
-            self._VTYPE_LONG: lambda: long(strValue),
-            self._VTYPE_FLOAT: lambda: float(strValue),
-            self._VTYPE_DOUBLE: lambda: float(strValue),
-            self._VTYPE_BOOLEAN: lambda: bool(strValue),
-            self._VTYPE_PAINTABLE: lambda: self._idPaintableMap.get(strValue)
+        return {
+            self._VTYPE_ARRAY: self.convertArray(strValue),
+            self._VTYPE_MAP: self.convertMap(strValue),
+            self._VTYPE_STRINGARRAY: self.convertStringArray(strValue),
+            self._VTYPE_STRING: strValue,
+            self._VTYPE_INTEGER: int(strValue),
+            self._VTYPE_LONG: long(strValue),
+            self._VTYPE_FLOAT: float(strValue),
+            self._VTYPE_DOUBLE: float(strValue),
+            self._VTYPE_BOOLEAN: bool(strValue),
+            self._VTYPE_PAINTABLE: self._idPaintableMap.get(strValue)
         }.get(variableType)
-
-        return val
 
 
     def _convertMap(self, strValue):
@@ -1272,8 +1271,8 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
 
             dateFormat = self._getDateFormat(code)
             if dateFormat == "":
-                self._logger.warning('Unable to get default date '
-                                     'pattern for locale ' + code)
+                logger.warning('Unable to get default date '
+                               'pattern for locale ' + code)
                 dateFormat = locale.nl_langinfo(locale.ERA_D_FMT)
             df = dateFormat
 
@@ -1692,10 +1691,6 @@ class AbstractCommunicationManager(Paintable, RepaintRequestListener):
 
     def cleanStreamVariable(self, owner, name):
         raise NotImplementedError
-
-
-AbstractCommunicationManager._logger = \
-        logging.getLogger(clsname(AbstractCommunicationManager))
 
 
 class Request(object):

@@ -26,9 +26,10 @@ from muntjac.event.dd.DragSource import DragSource
 from muntjac.terminal.gwt.client.ui.dd.VDragAndDropManager import DragEventType
 
 
-class DragAndDropService(VariableOwner):
+logger = logging.getLogger(__name__)
 
-    _logger = logging.getLogger('.'.join(__package__, __class__.__name__))
+
+class DragAndDropService(VariableOwner):
 
     def __init__(self, manager):
         self._manager = manager
@@ -44,7 +45,8 @@ class DragAndDropService(VariableOwner):
 
         # Validate drop handler owner
         if not isinstance(owner, DropTarget):
-            self._logger.critical('DropHandler owner ' + owner + ' must implement DropTarget')
+            logger.critical('DropHandler owner ' + owner
+                    + ' must implement DropTarget')
             return
 
         # owner cannot be null here
@@ -52,16 +54,16 @@ class DragAndDropService(VariableOwner):
         dropTarget = owner
         self._lastVisitId = variables.get('visitId')
 
-        # request may be dropRequest or request during drag operation (commonly
-        # dragover or dragenter)
-        dropRequest = self._isDropRequest(variables)
+        # request may be dropRequest or request during drag operation
+        # (commonly dragover or dragenter)
+        dropRequest = self.isDropRequest(variables)
         if dropRequest:
-            self._handleDropRequest(dropTarget, variables)
+            self.handleDropRequest(dropTarget, variables)
         else:
-            self._handleDragRequest(dropTarget, variables)
+            self.handleDragRequest(dropTarget, variables)
 
 
-    def _handleDropRequest(self, dropTarget, variables):
+    def handleDropRequest(self, dropTarget, variables):
         """Handles a drop request from the VDragAndDropManager.
 
         @param dropTarget
@@ -70,21 +72,23 @@ class DragAndDropService(VariableOwner):
         dropHandler = dropTarget.getDropHandler()
         if dropHandler is None:
             # No dropHandler returned so no drop can be performed.
-            self._logger.info('DropTarget.getDropHandler() returned null for owner: ' \
-                              + dropTarget)
+            logger.info('DropTarget.getDropHandler() returned null '
+                    'for owner: ' + dropTarget)
             return
 
         # Construct the Transferable and the DragDropDetails for the drop
         # operation based on the info passed from the client widgets (drag
         # source for Transferable, drop target for DragDropDetails).
         transferable = self._constructTransferable(dropTarget, variables)
-        dropData = self._constructDragDropDetails(dropTarget, variables)
+        dropData = self.constructDragDropDetails(dropTarget, variables)
+
         dropEvent = DragAndDropEvent(transferable, dropData)
+
         if dropHandler.getAcceptCriterion().accept(dropEvent):
             dropHandler.drop(dropEvent)
 
 
-    def _handleDragRequest(self, dropTarget, variables):
+    def handleDragRequest(self, dropTarget, variables):
         """Handles a drag/move request from the VDragAndDropManager.
 
         @param dropTarget
@@ -92,23 +96,24 @@ class DragAndDropService(VariableOwner):
         """
         self._lastVisitId = variables.get('visitId')
 
-        self._acceptCriterion = dropTarget.getDropHandler().getAcceptCriterion()
+        self._acceptCriterion = \
+                dropTarget.getDropHandler().getAcceptCriterion()
 
         # Construct the Transferable and the DragDropDetails for the drag
         # operation based on the info passed from the client widgets (drag
         # source for Transferable, current target for DragDropDetails).
         transferable = self.constructTransferable(dropTarget, variables)
-        dragDropDetails = self._constructDragDropDetails(dropTarget, variables)
+        dragDropDetails = self.constructDragDropDetails(dropTarget, variables)
 
         self._dragEvent = DragAndDropEvent(transferable, dragDropDetails)
 
         self._lastVisitAccepted = self._acceptCriterion.accept(self._dragEvent)
 
 
-    def _constructDragDropDetails(self, dropTarget, variables):
-        """Construct DragDropDetails based on variables from client drop target.
-        Uses DragDropDetailsTranslator if available, otherwise a default
-        DragDropDetails implementation is used.
+    def constructDragDropDetails(self, dropTarget, variables):
+        """Construct DragDropDetails based on variables from client drop
+        target. Uses DragDropDetailsTranslator if available, otherwise a
+        default DragDropDetails implementation is used.
 
         @param dropTarget
         @param variables
@@ -125,11 +130,11 @@ class DragAndDropService(VariableOwner):
         return dropData
 
 
-    def _isDropRequest(self, variables):
-        return self._getRequestType(variables) == DragEventType.DROP
+    def isDropRequest(self, variables):
+        return self.getRequestType(variables) == DragEventType.DROP
 
 
-    def _getRequestType(self, variables):
+    def getRequestType(self, variables):
         typ = variables.get('type')
         return DragEventType.values().get(typ)
 
@@ -140,7 +145,8 @@ class DragAndDropService(VariableOwner):
         variables = variables.get('tra')
 
         transferable = None
-        if sourceComponent is not None and isinstance(sourceComponent, DragSource):
+        if (sourceComponent is not None
+                and isinstance(sourceComponent, DragSource)):
             transferable = sourceComponent.getTransferable(variables)
 
         if transferable is None:
@@ -164,7 +170,8 @@ class DragAndDropService(VariableOwner):
             jsonPaintTarget.startTag('dd')
             jsonPaintTarget.addAttribute('visitId', self._lastVisitId)
             if self._acceptCriterion is not None:
-                jsonPaintTarget.addAttribute('accepted', self._lastVisitAccepted)
+                jsonPaintTarget.addAttribute('accepted',
+                        self._lastVisitAccepted)
                 self._acceptCriterion.paintResponse(jsonPaintTarget)
             jsonPaintTarget.endTag('dd')
             jsonPaintTarget.close()

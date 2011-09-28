@@ -17,32 +17,32 @@
 
 class Constants(object):
 
-    NOT_PRODUCTION_MODE_INFO = '\n' \
-        '=================================================================\n' \
-        'Muntjac is running in DEBUG MODE.\nAdd productionMode=true to INI ' \
-        'to disable debug features.\nTo show debug window, add ?debug to ' \
-        'your application URL.\n' \
-        '================================================================='
+    NOT_PRODUCTION_MODE_INFO = ('\n'
+        '=================================================================\n'
+        'Muntjac is running in DEBUG MODE.\nAdd productionMode=true to INI '
+        'to disable debug features.\nTo show debug window, add ?debug to '
+        'your application URL.\n'
+        '=================================================================')
 
-    WARNING_XSRF_PROTECTION_DISABLED = '\n' \
-        '===========================================================\n' \
-        'WARNING: Cross-site request forgery protection is disabled!\n' \
-        '==========================================================='
+    WARNING_XSRF_PROTECTION_DISABLED = ('\n'
+        '===========================================================\n'
+        'WARNING: Cross-site request forgery protection is disabled!\n'
+        '===========================================================')
 
-    WARNING_RESOURCE_CACHING_TIME_NOT_NUMERIC = '\n' \
-        '===========================================================\n' \
-        'WARNING: resourceCacheTime has been set to a non integer value ' \
-        'in INI. The default of 1h will be used.\n' \
-        '==========================================================='
+    WARNING_RESOURCE_CACHING_TIME_NOT_NUMERIC = ('\n'
+        '===========================================================\n'
+        'WARNING: resourceCacheTime has been set to a non integer value '
+        'in INI. The default of 1h will be used.\n'
+        '===========================================================')
 
-    WIDGETSET_MISMATCH_INFO = '\n' \
-        '=================================================================\n' \
-        'The widgetset in use does not seem to be built for the Muntjac\n' \
-        'version in use. This might cause strange problems - a\n' \
-        'recompile/deploy is strongly recommended.\n' \
-        ' Muntjac version: %s\n' \
-        ' Widgetset version: %s\n' \
-        '================================================================='
+    WIDGETSET_MISMATCH_INFO = ('\n'
+        '=================================================================\n'
+        'The widgetset in use does not seem to be built for the Muntjac\n'
+        'version in use. This might cause strange problems - a\n'
+        'recompile/deploy is strongly recommended.\n'
+        ' Muntjac version: %s\n'
+        ' Widgetset version: %s\n'
+        '=================================================================')
 
     URL_PARAMETER_RESTART_APPLICATION = 'restartApplication'
     URL_PARAMETER_CLOSE_APPLICATION = 'closeApplication'
@@ -68,7 +68,8 @@ class Constants(object):
 
     # Widget set parameter name
     PARAMETER_WIDGETSET = 'widgetset'
-    ERROR_NO_WINDOW_FOUND = 'No window found. Did you remember to setMainWindow()?'
+    ERROR_NO_WINDOW_FOUND = ('No window found. '
+            'Did you remember to setMainWindow()?')
     DEFAULT_THEME_NAME = 'reindeer'
     INVALID_SECURITY_KEY_MSG = 'Invalid security key.'
 

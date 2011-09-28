@@ -15,20 +15,20 @@
 
 """WebKit utility functions.
 
-TODO: Move to PasteWebkit.
+TODO: Move to PasteWebKit.
 """
 
 import locale
 import urlparse
 
-def contextPath(request):
+def getContextPath(request):
     ## FIXME: implement request.contextPath()
     return request.serverSideContextPath()
 
 
 def originalContextPath(request):
     ## FIXME: implement request.originalContextPath()
-    return contextPath(request)
+    return getContextPath(request)
 
 
 def getServletPath(request):
@@ -77,3 +77,23 @@ def getUrlPath(url):
     @return: the path part or the url
     """
     urlparse(url)[2]
+
+
+def loadClass(className):
+    return (lambda x: getattr(__import__(x.rsplit('.', 1)[0],
+                                         fromlist=x.rsplit('.', 1)[0]),
+                              x.split('.')[-1]))(className)
+
+
+def getPathInfo(request):
+    return request.extraURLPath()
+
+
+def getResourceAsStream(servlet, path):
+    # FIXME: make relative to context root
+    stream = open(path, 'rb')
+    return stream
+
+
+def getSuperClass(cls):
+    return cls.__mro__[1] if len(cls.__mro__) > 1 else None

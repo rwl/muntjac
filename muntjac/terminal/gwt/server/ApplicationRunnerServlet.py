@@ -14,39 +14,50 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import re
 import logging
 
-from muntjac.terminal.gwt.server.AbstractApplicationServlet import AbstractApplicationServlet
+from paste.deploy import CONFIG
+
 from muntjac.terminal.gwt.server.ServletException import ServletException
+
+from muntjac.terminal.gwt.server.AbstractApplicationServlet import \
+    AbstractApplicationServlet
+
+from muntjac.terminal.gwt.server.util import \
+    getContextPath, loadClass, getPathInfo
+
+
+logger = logging.getLogger(__name__)
 
 
 class ApplicationRunnerServlet(AbstractApplicationServlet):
 
-    _logger = logging.getLogger('.'.join(__package__, __class__.__name__))
+    def awake(self, transaction):
+        super(ApplicationRunnerServlet, self).awake(transaction)
 
-    def init(self, servletConfig):
-        super(ApplicationRunnerServlet, self).init(servletConfig)
-
-        # The name of the application class currently used. Only valid within one
-        # request.
+        # The name of the application class currently used. Only valid
+        # within one request.
         self._defaultPackages = None
+
         self._request = None  # ThreadLocal()
 
-        initParameter = servletConfig.getInitParameter('defaultPackages')
+        initParameter = CONFIG.get('defaultPackages')
         if initParameter is not None:
-            self._defaultPackages = initParameter.split(',')
+            self._defaultPackages = re.split(',', initParameter)
 
 
-    def service(self, request, response):
-        self._request = request
-        super(ApplicationRunnerServlet, self).service(request, response)
+    def respond(self, transaction):
+        self._request = transaction.request()
+
+        super(ApplicationRunnerServlet, self).respond(transaction)
+
         self._request = None
 
 
     def getApplicationUrl(self, request):
-        url = super(ApplicationRunnerServlet, self).getApplicationUrl(request)
+        path = super(ApplicationRunnerServlet, self).getApplicationUrl(request)
 
-        path = url
         path += self.getApplicationRunnerApplicationClassName(request)
         path += '/'
 
@@ -59,16 +70,16 @@ class ApplicationRunnerServlet(AbstractApplicationServlet):
             application = self.getApplicationClass()()
             return application
         except TypeError:
-            raise ServletException('Failed to load application class: ' \
+            raise ServletException('Failed to load application class: '
                     + self.getApplicationRunnerApplicationClassName(request))
 
 
-    def _getApplicationRunnerApplicationClassName(self, request):
+    def getApplicationRunnerApplicationClassName(self, request):
         return self.getApplicationRunnerURIs(request).applicationClassname
 
 
     @classmethod
-    def _getApplicationRunnerURIs(cls, request):
+    def getApplicationRunnerURIs(cls, request):
         """Parses application runner URIs.
 
         If request URL is e.g.
@@ -83,13 +94,13 @@ class ApplicationRunnerServlet(AbstractApplicationServlet):
         @return string array containing widgetset URI, application URI and
                 context, runner, application classname
         """
-        urlParts = request.uri().split('\\/')
+        urlParts = re.split('\\/', request.uri())
         context = None
         # String runner = null;
         uris = URIS()
         applicationClassname = None
-        contextPath = request.contextPath()
-        if urlParts[1] == contextPath.replaceAll('\\/', ''):
+        contextPath = getContextPath(request)
+        if urlParts[1] == re.sub('\\/', '', contextPath):
             # class name comes after web context and runner application
             context = urlParts[1]
             # runner = urlParts[2]
@@ -125,22 +136,23 @@ class ApplicationRunnerServlet(AbstractApplicationServlet):
     def getApplicationClass(self):
         appClass = None
 
-        baseName = self._getApplicationRunnerApplicationClassName(self._request)  #@PydevCodeAnalysisIgnore
+        baseName = self.getApplicationRunnerApplicationClassName(self._request)  #@PydevCodeAnalysisIgnore
 
         try:
-            exec 'appClass = baseName()'
+            appClass = loadClass(baseName)
             return appClass
         except Exception:
             if self._defaultPackages is not None:
                 for _ in range(len(self._defaultPackages)):
                     try:
-                        exec "appClass = (self._defaultPackages[i] + '.' + baseName)()"
+                        clsName = self._defaultPackages[i] + '.' + baseName
+                        appClass = loadClass(clsName)
                     except TypeError:
-                        # Ignore as this is expected for many packages
-                        pass
+                        pass  # Ignore as this is expected for many packages
                     except Exception:
                         # TODO: handle exception
-                        self._logger.info('Failed to find application class in the default package.')
+                        logger.info('Failed to find application '
+                                'class in the default package.')
 
                     if appClass is not None:
                         return appClass
@@ -149,10 +161,11 @@ class ApplicationRunnerServlet(AbstractApplicationServlet):
 
 
     def getRequestPathInfo(self, request):
-        path = request.extraURLPath()
+        path = getPathInfo(request)
         if path is None:
             return None
-        path = path[1 + len(self.getApplicationRunnerApplicationClassName(request)):]
+        clsName = self.getApplicationRunnerApplicationClassName(request)
+        path = path[1 + len(clsName):]
         return path
 
 
@@ -161,13 +174,14 @@ class ApplicationRunnerServlet(AbstractApplicationServlet):
         staticFilesPath = uris.staticFilesPath
         if staticFilesPath == '/':
             staticFilesPath = ''
-
         return staticFilesPath
 
 
 class URIS(object):
-    staticFilesPath = None
-    # String applicationURI;
-    # String context;
-    # String runner;
-    applicationClassname = None
+
+    def __init__(self):
+        self.staticFilesPath = None
+        # self.applicationURI;
+        # self.context;
+        # self.runner;
+        self.applicationClassname = None
