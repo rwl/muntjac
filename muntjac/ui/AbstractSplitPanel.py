@@ -68,8 +68,7 @@ class AbstractSplitPanel(AbstractLayout):
     can contain two components. The comopnents are split by a divider element.
 
     @author Vaadin Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 6.5
     """
 

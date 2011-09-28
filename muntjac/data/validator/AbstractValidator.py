@@ -29,8 +29,7 @@ class AbstractValidator(Validator):
     </p>
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 5.4
     """
 

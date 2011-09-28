@@ -39,8 +39,7 @@ class HorizontalSplitPanel(AbstractSplitPanel):
     </pre>
 
     @author Vaadin Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 6.5
     """
 

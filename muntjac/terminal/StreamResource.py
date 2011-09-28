@@ -26,8 +26,7 @@ class StreamResource(ApplicationResource):
     registered to window in creation.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 
@@ -172,8 +171,7 @@ class StreamSource(object):
     """Interface implemented by the source of a StreamResource.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
     # documented in superclass

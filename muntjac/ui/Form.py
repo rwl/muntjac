@@ -63,8 +63,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, Not
     </p>
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 

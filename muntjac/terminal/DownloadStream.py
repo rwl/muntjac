@@ -20,8 +20,7 @@ class DownloadStream(object):
     """Downloadable stream.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
     # Maximum cache time.

@@ -30,8 +30,7 @@ class BaseFieldFactory(FieldFactory):
     <p>
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.1
     @deprecated use {@link DefaultFieldFactory} or own implementations on
                 {@link FormFieldFactory} or {@link TableFieldFactory} instead.

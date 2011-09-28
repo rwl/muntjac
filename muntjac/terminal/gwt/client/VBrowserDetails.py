@@ -51,14 +51,18 @@ class VBrowserDetails(object):
         userAgent = userAgent.lower()
 
         # browser engine name
-        self._isGecko = userAgent.find('gecko') != -1 and userAgent.find('webkit') == -1
+        self._isGecko = (userAgent.find('gecko') != -1
+                and userAgent.find('webkit') == -1)
         self._isWebKit = userAgent.find('applewebkit') != -1
         self._isPresto = userAgent.find(' presto/') != -1
         # browser name
         self._isChrome = userAgent.find(' chrome/') != -1
-        self._isSafari = not self._isChrome and userAgent.find('safari') != -1
+        self._isSafari = ((not self._isChrome)
+                and userAgent.find('safari') != -1)
         self._isOpera = userAgent.find('opera') != -1
-        self._isIE = userAgent.find('msie') != -1 and not self._isOpera and userAgent.find('webtv') == -1
+        self._isIE = (userAgent.find('msie') != -1
+                and (not self._isOpera)
+                and userAgent.find('webtv') == -1)
         self._isFirefox = userAgent.find(' firefox/') != -1
 
         # Rendering engine version
@@ -81,17 +85,21 @@ class VBrowserDetails(object):
         try:
             if self._isIE:
                 ieVersionString = userAgent[userAgent.find('msie ') + 5:]
-                ieVersionString = self.safeSubstring(ieVersionString, 0, ieVersionString.find(';'))
+                ieVersionString = self.safeSubstring(ieVersionString, 0,
+                        ieVersionString.find(';'))
                 self.parseVersionString(ieVersionString)
             elif self._isFirefox:
                 i = userAgent.find(' firefox/') + 9
-                self.parseVersionString( self.safeSubstring(userAgent, i, i + 5) )
+                ver = self.safeSubstring(userAgent, i, i + 5)
+                self.parseVersionString(ver)
             elif self._isChrome:
                 i = userAgent.find(' chrome/') + 8
-                self.parseVersionString( self.safeSubstring(userAgent, i, i + 5) )
+                ver = self.safeSubstring(userAgent, i, i + 5)
+                self.parseVersionString(ver)
             elif self._isSafari:
                 i = userAgent.find(' version/') + 9
-                self.parseVersionString( self.safeSubstring(userAgent, i, i + 5) )
+                ver = self.safeSubstring(userAgent, i, i + 5)
+                self.parseVersionString(ver)
             elif self._isOpera:
                 i = userAgent.find(' version/')
                 if i != -1:
@@ -99,7 +107,8 @@ class VBrowserDetails(object):
                     i += 9  # " version/".length
                 else:
                     i = userAgent.find('opera/') + 6
-                self.parseVersionString(self.safeSubstring(userAgent, i, i + 5))
+                ver = self.safeSubstring(userAgent, i, i + 5)
+                self.parseVersionString(ver)
         except Exception:
             # Browser version parsing failed
             print 'Browser version parsing failed for: ' + userAgent
@@ -120,19 +129,17 @@ class VBrowserDetails(object):
         if idx < 0:
             idx = len(versionString)
 
-        self._browserMajorVersion = int(self.safeSubstring(versionString, 0, idx))
+        ver = self.safeSubstring(versionString, 0, idx)
+        self._browserMajorVersion = int(ver)
 
         idx2 = versionString.find('.', idx + 1)
         if idx2 < 0:
             idx2 = len(versionString)
 
-
         try:
+            ver = self.safeSubstring(versionString, idx + 1, idx2)
             self._browserMinorVersion = \
-                    int( re.sub('[^0-9].*', '',
-                                self.safeSubstring(versionString,
-                                                   idx + 1,
-                                                   idx2)) )
+                    int( re.sub('[^0-9].*', '', ver) )
         except ValueError:
             pass  # leave the minor version unmodified (-1 = unknown)
 
@@ -212,8 +219,8 @@ class VBrowserDetails(object):
 
 
     def getBrowserEngineVersion(self):
-        """Returns the version of the browser engine. For WebKit this is an integer
-        e.g., 532.0. For gecko it is a float e.g., 1.8 or 1.9.
+        """Returns the version of the browser engine. For WebKit this is
+        an integer e.g., 532.0. For gecko it is a float e.g., 1.8 or 1.9.
 
         @return The version of the browser engine
         """
@@ -221,12 +228,11 @@ class VBrowserDetails(object):
 
 
     def getBrowserMajorVersion(self):
-        """Returns the browser major version e.g., 3 for Firefox 3.5, 4 for Chrome
-        4, 8 for Internet Explorer 8.
-        <p>
-        Note that Internet Explorer 8 and newer will return the document mode so
-        IE8 rendering as IE7 will return 7.
-        </p>
+        """Returns the browser major version e.g., 3 for Firefox 3.5, 4 for
+        Chrome 4, 8 for Internet Explorer 8.
+
+        Note that Internet Explorer 8 and newer will return the document
+        mode so IE8 rendering as IE7 will return 7.
 
         @return The major version of the browser.
         """
@@ -244,9 +250,10 @@ class VBrowserDetails(object):
 
 
     def setIEMode(self, documentMode):
-        """Sets the version for IE based on the documentMode. This is used to return
-        the correct the correct IE version when the version from the user agent
-        string and the value of the documentMode property do not match.
+        """Sets the version for IE based on the documentMode. This is used
+        to return the correct the correct IE version when the version from
+        the user agent string and the value of the documentMode property do
+        not match.
 
         @param documentMode
                    The current document mode

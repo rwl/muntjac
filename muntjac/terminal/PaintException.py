@@ -19,8 +19,7 @@ class PaintException(IOError):
     """<code>PaintExcepection</code> is thrown if painting of a component fails.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 

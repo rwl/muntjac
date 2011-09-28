@@ -31,8 +31,7 @@ class ContainerOrderedWrapper(Container, Ordered, Container,
     with the {@link #updateOrderWrapper()} method.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 

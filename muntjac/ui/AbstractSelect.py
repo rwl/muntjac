@@ -135,8 +135,7 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
     </p>
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 5.0
     """
     # Item caption mode: Item's ID's <code>String</code> representation is used

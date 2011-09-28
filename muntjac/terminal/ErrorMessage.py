@@ -22,8 +22,7 @@ class ErrorMessage(Paintable):
     shown to user must implement this interface.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
     # Error code for system errors and bugs.

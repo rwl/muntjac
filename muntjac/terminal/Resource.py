@@ -20,8 +20,7 @@ class Resource(object):
     displaying the resource type is left to the terminal.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 

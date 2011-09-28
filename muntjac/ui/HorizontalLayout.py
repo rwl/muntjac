@@ -27,8 +27,7 @@ class HorizontalLayout(AbstractOrderedLayout):
     subcomponents in the order of their addition (horizontally).
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 5.3
     """
 

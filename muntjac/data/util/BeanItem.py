@@ -22,8 +22,7 @@ class BeanItem(PropertysetItem):
     """A wrapper class for adding the Item interface to any Java Bean.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 

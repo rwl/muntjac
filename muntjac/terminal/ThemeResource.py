@@ -25,8 +25,7 @@ class ThemeResource(Resource):
     provide static images, flash, java-applets, etc for the terminals.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 

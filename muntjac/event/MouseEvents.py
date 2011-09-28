@@ -24,8 +24,7 @@ class MouseEvents(object):
 
     @author IT Mill Ltd.
     @see ClickListener
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 6.2
     """
     pass
@@ -41,8 +40,7 @@ class ClickEvent(ComponentEvent):
 
     @author IT Mill Ltd.
     @see ClickListener
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 6.2
     """
 
@@ -165,8 +163,7 @@ class ClickListener(ComponentEventListener):
 
     @see ClickEvent
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 6.2
     """
 
@@ -188,8 +185,7 @@ class DoubleClickEvent(ComponentEvent):
 
     @see ClickEvent
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 6.2
     """
 
@@ -203,8 +199,7 @@ class DoubleClickListener(ComponentEventListener):
 
     @see DoubleClickEvent
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 6.2
     """
 

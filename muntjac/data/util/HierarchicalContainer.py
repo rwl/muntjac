@@ -23,8 +23,7 @@ class HierarchicalContainer(IndexedContainer, Container, Hierarchical):
     tree-like structure.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 

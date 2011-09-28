@@ -49,8 +49,7 @@ class MethodProperty(AbstractProperty):
     </p>
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 
@@ -624,8 +623,7 @@ class MethodException(RuntimeError):
     property.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 

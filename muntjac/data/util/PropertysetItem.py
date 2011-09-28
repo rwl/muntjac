@@ -26,8 +26,7 @@ class PropertysetItem(Item, Item, PropertySetChangeNotifier):  # Cloneable
     set managed by the class.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 
@@ -243,8 +242,7 @@ class PropertySetChangeEvent(EventObject, Item, PropertySetChangeEvent):
     changed.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 

@@ -25,8 +25,7 @@ class FileTypeResolver(object):
     </p>
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
     # Default icon given if no icon is specified for a mime-type.

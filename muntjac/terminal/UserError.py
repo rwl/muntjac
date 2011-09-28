@@ -22,8 +22,7 @@ class UserError(ErrorMessage):
     errors are occur in normal usage of the application and guide the user.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
     # Content mode, where the error contains only plain text.

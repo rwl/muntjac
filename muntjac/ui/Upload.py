@@ -32,8 +32,7 @@ class StartedListener(object):
     """Receives the events when the upload starts.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 5.0
     """
 
@@ -50,8 +49,7 @@ class FinishedListener(object):
     """Receives the events when the uploads are ready.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 
@@ -68,8 +66,7 @@ class FailedListener(object):
     """Receives events when the uploads are finished, but unsuccessful.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 
@@ -86,8 +83,7 @@ class SucceededListener(object):
     """Receives events when the uploads are successfully finished.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 
@@ -150,8 +146,7 @@ class Upload(AbstractComponent, Component, Focusable):
     browsers setting size may work to some extend.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 
@@ -659,8 +654,7 @@ class Receiver(object):
     Upload component an output stream to write the uploaded data.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
     # Upload events
@@ -685,8 +679,7 @@ class FinishedEvent(ComponentEvent):
     FailedEvent, which are both subclasses of the FinishedEvent.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 
@@ -749,8 +742,7 @@ class FailedEvent(FinishedEvent):
     reception is interrupted for some reason.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 
@@ -809,8 +801,7 @@ class SucceededEvent(FinishedEvent):
     successfully.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 
@@ -827,8 +818,7 @@ class StartedEvent(ComponentEvent):
     """Upload.StartedEvent event is sent when the upload is started to received.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 5.0
     """
 

@@ -46,8 +46,7 @@ class CustomLayout(AbstractLayout):
     @author IT Mill Ltd.
     @author Duy B. Vo (<a
             href="mailto:devduy@gmail.com?subject=Vaadin">devduy@gmail.com</a>)
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 

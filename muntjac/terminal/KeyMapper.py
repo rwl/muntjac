@@ -20,8 +20,7 @@ class KeyMapper(object):
     for objects and retrieving the objects later with the key.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 

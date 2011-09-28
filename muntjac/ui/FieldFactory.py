@@ -23,8 +23,7 @@ class FieldFactory(FormFieldFactory, TableFieldFactory):
     context.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.1
     @deprecated FieldFactory was split into two lighter interfaces in 6.0 Use
                 FormFieldFactory or TableFieldFactory or both instead.

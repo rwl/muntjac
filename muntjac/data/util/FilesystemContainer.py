@@ -27,8 +27,7 @@ class FileItem(Item):
     """A Item wrapper for files in a filesystem.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
     # The wrapped file.
@@ -149,8 +148,7 @@ class FilesystemContainer(Container, Hierarchical):
     """A hierarchical container wrapper for a filesystem.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
     # String identifier of a file's "name" property.
@@ -669,8 +667,7 @@ class FileExtensionFilter(object):  # FIXME: FilenameFilter
     extension.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 

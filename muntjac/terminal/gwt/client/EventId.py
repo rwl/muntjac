@@ -14,7 +14,11 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
 class EventId(object):
+
     BLUR = 'blur'
+
     FOCUS = 'focus'
+
     LAYOUT_CLICK = 'layout_click'

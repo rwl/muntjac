@@ -49,8 +49,7 @@ class GridLayout(AbstractLayout, Layout, AlignmentHandler, Layout,
     </p>
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 
@@ -945,8 +944,7 @@ class Area(object):
     (column2,row2).
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 
@@ -1096,8 +1094,7 @@ class OverlapsException(RuntimeError):
     (even partly) at the same space on a grid with the new component.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 
@@ -1147,8 +1144,7 @@ class OutOfBoundsException(RuntimeError):
     bounds of the grid.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 

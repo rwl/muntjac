@@ -28,8 +28,7 @@ class ApplicationResource(Resource):
     </p>
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
     # Default cache time.

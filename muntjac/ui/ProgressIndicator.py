@@ -35,8 +35,7 @@ class ProgressIndicator(AbstractField, Property, Property, Viewer,
     May view an other property that indicates progress 0...1
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 4
     """
 

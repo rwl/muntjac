@@ -44,7 +44,8 @@ class MouseEventDetails(object):
             self.__init__(evt, None)
         else:
             raise NotImplementedError
-#            self._type = Event.getTypeInt(evt.getType())  # FIXME: com.google.gwt.user.client.Event
+            # FIXME: com.google.gwt.user.client.Event
+#            self._type = Event.getTypeInt(evt.getType())
 #            self._clientX = Util.getTouchOrMouseClientX(evt)
 #            self._clientY = Util.getTouchOrMouseClientY(evt)
             self._button = evt.getButton()
@@ -53,8 +54,10 @@ class MouseEventDetails(object):
             self._metaKey = evt.getMetaKey()
             self._shiftKey = evt.getShiftKey()
             if relativeToElement is not None:
-                self._relativeX = self.getRelativeX(self._clientX, relativeToElement)
-                self._relativeY = self.getRelativeY(self._clientY, relativeToElement)
+                self._relativeX = self.getRelativeX(self._clientX,
+                        relativeToElement)
+                self._relativeY = self.getRelativeY(self._clientY,
+                        relativeToElement)
 
 
     def toString(self):
@@ -62,11 +65,11 @@ class MouseEventDetails(object):
 
 
     def serialize(self):
-        return '' + self._button + self._DELIM + self._clientX + self._DELIM \
-                + self._clientY + self._DELIM + self._altKey + self._DELIM \
-                + self._ctrlKey + self._DELIM + self._metaKey + self._DELIM \
-                + self._shiftKey + self._DELIM + self._type + self._DELIM \
-                + self._relativeX + self._DELIM + self._relativeY
+        return (self._button + self._DELIM + self._clientX + self._DELIM
+                + self._clientY + self._DELIM + self._altKey + self._DELIM
+                + self._ctrlKey + self._DELIM + self._metaKey + self._DELIM
+                + self._shiftKey + self._DELIM + self._type + self._DELIM
+                + self._relativeX + self._DELIM + self._relativeY)
 
 
     @classmethod

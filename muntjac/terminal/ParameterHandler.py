@@ -33,8 +33,7 @@ class ParameterHandler(object):
     </p>
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 

@@ -26,8 +26,7 @@ class AbstractLayout(AbstractComponentContainer, Layout, MarginHandler):
     interface.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 5.0
     """
     _CLICK_EVENT = EventId.LAYOUT_CLICK

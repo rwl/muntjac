@@ -47,15 +47,16 @@ class VMarginInfo(object):
             else:
                 enabled, = args
                 if enabled:
-                    self._bitMask = self._TOP + self._RIGHT + self._BOTTOM + self._LEFT
+                    self._bitMask = \
+                        self._TOP + self._RIGHT + self._BOTTOM + self._LEFT
                 else:
                     self._bitMask = 0
         elif nargs == 4:
             top, right, bottom, left = args
-            self._bitMask = self._TOP if top else 0
-            self._bitMask += self._RIGHT if right else 0
+            self._bitMask  = self._TOP    if top    else 0
+            self._bitMask += self._RIGHT  if right  else 0
             self._bitMask += self._BOTTOM if bottom else 0
-            self._bitMask += self._LEFT if left else 0
+            self._bitMask += self._LEFT   if left   else 0
         else:
             raise ValueError, 'invalid number of arguments'
 

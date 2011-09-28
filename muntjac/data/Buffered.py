@@ -48,8 +48,7 @@ class Buffered(object):
     </p>
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 
@@ -151,8 +150,7 @@ class SourceException(RuntimeError, ErrorMessage):
     in processing a data source.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 

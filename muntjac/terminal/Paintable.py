@@ -23,8 +23,7 @@ class Paintable(EventListener):
     and that way describing to the terminal how it should be displayed in the UI.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 

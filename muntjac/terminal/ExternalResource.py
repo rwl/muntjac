@@ -24,8 +24,7 @@ class ExternalResource(Resource):
     terminal and are not fetched trough the terminal adapter.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 

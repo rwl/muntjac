@@ -592,8 +592,7 @@ class Application(URIHandler, Terminal, ErrorListener):
     </p>
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
     _logger = logging.getLogger(Application.getName())
@@ -1468,8 +1467,7 @@ class UserChangeEvent(EventObject):
     Application user change event sent when the setUser is called to change
     the current user of the application.
 
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 
@@ -1521,8 +1519,7 @@ class UserChangeListener(EventListener):
     """The <code>UserChangeListener</code> interface for listening application
     user changes.
 
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 

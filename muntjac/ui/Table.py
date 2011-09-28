@@ -96,8 +96,7 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
     </p>
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 

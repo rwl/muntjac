@@ -28,8 +28,7 @@ class ClassResource(ApplicationResource):
     @see java.lang.Class#getResource(java.lang.String)
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 

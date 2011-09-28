@@ -23,8 +23,7 @@ class CompositeErrorMessage(ErrorMessage):
     """Class for combining multiple error messages together.
 
     @author IT Mill Ltd
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 

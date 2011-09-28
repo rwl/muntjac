@@ -40,8 +40,7 @@ class Property(object):
     </p>
 
     @author IT Mill Ltd
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 
@@ -135,8 +134,7 @@ class ReadOnlyException(RuntimeError):
     modification failed because it's in read-only mode.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 
@@ -160,8 +158,7 @@ class ConversionException(RuntimeError):
     the Property.
 
     @author IT Mill Ltd
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 
@@ -197,8 +194,7 @@ class Viewer(object):
     as a data source.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 
@@ -231,8 +227,7 @@ class Editor(Viewer):
     </p>
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
     pass
@@ -243,8 +238,7 @@ class ValueChangeEvent(object):
     changed.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 
@@ -261,8 +255,7 @@ class ValueChangeListener(object):
     <code>ValueChangeEvent</code> objects.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 
@@ -290,8 +283,7 @@ class ValueChangeNotifier(object):
     </p>
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 
@@ -318,8 +310,7 @@ class ReadOnlyStatusChangeEvent(object):
     status has been changed.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 
@@ -336,8 +327,7 @@ class ReadOnlyStatusChangeListener(object):
     <code>ReadOnlyStatusChangeEvent</code> objects.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 
@@ -366,8 +356,7 @@ class ReadOnlyStatusChangeNotifier(object):
     </p>
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 

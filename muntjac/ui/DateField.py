@@ -47,8 +47,7 @@ class DateField(AbstractField, FieldEvents, BlurNotifier, FieldEvents, FocusNoti
     </p>
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 

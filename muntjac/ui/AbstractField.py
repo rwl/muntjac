@@ -56,8 +56,7 @@ class AbstractField(AbstractComponent, Field, Property, ReadOnlyStatusChangeList
     </p>
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 
@@ -996,8 +995,7 @@ class ReadOnlyStatusChangeEvent(ComponentEvent, Property, ReadOnlyStatusChangeEv
     status has changed.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 

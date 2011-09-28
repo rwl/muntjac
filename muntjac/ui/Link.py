@@ -25,8 +25,7 @@ class Link(AbstractComponent):
     """Link is used to create external or internal URL links.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 

@@ -25,8 +25,7 @@ class TableFieldFactory(object):
     <p>
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 6.0
     @see FormFieldFactory
     """

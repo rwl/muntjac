@@ -23,8 +23,7 @@ class IntegerValidator(AbstractStringValidator):
     information.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 5.4
     """
 

@@ -53,8 +53,7 @@ class Label(AbstractComponent, Property, Property, Viewer, Property,
     </p>
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 

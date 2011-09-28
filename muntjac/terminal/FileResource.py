@@ -27,8 +27,7 @@ class FileResource(ApplicationResource):
     resource is automatically registered to the application when it is created.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 

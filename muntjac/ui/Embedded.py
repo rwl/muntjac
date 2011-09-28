@@ -25,8 +25,7 @@ class Embedded(AbstractComponent):
     """Component for embedding external objects.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 

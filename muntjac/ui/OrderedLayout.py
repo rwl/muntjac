@@ -27,8 +27,7 @@ class OrderedLayout(AbstractOrderedLayout):
     subcomponents in the order of their addition in specified orientation.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     @deprecated Replaced by VerticalLayout/HorizontalLayout. For type checking
                 please not that VerticalLayout/HorizontalLayout do not extend

@@ -28,8 +28,7 @@ class StreamVariable(object):
     <p>
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 6.5
     @see PaintTarget#addVariable(VariableOwner, String, StreamVariable)
     """

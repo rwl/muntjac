@@ -26,8 +26,7 @@ class BufferedValidatable(Buffered, Validatable):
     </p>
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 

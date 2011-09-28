@@ -91,8 +91,7 @@ class ValueChangeEvent(ComponentEvent, Property, ValueChangeEvent):
     changed.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 

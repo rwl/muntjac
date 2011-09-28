@@ -22,8 +22,7 @@ class NullValidator(Validator):
     values. By default, nulls are not allowed.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 

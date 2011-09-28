@@ -20,8 +20,7 @@ class Sizeable(object):
     may be dynamically resized during runtime.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
     # Unit code representing pixels.

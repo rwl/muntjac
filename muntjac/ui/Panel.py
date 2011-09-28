@@ -37,8 +37,7 @@ class Panel(AbstractComponentContainer, Scrollable, ComponentContainer,
     """Panel - a simple single component container.
 
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 3.0
     """
 

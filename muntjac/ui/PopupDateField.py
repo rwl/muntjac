@@ -27,8 +27,7 @@ class PopupDateField(DateField):
     @see DateField
     @see InlineDateField
     @author IT Mill Ltd.
-    @version
-    @VERSION@
+    @version @VERSION@
     @since 5.0
     """
 
