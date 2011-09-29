@@ -14,10 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.ui.AbstractComponent import ComponentErrorEvent
+from muntjac.ui.AbstractComponent import IComponentErrorEvent
 
 
-class ChangeVariablesErrorEvent(ComponentErrorEvent):
+class ChangeVariablesErrorEvent(IComponentErrorEvent):
 
     def __init__(self, component, throwable, variableChanges):
         self._component = component

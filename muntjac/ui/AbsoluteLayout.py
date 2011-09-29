@@ -18,47 +18,43 @@ import re
 
 from muntjac.ui.AbstractLayout import AbstractLayout
 from muntjac.terminal.gwt.client.EventId import EventId
-
-from muntjac.event.LayoutEvents import LayoutClickEvent
-from muntjac.event.LayoutEvents import ILayoutClickListener
-from muntjac.event.LayoutEvents import ILayoutClickNotifier
 from muntjac.terminal.ISizeable import ISizeable
 
-#from muntjac.terminal.gwt.client.ui.VAbsoluteLayout import VAbsoluteLayout
-#from muntjac.ui.ClientWidget import LoadStyle
+from muntjac.event.LayoutEvents import \
+    LayoutClickEvent, ILayoutClickListener, ILayoutClickNotifier
 
 
 class AbsoluteLayout(AbstractLayout, ILayoutClickNotifier):
-    """AbsoluteLayout is a layout implementation that mimics html absolute
-    positioning.
+    """AbsoluteLayout is a layout implementation that mimics html
+    absolute positioning.
     """
 
-#    CLIENT_WIDGET = VAbsoluteLayout
-#    LOAD_STYLE = LoadStyle.DEFERRED
+    #CLIENT_WIDGET = ClientWidget(VAbsoluteLayout)
 
     _CLICK_EVENT = EventId.LAYOUT_CLICK
 
-    # The components in the layout
-    _components = set()
-
-    # Maps each component to a position
-    _componentToCoordinates = dict()
-
     def __init__(self):
         """Creates an AbsoluteLayout with full size."""
+
+        # The components in the layout
+        self._components = set()
+
+        # Maps each component to a position
+        self._componentToCoordinates = dict()
+
         self.setSizeFull()
 
 
     def getComponentIterator(self):
-        """Gets an iterator for going through all components enclosed in the
-        absolute layout.
+        """Gets an iterator for going through all components enclosed
+        in the absolute layout.
         """
         return iter(self._components)
 
 
     def getComponentCount(self):
-        """Gets the number of contained components. Consistent with the iterator
-        returned by {@link #getComponentIterator()}.
+        """Gets the number of contained components. Consistent with
+        the iterator returned by {@link #getComponentIterator()}.
 
         @return the number of contained components
         """
@@ -66,8 +62,8 @@ class AbsoluteLayout(AbstractLayout, ILayoutClickNotifier):
 
 
     def replaceComponent(self, oldComponent, newComponent):
-        """Replaces one component with another one. The new component inherits the
-        old components position.
+        """Replaces one component with another one. The new component
+        inherits the old components position.
         """
         position = self.getPosition(oldComponent)
         self.removeComponent(oldComponent)
@@ -76,24 +72,24 @@ class AbsoluteLayout(AbstractLayout, ILayoutClickNotifier):
 
 
     def addComponent(self, c, cssPosition=None):
-        """Adds a component to the layout. The component can be positioned by
-        providing a string formatted in CSS-format.
-        <p>
-        For example the string "top:10px;left:10px" will position the component
-        10 pixels from the left and 10 pixels from the top. The identifiers:
-        "top","left","right" and "bottom" can be used to specify the position.
-        </p>
+        """Adds a component to the layout. The component can be positioned
+        by providing a string formatted in CSS-format.
+
+        For example the string "top:10px;left:10px" will position the
+        component 10 pixels from the left and 10 pixels from the top. The
+        identifiers: "top","left","right" and "bottom" can be used to
+        specify the position.
 
         @param c
                    The component to add to the layout
         @param cssPosition
                    The css position string
         """
-        # Create position instance and add it to componentToCoordinates map. We
-        # need to do this before we call addComponent so the attachListeners
-        # can access this position. #6368
+        # Create position instance and add it to componentToCoordinates
+        # map. We need to do this before we call addComponent so the
+        # attachListeners can access this position. #6368
         if cssPosition is not None:
-            position = self.ComponentPosition()
+            position = ComponentPosition()
             position.setCSSString(cssPosition)
             self._componentToCoordinates[c] = position
 
@@ -101,11 +97,12 @@ class AbsoluteLayout(AbstractLayout, ILayoutClickNotifier):
         try:
             super(AbsoluteLayout, self).addComponent(c)
             self.requestRepaint()
-        except ValueError:
+        except ValueError, e:
             self._components.remove(c)
             if cssPosition is not None:
                 # Remove component coordinates if adding fails
                 del self._componentToCoordinates[c]
+                raise e
 
 
     def removeComponent(self, c):
@@ -116,19 +113,19 @@ class AbsoluteLayout(AbstractLayout, ILayoutClickNotifier):
 
 
     def getPosition(self, component):
-        """Gets the position of a component in the layout. Returns null if component
-        is not attached to the layout.
+        """Gets the position of a component in the layout. Returns null
+        if component is not attached to the layout.
 
         @param component
                    The component which position is needed
-        @return An instance of ComponentPosition containing the position of the
-                component, or null if the component is not enclosed in the
-                layout.
+        @return An instance of ComponentPosition containing the position
+                of the component, or null if the component is not enclosed
+                in the layout.
         """
         if component.getParent() != self:
             return None
         elif component in self._componentToCoordinates:
-            return self._componentToCoordinates[component]
+            return self._componentToCoordinates.get(component)
         else:
             coords = ComponentPosition()
             self._componentToCoordinates[component] = coords
@@ -139,14 +136,15 @@ class AbsoluteLayout(AbstractLayout, ILayoutClickNotifier):
         super(AbsoluteLayout, self).paintContent(target)
         for component in self._components:
             target.startTag('cc')
-            target.addAttribute('css', self.getPosition(component).getCSSString())
+            css = self.getPosition(component).getCSSString()
+            target.addAttribute('css', css)
             component.paint(target)
             target.endTag('cc')
 
 
     def addListener(self, listener):
         self.addListener(self._CLICK_EVENT, LayoutClickEvent, listener,
-                         ILayoutClickListener.clickMethod)
+                ILayoutClickListener.clickMethod)
 
 
     def removeListener(self, listener):
@@ -154,9 +152,9 @@ class AbsoluteLayout(AbstractLayout, ILayoutClickNotifier):
 
 
 class ComponentPosition(object):
-    """The CompontPosition class represents a components position within the
-    absolute layout. It contains the attributes for left, right, top and
-    bottom and the units used to specify them.
+    """The CompontPosition class represents a components position within
+    the absolute layout. It contains the attributes for left, right, top
+    and bottom and the units used to specify them.
     """
 
     def __init__(self):
@@ -182,9 +180,12 @@ class ComponentPosition(object):
 
         @param css
         """
-        self._topValue = self._rightValue = self._bottomValue = self._leftValue = None
-        self._topUnits = self._rightUnits = self._bottomUnits = self._leftUnits = 0
+        self._topValue = self._bottomValue = None
+        self._rightValue = self._leftValue = None
+        self._topUnits = self._bottomUnits = 0
+        self._rightUnits = self._leftUnits = 0
         self._zIndex = -1
+
         if css is None:
             return
 
@@ -196,7 +197,7 @@ class ComponentPosition(object):
                 continue
 
             if key == 'z-index':
-                self._zIndex = int(keyValuePair[1].strip())
+                self._zIndex = int( keyValuePair[1].strip() )
             else:
                 if len(keyValuePair) > 1:
                     value = keyValuePair[1].strip()
@@ -213,12 +214,15 @@ class ComponentPosition(object):
                 if key == 'top':
                     self._topValue = v
                     self._topUnits = unitInt
+
                 elif key == 'right':
                     self._rightValue = v
                     self._rightUnits = unitInt
+
                 elif key == 'bottom':
                     self._bottomValue = v
                     self._bottomUnits = unitInt
+
                 elif key == 'left':
                     self._leftValue = v
                     self._leftUnits = unitInt
@@ -227,8 +231,8 @@ class ComponentPosition(object):
 
 
     def parseCssUnit(self, string):
-        """Parses a string and checks if a unit is found. If a unit is not found
-        from the string the unit pixels is used.
+        """Parses a string and checks if a unit is found. If a unit
+        is not found from the string the unit pixels is used.
 
         @param string
                    The string to parse the unit from
@@ -247,16 +251,20 @@ class ComponentPosition(object):
         """
         s = ''
         if self._topValue is not None:
-            s += 'top:' + self._topValue + ISizeable.UNIT_SYMBOLS[self._topUnits] + ';'
+            symbol = ISizeable.UNIT_SYMBOLS[self._topUnits]
+            s += 'top:' + self._topValue + symbol + ';'
 
         if self._rightValue is not None:
-            s += 'right:' + self._rightValue + ISizeable.UNIT_SYMBOLS[self._rightUnits] + ';'
+            symbol = ISizeable.UNIT_SYMBOLS[self._rightUnits]
+            s += 'right:' + self._rightValue + symbol + ';'
 
         if self._bottomValue is not None:
-            s += 'bottom:' + self._bottomValue + ISizeable.UNIT_SYMBOLS[self._bottomUnits] + ';'
+            symbol = ISizeable.UNIT_SYMBOLS[self._bottomUnits]
+            s += 'bottom:' + self._bottomValue + symbol + ';'
 
         if self._leftValue is not None:
-            s += 'left:' + self._leftValue + ISizeable.UNIT_SYMBOLS[self._leftUnits] + ';'
+            symbol = ISizeable.UNIT_SYMBOLS[self._leftUnits]
+            s += 'left:' + self._leftValue + symbol + ';'
 
         if self._zIndex >= 0:
             s += 'z-index:' + self._zIndex + ';'
@@ -265,14 +273,14 @@ class ComponentPosition(object):
 
 
     def setTop(self, topValue, topUnits):
-        """Sets the 'top' attribute; distance from the top of the component to
-        the top edge of the layout.
+        """Sets the 'top' attribute; distance from the top of the
+        component to the top edge of the layout.
 
         @param topValue
                    The value of the 'top' attribute
         @param topUnits
-                   The unit of the 'top' attribute. See UNIT_SYMBOLS for a
-                   description of the available units.
+                   The unit of the 'top' attribute. See UNIT_SYMBOLS
+                   for a description of the available units.
         """
         self._topValue = topValue
         self._topUnits = topUnits
@@ -280,14 +288,14 @@ class ComponentPosition(object):
 
 
     def setRight(self, rightValue, rightUnits):
-        """Sets the 'right' attribute; distance from the right of the component
-        to the right edge of the layout.
+        """Sets the 'right' attribute; distance from the right of the
+        component to the right edge of the layout.
 
         @param rightValue
                    The value of the 'right' attribute
         @param rightUnits
-                   The unit of the 'right' attribute. See UNIT_SYMBOLS for a
-                   description of the available units.
+                   The unit of the 'right' attribute. See UNIT_SYMBOLS
+                   for a description of the available units.
         """
         self._rightValue = rightValue
         self._rightUnits = rightUnits
@@ -301,8 +309,8 @@ class ComponentPosition(object):
         @param bottomValue
                    The value of the 'bottom' attribute
         @param units
-                   The unit of the 'bottom' attribute. See UNIT_SYMBOLS for a
-                   description of the available units.
+                   The unit of the 'bottom' attribute. See UNIT_SYMBOLS
+                   for a description of the available units.
         """
         self._bottomValue = bottomValue
         self._bottomUnits = bottomUnits
@@ -310,14 +318,14 @@ class ComponentPosition(object):
 
 
     def setLeft(self, leftValue, leftUnits):
-        """Sets the 'left' attribute; distance from the left of the component to
-        the left edge of the layout.
+        """Sets the 'left' attribute; distance from the left of the
+        component to the left edge of the layout.
 
         @param leftValue
                    The value of the 'left' attribute
         @param units
-                   The unit of the 'left' attribute. See UNIT_SYMBOLS for a
-                   description of the available units.
+                   The unit of the 'left' attribute. See UNIT_SYMBOLS
+                   for a description of the available units.
         """
         self._leftValue = leftValue
         self._leftUnits = leftUnits
@@ -335,8 +343,8 @@ class ComponentPosition(object):
 
 
     def setTopValue(self, topValue):
-        """Sets the value of the 'top' attribute; distance from the top of the
-        component to the top edge of the layout.
+        """Sets the value of the 'top' attribute; distance from the top
+        of the component to the top edge of the layout.
 
         @param topValue
                    The value of the 'left' attribute
@@ -364,9 +372,9 @@ class ComponentPosition(object):
 
 
     def setRightValue(self, rightValue):
-        """Sets the 'right' attribute value (distance from the right of the
-        component to the right edge of the layout). Currently active units
-        are maintained.
+        """Sets the 'right' attribute value (distance from the right
+        of the component to the right edge of the layout). Currently
+        active units are maintained.
 
         @param rightValue
                    The value of the 'right' attribute
@@ -386,9 +394,9 @@ class ComponentPosition(object):
 
 
     def setBottomValue(self, bottomValue):
-        """Sets the 'bottom' attribute value (distance from the bottom of the
-        component to the bottom edge of the layout). Currently active units
-        are maintained.
+        """Sets the 'bottom' attribute value (distance from the bottom
+        of the component to the bottom edge of the layout). Currently
+        active units are maintained.
 
         @param bottomValue
                    The value of the 'bottom' attribute
@@ -408,9 +416,9 @@ class ComponentPosition(object):
 
 
     def setLeftValue(self, leftValue):
-        """Sets the 'left' attribute value (distance from the left of the
-        component to the left edge of the layout). Currently active units are
-        maintained.
+        """Sets the 'left' attribute value (distance from the left of
+        the component to the left edge of the layout). Currently active
+        units are maintained.
 
         @param leftValue
                    The value of the 'left' CSS-attribute
@@ -423,8 +431,8 @@ class ComponentPosition(object):
     def getTopUnits(self):
         """Gets the unit for the 'top' attribute
 
-        @return See {@link ISizeable} UNIT_SYMBOLS for a description of the
-                available units.
+        @return See {@link ISizeable} UNIT_SYMBOLS for a description of
+                the available units.
         """
         return self._topUnits
 
@@ -433,8 +441,8 @@ class ComponentPosition(object):
         """Sets the unit for the 'top' attribute
 
         @param topUnits
-                   See {@link ISizeable} UNIT_SYMBOLS for a description of the
-                   available units.
+                   See {@link ISizeable} UNIT_SYMBOLS for a description
+                   of the available units.
         """
         self._topUnits = topUnits
         self.requestRepaint()
@@ -443,8 +451,8 @@ class ComponentPosition(object):
     def getRightUnits(self):
         """Gets the unit for the 'right' attribute
 
-        @return See {@link ISizeable} UNIT_SYMBOLS for a description of the
-                available units.
+        @return See {@link ISizeable} UNIT_SYMBOLS for a description of
+                the available units.
         """
         return self._rightUnits
 
@@ -453,8 +461,8 @@ class ComponentPosition(object):
         """Sets the unit for the 'right' attribute
 
         @param rightUnits
-                   See {@link ISizeable} UNIT_SYMBOLS for a description of the
-                   available units.
+                   See {@link ISizeable} UNIT_SYMBOLS for a description
+                   of the available units.
         """
         self._rightUnits = rightUnits
         self.requestRepaint()
@@ -463,8 +471,8 @@ class ComponentPosition(object):
     def getBottomUnits(self):
         """Gets the unit for the 'bottom' attribute
 
-        @return See {@link ISizeable} UNIT_SYMBOLS for a description of the
-                available units.
+        @return See {@link ISizeable} UNIT_SYMBOLS for a description of
+                the available units.
         """
         return self._bottomUnits
 
@@ -473,8 +481,8 @@ class ComponentPosition(object):
         """Sets the unit for the 'bottom' attribute
 
         @param bottomUnits
-                   See {@link ISizeable} UNIT_SYMBOLS for a description of the
-                   available units.
+                   See {@link ISizeable} UNIT_SYMBOLS for a description
+                   of the available units.
         """
         self._bottomUnits = bottomUnits
         self.requestRepaint()
@@ -483,8 +491,8 @@ class ComponentPosition(object):
     def getLeftUnits(self):
         """Gets the unit for the 'left' attribute
 
-        @return See {@link ISizeable} UNIT_SYMBOLS for a description of the
-                available units.
+        @return See {@link ISizeable} UNIT_SYMBOLS for a description
+                of the available units.
         """
         return self._leftUnits
 
@@ -493,8 +501,8 @@ class ComponentPosition(object):
         """Sets the unit for the 'left' attribute
 
         @param leftUnits
-                   See {@link ISizeable} UNIT_SYMBOLS for a description of the
-                   available units.
+                   See {@link ISizeable} UNIT_SYMBOLS for a description
+                   of the available units.
         """
         self._leftUnits = leftUnits
         self.requestRepaint()
