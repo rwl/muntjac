@@ -18,7 +18,7 @@ from muntjac.event.FieldEvents import \
     BlurEvent, IBlurListener, IBlurNotifier, FocusEvent, \
     IFocusListener, IFocusNotifier
 
-from muntjac.ui.AbstractSelect import AbstractSelect, Filtering
+from muntjac.ui.AbstractSelect import AbstractSelect, IFiltering
 from muntjac.data.util.filter.SimpleStringFilter import SimpleStringFilter
 from muntjac.data.Container import Container, Filterable, Indexed
 
@@ -26,7 +26,7 @@ from muntjac.data.Container import Container, Filterable, Indexed
 #from muntjac.ui.ClientWidget import LoadStyle
 
 
-class Select(AbstractSelect, AbstractSelect, Filtering,
+class Select(AbstractSelect, AbstractSelect, IFiltering,
              IBlurNotifier, IFocusNotifier):
     """<p>
     A class representing a selection of items the user has selected in a UI. The

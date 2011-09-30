@@ -14,147 +14,64 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.data.util.IndexedContainer import IndexedContainer
-from muntjac.data.Property import Property, ValueChangeListener,\
-    ReadOnlyException, ConversionException, ValueChangeNotifier
 from muntjac.ui.AbstractField import AbstractField
-from muntjac.data.Item import Item
-from muntjac.terminal.gwt.client.ui.dd.VerticalDropLocation import VerticalDropLocation
-from muntjac.event.dd.acceptcriteria.ContainsDataFlavor import ContainsDataFlavor
 from muntjac.terminal.IResource import IResource
 from muntjac.terminal.KeyMapper import KeyMapper
-from muntjac.event.dd.acceptcriteria.ClientSideCriterion import ClientSideCriterion
+
+from muntjac.data import Property
+from muntjac.data import Container
+from muntjac.data import Item
+
+from muntjac.data.util.IndexedContainer import IndexedContainer
+
 from muntjac.event.dd.acceptcriteria.TargetDetailIs import TargetDetailIs
 from muntjac.event.dd.TargetDetailsImpl import TargetDetailsImpl
 
-from muntjac.data.Container import \
-    Container, ItemSetChangeEvent, ItemSetChangeListener, \
-    ItemSetChangeNotifier, PropertySetChangeEvent, PropertySetChangeListener, \
-    PropertySetChangeNotifier, Viewer, Indexed
+from muntjac.event.dd.acceptcriteria.ContainsDataFlavor import \
+    ContainsDataFlavor
 
-from muntjac.data.Item import PropertySetChangeNotifier as ItemPropertySetChangeNotifier
+from muntjac.event.dd.acceptcriteria.ClientSideCriterion import \
+    ClientSideCriterion
 
-
-class Filtering(object):
-    """Interface for option filtering, used to filter options based on user
-    entered value. The value is matched to the item caption.
-    <code>FILTERINGMODE_OFF</code> (0) turns the filtering off.
-    <code>FILTERINGMODE_STARTSWITH</code> (1) matches from the start of the
-    caption. <code>FILTERINGMODE_CONTAINS</code> (1) matches anywhere in the
-    caption.
-    """
-    FILTERINGMODE_OFF = 0
-    FILTERINGMODE_STARTSWITH = 1
-    FILTERINGMODE_CONTAINS = 2
-
-    def setFilteringMode(self, filteringMode):
-        """Sets the option filtering mode.
-
-        @param filteringMode
-                   the filtering mode to use
-        """
-        pass
-
-    def getFilteringMode(self):
-        """Gets the current filtering mode.
-
-        @return the filtering mode in use
-        """
-        pass
+from muntjac.terminal.gwt.client.ui.dd.VerticalDropLocation import \
+    VerticalDropLocation
 
 
-class MultiSelectMode(object):
-    """Multi select modes that controls how multi select behaves."""
+class AbstractSelect(AbstractField, Container.Container, Container.Viewer,
+            Container.PropertySetChangeListener,
+            Container.PropertySetChangeNotifier,
+            Container.ItemSetChangeNotifier,
+            Container.ItemSetChangeListener):
+    """A class representing a selection of items the user has selected
+    in a UI. The set of choices is presented as a set of
+    {@link com.vaadin.data.Item}s in a {@link com.vaadin.data.Container}.
 
-    # The default behavior of the multi select mode
-    DEFAULT = 'DEFAULT'
-
-    # The previous more simple behavior of the multselect
-    SIMPLE = 'SIMPLE'
-
-    _values = [DEFAULT, SIMPLE]
-
-    @classmethod
-    def values(cls):
-        return cls._enum_values[:]
-
-
-class NewItemHandler(object):
-
-    def addNewItem(self, newItemCaption):
-        pass
-
-
-class DefaultNewItemHandler(NewItemHandler):
-    """TODO refine doc
-
-    This is a default class that handles adding new items that are typed by
-    user to selects container.
-
-    By extending this class one may implement some logic on new item addition
-    like database inserts.
-    """
-
-    def addNewItem(self, newItemCaption):
-        # Checks for readonly
-        if self.isReadOnly():
-            raise ReadOnlyException()
-        # Adds new option
-        if self.addItem(newItemCaption) is not None:
-            # Sets the caption property, if used
-            if self.getItemCaptionPropertyId() is not None:
-                # The conversion exception is safely ignored, the
-                # caption is just missing
-
-                try:
-                    self.getContainerProperty(newItemCaption, self.getItemCaptionPropertyId()).setValue(newItemCaption)
-                except ConversionException:
-                    pass
-            if self.isMultiSelect():
-                values = set(self.getValue())
-                values.add(newItemCaption)
-                self.setValue(values)
-            else:
-                self.setValue(newItemCaption)
-
-
-class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
-                     PropertySetChangeListener, Container,
-                     PropertySetChangeNotifier, Container, ItemSetChangeNotifier,
-                     Container, ItemSetChangeListener):
-    """<p>
-    A class representing a selection of items the user has selected in a UI. The
-    set of choices is presented as a set of {@link com.vaadin.data.Item}s in a
-    {@link com.vaadin.data.Container}.
-    </p>
-
-    <p>
-    A <code>Select</code> component may be in single- or multiselect mode.
-    Multiselect mode means that more than one item can be selected
+    A <code>Select</code> component may be in single- or multiselect
+    mode. Multiselect mode means that more than one item can be selected
     simultaneously.
-    </p>
 
     @author IT Mill Ltd.
     @author Richard Lincoln
     @version @VERSION@
     @since 5.0
     """
-    # Item caption mode: Item's ID's <code>String</code> representation is used
-    # as caption.
+
+    # Item caption mode: Item's ID's <code>String</code> representation
+    # is used as caption.
     ITEM_CAPTION_MODE_ID = 0
 
-    # Item caption mode: Item's <code>String</code> representation is used as
-    # caption.
+    # Item caption mode: Item's <code>String</code> representation is
+    # used as caption.
     ITEM_CAPTION_MODE_ITEM = 1
 
-    # Item caption mode: Index of the item is used as caption. The index mode
-    # can only be used with the containers implementing the
+    # Item caption mode: Index of the item is used as caption. The index
+    # mode can only be used with the containers implementing the
     # {@link com.vaadin.data.Container.Indexed} interface.
     ITEM_CAPTION_MODE_INDEX = 2
 
-    # Item caption mode: If an Item has a caption it's used, if not, Item's
-    # ID's <code>String</code> representation is used as caption. <b>This is
-    # the default</b>.
+    # Item caption mode: If an Item has a caption it's used, if not,
+    # Item's ID's <code>String</code> representation is used as caption.
+    # <b>This is the default</b>.
     ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID = 3
 
     # Item caption mode: Captions must be explicitly specified.
@@ -163,8 +80,8 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
     # Item caption mode: Only icons are shown, captions are hidden.
     ITEM_CAPTION_MODE_ICON_ONLY = 5
 
-    # Item caption mode: Item captions are read from property specified with
-    # <code>setItemCaptionPropertyId</code>.
+    # Item caption mode: Item captions are read from property specified
+    # with <code>setItemCaptionPropertyId</code>.
     ITEM_CAPTION_MODE_PROPERTY = 6
 
 
@@ -178,15 +95,18 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
         @param caption
                    the Caption of the component.
         @param dataSource
-                   the Container datasource to be selected from by this select.
+                   the Container datasource to be selected from by
+                   this select.
         ---
-        Creates a new select that is filled from a collection of option values.
+        Creates a new select that is filled from a collection of
+        option values.
 
         @param caption
                    the Caption of this field.
         @param options
                    the Collection containing the options.
         """
+
         # Is the select in multiselect mode?
         self._multiSelect = False
 
@@ -222,11 +142,9 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
 
         # Item id that represents null selection of this select.
         #
-        # <p>
-        # Data interface does not support nulls as item ids. Selecting the item
-        # identified by this id is the same as selecting no items at all. This
-        # setting only affects the single select mode.
-        # </p>
+        # Data interface does not support nulls as item ids. Selecting the
+        # item identified by this id is the same as selecting no items at
+        # all. This setting only affects the single select mode.
         self._nullSelectionItemId = None
 
         # Null (empty) selection is enabled by default
@@ -238,7 +156,6 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
         self._captionChangeListener = None
 
 
-        args = args
         nargs = len(args)
         if nargs == 0:
             self.setContainerDataSource(IndexedContainer())
@@ -249,7 +166,7 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
         elif nargs == 2:
             if isinstance(args[1], list):
                 caption, options = args
-                # Creates the options container and add given options to it
+                # Create the options container and add given options to it
                 c = IndexedContainer()
                 if options is not None:
                     for o in options:
@@ -291,10 +208,12 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
         # Constructs selected keys array
         if self.isMultiSelect():
             selectedKeys = [None] * len(self.getValue())
+        elif (self.getValue() is None
+                and self.getNullSelectionItemId() is None):
+            selectedKeys = [None] * 0
         else:
-            selectedKeys = [None] * (0 if self.getValue() is None and self.getNullSelectionItemId() is None else 1)
+            selectedKeys = [None] * 1
 
-        # ==
         # first remove all previous item/property listeners
         self.getCaptionChangeListener().clear()
         # Paints the options and create array of selected id keys
@@ -303,38 +222,39 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
         keyIndex = 0
         # Support for external null selection item id
         ids = self.getItemIds()
-        if self.isNullSelectionAllowed() \
-                and self.getNullSelectionItemId() is not None \
-                and not ids.contains(self.getNullSelectionItemId()):
+        if (self.isNullSelectionAllowed()
+                and self.getNullSelectionItemId() is not None
+                and self.getNullSelectionItemId() not in ids):
             idd = self.getNullSelectionItemId()
             # Paints option
             target.startTag('so')
             self.paintItem(target, idd)
             if self.isSelected(idd):
                 selectedKeys[keyIndex] = self.itemIdMapper.key(idd)
-                keyIndex += 1
+                keyIndex += 1  # post increment
             target.endTag('so')
 
         i = self.getItemIds()
         # Paints the available selection options from data source
         for idd in i:
-            if not self.isNullSelectionAllowed() \
-                    and idd is not None \
-                    and idd == self.getNullSelectionItemId():
+            if (not self.isNullSelectionAllowed()
+                    and idd is not None
+                    and idd == self.getNullSelectionItemId()):
                 # Remove item if it's the null selection item but null
                 # selection is not allowed
                 continue
+
             key = self.itemIdMapper.key(idd)
-            # add listener for each item, to cause repaint if an item changes
+            # add listener for each item, to cause repaint
+            # if an item changes
             self.getCaptionChangeListener().addNotifierForItem(idd)
             target.startTag('so')
             self.paintItem(target, idd)
             if self.isSelected(idd) and keyIndex < len(selectedKeys):
                 selectedKeys[keyIndex] = key
-                keyIndex += 1
+                keyIndex += 1  # post increment
             target.endTag('so')
         target.endTag('options')
-        # ==
 
         # Paint variables
         target.addVariable(self, 'selected', selectedKeys)
@@ -361,8 +281,7 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
     def changeVariables(self, source, variables):
         """Invoked when the value of a variable has changed.
 
-        @see com.vaadin.ui.AbstractComponent#changeVariables(java.lang.Object,
-             java.util.Map)
+        @see com.vaadin.ui.AbstractComponent#changeVariables()
         """
         super(AbstractSelect, self).changeVariables(source, variables)
 
@@ -374,7 +293,7 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
 
         # Selection change
         if 'selected' in variables:
-            ka = variables['selected']
+            ka = variables.get('selected')
 
             # Multiselect mode
             if self.isMultiSelect():
@@ -385,10 +304,11 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
                 s = list()
                 for i in range( len(ka) ):
                     idd = self.itemIdMapper.get(ka[i])
-                    if not self.isNullSelectionAllowed() \
-                            and (idd is None) \
-                            or (idd == self.getNullSelectionItemId()):
-                        # skip empty selection if nullselection is not allowed
+                    if (not self.isNullSelectionAllowed()
+                            and (idd is None
+                            or idd == self.getNullSelectionItemId())):
+                        # skip empty selection if nullselection
+                        # is not allowed
                         self.requestRepaint()
                     elif idd is not None and self.containsId(idd):
                         s.append(idd)
@@ -407,35 +327,37 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
                         newsel = set()
                     else:
                         newsel = set(newsel)
-                    newsel.removeAll(visible)
-                    newsel.addAll(s)
+                    newsel.difference(visible)
+                    newsel.union(s)
                     self.setValue(newsel, True)
             else:
                 # Single select mode
-                if not self.isNullSelectionAllowed() \
-                        and ((len(ka) == 0) or (ka[0] is None)) \
-                        or (ka[0] == self.getNullSelectionItemId()):
+                if (not self.isNullSelectionAllowed()
+                        and (len(ka) == 0 or ka[0] is None
+                        or ka[0] == self.getNullSelectionItemId())):
                     self.requestRepaint()
                     return
+
                 if len(ka) == 0:
-                    # Allows deselection only if the deselected item is
-                    # visible
+                    # Allows deselection only if the deselected item
+                    # is visible
                     current = self.getValue()
                     visible = self.getVisibleItemIds()
                     if visible is not None and current in visible:
                         self.setValue(None, True)
                 else:
-                    idd = self.itemIdMapper.get( ka[0] )
+                    idd = self.itemIdMapper.get(ka[0])
                     if not self.isNullSelectionAllowed() and idd is None:
                         self.requestRepaint()
-                    elif idd is not None and idd == self.getNullSelectionItemId():
+                    elif (idd is not None
+                            and idd == self.getNullSelectionItemId()):
                         self.setValue(None, True)
                     else:
                         self.setValue(idd, True)
 
 
     def setNewItemHandler(self, newItemHandler):
-        """TODO refine doc Setter for new item handler that is called when user adds
+        """Setter for new item handler that is called when user adds
         new item in newItemAllowed mode.
 
         @param newItemHandler
@@ -444,19 +366,19 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
 
 
     def getNewItemHandler(self):
-        """TODO refine doc
+        """Getter for new item handler.
 
-        @return
+        @return newItemHandler
         """
         if self._newItemHandler is None:
-            self._newItemHandler = self.DefaultNewItemHandler()
+            self._newItemHandler = DefaultNewItemHandler()
         return self._newItemHandler
 
 
     def getVisibleItemIds(self):
-        """Gets the visible item ids. In Select, this returns list of all item ids,
-        but can be overriden in subclasses if they paint only part of the items
-        to the terminal or null if no items is visible.
+        """Gets the visible item ids. In Select, this returns list of all
+        item ids, but can be overriden in subclasses if they paint only
+        part of the items to the terminal or null if no items is visible.
         """
         if self.isVisible():
             return self.getItemIds()
@@ -465,16 +387,14 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
 
     def getType(self, propertyId):
         """Returns the type of the property. <code>getValue</code> and
-        <code>setValue</code> methods must be compatible with this type: one can
-        safely cast <code>getValue</code> to given type and pass any variable
-        assignable to this type as a parameter to <code>setValue</code>.
-
-        @return the Type of the property.
-        ---
-        Gets the property type.
+        <code>setValue</code> methods must be compatible with this type:
+        one can safely cast <code>getValue</code> to given type and pass
+        any variable assignable to this type as a parameter to
+        <code>setValue</code>.
 
         @param propertyId
                    the Id identifying the property.
+        @return the Type of the property.
         @see com.vaadin.data.Container#getType(java.lang.Object)
         """
         if propertyId is None:
@@ -487,7 +407,8 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
 
 
     def getValue(self):
-        """Gets the selected item id or in multiselect mode a set of selected ids.
+        """Gets the selected item id or in multiselect mode a set of
+        selected ids.
 
         @see com.vaadin.ui.AbstractField#getValue()
         """
@@ -504,6 +425,7 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
 
             elif isinstance(retValue, list):
                 return set(retValue)
+
             else:
                 s = set()
                 if self.items.containsId(retValue):
@@ -516,23 +438,9 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
     def setValue(self, newValue, repaintIsNotNeeded=None):
         """Sets the visible value of the property.
 
-        <p>
-        The value of the select is the selected item id. If the select is in
-        multiselect-mode, the value is a set of selected item keys. In
-        multiselect mode all collections of id:s can be assigned.
-        </p>
-
-        @param newValue
-                   the New selected item or collection of selected items.
-        @see com.vaadin.ui.AbstractField#setValue(java.lang.Object)
-        ---
-        Sets the visible value of the property.
-
-        <p>
-        The value of the select is the selected item id. If the select is in
-        multiselect-mode, the value is a set of selected item keys. In
-        multiselect mode all collections of id:s can be assigned.
-        </p>
+        The value of the select is the selected item id. If the select
+        is in multiselect-mode, the value is a set of selected item keys.
+        In multiselect mode all collections of id:s can be assigned.
 
         @param newValue
                    the New selected item or collection of selected items.
@@ -549,18 +457,21 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
             if self.isMultiSelect():
 
                 if newValue is None:
-                    super(AbstractSelect, self).setValue(set(), repaintIsNotNeeded)
-                elif list in newValue.__class__.__mro__:  # FIXME: translate isAssignableFrom
-                    super(AbstractSelect, self).setValue(set(newValue), repaintIsNotNeeded)
+                    super(AbstractSelect, self).setValue(set(),
+                            repaintIsNotNeeded)
+                elif issubclass(newValue, list):
+                    super(AbstractSelect, self).setValue(set(newValue),
+                            repaintIsNotNeeded)
 
-            elif (newValue is None) or self.items.containsId(newValue):
-                super(AbstractSelect, self).setValue(newValue, repaintIsNotNeeded)
+            elif newValue is None or self.items.containsId(newValue):
+                super(AbstractSelect, self).setValue(newValue,
+                        repaintIsNotNeeded)
 
     # Container methods
 
     def getItem(self, itemId):
-        """Gets the item from the container with given id. If the container does not
-        contain the requested item, null is returned.
+        """Gets the item from the container with given id. If the container
+        does not contain the requested item, null is returned.
 
         @param itemId
                    the item id.
@@ -588,10 +499,12 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
     # Gets the number of items in the container.
     #
     # @return the Number of items in the container.
-    #
     # @see com.vaadin.data.Container#size()
     def size(self):
         return len(self.items)
+
+    def __len__(self):
+        return self.size()
 
 
     def containsId(self, itemId):
@@ -607,8 +520,8 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
 
 
     def getContainerProperty(self, itemId, propertyId):
-        """Gets the Property identified by the given itemId and propertyId from the
-        Container
+        """Gets the Property identified by the given itemId and propertyId
+        from the Container
 
         @see com.vaadin.data.Container#getContainerProperty(Object, Object)
         """
@@ -616,27 +529,30 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
 
 
     def addContainerProperty(self, propertyId, typ, defaultValue):
-        """Adds the new property to all items. Adds a property with given id, type
-        and default value to all items in the container.
+        """Adds the new property to all items. Adds a property with given
+        id, type and default value to all items in the container.
 
-        This functionality is optional. If the function is unsupported, it always
-        returns false.
+        This functionality is optional. If the function is unsupported,
+        it always returns false.
 
         @return True if the operation succeeded.
-        @see com.vaadin.data.Container#addContainerProperty(java.lang.Object,
-             java.lang.Class, java.lang.Object)
+        @see com.vaadin.data.Container#addContainerProperty()
         """
-        retval = self.items.addContainerProperty(propertyId, typ, defaultValue)
-        if retval and not isinstance(self.items, PropertySetChangeNotifier):
+        retval = self.items.addContainerProperty(propertyId, typ,
+                defaultValue)
+
+        if (retval and not isinstance(self.items,
+                Container.PropertySetChangeNotifier)):
             self.firePropertySetChange()
+
         return retval
 
 
     def removeAllItems(self):
         """Removes all items from the container.
 
-        This functionality is optional. If the function is unsupported, it always
-        returns false.
+        This functionality is optional. If the function is unsupported,
+        it always returns false.
 
         @return True if the operation succeeded.
         @see com.vaadin.data.Container#removeAllItems()
@@ -646,41 +562,44 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
 
         if retval:
             self.setValue(None)
-            if not isinstance(self.items, ItemSetChangeNotifier):
+            if not isinstance(self.items, Container.ItemSetChangeNotifier):
                 self.fireItemSetChange()
 
         return retval
 
 
     def addItem(self, itemId=None):
-        """Creates a new item into container with container managed id. The id of
-        the created new item is returned. The item can be fetched with getItem()
-        method. if the creation fails, null is returned.
+        """Creates a new item into container with container managed id. The
+        id of the created new item is returned. The item can be fetched with
+        getItem() method. if the creation fails, null is returned.
 
         @return the Id of the created item or null in case of failure.
         @see com.vaadin.data.Container#addItem()
         ---
-        Create a new item into container. The created new item is returned and
-        ready for setting property values. if the creation fails, null is
-        returned. In case the container already contains the item, null is
-        returned.
+        Create a new item into container. The created new item is returned
+        and ready for setting property values. if the creation fails, null
+        is returned. In case the container already contains the item, null
+        is returned.
 
-        This functionality is optional. If the function is unsupported, it always
-        returns null.
+        This functionality is optional. If the function is unsupported, it
+        always returns null.
 
         @param itemId
                    the Identification of the item to be created.
-        @return the Created item with the given id, or null in case of failure.
+        @return the Created item with the given id, or null in case of
+                failure.
         @see com.vaadin.data.Container#addItem(java.lang.Object)
         """
         if itemId is None:
             retval = self.items.addItem()
-            if retval is not None and not isinstance(self.items, ItemSetChangeNotifier):
+            if retval is not None and not isinstance(self.items,
+                    Container.ItemSetChangeNotifier):
                 self.fireItemSetChange()
             return retval
         else:
             retval = self.items.addItem(itemId)
-            if retval is not None and not isinstance(self.items, ItemSetChangeNotifier):
+            if retval is not None and not isinstance(self.items,
+                    Container.ItemSetChangeNotifier):
                 self.fireItemSetChange()
             return retval
 
@@ -689,23 +608,25 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
         self.unselect(itemId)
         retval = self.items.removeItem(itemId)
         self.itemIdMapper.remove(itemId)
-        if retval and not isinstance(self.items, ItemSetChangeNotifier):
+        if retval and not isinstance(self.items,
+                    Container.ItemSetChangeNotifier):
             self.fireItemSetChange()
         return retval
 
 
     def removeContainerProperty(self, propertyId):
-        """Removes the property from all items. Removes a property with given id
-        from all the items in the container.
+        """Removes the property from all items. Removes a property with
+        given id from all the items in the container.
 
-        This functionality is optional. If the function is unsupported, it always
-        returns false.
+        This functionality is optional. If the function is unsupported,
+        it always returns false.
 
         @return True if the operation succeeded.
-        @see com.vaadin.data.Container#removeContainerProperty(java.lang.Object)
+        @see com.vaadin.data.Container#removeContainerProperty()
         """
         retval = self.items.removeContainerProperty(propertyId)
-        if retval and not isinstance(self.items, PropertySetChangeNotifier):
+        if retval and not isinstance(self.items,
+                Container.PropertySetChangeNotifier):
             self.firePropertySetChange()
         return retval
 
@@ -713,10 +634,10 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
     def setContainerDataSource(self, newDataSource):
         """Sets the Container that serves as the data source of the viewer.
 
-        As a side-effect the fields value (selection) is set to null due old
-        selection not necessary exists in new Container.
+        As a side-effect the fields value (selection) is set to null due
+        old selection not necessary exists in new Container.
 
-        @see com.vaadin.data.Container.Viewer#setContainerDataSource(Container)
+        @see com.vaadin.data.Container.Viewer#setContainerDataSource()
 
         @param newDataSource
                    the new data source.
@@ -730,10 +651,12 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
 
             # Removes listeners from the old datasource
             if self.items is not None:
-                if isinstance(self.items, ItemSetChangeNotifier):
+                if isinstance(self.items,
+                        Container.ItemSetChangeNotifier):
                     self.items.removeListener(self)
 
-                if isinstance(self.items, PropertySetChangeNotifier):
+                if isinstance(self.items,
+                        Container.PropertySetChangeNotifier):
                     self.items.removeListener(self)
 
             # Assigns new data source
@@ -744,13 +667,15 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
 
             # Adds listeners
             if self.items is not None:
-                if isinstance(self.items, ItemSetChangeNotifier):
+                if isinstance(self.items,
+                        Container.ItemSetChangeNotifier):
                     self.items.addListener(self)
-                if isinstance(self.items, PropertySetChangeNotifier):
+                if isinstance(self.items,
+                        Container.PropertySetChangeNotifier):
                     self.items.addListener(self)
 
-            # We expect changing the data source should also clean value. See
-            # #810, #4607, #5281
+            # We expect changing the data source should also clean value.
+            # See #810, #4607, #5281
             self.setValue(None)
 
             self.requestRepaint()
@@ -774,15 +699,17 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
 
 
     def setMultiSelect(self, multiSelect):
-        """Sets the multiselect mode. Setting multiselect mode false may loose
-        selection information: if selected items set contains one or more
-        selected items, only one of the selected items is kept as selected.
+        """Sets the multiselect mode. Setting multiselect mode false may
+        loose selection information: if selected items set contains one
+        or more selected items, only one of the selected items is kept as
+        selected.
 
         @param multiSelect
                    the New value of property multiSelect.
         """
         if multiSelect and self.getNullSelectionItemId() is not None:
-            raise ValueError, 'Multiselect and NullSelectionItemId can not be set at the same time.'
+            raise ValueError, ('Multiselect and NullSelectionItemId can '
+                    'not be set at the same time.')
 
         if multiSelect != self._multiSelect:
 
@@ -805,15 +732,16 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
                 else:
                     # Set the single select to contain only the first
                     # selected value in the multiselect
-                    self.setValue(iter(s).next())  # FIXME: translate iterator
+                    self.setValue(s[0])  # FIXME: check iterator
 
             self.requestRepaint()
 
 
     def isNewItemsAllowed(self):
-        """Does the select allow adding new options by the user. If true, the new
-        options can be added to the Container. The text entered by the user is
-        used as id. Note that data-source must allow adding new items.
+        """Does the select allow adding new options by the user. If true,
+        the new options can be added to the Container. The text entered by
+        the user is used as id. Note that data-source must allow adding new
+        items.
 
         @return True if additions are allowed.
         """
@@ -828,16 +756,18 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
         """
         # Only handle change requests
         if self._allowNewOptions != allowNewOptions:
+
             self._allowNewOptions = allowNewOptions
+
             self.requestRepaint()
 
 
     def setItemCaption(self, itemId, caption):
-        """Override the caption of an item. Setting caption explicitly overrides id,
-        item and index captions.
+        """Override the caption of an item. Setting caption explicitly
+        overrides id, item and index captions.
 
         @param itemId
-                   the id of the item to be recaptioned.
+                   the id of the item to be re-captioned.
         @param caption
                    the New caption.
         """
@@ -847,9 +777,9 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
 
 
     def getItemCaption(self, itemId):
-        """Gets the caption of an item. The caption is generated as specified by the
-        item caption mode. See <code>setItemCaptionMode()</code> for more
-        details.
+        """Gets the caption of an item. The caption is generated as specified
+        by the item caption mode. See <code>setItemCaptionMode()</code> for
+        more details.
 
         @param itemId
                    the id of the item to be queried.
@@ -864,23 +794,29 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
         test = self.getItemCaptionMode()
         if test == self.ITEM_CAPTION_MODE_ID:
             caption = str(itemId)
+
         elif test == self.ITEM_CAPTION_MODE_INDEX:
-            if isinstance(self.items, Indexed):
+            if isinstance(self.items, Container.Indexed):
                 caption = str(self.items.indexOfId(itemId))
             else:
                 caption = 'ERROR: Container is not indexed'
+
         elif test == self.ITEM_CAPTION_MODE_ITEM:
             i = self.getItem(itemId)
             if i is not None:
                 caption = str(i)
+
         elif test == self.ITEM_CAPTION_MODE_EXPLICIT:
             caption = self._itemCaptions[itemId]
+
         elif test == self.ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID:
             caption = self._itemCaptions[itemId]
             if caption is None:
                 caption = str(itemId)
+
         elif test == self.ITEM_CAPTION_MODE_PROPERTY:
-            p = self.getContainerProperty(itemId, self.getItemCaptionPropertyId())
+            p = self.getContainerProperty(itemId,
+                    self.getItemCaptionPropertyId())
             if p is not None:
                 caption = str(p)
 
@@ -898,7 +834,7 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
         """
         if itemId is not None:
             if icon is None:
-                self._itemIcons.remove(itemId)
+                del self._itemIcons[itemId]
             else:
                 self._itemIcons[itemId] = icon
             self.requestRepaint()
@@ -911,7 +847,7 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
                    the id of the item to be assigned an icon.
         @return the icon for the item or null, if not specified.
         """
-        explicit = self._itemIcons[itemId]
+        explicit = self._itemIcons.get(itemId)
         if explicit is not None:
             return explicit
 
@@ -932,23 +868,22 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
     def setItemCaptionMode(self, mode):
         """Sets the item caption mode.
 
-        <p>
         The mode can be one of the following ones:
         <ul>
         <li><code>ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID</code> : Items
-        Id-objects <code>toString</code> is used as item caption. If caption is
-        explicitly specified, it overrides the id-caption.
+        Id-objects <code>toString</code> is used as item caption. If caption
+        is explicitly specified, it overrides the id-caption.
         <li><code>ITEM_CAPTION_MODE_ID</code> : Items Id-objects
         <code>toString</code> is used as item caption.</li>
         <li><code>ITEM_CAPTION_MODE_ITEM</code> : Item-objects
         <code>toString</code> is used as item caption.</li>
-        <li><code>ITEM_CAPTION_MODE_INDEX</code> : The index of the item is used
-        as item caption. The index mode can only be used with the containers
-        implementing <code>Container.Indexed</code> interface.</li>
-        <li><code>ITEM_CAPTION_MODE_EXPLICIT</code> : The item captions must be
-        explicitly specified.</li>
-        <li><code>ITEM_CAPTION_MODE_PROPERTY</code> : The item captions are read
-        from property, that must be specified with
+        <li><code>ITEM_CAPTION_MODE_INDEX</code> : The index of the item is
+        used as item caption. The index mode can only be used with the
+        containers implementing <code>Container.Indexed</code> interface.</li>
+        <li><code>ITEM_CAPTION_MODE_EXPLICIT</code> : The item captions must
+        be explicitly specified.</li>
+        <li><code>ITEM_CAPTION_MODE_PROPERTY</code> : The item captions are
+        read from property, that must be specified with
         <code>setItemCaptionPropertyId</code>.</li>
         </ul>
         The <code>ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID</code> is the default
@@ -958,7 +893,8 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
         @param mode
                    the One of the modes listed above.
         """
-        if self.ITEM_CAPTION_MODE_ID <= mode and mode <= self.ITEM_CAPTION_MODE_PROPERTY:
+        if (self.ITEM_CAPTION_MODE_ID <= mode
+                and mode <= self.ITEM_CAPTION_MODE_PROPERTY):
             self._itemCaptionMode = mode
             self.requestRepaint()
 
@@ -966,28 +902,26 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
     def getItemCaptionMode(self):
         """Gets the item caption mode.
 
-        <p>
         The mode can be one of the following ones:
         <ul>
         <li><code>ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID</code> : Items
-        Id-objects <code>toString</code> is used as item caption. If caption is
-        explicitly specified, it overrides the id-caption.
+        Id-objects <code>toString</code> is used as item caption. If caption
+        is explicitly specified, it overrides the id-caption.
         <li><code>ITEM_CAPTION_MODE_ID</code> : Items Id-objects
         <code>toString</code> is used as item caption.</li>
         <li><code>ITEM_CAPTION_MODE_ITEM</code> : Item-objects
         <code>toString</code> is used as item caption.</li>
-        <li><code>ITEM_CAPTION_MODE_INDEX</code> : The index of the item is used
-        as item caption. The index mode can only be used with the containers
-        implementing <code>Container.Indexed</code> interface.</li>
-        <li><code>ITEM_CAPTION_MODE_EXPLICIT</code> : The item captions must be
-        explicitly specified.</li>
-        <li><code>ITEM_CAPTION_MODE_PROPERTY</code> : The item captions are read
-        from property, that must be specified with
+        <li><code>ITEM_CAPTION_MODE_INDEX</code> : The index of the item is
+        used as item caption. The index mode can only be used with the
+        containers implementing <code>Container.Indexed</code> interface.</li>
+        <li><code>ITEM_CAPTION_MODE_EXPLICIT</code> : The item captions must
+        be explicitly specified.</li>
+        <li><code>ITEM_CAPTION_MODE_PROPERTY</code> : The item captions are
+        read from property, that must be specified with
         <code>setItemCaptionPropertyId</code>.</li>
         </ul>
         The <code>ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID</code> is the default
         mode.
-        </p>
 
         @return the One of the modes listed above.
         """
@@ -997,19 +931,14 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
     def setItemCaptionPropertyId(self, propertyId):
         """Sets the item caption property.
 
-        <p>
         Setting the id to a existing property implicitly sets the item caption
         mode to <code>ITEM_CAPTION_MODE_PROPERTY</code>. If the object is in
-        <code>ITEM_CAPTION_MODE_PROPERTY</code> mode, setting caption property id
-        null resets the item caption mode to
+        <code>ITEM_CAPTION_MODE_PROPERTY</code> mode, setting caption property
+        id null resets the item caption mode to
         <code>ITEM_CAPTION_EXPLICIT_DEFAULTS_ID</code>.
-        </p>
 
-        <p>
-        Setting the property id to null disables this feature. The id is null by
-        default
-        </p>
-        .
+        Setting the property id to null disables this feature. The id is null
+        by default.
 
         @param propertyId
                    the id of the property.
@@ -1021,7 +950,8 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
         else:
             self._itemCaptionPropertyId = None
             if self.getItemCaptionMode() == self.ITEM_CAPTION_MODE_PROPERTY:
-                self.setItemCaptionMode(self.ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID)
+                self.setItemCaptionMode(
+                        self.ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID)
             self.requestRepaint()
 
 
@@ -1036,34 +966,30 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
     def setItemIconPropertyId(self, propertyId):
         """Sets the item icon property.
 
-        <p>
-        If the property id is set to a valid value, each item is given an icon
-        got from the given property of the items. The type of the property must
-        be assignable to IResource.
-        </p>
+        If the property id is set to a valid value, each item is given an
+        icon got from the given property of the items. The type of the
+        property must be assignable to IResource.
 
-        <p>
-        Note : The icons set with <code>setItemIcon</code> function override the
-        icons from the property.
-        </p>
+        Note : The icons set with <code>setItemIcon</code> function override
+        the icons from the property.
 
-        <p>
-        Setting the property id to null disables this feature. The id is null by
-        default
-        </p>
-        .
+        Setting the property id to null disables this feature. The id is
+        null by default.
 
         @param propertyId
-                   the id of the property that specifies icons for items or null
-        @throws IllegalArgumentException
-                    If the propertyId is not in the container or is not of a
-                    valid type
+                   the id of the property that specifies icons for items
+                   or null
+        @throws ValueError
+                    If the propertyId is not in the container or is not of
+                    a valid type
         """
         if propertyId is None:
             self._itemIconPropertyId = None
-        elif not self.getContainerPropertyIds().contains(propertyId):
+
+        elif propertyId not in self.getContainerPropertyIds():
             raise ValueError, 'Property id not found in the container'
-        elif IResource in self.getType(propertyId).__mro__:  # FIXME: translate isAssignableFrom
+
+        elif issubclass(self.getType(propertyId), IResource):
             self._itemIconPropertyId = propertyId
         else:
             raise ValueError, 'Property type must be assignable to IResource'
@@ -1074,22 +1000,15 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
     def getItemIconPropertyId(self):
         """Gets the item icon property.
 
-        <p>
-        If the property id is set to a valid value, each item is given an icon
-        got from the given property of the items. The type of the property must
-        be assignable to Icon.
-        </p>
+        If the property id is set to a valid value, each item is given an
+        icon got from the given property of the items. The type of the
+        property must be assignable to Icon.
 
-        <p>
-        Note : The icons set with <code>setItemIcon</code> function override the
-        icons from the property.
-        </p>
+        Note : The icons set with <code>setItemIcon</code> function override
+        the icons from the property.
 
-        <p>
-        Setting the property id to null disables this feature. The id is null by
-        default
-        </p>
-        .
+        Setting the property id to null disables this feature. The id is null
+        by default.
 
         @return the Id of the property containing the item icons.
         """
@@ -1099,11 +1018,9 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
     def isSelected(self, itemId):
         """Tests if an item is selected.
 
-        <p>
-        In single select mode testing selection status of the item identified by
-        {@link #getNullSelectionItemId()} returns true if the value of the
+        In single select mode testing selection status of the item identified
+        by {@link #getNullSelectionItemId()} returns true if the value of the
         property is null.
-        </p>
 
         @param itemId
                    the Id the of the item to be tested.
@@ -1116,16 +1033,18 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
             return itemId in self.getValue()
         else:
             value = self.getValue()
-            return itemId == self.getNullSelectionItemId() if value is None else value
+            if value is None:
+                return itemId == self.getNullSelectionItemId()
+            else:
+                return value
 
 
     def select(self, itemId):
         """Selects an item.
 
-        <p>
         In single select mode selecting item identified by
-        {@link #getNullSelectionItemId()} sets the value of the property to null.
-        </p>
+        {@link #getNullSelectionItemId()} sets the value of the property
+        to null.
 
         @param itemId
                    the identifier of Item to be selected.
@@ -1134,7 +1053,8 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
         """
         if not self.isMultiSelect():
             self.setValue(itemId)
-        elif not self.isSelected(itemId) and itemId is not None and self.items.containsId(itemId):
+        elif (not self.isSelected(itemId) and itemId is not None
+                and self.items.containsId(itemId)):
             s = set(self.getValue())
             s.add(itemId)
             self.setValue(s)
@@ -1160,7 +1080,7 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
     def containerPropertySetChange(self, event):
         """Notifies this listener that the Containers contents has changed.
 
-        @see com.vaadin.data.Container.PropertySetChangeListener#containerPropertySetChange(com.vaadin.data.Container.PropertySetChangeEvent)
+        @see PropertySetChangeListener.containerPropertySetChange
         """
         self.firePropertySetChange()
 
@@ -1168,13 +1088,13 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
     def addListener(self, listener):
         """Adds a new Property set change listener for this Container.
 
-        @see com.vaadin.data.Container.PropertySetChangeNotifier#addListener(com.vaadin.data.Container.PropertySetChangeListener)
+        @see PropertySetChangeNotifier.addListener()
         ---
         Adds an Item set change listener for the object.
 
-        @see com.vaadin.data.Container.ItemSetChangeNotifier#addListener(com.vaadin.data.Container.ItemSetChangeListener)
+        @see ItemSetChangeNotifier.addListener()
         """
-        if isinstance(listener, ItemSetChangeListener):
+        if isinstance(listener, Container.ItemSetChangeListener):
             if self._itemSetEventListeners is None:
                 self._itemSetEventListeners = set()
             self._itemSetEventListeners.add(listener)
@@ -1187,35 +1107,35 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
     def removeListener(self, listener):
         """Removes a previously registered Property set change listener.
 
-        @see com.vaadin.data.Container.PropertySetChangeNotifier#removeListener(com.vaadin.data.Container.PropertySetChangeListener)
+        @see PropertySetChangeNotifier.removeListener()
         ---
         Removes the Item set change listener from the object.
 
-        @see com.vaadin.data.Container.ItemSetChangeNotifier#removeListener(com.vaadin.data.Container.ItemSetChangeListener)
+        @see ItemSetChangeNotifier.removeListener()
         """
-        if isinstance(listener, ItemSetChangeListener):
+        if isinstance(listener, Container.ItemSetChangeListener):
             if self._itemSetEventListeners is not None:
                 self._itemSetEventListeners.remove(listener)
-                if self._itemSetEventListeners.isEmpty():
+                if len(self._itemSetEventListeners) == 0:
                     self._itemSetEventListeners = None
         else:
             if self._propertySetEventListeners is not None:
                 self._propertySetEventListeners.remove(listener)
-                if self._propertySetEventListeners.isEmpty():
+                if len(self._propertySetEventListeners) == 0:
                     self._propertySetEventListeners = None
 
 
     def getListeners(self, eventType):
-        if ItemSetChangeEvent in eventType.__mro__:  # FIXME: translate isAssignableFrom
+        if issubclass(eventType, Container.ItemSetChangeEvent):
             if self._itemSetEventListeners is None:
-                return list()
+                return set()
             else:
-                return self._itemSetEventListeners  # unmodifiable
-        elif PropertySetChangeEvent in eventType.__mro__:  # FIXME: translate isAssignableFrom
+                return set(self._itemSetEventListeners)
+        elif issubclass(eventType, Container.PropertySetChangeEvent):
             if self._propertySetEventListeners is None:
-                return list()
+                return set()
             else:
-                return self._propertySetEventListeners  # unmodifiable
+                return set(self._propertySetEventListeners)
 
         return super(AbstractSelect, self).getListeners(eventType)
 
@@ -1223,7 +1143,7 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
     def containerItemSetChange(self, event):
         """Lets the listener know a Containers Item set has changed.
 
-        @see com.vaadin.data.Container.ItemSetChangeListener#containerItemSetChange(com.vaadin.data.Container.ItemSetChangeEvent)
+        @see ItemSetChangeListener.containerItemSetChange()
         """
         # Clears the item id mapping table
         self.itemIdMapper.removeAll()
@@ -1234,51 +1154,29 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
 
     def firePropertySetChange(self):
         """Fires the property set change event."""
-        if self._propertySetEventListeners is not None \
-                and not self._propertySetEventListeners.isEmpty():
-            event = PropertySetChangeEvent()
+        if (self._propertySetEventListeners is not None
+                and len(self._propertySetEventListeners) > 0):
+            event = PropertySetChangeEvent(self)
             listeners = list(self._propertySetEventListeners)
-            for i in range(len(listeners)):
-                listeners[i].containerPropertySetChange(event)
+            for l in listeners:
+                l.containerPropertySetChange(event)
         self.requestRepaint()
 
 
     def fireItemSetChange(self):
         """Fires the item set change event."""
-        if self._itemSetEventListeners is not None \
-                and len(self._itemSetEventListeners) > 0:
-            event = ItemSetChangeEvent()
+        if (self._itemSetEventListeners is not None
+                and len(self._itemSetEventListeners) > 0):
+            event = ItemSetChangeEvent(self)
             listeners = list(self._itemSetEventListeners)
             for i in range(len(listeners)):
                 listeners[i].containerItemSetChange(event)
         self.requestRepaint()
 
 
-    class ItemSetChangeEvent(Container, ItemSetChangeEvent):
-        """Implementation of item set change event."""
-
-        def getContainer(self):
-            """Gets the Property where the event occurred.
-
-            @see com.vaadin.data.Container.ItemSetChangeEvent#getContainer()
-            """
-            return AbstractSelect.self
-
-
-    class PropertySetChangeEvent(Container, PropertySetChangeEvent):
-        """Implementation of property set change event."""
-
-        def getContainer(self):
-            """Retrieves the Container whose contents have been modified.
-
-            @see com.vaadin.data.Container.PropertySetChangeEvent#getContainer()
-            """
-            return AbstractSelect.self
-
-
     def isEmpty(self):
-        """For multi-selectable fields, also an empty collection of values is
-        considered to be an empty field.
+        """For multi-selectable fields, also an empty collection of values
+        is considered to be an empty field.
 
         @see AbstractField#isEmpty().
         """
@@ -1286,14 +1184,16 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
             return super(AbstractSelect, self).isEmpty()
         else:
             value = self.getValue()
-            return super(AbstractSelect, self).isEmpty() or (isinstance(value, list) and value.isEmpty())
+            return (super(AbstractSelect, self).isEmpty()
+                    or (isinstance(value, list) and len(value) == 0))
 
 
     def setNullSelectionAllowed(self, nullSelectionAllowed):
-        """Allow or disallow empty selection by the user. If the select is in
-        single-select mode, you can make an item represent the empty selection by
-        calling <code>setNullSelectionItemId()</code>. This way you can for
-        instance set an icon and caption for the null selection item.
+        """Allow or disallow empty selection by the user. If the select is
+        in single-select mode, you can make an item represent the empty
+        selection by calling <code>setNullSelectionItemId()</code>. This
+        way you can for instance set an icon and caption for the null
+        selection item.
 
         @param nullSelectionAllowed
                    whether or not to allow empty selection
@@ -1315,14 +1215,12 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
 
 
     def getNullSelectionItemId(self):
-        """Returns the item id that represents null value of this select in single
-        select mode.
+        """Returns the item id that represents null value of this select in
+        single select mode.
 
-        <p>
         Data interface does not support nulls as item ids. Selecting the item
         identified by this id is the same as selecting no items at all. This
         setting only affects the single select mode.
-        </p>
 
         @return the Object Null value item id.
         @see #setNullSelectionItemId(Object)
@@ -1335,11 +1233,9 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
     def setNullSelectionItemId(self, nullSelectionItemId):
         """Sets the item id that represents null value of this select.
 
-        <p>
-        Data interface does not support nulls as item ids. Selecting the item
-        idetified by this id is the same as selecting no items at all. This
-        setting only affects the single select mode.
-        </p>
+        Data interface does not support nulls as item ids. Selecting the
+        item identified by this id is the same as selecting no items at all.
+        This setting only affects the single select mode.
 
         @param nullSelectionItemId
                    the nullSelectionItemId to set.
@@ -1348,7 +1244,9 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
         @see #select(Object)
         """
         if nullSelectionItemId is not None and self.isMultiSelect():
-            raise ValueError, 'Multiselect and NullSelectionItemId can not be set at the same time.'
+            raise ValueError, ('Multiselect and NullSelectionItemId can '
+                    'not be set at the same time.')
+
         self._nullSelectionItemId = nullSelectionItemId
 
 
@@ -1368,11 +1266,132 @@ class AbstractSelect(AbstractField, Container, Container, Viewer, Container,
         self.getCaptionChangeListener().clear()
         super(AbstractSelect, self).detach()
 
-    # Caption change listener
+
     def getCaptionChangeListener(self):
         if self._captionChangeListener is None:
             self._captionChangeListener = CaptionChangeListener()
         return self._captionChangeListener
+
+
+class IFiltering(object):
+    """Interface for option filtering, used to filter options based on
+    user entered value. The value is matched to the item caption.
+    <code>FILTERINGMODE_OFF</code> (0) turns the filtering off.
+    <code>FILTERINGMODE_STARTSWITH</code> (1) matches from the start of
+    the caption. <code>FILTERINGMODE_CONTAINS</code> (1) matches anywhere
+    in the caption.
+    """
+
+    FILTERINGMODE_OFF = 0
+
+    FILTERINGMODE_STARTSWITH = 1
+
+    FILTERINGMODE_CONTAINS = 2
+
+    def setFilteringMode(self, filteringMode):
+        """Sets the option filtering mode.
+
+        @param filteringMode
+                   the filtering mode to use
+        """
+        raise NotImplementedError
+
+
+    def getFilteringMode(self):
+        """Gets the current filtering mode.
+
+        @return the filtering mode in use
+        """
+        raise NotImplementedError
+
+
+class MultiSelectMode(object):
+    """Multi select modes that controls how multi select behaves."""
+
+    # The default behavior of the multi select mode
+    DEFAULT = 'DEFAULT'
+
+    # The previous more simple behavior of the multselect
+    SIMPLE = 'SIMPLE'
+
+    _values = [DEFAULT, SIMPLE]
+
+    @classmethod
+    def values(cls):
+        return cls._enum_values[:]
+
+
+class INewItemHandler(object):
+
+    def addNewItem(self, newItemCaption):
+        raise NotImplementedError
+
+
+class DefaultNewItemHandler(INewItemHandler):
+    """TODO refine doc
+
+    This is a default class that handles adding new items that are typed
+    by user to selects container.
+
+    By extending this class one may implement some logic on new item
+    addition like database inserts.
+    """
+
+    def addNewItem(self, newItemCaption):
+        # Checks for readonly
+        if self.isReadOnly():
+            raise Property.ReadOnlyException()
+
+        # Adds new option
+        if self.addItem(newItemCaption) is not None:
+
+            # Sets the caption property, if used
+            if self.getItemCaptionPropertyId() is not None:
+                try:
+                    prop = self.getContainerProperty(newItemCaption,
+                            self.getItemCaptionPropertyId())
+                    prop.setValue(newItemCaption)
+                except Property.ConversionException:
+                    # The conversion exception is safely ignored, the
+                    # caption is just missing
+                    pass
+
+            if self.isMultiSelect():
+                values = set(self.getValue())
+                values.add(newItemCaption)
+                self.setValue(values)
+            else:
+                self.setValue(newItemCaption)
+
+
+class ItemSetChangeEvent(Container.ItemSetChangeEvent):
+    """Implementation of item set change event."""
+
+    def __init__(self, container):
+        self._container = container
+
+
+    def getContainer(self):
+        """Gets the Property where the event occurred.
+
+        @see com.vaadin.data.Container.ItemSetChangeEvent#getContainer()
+        """
+        return self._container
+
+
+class PropertySetChangeEvent(Container.PropertySetChangeEvent):
+    """Implementation of property set change event."""
+
+    def __init__(self, container):
+        self._container = container
+
+
+    def getContainer(self):
+        """Retrieves the Container whose contents have been modified.
+
+        @see com.vaadin.data.Container.PropertySetChangeEvent#getContainer()
+        """
+        return self._container
 
 
 class AbstractSelectTargetDetails(TargetDetailsImpl):
@@ -1382,11 +1401,11 @@ class AbstractSelectTargetDetails(TargetDetailsImpl):
     @since 6.3
     """
 
-    def __init__(self, rawVariables, _AbstractSelect_self):
+    def __init__(self, rawVariables, select):
         """Constructor that automatically converts itemIdOver key to
         corresponding item Id
         """
-        super(AbstractSelect.AbstractSelectTargetDetails, self)(rawVariables, self._AbstractSelect_self)  # FIXME: AbstractSelect.this translation
+        super(AbstractSelectTargetDetails, self)(rawVariables, select)
 
         # The item id over which the drag event happened.
         self.idOver = None
@@ -1398,33 +1417,39 @@ class AbstractSelectTargetDetails(TargetDetailsImpl):
 
 
     def getItemIdOver(self):
-        """If the drag operation is currently over an {@link Item}, this method
-        returns the identifier of that {@link Item}.
+        """If the drag operation is currently over an {@link Item}, this
+        method returns the identifier of that {@link Item}.
         """
         return self.idOver
 
 
     def getDropLocation(self):
-        """Returns a detailed vertical location where the drop happened on Item."""
+        """Returns a detailed vertical location where the drop happened on
+        Item.
+        """
         detail = self.getData('detail')
         if detail is None:
             return None
         return VerticalDropLocation.valueOf(detail)
 
 
-class CaptionChangeListener(Item, PropertySetChangeListener, Property, ValueChangeListener):
-    """This is a listener helper for Item and Property changes that should cause
-    a repaint. It should be attached to all items that are displayed, and the
-    default implementation does this in paintContent(). Especially
+class CaptionChangeListener(Item.PropertySetChangeListener,
+            Property.ValueChangeListener):
+    """This is a listener helper for Item and Property changes that should
+    cause a repaint. It should be attached to all items that are displayed,
+    and the default implementation does this in paintContent(). Especially
     "lazyloading" components should take care to add and remove listeners as
     appropriate. Call addNotifierForItem() for each painted item (and
     remember to clear).
 
     NOTE: singleton, use getCaptionChangeListener().
     """
-    # TODO clean this up - type is either Item.PropertySetChangeNotifier or
-    # Property.ValueChangeNotifier
-    _captionChangeNotifiers = set()
+
+    def __init__(self):
+        # TODO clean this up - type is either Item.PropertySetChangeNotifier
+        # or Property.ValueChangeNotifier
+        self._captionChangeNotifiers = set()
+
 
     def addNotifierForItem(self, itemId):
         test = self.getItemCaptionMode()
@@ -1433,7 +1458,7 @@ class CaptionChangeListener(Item, PropertySetChangeListener, Property, ValueChan
             if i is None:
                 return
 
-            if isinstance(i, ItemPropertySetChangeNotifier):
+            if isinstance(i, Item.PropertySetChangeNotifier):
                 i.addListener(self.getCaptionChangeListener())
                 self._captionChangeNotifiers.add(i)
 
@@ -1441,19 +1466,22 @@ class CaptionChangeListener(Item, PropertySetChangeListener, Property, ValueChan
             if pids is not None:
                 for pid in pids:
                     p = i.getItemProperty(pid)
-                    if p is not None and isinstance(p, ValueChangeNotifier):
+                    if (p is not None
+                            and isinstance(p, Property.ValueChangeNotifier)):
                         p.addListener(self.getCaptionChangeListener())
                         self._captionChangeNotifiers.add(p)
+
         elif test == self.ITEM_CAPTION_MODE_PROPERTY:
-            p = self.getContainerProperty(itemId, self.getItemCaptionPropertyId())
-            if p is not None and isinstance(p, ValueChangeNotifier):
+            p = self.getContainerProperty(itemId,
+                    self.getItemCaptionPropertyId())
+            if p is not None and isinstance(p, Property.ValueChangeNotifier):
                 p.addListener(self.getCaptionChangeListener())
                 self._captionChangeNotifiers.add(p)
 
 
     def clear(self):
         for notifier in self._captionChangeNotifiers:
-            if isinstance(notifier, ItemPropertySetChangeNotifier):
+            if isinstance(notifier, Item.PropertySetChangeNotifier):
                 notifier.removeListener(self.getCaptionChangeListener())
             else:
                 notifier.removeListener(self.getCaptionChangeListener())
@@ -1486,20 +1514,22 @@ class AbstractItemSetCriterion(ClientSideCriterion):
     def paintContent(self, target):
         super(AbstractItemSetCriterion, self).paintContent(target)
         keys = [None] * len(self.itemIds)
+
         i = 0
         for itemId in self.itemIds:
             key = self.select.itemIdMapper.key(itemId)
             keys[i] = key
             i += 1
+
         target.addAttribute('keys', keys)
         target.addAttribute('s', self.select)
 
 
 class TargetItemIs(AbstractItemSetCriterion):
-    """Criterion which accepts a drop only if the drop target is (one of) the
-    given Item identifier(s). Criterion can be used only on a drop targets
-    that extends AbstractSelect like {@link Table} and {@link Tree}. The
-    target and identifiers of valid Items are given in constructor.
+    """Criterion which accepts a drop only if the drop target is (one of)
+    the given Item identifier(s). Criterion can be used only on a drop
+    targets that extends AbstractSelect like {@link Table} and {@link Tree}.
+    The target and identifiers of valid Items are given in constructor.
 
     @since 6.3
     """
@@ -1521,8 +1551,8 @@ class TargetItemIs(AbstractItemSetCriterion):
 
 
 class AcceptItem(AbstractItemSetCriterion):
-    """This criterion accepts a only a {@link Transferable} that contains given
-    Item (practically its identifier) from a specific AbstractSelect.
+    """This criterion accepts a only a {@link Transferable} that contains
+    given Item (practically its identifier) from a specific AbstractSelect.
 
     @since 6.3
     """
@@ -1552,16 +1582,20 @@ class AcceptItem(AbstractItemSetCriterion):
 
 
 class VerticalLocationIs(TargetDetailIs):
-    """An accept criterion to accept drops only on a specific vertical location
-    of an item.
-    <p>
+    """An accept criterion to accept drops only on a specific vertical
+    location of an item.
+
     This accept criterion is currently usable in Tree and Table
     implementations.
     """
 
-    def __init__(self, l):
-        super(VerticalLocationIs, self)('detail', l.name())
+    VerticalLocationIs.TOP = None
+    VerticalLocationIs.BOTTOM = None
+    VerticalLocationIs.MIDDLE = None
 
-VerticalLocationIs.TOP = VerticalLocationIs(VerticalDropLocation.TOP)  # FIXME: VerticalLocationIs translation
+    def __init__(self, l):
+        super(VerticalLocationIs, self)('detail', l)
+
+VerticalLocationIs.TOP    = VerticalLocationIs(VerticalDropLocation.TOP)
 VerticalLocationIs.BOTTOM = VerticalLocationIs(VerticalDropLocation.BOTTOM)
 VerticalLocationIs.MIDDLE = VerticalLocationIs(VerticalDropLocation.MIDDLE)

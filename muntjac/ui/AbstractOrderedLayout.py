@@ -16,17 +16,18 @@
 
 from muntjac.ui.Alignment import Alignment
 from muntjac.ui.AbstractLayout import AbstractLayout
-from muntjac.ui.ILayout import IAlignmentHandler, ILayout, ISpacingHandler
+from muntjac.ui.ILayout import IAlignmentHandler, ISpacingHandler
 from muntjac.terminal.gwt.client.EventId import EventId
 
 from muntjac.event.LayoutEvents import \
     ILayoutClickNotifier, ILayoutClickListener, LayoutClickEvent
 
 
-class AbstractOrderedLayout(AbstractLayout, ILayout, IAlignmentHandler,
-                            ILayout, ISpacingHandler, ILayoutClickNotifier):
+class AbstractOrderedLayout(AbstractLayout, IAlignmentHandler,
+            ISpacingHandler, ILayoutClickNotifier):
 
     _CLICK_EVENT = EventId.LAYOUT_CLICK
+
     ALIGNMENT_DEFAULT = Alignment.TOP_LEFT
 
     def __init__(self):
@@ -43,8 +44,8 @@ class AbstractOrderedLayout(AbstractLayout, ILayout, IAlignmentHandler,
 
 
     def addComponent(self, c, index=None):
-        """Add a component into this container. The component is added to the right
-        or under the previous component.
+        """Add a component into this container. The component is added
+        to the right or under the previous component.
 
         @param c
                    the component to be added.
@@ -54,8 +55,9 @@ class AbstractOrderedLayout(AbstractLayout, ILayout, IAlignmentHandler,
         @param c
                    the component to be added.
         @param index
-                   the Index of the component position. The components currently
-                   in and after the position are shifted forwards.
+                   the Index of the component position. The components
+                   currently in and after the position are shifted
+                   forwards.
         """
         if index is None:
             self.components.append(c)
@@ -71,11 +73,10 @@ class AbstractOrderedLayout(AbstractLayout, ILayout, IAlignmentHandler,
 
 
     def addComponentAsFirst(self, c):
-        """Adds a component into this container. The component is added to the left
-        or on top of the other components.
+        """Adds a component into this container. The component is
+        added to the left or on top of the other components.
 
-        @param c
-                   the component to be added.
+        @param c the component to be added.
         """
         self.components.addFirst(c)
         try:
@@ -89,28 +90,27 @@ class AbstractOrderedLayout(AbstractLayout, ILayout, IAlignmentHandler,
     def removeComponent(self, c):
         """Removes the component from this container.
 
-        @param c
-                   the component to be removed.
+        @param c the component to be removed.
         """
         self.components.remove(c)
-        self._componentToAlignment.remove(c)
-        self._componentToExpandRatio.remove(c)
+        del self._componentToAlignment[c]
+        del self._componentToExpandRatio[c]
         super(AbstractOrderedLayout, self).removeComponent(c)
         self.requestRepaint()
 
 
     def getComponentIterator(self):
-        """Gets the component container iterator for going trough all the components
-        in the container.
+        """Gets the component container iterator for going through
+        all the components in the container.
 
         @return the Iterator of the components inside the container.
         """
-        return self.components
+        return iter(self.components)
 
 
     def getComponentCount(self):
-        """Gets the number of contained components. Consistent with the iterator
-        returned by {@link #getComponentIterator()}.
+        """Gets the number of contained components. Consistent with
+        the iterator returned by {@link #getComponentIterator()}.
 
         @return the number of contained components
         """
@@ -142,7 +142,6 @@ class AbstractOrderedLayout(AbstractLayout, ILayout, IAlignmentHandler,
 
 
     def replaceComponent(self, oldComponent, newComponent):
-
         # Gets the locations
         oldLocation = -1
         newLocation = -1
@@ -164,23 +163,21 @@ class AbstractOrderedLayout(AbstractLayout, ILayout, IAlignmentHandler,
                 self.components.remove(oldComponent)
                 self.components.insert(newLocation, oldComponent)
                 self.components.remove(newComponent)
-                self._componentToAlignment.remove(newComponent)
+                del self._componentToAlignment[newComponent]
                 self.components.insert(oldLocation, newComponent)
             else:
                 self.components.remove(newComponent)
                 self.components.insert(oldLocation, newComponent)
                 self.components.remove(oldComponent)
-                self._componentToAlignment.remove(oldComponent)
+                del self._componentToAlignment[oldComponent]
                 self.components.insert(newLocation, oldComponent)
 
             self.requestRepaint()
 
 
     def setComponentAlignment(self, childComponent, alignment,
-                              verticalAlignment=None):
-        """None
-        ---
-        Sets the component alignment using a short hand string notation.
+                verticalAlignment=None):
+        """Sets the component alignment using a short hand string notation.
 
         @deprecated Replaced by
                     {@link #setComponentAlignment(Component, Alignment)}
@@ -197,7 +194,8 @@ class AbstractOrderedLayout(AbstractLayout, ILayout, IAlignmentHandler,
             self._componentToAlignment[childComponent] = alignment
             self.requestRepaint()
         else:
-            raise ValueError, 'Component must be added to layout before using setComponentAlignment()'
+            raise ValueError, ('Component must be added to layout '
+                    'before using setComponentAlignment()')
 
 
     def getComponentAlignment(self, childComponent):
@@ -222,39 +220,38 @@ class AbstractOrderedLayout(AbstractLayout, ILayout, IAlignmentHandler,
 
 
     def setExpandRatio(self, component, ratio):
-        """<p>
-        This method is used to control how excess space in layout is distributed
-        among components. Excess space may exist if layout is sized and contained
-        non relatively sized components don't consume all available space.
+        """This method is used to control how excess space in layout
+        is distributed among components. Excess space may exist if
+        layout is sized and contained non relatively sized components
+        don't consume all available space.
 
-        <p>
-        Example how to distribute 1:3 (33%) for component1 and 2:3 (67%) for
-        component2 :
+        Example how to distribute 1:3 (33%) for component1 and
+        2:3 (67%) for component2 :
 
         <code>
         layout.setExpandRatio(component1, 1);<br>
         layout.setExpandRatio(component2, 2);
         </code>
 
-        <p>
-        If no ratios have been set, the excess space is distributed evenly among
-        all components.
+        If no ratios have been set, the excess space is distributed
+        evenly among all components.
 
-        <p>
-        Note, that width or height (depending on orientation) needs to be defined
-        for this method to have any effect.
+        Note, that width or height (depending on orientation) needs
+        to be defined for this method to have any effect.
 
         @see Sizeable
 
         @param component
-                   the component in this layout which expand ratio is to be set
+                   the component in this layout which expand ratio
+                   is to be set
         @param ratio
         """
         if component in self.components:
             self._componentToExpandRatio[component] = ratio
             self.requestRepaint()
         else:
-            raise ValueError, 'Component must be added to layout before using setExpandRatio()'
+            raise ValueError, ('Component must be added to layout '
+                    'before using setExpandRatio()')
 
 
     def getExpandRatio(self, component):
@@ -265,12 +262,12 @@ class AbstractOrderedLayout(AbstractLayout, ILayout, IAlignmentHandler,
         @return expand ratio of given component, 0.0f by default
         """
         ratio = self._componentToExpandRatio.get(component)
-        return 0 if ratio is None else ratio.floatValue()
+        return 0 if ratio is None else float(ratio)
 
 
     def addListener(self, listener):
-        self.addListener(self._CLICK_EVENT, self.LayoutClickEvent,
-                         listener, ILayoutClickListener.clickMethod)
+        self.addListener(self._CLICK_EVENT, LayoutClickEvent, listener,
+                ILayoutClickListener.clickMethod)
 
 
     def removeListener(self, listener):
@@ -282,7 +279,8 @@ class AbstractOrderedLayout(AbstractLayout, ILayout, IAlignmentHandler,
 
         @param component
                    The component to look up.
-        @return The index of the component or -1 if the component is not a child.
+        @return The index of the component or -1 if the component
+                is not a child.
         """
         return self.components.index(component)
 
@@ -293,7 +291,7 @@ class AbstractOrderedLayout(AbstractLayout, ILayout, IAlignmentHandler,
         @param index
                    The position of the component.
         @return The component at the given index.
-        @throws IndexOutOfBoundsException
+        @raise IndexError:
                     If the index is out of range.
         """
-        return self.components.get(index)
+        return self.components[index]

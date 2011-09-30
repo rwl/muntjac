@@ -18,18 +18,19 @@ from muntjac.ui.ILayout import ILayout, IMarginHandler, MarginInfo
 from muntjac.ui.AbstractComponentContainer import AbstractComponentContainer
 from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
 from muntjac.terminal.gwt.client.EventId import EventId
-from muntjac.event.LayoutEvents import ILayoutClickNotifier
+from muntjac.event.LayoutEvents import ILayoutClickNotifier, LayoutClickEvent
 
 
 class AbstractLayout(AbstractComponentContainer, ILayout, IMarginHandler):
-    """An abstract class that defines default implementation for the {@link ILayout}
-    interface.
+    """An abstract class that defines default implementation for the
+    {@link ILayout} interface.
 
     @author IT Mill Ltd.
     @author Richard Lincoln
     @version @VERSION@
     @since 5.0
     """
+
     _CLICK_EVENT = EventId.LAYOUT_CLICK
 
     def __init__(self):
@@ -49,10 +50,8 @@ class AbstractLayout(AbstractComponentContainer, ILayout, IMarginHandler):
                 self.requestRepaint()
         elif nargs == 4:
             topEnabled, rightEnabled, bottomEnabled, leftEnabled = args
-            self.margins.setMargins(topEnabled,
-                                    rightEnabled,
-                                    bottomEnabled,
-                                    leftEnabled)
+            self.margins.setMargins(topEnabled, rightEnabled,
+                    bottomEnabled, leftEnabled)
             self.requestRepaint()
         else:
             raise ValueError, 'invalid number of arguments'
@@ -70,26 +69,31 @@ class AbstractLayout(AbstractComponentContainer, ILayout, IMarginHandler):
     def changeVariables(self, source, variables):
         super(AbstractLayout, self).changeVariables(source, variables)
         # not all subclasses use these events
-        if isinstance(self, ILayoutClickNotifier) \
-                and self._CLICK_EVENT in variables:
-            self.fireClick(variables[self._CLICK_EVENT])
+        if (isinstance(self, ILayoutClickNotifier)
+                and self._CLICK_EVENT in variables):
+            self.fireClick( variables.get(self._CLICK_EVENT) )
 
 
     def fireClick(self, parameters):
         """Fire a layout click event.
 
-        Note that this method is only used by the subclasses that implement
-        {@link LayoutClickNotifier}, and can be overridden for custom click event
-        firing.
+        Note that this method is only used by the subclasses that
+        implement {@link LayoutClickNotifier}, and can be overridden
+        for custom click event firing.
 
         @param parameters
-                   The parameters received from the client side implementation
+                   The parameters received from the client side
+                   implementation
         """
-        mouseDetails = MouseEventDetails.deSerialize(parameters['mouseDetails'])
+        mouseDetails = MouseEventDetails.deSerialize(
+                parameters.get('mouseDetails'))
+
         clickedComponent = parameters.get('component')
+
         childComponent = clickedComponent
-        while childComponent is not None and childComponent.getParent() != self:
+        while (childComponent is not None
+                and childComponent.getParent() != self):
             childComponent = childComponent.getParent()
-        self.fireEvent(self.LayoutClickEvent(self, mouseDetails,
-                                             clickedComponent,
-                                             childComponent))
+
+        self.fireEvent(LayoutClickEvent(self, mouseDetails,
+                clickedComponent, childComponent))

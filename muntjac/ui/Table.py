@@ -3165,7 +3165,7 @@ class Table(AbstractSelect, Action, Container, Container, Ordered, Container,
 
 
     def translateDropTargetDetails(self, clientVariables):
-        return AbstractSelectTargetDetails(clientVariables, self)  # FIXME: _AbstractSelect_self
+        return AbstractSelectTargetDetails(clientVariables, self)
 
 
     def setMultiSelectMode(self, mode):
