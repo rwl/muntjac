@@ -21,43 +21,35 @@ from muntjac.ui.AbstractComponent import AbstractComponent
 
 
 class BaseFieldFactory(IFieldFactory):
-    """Default implementation of the the following Field types are used by default:
-    <p>
+    """Default implementation of the the following Field types are used
+    by default:
+
     <b>Boolean</b>: Button(switchMode:true).<br/>
     <b>Date</b>: DateField(resolution: day).<br/>
     <b>Item</b>: Form. <br/>
     <b>default field type</b>: TextField.
-    <p>
 
     @author IT Mill Ltd.
     @author Richard Lincoln
     @version @VERSION@
     @since 3.1
-    @deprecated use {@link DefaultFieldFactory} or own implementations on
-                {@link FormFieldFactory} or {@link TableFieldFactory} instead.
+    @deprecated use {@link DefaultFieldFactory} or own implementations
+                on {@link FormFieldFactory} or {@link TableFieldFactory}
+                instead.
     """
+
+    def __init__(self):
+        raise DeprecationWarning, 'use DefaultFieldFactory'
+
 
     def createField(self, *args):
         """Creates the field based on type of data.
-
 
         @param type
                    the type of data presented in field.
         @param uiContext
                    the context where the Field is presented.
-
-        @see com.vaadin.ui.IFieldFactory#createField(Class, Component)
-        ---
-        Creates the field based on the datasource property.
-
-        @see com.vaadin.ui.IFieldFactory#createField(Property, Component)
-        ---
-        Creates the field based on the item and property id.
-
-        @see com.vaadin.ui.IFieldFactory#createField(Item, Object, Component)
-        ---
-        @see com.vaadin.ui.IFieldFactory#createField(com.vaadin.data.Container,
-             java.lang.Object, java.lang.Object, com.vaadin.ui.Component)
+        @see IFieldFactory.createField
         """
         nargs = len(args)
         if nargs == 2:
@@ -73,15 +65,18 @@ class BaseFieldFactory(IFieldFactory):
         elif nargs == 3:
             item, propertyId, uiContext = args
             if item is not None and propertyId is not None:
-                f = self.createField(item.getItemProperty(propertyId), uiContext)
+                f = self.createField(item.getItemProperty(propertyId),
+                        uiContext)
                 if isinstance(f, AbstractComponent):
-                    name = DefaultFieldFactory.createCaptionByPropertyId(propertyId)
+                    name = DefaultFieldFactory.createCaptionByPropertyId(
+                            propertyId)
                     f.setCaption(name)
                 return f
             else:
                 return None
         elif nargs == 4:
             container, itemId, propertyId, uiContext = args
-            return self.createField(container.getContainerProperty(itemId, propertyId), uiContext)
+            prop = container.getContainerProperty(itemId, propertyId)
+            return self.createField(prop, uiContext)
         else:
             raise ValueError, 'invalid number of arguments'

@@ -14,17 +14,17 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.event.IComponentEventListener import IComponentEventListener
 from muntjac.ui.VerticalLayout import VerticalLayout
 from muntjac.ui.AbstractLayout import AbstractLayout
 from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
 from muntjac.event.MouseEvents import ClickEvent as MouseClickEvent
+from muntjac.event.IComponentEventListener import IComponentEventListener
 
 from muntjac.terminal.gwt.client.ui.VSplitPanel import VSplitPanel
 
 
-class ComponentIterator(object):  # FIXME: implement iterator
-    """Modifiable and Serializable Iterator for the components, used by
+class ComponentIterator(object):
+    """Modifiable and serializable iterator for the components, used by
     {@link AbstractSplitPanel#getComponentIterator()}.
     """
 
@@ -33,18 +33,25 @@ class ComponentIterator(object):  # FIXME: implement iterator
         self._i = 0
 
 
+    def __iter__(self):
+        return self
+
+
     def hasNext(self):
         if self._i < self.sp.getComponentCount():
             return True
         return False
 
 
-    def __iter__(self):
+    def next(self):  #@PydevCodeAnalysisIgnore
         if not self.hasNext():
-            return None
+            raise StopIteration
         self._i += 1
         if self._i == 1:
-            return self.sp.secondComponent if self.sp.firstComponent is None else self.sp.firstComponent
+            if self.sp.firstComponent is None:
+                return self.sp.secondComponent
+            else:
+                return self.sp.firstComponent
         elif self._i == 2:
             return self.sp.secondComponent
         return None
@@ -62,10 +69,9 @@ class ComponentIterator(object):  # FIXME: implement iterator
 
 
 class AbstractSplitPanel(AbstractLayout):
-    """AbstractSplitPanel.
-
-    <code>AbstractSplitPanel</code> is base class for a component container that
-    can contain two components. The comopnents are split by a divider element.
+    """<code>AbstractSplitPanel</code> is base class for a component
+    container that can contain two components. The comopnents are split
+    by a divider element.
 
     @author Vaadin Ltd.
     @version @VERSION@
@@ -84,8 +90,8 @@ class AbstractSplitPanel(AbstractLayout):
 
 
     def addComponent(self, c):
-        """Add a component into this container. The component is added to the right
-        or under the previous component.
+        """Add a component into this container. The component is added to
+        the right or under the previous component.
 
         @param c
                    the component to be added.
@@ -95,7 +101,8 @@ class AbstractSplitPanel(AbstractLayout):
         elif self._secondComponent is None:
             self._secondComponent = c
         else:
-            raise NotImplementedError, 'Split panel can contain only two components'
+            raise NotImplementedError, \
+                    'Split panel can contain only two components'
 
         super(AbstractSplitPanel, self).addComponent(c)
         self.requestRepaint()
@@ -103,12 +110,10 @@ class AbstractSplitPanel(AbstractLayout):
 
     def setFirstComponent(self, c):
         if self._firstComponent == c:
-            # Nothing to do
-            return
+            return  # Nothing to do
 
         if self._firstComponent is not None:
-            # detach old
-            self.removeComponent(self._firstComponent)
+            self.removeComponent(self._firstComponent)  # detach old
 
         self._firstComponent = c
         super(AbstractSplitPanel, self).addComponent(c)
@@ -117,12 +122,10 @@ class AbstractSplitPanel(AbstractLayout):
 
     def setSecondComponent(self, c):
         if c == self._secondComponent:
-            # Nothing to do
-            return
+            return  # Nothing to do
 
         if self._secondComponent is not None:
-            # detach old
-            self.removeComponent(self._secondComponent)
+            self.removeComponent(self._secondComponent)  # detach old
 
         self._secondComponent = c
         super(AbstractSplitPanel, self).addComponent(c)
@@ -142,8 +145,7 @@ class AbstractSplitPanel(AbstractLayout):
     def removeComponent(self, c):
         """Removes the component from this container.
 
-        @param c
-                   the component to be removed.
+        @param c the component to be removed.
         """
         super(AbstractSplitPanel, self).removeComponent(c)
 
@@ -160,8 +162,8 @@ class AbstractSplitPanel(AbstractLayout):
 
 
     def getComponentCount(self):
-        """Gets the number of contained components. Consistent with the iterator
-        returned by {@link #getComponentIterator()}.
+        """Gets the number of contained components. Consistent with the
+        iterator returned by {@link #getComponentIterator()}.
 
         @return the number of contained components (zero, one or two)
         """
@@ -173,7 +175,6 @@ class AbstractSplitPanel(AbstractLayout):
             count += 1
 
         return count
-
 
 
     def paintContent(self, target):
@@ -223,45 +224,48 @@ class AbstractSplitPanel(AbstractLayout):
         """Moves the position of the splitter.
 
         @param pos
-                   the new size of the first region in the unit that was last
-                   used (default is percentage)
+                   the new size of the first region in the unit that was
+                   last used (default is percentage)
         ---
         Moves the position of the splitter.
 
         @param pos
-                   the new size of the region in the unit that was last used
-                   (default is percentage)
+                   the new size of the region in the unit that was last
+                   used (default is percentage)
         @param reverse
-                   if set to true the split splitter position is measured by the
-                   second region else it is measured by the first region
+                   if set to true the split splitter position is measured by
+                   the second region else it is measured by the first region
         ---
         Moves the position of the splitter with given position and unit.
 
         @param pos
                    size of the first region
         @param unit
-                   the unit (from {@link Sizeable}) in which the size is given.
+                   the unit (from {@link Sizeable}) in which the size is
+                   given.
         ---
         Moves the position of the splitter with given position and unit.
 
         @param pos
                    size of the first region
         @param unit
-                   the unit (from {@link Sizeable}) in which the size is given.
+                   the unit (from {@link Sizeable}) in which the size is
+                   given.
         @param reverse
-                   if set to true the split splitter position is measured by the
-                   second region else it is measured by the first region
+                   if set to true the split splitter position is measured by
+                   the second region else it is measured by the first region
         ---
         Moves the position of the splitter.
 
         @param pos
                    the new size of the first region
         @param unit
-                   the unit (from {@link Sizeable}) in which the size is given.
+                   the unit (from {@link Sizeable}) in which the size is
+                   given.
         @param repaintNotNeeded
-                   true if client side needs to be updated. Use false if the
-                   position info has come from the client side, thus it already
-                   knows the position.
+                   true if client side needs to be updated. Use false if
+                   the position info has come from the client side, thus it
+                   already knows the position.
         """
         nargs = len(args)
         if nargs == 1:
@@ -280,7 +284,8 @@ class AbstractSplitPanel(AbstractLayout):
         elif nargs == 4:
             pos, unit, repaintNeeded, reverse = args
             if unit != self.UNITS_PERCENTAGE and unit != self.UNITS_PIXELS:
-                raise self.IllegalArgumentException('Only percentage and pixel units are allowed')
+                raise ValueError, \
+                        'Only percentage and pixel units are allowed'
             self._pos = pos
             self._posUnit = unit
             self._posReversed = reverse
@@ -308,55 +313,56 @@ class AbstractSplitPanel(AbstractLayout):
 
 
     def setLocked(self, locked):
-        """Lock the SplitPanels position, disabling the user from dragging the split
-        handle.
+        """Lock the SplitPanels position, disabling the user from dragging
+        the split handle.
 
         @param locked
-                   Set <code>true</code> if locked, <code>false</code> otherwise.
+                   Set <code>true</code> if locked, <code>false</code>
+                   otherwise.
         """
         self._locked = locked
         self.requestRepaint()
 
 
     def isLocked(self):
-        """Is the SplitPanel handle locked (user not allowed to change split
-        position by dragging).
+        """Is the SplitPanel handle locked (user not allowed to change
+        split position by dragging).
 
         @return <code>true</code> if locked, <code>false</code> otherwise.
         """
-        # Invoked when a variable of the component changes. Don't add a JavaDoc
-        # comment here, we use the default documentation from implemented
-        # interface.
-
         return self._locked
 
 
     def changeVariables(self, source, variables):
+        # Invoked when a variable of the component changes.
         super(AbstractSplitPanel, self).changeVariables(source, variables)
 
         if 'position' in variables and not self.isLocked():
-            newPos = variables['position']
+            newPos = variables.get('position')
             self.setSplitPosition(newPos, self._posUnit, self._posReversed)
 
         if self._SPLITTER_CLICK_EVENT in variables:
-            self.fireClick(variables[self._SPLITTER_CLICK_EVENT])
+            self.fireClick(variables.get(self._SPLITTER_CLICK_EVENT))
 
 
     def fireClick(self, parameters):
-        mouseDetails = MouseEventDetails.deSerialize(parameters.get('mouseDetails'))
+        mouseDetails = \
+                MouseEventDetails.deSerialize(parameters.get('mouseDetails'))
         self.fireEvent( SplitterClickEvent(self, mouseDetails) )
 
 
     def addListener(self, listener):
-        self.addListener(self._SPLITTER_CLICK_EVENT, SplitterClickEvent, listener, SplitterClickListener.clickMethod)
+        self.addListener(self._SPLITTER_CLICK_EVENT, SplitterClickEvent,
+                listener, SplitterClickListener.clickMethod)
 
 
     def removeListener(self, listener):
-        self.removeListener(self._SPLITTER_CLICK_EVENT, SplitterClickEvent, listener)
+        self.removeListener(self._SPLITTER_CLICK_EVENT, SplitterClickEvent,
+                listener)
 
 
-class SplitterClickListener(IComponentEventListener):
-    """<code>SplitterClickListener</code> interface for listening for
+class ISplitterClickListener(IComponentEventListener):
+    """<code>ISplitterClickListener</code> interface for listening for
     <code>SplitterClickEvent</code> fired by a <code>SplitPanel</code>.
 
     @see SplitterClickEvent
@@ -369,9 +375,9 @@ class SplitterClickListener(IComponentEventListener):
         @param event
                    SplitterClickEvent event.
         """
-        pass
+        raise NotImplementedError
 
-    clickMethod = splitterClick  # FIXME: translate findMethod
+    clickMethod = splitterClick
 
 
 class SplitterClickEvent(MouseClickEvent):

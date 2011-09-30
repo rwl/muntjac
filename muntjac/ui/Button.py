@@ -14,18 +14,36 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.event.FieldEvents import \
-    BlurEvent, IBlurListener, IBlurNotifier, FocusEvent, \
-    IFocusListener, IFocusNotifier
-
 from muntjac.ui.AbstractField import AbstractField
-from muntjac.event.ShortcutListener import ShortcutListener
-from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
-from muntjac.data.Property import Property
 from muntjac.ui.IComponent import Event as ComponentEvent
+from muntjac.event.ShortcutListener import ShortcutListener
+from muntjac.data.Property import Property
 
-#from muntjac.ui.ClientWidget import LoadStyle
-#from muntjac.terminal.gwt.client.ui.VButton import VButton
+from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
+
+from muntjac.event.FieldEvents import \
+    (BlurEvent, IBlurListener, IBlurNotifier, FocusEvent,
+    IFocusListener, IFocusNotifier)
+
+
+class IClickListener(object):
+    """Interface for listening for a {@link ClickEvent} fired by a
+    {@link Component}.
+
+    @author IT Mill Ltd.
+    @author Richard Lincoln
+    @version @VERSION@
+    @since 3.0
+    """
+
+    def buttonClick(self, event):
+        """Called when a {@link Button} has been clicked. A reference to
+        the button is given by {@link ClickEvent#getButton()}.
+
+        @param event
+                   An event containing information about the click.
+        """
+        raise NotImplementedError
 
 
 class Button(AbstractField, IBlurNotifier, IFocusNotifier):
@@ -37,12 +55,11 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
     @since 3.0
     """
 
-#    CLIENT_WIDGET = VButton  # FIXME: annotate
-#    LOAD_STYLE = LoadStyle.EAGER
+    #CLIENT_WIDGET = ClientWidget(VButton, LoadStyle.EAGER)
 
     def __init__(self, *args):
-        """Creates a new push button. The value of the push button is false and it
-        is immediate by default.
+        """Creates a new push button. The value of the push button is false
+        and it is immediate by default.
         ---
         Creates a new push button.
 
@@ -61,8 +78,8 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
         Creates a new push button with a method listening button clicks. Using
         this method is discouraged because it cannot be checked during
         compilation. Use
-        {@link #Button(String, com.vaadin.ui.Button.ClickListener)} instead. The
-        method must have either no parameters, or only one parameter of
+        {@link #Button(String, com.vaadin.ui.Button.ClickListener)} instead.
+        The method must have either no parameters, or only one parameter of
         Button.ClickEvent type.
 
         @param caption
@@ -70,8 +87,8 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
         @param target
                    the Object having the method for listening button clicks.
         @param methodName
-                   the name of the method in target object, that receives button
-                   click events.
+                   the name of the method in target object, that receives
+                   button click events.
         ---
         Creates a new switch button with initial value.
 
@@ -98,7 +115,7 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
             self.__init__()
             self.setCaption(caption)
         elif nargs == 2:
-            if isinstance(args[1], ClickListener):
+            if isinstance(args[1], IClickListener):
                 caption, listener = args
                 self.__init__(caption)
                 self.addListener(listener)
@@ -142,8 +159,8 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
 
 
     def changeVariables(self, source, variables):
-        """Invoked when the value of a variable has changed. Button listeners are
-        notified if the button is clicked.
+        """Invoked when the value of a variable has changed. Button
+        listeners are notified if the button is clicked.
 
         @param source
         @param variables
@@ -158,35 +175,36 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
             if self.isSwitchMode():
                 # For switch button, the event is only sent if the
                 # switch state is changed
-                if newValue is not None \
-                        and not (newValue == oldValue) \
-                        and not self.isReadOnly():
+                if (newValue is not None and newValue != oldValue
+                        and not self.isReadOnly()):
                     self.setValue(newValue)
                     if 'mousedetails' in variables:
-                        self.fireClick(MouseEventDetails.deSerialize( variables.get('mousedetails') ))
+                        self.fireClick(MouseEventDetails.deSerialize(
+                                variables.get('mousedetails')))
                     else:
-                        # for compatibility with custom implementations which
-                        # don't send mouse details
+                        # for compatibility with custom implementations
+                        # which don't send mouse details
                         self.fireClick()
             else:
                 # Only send click event if the button is pushed
                 if newValue.booleanValue():
                     if 'mousedetails' in variables:
-                        self.fireClick(MouseEventDetails.deSerialize(variables.get('mousedetails')))
+                        self.fireClick(MouseEventDetails.deSerialize(
+                                variables.get('mousedetails')))
                     else:
-                        # for compatibility with custom implementations which
-                        # don't send mouse details
+                        # for compatibility with custom implementations
+                        # which don't send mouse details
                         self.fireClick()
 
                 # If the button is true for some reason, release it
-                if (None is oldValue) or oldValue.booleanValue():
+                if oldValue is None or bool(oldValue):
                     self.setValue(False)
 
         if FocusEvent.EVENT_ID in variables:
-            self.fireEvent(FocusEvent(self))
+            self.fireEvent( FocusEvent(self) )
 
         if BlurEvent.EVENT_ID in variables:
-            self.fireEvent(BlurEvent(self))
+            self.fireEvent( BlurEvent(self) )
 
 
     def isSwitchMode(self):
@@ -194,9 +212,10 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
 
         @return <code>true</code> if it is in Switch Mode, otherwise
                 <code>false</code>.
-        @deprecated the {@link CheckBox} component should be used instead of
-                    Button in switch mode
+        @deprecated the {@link CheckBox} component should be used instead
+                    of Button in switch mode
         """
+        raise DeprecationWarning, 'use CheckBox instead'
         return self._switchMode
 
 
@@ -205,8 +224,8 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
 
         @param switchMode
                    The switchMode to set.
-        @deprecated the {@link CheckBox} component should be used instead of
-                    Button in switch mode
+        @deprecated the {@link CheckBox} component should be used instead
+                    of Button in switch mode
         """
         self._switchMode = switchMode
         if not switchMode:
@@ -221,16 +240,18 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
         @return True iff the button is pressed down or checked.
         """
         value = self.getValue()
-        return False if None is value else value.booleanValue()
+        return False if None is value else bool(value)
 
 
     def setImmediate(self, immediate):
-        """Sets immediate mode. Push buttons can not be set in non-immediate mode.
+        """Sets immediate mode. Push buttons can not be set in
+        non-immediate mode.
 
-        @see com.vaadin.ui.AbstractComponent#setImmediate(boolean)
+        @see AbstractComponent.setImmediate
         """
         # Push buttons are always immediate
-        super(Button, self).setImmediate((not self.isSwitchMode()) or immediate)
+        super(Button, self).setImmediate(
+                (not self.isSwitchMode()) or immediate)
 
 
     def getType(self):
@@ -238,14 +259,12 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
 
         @see com.vaadin.data.Property#getType()
         """
-        # Click event
         return bool
 
 
-    _BUTTON_CLICK_METHOD = buttonClick  # FIXME: translate getDeclaredMethod
+    _BUTTON_CLICK_METHOD = getattr(IClickListener, "buttonClick")
 
     # Button style with no decorations. Looks like a link, acts like a button
-    #
     # @deprecated use {@link BaseTheme#BUTTON_LINK} instead.
     STYLE_LINK = 'link'
 
@@ -258,15 +277,15 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
         """
         if isinstance(listener, IBlurListener):
             self.addListener(BlurEvent.EVENT_ID, BlurEvent, listener,
-                             IBlurListener.blurMethod)
+                    IBlurListener.blurMethod)
 
-        elif isinstance(listener, ClickListener):
+        elif isinstance(listener, IClickListener):
             self.addListener(self.ClickEvent, listener,
-                             self._BUTTON_CLICK_METHOD)
+                    self._BUTTON_CLICK_METHOD)
 
         else:
             self.addListener(FocusEvent.EVENT_ID, FocusEvent, listener,
-                             IFocusListener.focusMethod)
+                    IFocusListener.focusMethod)
 
 
     def removeListener(self, listener):
@@ -278,9 +297,9 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
         if isinstance(listener, IBlurListener):
             self.removeListener(BlurEvent.EVENT_ID, BlurEvent, listener)
 
-        elif isinstance(listener, ClickListener):
+        elif isinstance(listener, IClickListener):
             self.removeListener(self.ClickEvent, listener,
-                                self._BUTTON_CLICK_METHOD)
+                    self._BUTTON_CLICK_METHOD)
 
         else:
             self.removeListener(FocusEvent.EVENT_ID, FocusEvent, listener)
@@ -289,16 +308,16 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
     def fireClick(self, details=None):
         """Fires a click event to all listeners without any event details.
 
-        In subclasses, override {@link #fireClick(MouseEventDetails)} instead of
-        this method.
+        In subclasses, override {@link #fireClick(MouseEventDetails)} instead
+        of this method.
         ---
         Fires a click event to all listeners.
 
         @param details
                    MouseEventDetails from which keyboard modifiers and other
                    information about the mouse click can be obtained. If the
-                   button was clicked by a keyboard event, some of the fields may
-                   be empty/undefined.
+                   button was clicked by a keyboard event, some of the fields
+                   may be empty/undefined.
         """
         if details is None:
             self.fireEvent( ClickEvent(self) )
@@ -309,26 +328,28 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
     def setInternalValue(self, newValue):
         # Make sure only booleans get through
         if None is not newValue and not isinstance(newValue, bool):
-            raise ValueError, self.__class__.__name__ + ' only accepts Boolean values'
+            raise ValueError, (self.__class__.__name__ +
+                    ' only accepts Boolean values')
 
         super(Button, self).setInternalValue(newValue)
 
 
     def setClickShortcut(self, keyCode, *modifiers):
-        """Makes it possible to invoke a click on this button by pressing the given
-        {@link KeyCode} and (optional) {@link ModifierKey}s.<br/>
+        """Makes it possible to invoke a click on this button by pressing
+        the given {@link KeyCode} and (optional) {@link ModifierKey}s.
+
         The shortcut is global (bound to the containing Window).
 
         @param keyCode
                    the keycode for invoking the shortcut
         @param modifiers
-                   the (optional) modifiers for invoking the shortcut, null for
-                   none
+                   the (optional) modifiers for invoking the shortcut, null
+                   for none
         """
         if self.clickShortcut is not None:
             self.removeShortcutListener(self.clickShortcut)
 
-        self.clickShortcut = self.ClickShortcut(self, keyCode, modifiers)
+        self.clickShortcut = ClickShortcut(self, keyCode, modifiers)
         self.addShortcutListener(self.clickShortcut)
 
 
@@ -348,8 +369,8 @@ class ClickShortcut(ShortcutListener):
     button = None
 
     def __init__(self, *args):
-        """Creates a keyboard shortcut for clicking the given button using the
-        shorthand notation defined in {@link ShortcutAction}.
+        """Creates a keyboard shortcut for clicking the given button using
+        the shorthand notation defined in {@link ShortcutAction}.
 
         @param button
                    to be clicked when the shortcut is invoked
@@ -434,8 +455,8 @@ class ClickEvent(ComponentEvent):
 
 
     def getClientX(self):
-        """Returns the mouse position (x coordinate) when the click took place.
-        The position is relative to the browser client area.
+        """Returns the mouse position (x coordinate) when the click took
+        place. The position is relative to the browser client area.
 
         @return The mouse cursor x position or -1 if unknown
         """
@@ -446,8 +467,8 @@ class ClickEvent(ComponentEvent):
 
 
     def getClientY(self):
-        """Returns the mouse position (y coordinate) when the click took place.
-        The position is relative to the browser client area.
+        """Returns the mouse position (y coordinate) when the click took
+        place. The position is relative to the browser client area.
 
         @return The mouse cursor y position or -1 if unknown
         """
@@ -486,8 +507,8 @@ class ClickEvent(ComponentEvent):
     def isAltKey(self):
         """Checks if the Alt key was down when the mouse event took place.
 
-        @return true if Alt was down when the event occured, false otherwise
-                or if unknown
+        @return true if Alt was down when the event occured, false
+                otherwise or if unknown
         """
         if None is not self._details:
             return self._details.isAltKey()
@@ -510,7 +531,7 @@ class ClickEvent(ComponentEvent):
     def isMetaKey(self):
         """Checks if the Meta key was down when the mouse event took place.
 
-        @return true if Meta was pressed when the event occured, false
+        @return true if Meta was pressed when the event occurred, false
                 otherwise or if unknown
         """
         if None is not self._details:
@@ -522,30 +543,10 @@ class ClickEvent(ComponentEvent):
     def isShiftKey(self):
         """Checks if the Shift key was down when the mouse event took place.
 
-        @return true if Shift was pressed when the event occured, false
+        @return true if Shift was pressed when the event occurred, false
                 otherwise or if unknown
         """
         if None is not self._details:
             return self._details.isShiftKey()
         else:
             return False
-
-
-class ClickListener(object):
-    """Interface for listening for a {@link ClickEvent} fired by a
-    {@link Component}.
-
-    @author IT Mill Ltd.
-    @author Richard Lincoln
-    @version @VERSION@
-    @since 3.0
-    """
-
-    def buttonClick(self, event):
-        """Called when a {@link Button} has been clicked. A reference to the
-        button is given by {@link ClickEvent#getButton()}.
-
-        @param event
-                   An event containing information about the click.
-        """
-        pass

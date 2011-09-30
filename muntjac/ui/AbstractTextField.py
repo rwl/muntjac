@@ -17,54 +17,13 @@
 from muntjac.ui.AbstractField import AbstractField
 from muntjac.terminal.gwt.client.ui.VTextField import VTextField
 
-from muntjac.event.FieldEvents import BlurEvent
-from muntjac.event.FieldEvents import IBlurListener
-from muntjac.event.FieldEvents import IBlurNotifier
-from muntjac.event.FieldEvents import FocusEvent
-from muntjac.event.FieldEvents import IFocusListener
-from muntjac.event.FieldEvents import IFocusNotifier
-from muntjac.event.FieldEvents import TextChangeEvent
-from muntjac.event.FieldEvents import ITextChangeListener
-from muntjac.event.FieldEvents import ITextChangeNotifier
+from muntjac.event.FieldEvents import \
+    BlurEvent, IBlurListener, IBlurNotifier, FocusEvent, IFocusListener, \
+    IFocusNotifier, TextChangeEvent, ITextChangeListener, ITextChangeNotifier
 
 
-class TextChangeEventMode(object):
-    """Different modes how the TextField can trigger {@link TextChangeEvent}s."""
-
-    # An event is triggered on each text content change, most commonly key
-    # press events.
-    EAGER = 'EAGER'
-
-    # Each text change event in the UI causes the event to be communicated
-    # to the application after a timeout. The length of the timeout can be
-    # controlled with {@link TextField#setInputEventTimeout(int)}. Only the
-    # last input event is reported to the server side if several text
-    # change events happen during the timeout.
-    # <p>
-    # In case of a {@link ValueChangeEvent} the schedule is not kept
-    # strictly. Before a {@link ValueChangeEvent} a {@link TextChangeEvent}
-    # is triggered if the text content has changed since the previous
-    # TextChangeEvent regardless of the schedule.
-    TIMEOUT = 'TIMEOUT'
-
-    # An event is triggered when there is a pause of text modifications.
-    # The length of the pause can be modified with
-    # {@link TextField#setInputEventTimeout(int)}. Like with the
-    # {@link #TIMEOUT} mode, an event is forced before
-    # {@link ValueChangeEvent}s, even if the user did not keep a pause
-    # while entering the text.
-    # <p>
-    # This is the default mode.
-    LAZY = 'LAZY'
-
-    _values = [EAGER, TIMEOUT, LAZY]
-
-    @classmethod
-    def values(cls):
-        return cls._values[:]
-
-
-class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier, ITextChangeNotifier):
+class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
+            ITextChangeNotifier):
 
     def __init__(self):
         super(AbstractTextField, self).__init__()
@@ -75,8 +34,8 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier, ITextChang
         # Null representation.
         self._nullRepresentation = 'null'
 
-        # Is setting to null from non-null value allowed by setting with null
-        # representation .
+        # Is setting to null from non-null value allowed by setting
+        # with null representation.
         self._nullSettingAllowed = False
 
         # Maximum character count in text field.
@@ -91,11 +50,13 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier, ITextChang
         # The text content when the last messages to the server was sent.
         self._lastKnownTextContent = None
 
-        # The position of the cursor when the last message to the server was sent.
+        # The position of the cursor when the last message to the server
+        # was sent.
         self._lastKnownCursorPosition = None
 
-        # Flag indicating that a text change event is pending to be triggered.
-        # Cleared by {@link #setInternalValue(Object)} and when the event is fired.
+        # Flag indicating that a text change event is pending to be
+        # triggered. Cleared by {@link #setInternalValue(Object)} and
+        # when the event is fired.
         self._textChangeEventPending = None
 
         self._textChangeEventMode = TextChangeEventMode.LAZY
@@ -110,9 +71,9 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier, ITextChang
         # Temporarily holds the new selection length.
         self._selectionLength = None
 
-        # Flag used to determine whether we are currently handling a state change
-        # triggered by a user. Used to properly fire text change event before value
-        # change event triggered by the client side.
+        # Flag used to determine whether we are currently handling a state
+        # change triggered by a user. Used to properly fire text change
+        # event before value change event triggered by the client side.
         self._changingVariables = None
 
 
@@ -135,7 +96,8 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier, ITextChang
         if value is None:
             value = self.getNullRepresentation()
         if value is None:
-            raise ValueError, 'Null values are not allowed if the null-representation is null'
+            raise ValueError, ('Null values are not allowed if '
+                    'the null-representation is null')
 
         target.addVariable(self, 'text', value)
 
@@ -145,13 +107,15 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier, ITextChang
             self._selectionPosition = -1
 
         if self.hasListeners(TextChangeEvent):
-            target.addAttribute(VTextField.ATTR_TEXTCHANGE_EVENTMODE, str(self.getTextChangeEventMode()))
-            target.addAttribute(VTextField.ATTR_TEXTCHANGE_TIMEOUT, self.getTextChangeTimeout())
+            target.addAttribute(VTextField.ATTR_TEXTCHANGE_EVENTMODE,
+                    str(self.getTextChangeEventMode()))
+            target.addAttribute(VTextField.ATTR_TEXTCHANGE_TIMEOUT,
+                    self.getTextChangeTimeout())
 
 
     def getFormattedValue(self):
-        """Gets the formatted string value. Sets the field value by using the
-        assigned Format.
+        """Gets the formatted string value. Sets the field value by using
+        the assigned format.
 
         @return the Formatted value.
         @see #setFormat(Format)
@@ -168,11 +132,12 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier, ITextChang
 
     def getValue(self):
         v = super(AbstractTextField, self).getValue()
-        if (self._format is None) or (v is None):
+        if self._format is None or v is None:
             return v
+
         try:
             raise DeprecationWarning
-            return self._format.format(v)
+            return self._format.format(v)  # FIXME format
         except ValueError:
             return v
 
@@ -189,48 +154,48 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier, ITextChang
 
             if VTextField.VAR_CUR_TEXT in variables:
                 # NOTE, we might want to develop this further so that on a
-                # value change event the whole text content don't need to be
-                # sent from the client to server. Just "commit" the value from
-                # currentText to the value.
+                # value change event the whole text content don't need to
+                # be sent from the client to server. Just "commit" the value
+                # from currentText to the value.
                 self.handleInputEventTextChange(variables)
 
             # Sets the text
             if 'text' in variables and not self.isReadOnly():
 
-                # Only do the setting if the string representation of the value
-                # has been updated
+                # Only do the setting if the string representation of the
+                # value has been updated
                 newValue = variables.get('text')
 
                 # server side check for max length
-                if self.getMaxLength() != -1 and len(newValue) > self.getMaxLength():
+                if (self.getMaxLength() != -1
+                        and len(newValue) > self.getMaxLength()):
                     newValue = newValue[:self.getMaxLength()]
 
                 oldValue = self.getFormattedValue()
 
-                if newValue is not None \
-                        and (oldValue is None) \
-                        or self.isNullSettingAllowed() \
-                        and newValue == self.getNullRepresentation():
+                if (newValue is not None
+                        and (oldValue is None or self.isNullSettingAllowed())
+                        and newValue == self.getNullRepresentation()):
                     newValue = None
 
-                if newValue != oldValue \
-                        and (newValue is None) \
-                        or (not (newValue == oldValue)):
+                if (newValue != oldValue
+                        and (newValue is None or newValue != oldValue)):
                     wasModified = self.isModified()
                     self.setValue(newValue, True)
 
                     # If the modified status changes, or if we have a
                     # formatter, repaint is needed after all.
-                    if (self._format is not None) or (wasModified != self.isModified()):
+                    if (self._format is not None
+                            or wasModified != self.isModified()):
                         self.requestRepaint()
 
             self.firePendingTextChangeEvent()
 
             if FocusEvent.EVENT_ID in variables:
-                self.fireEvent(FocusEvent(self))
+                self.fireEvent( FocusEvent(self) )
 
             if BlurEvent.EVENT_ID in variables:
-                self.fireEvent(BlurEvent(self))
+                self.fireEvent( BlurEvent(self) )
         finally:
             self._changingVariables = False
 
@@ -242,15 +207,11 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier, ITextChang
     def getNullRepresentation(self):
         """Gets the null-string representation.
 
-        <p>
         The null-valued strings are represented on the user interface by
-        replacing the null value with this string. If the null representation is
-        set null (not 'null' string), painting null value throws exception.
-        </p>
+        replacing the null value with this string. If the null representation
+        is set null (not 'null' string), painting null value throws exception.
 
-        <p>
         The default value is string 'null'.
-        </p>
 
         @return the String Textual representation for null strings.
         @see TextField#isNullSettingAllowed()
@@ -261,21 +222,17 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier, ITextChang
     def isNullSettingAllowed(self):
         """Is setting nulls with null-string representation allowed.
 
-        <p>
         If this property is true, writing null-representation string to text
         field always sets the field value to real null. If this property is
         false, null setting is not made, but the null values are maintained.
         Maintenance of null-values is made by only converting the textfield
         contents to real null, if the text field matches the null-string
         representation and the current value of the field is null.
-        </p>
 
-        <p>
         By default this setting is false
-        </p>
 
-        @return boolean Should the null-string represenation be always converted
-                to null-values.
+        @return boolean Should the null-string represenation be always
+                converted to null-values.
         @see TextField#getNullRepresentation()
         """
         return self._nullSettingAllowed
@@ -284,15 +241,11 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier, ITextChang
     def setNullRepresentation(self, nullRepresentation):
         """Sets the null-string representation.
 
-        <p>
         The null-valued strings are represented on the user interface by
-        replacing the null value with this string. If the null representation is
-        set null (not 'null' string), painting null value throws exception.
-        </p>
+        replacing the null value with this string. If the null representation
+        is set null (not 'null' string), painting null value throws exception.
 
-        <p>
         The default value is string 'null'
-        </p>
 
         @param nullRepresentation
                    Textual representation for null strings.
@@ -305,22 +258,18 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier, ITextChang
     def setNullSettingAllowed(self, nullSettingAllowed):
         """Sets the null conversion mode.
 
-        <p>
         If this property is true, writing null-representation string to text
         field always sets the field value to real null. If this property is
         false, null setting is not made, but the null values are maintained.
         Maintenance of null-values is made by only converting the textfield
         contents to real null, if the text field matches the null-string
         representation and the current value of the field is null.
-        </p>
 
-        <p>
         By default this setting is false.
-        </p>
 
         @param nullSettingAllowed
-                   Should the null-string representation always be converted to
-                   null-values.
+                   Should the null-string representation always be converted
+                   to null-values.
         @see TextField#getNullRepresentation()
         """
         self._nullSettingAllowed = nullSettingAllowed
@@ -333,6 +282,7 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier, ITextChang
         @return the Format used to format the value.
         @deprecated replaced by {@link com.vaadin.data.util.PropertyFormatter}
         """
+        raise DeprecationWarning, 'replaced by PropertyFormatter'
         return self._format
 
 
@@ -344,12 +294,14 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier, ITextChang
                    formatting.
         @deprecated replaced by {@link com.vaadin.data.util.PropertyFormatter}
         """
+        raise DeprecationWarning, 'replaced by PropertyFormatter'
         self._format = fmt
         self.requestRepaint()
 
 
     def isEmpty(self):
-        return super(AbstractTextField, self).isEmpty() or (len(str(self)) == 0)
+        return (super(AbstractTextField, self).isEmpty()
+                or len(str(self)) == 0)
 
 
     def getMaxLength(self):
@@ -373,9 +325,9 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier, ITextChang
 
 
     def getColumns(self):
-        """Gets the number of columns in the editor. If the number of columns is set
-        0, the actual number of displayed columns is determined implicitly by the
-        adapter.
+        """Gets the number of columns in the editor. If the number of columns
+        is set 0, the actual number of displayed columns is determined
+        implicitly by the adapter.
 
         @return the number of columns in the editor.
         """
@@ -383,9 +335,9 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier, ITextChang
 
 
     def setColumns(self, columns):
-        """Sets the number of columns in the editor. If the number of columns is set
-        0, the actual number of displayed columns is determined implicitly by the
-        adapter.
+        """Sets the number of columns in the editor. If the number of columns
+        is set 0, the actual number of displayed columns is determined
+        implicitly by the adapter.
 
         @param columns
                    the number of columns to set.
@@ -406,12 +358,11 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier, ITextChang
 
 
     def setInputPrompt(self, inputPrompt):
-        """Sets the input prompt - a textual prompt that is displayed when the field
-        would otherwise be empty, to prompt the user for input.
+        """Sets the input prompt - a textual prompt that is displayed when
+        the field would otherwise be empty, to prompt the user for input.
 
         @param inputPrompt
         """
-        # ** Text Change Events **
         self._inputPrompt = inputPrompt
         self.requestRepaint()
 
@@ -424,22 +375,24 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier, ITextChang
 
     def setInternalValue(self, newValue):
         if self._changingVariables and not self._textChangeEventPending:
-            # Fire a "simulated" text change event before value change event if
-            # change is coming from the client side.
+            # Fire a "simulated" text change event before value change event
+            # if change is coming from the client side.
             #
             # Iff there is both value change and textChangeEvent in same
-            # variable burst, it is a text field in non immediate mode and the
-            # text change event "flushed" queued value change event. In this
-            # case textChangeEventPending flag is already on and text change
-            # event will be fired after the value change event.
-            if newValue is None and self._lastKnownTextContent is not None \
-                    and not (self._lastKnownTextContent == self.getNullRepresentation()):
+            # variable burst, it is a text field in non immediate mode and
+            # the text change event "flushed" queued value change event. In
+            # this case textChangeEventPending flag is already on and text
+            # change event will be fired after the value change event.
+            if (newValue is None and self._lastKnownTextContent is not None
+                    and self._lastKnownTextContent != \
+                            self.getNullRepresentation()):
                 # Value was changed from something to null representation
                 self._lastKnownTextContent = self.getNullRepresentation()
                 self._textChangeEventPending = True
-            elif newValue is not None \
-                    and not (str(newValue) == self._lastKnownTextContent):
-                # Value was changed to something else than null representation
+            elif (newValue is not None
+                    and str(newValue) != self._lastKnownTextContent):
+                # Value was changed to something else than null
+                # representation
                 self._lastKnownTextContent = str(newValue)
                 self._textChangeEventPending = True
 
@@ -449,10 +402,11 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier, ITextChang
 
 
     def handleInputEventTextChange(self, variables):
-        # TODO we could vastly optimize the communication of values by using
-        # some sort of diffs instead of always sending the whole text content.
-        # Also on value change events we could use the mechanism.
-        obj = variables[VTextField.VAR_CUR_TEXT]
+        # TODO we could vastly optimize the communication of values by
+        # using some sort of diffs instead of always sending the whole
+        # text content. Also on value change events we could use the
+        # mechanism.
+        obj = variables.get(VTextField.VAR_CUR_TEXT)
         self._lastKnownTextContent = obj
         self._textChangeEventPending = True
 
@@ -460,8 +414,7 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier, ITextChang
     def setTextChangeEventMode(self, inputEventMode):
         """Sets the mode how the TextField triggers {@link TextChangeEvent}s.
 
-        @param inputEventMode
-                   the new mode
+        @param inputEventMode: the new mode
 
         @see TextChangeEventMode
         """
@@ -477,15 +430,15 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier, ITextChang
     def addListener(self, listener):
         if isinstance(listener, IBlurListener):
             self.addListener(BlurEvent.EVENT_ID, BlurEvent, listener,
-                             IBlurListener.blurMethod)
+                    IBlurListener.blurMethod)
 
         elif isinstance(listener, IFocusListener):
             self.addListener(FocusEvent.EVENT_ID, FocusEvent, listener,
-                             IFocusListener.focusMethod)
+                    IFocusListener.focusMethod)
 
         else:
             self.addListener(ITextChangeListener.EVENT_ID, TextChangeEvent,
-                             listener, ITextChangeListener.EVENT_METHOD)
+                    listener, ITextChangeListener.EVENT_METHOD)
 
 
     def removeListener(self, listener):
@@ -496,20 +449,19 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier, ITextChang
             self.removeListener(FocusEvent.EVENT_ID, FocusEvent, listener)
 
         else:
-            self.removeListener(ITextChangeListener.EVENT_ID, TextChangeEvent,
-                                listener)
+            self.removeListener(ITextChangeListener.EVENT_ID,
+                    TextChangeEvent, listener)
 
 
     def setTextChangeTimeout(self, timeout):
-        """The text change timeout modifies how often text change events are
-        communicated to the application when {@link #getTextChangeEventMode()} is
-        {@link TextChangeEventMode#LAZY} or {@link TextChangeEventMode#TIMEOUT}.
-
+        """The text change timeout modifies how often text change events
+        are communicated to the application when
+        {@link #getTextChangeEventMode()} is {@link TextChangeEventMode#LAZY}
+        or {@link TextChangeEventMode#TIMEOUT}.
 
         @see #getTextChangeEventMode()
 
-        @param timeout
-                   the timeout in milliseconds
+        @param timeout: the timeout in milliseconds
         """
         self._textChangeEventTimeout = timeout
         self.requestRepaint()
@@ -517,8 +469,8 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier, ITextChang
 
     def getTextChangeTimeout(self):
         """Gets the timeout used to fire {@link TextChangeEvent}s when the
-        {@link #getTextChangeEventMode()} is {@link TextChangeEventMode#LAZY} or
-        {@link TextChangeEventMode#TIMEOUT}.
+        {@link #getTextChangeEventMode()} is {@link TextChangeEventMode#LAZY}
+        or {@link TextChangeEventMode#TIMEOUT}.
 
         @return the timeout value in milliseconds
         """
@@ -527,13 +479,14 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier, ITextChang
 
     def getCurrentTextContent(self):
         """Gets the current (or the last known) text content in the field.
-        <p>
-        Note the text returned by this method is not necessary the same that is
-        returned by the {@link #getValue()} method. The value is updated when the
-        terminal fires a value change event via e.g. blurring the field or by
-        pressing enter. The value returned by this method is updated also on
-        {@link TextChangeEvent}s. Due to this high dependency to the terminal
-        implementation this method is (at least at this point) not published.
+
+        Note the text returned by this method is not necessary the same that
+        is returned by the {@link #getValue()} method. The value is updated
+        when the terminal fires a value change event via e.g. blurring the
+        field or by pressing enter. The value returned by this method is
+        updated also on {@link TextChangeEvent}s. Due to this high dependency
+        to the terminal implementation this method is (at least at this
+        point) not published.
 
         @return the text which is currently displayed in the field.
         """
@@ -574,8 +527,8 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier, ITextChang
 
 
     def setCursorPosition(self, pos):
-        """Sets the cursor position in the field. As a side effect the field will
-        become focused.
+        """Sets the cursor position in the field. As a side effect the
+        field will become focused.
 
         @since 6.4
 
@@ -589,16 +542,53 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier, ITextChang
     def getCursorPosition(self):
         """Returns the last known cursor position of the field.
 
-        <p>
         Note that due to the client server nature or the GWT terminal, Vaadin
-        cannot provide the exact value of the cursor position in most situations.
-        The value is updated only when the client side terminal communicates to
-        TextField, like on {@link ValueChangeEvent}s and {@link TextChangeEvent}
-        s. This may change later if a deep push integration is built to Vaadin.
+        cannot provide the exact value of the cursor position in most
+        situations. The value is updated only when the client side terminal
+        communicates to TextField, like on {@link ValueChangeEvent}s and
+        {@link TextChangeEvent}s. This may change later if a deep push
+        integration is built to Vaadin.
 
         @return the cursor position
         """
         return self._lastKnownCursorPosition
+
+
+class TextChangeEventMode(object):
+    """Different modes how the TextField can trigger {@link TextChangeEvent}s.
+    """
+
+    # An event is triggered on each text content change, most commonly key
+    # press events.
+    EAGER = 'EAGER'
+
+    # Each text change event in the UI causes the event to be communicated
+    # to the application after a timeout. The length of the timeout can be
+    # controlled with {@link TextField#setInputEventTimeout(int)}. Only the
+    # last input event is reported to the server side if several text
+    # change events happen during the timeout.
+    #
+    # In case of a {@link ValueChangeEvent} the schedule is not kept
+    # strictly. Before a {@link ValueChangeEvent} a {@link TextChangeEvent}
+    # is triggered if the text content has changed since the previous
+    # TextChangeEvent regardless of the schedule.
+    TIMEOUT = 'TIMEOUT'
+
+    # An event is triggered when there is a pause of text modifications.
+    # The length of the pause can be modified with
+    # {@link TextField#setInputEventTimeout(int)}. Like with the
+    # {@link #TIMEOUT} mode, an event is forced before
+    # {@link ValueChangeEvent}s, even if the user did not keep a pause
+    # while entering the text.
+    #
+    # This is the default mode.
+    LAZY = 'LAZY'
+
+    _values = [EAGER, TIMEOUT, LAZY]
+
+    @classmethod
+    def values(cls):
+        return cls._values[:]
 
 
 class TextChangeEventImpl(TextChangeEvent):

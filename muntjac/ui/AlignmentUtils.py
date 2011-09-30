@@ -35,18 +35,18 @@ class AlignmentUtils(object):
 
     r,right for right alignment
 
-    @deprecated {@code AlignmentUtils} has been replaced by {@link Alignment}.
+    @deprecated replaced by {@link Alignment}.
     """
 
-    raise DeprecationWarning
+    raise DeprecationWarning, 'AlignmentUtils replaced by Alignment'
 
-    _horizontalMask = (IAlignmentHandler.ALIGNMENT_LEFT \
-                | IAlignmentHandler.ALIGNMENT_HORIZONTAL_CENTER) \
-                | IAlignmentHandler.ALIGNMENT_RIGHT
+    _horizontalMask = (IAlignmentHandler.ALIGNMENT_LEFT
+                | IAlignmentHandler.ALIGNMENT_HORIZONTAL_CENTER
+                | IAlignmentHandler.ALIGNMENT_RIGHT)
 
-    _verticalMask = (IAlignmentHandler.ALIGNMENT_TOP \
-                | IAlignmentHandler.ALIGNMENT_VERTICAL_CENTER) \
-                | IAlignmentHandler.ALIGNMENT_BOTTOM
+    _verticalMask = (IAlignmentHandler.ALIGNMENT_TOP
+                | IAlignmentHandler.ALIGNMENT_VERTICAL_CENTER
+                | IAlignmentHandler.ALIGNMENT_BOTTOM)
 
     _alignmentStrings = dict()
 
@@ -76,32 +76,39 @@ class AlignmentUtils(object):
                    "r","rt","tr","t". If the longer notation is used the
                    alignments should be separated by a space e.g.
                    "right","right top","top right","top". It is valid to mix
-                   short and long notation but they must be separated by a space
-                   e.g. "r top".
-        @throws IllegalArgumentException
+                   short and long notation but they must be separated by a
+                   space e.g. "r top".
+        @throws ValueError
         """
-        if (alignment is None) or (len(alignment) == 0):
-            raise ValueError, 'alignment for setComponentAlignment() cannot be null or empty'
+        if alignment is None or len(alignment) == 0:
+            raise ValueError, ('alignment for setComponentAlignment() '
+                    'cannot be null or empty')
 
-        currentAlignment = parent.getComponentAlignment(component).getBitMask()
+        currentAlignment = parent.getComponentAlignment(
+                component).getBitMask()
 
         if len(alignment) == 1:
             # Use short form "t","l",...
-            currentAlignment = cls.parseAlignment(alignment[:1], currentAlignment)
+            currentAlignment = cls.parseAlignment(alignment[:1],
+                    currentAlignment)
 
         elif len(alignment) == 2:
             # Use short form "tr","lb",...
-            currentAlignment = cls.parseAlignment(alignment[:1], currentAlignment)
-            currentAlignment = cls.parseAlignment(alignment[1:2], currentAlignment)
+            currentAlignment = cls.parseAlignment(alignment[:1],
+                    currentAlignment)
+            currentAlignment = cls.parseAlignment(alignment[1:2],
+                    currentAlignment)
 
         else:
             # Alignments are separated by space
             strings = alignment.split(' ')
             if len(strings) > 2:
-                raise ValueError, 'alignment for setComponentAlignment() should not contain more than 2 alignments'
+                raise ValueError, ('alignment for setComponentAlignment() '
+                        'should not contain more than 2 alignments')
 
             for alignmentString in strings:
-                currentAlignment = cls.parseAlignment(alignmentString, currentAlignment)
+                currentAlignment = cls.parseAlignment(alignmentString,
+                        currentAlignment)
 
         horizontalAlignment = currentAlignment & cls._horizontalMask
         verticalAlignment = currentAlignment & cls._verticalMask
@@ -111,9 +118,9 @@ class AlignmentUtils(object):
 
     @classmethod
     def parseAlignment(cls, alignmentString, alignment):
-        """Parse alignmentString which contains one alignment (horizontal or
-        vertical) and return and updated version of the passed alignment where
-        the alignment in one direction has been changed. If the passed
+        """Parse alignmentString which contains one alignment (horizontal
+        or vertical) and return and updated version of the passed alignment
+        where the alignment in one direction has been changed. If the passed
         alignmentString is unknown an exception is thrown
 
         @param alignmentString
@@ -121,10 +128,11 @@ class AlignmentUtils(object):
         @return
         @throws IllegalArgumentException
         """
-        parsed = cls._alignmentStrings.get(alignmentString.lower())
+        parsed = cls._alignmentStrings.get( alignmentString.lower() )
 
         if parsed is None:
-            raise ValueError, 'Could not parse alignment string \'' + alignmentString + '\''
+            raise ValueError, ('Could not parse alignment string \''
+                    + alignmentString + '\'')
 
         if parsed & cls._horizontalMask != 0:
             # Get the vertical alignment from the current alignment
