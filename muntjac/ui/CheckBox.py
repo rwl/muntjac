@@ -14,17 +14,13 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.ui.Button import Button, ClickListener
+from muntjac.ui.Button import Button, IClickListener
 from muntjac.data.Property import Property
-
-#from muntjac.terminal.gwt.client.ui.VCheckBox import VCheckBox
-#from muntjac.ui.ClientWidget import LoadStyle
 
 
 class CheckBox(Button):
 
-#    CLIENT_WIDGET = VCheckBox
-#    LOAD_STYLE = LoadStyle.DEFERRED
+    #CLIENT_WIDGET = ClientWidget(VCheckBox)
 
     def __init__(self, *args):
         """Creates a new switch button.
@@ -56,8 +52,8 @@ class CheckBox(Button):
         @param target
                    the Object having the method for listening button clicks.
         @param methodName
-                   the name of the method in target object, that receives button
-                   click events.
+                   the name of the method in target object, that receives
+                   button click events.
         ---
         Creates a new switch button that is connected to a boolean property.
 
@@ -67,8 +63,8 @@ class CheckBox(Button):
         ---
         Creates a new push button with a set caption.
 
-        The value of the push button is always false and they are immediate by
-        default.
+        The value of the push button is always false and they are immediate
+        by default.
 
         @param caption
                    the Button caption.
@@ -80,7 +76,7 @@ class CheckBox(Button):
             caption, = args
             super(CheckBox, self)(caption, False)
         elif nargs == 2:
-            if isinstance(args[1], ClickListener):
+            if isinstance(args[1], IClickListener):
                 caption, listener = args
                 super(CheckBox, self)(caption, listener)
                 self.setSwitchMode(True)
@@ -100,9 +96,10 @@ class CheckBox(Button):
 
 
     def setSwitchMode(self, switchMode):
-        raise DeprecationWarning
+        raise DeprecationWarning, 'CheckBox is always in switch mode'
 
         if self.switchMode and not switchMode:
-            raise NotImplementedError, 'CheckBox is always in switch mode (consider using a Button)'
+            raise NotImplementedError, ('CheckBox is always in switch '
+                    'mode (consider using a Button)')
 
         super(CheckBox, self).setSwitchMode(True)

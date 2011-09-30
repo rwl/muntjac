@@ -14,20 +14,18 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.ui.AbstractComponentContainer import AbstractComponentContainer
+from muntjac.terminal import fullname
 
-#from muntjac.terminal.gwt.client.ui.VCustomComponent import VCustomComponent
-#from muntjac.ui.ClientWidget import LoadStyle
+from muntjac.ui.AbstractComponentContainer import AbstractComponentContainer
 
 
 class CustomComponent(AbstractComponentContainer):
-    """Custom component provides simple implementation of Component interface for
-    creation of new UI components by composition of existing components.
-    <p>
+    """Custom component provides simple implementation of Component interface
+    for creation of new UI components by composition of existing components.
+
     The component is used by inheriting the CustomComponent class and setting
     composite root inside the Custom component. The composite root itself can
     contain more components, but their interfaces are hidden from the users.
-    </p>
 
     @author IT Mill Ltd.
     @author Richard Lincoln
@@ -35,26 +33,20 @@ class CustomComponent(AbstractComponentContainer):
     @since 3.0
     """
 
-#    CLIENT_WIDGET = VCustomComponent
-#    LOAD_STYLE = LoadStyle.EAGER
-
+    #CLIENT_WIDGET = ClientWidget(VCustomComponent, LoadStyle.EAGER)
 
     def __init__(self, compositionRoot=None):
         """Constructs a new custom component.
 
-        <p>
-        The component is implemented by wrapping the methods of the composition
-        root component given as parameter. The composition root must be set
-        before the component can be used.
-        </p>
+        The component is implemented by wrapping the methods of the
+        composition root component given as parameter. The composition root
+        must be set before the component can be used.
         ---
         Constructs a new custom component.
 
-        <p>
-        The component is implemented by wrapping the methods of the composition
-        root component given as parameter. The composition root must not be null
-        and can not be changed after the composition.
-        </p>
+        The component is implemented by wrapping the methods of the
+        composition root component given as parameter. The composition root
+        must not be null and can not be changed after the composition.
 
         @param compositionRoot
                    the root of the composition component tree.
@@ -82,10 +74,9 @@ class CustomComponent(AbstractComponentContainer):
 
     def setCompositionRoot(self, compositionRoot):
         """Sets the compositions root.
-        <p>
-        The composition root must be set to non-null value before the component
-        can be used. The composition root can only be set once.
-        </p>
+
+        The composition root must be set to non-null value before the
+        component can be used. The composition root can only be set once.
 
         @param compositionRoot
                    the root of the composition component tree.
@@ -105,10 +96,9 @@ class CustomComponent(AbstractComponentContainer):
 
     def paintContent(self, target):
         if self._root is None:
-            raise ValueError, 'Composition root must be set to' \
-                    + ' non-null value before the ' \
-                    + self.getClass().getName() \
-                    + ' can be painted'
+            raise ValueError, ('Composition root must be set to'
+                    + ' non-null value before the ' + fullname(self)
+                    + ' can be painted')
 
         if self.getComponentType() is not None:
             target.addAttribute('type', self.getComponentType())
@@ -119,27 +109,29 @@ class CustomComponent(AbstractComponentContainer):
     def getComponentType(self):
         """Gets the component type.
 
-        The component type is textual type of the component. This is included in
-        the UIDL as component tag attribute.
+        The component type is textual type of the component. This is included
+        in the UIDL as component tag attribute.
 
         @deprecated not more useful as the whole tag system has been removed
 
         @return the component type.
         """
+        raise DeprecationWarning, 'tag system has been removed'
         return self._componentType
 
 
     def setComponentType(self, componentType):
         """Sets the component type.
 
-        The component type is textual type of the component. This is included in
-        the UIDL as component tag attribute.
+        The component type is textual type of the component. This is included
+        in the UIDL as component tag attribute.
 
         @deprecated not more useful as the whole tag system has been removed
 
         @param componentType
                    the componentType to set.
         """
+        raise DeprecationWarning, 'tag system has been removed'
         self._componentType = componentType
 
 
@@ -148,8 +140,8 @@ class CustomComponent(AbstractComponentContainer):
 
 
     def getComponentCount(self):
-        """Gets the number of contained components. Consistent with the iterator
-        returned by {@link #getComponentIterator()}.
+        """Gets the number of contained components. Consistent with the
+        iterator returned by {@link #getComponentIterator()}.
 
         @return the number of contained components (zero or one)
         """
@@ -159,8 +151,7 @@ class CustomComponent(AbstractComponentContainer):
     def replaceComponent(self, oldComponent, newComponent):
         """This method is not supported by CustomComponent.
 
-        @see com.vaadin.ui.ComponentContainer#replaceComponent(com.vaadin.ui.Component,
-             com.vaadin.ui.Component)
+        @see ComponentContainer.replaceComponent()
         """
         raise NotImplementedError
 
@@ -170,7 +161,7 @@ class CustomComponent(AbstractComponentContainer):
         {@link CustomComponent#setCompositionRoot(Component)} to set
         CustomComponents "child".
 
-        @see com.vaadin.ui.AbstractComponentContainer#addComponent(com.vaadin.ui.Component)
+        @see AbstractComponentContainer.addComponent()
         """
         raise NotImplementedError
 
@@ -178,7 +169,7 @@ class CustomComponent(AbstractComponentContainer):
     def moveComponentsFrom(self, source):
         """This method is not supported by CustomComponent.
 
-        @see com.vaadin.ui.AbstractComponentContainer#moveComponentsFrom(com.vaadin.ui.ComponentContainer)
+        @see AbstractComponentContainer.moveComponentsFrom()
         """
         raise NotImplementedError
 
@@ -186,7 +177,7 @@ class CustomComponent(AbstractComponentContainer):
     def removeAllComponents(self):
         """This method is not supported by CustomComponent.
 
-        @see com.vaadin.ui.AbstractComponentContainer#removeAllComponents()
+        @see AbstractComponentContainer.removeAllComponents()
         """
         raise NotImplementedError
 
@@ -194,24 +185,29 @@ class CustomComponent(AbstractComponentContainer):
     def removeComponent(self, c):
         """This method is not supported by CustomComponent.
 
-        @see com.vaadin.ui.AbstractComponentContainer#removeComponent(com.vaadin.ui.Component)
+        @see AbstractComponentContainer.removeComponent()
         """
         raise NotImplementedError
 
 
-class ComponentIterator(object):  # FIXME: implement iterator
+class ComponentIterator(object):
 
     def __init__(self, c):
+        self._component = c
         self._first = c.getCompositionRoot() is not None
+
+
+    def __iter__(self):
+        return self
 
 
     def hasNext(self):
         return self._first
 
 
-    def __iter__(self):
+    def next(self):  #@PydevCodeAnalysisIgnore
         self._first = False
-        return self.root
+        return self._component.root
 
 
     def remove(self):

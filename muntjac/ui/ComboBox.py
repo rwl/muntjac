@@ -17,21 +17,16 @@
 from muntjac.ui.Select import Select
 from muntjac.data.Container import Container
 
-#from muntjac.ui.ClientWidget import LoadStyle
-#from muntjac.terminal.gwt.client.ui.VFilterSelect import VFilterSelect
-
 
 class ComboBox(Select):
-    """A filtering dropdown single-select. Suitable for newItemsAllowed, but it's
-    turned of by default to avoid mistakes. Items are filtered based on user
-    input, and loaded dynamically ("lazy-loading") from the server. You can turn
-    on newItemsAllowed and change filtering mode (and also turn it off), but you
-    can not turn on multi-select mode.
+    """A filtering dropdown single-select. Suitable for newItemsAllowed, but
+    it's turned of by default to avoid mistakes. Items are filtered based on
+    user input, and loaded dynamically ("lazy-loading") from the server. You
+    can turn on newItemsAllowed and change filtering mode (and also turn it
+    off), but you can not turn on multi-select mode.
     """
 
-#    CLIENT_WIDGET = VFilterSelect  # FIXME: use annotation
-#    LOAD_STYLE = LoadStyle.DEFERRED
-
+    #CLIENT_WIDGET = ClientWidget(VFilterSelect)
 
     def __init__(self, *args):
         self._inputPrompt = None
@@ -76,8 +71,8 @@ class ComboBox(Select):
 
 
     def setInputPrompt(self, inputPrompt):
-        """Sets the input prompt - a textual prompt that is displayed when the
-        select would otherwise be empty, to prompt the user for input.
+        """Sets the input prompt - a textual prompt that is displayed when
+        the select would otherwise be empty, to prompt the user for input.
 
         @param inputPrompt
                    the desired input prompt, or null to disable

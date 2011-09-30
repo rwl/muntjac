@@ -15,19 +15,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class LoadStyle(object):
-    # The widget is included in the initial JS sent to the client.
-    EAGER = 'EAGER'
-
-    # Not included in the initial set of widgets, but added to queue from
-    # which it will be loaded when network is not busy or the
-    # implementation is required.
-    DEFERRED = 'DEFERRED'
-
-    # Loaded to the client only if needed.
-    LAZY = 'LAZY'
-
-
 class ClientWidget(object):
     """Annotation defining the default client side counterpart in GWT
     terminal for {@link Component}.
@@ -87,3 +74,16 @@ class ClientWidget(object):
             self.loadStyle = LoadStyle.DEFERRED
         else:
             self.loadStyle = loadStyle
+
+
+class LoadStyle(object):
+    # The widget is included in the initial JS sent to the client.
+    EAGER = 'EAGER'
+
+    # Not included in the initial set of widgets, but added to queue from
+    # which it will be loaded when network is not busy or the
+    # implementation is required.
+    DEFERRED = 'DEFERRED'
+
+    # Loaded to the client only if needed.
+    LAZY = 'LAZY'
