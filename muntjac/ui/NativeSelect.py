@@ -19,10 +19,10 @@ from muntjac.data.Container import Container
 
 
 class NativeSelect(AbstractSelect):
-    """This is a simple drop-down select without, for instance, support for
-    multiselect, new items, lazyloading, and other advanced features. Sometimes
-    "native" select without all the bells-and-whistles of the ComboBox is a
-    better choice.
+    """This is a simple drop-down select without, for instance, support
+    for multiselect, new items, lazyloading, and other advanced features.
+    Sometimes "native" select without all the bells-and-whistles of the
+    ComboBox is a better choice.
     """
 
     def __init__(self, *args):
@@ -48,9 +48,9 @@ class NativeSelect(AbstractSelect):
 
 
     def setColumns(self, columns):
-        """Sets the number of columns in the editor. If the number of columns is set
-        0, the actual number of displayed columns is determined implicitly by the
-        adapter.
+        """Sets the number of columns in the editor. If the number of columns
+        is set 0, the actual number of displayed columns is determined
+        implicitly by the adapter.
 
         @param columns
                    the number of columns to set.

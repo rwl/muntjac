@@ -22,8 +22,8 @@ from muntjac.terminal.gwt.client.ui.AlignmentInfo import Bits
 
 class ILayout(IComponentContainer):
     """Extension to the {@link IComponentContainer} interface which adds the
-    layouting control to the elements in the container. This is required by the
-    various layout components to enable them to place other components in
+    layouting control to the elements in the container. This is required by
+    the various layout components to enable them to place other components in
     specific locations in the UI.
 
     @author IT Mill Ltd.
@@ -33,17 +33,18 @@ class ILayout(IComponentContainer):
     """
 
     def setMargin(self, *args):
-        """Enable layout margins. Affects all four sides of the layout. This will
-        tell the client-side implementation to leave extra space around the
-        layout. The client-side implementation decides the actual amount, and it
-        can vary between themes.
+        """Enable layout margins. Affects all four sides of the layout. This
+        will tell the client-side implementation to leave extra space around
+        the layout. The client-side implementation decides the actual amount,
+        and it can vary between themes.
 
         @param enabled
         ---
         Enable specific layout margins. This will tell the client-side
-        implementation to leave extra space around the layout in specified edges,
-        clockwise from top (top, right, bottom, left). The client-side
-        implementation decides the actual amount, and it can vary between themes.
+        implementation to leave extra space around the layout in specified
+        edges, clockwise from top (top, right, bottom, left). The client-side
+        implementation decides the actual amount, and it can vary between
+        themes.
 
         @param top
         @param right
@@ -54,9 +55,10 @@ class ILayout(IComponentContainer):
 
 
 class IAlignmentHandler(object):
-    """IAlignmentHandler is most commonly an advanced {@link ILayout} that can
-    align its components.
+    """IAlignmentHandler is most commonly an advanced {@link ILayout} that
+    can align its components.
     """
+
     # Contained component should be aligned horizontally to the left.
     #
     # @deprecated Use of {@link Alignment} class and its constants
@@ -136,18 +138,14 @@ class ISpacingHandler(object):
     def setSpacing(self, enabled):
         """Enable spacing between child components within this layout.
 
-        <p>
         <strong>NOTE:</strong> This will only affect the space between
         components, not the space around all the components in the layout
         (i.e. do not confuse this with the cellspacing attribute of a HTML
         Table). Use {@link #setMargin(boolean)} to add space around the
         layout.
-        </p>
 
-        <p>
         See the reference manual for more information about CSS rules for
         defining the amount of spacing to use.
-        </p>
 
         @param enabled
                    true if spacing should be turned on, false if it should be
@@ -179,17 +177,13 @@ class IMarginHandler(object):
     def setMargin(self, marginInfo):
         """Enable margins for this layout.
 
-        <p>
         <strong>NOTE:</strong> This will only affect the space around the
         components in the layout, not space between the components in the
         layout. Use {@link #setSpacing(boolean)} to add space between the
         components in the layout.
-        </p>
 
-        <p>
         See the reference manual for more information about CSS rules for
         defining the size of the margin.
-        </p>
 
         @param marginInfo
                    MarginInfo object containing the new margins.

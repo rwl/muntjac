@@ -15,8 +15,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.ui.AbstractComponent import AbstractComponent
-from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
 from muntjac.event.MouseEvents import IClickListener, ClickEvent
+from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
 
 from muntjac.terminal.gwt.client.ui.VEmbedded import VEmbedded
 
@@ -30,8 +30,7 @@ class Embedded(AbstractComponent):
     @since 3.0
     """
 
-#    CLIENT_WIDGET = VEmbedded
-#    LOAD_STYLE = LoadStyle.EAGER
+    #CLIENT_WIDGET = ClientWidget(VEmbedded, LoadStyle.EAGER)
 
     _CLICK_EVENT = VEmbedded.CLICK_EVENT_IDENTIFIER
 
@@ -51,9 +50,9 @@ class Embedded(AbstractComponent):
 
         @param caption
         ---
-        Creates a new Embedded object whose contents is loaded from given
-        resource. The dimensions are assumed if possible. The type is guessed
-        from resource.
+        Creates a new Embedded object whose contents is loaded from
+        given resource. The dimensions are assumed if possible. The
+        type is guessed from resource.
 
         @param caption
         @param source
@@ -80,16 +79,17 @@ class Embedded(AbstractComponent):
 
         if caption is not None:
             self.setCaption(caption)
+
         if source is not None:
             self.setSource(source)
 
 
     def paintContent(self, target):
         """Invoked when the component state should be painted."""
-        test = self._type
-        if test == self.TYPE_IMAGE:
+
+        if self._type == self.TYPE_IMAGE:
             target.addAttribute('type', 'image')
-        elif test == self.TYPE_BROWSER:
+        elif self._type == self.TYPE_BROWSER:
             target.addAttribute('type', 'browser')
 
 
@@ -123,15 +123,13 @@ class Embedded(AbstractComponent):
 
 
     def setParameter(self, name, value):
-        """Sets an object parameter. Parameters are optional information, and they
-        are passed to the instantiated object. Parameters are are stored as name
-        value pairs. This overrides the previous value assigned to this
-        parameter.
+        """Sets an object parameter. Parameters are optional information,
+        and they are passed to the instantiated object. Parameters are are
+        stored as name value pairs. This overrides the previous value
+        assigned to this parameter.
 
-        @param name
-                   the name of the parameter.
-        @param value
-                   the value of the parameter.
+        @param name: the name of the parameter.
+        @param value: the value of the parameter.
         """
         self._parameters[name] = value
         self.requestRepaint()
@@ -139,8 +137,8 @@ class Embedded(AbstractComponent):
 
     def getParameter(self, name):
         """Gets the value of an object parameter. Parameters are optional
-        information, and they are passed to the instantiated object. Parameters
-        are are stored as name value pairs.
+        information, and they are passed to the instantiated object.
+        Parameters are are stored as name value pairs.
 
         @return the Value of parameter or null if not found.
         """
@@ -166,9 +164,9 @@ class Embedded(AbstractComponent):
 
 
     def getCodebase(self):
-        """This attribute specifies the base path used to resolve relative URIs
-        specified by the classid, data, and archive attributes. When absent, its
-        default value is the base URI of the current document.
+        """This attribute specifies the base path used to resolve relative
+        URIs specified by the classid, data, and archive attributes. When
+        absent, its default value is the base URI of the current document.
 
         @return the code base.
         """
@@ -192,8 +190,8 @@ class Embedded(AbstractComponent):
 
 
     def getStandby(self):
-        """This attribute specifies a message that a user agent may render while
-        loading the object's implementation and data.
+        """This attribute specifies a message that a user agent may render
+        while loading the object's implementation and data.
 
         @return The text displayed when loading
         """
@@ -201,31 +199,31 @@ class Embedded(AbstractComponent):
 
 
     def setCodebase(self, codebase):
-        """This attribute specifies the base path used to resolve relative URIs
-        specified by the classid, data, and archive attributes. When absent, its
-        default value is the base URI of the current document.
+        """This attribute specifies the base path used to resolve relative
+        URIs specified by the classid, data, and archive attributes. When
+        absent, its default value is the base URI of the current document.
 
         @param codebase
                    The base path
         """
-        if (codebase != self._codebase) \
-                or (codebase is not None and not (codebase == self._codebase)):
+        if (codebase != self._codebase
+                or (codebase is not None and codebase != self._codebase)):
             self._codebase = codebase
             self.requestRepaint()
 
 
     def setCodetype(self, codetype):
         """This attribute specifies the content type of data expected when
-        downloading the object specified by classid. This attribute is optional
-        but recommended when classid is specified since it allows the user agent
-        to avoid loading information for unsupported content types. When absent,
-        it defaults to the value of the type attribute.
+        downloading the object specified by classid. This attribute is
+        optional but recommended when classid is specified since it allows
+        the user agent to avoid loading information for unsupported content
+        types. When absent, it defaults to the value of the type attribute.
 
         @param codetype
                    the codetype to set.
         """
-        if (codetype != self._codetype) \
-                or (codetype is not None and not (codetype == self._codetype)):
+        if (codetype != self._codetype
+                or (codetype is not None and codetype != self._codetype)):
             self._codetype = codetype
             self.requestRepaint()
 
@@ -233,11 +231,10 @@ class Embedded(AbstractComponent):
     def setMimeType(self, mimeType):
         """Sets the mimeType, the MIME-Type of the object.
 
-        @param mimeType
-                   the mimeType to set.
+        @param mimeType: the mimeType to set.
         """
-        if (mimeType != self._mimeType) \
-                or (mimeType is not None and not (mimeType == self._mimeType)):
+        if (mimeType != self._mimeType
+                or (mimeType is not None and mimeType != self._mimeType)):
             self._mimeType = mimeType
             if 'application/x-shockwave-flash' == mimeType:
                 # Automatically add wmode transparent as we use lots of
@@ -251,14 +248,13 @@ class Embedded(AbstractComponent):
 
 
     def setStandby(self, standby):
-        """This attribute specifies a message that a user agent may render while
-        loading the object's implementation and data.
+        """This attribute specifies a message that a user agent may render
+        while loading the object's implementation and data.
 
-        @param standby
-                   The text to display while loading
+        @param standby: The text to display while loading
         """
-        if (standby != self._standby) \
-                or (standby is not None and not (standby == self._standby)):
+        if (standby != self._standby
+                or (standby is not None and standby != self._standby)):
             self._standby = standby
             self.requestRepaint()
 
@@ -279,8 +275,8 @@ class Embedded(AbstractComponent):
         @param classId
                    the classId to set.
         """
-        if (classId != self._classId) \
-                or (classId is not None and not (classId == self._classId)):
+        if (classId != self._classId
+                or (classId is not None and classId != self._classId)):
             self._classId = classId
             self.requestRepaint()
 
@@ -295,13 +291,12 @@ class Embedded(AbstractComponent):
 
     def getType(self):
         """Gets the type of the embedded object.
-        <p>
+
         This can be one of the following:
         <ul>
         <li>TYPE_OBJECT <i>(This is the default)</i>
         <li>TYPE_IMAGE
         </ul>
-        </p>
 
         @return the type.
         """
@@ -309,13 +304,12 @@ class Embedded(AbstractComponent):
 
 
     def setSource(self, source):
-        """Sets the object source resource. The dimensions are assumed if possible.
-        The type is guessed from resource.
+        """Sets the object source resource. The dimensions are assumed
+        if possible. The type is guessed from resource.
 
-        @param source
-                   the source to set.
+        @param source: the source to set.
         """
-        if source is not None and not (source == self._source):
+        if source is not None and source != self._source:
             self._source = source
             mt = source.getMIMEType()
 
@@ -327,42 +321,39 @@ class Embedded(AbstractComponent):
             elif mt[:mt.find('/')].lower() == 'image':
                 self._type = self.TYPE_IMAGE
             else:
-                # Keep previous type
-                pass
+                pass  # Keep previous type
 
             self.requestRepaint()
 
 
     def setType(self, typ):
         """Sets the object type.
-        <p>
+
         This can be one of the following:
         <ul>
         <li>TYPE_OBJECT <i>(This is the default)</i>
         <li>TYPE_IMAGE
         <li>TYPE_BROWSER
         </ul>
-        </p>
 
-        @param type
-                   the type to set.
+        @param type: the type to set.
         """
-        if (
-            typ != self.TYPE_OBJECT and typ != self.TYPE_IMAGE and typ != self.TYPE_BROWSER
-        ):
-            raise self.IllegalArgumentException('Unsupported typ')
+        if (typ != self.TYPE_OBJECT and typ != self.TYPE_IMAGE
+                and typ != self.TYPE_BROWSER):
+            raise ValueError, 'Unsupported typ'
+
         if typ != self._type:
             self._type = typ
             self.requestRepaint()
 
 
     def getArchive(self):
-        """This attribute may be used to specify a space-separated list of URIs for
-        archives containing resources relevant to the object, which may include
-        the resources specified by the classid and data attributes. Preloading
-        archives will generally result in reduced load times for objects.
-        Archives specified as relative URIs should be interpreted relative to the
-        codebase attribute.
+        """This attribute may be used to specify a space-separated list of
+        URIs for archives containing resources relevant to the object, which
+        may include the resources specified by the classid and data
+        attributes. Preloading archives will generally result in reduced load
+        times for objects. Archives specified as relative URIs should be
+        interpreted relative to the codebase attribute.
 
         @return Space-separated list of URIs with resources relevant to the
                 object
@@ -371,39 +362,40 @@ class Embedded(AbstractComponent):
 
 
     def setArchive(self, archive):
-        """This attribute may be used to specify a space-separated list of URIs for
-        archives containing resources relevant to the object, which may include
-        the resources specified by the classid and data attributes. Preloading
-        archives will generally result in reduced load times for objects.
-        Archives specified as relative URIs should be interpreted relative to the
-        codebase attribute.
+        """This attribute may be used to specify a space-separated list of
+        URIs for archives containing resources relevant to the object, which
+        may include the resources specified by the classid and data
+        attributes. Preloading archives will generally result in reduced load
+        times for objects. Archives specified as relative URIs should be
+        interpreted relative to the codebase attribute.
 
         @param archive
-                   Space-separated list of URIs with resources relevant to the
-                   object
+                   Space-separated list of URIs with resources relevant to
+                   the object
         """
-        if (archive != self._archive) \
-                or (archive is not None and not (archive == self._archive)):
+        if (archive != self._archive
+                or (archive is not None and archive != self._archive)):
             self._archive = archive
             self.requestRepaint()
 
 
     def addListener(self, listener):
-        """Add a click listener to the component. The listener is called whenever
-        the user clicks inside the component. Depending on the content the event
-        may be blocked and in that case no event is fired.
+        """Add a click listener to the component. The listener is called
+        whenever the user clicks inside the component. Depending on the
+        content the event may be blocked and in that case no event is fired.
 
         Use {@link #removeListener(ClickListener)} to remove the listener.
 
         @param listener
                    The listener to add
         """
-        self.addListener(self._CLICK_EVENT, ClickEvent, listener, IClickListener.clickMethod)
+        self.addListener(self._CLICK_EVENT, ClickEvent, listener,
+                IClickListener.clickMethod)
 
 
     def removeListener(self, listener):
-        """Remove a click listener from the component. The listener should earlier
-        have been added using {@link #addListener(ClickListener)}.
+        """Remove a click listener from the component. The listener should
+        earlier have been added using {@link #addListener(ClickListener)}.
 
         @param listener
                    The listener to remove
@@ -414,7 +406,7 @@ class Embedded(AbstractComponent):
     def changeVariables(self, source, variables):
         super(Embedded, self).changeVariables(source, variables)
         if self._CLICK_EVENT in variables:
-            self.fireClick(variables[self._CLICK_EVENT])
+            self.fireClick(variables.get(self._CLICK_EVENT))
 
 
     def fireClick(self, parameters):
@@ -422,5 +414,6 @@ class Embedded(AbstractComponent):
 
         @param parameters
         """
-        mouseDetails = MouseEventDetails.deSerialize(parameters['mouseDetails'])
+        mouseDetails = \
+                MouseEventDetails.deSerialize(parameters['mouseDetails'])
         self.fireEvent( ClickEvent(self, mouseDetails) )

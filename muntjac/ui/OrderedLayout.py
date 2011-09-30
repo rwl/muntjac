@@ -16,9 +16,6 @@
 
 from muntjac.ui.AbstractOrderedLayout import AbstractOrderedLayout
 
-#from muntjac.terminal.gwt.client.ui.VOrderedLayout import VOrderedLayout
-#from muntjac.ui.ClientWidget import LoadStyle
-
 
 class OrderedLayout(AbstractOrderedLayout):
     """Ordered layout.
@@ -32,12 +29,11 @@ class OrderedLayout(AbstractOrderedLayout):
     @since 3.0
     @deprecated Replaced by VerticalLayout/HorizontalLayout. For type checking
                 please not that VerticalLayout/HorizontalLayout do not extend
-                OrderedLayout but AbstractOrderedLayout (which also OrderedLayout
-                extends).
+                OrderedLayout but AbstractOrderedLayout (which also
+                OrderedLayout extends).
     """
 
-#    CLIENT_WIDGET = VOrderedLayout
-#    LOAD_STYLE = LoadStyle.EAGER
+    #CLIENT_WIDGET = ClientWidget(VOrderedLayout, LoadStyle.EAGER)
 
     # Components are to be laid out vertically.
     ORIENTATION_VERTICAL = 0
@@ -52,14 +48,15 @@ class OrderedLayout(AbstractOrderedLayout):
 
         @deprecated Use VerticalLayout instead.
         ---
-        Create a new ordered layout. The orientation of the layout is given as
-        parameters.
+        Create a new ordered layout. The orientation of the layout is
+        given as parameters.
 
-        @param orientation
-                   the Orientation of the layout.
+        @param orientation: the Orientation of the layout.
 
         @deprecated Use VerticalLayout/HorizontalLayout instead.
         """
+        raise DeprecationWarning, 'use VerticalLayout/HorizontalLayout instead'
+
         # Orientation of the layout.
         self._orientation = None
 
@@ -80,22 +77,22 @@ class OrderedLayout(AbstractOrderedLayout):
 
 
     def setOrientation(self, orientation, needsRepaint=True):
-        """Sets the orientation of this OrderedLayout. This method should only be
-        used before initial paint.
+        """Sets the orientation of this OrderedLayout. This method should only
+        be used before initial paint.
 
         @param orientation
                    the New value of property orientation.
-        @deprecated Use VerticalLayout/HorizontalLayout or define orientation in
-                    constructor instead
+        @deprecated Use VerticalLayout/HorizontalLayout or define orientation
+                    in constructor instead
         ---
-        Internal method to change orientation of layout. This method should only
-        be used before initial paint.
+        Internal method to change orientation of layout. This method should
+        only be used before initial paint.
 
         @param orientation
         """
         # Checks the validity of the argument
-        if orientation < self.ORIENTATION_VERTICAL \
-                or orientation > self.ORIENTATION_HORIZONTAL:
+        if (orientation < self.ORIENTATION_VERTICAL
+                or orientation > self.ORIENTATION_HORIZONTAL):
             raise ValueError()
 
         self._orientation = orientation

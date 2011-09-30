@@ -18,9 +18,9 @@ from muntjac.ui.IComponent import IComponent, Event
 
 
 class IComponentContainer(IComponent):
-    """Extension to the {@link IComponent} interface which adds to it the capacity to
-    contain other components. All UI elements that can have child elements
-    implement this interface.
+    """Extension to the {@link IComponent} interface which adds to it the
+    capacity to contain other components. All UI elements that can have child
+    elements implement this interface.
 
     @author IT Mill Ltd.
     @author Richard Lincoln

@@ -14,22 +14,19 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.event.FieldEvents import \
-    BlurEvent, IBlurListener, IBlurNotifier, FocusEvent, \
-    IFocusListener, IFocusNotifier
-
 from muntjac.ui.AbstractSelect import AbstractSelect
 from muntjac.data.Container import Container
 
-#from muntjac.terminal.gwt.client.ui.VOptionGroup import VOptionGroup
-#from muntjac.ui.ClientWidget import LoadStyle
+from muntjac.event.FieldEvents import \
+    BlurEvent, IBlurListener, IBlurNotifier, FocusEvent, \
+    IFocusListener, IFocusNotifier
+from muntjac.ui.AbstractComponent import AbstractComponent
 
 
 class OptionGroup(AbstractSelect, IBlurNotifier, IFocusNotifier):
     """Configures select to be used as an option group."""
 
-#    CLIENT_WIDGET = VOptionGroup
-#    LOAD_STYLE = LoadStyle.EAGER
+    #CLIENT_WIDGET = ClientWidget(VOptionGroup, LoadStyle.EAGER)
 
     def __init__(self, *args):
         self._disabledItemIds = set()
@@ -75,16 +72,20 @@ class OptionGroup(AbstractSelect, IBlurNotifier, IFocusNotifier):
 
     def addListener(self, listener):
         if isinstance(listener, IBlurListener):
-            self.addListener(BlurEvent.EVENT_ID, BlurEvent, listener, IBlurListener.blurMethod)
+            AbstractComponent.addListener(self, BlurEvent.EVENT_ID,
+                    BlurEvent, listener, IBlurListener.blurMethod)
         else:
-            self.addListener(FocusEvent.EVENT_ID, FocusEvent, listener, IFocusListener.focusMethod)
+            AbstractComponent.addListener(self, FocusEvent.EVENT_ID,
+                    FocusEvent, listener, IFocusListener.focusMethod)
 
 
     def removeListener(self, listener):
         if isinstance(listener, IBlurListener):
-            self.removeListener(BlurEvent.EVENT_ID, BlurEvent, listener)
+            AbstractComponent.removeListener(self, BlurEvent.EVENT_ID,
+                    BlurEvent, listener)
         else:
-            self.removeListener(FocusEvent.EVENT_ID, FocusEvent, listener)
+            AbstractComponent.removeListener(self, FocusEvent.EVENT_ID,
+                    FocusEvent, listener)
 
 
     def setValue(self, newValue, repaintIsNotNeeded):
@@ -97,12 +98,14 @@ class OptionGroup(AbstractSelect, IBlurNotifier, IFocusNotifier):
                 currentValueSet = self.getValue()
                 newValueSet = newValue
                 for itemId in currentValueSet:
-                    if not self.isItemEnabled(itemId) and not (itemId in newValueSet):
+                    if (not self.isItemEnabled(itemId)
+                            and not (itemId in newValueSet)):
                         self.requestRepaint()
                         return
 
                 for itemId in newValueSet:
-                    if not self.isItemEnabled(itemId) and not (itemId in currentValueSet):
+                    if (not self.isItemEnabled(itemId)
+                            and not (itemId in currentValueSet)):
                         self.requestRepaint()
                         return
             else:

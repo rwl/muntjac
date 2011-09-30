@@ -19,15 +19,15 @@ from muntjac.ui.IFormFieldFactory import IFormFieldFactory
 
 
 class IFieldFactory(IFormFieldFactory, ITableFieldFactory):
-    """Factory for creating new Field-instances based on type, datasource and/or
-    context.
+    """Factory for creating new Field-instances based on type, datasource
+    and/or context.
 
     @author IT Mill Ltd.
     @author Richard Lincoln
     @version @VERSION@
     @since 3.1
-    @deprecated IFieldFactory was split into two lighter interfaces in 6.0 Use
-                IFormFieldFactory or ITableFieldFactory or both instead.
+    @deprecated IFieldFactory was split into two lighter interfaces in 6.0
+                Use IFormFieldFactory or ITableFieldFactory or both instead.
     """
 
     def createField(self, *args):

@@ -16,27 +16,23 @@
 
 from muntjac.ui.OrderedLayout import OrderedLayout
 
-#from muntjac.terminal.gwt.client.ui.VFormLayout import VFormLayout
-#from muntjac.ui.ClientWidget import LoadStyle
-
 
 class FormLayout(OrderedLayout):
-    """FormLayout is used by {@link Form} to layout fields. It may also be used
-    separately without {@link Form}.
+    """FormLayout is used by {@link Form} to layout fields. It may also be
+    used separately without {@link Form}.
 
-    FormLayout is a close relative to vertical {@link OrderedLayout}, but in
-    FormLayout caption is rendered on left side of component. Required and
-    validation indicators are between captions and fields.
+    FormLayout is a close relative to vertical {@link OrderedLayout}, but
+    in FormLayout caption is rendered on left side of component. Required
+    and validation indicators are between captions and fields.
 
     FormLayout does not currently support some advanced methods from
     OrderedLayout like setExpandRatio and setComponentAlignment.
 
-    FormLayout by default has component spacing on. Also margin top and margin
-    bottom are by default on.
+    FormLayout by default has component spacing on. Also margin top and
+    margin bottom are by default on.
     """
 
-#    CLIENT_WIDGET = VFormLayout
-#    LOAD_STYLE = LoadStyle.EAGER
+    #CLIENT_WIDGET = ClientWidget(VFormLayout, LoadStyle.EAGER)
 
     def __init__(self):
         super(FormLayout, self)()

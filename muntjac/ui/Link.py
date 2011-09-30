@@ -17,9 +17,6 @@
 from muntjac.ui.AbstractComponent import AbstractComponent
 from muntjac.ui.Window import Window
 
-#from muntjac.terminal.gwt.client.ui.VLink import VLink
-#from muntjac.ui.ClientWidget import LoadStyle
-
 
 class Link(AbstractComponent):
     """Link is used to create external or internal URL links.
@@ -30,8 +27,7 @@ class Link(AbstractComponent):
     @since 3.0
     """
 
-#    CLIENT_WIDGET = VLink
-#    LOAD_STYLE = LoadStyle.EAGER
+    #CLIENT_WIDGET = ClientWidget(VLink, LoadStyle.EAGER)
 
     # Target window border type constant: No window border
     TARGET_BORDER_NONE = Window.BORDER_NONE
@@ -143,8 +139,8 @@ class Link(AbstractComponent):
 
 
     def getTargetName(self):
-        """Returns the target window name. Empty name of null implies that the
-        target is opened to the window containing the link.
+        """Returns the target window name. Empty name of null implies
+        that the target is opened to the window containing the link.
 
         @return the target window name.
         """
@@ -165,9 +161,9 @@ class Link(AbstractComponent):
         @param targetBorder
                    the targetBorder to set.
         """
-        if targetBorder == self.TARGET_BORDER_DEFAULT \
-            or targetBorder == self.TARGET_BORDER_MINIMAL \
-            or targetBorder == self.TARGET_BORDER_NONE:
+        if (targetBorder == self.TARGET_BORDER_DEFAULT
+                or targetBorder == self.TARGET_BORDER_MINIMAL
+                or targetBorder == self.TARGET_BORDER_NONE):
             self._targetBorder = targetBorder
             self.requestRepaint()
 

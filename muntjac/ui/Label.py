@@ -23,34 +23,27 @@ from muntjac.data.util.ObjectProperty import ObjectProperty
 from muntjac.ui.AbstractComponent import AbstractComponent
 from muntjac.ui.IComponent import Event as ComponentEvent
 
-from muntjac.data.Property import \
-    Property, ValueChangeListener, ValueChangeNotifier, Viewer, \
-    ValueChangeEvent as PropertyValueChangeEvent
-
-#from muntjac.ui.ClientWidget import LoadStyle
-#from muntjac.terminal.gwt.client.ui.VLabel import VLabel
+from muntjac.data import Property
 
 
-class Label(AbstractComponent, Property, Property, Viewer, Property,
-            ValueChangeListener, Property, ValueChangeNotifier):
+class Label(AbstractComponent, Property.Property, Property.Viewer,
+            Property.ValueChangeListener, Property.ValueChangeNotifier):
     """Label component for showing non-editable short texts.
 
     The label content can be set to the modes specified by the final members
     CONTENT_*
 
-    <p>
     The contents of the label may contain simple formatting:
     <ul>
     <li><b>&lt;b></b> Bold
     <li><b>&lt;i></b> Italic
     <li><b>&lt;u></b> Underlined
     <li><b>&lt;br/></b> Linebreak
-    <li><b>&lt;ul>&lt;li>item 1&lt;/li>&lt;li>item 2&lt;/li>&lt;/ul></b> List of
-    items
+    <li><b>&lt;ul>&lt;li>item 1&lt;/li>&lt;li>item 2&lt;/li>&lt;/ul></b> List
+    of items
     </ul>
-    The <b>b</b>,<b>i</b>,<b>u</b> and <b>li</b> tags can contain all the tags in
-    the list recursively.
-    </p>
+    The <b>b</b>,<b>i</b>,<b>u</b> and <b>li</b> tags can contain all the tags
+    in the list recursively.
 
     @author IT Mill Ltd.
     @author Richard Lincoln
@@ -58,8 +51,7 @@ class Label(AbstractComponent, Property, Property, Viewer, Property,
     @since 3.0
     """
 
-#    CLIENT_WIDGET = VLabel
-#    LOAD_STYLE = LoadStyle.EAGER
+    #CLIENT_WIDGET = ClientWidget(VLabel, LoadStyle.EAGER)
 
     # Content mode, where the label contains only plain text. The getValue()
     # result is coded to XML when painting.
@@ -98,25 +90,10 @@ class Label(AbstractComponent, Property, Property, Viewer, Property,
 
     _DATASOURCE_MUST_BE_SET = 'Datasource must be set'
 
+
     def __init__(self, contentSource="", contentMode=None):
 
-        """Creates an empty Label.
-        ---
-        Creates a new instance of Label with text-contents.
-
-        @param content
-        ---
-        Creates a new instance of Label with text-contents read from given
-        datasource.
-
-        @param contentSource
-        ---
-        Creates a new instance of Label with text-contents.
-
-        @param content
-        @param contentMode
-        ---
-        Creates a new instance of Label with text-contents read from given
+        """Creates a new instance of Label with text-contents read from given
         datasource.
 
         @param contentSource
@@ -132,8 +109,10 @@ class Label(AbstractComponent, Property, Property, Viewer, Property,
             contentMode = self.CONTENT_DEFAULT
 
         self.setPropertyDataSource(contentSource)
+
         if contentMode != self.CONTENT_DEFAULT:
             self.setContentMode(contentMode)
+
         self.setWidth(100, self.UNITS_PERCENTAGE)
 
 
@@ -149,8 +128,8 @@ class Label(AbstractComponent, Property, Property, Viewer, Property,
 
 
     def isReadOnly(self):
-        """Is the component read-only ? Readonly is not used in label - this returns
-        allways false.
+        """Is the component read-only ? Readonly is not used in label - this
+        returns always false.
 
         @return <code>true</code> if the component is in read only mode.
         """
@@ -168,7 +147,8 @@ class Label(AbstractComponent, Property, Property, Viewer, Property,
                     if the Paint Operation fails.
         """
         if self._contentMode != self.CONTENT_TEXT:
-            target.addAttribute('mode', self._CONTENT_MODE_NAME[self._contentMode])
+            target.addAttribute('mode',
+                    self._CONTENT_MODE_NAME[self._contentMode])
 
         if self._contentMode == self.CONTENT_TEXT:
             target.addText(str(self))
@@ -178,7 +158,8 @@ class Label(AbstractComponent, Property, Property, Viewer, Property,
 
         elif self._contentMode == self.CONTENT_XHTML:
             target.startTag('data')
-            target.addXMLSection('div', str(self), 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd')
+            target.addXMLSection('div', str(self),
+                    'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd')
             target.endTag('data')
 
         elif self._contentMode == self.CONTENT_PREFORMATTED:
@@ -197,8 +178,8 @@ class Label(AbstractComponent, Property, Property, Viewer, Property,
 
 
     def getValue(self):
-        """Gets the value of the label. Value of the label is the XML contents of
-        the label.
+        """Gets the value of the label. Value of the label is the XML
+        contents of the label.
 
         @return the Value of the label.
         """
@@ -208,8 +189,8 @@ class Label(AbstractComponent, Property, Property, Viewer, Property,
 
 
     def setValue(self, newValue):
-        """Set the value of the label. Value of the label is the XML contents of the
-        label.
+        """Set the value of the label. Value of the label is the XML
+        contents of the label.
 
         @param newValue
                    the New value of the label.
@@ -250,19 +231,21 @@ class Label(AbstractComponent, Property, Property, Viewer, Property,
 
         @param newDataSource
                    the new data source Property
-        @see com.vaadin.data.Property.Viewer#setPropertyDataSource(com.vaadin.data.Property)
+        @see Property.Viewer#setPropertyDataSource()
         """
         # Stops listening the old data source changes
-        if self._dataSource is not None \
-                and issubclass(self._dataSource.getClass(), ValueChangeNotifier):
+        if (self._dataSource is not None
+                and issubclass(self._dataSource.__class__,
+                        Property.ValueChangeNotifier)):
             self._dataSource.removeListener(self)
 
         # Sets the new data source
         self._dataSource = newDataSource
 
         # Listens the new data source if possible
-        if self._dataSource is not None \
-                and issubclass(self._dataSource.getClass(), ValueChangeNotifier):
+        if (self._dataSource is not None
+                and issubclass(self._dataSource.__class__,
+                        Property.ValueChangeNotifier)):
             self._dataSource.addListener(self)
 
         self.requestRepaint()
@@ -271,7 +254,6 @@ class Label(AbstractComponent, Property, Property, Viewer, Property,
     def getContentMode(self):
         """Gets the content mode of the Label.
 
-        <p>
         Possible content modes include:
         <ul>
         <li><b>CONTENT_TEXT</b> Content mode, where the label contains only plain
@@ -292,7 +274,6 @@ class Label(AbstractComponent, Property, Property, Viewer, Property,
         some specific purposes where possibly broken HTML content needs to be
         shown, but in most cases XHTML mode should be preferred.</li>
         </ul>
-        </p>
 
         @return the Content mode of the label.
         """
@@ -302,7 +283,6 @@ class Label(AbstractComponent, Property, Property, Viewer, Property,
     def setContentMode(self, contentMode):
         """Sets the content mode of the Label.
 
-        <p>
         Possible content modes include:
         <ul>
         <li><b>CONTENT_TEXT</b> Content mode, where the label contains only plain
@@ -323,30 +303,31 @@ class Label(AbstractComponent, Property, Property, Viewer, Property,
         some specific purposes where possibly broken HTML content needs to be
         shown, but in most cases XHTML mode should be preferred.</li>
         </ul>
-        </p>
 
         @param contentMode
                    the New content mode of the label.
         """
         # Value change events
-        if contentMode != self._contentMode \
-                and contentMode >= self.CONTENT_TEXT \
-                and contentMode <= self.CONTENT_RAW:
+        if (contentMode != self._contentMode
+                and contentMode >= self.CONTENT_TEXT
+                and contentMode <= self.CONTENT_RAW):
             self._contentMode = contentMode
             self.requestRepaint()
 
 
-    _VALUE_CHANGE_METHOD = getattr(ValueChangeListener, "valueChange")
+    _VALUE_CHANGE_METHOD = getattr(Property.ValueChangeListener, "valueChange")
 
 
     def addListener(self, listener):
         """Adds the value change listener."""
-        self.addListener(ValueChangeEvent, listener, self._VALUE_CHANGE_METHOD)
+        AbstractComponent.addListener(self, ValueChangeEvent, listener,
+                self._VALUE_CHANGE_METHOD)
 
 
     def removeListener(self, listener):
         """Removes the value change listener."""
-        self.removeListener(ValueChangeEvent, listener, self._VALUE_CHANGE_METHOD)
+        AbstractComponent.removeListener(self, ValueChangeEvent, listener,
+                self._VALUE_CHANGE_METHOD)
 
 
     def fireValueChange(self):
@@ -364,33 +345,29 @@ class Label(AbstractComponent, Property, Property, Viewer, Property,
     def __eq__(self, other):
         """Compares the Label to other objects.
 
-        <p>
-        Labels can be compared to other labels for sorting label contents. This
-        is especially handy for sorting table columns.
-        </p>
+        Labels can be compared to other labels for sorting label contents.
+        This is especially handy for sorting table columns.
 
-        <p>
-        In RAW, PREFORMATTED and TEXT modes, the label contents are compared as
-        is. In XML, UIDL and XHTML modes, only CDATA is compared and tags
-        ignored. If the other object is not a Label, its toString() return value
-        is used in comparison.
-        </p>
+        In RAW, PREFORMATTED and TEXT modes, the label contents are compared
+        as is. In XML, UIDL and XHTML modes, only CDATA is compared and tags
+        ignored. If the other object is not a Label, its toString() return
+        value is used in comparison.
 
         @param other
                    the Other object to compare to.
-        @return a negative integer, zero, or a positive integer as this object is
-                less than, equal to, or greater than the specified object.
+        @return a negative integer, zero, or a positive integer as this object
+                is less than, equal to, or greater than the specified object.
         @see java.lang.Comparable#compareTo(java.lang.Object)
         """
-        if (self._contentMode == self.CONTENT_XML) \
-                or (self._contentMode == self.CONTENT_UIDL) \
-                or (self._contentMode == self.CONTENT_XHTML):
+        if (self._contentMode == self.CONTENT_XML
+                or self._contentMode == self.CONTENT_UIDL
+                or self._contentMode == self.CONTENT_XHTML):
             thisValue = self.stripTags(str(self))
         else:
             thisValue = str(self)
         if isinstance(other, Label) \
-                and (other.getContentMode() == self.CONTENT_XML \
-                     or other.getContentMode() == self.CONTENT_UIDL \
+                and (other.getContentMode() == self.CONTENT_XML
+                     or other.getContentMode() == self.CONTENT_UIDL
                      or other.getContentMode() == self.CONTENT_XHTML):
             otherValue = self.stripTags(str(other))
         else:
@@ -424,7 +401,7 @@ class Label(AbstractComponent, Property, Property, Viewer, Property,
         return result
 
 
-class ValueChangeEvent(ComponentEvent, PropertyValueChangeEvent):
+class ValueChangeEvent(ComponentEvent, Property.ValueChangeEvent):
     """Value change event."""
 
     def __init__(self, source):

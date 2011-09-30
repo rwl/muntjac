@@ -16,9 +16,9 @@
 
 
 class Html5File(object):
-    """{@link DragAndDropWrapper} can receive also files from client computer if
-    appropriate HTML 5 features are supported on client side. This class wraps
-    information about dragged file on server side.
+    """{@link DragAndDropWrapper} can receive also files from client computer
+    if appropriate HTML 5 features are supported on client side. This class
+    wraps information about dragged file on server side.
     """
 
     def __init__(self, name, size, mimeType):
@@ -41,16 +41,17 @@ class Html5File(object):
 
 
     def setStreamVariable(self, streamVariable):
-        """Sets the {@link StreamVariable} that into which the file contents will be
-        written. Usage of StreamVariable is similar to {@link Upload} component.
-        <p>
-        If the {@link StreamVariable} is not set in the {@link DropHandler} the file
-        contents will not be sent to server.
-        <p>
-        <em>Note!</em> receiving file contents is experimental feature depending
-        on HTML 5 API's. It is supported only by modern web browsers like Firefox
-        3.6 and above and recent webkit based browsers (Safari 5, Chrome 6) at
-        this time.
+        """Sets the {@link StreamVariable} that into which the file contents
+        will be written. Usage of StreamVariable is similar to {@link Upload}
+        component.
+
+        If the {@link StreamVariable} is not set in the {@link DropHandler}
+        the file contents will not be sent to server.
+
+        <em>Note!</em> receiving file contents is experimental feature
+        depending on HTML 5 API's. It is supported only by modern web browsers
+        like Firefox 3.6 and above and recent webkit based browsers (Safari 5,
+        Chrome 6) at this time.
 
         @param streamVariable
                    the callback that returns stream where the implementation

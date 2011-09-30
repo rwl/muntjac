@@ -16,15 +16,12 @@
 
 from muntjac.ui.AbstractOrderedLayout import AbstractOrderedLayout
 
-#from muntjac.terminal.gwt.client.ui.VHorizontalLayout import VHorizontalLayout
-#from muntjac.ui.ClientWidget import LoadStyle
-
 
 class HorizontalLayout(AbstractOrderedLayout):
     """Horizontal layout
 
-    <code>HorizontalLayout</code> is a component container, which shows the
-    subcomponents in the order of their addition (horizontally).
+    <code>HorizontalLayout</code> is a component container, which shows
+    the subcomponents in the order of their addition (horizontally).
 
     @author IT Mill Ltd.
     @author Richard Lincoln
@@ -32,8 +29,7 @@ class HorizontalLayout(AbstractOrderedLayout):
     @since 5.3
     """
 
-#    CLIENT_WIDGET = VHorizontalLayout
-#    LOAD_STYLE = LoadStyle.EAGER
+    #CLIENT_WIDGET = ClientWidget(VHorizontalLayout, LoadStyle.EAGER)
 
     def __init__(self):
         pass

@@ -22,20 +22,21 @@ except ImportError, e:
 from muntjac.ui.IComponent import Event
 from muntjac.ui.Embedded import Embedded
 from muntjac.ui.CustomComponent import CustomComponent
+from muntjac.ui.AbstractComponent import AbstractComponent
 from muntjac.terminal.IApplicationResource import IApplicationResource
 from muntjac.terminal.IUriHandler import IUriHandler
 from muntjac.terminal.DownloadStream import DownloadStream
 from muntjac.terminal.IParameterHandler import IParameterHandler
 
-from muntjac.terminal.gwt.client.ApplicationConnection import ApplicationConnection
+from muntjac.terminal.gwt.client.ApplicationConnection import \
+    ApplicationConnection
 
 
 class LoginEvent(Event):
     """This event is sent when login form is submitted."""
-    _params = None
 
-    def __init__(self, params, _LoginForm_this):  # FIXME: translate inner class
-        super(LoginEvent, self)(_LoginForm_this)
+    def __init__(self, params, form):
+        super(LoginEvent, self)(form)
         self._params = params
 
 
@@ -61,26 +62,28 @@ class ILoginListener(object):
 
         @param event
         """
-        pass
+        raise NotImplementedError
 
 
 class LoginForm(CustomComponent):
     """LoginForm is a Vaadin component to handle common problem among Ajax
-    applications: browsers password managers don't fill dynamically created forms
-    like all those UI elements created by Vaadin.
-    <p>
-    For developer it is easy to use: add component to a desired place in you UI
-    and add ILoginListener to validate form input. Behind the curtain LoginForm
-    creates an iframe with static html that browsers detect.
-    <p>
-    Login form is by default 100% width and height, so consider using it inside a
-    sized {@link Panel} or {@link Window}.
-    <p>
-    Login page html can be overridden by replacing protected getLoginHTML method.
-    As the login page is actually an iframe, styles must be handled manually. By
-    default component tries to guess the right place for theme css.
-    <p>
-    Note, this is a new Ajax terminal specific component and is likely to change.
+    applications: browsers password managers don't fill dynamically created
+    forms like all those UI elements created by Vaadin.
+
+    For developer it is easy to use: add component to a desired place in you
+    UI and add ILoginListener to validate form input. Behind the curtain
+    LoginForm creates an iframe with static html that browsers detect.
+
+    Login form is by default 100% width and height, so consider using it
+    inside a sized {@link Panel} or {@link Window}.
+
+    Login page html can be overridden by replacing protected getLoginHTML
+    method. As the login page is actually an iframe, styles must be handled
+    manually. By default component tries to guess the right place for theme
+    css.
+
+    Note, this is a new Ajax terminal specific component and is likely to
+    change.
 
     @since 5.3
     """
@@ -99,9 +102,9 @@ class LoginForm(CustomComponent):
         self.setCompositionRoot(self._iframe)
         self.addStyleName('v-loginform')
 
-        self.loginPage = LoginPage(self)  # FIXME: translate inner classes
-        self.parameterHandler = IParameterHandler()
-        self.uriHandler = UriHandler()
+        self.loginPage = LoginPage(self)
+        self.parameterHandler = ParameterHandler(self)
+        self.uriHandler = UriHandler(self)
 
 
     def getLoginHTML(self):
@@ -114,49 +117,49 @@ class LoginForm(CustomComponent):
         appUri = str(self.getApplication().getURL()) \
                 + self.getWindow().getName() + '/'
 
-        return '<!DOCTYPE html PUBLIC \"-//W3C//DTD ' \
-                + 'XHTML 1.0 Transitional//EN\" ' \
-                + '\"http://www.w3.org/TR/xhtml1/' \
-                + 'DTD/xhtml1-transitional.dtd\">\n' \
-                + '<html>' \
-                + '<head><script type=\'text/javascript\'>' \
-                + 'var setTarget = function() {' \
-                + 'var uri = \'' \
-                + appUri \
-                + 'loginHandler' \
-                + '\'; var f = document.getElementById(\'loginf\');' \
-                + 'document.forms[0].action = uri;document.forms[0].username.focus();};' \
-                + '' + 'var styles = window.parent.document.styleSheets;' \
-                + 'for(var j = 0; j < styles.length; j++) {\n' \
-                + 'if(styles[j].href) {' \
-                + 'var stylesheet = document.createElement(\'link\');\n' \
-                + 'stylesheet.setAttribute(\'rel\', \'stylesheet\');\n' \
-                + 'stylesheet.setAttribute(\'type\', \'text/css\');\n' \
-                + 'stylesheet.setAttribute(\'href\', styles[j].href);\n' \
-                + 'document.getElementsByTagName(\'head\')[0].appendChild(stylesheet);\n' \
-                + '}' \
-                + '}\n' \
-                + 'function submitOnEnter(e) { var keycode = e.keyCode || e.which;' \
-                + ' if (keycode == 13) {document.forms[0].submit();}  } \n' \
-                + '</script>' \
-                + '</head><body onload=\'setTarget();\' style=\'margin:0;padding:0; background:transparent;\' class=\"' \
-                + ApplicationConnection.GENERATED_BODY_CLASSNAME \
-                + '\">' + '<div class=\'v-app v-app-loginpage\' style=\"background:transparent;\">' \
-                + '<iframe name=\'logintarget\' style=\'width:0;height:0;' \
-                + 'border:0;margin:0;padding:0;\'></iframe>' \
-                + '<form id=\'loginf\' target=\'logintarget\' onkeypress=\"submitOnEnter(event)\" method=\"post\">' \
-                + '<div>' \
-                + self._usernameCaption \
-                + '</div><div >' \
-                + '<input class=\'v-textfield\' style=\'display:block;\' type=\'text\' name=\'username\'></div>' \
-                + '<div>' \
-                + self._passwordCaption \
-                + '</div>' \
-                + '<div><input class=\'v-textfield\' style=\'display:block;\' type=\'password\' name=\'password\'></div>' \
-                + '<div><div onclick=\"document.forms[0].submit();\" tabindex=\"0\" class=\"v-button\" role=\"button\" ><span class=\"v-button-wrap\"><span class=\"v-button-caption\">' \
-                + self._loginButtonCaption \
-                + '</span></span></div></div></form></div>' \
-                + '</body></html>'
+        return ('<!DOCTYPE html PUBLIC \"-//W3C//DTD '
+                + 'XHTML 1.0 Transitional//EN\" '
+                + '\"http://www.w3.org/TR/xhtml1/'
+                + 'DTD/xhtml1-transitional.dtd\">\n'
+                + '<html>'
+                + '<head><script type=\'text/javascript\'>'
+                + 'var setTarget = function() {'
+                + 'var uri = \''
+                + appUri
+                + 'loginHandler'
+                + '\'; var f = document.getElementById(\'loginf\');'
+                + 'document.forms[0].action = uri;document.forms[0].username.focus();};'
+                + '' + 'var styles = window.parent.document.styleSheets;'
+                + 'for(var j = 0; j < styles.length; j++) {\n'
+                + 'if(styles[j].href) {'
+                + 'var stylesheet = document.createElement(\'link\');\n'
+                + 'stylesheet.setAttribute(\'rel\', \'stylesheet\');\n'
+                + 'stylesheet.setAttribute(\'type\', \'text/css\');\n'
+                + 'stylesheet.setAttribute(\'href\', styles[j].href);\n'
+                + 'document.getElementsByTagName(\'head\')[0].appendChild(stylesheet);\n'
+                + '}'
+                + '}\n'
+                + 'function submitOnEnter(e) { var keycode = e.keyCode || e.which;'
+                + ' if (keycode == 13) {document.forms[0].submit();}  } \n'
+                + '</script>'
+                + '</head><body onload=\'setTarget();\' style=\'margin:0;padding:0; background:transparent;\' class=\"'
+                + ApplicationConnection.GENERATED_BODY_CLASSNAME
+                + '\">' + '<div class=\'v-app v-app-loginpage\' style=\"background:transparent;\">'
+                + '<iframe name=\'logintarget\' style=\'width:0;height:0;'
+                + 'border:0;margin:0;padding:0;\'></iframe>'
+                + '<form id=\'loginf\' target=\'logintarget\' onkeypress=\"submitOnEnter(event)\" method=\"post\">'
+                + '<div>'
+                + self._usernameCaption
+                + '</div><div >'
+                + '<input class=\'v-textfield\' style=\'display:block;\' type=\'text\' name=\'username\'></div>'
+                + '<div>'
+                + self._passwordCaption
+                + '</div>'
+                + '<div><input class=\'v-textfield\' style=\'display:block;\' type=\'password\' name=\'password\'></div>'
+                + '<div><div onclick=\"document.forms[0].submit();\" tabindex=\"0\" class=\"v-button\" role=\"button\" ><span class=\"v-button-wrap\"><span class=\"v-button-caption\">'
+                + self._loginButtonCaption
+                + '</span></span></div></div></form></div>'
+                + '</body></html>')
 
 
     def attach(self):
@@ -178,7 +181,7 @@ class LoginForm(CustomComponent):
         super(LoginForm, self).detach()
 
 
-    _ON_LOGIN_METHOD = getattr(ILoginListener, 'onLogin')  # FIXME: translate getDeclaredMethod
+    _ON_LOGIN_METHOD = getattr(ILoginListener, 'onLogin')
     _UNDEFINED_HEIGHT = '140px'
     _UNDEFINED_WIDTH = '200px'
 
@@ -188,7 +191,8 @@ class LoginForm(CustomComponent):
 
         @param listener
         """
-        self.addListener(LoginEvent, listener, self._ON_LOGIN_METHOD)
+        AbstractComponent.addListener(self, LoginEvent, listener,
+                self._ON_LOGIN_METHOD)
 
 
     def removeListener(self, listener):
@@ -196,7 +200,8 @@ class LoginForm(CustomComponent):
 
         @param listener
         """
-        self.removeListener(self.LoginEvent, listener, self._ON_LOGIN_METHOD)
+        AbstractComponent.removeListener(self, self.LoginEvent, listener,
+                self._ON_LOGIN_METHOD)
 
 
     def setWidth(self, width, unit):
@@ -226,8 +231,8 @@ class LoginForm(CustomComponent):
 
 
     def setUsernameCaption(self, usernameCaption):
-        """Sets the caption to show for the user name field. The caption cannot be
-        changed after the form has been shown to the user.
+        """Sets the caption to show for the user name field. The caption
+        cannot be changed after the form has been shown to the user.
 
         @param usernameCaption
         """
@@ -243,8 +248,8 @@ class LoginForm(CustomComponent):
 
 
     def setPasswordCaption(self, passwordCaption):
-        """Sets the caption to show for the password field. The caption cannot be
-        changed after the form has been shown to the user.
+        """Sets the caption to show for the password field. The caption
+        cannot be changed after the form has been shown to the user.
 
         @param passwordCaption
         """
@@ -260,28 +265,26 @@ class LoginForm(CustomComponent):
 
 
     def setLoginButtonCaption(self, loginButtonCaption):
-        """Sets the caption (button text) to show for the login button. The caption
-        cannot be changed after the form has been shown to the user.
+        """Sets the caption (button text) to show for the login button. The
+        caption cannot be changed after the form has been shown to the user.
 
         @param loginButtonCaption
         """
         self._loginButtonCaption = loginButtonCaption
 
 
-
-
 class LoginPage(IApplicationResource):
 
-    def __init__(self, _LoginForm_this_):
-        self._LoginForm_this_ = _LoginForm_this_
+    def __init__(self, form):
+        self._form = form
 
 
     def getApplication(self):
-        return self._LoginForm_this_.getApplication()
+        return self._form.getApplication()
 
 
     def getBufferSize(self):
-        return len(self._LoginForm_this_.getLoginHTML())
+        return len(self._form.getLoginHTML())
 
 
     def getCacheTime(self):
@@ -293,49 +296,47 @@ class LoginPage(IApplicationResource):
 
 
     def getStream(self):
-        return DownloadStream(StringIO(self._LoginForm_this_.getLoginHTML()),
-                              self._LoginForm_this_.getMIMEType(),
-                              self._LoginForm_this_.getFilename())
+        return DownloadStream(StringIO(self._form.getLoginHTML()),
+                self._form.getMIMEType(), self._form.getFilename())
 
 
     def getMIMEType(self):
         return "text/html; charset=utf-8"
 
 
-class ParamHandler(IParameterHandler):
+class ParameterHandler(IParameterHandler):
+
+    def __init__(self, form):
+        self._form = form
+
 
     def handleParameters(self, parameters):
         if 'username' in parameters:
-            self.getWindow().addURIHandler(self.uriHandler)
+            self._form.getWindow().addURIHandler(self.uriHandler)
             params = dict()
             # expecting single params
-            _0 = True
-            it = parameters.keys()
-            while True:
-                if _0 is True:
-                    _0 = False
-                if not it.hasNext():
-                    break
-                key = it.next()
+            for key in parameters:
                 value = parameters[key][0]
-                params.put(key, value)
-            event = LoginEvent(params)
+                params[key] = value
+            event = LoginEvent(params, self._form)
             self.fireEvent(event)
 
 
 class UriHandler(IUriHandler):
 
-    def __init__(self):
-        self._responce = '<html><body>Login form handeled.' \
-            + '<script type=\'text/javascript\'>top.vaadin.forceSync();' \
-            + '</script></body></html>'
+    def __init__(self, form):
+        self._form = form
+        self._responce = ('<html><body>Login form handeled.'
+            + '<script type=\'text/javascript\'>top.vaadin.forceSync();'
+            + '</script></body></html>')
 
 
     def handleURI(self, context, relativeUri):
-        if relativeUri is not None and relativeUri.contains('loginHandler'):
-            if self.window is not None:
-                self.window.removeURIHandler(self)
-            downloadStream = DownloadStream(StringIO(), 'text/html', 'loginSuccesfull')
+        if relativeUri is not None and 'loginHandler' in relativeUri:
+            if self._form.window is not None:
+                self._form.window.removeURIHandler(self)
+            downloadStream = DownloadStream(StringIO(), 'text/html',
+                    'loginSuccesfull')
             downloadStream.setCacheTime(-1)
             return downloadStream
         else:

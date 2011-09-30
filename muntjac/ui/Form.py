@@ -15,51 +15,50 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.data.Item import Editor, Item
-from muntjac.ui.AbstractField import AbstractField
 from muntjac.data.Buffered import Buffered, SourceException
-from muntjac.ui.DefaultFieldFactory import DefaultFieldFactory
 from muntjac.data.Validatable import Validatable
-from muntjac.ui.FormLayout import FormLayout
-from muntjac.ui.HorizontalLayout import HorizontalLayout
 from muntjac.data.Validator import InvalidValueException
-from muntjac.ui.Select import Select
-from muntjac.event.Action import Action, INotifier
-from muntjac.terminal.CompositeErrorMessage import CompositeErrorMessage
-from muntjac.event.ActionManager import ActionManager
 from muntjac.data.Property import ValueChangeListener
+from muntjac.event.ActionManager import ActionManager
+
+from muntjac.ui.AbstractField import AbstractField
+from muntjac.ui.DefaultFieldFactory import DefaultFieldFactory
 from muntjac.ui.AbstractComponent import AbstractComponent
 from muntjac.ui.IField import IField
 from muntjac.ui.CustomLayout import CustomLayout
 from muntjac.ui.IComponentContainer import IComponentContainer
 from muntjac.ui.GridLayout import GridLayout
 from muntjac.ui.IFieldFactory import IFieldFactory
+from muntjac.ui.FormLayout import FormLayout
+from muntjac.ui.HorizontalLayout import HorizontalLayout
+from muntjac.ui.Select import Select
+from muntjac.event.Action import Action, INotifier
+
+from muntjac.terminal.CompositeErrorMessage import CompositeErrorMessage
 
 
-class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, INotifier):
+class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action,
+           INotifier):
     """Form component provides easy way of creating and managing sets fields.
 
-    <p>
     <code>Form</code> is a container for fields implementing {@link IField}
     interface. It provides support for any layouts and provides buffering
     interface for easy connection of commit and discard buttons. All the form
     fields can be customized by adding validators, setting captions and icons,
     setting immediateness, etc. Also direct mechanism for replacing existing
     fields with selections is given.
-    </p>
 
-    <p>
     <code>Form</code> provides customizable editor for classes implementing
-    {@link com.vaadin.data.Item} interface. Also the form itself implements this
-    interface for easier connectivity to other items. To use the form as editor
-    for an item, just connect the item to form with
-    {@link Form#setItemDataSource(Item)}. If only a part of the item needs to be
-    edited, {@link Form#setItemDataSource(Item,Collection)} can be used instead.
-    After the item has been connected to the form, the automatically created
-    fields can be customized and new fields can be added. If you need to connect
-    a class that does not implement {@link com.vaadin.data.Item} interface, most
-    properties of any class following bean pattern, can be accessed trough
-    {@link com.vaadin.data.util.BeanItem}.
-    </p>
+    {@link com.vaadin.data.Item} interface. Also the form itself implements
+    this interface for easier connectivity to other items. To use the form as
+    editor for an item, just connect the item to form with
+    {@link Form#setItemDataSource(Item)}. If only a part of the item needs to
+    be edited, {@link Form#setItemDataSource(Item,Collection)} can be used
+    instead. After the item has been connected to the form, the automatically
+    created fields can be customized and new fields can be added. If you need
+    to connect a class that does not implement {@link com.vaadin.data.Item}
+    interface, most properties of any class following bean pattern, can be
+    accessed trough {@link com.vaadin.data.util.BeanItem}.
 
     @author IT Mill Ltd.
     @author Richard Lincoln
@@ -70,9 +69,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, INo
     def __init__(self, formLayout=None, fieldFactory=None):
         """Constructs a new form with default layout.
 
-        <p>
         By default the form uses {@link FormLayout}.
-        </p>
         ---
         Constructs a new form with given {@link Layout}.
 
@@ -129,9 +126,9 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, INo
         self._gridlayoutCursorY = -1
 
         # Keeps track of the Actions added to this component, and manages the
-        # painting and handling as well. Note that the extended AbstractField is a
-        # {@link ShortcutNotifier} and has a actionManager that delegates actions
-        # to the containing window. This one does not delegate.
+        # painting and handling as well. Note that the extended AbstractField
+        # is a {@link ShortcutNotifier} and has a actionManager that delegates
+        # actions to the containing window. This one does not delegate.
         self._ownActionManager = ActionManager(self)
 
         if fieldFactory is None:
@@ -175,14 +172,14 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, INo
 
 
     def getErrorMessage(self):
-        """The error message of a Form is the error of the first field with a
-        non-empty error.
+        """The error message of a Form is the error of the first field with
+        a non-empty error.
 
         Empty error messages of the contained fields are skipped, because an
-        empty error indicator would be confusing to the user, especially if there
-        are errors that have something to display. This is also the reason why
-        the calculation of the error message is separate from validation, because
-        validation fails also on empty errors.
+        empty error indicator would be confusing to the user, especially if
+        there are errors that have something to display. This is also the
+        reason why the calculation of the error message is separate from
+        validation, because validation fails also on empty errors.
         """
         # Reimplement the checking of validation error by using
         # getErrorMessage() recursively instead of validate().
@@ -197,38 +194,41 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, INo
                     if validationError is not None:
                         # Show caption as error for fields with empty errors
                         if '' == str(validationError):
-                            validationError = InvalidValueException(field.getCaption())
+                            e = InvalidValueException(field.getCaption())
+                            validationError = e
                         break
                     elif isinstance(f, IField) and not f.isValid():
                         # Something is wrong with the field, but no proper
                         # error is given. Generate one.
-                        validationError = InvalidValueException(field.getCaption())
+                        e = InvalidValueException(field.getCaption())
+                        validationError = e
                         break
 
         # Return if there are no errors at all
-        if self.getComponentError() is None and validationError is None \
-                and self._currentBufferedSourceException is None:
+        if (self.getComponentError() is None and validationError is None
+                and self._currentBufferedSourceException is None):
             return None
 
         # Throw combination of the error types
-        return CompositeErrorMessage([self.getComponentError(), validationError,
-                                      self._currentBufferedSourceException])
+        return CompositeErrorMessage([self.getComponentError(),
+                validationError, self._currentBufferedSourceException])
 
 
     def setValidationVisibleOnCommit(self, makeVisible):
         """Controls the making validation visible implicitly on commit.
 
-        Having commit() call setValidationVisible(true) implicitly is the default
-        behaviour. You can disable the implicit setting by setting this property
-        as false.
+        Having commit() call setValidationVisible(true) implicitly is the
+        default behaviour. You can disable the implicit setting by setting
+        this property as false.
 
-        It is useful, because you usually want to start with the form free of
-        errors and only display them after the user clicks Ok. You can disable
-        the implicit setting by setting this property as false.
+        It is useful, because you usually want to start with the form free
+        of errors and only display them after the user clicks Ok. You can
+        disable the implicit setting by setting this property as false.
 
         @param makeVisible
-                   If true (default), validation is made visible when commit() is
-                   called. If false, the visibility is left as it is.
+                   If true (default), validation is made visible when
+                   commit() is called. If false, the visibility is left
+                   as it is.
         """
         self._validationVisibleOnCommit = makeVisible
 
@@ -245,6 +245,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, INo
 
     def commit(self):
         # Commit changes to the data source.
+
         problems = None
 
         # Only commit on valid state if so requested
@@ -267,7 +268,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, INo
             except SourceException, e:
                 if problems is None:
                     problems = list()
-                problems.add(e)
+                problems.append(e)
 
         # No problems occurred
         if problems is None:
@@ -281,7 +282,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, INo
         index = 0
         for i in problems:
             causes[index] = i
-            index += 1
+            index += 1  # post increment
 
         e = SourceException(self, causes)
         self._currentBufferedSourceException = e
@@ -300,7 +301,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, INo
             except SourceException, e:
                 if problems is None:
                     problems = list()
-                problems.add(e)
+                problems.append(e)
 
         # No problems occurred
         if problems is None:
@@ -314,7 +315,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, INo
         index = 0
         for i in problems:
             causes[index] = i
-            index += 1
+            index += 1  # post increment
 
         e = SourceException(self, causes)
         self._currentBufferedSourceException = e
@@ -367,33 +368,36 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, INo
         # Checks inputs
         if (idd is None) or (prop is None):
             raise ValueError, 'Id and property must be non-null'
+
         # Checks that the property id is not reserved
         if self._propertyIds.contains(idd):
             return False
+
         self._propertyIds.add(idd)
         self._ownProperties.put(idd, prop)
+
         # Gets suitable field
         field = self._fieldFactory.createField(self, idd, self)
         if field is None:
             return False
+
         # Configures the field
         field.setPropertyDataSource(prop)
+
         # Register and attach the created field
         self.addField(idd, field)
+
         return True
 
 
     def addField(self, propertyId, field):
-        """Registers the field with the form and adds the field to the form layout.
+        """Registers the field with the form and adds the field to the
+        form layout.
 
-        <p>
         The property id must not be already used in the form.
-        </p>
 
-        <p>
         This field is added to the layout using the
         {@link #attachField(Object, IField)} method.
-        </p>
 
         @param propertyId
                    the Property id the the field.
@@ -406,20 +410,18 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, INo
 
 
     def registerField(self, propertyId, field):
-        """Register the field with the form. All registered fields are validated
-        when the form is validated and also committed when the form is committed.
+        """Register the field with the form. All registered fields are
+        validated when the form is validated and also committed when the
+        form is committed.
 
-        <p>
         The property id must not be already used in the form.
-        </p>
-
 
         @param propertyId
                    the Property id of the field.
         @param field
                    the IField that should be registered
         """
-        if (propertyId is None) or (field is None):
+        if propertyId is None or field is None:
             return
 
         self._fields[propertyId] = field
@@ -439,22 +441,20 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, INo
 
     def attachField(self, propertyId, field):
         """Adds the field to the form layout.
-        <p>
+
         The field is added to the form layout in the default position (the
         position used by {@link Layout#addComponent(Component)}. If the
-        underlying layout is a {@link CustomLayout} the field is added to the
-        CustomLayout location given by the string representation of the property
-        id using {@link CustomLayout#addComponent(Component, String)}.
-        </p>
+        underlying layout is a {@link CustomLayout} the field is added to
+        the CustomLayout location given by the string representation of the
+        property id using {@link CustomLayout.addComponent()}.
 
-        <p>
-        Override this method to control how the fields are added to the layout.
-        </p>
+        Override this method to control how the fields are added to the
+        layout.
 
         @param propertyId
         @param field
         """
-        if (propertyId is None) or (field is None):
+        if propertyId is None or field is None:
             return
 
         if isinstance(self._layout, CustomLayout):
@@ -466,17 +466,16 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, INo
     def getItemProperty(self, idd):
         """The property identified by the property id.
 
-        <p>
         The property data source of the field specified with property id is
         returned. If there is a (with specified property id) having no data
         source, the field is returned instead of the data source.
-        </p>
 
         @see com.vaadin.data.Item#getItemProperty(Object)
         """
         field = self._fields.get(idd)
         if field is None:
-            # field does not exist or it is not (yet) created for this property
+            # field does not exist or it is not (yet) created for
+            # this property
             return self._ownProperties.get(idd)
 
         prop = field.getPropertyDataSource()
@@ -517,12 +516,11 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, INo
 
 
     def detachField(self, field):
-        """Called when a form field is detached from a Form. Typically when a new
-        Item is assigned to Form via {@link #setItemDataSource(Item)}.
-        <p>
+        """Called when a form field is detached from a Form. Typically when
+        a new Item is assigned to Form via {@link #setItemDataSource(Item)}.
+
         Override this method to control how the fields are removed from the
         layout.
-        </p>
 
         @param field
                    the field to be detached from the forms layout.
@@ -535,8 +533,8 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, INo
     def removeAllProperties(self):
         """Removes all properties and fields from the form.
 
-        @return the Success of the operation. Removal of all fields succeeded if
-                (and only if) the return value is <code>true</code>.
+        @return the Success of the operation. Removal of all fields succeeded
+                if (and only if) the return value is <code>true</code>.
         """
         properties = list(self._propertyIds)
         success = True
@@ -555,26 +553,26 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, INo
     def setItemDataSource(self, newDataSource, propertyIds=None):
         """Sets the item datasource for the form.
 
-        <p>
         Setting item datasource clears any fields, the form might contain and
         adds all the properties as fields to the form.
-        </p>
 
         @see com.vaadin.data.Item.Viewer#setItemDataSource(Item)
         ---
         Set the item datasource for the form, but limit the form contents to
         specified properties of the item.
 
-        <p>
         Setting item datasource clears any fields, the form might contain and
-        adds the specified the properties as fields to the form, in the specified
-        order.
-        </p>
+        adds the specified the properties as fields to the form, in the
+        specified order.
 
         @see com.vaadin.data.Item.Viewer#setItemDataSource(Item)
         """
         if propertyIds is None:
-            self.setItemDataSource(newDataSource, newDataSource.getItemPropertyIds() if newDataSource is not None else None)
+            if newDataSource is not None:
+                self.setItemDataSource(newDataSource,
+                        newDataSource.getItemPropertyIds())
+            else:
+                self.setItemDataSource(None)
         else:
             if isinstance(self._layout, GridLayout):
                 gl = self._layout
@@ -601,7 +599,8 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, INo
             for idd in propertyIds:
                 prop = self._itemDatasource.getItemProperty(idd)
                 if idd is not None and prop is not None:
-                    f = self._fieldFactory.createField(self._itemDatasource, idd, self)
+                    f = self._fieldFactory.createField(self._itemDatasource,
+                            idd, self)
                     if f is not None:
                         f.setPropertyDataSource(prop)
                         self.addField(idd, f)
@@ -610,10 +609,8 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, INo
     def getLayout(self):
         """Gets the layout of the form.
 
-        <p>
-        By default form uses <code>OrderedLayout</code> with <code>form</code>
-        -style.
-        </p>
+        By default form uses <code>OrderedLayout</code> with
+        <code>form</code>-style.
 
         @return the Layout of the form.
         """
@@ -623,10 +620,8 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, INo
     def setLayout(self, newLayout):
         """Sets the layout of the form.
 
-        <p>
-        By default form uses <code>OrderedLayout</code> with <code>form</code>
-        -style.
-        </p>
+        By default form uses <code>OrderedLayout</code> with
+        <code>form</code>-style.
 
         @param newLayout
                    the Layout of the form.
@@ -660,11 +655,9 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, INo
     def replaceWithSelect(self, propertyId, values, descriptions):
         """Sets the form field to be selectable from static list of changes.
 
-        <p>
-        The list values and descriptions are given as array. The value-array must
-        contain the current value of the field and the lengths of the arrays must
-        match. Null values are not supported.
-        </p>
+        The list values and descriptions are given as array. The value-array
+        must contain the current value of the field and the lengths of the
+        arrays must match. Null values are not supported.
 
         @param propertyId
                    the id of the property.
@@ -673,19 +666,23 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, INo
         @return the select property generated
         """
         # Checks the parameters
-        if (propertyId is None) or (values is None) or (descriptions is None):
+        if propertyId is None or values is None or descriptions is None:
             raise ValueError, 'All parameters must be non-null'
 
         if len(values) != len(descriptions):
-            raise ValueError, 'Value and description list are of different size'
+            raise ValueError, \
+                    'Value and description list are of different size'
 
         # Gets the old field
         oldField = self._fields.get(propertyId)
         if oldField is None:
-            raise ValueError, 'IField with given propertyid \'' \
-                    + str(propertyId) + '\' can not be found.'
+            raise ValueError, ('IField with given propertyid \''
+                    + str(propertyId) + '\' can not be found.')
 
-        value = oldField.getValue() if oldField.getPropertyDataSource() is None else oldField.getPropertyDataSource().getValue()
+        if oldField.getPropertyDataSource() is None:
+            value = oldField.getValue()
+        else:
+            value = oldField.getPropertyDataSource().getValue()
 
         # Checks that the value exists and check if the select should
         # be forced in multiselect mode
@@ -693,30 +690,31 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, INo
         isMultiselect = False
         i = 0
         while i < len(values) and not found:
-            if (values[i] == value) \
-                    or (value is not None and value == values[i]):
+            if (values[i] == value
+                    or (value is not None and value == values[i])):
                 found = True
                 i += 1
 
         if value is not None and not found:
-            if isinstance(value, list):
+            if isinstance(value, (list, set)):
                 for val in value:
                     found = False
                     i = 0
                     while i < len(values) and not found:
-                        if (values[i] == val) or (val is not None and val == values[i]):
+                        if (values[i] == val or
+                                (val is not None and val == values[i])):
                             found = True
                         i += 1
                     if not found:
-                        raise ValueError, 'Currently selected value \'' \
-                            + val + '\' of property \'' \
-                            + str(propertyId) + '\' was not found'
+                        raise ValueError, ('Currently selected value \''
+                            + val + '\' of property \''
+                            + str(propertyId) + '\' was not found')
 
                 isMultiselect = True
             else:
-                raise ValueError, 'Current value \'' \
-                        + value + '\' of property \'' \
-                        + str(propertyId) + '\' was not found'
+                raise ValueError, ('Current value \''
+                        + value + '\' of property \''
+                        + str(propertyId) + '\' was not found')
 
         # Creates the new field matching to old field parameters
         newField = Select()
@@ -729,7 +727,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, INo
         newField.setWriteThrough(oldField.isWriteThrough())
 
         # Creates the options list
-        newField.addContainerProperty('desc', str, '')
+        newField.addContainerProperty('desc', basestring, '')
         newField.setItemCaptionPropertyId('desc')
         for idd in values:
             if idd is None:
@@ -740,7 +738,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, INo
                 item = newField.addItem(idd)
 
             if item is not None:
-                item.getItemProperty('desc').setValue(str(descriptions[i]))
+                item.getItemProperty('desc').setValue( str(descriptions[i]) )
 
         # Sets the property data source
         prop = oldField.getPropertyDataSource()
@@ -779,7 +777,8 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, INo
 
 
     def isValid(self):
-        """Tests the current value of the object against all registered validators
+        """Tests the current value of the object against all registered
+        validators
 
         @see com.vaadin.data.Validatable#isValid()
         """
@@ -830,14 +829,15 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, INo
     def setFieldFactory(self, fieldFactory):
         """Sets the field factory of Form.
 
-        <code>IFieldFactory</code> is used to create fields for form properties.
-        By default the form uses BaseFieldFactory to create IField instances.
+        <code>IFieldFactory</code> is used to create fields for form
+        properties. By default the form uses BaseFieldFactory to create
+        IField instances.
 
         @param fieldFactory
                    the New factory used to create the fields.
         @see IField
         @see FormFieldFactory
-        @deprecated use {@link #setFormFieldFactory(FormFieldFactory)} instead
+        @deprecated use {@link #setFormFieldFactory()} instead
         """
         raise DeprecationWarning, 'use setFormFieldFactory() instead'
         self._fieldFactory = fieldFactory
@@ -874,8 +874,11 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, INo
                     FormFieldFactory using
                     {@link #setFormFieldFactory(FormFieldFactory)}.
         """
+        raise DeprecationWarning, 'Use getFormFieldFactory() instead'
+
         if isinstance(self._fieldFactory, IFieldFactory):
             return self._fieldFactory
+
         return None
 
 
@@ -910,8 +913,8 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, INo
 
     def getFirstFocusableField(self):
         """Gets the first focusable field in form. If there are enabled,
-        non-read-only fields, the first one of them is returned. Otherwise, the
-        field for the first property (or null if none) is returned.
+        non-read-only fields, the first one of them is returned. Otherwise,
+        the field for the first property (or null if none) is returned.
 
         @return the IField.
         """
@@ -922,9 +925,9 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, INo
                     if field.isEnabled() and not field.isReadOnly():
                         return field
 
-            # fallback: first field if none of the fields is enabled and
-            # writable
-            idd = iter( self.getItemPropertyIds() ).next()  # FIXME: translate iterator
+            # fallback: first field if none of the fields is enabled
+            # and writable
+            idd = iter( self.getItemPropertyIds() ).next()
             if idd is not None:
                 return self.getField(idd)
 
@@ -998,8 +1001,8 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, INo
 
 
     def setImmediate(self, immediate):
-        """Setting the form to be immediate also sets all the fields of the form to
-        the same state.
+        """Setting the form to be immediate also sets all the fields
+        of the form to the same state.
         """
         super(Form, self).setImmediate(immediate)
         for f in self._fields.values():
@@ -1025,8 +1028,9 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, INo
 
 
     def getFooter(self):
-        """Returns a layout that is rendered below normal form contents. This area
-        can be used for example to include buttons related to form contents.
+        """Returns a layout that is rendered below normal form contents.
+        This area can be used for example to include buttons related to
+        form contents.
 
         @return layout rendered below normal form contents.
         """
@@ -1037,10 +1041,9 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, INo
 
 
     def setFooter(self, newFormFooter):
-        """Sets the layout that is rendered below normal form contens.
+        """Sets the layout that is rendered below normal form contents.
 
-        @param newFormFooter
-                   the new Layout
+        @param newFormFooter: the new Layout
         """
         if self._formFooter is not None:
             self._formFooter.setParent(None)
@@ -1058,12 +1061,14 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action, INo
 
 
     def getOwnActionManager(self):
-        """Gets the {@link ActionManager} responsible for handling {@link Action}s
-        added to this Form.<br/>
+        """Gets the {@link ActionManager} responsible for handling
+        {@link Action}s added to this Form.
+
         Note that Form has another ActionManager inherited from
-        {@link AbstractField}. The ownActionManager handles Actions attached to
-        this Form specifically, while the ActionManager in AbstractField
-        delegates to the containing Window (i.e global Actions).
+        {@link AbstractField}. The ownActionManager handles Actions
+        attached to this Form specifically, while the ActionManager
+        in AbstractField delegates to the containing Window (i.e global
+        Actions).
 
         @return
         """

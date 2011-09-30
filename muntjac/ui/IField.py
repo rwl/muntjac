@@ -14,15 +14,19 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.ui.IComponent import IComponent, IFocusable, Event as ComponentEvent
+from muntjac.data import Property
+
 from muntjac.data.BufferedValidatable import BufferedValidatable
-from muntjac.data.Property import Property, ValueChangeEvent,\
-    ValueChangeNotifier, ValueChangeListener, Editor
+
+from muntjac.ui.IComponent import \
+    IComponent, IFocusable, Event as ComponentEvent
 
 
-class IField(IComponent, BufferedValidatable, Property, ValueChangeNotifier,
-            ValueChangeListener, Editor, IFocusable):
-    """@author IT Mill Ltd."""
+class IField(IComponent, BufferedValidatable, Property.ValueChangeNotifier,
+            Property.ValueChangeListener, Property.Editor, IFocusable):
+    """@author IT Mill Ltd.
+    @author Richard Lincoln
+    """
 
     def setCaption(self, caption):
         """Sets the Caption.
@@ -67,7 +71,8 @@ class IField(IComponent, BufferedValidatable, Property, ValueChangeNotifier,
 
 
     def setRequiredError(self, requiredMessage):
-        """Sets the error message to be displayed if a required field is empty.
+        """Sets the error message to be displayed if a required field is
+        empty.
 
         @param requiredMessage
                    Error message.
@@ -77,8 +82,8 @@ class IField(IComponent, BufferedValidatable, Property, ValueChangeNotifier,
 
 
     def getRequiredError(self):
-        """Gets the error message that is to be displayed if a required field is
-        empty.
+        """Gets the error message that is to be displayed if a required
+        field is empty.
 
         @return Error message.
         @since 5.2.6
@@ -86,9 +91,9 @@ class IField(IComponent, BufferedValidatable, Property, ValueChangeNotifier,
         raise NotImplementedError
 
 
-class ValueChangeEvent(ComponentEvent, Property, ValueChangeEvent):
-    """An <code>Event</code> object specifying the IField whose value has been
-    changed.
+class ValueChangeEvent(ComponentEvent, Property.ValueChangeEvent):
+    """An <code>Event</code> object specifying the IField whose value has
+    been changed.
 
     @author IT Mill Ltd.
     @author Richard Lincoln
@@ -97,7 +102,8 @@ class ValueChangeEvent(ComponentEvent, Property, ValueChangeEvent):
     """
 
     def __init__(self, source):
-        """Constructs a new event object with the specified source field object.
+        """Constructs a new event object with the specified source field
+        object.
 
         @param source
                    the field that caused the event.

@@ -18,22 +18,23 @@ from muntjac.ui.OrderedLayout import OrderedLayout
 
 
 class ExpandLayout(OrderedLayout):
-    """A layout that will give one of it's components as much space as possible,
-    while still showing the other components in the layout. The other components
-    will in effect be given a fixed sized space, while the space given to the
-    expanded component will grow/shrink to fill the rest of the space available -
-    for instance when re-sizing the window.
+    """A layout that will give one of it's components as much space as
+    possible, while still showing the other components in the layout. The
+    other components will in effect be given a fixed sized space, while the
+    space given to the expanded component will grow/shrink to fill the rest
+    of the space available - for instance when re-sizing the window.
 
     Note that this layout is 100% in both directions by default ({link
-    {@link #setSizeFull()}). Remember to set the units if you want to specify a
-    fixed size. If the layout fails to show up, check that the parent layout is
-    actually giving some space.
+    {@link #setSizeFull()}). Remember to set the units if you want to
+    specify a fixed size. If the layout fails to show up, check that the
+    parent layout is actually giving some space.
 
     @deprecated Deprecated in favor of the new OrderedLayout
     """
-    raise DeprecationWarning
 
     def __init__(self, orientation=None):
+        raise DeprecationWarning, 'use OrderedLayout'
+
         self._expanded = None
 
         if orientation is None:
@@ -44,15 +45,13 @@ class ExpandLayout(OrderedLayout):
 
 
     def expand(self, c):
-        """@param c
-                   Component which container will be maximized
+        """@param c: Component which container will be maximized
         """
         if self._expanded is not None:
-            # Ignore error if component has been removed
             try:
                 self.setExpandRatio(self._expanded, 0.0)
             except ValueError:
-                pass
+                pass  # Ignore error if component has been removed
 
         self._expanded = c
         if self._expanded is not None:
@@ -79,7 +78,7 @@ class ExpandLayout(OrderedLayout):
     def removeComponent(self, c):
         super(ExpandLayout, self).removeComponent(c)
         if c == self._expanded:
-            try:  ## FIXEM implement iterator
+            try:
                 self.expand(self.getComponentIterator().next())
             except StopIteration:
                 self.expand(None)
