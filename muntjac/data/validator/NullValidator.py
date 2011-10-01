@@ -14,10 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.data.Validator import Validator, InvalidValueException
+from muntjac.data.IValidator import IValidator, InvalidValueException
 
 
-class NullValidator(Validator):
+class NullValidator(IValidator):
     """This validator is used for validating properties that do or do not allow null
     values. By default, nulls are not allowed.
 
@@ -47,7 +47,7 @@ class NullValidator(Validator):
 
         @param value
                    the value to validate.
-        @throws Validator.InvalidValueException
+        @throws IValidator.InvalidValueException
                     if the value was invalid.
         """
         if (self._onlyNullAllowed and value is not None) \

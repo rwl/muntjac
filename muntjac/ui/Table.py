@@ -24,7 +24,7 @@ from muntjac.ui.IComponentContainer import IComponentContainer
 from muntjac.ui.IComponent import IComponent, Event as ComponentEvent
 from muntjac.ui.AbstractComponent import AbstractComponent
 
-from muntjac.data.Property import ValueChangeNotifier
+from muntjac.data.IProperty import IValueChangeNotifier
 from muntjac.event.MouseEvents import ClickEvent
 from muntjac.event import Action
 from muntjac.event.DataBoundTransferable import DataBoundTransferable
@@ -35,7 +35,7 @@ from muntjac.terminal.KeyMapper import KeyMapper
 from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
 from muntjac.terminal.gwt.client.ui.VScrollTable import VScrollTable
 
-from muntjac.data import Container
+from muntjac.data import IContainer
 
 from muntjac.event.dd.acceptcriteria.ServerSideCriterion import \
     ServerSideCriterion
@@ -47,7 +47,7 @@ from muntjac.event.ItemClickEvent import \
     ItemClickEvent, IItemClickNotifier, IItemClickSource
 
 from muntjac.data.util.IndexedContainer import \
-    ItemSetChangeEvent, IndexedContainer
+    IItemSetChangeEvent, IndexedContainer
 
 from muntjac.terminal import clsname
 
@@ -55,8 +55,8 @@ from muntjac.terminal import clsname
 logger = logging.getLogger(__name__)
 
 
-class Table(AbstractSelect, Action.IContainer, Container.Ordered,
-            Container.Sortable, IItemClickSource, IItemClickNotifier,
+class Table(AbstractSelect, Action.IContainer, IContainer.IOrdered,
+            IContainer.ISortable, IItemClickSource, IItemClickNotifier,
             IDragSource, IDropTarget):
     """<code>Table</code> is used for representing data or components in a
     pageable and selectable table.
@@ -121,7 +121,7 @@ class Table(AbstractSelect, Action.IContainer, Container.Ordered,
 
     # Row caption mode: Index of the item is used as item caption. The
     # index mode can only be used with the containers implementing
-    # Container.Indexed interface.
+    # IContainer.IIndexed interface.
     ROW_HEADER_MODE_INDEX = AbstractSelect.ITEM_CAPTION_MODE_INDEX
 
     # Row caption mode: Item captions are explicitly specified.
@@ -149,7 +149,7 @@ class Table(AbstractSelect, Action.IContainer, Container.Ordered,
 
 
     def __init__(self, caption=None, dataSource=None):
-        """Creates a new table with caption and connect it to a Container.
+        """Creates a new table with caption and connect it to a IContainer.
 
         @param caption
         @param dataSource
@@ -323,7 +323,7 @@ class Table(AbstractSelect, Action.IContainer, Container.Ordered,
                 raise ValueError, 'Ids must be non-nulls'
             elif (visibleColumns[i] not in properties
                     and (visibleColumns[i] not in self._columnGenerators)):
-                raise ValueError, ('Ids must exist in the Container or '
+                raise ValueError, ('Ids must exist in the IContainer or '
                     'as a generated column , missing id: '
                     + visibleColumns[i])
 
@@ -690,7 +690,7 @@ class Table(AbstractSelect, Action.IContainer, Container.Ordered,
         @return the Value of property currentPageFirstItem.
         """
         # Priorise index over id if indexes are supported
-        if isinstance(self.items, Container.Indexed):
+        if isinstance(self.items, IContainer.IIndexed):
             index = self.getCurrentPageFirstItemIndex()
             idd = None
             if index >= 0 and index < len(self):
@@ -718,7 +718,7 @@ class Table(AbstractSelect, Action.IContainer, Container.Ordered,
         """
         # Gets the corresponding index
         index = -1
-        if isinstance(self.items, Container.Indexed):
+        if isinstance(self.items, IContainer.IIndexed):
             index = self.indexOfId(currentPageFirstItemId)
         else:
             # If the table item container does not have index, we have to
@@ -988,7 +988,7 @@ class Table(AbstractSelect, Action.IContainer, Container.Ordered,
         if newIndex < 0:
             newIndex = 0
 
-        # minimize Container.size() calls which may be expensive. For
+        # minimize IContainer.size() calls which may be expensive. For
         # example it may cause sql query.
         size = self.size()
 
@@ -1004,7 +1004,7 @@ class Table(AbstractSelect, Action.IContainer, Container.Ordered,
             newIndex = maxIndex
 
         # Refresh first item id
-        if isinstance(self.items, Container.Indexed):
+        if isinstance(self.items, IContainer.IIndexed):
             try:
                 self._currentPageFirstItemId = self.getIdByIndex(newIndex)
             except IndexError:
@@ -1185,7 +1185,7 @@ class Table(AbstractSelect, Action.IContainer, Container.Ordered,
                 return
 
             # Gets the first item id
-            if isinstance(self.items, Container.Indexed):
+            if isinstance(self.items, IContainer.IIndexed):
                 idd = self.getIdByIndex(firstIndex)
             else:
                 idd = self.firstItemId()
@@ -1284,7 +1284,7 @@ class Table(AbstractSelect, Action.IContainer, Container.Ordered,
                         cells[self.CELL_FIRSTCOL + j][i] = value
 
                 # Gets the next item idd
-                if isinstance(self.items, Container.Indexed):
+                if isinstance(self.items, IContainer.IIndexed):
                     index = firstIndex + i + 1
                     if index < totalRows:
                         idd = self.getIdByIndex(index)
@@ -1316,7 +1316,7 @@ class Table(AbstractSelect, Action.IContainer, Container.Ordered,
 
 
     def listenProperty(self, p, oldListenedProperties):
-        if isinstance(p, ValueChangeNotifier):
+        if isinstance(p, IValueChangeNotifier):
             if ((oldListenedProperties is None)
                     or (p not in oldListenedProperties)):
                 p.addListener(self)
@@ -1405,7 +1405,7 @@ class Table(AbstractSelect, Action.IContainer, Container.Ordered,
         specified.</li>
         <li>{@link #ROW_HEADER_MODE_INDEX}: The index of the item is used as row
         caption. The index mode can only be used with the containers implementing
-        <code>Container.Indexed</code> interface.</li>
+        <code>IContainer.IIndexed</code> interface.</li>
         </ul>
         The default value is {@link #ROW_HEADER_MODE_HIDDEN}
 
@@ -1475,7 +1475,7 @@ class Table(AbstractSelect, Action.IContainer, Container.Ordered,
         for i in range(len(availableCols)):
             item.getItemProperty( availableCols[i] ).setValue(cells[i])
 
-        if not isinstance(self.items, Container.ItemSetChangeNotifier):
+        if not isinstance(self.items, IContainer.IItemSetChangeNotifier):
             self.resetPageBuffer()
             self.refreshRenderedCells()
 
@@ -1499,7 +1499,7 @@ class Table(AbstractSelect, Action.IContainer, Container.Ordered,
 
         # Assures that the data source is ordered by making unordered
         # containers ordered by wrapping them
-        if isinstance(newDataSource, Container.Ordered):
+        if isinstance(newDataSource, IContainer.IOrdered):
             super(Table, self).setContainerDataSource(newDataSource)
         else:
             raise NotImplementedError
@@ -2056,7 +2056,7 @@ class Table(AbstractSelect, Action.IContainer, Container.Ordered,
             target.addVariable(self, 'firstvisible', first)
 
         # Sorting
-        if isinstance(self.getContainerDataSource(), Container.Sortable):
+        if isinstance(self.getContainerDataSource(), IContainer.ISortable):
             target.addVariable(self, 'sortcolumn',
                     self._columnIdMap.key(self._sortContainerPropertyId))
             target.addVariable(self, 'sortascending', self._sortAscending)
@@ -2337,7 +2337,7 @@ class Table(AbstractSelect, Action.IContainer, Container.Ordered,
     def addActionHandler(self, actionHandler):
         """Registers a new action handler for this container
 
-        @see Action.Container.addActionHandler(Action.Handler)
+        @see Action.IContainer.addActionHandler(Action.Handler)
         """
         if actionHandler is not None:
 
@@ -2354,7 +2354,7 @@ class Table(AbstractSelect, Action.IContainer, Container.Ordered,
         """Removes a previously registered action handler for the contents
         of this container.
 
-        @see Container.removeActionHandler(Action.Handler)
+        @see IContainer.removeActionHandler(Action.Handler)
         """
         if (self._actionHandlers is not None
                 and actionHandler in self._actionHandlers):
@@ -2426,9 +2426,9 @@ class Table(AbstractSelect, Action.IContainer, Container.Ordered,
 
 
     def removeAllItems(self):
-        """Removes all Items from the Container.
+        """Removes all Items from the IContainer.
 
-        @see com.vaadin.data.Container#removeAllItems()
+        @see com.vaadin.data.IContainer#removeAllItems()
         """
         self._currentPageFirstItemId = None
         self._currentPageFirstItemIndex = 0
@@ -2437,9 +2437,9 @@ class Table(AbstractSelect, Action.IContainer, Container.Ordered,
 
     def removeItem(self, itemId):
         """Removes the Item identified by <code>ItemId</code> from the
-        Container.
+        IContainer.
 
-        @see com.vaadin.data.Container#removeItem(Object)
+        @see com.vaadin.data.IContainer#removeItem(Object)
         """
         nextItemId = self.nextItemId(itemId)
         ret = super(Table, self).removeItem(itemId)
@@ -2447,7 +2447,7 @@ class Table(AbstractSelect, Action.IContainer, Container.Ordered,
                 and itemId == self._currentPageFirstItemId):
             self._currentPageFirstItemId = nextItemId
 
-        if not isinstance(self.items, Container.ItemSetChangeNotifier):
+        if not isinstance(self.items, IContainer.IItemSetChangeNotifier):
             self.resetPageBuffer()
             self.refreshRenderedCells()
 
@@ -2456,9 +2456,9 @@ class Table(AbstractSelect, Action.IContainer, Container.Ordered,
 
     def removeContainerProperty(self, propertyId):
         """Removes a Property specified by the given Property ID from the
-        Container.
+        IContainer.
 
-        @see com.vaadin.data.Container#removeContainerProperty(Object)
+        @see com.vaadin.data.IContainer#removeContainerProperty(Object)
         """
         # If a visible property is removed, remove the corresponding column
         self._visibleColumns.remove(propertyId)
@@ -2478,7 +2478,7 @@ class Table(AbstractSelect, Action.IContainer, Container.Ordered,
                    the class of the property.
         @param defaultValue
                    the default value given for all existing items.
-        @see com.vaadin.data.Container#addContainerProperty(Object, Class,
+        @see com.vaadin.data.IContainer#addContainerProperty(Object, Class,
              Object)
         ---
         Adds a new property to the table and show it as a visible column.
@@ -2499,7 +2499,7 @@ class Table(AbstractSelect, Action.IContainer, Container.Ordered,
                    the Alignment of the column. Null implies align left.
         @throws UnsupportedOperationException
                     if the operation is not supported.
-        @see com.vaadin.data.Container#addContainerProperty(Object, Class,
+        @see com.vaadin.data.IContainer#addContainerProperty(Object, Class,
              Object)
         """
         args = args
@@ -2515,7 +2515,7 @@ class Table(AbstractSelect, Action.IContainer, Container.Ordered,
                 if visibleColAdded:
                     self._visibleColumns.remove(propertyId)
                 return False
-            if not isinstance(self.items, Container.PropertySetChangeNotifier):
+            if not isinstance(self.items, IContainer.IPropertySetChangeNotifier):
                 self.resetPageBuffer()
                 self.refreshRenderedCells()
             return True
@@ -2536,7 +2536,7 @@ class Table(AbstractSelect, Action.IContainer, Container.Ordered,
         """Adds a generated column to the Table.
 
         A generated column is a column that exists only in the Table, not as a
-        property in the underlying Container. It shows up just as a regular
+        property in the underlying IContainer. It shows up just as a regular
         column.
 
         A generated column will override a property with the same id, so that
@@ -2628,14 +2628,14 @@ class Table(AbstractSelect, Action.IContainer, Container.Ordered,
 
 
     def containerItemSetChange(self, event):
-        """Container datasource item set change. Table must flush its buffers
+        """IContainer datasource item set change. Table must flush its buffers
         on change.
 
-        @see Container.ItemSetChangeListener.containerItemSetChange()
+        @see IContainer.ItemSetChangeListener.containerItemSetChange()
         """
         super(Table, self).containerItemSetChange(event)
 
-        if isinstance(event, ItemSetChangeEvent):
+        if isinstance(event, IItemSetChangeEvent):
             evt = event
             # if the event is not a global one and the added item is outside
             # the visible/buffered area, no need to do anything
@@ -2658,10 +2658,10 @@ class Table(AbstractSelect, Action.IContainer, Container.Ordered,
 
 
     def containerPropertySetChange(self, event):
-        """Container datasource property set change. Table must flush its
+        """IContainer datasource property set change. Table must flush its
         buffers on change.
 
-        @see Container.PropertySetChangeListener.containerPropertySetChange()
+        @see IContainer.PropertySetChangeListener.containerPropertySetChange()
         """
         self.disableContentRefreshing()
         super(Table, self).containerPropertySetChange(event)
@@ -2703,7 +2703,7 @@ class Table(AbstractSelect, Action.IContainer, Container.Ordered,
         """Gets the ID of the Item following the Item that corresponds to
         itemId.
 
-        @see com.vaadin.data.Container.Ordered#nextItemId(java.lang.Object)
+        @see com.vaadin.data.IContainer.IOrdered#nextItemId(java.lang.Object)
         """
         return self.items.nextItemId(itemId)
 
@@ -2712,41 +2712,41 @@ class Table(AbstractSelect, Action.IContainer, Container.Ordered,
         """Gets the ID of the Item preceding the Item that corresponds to
         the itemId.
 
-        @see com.vaadin.data.Container.Ordered#prevItemId(java.lang.Object)
+        @see com.vaadin.data.IContainer.IOrdered#prevItemId(java.lang.Object)
         """
         return self.items.prevItemId(itemId)
 
 
     def firstItemId(self):
-        """Gets the ID of the first Item in the Container.
+        """Gets the ID of the first Item in the IContainer.
 
-        @see com.vaadin.data.Container.Ordered#firstItemId()
+        @see com.vaadin.data.IContainer.IOrdered#firstItemId()
         """
         return self.items.firstItemId()
 
 
     def lastItemId(self):
-        """Gets the ID of the last Item in the Container.
+        """Gets the ID of the last Item in the IContainer.
 
-        @see com.vaadin.data.Container.Ordered#lastItemId()
+        @see com.vaadin.data.IContainer.IOrdered#lastItemId()
         """
         return self.items.lastItemId()
 
 
     def isFirstId(self, itemId):
         """Tests if the Item corresponding to the given Item ID is the first
-        Item in the Container.
+        Item in the IContainer.
 
-        @see com.vaadin.data.Container.Ordered#isFirstId(java.lang.Object)
+        @see com.vaadin.data.IContainer.IOrdered#isFirstId(java.lang.Object)
         """
         return self.items.isFirstId(itemId)
 
 
     def isLastId(self, itemId):
         """Tests if the Item corresponding to the given Item ID is the last
-        Item in the Container.
+        Item in the IContainer.
 
-        @see com.vaadin.data.Container.Ordered#isLastId(java.lang.Object)
+        @see com.vaadin.data.IContainer.IOrdered#isLastId(java.lang.Object)
         """
         return self.items.isLastId(itemId)
 
@@ -2754,11 +2754,11 @@ class Table(AbstractSelect, Action.IContainer, Container.Ordered,
     def addItemAfter(self, previousItemId, newItemId=None):
         """Adds new item after the given item.
 
-        @see com.vaadin.data.Container.Ordered#addItemAfter(java.lang.Object)
+        @see com.vaadin.data.IContainer.IOrdered#addItemAfter(java.lang.Object)
         ---
         Adds new item after the given item.
 
-        @see com.vaadin.data.Container.Ordered#addItemAfter(java.lang.Object,
+        @see com.vaadin.data.IContainer.IOrdered#addItemAfter(java.lang.Object,
              java.lang.Object)
         """
         if newItemId is None:
@@ -2766,7 +2766,7 @@ class Table(AbstractSelect, Action.IContainer, Container.Ordered,
         else:
             item = self.items.addItemAfter(previousItemId, newItemId)
 
-        if not isinstance(self.items, Container.ItemSetChangeNotifier):
+        if not isinstance(self.items, IContainer.IItemSetChangeNotifier):
             self.resetPageBuffer()
             self.refreshRenderedCells()
 
@@ -2880,15 +2880,15 @@ class Table(AbstractSelect, Action.IContainer, Container.Ordered,
 
         @throws UnsupportedOperationException
                     if the container data source does not implement
-                    Container.Sortable
-        @see com.vaadin.data.Container.Sortable#sort(java.lang.Object[],
+                    IContainer.ISortable
+        @see com.vaadin.data.IContainer.ISortable#sort(java.lang.Object[],
              boolean[])
         ---
         Sorts the table by currently selected sorting column.
 
         @throws UnsupportedOperationException
                     if the container data source does not implement
-                    Container.Sortable
+                    IContainer.ISortable
         """
         nargs = len(args)
         if nargs == 0:
@@ -2898,7 +2898,7 @@ class Table(AbstractSelect, Action.IContainer, Container.Ordered,
         elif nargs == 2:
             propertyId, ascending = args
             c = self.getContainerDataSource()
-            if isinstance(c, Container.Sortable):
+            if isinstance(c, IContainer.ISortable):
                 pageIndex = self.getCurrentPageFirstItemIndex()
                 c.sort(propertyId, ascending)
                 self.setCurrentPageFirstItemIndex(pageIndex)
@@ -2914,10 +2914,10 @@ class Table(AbstractSelect, Action.IContainer, Container.Ordered,
     def getSortableContainerPropertyIds(self):
         """Gets the container property IDs, which can be used to sort the item.
 
-        @see com.vaadin.data.Container.Sortable#getSortableContainerPropertyIds()
+        @see com.vaadin.data.IContainer.ISortable#getSortableContainerPropertyIds()
         """
         c = self.getContainerDataSource()
-        if isinstance(c, Container.Sortable) and not self.isSortDisabled():
+        if isinstance(c, IContainer.ISortable) and not self.isSortDisabled():
             return c.getSortableContainerPropertyIds()
         else:
             return list()
@@ -2926,7 +2926,7 @@ class Table(AbstractSelect, Action.IContainer, Container.Ordered,
     def getSortContainerPropertyId(self):
         """Gets the currently sorted column property ID.
 
-        @return the Container property id of the currently sorted column.
+        @return the IContainer property id of the currently sorted column.
         """
         return self._sortContainerPropertyId
 
@@ -2935,7 +2935,7 @@ class Table(AbstractSelect, Action.IContainer, Container.Ordered,
         """Sets the currently sorted column property id.
 
         @param propertyId
-                   the Container property id of the currently sorted column.
+                   the IContainer property id of the currently sorted column.
         ---
         Internal method to set currently sorted column property id. With
         doSort flag actual sorting may be bypassed.
@@ -3281,7 +3281,7 @@ class TableDragMode(object):
 
 class IColumnGenerator(object):
     """Used to create "generated columns"; columns that exist only in the
-    Table, not in the underlying Container. Implement this interface and pass
+    Table, not in the underlying IContainer. Implement this interface and pass
     it to Table.addGeneratedColumn along with an id for the column to be
     generated.
     """

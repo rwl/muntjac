@@ -23,11 +23,11 @@ from muntjac.data.util.ObjectProperty import ObjectProperty
 from muntjac.ui.AbstractComponent import AbstractComponent
 from muntjac.ui.IComponent import Event as ComponentEvent
 
-from muntjac.data import Property
+from muntjac.data import IProperty
 
 
-class Label(AbstractComponent, Property.Property, Property.Viewer,
-            Property.ValueChangeListener, Property.ValueChangeNotifier):
+class Label(AbstractComponent, IProperty.IProperty, IProperty.IViewer,
+            IProperty.IValueChangeListener, IProperty.IValueChangeNotifier):
     """Label component for showing non-editable short texts.
 
     The label content can be set to the modes specified by the final members
@@ -208,9 +208,9 @@ class Label(AbstractComponent, Property.Property, Property.Viewer,
 
 
     def getType(self):
-        """Gets the type of the Property.
+        """Gets the type of the IProperty.
 
-        @see com.vaadin.data.Property#getType()
+        @see com.vaadin.data.IProperty#getType()
         """
         if self._dataSource is None:
             raise ValueError, self._DATASOURCE_MUST_BE_SET
@@ -221,7 +221,7 @@ class Label(AbstractComponent, Property.Property, Property.Viewer,
         """Gets the viewing data-source property.
 
         @return the data source property.
-        @see com.vaadin.data.Property.Viewer#getPropertyDataSource()
+        @see com.vaadin.data.IProperty.IViewer#getPropertyDataSource()
         """
         return self._dataSource
 
@@ -230,13 +230,13 @@ class Label(AbstractComponent, Property.Property, Property.Viewer,
         """Sets the property as data-source for viewing.
 
         @param newDataSource
-                   the new data source Property
-        @see Property.Viewer#setPropertyDataSource()
+                   the new data source IProperty
+        @see IProperty.IViewer#setPropertyDataSource()
         """
         # Stops listening the old data source changes
         if (self._dataSource is not None
                 and issubclass(self._dataSource.__class__,
-                        Property.ValueChangeNotifier)):
+                        IProperty.IValueChangeNotifier)):
             self._dataSource.removeListener(self)
 
         # Sets the new data source
@@ -245,7 +245,7 @@ class Label(AbstractComponent, Property.Property, Property.Viewer,
         # Listens the new data source if possible
         if (self._dataSource is not None
                 and issubclass(self._dataSource.__class__,
-                        Property.ValueChangeNotifier)):
+                        IProperty.IValueChangeNotifier)):
             self._dataSource.addListener(self)
 
         self.requestRepaint()
@@ -315,7 +315,7 @@ class Label(AbstractComponent, Property.Property, Property.Viewer,
             self.requestRepaint()
 
 
-    _VALUE_CHANGE_METHOD = getattr(Property.ValueChangeListener, "valueChange")
+    _VALUE_CHANGE_METHOD = getattr(IProperty.IValueChangeListener, "valueChange")
 
 
     def addListener(self, listener):
@@ -401,7 +401,7 @@ class Label(AbstractComponent, Property.Property, Property.Viewer,
         return result
 
 
-class ValueChangeEvent(ComponentEvent, Property.ValueChangeEvent):
+class ValueChangeEvent(ComponentEvent, IProperty.ValueChangeEvent):
     """Value change event."""
 
     def __init__(self, source):
@@ -410,5 +410,5 @@ class ValueChangeEvent(ComponentEvent, Property.ValueChangeEvent):
 
 
     def getProperty(self):
-        """Gets the Property that has been modified."""
+        """Gets the IProperty that has been modified."""
         return self.getSource()

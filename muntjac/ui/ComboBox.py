@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.ui.Select import Select
-from muntjac.data.Container import Container
+from muntjac.data.IContainer import IContainer
 
 
 class ComboBox(Select):
@@ -41,7 +41,7 @@ class ComboBox(Select):
             self.setMultiSelect(False)
             self.setNewItemsAllowed(False)
         elif nargs == 2:
-            if isinstance(args[1], Container):
+            if isinstance(args[1], IContainer):
                 caption, dataSource = args
                 super(ComboBox, self)(caption, dataSource)
                 self.setMultiSelect(False)

@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.ui.AbstractSelect import AbstractSelect
-from muntjac.data.Container import Container
+from muntjac.data.IContainer import IContainer
 
 from muntjac.event.FieldEvents import \
     BlurEvent, IBlurListener, IBlurNotifier, FocusEvent, \
@@ -39,7 +39,7 @@ class OptionGroup(AbstractSelect, IBlurNotifier, IFocusNotifier):
             caption, = args
             super(OptionGroup, self)(caption)
         elif nargs == 2:
-            if isinstance(args[1], Container):
+            if isinstance(args[1], IContainer):
                 caption, dataSource = args
                 super(OptionGroup, self)(caption, dataSource)
             else:

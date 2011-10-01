@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.event.TransferableImpl import TransferableImpl
-from muntjac.data.Container import Viewer
+from muntjac.data.IContainer import IViewer
 
 
 class DataBoundTransferable(TransferableImpl):
@@ -25,7 +25,7 @@ class DataBoundTransferable(TransferableImpl):
     table column identifier when transferring a single table cell).
 
     The component must implement the interface
-    {@link com.vaadin.data.Container.Viewer}.
+    {@link com.vaadin.data.Container.IViewer}.
 
     In most cases, receivers of data transfers should depend on this class
     instead of its concrete subclasses.
@@ -58,13 +58,13 @@ class DataBoundTransferable(TransferableImpl):
     def getSourceContainer(self):
         """Returns the container data source from which the transfer occurs.
 
-        {@link com.vaadin.data.Container.Viewer#getContainerDataSource()} is used
+        {@link com.vaadin.data.Container.IViewer#getContainerDataSource()} is used
         to obtain the underlying container of the source component.
 
         @return Container
         """
         sourceComponent = self.getSourceComponent()
-        if isinstance(sourceComponent, Viewer):
+        if isinstance(sourceComponent, IViewer):
             return sourceComponent.getContainerDataSource()
         else:
             # this should not happen

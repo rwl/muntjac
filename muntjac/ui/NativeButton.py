@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.ui.Button import Button, ClickListener
-from muntjac.data.Property import Property
+from muntjac.data.IProperty import IProperty
 
 
 class NativeButton(Button):
@@ -47,7 +47,7 @@ class NativeButton(Button):
             if isinstance(args[1], ClickListener):
                 caption, listener = args
                 super(NativeButton, self)(caption, listener)
-            elif isinstance(args[1], Property):
+            elif isinstance(args[1], IProperty):
                 caption, dataSource = args
                 super(NativeButton, self)(caption, dataSource)
             else:

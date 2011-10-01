@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.ui.AbstractField import AbstractField
-from muntjac.data.Property import Property
+from muntjac.data.IProperty import IProperty
 
 
 class RichTextArea(AbstractField):
@@ -37,13 +37,13 @@ class RichTextArea(AbstractField):
                    the caption for the editor.
         ---
         Constructs a new <code>RichTextArea</code> that's bound to the
-        specified <code>Property</code> and has no caption.
+        specified <code>IProperty</code> and has no caption.
 
         @param dataSource
                    the data source for the editor value
         ---
         Constructs a new <code>RichTextArea</code> that's bound to the
-        specified <code>Property</code> and has the given caption.
+        specified <code>IProperty</code> and has the given caption.
 
         @param caption
                    the caption for the editor.
@@ -76,7 +76,7 @@ class RichTextArea(AbstractField):
         if nargs == 0:
             self.setValue('')
         elif nargs == 1:
-            if isinstance(args[0], Property):
+            if isinstance(args[0], IProperty):
                 dataSource, = args
                 self.setPropertyDataSource(dataSource)
             else:
@@ -84,7 +84,7 @@ class RichTextArea(AbstractField):
                 self.__init__()
                 self.setCaption(caption)
         elif nargs == 2:
-            if isinstance(args[1], Property):
+            if isinstance(args[1], IProperty):
                 caption, dataSource = args
                 self.__init__(dataSource)
                 self.setCaption(caption)

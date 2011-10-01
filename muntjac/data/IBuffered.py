@@ -20,32 +20,24 @@ from muntjac.terminal.SystemError import SystemErr
 from muntjac.terminal.IErrorMessage import IErrorMessage
 
 
-class Buffered(object):
-    """<p>
-    Defines the interface to commit and discard changes to an object, supporting
-    read-through and write-through modes.
-    </p>
+class IBuffered(object):
+    """Defines the interface to commit and discard changes to an object,
+    supporting read-through and write-through modes.
 
-    <p>
     <i>Read-through mode</i> means that the value read from the buffered object
     is constantly up to date with the data source. <i>Write-through</i> mode
     means that all changes to the object are immediately updated to the data
     source.
-    </p>
 
-    <p>
     Since these modes are independent, their combinations may result in some
     behaviour that may sound surprising.
-    </p>
 
-    <p>
-    For example, if a <code>Buffered</code> object is in read-through mode but
+    For example, if a <code>IBuffered</code> object is in read-through mode but
     not in write-through mode, the result is an object whose value is updated
     directly from the data source only if it's not locally modified. If the value
     is locally modified, retrieving the value from the object would result in a
     value that is different than the one stored in the data source, even though
     the object is in read-through mode.
-    </p>
 
     @author IT Mill Ltd.
     @author Richard Lincoln
@@ -65,17 +57,19 @@ class Buffered(object):
                     if the operation fails because validation is enabled and the
                     values do not validate
         """
-        pass
+        raise NotImplementedError
+
 
     def discard(self):
-        """Discards all changes since last commit. The object updates its value from
-        the data source.
+        """Discards all changes since last commit. The object updates its value
+        from the data source.
 
         @throws SourceException
                     if the operation fails because of an exception is thrown by
                     the data source. The cause is included in the exception.
         """
-        pass
+        raise NotImplementedError
+
 
     def isWriteThrough(self):
         """Tests if the object is in write-through mode. If the object is in
@@ -85,7 +79,8 @@ class Buffered(object):
         @return <code>true</code> if the object is in write-through mode,
                 <code>false</code> if it's not.
         """
-        pass
+        raise NotImplementedError
+
 
     def setWriteThrough(self, writeThrough):
         """Sets the object's write-through mode to the specified status. When
@@ -102,7 +97,8 @@ class Buffered(object):
                     If the implicit commit operation fails because of a
                     validation error.
         """
-        pass
+        raise NotImplementedError
+
 
     def isReadThrough(self):
         """Tests if the object is in read-through mode. If the object is in
@@ -118,7 +114,8 @@ class Buffered(object):
         @return <code>true</code> if the object is in read-through mode,
                 <code>false</code> if it's not.
         """
-        pass
+        raise NotImplementedError
+
 
     def setReadThrough(self, readThrough):
         """Sets the object's read-through mode to the specified status. When
@@ -133,7 +130,8 @@ class Buffered(object):
                     If the operation fails because of an exception is thrown by
                     the data source. The cause is included in the exception.
         """
-        pass
+        raise NotImplementedError
+
 
     def isModified(self):
         """Tests if the value stored in the object has been modified since it was
@@ -142,7 +140,7 @@ class Buffered(object):
         @return <code>true</code> if the value in the object has been modified
                 since the last data source update, <code>false</code> if not.
         """
-        pass
+        raise NotImplementedError
 
 
 class SourceException(RuntimeError, IErrorMessage):
@@ -160,19 +158,19 @@ class SourceException(RuntimeError, IErrorMessage):
         """Creates a source exception that does not include a cause.
 
         @param source
-                   the source object implementing the Buffered interface.
+                   the source object implementing the IBuffered interface.
         ---
         Creates a source exception from a cause exception.
 
         @param source
-                   the source object implementing the Buffered interface.
+                   the source object implementing the IBuffered interface.
         @param cause
                    the original cause for this exception.
         ---
         Creates a source exception from multiple causes.
 
         @param source
-                   the source object implementing the Buffered interface.
+                   the source object implementing the IBuffered interface.
         @param causes
                    the original causes for this exception.
         """
@@ -213,7 +211,7 @@ class SourceException(RuntimeError, IErrorMessage):
     def getSource(self):
         """Gets a source of the exception.
 
-        @return the Buffered object which generated this exception.
+        @return the IBuffered object which generated this exception.
         """
         return self._source
 
@@ -232,9 +230,14 @@ class SourceException(RuntimeError, IErrorMessage):
         level = -sys.maxint - 1
 
         for i in range(len(self._causes)):
-            causeLevel = self._causes[i].getErrorLevel() if isinstance(self._causes[i], IErrorMessage) else IErrorMessage.ERROR
+            if isinstance(self._causes[i], IErrorMessage):
+                causeLevel = self._causes[i].getErrorLevel()
+            else:
+                causeLevel = IErrorMessage.ERROR
+
             if causeLevel > level:
                 level = causeLevel
+
         return IErrorMessage.ERROR if level == -sys.maxint - 1 else level
 
 
@@ -268,19 +271,19 @@ class SourceException(RuntimeError, IErrorMessage):
 
 
     def addListener(self, listener):
-        pass
+        raise NotImplementedError
 
 
     def removeListener(self, listener):
-        pass
+        raise NotImplementedError
 
 
     def requestRepaint(self):
-        pass
+        raise NotImplementedError
 
 
     def requestRepaintRequests(self):
-        pass
+        raise NotImplementedError
 
 
     def getDebugId(self):
@@ -288,4 +291,5 @@ class SourceException(RuntimeError, IErrorMessage):
 
 
     def setDebugId(self, idd):
-        raise NotImplementedError, 'Setting testing id for this Paintable is not implemented'
+        raise NotImplementedError, \
+                'Setting testing id for this Paintable is not implemented'

@@ -14,16 +14,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.data.Validatable import Validatable
-from muntjac.data.Buffered import Buffered
+from muntjac.data.IValidatable import IValidatable
+from muntjac.data.IBuffered import IBuffered
 
 
-class BufferedValidatable(Buffered, Validatable):
-    """<p>
-    This interface defines the combination of <code>Validatable</code> and
-    <code>Buffered</code> interfaces. The combination of the interfaces defines
+class IBufferedValidatable(IBuffered, IValidatable):
+    """This interface defines the combination of <code>IValidatable</code> and
+    <code>IBuffered</code> interfaces. The combination of the interfaces defines
     if the invalid data is committed to datasource.
-    </p>
 
     @author IT Mill Ltd.
     @author Richard Lincoln
@@ -35,11 +33,11 @@ class BufferedValidatable(Buffered, Validatable):
         """Tests if the invalid data is committed to datasource. The default is
         <code>false</code>.
         """
-        pass
+        raise NotImplementedError
 
 
     def setInvalidCommitted(self, isCommitted):
-        """Sets if the invalid data should be committed to datasource. The default
-        is <code>false</code>.
+        """Sets if the invalid data should be committed to datasource. The
+        default is <code>false</code>.
         """
-        pass
+        raise NotImplementedError

@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.ui.AbstractTextField import AbstractTextField
-from muntjac.data.Property import Property
+from muntjac.data.IProperty import IProperty
 
 
 class TextArea(AbstractTextField):
@@ -62,7 +62,7 @@ class TextArea(AbstractTextField):
         if nargs == 0:
             self.setValue('')
         elif nargs == 1:
-            if isinstance(args[0], Property):
+            if isinstance(args[0], IProperty):
                 dataSource, = args
                 self.__init__()
                 self.setPropertyDataSource(dataSource)
@@ -71,7 +71,7 @@ class TextArea(AbstractTextField):
                 self.__init__()
                 self.setCaption(caption)
         elif nargs == 2:
-            if isinstance(args[1], Property):
+            if isinstance(args[1], IProperty):
                 caption, dataSource = args
                 self.__init__(dataSource)
                 self.setCaption(caption)

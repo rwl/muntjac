@@ -16,7 +16,7 @@
 
 from muntjac.event import FieldEvents
 from muntjac.data.util.filter.SimpleStringFilter import SimpleStringFilter
-from muntjac.data.Container import Container, Filterable, Indexed
+from muntjac.data.IContainer import IContainer, IFilterable, IIndexed
 from muntjac.ui import AbstractSelect
 from muntjac.ui.AbstractComponent import AbstractComponent
 
@@ -28,7 +28,7 @@ class Select(AbstractSelect.AbstractSelect, AbstractSelect.IFiltering,
              FieldEvents.IBlurNotifier, FieldEvents.IFocusNotifier):
     """A class representing a selection of items the user has selected in a
     UI. The set of choices is presented as a set of
-    {@link com.vaadin.data.Item}s in a {@link com.vaadin.data.Container}.
+    {@link com.vaadin.data.Item}s in a {@link com.vaadin.data.IContainer}.
 
     A <code>Select</code> component may be in single- or multiselect mode.
     Multiselect mode means that more than one item can be selected
@@ -87,7 +87,7 @@ class Select(AbstractSelect.AbstractSelect, AbstractSelect.IFiltering,
             caption, = args
             super(Select, self)(caption)
         elif nargs == 2:
-            if isinstance(args[1], Container):
+            if isinstance(args[1], IContainer):
                 caption, dataSource = args
                 super(Select, self)(caption, dataSource)
             else:
@@ -256,7 +256,7 @@ class Select(AbstractSelect.AbstractSelect, AbstractSelect.IFiltering,
         As a size effect, {@link #filteredSize} is set to the total number of
         items passing the filter.
 
-        The current container must be {@link Filterable} and {@link Indexed},
+        The current container must be {@link IFilterable} and {@link IIndexed},
         and the filtering mode must be suitable for container filtering
         (tested with {@link #canUseContainerFilter()}).
 
@@ -274,8 +274,8 @@ class Select(AbstractSelect.AbstractSelect, AbstractSelect.IFiltering,
             self._filteredSize = len(container)
             return list(container.getItemIds())
 
-        if ((not isinstance(container, Filterable))
-                or (not isinstance(container, Indexed))
+        if ((not isinstance(container, IFilterable))
+                or (not isinstance(container, IIndexed))
                 or (self.getItemCaptionMode() !=
                         self.ITEM_CAPTION_MODE_PROPERTY)):
             return None
@@ -327,7 +327,7 @@ class Select(AbstractSelect.AbstractSelect, AbstractSelect.IFiltering,
 
 
     def buildFilter(self, filterString, filteringMode):
-        """Constructs a filter instance to use when using a Filterable
+        """Constructs a filter instance to use when using a IFilterable
         container in the <code>ITEM_CAPTION_MODE_PROPERTY</code> mode.
 
         Note that the client side implementation expects the filter string to

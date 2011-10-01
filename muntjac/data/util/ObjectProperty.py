@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.data.util.AbstractProperty import AbstractProperty
-from muntjac.data.Property import ReadOnlyException, ConversionException
+from muntjac.data.IProperty import ReadOnlyException, ConversionException
 
 
 class ObjectProperty(AbstractProperty):

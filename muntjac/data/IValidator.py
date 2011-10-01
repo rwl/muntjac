@@ -17,24 +17,21 @@
 from muntjac.terminal.IErrorMessage import IErrorMessage
 
 
-class Validator(object):
+class IValidator(object):
     """Interface that implements a method for validating if an {@link Object} is
     valid or not.
-    <p>
+
     Implementors of this class can be added to any
     {@link com.vaadin.data.Validatable Validatable} implementor to verify its
     value.
-    </p>
-    <p>
+
     {@link #isValid(Object)} and {@link #validate(Object)} can be used to check
     if a value is valid. {@link #isValid(Object)} and {@link #validate(Object)}
     must use the same validation logic so that iff {@link #isValid(Object)}
     returns false, {@link #validate(Object)} throws an
     {@link InvalidValueException}.
-    </p>
-    <p>
+
     Validators must not have any side effects.
-    </p>
 
     @author IT Mill Ltd.
     @author Richard Lincoln
@@ -49,10 +46,10 @@ class Validator(object):
 
         @param value
                    the value to check
-        @throws Validator.InvalidValueException
+        @throws IValidator.InvalidValueException
                     if the value is invalid
         """
-        pass
+        raise NotImplementedError
 
 
     def isValid(self, value):
@@ -65,11 +62,11 @@ class Validator(object):
         @return <code>true</code> if the value is valid, <code>false</code>
                 otherwise.
         """
-        pass
+        raise NotImplementedError
 
 
 class InvalidValueException(RuntimeError, IErrorMessage):
-    """Exception that is thrown by a {@link Validator} when a value is invalid.
+    """Exception that is thrown by a {@link IValidator} when a value is invalid.
 
     @author IT Mill Ltd.
     @author Richard Lincoln
@@ -180,7 +177,7 @@ class InvalidValueException(RuntimeError, IErrorMessage):
         return self._causes
 
 
-class EmptyValueException(Validator.InvalidValueException):
+class EmptyValueException(IValidator.InvalidValueException):
     """A specific type of {@link InvalidValueException} that indicates that
     validation failed because the value was empty. What empty means is up to
     the thrower.

@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.data.validator.AbstractValidator import AbstractValidator
-from muntjac.data.Validator import InvalidValueException
+from muntjac.data.IValidator import InvalidValueException
 
 
 class CompositeValidator(AbstractValidator):

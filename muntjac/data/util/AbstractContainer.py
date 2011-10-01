@@ -14,12 +14,12 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.data.Container import Container, ItemSetChangeEvent, PropertySetChangeEvent,\
-    ItemSetChangeListener
+from muntjac.data.IContainer import IContainer, IItemSetChangeEvent, IPropertySetChangeEvent,\
+    IItemSetChangeListener
 from muntjac.event import EventObject
 
 
-class AbstractContainer(Container):
+class AbstractContainer(IContainer):
     """Abstract container class that manages event listeners and sending events to
     them ({@link PropertySetChangeNotifier}, {@link ItemSetChangeNotifier}).
 
@@ -47,15 +47,15 @@ class AbstractContainer(Container):
         {@link PropertySetChangeNotifier}, override with the corresponding public
         method and implement the interface to use this.
 
-        @see PropertySetChangeNotifier#addListener(com.vaadin.data.Container.PropertySetChangeListener)
+        @see PropertySetChangeNotifier#addListener(com.vaadin.data.IContainer.PropertySetChangeListener)
         ---
         Implementation of the corresponding method in
         {@link ItemSetChangeNotifier}, override with the corresponding public
         method and implement the interface to use this.
 
-        @see ItemSetChangeNotifier#addListener(com.vaadin.data.Container.ItemSetChangeListener)
+        @see ItemSetChangeNotifier#addListener(com.vaadin.data.IContainer.IItemSetChangeListener)
         """
-        if isinstance(listener, ItemSetChangeListener):
+        if isinstance(listener, IItemSetChangeListener):
             if self.getItemSetChangeListeners() is None:
                 self.setItemSetChangeListeners(list())
             self.getItemSetChangeListeners().append(listener)
@@ -70,16 +70,16 @@ class AbstractContainer(Container):
         {@link PropertySetChangeNotifier}, override with the corresponding public
         method and implement the interface to use this.
 
-        @see PropertySetChangeNotifier#removeListener(com.vaadin.data.Container.
+        @see PropertySetChangeNotifier#removeListener(com.vaadin.data.IContainer.
              PropertySetChangeListener)
         ---
         Implementation of the corresponding method in
         {@link ItemSetChangeNotifier}, override with the corresponding public
         method and implement the interface to use this.
 
-        @see ItemSetChangeNotifier#removeListener(com.vaadin.data.Container.ItemSetChangeListener)
+        @see ItemSetChangeNotifier#removeListener(com.vaadin.data.IContainer.IItemSetChangeListener)
         """
-        if isinstance(listener, ItemSetChangeListener):
+        if isinstance(listener, IItemSetChangeListener):
             if self.getItemSetChangeListeners() is not None:
                 self.getItemSetChangeListeners().remove(listener)
         else:
@@ -158,13 +158,13 @@ class AbstractContainer(Container):
 
 
     def getListeners(self, eventType):
-        if issubclass(eventType, PropertySetChangeEvent):
+        if issubclass(eventType, IPropertySetChangeEvent):
             if self._propertySetChangeListeners is None:
                 return list()
             else:
                 return list(self._propertySetChangeListeners)
 
-        elif issubclass(eventType, ItemSetChangeEvent):
+        elif issubclass(eventType, IItemSetChangeEvent):
             if self._itemSetChangeListeners is None:
                 return list()
             else:
@@ -173,7 +173,7 @@ class AbstractContainer(Container):
         return list
 
 
-class BasePropertySetChangeEvent(EventObject, Container, PropertySetChangeEvent):
+class BasePropertySetChangeEvent(EventObject, IContainer, IPropertySetChangeEvent):
     """An <code>event</code> object specifying the container whose Property set
     has changed.
 
@@ -190,7 +190,7 @@ class BasePropertySetChangeEvent(EventObject, Container, PropertySetChangeEvent)
         return self.getSource()
 
 
-class BaseItemSetChangeEvent(EventObject, Container, ItemSetChangeEvent):
+class BaseItemSetChangeEvent(EventObject, IContainer, IItemSetChangeEvent):
     """An <code>event</code> object specifying the container whose Item set has
     changed.
 

@@ -15,18 +15,18 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.data.util.DefaultItemSorter import DefaultItemSorter
-from muntjac.data.Container import Container, Indexed, ItemSetChangeNotifier,\
-    Sortable
+from muntjac.data.IContainer import IContainer, IIndexed, IItemSetChangeNotifier,\
+    ISortable
 from muntjac.data.util.AbstractContainer import AbstractContainer
 from muntjac.data.util.ListSet import ListSet
 
 
-class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier,
-                                Container, Indexed):
-    """Abstract {@link Container} class that handles common functionality for
+class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
+                                IContainer, IIndexed):
+    """Abstract {@link IContainer} class that handles common functionality for
     in-memory containers. Concrete in-memory container classes can either inherit
     this class, inherit {@link AbstractContainer}, or implement the
-    {@link Container} interface directly.
+    {@link IContainer} interface directly.
 
     Adding and removing items (if desired) must be implemented in subclasses by
     overriding the appropriate add*Item() and remove*Item() and removeAllItems()
@@ -44,32 +44,32 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier,
 
     Features:
     <ul>
-    <li> {@link Container.Ordered}
-    <li> {@link Container.Indexed}
+    <li> {@link IContainer.Ordered}
+    <li> {@link IContainer.IIndexed}
     <li> {@link Filterable} and {@link SimpleFilterable} (internal implementation,
     does not implement the interface directly)
-    <li> {@link Sortable} (internal implementation, does not implement the
+    <li> {@link ISortable} (internal implementation, does not implement the
     interface directly)
     </ul>
 
-    To implement {@link Sortable}, subclasses need to implement
+    To implement {@link ISortable}, subclasses need to implement
     {@link #getSortablePropertyIds()} and call the superclass method
     {@link #sortContainer(Object[], boolean[])} in the method
     <code>sort(Object[], boolean[])</code>.
 
     To implement {@link Filterable}, subclasses need to implement the methods
-    {@link Filterable#addContainerFilter(com.vaadin.data.Container.Filter)}
+    {@link Filterable#addContainerFilter(com.vaadin.data.IContainer.Filter)}
     (calling {@link #addFilter(Filter)}),
     {@link Filterable#removeAllContainerFilters()} (calling
     {@link #removeAllFilters()}) and
-    {@link Filterable#removeContainerFilter(com.vaadin.data.Container.Filter)}
-    (calling {@link #removeFilter(com.vaadin.data.Container.Filter)}).
+    {@link Filterable#removeContainerFilter(com.vaadin.data.IContainer.Filter)}
+    (calling {@link #removeFilter(com.vaadin.data.IContainer.Filter)}).
 
     To implement {@link SimpleFilterable}, subclasses also need to implement the
     methods
     {@link SimpleFilterable#addContainerFilter(Object, String, boolean, boolean)}
     and {@link SimpleFilterable#removeContainerFilters(Object)} calling
-    {@link #addFilter(com.vaadin.data.Container.Filter)} and
+    {@link #addFilter(com.vaadin.data.IContainer.Filter)} and
     {@link #removeFilters(Object)} respectively.
 
     @param <ITEMIDTYPE>
@@ -97,7 +97,7 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier,
         # An ordered {@link List} of item identifiers in the container after
         # filtering, excluding those that have been filtered out.
         #
-        # This is what the external API of the {@link Container} interface and its
+        # This is what the external API of the {@link IContainer} interface and its
         # subinterfaces shows (e.g. {@link #size()}, {@link #nextItemId(Object)}).
         #
         # If null, the full item id list is used instead.
@@ -110,7 +110,7 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier,
         # The item sorter which is used for sorting the container.
         self._itemSorter = DefaultItemSorter()
 
-        # Container interface methods with more specific return class
+        # IContainer interface methods with more specific return class
         # default implementation, can be overridden
         self.setAllItemIds( ListSet() )
 
@@ -138,7 +138,7 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier,
     # be cast to Collection<MyInterface>
     # public abstract Collection<PROPERTYIDCLASS> getContainerPropertyIds();
     # public abstract Collection<ITEMIDCLASS> getItemIds();
-    # Container interface method implementations
+    # IContainer interface method implementations
 
 
     def size(self):
@@ -331,7 +331,7 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier,
         be in-memory filterable.
 
         This can be used to implement
-        {@link Filterable#addContainerFilter(com.vaadin.data.Container.Filter)}
+        {@link Filterable#addContainerFilter(com.vaadin.data.IContainer.Filter)}
         and optionally also
         {@link SimpleFilterable#addContainerFilter(Object, String, boolean, boolean)}
         (with {@link SimpleStringFilter}).
@@ -351,7 +351,7 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier,
         """Remove a specific container filter and re-filter the view (if necessary).
 
         This can be used to implement
-        {@link Filterable#removeContainerFilter(com.vaadin.data.Container.Filter)}
+        {@link Filterable#removeContainerFilter(com.vaadin.data.IContainer.Filter)}
         .
         """
         for f in self.getFilters():
@@ -440,16 +440,16 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier,
 
 
     def sortContainer(self, propertyId, ascending):
-        """Sort base implementation to be used to implement {@link Sortable}.
+        """Sort base implementation to be used to implement {@link ISortable}.
 
         Subclasses should call this from a public
-        {@link #sort(Object[], boolean[])} method when implementing Sortable.
+        {@link #sort(Object[], boolean[])} method when implementing ISortable.
 
-        @see com.vaadin.data.Container.Sortable#sort(java.lang.Object[],
+        @see com.vaadin.data.IContainer.ISortable#sort(java.lang.Object[],
              boolean[])
         """
-        if not isinstance(self, Sortable):
-            raise NotImplementedError, 'Cannot sort a Container that does not implement Sortable'
+        if not isinstance(self, ISortable):
+            raise NotImplementedError, 'Cannot sort a IContainer that does not implement ISortable'
 
         # Set up the item sorter for the sort operation
         self.getItemSorter().setSortProperties(self, propertyId, ascending)
@@ -476,7 +476,7 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier,
 
     def getSortablePropertyIds(self):
         """Returns the sortable property identifiers for the container. Can be used
-        to implement {@link Sortable#getSortableContainerPropertyIds()}.
+        to implement {@link ISortable#getSortableContainerPropertyIds()}.
         """
         sortables = list()
 
@@ -698,7 +698,7 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier,
                    was visible)
         @param itemId
                    id of the removed item, of type {@link Object} to satisfy
-                   {@link Container#removeItem(Object)} API
+                   {@link IContainer#removeItem(Object)} API
         """
         self.fireItemSetChange()
 
@@ -767,7 +767,7 @@ class AbstractInMemoryContainer(AbstractContainer, ItemSetChangeNotifier,
         """Set the internal collection of filters without performing filtering.
 
         This method is mostly for internal use, use
-        {@link #addFilter(com.vaadin.data.Container.Filter)} and
+        {@link #addFilter(com.vaadin.data.IContainer.Filter)} and
         <code>remove*Filter*</code> (which also re-filter the container) instead
         when possible.
 

@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.ui.DateField import DateField
-from muntjac.data.Property import Property
+from muntjac.data.IProperty import IProperty
 
 
 class PopupDateField(DateField):
@@ -37,14 +37,14 @@ class PopupDateField(DateField):
         if nargs == 0:
             super(PopupDateField, self)()
         elif nargs == 1:
-            if isinstance(args[0], Property):
+            if isinstance(args[0], IProperty):
                 dataSource, = args
                 super(PopupDateField, self)(dataSource)
             else:
                 caption, = args
                 super(PopupDateField, self)(caption)
         elif nargs == 2:
-            if isinstance(args[1], Property):
+            if isinstance(args[1], IProperty):
                 caption, dataSource = args
                 super(PopupDateField, self)(caption, dataSource)
             else:

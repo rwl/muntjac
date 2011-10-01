@@ -14,10 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.data.Container import Filter
+from muntjac.data.IContainer import IFilter
 
 
-class SimpleStringFilter(Filter):
+class SimpleStringFilter(IFilter):
     """Simple string filter for matching items that start with or contain a
     specified string. The matching can be case-sensitive or case-insensitive.
 

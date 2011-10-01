@@ -18,9 +18,9 @@ from muntjac.ui.AbstractField import AbstractField
 from muntjac.terminal.IResource import IResource
 from muntjac.terminal.KeyMapper import KeyMapper
 
-from muntjac.data import Property
-from muntjac.data import Container
-from muntjac.data import Item
+from muntjac.data import IProperty
+from muntjac.data import IContainer
+from muntjac.data import IItem
 
 from muntjac.data.util.IndexedContainer import IndexedContainer
 
@@ -37,14 +37,14 @@ from muntjac.terminal.gwt.client.ui.dd.VerticalDropLocation import \
     VerticalDropLocation
 
 
-class AbstractSelect(AbstractField, Container.Container, Container.Viewer,
-            Container.PropertySetChangeListener,
-            Container.PropertySetChangeNotifier,
-            Container.ItemSetChangeNotifier,
-            Container.ItemSetChangeListener):
+class AbstractSelect(AbstractField, IContainer.IContainer, IContainer.IViewer,
+            IContainer.IPropertySetChangeListener,
+            IContainer.IPropertySetChangeNotifier,
+            IContainer.IItemSetChangeNotifier,
+            IContainer.IItemSetChangeListener):
     """A class representing a selection of items the user has selected
     in a UI. The set of choices is presented as a set of
-    {@link com.vaadin.data.Item}s in a {@link com.vaadin.data.Container}.
+    {@link com.vaadin.data.IItem}s in a {@link com.vaadin.data.IContainer}.
 
     A <code>Select</code> component may be in single- or multiselect
     mode. Multiselect mode means that more than one item can be selected
@@ -56,31 +56,31 @@ class AbstractSelect(AbstractField, Container.Container, Container.Viewer,
     @since 5.0
     """
 
-    # Item caption mode: Item's ID's <code>String</code> representation
+    # IItem caption mode: IItem's ID's <code>String</code> representation
     # is used as caption.
     ITEM_CAPTION_MODE_ID = 0
 
-    # Item caption mode: Item's <code>String</code> representation is
+    # IItem caption mode: IItem's <code>String</code> representation is
     # used as caption.
     ITEM_CAPTION_MODE_ITEM = 1
 
-    # Item caption mode: Index of the item is used as caption. The index
+    # IItem caption mode: Index of the item is used as caption. The index
     # mode can only be used with the containers implementing the
-    # {@link com.vaadin.data.Container.Indexed} interface.
+    # {@link com.vaadin.data.IContainer.IIndexed} interface.
     ITEM_CAPTION_MODE_INDEX = 2
 
-    # Item caption mode: If an Item has a caption it's used, if not,
-    # Item's ID's <code>String</code> representation is used as caption.
+    # IItem caption mode: If an IItem has a caption it's used, if not,
+    # IItem's ID's <code>String</code> representation is used as caption.
     # <b>This is the default</b>.
     ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID = 3
 
-    # Item caption mode: Captions must be explicitly specified.
+    # IItem caption mode: Captions must be explicitly specified.
     ITEM_CAPTION_MODE_EXPLICIT = 4
 
-    # Item caption mode: Only icons are shown, captions are hidden.
+    # IItem caption mode: Only icons are shown, captions are hidden.
     ITEM_CAPTION_MODE_ICON_ONLY = 5
 
-    # Item caption mode: Item captions are read from property specified
+    # IItem caption mode: IItem captions are read from property specified
     # with <code>setItemCaptionPropertyId</code>.
     ITEM_CAPTION_MODE_PROPERTY = 6
 
@@ -95,7 +95,7 @@ class AbstractSelect(AbstractField, Container.Container, Container.Viewer,
         @param caption
                    the Caption of the component.
         @param dataSource
-                   the Container datasource to be selected from by
+                   the IContainer datasource to be selected from by
                    this select.
         ---
         Creates a new select that is filled from a collection of
@@ -119,19 +119,19 @@ class AbstractSelect(AbstractField, Container.Container, Container.Viewer,
         # Keymapper used to map key values.
         self.itemIdMapper = KeyMapper()
 
-        # Item icons.
+        # IItem icons.
         self._itemIcons = dict()
 
-        # Item captions.
+        # IItem captions.
         self._itemCaptions = dict()
 
-        # Item caption mode.
+        # IItem caption mode.
         self._itemCaptionMode = self.ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID
 
-        # Item caption source property id.
+        # IItem caption source property id.
         self._itemCaptionPropertyId = None
 
-        # Item icon source property id.
+        # IItem icon source property id.
         self._itemIconPropertyId = None
 
         # List of property set change event listeners.
@@ -140,7 +140,7 @@ class AbstractSelect(AbstractField, Container.Container, Container.Viewer,
         # List of item set change event listeners.
         self._itemSetEventListeners = None
 
-        # Item id that represents null selection of this select.
+        # IItem id that represents null selection of this select.
         #
         # Data interface does not support nulls as item ids. Selecting the
         # item identified by this id is the same as selecting no items at
@@ -152,7 +152,7 @@ class AbstractSelect(AbstractField, Container.Container, Container.Viewer,
 
         self._newItemHandler = None
 
-        # Caption (Item / Property) change listeners
+        # Caption (IItem / IProperty) change listeners
         self._captionChangeListener = None
 
 
@@ -395,7 +395,7 @@ class AbstractSelect(AbstractField, Container.Container, Container.Viewer,
         @param propertyId
                    the Id identifying the property.
         @return the Type of the property.
-        @see com.vaadin.data.Container#getType(java.lang.Object)
+        @see com.vaadin.data.IContainer#getType(java.lang.Object)
         """
         if propertyId is None:
             if self.isMultiSelect():
@@ -467,7 +467,7 @@ class AbstractSelect(AbstractField, Container.Container, Container.Viewer,
                 super(AbstractSelect, self).setValue(newValue,
                         repaintIsNotNeeded)
 
-    # Container methods
+    # IContainer methods
 
     def getItem(self, itemId):
         """Gets the item from the container with given id. If the container
@@ -499,7 +499,7 @@ class AbstractSelect(AbstractField, Container.Container, Container.Viewer,
     # Gets the number of items in the container.
     #
     # @return the Number of items in the container.
-    # @see com.vaadin.data.Container#size()
+    # @see com.vaadin.data.IContainer#size()
     def size(self):
         return len(self.items)
 
@@ -520,10 +520,10 @@ class AbstractSelect(AbstractField, Container.Container, Container.Viewer,
 
 
     def getContainerProperty(self, itemId, propertyId):
-        """Gets the Property identified by the given itemId and propertyId
-        from the Container
+        """Gets the IProperty identified by the given itemId and propertyId
+        from the IContainer
 
-        @see com.vaadin.data.Container#getContainerProperty(Object, Object)
+        @see com.vaadin.data.IContainer#getContainerProperty(Object, Object)
         """
         return self.items.getContainerProperty(itemId, propertyId)
 
@@ -536,13 +536,13 @@ class AbstractSelect(AbstractField, Container.Container, Container.Viewer,
         it always returns false.
 
         @return True if the operation succeeded.
-        @see com.vaadin.data.Container#addContainerProperty()
+        @see com.vaadin.data.IContainer#addContainerProperty()
         """
         retval = self.items.addContainerProperty(propertyId, typ,
                 defaultValue)
 
         if (retval and not isinstance(self.items,
-                Container.PropertySetChangeNotifier)):
+                IContainer.IPropertySetChangeNotifier)):
             self.firePropertySetChange()
 
         return retval
@@ -555,14 +555,14 @@ class AbstractSelect(AbstractField, Container.Container, Container.Viewer,
         it always returns false.
 
         @return True if the operation succeeded.
-        @see com.vaadin.data.Container#removeAllItems()
+        @see com.vaadin.data.IContainer#removeAllItems()
         """
         retval = self.items.removeAllItems()
         self.itemIdMapper.removeAll()
 
         if retval:
             self.setValue(None)
-            if not isinstance(self.items, Container.ItemSetChangeNotifier):
+            if not isinstance(self.items, IContainer.IItemSetChangeNotifier):
                 self.fireItemSetChange()
 
         return retval
@@ -574,7 +574,7 @@ class AbstractSelect(AbstractField, Container.Container, Container.Viewer,
         getItem() method. if the creation fails, null is returned.
 
         @return the Id of the created item or null in case of failure.
-        @see com.vaadin.data.Container#addItem()
+        @see com.vaadin.data.IContainer#addItem()
         ---
         Create a new item into container. The created new item is returned
         and ready for setting property values. if the creation fails, null
@@ -588,18 +588,18 @@ class AbstractSelect(AbstractField, Container.Container, Container.Viewer,
                    the Identification of the item to be created.
         @return the Created item with the given id, or null in case of
                 failure.
-        @see com.vaadin.data.Container#addItem(java.lang.Object)
+        @see com.vaadin.data.IContainer#addItem(java.lang.Object)
         """
         if itemId is None:
             retval = self.items.addItem()
             if retval is not None and not isinstance(self.items,
-                    Container.ItemSetChangeNotifier):
+                    IContainer.IItemSetChangeNotifier):
                 self.fireItemSetChange()
             return retval
         else:
             retval = self.items.addItem(itemId)
             if retval is not None and not isinstance(self.items,
-                    Container.ItemSetChangeNotifier):
+                    IContainer.IItemSetChangeNotifier):
                 self.fireItemSetChange()
             return retval
 
@@ -609,7 +609,7 @@ class AbstractSelect(AbstractField, Container.Container, Container.Viewer,
         retval = self.items.removeItem(itemId)
         self.itemIdMapper.remove(itemId)
         if retval and not isinstance(self.items,
-                    Container.ItemSetChangeNotifier):
+                    IContainer.IItemSetChangeNotifier):
             self.fireItemSetChange()
         return retval
 
@@ -622,22 +622,22 @@ class AbstractSelect(AbstractField, Container.Container, Container.Viewer,
         it always returns false.
 
         @return True if the operation succeeded.
-        @see com.vaadin.data.Container#removeContainerProperty()
+        @see com.vaadin.data.IContainer#removeContainerProperty()
         """
         retval = self.items.removeContainerProperty(propertyId)
         if retval and not isinstance(self.items,
-                Container.PropertySetChangeNotifier):
+                IContainer.IPropertySetChangeNotifier):
             self.firePropertySetChange()
         return retval
 
 
     def setContainerDataSource(self, newDataSource):
-        """Sets the Container that serves as the data source of the viewer.
+        """Sets the IContainer that serves as the data source of the viewer.
 
         As a side-effect the fields value (selection) is set to null due
-        old selection not necessary exists in new Container.
+        old selection not necessary exists in new IContainer.
 
-        @see com.vaadin.data.Container.Viewer#setContainerDataSource()
+        @see com.vaadin.data.IContainer.IViewer#setContainerDataSource()
 
         @param newDataSource
                    the new data source.
@@ -652,11 +652,11 @@ class AbstractSelect(AbstractField, Container.Container, Container.Viewer,
             # Removes listeners from the old datasource
             if self.items is not None:
                 if isinstance(self.items,
-                        Container.ItemSetChangeNotifier):
+                        IContainer.IItemSetChangeNotifier):
                     self.items.removeListener(self)
 
                 if isinstance(self.items,
-                        Container.PropertySetChangeNotifier):
+                        IContainer.IPropertySetChangeNotifier):
                     self.items.removeListener(self)
 
             # Assigns new data source
@@ -668,10 +668,10 @@ class AbstractSelect(AbstractField, Container.Container, Container.Viewer,
             # Adds listeners
             if self.items is not None:
                 if isinstance(self.items,
-                        Container.ItemSetChangeNotifier):
+                        IContainer.IItemSetChangeNotifier):
                     self.items.addListener(self)
                 if isinstance(self.items,
-                        Container.PropertySetChangeNotifier):
+                        IContainer.IPropertySetChangeNotifier):
                     self.items.addListener(self)
 
             # We expect changing the data source should also clean value.
@@ -684,7 +684,7 @@ class AbstractSelect(AbstractField, Container.Container, Container.Viewer,
     def getContainerDataSource(self):
         """Gets the viewing data-source container.
 
-        @see com.vaadin.data.Container.Viewer#getContainerDataSource()
+        @see com.vaadin.data.IContainer.IViewer#getContainerDataSource()
         """
         return self.items
 
@@ -739,7 +739,7 @@ class AbstractSelect(AbstractField, Container.Container, Container.Viewer,
 
     def isNewItemsAllowed(self):
         """Does the select allow adding new options by the user. If true,
-        the new options can be added to the Container. The text entered by
+        the new options can be added to the IContainer. The text entered by
         the user is used as id. Note that data-source must allow adding new
         items.
 
@@ -796,10 +796,10 @@ class AbstractSelect(AbstractField, Container.Container, Container.Viewer,
             caption = str(itemId)
 
         elif test == self.ITEM_CAPTION_MODE_INDEX:
-            if isinstance(self.items, Container.Indexed):
+            if isinstance(self.items, IContainer.IIndexed):
                 caption = str(self.items.indexOfId(itemId))
             else:
-                caption = 'ERROR: Container is not indexed'
+                caption = 'ERROR: IContainer is not indexed'
 
         elif test == self.ITEM_CAPTION_MODE_ITEM:
             i = self.getItem(itemId)
@@ -875,11 +875,11 @@ class AbstractSelect(AbstractField, Container.Container, Container.Viewer,
         is explicitly specified, it overrides the id-caption.
         <li><code>ITEM_CAPTION_MODE_ID</code> : Items Id-objects
         <code>toString</code> is used as item caption.</li>
-        <li><code>ITEM_CAPTION_MODE_ITEM</code> : Item-objects
+        <li><code>ITEM_CAPTION_MODE_ITEM</code> : IItem-objects
         <code>toString</code> is used as item caption.</li>
         <li><code>ITEM_CAPTION_MODE_INDEX</code> : The index of the item is
         used as item caption. The index mode can only be used with the
-        containers implementing <code>Container.Indexed</code> interface.</li>
+        containers implementing <code>IContainer.IIndexed</code> interface.</li>
         <li><code>ITEM_CAPTION_MODE_EXPLICIT</code> : The item captions must
         be explicitly specified.</li>
         <li><code>ITEM_CAPTION_MODE_PROPERTY</code> : The item captions are
@@ -909,11 +909,11 @@ class AbstractSelect(AbstractField, Container.Container, Container.Viewer,
         is explicitly specified, it overrides the id-caption.
         <li><code>ITEM_CAPTION_MODE_ID</code> : Items Id-objects
         <code>toString</code> is used as item caption.</li>
-        <li><code>ITEM_CAPTION_MODE_ITEM</code> : Item-objects
+        <li><code>ITEM_CAPTION_MODE_ITEM</code> : IItem-objects
         <code>toString</code> is used as item caption.</li>
         <li><code>ITEM_CAPTION_MODE_INDEX</code> : The index of the item is
         used as item caption. The index mode can only be used with the
-        containers implementing <code>Container.Indexed</code> interface.</li>
+        containers implementing <code>IContainer.IIndexed</code> interface.</li>
         <li><code>ITEM_CAPTION_MODE_EXPLICIT</code> : The item captions must
         be explicitly specified.</li>
         <li><code>ITEM_CAPTION_MODE_PROPERTY</code> : The item captions are
@@ -987,12 +987,12 @@ class AbstractSelect(AbstractField, Container.Container, Container.Viewer,
             self._itemIconPropertyId = None
 
         elif propertyId not in self.getContainerPropertyIds():
-            raise ValueError, 'Property id not found in the container'
+            raise ValueError, 'IProperty id not found in the container'
 
         elif issubclass(self.getType(propertyId), IResource):
             self._itemIconPropertyId = propertyId
         else:
-            raise ValueError, 'Property type must be assignable to IResource'
+            raise ValueError, 'IProperty type must be assignable to IResource'
 
         self.requestRepaint()
 
@@ -1047,7 +1047,7 @@ class AbstractSelect(AbstractField, Container.Container, Container.Viewer,
         to null.
 
         @param itemId
-                   the identifier of Item to be selected.
+                   the identifier of IItem to be selected.
         @see #getNullSelectionItemId()
         @see #setNullSelectionItemId(Object)
         """
@@ -1064,7 +1064,7 @@ class AbstractSelect(AbstractField, Container.Container, Container.Viewer,
         """Unselects an item.
 
         @param itemId
-                   the identifier of the Item to be unselected.
+                   the identifier of the IItem to be unselected.
         @see #getNullSelectionItemId()
         @see #setNullSelectionItemId(Object)
         """
@@ -1080,21 +1080,21 @@ class AbstractSelect(AbstractField, Container.Container, Container.Viewer,
     def containerPropertySetChange(self, event):
         """Notifies this listener that the Containers contents has changed.
 
-        @see PropertySetChangeListener.containerPropertySetChange
+        @see IPropertySetChangeListener.containerPropertySetChange
         """
         self.firePropertySetChange()
 
 
     def addListener(self, listener):
-        """Adds a new Property set change listener for this Container.
+        """Adds a new IProperty set change listener for this IContainer.
 
-        @see PropertySetChangeNotifier.addListener()
+        @see IPropertySetChangeNotifier.addListener()
         ---
-        Adds an Item set change listener for the object.
+        Adds an IItem set change listener for the object.
 
-        @see ItemSetChangeNotifier.addListener()
+        @see IItemSetChangeNotifier.addListener()
         """
-        if isinstance(listener, Container.ItemSetChangeListener):
+        if isinstance(listener, IContainer.IItemSetChangeListener):
             if self._itemSetEventListeners is None:
                 self._itemSetEventListeners = set()
             self._itemSetEventListeners.add(listener)
@@ -1105,15 +1105,15 @@ class AbstractSelect(AbstractField, Container.Container, Container.Viewer,
 
 
     def removeListener(self, listener):
-        """Removes a previously registered Property set change listener.
+        """Removes a previously registered IProperty set change listener.
 
-        @see PropertySetChangeNotifier.removeListener()
+        @see IPropertySetChangeNotifier.removeListener()
         ---
-        Removes the Item set change listener from the object.
+        Removes the IItem set change listener from the object.
 
-        @see ItemSetChangeNotifier.removeListener()
+        @see IItemSetChangeNotifier.removeListener()
         """
-        if isinstance(listener, Container.ItemSetChangeListener):
+        if isinstance(listener, IContainer.IItemSetChangeListener):
             if self._itemSetEventListeners is not None:
                 self._itemSetEventListeners.remove(listener)
                 if len(self._itemSetEventListeners) == 0:
@@ -1126,12 +1126,12 @@ class AbstractSelect(AbstractField, Container.Container, Container.Viewer,
 
 
     def getListeners(self, eventType):
-        if issubclass(eventType, Container.ItemSetChangeEvent):
+        if issubclass(eventType, IContainer.IItemSetChangeEvent):
             if self._itemSetEventListeners is None:
                 return set()
             else:
                 return set(self._itemSetEventListeners)
-        elif issubclass(eventType, Container.PropertySetChangeEvent):
+        elif issubclass(eventType, IContainer.IPropertySetChangeEvent):
             if self._propertySetEventListeners is None:
                 return set()
             else:
@@ -1141,9 +1141,9 @@ class AbstractSelect(AbstractField, Container.Container, Container.Viewer,
 
 
     def containerItemSetChange(self, event):
-        """Lets the listener know a Containers Item set has changed.
+        """Lets the listener know a Containers IItem set has changed.
 
-        @see ItemSetChangeListener.containerItemSetChange()
+        @see IItemSetChangeListener.containerItemSetChange()
         """
         # Clears the item id mapping table
         self.itemIdMapper.removeAll()
@@ -1156,7 +1156,7 @@ class AbstractSelect(AbstractField, Container.Container, Container.Viewer,
         """Fires the property set change event."""
         if (self._propertySetEventListeners is not None
                 and len(self._propertySetEventListeners) > 0):
-            event = PropertySetChangeEvent(self)
+            event = IPropertySetChangeEvent(self)
             listeners = list(self._propertySetEventListeners)
             for l in listeners:
                 l.containerPropertySetChange(event)
@@ -1167,7 +1167,7 @@ class AbstractSelect(AbstractField, Container.Container, Container.Viewer,
         """Fires the item set change event."""
         if (self._itemSetEventListeners is not None
                 and len(self._itemSetEventListeners) > 0):
-            event = ItemSetChangeEvent(self)
+            event = IItemSetChangeEvent(self)
             listeners = list(self._itemSetEventListeners)
             for i in range(len(listeners)):
                 listeners[i].containerItemSetChange(event)
@@ -1340,7 +1340,7 @@ class DefaultNewItemHandler(INewItemHandler):
     def addNewItem(self, newItemCaption):
         # Checks for readonly
         if self.isReadOnly():
-            raise Property.ReadOnlyException()
+            raise IProperty.ReadOnlyException()
 
         # Adds new option
         if self.addItem(newItemCaption) is not None:
@@ -1351,7 +1351,7 @@ class DefaultNewItemHandler(INewItemHandler):
                     prop = self.getContainerProperty(newItemCaption,
                             self.getItemCaptionPropertyId())
                     prop.setValue(newItemCaption)
-                except Property.ConversionException:
+                except IProperty.ConversionException:
                     # The conversion exception is safely ignored, the
                     # caption is just missing
                     pass
@@ -1364,7 +1364,7 @@ class DefaultNewItemHandler(INewItemHandler):
                 self.setValue(newItemCaption)
 
 
-class ItemSetChangeEvent(Container.ItemSetChangeEvent):
+class IItemSetChangeEvent(IContainer.IItemSetChangeEvent):
     """Implementation of item set change event."""
 
     def __init__(self, container):
@@ -1372,14 +1372,14 @@ class ItemSetChangeEvent(Container.ItemSetChangeEvent):
 
 
     def getContainer(self):
-        """Gets the Property where the event occurred.
+        """Gets the IProperty where the event occurred.
 
-        @see com.vaadin.data.Container.ItemSetChangeEvent#getContainer()
+        @see com.vaadin.data.IContainer.IItemSetChangeEvent#getContainer()
         """
         return self._container
 
 
-class PropertySetChangeEvent(Container.PropertySetChangeEvent):
+class IPropertySetChangeEvent(IContainer.IPropertySetChangeEvent):
     """Implementation of property set change event."""
 
     def __init__(self, container):
@@ -1387,9 +1387,9 @@ class PropertySetChangeEvent(Container.PropertySetChangeEvent):
 
 
     def getContainer(self):
-        """Retrieves the Container whose contents have been modified.
+        """Retrieves the IContainer whose contents have been modified.
 
-        @see com.vaadin.data.Container.PropertySetChangeEvent#getContainer()
+        @see com.vaadin.data.IContainer.IPropertySetChangeEvent#getContainer()
         """
         return self._container
 
@@ -1417,15 +1417,15 @@ class AbstractSelectTargetDetails(TargetDetailsImpl):
 
 
     def getItemIdOver(self):
-        """If the drag operation is currently over an {@link Item}, this
-        method returns the identifier of that {@link Item}.
+        """If the drag operation is currently over an {@link IItem}, this
+        method returns the identifier of that {@link IItem}.
         """
         return self.idOver
 
 
     def getDropLocation(self):
         """Returns a detailed vertical location where the drop happened on
-        Item.
+        IItem.
         """
         detail = self.getData('detail')
         if detail is None:
@@ -1433,9 +1433,9 @@ class AbstractSelectTargetDetails(TargetDetailsImpl):
         return VerticalDropLocation.valueOf(detail)
 
 
-class CaptionChangeListener(Item.PropertySetChangeListener,
-            Property.ValueChangeListener):
-    """This is a listener helper for Item and Property changes that should
+class CaptionChangeListener(IItem.IPropertySetChangeListener,
+            IProperty.IValueChangeListener):
+    """This is a listener helper for IItem and IProperty changes that should
     cause a repaint. It should be attached to all items that are displayed,
     and the default implementation does this in paintContent(). Especially
     "lazyloading" components should take care to add and remove listeners as
@@ -1446,8 +1446,8 @@ class CaptionChangeListener(Item.PropertySetChangeListener,
     """
 
     def __init__(self):
-        # TODO clean this up - type is either Item.PropertySetChangeNotifier
-        # or Property.ValueChangeNotifier
+        # TODO clean this up - type is either IItem.IPropertySetChangeNotifier
+        # or IProperty.IValueChangeNotifier
         self._captionChangeNotifiers = set()
 
 
@@ -1458,7 +1458,7 @@ class CaptionChangeListener(Item.PropertySetChangeListener,
             if i is None:
                 return
 
-            if isinstance(i, Item.PropertySetChangeNotifier):
+            if isinstance(i, IItem.IPropertySetChangeNotifier):
                 i.addListener(self.getCaptionChangeListener())
                 self._captionChangeNotifiers.add(i)
 
@@ -1467,21 +1467,21 @@ class CaptionChangeListener(Item.PropertySetChangeListener,
                 for pid in pids:
                     p = i.getItemProperty(pid)
                     if (p is not None
-                            and isinstance(p, Property.ValueChangeNotifier)):
+                            and isinstance(p, IProperty.IValueChangeNotifier)):
                         p.addListener(self.getCaptionChangeListener())
                         self._captionChangeNotifiers.add(p)
 
         elif test == self.ITEM_CAPTION_MODE_PROPERTY:
             p = self.getContainerProperty(itemId,
                     self.getItemCaptionPropertyId())
-            if p is not None and isinstance(p, Property.ValueChangeNotifier):
+            if p is not None and isinstance(p, IProperty.IValueChangeNotifier):
                 p.addListener(self.getCaptionChangeListener())
                 self._captionChangeNotifiers.add(p)
 
 
     def clear(self):
         for notifier in self._captionChangeNotifiers:
-            if isinstance(notifier, Item.PropertySetChangeNotifier):
+            if isinstance(notifier, IItem.IPropertySetChangeNotifier):
                 notifier.removeListener(self.getCaptionChangeListener())
             else:
                 notifier.removeListener(self.getCaptionChangeListener())
@@ -1527,7 +1527,7 @@ class AbstractItemSetCriterion(ClientSideCriterion):
 
 class TargetItemIs(AbstractItemSetCriterion):
     """Criterion which accepts a drop only if the drop target is (one of)
-    the given Item identifier(s). Criterion can be used only on a drop
+    the given IItem identifier(s). Criterion can be used only on a drop
     targets that extends AbstractSelect like {@link Table} and {@link Tree}.
     The target and identifiers of valid Items are given in constructor.
 
@@ -1552,7 +1552,7 @@ class TargetItemIs(AbstractItemSetCriterion):
 
 class AcceptItem(AbstractItemSetCriterion):
     """This criterion accepts a only a {@link Transferable} that contains
-    given Item (practically its identifier) from a specific AbstractSelect.
+    given IItem (practically its identifier) from a specific AbstractSelect.
 
     @since 6.3
     """
@@ -1575,8 +1575,8 @@ class AcceptItem(AbstractItemSetCriterion):
         return self.itemIds.contains(transferable.getItemId())
 
     # A simple accept criterion which ensures that {@link Transferable}
-    # contains an {@link Item} (or actually its identifier). In other words
-    # the criterion check that drag is coming from a {@link Container} like
+    # contains an {@link IItem} (or actually its identifier). In other words
+    # the criterion check that drag is coming from a {@link IContainer} like
     # {@link Tree} or {@link Table}.
     ALL = ContainsDataFlavor('itemId')
 

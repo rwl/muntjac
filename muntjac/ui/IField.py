@@ -14,16 +14,16 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.data import Property
+from muntjac.data import IProperty
 
-from muntjac.data.BufferedValidatable import BufferedValidatable
+from muntjac.data.IBufferedValidatable import IBufferedValidatable
 
 from muntjac.ui.IComponent import \
     IComponent, IFocusable, Event as ComponentEvent
 
 
-class IField(IComponent, BufferedValidatable, Property.ValueChangeNotifier,
-            Property.ValueChangeListener, Property.Editor, IFocusable):
+class IField(IComponent, IBufferedValidatable, IProperty.IValueChangeNotifier,
+            IProperty.IValueChangeListener, IProperty.IEditor, IFocusable):
     """@author IT Mill Ltd.
     @author Richard Lincoln
     """
@@ -91,7 +91,7 @@ class IField(IComponent, BufferedValidatable, Property.ValueChangeNotifier,
         raise NotImplementedError
 
 
-class ValueChangeEvent(ComponentEvent, Property.ValueChangeEvent):
+class ValueChangeEvent(ComponentEvent, IProperty.ValueChangeEvent):
     """An <code>Event</code> object specifying the IField whose value has
     been changed.
 
@@ -112,8 +112,8 @@ class ValueChangeEvent(ComponentEvent, Property.ValueChangeEvent):
 
 
     def getProperty(self):
-        """Gets the Property which triggered the event.
+        """Gets the IProperty which triggered the event.
 
-        @return the Source Property of the event.
+        @return the Source IProperty of the event.
         """
         return self.getSource()

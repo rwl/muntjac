@@ -19,9 +19,9 @@ import locale
 from datetime import datetime
 
 from muntjac.ui.AbstractField import AbstractField
-from muntjac.data.Property import Property, ConversionException
+from muntjac.data.IProperty import IProperty, ConversionException
 from muntjac.ui.Form import Form
-from muntjac.data.Validator import InvalidValueException
+from muntjac.data.IValidator import InvalidValueException
 from muntjac.terminal.gwt.client.ui.VDateField import VDateField
 
 from muntjac.event.FieldEvents import \
@@ -30,7 +30,7 @@ from muntjac.event.FieldEvents import \
 
 
 class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
-    """A date editor component that can be bound to any {@link Property}
+    """A date editor component that can be bound to any {@link IProperty}
     that is compatible with <code>java.util.Date</code>.
 
     Since <code>DateField</code> extends <code>AbstractField</code> it
@@ -81,23 +81,23 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
                    the caption of the datefield.
         ---
         Constructs a new <code>DateField</code> that's bound to the specified
-        <code>Property</code> and has the given caption <code>String</code>.
+        <code>IProperty</code> and has the given caption <code>String</code>.
 
         @param caption
                    the caption <code>String</code> for the editor.
         @param dataSource
-                   the Property to be edited with this editor.
+                   the IProperty to be edited with this editor.
         ---
         Constructs a new <code>DateField</code> that's bound to the specified
-        <code>Property</code> and has no caption.
+        <code>IProperty</code> and has no caption.
 
         @param dataSource
-                   the Property to be edited with this editor.
+                   the IProperty to be edited with this editor.
         ---
         Constructs a new <code>DateField</code> with the given caption and
         initial text contents. The editor constructed this way will not be
-        bound to a Property unless
-        {@link Property.Viewer.setPropertyDataSource()} is called to bind it.
+        bound to a IProperty unless
+        {@link IProperty.Viewer.setPropertyDataSource()} is called to bind it.
 
         @param caption
                    the caption <code>String</code> for the editor.
@@ -132,7 +132,7 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
         if nargs == 0:
             pass
         elif nargs == 1:
-            if isinstance(args[0], Property):
+            if isinstance(args[0], IProperty):
                 dataSource, = args
                 if not issubclass(dataSource.getType(), datetime):
                     raise ValueError, ('Can\'t use '
@@ -345,7 +345,7 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
         """This method is called to handle a non-empty date string from
         the client if the client could not parse it as a Date.
 
-        By default, a Property.ConversionException is thrown, and the
+        By default, a IProperty.ConversionException is thrown, and the
         current value is not modified.
 
         This can be overridden to handle conversions, to return null
@@ -354,7 +354,7 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
 
         @param dateString
         @return parsed Date
-        @raise Property.ConversionException:
+        @raise IProperty.ConversionException:
                     to keep the old value and indicate an error
         """
         self._currentParseErrorMessage = None
@@ -433,7 +433,7 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
         """Sets the DateField datasource. Datasource type must assignable
         to Date.
 
-        @see Property.Viewer.setPropertyDataSource()
+        @see IProperty.Viewer.setPropertyDataSource()
         """
         if (newDataSource is None
                 or issubclass(newDataSource.getType(), datetime)):

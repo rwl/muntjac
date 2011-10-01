@@ -23,24 +23,24 @@ from muntjac.ui.IComponent import Event as ComponentEvent
 
 from muntjac.event import Action
 from muntjac.ui import IField
-from muntjac.data import Property
+from muntjac.data import IProperty
 
-from muntjac.data.Validator import EmptyValueException
-from muntjac.data.Buffered import SourceException
-from muntjac.data.Validator import InvalidValueException
-from muntjac.data.Validatable import Validatable
+from muntjac.data.IValidator import EmptyValueException
+from muntjac.data.IBuffered import SourceException
+from muntjac.data.IValidator import InvalidValueException
+from muntjac.data.IValidatable import IValidatable
 
 from muntjac.terminal.CompositeErrorMessage import CompositeErrorMessage
 
 
 class AbstractField(AbstractComponent, IField.IField,
-            Action.ShortcutNotifier, Property.ReadOnlyStatusChangeNotifier,
-            Property.ReadOnlyStatusChangeListener):
+            Action.ShortcutNotifier, IProperty.IReadOnlyStatusChangeNotifier,
+            IProperty.IReadOnlyStatusChangeListener):
     """Abstract field component for implementing buffered property editors.
     The field may hold an internal value, or it may be connected to any data
-    source that implements the {@link com.vaadin.data.Property}interface.
+    source that implements the {@link com.vaadin.data.IProperty}interface.
     <code>AbstractField</code> implements that interface itself, too, so
-    accessing the Property value represented by it is straightforward.
+    accessing the IProperty value represented by it is straightforward.
 
     AbstractField also provides the {@link com.vaadin.data.Buffered}
     interface for buffering the data source value. By default the IField is
@@ -299,7 +299,7 @@ class AbstractField(AbstractComponent, IField.IField,
 
 
     def __str__(self):
-        """Returns the value of the Property in human readable textual
+        """Returns the value of the IProperty in human readable textual
         format.
         """
         value = self.getValue()
@@ -349,8 +349,8 @@ class AbstractField(AbstractComponent, IField.IField,
                    the New value of the field.
         @param repaintIsNotNeeded
                    True iff caller is sure that repaint is not needed.
-        @throws Property.ReadOnlyException
-        @throws Property.ConversionException
+        @throws IProperty.ReadOnlyException
+        @throws IProperty.ConversionException
         """
         if ((newValue is None and self._value is not None)
                 or (newValue is not None
@@ -358,7 +358,7 @@ class AbstractField(AbstractComponent, IField.IField,
 
             # Read only fields can not be changed
             if self.isReadOnly():
-                raise Property.ReadOnlyException()
+                raise IProperty.ReadOnlyException()
 
             # Repaint is needed even when the client thinks that it knows
             # the new state if validity of the component may change
@@ -409,14 +409,14 @@ class AbstractField(AbstractComponent, IField.IField,
     def getPropertyDataSource(self):
         """Gets the current data source of the field, if any.
 
-        @return the current data source as a Property, or <code>null</code>
+        @return the current data source as a IProperty, or <code>null</code>
                 if none defined.
         """
         return self._dataSource
 
 
     def setPropertyDataSource(self, newDataSource):
-        """Sets the specified Property as the data source for the field.
+        """Sets the specified IProperty as the data source for the field.
         All uncommitted changes are replaced with a value from the new data
         source.
 
@@ -436,7 +436,7 @@ class AbstractField(AbstractComponent, IField.IField,
         discard().
 
         @param newDataSource
-                   the new data source Property.
+                   the new data source IProperty.
         """
         # Saves the old value
         oldValue = self._value
@@ -444,14 +444,14 @@ class AbstractField(AbstractComponent, IField.IField,
         # Stops listening the old data source changes
         if (self._dataSource is not None \
                 and issubclass(self._dataSource,
-                        Property.ValueChangeNotifier)):
+                        IProperty.IValueChangeNotifier)):
 
             self._dataSource.removeListener(self)
 
 
         if (self._dataSource is not None \
                 and issubclass(self._dataSource,
-                        Property.ReadOnlyStatusChangeNotifier)):
+                        IProperty.IReadOnlyStatusChangeNotifier)):
 
             self._dataSource.removeListener(self)
 
@@ -473,15 +473,15 @@ class AbstractField(AbstractComponent, IField.IField,
             self._modified = True
 
         # Listens the new data source if possible
-        if isinstance(self._dataSource, Property.ValueChangeNotifier):
+        if isinstance(self._dataSource, IProperty.IValueChangeNotifier):
             self._dataSource.addListener(self)
 
         if isinstance(self._dataSource,
-                Property.ReadOnlyStatusChangeNotifier):
+                IProperty.IReadOnlyStatusChangeNotifier):
             self._dataSource.addListener(self)
 
         # Copy the validators from the data source
-        if isinstance(self._dataSource, Validatable):
+        if isinstance(self._dataSource, IValidatable):
             validators = self._dataSource.getValidators()
             if validators is not None:
                 for v in validators:
@@ -561,7 +561,7 @@ class AbstractField(AbstractComponent, IField.IField,
 
 
     def validate(self):
-        """Checks the validity of the Validatable by validating the field
+        """Checks the validity of the IValidatable by validating the field
         with all attached validators except when the field is empty. An
         empty field is invalid if it is required and valid otherwise.
 
@@ -570,7 +570,7 @@ class AbstractField(AbstractComponent, IField.IField,
         EmptyValueException with the error message set with
         setRequiredError().
 
-        @see com.vaadin.data.Validatable#validate()
+        @see com.vaadin.data.IValidatable#validate()
         """
         if self.isEmpty():
             if self.isRequired():
@@ -624,7 +624,7 @@ class AbstractField(AbstractComponent, IField.IField,
         immediately.
 
         @return true iff the invalid values are allowed.
-        @see com.vaadin.data.Validatable#isInvalidAllowed()
+        @see com.vaadin.data.IValidatable#isInvalidAllowed()
         """
         return self._invalidAllowed
 
@@ -640,7 +640,7 @@ class AbstractField(AbstractComponent, IField.IField,
         allow invalid values. The validators are automatically copied to the
         field when the datasource is set.
 
-        @see com.vaadin.data.Validatable#setInvalidAllowed(boolean)
+        @see com.vaadin.data.IValidatable#setInvalidAllowed(boolean)
         """
         self._invalidAllowed = invalidAllowed
 
@@ -678,14 +678,14 @@ class AbstractField(AbstractComponent, IField.IField,
 
 
     _VALUE_CHANGE_METHOD = \
-            getattr(Property.ValueChangeListener, 'valueChange')
+            getattr(IProperty.IValueChangeListener, 'valueChange')
 
 
     def addListener(self, listener):
         # Adds a value change listener for the field.
-        if isinstance(listener, Property.ReadOnlyStatusChangeListener):
+        if isinstance(listener, IProperty.IReadOnlyStatusChangeListener):
             AbstractComponent.addListener(self,
-                    Property.ReadOnlyStatusChangeEvent, listener,
+                    IProperty.IReadOnlyStatusChangeEvent, listener,
                     self._READ_ONLY_STATUS_CHANGE_METHOD)
         else:
             self.addListener(IField.ValueChangeEvent, listener,
@@ -694,9 +694,9 @@ class AbstractField(AbstractComponent, IField.IField,
 
     def removeListener(self, listener):
         # Removes a value change listener from the field.
-        if isinstance(listener, Property.ReadOnlyStatusChangeListener):
+        if isinstance(listener, IProperty.IReadOnlyStatusChangeListener):
             AbstractComponent.removeListener(self,
-                    Property.ReadOnlyStatusChangeEvent, listener,
+                    IProperty.IReadOnlyStatusChangeEvent, listener,
                     self._READ_ONLY_STATUS_CHANGE_METHOD)
         else:
             self.removeListener(IField.ValueChangeEvent, listener,
@@ -713,7 +713,7 @@ class AbstractField(AbstractComponent, IField.IField,
 
 
     _READ_ONLY_STATUS_CHANGE_METHOD = \
-            getattr(Property.ReadOnlyStatusChangeListener,
+            getattr(IProperty.IReadOnlyStatusChangeListener,
                     'readOnlyStatusChange')
 
 
@@ -721,7 +721,7 @@ class AbstractField(AbstractComponent, IField.IField,
         """React to read only status changes of the property by
         requesting a repaint.
 
-        @see Property.ReadOnlyStatusChangeListener
+        @see IProperty.IReadOnlyStatusChangeListener
         """
         self.requestRepaint()
 
@@ -730,7 +730,7 @@ class AbstractField(AbstractComponent, IField.IField,
         """Emits the read-only status change event. The value contained
         in the field is validated before the event is created.
         """
-        self.fireEvent( ReadOnlyStatusChangeEvent(self) )
+        self.fireEvent( IReadOnlyStatusChangeEvent(self) )
 
 
     def valueChange(self, event):
@@ -998,9 +998,9 @@ class FocusShortcut(ShortcutListener):
         self.focusable.focus()
 
 
-class ReadOnlyStatusChangeEvent(ComponentEvent, Property,
-            Property.ReadOnlyStatusChangeEvent):
-    """An <code>Event</code> object specifying the Property whose
+class IReadOnlyStatusChangeEvent(ComponentEvent, IProperty,
+            IProperty.IReadOnlyStatusChangeEvent):
+    """An <code>Event</code> object specifying the IProperty whose
     read-only status has changed.
 
     @author IT Mill Ltd.
@@ -1015,11 +1015,11 @@ class ReadOnlyStatusChangeEvent(ComponentEvent, Property,
         @param source
                    the Source of the event.
         """
-        super(ReadOnlyStatusChangeEvent, self)(source)
+        super(IReadOnlyStatusChangeEvent, self)(source)
 
 
     def getProperty(self):
-        """Property where the event occurred.
+        """IProperty where the event occurred.
 
         @return the Source of the event.
         """

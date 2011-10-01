@@ -15,16 +15,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class Container(object):
-    """<p>
-    A specialized set of identified Items. Basically the Container is a set of
-    {@link Item}s, but it imposes certain constraints on its contents. These
+class IContainer(object):
+    """A specialized set of identified Items. Basically the IContainer is a set
+    of {@link Item}s, but it imposes certain constraints on its contents. These
     constraints state the following:
-    </p>
 
     <ul>
-    <li>All Items in the Container must have the same number of Properties.
-    <li>All Items in the Container must have the same Property ID's (see
+    <li>All Items in the IContainer must have the same number of Properties.
+    <li>All Items in the IContainer must have the same Property ID's (see
     {@link Item#getItemPropertyIds()}).
     <li>All Properties in the Items corresponding to the same Property ID must
     have the same data type.
@@ -32,42 +30,30 @@ class Container(object):
     IDs.
     </ul>
 
-    <p>
-    The Container can be visualized as a representation of a relational database
-    table. Each Item in the Container represents a row in the table, and all
+    The IContainer can be visualized as a representation of a relational database
+    table. Each Item in the IContainer represents a row in the table, and all
     cells in a column (identified by a Property ID) have the same data type. Note
-    that as with the cells in a database table, no Property in a Container may be
+    that as with the cells in a database table, no Property in a IContainer may be
     empty, though they may contain <code>null</code> values.
-    </p>
 
-    <p>
-    Note that though uniquely identified, the Items in a Container are not
-    necessarily {@link Container.Ordered ordered} or {@link Container.Indexed
+    Note that though uniquely identified, the Items in a IContainer are not
+    necessarily {@link IContainer.IOrdered ordered} or {@link IContainer.IIndexed
     indexed}.
-    </p>
 
-    <p>
     Containers can derive Item ID's from the item properties or use other,
     container specific or user specified identifiers.
-    </p>
 
-    <p>
-    If a container is {@link Filterable filtered} or {@link Sortable sorted},
+    If a container is {@link IFilterable filtered} or {@link ISortable sorted},
     most of the the methods of the container interface and its subinterfaces
     (container size, {@link #containsId(Object)}, iteration and indices etc.)
     relate to the filtered and sorted view, not to the full container contents.
     See individual method javadoc for exceptions to this (adding and removing
     items).
-    </p>
 
-    <p>
     <img src=doc-files/Container_full.gif>
-    </p>
 
-    <p>
-    The Container interface is split to several subinterfaces so that a class can
+    The IContainer interface is split to several subinterfaces so that a class can
     implement only the ones it needs.
-    </p>
 
     @author IT Mill Ltd
     @version @VERSION@
@@ -75,8 +61,8 @@ class Container(object):
     """
 
     def getItem(self, itemId):
-        """Gets the {@link Item} with the given Item ID from the Container. If the
-        Container does not contain the requested Item, <code>null</code> is
+        """Gets the {@link Item} with the given Item ID from the IContainer. If the
+        IContainer does not contain the requested Item, <code>null</code> is
         returned.
 
         Containers should not return Items that are filtered out.
@@ -84,27 +70,27 @@ class Container(object):
         @param itemId
                    ID of the {@link Item} to retrieve
         @return the {@link Item} with the given ID or <code>null</code> if the
-                Item is not found in the Container
+                Item is not found in the IContainer
         """
-        pass
+        raise NotImplementedError
 
 
     def getContainerPropertyIds(self):
-        """Gets the ID's of all Properties stored in the Container. The ID's cannot
+        """Gets the ID's of all Properties stored in the IContainer. The ID's cannot
         be modified through the returned collection.
 
         @return unmodifiable collection of Property IDs
         """
-        pass
+        raise NotImplementedError
 
 
     def getItemIds(self):
         """Gets the ID's of all visible (after filtering and sorting) Items stored
-        in the Container. The ID's cannot be modified through the returned
+        in the IContainer. The ID's cannot be modified through the returned
         collection.
 
-        If the container is {@link Ordered}, the collection returned by this
-        method should follow that order. If the container is {@link Sortable},
+        If the container is {@link IOrdered}, the collection returned by this
+        method should follow that order. If the container is {@link ISortable},
         the items should be in the sorted order.
 
         Calling this method for large lazy containers can be an expensive
@@ -112,13 +98,13 @@ class Container(object):
 
         @return unmodifiable collection of Item IDs
         """
-        pass
+        raise NotImplementedError
 
 
     def getContainerProperty(self, itemId, propertyId):
         """Gets the Property identified by the given itemId and propertyId from the
-        Container. If the Container does not contain the item or it is filtered
-        out, or the Container does not have the Property, <code>null</code> is
+        IContainer. If the IContainer does not contain the item or it is filtered
+        out, or the IContainer does not have the Property, <code>null</code> is
         returned.
 
         @param itemId
@@ -127,7 +113,7 @@ class Container(object):
                    ID of the Property to retrieve
         @return Property with the given ID or <code>null</code>
         """
-        pass
+        raise NotImplementedError
 
 
     def getType(self, propertyId):
@@ -137,22 +123,22 @@ class Container(object):
                    ID identifying the Properties
         @return data type of the Properties
         """
-        pass
+        raise NotImplementedError
 
 
     def size(self):
-        """Gets the number of visible Items in the Container.
+        """Gets the number of visible Items in the IContainer.
 
         Filtering can hide items so that they will not be visible through the
         container API.
 
-        @return number of Items in the Container
+        @return number of Items in the IContainer
         """
-        pass
+        raise NotImplementedError
 
 
     def containsId(self, itemId):
-        """Tests if the Container contains the specified Item.
+        """Tests if the IContainer contains the specified Item.
 
         Filtering can hide items so that they will not be visible through the
         container API, and this method should respect visibility of items (i.e.
@@ -161,23 +147,19 @@ class Container(object):
 
         @param itemId
                    ID the of Item to be tested
-        @return boolean indicating if the Container holds the specified Item
+        @return boolean indicating if the IContainer holds the specified Item
         """
-        pass
+        raise NotImplementedError
 
 
     def addItem(self, itemId=None):
-        """Creates a new Item with the given ID in the Container.
+        """Creates a new Item with the given ID in the IContainer.
 
-        <p>
         The new Item is returned, and it is ready to have its Properties
         modified. Returns <code>null</code> if the operation fails or the
-        Container already contains a Item with the given ID.
-        </p>
+        IContainer already contains a Item with the given ID.
 
-        <p>
         This functionality is optional.
-        </p>
 
         @param itemId
                    ID of the Item to be created
@@ -186,17 +168,13 @@ class Container(object):
                     if adding an item with an explicit item ID is not supported
                     by the container
         ---
-        Creates a new Item into the Container, and assign it an automatic ID.
+        Creates a new Item into the IContainer, and assign it an automatic ID.
 
-        <p>
         The new ID is returned, or <code>null</code> if the operation fails.
         After a successful call you can use the {@link #getItem(Object ItemId)
         <code>getItem</code>}method to fetch the Item.
-        </p>
 
-        <p>
         This functionality is optional.
-        </p>
 
         @return ID of the newly created Item, or <code>null</code> in case of a
                 failure
@@ -204,20 +182,16 @@ class Container(object):
                     if adding an item without an explicit item ID is not
                     supported by the container
         """
-        pass
+        raise NotImplementedError
 
 
     def removeItem(self, itemId):
-        """Removes the Item identified by <code>ItemId</code> from the Container.
+        """Removes the Item identified by <code>ItemId</code> from the IContainer.
 
-        <p>
         Containers that support filtering should also allow removing an item that
         is currently filtered out.
-        </p>
 
-        <p>
         This functionality is optional.
-        </p>
 
         @param itemId
                    ID of the Item to remove
@@ -226,11 +200,11 @@ class Container(object):
         @throws UnsupportedOperationException
                     if the container does not support removing individual items
         """
-        pass
+        raise NotImplementedError
 
 
     def addContainerProperty(self, propertyId, typ, defaultValue):
-        """Adds a new Property to all Items in the Container. The Property ID, data
+        """Adds a new Property to all Items in the IContainer. The Property ID, data
         type and default value of the new Property are given as parameters.
 
         This functionality is optional.
@@ -247,12 +221,12 @@ class Container(object):
                     if the container does not support explicitly adding container
                     properties
         """
-        pass
+        raise NotImplementedError
 
 
     def removeContainerProperty(self, propertyId):
-        """Removes a Property specified by the given Property ID from the Container.
-        Note that the Property will be removed from all Items in the Container.
+        """Removes a Property specified by the given Property ID from the IContainer.
+        Note that the Property will be removed from all Items in the IContainer.
 
         This functionality is optional.
 
@@ -264,112 +238,106 @@ class Container(object):
                     if the container does not support removing container
                     properties
         """
-        pass
+        raise NotImplementedError
 
 
     def removeAllItems(self):
-        """Removes all Items from the Container.
+        """Removes all Items from the IContainer.
 
-        <p>
         Note that Property ID and type information is preserved. This
         functionality is optional.
-        </p>
 
         @return <code>true</code> if the operation succeeded, <code>false</code>
                 if not
         @throws UnsupportedOperationException
                     if the container does not support removing all items
         """
-        pass
+        raise NotImplementedError
 
 
-class Ordered(Container):
-    """Interface for Container classes whose {@link Item}s can be traversed in
+class IOrdered(IContainer):
+    """Interface for IContainer classes whose {@link Item}s can be traversed in
     order.
 
-    <p>
     If the container is filtered or sorted, the traversal applies to the
     filtered and sorted view.
-    </p>
-    <p>
+
     The <code>addItemAfter()</code> methods should apply filters to the added
     item after inserting it, possibly hiding it immediately. If the container
     is being sorted, they may add items at the correct sorted position
-    instead of the given position. See also {@link Filterable} and
-    {@link Sortable} for more information.
-    </p>
+    instead of the given position. See also {@link IFilterable} and
+    {@link ISortable} for more information.
     """
 
     def nextItemId(self, itemId):
         """Gets the ID of the Item following the Item that corresponds to
         <code>itemId</code>. If the given Item is the last or not found in
-        the Container, <code>null</code> is returned.
+        the IContainer, <code>null</code> is returned.
 
         @param itemId
-                   ID of a visible Item in the Container
+                   ID of a visible Item in the IContainer
         @return ID of the next visible Item or <code>null</code>
         """
-        pass
+        raise NotImplementedError
 
 
     def prevItemId(self, itemId):
         """Gets the ID of the Item preceding the Item that corresponds to
         <code>itemId</code>. If the given Item is the first or not found in
-        the Container, <code>null</code> is returned.
+        the IContainer, <code>null</code> is returned.
 
         @param itemId
-                   ID of a visible Item in the Container
+                   ID of a visible Item in the IContainer
         @return ID of the previous visible Item or <code>null</code>
         """
-        pass
+        raise NotImplementedError
 
 
     def firstItemId(self):
-        """Gets the ID of the first Item in the Container.
+        """Gets the ID of the first Item in the IContainer.
 
-        @return ID of the first visible Item in the Container
+        @return ID of the first visible Item in the IContainer
         """
-        pass
+        raise NotImplementedError
 
 
     def lastItemId(self):
-        """Gets the ID of the last Item in the Container..
+        """Gets the ID of the last Item in the IContainer..
 
-        @return ID of the last visible Item in the Container
+        @return ID of the last visible Item in the IContainer
         """
-        pass
+        raise NotImplementedError
 
 
     def isFirstId(self, itemId):
         """Tests if the Item corresponding to the given Item ID is the first
-        Item in the Container.
+        Item in the IContainer.
 
         @param itemId
-                   ID of an Item in the Container
+                   ID of an Item in the IContainer
         @return <code>true</code> if the Item is first visible item in the
-                Container, <code>false</code> if not
+                IContainer, <code>false</code> if not
         """
-        pass
+        raise NotImplementedError
 
 
     def isLastId(self, itemId):
         """Tests if the Item corresponding to the given Item ID is the last Item
-        in the Container.
+        in the IContainer.
 
         @return <code>true</code> if the Item is last visible item in the
-                Container, <code>false</code> if not
+                IContainer, <code>false</code> if not
         """
-        pass
+        raise NotImplementedError
 
 
     def addItemAfter(self, previousItemId, newItemId=None):
         """Adds a new item after the given item.
-        <p>
+
         Adding an item after null item adds the item as first item of the
         ordered container.
-        </p>
 
-        @see Ordered Ordered: adding items in filtered or sorted containers
+        @see IOrdered IOrdered: adding items in filtered or sorted containers
 
         @param previousItemId
                    Id of the visible item in ordered container after which to
@@ -380,12 +348,11 @@ class Ordered(Container):
                     if the operation is not supported by the container
         ---
         Adds a new item after the given item.
-        <p>
+
         Adding an item after null item adds the item as first item of the
         ordered container.
-        </p>
 
-        @see Ordered Ordered: adding items in filtered or sorted containers
+        @see IOrdered IOrdered: adding items in filtered or sorted containers
 
         @param previousItemId
                    Id of the visible item in ordered container after which to
@@ -396,30 +363,27 @@ class Ordered(Container):
         @throws UnsupportedOperationException
                     if the operation is not supported by the container
         """
-        pass
+        raise NotImplementedError
 
 
-class Sortable(Ordered):
-    """Interface for Container classes whose {@link Item}s can be sorted.
-    <p>
-    When an {@link Ordered} or {@link Indexed} container is sorted, all
+class ISortable(IOrdered):
+    """Interface for IContainer classes whose {@link Item}s can be sorted.
+
+    When an {@link IOrdered} or {@link IIndexed} container is sorted, all
     relevant operations of these interfaces should only use the filtered and
     sorted contents and the filtered indices to the container. Indices or
     item identifiers in the public API refer to the visible view unless
     otherwise stated. However, the <code>addItem*()</code> methods may add
     items that will be filtered out after addition or moved to another
     position based on sorting.
-    </p>
-    <p>
-    How sorting is performed when a {@link Hierarchical} container implements
-    {@link Sortable} is implementation specific and should be documented in
+
+    How sorting is performed when a {@link IHierarchical} container implements
+    {@link ISortable} is implementation specific and should be documented in
     the implementing class. However, the recommended approach is sorting the
     roots and the sets of children of each item separately.
-    </p>
-    <p>
+
     Depending on the container type, sorting a container may permanently
     change the internal order of items in the container.
-    </p>
     """
 
     def sort(self, propertyId, ascending):
@@ -444,7 +408,7 @@ class Sortable(Ordered):
                    sort in ascending order, <code>false</code> to use
                    descending order.
         """
-        pass
+        raise NotImplementedError
 
 
     def getSortableContainerPropertyIds(self):
@@ -453,18 +417,17 @@ class Sortable(Ordered):
         @return the IDs of the properties that can be used for sorting the
                 container
         """
-        pass
+        raise NotImplementedError
 
 
-class Indexed(Ordered):
-    """Interface for Container classes whose {@link Item}s can be accessed by
+class IIndexed(IOrdered):
+    """Interface for IContainer classes whose {@link Item}s can be accessed by
     their position in the container.
-    <p>
+
     If the container is filtered or sorted, all indices refer to the filtered
     and sorted view. However, the <code>addItemAt()</code> methods may add
     items that will be filtered out after addition or moved to another
     position based on sorting.
-    </p>
     """
 
     def indexOfId(self, itemId):
@@ -473,11 +436,11 @@ class Indexed(Ordered):
         index = -1 if there is no visible item with that id in the container.
 
         @param itemId
-                   ID of an Item in the Container
+                   ID of an Item in the IContainer
         @return index of the Item, or -1 if (the filtered and sorted view of)
-                the Container does not include the Item
+                the IContainer does not include the Item
         """
-        pass
+        raise NotImplementedError
 
 
     def getIdByIndex(self, index):
@@ -485,25 +448,23 @@ class Indexed(Ordered):
 
         @param index
                    Index of the requested id in (the filtered and sorted view
-                   of) the Container
+                   of) the IContainer
         @return ID of the Item in the given index
         """
-        pass
+        raise NotImplementedError
 
 
     def addItemAt(self, index, newItemId=None):
         """Adds a new item at given index (in the filtered view).
-        <p>
+
         The indices of the item currently in the given position and all the
         following items are incremented.
-        </p>
-        <p>
+
         This method should apply filters to the added item after inserting
         it, possibly hiding it immediately. If the container is being sorted,
         the item may be added at the correct sorted position instead of the
-        given position. See {@link Indexed}, {@link Ordered},
-        {@link Filterable} and {@link Sortable} for more information.
-        </p>
+        given position. See {@link IIndexed}, {@link IOrdered},
+        {@link IFilterable} and {@link ISortable} for more information.
 
         @param index
                    Index (in the filtered and sorted view) to add the new
@@ -516,14 +477,12 @@ class Indexed(Ordered):
         <p>
         The indexes of the item currently in the given position and all the
         following items are incremented.
-        </p>
-        <p>
+
         This method should apply filters to the added item after inserting
         it, possibly hiding it immediately. If the container is being sorted,
         the item may be added at the correct sorted position instead of the
-        given position. See {@link Indexed}, {@link Filterable} and
-        {@link Sortable} for more information.
-        </p>
+        given position. See {@link IIndexed}, {@link IFilterable} and
+        {@link ISortable} for more information.
 
         @param index
                    Index (in the filtered and sorted view) at which to add
@@ -534,15 +493,13 @@ class Indexed(Ordered):
         @throws UnsupportedOperationException
                     if the operation is not supported by the container
         """
-        pass
+        raise NotImplementedError
 
 
-class Hierarchical(Container):
-    """<p>
-    Interface for <code>Container</code> classes whose Items can be arranged
+class IHierarchical(IContainer):
+    """Interface for <code>IContainer</code> classes whose Items can be arranged
     hierarchically. This means that the Items in the container belong in a
     tree-like structure, with the following quirks:
-    </p>
 
     <ul>
     <li>The Item structure may have more than one root elements
@@ -561,7 +518,7 @@ class Hierarchical(Container):
                 containing the IDs of all other Items that are children in
                 the container hierarchy
         """
-        pass
+        raise NotImplementedError
 
 
     def getParent(self, itemId):
@@ -572,7 +529,7 @@ class Hierarchical(Container):
         @return the ID of the parent Item. Will be <code>null</code> if the
                 specified Item is a root element.
         """
-        pass
+        raise NotImplementedError
 
 
     def rootItemIds(self):
@@ -583,21 +540,17 @@ class Hierarchical(Container):
         @return An unmodifiable {@link java.util.Collection collection}
                 containing IDs of all root elements of the container
         """
-        pass
+        raise NotImplementedError
 
 
     def setParent(self, itemId, newParentId):
-        """<p>
-        Sets the parent of an Item. The new parent item must exist and be
+        """Sets the parent of an Item. The new parent item must exist and be
         able to have children. (
         <code>{@link #areChildrenAllowed(Object)} == true</code> ). It is
         also possible to detach a node from the hierarchy (and thus make it
         root) by setting the parent <code>null</code>.
-        </p>
 
-        <p>
         This operation is optional.
-        </p>
 
         @param itemId
                    ID of the item to be set as the child of the Item
@@ -608,7 +561,7 @@ class Hierarchical(Container):
         @return <code>true</code> if the operation succeeded,
                 <code>false</code> if not
         """
-        pass
+        raise NotImplementedError
 
 
     def areChildrenAllowed(self, itemId):
@@ -618,29 +571,24 @@ class Hierarchical(Container):
                    ID of the Item in the container whose child capability is
                    to be tested
         @return <code>true</code> if the specified Item exists in the
-                Container and it can have children, <code>false</code> if
+                IContainer and it can have children, <code>false</code> if
                 it's not found from the container or it can't have children.
         """
-        pass
+        raise NotImplementedError
 
 
     def setChildrenAllowed(self, itemId, areChildrenAllowed):
-        """<p>
-        Sets the given Item's capability to have children. If the Item
+        """Sets the given Item's capability to have children. If the Item
         identified with <code>itemId</code> already has children and
         <code>{@link #areChildrenAllowed(Object)}</code> is false this method
         fails and <code>false</code> is returned.
-        </p>
-        <p>
+
         The children must be first explicitly removed with
         {@link #setParent(Object itemId, Object newParentId)}or
-        {@link com.vaadin.data.Container#removeItem(Object itemId)}.
-        </p>
+        {@link com.vaadin.data.IContainer#removeItem(Object itemId)}.
 
-        <p>
         This operation is optional. If it is not implemented, the method
         always returns <code>false</code>.
-        </p>
 
         @param itemId
                    ID of the Item in the container whose child capability is
@@ -651,7 +599,7 @@ class Hierarchical(Container):
         @return <code>true</code> if the operation succeeded,
                 <code>false</code> if not
         """
-        pass
+        raise NotImplementedError
 
 
     def isRoot(self, itemId):
@@ -665,92 +613,78 @@ class Hierarchical(Container):
         @return <code>true</code> if the specified Item is a root,
                 <code>false</code> if not
         """
-        pass
+        raise NotImplementedError
 
 
     def hasChildren(self, itemId):
-        """<p>
-        Tests if the Item specified with <code>itemId</code> has child Items
+        """Tests if the Item specified with <code>itemId</code> has child Items
         or if it is a leaf. The {@link #getChildren(Object itemId)} method
         always returns <code>null</code> for leaf Items.
-        </p>
 
-        <p>
         Note that being a leaf does not imply whether or not an Item is
         allowed to have children.
-        </p>
-        .
 
         @param itemId
                    ID of the Item to be tested
         @return <code>true</code> if the specified Item has children,
                 <code>false</code> if not (is a leaf)
         """
-        pass
+        raise NotImplementedError
 
 
     def removeItem(self, itemId):
-        """<p>
-        Removes the Item identified by <code>ItemId</code> from the
-        Container.
-        </p>
+        """Removes the Item identified by <code>ItemId</code> from the
+        IContainer.
 
-        <p>
         Note that this does not remove any children the item might have.
-        </p>
 
         @param itemId
                    ID of the Item to remove
         @return <code>true</code> if the operation succeeded,
                 <code>false</code> if not
         """
-        pass
+        raise NotImplementedError
 
 
-class SimpleFilterable(Container):
+class ISimpleFilterable(IContainer):
     """Interface that is implemented by containers which allow reducing their
     visible contents based on a set of filters. This interface has been
-    renamed from {@link Filterable}, and implementing the new
-    {@link Filterable} instead of or in addition to {@link SimpleFilterable}
+    renamed from {@link IFilterable}, and implementing the new
+    {@link IFilterable} instead of or in addition to {@link ISimpleFilterable}
     is recommended. This interface might be removed in future Vaadin
     versions.
-    <p>
+
     When a set of filters are set, only items that match all the filters are
     included in the visible contents of the container. Still new items that
     do not match filters can be added to the container. Multiple filters can
     be added and the container remembers the state of the filters. When
     multiple filters are added, all filters must match for an item to be
     visible in the container.
-    </p>
-    <p>
-    When an {@link Ordered} or {@link Indexed} container is filtered, all
+
+    When an {@link IOrdered} or {@link IIndexed} container is filtered, all
     operations of these interfaces should only use the filtered contents and
     the filtered indices to the container.
-    </p>
-    <p>
-    How filtering is performed when a {@link Hierarchical} container
-    implements {@link SimpleFilterable} is implementation specific and should
-    be documented in the implementing class.
-    </p>
-    <p>
-    Adding items (if supported) to a filtered {@link Ordered} or
-    {@link Indexed} container should insert them immediately after the
-    indicated visible item. The unfiltered position of items added at index
-    0, at index {@link com.vaadin.data.Container#size()} or at an undefined
-    position is up to the implementation.
-    </p>
-    <p>
-    The functionality of SimpleFilterable can be implemented using the
-    {@link Filterable} API and {@link SimpleStringFilter}.
-    </p>
 
-    @since 5.0 (renamed from Filterable to SimpleFilterable in 6.6)
+    How filtering is performed when a {@link IHierarchical} container
+    implements {@link ISimpleFilterable} is implementation specific and should
+    be documented in the implementing class.
+
+    Adding items (if supported) to a filtered {@link IOrdered} or
+    {@link IIndexed} container should insert them immediately after the
+    indicated visible item. The unfiltered position of items added at index
+    0, at index {@link com.vaadin.data.IContainer#size()} or at an undefined
+    position is up to the implementation.
+
+    The functionality of ISimpleFilterable can be implemented using the
+    {@link IFilterable} API and {@link SimpleStringFilter}.
+
+    @since 5.0 (renamed from IFilterable to ISimpleFilterable in 6.6)
     """
 
     def addContainerFilter(self, propertyId, filterString, ignoreCase, onlyMatchPrefix):
         """Add a filter for given property.
 
-        The API {@link Filterable#addContainerFilter(Filter)} is recommended
+        The API {@link IFilterable#addContainerFilter(IFilter)} is recommended
         instead of this method. A {@link SimpleStringFilter} can be used with
         the new API to implement the old string filtering functionality.
 
@@ -771,12 +705,12 @@ class SimpleFilterable(Container):
         @param onlyMatchPrefix
                    Only match prefixes; no other matches are included.
         """
-        pass
+        raise NotImplementedError
 
 
     def removeAllContainerFilters(self):
         """Remove all filters from all properties."""
-        pass
+        raise NotImplementedError
 
 
     def removeContainerFilters(self, propertyId):
@@ -785,11 +719,11 @@ class SimpleFilterable(Container):
         @param propertyId
                    for which to remove filters
         """
-        pass
+        raise NotImplementedError
 
 
-class Filter(object):
-    """Filter interface for container filtering.
+class IFilter(object):
+    """IFilter interface for container filtering.
 
     If a filter does not support in-memory filtering,
     {@link #passesFilter(Item)} should throw
@@ -801,11 +735,11 @@ class Filter(object):
     An {@link UnsupportedFilterException} can be thrown by the container if a
     particular filter is not supported by the container.
 
-    An {@link Filter} should implement {@link #equals(Object)} and
+    An {@link IFilter} should implement {@link #equals(Object)} and
     {@link #hashCode()} correctly to avoid duplicate filter registrations
     etc.
 
-    @see Filterable
+    @see IFilterable
 
     @since 6.6
     """
@@ -822,7 +756,7 @@ class Filter(object):
         @throws UnsupportedOperationException
                     if the filter cannot be used for in-memory filtering
         """
-        pass
+        raise NotImplementedError
 
 
     def appliesToProperty(self, propertyId):
@@ -836,46 +770,40 @@ class Filter(object):
         @return true if the filtering result may/does change based on changes
                 to the property identified by propertyId
         """
-        pass
+        raise NotImplementedError
 
 
-class Filterable(Container):
+class IFilterable(IContainer):
     """Interface that is implemented by containers which allow reducing their
     visible contents based on a set of filters.
-    <p>
+
     When a set of filters are set, only items that match all the filters are
     included in the visible contents of the container. Still new items that
     do not match filters can be added to the container. Multiple filters can
     be added and the container remembers the state of the filters. When
     multiple filters are added, all filters must match for an item to be
     visible in the container.
-    </p>
-    <p>
-    When an {@link Ordered} or {@link Indexed} container is filtered, all
+
+    When an {@link IOrdered} or {@link IIndexed} container is filtered, all
     operations of these interfaces should only use the filtered and sorted
     contents and the filtered indices to the container. Indices or item
     identifiers in the public API refer to the visible view unless otherwise
     stated. However, the <code>addItem*()</code> methods may add items that
     will be filtered out after addition or moved to another position based on
     sorting.
-    </p>
-    <p>
-    How filtering is performed when a {@link Hierarchical} container
-    implements {@link Filterable} is implementation specific and should be
-    documented in the implementing class.
-    </p>
-    <p>
-    Adding items (if supported) to a filtered {@link Ordered} or
-    {@link Indexed} container should insert them immediately after the
-    indicated visible item. However, the unfiltered position of items added
-    at index 0, at index {@link com.vaadin.data.Container#size()} or at an
-    undefined position is up to the implementation.
-    </p>
 
-    <p>
-    This API replaces the old Filterable interface, renamed to
-    {@link SimpleFilterable} in Vaadin 6.6.
-    </p>
+    How filtering is performed when a {@link IHierarchical} container
+    implements {@link IFilterable} is implementation specific and should be
+    documented in the implementing class.
+
+    Adding items (if supported) to a filtered {@link IOrdered} or
+    {@link IIndexed} container should insert them immediately after the
+    indicated visible item. However, the unfiltered position of items added
+    at index 0, at index {@link com.vaadin.data.IContainer#size()} or at an
+    undefined position is up to the implementation.
+
+    This API replaces the old IFilterable interface, renamed to
+    {@link ISimpleFilterable} in Vaadin 6.6.
 
     @since 6.6
     """
@@ -889,7 +817,7 @@ class Filterable(Container):
         @throws UnsupportedFilterException
                     if the filter is not supported by the container
         """
-        pass
+        raise NotImplementedError
 
 
     def removeContainerFilter(self, fltr):
@@ -898,53 +826,50 @@ class Filterable(Container):
         This requires that the equals() method considers the filters as
         equivalent (same instance or properly implemented equals() method).
         """
-        pass
+        raise NotImplementedError
 
 
     def removeAllContainerFilters(self):
         """Remove all active filters from the container."""
-        pass
+        raise NotImplementedError
 
 
-class Viewer(object):
-    """Interface implemented by viewer classes capable of using a Container as a
+class IViewer(object):
+    """Interface implemented by viewer classes capable of using a IContainer as a
     data source.
     """
 
     def setContainerDataSource(self, newDataSource):
-        """Sets the Container that serves as the data source of the viewer.
+        """Sets the IContainer that serves as the data source of the viewer.
 
         @param newDataSource
                    The new data source Item
         """
-        pass
+        raise NotImplementedError
 
 
     def getContainerDataSource(self):
-        """Gets the Container serving as the data source of the viewer.
+        """Gets the IContainer serving as the data source of the viewer.
 
-        @return data source Container
+        @return data source IContainer
         """
-        pass
+        raise NotImplementedError
 
 
-class Editor(Viewer):
-    """<p>
-    Interface implemented by the editor classes supporting editing the
-    Container. Implementing this interface means that the Container serving
+class IEditor(IViewer):
+    """Interface implemented by the editor classes supporting editing the
+    IContainer. Implementing this interface means that the IContainer serving
     as the data source of the editor can be modified through it.
-    </p>
-    <p>
-    Note that not implementing the <code>Container.Editor</code> interface
-    does not restrict the class from editing the Container contents
+
+    Note that not implementing the <code>IContainer.IEditor</code> interface
+    does not restrict the class from editing the IContainer contents
     internally.
-    </p>
     """
-    pass
+    raise NotImplementedError
 
 
-class ItemSetChangeEvent(object):
-    """An <code>Event</code> object specifying the Container whose Item set has
+class IItemSetChangeEvent(object):
+    """An <code>Event</code> object specifying the IContainer whose Item set has
     changed (items added, removed or reordered).
 
     A simple property value change is not an item set change.
@@ -955,11 +880,11 @@ class ItemSetChangeEvent(object):
 
         @return source of the event
         """
-        pass
+        raise NotImplementedError
 
 
-class ItemSetChangeListener(object):
-    """Container Item set change listener interface.
+class IItemSetChangeListener(object):
+    """IContainer Item set change listener interface.
 
     An item set change refers to addition, removal or reordering of items in
     the container. A simple property value change is not an item set change.
@@ -972,26 +897,24 @@ class ItemSetChangeListener(object):
         @param event
                    change event text
         """
-        pass
+        raise NotImplementedError
 
 
-class ItemSetChangeNotifier(object):
-    """The interface for adding and removing <code>ItemSetChangeEvent</code>
+class IItemSetChangeNotifier(object):
+    """The interface for adding and removing <code>IItemSetChangeEvent</code>
     listeners. By implementing this interface a class explicitly announces
-    that it will generate a <code>ItemSetChangeEvent</code> when its contents
+    that it will generate a <code>IItemSetChangeEvent</code> when its contents
     are modified.
 
     An item set change refers to addition, removal or reordering of items in
     the container. A simple property value change is not an item set change.
 
-    <p>
     Note: The general Java convention is not to explicitly declare that a
     class generates events, but to directly define the
     <code>addListener</code> and <code>removeListener</code> methods. That
     way the caller of these methods has no real way of finding out if the
     class really will send the events, or if it just defines the methods to
     be able to implement an interface.
-    </p>
     """
 
     def addListener(self, listener):
@@ -1000,7 +923,7 @@ class ItemSetChangeNotifier(object):
         @param listener
                    listener to be added
         """
-        pass
+        raise NotImplementedError
 
 
     def removeListener(self, listener):
@@ -1009,11 +932,11 @@ class ItemSetChangeNotifier(object):
         @param listener
                    listener to be removed
         """
-        pass
+        raise NotImplementedError
 
 
-class PropertySetChangeEvent(object):
-    """An <code>Event</code> object specifying the Container whose Property set
+class IPropertySetChangeEvent(object):
+    """An <code>Event</code> object specifying the IContainer whose Property set
     has changed.
 
     A property set change means the addition, removal or other structural
@@ -1023,15 +946,15 @@ class PropertySetChangeEvent(object):
     """
 
     def getContainer(self):
-        """Retrieves the Container whose contents have been modified.
+        """Retrieves the IContainer whose contents have been modified.
 
-        @return Source Container of the event.
+        @return Source IContainer of the event.
         """
-        pass
+        raise NotImplementedError
 
 
-class PropertySetChangeListener(object):
-    """The listener interface for receiving <code>PropertySetChangeEvent</code>
+class IPropertySetChangeListener(object):
+    """The listener interface for receiving <code>IPropertySetChangeEvent</code>
     objects.
 
     A property set change means the addition, removal or other structural
@@ -1042,46 +965,40 @@ class PropertySetChangeListener(object):
 
     def containerPropertySetChange(self, event):
         """Notifies this listener that the set of property IDs supported by the
-        Container has changed.
+        IContainer has changed.
 
         @param event
                    Change event.
         """
-        pass
+        raise NotImplementedError
 
 
-class PropertySetChangeNotifier(object):
-    """<p>
-    The interface for adding and removing <code>PropertySetChangeEvent</code>
+class IPropertySetChangeNotifier(object):
+    """The interface for adding and removing <code>IPropertySetChangeEvent</code>
     listeners. By implementing this interface a class explicitly announces
-    that it will generate a <code>PropertySetChangeEvent</code> when the set
+    that it will generate a <code>IPropertySetChangeEvent</code> when the set
     of property IDs supported by the container is modified.
-    </p>
 
-    <p>
     A property set change means the addition, removal or other structural
     changes to the properties of a container. Changes concerning the set of
     items in the container and their property values are not property set
     changes.
-    </p>
 
-    <p>
     Note that the general Java convention is not to explicitly declare that a
     class generates events, but to directly define the
     <code>addListener</code> and <code>removeListener</code> methods. That
     way the caller of these methods has no real way of finding out if the
     class really will send the events, or if it just defines the methods to
     be able to implement an interface.
-    </p>
     """
 
     def addListener(self, listener):
-        """Registers a new Property set change listener for this Container.
+        """Registers a new Property set change listener for this IContainer.
 
         @param listener
                    The new Listener to be registered
         """
-        pass
+        raise NotImplementedError
 
 
     def removeListener(self, listener):
@@ -1090,4 +1007,4 @@ class PropertySetChangeNotifier(object):
         @param listener
                    Listener to be removed
         """
-        pass
+        raise NotImplementedError

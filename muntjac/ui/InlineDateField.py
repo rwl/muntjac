@@ -17,7 +17,7 @@
 from datetime import datetime
 
 from muntjac.ui.DateField import DateField
-from muntjac.data.Property import Property
+from muntjac.data.IProperty import IProperty
 
 
 class InlineDateField(DateField):
@@ -36,7 +36,7 @@ class InlineDateField(DateField):
         if nargs == 0:
             super(InlineDateField, self)()
         elif nargs == 1:
-            if isinstance(args[0], Property):
+            if isinstance(args[0], IProperty):
                 dataSource, = args
                 super(InlineDateField, self)(dataSource)
             else:

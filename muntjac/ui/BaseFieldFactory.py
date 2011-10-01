@@ -16,7 +16,7 @@
 
 from muntjac.ui.DefaultFieldFactory import DefaultFieldFactory
 from muntjac.ui.IFieldFactory import IFieldFactory
-from muntjac.data.Property import Property
+from muntjac.data.IProperty import IProperty
 from muntjac.ui.AbstractComponent import AbstractComponent
 
 
@@ -53,7 +53,7 @@ class BaseFieldFactory(IFieldFactory):
         """
         nargs = len(args)
         if nargs == 2:
-            if isinstance(args[0], Property):
+            if isinstance(args[0], IProperty):
                 prop, uiContext = args
                 if property is not None:
                     return self.createField(prop.getType(), uiContext)

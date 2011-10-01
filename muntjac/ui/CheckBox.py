@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.ui.Button import Button, IClickListener
-from muntjac.data.Property import Property
+from muntjac.data.IProperty import IProperty
 
 
 class CheckBox(Button):
@@ -80,7 +80,7 @@ class CheckBox(Button):
                 caption, listener = args
                 super(CheckBox, self)(caption, listener)
                 self.setSwitchMode(True)
-            elif isinstance(args[1], Property):
+            elif isinstance(args[1], IProperty):
                 caption, dataSource = args
                 super(CheckBox, self)(caption, dataSource)
                 self.setSwitchMode(True)

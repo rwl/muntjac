@@ -14,11 +14,11 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.data.Item import Editor, Item
-from muntjac.data.Buffered import Buffered, SourceException
-from muntjac.data.Validatable import Validatable
-from muntjac.data.Validator import InvalidValueException
-from muntjac.data.Property import ValueChangeListener
+from muntjac.data.IItem import IEditor, IItem
+from muntjac.data.IBuffered import IBuffered, SourceException
+from muntjac.data.IValidatable import IValidatable
+from muntjac.data.IValidator import InvalidValueException
+from muntjac.data.IProperty import IValueChangeListener
 from muntjac.event.ActionManager import ActionManager
 
 from muntjac.ui.AbstractField import AbstractField
@@ -37,7 +37,7 @@ from muntjac.event.Action import Action, INotifier
 from muntjac.terminal.CompositeErrorMessage import CompositeErrorMessage
 
 
-class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action,
+class Form(AbstractField, IItem, IEditor, IBuffered, IItem, IValidatable, Action,
            INotifier):
     """Form component provides easy way of creating and managing sets fields.
 
@@ -49,14 +49,14 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action,
     fields with selections is given.
 
     <code>Form</code> provides customizable editor for classes implementing
-    {@link com.vaadin.data.Item} interface. Also the form itself implements
+    {@link com.vaadin.data.IItem} interface. Also the form itself implements
     this interface for easier connectivity to other items. To use the form as
     editor for an item, just connect the item to form with
-    {@link Form#setItemDataSource(Item)}. If only a part of the item needs to
-    be edited, {@link Form#setItemDataSource(Item,Collection)} can be used
+    {@link Form#setItemDataSource(IItem)}. If only a part of the item needs to
+    be edited, {@link Form#setItemDataSource(IItem,Collection)} can be used
     instead. After the item has been connected to the form, the automatically
     created fields can be customized and new fields can be added. If you need
-    to connect a class that does not implement {@link com.vaadin.data.Item}
+    to connect a class that does not implement {@link com.vaadin.data.IItem}
     interface, most properties of any class following bean pattern, can be
     accessed trough {@link com.vaadin.data.util.BeanItem}.
 
@@ -89,7 +89,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action,
         # Layout of the form.
         self._layout = None
 
-        # Item connected to this form as datasource.
+        # IItem connected to this form as datasource.
         self._itemDatasource = None
 
         # Ordered list of property ids in this editor.
@@ -107,7 +107,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action,
         # Mapping from propertyName to corresponding field.
         self._fields = dict()
 
-        # Form may act as an Item, its own properties are stored here.
+        # Form may act as an IItem, its own properties are stored here.
         self._ownProperties = dict()
 
         # IField factory for this form.
@@ -146,7 +146,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action,
     #
     # TODO introduce ValidityChangeEvent (#6239) and start using it instead.
     # See e.g. DateField#notifyFormOfValidityChange().
-    class fieldValueChangeListener(ValueChangeListener):
+    class fieldValueChangeListener(IValueChangeListener):
 
         def valueChange(self, event):
             self.requestRepaint()
@@ -363,7 +363,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action,
     def addItemProperty(self, idd, prop):
         """Adds a new property to form and create corresponding field.
 
-        @see com.vaadin.data.Item#addItemProperty(Object, Property)
+        @see com.vaadin.data.IItem#addItemProperty(Object, Property)
         """
         # Checks inputs
         if (idd is None) or (prop is None):
@@ -470,7 +470,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action,
         returned. If there is a (with specified property id) having no data
         source, the field is returned instead of the data source.
 
-        @see com.vaadin.data.Item#getItemProperty(Object)
+        @see com.vaadin.data.IItem#getItemProperty(Object)
         """
         field = self._fields.get(idd)
         if field is None:
@@ -502,7 +502,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action,
     def removeItemProperty(self, idd):
         """Removes the property and corresponding field from the form.
 
-        @see com.vaadin.data.Item#removeItemProperty(Object)
+        @see com.vaadin.data.IItem#removeItemProperty(Object)
         """
         self._ownProperties.remove(idd)
         field = self._fields.get(idd)
@@ -517,7 +517,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action,
 
     def detachField(self, field):
         """Called when a form field is detached from a Form. Typically when
-        a new Item is assigned to Form via {@link #setItemDataSource(Item)}.
+        a new IItem is assigned to Form via {@link #setItemDataSource(IItem)}.
 
         Override this method to control how the fields are removed from the
         layout.
@@ -556,7 +556,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action,
         Setting item datasource clears any fields, the form might contain and
         adds all the properties as fields to the form.
 
-        @see com.vaadin.data.Item.Viewer#setItemDataSource(Item)
+        @see com.vaadin.data.IItem.Viewer#setItemDataSource(IItem)
         ---
         Set the item datasource for the form, but limit the form contents to
         specified properties of the item.
@@ -565,7 +565,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action,
         adds the specified the properties as fields to the form, in the
         specified order.
 
-        @see com.vaadin.data.Item.Viewer#setItemDataSource(Item)
+        @see com.vaadin.data.IItem.Viewer#setItemDataSource(IItem)
         """
         if propertyIds is None:
             if newDataSource is not None:
@@ -780,7 +780,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action,
         """Tests the current value of the object against all registered
         validators
 
-        @see com.vaadin.data.Validatable#isValid()
+        @see com.vaadin.data.IValidatable#isValid()
         """
         valid = True
 
@@ -793,7 +793,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action,
     def validate(self):
         """Checks the validity of the validatable.
 
-        @see com.vaadin.data.Validatable#validate()
+        @see com.vaadin.data.IValidatable#validate()
         """
         super(Form, self).validate()
         for i in self._propertyIds:
@@ -803,7 +803,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action,
     def isInvalidAllowed(self):
         """Checks the validabtable object accept invalid values.
 
-        @see com.vaadin.data.Validatable#isInvalidAllowed()
+        @see com.vaadin.data.IValidatable#isInvalidAllowed()
         """
         return True
 
@@ -811,7 +811,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action,
     def setInvalidAllowed(self, invalidValueAllowed):
         """Should the validabtable object accept invalid values.
 
-        @see com.vaadin.data.Validatable#setInvalidAllowed(boolean)
+        @see com.vaadin.data.IValidatable#setInvalidAllowed(boolean)
         """
         raise NotImplementedError
 
@@ -944,7 +944,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action,
         """
         # If data is an item use it.
         item = None
-        if isinstance(data, Item):
+        if isinstance(data, IItem):
             item = data
         elif data is not None:
             raise NotImplementedError
@@ -962,7 +962,7 @@ class Form(AbstractField, Item, Editor, Buffered, Item, Validatable, Action,
     def getVisibleItemProperties(self):
         """Returns the visibleProperties.
 
-        @return the Collection of visible Item properites.
+        @return the Collection of visible IItem properites.
         """
         return self._visibleItemProperties
 

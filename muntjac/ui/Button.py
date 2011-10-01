@@ -17,7 +17,7 @@
 from muntjac.ui.AbstractField import AbstractField
 from muntjac.ui.IComponent import Event as ComponentEvent
 from muntjac.event.ShortcutListener import ShortcutListener
-from muntjac.data.Property import Property
+from muntjac.data.IProperty import IProperty
 
 from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
 
@@ -119,7 +119,7 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
                 caption, listener = args
                 self.__init__(caption)
                 self.addListener(listener)
-            elif isinstance(args[1], Property):
+            elif isinstance(args[1], IProperty):
                 caption, dataSource = args
                 self.setCaption(caption)
                 self.setSwitchMode(True)
@@ -257,7 +257,7 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
     def getType(self):
         """The type of the button as a property.
 
-        @see com.vaadin.data.Property#getType()
+        @see com.vaadin.data.IProperty#getType()
         """
         return bool
 

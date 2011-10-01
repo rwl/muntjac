@@ -21,7 +21,7 @@ try:
 except ImportError, e:
     from StringIO import StringIO
 
-from muntjac.data.Item import Item
+from muntjac.data.IItem import IItem
 from muntjac.ui.ITableFieldFactory import ITableFieldFactory
 from muntjac.ui.IFormFieldFactory import IFormFieldFactory
 from muntjac.ui.DateField import DateField
@@ -117,7 +117,7 @@ class DefaultFieldFactory(IFormFieldFactory, ITableFieldFactory):
 
         <b>Boolean</b>: {@link CheckBox}.<br/>
         <b>Date</b>: {@link DateField}(resolution: day).<br/>
-        <b>Item</b>: {@link Form}. <br/>
+        <b>IItem</b>: {@link Form}. <br/>
         <b>default field type</b>: {@link TextField}.
 
         @param type
@@ -128,8 +128,8 @@ class DefaultFieldFactory(IFormFieldFactory, ITableFieldFactory):
         if typ is None:
             return None
 
-        # Item field
-        if issubclass(typ, Item):
+        # IItem field
+        if issubclass(typ, IItem):
             return Form()
 
         # Date field

@@ -15,12 +15,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class Validatable(object):
-    """<p>
-    Interface for validatable objects. Defines methods to verify if the object's
+class IValidatable(object):
+    """Interface for validatable objects. Defines methods to verify if the object's
     value is valid or not, and to add, remove and list registered validators of
     the object.
-    </p>
 
     @author IT Mill Ltd.
     @author Richard Lincoln
@@ -30,90 +28,76 @@ class Validatable(object):
     """
 
     def addValidator(self, validator):
-        """<p>
-        Adds a new validator for this object. The validator's
+        """Adds a new validator for this object. The validator's
         {@link Validator#validate(Object)} method is activated every time the
         object's value needs to be verified, that is, when the {@link #isValid()}
         method is called. This usually happens when the object's value changes.
-        </p>
 
         @param validator
                    the new validator
         """
-        pass
+        raise NotImplementedError
 
 
     def removeValidator(self, validator):
-        """<p>
-        Removes a previously registered validator from the object. The specified
+        """Removes a previously registered validator from the object. The specified
         validator is removed from the object and its <code>validate</code> method
         is no longer called in {@link #isValid()}.
-        </p>
 
         @param validator
                    the validator to remove
         """
-        pass
+        raise NotImplementedError
 
 
     def getValidators(self):
-        """<p>
-        Lists all validators currently registered for the object. If no
+        """Lists all validators currently registered for the object. If no
         validators are registered, returns <code>null</code>.
-        </p>
 
         @return collection of validators or <code>null</code>
         """
-        pass
+        raise NotImplementedError
 
 
     def isValid(self):
-        """<p>
-        Tests the current value of the object against all registered validators.
+        """Tests the current value of the object against all registered validators.
         The registered validators are iterated and for each the
         {@link Validator#validate(Object)} method is called. If any validator
         throws the {@link Validator.InvalidValueException} this method returns
         <code>false</code>.
-        </p>
 
         @return <code>true</code> if the registered validators concur that the
                 value is valid, <code>false</code> otherwise
         """
-        pass
+        raise NotImplementedError
 
 
     def validate(self):
-        """<p>
-        Checks the validity of the validatable. If the validatable is valid this
+        """Checks the validity of the validatable. If the validatable is valid this
         method should do nothing, and if it's not valid, it should throw
         <code>Validator.InvalidValueException</code>
-        </p>
 
         @throws Validator.InvalidValueException
                     if the value is not valid
         """
-        pass
+        raise NotImplementedError
 
 
     def isInvalidAllowed(self):
-        """<p>
-        Checks the validabtable object accept invalid values.The default value is
+        """Checks the validabtable object accept invalid values.The default value is
         <code>true</code>.
-        </p>
         """
-        pass
+        raise NotImplementedError
 
 
     def setInvalidAllowed(self, invalidValueAllowed):
-        """<p>
-        Should the validabtable object accept invalid values. Supporting this
+        """Should the validabtable object accept invalid values. Supporting this
         configuration possibility is optional. By default invalid values are
         allowed.
-        </p>
 
         @param invalidValueAllowed
 
         @throws UnsupportedOperationException
                     if the setInvalidAllowed is not supported.
         """
-        pass
+        raise NotImplementedError

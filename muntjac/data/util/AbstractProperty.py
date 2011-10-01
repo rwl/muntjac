@@ -14,31 +14,31 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.data.Property import \
-    Property, ReadOnlyStatusChangeEvent, ReadOnlyStatusChangeNotifier, \
-    ValueChangeEvent, ValueChangeNotifier, ReadOnlyStatusChangeListener
+from muntjac.data.IProperty import \
+    IProperty, IReadOnlyStatusChangeEvent, IReadOnlyStatusChangeNotifier, \
+    ValueChangeEvent, IValueChangeNotifier, IReadOnlyStatusChangeListener
 from muntjac.event import EventObject
 
 
-class AbstractProperty(Property, Property, ValueChangeNotifier, Property,
-                       ReadOnlyStatusChangeNotifier):
-    """Abstract base class for {@link Property} implementations.
+class AbstractProperty(IProperty, IProperty, IValueChangeNotifier, IProperty,
+                       IReadOnlyStatusChangeNotifier):
+    """Abstract base class for {@link IProperty} implementations.
 
     Handles listener management for {@link ValueChangeListener}s and
-    {@link ReadOnlyStatusChangeListener}s.
+    {@link IReadOnlyStatusChangeListener}s.
 
     @since 6.6
     """
 
     def __init__(self):
         # List of listeners who are interested in the read-only status changes of
-        # the Property
+        # the IProperty
         self._readOnlyStatusChangeListeners = None
 
-        # List of listeners who are interested in the value changes of the Property
+        # List of listeners who are interested in the value changes of the IProperty
         self._valueChangeListeners = None
 
-        # Is the Property read-only?
+        # Is the IProperty read-only?
         self._readOnly = None
 
 
@@ -59,11 +59,11 @@ class AbstractProperty(Property, Property, ValueChangeNotifier, Property,
 
 
     def toString(self):
-        """Returns the value of the <code>Property</code> in human readable textual
+        """Returns the value of the <code>IProperty</code> in human readable textual
         format. The return value should be assignable to the
-        <code>setValue</code> method if the Property is not in read-only mode.
+        <code>setValue</code> method if the IProperty is not in read-only mode.
 
-        @return String representation of the value stored in the Property
+        @return String representation of the value stored in the IProperty
         """
         value = self.getValue()
         if value is None:
@@ -72,12 +72,12 @@ class AbstractProperty(Property, Property, ValueChangeNotifier, Property,
 
 
     def addListener(self, listener):
-        """Registers a new read-only status change listener for this Property.
+        """Registers a new read-only status change listener for this IProperty.
 
         @param listener
                    the new Listener to be registered.
         """
-        if isinstance(listener, ReadOnlyStatusChangeListener):
+        if isinstance(listener, IReadOnlyStatusChangeListener):
             if self._readOnlyStatusChangeListeners is None:
                 self._readOnlyStatusChangeListeners = list()
 
@@ -95,7 +95,7 @@ class AbstractProperty(Property, Property, ValueChangeNotifier, Property,
         @param listener
                    the listener to be removed.
         """
-        if isinstance(listener, ReadOnlyStatusChangeListener):
+        if isinstance(listener, IReadOnlyStatusChangeListener):
             if self._readOnlyStatusChangeListeners is not None:
                 self._readOnlyStatusChangeListeners.remove(listener)
         else:
@@ -107,7 +107,7 @@ class AbstractProperty(Property, Property, ValueChangeNotifier, Property,
         """Sends a read only status change event to all registered listeners."""
         if self._readOnlyStatusChangeListeners is not None:
             l = list(self._readOnlyStatusChangeListeners)
-            event = ReadOnlyStatusChangeEvent(self)
+            event = IReadOnlyStatusChangeEvent(self)
             for listener in l:
                 listener.readOnlyStatusChange(event)
 
@@ -127,7 +127,7 @@ class AbstractProperty(Property, Property, ValueChangeNotifier, Property,
                 return list()
             else:
                 return list(self._valueChangeListeners)
-        elif issubclass(eventType, ReadOnlyStatusChangeEvent):
+        elif issubclass(eventType, IReadOnlyStatusChangeEvent):
             if self._readOnlyStatusChangeListeners is None:
                 return list()
             else:
@@ -135,9 +135,9 @@ class AbstractProperty(Property, Property, ValueChangeNotifier, Property,
         return list()
 
 
-class ReadOnlyStatusChangeEvent(EventObject, Property,
-                                ReadOnlyStatusChangeEvent):
-    """An <code>Event</code> object specifying the Property whose read-only
+class IReadOnlyStatusChangeEvent(EventObject, IProperty,
+                                IReadOnlyStatusChangeEvent):
+    """An <code>Event</code> object specifying the IProperty whose read-only
     status has been changed.
     """
 
@@ -147,19 +147,19 @@ class ReadOnlyStatusChangeEvent(EventObject, Property,
         @param source
                    source object of the event.
         """
-        super(ReadOnlyStatusChangeEvent, self)(source)
+        super(IReadOnlyStatusChangeEvent, self)(source)
 
 
     def getProperty(self):
-        """Gets the Property whose read-only state has changed.
+        """Gets the IProperty whose read-only state has changed.
 
-        @return source Property of the event.
+        @return source IProperty of the event.
         """
         return self.getSource()
 
 
-class ValueChangeEvent(EventObject, Property, ValueChangeEvent):
-    """An <code>Event</code> object specifying the Property whose value has been
+class ValueChangeEvent(EventObject, IProperty, ValueChangeEvent):
+    """An <code>Event</code> object specifying the IProperty whose value has been
     changed.
     """
 
@@ -173,8 +173,8 @@ class ValueChangeEvent(EventObject, Property, ValueChangeEvent):
 
 
     def getProperty(self):
-        """Gets the Property whose value has changed.
+        """Gets the IProperty whose value has changed.
 
-        @return source Property of the event.
+        @return source IProperty of the event.
         """
         return self.getSource()

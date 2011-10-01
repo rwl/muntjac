@@ -21,7 +21,7 @@ from muntjac.terminal import clsname
 from muntjac.terminal.KeyMapper import KeyMapper
 from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
 
-from muntjac.data import Container
+from muntjac.data import IContainer
 
 from muntjac.ui.AbstractComponent import AbstractComponent
 
@@ -52,7 +52,7 @@ from muntjac.terminal.gwt.client.ui.dd.VerticalDropLocation import \
     VerticalDropLocation
 
 
-class Tree(AbstractSelect, Container.Hierarchical, Action.IContainer,
+class Tree(AbstractSelect, IContainer.IHierarchical, Action.IContainer,
            IItemClickSource, IItemClickNotifier, IDragSource, IDropTarget):
     """Tree component. A Tree can be used to select an item (or multiple
     items) from a hierarchical set of items.
@@ -66,7 +66,7 @@ class Tree(AbstractSelect, Container.Hierarchical, Action.IContainer,
     #CLIENT_WIDGET = ClientWidget(VTree, LoadStyle.EAGER)
 
     def __init__(self, caption=None, dataSource=None):
-        """Creates a new tree with caption and connect it to a Container.
+        """Creates a new tree with caption and connect it to a IContainer.
 
         @param caption
         @param dataSource
@@ -570,7 +570,7 @@ class Tree(AbstractSelect, Container.Hierarchical, Action.IContainer,
     def areChildrenAllowed(self, itemId):
         """Tests if the Item with given ID can have any children.
 
-        @see Container.Hierarchical.areChildrenAllowed(Object)
+        @see IContainer.IHierarchical.areChildrenAllowed(Object)
         """
         return self.items.areChildrenAllowed(itemId)
 
@@ -578,7 +578,7 @@ class Tree(AbstractSelect, Container.Hierarchical, Action.IContainer,
     def getChildren(self, itemId):
         """Gets the IDs of all Items that are children of the specified Item.
 
-        @see Container.Hierarchical.getChildren(Object)
+        @see IContainer.IHierarchical.getChildren(Object)
         """
         return self.items.getChildren(itemId)
 
@@ -586,7 +586,7 @@ class Tree(AbstractSelect, Container.Hierarchical, Action.IContainer,
     def getParent(self, itemId):
         """Gets the ID of the parent Item of the specified Item.
 
-        @see Container.Hierarchical.getParent(Object)
+        @see IContainer.IHierarchical.getParent(Object)
         """
         return self.items.getParent(itemId)
 
@@ -595,7 +595,7 @@ class Tree(AbstractSelect, Container.Hierarchical, Action.IContainer,
         """Tests if the Item specified with <code>itemId</code> has child
         Items.
 
-        @see Container.Hierarchical.hasChildren(Object)
+        @see IContainer.IHierarchical.hasChildren(Object)
         """
         return self.items.hasChildren(itemId)
 
@@ -604,7 +604,7 @@ class Tree(AbstractSelect, Container.Hierarchical, Action.IContainer,
         """Tests if the Item specified with <code>itemId</code> is a root
         Item.
 
-        @see com.vaadin.data.Container.Hierarchical#isRoot(Object)
+        @see com.vaadin.data.IContainer.IHierarchical#isRoot(Object)
         """
         return self.items.isRoot(itemId)
 
@@ -613,7 +613,7 @@ class Tree(AbstractSelect, Container.Hierarchical, Action.IContainer,
         """Gets the IDs of all Items in the container that don't have a
         parent.
 
-        @see com.vaadin.data.Container.Hierarchical#rootItemIds()
+        @see com.vaadin.data.IContainer.IHierarchical#rootItemIds()
         """
         return self.items.rootItemIds()
 
@@ -621,7 +621,7 @@ class Tree(AbstractSelect, Container.Hierarchical, Action.IContainer,
     def setChildrenAllowed(self, itemId, areChildrenAllowed):
         """Sets the given Item's capability to have children.
 
-        @see com.vaadin.data.Container.Hierarchical#setChildrenAllowed()
+        @see com.vaadin.data.IContainer.IHierarchical#setChildrenAllowed()
         """
         success = self.items.setChildrenAllowed(itemId, areChildrenAllowed)
         if success:
@@ -639,9 +639,9 @@ class Tree(AbstractSelect, Container.Hierarchical, Action.IContainer,
 
 
     def setContainerDataSource(self, newDataSource):
-        """Sets the Container that serves as the data source of the viewer.
+        """Sets the IContainer that serves as the data source of the viewer.
 
-        @see Container.Viewer#setContainerDataSource(Container)
+        @see IContainer.Viewer#setContainerDataSource(IContainer)
         """
         if newDataSource is None:
             # Note: using wrapped IndexedContainer to match constructor
@@ -651,7 +651,7 @@ class Tree(AbstractSelect, Container.Hierarchical, Action.IContainer,
 
         # Assure that the data source is ordered by making unordered
         # containers ordered by wrapping them
-        if issubclass(newDataSource.__class__, Container.Hierarchical):
+        if issubclass(newDataSource.__class__, IContainer.IHierarchical):
             super(Tree, self).setContainerDataSource(newDataSource)
         else:
             raise NotImplementedError
@@ -725,7 +725,7 @@ class Tree(AbstractSelect, Container.Hierarchical, Action.IContainer,
     def addActionHandler(self, actionHandler):
         """Adds an action handler.
 
-        @see Action.Container#addActionHandler(Action.Handler)
+        @see Action.IContainer#addActionHandler(Action.Handler)
         """
         if actionHandler is not None:
             if self._actionHandlers is None:
@@ -739,7 +739,7 @@ class Tree(AbstractSelect, Container.Hierarchical, Action.IContainer,
     def removeActionHandler(self, actionHandler):
         """Removes an action handler.
 
-        @see Action.Container#removeActionHandler(Action.Handler)
+        @see Action.IContainer#removeActionHandler(Action.Handler)
         """
         if (self._actionHandlers is not None
                 and actionHandler in self._actionHandlers):
@@ -899,7 +899,7 @@ class TreeDragMode(object):
     NONE = 'NONE'
 
     # When drag mode is NODE, users can initiate drag from Tree nodes that
-    # represent {@link Item}s in from the backed {@link Container}.
+    # represent {@link Item}s in from the backed {@link IContainer}.
     NODE = 'NODE'
 
     _values = [NONE, NODE]

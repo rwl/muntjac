@@ -15,11 +15,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.ui.AbstractTextField import AbstractTextField
-from muntjac.data.Property import Property
+from muntjac.data.IProperty import IProperty
 
 
 class TextField(AbstractTextField):
-    """A text editor component that can be bound to any bindable Property.
+    """A text editor component that can be bound to any bindable IProperty.
     The text editor supports both multiline and single line modes, default
     is one-line mode.
 
@@ -46,23 +46,23 @@ class TextField(AbstractTextField):
                    the caption <code>String</code> for the editor.
         ---
         Constructs a new <code>TextField</code> that's bound to the specified
-        <code>Property</code> and has no caption.
+        <code>IProperty</code> and has no caption.
 
         @param dataSource
-                   the Property to be edited with this editor.
+                   the IProperty to be edited with this editor.
         ---
         Constructs a new <code>TextField</code> that's bound to the specified
-        <code>Property</code> and has the given caption <code>String</code>.
+        <code>IProperty</code> and has the given caption <code>String</code>.
 
         @param caption
                    the caption <code>String</code> for the editor.
         @param dataSource
-                   the Property to be edited with this editor.
+                   the IProperty to be edited with this editor.
         ---
         Constructs a new <code>TextField</code> with the given caption and
         initial text contents. The editor constructed this way will not be
-        bound to a Property unless
-        {@link Property.Viewer#setPropertyDataSource(Property)} is called to
+        bound to a IProperty unless
+        {@link IProperty.Viewer#setPropertyDataSource(IProperty)} is called to
         bind it.
 
         @param caption
@@ -85,7 +85,7 @@ class TextField(AbstractTextField):
         if nargs == 0:
             self.setValue('')
         elif nargs == 1:
-            if isinstance(args[0], Property):
+            if isinstance(args[0], IProperty):
                 dataSource, = args
                 self.setPropertyDataSource(dataSource)
             else:
@@ -93,7 +93,7 @@ class TextField(AbstractTextField):
                 self.__init__()
                 self.setCaption(caption)
         elif nargs == 2:
-            if isinstance(args[1], Property):
+            if isinstance(args[1], IProperty):
                 caption, dataSource = args
                 self.__init__(dataSource)
                 self.setCaption(caption)

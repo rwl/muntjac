@@ -14,12 +14,12 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.data.Validator import InvalidValueException, Validator
+from muntjac.data.IValidator import InvalidValueException, IValidator
 
 
-class AbstractValidator(Validator):
-    """Abstract {@link com.vaadin.data.Validator Validator} implementation that
-    provides a basic Validator implementation except the {@link #isValid(Object)}
+class AbstractValidator(IValidator):
+    """Abstract {@link com.vaadin.data.IValidator IValidator} implementation that
+    provides a basic IValidator implementation except the {@link #isValid(Object)}
     method. Sub-classes need to implement the {@link #isValid(Object)} method.
     <p>
     To include the value that failed validation in the exception message you can
