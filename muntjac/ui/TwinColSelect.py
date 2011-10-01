@@ -20,16 +20,14 @@ from muntjac.terminal.gwt.client.ui.VTwinColSelect import VTwinColSelect
 
 
 class TwinColSelect(AbstractSelect):
-    """Multiselect component with two lists: left side for available items and right
-    side for selected items.
+    """Multiselect component with two lists: left side for available items
+    and right side for selected items.
     """
 
-#    CLIENT_WIDGET = VTwinColSelect
-#    LOAD_STYLE = LoadStyle.EAGER
+    #CLIENT_WIDGET = ClientWidget(VTwinColSelect, LoadStyle.EAGER)
 
     def __init__(self, *args):
-        """None
-        ---
+        """
         @param caption
         ---
         @param caption
@@ -47,16 +45,15 @@ class TwinColSelect(AbstractSelect):
 
 
     def setColumns(self, columns):
-        """Sets the number of columns in the editor. If the number of columns is set
-        0, the actual number of displayed columns is determined implicitly by the
-        adapter.
-        <p>
+        """Sets the number of columns in the editor. If the number of columns
+        is set 0, the actual number of displayed columns is determined
+        implicitly by the adapter.
+
         The number of columns overrides the value set by setWidth. Only if
         columns are set to 0 (default) the width set using
         {@link #setWidth(float, int)} or {@link #setWidth(String)} is used.
 
-        @param columns
-                   the number of columns to set.
+        @param columns: the number of columns to set.
         """
         if columns < 0:
             columns = 0
@@ -74,18 +71,16 @@ class TwinColSelect(AbstractSelect):
 
 
     def setRows(self, rows):
-        """Sets the number of rows in the editor. If the number of rows is set to 0,
-        the actual number of displayed rows is determined implicitly by the
-        adapter.
-        <p>
+        """Sets the number of rows in the editor. If the number of rows is set
+        to 0, the actual number of displayed rows is determined implicitly by
+        the adapter.
+
         If a height if set (using {@link #setHeight(String)} or
         {@link #setHeight(float, int)}) it overrides the number of rows. Leave
         the height undefined to use this method. This is the opposite of how
         {@link #setColumns(int)} work.
 
-
-        @param rows
-                   the number of rows to set.
+        @param rows: the number of rows to set.
         """
         if rows < 0:
             rows = 0
@@ -96,6 +91,7 @@ class TwinColSelect(AbstractSelect):
 
     def paintContent(self, target):
         target.addAttribute('type', 'twincol')
+
         # Adds the number of columns
         if self._columns != 0:
             target.addAttribute('cols', self._columns)
@@ -119,8 +115,7 @@ class TwinColSelect(AbstractSelect):
     def setRightColumnCaption(self, rightColumnCaption):
         """Sets the text shown above the right column.
 
-        @param caption
-                   The text to show
+        @param caption: The text to show
         """
         self._rightColumnCaption = rightColumnCaption
         self.requestRepaint()
@@ -137,8 +132,7 @@ class TwinColSelect(AbstractSelect):
     def setLeftColumnCaption(self, leftColumnCaption):
         """Sets the text shown above the left column.
 
-        @param caption
-                   The text to show
+        @param caption: The text to show
         """
         self._leftColumnCaption = leftColumnCaption
         self.requestRepaint()

@@ -14,32 +14,32 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from urlparse import urljoin
+
 from muntjac.event.ShortcutListener import ShortcutListener
-from muntjac.ui.Panel import Panel
 from muntjac.terminal.URIHandler import IUriHandler
 from muntjac.terminal.gwt.client.ui.VView import VView
 from muntjac.terminal.ParameterHandler import IParameterHandler
 from muntjac.terminal.Sizeable import ISizeable
 from muntjac.terminal.gwt.client.ui.VWindow import VWindow
+
 from muntjac.ui.ClientWidget import LoadStyle
-from urlparse import urljoin
+from muntjac.ui.Panel import Panel
 from muntjac.ui.IComponent import Event as ComponentEvent
+from muntjac.ui.AbstractComponent import AbstractComponent
 
 from muntjac.event.FieldEvents import \
-    IFocusNotifier, IBlurNotifier, FocusEvent, BlurEvent, IBlurListener, \
-    IFocusListener
+    (IFocusNotifier, IBlurNotifier, FocusEvent, BlurEvent)
 
 
 class ICloseListener(object):
     """An interface used for listening to Window close events. Add the
     ICloseListener to a browser level window or a sub window and
-    {@link ICloseListener#windowClose(CloseEvent)} will be called whenever the
-    user closes the window.
+    {@link ICloseListener#windowClose(CloseEvent)} will be called whenever
+    the user closes the window.
 
-    <p>
     Since Vaadin 6.5, removing windows using {@link #removeWindow(Window)}
     does fire the ICloseListener.
-    </p>
     """
 
     def windowClose(self, e):
@@ -47,8 +47,7 @@ class ICloseListener(object):
         {@link CloseEvent#getWindow()} to get a reference to the
         {@link Window} that was closed.
 
-        @param e
-                   Event containing
+        @param e: Event containing
         """
         raise NotImplementedError
 
@@ -63,45 +62,40 @@ class IResizeListener(object):
         raise NotImplementedError
 
 
-class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifier):
-    """A component that represents an application (browser native) window or a sub
-    window.
-    <p>
-    If the window is a application window or a sub window depends on how it is
-    added to the application. Adding a {@code Window} to a {@code Window} using
-    {@link Window#addWindow(Window)} makes it a sub window and adding a
+class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
+            IBlurNotifier):
+    """A component that represents an application (browser native) window or
+    a sub window.
+
+    If the window is a application window or a sub window depends on how it
+    is added to the application. Adding a {@code Window} to a {@code Window}
+    using {@link Window#addWindow(Window)} makes it a sub window and adding a
     {@code Window} to the {@code Application} using
     {@link Application#addWindow(Window)} makes it an application window.
-    </p>
-    <p>
+
     An application window is the base of any view in a Vaadin application. All
     applications contain a main application window (set using
-    {@link Application#setMainWindow(Window)} which is what is initially shown to
-    the user. The contents of a window is set using
+    {@link Application#setMainWindow(Window)} which is what is initially shown
+    to the user. The contents of a window is set using
     {@link #setContent(ComponentContainer)}. The contents can in turn contain
-    other components. For multi-tab applications there is one window instance per
-    opened tab.
-    </p>
-    <p>
+    other components. For multi-tab applications there is one window instance
+    per opened tab.
+
     A sub window is floating popup style window that can be added to an
     application window. Like the application window its content is set using
     {@link #setContent(ComponentContainer)}. A sub window can be positioned on
     the screen using absolute coordinates (pixels). The default content of the
     Window is set to be suitable for application windows. For sub windows it
     might be necessary to set the size of the content to work as expected.
-    </p>
-    <p>
+
     Window caption is displayed in the browser title bar for application level
     windows and in the window header for sub windows.
-    </p>
-    <p>
+
     Certain methods in this class are only meaningful for sub windows and other
     parts only for application windows. These are marked using <b>Sub window
     only</b> and <b>Application window only</b> respectively in the javadoc.
-    </p>
-    <p>
+
     Sub window is to be split into a separate component in Vaadin 7.
-    </p>
 
     @author IT Mill Ltd.
     @author Richard Lincoln
@@ -109,62 +103,56 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
     @since 3.0
     """
 
-    CLIENT_WIDGET = VWindow
-    LOAD_STYLE = LoadStyle.EAGER
+    #CLIENT_WIDGET = ClientWidget(VWindow, LoadStyle.EAGER)
 
-    # <b>Application window only</b>. A border style used for opening resources
-    # in a window without a border.
+    # <b>Application window only</b>. A border style used for opening
+    # resources in a window without a border.
     BORDER_NONE = 0
 
-    # <b>Application window only</b>. A border style used for opening resources
-    # in a window with a minimal border.
+    # <b>Application window only</b>. A border style used for opening
+    # resources in a window with a minimal border.
     BORDER_MINIMAL = 1
 
-    # <b>Application window only</b>. A border style that indicates that the
-    # default border style should be used when opening resources.
+    # <b>Application window only</b>. A border style that indicates that
+    # the default border style should be used when opening resources.
     BORDER_DEFAULT = 2
 
 
     def __init__(self, caption='', content=None):
-        """Creates a new unnamed window with a default layout.
-        ---
-        Creates a new unnamed window with a default layout and given title.
-
-        @param caption
-                   the title of the window.
-        ---
-        Creates a new unnamed window with the given content and title.
+        """Creates a new unnamed window with the given content and title.
 
         @param caption
                    the title of the window.
         @param content
                    the contents of the window
         """
+
         # <b>Application window only</b>. The user terminal for this window.
         self._terminal = None
 
-        # <b>Application window only</b>. The application this window is attached
-        # to or null.
+        # <b>Application window only</b>. The application this window is
+        # attached to or null.
         self._application = None
 
-        # <b>Application window only</b>. List of URI handlers for this window.
+        # <b>Application window only</b>. List of URI handlers for this
+        # window.
         self._uriHandlerList = None
 
-        # <b>Application window only</b>. List of parameter handlers for this
-        # window.
+        # <b>Application window only</b>. List of parameter handlers for
+        # this window.
         self._parameterHandlerList = None
 
-        # <b>Application window only</b>. List of sub windows in this window. A sub
-        # window cannot have other sub windows.
+        # <b>Application window only</b>. List of sub windows in this window.
+        # A sub window cannot have other sub windows.
         self._subwindows = set()
 
-        # <b>Application window only</b>. Explicitly specified theme of this window
-        # or null if the application theme should be used.
+        # <b>Application window only</b>. Explicitly specified theme of this
+        # window or null if the application theme should be used.
         self._theme = None
 
-        # <b>Application window only</b>. Resources to be opened automatically on
-        # next repaint. The list is automatically cleared when it has been sent to
-        # the client.
+        # <b>Application window only</b>. Resources to be opened automatically
+        # on next repaint. The list is automatically cleared when it has been
+        # sent to the client.
         self._openList = list()
 
         # <b>Application window only</b>. Unique name of the window used to
@@ -174,60 +162,63 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
         # <b>Application window only.</b> Border mode of the Window.
         self._border = self.BORDER_DEFAULT
 
-        # <b>Sub window only</b>. Top offset in pixels for the sub window (relative
-        # to the parent application window) or -1 if unspecified.
+        # <b>Sub window only</b>. Top offset in pixels for the sub window
+        # (relative to the parent application window) or -1 if unspecified.
         self._positionY = -1
 
         # <b>Sub window only</b>. Left offset in pixels for the sub window
         # (relative to the parent application window) or -1 if unspecified.
         self._positionX = -1
 
-        # <b>Application window only</b>. A list of notifications that are waiting
-        # to be sent to the client. Cleared (set to null) when the notifications
-        # have been sent.
+        # <b>Application window only</b>. A list of notifications that are
+        # waiting to be sent to the client. Cleared (set to null) when the
+        # notifications have been sent.
         self._notifications = None
 
         # <b>Sub window only</b>. Modality flag for sub window.
         self._modal = False
 
-        # <b>Sub window only</b>. Controls if the end user can resize the window.
+        # <b>Sub window only</b>. Controls if the end user can resize the
+        # window.
         self._resizable = True
 
-        # <b>Sub window only</b>. Controls if the end user can move the window by
-        # dragging.
+        # <b>Sub window only</b>. Controls if the end user can move the
+        # window by dragging.
         self._draggable = True
 
-        # <b>Sub window only</b>. Flag which is true if the window is centered on
-        # the screen.
+        # <b>Sub window only</b>. Flag which is true if the window is
+        # centered on the screen.
         self._centerRequested = False
 
         # Should resize recalculate layouts lazily (as opposed to immediately)
         self._resizeLazy = False
 
-        # Component that should be focused after the next repaint. Null if no focus
-        # change should take place.
+        # Component that should be focused after the next repaint. Null if no
+        # focus change should take place.
         self._pendingFocus = None
 
-        # <b>Application window only</b>. A list of javascript commands that are
-        # waiting to be sent to the client. Cleared (set to null) when the commands
-        # have been sent.
+        # <b>Application window only</b>. A list of javascript commands that
+        # are waiting to be sent to the client. Cleared (set to null) when the
+        # commands have been sent.
         self._jsExecQueue = None
 
-        # The component that should be scrolled into view after the next repaint.
-        # Null if nothing should be scrolled into view.
+        # The component that should be scrolled into view after the next
+        # repaint. Null if nothing should be scrolled into view.
         self._scrollIntoView = None
 
         super(Window, self)(caption, content)
+
         self.setScrollable(True)
+
         self.setSizeUndefined()
 
         self._bringToFront = None
 
-        # This sequesnce is used to keep the right order of windows if multiple
-        # windows are brought to front in a single changeset. Incremented and saved
-        # by childwindows. If sequence is not used, the order is quite random
-        # (depends on the order getting to dirty list. e.g. which window got
-        # variable changes).
+        # This sequesnce is used to keep the right order of windows if
+        # multiple windows are brought to front in a single changeset.
+        # Incremented and saved by childwindows. If sequence is not used,
+        # the order is quite random (depends on the order getting to dirty
+        # list. e.g. which window got variable changes).
         self._bringToFrontSequence = 0
 
         self.closeShortcut = None
@@ -235,8 +226,8 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
 
     def addComponent(self, c):
         if isinstance(c, Window):
-            raise ValueError, 'Window cannot be added to another via addComponent. ' \
-                    + 'Use addWindow(Window) instead.'
+            raise ValueError, ('Window cannot be added to another '
+                    'via addComponent. Use addWindow(Window) instead.')
         super(Window, self).addComponent(c)
 
 
@@ -250,9 +241,8 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
 
     def getWindow(self):
         """Gets the parent window of the component.
-        <p>
+
         This is always the window itself.
-        </p>
 
         @see Component#getWindow()
         @return the window itself
@@ -270,10 +260,8 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
     def getParent(self):
         """Gets the parent component of the window.
 
-        <p>
-        The parent of an application window is always null. The parent of a sub
-        window is the application window the sub window is attached to.
-        </p>
+        The parent of an application window is always null. The parent of a
+        sub window is the application window the sub window is attached to.
 
         @return the parent window
         @see Component#getParent()
@@ -282,9 +270,9 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
 
 
     def addURIHandler(self, handler):
-        """<b>Application window only</b>. Adds a new URI handler to this window. If
-        this is a sub window the URI handler is attached to the parent
-        application window.
+        """<b>Application window only</b>. Adds a new URI handler to this
+        window. If this is a sub window the URI handler is attached to the
+        parent application window.
 
         @param handler
                    the URI handler to add.
@@ -298,13 +286,13 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
             if self._uriHandlerList is None:
                 self._uriHandlerList = list()
             if handler not in self._uriHandlerList:
-                self._uriHandlerList.addLast(handler)
+                self._uriHandlerList.append(handler)
 
 
     def removeURIHandler(self, handler):
-        """<b>Application window only</b>. Removes the URI handler from this window.
-        If this is a sub window the URI handler is removed from the parent
-        application window.
+        """<b>Application window only</b>. Removes the URI handler from this
+        window. If this is a sub window the URI handler is removed from the
+        parent application window.
 
         @param handler
                    the URI handler to remove.
@@ -314,7 +302,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
             mainWindow = self.getParent()
             mainWindow.removeURIHandler(handler)
         else:
-            if (handler is None) or (self._uriHandlerList is None):
+            if handler is None or self._uriHandlerList is None:
                 return
             self._uriHandlerList.remove(handler)
             if len(self._uriHandlerList) == 0:
@@ -322,42 +310,40 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
 
 
     def handleURI(self, context, relativeUri):
-        """<b>Application window only</b>. Handles an URI by passing the URI to all
-        URI handlers defined using {@link #addURIHandler(IUriHandler)}. All URI
-        handlers are called for each URI but no more than one handler may return
-        a {@link DownloadStream}. If more than one stream is returned a
-        {@code RuntimeException} is thrown.
+        """<b>Application window only</b>. Handles an URI by passing the URI
+        to all URI handlers defined using {@link #addURIHandler(IUriHandler)}.
+        All URI handlers are called for each URI but no more than one handler
+        may return a {@link DownloadStream}. If more than one stream is
+        returned a {@code RuntimeException} is thrown.
 
         @param context
                    The URL of the application
         @param relativeUri
                    The URI relative to {@code context}
-        @return A {@code DownloadStream} that one of the URI handlers returned,
-                null if no {@code DownloadStream} was returned.
+        @return A {@code DownloadStream} that one of the URI handlers
+                returned, null if no {@code DownloadStream} was returned.
         """
         result = None
 
         if self._uriHandlerList is not None:
             handlers = list(self._uriHandlerList)
 
-            for i in range(len(handlers)):
-                ds = handlers[i].handleURI(context, relativeUri)
+            for handler in handlers:
+                ds = handler.handleURI(context, relativeUri)
                 if ds is not None:
                     if result is not None:
-                        raise RuntimeError('handleURI for ' \
-                                           + context \
-                                           + ' uri: \'' \
-                                           + relativeUri \
-                                           + '\' returns ambigious result.')
+                        raise RuntimeError(('handleURI for ' + context
+                                + ' uri: \'' + relativeUri
+                                + '\' returns ambigious result.'))
                     result = ds
 
         return result
 
 
     def addParameterHandler(self, handler):
-        """<b>Application window only</b>. Adds a new parameter handler to this
-        window. If this is a sub window the parameter handler is attached to the
-        parent application window.
+        """<b>Application window only</b>. Adds a new parameter handler to
+        this window. If this is a sub window the parameter handler is attached
+        to the parent application window.
 
         @param handler
                    the parameter handler to add.
@@ -375,9 +361,9 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
 
 
     def removeParameterHandler(self, handler):
-        """<b>Application window only</b>. Removes the parameter handler from this
-        window. If this is a sub window the parameter handler is removed from the
-        parent application window.
+        """<b>Application window only</b>. Removes the parameter handler from
+        this window. If this is a sub window the parameter handler is removed
+        from the parent application window.
 
         @param handler
                    the parameter handler to remove.
@@ -387,7 +373,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
             mainWindow = self.getParent()
             mainWindow.removeParameterHandler(handler)
         else:
-            if (handler is None) or (self._parameterHandlerList is None):
+            if handler is None or self._parameterHandlerList is None:
                 return
             self._parameterHandlerList.remove(handler)
             if len(self._parameterHandlerList) == 0:
@@ -406,22 +392,20 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
         """
         if self._parameterHandlerList is not None:
             handlers = list(self._parameterHandlerList)
-            for i in range(len(handlers)):
-                handlers[i].handleParameters(parameters)
+            for handler in handlers:
+                handler.handleParameters(parameters)
 
 
     def getTheme(self):
         """<b>Application window only</b>. Gets the theme for this window.
-        <p>
-        If the theme for this window is not explicitly set, the application theme
-        name is returned. If the window is not attached to an application, the
-        terminal default theme name is returned. If the theme name cannot be
-        determined, null is returned
-        </p>
-        <p>
-        Subwindows do not support themes and return the theme used by the parent
-        window
-        </p>
+
+        If the theme for this window is not explicitly set, the application
+        theme name is returned. If the window is not attached to an
+        application, the terminal default theme name is returned. If the theme
+        name cannot be determined, null is returned
+
+        Subwindows do not support themes and return the theme used by the
+        parent window
 
         @return the name of the theme used for the window
         """
@@ -442,15 +426,17 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
 
 
     def setTheme(self, theme):
-        """<b>Application window only</b>. Sets the name of the theme to use for
-        this window. Changing the theme will cause the page to be reloaded.
+        """<b>Application window only</b>. Sets the name of the theme to
+        use for this window. Changing the theme will cause the page to be
+        reloaded.
 
         @param theme
-                   the name of the new theme for this window or null to use the
-                   application theme.
+                   the name of the new theme for this window or null to
+                   use the application theme.
         """
         if self.getParent() is not None:
-            raise NotImplementedError, 'Setting theme for sub-windows is not supported.'
+            raise NotImplementedError, \
+                    'Setting theme for sub-windows is not supported.'
         self._theme = theme
         self.requestRepaint()
 
@@ -474,7 +460,8 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
             target.addAttribute(VView.RESIZE_LAZY, self._resizeLazy)
 
         if not self._draggable:
-            # Inverted to prevent an extra attribute for almost all sub windows
+            # Inverted to prevent an extra attribute for
+            # almost all sub windows
             target.addAttribute('fixedposition', True)
 
         if self._bringToFront is not None:
@@ -490,15 +477,17 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
             self._scrollIntoView = None
 
         # Marks the main window
-        if self.getApplication() is not None \
-                and self == self.getApplication().getMainWindow():
+        if (self.getApplication() is not None
+                and self == self.getApplication().getMainWindow()):
             target.addAttribute('main', True)
 
         if self.getContent() is not None:
-            if self.getContent().getHeightUnits() == ISizeable.UNITS_PERCENTAGE:
+            if (self.getContent().getHeightUnits()
+                        == ISizeable.UNITS_PERCENTAGE):
                 target.addAttribute('layoutRelativeHeight', True)
 
-            if self.getContent().getWidthUnits() == ISizeable.UNITS_PERCENTAGE:
+            if (self.getContent().getWidthUnits()
+                        == ISizeable.UNITS_PERCENTAGE):
                 target.addAttribute('layoutRelativeWidth', True)
 
         # Open requested resource
@@ -560,18 +549,18 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
 
         if self._pendingFocus is not None:
             # ensure focused component is still attached to this main window
-            if self._pendingFocus.getWindow() == self \
-                    or self._pendingFocus.getWindow() is not None \
-                    and self._pendingFocus.getWindow().getParent() == self:
+            if (self._pendingFocus.getWindow() == self
+                    or self._pendingFocus.getWindow() is not None
+                    and self._pendingFocus.getWindow().getParent() == self):
                 target.addAttribute('focused', self._pendingFocus)
 
             self._pendingFocus = None
 
 
     def scrollIntoView(self, component):
-        """Scrolls any component between the component and window to a suitable
-        position so the component is visible to the user. The given component
-        must be inside this window.
+        """Scrolls any component between the component and window to a
+        suitable position so the component is visible to the user. The given
+        component must be inside this window.
 
         @param component
                    the component to be scrolled into view
@@ -579,14 +568,16 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
                     if {@code component} is not inside this window
         """
         if component.getWindow() != self:
-            raise ValueError, 'The component where to scroll must be inside this window.'
+            raise ValueError, ('The component where to scroll '
+                    'must be inside this window.')
         self._scrollIntoView = component
         self.requestRepaint()
 
 
-    def open(self, resource, windowName=None, width=-1, height=-1, border=None):  #@PydevCodeAnalysisIgnore
-        """Opens the given resource in this window. The contents of this Window is
-        replaced by the {@code Resource}.
+    def open(self, resource, windowName=None, width=-1, height=-1,
+            border=None):  #@PydevCodeAnalysisIgnore
+        """Opens the given resource in this window. The contents of this
+        Window is replaced by the {@code Resource}.
 
         @param resource
                    the resource to show in this window
@@ -597,30 +588,26 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
         window.open call in the client. This means that special values such as
         "_blank", "_self", "_top", "_parent" have special meaning. An empty or
         <code>null</code> window name is also a special case.
-        </p>
-        <p>
-        "", null and "_self" as {@code windowName} all causes the resource to be
-        opened in the current window, replacing any old contents. For
+
+        "", null and "_self" as {@code windowName} all causes the resource to
+        be opened in the current window, replacing any old contents. For
         downloadable content you should avoid "_self" as "_self" causes the
         client to skip rendering of any other changes as it considers them
-        irrelevant (the page will be replaced by the resource). This can speed up
-        the opening of a resource, but it might also put the client side into an
-        inconsistent state if the window content is not completely replaced e.g.,
-        if the resource is downloaded instead of displayed in the browser.
-        </p>
-        <p>
-        "_blank" as {@code windowName} causes the resource to always be opened in
-        a new window or tab (depends on the browser and browser settings).
-        </p>
-        <p>
-        "_top" and "_parent" as {@code windowName} works as specified by the HTML
-        standard.
-        </p>
-        <p>
-        Any other {@code windowName} will open the resource in a window with that
-        name, either by opening a new window/tab in the browser or by replacing
-        the contents of an existing window with that name.
-        </p>
+        irrelevant (the page will be replaced by the resource). This can speed
+        up the opening of a resource, but it might also put the client side
+        into an inconsistent state if the window content is not completely
+        replaced e.g., if the resource is downloaded instead of displayed in
+        the browser.
+
+        "_blank" as {@code windowName} causes the resource to always be opened
+        in a new window or tab (depends on the browser and browser settings).
+
+        "_top" and "_parent" as {@code windowName} works as specified by the
+        HTML standard.
+
+        Any other {@code windowName} will open the resource in a window with
+        that name, either by opening a new window/tab in the browser or by
+        replacing the contents of an existing window with that name.
 
         @param resource
                    the resource.
@@ -647,43 +634,43 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
             border = self.BORDER_DEFAULT
 
         if resource not in self._openList:
-            self._openList.append( OpenResource(resource, windowName, width, height, border) )
+            r = OpenResource(resource, windowName, width, height, border)
+            self._openList.append(r)
 
         self.requestRepaint()
 
 
     def getURL(self):
-        """Gets the full URL of the window. The returned URL is window specific and
-        can be used to directly refer to the window.
-        <p>
-        Note! This method can not be used for portlets.
-        </p>
+        """Gets the full URL of the window. The returned URL is window
+        specific and can be used to directly refer to the window.
 
-        @return the URL of the window or null if the window is not attached to an
-                application
+        Note! This method can not be used for portlets.
+
+        @return the URL of the window or null if the window is not attached
+                to an application
         """
         if self._application is None:
             return None
 
         try:
-            return urljoin(self._application.getURL(), self.getName() + '/')  # FIXME: URL
+            # FIXME: URL
+            return urljoin(self._application.getURL(), self.getName() + '/')
         except Exception:
-            raise RuntimeError('Internal problem getting window URL, please report')
+            raise RuntimeError, \
+                    'Internal problem getting window URL, please report'
 
 
     def getName(self):
-        """<b>Application window only</b>. Gets the unique name of the window. The
-        name of the window is used to uniquely identify it.
-        <p>
-        The name also determines the URL that can be used for direct access to a
-        window. All windows can be accessed through
+        """<b>Application window only</b>. Gets the unique name of the window.
+        The name of the window is used to uniquely identify it.
+
+        The name also determines the URL that can be used for direct access to
+        a window. All windows can be accessed through
         {@code http://host:port/app/win} where {@code http://host:port/app} is
         the application URL (as returned by {@link Application#getURL()} and
         {@code win} is the window name.
-        </p>
-        <p>
+
         Note! Portlets do not support direct window access through URLs.
-        </p>
 
         @return the Name of the Window.
         """
@@ -703,10 +690,9 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
         """Sets the border style for this window. Valid values are
         {@link Window#BORDER_NONE}, {@link Window#BORDER_MINIMAL},
         {@link Window#BORDER_DEFAULT}.
-        <p>
-        <b>Note!</b> Setting this seems to currently have no effect whatsoever on
-        the window.
-        </p>
+
+        <b>Note!</b> Setting this seems to currently have no effect
+        whatsoever on the window.
 
         @param border
                    the border style to set
@@ -717,17 +703,14 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
     def setApplication(self, application):
         """Sets the application this window is attached to.
 
-        <p>
-        This method is called by the framework and should not be called directly
-        from application code. {@link com.vaadin.Application#addWindow(Window)}
+        This method is called by the framework and should not be called
+        directly from application code. {@link Application#addWindow(Window)}
         should be used to add the window to an application and
-        {@link com.vaadin.Application#removeWindow(Window)} to remove the window
-        from the application.
-        </p>
-        <p>
+        {@link com.vaadin.Application#removeWindow(Window)} to remove the
+        window from the application.
+
         This method invokes {@link Component#attach()} and
         {@link Component#detach()} methods when necessary.
-        <p>
 
         @param application
                    the application the window is attached to
@@ -749,40 +732,37 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
 
 
     def setName(self, name):
-        """<b>Application window only</b>. Sets the unique name of the window. The
-        name of the window is used to uniquely identify it inside the
+        """<b>Application window only</b>. Sets the unique name of the window.
+        The name of the window is used to uniquely identify it inside the
         application.
-        <p>
-        The name also determines the URL that can be used for direct access to a
-        window. All windows can be accessed through
+
+        The name also determines the URL that can be used for direct access to
+        a window. All windows can be accessed through
         {@code http://host:port/app/win} where {@code http://host:port/app} is
         the application URL (as returned by {@link Application#getURL()} and
         {@code win} is the window name.
-        </p>
-        <p>
+
         This method can only be called before the window is added to an
         application.
-        </p>
-        <p>
+
         Note! Portlets do not support direct window access through URLs.
-        </p>
 
         @param name
-                   the new name for the window or null if the application should
-                   automatically assign a name to it
+                   the new name for the window or null if the application
+                   should automatically assign a name to it
         @throws IllegalStateException
                     if the window is attached to an application
         """
         # The name can not be changed in application
         if self.getApplication() is not None:
-            raise ValueError, 'Window name can not be changed while ' \
-                    + 'the window is in application'
+            raise ValueError, ('Window name can not be changed while '
+                    'the window is in application')
         self._name = name
 
 
     def setTerminal(self, typ):
-        """Sets the user terminal. Used by the terminal adapter, should never be
-        called from application code.
+        """Sets the user terminal. Used by the terminal adapter, should never
+        be called from application code.
 
         @param type
                    the terminal to set.
@@ -795,14 +775,14 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
         sizeHasChanged = False
         # size is handled in super class, but resize events only in windows ->
         # so detect if size change occurs before super.changeVariables()
-        if 'height' in variables \
-                and (self.getHeightUnits() != self.UNITS_PIXELS \
-                     or variables.get('height') != self.getHeight()):
+        if ('height' in variables
+                and (self.getHeightUnits() != self.UNITS_PIXELS
+                     or variables.get('height') != self.getHeight())):
             sizeHasChanged = True
 
-        if 'width' in variables \
-                and (self.getWidthUnits() != self.UNITS_PIXELS \
-                     or variables['width'] != self.getWidth()):
+        if ('width' in variables
+                and (self.getWidthUnits() != self.UNITS_PIXELS
+                     or variables['width'] != self.getWidth())):
             sizeHasChanged = True
 
         super(Window, self).changeVariables(source, variables)
@@ -832,28 +812,24 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
         if sizeHasChanged:
             self.fireResize()
 
-        if self.FocusEvent.EVENT_ID in variables:
+        if FocusEvent.EVENT_ID in variables:
             self.fireEvent( FocusEvent(self) )
 
-        elif self.BlurEvent.EVENT_ID in variables:
+        elif BlurEvent.EVENT_ID in variables:
             self.fireEvent( BlurEvent(self) )
 
 
     def close(self):
         """Method that handles window closing (from UI).
 
-        <p>
-        By default, sub-windows are removed from their respective parent windows
-        and thus visually closed on browser-side. Browser-level windows also
-        closed on the client-side, but they are not implicitly removed from the
-        application.
-        </p>
+        By default, sub-windows are removed from their respective parent
+        windows and thus visually closed on browser-side. Browser-level windows
+        also closed on the client-side, but they are not implicitly removed
+        from the application.
 
-        <p>
-        To explicitly close a sub-window, use {@link #removeWindow(Window)}. To
-        react to a window being closed (after it is closed), register a
+        To explicitly close a sub-window, use {@link #removeWindow(Window)}.
+        To react to a window being closed (after it is closed), register a
         {@link ICloseListener}.
-        </p>
         """
         parent = self.getParent()
         if parent is None:
@@ -867,31 +843,24 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
 
 
     def getPositionX(self):
-        """Gets the distance of Window left border in pixels from left border of the
-        containing (main window).
+        """Gets the distance of Window left border in pixels from left border
+        of the containing (main window).
 
-        @return the Distance of Window left border in pixels from left border of
-                the containing (main window). or -1 if unspecified.
+        @return the Distance of Window left border in pixels from left border
+                of the containing (main window). or -1 if unspecified.
         @since 4.0.0
         """
         return self._positionX
 
 
     def setPositionX(self, positionX, repaintRequired=True):
-        """Sets the distance of Window left border in pixels from left border of the
-        containing (main window).
+        """Sets the distance of Window left border in pixels from left border
+        of the containing (main window).
 
         @param positionX
-                   the Distance of Window left border in pixels from left border
-                   of the containing (main window). or -1 if unspecified.
-        @since 4.0.0
-        ---
-        Sets the distance of Window left border in pixels from left border of the
-        containing (main window).
-
-        @param positionX
-                   the Distance of Window left border in pixels from left border
-                   of the containing (main window). or -1 if unspecified.
+                   the Distance of Window left border in pixels from
+                   left border of the containing (main window). or -1
+                   if unspecified.
         @param repaintRequired
                    true if the window needs to be repainted, false otherwise
         @since 6.3.4
@@ -903,11 +872,11 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
 
 
     def getPositionY(self):
-        """Gets the distance of Window top border in pixels from top border of the
-        containing (main window).
+        """Gets the distance of Window top border in pixels from top border
+        of the containing (main window).
 
-        @return Distance of Window top border in pixels from top border of the
-                containing (main window). or -1 if unspecified .
+        @return Distance of Window top border in pixels from top border of
+                the containing (main window). or -1 if unspecified.
 
         @since 4.0.0
         """
@@ -915,21 +884,21 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
 
 
     def setPositionY(self, positionY, repaintRequired=True):
-        """Sets the distance of Window top border in pixels from top border of the
-        containing (main window).
+        """Sets the distance of Window top border in pixels from top border
+        of the containing (main window).
 
         @param positionY
-                   the Distance of Window top border in pixels from top border of
-                   the containing (main window). or -1 if unspecified
+                   the Distance of Window top border in pixels from top border
+                   of the containing (main window). or -1 if unspecified
 
         @since 4.0.0
         ---
-        Sets the distance of Window top border in pixels from top border of the
-        containing (main window).
+        Sets the distance of Window top border in pixels from top border of
+        the containing (main window).
 
         @param positionY
-                   the Distance of Window top border in pixels from top border of
-                   the containing (main window). or -1 if unspecified
+                   the Distance of Window top border in pixels from top border
+                   of the containing (main window). or -1 if unspecified
         @param repaintRequired
                    true if the window needs to be repainted, false otherwise
 
@@ -950,9 +919,9 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
         For a sub window the ICloseListener is fired when the user closes it
         (clicks on the close button).
 
-        For a browser level window the ICloseListener is fired when the browser
-        level window is closed. Note that closing a browser level window does not
-        mean it will be destroyed.
+        For a browser level window the ICloseListener is fired when the
+        browser level window is closed. Note that closing a browser level
+        window does not mean it will be destroyed.
 
         <p>
         Since Vaadin 6.5, removing windows using {@link #removeWindow(Window)}
@@ -966,34 +935,36 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
 
         @param listener
         ---
-        Note, that focus/blur listeners in Window class are only supported by sub
-        windows. Also note that Window is not considered focused if its contained
-        component currently has focus.
+        Note, that focus/blur listeners in Window class are only supported by
+        sub windows. Also note that Window is not considered focused if its
+        contained component currently has focus.
 
-        @see com.vaadin.event.FieldEvents.IFocusNotifier#addListener(com.vaadin.event.FieldEvents.IFocusListener)
+        @see FieldEvents.IFocusNotifier.addListener()
         ---
         Note, that focus/blur listeners in Window class are only supported by sub
         windows. Also note that Window is not considered focused if its contained
         component currently has focus.
 
-        @see com.vaadin.event.FieldEvents.IBlurNotifier#addListener(com.vaadin.event.FieldEvents.IBlurListener)
+        @see FieldEvents.IBlurNotifier.addListener()
         """
         if isinstance(listener, IBlurListener):
-            self.addListener(BlurEvent.EVENT_ID, BlurEvent, listener, IBlurListener.blurMethod)
+            AbstractComponent.addListener(self, BlurEvent.EVENT_ID,
+                    BlurEvent, listener, IBlurListener.blurMethod)
         elif isinstance(listener, ICloseListener):
-            self.addListener(CloseEvent, listener, self._WINDOW_CLOSE_METHOD)
+            AbstractComponent.addListener(self, CloseEvent, listener,
+                    self._WINDOW_CLOSE_METHOD)
         elif isinstance(listener, IFocusListener):
-            self.addListener(FocusEvent.EVENT_ID, FocusEvent, listener, IFocusListener.focusMethod)
+            AbstractComponent.addListener(self, FocusEvent.EVENT_ID,
+                    FocusEvent, listener, IFocusListener.focusMethod)
         else:
-            self.addListener(ResizeEvent, listener, self._WINDOW_RESIZE_METHOD)
+            AbstractComponent.addListener(self, ResizeEvent, listener,
+                    self._WINDOW_RESIZE_METHOD)
 
 
     def removeListener(self, listener):
         """Removes the ICloseListener from the window.
 
-        <p>
         For more information on CloseListeners see {@link ICloseListener}.
-        </p>
 
         @param listener
                    the ICloseListener to remove.
@@ -1003,13 +974,16 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
         @param listener
         """
         if isinstance(listener, IBlurListener):
-            self.removeListener(BlurEvent.EVENT_ID, BlurEvent, listener)
+            AbstractComponent.removeListener(self, BlurEvent.EVENT_ID,
+                    BlurEvent, listener)
         elif isinstance(listener, ICloseListener):
-            self.removeListener(CloseEvent, listener, self._WINDOW_CLOSE_METHOD)
+            AbstractComponent.removeListener(self, CloseEvent, listener,
+                    self._WINDOW_CLOSE_METHOD)
         elif isinstance(listener, IFocusListener):
-            self.removeListener(FocusEvent.EVENT_ID, FocusEvent, listener)
+            AbstractComponent.removeListener(self, FocusEvent.EVENT_ID,
+                    FocusEvent, listener)
         else:
-            self.removeListener(ResizeEvent, listener)
+            AbstractComponent.removeListener(self, ResizeEvent, listener)
 
 
     def fireClose(self):
@@ -1034,16 +1008,13 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
     def addWindow(self, window):
         """Adds a window inside another window.
 
-        <p>
-        Adding windows inside another window creates "subwindows". These windows
-        should not be added to application directly and are not accessible
-        directly with any url. Addding windows implicitly sets their parents.
-        </p>
+        Adding windows inside another window creates "subwindows". These
+        windows should not be added to application directly and are not
+        accessible directly with any url. Addding windows implicitly sets
+        their parents.
 
-        <p>
         Only one level of subwindows are supported. Thus you can add windows
         inside such windows whose parent is <code>null</code>.
-        </p>
 
         @param window
         @throws IllegalArgumentException
@@ -1055,11 +1026,12 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
             raise ValueError, 'Argument must not be null'
 
         if window.getApplication() is not None:
-            raise ValueError, 'Window was already added to application' \
-                    + ' - it can not be added to another window also.'
+            raise ValueError, ('Window was already added to application'
+                    ' - it can not be added to another window also.')
 
         elif self.getParent() is not None:
-            raise ValueError, 'You can only add windows inside application-level windows.'
+            raise ValueError, ('You can only add windows inside '
+                    'application-level windows.')
 
         elif len(window.subwindows) > 0:
             raise ValueError, 'Only one level of subwindows are supported.'
@@ -1070,11 +1042,11 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
     def removeWindow(self, window):
         """Remove the given subwindow from this window.
 
-        Since Vaadin 6.5, {@link ICloseListener}s are called also when explicitly
-        removing a window by calling this method.
+        Since Vaadin 6.5, {@link ICloseListener}s are called also when
+        explicitly removing a window by calling this method.
 
-        Since Vaadin 6.5, returns a boolean indicating if the window was removed
-        or not.
+        Since Vaadin 6.5, returns a boolean indicating if the window was
+        removed or not.
 
         @param window
                    Window to be removed.
@@ -1092,27 +1064,32 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
 
 
     def bringToFront(self):
-        """If there are currently several sub windows visible, calling this method
-        makes this window topmost.
-        <p>
+        """If there are currently several sub windows visible, calling this
+        method makes this window topmost.
+
         This method can only be called if this window is a sub window and
-        connected a top level window. Else an illegal state exception is thrown.
-        Also if there are modal windows and this window is not modal, and illegal
-        state exception is thrown.
-        <p>
-        <strong> Note, this API works on sub windows only. Browsers can't reorder
-        OS windows.</strong>
+        connected a top level window. Else an illegal state exception is
+        thrown. Also if there are modal windows and this window is not modal,
+        and illegal state exception is thrown.
+
+        <strong> Note, this API works on sub windows only. Browsers can't
+        reorder OS windows.</strong>
         """
         parent = self.getParent()
         if parent is None:
-            raise ValueError, 'Window must be attached to parent before calling bringToFront method.'
+            raise ValueError, ('Window must be attached to parent '
+                    'before calling bringToFront method.')
 
         for w in parent.getChildWindows():
             if w.isModal() and not self.isModal():
-                raise ValueError, 'There are modal windows currently visible, non-modal window cannot be brought to front.'
+                raise ValueError, ('There are modal windows currently '
+                    'visible, non-modal window cannot be brought to front.')
 
         self._bringToFront = self.getParent().bringToFrontSequence
-        self.getParent().bringToFrontSequence = self.getParent().bringToFrontSequence + 1
+
+        self.getParent().bringToFrontSequence = \
+                self.getParent().bringToFrontSequence + 1
+
         self.requestRepaint()
 
 
@@ -1125,7 +1102,8 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
 
 
     def setModal(self, modality):
-        """Sets sub-window modal, so that widgets behind it cannot be accessed.
+        """Sets sub-window modal, so that widgets behind it cannot be
+        accessed.
         <b>Note:</b> affects sub-windows only.
 
         @param modality
@@ -1152,24 +1130,25 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
 
 
     def isResizable(self):
-        """@return true if window is resizable by the end-user, otherwise false."""
+        """@return true if window is resizable by the end-user, otherwise
+        false."""
         return self._resizable
 
 
     def isResizeLazy(self):
-        """@return true if a delay is used before recalculating sizes, false if
-                sizes are recalculated immediately.
+        """@return true if a delay is used before recalculating sizes,
+                   false if sizes are recalculated immediately.
         """
         return self._resizeLazy
 
 
     def setResizeLazy(self, resizeLazy):
-        """Should resize operations be lazy, i.e. should there be a delay before
-        layout sizes are recalculated. Speeds up resize operations in slow UIs
-        with the penalty of slightly decreased usability.
+        """Should resize operations be lazy, i.e. should there be a delay
+        before layout sizes are recalculated. Speeds up resize operations
+        in slow UIs with the penalty of slightly decreased usability.
 
-        Note, some browser send false resize events for the browser window and
-        are therefore always lazy.
+        Note, some browser send false resize events for the browser window
+        and are therefore always lazy.
 
         @param resizeLazy
                    true to use a delay before recalculating sizes, false to
@@ -1188,8 +1167,8 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
 
 
     def showNotification(self, *args):
-        """Shows a notification message on the middle of the window. The message
-        automatically disappears ("humanized message").
+        """Shows a notification message on the middle of the window. The
+        message automatically disappears ("humanized message").
 
         @see #showNotification(com.vaadin.ui.Window.Notification)
         @see Notification
@@ -1197,9 +1176,10 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
         @param caption
                    The message
         ---
-        Shows a notification message the window. The position and behavior of the
-        message depends on the type, which is one of the basic types defined in
-        {@link Notification}, for instance Notification.TYPE_WARNING_MESSAGE.
+        Shows a notification message the window. The position and behavior
+        of the message depends on the type, which is one of the basic types
+        defined in {@link Notification}, for instance
+        Notification.TYPE_WARNING_MESSAGE.
 
         @see #showNotification(com.vaadin.ui.Window.Notification)
         @see Notification
@@ -1274,19 +1254,19 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
         if self._notifications is None:
             self._notifications = list()
 
-        self._notifications.add(notification)
+        self._notifications.append(notification)
         self.requestRepaint()
 
 
     def setFocusedComponent(self, focusable):
-        """This method is used by Component.Focusable objects to request focus to
-        themselves. Focus renders must be handled at window level (instead of
-        Component.Focusable) due we want the last focused component to be focused
-        in client too. Not the one that is rendered last (the case we'd get if
-        implemented in Focusable only).
+        """This method is used by Component.Focusable objects to request focus
+        to themselves. Focus renders must be handled at window level (instead
+        of Component.Focusable) due we want the last focused component to be
+        focused in client too. Not the one that is rendered last (the case
+        we'd get if implemented in Focusable only).
 
-        To focus component from Vaadin application, use Focusable.focus(). See
-        {@link Focusable}.
+        To focus component from Vaadin application, use Focusable.focus().
+        See {@link Focusable}.
 
         @param focusable
                    to be focused on next paint
@@ -1302,25 +1282,23 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
     def executeJavaScript(self, script):
         """Executes JavaScript in this window.
 
-        <p>
-        This method allows one to inject javascript from the server to client. A
-        client implementation is not required to implement this functionality,
-        but currently all web-based clients do implement this.
-        </p>
+        This method allows one to inject javascript from the server to client.
+        A client implementation is not required to implement this
+        functionality, but currently all web-based clients do implement this.
 
-        <p>
-        Executing javascript this way often leads to cross-browser compatibility
-        issues and regressions that are hard to resolve. Use of this method
-        should be avoided and instead it is recommended to create new widgets
-        with GWT. For more info on creating own, reusable client-side widgets in
-        Java, read the corresponding chapter in Book of Vaadin.
-        </p>
+        Executing javascript this way often leads to cross-browser
+        compatibility issues and regressions that are hard to resolve. Use of
+        this method should be avoided and instead it is recommended to create
+        new widgets with GWT. For more info on creating own, reusable
+        client-side widgets in Java, read the corresponding chapter in Book of
+        Vaadin.
 
         @param script
                    JavaScript snippet that will be executed.
         """
         if self.getParent() is not None:
-            raise NotImplementedError, 'Only application level windows can execute javascript.'
+            raise NotImplementedError, ('Only application level '
+                    'windows can execute javascript.')
 
         if self._jsExecQueue is None:
             self._jsExecQueue = list()
@@ -1332,15 +1310,15 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
 
     def isClosable(self):
         """Returns the closable status of the sub window. If a sub window is
-        closable it typically shows an X in the upper right corner. Clicking on
-        the X sends a close event to the server. Setting closable to false will
-        remove the X from the sub window and prevent the user from closing the
-        window.
+        closable it typically shows an X in the upper right corner. Clicking
+        on the X sends a close event to the server. Setting closable to false
+        will remove the X from the sub window and prevent the user from
+        closing the window.
 
-        Note! For historical reasons readonly controls the closability of the sub
-        window and therefore readonly and closable affect each other. Setting
-        readonly to true will set closable to false and vice versa.
-        <p/>
+        Note! For historical reasons readonly controls the closability of the
+        sub window and therefore readonly and closable affect each other.
+        Setting readonly to true will set closable to false and vice versa.
+
         Closable only applies to sub windows, not to browser level windows.
 
         @return true if the sub window can be closed by the user.
@@ -1349,15 +1327,16 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
 
 
     def setClosable(self, closable):
-        """Sets the closable status for the sub window. If a sub window is closable
-        it typically shows an X in the upper right corner. Clicking on the X
-        sends a close event to the server. Setting closable to false will remove
-        the X from the sub window and prevent the user from closing the window.
+        """Sets the closable status for the sub window. If a sub window is
+        closable it typically shows an X in the upper right corner. Clicking
+        on the X sends a close event to the server. Setting closable to false
+        will remove the X from the sub window and prevent the user from
+        closing the window.
 
-        Note! For historical reasons readonly controls the closability of the sub
-        window and therefore readonly and closable affect each other. Setting
-        readonly to true will set closable to false and vice versa.
-        <p/>
+        Note! For historical reasons readonly controls the closability of the
+        sub window and therefore readonly and closable affect each other.
+        Setting readonly to true will set closable to false and vice versa.
+
         Closable only applies to sub windows, not to browser level windows.
 
         @param closable
@@ -1367,9 +1346,9 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
 
 
     def isDraggable(self):
-        """Indicates whether a sub window can be dragged or not. By default a sub
-        window is draggable.
-        <p/>
+        """Indicates whether a sub window can be dragged or not. By default
+        a sub window is draggable.
+
         Draggable only applies to sub windows, not to browser level windows.
 
         @param draggable
@@ -1379,15 +1358,14 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
 
 
     def setDraggable(self, draggable):
-        """Enables or disables that a sub window can be dragged (moved) by the user.
-        By default a sub window is draggable.
-        <p/>
+        """Enables or disables that a sub window can be dragged (moved) by
+        the user. By default a sub window is draggable.
+
         Draggable only applies to sub windows, not to browser level windows.
 
         @param draggable
                    true if the sub window can be dragged by the user
         """
-        # Actions
         self._draggable = draggable
         self.requestRepaint()
 
@@ -1395,15 +1373,16 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
     def setCloseShortcut(self, keyCode, *modifiers):
         """Makes is possible to close the window by pressing the given
         {@link KeyCode} and (optional) {@link ModifierKey}s.<br/>
-        Note that this shortcut only reacts while the window has focus, closing
-        itself - if you want to close a subwindow from a parent window, use
-        {@link #addAction(com.vaadin.event.Action)} of the parent window instead.
+        Note that this shortcut only reacts while the window has focus,
+        closing itself - if you want to close a subwindow from a parent
+        window, use {@link #addAction(com.vaadin.event.Action)} of the
+        parent window instead.
 
         @param keyCode
                    the keycode for invoking the shortcut
         @param modifiers
-                   the (optional) modifiers for invoking the shortcut, null for
-                   none
+                   the (optional) modifiers for invoking the shortcut,
+                   null for none
         """
         if self.closeShortcut is not None:
             self.removeAction(self.closeShortcut)
@@ -1425,13 +1404,13 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier, IBlurNotifie
     def focus(self):
         """{@inheritDoc}
 
-        If the window is a sub-window focusing will cause the sub-window to be
-        brought on top of other sub-windows on gain keyboard focus.
+        If the window is a sub-window focusing will cause the sub-window
+        to be brought on top of other sub-windows on gain keyboard focus.
         """
         if self.getParent() is not None:
             # When focusing a sub-window it basically means it should be
-            # brought to the front. Instead of just moving the keyboard focus
-            # we focus the window and bring it top-most.
+            # brought to the front. Instead of just moving the keyboard
+            # focus we focus the window and bring it top-most.
             self._bringToFront()
         else:
             super(Window, self).focus()
@@ -1533,12 +1512,11 @@ class ResizeEvent(ComponentEvent):
 class Notification(object):
     """A notification message, used to display temporary messages to the user -
     for example "Document saved", or "Save failed".
-    <p>
+
     The notification message can consist of several parts: caption,
     description and icon. It is usually used with only caption - one should
     be wary of filling the notification with too much information.
-    </p>
-    <p>
+
     The notification message tries to be as unobtrusive as possible, while
     still drawing needed attention. There are several basic types of messages
     that can be used in different situations:
@@ -1563,13 +1541,13 @@ class Notification(object):
     current task - for instance to show "You have a new message in your
     inbox" while the user is working in some other area of the application.</li>
     </ul>
-    </p>
-    <p>
+
     In addition to the basic pre-configured types, a Notification can also be
     configured to show up in a custom position, for a specified time (or
     until clicked), and with a custom stylename. An icon can also be added.
     </p>
     """
+
     TYPE_HUMANIZED_MESSAGE = 1
     TYPE_WARNING_MESSAGE = 2
     TYPE_ERROR_MESSAGE = 3
@@ -1794,8 +1772,8 @@ class CloseShortcut(ShortcutListener):
     """
 
     def __init__(self, *args):
-        """Creates a keyboard shortcut for closing the given window using the
-        shorthand notation defined in {@link ShortcutAction}.
+        """Creates a keyboard shortcut for closing the given window using
+        the shorthand notation defined in {@link ShortcutAction}.
 
         @param window
                    to be closed when the shortcut is invoked

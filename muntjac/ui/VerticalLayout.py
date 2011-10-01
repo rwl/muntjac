@@ -16,16 +16,13 @@
 
 from muntjac.ui.AbstractOrderedLayout import AbstractOrderedLayout
 
-#from muntjac.terminal.gwt.client.ui.VVerticalLayout import VVerticalLayout
-#from muntjac.ui.ClientWidget import LoadStyle
-
 
 class VerticalLayout(AbstractOrderedLayout):
     """Vertical layout
 
     <code>VerticalLayout</code> is a component container, which shows the
-    subcomponents in the order of their addition (vertically). A vertical layout
-    is by default 100% wide.
+    subcomponents in the order of their addition (vertically). A vertical
+    layout is by default 100% wide.
 
     @author IT Mill Ltd.
     @author Richard Lincoln
@@ -33,8 +30,7 @@ class VerticalLayout(AbstractOrderedLayout):
     @since 5.3
     """
 
-#    CLIENT_WIDGET = VVerticalLayout
-#    LOAD_STYLE = LoadStyle.EAGER
+    #CLIENT_WIDGET = ClientWidget(VVerticalLayout, LoadStyle.EAGER)
 
     def __init__(self):
         self.setWidth('100%')

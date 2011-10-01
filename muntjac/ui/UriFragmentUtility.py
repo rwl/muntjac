@@ -17,9 +17,6 @@
 from muntjac.ui.AbstractComponent import AbstractComponent
 from muntjac.ui.IComponent import Event as ComponentEvent
 
-#from muntjac.terminal.gwt.client.ui.VUriFragmentUtility import VUriFragmentUtility
-#from muntjac.ui.ClientWidget import LoadStyle
-
 
 class IFragmentChangedListener(object):
     """Listener that listens changes in URI fragment."""
@@ -29,25 +26,27 @@ class IFragmentChangedListener(object):
 
 
 class UriFragmentUtility(AbstractComponent):
-    """Experimental web browser dependent component for URI fragment (part after
-    hash mark "#") reading and writing.
+    """Experimental web browser dependent component for URI fragment (part
+    after hash mark "#") reading and writing.
 
     Component can be used to workaround common ajax web applications pitfalls:
     bookmarking a program state and back button.
     """
 
-#    CLIENT_WIDGET = VUriFragmentUtility
-#    LOAD_STYLE = LoadStyle.EAGER
+    #CLIENT_WIDGET = ClientWidget(VUriFragmentUtility, LoadStyle.EAGER)
 
-    _FRAGMENT_CHANGED_METHOD = getattr(IFragmentChangedListener, 'fragmentChanged')
+    _FRAGMENT_CHANGED_METHOD = getattr(IFragmentChangedListener,
+            'fragmentChanged')
 
 
     def addListener(self, listener):
-        self.addListener(FragmentChangedEvent, listener, self._FRAGMENT_CHANGED_METHOD)
+        AbstractComponent.addListener(self, FragmentChangedEvent, listener,
+                self._FRAGMENT_CHANGED_METHOD)
 
 
     def removeListener(self, listener):
-        self.removeListener(FragmentChangedEvent, listener, self._FRAGMENT_CHANGED_METHOD)
+        AbstractComponent.removeListener(self, FragmentChangedEvent, listener,
+                self._FRAGMENT_CHANGED_METHOD)
 
 
     def __init__(self):
@@ -70,12 +69,12 @@ class UriFragmentUtility(AbstractComponent):
 
     def getFragment(self):
         """Gets currently set URI fragment.
-        <p>
+
         To listen changes in fragment, hook a {@link IFragmentChangedListener}.
-        <p>
+
         Note that initial URI fragment that user used to enter the application
-        will be read after application init. It fires FragmentChangedEvent only
-        if it is not the same as on server side.
+        will be read after application init. It fires FragmentChangedEvent
+        only if it is not the same as on server side.
 
         @return the current fragment in browser uri or null if not known
         """
@@ -99,9 +98,9 @@ class UriFragmentUtility(AbstractComponent):
         @see FragmentChangedEvent
         @see IFragmentChangedListener
         """
-        if (newFragment is None and self._fragment is not None) \
-                or (newFragment is not None \
-                    and not (newFragment == self._fragment)):
+        if ((newFragment is None and self._fragment is not None)
+                or (newFragment is not None
+                        and newFragment != self._fragment)):
                 self._fragment = newFragment
                 if fireEvent:
                     fireEvent( FragmentChangedEvent(self) )

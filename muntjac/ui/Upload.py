@@ -16,16 +16,14 @@
 
 from muntjac.ui.AbstractComponent import AbstractComponent
 
-from muntjac.ui.IComponent import IComponent, IFocusable, Event as ComponentEvent
+from muntjac.ui.IComponent import \
+    IComponent, IFocusable, Event as ComponentEvent
 
 from muntjac.terminal.IStreamVariable import \
     IStreamingProgressEvent, IStreamVariable
 
 from muntjac.terminal.gwt.server.Exceptions import \
     NoInputStreamException, NoOutputStreamException
-
-#from muntjac.terminal.gwt.client.ui.VUpload import VUpload
-#from muntjac.ui.ClientWidget import LoadStyle
 
 
 class IStartedListener(object):
@@ -117,34 +115,28 @@ class IProgressListener(object):
 class Upload(AbstractComponent, IComponent, IFocusable):
     """IComponent for uploading files from client to server.
 
-    <p>
-    The visible component consists of a file name input box and a browse button
-    and an upload submit button to start uploading.
+    The visible component consists of a file name input box and a browse
+    button and an upload submit button to start uploading.
 
-    <p>
-    The Upload component needs a java.io.OutputStream to write the uploaded data.
-    You need to implement the Upload.IReceiver interface and return the output
-    stream in the receiveUpload() method.
+    The Upload component needs a java.io.OutputStream to write the uploaded
+    data. You need to implement the Upload.IReceiver interface and return the
+    output stream in the receiveUpload() method.
 
-    <p>
     You can get an event regarding starting (StartedEvent), progress
     (ProgressEvent), and finishing (FinishedEvent) of upload by implementing
-    IStartedListener, IProgressListener, and IFinishedListener, respectively. The
-    IFinishedListener is called for both failed and succeeded uploads. If you wish
-    to separate between these two cases, you can use ISucceededListener
-    (SucceededEvenet) and IFailedListener (FailedEvent).
+    IStartedListener, IProgressListener, and IFinishedListener, respectively.
+    The IFinishedListener is called for both failed and succeeded uploads. If
+    you wish to separate between these two cases, you can use
+    ISucceededListener (SucceededEvenet) and IFailedListener (FailedEvent).
 
-    <p>
     The upload component does not itself show upload progress, but you can use
     the ProgressIndicator for providing progress feedback by implementing
     IProgressListener and updating the indicator in updateProgress().
 
-    <p>
-    Setting upload component immediate initiates the upload as soon as a file is
-    selected, instead of the common pattern of file selection field and upload
-    button.
+    Setting upload component immediate initiates the upload as soon as a file
+    is selected, instead of the common pattern of file selection field and
+    upload button.
 
-    <p>
     Note! Because of browser dependent implementations of <input type="file">
     element, setting size for Upload component is not supported. For some
     browsers setting size may work to some extend.
@@ -155,15 +147,14 @@ class Upload(AbstractComponent, IComponent, IFocusable):
     @since 3.0
     """
 
-#    CLIENT_WIDGET = VUpload
-#    LOAD_STYLE = LoadStyle.LAZY
-
+    #CLIENT_WIDGET = ClientWidget(VUpload, LoadStyle.LAZY)
 
     def __init__(self, caption=None, uploadReceiver=None):
         """Creates a new instance of Upload.
 
         The receiver must be set before performing an upload.
         """
+
         # Should the field be focused on next repaint?
         self._focus = False
 
@@ -181,8 +172,8 @@ class Upload(AbstractComponent, IComponent, IFocusable):
 
         self._buttonCaption = 'Upload'
 
-        # ProgressListeners to which information about progress is sent
-        # during upload
+        # ProgressListeners to which information about progress
+        # is sent during upload
         self._progressListeners = None
 
         self._interrupted = False
@@ -206,8 +197,7 @@ class Upload(AbstractComponent, IComponent, IFocusable):
     def changeVariables(self, source, variables):
         """Invoked when the value of a variable has changed.
 
-        @see com.vaadin.ui.AbstractComponent#changeVariables(java.lang.Object,
-             java.util.Map)
+        @see AbstractComponent.changeVariables()
         """
         if 'pollForStart' in variables:
             idd = variables.get('pollForStart')
@@ -262,36 +252,18 @@ class Upload(AbstractComponent, IComponent, IFocusable):
 
 
     def addListener(self, listener):
-        """Adds the upload started event listener.
-
-        @param listener
-                   the Listener to be added.
-        ---
-        Adds the upload received event listener.
-
-        @param listener
-                   the Listener to be added.
-        ---
-        Adds the upload interrupted event listener.
-
-        @param listener
-                   the Listener to be added.
-        ---
-        Adds the upload success event listener.
-
-        @param listener
-                   the Listener to be added.
-        ---
-        Adds the upload success event listener.
+        """Adds an event listener.
 
         @param listener
                    the Listener to be added.
         """
         if isinstance(listener, IFailedListener):
-            self.addListener(FailedEvent, listener, self._UPLOAD_FAILED_METHOD)
+            AbstractComponent.addListener(self, FailedEvent, listener,
+                    self._UPLOAD_FAILED_METHOD)
 
         elif isinstance(listener, IFinishedListener):
-            self.addListener(FinishedEvent, listener, self._UPLOAD_FINISHED_METHOD)
+            AbstractComponent.addListener(self, FinishedEvent, listener,
+                    self._UPLOAD_FINISHED_METHOD)
 
         elif isinstance(listener, IProgressListener):
             if self._progressListeners is None:
@@ -299,53 +271,39 @@ class Upload(AbstractComponent, IComponent, IFocusable):
             self._progressListeners.add(listener)
 
         elif isinstance(listener, IStartedListener):
-            self.addListener(StartedEvent, listener, self._UPLOAD_STARTED_METHOD)
+            AbstractComponent.addListener(self, StartedEvent, listener,
+                    self._UPLOAD_STARTED_METHOD)
 
         else:
-            self.addListener(SucceededEvent, listener, self._UPLOAD_SUCCEEDED_METHOD)
+            AbstractComponent.addListener(self, SucceededEvent, listener,
+                    self._UPLOAD_SUCCEEDED_METHOD)
 
 
     def removeListener(self, listener):
-        """Removes the upload started event listener.
-
-        @param listener
-                   the Listener to be removed.
-        ---
-        Removes the upload received event listener.
-
-        @param listener
-                   the Listener to be removed.
-        ---
-        Removes the upload interrupted event listener.
-
-        @param listener
-                   the Listener to be removed.
-        ---
-        Removes the upload success event listener.
-
-        @param listener
-                   the Listener to be removed.
-        ---
-        Removes the upload success event listener.
+        """Removes an event listener.
 
         @param listener
                    the Listener to be removed.
         """
         if isinstance(listener, IFailedListener):
-            self.removeListener(FailedEvent, listener, self._UPLOAD_FAILED_METHOD)
+            AbstractComponent.removeListener(self, FailedEvent, listener,
+                    self._UPLOAD_FAILED_METHOD)
 
         elif isinstance(listener, IFinishedListener):
-            self.removeListener(FinishedEvent, listener, self._UPLOAD_FINISHED_METHOD)
+            AbstractComponent.removeListener(self, FinishedEvent, listener,
+                    self._UPLOAD_FINISHED_METHOD)
 
         elif isinstance(listener, IProgressListener):
             if self._progressListeners is not None:
                 self._progressListeners.remove(listener)
 
         elif isinstance(listener, IStartedListener):
-            self.removeListener(StartedEvent, listener, self._UPLOAD_STARTED_METHOD)
+            AbstractComponent.removeListener(self, StartedEvent, listener,
+                    self._UPLOAD_STARTED_METHOD)
 
         else:
-            self.removeListener(SucceededEvent, listener, self._UPLOAD_SUCCEEDED_METHOD)
+            AbstractComponent.removeListener(self, SucceededEvent, listener,
+                    self._UPLOAD_SUCCEEDED_METHOD)
 
 
     def fireStarted(self, filename, MIMEType):
@@ -355,7 +313,8 @@ class Upload(AbstractComponent, IComponent, IFocusable):
         @param MIMEType
         @param length
         """
-        self.fireEvent( StartedEvent(self, filename, MIMEType, self._contentLength) )
+        evt = StartedEvent(self, filename, MIMEType, self._contentLength)
+        self.fireEvent(evt)
 
 
     def fireUploadInterrupted(self, filename, MIMEType, length, e=None):
@@ -366,17 +325,21 @@ class Upload(AbstractComponent, IComponent, IFocusable):
         @param length
         """
         if e is None:
-            self.fireEvent( FailedEvent(self, filename, MIMEType, length) )
+            evt = FailedEvent(self, filename, MIMEType, length)
         else:
-            self.fireEvent( FailedEvent(self, filename, MIMEType, length, e) )
+            evt = FailedEvent(self, filename, MIMEType, length, e)
+
+        self.fireEvent(evt)
 
 
     def fireNoInputStream(self, filename, MIMEType, length):
-        self.fireEvent( NoInputStreamEvent(self, filename, MIMEType, length) )
+        evt = NoInputStreamEvent(self, filename, MIMEType, length)
+        self.fireEvent(evt)
 
 
     def fireNoOutputStream(self, filename, MIMEType, length):
-        self.fireEvent( NoOutputStreamEvent(self, filename, MIMEType, length) )
+        evt = NoOutputStreamEvent(self, filename, MIMEType, length)
+        self.fireEvent(evt)
 
 
     def fireUploadSuccess(self, filename, MIMEType, length):
@@ -386,7 +349,8 @@ class Upload(AbstractComponent, IComponent, IFocusable):
         @param MIMEType
         @param length
         """
-        self.fireEvent( SucceededEvent(self, filename, MIMEType, length) )
+        evt = SucceededEvent(self, filename, MIMEType, length)
+        self.fireEvent(evt)
 
 
     def fireUpdateProgress(self, totalBytes, contentLength):
@@ -397,8 +361,8 @@ class Upload(AbstractComponent, IComponent, IFocusable):
         @param contentLength
                    actual size of the file being uploaded, if known
         """
-        # this is implemented differently than other listeners to maintain
-        # backwards compatibility
+        # this is implemented differently than other listeners to
+        # maintain backwards compatibility
         if self._progressListeners is not None:
             for l in self._progressListeners:
                 l.updateProgress(totalBytes, contentLength)
@@ -446,10 +410,10 @@ class Upload(AbstractComponent, IComponent, IFocusable):
         """Go into upload state. This is to prevent double uploading on same
         component.
 
-        Warning: this is an internal method used by the framework and should not
-        be used by user of the Upload component. Using it results in the Upload
-        component going in wrong state and not working. It is currently public
-        because it is used by another class.
+        Warning: this is an internal method used by the framework and should
+        not be used by user of the Upload component. Using it results in the
+        Upload component going in wrong state and not working. It is currently
+        public because it is used by another class.
         """
         if self._isUploading:
             raise ValueError, 'uploading already started'
@@ -459,9 +423,9 @@ class Upload(AbstractComponent, IComponent, IFocusable):
 
 
     def interruptUpload(self):
-        """Interrupts the upload currently being received. The interruption will be
-        done by the receiving tread so this method will return immediately and
-        the actual interrupt will happen a bit later.
+        """Interrupts the upload currently being received. The interruption
+        will be done by the receiving tread so this method will return
+        immediately and the actual interrupt will happen a bit later.
         """
         if self._isUploading:
             self._interrupted = True
@@ -470,8 +434,8 @@ class Upload(AbstractComponent, IComponent, IFocusable):
     def endUpload(self):
         """Go into state where new uploading can begin.
 
-        Warning: this is an internal method used by the framework and should not
-        be used by user of the Upload component.
+        Warning: this is an internal method used by the framework and should
+        not be used by user of the Upload component.
         """
         self._isUploading = False
         self._contentLength = -1
@@ -492,8 +456,8 @@ class Upload(AbstractComponent, IComponent, IFocusable):
 
 
     def getUploadSize(self):
-        """Returns size of file currently being uploaded. Value sane only during
-        upload.
+        """Returns size of file currently being uploaded. Value sane only
+        during upload.
 
         @return size in bytes
         """
@@ -501,11 +465,14 @@ class Upload(AbstractComponent, IComponent, IFocusable):
 
 
     def setProgressListener(self, progressListener):
-        """This method is deprecated, use addListener(IProgressListener) instead.
+        """This method is deprecated, use addListener(IProgressListener)
+        instead.
 
         @deprecated Use addListener(IProgressListener) instead.
         @param progressListener
         """
+        raise DeprecationWarning, 'use addListener() instead'
+
         self.addListener(progressListener)
 
 
@@ -515,7 +482,10 @@ class Upload(AbstractComponent, IComponent, IFocusable):
         @deprecated Replaced with addListener/removeListener
         @return listener
         """
-        if (self._progressListeners is None) or self._progressListeners.isEmpty():
+        raise DeprecationWarning, 'replaced with addListener/removeListener'
+
+        if (self._progressListeners is None
+                or len(self._progressListeners) == 0):
             return None
         else:
             return self._progressListeners.next()
@@ -527,23 +497,21 @@ class Upload(AbstractComponent, IComponent, IFocusable):
 
 
     def setButtonCaption(self, buttonCaption):
-        """In addition to the actual file chooser, upload components have button
-        that starts actual upload progress. This method is used to set text in
-        that button.
-        <p>
+        """In addition to the actual file chooser, upload components have
+        button that starts actual upload progress. This method is used to set
+        text in that button.
+
         In case the button text is set to null, the button is hidden. In this
         case developer must explicitly initiate the upload process with
         {@link #submitUpload()}.
-        <p>
+
         In case the Upload is used in immediate mode using
         {@link #setImmediate(boolean)}, the file choose (html input with type
         "file") is hidden and only the button with this text is shown.
-        <p>
 
-        <p>
-        <strong>Note</strong> the string given is set as is to the button. HTML
-        formatting is not stripped. Be sure to properly validate your value
-        according to your needs.
+        <strong>Note</strong> the string given is set as is to the button.
+        HTML formatting is not stripped. Be sure to properly validate your
+        value according to your needs.
 
         @param buttonCaption
                    text for upload components button.
@@ -554,20 +522,20 @@ class Upload(AbstractComponent, IComponent, IFocusable):
 
     def submitUpload(self):
         """Forces the upload the send selected file to the server.
-        <p>
+
         In case developer wants to use this feature, he/she will most probably
-        want to hide the uploads internal submit button by setting its caption to
-        null with {@link #setButtonCaption(String)} method.
-        <p>
+        want to hide the uploads internal submit button by setting its caption
+        to null with {@link #setButtonCaption(String)} method.
+
         Note, that the upload runs asynchronous. Developer should use normal
         upload listeners to trac the process of upload. If the field is empty
         uploaded the file name will be empty string and file length 0 in the
         upload finished event.
-        <p>
-        Also note, that the developer should not remove or modify the upload in
-        the same user transaction where the upload submit is requested. The
-        upload may safely be hidden or removed once the upload started event is
-        fired.
+
+        Also note, that the developer should not remove or modify the upload
+        in the same user transaction where the upload submit is requested. The
+        upload may safely be hidden or removed once the upload started event
+        is fired.
         """
         self.requestRepaint()
         self._forceSubmit = True
@@ -579,11 +547,11 @@ class Upload(AbstractComponent, IComponent, IFocusable):
 
 
     def getStreamVariable(self):
-        # Handle to terminal via Upload monitors and controls the upload during it
-        # is being streamed.
+        # Handle to terminal via Upload monitors and controls the upload
+        # during it is being streamed.
         if self._streamVariable is None:
 
-            class InnerStreamVariable(IStreamVariable):  # FIXME: inner class
+            class InnerStreamVariable(IStreamVariable):
 
                 def __init__(self, upload):
                     self._upload = upload
@@ -591,20 +559,23 @@ class Upload(AbstractComponent, IComponent, IFocusable):
 
 
                 def listenProgress(self):
-                    return self._upload.progressListeners is not None and len(self._upload.progressListeners) > 0
+                    return (self._upload.progressListeners is not None
+                            and len(self._upload.progressListeners) > 0)
 
 
                 def onProgress(self, event):
-                    self._upload.fireUpdateProgress(event.getBytesReceived(), event.getContentLength())
+                    self._upload.fireUpdateProgress(event.getBytesReceived(),
+                            event.getContentLength())
 
 
                 def isInterrupted(self):
-                    return self.interrupted
+                    return self._upload.interrupted
 
 
                 def getOutputStream(self):
-                    receiveUpload = self._upload.receiver.receiveUpload(self._lastStartedEvent.getFileName(),
-                                                                        self._lastStartedEvent.getMimeType())
+                    receiveUpload = self._upload.receiver.receiveUpload(
+                            self._lastStartedEvent.getFileName(),
+                            self._lastStartedEvent.getMimeType())
                     self._lastStartedEvent = None
                     return receiveUpload
 
@@ -612,14 +583,14 @@ class Upload(AbstractComponent, IComponent, IFocusable):
                 def streamingStarted(self, event):
                     self.startUpload()
                     self._upload.contentLength = event.getContentLength()
-                    self._upload.fireStarted(event.getFileName(), event.getMimeType())
+                    self._upload.fireStarted(event.getFileName(),
+                            event.getMimeType())
                     self._lastStartedEvent = event
 
 
                 def streamingFinished(self, event):
                     self._upload.fireUploadSuccess(event.getFileName(),
-                                                   event.getMimeType(),
-                                                   event.getContentLength())
+                            event.getMimeType(), event.getContentLength())
                     self._upload.endUpload()
                     self._upload.requestRepaint()
 
@@ -628,15 +599,15 @@ class Upload(AbstractComponent, IComponent, IFocusable):
                     exception = event.getException()
                     if isinstance(exception, NoInputStreamException):
                         self._upload.fireNoInputStream(event.getFileName(),
-                                                       event.getMimeType(), 0)
+                                event.getMimeType(), 0)
 
                     elif isinstance(exception, NoOutputStreamException):
                         self._upload.fireNoOutputStream(event.getFileName(),
-                                                        event.getMimeType(), 0)
+                                event.getMimeType(), 0)
                     else:
                         self._upload.fireUploadInterrupted(event.getFileName(),
-                                                           event.getMimeType(),
-                                                           0, exception)
+                                event.getMimeType(), 0, exception)
+
                     self._upload.endUpload()
 
             self._streamVariable = InnerStreamVariable(self)
@@ -655,15 +626,14 @@ class Upload(AbstractComponent, IComponent, IFocusable):
 
 
 class IReceiver(object):
-    """Interface that must be implemented by the upload receivers to provide the
-    Upload component an output stream to write the uploaded data.
+    """Interface that must be implemented by the upload receivers to provide
+    the Upload component an output stream to write the uploaded data.
 
     @author IT Mill Ltd.
     @author Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
-    # Upload events
 
     def receiveUpload(self, filename, mimeType):
         """Invoked when a new upload arrives.
@@ -679,10 +649,10 @@ class IReceiver(object):
 
 
 class FinishedEvent(ComponentEvent):
-    """Upload.FinishedEvent is sent when the upload receives a file, regardless
-    of whether the reception was successful or failed. If you wish to
-    distinguish between the two cases, use either SucceededEvent or
-    FailedEvent, which are both subclasses of the FinishedEvent.
+    """Upload.FinishedEvent is sent when the upload receives a file,
+    regardless of whether the reception was successful or failed. If
+    you wish to distinguish between the two cases, use either SucceededEvent
+    or FailedEvent, which are both subclasses of the FinishedEvent.
 
     @author IT Mill Ltd.
     @author Richard Lincoln
@@ -745,8 +715,8 @@ class FinishedEvent(ComponentEvent):
 
 
 class FailedEvent(FinishedEvent):
-    """Upload.FailedEvent event is sent when the upload is received, but the
-    reception is interrupted for some reason.
+    """Upload.FailedEvent event is sent when the upload is received,
+    but the reception is interrupted for some reason.
 
     @author IT Mill Ltd.
     @author Richard Lincoln
@@ -756,12 +726,6 @@ class FailedEvent(FinishedEvent):
 
     def __init__(self, source, filename, MIMEType, length, reason=None):
         """@param source
-        @param filename
-        @param MIMEType
-        @param length
-        @param exception
-        ---
-        @param source
         @param filename
         @param MIMEType
         @param length
@@ -781,7 +745,8 @@ class FailedEvent(FinishedEvent):
 
 
 class NoOutputStreamEvent(FailedEvent):
-    """FailedEvent that indicates that an output stream could not be obtained."""
+    """FailedEvent that indicates that an output stream could not be obtained.
+    """
 
     def __init__(self, source, filename, MIMEType, length):
         """@param source
@@ -793,7 +758,8 @@ class NoOutputStreamEvent(FailedEvent):
 
 
 class NoInputStreamEvent(FailedEvent):
-    """FailedEvent that indicates that an input stream could not be obtained."""
+    """FailedEvent that indicates that an input stream could not be obtained.
+    """
 
     def __init__(self, source, filename, MIMEType, length):
         """@param source
@@ -824,7 +790,8 @@ class SucceededEvent(FinishedEvent):
 
 
 class StartedEvent(ComponentEvent):
-    """Upload.StartedEvent event is sent when the upload is started to received.
+    """Upload.StartedEvent event is sent when the upload is started to
+    received.
 
     @author IT Mill Ltd.
     @author Richard Lincoln

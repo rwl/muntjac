@@ -16,13 +16,10 @@
 
 from muntjac.ui.AbstractSplitPanel import AbstractSplitPanel
 
-#from muntjac.terminal.gwt.client.ui.VSplitPanelVertical import VSplitPanelVertical
-#from muntjac.ui.ClientWidget import LoadStyle
-
 
 class VerticalSplitPanel(AbstractSplitPanel):
-    """A vertical split panel contains two components and lays them vertically. The
-    first component is above the second component.
+    """A vertical split panel contains two components and lays them
+    vertically. The first component is above the second component.
 
     <pre>
          +--------------------------+
@@ -37,8 +34,7 @@ class VerticalSplitPanel(AbstractSplitPanel):
     </pre>
     """
 
-#    CLIENT_WIDGET = VSplitPanelVertical
-#    LOAD_STYLE = LoadStyle.EAGER
+    #CLIENT_WIDGET = ClientWidget(VSplitPanelVertical, LoadStyle.EAGER)
 
     def __init__(self):
         super(VerticalSplitPanel, self)()
