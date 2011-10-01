@@ -14,31 +14,25 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.event.FieldEvents import \
-    BlurEvent, IBlurListener, IBlurNotifier, FocusEvent, \
-    IFocusListener, IFocusNotifier
-
-from muntjac.ui.AbstractSelect import AbstractSelect, IFiltering
+from muntjac.event import FieldEvents
 from muntjac.data.util.filter.SimpleStringFilter import SimpleStringFilter
 from muntjac.data.Container import Container, Filterable, Indexed
+from muntjac.ui import AbstractSelect
+from muntjac.ui.AbstractComponent import AbstractComponent
 
-#from muntjac.terminal.gwt.client.ui.VFilterSelect import VFilterSelect
-#from muntjac.ui.ClientWidget import LoadStyle
+from muntjac.event.FieldEvents import \
+    FocusEvent, BlurEvent, IBlurListener, IFocusListener
 
 
-class Select(AbstractSelect, AbstractSelect, IFiltering,
-             IBlurNotifier, IFocusNotifier):
-    """<p>
-    A class representing a selection of items the user has selected in a UI. The
-    set of choices is presented as a set of {@link com.vaadin.data.Item}s in a
-    {@link com.vaadin.data.Container}.
-    </p>
+class Select(AbstractSelect.AbstractSelect, AbstractSelect.IFiltering,
+             FieldEvents.IBlurNotifier, FieldEvents.IFocusNotifier):
+    """A class representing a selection of items the user has selected in a
+    UI. The set of choices is presented as a set of
+    {@link com.vaadin.data.Item}s in a {@link com.vaadin.data.Container}.
 
-    <p>
     A <code>Select</code> component may be in single- or multiselect mode.
     Multiselect mode means that more than one item can be selected
     simultaneously.
-    </p>
 
     @author IT Mill Ltd.
     @author Richard Lincoln
@@ -46,8 +40,7 @@ class Select(AbstractSelect, AbstractSelect, IFiltering,
     @since 3.0
     """
 
-#    CLIENT_WIDGET = VFilterSelect
-#    LOAD_STYLE = LoadStyle.LAZY
+    #CLIENT_WIDGET = ClientWidget(VFilterSelect, LoadStyle.LAZY)
 
     def __init__(self, *args):
         # Holds value of property pageLength. 0 disables paging.
@@ -63,25 +56,28 @@ class Select(AbstractSelect, AbstractSelect, IFiltering,
         self._filterstring = None
         self._prevfilterstring = None
 
-        # Number of options that pass the filter, excluding the null item if any.
+        # Number of options that pass the filter, excluding the null
+        # item if any.
         self._filteredSize = None
 
-        # Cache of filtered options, used only by the in-memory filtering system.
+        # Cache of filtered options, used only by the in-memory
+        # filtering system.
         self._filteredOptions = None
 
-        # Flag to indicate that request repaint is called by filter request only
+        # Flag to indicate that request repaint is called by filter
+        # request only
         self._optionRequest = None
 
-        # True if the container is being filtered temporarily and item set change
-        # notifications should be suppressed.
+        # True if the container is being filtered temporarily and item
+        # set change notifications should be suppressed.
         self._filteringContainer = None
 
-        # Flag to indicate whether to scroll the selected item visible (select the
-        # page on which it is) when opening the popup or not. Only applies to
-        # single select mode.
+        # Flag to indicate whether to scroll the selected item visible
+        # (select the page on which it is) when opening the popup or not.
+        # Only applies to single select mode.
         #
-        # This requires finding the index of the item, which can be expensive in
-        # many large lazy loading containers.
+        # This requires finding the index of the item, which can be expensive
+        # in many large lazy loading containers.
         self._scrollToSelectedItem = True
 
         nargs = len(args)
@@ -146,8 +142,10 @@ class Select(AbstractSelect, AbstractSelect, IFiltering,
         # Constructs selected keys array
         if self.isMultiSelect():
             selectedKeys = [None] * len(self.getValue())
+        elif self.getValue() is None and self.getNullSelectionItemId() is None:
+            selectedKeys = [None] * 0
         else:
-            selectedKeys = [None] * (0 if self.getValue() is None and self.getNullSelectionItemId() is None else 1)
+            selectedKeys = [None] * 1
 
         target.addAttribute('pagelength', self.pageLength)
 
@@ -163,9 +161,9 @@ class Select(AbstractSelect, AbstractSelect, IFiltering,
             self._currentPage = 0
             self._filterstring = ''
 
-        nullFilteredOut = self._filterstring is not None \
-                and not ('' == self._filterstring) \
-                and self._filteringMode != self.FILTERINGMODE_OFF
+        nullFilteredOut = (self._filterstring is not None
+                and self._filterstring != ''
+                and self._filteringMode != self.FILTERINGMODE_OFF)
         # null option is needed and not filtered out, even if not on current
         # page
         nullOptionVisible = needNullSelectOption and not nullFilteredOut
@@ -173,13 +171,14 @@ class Select(AbstractSelect, AbstractSelect, IFiltering,
         # first try if using container filters is possible
         options = self.getOptionsWithFilter(nullOptionVisible)
         if None is options:
-            # not able to use container filters, perform explicit in-memory
-            # filtering
+            # not able to use container filters, perform explicit
+            # in-memory filtering
             options = self.getFilteredOptions()
             self._filteredSize = len(options)
             options = self.sanitetizeList(options, nullOptionVisible)
 
-        paintNullSelection = needNullSelectOption and self._currentPage == 0 and not nullFilteredOut
+        paintNullSelection = (needNullSelectOption and self._currentPage == 0
+                and not nullFilteredOut)
 
         if paintNullSelection:
             target.startTag('so')
@@ -193,9 +192,9 @@ class Select(AbstractSelect, AbstractSelect, IFiltering,
             try:
                 idd = i.next()
 
-                if not self.isNullSelectionAllowed() and idd is not None \
-                        and idd == self.getNullSelectionItemId() \
-                        and not self.isSelected(idd):
+                if (not self.isNullSelectionAllowed() and idd is not None
+                        and idd == self.getNullSelectionItemId()
+                        and not self.isSelected(idd)):
                     continue
 
                 # Gets the option attribute values
@@ -224,9 +223,12 @@ class Select(AbstractSelect, AbstractSelect, IFiltering,
                 break
         target.endTag('options')
 
-        target.addAttribute('totalitems', len(self) + (1 if needNullSelectOption else 0))
-        if (self._filteredSize > 0) or nullOptionVisible:
-            target.addAttribute('totalMatches', self._filteredSize + (1 if nullOptionVisible else 0))
+        target.addAttribute('totalitems', (len(self)
+                + (1 if needNullSelectOption else 0)))
+
+        if self._filteredSize > 0 or nullOptionVisible:
+            target.addAttribute('totalMatches', (self._filteredSize
+                    + (1 if nullOptionVisible else 0)))
 
         # Paint variables
         target.addVariable(self, 'selected', selectedKeys)
@@ -241,9 +243,9 @@ class Select(AbstractSelect, AbstractSelect, IFiltering,
         self._optionRequest = True
 
         # Hide the error indicator if needed
-        if self.isRequired() and self.isEmpty() \
-                and self.getComponentError() is None \
-                and self.getErrorMessage() is not None:
+        if (self.isRequired() and self.isEmpty()
+                and self.getComponentError() is None
+                and self.getErrorMessage() is not None):
             target.addAttribute('hideErrors', True)
 
 
@@ -254,9 +256,9 @@ class Select(AbstractSelect, AbstractSelect, IFiltering,
         As a size effect, {@link #filteredSize} is set to the total number of
         items passing the filter.
 
-        The current container must be {@link Filterable} and {@link Indexed}, and
-        the filtering mode must be suitable for container filtering (tested with
-        {@link #canUseContainerFilter()}).
+        The current container must be {@link Filterable} and {@link Indexed},
+        and the filtering mode must be suitable for container filtering
+        (tested with {@link #canUseContainerFilter()}).
 
         Use {@link #getFilteredOptions()} and
         {@link #sanitetizeList(List, boolean)} if this is not the case.
@@ -272,9 +274,10 @@ class Select(AbstractSelect, AbstractSelect, IFiltering,
             self._filteredSize = len(container)
             return list(container.getItemIds())
 
-        if (not isinstance(container, Filterable)) \
-                or (not isinstance(container, Indexed)) \
-                or (self.getItemCaptionMode() != self.ITEM_CAPTION_MODE_PROPERTY):
+        if ((not isinstance(container, Filterable))
+                or (not isinstance(container, Indexed))
+                or (self.getItemCaptionMode() !=
+                        self.ITEM_CAPTION_MODE_PROPERTY)):
             return None
 
         filterable = container
@@ -296,25 +299,22 @@ class Select(AbstractSelect, AbstractSelect, IFiltering,
         # to page with the selected item after filtering if accepted by
         # filter
         selection = self.getValue()
-        if self.isScrollToSelectedItem() and not self._optionRequest \
-                and not self.isMultiSelect() and selection is not None:
+        if (self.isScrollToSelectedItem() and not self._optionRequest
+                and not self.isMultiSelect() and selection is not None):
             # ensure proper page
             indexToEnsureInView = indexed.indexOfId(selection)
 
         self._filteredSize = len(container)
         self._currentPage = self.adjustCurrentPage(self._currentPage,
-                                                   needNullSelectOption,
-                                                   indexToEnsureInView,
-                                                   self._filteredSize)
+                needNullSelectOption, indexToEnsureInView, self._filteredSize)
         first = self.getFirstItemIndexOnCurrentPage(needNullSelectOption,
-                                                    self._filteredSize)
+                self._filteredSize)
         last = self.getLastItemIndexOnCurrentPage(needNullSelectOption,
-                                                  self._filteredSize,
-                                                  first)
+                self._filteredSize, first)
 
         options = list()
         i = first
-        while (i <= last and i < self._filteredSize):
+        while i <= last and i < self._filteredSize:
             options.append( indexed.getIdByIndex(i) )
             i += 1
 
@@ -327,8 +327,8 @@ class Select(AbstractSelect, AbstractSelect, IFiltering,
 
 
     def buildFilter(self, filterString, filteringMode):
-        """Constructs a filter instance to use when using a Filterable container in
-        the <code>ITEM_CAPTION_MODE_PROPERTY</code> mode.
+        """Constructs a filter instance to use when using a Filterable
+        container in the <code>ITEM_CAPTION_MODE_PROPERTY</code> mode.
 
         Note that the client side implementation expects the filter string to
         apply to the item caption string it sees, so changing the behavior of
@@ -344,9 +344,11 @@ class Select(AbstractSelect, AbstractSelect, IFiltering,
             if test == self.FILTERINGMODE_OFF:
                 pass
             elif test == self.FILTERINGMODE_STARTSWITH:
-                fltr = SimpleStringFilter(self.getItemCaptionPropertyId(), filterString, True, True)
+                fltr = SimpleStringFilter(self.getItemCaptionPropertyId(),
+                        filterString, True, True)
             elif test == self.FILTERINGMODE_CONTAINS:
-                fltr = SimpleStringFilter(self.getItemCaptionPropertyId(), filterString, True, False)
+                fltr = SimpleStringFilter(self.getItemCaptionPropertyId(),
+                        filterString, True, False)
         return fltr
 
 
@@ -362,13 +364,13 @@ class Select(AbstractSelect, AbstractSelect, IFiltering,
         page will be the one where possible selection exists.
 
         Detects proper first and last item in list to return right page of
-        options. Also, if the current page is beyond the end of the list, it will
-        be adjusted.
+        options. Also, if the current page is beyond the end of the list, it
+        will be adjusted.
 
         @param options
         @param needNullSelectOption
-                   flag to indicate if nullselect option needs to be taken into
-                   consideration
+                   flag to indicate if nullselect option needs to be taken
+                   into consideration
         """
         if self.pageLength != 0 and len(options) > self.pageLength:
 
@@ -378,37 +380,35 @@ class Select(AbstractSelect, AbstractSelect, IFiltering,
             # to page with the selected item after filtering if accepted by
             # filter
             selection = self.getValue()
-            if self.isScrollToSelectedItem() and not self._optionRequest \
-                    and not self.isMultiSelect() and selection is not None:
+            if (self.isScrollToSelectedItem() and not self._optionRequest
+                    and not self.isMultiSelect() and selection is not None):
                 # ensure proper page
                 indexToEnsureInView = options.index(selection)
 
             size = len(options)
             self._currentPage = self.adjustCurrentPage(self._currentPage,
-                                                       needNullSelectOption,
-                                                       indexToEnsureInView,
-                                                       size)
+                    needNullSelectOption, indexToEnsureInView, size)
             first = self.getFirstItemIndexOnCurrentPage(needNullSelectOption,
-                                                        size)
+                    size)
             last = self.getLastItemIndexOnCurrentPage(needNullSelectOption,
-                                                      size, first)
+                    size, first)
             return options.subList(first, last + 1)
         else:
             return options
 
 
     def getFirstItemIndexOnCurrentPage(self, needNullSelectOption, size):
-        """Returns the index of the first item on the current page. The index is to
-        the underlying (possibly filtered) contents. The null item, if any, does
-        not have an index but takes up a slot on the first page.
+        """Returns the index of the first item on the current page. The index
+        is to the underlying (possibly filtered) contents. The null item, if
+        any, does not have an index but takes up a slot on the first page.
 
         @param needNullSelectOption
-                   true if a null option should be shown before any other options
-                   (takes up the first slot on the first page, not counted in
-                   index)
+                   true if a null option should be shown before any other
+                   options (takes up the first slot on the first page, not
+                   counted in index)
         @param size
-                   number of items after filtering (not including the null item,
-                   if any)
+                   number of items after filtering (not including the null
+                   item, if any)
         @return first item to show on the UI (index to the filtered list of
                 options, not taking the null item into consideration if any)
         """
@@ -421,53 +421,66 @@ class Select(AbstractSelect, AbstractSelect, IFiltering,
 
 
     def getLastItemIndexOnCurrentPage(self, needNullSelectOption, size, first):
-        """Returns the index of the last item on the current page. The index is to
-        the underlying (possibly filtered) contents. If needNullSelectOption is
-        true, the null item takes up the first slot on the first page,
-        effectively reducing the first page size by one.
+        """Returns the index of the last item on the current page. The index
+        is to the underlying (possibly filtered) contents. If
+        needNullSelectOption is true, the null item takes up the first slot
+        on the first page, effectively reducing the first page size by one.
 
         @param needNullSelectOption
-                   true if a null option should be shown before any other options
-                   (takes up the first slot on the first page, not counted in
-                   index)
+                   true if a null option should be shown before any other
+                   options (takes up the first slot on the first page, not
+                   counted in index)
         @param size
-                   number of items after filtering (not including the null item,
-                   if any)
+                   number of items after filtering (not including the null
+                   item, if any)
         @param first
                    index in the filtered view of the first item of the page
         @return index in the filtered view of the last item on the page
         """
         # page length usable for non-null items
-        effectivePageLength = self.pageLength - (1 if needNullSelectOption and self._currentPage == 0 else 0)
+        if needNullSelectOption and self._currentPage == 0:
+            effectivePageLength = self.pageLength - 1
+        else:
+            effectivePageLength = self.pageLength
+
         return min(size - 1, (first + effectivePageLength) - 1)
 
 
-    def adjustCurrentPage(self, page, needNullSelectOption, indexToEnsureInView, size):
-        """Adjusts the index of the current page if necessary: make sure the current
-        page is not after the end of the contents, and optionally go to the page
-        containg a specific item. There are no side effects but the adjusted page
-        index is returned.
+    def adjustCurrentPage(self, page, needNullSelectOption,
+                indexToEnsureInView, size):
+        """Adjusts the index of the current page if necessary: make sure the
+        current page is not after the end of the contents, and optionally go
+        to the page containg a specific item. There are no side effects but
+        the adjusted page index is returned.
 
         @param page
                    page number to use as the starting point
         @param needNullSelectOption
-                   true if a null option should be shown before any other options
-                   (takes up the first slot on the first page, not counted in
-                   index)
+                   true if a null option should be shown before any other
+                   options (takes up the first slot on the first page, not
+                   counted in index)
         @param indexToEnsureInView
-                   index of an item that should be included on the page (in the
-                   data set, not counting the null item if any), -1 for none
+                   index of an item that should be included on the page (in
+                   the data set, not counting the null item if any), -1 for
+                   none
         @param size
-                   number of items after filtering (not including the null item,
-                   if any)
+                   number of items after filtering (not including the null
+                   item, if any)
         """
         if indexToEnsureInView != -1:
-            newPage = (indexToEnsureInView + (1 if needNullSelectOption else 0)) / self.pageLength
+            if needNullSelectOption:
+                newPage = (indexToEnsureInView + 1) / self.pageLength
+            else:
+                newPage = indexToEnsureInView / self.pageLength
+
             page = newPage
 
         # adjust the current page if beyond the end of the list
         if page * self.pageLength > size:
-            page = (size + (1 if needNullSelectOption else 0)) / self.pageLength
+            if needNullSelectOption:
+                page = (size + 1) / self.pageLength
+            else:
+                page = size / self.pageLength
 
         return page
 
@@ -476,13 +489,13 @@ class Select(AbstractSelect, AbstractSelect, IFiltering,
         """Filters the options in memory and returns the full filtered list.
 
         This can be less efficient than using container filters, so use
-        {@link #getOptionsWithFilter(boolean)} if possible (filterable container
-        and suitable item caption mode etc.).
+        {@link #getOptionsWithFilter(boolean)} if possible (filterable
+        container and suitable item caption mode etc.).
 
         @return
         """
-        if None is self._filterstring or '' == self._filterstring \
-                or self.FILTERINGMODE_OFF == self._filteringMode:
+        if (self._filterstring is None or '' == self._filterstring
+                or self.FILTERINGMODE_OFF == self._filteringMode):
             self._prevfilterstring = None
             self._filteredOptions = list(self.getItemIds())
             return self._filteredOptions
@@ -490,8 +503,8 @@ class Select(AbstractSelect, AbstractSelect, IFiltering,
         if self._filterstring == self._prevfilterstring:
             return self._filteredOptions
 
-        if self._prevfilterstring is not None \
-                and self._filterstring.startswith(self._prevfilterstring):
+        if (self._prevfilterstring is not None
+                and self._filterstring.startswith(self._prevfilterstring)):
             items = self._filteredOptions
         else:
             items = self.getItemIds()
@@ -500,7 +513,7 @@ class Select(AbstractSelect, AbstractSelect, IFiltering,
         self._filteredOptions = list()
         for itemId in items:
             caption = self.getItemCaption(itemId)
-            if (caption is None or caption == ''):
+            if caption is None or caption == '':
                 continue
             else:
                 caption = caption.lower()
@@ -521,8 +534,7 @@ class Select(AbstractSelect, AbstractSelect, IFiltering,
     def changeVariables(self, source, variables):
         """Invoked when the value of a variable has changed.
 
-        @see com.vaadin.ui.AbstractComponent#changeVariables(java.lang.Object,
-             java.util.Map)
+        @see AbstractComponent#changeVariables()
         """
         # Not calling super.changeVariables due the history of select
         # component hierarchy
@@ -541,7 +553,7 @@ class Select(AbstractSelect, AbstractSelect, IFiltering,
                 for i in range(len(ka)):
                     idd = self.itemIdMapper.get(ka[i])
                     if idd is not None and self.containsId(idd):
-                        s.add(idd)
+                        s.append(idd)
 
                 # Limits the deselection to the set of visible items
                 # (non-visible items can not be deselected)
@@ -616,18 +628,21 @@ class Select(AbstractSelect, AbstractSelect, IFiltering,
 
 
     def setColumns(self, columns):
-        """Note, one should use more generic setWidth(String) method instead of
-        this. This now days actually converts columns to width with em css unit.
+        """Note, one should use more generic setWidth(String) method instead
+        of this. This now days actually converts columns to width with em css
+        unit.
 
-        Sets the number of columns in the editor. If the number of columns is set
-        0, the actual number of displayed columns is determined implicitly by the
-        adapter.
+        Sets the number of columns in the editor. If the number of columns is
+        set 0, the actual number of displayed columns is determined implicitly
+        by the adapter.
 
         @deprecated
 
         @param columns
                    the number of columns to set.
         """
+        raise DeprecationWarning
+
         if columns < 0:
             columns = 0
         if self._columns != columns:
@@ -640,21 +655,26 @@ class Select(AbstractSelect, AbstractSelect, IFiltering,
         """@deprecated see setter function
         @return
         """
+        raise DeprecationWarning, 'see setter function'
         return self._columns
 
 
     def addListener(self, listener):
         if isinstance(listener, IBlurListener):
-            self.addListener(BlurEvent.EVENT_ID, BlurEvent, listener, IBlurListener.blurMethod)
+            AbstractComponent.addListener(self, BlurEvent.EVENT_ID,
+                    BlurEvent, listener, IBlurListener.blurMethod)
         else:
-            self.addListener(FocusEvent.EVENT_ID, FocusEvent, listener, IFocusListener.focusMethod)
+            AbstractComponent.addListener(self, FocusEvent.EVENT_ID,
+                    FocusEvent, listener, IFocusListener.focusMethod)
 
 
     def removeListener(self, listener):
         if isinstance(listener, IBlurListener):
-            self.removeListener(BlurEvent.EVENT_ID, BlurEvent, listener)
+            AbstractComponent.removeListener(self, BlurEvent.EVENT_ID,
+                    BlurEvent, listener)
         else:
-            self.removeListener(FocusEvent.EVENT_ID, FocusEvent, listener)
+            AbstractComponent.removeListener(self, FocusEvent.EVENT_ID,
+                    FocusEvent, listener)
 
 
     def setMultiSelect(self, multiSelect):
@@ -675,23 +695,23 @@ class Select(AbstractSelect, AbstractSelect, IFiltering,
 
 
     def setScrollToSelectedItem(self, scrollToSelectedItem):
-        """Sets whether to scroll the selected item visible (directly open the page
-        on which it is) when opening the combo box popup or not. Only applies to
-        single select mode.
+        """Sets whether to scroll the selected item visible (directly open
+        the page on which it is) when opening the combo box popup or not.
+        Only applies to single select mode.
 
-        This requires finding the index of the item, which can be expensive in
-        many large lazy loading containers.
+        This requires finding the index of the item, which can be expensive
+        in many large lazy loading containers.
 
         @param scrollToSelectedItem
-                   true to find the page with the selected item when opening the
-                   selection popup
+                   true to find the page with the selected item when opening
+                   the selection popup
         """
         self._scrollToSelectedItem = scrollToSelectedItem
 
 
     def isScrollToSelectedItem(self):
-        """Returns true if the select should find the page with the selected item
-        when opening the popup (single select combo box only).
+        """Returns true if the select should find the page with the selected
+        item when opening the popup (single select combo box only).
 
         @see #setScrollToSelectedItem(boolean)
 

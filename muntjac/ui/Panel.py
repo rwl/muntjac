@@ -16,12 +16,11 @@
 
 from muntjac.terminal.IScrollable import IScrollable
 from muntjac.event.ActionManager import ActionManager
-from muntjac.event.Action import Action, INotifier
-from muntjac.ui.AbstractComponentContainer import AbstractComponentContainer
+from muntjac.event import Action
 from muntjac.ui.VerticalLayout import VerticalLayout
+from muntjac.ui.AbstractComponentContainer import AbstractComponentContainer
 
-from muntjac.ui.IComponentContainer import \
-    IComponentContainer, IComponentAttachListener, IComponentDetachListener
+from muntjac.ui import IComponentContainer
 
 from muntjac.ui.IComponent import IFocusable
 from muntjac.ui.ILayout import ILayout
@@ -29,11 +28,13 @@ from muntjac.event.MouseEvents import ClickEvent, IClickListener
 
 from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
 from muntjac.terminal.gwt.client.ui.VPanel import VPanel
+from muntjac.ui.AbstractComponent import AbstractComponent
 
 
-class Panel(AbstractComponentContainer, IScrollable, IComponentContainer,
-            IComponentAttachListener, IComponentContainer,
-            IComponentDetachListener, Action, INotifier, IFocusable):
+class Panel(AbstractComponentContainer, IScrollable,
+            IComponentContainer.IComponentAttachListener,
+            IComponentContainer.IComponentDetachListener,
+            Action.INotifier, IFocusable):
     """Panel - a simple single component container.
 
     @author IT Mill Ltd.
@@ -42,8 +43,7 @@ class Panel(AbstractComponentContainer, IScrollable, IComponentContainer,
     @since 3.0
     """
 
-#    CLIENT_WIDGET = VPanel
-#    LOAD_STYLE = LoadStyle.EAGER
+    #CLIENT_WIDGET = ClientWidget(VPanel, LoadStyle.EAGER)
 
     _CLICK_EVENT = VPanel.CLICK_EVENT_IDENTIFIER
 
@@ -60,8 +60,8 @@ class Panel(AbstractComponentContainer, IScrollable, IComponentContainer,
     def __init__(self, *args):
         """Creates a new empty panel. A VerticalLayout is used as content.
         ---
-        Creates a new empty panel which contains the given content. The content
-        cannot be null.
+        Creates a new empty panel which contains the given content. The
+        content cannot be null.
 
         @param content
                    the content for the panel.
@@ -90,13 +90,13 @@ class Panel(AbstractComponentContainer, IScrollable, IComponentContainer,
         # Scrolling mode.
         self._scrollable = False
 
-        # Keeps track of the Actions added to this component, and manages the
-        # painting and handling as well.
+        # Keeps track of the Actions added to this component, and manages
+        # the painting and handling as well.
         self.actionManager = None
 
-        # By default the Panel is not in the normal document focus flow and can
-        # only be focused by using the focus()-method. Change this to 0 if you want
-        # to have the Panel in the normal focus flow.
+        # By default the Panel is not in the normal document focus flow and
+        # can only be focused by using the focus()-method. Change this to 0
+        # if you want to have the Panel in the normal focus flow.
         self._tabIndex = -1
 
         nargs = len(args)
@@ -125,18 +125,21 @@ class Panel(AbstractComponentContainer, IScrollable, IComponentContainer,
         @deprecated A Panel can now contain a IComponentContainer which is not
                     necessarily a ILayout. Use {@link #getContent()} instead.
         """
+        raise DeprecationWarning, 'Use getContent() instead'
+
         if isinstance(self._content, ILayout):
             return self._content
         elif self._content is None:
             return None
-        raise ValueError, 'Panel does not contain a ILayout. Use getContent() instead of getLayout().'
+        raise ValueError, ('Panel does not contain a ILayout. '
+                'Use getContent() instead of getLayout().')
 
 
     def setLayout(self, newLayout):
         """Sets the layout of the panel.
 
-        If given layout is null, a VerticalLayout with margins set is used as a
-        default.
+        If given layout is null, a VerticalLayout with margins set is used
+        as a default.
 
         Components from old layout are not moved to new layout by default
         (changed in 5.2.2). Use function in ILayout interface manually.
@@ -159,23 +162,20 @@ class Panel(AbstractComponentContainer, IScrollable, IComponentContainer,
 
 
     def setContent(self, newContent):
-        """Set the content of the Panel. If null is given as the new content then a
-        layout is automatically created and set as the content.
+        """Set the content of the Panel. If null is given as the new content
+        then a layout is automatically created and set as the content.
 
-        @param content
-                   The new content
+        @param content: The new content
         """
         # If the content is null we create the default content
         if newContent is None:
             newContent = self.createDefaultContent()
 
-        # if (newContent == null) {
-        # throw new IllegalArgumentException("Content cannot be null");
-        # }
+        # if newContent is None:
+        #     raise ValueError, "Content cannot be null"
 
         if newContent == self._content:
-            # don't set the same content twice
-            return
+            return  # don't set the same content twice
 
         # detach old content if present
         if self._content is not None:
@@ -197,8 +197,8 @@ class Panel(AbstractComponentContainer, IScrollable, IComponentContainer,
 
 
     def createDefaultContent(self):
-        """Create a IComponentContainer which is added by default to the Panel if
-        user does not specify any content.
+        """Create a IComponentContainer which is added by default to
+        the Panel if user does not specify any content.
 
         @return
         """
@@ -231,30 +231,28 @@ class Panel(AbstractComponentContainer, IScrollable, IComponentContainer,
     def addComponent(self, c):
         """Adds the component into this container.
 
-        @param c
-                   the component to be added.
-        @see com.vaadin.ui.AbstractComponentContainer#addComponent(com.vaadin.ui.Component)
+        @param c: the component to be added.
+        @see AbstractComponentContainer#addComponent()
         """
         self._content.addComponent(c)
-        # No repaint request is made as we except the underlying container to
-        # request repaints
+        # No repaint request is made as we except the underlying
+        # container to request repaints
 
 
     def removeComponent(self, c):
         """Removes the component from this container.
 
-        @param c
-                   The component to be removed.
-        @see com.vaadin.ui.AbstractComponentContainer#removeComponent(com.vaadin.ui.Component)
+        @param c: The component to be removed.
+        @see AbstractComponentContainer.removeComponent()
         """
         self._content.removeComponent(c)
-        # No repaint request is made as we except the underlying container to
-        # request repaints
+        # No repaint request is made as we except the underlying
+        # container to request repaints
 
 
     def getComponentIterator(self):
-        """Gets the component container iterator for going through all the
-        components in the container.
+        """Gets the component container iterator for going through
+        all the components in the container.
 
         @return the Iterator of the components inside the container.
         @see com.vaadin.ui.IComponentContainer#getComponentIterator()
@@ -263,8 +261,8 @@ class Panel(AbstractComponentContainer, IScrollable, IComponentContainer,
 
 
     def changeVariables(self, source, variables):
-        """Called when one or more variables handled by the implementing class are
-        changed.
+        """Called when one or more variables handled by the implementing
+        class are changed.
 
         @see com.vaadin.terminal.VariableOwner#changeVariables(Object, Map)
         """
@@ -274,25 +272,25 @@ class Panel(AbstractComponentContainer, IScrollable, IComponentContainer,
             self.fireClick(variables[self._CLICK_EVENT])
 
         # Get new size
-        newWidth = variables['width']
-        newHeight = variables['height']
+        newWidth = variables.get('width')
+        newHeight = variables.get('height')
 
-        if newWidth is not None and newWidth.intValue() != self.getWidth():
-            self.setWidth(newWidth.intValue(), self.UNITS_PIXELS)
+        if newWidth is not None and int(newWidth) != self.getWidth():
+            self.setWidth(int(newWidth), self.UNITS_PIXELS)
 
-        if newHeight is not None and newHeight.intValue() != self.getHeight():
-            self.setHeight(newHeight.intValue(), self.UNITS_PIXELS)
+        if newHeight is not None and int(newHeight) != self.getHeight():
+            self.setHeight(int(newHeight), self.UNITS_PIXELS)
 
         # Scrolling
-        newScrollX = variables['scrollLeft']
-        newScrollY = variables['scrollTop']
-        if newScrollX is not None and newScrollX.intValue() != self.getScrollLeft():
+        newScrollX = variables.get('scrollLeft')
+        newScrollY = variables.get('scrollTop')
+        if newScrollX is not None and int(newScrollX) != self.getScrollLeft():
             # set internally, not to fire request repaint
-            self._scrollOffsetX = newScrollX.intValue()
+            self._scrollOffsetX = int(newScrollX)
 
-        if newScrollY is not None and newScrollY.intValue() != self.getScrollTop():
+        if newScrollY is not None and int(newScrollY) != self.getScrollTop():
             # set internally, not to fire request repaint
-            self._scrollOffsetY = newScrollY.intValue()
+            self._scrollOffsetY = int(newScrollY)
 
         # Actions
         if self.actionManager is not None:
@@ -300,12 +298,12 @@ class Panel(AbstractComponentContainer, IScrollable, IComponentContainer,
 
 
     def getScrollLeft(self):
-        # Scrolling functionality
         return self._scrollOffsetX
 
 
     def getScrollOffsetX(self):
         """@deprecated use {@link #getScrollLeft()} instead"""
+        raise DeprecationWarning, 'use getScrollLeft() instead'
         return self.getScrollLeft()
 
 
@@ -315,6 +313,7 @@ class Panel(AbstractComponentContainer, IScrollable, IComponentContainer,
 
     def getScrollOffsetY(self):
         """@deprecated use {@link #getScrollTop()} instead"""
+        raise DeprecationWarning, 'use getScrollTop() instead'
         return self.getScrollTop()
 
 
@@ -339,7 +338,7 @@ class Panel(AbstractComponentContainer, IScrollable, IComponentContainer,
 
     def setScrollOffsetX(self, pixels):
         """@deprecated use setScrollLeft() method instead"""
-        raise DeprecationWarning
+        raise DeprecationWarning, 'use setScrollLeft() method instead'
         self.setScrollLeft(pixels)
 
 
@@ -353,6 +352,7 @@ class Panel(AbstractComponentContainer, IScrollable, IComponentContainer,
 
     def setScrollOffsetY(self, pixels):
         """@deprecated use setScrollTop() method instead"""
+        raise DeprecationWarning, 'use setScrollTop() method instead'
         self.setScrollTop(pixels)
 
 
@@ -363,7 +363,7 @@ class Panel(AbstractComponentContainer, IScrollable, IComponentContainer,
     def componentAttachedToContainer(self, event):
         """A new component is attached to container.
 
-        @see com.vaadin.ui.IComponentContainer.IComponentAttachListener#componentAttachedToContainer(com.vaadin.ui.IComponentContainer.ComponentAttachEvent)
+        @see IComponentAttachListener.componentAttachedToContainer()
         """
         if event.getContainer() == self._content:
             self.fireComponentAttachEvent(event.getAttachedComponent())
@@ -372,7 +372,7 @@ class Panel(AbstractComponentContainer, IScrollable, IComponentContainer,
     def componentDetachedFromContainer(self, event):
         """A component has been detached from container.
 
-        @see com.vaadin.ui.IComponentContainer.IComponentDetachListener#componentDetachedFromContainer(com.vaadin.ui.IComponentContainer.ComponentDetachEvent)
+        @see IComponentDetachListener.componentDetachedFromContainer()
         """
         if event.getContainer() == self._content:
             self.fireComponentDetachEvent(event.getDetachedComponent())
@@ -438,37 +438,39 @@ class Panel(AbstractComponentContainer, IScrollable, IComponentContainer,
 
 
     def addListener(self, listener):
-        """Add a click listener to the Panel. The listener is called whenever the
-        user clicks inside the Panel. Also when the click targets a component
-        inside the Panel, provided the targeted component does not prevent the
-        click event from propagating.
+        """Add a click listener to the Panel. The listener is called whenever
+        the user clicks inside the Panel. Also when the click targets a
+        component inside the Panel, provided the targeted component does not
+        prevent the click event from propagating.
 
         Use {@link #removeListener(ClickListener)} to remove the listener.
 
         @param listener
                    The listener to add
         """
-        self.addListener(self._CLICK_EVENT, ClickEvent, listener,
-                         IClickListener.clickMethod)
+        AbstractComponent.addListener(self, self._CLICK_EVENT, ClickEvent,
+                listener, IClickListener.clickMethod)
 
 
     def removeListener(self, listener):
-        """Remove a click listener from the Panel. The listener should earlier have
-        been added using {@link #addListener(ClickListener)}.
+        """Remove a click listener from the Panel. The listener should earlier
+        have been added using {@link #addListener(ClickListener)}.
 
         @param listener
                    The listener to remove
         """
-        self.removeListener(self._CLICK_EVENT, ClickEvent, listener)
+        AbstractComponent.removeListener(self, self._CLICK_EVENT, ClickEvent,
+                listener)
 
 
     def fireClick(self, parameters):
         """Fire a click event to all click listeners.
 
         @param object
-                   The raw "value" of the variable change from the client side.
+                   The raw "value" of the variable change from the client side
         """
-        mouseDetails = MouseEventDetails.deSerialize(parameters.get('mouseDetails'))
+        mouseDetails = MouseEventDetails.deSerialize(
+                parameters.get('mouseDetails'))
         self.fireEvent( ClickEvent(self, mouseDetails) )
 
 

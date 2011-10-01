@@ -16,9 +16,7 @@
 
 from muntjac.ui.AbstractComponentContainer import AbstractComponentContainer
 from muntjac.ui.IComponent import Event as ComponentEvent
-
-#from muntjac.terminal.gwt.client.ui.VPopupView import VPopupView
-#from muntjac.ui.ClientWidget import LoadStyle
+from muntjac.ui.AbstractComponent import AbstractComponent
 
 
 class IPopupVisibilityListener(object):
@@ -27,11 +25,10 @@ class IPopupVisibilityListener(object):
     """
 
     def popupVisibilityChange(self, event):
-        """Pass to {@link PopupView#PopupVisibilityEvent} to start listening for
-        popup visibility changes.
+        """Pass to {@link PopupView#PopupVisibilityEvent} to start listening
+        for popup visibility changes.
 
-        @param event
-                   the event
+        @param event: the event
 
         @see {@link PopupVisibilityEvent}
         @see {@link PopupView#addListener(IPopupVisibilityListener)}
@@ -49,11 +46,15 @@ class SingleComponentIterator(object):
         self._first = component is None
 
 
+    def __iter__(self):
+        return self
+
+
     def hasNext(self):
         return not self._first
 
 
-    def __iter__(self):
+    def next(self):  #@PydevCodeAnalysisIgnore
         if not self._first:
             self._first = True
             return self._component
@@ -66,41 +67,41 @@ class SingleComponentIterator(object):
 
 
 class PopupView(AbstractComponentContainer):
-    """A component for displaying a two different views to data. The minimized view
-    is normally used to render the component, and when it is clicked the full
-    view is displayed on a popup. The inner class {@link PopupView.IContent} is
+    """A component for displaying a two different views to data. The minimized
+    view is normally used to render the component, and when it is clicked the
+    full view is displayed on a popup. The class {@link PopupView.IContent} is
     used to deliver contents to this component.
 
     @author IT Mill Ltd.
     @author Richard Lincoln
     """
 
-#    CLIENT_WIDGET = VPopupView
-#    LOAD_STYLE = LoadStyle.EAGER
+    #CLIENT_WIDGET = ClientWidget(VPopupView, LoadStyle.EAGER)
 
-    _POPUP_VISIBILITY_METHOD = getattr(IPopupVisibilityListener, 'popupVisibilityChange')
+    _POPUP_VISIBILITY_METHOD = getattr(IPopupVisibilityListener,
+            'popupVisibilityChange')
 
     def __init__(self, *args):
-        """A simple way to create a PopupPanel. Note that the minimal representation
-        may not be dynamically updated, in order to achieve this create your own
-        IContent object and use {@link PopupView#PopupView(IContent)}.
+        """A simple way to create a PopupPanel. Note that the minimal
+        representation may not be dynamically updated, in order to achieve
+        this create your own IContent object and use
+        {@link PopupView#PopupView(IContent)}.
 
-        @param small
-                   the minimal textual representation as HTML
-        @param large
-                   the full, Component-type representation
+        @param small: the minimal textual representation as HTML
+        @param large: the full, Component-type representation
         ---
-        Creates a PopupView through the PopupView.IContent interface. This allows
-        the creator to dynamically change the contents of the PopupView.
+        Creates a PopupView through the PopupView.IContent interface.
+        This allows the creator to dynamically change the contents of
+        the PopupView.
 
         @param content
-                   the PopupView.IContent that contains the information for this
+                   the PopupView.IContent that contains the information
+                   for this
         """
         self._content = None
         self._hideOnMouseOut = None
         self._visibleComponent = None
 
-        args = args
         nargs = len(args)
         if nargs == 1:
             content, = args
@@ -110,34 +111,40 @@ class PopupView(AbstractComponentContainer):
         elif nargs == 2:
             small, large = args
 
-            class InnerContent(PopupView.Content):  # FIXME: inner class
+            class InnerContent(IContent):
+
+                def __init__(self, small, large):
+                    self._small = small
+                    self._large = large
 
                 def getMinimizedValueAsHTML(self):
-                    return small
+                    return self._small
 
                 def getPopupComponent(self):
-                    return large
+                    return self._large
 
-            c = InnerContent()
+            c = InnerContent(small, large)
             self.__init__(c)
         else:
             raise ValueError, 'invalid number of arguments'
 
 
     def setContent(self, newContent):
-        """This method will replace the current content of the panel with a new one.
+        """This method will replace the current content of the panel with
+        a new one.
 
         @param newContent
-                   PopupView.IContent object containing new information for the
-                   PopupView
+                   PopupView.IContent object containing new information
+                   for the PopupView
         @throws IllegalArgumentException
-                    if the method is passed a null value, or if one of the
-                    content methods returns null
+                    if the method is passed a null value, or if one of
+                    the content methods returns null
         """
         if newContent is None:
-            raise self.IllegalArgumentException('IContent must not be null')
+            raise ValueError, 'IContent must not be null'
         self._content = newContent
         self.requestRepaint()
+
 
     def getContent(self):
         """Returns the content-package for this PopupView.
@@ -146,13 +153,17 @@ class PopupView(AbstractComponentContainer):
         """
         return self._content
 
+
     def setPopupVisibility(self, visible):
         """@deprecated Use {@link #setPopupVisible()} instead."""
+        raise DeprecationWarning, 'use setPopupVisible() instead'
         self.setPopupVisible(visible)
 
     def getPopupVisibility(self):
         """@deprecated Use {@link #isPopupVisible()} instead."""
+        raise DeprecationWarning, 'use isPopupVisible() instead'
         return self.isPopupVisible()
+
 
     def setPopupVisible(self, visible):
         """Set the visibility of the popup. Does not hide the minimal
@@ -164,7 +175,8 @@ class PopupView(AbstractComponentContainer):
             if visible:
                 self._visibleComponent = self._content.getPopupComponent()
                 if self._visibleComponent is None:
-                    raise ValueError, 'PopupView.IContent did not return Component to set visible'
+                    raise ValueError, ('PopupView.IContent did not return '
+                            'Component to set visible')
                 super(PopupView, self).addComponent(self._visibleComponent)
             else:
                 super(PopupView, self).removeComponent(self._visibleComponent)
@@ -182,8 +194,8 @@ class PopupView(AbstractComponentContainer):
 
 
     def isHideOnMouseOut(self):
-        """Check if this popup will be hidden when the user takes the mouse cursor
-        out of the popup area.
+        """Check if this popup will be hidden when the user takes the mouse
+        cursor out of the popup area.
 
         @return true if the popup is hidden on mouse out, false otherwise
         """
@@ -193,9 +205,9 @@ class PopupView(AbstractComponentContainer):
     # (but mandatory). Most of them are not supported in this implementation.
 
     def setHideOnMouseOut(self, hideOnMouseOut):
-        """Should the popup automatically hide when the user takes the mouse cursor
-        out of the popup area? If this is false, the user must click outside the
-        popup to close it. The default is true.
+        """Should the popup automatically hide when the user takes the mouse
+        cursor out of the popup area? If this is false, the user must click
+        outside the popup to close it. The default is true.
 
         @param hideOnMouseOut
         """
@@ -203,7 +215,8 @@ class PopupView(AbstractComponentContainer):
 
 
     def getComponentIterator(self):
-        """This class only contains other components when the popup is showing.
+        """This class only contains other components when the popup is
+        showing.
 
         @see com.vaadin.ui.ComponentContainer#getComponentIterator()
         """
@@ -211,8 +224,8 @@ class PopupView(AbstractComponentContainer):
 
 
     def getComponentCount(self):
-        """Gets the number of contained components. Consistent with the iterator
-        returned by {@link #getComponentIterator()}.
+        """Gets the number of contained components. Consistent with the
+        iterator returned by {@link #getComponentIterator()}.
 
         @return the number of contained components (zero or one)
         """
@@ -231,7 +244,7 @@ class PopupView(AbstractComponentContainer):
     def moveComponentsFrom(self, source):
         """Not supported in this implementation.
 
-        @see com.vaadin.ui.AbstractComponentContainer#moveComponentsFrom(com.vaadin.ui.ComponentContainer)
+        @see AbstractComponentContainer.moveComponentsFrom()
         @throws UnsupportedOperationException
         """
         raise NotImplementedError
@@ -240,7 +253,7 @@ class PopupView(AbstractComponentContainer):
     def addComponent(self, c):
         """Not supported in this implementation.
 
-        @see com.vaadin.ui.AbstractComponentContainer#addComponent(com.vaadin.ui.Component)
+        @see AbstractComponentContainer.addComponent()
         @throws UnsupportedOperationException
         """
         raise NotImplementedError
@@ -249,8 +262,7 @@ class PopupView(AbstractComponentContainer):
     def replaceComponent(self, oldComponent, newComponent):
         """Not supported in this implementation.
 
-        @see com.vaadin.ui.ComponentContainer#replaceComponent(com.vaadin.ui.Component,
-             com.vaadin.ui.Component)
+        @see ComponentContainer.replaceComponent()
         @throws UnsupportedOperationException
         """
         raise NotImplementedError
@@ -259,7 +271,7 @@ class PopupView(AbstractComponentContainer):
     def removeComponent(self, c):
         """Not supported in this implementation
 
-        @see com.vaadin.ui.AbstractComponentContainer#removeComponent(com.vaadin.ui.Component)
+        @see AbstractComponentContainer.removeComponent()
         """
         raise NotImplementedError
 
@@ -268,7 +280,7 @@ class PopupView(AbstractComponentContainer):
     def paintContent(self, target):
         """Paint (serialize) the component for the client.
 
-        @see com.vaadin.ui.AbstractComponent#paintContent(com.vaadin.terminal.PaintTarget)
+        @see AbstractComponent.paintContent()
         """
         # Superclass writes any common attributes in the paint target.
         super(PopupView, self).paintContent(target)
@@ -292,36 +304,35 @@ class PopupView(AbstractComponentContainer):
     def changeVariables(self, source, variables):
         """Deserialize changes received from client.
 
-        @see com.vaadin.ui.AbstractComponent#changeVariables(java.lang.Object,
-             java.util.Map)
+        @see AbstractComponent.changeVariables()
         """
         if 'popupVisibility' in variables:
-            self.setPopupVisible(variables['popupVisibility'].booleanValue())
+            self.setPopupVisible( bool(variables.get('popupVisibility')) )
 
 
     def addListener(self, listener):
-        """Add a listener that is called whenever the visibility of the popup is
-        changed.
+        """Add a listener that is called whenever the visibility of the popup
+        is changed.
 
-        @param listener
-                   the listener to add
+        @param listener: the listener to add
         @see IPopupVisibilityListener
         @see PopupVisibilityEvent
         @see #removeListener(IPopupVisibilityListener)
         """
-        self.addListener(PopupVisibilityEvent, listener, self._POPUP_VISIBILITY_METHOD)
+        AbstractComponent.addListener(self, PopupVisibilityEvent, listener,
+                self._POPUP_VISIBILITY_METHOD)
 
 
     def removeListener(self, listener):
-        """Removes a previously added listener, so that it no longer receives events
-        when the visibility of the popup changes.
+        """Removes a previously added listener, so that it no longer receives
+        events when the visibility of the popup changes.
 
-        @param listener
-                   the listener to remove
+        @param listener: the listener to remove
         @see IPopupVisibilityListener
         @see #addListener(IPopupVisibilityListener)
         """
-        self.removeListener(PopupVisibilityEvent, listener, self._POPUP_VISIBILITY_METHOD)
+        AbstractComponent.removeListener(self, PopupVisibilityEvent, listener,
+                self._POPUP_VISIBILITY_METHOD)
 
 
 class PopupVisibilityEvent(ComponentEvent):
@@ -352,9 +363,9 @@ class PopupVisibilityEvent(ComponentEvent):
 
 
 class IContent(object):
-    """Used to deliver customized content-packages to the PopupView. These are
-    dynamically loaded when they are redrawn. The user must take care that
-    neither of these methods ever return null.
+    """Used to deliver customized content-packages to the PopupView. These
+    are dynamically loaded when they are redrawn. The user must take care
+    that neither of these methods ever return null.
     """
 
     def getMinimizedValueAsHTML(self):

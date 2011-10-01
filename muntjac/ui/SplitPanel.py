@@ -16,9 +16,6 @@
 
 from muntjac.ui.AbstractSplitPanel import AbstractSplitPanel
 
-#from muntjac.terminal.gwt.client.ui.VSplitPanelHorizontal import VSplitPanelHorizontal
-#from muntjac.ui.ClientWidget import LoadStyle
-
 
 class SplitPanel(AbstractSplitPanel):
     """SplitPanel.
@@ -34,8 +31,7 @@ class SplitPanel(AbstractSplitPanel):
                 {@link VerticalSplitPanel} instead.
     """
 
-#    CLIENT_WIDGET = VSplitPanelHorizontal
-#    LOAD_STYLE = LoadStyle.EAGER
+    #CLIENT_WIDGET = ClientWidget(VSplitPanelHorizontal, LoadStyle.EAGER)
 
     # Components are to be laid out vertically.
     ORIENTATION_VERTICAL = 0
@@ -91,8 +87,8 @@ class SplitPanel(AbstractSplitPanel):
                    the New value of property orientation.
         """
         # Checks the validity of the argument
-        if orientation < self.ORIENTATION_VERTICAL \
-                or orientation > self.ORIENTATION_HORIZONTAL:
+        if (orientation < self.ORIENTATION_VERTICAL
+                or orientation > self.ORIENTATION_HORIZONTAL):
             raise ValueError
 
         self._orientation = orientation

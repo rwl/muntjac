@@ -17,17 +17,13 @@
 from muntjac.ui.AbstractTextField import AbstractTextField
 from muntjac.data.Property import Property
 
-#from muntjac.terminal.gwt.client.ui.VPasswordField import VPasswordField
-#from muntjac.ui.ClientWidget import LoadStyle
-
 
 class PasswordField(AbstractTextField):
-    """A field that is used to enter secret text information like passwords. The
-    entered text is not displayed on the screen.
+    """A field that is used to enter secret text information like passwords.
+    The entered text is not displayed on the screen.
     """
 
-#    CLIENT_WIDGET = VPasswordField
-#    LOAD_STYLE = LoadStyle.EAGER
+    #CLIENT_WIDGET = ClientWidget(VPasswordField, LoadStyle.EAGER)
 
     def __init__(self, *args):
         """Constructs an empty PasswordField.
@@ -37,7 +33,8 @@ class PasswordField(AbstractTextField):
         @param dataSource
                    the property data source for the field
         ---
-        Constructs a PasswordField with given caption and property data source.
+        Constructs a PasswordField with given caption and property data
+        source.
 
         @param caption
                    the caption for the field

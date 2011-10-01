@@ -19,10 +19,8 @@ from muntjac.data.Property import Property
 
 
 class PopupDateField(DateField):
-    """<p>
-    A date entry component, which displays the actual date selector as a popup.
-
-    </p>
+    """A date entry component, which displays the actual date selector
+    as a popup.
 
     @see DateField
     @see InlineDateField
@@ -72,8 +70,8 @@ class PopupDateField(DateField):
 
 
     def setInputPrompt(self, inputPrompt):
-        """Sets the input prompt - a textual prompt that is displayed when the field
-        would otherwise be empty, to prompt the user for input.
+        """Sets the input prompt - a textual prompt that is displayed when
+        the field would otherwise be empty, to prompt the user for input.
 
         @param inputPrompt
         """

@@ -16,51 +16,15 @@
 
 from muntjac.ui.AbstractField import AbstractField
 
-#from muntjac.terminal.gwt.client.ui.VSlider import VSlider
-#from muntjac.ui.ClientWidget import LoadStyle
-
 
 class Slider(AbstractField):
     """A component for selecting a numerical value within a range.
-
-    Example code: <code>
-    	class MyPlayer extends CustomComponent implements ValueChangeListener {
-
-    		Label volumeIndicator = new Label();
-    		Slider slider;
-
-    		public MyPlayer() {
-    			VerticalLayout vl = new VerticalLayout();
-    			setCompositionRoot(vl);
-    			slider = new Slider("Volume", 0, 100);
-    			slider.setImmediate(true);
-                         slider.setValue(new Double(50));
-    			vl.addComponent(slider);
-    			vl.addComponent(volumeIndicator);
-    			volumeIndicator.setValue("Current volume:" + 50.0);
-    			slider.addListener(this);
-
-    		}
-
-    		public void setVolume(double d) {
-    			volumeIndicator.setValue("Current volume: " + d);
-    		}
-
-    		public void valueChange(ValueChangeEvent event) {
-    			Double d = (Double) event.getProperty().getValue();
-    			setVolume(d.doubleValue());
-    		}
-    	}
-
-    </code>
 
     @author IT Mill Ltd.
     @author Richard Lincoln
     """
 
-#    CLIENT_WIDGET = VSlider
-#    LOAD_STYLE = LoadStyle.LAZY
-
+    #CLIENT_WIDGET = ClientWidget(VSlider, LoadStyle.LAZY)
 
     ORIENTATION_HORIZONTAL = 0
 
@@ -72,9 +36,10 @@ class Slider(AbstractField):
     # implementation dictates how different styles will look.
     STYLE_SCROLLBAR = 'scrollbar'
 
+
     def __init__(self, *args):
-        """Default Slider constructor. Sets all values to defaults and the slide
-        handle at minimum value.
+        """Default Slider constructor. Sets all values to defaults and the
+        slide handle at minimum value.
         ---
         Create a new slider with the caption given as parameter. All slider
         values set to defaults.
@@ -105,31 +70,31 @@ class Slider(AbstractField):
         # Maximum value of slider
         self._max = 100
 
-        # Resolution, how many digits are considered relevant after the decimal
-        # point. Must be a non-negative value
+        # Resolution, how many digits are considered relevant after the
+        # decimal point. Must be a non-negative value
         self._resolution = 0
 
         # Slider orientation (horizontal/vertical), defaults .
         self._orientation = self.ORIENTATION_HORIZONTAL
 
-        # Slider size in pixels. In horizontal mode, if set to -1, allow 100% width
-        # of container. In vertical mode, if set to -1, default height is
-        # determined by the client-side implementation.
+        # Slider size in pixels. In horizontal mode, if set to -1, allow
+        # 100% width of container. In vertical mode, if set to -1, default
+        # height is determined by the client-side implementation.
         #
         # @deprecated
         self._size = -1
 
-        # Handle (draggable control element) size in percents relative to base
-        # size. Must be a value between 1-99. Other values are converted to nearest
-        # bound. A negative value sets the width to auto (client-side
-        # implementation calculates).
+        # Handle (draggable control element) size in percents relative to
+        # base size. Must be a value between 1-99. Other values are converted
+        # to nearest bound. A negative value sets the width to auto
+        # (client-side implementation calculates).
         #
         # @deprecated The size is dictated by the current theme.
         self._handleSize = -1
 
-        # Show arrows that can be pressed to slide the handle in some increments
-        # (client-side implementation decides the increment, usually somewhere
-        # between 5-10% of slide range).
+        # Show arrows that can be pressed to slide the handle in some
+        # increments (client-side implementation decides the increment,
+        # usually somewhere between 5-10% of slide range).
         self._arrows = False
 
         args = args
@@ -171,11 +136,10 @@ class Slider(AbstractField):
 
 
     def setMax(self, maxx):
-        """Set the maximum value of the Slider. If the current value of the Slider
-        is out of new bounds, the value is set to new minimum.
+        """Set the maximum value of the Slider. If the current value of
+        the Slider is out of new bounds, the value is set to new minimum.
 
-        @param max
-                   New maximum value of the Slider.
+        @param max: new maximum value of the Slider
         """
         self._max = maxx
 
@@ -194,14 +158,14 @@ class Slider(AbstractField):
     def getMin(self):
         """Gets the minimum value in Sliders range.
 
-        @return the smalles value slider can have
+        @return the smallest value slider can have
         """
         return self._min
 
 
     def setMin(self, minn):
-        """Set the minimum value of the Slider. If the current value of the Slider
-        is out of new bounds, the value is set to new minimum.
+        """Set the minimum value of the Slider. If the current value of
+        the Slider is out of new bounds, the value is set to new minimum.
 
         @param min
                    New minimum value of the Slider.
@@ -260,8 +224,8 @@ class Slider(AbstractField):
         """Set the value of this Slider.
 
         @param value
-                   New value of Slider. Must be within Sliders range (min - max),
-                   otherwise throws an exception.
+                   New value of Slider. Must be within Sliders range
+                   (min - max), otherwise throws an exception.
         @param repaintIsNotNeeded
                    If true, client-side is not requested to repaint itself.
         @throws ValueOutOfBoundsException
@@ -269,15 +233,15 @@ class Slider(AbstractField):
         Set the value of this Slider.
 
         @param value
-                   New value of Slider. Must be within Sliders range (min - max),
-                   otherwise throws an exception.
+                   New value of Slider. Must be within Sliders range
+                   (min - max), otherwise throws an exception.
         @throws ValueOutOfBoundsException
         ---
         Set the value of this Slider.
 
         @param value
-                   New value of Slider. Must be within Sliders range (min - max),
-                   otherwise throws an exception.
+                   New value of Slider. Must be within Sliders range
+                   (min - max), otherwise throws an exception.
         @throws ValueOutOfBoundsException
         """
         v = value
@@ -382,8 +346,8 @@ class Slider(AbstractField):
 
 
     def changeVariables(self, source, variables):
-        """Invoked when the value of a variable has changed. Slider listeners are
-        notified if the slider value has changed.
+        """Invoked when the value of a variable has changed. Slider listeners
+        are notified if the slider value has changed.
 
         @param source
         @param variables
@@ -393,8 +357,8 @@ class Slider(AbstractField):
         if 'value' in variables:
             value = variables.get('value')
             newValue = float(str(value))
-            if newValue is not None and newValue != self.getValue() \
-                    and not (newValue == self.getValue()):
+            if (newValue is not None and newValue != self.getValue()
+                    and newValue != self.getValue()):
                 # Convert to nearest bound
                 try:
                     self.setValue(newValue, True)
@@ -419,12 +383,13 @@ class ValueOutOfBoundsException(Exception):
     """
 
     def __init__(self, valueOutOfBounds):
-        """Constructs an <code>ValueOutOfBoundsException</code> with the
-        specified detail message.
+        """Constructs an <code>ValueOutOfBoundsException</code> with
+        the specified detail message.
 
         @param valueOutOfBounds
         """
         self._value = valueOutOfBounds
+
 
     def getValue(self):
         return self._value

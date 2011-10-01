@@ -17,17 +17,13 @@
 from muntjac.data.util.ObjectProperty import ObjectProperty
 from muntjac.ui.AbstractField import AbstractField
 
-#from muntjac.terminal.gwt.client.ui.VProgressIndicator import VProgressIndicator
-#from muntjac.ui.ClientWidget import LoadStyle
-
-from muntjac.data.Property import \
-    Property, ValueChangeListener, Viewer, ValueChangeNotifier
+from muntjac.data import Property
 
 
-class ProgressIndicator(AbstractField, Property, Property, Viewer,
-                        Property, ValueChangeListener):
-    """<code>ProgressIndicator</code> is component that shows user state of a
-    process (like long computing or file upload)
+class ProgressIndicator(AbstractField, Property.Property, Property.Viewer,
+                        Property.ValueChangeListener):
+    """<code>ProgressIndicator</code> is component that shows user state of
+    a process (like long computing or file upload)
 
     <code>ProgressIndicator</code> has two mainmodes. One for indeterminate
     processes and other (default) for processes which progress can be measured
@@ -40,8 +36,7 @@ class ProgressIndicator(AbstractField, Property, Property, Viewer,
     @since 4
     """
 
-#    CLIENT_WIDGET = VProgressIndicator
-#    LOAD_STYLE = LoadStyle.EAGER
+    #CLIENT_WIDGET = ClientWidget(VProgressIndicator, LoadStyle.EAGER)
 
     # Content mode, where the label contains only plain text. The getValue()
     # result is coded to XML when painting.
@@ -58,8 +53,8 @@ class ProgressIndicator(AbstractField, Property, Property, Viewer,
 
         @param value
         ---
-        Creates a new instance of ProgressIndicator with stae read from given
-        datasource.
+        Creates a new instance of ProgressIndicator with state read from
+        given datasource.
 
         @param contentSource
         """
@@ -69,14 +64,14 @@ class ProgressIndicator(AbstractField, Property, Property, Viewer,
 
         nargs = len(args)
         if nargs == 0:
-            self.setPropertyDataSource(ObjectProperty(0.0, float))
+            self.setPropertyDataSource( ObjectProperty(0.0, float) )
         elif nargs == 1:
             if isinstance(args[0], Property):
                 contentSource, = args
                 self.setPropertyDataSource(contentSource)
             else:
                 value, = args
-                self.setPropertyDataSource(ObjectProperty(value, float))
+                self.setPropertyDataSource( ObjectProperty(value, float) )
         else:
             raise ValueError, 'too many arguments'
 
@@ -89,19 +84,19 @@ class ProgressIndicator(AbstractField, Property, Property, Viewer,
                    True to enable read-only mode, False to disable it.
         """
         if self._dataSource is None:
-            raise ValueError, 'Datasource must be set'
+            raise ValueError, 'datasource must be set'
 
         self._dataSource.setReadOnly(readOnly)
 
 
     def isReadOnly(self):
-        """Is the component read-only ? Readonly is not used in ProgressIndicator -
-        this returns allways false.
+        """Is the component read-only ? Readonly is not used in
+        ProgressIndicator - this returns allways false.
 
         @return True if the component is in read only mode.
         """
         if self._dataSource is None:
-            raise ValueError, 'Datasource must be set'
+            raise ValueError, 'datasource must be set'
 
         return self._dataSource.isReadOnly()
 
@@ -120,28 +115,27 @@ class ProgressIndicator(AbstractField, Property, Property, Viewer,
 
 
     def getValue(self):
-        """Gets the value of the ProgressIndicator. Value of the ProgressIndicator
-        is Float between 0 and 1.
+        """Gets the value of the ProgressIndicator. Value of the
+        ProgressIndicator is a float between 0 and 1.
 
         @return the Value of the ProgressIndicator.
         @see com.vaadin.ui.AbstractField#getValue()
         """
         if self._dataSource is None:
-            raise ValueError, 'Datasource must be set'
+            raise ValueError, 'datasource must be set'
 
         return self._dataSource.getValue()
 
 
     def setValue(self, newValue):
-        """Sets the value of the ProgressIndicator. Value of the ProgressIndicator
-        is the Float between 0 and 1.
+        """Sets the value of the ProgressIndicator. Value of the
+        ProgressIndicator is the float between 0 and 1.
 
-        @param newValue
-                   the New value of the ProgressIndicator.
+        @param newValue: the new value of the ProgressIndicator.
         @see com.vaadin.ui.AbstractField#setValue(java.lang.Object)
         """
         if self._dataSource is None:
-            raise ValueError, 'Datasource must be set'
+            raise ValueError, 'datasource must be set'
 
         self._dataSource.setValue(newValue)
 
@@ -149,7 +143,7 @@ class ProgressIndicator(AbstractField, Property, Property, Viewer,
     def __str__(self):
         """@see com.vaadin.ui.AbstractField#toString()"""
         if self._dataSource is None:
-            raise ValueError, 'Datasource must be set'
+            raise ValueError, 'datasource must be set'
 
         return str(self._dataSource)
 
@@ -157,7 +151,7 @@ class ProgressIndicator(AbstractField, Property, Property, Viewer,
     def getType(self):
         """@see com.vaadin.ui.AbstractField#getType()"""
         if self._dataSource is None:
-            raise ValueError, 'Datasource must be set'
+            raise ValueError, 'datasource must be set'
 
         return self._dataSource.getType()
 
@@ -166,7 +160,7 @@ class ProgressIndicator(AbstractField, Property, Property, Viewer,
         """Gets the viewing data-source property.
 
         @return the datasource.
-        @see com.vaadin.ui.AbstractField#getPropertyDataSource()
+        @see AbstractField.getPropertyDataSource()
         """
         return self._dataSource
 
@@ -176,19 +170,21 @@ class ProgressIndicator(AbstractField, Property, Property, Viewer,
 
         @param newDataSource
                    the new data source.
-        @see com.vaadin.ui.AbstractField#setPropertyDataSource(com.vaadin.data.Property)
+        @see AbstractField#setPropertyDataSource()
         """
         # Stops listening the old data source changes
-        if self._dataSource is not None \
-                and issubclass(self._dataSource.getClass(), ValueChangeNotifier):
+        if (self._dataSource is not None
+                and issubclass(self._dataSource.__class__,
+                        Property.ValueChangeNotifier)):
             self._dataSource.removeListener(self)
 
         # Sets the new data source
         self._dataSource = newDataSource
 
         # Listens the new data source if possible
-        if self._dataSource is not None \
-                and issubclass(self._dataSource.getClass(), ValueChangeNotifier):
+        if (self._dataSource is not None
+                and issubclass(self._dataSource.__class__,
+                        Property.ValueChangeNotifier)):
             self._dataSource.addListener(self)
 
 

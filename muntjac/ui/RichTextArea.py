@@ -17,20 +17,16 @@
 from muntjac.ui.AbstractField import AbstractField
 from muntjac.data.Property import Property
 
-#from muntjac.terminal.gwt.client.ui.richtextarea.VRichTextArea import VRichTextArea
-#from muntjac.ui.ClientWidget import LoadStyle
-
 
 class RichTextArea(AbstractField):
     """A simple RichTextArea to edit HTML format text.
 
     Note, that using {@link TextField#setMaxLength(int)} method in
-    {@link RichTextArea} may produce unexpected results as formatting is counted
-    into length of field.
+    {@link RichTextArea} may produce unexpected results as formatting
+    is counted into length of field.
     """
 
-#    CLIENT_WIDGET = VRichTextArea
-#    LOAD_STYLE = LoadStyle.LAZY
+    #CLIENT_WIDGET = ClientWidget(VRichTextArea, LoadStyle.LAZY)
 
     def __init__(self, *args):
         """Constructs an empty <code>RichTextArea</code> with no caption.
@@ -40,22 +36,22 @@ class RichTextArea(AbstractField):
         @param caption
                    the caption for the editor.
         ---
-        Constructs a new <code>RichTextArea</code> that's bound to the specified
-        <code>Property</code> and has no caption.
+        Constructs a new <code>RichTextArea</code> that's bound to the
+        specified <code>Property</code> and has no caption.
 
         @param dataSource
                    the data source for the editor value
         ---
-        Constructs a new <code>RichTextArea</code> that's bound to the specified
-        <code>Property</code> and has the given caption.
+        Constructs a new <code>RichTextArea</code> that's bound to the
+        specified <code>Property</code> and has the given caption.
 
         @param caption
                    the caption for the editor.
         @param dataSource
                    the data source for the editor value
         ---
-        Constructs a new <code>RichTextArea</code> with the given caption and
-        initial text contents.
+        Constructs a new <code>RichTextArea</code> with the given caption
+        and initial text contents.
 
         @param caption
                    the caption for the editor.
@@ -68,15 +64,14 @@ class RichTextArea(AbstractField):
         # Null representation.
         self._nullRepresentation = 'null'
 
-        # Is setting to null from non-null value allowed by setting with null
-        # representation .
+        # Is setting to null from non-null value allowed by setting with
+        # null representation.
         self._nullSettingAllowed = False
 
-        # Temporary flag that indicates all content will be selected after the next
-        # paint. Reset to false after painted.
+        # Temporary flag that indicates all content will be selected after
+        # the next paint. Reset to false after painted.
         self._selectAll = False
 
-        args = args
         nargs = len(args)
         if nargs == 0:
             self.setValue('')
@@ -112,7 +107,8 @@ class RichTextArea(AbstractField):
             value = self.getNullRepresentation()
 
         if value is None:
-            raise ValueError, 'Null values are not allowed if the null-representation is null'
+            raise ValueError, ('Null values are not allowed if '
+                    'the null-representation is null')
 
         target.addVariable(self, 'text', value)
 
@@ -129,8 +125,8 @@ class RichTextArea(AbstractField):
 
 
     def selectAll(self):
-        """Selects all text in the rich text area. As a side effect, focuses the
-        rich text area.
+        """Selects all text in the rich text area. As a side effect,
+        focuses the rich text area.
 
         @since 6.5
         """
@@ -146,8 +142,8 @@ class RichTextArea(AbstractField):
 
 
     def getFormattedValue(self):
-        """Gets the formatted string value. Sets the field value by using the
-        assigned Format.
+        """Gets the formatted string value. Sets the field value by using
+        the assigned Format.
 
         @return the Formatted value.
         @see #setFormat(Format)
@@ -162,9 +158,10 @@ class RichTextArea(AbstractField):
 
     def getValue(self):
         v = super(RichTextArea, self).getValue()
-        if (self._format is None) or (v is None):
+        if self._format is None or v is None:
             return v
         try:
+            raise DeprecationWarning
             return self._format.format(v)
         except ValueError:
             return v
@@ -177,24 +174,25 @@ class RichTextArea(AbstractField):
         # Sets the text
         if 'text' in variables and not self.isReadOnly():
 
-            # Only do the setting if the string representation of the value
-            # has been updated
-            newValue = variables['text']
+            # Only do the setting if the string representation of the
+            # value has been updated
+            newValue = variables.get('text')
 
             oldValue = self.getFormattedValue()
-            if newValue is not None \
-                    and (oldValue is None) or self.isNullSettingAllowed() \
-                    and newValue == self.getNullRepresentation():
+            if (newValue is not None
+                    and (oldValue is None or self.isNullSettingAllowed())
+                    and newValue == self.getNullRepresentation()):
                 newValue = None
 
-            if newValue != oldValue \
-                    and (newValue is None or not (newValue == oldValue)):
+            if (newValue != oldValue
+                    and (newValue is None or newValue != oldValue)):
                 wasModified = self.isModified()
                 self.setValue(newValue, True)
 
                 # If the modified status changes, or if we have a formatter,
                 # repaint is needed after all.
-                if (self._format is not None or wasModified != self.isModified()):
+                if (self._format is not None
+                        or wasModified != self.isModified()):
                     self.requestRepaint()
 
 
@@ -205,15 +203,11 @@ class RichTextArea(AbstractField):
     def getNullRepresentation(self):
         """Gets the null-string representation.
 
-        <p>
         The null-valued strings are represented on the user interface by
-        replacing the null value with this string. If the null representation is
-        set null (not 'null' string), painting null value throws exception.
-        </p>
+        replacing the null value with this string. If the null representation
+        is set null (not 'null' string), painting null value throws exception.
 
-        <p>
         The default value is string 'null'.
-        </p>
 
         @return the String Textual representation for null strings.
         @see TextField#isNullSettingAllowed()
@@ -224,21 +218,17 @@ class RichTextArea(AbstractField):
     def isNullSettingAllowed(self):
         """Is setting nulls with null-string representation allowed.
 
-        <p>
         If this property is true, writing null-representation string to text
         field always sets the field value to real null. If this property is
         false, null setting is not made, but the null values are maintained.
         Maintenance of null-values is made by only converting the textfield
         contents to real null, if the text field matches the null-string
         representation and the current value of the field is null.
-        </p>
 
-        <p>
         By default this setting is false
-        </p>
 
-        @return boolean Should the null-string represenation be always converted
-                to null-values.
+        @return boolean Should the null-string represenation be always
+                converted to null-values.
         @see TextField#getNullRepresentation()
         """
         return self._nullSettingAllowed
@@ -247,15 +237,11 @@ class RichTextArea(AbstractField):
     def setNullRepresentation(self, nullRepresentation):
         """Sets the null-string representation.
 
-        <p>
         The null-valued strings are represented on the user interface by
-        replacing the null value with this string. If the null representation is
-        set null (not 'null' string), painting null value throws exception.
-        </p>
+        replacing the null value with this string. If the null representation
+        is set null (not 'null' string), painting null value throws exception.
 
-        <p>
         The default value is string 'null'
-        </p>
 
         @param nullRepresentation
                    Textual representation for null strings.
@@ -267,22 +253,18 @@ class RichTextArea(AbstractField):
     def setNullSettingAllowed(self, nullSettingAllowed):
         """Sets the null conversion mode.
 
-        <p>
         If this property is true, writing null-representation string to text
         field always sets the field value to real null. If this property is
         false, null setting is not made, but the null values are maintained.
         Maintenance of null-values is made by only converting the textfield
         contents to real null, if the text field matches the null-string
         representation and the current value of the field is null.
-        </p>
 
-        <p>
         By default this setting is false.
-        </p>
 
         @param nullSettingAllowed
-                   Should the null-string represenation be always converted to
-                   null-values.
+                   Should the null-string representation be always converted
+                   to null-values.
         @see TextField#getNullRepresentation()
         """
         self._nullSettingAllowed = nullSettingAllowed
@@ -294,6 +276,7 @@ class RichTextArea(AbstractField):
         @return the Format used to format the value.
         @deprecated replaced by {@link com.vaadin.data.util.PropertyFormatter}
         """
+        raise DeprecationWarning, 'replaced by PropertyFormatter'
         return self._format
 
 
@@ -305,6 +288,7 @@ class RichTextArea(AbstractField):
                    formatting.
         @deprecated replaced by {@link com.vaadin.data.util.PropertyFormatter}
         """
+        raise DeprecationWarning, 'replaced by PropertyFormatter'
         self._format = frmt
         self.requestRepaint()
 
