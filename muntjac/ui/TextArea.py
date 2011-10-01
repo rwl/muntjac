@@ -17,15 +17,11 @@
 from muntjac.ui.AbstractTextField import AbstractTextField
 from muntjac.data.Property import Property
 
-#from muntjac.terminal.gwt.client.ui.VTextArea import VTextArea
-#from muntjac.ui.ClientWidget import LoadStyle
-
 
 class TextArea(AbstractTextField):
     """A text field that supports multi line editing."""
 
-#    CLIENT_WIDGET = VTextArea
-#    LOAD_STYLE = LoadStyle.EAGER
+    #CLIENT_WIDGET = ClientWidget(VTextArea, LoadStyle.EAGER)
 
     _DEFAULT_ROWS = 5
 
@@ -58,6 +54,7 @@ class TextArea(AbstractTextField):
         """
         # Number of visible rows in the text area.
         self._rows = self._DEFAULT_ROWS
+
         # Tells if word-wrapping should be used in the text area.
         self._wordwrap = True
 
@@ -89,8 +86,7 @@ class TextArea(AbstractTextField):
     def setRows(self, rows):
         """Sets the number of rows in the text area.
 
-        @param rows
-                   the number of rows for this text area.
+        @param rows: the number of rows for this text area.
         """
         if rows < 0:
             rows = 0
@@ -112,8 +108,8 @@ class TextArea(AbstractTextField):
         """Sets the text area's word-wrap mode on or off.
 
         @param wordwrap
-                   the boolean value specifying if the text area should be in
-                   word-wrap mode.
+                   the boolean value specifying if the text area should be
+                   in word-wrap mode.
         """
         if self._wordwrap != wordwrap:
             self._wordwrap = wordwrap
@@ -135,5 +131,6 @@ class TextArea(AbstractTextField):
         target.addAttribute('rows', self.getRows())
 
         if not self.isWordwrap():
-            # Wordwrap is only painted if turned off to minimize communications
+            # Wordwrap is only painted if turned off to minimize
+            # communications
             target.addAttribute('wordwrap', False)

@@ -17,24 +17,17 @@
 from muntjac.ui.AbstractTextField import AbstractTextField
 from muntjac.data.Property import Property
 
-#from muntjac.terminal.gwt.client.ui.VTextField import VTextField
-#from muntjac.ui.ClientWidget import LoadStyle
-
 
 class TextField(AbstractTextField):
-    """<p>
-    A text editor component that can be bound to any bindable Property. The text
-    editor supports both multiline and single line modes, default is one-line
-    mode.
-    </p>
+    """A text editor component that can be bound to any bindable Property.
+    The text editor supports both multiline and single line modes, default
+    is one-line mode.
 
-    <p>
-    Since <code>TextField</code> extends <code>AbstractField</code> it implements
-    the {@link com.vaadin.data.Buffered} interface. A <code>TextField</code> is
-    in write-through mode by default, so
-    {@link com.vaadin.ui.AbstractField#setWriteThrough(boolean)} must be called
-    to enable buffering.
-    </p>
+    Since <code>TextField</code> extends <code>AbstractField</code> it
+    implements the {@link com.vaadin.data.Buffered} interface. A
+    <code>TextField</code> is in write-through mode by default, so
+    {@link com.vaadin.ui.AbstractField#setWriteThrough(boolean)} must be
+    called to enable buffering.
 
     @author IT Mill Ltd.
     @author Richard Lincoln
@@ -42,9 +35,7 @@ class TextField(AbstractTextField):
     @since 3.0
     """
 
-#    CLIENT_WIDGET = VTextField
-#    LOAD_STYLE = LoadStyle.EAGER
-
+    #CLIENT_WIDGET = ClientWidget(VTextField, LoadStyle.EAGER)
 
     def __init__(self, *args):
         """Constructs an empty <code>TextField</code> with no caption.
@@ -69,18 +60,18 @@ class TextField(AbstractTextField):
                    the Property to be edited with this editor.
         ---
         Constructs a new <code>TextField</code> with the given caption and
-        initial text contents. The editor constructed this way will not be bound
-        to a Property unless
-        {@link com.vaadin.data.Property.Viewer#setPropertyDataSource(Property)}
-        is called to bind it.
+        initial text contents. The editor constructed this way will not be
+        bound to a Property unless
+        {@link Property.Viewer#setPropertyDataSource(Property)} is called to
+        bind it.
 
         @param caption
                    the caption <code>String</code> for the editor.
         @param text
                    the initial text content of the editor.
         """
-        # Tells if input is used to enter sensitive information that is not echoed
-        # to display. Typically passwords.
+        # Tells if input is used to enter sensitive information that is not
+        # echoed to display. Typically passwords.
         self._secret = False
 
         # Number of visible rows in a multiline TextField. Value 0 implies a
@@ -115,8 +106,8 @@ class TextField(AbstractTextField):
 
 
     def isSecret(self):
-        """Gets the secret property. If a field is used to enter secret information
-        the information is not echoed to display.
+        """Gets the secret property. If a field is used to enter secret
+        information the information is not echoed to display.
 
         @return <code>true</code> if the field is used to enter secret
                 information, <code>false</code> otherwise.
@@ -124,14 +115,14 @@ class TextField(AbstractTextField):
         @deprecated Starting from 6.5 use {@link PasswordField} instead for
                     secret text input.
         """
-        raise DeprecationWarning, 'use PasswordField instead for secret text input.'
+        raise DeprecationWarning, 'use PasswordField instead'
 
         return self._secret
 
 
     def setSecret(self, secret):
-        """Sets the secret property on and off. If a field is used to enter secret
-        information the information is not echoed to display.
+        """Sets the secret property on and off. If a field is used to enter
+        secret information the information is not echoed to display.
 
         @param secret
                    the value specifying if the field is used to enter secret
@@ -139,7 +130,7 @@ class TextField(AbstractTextField):
         @deprecated Starting from 6.5 use {@link PasswordField} instead for
                     secret text input.
         """
-        raise DeprecationWarning, 'use PasswordField instead for secret text input.'
+        raise DeprecationWarning, 'use PasswordField instead'
 
         if self._secret != secret:
             self._secret = secret
@@ -164,15 +155,15 @@ class TextField(AbstractTextField):
 
 
     def getRows(self):
-        """Gets the number of rows in the editor. If the number of rows is set to 0,
-        the actual number of displayed rows is determined implicitly by the
-        adapter.
+        """Gets the number of rows in the editor. If the number of rows is set
+        to 0, the actual number of displayed rows is determined implicitly by
+        the adapter.
 
         @return number of explicitly set rows.
-        @deprecated Starting from 6.5 use {@link TextArea} for a multi-line text
-                    input.
+        @deprecated Starting from 6.5 use {@link TextArea} for a multi-line
+                    text input.
         """
-        raise DeprecationWarning, 'use TextArea for a multi-line text input.'
+        raise DeprecationWarning, 'use TextArea for a multi-line text input'
 
         return self._rows
 
@@ -183,10 +174,10 @@ class TextField(AbstractTextField):
         @param rows
                    the number of rows for this editor.
 
-        @deprecated Starting from 6.5 use {@link TextArea} for a multi-line text
-                    input.
+        @deprecated Starting from 6.5 use {@link TextArea} for a multi-line
+                    text input.
         """
-        raise DeprecationWarning, 'use TextArea for a multi-line text input.'
+        raise DeprecationWarning, 'use TextArea for a multi-line text input'
 
         if rows < 0:
             rows = 0
@@ -201,10 +192,10 @@ class TextField(AbstractTextField):
 
         @return <code>true</code> if the component is in the word-wrap mode,
                 <code>false</code> if not.
-        @deprecated Starting from 6.5 use {@link TextArea} for a multi-line text
-                    input.
+        @deprecated Starting from 6.5 use {@link TextArea} for a multi-line
+                    text input.
         """
-        raise DeprecationWarning, 'use TextArea for a multi-line text input.'
+        raise DeprecationWarning, 'use TextArea for a multi-line text input'
         return self._wordwrap
 
 
@@ -215,10 +206,10 @@ class TextField(AbstractTextField):
                    the boolean value specifying if the editor should be in
                    word-wrap mode after the call or not.
 
-        @deprecated Starting from 6.5 use {@link TextArea} for a multi-line text
-                    input.
+        @deprecated Starting from 6.5 use {@link TextArea} for a multi-line
+                    text input.
         """
-        raise DeprecationWarning, 'use TextArea for a multi-line text input.'
+        raise DeprecationWarning, 'use TextArea for a multi-line text input'
         if self._wordwrap != wordwrap:
             self._wordwrap = wordwrap
             self.requestRepaint()
@@ -227,19 +218,17 @@ class TextField(AbstractTextField):
     def setHeight(self, height, unit=None):
         """Sets the height of the {@link TextField} instance.
 
-        <p>
         Setting height for {@link TextField} also has a side-effect that puts
         {@link TextField} into multiline mode (aka "textarea"). Multiline mode
-        can also be achieved by calling {@link #setRows(int)}. The height value
-        overrides the number of rows set by {@link #setRows(int)}.
-        <p>
+        can also be achieved by calling {@link #setRows(int)}. The height
+        value overrides the number of rows set by {@link #setRows(int)}.
+
         If you want to set height of single line {@link TextField}, call
-        {@link #setRows(int)} with value 0 after setting the height. Setting rows
-        to 0 resets the side-effect.
-        <p>
+        {@link #setRows(int)} with value 0 after setting the height. Setting
+        rows to 0 resets the side-effect.
+
         Starting from 6.5 you should use {@link TextArea} instead of
         {@link TextField} for multiline text input.
-
 
         @see com.vaadin.ui.AbstractComponent#setHeight(float, int)
         ---
@@ -248,23 +237,23 @@ class TextField(AbstractTextField):
         <p>
         Setting height for {@link TextField} also has a side-effect that puts
         {@link TextField} into multiline mode (aka "textarea"). Multiline mode
-        can also be achieved by calling {@link #setRows(int)}. The height value
-        overrides the number of rows set by {@link #setRows(int)}.
+        can also be achieved by calling {@link #setRows(int)}. The height
+        value overrides the number of rows set by {@link #setRows(int)}.
         <p>
         If you want to set height of single line {@link TextField}, call
-        {@link #setRows(int)} with value 0 after setting the height. Setting rows
-        to 0 resets the side-effect.
+        {@link #setRows(int)} with value 0 after setting the height. Setting
+        rows to 0 resets the side-effect.
 
         @see com.vaadin.ui.AbstractComponent#setHeight(java.lang.String)
         """
         if unit is None:
-            # will call setHeight(float, int) the actually does the magic. Method
-            # is overridden just to document side-effects.
+            # will call setHeight(float, int) the actually does the magic.
+            # Method is overridden just to document side-effects.
             super(TextField, self).setHeight(height)
         else:
             super(TextField, self).setHeight(height, unit)
             if height > 1 and self.__class__ == TextField:
-                # In html based terminals we most commonly want to make component
-                # to be textarea if height is defined. Setting row field above 0
-                # will render component as textarea.
+                # In html based terminals we most commonly want to make
+                # component to be textarea if height is defined. Setting row
+                # field above 0 will render component as textarea.
                 self.setRows(2)

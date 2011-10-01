@@ -14,14 +14,15 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.ui.AbstractComponentContainer import AbstractComponentContainer
 from muntjac.terminal.KeyMapper import KeyMapper
-from muntjac.ui.IComponent import IComponent, Event as ComponentEvent
 from muntjac.terminal.IPaintable import IRepaintRequestListener
-from muntjac.terminal.gwt.server.CommunicationManager import CommunicationManager
 
-#from muntjac.terminal.gwt.client.ui.VTabsheet import VTabsheet
-#from muntjac.ui.ClientWidget import LoadStyle
+from muntjac.ui.AbstractComponent import AbstractComponent
+from muntjac.ui.IComponent import IComponent, Event as ComponentEvent
+from muntjac.ui.AbstractComponentContainer import AbstractComponentContainer
+
+from muntjac.terminal.gwt.server.CommunicationManager import \
+    CommunicationManager
 
 
 class ISelectedTabChangeListener(object):
@@ -39,8 +40,7 @@ class ISelectedTabChangeListener(object):
     def selectedTabChange(self, event):
         """Selected (shown) tab in tab sheet has has been changed.
 
-        @param event
-                   the selected tab change event.
+        @param event: the selected tab change event.
         """
         raise NotImplementedError
 
@@ -50,24 +50,25 @@ class TabSheet(AbstractComponentContainer):
 
     Tabs are typically identified by the component contained on the tab (see
     {@link ComponentContainer}), and tab metadata (including caption, icon,
-    visibility, enabledness, closability etc.) is kept in separate {@link ITab}
-    instances.
+    visibility, enabledness, closability etc.) is kept in separate {@link
+    ITab} instances.
 
-    Tabs added with {@link #addComponent(IComponent)} get the caption and the icon
-    of the component at the time when the component is created, and these are not
-    automatically updated after tab creation.
+    Tabs added with {@link #addComponent(IComponent)} get the caption and the
+    icon of the component at the time when the component is created, and these
+    are not automatically updated after tab creation.
 
     A tab sheet can have multiple tab selection listeners and one tab close
     handler ({@link ICloseHandler}), which by default removes the tab from the
     TabSheet.
 
-    The {@link TabSheet} can be styled with the .v-tabsheet, .v-tabsheet-tabs and
-    .v-tabsheet-content styles. Themes may also have pre-defined variations of
-    the tab sheet presentation, such as {@link Reindeer#TABSHEET_BORDERLESS},
-    {@link Runo#TABSHEET_SMALL} and several other styles in {@link Reindeer}.
+    The {@link TabSheet} can be styled with the .v-tabsheet, .v-tabsheet-tabs
+    and .v-tabsheet-content styles. Themes may also have pre-defined
+    variations of the tab sheet presentation, such as
+    {@link Reindeer#TABSHEET_BORDERLESS}, {@link Runo#TABSHEET_SMALL} and
+    several other styles in {@link Reindeer}.
 
-    The current implementation does not load the tabs to the UI before the first
-    time they are shown, but this may change in future releases.
+    The current implementation does not load the tabs to the UI before the
+    first time they are shown, but this may change in future releases.
 
     @author IT Mill Ltd.
     @author Richard Lincoln
@@ -75,19 +76,17 @@ class TabSheet(AbstractComponentContainer):
     @since 3.0
     """
 
-#    CLIENT_WIDGET = VTabsheet
-#    LOAD_STYLE = LoadStyle.EAGER
-
+    #CLIENT_WIDGET = ClientWidget(VTabsheet, LoadStyle.EAGER)
 
     def __init__(self):
-        """Constructs a new Tabsheet. Tabsheet is immediate by default, and the
-        default close handler removes the tab being closed.
+        """Constructs a new Tabsheet. Tabsheet is immediate by default, and
+        the default close handler removes the tab being closed.
         """
         super(TabSheet, self)()
 
-        # List of component tabs (tab contents). In addition to being on this list,
-        # there is a {@link ITab} object in tabs for each tab with meta-data about
-        # the tab.
+        # List of component tabs (tab contents). In addition to being on this
+        # list, there is a {@link ITab} object in tabs for each tab with
+        # meta-data about the tab.
         self._components = list()
 
         # Map containing information related to the tabs (caption, icon etc).
@@ -96,14 +95,15 @@ class TabSheet(AbstractComponentContainer):
         # Selected tab content component.
         self._selected = None
 
-        # Mapper between server-side component instances (tab contents) and keys
-        # given to the client that identify tabs.
+        # Mapper between server-side component instances (tab contents) and
+        # keys given to the client that identify tabs.
         self._keyMapper = KeyMapper()
 
         # When true, the tab selection area is not displayed to the user.
         self._tabsHidden = None
 
-        # Tabs that have been shown to the user (have been painted as selected).
+        # Tabs that have been shown to the user (have been painted as
+        # selected).
         self._paintedTabs = set()
 
         # Handler to be called when a tab is closed.
@@ -118,8 +118,7 @@ class TabSheet(AbstractComponentContainer):
             def onTabClose(self, tabsheet, c):
                 tabsheet.removeComponent(c)
 
-        handler = InnerHandler()
-        self.setCloseHandler(handler)
+        self.setCloseHandler(InnerHandler())
 
 
     def getComponentIterator(self):
@@ -132,8 +131,8 @@ class TabSheet(AbstractComponentContainer):
 
 
     def getComponentCount(self):
-        """Gets the number of contained components (tabs). Consistent with the
-        iterator returned by {@link #getComponentIterator()}.
+        """Gets the number of contained components (tabs). Consistent with
+        the iterator returned by {@link #getComponentIterator()}.
 
         @return the number of contained components
         """
@@ -166,33 +165,30 @@ class TabSheet(AbstractComponentContainer):
 
 
     def removeTab(self, tab):
-        """Removes a {@link ITab} and the component associated with it, as previously
-        added with {@link #addTab(IComponent)},
+        """Removes a {@link ITab} and the component associated with it, as
+        previously added with {@link #addTab(IComponent)},
         {@link #addTab(IComponent, String, Resource)} or
         {@link #addComponent(IComponent)}.
-        <p>
+
         If the tab was selected, the first eligible (visible and enabled)
         remaining tab is selected.
-        </p>
 
         @see #addTab(IComponent)
         @see #addTab(IComponent, String, Resource)
         @see #addComponent(IComponent)
         @see #removeComponent(IComponent)
-        @param tab
-                   the ITab to remove
+        @param tab: the ITab to remove
         """
         self.removeComponent(tab.getComponent())
 
 
     def addComponent(self, c):
-        """Adds a new tab into TabSheet. IComponent caption and icon are copied to
-        the tab metadata at creation time.
+        """Adds a new tab into TabSheet. IComponent caption and icon are
+        copied to the tab metadata at creation time.
 
         @see #addTab(IComponent)
 
-        @param c
-                   the component to be added.
+        @param c: the component to be added.
         """
         self.addTab(c)
 
@@ -200,21 +196,21 @@ class TabSheet(AbstractComponentContainer):
     def addTab(self, *args):
         """Adds a new tab into TabSheet.
 
-        The first tab added to a tab sheet is automatically selected and a tab
-        selection event is fired.
+        The first tab added to a tab sheet is automatically selected and a
+        tab selection event is fired.
 
-        If the component is already present in the tab sheet, changes its caption
-        and icon and returns the corresponding (old) tab, preserving other tab
-        metadata.
+        If the component is already present in the tab sheet, changes its
+        caption and icon and returns the corresponding (old) tab, preserving
+        other tab metadata.
 
         @param c
                    the component to be added onto tab - should not be null.
         @param caption
-                   the caption to be set for the component and used rendered in
-                   tab bar
+                   the caption to be set for the component and used rendered
+                   in tab bar
         @param icon
-                   the icon to be set for the component and used rendered in tab
-                   bar
+                   the icon to be set for the component and used rendered in
+                   tab bar
         @return the created {@link ITab}
         ---
         Adds a new tab into TabSheet.
@@ -222,24 +218,24 @@ class TabSheet(AbstractComponentContainer):
         The first tab added to a tab sheet is automatically selected and a tab
         selection event is fired.
 
-        If the component is already present in the tab sheet, changes its caption
-        and icon and returns the corresponding (old) tab, preserving other tab
-        metadata like the position.
+        If the component is already present in the tab sheet, changes its
+        caption and icon and returns the corresponding (old) tab, preserving
+        other tab metadata like the position.
 
         @param c
                    the component to be added onto tab - should not be null.
         @param caption
-                   the caption to be set for the component and used rendered in
-                   tab bar
+                   the caption to be set for the component and used rendered
+                   in tab bar
         @param icon
-                   the icon to be set for the component and used rendered in tab
-                   bar
+                   the icon to be set for the component and used rendered in
+                   tab bar
         @param position
                    the position at where the the tab should be added.
         @return the created {@link ITab}
         ---
-        Adds a new tab into TabSheet. IComponent caption and icon are copied to
-        the tab metadata at creation time.
+        Adds a new tab into TabSheet. IComponent caption and icon are copied
+        to the tab metadata at creation time.
 
         If the tab sheet already contains the component, its tab is returned.
 
@@ -247,8 +243,8 @@ class TabSheet(AbstractComponentContainer):
                    the component to be added onto tab - should not be null.
         @return the created {@link ITab}
         ---
-        Adds a new tab into TabSheet. IComponent caption and icon are copied to
-        the tab metadata at creation time.
+        Adds a new tab into TabSheet. IComponent caption and icon are copied
+        to the tab metadata at creation time.
 
         If the tab sheet already contains the component, its tab is returned.
 
@@ -258,7 +254,6 @@ class TabSheet(AbstractComponentContainer):
                    The position where the tab should be added
         @return the created {@link ITab}
         """
-        args = args
         nargs = len(args)
         if nargs == 1:
             c, = args
@@ -279,7 +274,7 @@ class TabSheet(AbstractComponentContainer):
             if c is None:
                 return None
             elif c in self._tabs:
-                tab = self._tabs[c]
+                tab = self._tabs.get(c)
                 tab.setCaption(caption)
                 tab.setIcon(icon)
                 return tab
@@ -313,7 +308,7 @@ class TabSheet(AbstractComponentContainer):
                 c = i.next()
                 caption = None
                 icon = None
-                if TabSheet.isAssignableFrom(source.getClass()):
+                if issubclass(source.__class__, TabSheet):
                     caption = source.getTabCaption(c)
                     icon = source.getTabIcon(c)
                 source.removeComponent(c)
@@ -386,7 +381,8 @@ class TabSheet(AbstractComponentContainer):
         target.endTag('tabs')
 
         if self._selected is not None:
-            target.addVariable(self, 'selected', self._keyMapper.key(self._selected))
+            target.addVariable(self, 'selected',
+                    self._keyMapper.key(self._selected))
 
         # clean possibly orphaned entries in paintedTabs
         for component2 in orphaned:
@@ -412,13 +408,15 @@ class TabSheet(AbstractComponentContainer):
 
 
     def getTabCaption(self, c):
-        """Gets tab caption. The tab is identified by the tab content component.
+        """Gets tab caption. The tab is identified by the tab content
+        component.
 
-        @param c
-                   the component in the tab
-        @deprecated Use {@link #getTab(IComponent)} and {@link ITab#getCaption()}
-                    instead.
+        @param c: the component in the tab
+        @deprecated Use {@link #getTab(IComponent)} and
+                    {@link ITab#getCaption()} instead.
         """
+        raise DeprecationWarning, 'use getTab() and ITab.getCaption() instead'
+
         info = self._tabs.get(c)
         if info is None:
             return ''
@@ -427,15 +425,16 @@ class TabSheet(AbstractComponentContainer):
 
 
     def setTabCaption(self, c, caption):
-        """Sets tab caption. The tab is identified by the tab content component.
+        """Sets tab caption. The tab is identified by the tab content
+        component.
 
-        @param c
-                   the component in the tab
-        @param caption
-                   the caption to set.
+        @param c: the component in the tab
+        @param caption: the caption to set.
         @deprecated Use {@link #getTab(IComponent)} and
                     {@link ITab#setCaption(String)} instead.
         """
+        raise DeprecationWarning, 'use getTab() and ITab.getCaption() instead'
+
         info = self._tabs.get(c)
         if info is not None:
             info.setCaption(caption)
@@ -446,11 +445,12 @@ class TabSheet(AbstractComponentContainer):
         """Gets the icon for a tab. The tab is identified by the tab content
         component.
 
-        @param c
-                   the component in the tab
+        @param c: the component in the tab
         @deprecated Use {@link #getTab(IComponent)} and {@link ITab#getIcon()}
                     instead.
         """
+        raise DeprecationWarning, 'use getTab() and ITab.getIcon() instead'
+
         info = self._tabs.get(c)
         if info is None:
             return None
@@ -459,8 +459,8 @@ class TabSheet(AbstractComponentContainer):
 
 
     def setTabIcon(self, c, icon):
-        """Sets icon for the given component. The tab is identified by the tab
-        content component.
+        """Sets icon for the given component. The tab is identified by the
+        tab content component.
 
         @param c
                    the component in the tab
@@ -469,6 +469,8 @@ class TabSheet(AbstractComponentContainer):
         @deprecated Use {@link #getTab(IComponent)} and
                     {@link ITab#setIcon(Resource)} instead.
         """
+        raise DeprecationWarning, 'use getTab() and ITab.getIcon() instead'
+
         info = self._tabs.get(c)
         if info is not None:
             info.setIcon(icon)
@@ -476,8 +478,9 @@ class TabSheet(AbstractComponentContainer):
 
 
     def getTab(self, arg):
-        """Returns the {@link ITab} (metadata) for a component. The {@link ITab}
-        object can be used for setting caption,icon, etc for the tab.
+        """Returns the {@link ITab} (metadata) for a component. The
+        {@link ITab} object can be used for setting caption,icon, etc
+        for the tab.
 
         @param c
                    the component
@@ -507,8 +510,8 @@ class TabSheet(AbstractComponentContainer):
 
         @param c
         """
-        if c is not None and c in self._components \
-                and not (c == self._selected):
+        if (c is not None and c in self._components
+                and c != self._selected):
             self._selected = c
             self.updateSelection()
             self.fireSelectedTabChange()
@@ -516,13 +519,13 @@ class TabSheet(AbstractComponentContainer):
 
 
     def updateSelection(self):
-        """Checks if the current selection is valid, and updates the selection if
-        the previously selected component is not visible and enabled. The first
-        visible and enabled tab is selected if the current selection is empty or
-        invalid.
+        """Checks if the current selection is valid, and updates the selection
+        if the previously selected component is not visible and enabled. The
+        first visible and enabled tab is selected if the current selection is
+        empty or invalid.
 
-        This method does not fire tab change events, but the caller should do so
-        if appropriate.
+        This method does not fire tab change events, but the caller should do
+        so if appropriate.
 
         @return true if selection was changed, false otherwise
         """
@@ -533,25 +536,25 @@ class TabSheet(AbstractComponentContainer):
             try:
                 component = i.next()
                 tab = self._tabs.get(component)
-                # If we have no selection, if the current selection is invisible or
-                # if the current selection is disabled (but the whole component is
-                # not) we select this tab instead
+                # If we have no selection, if the current selection is
+                # invisible or if the current selection is disabled (but
+                # the whole component is not) we select this tab instead
                 selectedTabInfo = None
                 if self._selected is not None:
                     selectedTabInfo = self._tabs.get(self._selected)
 
-                if self._selected is None \
-                        or selectedTabInfo is None \
-                        or not selectedTabInfo.isVisible() \
-                        or not selectedTabInfo.isEnabled():
-                    # The current selection is not valid so we need to change
-                    # it
+                if (self._selected is None
+                        or selectedTabInfo is None
+                        or not selectedTabInfo.isVisible()
+                        or not selectedTabInfo.isEnabled()):
+                    # The current selection is not valid so we need to
+                    # change it
                     if tab.isEnabled() and tab.isVisible():
                         self._selected = component
                         break
                     else:
-                        # The current selection is not valid but this tab cannot be
-                        # selected either.
+                        # The current selection is not valid but this
+                        # tab cannot be selected either.
                         self._selected = None
             except StopIteration:
                 break
@@ -569,7 +572,8 @@ class TabSheet(AbstractComponentContainer):
 
     def changeVariables(self, source, variables):
         if 'selected' in variables:
-            self.setSelectedTab(self._keyMapper.get(variables.get('selected')))
+            select = self._keyMapper.get(variables.get('selected'))
+            self.setSelectedTab(select)
 
         if 'close' in variables:
             tab = self._keyMapper.get(variables.get('close'))
@@ -579,19 +583,20 @@ class TabSheet(AbstractComponentContainer):
 
 
     def replaceComponent(self, oldComponent, newComponent):
-        """Replaces a component (tab content) with another. This can be used to
-        change tab contents or to rearrange tabs. The tab position and some
+        """Replaces a component (tab content) with another. This can be used
+        to change tab contents or to rearrange tabs. The tab position and some
         metadata are preserved when moving components within the same
         {@link TabSheet}.
 
-        If the oldComponent is not present in the tab sheet, the new one is added
-        at the end.
+        If the oldComponent is not present in the tab sheet, the new one is
+        added at the end.
 
         If the oldComponent is already in the tab sheet but the newComponent
-        isn't, the old tab is replaced with a new one, and the caption and icon
-        of the old one are copied to the new tab.
+        isn't, the old tab is replaced with a new one, and the caption and
+        icon of the old one are copied to the new tab.
 
-        If both old and new components are present, their positions are swapped.
+        If both old and new components are present, their positions are
+        swapped.
 
         {@inheritDoc}
         """
@@ -665,7 +670,8 @@ class TabSheet(AbstractComponentContainer):
             self.requestRepaint()
 
 
-    _SELECTED_TAB_CHANGE_METHOD = getattr(ISelectedTabChangeListener, 'selectedTabChange')  # FIXME: getDeclaredMethod
+    _SELECTED_TAB_CHANGE_METHOD = getattr(ISelectedTabChangeListener,
+            'selectedTabChange')
 
 
     def addListener(self, listener):
@@ -674,7 +680,8 @@ class TabSheet(AbstractComponentContainer):
         @param listener
                    the Listener to be added.
         """
-        self.addListener(SelectedTabChangeEvent, listener, self._SELECTED_TAB_CHANGE_METHOD)
+        AbstractComponent.addListener(self, SelectedTabChangeEvent, listener,
+                self._SELECTED_TAB_CHANGE_METHOD)
 
 
     def removeListener(self, listener):
@@ -690,7 +697,8 @@ class TabSheet(AbstractComponentContainer):
                 # caching issues when detached-attached without render
                 self._paintedTabs.clear()
         else:
-            self.removeListener(SelectedTabChangeEvent, listener, self._SELECTED_TAB_CHANGE_METHOD)
+            AbstractComponent.removeListener(self, SelectedTabChangeEvent,
+                    listener, self._SELECTED_TAB_CHANGE_METHOD)
 
 
     def fireSelectedTabChange(self):
@@ -699,12 +707,13 @@ class TabSheet(AbstractComponentContainer):
 
 
     def setCloseHandler(self, handler):
-        """Provide a custom {@link ICloseHandler} for this TabSheet if you wish to
-        perform some additional tasks when a user clicks on a tabs close button,
-        e.g. show a confirmation dialogue before removing the tab.
+        """Provide a custom {@link ICloseHandler} for this TabSheet if you
+        wish to perform some additional tasks when a user clicks on a tabs
+        close button, e.g. show a confirmation dialogue before removing the
+        tab.
 
-        To remove the tab, if you provide your own close handler, you must call
-        {@link #removeComponent(IComponent)} yourself.
+        To remove the tab, if you provide your own close handler, you must
+        call {@link #removeComponent(IComponent)} yourself.
 
         The default ICloseHandler for TabSheet will only remove the tab.
 
@@ -738,8 +747,8 @@ class TabSheet(AbstractComponentContainer):
 
 
 class SelectedTabChangeEvent(ComponentEvent):
-    """Selected tab change event. This event is sent when the selected (shown)
-    tab in the tab sheet is changed.
+    """Selected tab change event. This event is sent when the selected
+    (shown) tab in the tab sheet is changed.
 
     @author IT Mill Ltd.
     @author Richard Lincoln
@@ -776,8 +785,8 @@ class ITab(object):
     """
 
     def isVisible(self):
-        """Returns the visible status for the tab. An invisible tab is not shown
-        in the tab bar and cannot be selected.
+        """Returns the visible status for the tab. An invisible tab is not
+        shown in the tab bar and cannot be selected.
 
         @return true for visible, false for hidden
         """
@@ -785,8 +794,8 @@ class ITab(object):
 
 
     def setVisible(self, visible):
-        """Sets the visible status for the tab. An invisible tab is not shown in
-        the tab bar and cannot be selected, selection is changed
+        """Sets the visible status for the tab. An invisible tab is not shown
+        in the tab bar and cannot be selected, selection is changed
         automatically when there is an attempt to select an invisible tab.
 
         @param visible
@@ -805,12 +814,11 @@ class ITab(object):
 
 
     def setClosable(self, closable):
-        """Sets the closability status for the tab. A closable tab can be closed
-        by the user through the user interface. This also controls if a close
-        button is shown to the user or not.
-        <p>
+        """Sets the closability status for the tab. A closable tab can be
+        closed by the user through the user interface. This also controls
+        if a close button is shown to the user or not.
+
         Note! Currently only supported by TabSheet, not Accordion.
-        </p>
 
         @param visible
                    true if the end user is allowed to close the tab, false
@@ -829,8 +837,8 @@ class ITab(object):
 
 
     def setEnabled(self, enabled):
-        """Sets the enabled status for the tab. A disabled tab is shown as such
-        in the tab bar and cannot be selected.
+        """Sets the enabled status for the tab. A disabled tab is shown as
+        such in the tab bar and cannot be selected.
 
         @param enabled
                    true for enabled, false for disabled
@@ -888,9 +896,9 @@ class ITab(object):
 
 
     def setComponentError(self, componentError):
-        """Sets an error indicator to be shown in the tab. This can be used e.g.
-        to communicate to the user that there is a problem in the contents of
-        the tab.
+        """Sets an error indicator to be shown in the tab. This can be used
+        e.g. to communicate to the user that there is a problem in the
+        contents of the tab.
 
         @see AbstractComponent#setComponentError(ErrorMessage)
 
@@ -1012,16 +1020,16 @@ class TabSheetTabImpl(ITab):
 
 
 class ICloseHandler(object):
-    """ICloseHandler is used to process tab closing events. Default behavior is
-    to remove the tab from the TabSheet.
+    """ICloseHandler is used to process tab closing events. Default behavior
+    is to remove the tab from the TabSheet.
 
     @author Jouni Koivuviita / IT Mill Ltd.
     @since 6.2.0
     """
 
     def onTabClose(self, tabsheet, tabContent):
-        """Called when a user has pressed the close icon of a tab in the client
-        side widget.
+        """Called when a user has pressed the close icon of a tab in the
+        client side widget.
 
         @param tabsheet
                    the TabSheet to which the tab belongs to

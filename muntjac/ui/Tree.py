@@ -17,46 +17,42 @@
 from collections import deque
 from Queue import LifoQueue
 
+from muntjac.terminal import clsname
+from muntjac.terminal.KeyMapper import KeyMapper
+from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
+
+from muntjac.data import Container
+
+from muntjac.ui.AbstractComponent import AbstractComponent
+
+from muntjac.event import Action
+from muntjac.event.DataBoundTransferable import DataBoundTransferable
 from muntjac.event.dd.acceptcriteria.TargetDetailIs import TargetDetailIs
 from muntjac.event.dd.IDropTarget import IDropTarget
 from muntjac.event.dd.IDragSource import IDragSource
-from muntjac.terminal.KeyMapper import KeyMapper
-from muntjac.data.Container import Container, Hierarchical
-from muntjac.event.Action import Action
-from muntjac.event.dd.acceptcriteria.ServerSideCriterion import ServerSideCriterion
-from muntjac.event.dd.acceptcriteria.ClientSideCriterion import ClientSideCriterion
-from muntjac.terminal.gwt.client.MouseEventDetails import MouseEventDetails
-from muntjac.event.ItemClickEvent import ItemClickEvent, IItemClickNotifier, IItemClickSource
-from muntjac.event.DataBoundTransferable import DataBoundTransferable
-from muntjac.ui.ClientWidget import LoadStyle
+
+from muntjac.event.dd.acceptcriteria.ServerSideCriterion import \
+    ServerSideCriterion
+
+from muntjac.event.dd.acceptcriteria.ClientSideCriterion import \
+    ClientSideCriterion
+
+from muntjac.event.ItemClickEvent import \
+    ItemClickEvent, IItemClickNotifier, IItemClickSource
+
 from muntjac.ui.IComponent import Event as ComponentEvent
 
 from muntjac.ui.AbstractSelect import \
     AbstractSelect, MultiSelectMode, AbstractSelectTargetDetails
 
-from muntjac.terminal.gwt.client.ui.VTree import VTree
-from muntjac.terminal.gwt.client.ui.dd.VerticalDropLocation import VerticalDropLocation
+from muntjac.terminal.gwt.client.ui.VTree import \
+    VTree
+
+from muntjac.terminal.gwt.client.ui.dd.VerticalDropLocation import \
+    VerticalDropLocation
 
 
-class TreeDragMode(object):
-    """Supported drag modes for Tree."""
-    # When drag mode is NONE, dragging from Tree is not supported. Browsers
-    # may still support selecting text/icons from Tree which can initiate
-    # HTML 5 style drag and drop operation.
-    NONE = 'NONE'
-
-    # When drag mode is NODE, users can initiate drag from Tree nodes that
-    # represent {@link Item}s in from the backed {@link Container}.
-    NODE = 'NODE'
-
-    _values = [NONE, NODE]
-
-    @classmethod
-    def values(cls):
-        return cls._enum_values[:]
-
-
-class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
+class Tree(AbstractSelect, Container.Hierarchical, Action.IContainer,
            IItemClickSource, IItemClickNotifier, IDragSource, IDropTarget):
     """Tree component. A Tree can be used to select an item (or multiple
     items) from a hierarchical set of items.
@@ -67,17 +63,10 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
     @since 3.0
     """
 
-    CLIENT_WIDGET = VTree
-    LOAD_STYLE = LoadStyle.EAGER
+    #CLIENT_WIDGET = ClientWidget(VTree, LoadStyle.EAGER)
 
     def __init__(self, caption=None, dataSource=None):
-        """Creates a new empty tree.
-        ---
-        Creates a new empty tree with caption.
-
-        @param caption
-        ---
-        Creates a new tree with caption and connect it to a Container.
+        """Creates a new tree with caption and connect it to a Container.
 
         @param caption
         @param dataSource
@@ -100,8 +89,8 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
         # Holds a itemId which was recently expanded
         self._expandedItemId = None
 
-        # a flag which indicates initial paint. After this flag set true partial
-        # updates are allowed.
+        # a flag which indicates initial paint. After this flag set
+        # true partial updates are allowed.
         self._initialPaint = True
 
         self._dragMode = TreeDragMode.NONE
@@ -140,8 +129,8 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
         @param itemId
                    the item id.
         @param sendChildTree
-                   flag to indicate if client needs subtree or not (may be
-                   cached)
+                   flag to indicate if client needs subtree or not (may
+                   be cached)
         @return True iff the expand operation succeeded
         """
         if sendChildTree is None:
@@ -184,8 +173,8 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
     def expandItemsRecursively(self, startItemId):
         """Expands the items recursively
 
-        Expands all the children recursively starting from an item. Operation
-        succeeds only if all expandable items are expanded.
+        Expands all the children recursively starting from an item.
+        Operation succeeds only if all expandable items are expanded.
 
         @param startItemId
         @return True iff the expand operation succeeded
@@ -198,10 +187,12 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
         # Expands recursively
         while not todo.empty():
             idd = todo.get()
-            if self.areChildrenAllowed(idd) and not self.expandItem(idd, False):
+            if (self.areChildrenAllowed(idd)
+                    and not self.expandItem(idd, False)):
                 result = False
             if self.hasChildren(idd):
-                todo.addAll(self.getChildren(idd))
+                for c in self.getChildren(idd):
+                    todo.put(c)
 
         self.requestRepaint()
         return result
@@ -228,8 +219,8 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
     def collapseItemsRecursively(self, startItemId):
         """Collapses the items recursively.
 
-        Collapse all the children recursively starting from an item. Operation
-        succeeds only if all expandable items are collapsed.
+        Collapse all the children recursively starting from an item.
+        Operation succeeds only if all expandable items are collapsed.
 
         @param startItemId
         @return True iff the collapse operation succeeded
@@ -253,13 +244,11 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
 
 
     def isSelectable(self):
-        """Returns the current selectable state. Selectable determines if the a node
-        can be selected on the client side. Selectable does not affect
+        """Returns the current selectable state. Selectable determines if the
+        a node can be selected on the client side. Selectable does not affect
         {@link #setValue(Object)} or {@link #select(Object)}.
 
-        <p>
         The tree is selectable by default.
-        </p>
 
         @return the current selectable state.
         """
@@ -267,13 +256,11 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
 
 
     def setSelectable(self, selectable):
-        """Sets the selectable state. Selectable determines if the a node can be
-        selected on the client side. Selectable does not affect
+        """Sets the selectable state. Selectable determines if the a node can
+        be selected on the client side. Selectable does not affect
         {@link #setValue(Object)} or {@link #select(Object)}.
 
-        <p>
         The tree is selectable by default.
-        </p>
 
         @param selectable
                    The new selectable state.
@@ -295,8 +282,8 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
 
 
     def getMultiselectMode(self):
-        """Returns the mode the multiselect is in. The mode controls how
-        multiselection can be done.
+        """Returns the mode the multiselect is in. The mode controls
+        how multiselection can be done.
 
         @return The mode
         """
@@ -308,22 +295,24 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
             key = variables.get('clickedKey')
 
             idd = self.itemIdMapper.get(key)
-            details = MouseEventDetails.deSerialize(variables.get('clickEvent'))
+            evt = variables.get('clickEvent')
+            details = MouseEventDetails.deSerialize(evt)
             item = self.getItem(idd)
             if item is not None:
-                self.fireEvent( ItemClickEvent(self, item, idd, None, details) )
+                event = ItemClickEvent(self, item, idd, None, details)
+                self.fireEvent(event)
 
         if not self.isSelectable() and 'selected' in variables:
-            # Not-selectable is a special case, AbstractSelect does not support
-            # TODO could be optimized.
+            # Not-selectable is a special case, AbstractSelect does not
+            # support. TODO: could be optimized.
             variables = dict(variables)
             del variables['selected']
 
         # Collapses the nodes
         if 'collapse' in variables:
             keys = variables.get('collapse')
-            for i in range(len(keys)):
-                idd = self.itemIdMapper.get(keys[i])
+            for key in keys:
+                idd = self.itemIdMapper.get(key)
                 if idd is not None and self.isExpanded(idd):
                     self._expanded.remove(idd)
                     self.fireCollapseEvent(idd)
@@ -335,16 +324,16 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
                 sendChildTree = True
 
             keys = variables.get('expand')
-            for i in range(len(keys)):
-                idd = self.itemIdMapper.get(keys[i])
+            for key in keys:
+                idd = self.itemIdMapper.get(key)
                 if idd is not None:
                     self.expandItem(idd, sendChildTree)
 
-        # AbstractSelect cannot handle multiselection so we handle
-        # it ourself
-        if 'selected' in variables \
-                and self.isMultiSelect() \
-                and self._multiSelectMode == self.MultiSelectMode.DEFAULT:
+        # AbstractSelect cannot handle multiselection so we
+        # handle it ourself
+        if ('selected' in variables
+                and self.isMultiSelect()
+                and self._multiSelectMode == MultiSelectMode.DEFAULT):
             self.handleSelectedItems(variables)
             variables = dict(variables)
             del variables['selected']
@@ -358,10 +347,10 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
             if len(st) == 2:
                 itemId = self.itemIdMapper.get(st[0].strip())
                 action = self._actionMapper.get(st[1].strip())
-                if action is not None \
-                        and (itemId is None) \
-                        or self.containsId(itemId) \
-                        and self._actionHandlers is not None:
+                if (action is not None
+                        and (itemId is None)
+                        or self.containsId(itemId)
+                        and self._actionHandlers is not None):
                     for ah in self._actionHandlers:
                         ah.handleAction(action, self, itemId)
 
@@ -378,10 +367,10 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
         s = list()
         for i in range(len(ka)):
             idd = self.itemIdMapper.get(ka[i])
-            if not self.isNullSelectionAllowed() \
-                    and (idd is None) \
-                    or (idd == self.getNullSelectionItemId()):
-                # skip empty selection if nullselection is not allowed
+            if (not self.isNullSelectionAllowed()
+                    and (idd is None)
+                    or (idd == self.getNullSelectionItemId())):
+                # skip empty selection if null selection is not allowed
                 self.requestRepaint()
             elif idd is not None and self.containsId(idd):
                 s.append(idd)
@@ -395,7 +384,8 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
 
 
     def paintContent(self, target):
-        """Paints any needed component-specific things to the given UIDL stream.
+        """Paints any needed component-specific things to the given UIDL
+        stream.
 
         @see com.vaadin.ui.AbstractComponent#paintContent(PaintTarget)
         """
@@ -403,7 +393,8 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
 
         if self._partialUpdate:
             target.addAttribute('partialUpdate', True)
-            target.addAttribute('rootKey', self.itemIdMapper.key(self._expandedItemId))
+            target.addAttribute('rootKey',
+                    self.itemIdMapper.key(self._expandedItemId))
         else:
             self.getCaptionChangeListener().clear()
 
@@ -413,9 +404,14 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
 
             # Paint tree attributes
             if self.isSelectable():
-                target.addAttribute('selectmode', 'multi' if self.isMultiSelect() else 'single')
                 if self.isMultiSelect():
-                    target.addAttribute('multiselectmode', MultiSelectMode.values().index(self._multiSelectMode))
+                    target.addAttribute('selectmode', 'multi')
+                else:
+                    target.addAttribute('selectmode', 'single')
+
+                if self.isMultiSelect():
+                    target.addAttribute('multiselectmode',
+                        MultiSelectMode.values().index(self._multiSelectMode))
             else:
                 target.addAttribute('selectmode', 'none')
 
@@ -425,8 +421,8 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
             if self.isNullSelectionAllowed():
                 target.addAttribute('nullselect', True)
 
-            if self._dragMode != self.TreeDragMode.NONE:
-                target.addAttribute('dragMode', self._dragMode.ordinal())
+            if self._dragMode != TreeDragMode.NONE:
+                target.addAttribute('dragMode', self._dragMode)
 
         # Initialize variables
         actionSet = set()
@@ -520,9 +516,9 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
                     target.addAttribute('al', keys)
 
                 # Adds the children if expanded, or close the tag
-                if self.isExpanded(itemId) \
-                        and self.hasChildren(itemId) \
-                        and self.areChildrenAllowed(itemId):
+                if (self.isExpanded(itemId)
+                        and self.hasChildren(itemId)
+                        and self.areChildrenAllowed(itemId)):
                     iteratorStack.append(self.getChildren(itemId))
                 elif isNode:
                     target.endTag('node')
@@ -534,7 +530,7 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
                 iteratorStack.pop()
 
                 # Closes node
-                if not iteratorStack.isEmpty():
+                if len(iteratorStack) > 0:
                     target.endTag('node')
 
         # Actions
@@ -562,11 +558,11 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
             target.addVariable(self, 'selected', selectedKeys)
 
             # Expand and collapse
-            target.addVariable(self, 'expand', [])
-            target.addVariable(self, 'collapse', [])
+            target.addVariable(self, 'expand', list())
+            target.addVariable(self, 'collapse', list())
 
             # New items
-            target.addVariable(self, 'newitem', [])
+            target.addVariable(self, 'newitem', list())
             if self._dropHandler is not None:
                 self._dropHandler.getAcceptCriterion().paint(target)
 
@@ -574,7 +570,7 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
     def areChildrenAllowed(self, itemId):
         """Tests if the Item with given ID can have any children.
 
-        @see com.vaadin.data.Container.Hierarchical#areChildrenAllowed(Object)
+        @see Container.Hierarchical.areChildrenAllowed(Object)
         """
         return self.items.areChildrenAllowed(itemId)
 
@@ -582,7 +578,7 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
     def getChildren(self, itemId):
         """Gets the IDs of all Items that are children of the specified Item.
 
-        @see com.vaadin.data.Container.Hierarchical#getChildren(Object)
+        @see Container.Hierarchical.getChildren(Object)
         """
         return self.items.getChildren(itemId)
 
@@ -590,21 +586,23 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
     def getParent(self, itemId):
         """Gets the ID of the parent Item of the specified Item.
 
-        @see com.vaadin.data.Container.Hierarchical#getParent(Object)
+        @see Container.Hierarchical.getParent(Object)
         """
         return self.items.getParent(itemId)
 
 
     def hasChildren(self, itemId):
-        """Tests if the Item specified with <code>itemId</code> has child Items.
+        """Tests if the Item specified with <code>itemId</code> has child
+        Items.
 
-        @see com.vaadin.data.Container.Hierarchical#hasChildren(Object)
+        @see Container.Hierarchical.hasChildren(Object)
         """
         return self.items.hasChildren(itemId)
 
 
     def isRoot(self, itemId):
-        """Tests if the Item specified with <code>itemId</code> is a root Item.
+        """Tests if the Item specified with <code>itemId</code> is a root
+        Item.
 
         @see com.vaadin.data.Container.Hierarchical#isRoot(Object)
         """
@@ -612,7 +610,8 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
 
 
     def rootItemIds(self):
-        """Gets the IDs of all Items in the container that don't have a parent.
+        """Gets the IDs of all Items in the container that don't have a
+        parent.
 
         @see com.vaadin.data.Container.Hierarchical#rootItemIds()
         """
@@ -622,8 +621,7 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
     def setChildrenAllowed(self, itemId, areChildrenAllowed):
         """Sets the given Item's capability to have children.
 
-        @see com.vaadin.data.Container.Hierarchical#setChildrenAllowed(Object,
-             boolean)
+        @see com.vaadin.data.Container.Hierarchical#setChildrenAllowed()
         """
         success = self.items.setChildrenAllowed(itemId, areChildrenAllowed)
         if success:
@@ -643,21 +641,22 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
     def setContainerDataSource(self, newDataSource):
         """Sets the Container that serves as the data source of the viewer.
 
-        @see com.vaadin.data.Container.Viewer#setContainerDataSource(Container)
+        @see Container.Viewer#setContainerDataSource(Container)
         """
         if newDataSource is None:
-            # Note: using wrapped IndexedContainer to match constructor (super
-            # creates an IndexedContainer, which is then wrapped).
+            # Note: using wrapped IndexedContainer to match constructor
+            # (super creates an IndexedContainer, which is then wrapped).
             raise NotImplementedError
             #newDataSource = ContainerHierarchicalWrapper(IndexedContainer())
 
         # Assure that the data source is ordered by making unordered
         # containers ordered by wrapping them
-        if issubclass(newDataSource.__class__, Hierarchical):
+        if issubclass(newDataSource.__class__, Container.Hierarchical):
             super(Tree, self).setContainerDataSource(newDataSource)
         else:
             raise NotImplementedError
-            #super(Tree, self).setContainerDataSource(ContainerHierarchicalWrapper(newDataSource))
+            #super(Tree, self).setContainerDataSource(
+            #    ContainerHierarchicalWrapper(newDataSource))
 
 
     def addListener(self, listener):
@@ -672,14 +671,15 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
                    the Listener to be added.
         """
         if isinstance(listener, ICollapseListener):
-            self.addListener(CollapseEvent, listener,
-                             ICollapseListener.COLLAPSE_METHOD)
+            AbstractComponent.addListener(self, CollapseEvent, listener,
+                    ICollapseListener.COLLAPSE_METHOD)
         elif isinstance(listener, IExpandListener):
-            self.addListener(ExpandEvent, listener,
-                             IExpandListener.EXPAND_METHOD)
+            AbstractComponent.addListener(self, ExpandEvent, listener,
+                    IExpandListener.EXPAND_METHOD)
         else:
-            self.addListener(VTree.ITEM_CLICK_EVENT_ID, ItemClickEvent,
-                             listener, ItemClickEvent.ITEM_CLICK_METHOD)
+            AbstractComponent.addListener(self, VTree.ITEM_CLICK_EVENT_ID,
+                    ItemClickEvent, listener,
+                    ItemClickEvent.ITEM_CLICK_METHOD)
 
 
     def removeListener(self, listener):
@@ -694,13 +694,14 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
                    the Listener to be removed.
         """
         if isinstance(listener, ICollapseListener):
-            self.removeListener(CollapseEvent, listener,
-                                ICollapseListener.COLLAPSE_METHOD)
+            AbstractComponent.removeListener(self, CollapseEvent, listener,
+                    ICollapseListener.COLLAPSE_METHOD)
         elif isinstance(listener, IExpandListener):
-            self.removeListener(ExpandEvent, listener,
-                                IExpandListener.EXPAND_METHOD)
+            AbstractComponent.removeListener(self, ExpandEvent, listener,
+                    IExpandListener.EXPAND_METHOD)
         else:
-            self.removeListener(VTree.ITEM_CLICK_EVENT_ID, ItemClickEvent, listener)
+            AbstractComponent.removeListener(self, VTree.ITEM_CLICK_EVENT_ID,
+                    ItemClickEvent, listener)
 
 
     def fireExpandEvent(self, itemId):
@@ -724,7 +725,7 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
     def addActionHandler(self, actionHandler):
         """Adds an action handler.
 
-        @see com.vaadin.event.Action.Container#addActionHandler(Action.Handler)
+        @see Action.Container#addActionHandler(Action.Handler)
         """
         if actionHandler is not None:
             if self._actionHandlers is None:
@@ -738,10 +739,10 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
     def removeActionHandler(self, actionHandler):
         """Removes an action handler.
 
-        @see com.vaadin.event.Action.Container#removeActionHandler(Action.Handler)
+        @see Action.Container#removeActionHandler(Action.Handler)
         """
-        if self._actionHandlers is not None \
-                and actionHandler in self._actionHandlers:
+        if (self._actionHandlers is not None
+                and actionHandler in self._actionHandlers):
             self._actionHandlers.remove(actionHandler)
             if len(self._actionHandlers) > 0:
                 self._actionHandlers = None
@@ -789,7 +790,7 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
     def setNullSelectionItemId(self, nullSelectionItemId):
         """Tree does not support <code>setNullSelectionItemId</code>.
 
-        @see com.vaadin.ui.AbstractSelect#setNullSelectionItemId(java.lang.Object)
+        @see AbstractSelect#setNullSelectionItemId(java.lang.Object)
         """
         if nullSelectionItemId is not None:
             raise NotImplementedError
@@ -807,13 +808,14 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
 
 
     def setLazyLoading(self, useLazyLoading):
-        """Tree does not support lazy options loading mode. Setting this true will
-        throw UnsupportedOperationException.
+        """Tree does not support lazy options loading mode. Setting this
+        true will throw UnsupportedOperationException.
 
         @see com.vaadin.ui.Select#setLazyLoading(boolean)
         """
         if useLazyLoading:
-            raise NotImplementedError, 'Lazy options loading is not supported by Tree.'
+            raise NotImplementedError, \
+                    'Lazy options loading is not supported by Tree.'
 
 
     def setItemStyleGenerator(self, itemStyleGenerator):
@@ -828,8 +830,8 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
 
 
     def getItemStyleGenerator(self):
-        """@return the current {@link IItemStyleGenerator} for this tree. Null if
-                {@link IItemStyleGenerator} is not set.
+        """@return the current {@link IItemStyleGenerator} for this tree.
+                   Null if {@link IItemStyleGenerator} is not set.
         """
         return self._itemStyleGenerator
 
@@ -860,8 +862,8 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
 
 
     def setDragMode(self, dragMode):
-        """Sets the drag mode that controls how Tree behaves as a {@link IDragSource}
-        .
+        """Sets the drag mode that controls how Tree behaves as a
+        {@link IDragSource}.
 
         @param dragMode
         """
@@ -871,7 +873,7 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
 
     def getDragMode(self):
         """@return the drag mode that controls how Tree behaves as a
-                {@link IDragSource}.
+                   {@link IDragSource}.
 
         @see TreeDragMode
         """
@@ -879,7 +881,7 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
 
 
     def getTransferable(self, payload):
-        transferable = self.TreeTransferable(self, payload)
+        transferable = TreeTransferable(self, payload)
         # updating drag source variables
         obj = payload.get('itemId')
 
@@ -889,10 +891,28 @@ class Tree(AbstractSelect, Container, Hierarchical, Action, Container,
         return transferable
 
 
+class TreeDragMode(object):
+    """Supported drag modes for Tree."""
+    # When drag mode is NONE, dragging from Tree is not supported. Browsers
+    # may still support selecting text/icons from Tree which can initiate
+    # HTML 5 style drag and drop operation.
+    NONE = 'NONE'
+
+    # When drag mode is NODE, users can initiate drag from Tree nodes that
+    # represent {@link Item}s in from the backed {@link Container}.
+    NODE = 'NODE'
+
+    _values = [NONE, NODE]
+
+    @classmethod
+    def values(cls):
+        return cls._enum_values[:]
+
+
 class ExpandEvent(ComponentEvent):
-    """Event to fired when a node is expanded. ExapandEvent is fired when a node
-    is to be expanded. it can me used to dynamically fill the sub-nodes of
-    the node.
+    """Event to fired when a node is expanded. ExapandEvent is fired when a
+    node is to be expanded. it can me used to dynamically fill the sub-nodes
+    of the node.
 
     @author IT Mill Ltd.
     @author Richard Lincoln
@@ -936,7 +956,8 @@ class IExpandListener(object):
         """
         raise NotImplementedError
 
-IExpandListener.EXPAND_METHOD = getattr(IExpandListener, 'nodeExpand')  # FIXME
+
+    EXPAND_METHOD = nodeExpand
 
 
 class CollapseEvent(ComponentEvent):
@@ -984,12 +1005,12 @@ class ICollapseListener(object):
         """
         raise NotImplementedError
 
-ICollapseListener.COLLAPSE_METHOD = getattr(ICollapseListener, 'nodeCollapse')  # FIXME
+    COLLAPSE_METHOD = nodeCollapse
 
 
 class IItemStyleGenerator(object):
-    """IItemStyleGenerator can be used to add custom styles to tree items. The
-    CSS class name that will be added to the cell content is
+    """IItemStyleGenerator can be used to add custom styles to tree items.
+    The CSS class name that will be added to the cell content is
     <tt>v-tree-node-[style name]</tt>.
     """
 
@@ -998,8 +1019,8 @@ class IItemStyleGenerator(object):
 
         @param itemId
                    The itemId of the item to be painted
-        @return The style name to add to this item. (the CSS class name will
-                be v-tree-node-[style name]
+        @return The style name to add to this item. (the CSS class name
+                will be v-tree-node-[style name]
         """
         raise NotImplementedError
 
@@ -1025,31 +1046,31 @@ class TreeTargetDetails(AbstractSelectTargetDetails):
         The identifier of the parent node is also returned if the cursor is
         on the top part of node. Else this method returns the same as
         {@link #getItemIdOver()}.
-        <p>
+
         In other words this method returns the identifier of the "folder"
         into the drag operation is targeted.
-        <p>
+
         If the method returns null, the current target is on a root node or
         on other undefined area over the tree component.
-        <p>
+
         The default Tree implementation marks the targetted tree node with
         CSS classnames v-tree-node-dragfolder and
         v-tree-node-caption-dragfolder (for the caption element).
         """
         itemIdOver = self.getItemIdOver()
 
-        if self.areChildrenAllowed(itemIdOver) \
-                and self.getDropLocation() == VerticalDropLocation.MIDDLE:
+        if (self.areChildrenAllowed(itemIdOver)
+                and self.getDropLocation() == VerticalDropLocation.MIDDLE):
             return itemIdOver
 
         return self.getParent(itemIdOver)
 
 
     def getItemIdAfter(self):
-        """If drop is targeted into "folder node" (see {@link #getItemIdInto()}
-        ), this method returns the item id of the node after the drag was
-        targeted. This method is useful when implementing drop into specific
-        location (between specific nodes) in tree.
+        """If drop is targeted into "folder node" (see {@link
+        #getItemIdInto()}), this method returns the item id of the node after
+        the drag was targeted. This method is useful when implementing drop
+        into specific location (between specific nodes) in tree.
 
         @return the id of the item after the user targets the drop or null if
                 "target" is a first item in node list (or the first in root
@@ -1103,11 +1124,10 @@ class TreeTransferable(DataBoundTransferable):
 
 
 class TreeDropCriterion(ServerSideCriterion):
-    """Lazy loading accept criterion for Tree. Accepted target nodes are loaded
-    from server once per drag and drop operation. Developer must override one
-    method that decides accepted tree nodes for the whole Tree.
+    """Lazy loading accept criterion for Tree. Accepted target nodes are
+    loaded from server once per drag and drop operation. Developer must
+    override one method that decides accepted tree nodes for the whole Tree.
 
-    <p>
     Initially pretty much no data is sent to client. On first required
     criterion check (per drag request) the client side data structure is
     initialized from server and no subsequent requests requests are needed
@@ -1120,7 +1140,7 @@ class TreeDropCriterion(ServerSideCriterion):
 
 
     def getIdentifier(self):
-        return TreeDropCriterion.__class__.__name__  # FIXME: getCanonicalName
+        return clsname(TreeDropCriterion)
 
 
     def accept(self, dragEvent):
@@ -1131,8 +1151,8 @@ class TreeDropCriterion(ServerSideCriterion):
 
 
     def paintResponse(self, target):
-        # send allowed nodes to client so subsequent requests can be
-        # avoided
+        # send allowed nodes to client so subsequent requests
+        # can be avoided
         arry = list(self._allowedItemIds)
         for i in range(len(arry)):
             key = self._tree.key(arry[i])
@@ -1147,7 +1167,7 @@ class TreeDropCriterion(ServerSideCriterion):
 class TargetItemAllowsChildren(TargetDetailIs):
     """A criterion that accepts {@link Transferable} only directly on a tree
     node that can have children.
-    <p>
+
     Class is singleton, use {@link TargetItemAllowsChildren#get()} to get the
     instance.
 
@@ -1156,9 +1176,12 @@ class TargetItemAllowsChildren(TargetDetailIs):
     @since 6.3
     """
 
+    INSTANCE = None
+
     @classmethod
     def get(cls):
-        return TargetItemAllowsChildren_INSTANCE
+        return cls.INSTANCE
+
 
     def __init__(self):
         # Uses enhanced server side check
@@ -1176,25 +1199,26 @@ class TargetItemAllowsChildren(TargetDetailIs):
                 return False
 
             # return true if directly over
-            return eventDetails.getDropLocation() == VerticalDropLocation.MIDDLE
+            return (eventDetails.getDropLocation()
+                        == VerticalDropLocation.MIDDLE)
         except Exception:
             return False
 
-TargetItemAllowsChildren_INSTANCE = TargetItemAllowsChildren()
+TargetItemAllowsChildren.INSTANCE = TargetItemAllowsChildren()
 
 
 class TargetInSubtree(ClientSideCriterion):
-    """An accept criterion that checks the parent node (or parent hierarchy) for
-    the item identifier given in constructor. If the parent is found, content
-    is accepted. Criterion can be used to accepts drags on a specific sub
-    tree only.
-    <p>
+    """An accept criterion that checks the parent node (or parent hierarchy)
+    for the item identifier given in constructor. If the parent is found,
+    content is accepted. Criterion can be used to accepts drags on a specific
+    sub tree only.
+
     The root items is also consider to be valid target.
     """
 
     def __init__(self, rootId, depthToCheck=None):
-        """Constructs a criteria that accepts the drag if the targeted Item is a
-        descendant of Item identified by given id
+        """Constructs a criteria that accepts the drag if the targeted Item
+        is a descendant of Item identified by given id
 
         @param parentItemId
                    the item identifier of the parent node
@@ -1223,9 +1247,9 @@ class TargetInSubtree(ClientSideCriterion):
             if eventDetails.getItemIdOver() is not None:
                 itemId = eventDetails.getItemIdOver()
                 i = 0
-                while itemId is not None \
-                        and (self._depthToCheck == -1) \
-                        or (i <= self._depthToCheck):
+                while (itemId is not None
+                        and (self._depthToCheck == -1)
+                        or (i <= self._depthToCheck)):
                     if itemId == self._rootId:
                         return True
                     itemId = self.getParent(itemId)
