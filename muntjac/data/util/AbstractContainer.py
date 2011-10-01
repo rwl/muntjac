@@ -14,9 +14,11 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.data.IContainer import IContainer, IItemSetChangeEvent, IPropertySetChangeEvent,\
-    IItemSetChangeListener
 from muntjac.event import EventObject
+
+from muntjac.data.IContainer import \
+    (IContainer, IItemSetChangeEvent, IPropertySetChangeEvent,
+     IItemSetChangeListener)
 
 
 class AbstractContainer(IContainer):
@@ -57,7 +59,7 @@ class AbstractContainer(IContainer):
         """
         if isinstance(listener, IItemSetChangeListener):
             if self.getItemSetChangeListeners() is None:
-                self.setItemSetChangeListeners(list())
+                self.setItemSetChangeListeners( list() )
             self.getItemSetChangeListeners().append(listener)
         else:
             if self.getPropertySetChangeListeners() is None:
@@ -173,9 +175,10 @@ class AbstractContainer(IContainer):
         return list
 
 
-class BasePropertySetChangeEvent(EventObject, IContainer, IPropertySetChangeEvent):
-    """An <code>event</code> object specifying the container whose Property set
-    has changed.
+class BasePropertySetChangeEvent(EventObject, IContainer,
+            IPropertySetChangeEvent):
+    """An <code>event</code> object specifying the container whose Property
+    set has changed.
 
     This class does not provide information about which properties were
     concerned by the change, but subclasses can provide additional
@@ -191,8 +194,8 @@ class BasePropertySetChangeEvent(EventObject, IContainer, IPropertySetChangeEven
 
 
 class BaseItemSetChangeEvent(EventObject, IContainer, IItemSetChangeEvent):
-    """An <code>event</code> object specifying the container whose Item set has
-    changed.
+    """An <code>event</code> object specifying the container whose Item set
+    has changed.
 
     This class does not provide information about the exact changes
     performed, but subclasses can add provide additional information about

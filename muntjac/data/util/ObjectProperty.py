@@ -70,17 +70,16 @@ class ObjectProperty(AbstractProperty):
         self._type = None
 
         # the cast is safe, because an object of type T has class Class<T>
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            value, = _0
+        nargs = len(args)
+        if nargs == 1:
+            value, = args
             self.__init__(value, value.getClass())
-        elif _1 == 2:
-            value, typ = _0
+        elif nargs == 2:
+            value, typ = args
             self._type = typ
             self.setValue(value)
-        elif _1 == 3:
-            value, typ, readOnly = _0
+        elif nargs == 3:
+            value, typ, readOnly = args
             self.__init__(value, typ)
             self.setReadOnly(readOnly)
         else:
@@ -123,16 +122,19 @@ class ObjectProperty(AbstractProperty):
         # Checks the mode
         if self.isReadOnly():
             raise ReadOnlyException()
+
         # Tries to assign the compatible value directly
-        if (newValue is None) or self._type.isAssignableFrom(newValue.getClass()):
+        if newValue is None or issubclass(newValue.__class__, self._type):
             value = newValue
             self._value = value
         else:
             # Gets the string constructor
             try:
-                constr = self.getType().getConstructor([str])
+                #constr = self.getType().getConstructor([str])
+                constr = self.getType().__init__  # FIXME: getConstructor
                 # Creates new object from the string
                 value = constr([str(newValue)])
             except Exception, e:
                 raise ConversionException(e)
+
         self.fireValueChange()

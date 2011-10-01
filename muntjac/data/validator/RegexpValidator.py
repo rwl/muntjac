@@ -23,14 +23,11 @@ class RegexpValidator(AbstractStringValidator):
     """String validator comparing the string against a Java regular expression. Both
     complete matches and substring matches are supported.
 
-    <p>
     For the Java regular expression syntax, see
     {@link java.util.regex.Pattern#sum}
-    </p>
-    <p>
+
     See {@link com.vaadin.data.validator.AbstractStringValidator} for more
     information.
-    </p>
 
     @author IT Mill Ltd.
     @author Richard Lincoln
@@ -43,7 +40,7 @@ class RegexpValidator(AbstractStringValidator):
         complete string to validate.
 
         @param regexp
-                   a Java regular expression
+                   a regular expression
         @param errorMessage
                    the message to display in case the value does not validate.
         ---
@@ -51,7 +48,7 @@ class RegexpValidator(AbstractStringValidator):
         string to validate.
 
         @param regexp
-                   a Java regular expression
+                   a regular expression
         @param complete
                    true to use check for a complete match, false to look for a
                    matching substring
@@ -62,7 +59,6 @@ class RegexpValidator(AbstractStringValidator):
         self._complete = None
         self._matcher = None
 
-        args = args
         nargs = len(args)
         if nargs == 2:
             regexp, errorMessage = args

@@ -38,4 +38,5 @@ class EmailValidator(RegexpValidator):
         @param errorMessage
                    the message to display in case the value does not validate.
         """
-        super(EmailValidator, self)('^([a-zA-Z0-9_\\.\\-+])+@(([a-zA-Z0-9-])+\\.)+([a-zA-Z0-9]{2,4})+$', True, errorMessage)
+        super(EmailValidator, self)(('^([a-zA-Z0-9_\\.\\-+])+'
+            '@(([a-zA-Z0-9-])+\\.)+([a-zA-Z0-9]{2,4})+$'), True, errorMessage)

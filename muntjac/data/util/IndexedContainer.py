@@ -14,8 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.data.IProperty import \
-    IProperty, ValueChangeEvent, IValueChangeNotifier, ConversionException
+from muntjac.data import IProperty
 
 from muntjac.data.IItem import IItem
 
@@ -25,21 +24,23 @@ from muntjac.data.util.AbstractInMemoryContainer import \
 from muntjac.data.util.filter.SimpleStringFilter import \
     SimpleStringFilter
 
-from muntjac.data.IContainer import \
-    IContainer, IFilterable, IPropertySetChangeNotifier, \
-    ISimpleFilterable, ISortable, IPropertySetChangeListener
-from muntjac.data.util.filter.UnsupportedFilterException import UnsupportedFilterException
-from muntjac.data.util.AbstractContainer import BaseItemSetChangeEvent
-from muntjac.event import EventObject
+from muntjac.data.util.filter.UnsupportedFilterException import \
+    UnsupportedFilterException
 
-# item type is really IndexedContainerItem, but using IItem not to show it in
-# public API
-class IndexedContainer(AbstractInMemoryContainer, IContainer,
-                       IPropertySetChangeNotifier, IProperty,
-                       IValueChangeNotifier, IContainer, ISortable,
-                       IFilterable, ISimpleFilterable):
+from muntjac.data.util.AbstractContainer import BaseItemSetChangeEvent
+
+from muntjac.data import IContainer
+from muntjac.event import EventObject
+from muntjac.terminal import fullname
+
+# item type is really IndexedContainerItem, but using IItem
+# not to show it in public API
+class IndexedContainer(AbstractInMemoryContainer,
+            IContainer.IPropertySetChangeNotifier,
+            IProperty.IValueChangeNotifier, IContainer.ISortable,
+            IContainer.IFilterable, IContainer.ISimpleFilterable):
     """An implementation of the <code>{@link IContainer.Indexed}</code> interface
-    with all important features.</p>
+    with all important features.
 
     Features:
     <ul>
@@ -68,15 +69,15 @@ class IndexedContainer(AbstractInMemoryContainer, IContainer,
         # IProperty ID to type mapping.
         _types = dict()
 
-        # Hash of Items, where each IItem is implemented as a mapping from IProperty
-        # ID to IProperty value.
+        # Hash of Items, where each IItem is implemented as a mapping from
+        # IProperty ID to IProperty value.
         _items = dict()
 
         # Set of properties that are read-only.
         _readOnlyProperties = set()
 
-        # List of all IProperty value change event listeners listening all the
-        # properties.
+        # List of all IProperty value change event listeners listening all
+        # the properties.
         _propertyValueChangeListeners = None
 
         # Data structure containing all listeners interested in changes to single
@@ -93,7 +94,8 @@ class IndexedContainer(AbstractInMemoryContainer, IContainer,
 
         if self._items is not None:
             for itemId in itemIds:
-                self.internalAddItemAtEnd(itemId, IndexedContainerItem(itemId), False)
+                self.internalAddItemAtEnd(itemId,
+                        IndexedContainerItem(itemId), False)
 
             self.filterAll()
 
@@ -129,7 +131,7 @@ class IndexedContainer(AbstractInMemoryContainer, IContainer,
 
     def addContainerProperty(self, propertyId, typ, defaultValue):
         # Fails, if nulls are given
-        if (propertyId is None) or (typ is None):
+        if propertyId is None or typ is None:
             return False
 
         # Fails if the IProperty is already present
@@ -144,7 +146,8 @@ class IndexedContainer(AbstractInMemoryContainer, IContainer,
         if defaultValue is not None:
             # for existing rows
             for item in self.getAllItemIds():
-                self.getItem(item).getItemProperty(propertyId).setValue(defaultValue)
+                prop = self.getItem(item).getItemProperty(propertyId)
+                prop.setValue(defaultValue)
 
             # store for next rows
             if self._defaultPropertyValues is None:
@@ -182,8 +185,7 @@ class IndexedContainer(AbstractInMemoryContainer, IContainer,
             return idd
         else:
             item = self.internalAddItemAtEnd(itemId,
-                                             IndexedContainerItem(itemId),
-                                             False)
+                    IndexedContainerItem(itemId), False)
             if not self.isFiltered():
                 # always the last item
                 self.fireItemAdded(self.size() - 1, itemId, item)
@@ -198,8 +200,7 @@ class IndexedContainer(AbstractInMemoryContainer, IContainer,
     def addDefaultValues(self, t):
         """Helper method to add default values for items if available
 
-        @param t
-                   data table of added item
+        @param t: data table of added item
         """
         if self._defaultPropertyValues is not None:
             for key in self._defaultPropertyValues.keys():
@@ -254,7 +255,8 @@ class IndexedContainer(AbstractInMemoryContainer, IContainer,
                 return None
         else:
 
-            return self.internalAddItemAfter(previousItemId, newItemId, self.IndexedContainerItem(newItemId), True)
+            return self.internalAddItemAfter(previousItemId, newItemId,
+                    IndexedContainerItem(newItemId), True)
 
 
     def addItemAt(self, index, newItemId=None):
@@ -264,15 +266,13 @@ class IndexedContainer(AbstractInMemoryContainer, IContainer,
             self.addItemAt(index, idd)
             return idd
         else:
-            return self.internalAddItemAt(index,
-                                          newItemId,
-                                          IndexedContainerItem(newItemId),
-                                          True)
+            return self.internalAddItemAt(index, newItemId,
+                    IndexedContainerItem(newItemId), True)
 
 
     def generateId(self):
-        """Generates an unique identifier for use as an item id. Guarantees that the
-        generated id is not currently used as an id.
+        """Generates an unique identifier for use as an item id. Guarantees
+        that the generated id is not currently used as an id.
 
         @return
         """
@@ -291,7 +291,7 @@ class IndexedContainer(AbstractInMemoryContainer, IContainer,
 
 
     def addListener(self, listener):
-        if isinstance(listener, IPropertySetChangeListener):
+        if isinstance(listener, IContainer.IPropertySetChangeListener):
             super(IndexedContainer, self).addListener(listener)
         else:
             if self._propertyValueChangeListeners is None:
@@ -300,7 +300,7 @@ class IndexedContainer(AbstractInMemoryContainer, IContainer,
 
 
     def removeListener(self, listener):
-        if isinstance(listener, IPropertySetChangeListener):
+        if isinstance(listener, IContainer.IPropertySetChangeListener):
             super(IndexedContainer, self).removeListener(listener)
         else:
             if self._propertyValueChangeListeners is not None:
@@ -322,7 +322,10 @@ class IndexedContainer(AbstractInMemoryContainer, IContainer,
 
         # Sends event to single property value change listeners
         if self._singlePropertyValueChangeListeners is not None:
-            propertySetToListenerListMap = self._singlePropertyValueChangeListeners.get(source.propertyId)
+
+            propertySetToListenerListMap = \
+                self._singlePropertyValueChangeListeners.get(source.propertyId)
+
             if propertySetToListenerListMap is not None:
                 listenerList = propertySetToListenerListMap.get(source.itemId)
                 if listenerList is not None:
@@ -333,7 +336,7 @@ class IndexedContainer(AbstractInMemoryContainer, IContainer,
 
 
     def getListeners(self, eventType):
-        if issubclass(eventType, ValueChangeEvent):
+        if issubclass(eventType, IProperty.ValueChangeEvent):
             if self._propertyValueChangeListeners is None:
                 return list()
             else:
@@ -363,14 +366,21 @@ class IndexedContainer(AbstractInMemoryContainer, IContainer,
         if listener is not None:
             if self._singlePropertyValueChangeListeners is None:
                 self._singlePropertyValueChangeListeners = dict()
-            propertySetToListenerListMap = self._singlePropertyValueChangeListeners.get(propertyId)
+
+            propertySetToListenerListMap = \
+                    self._singlePropertyValueChangeListeners.get(propertyId)
+
             if propertySetToListenerListMap is None:
                 propertySetToListenerListMap = dict()
-                self._singlePropertyValueChangeListeners[propertyId] = propertySetToListenerListMap
+                self._singlePropertyValueChangeListeners[propertyId] = \
+                        propertySetToListenerListMap
+
             listenerList = propertySetToListenerListMap.get(itemId)
+
             if listenerList is None:
                 listenerList = list()
                 propertySetToListenerListMap[itemId] = listenerList
+
             listenerList.append(listener)
 
 
@@ -384,17 +394,23 @@ class IndexedContainer(AbstractInMemoryContainer, IContainer,
         @param listener
                    the listener to be removed.
         """
-        if listener is not None \
-                and self._singlePropertyValueChangeListeners is not None:
-            propertySetToListenerListMap = self._singlePropertyValueChangeListeners.get(propertyId)
+        if (listener is not None
+                and self._singlePropertyValueChangeListeners is not None):
+
+            propertySetToListenerListMap = \
+                    self._singlePropertyValueChangeListeners.get(propertyId)
+
             if propertySetToListenerListMap is not None:
                 listenerList = propertySetToListenerListMap.get(itemId)
+
                 if listenerList is not None:
                     listenerList.remove(listener)
                     if len(listenerList) == 0:
                         del propertySetToListenerListMap[itemId]
+
                 if len(propertySetToListenerListMap) == 0:
                     del self._singlePropertyValueChangeListeners[propertyId]
+
             if len(self._singlePropertyValueChangeListeners) == 0:
                 self._singlePropertyValueChangeListeners = None
 
@@ -428,16 +444,53 @@ class IndexedContainer(AbstractInMemoryContainer, IContainer,
         nc = IndexedContainer()
 
         # Clone the shallow properties
-        nc.setAllItemIds(self.getAllItemIds().clone() if self.getAllItemIds() is not None else None)  # FIXME: clone
-        nc.setItemSetChangeListeners(list(self.getItemSetChangeListeners()) if self.getItemSetChangeListeners() is not None else None)
-        nc.propertyIds = self._propertyIds.clone() if self._propertyIds is not None else None
-        nc.setPropertySetChangeListeners(list(self.getPropertySetChangeListeners()) if self.getPropertySetChangeListeners() is not None else None)
-        nc.propertyValueChangeListeners = self._propertyValueChangeListeners.clone() if self._propertyValueChangeListeners is not None else None
-        nc.readOnlyProperties = self._readOnlyProperties.clone() if self._readOnlyProperties is not None else None
-        nc.singlePropertyValueChangeListeners = self._singlePropertyValueChangeListeners.clone() if self._singlePropertyValueChangeListeners is not None else None
-        nc.types = self._types.clone() if self._types is not None else None
+        if self.getAllItemIds() is not None:
+            nc.setAllItemIds(self.getAllItemIds().clone())  # FIXME: clone
+        else:
+            nc.setAllItemIds(None)
+
+        if self.getItemSetChangeListeners() is not None:
+            nc.setItemSetChangeListeners(list(self.getItemSetChangeListeners()))
+        else:
+            nc.setItemSetChangeListeners(None)
+
+        if self._propertyIds is not None:
+            nc.propertyIds = self._propertyIds.clone()
+        else:
+            nc.propertyIds = None
+
+        if self.getPropertySetChangeListeners() is not None:
+            nc.setPropertySetChangeListeners(
+                    list(self.getPropertySetChangeListeners()))
+        else:
+            nc.setPropertySetChangeListeners(None)
+
+        if self._propertyValueChangeListeners is not None:
+            nc.propertyValueChangeListeners = self._propertyValueChangeListeners.clone()
+        else:
+            nc.propertyValueChangeListeners = None
+
+        if self._readOnlyProperties is not None:
+            nc.readOnlyProperties = self._readOnlyProperties.clone()
+        else:
+            nc.readOnlyProperties = None
+
+        if self._singlePropertyValueChangeListeners is not None:
+            nc.singlePropertyValueChangeListeners = self._singlePropertyValueChangeListeners.clone()
+        else:
+            nc.singlePropertyValueChangeListeners = None
+
+        if self._types is not None:
+            nc.types = self._types.clone()
+        else:
+            nc.types = None
+
         nc.setFilters(self.getFilters().clone())
-        nc.setFilteredItemIds(None if self.getFilteredItemIds() is None else self.getFilteredItemIds().clone())
+
+        if self.getFilteredItemIds() is None:
+            nc.setFilteredItemIds(None)
+        else:
+            nc.setFilteredItemIds( self.getFilteredItemIds().clone() )
 
         # Clone property-values
         if self._items is None:
@@ -457,10 +510,11 @@ class IndexedContainer(AbstractInMemoryContainer, IContainer,
             self.addFilter(fltr)
         elif nargs == 4:
             propertyId, filterString, ignoreCase, onlyMatchPrefix = args
-            # the filter instance created here is always valid for in-memory
-            # containers
+            # the filter instance created here is always valid for
+            # in-memory containers
             try:
-                self.addFilter(SimpleStringFilter(propertyId, filterString, ignoreCase, onlyMatchPrefix))
+                self.addFilter(SimpleStringFilter(propertyId, filterString,
+                        ignoreCase, onlyMatchPrefix))
             except UnsupportedFilterException:
                 pass
         else:
@@ -485,8 +539,7 @@ class IndexedContainerItem(IItem):
         """Constructs a new ListItem instance and connects it to a host
         container.
 
-        @param itemId
-                   the IItem ID of the new IItem.
+        @param itemId: the IItem ID of the new IItem.
         """
         if itemId is None:
             raise ValueError
@@ -523,7 +576,7 @@ class IndexedContainerItem(IItem):
         return retValue
 
 
-    def hashCode(self):
+    def __hash__(self):
         """Calculates a integer hash-code for the IItem that's unique inside the
         list. Two Items inside the same list have always different
         hash-codes, though Items in different lists may have identical
@@ -531,7 +584,7 @@ class IndexedContainerItem(IItem):
 
         @return A locally unique hash-code as integer
         """
-        return self._itemId.hashCode()
+        return hash(self._itemId)
 
 
     def __eq__(self, obj):
@@ -543,9 +596,11 @@ class IndexedContainerItem(IItem):
         @return <code>true</code> if the given object is the same as this
                 object, <code>false</code> if not
         """
-        if (obj is None) or (not (obj.__class__ == IndexedContainerItem)):
+        if obj is None or obj.__class__ != IndexedContainerItem:
             return False
+
         li = obj
+
         return self.getHost() == li.getHost() and self._itemId == li.itemId
 
 
@@ -560,8 +615,8 @@ class IndexedContainerItem(IItem):
 
         @see com.vaadin.data.IItem#addProperty(Object, IProperty)
         """
-        raise NotImplementedError, 'Indexed container item ' \
-                + 'does not support adding new properties'
+        raise NotImplementedError, ('Indexed container item '
+                + 'does not support adding new properties')
 
 
     def removeItemProperty(self, idd):
@@ -571,10 +626,11 @@ class IndexedContainerItem(IItem):
 
         @see com.vaadin.data.IItem#removeProperty(Object)
         """
-        raise NotImplementedError, 'Indexed container item does not support property removal'
+        raise NotImplementedError, \
+                'Indexed container item does not support property removal'
 
 
-class IndexedContainerProperty(IProperty, IValueChangeNotifier):
+class IndexedContainerProperty(IProperty, IProperty.IValueChangeNotifier):
     """A class implementing the {@link IProperty} interface to be contained in
     the {@link IndexedContainerItem} contained in the
     {@link IndexedContainer}.
@@ -641,17 +697,14 @@ class IndexedContainerProperty(IProperty, IValueChangeNotifier):
         else:
             try:
                 # Gets the string constructor
-                constr = self.getType().getConstructor([str])  # FIXME: getConstructor
+                #constr = self.getType().getConstructor([str])
+                constr = self.getType().__init__  # FIXME: getConstructor
                 # Creates new object from the string
-                propertySet.put(self._propertyId, constr([str(newValue)]))
+                propertySet[self._propertyId] = constr([str(newValue)])
             except Exception:
-                raise ConversionException, 'Conversion for value \'' \
-                        + newValue \
-                        + '\' of class ' \
-                        + newValue.__class__.__name__ \
-                        + ' to ' \
-                        + self.getType().getName() \
-                        + ' failed'
+                raise IProperty.ConversionException, ('Conversion for value \''
+                        + newValue + '\' of class ' + fullname(newValue)
+                        + ' to ' + self.getType().__name__ + ' failed')
 
         # update the container filtering if this property is being filtered
         if self.isPropertyFiltered(self._propertyId):
@@ -669,12 +722,14 @@ class IndexedContainerProperty(IProperty, IValueChangeNotifier):
                 IProperty
         """
         value = self.getValue()
+
         if value is None:
             return None
+
         return str(value)
 
 
-    def hashCode(self):
+    def __hash__(self):
         """Calculates a integer hash-code for the IProperty that's unique inside
         the IItem containing the IProperty. Two different Properties inside the
         same IItem contained in the same list always have different
@@ -683,10 +738,10 @@ class IndexedContainerProperty(IProperty, IValueChangeNotifier):
 
         @return A locally unique hash-code as integer
         """
-        return self._itemId.hashCode() ^ self._propertyId.hashCode()
+        return hash(self._itemId) ^ hash(self._propertyId)
 
 
-    def equals(self, obj):
+    def __eq__(self, obj):
         """Tests if the given object is the same as the this object. Two
         Properties got from an IItem with the same ID are equal.
 
@@ -695,20 +750,24 @@ class IndexedContainerProperty(IProperty, IValueChangeNotifier):
         @return <code>true</code> if the given object is the same as this
                 object, <code>false</code> if not
         """
-        if (obj is None) or (not (obj.__class__ == IndexedContainerProperty)):
+        if obj is None or obj.__class__ != IndexedContainerProperty:
             return False
+
         lp = obj
-        return lp.getHost() == self.getHost() \
-                and lp.propertyId == self._propertyId \
-                and lp.itemId == self._itemId
+
+        return (lp.getHost() == self.getHost()
+                and lp.propertyId == self._propertyId
+                and lp.itemId == self._itemId)
 
 
     def addListener(self, listener):
-        self.addSinglePropertyChangeListener(self._propertyId, self._itemId, listener)
+        self.addSinglePropertyChangeListener(self._propertyId,
+                self._itemId, listener)
 
 
     def removeListener(self, listener):
-        self.removeSinglePropertyChangeListener(self._propertyId, self._itemId, listener)
+        self.removeSinglePropertyChangeListener(self._propertyId,
+                self._itemId, listener)
 
 
     def getHost(self):
@@ -739,7 +798,7 @@ class IItemSetChangeEvent(BaseItemSetChangeEvent):
         return self._addedItemIndex
 
 
-class PropertyValueChangeEvent(EventObject, IProperty, ValueChangeEvent):
+class PropertyValueChangeEvent(EventObject, IProperty.ValueChangeEvent):
     """An <code>event</code> object specifying the IProperty in a list whose
     value has changed.
 

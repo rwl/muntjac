@@ -14,14 +14,12 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.data.IProperty import \
-    IProperty, IReadOnlyStatusChangeEvent, IReadOnlyStatusChangeNotifier, \
-    ValueChangeEvent, IValueChangeNotifier, IReadOnlyStatusChangeListener
+from muntjac.data import IProperty
 from muntjac.event import EventObject
 
 
-class AbstractProperty(IProperty, IProperty, IValueChangeNotifier, IProperty,
-                       IReadOnlyStatusChangeNotifier):
+class AbstractProperty(IProperty.IProperty, IProperty.IValueChangeNotifier,
+            IProperty.IReadOnlyStatusChangeNotifier):
     """Abstract base class for {@link IProperty} implementations.
 
     Handles listener management for {@link ValueChangeListener}s and
@@ -31,11 +29,12 @@ class AbstractProperty(IProperty, IProperty, IValueChangeNotifier, IProperty,
     """
 
     def __init__(self):
-        # List of listeners who are interested in the read-only status changes of
-        # the IProperty
+        # List of listeners who are interested in the read-only status
+        # changes of the IProperty
         self._readOnlyStatusChangeListeners = None
 
-        # List of listeners who are interested in the value changes of the IProperty
+        # List of listeners who are interested in the value changes of
+        # the IProperty
         self._valueChangeListeners = None
 
         # Is the IProperty read-only?
@@ -45,8 +44,8 @@ class AbstractProperty(IProperty, IProperty, IValueChangeNotifier, IProperty,
     def isReadOnly(self):
         """{@inheritDoc}
 
-        Override for additional restrictions on what is considered a read-only
-        property.
+        Override for additional restrictions on what is considered a
+        read-only property.
         """
         return self._readOnly
 
@@ -59,8 +58,8 @@ class AbstractProperty(IProperty, IProperty, IValueChangeNotifier, IProperty,
 
 
     def toString(self):
-        """Returns the value of the <code>IProperty</code> in human readable textual
-        format. The return value should be assignable to the
+        """Returns the value of the <code>IProperty</code> in human readable
+        textual format. The return value should be assignable to the
         <code>setValue</code> method if the IProperty is not in read-only mode.
 
         @return String representation of the value stored in the IProperty
@@ -77,7 +76,7 @@ class AbstractProperty(IProperty, IProperty, IValueChangeNotifier, IProperty,
         @param listener
                    the new Listener to be registered.
         """
-        if isinstance(listener, IReadOnlyStatusChangeListener):
+        if isinstance(listener, IProperty.IReadOnlyStatusChangeListener):
             if self._readOnlyStatusChangeListeners is None:
                 self._readOnlyStatusChangeListeners = list()
 
@@ -95,7 +94,7 @@ class AbstractProperty(IProperty, IProperty, IValueChangeNotifier, IProperty,
         @param listener
                    the listener to be removed.
         """
-        if isinstance(listener, IReadOnlyStatusChangeListener):
+        if isinstance(listener, IProperty.IReadOnlyStatusChangeListener):
             if self._readOnlyStatusChangeListeners is not None:
                 self._readOnlyStatusChangeListeners.remove(listener)
         else:
@@ -107,7 +106,7 @@ class AbstractProperty(IProperty, IProperty, IValueChangeNotifier, IProperty,
         """Sends a read only status change event to all registered listeners."""
         if self._readOnlyStatusChangeListeners is not None:
             l = list(self._readOnlyStatusChangeListeners)
-            event = IReadOnlyStatusChangeEvent(self)
+            event = IProperty.IReadOnlyStatusChangeEvent(self)
             for listener in l:
                 listener.readOnlyStatusChange(event)
 
@@ -116,7 +115,7 @@ class AbstractProperty(IProperty, IProperty, IValueChangeNotifier, IProperty,
         """Sends a value change event to all registered listeners."""
         if self._valueChangeListeners is not None:
             l = list(self._valueChangeListeners)
-            event = ValueChangeEvent(self)
+            event = IProperty.ValueChangeEvent(self)
             for listener in l:
                 listener.valueChange(event)
 
@@ -127,7 +126,7 @@ class AbstractProperty(IProperty, IProperty, IValueChangeNotifier, IProperty,
                 return list()
             else:
                 return list(self._valueChangeListeners)
-        elif issubclass(eventType, IReadOnlyStatusChangeEvent):
+        elif issubclass(eventType, IProperty.IReadOnlyStatusChangeEvent):
             if self._readOnlyStatusChangeListeners is None:
                 return list()
             else:
@@ -136,7 +135,7 @@ class AbstractProperty(IProperty, IProperty, IValueChangeNotifier, IProperty,
 
 
 class IReadOnlyStatusChangeEvent(EventObject, IProperty,
-                                IReadOnlyStatusChangeEvent):
+            IProperty.IReadOnlyStatusChangeEvent):
     """An <code>Event</code> object specifying the IProperty whose read-only
     status has been changed.
     """
@@ -158,7 +157,7 @@ class IReadOnlyStatusChangeEvent(EventObject, IProperty,
         return self.getSource()
 
 
-class ValueChangeEvent(EventObject, IProperty, ValueChangeEvent):
+class ValueChangeEvent(EventObject, IProperty.ValueChangeEvent):
     """An <code>Event</code> object specifying the IProperty whose value has been
     changed.
     """

@@ -18,8 +18,8 @@ from muntjac.data.IValidator import IValidator, InvalidValueException
 
 
 class NullValidator(IValidator):
-    """This validator is used for validating properties that do or do not allow null
-    values. By default, nulls are not allowed.
+    """This validator is used for validating properties that do or do not
+    allow null values. By default, nulls are not allowed.
 
     @author IT Mill Ltd.
     @author Richard Lincoln

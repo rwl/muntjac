@@ -15,15 +15,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class ItemSorter(object):  # FIXME: Comparator, Cloneable, Serializable
+class IItemSorter(object):  # FIXME: Comparator, Cloneable, Serializable
     """An item comparator which is compatible with the {@link Sortable} interface.
-    The <code>ItemSorter</code> interface can be used in <code>Sortable</code>
+    The <code>IItemSorter</code> interface can be used in <code>Sortable</code>
     implementations to provide a custom sorting method.
     """
 
     def setSortProperties(self, container, propertyId, ascending):
         """Sets the parameters for an upcoming sort operation. The parameters
-        determine what container to sort and how the <code>ItemSorter</code>
+        determine what container to sort and how the <code>IItemSorter</code>
         sorts the container.
 
         @param container
@@ -42,7 +42,7 @@ class ItemSorter(object):  # FIXME: Comparator, Cloneable, Serializable
                    {@link Sortable#sort(Object[], boolean[])} for more
                    information.
         """
-        pass
+        raise NotImplementedError
 
 
     def compare(self, itemId1, itemId2):
@@ -50,10 +50,10 @@ class ItemSorter(object):  # FIXME: Comparator, Cloneable, Serializable
         or a positive integer as the first argument is less than, equal to, or
         greater than the second.
         <p>
-        The parameters for the <code>ItemSorter</code> <code>compare()</code>
+        The parameters for the <code>IItemSorter</code> <code>compare()</code>
         method must always be item ids which exist in the container set using
         {@link #setSortProperties(Sortable, Object[], boolean[])}.
 
         @see Comparator#compare(Object, Object)
         """
-        pass
+        raise NotImplementedError

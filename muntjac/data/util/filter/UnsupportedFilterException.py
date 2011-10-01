@@ -16,8 +16,8 @@
 
 
 class UnsupportedFilterException(RuntimeError):
-    """Exception for cases where a container does not support a specific type of
-    filters.
+    """Exception for cases where a container does not support a specific
+    type of filters.
 
     If possible, this should be thrown already when adding a filter to a
     container. If a problem is not detected at that point, an
@@ -28,19 +28,18 @@ class UnsupportedFilterException(RuntimeError):
     """
 
     def __init__(self, *args):
-        _0 = args
-        _1 = len(args)
-        if _1 == 0:
+        nargs = len(args)
+        if nargs == 0:
             pass
-        elif _1 == 1:
-            if isinstance(_0[0], Exception):
-                cause, = _0
+        elif nargs == 1:
+            if isinstance(args[0], Exception):
+                cause, = args
                 super(UnsupportedFilterException, self)(cause)
             else:
-                message, = _0
+                message, = args
                 super(UnsupportedFilterException, self)(message)
-        elif _1 == 2:
-            message, cause = _0
+        elif nargs == 2:
+            message, cause = args
             super(UnsupportedFilterException, self)(message, cause)
         else:
             raise ValueError

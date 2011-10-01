@@ -46,7 +46,7 @@ class ListSet(list):
                 c, = args
                 super(ListSet, self)(c)
                 self._itemSet = set(len(c))
-                self._itemSet.addAll(c)
+                self._itemSet.union(c)
         else:
             raise ValueError, 'too many arguments'
 
@@ -57,7 +57,11 @@ class ListSet(list):
 
 
     def containsAll(self, c):
-        return self._itemSet.containsAll(c)
+        for cc in c:
+            if cc not in self._itemSet:
+                return False
+        else:
+            return True
 
     # Methods for updating the set when the list is updated.
     def add(self, *args):
@@ -73,7 +77,7 @@ class ListSet(list):
                 # Duplicates are not allowed
                 return False
             if super(ListSet, self).add(e):
-                self._itemSet.append(e)
+                self._itemSet.add(e)
                 return True
             else:
                 return False
@@ -83,7 +87,7 @@ class ListSet(list):
                 # Duplicates are not allowed
                 return
             super(ListSet, self).add(index, element)
-            self._itemSet.append(element)
+            self._itemSet.add(element)
         else:
             raise ValueError, 'invalid number of arguments'
 
@@ -97,7 +101,7 @@ class ListSet(list):
                 if e in self:
                     continue
                 if self.add(e):
-                    self._itemSet.append(e)
+                    self._itemSet.add(e)
                     modified = True
             return modified
         elif nargs == 2:
@@ -109,7 +113,7 @@ class ListSet(list):
                     continue
                 self.add(index, e)
                 index += 1
-                self._itemSet.append(e)
+                self._itemSet.add(e)
                 modified = True
             return modified
         else:
@@ -154,7 +158,8 @@ class ListSet(list):
         for idx in range(fromIndex, toIndex):
             toRemove.add(self.get(idx))
         super(ListSet, self).removeRange(fromIndex, toIndex)
-        self._itemSet.removeAll(toRemove)
+        for r in toRemove:
+            self._itemSet.remove(r)
 
 
     def set(self, index, element):  #@PydevCodeAnalysisIgnore
@@ -199,8 +204,8 @@ class ListSet(list):
 
 
     def addDuplicate(self, element):
-        """Marks the "element" can be found more than once from the list. Allowed in
-        {@link #set(int, Object)} to make sorting work.
+        """Marks the "element" can be found more than once from the list.
+        Allowed in {@link #set(int, Object)} to make sorting work.
 
         @param element
         """

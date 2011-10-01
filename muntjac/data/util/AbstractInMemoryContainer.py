@@ -15,14 +15,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.data.util.DefaultItemSorter import DefaultItemSorter
-from muntjac.data.IContainer import IContainer, IIndexed, IItemSetChangeNotifier,\
-    ISortable
+
+from muntjac.data.IContainer import \
+    IContainer, IIndexed, IItemSetChangeNotifier, ISortable
+
 from muntjac.data.util.AbstractContainer import AbstractContainer
 from muntjac.data.util.ListSet import ListSet
 
 
 class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
-                                IContainer, IIndexed):
+            IContainer, IIndexed):
     """Abstract {@link IContainer} class that handles common functionality for
     in-memory containers. Concrete in-memory container classes can either inherit
     this class, inherit {@link AbstractContainer}, or implement the
@@ -132,7 +134,6 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
         """
         pass
 
-
     # cannot override getContainerPropertyIds() and getItemIds(): if subclass
     # uses Object as ITEMIDCLASS or PROPERTYIDCLASS, Collection<Object> cannot
     # be cast to Collection<MyInterface>
@@ -140,9 +141,11 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
     # public abstract Collection<ITEMIDCLASS> getItemIds();
     # IContainer interface method implementations
 
-
     def size(self):
         return len(self.getVisibleItemIds())
+
+    def __len__(self):
+        return self.size()
 
 
     def containsId(self, itemId):
@@ -212,31 +215,45 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
 
 
     def addItemAt(self, index, newItemId=None):
-        raise NotImplementedError, 'Adding items not supported. Override the relevant addItem*() methods if required as specified in AbstractInMemoryContainer javadoc.'
+        raise NotImplementedError, ('Adding items not supported. Override the '
+                'relevant addItem*() methods if required as specified in '
+                'AbstractInMemoryContainer docstring.')
 
 
     def addItemAfter(self, previousItemId, newItemId=None):
-        raise NotImplementedError, 'Adding items not supported. Override the relevant addItem*() methods if required as specified in AbstractInMemoryContainer javadoc.'
+        raise NotImplementedError, ('Adding items not supported. Override the '
+                'relevant addItem*() methods if required as specified in '
+                'AbstractInMemoryContainer docstring.')
 
 
     def addItem(self, itemId=None):
-        raise NotImplementedError, 'Adding items not supported. Override the relevant addItem*() methods if required as specified in AbstractInMemoryContainer javadoc.'
+        raise NotImplementedError, ('Adding items not supported. Override the '
+                'relevant addItem*() methods if required as specified in '
+                'AbstractInMemoryContainer docstring.')
 
 
     def removeItem(self, itemId):
-        raise NotImplementedError, 'Removing items not supported. Override the removeItem() method if required as specified in AbstractInMemoryContainer javadoc.'
+        raise NotImplementedError, ('Removing items not supported. Override '
+                'the removeItem() method if required as specified in '
+                'AbstractInMemoryContainer docstring.')
 
 
     def removeAllItems(self):
-        raise NotImplementedError, 'Removing items not supported. Override the removeAllItems() method if required as specified in AbstractInMemoryContainer javadoc.'
+        raise NotImplementedError, ('Removing items not supported. Override '
+                'the removeAllItems() method if required as specified in '
+                'AbstractInMemoryContainer docstring.')
 
 
     def addContainerProperty(self, propertyId, typ, defaultValue):
-        raise NotImplementedError, 'Adding container properties not supported. Override the addContainerProperty() method if required.'
+        raise NotImplementedError, ('Adding container properties not '
+                'supported. Override the addContainerProperty() method '
+                'if required.')
 
 
     def removeContainerProperty(self, propertyId):
-        raise NotImplementedError, 'Removing container properties not supported. Override the addContainerProperty() method if required.'
+        raise NotImplementedError, ('Removing container properties not '
+                'supported. Override the addContainerProperty() method '
+                'if required.')
 
 
     def addListener(self, listener):
@@ -268,7 +285,8 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
         @return true if the item set has changed as a result of the filtering
         """
         if not hasFilters:
-            changed = len(self.getAllItemIds()) != len(self.getVisibleItemIds())
+            changed = (len(self.getAllItemIds())
+                    != len(self.getVisibleItemIds()))
             self.setFilteredItemIds(None)
             return changed
 
@@ -279,7 +297,7 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
             originalFilteredItemIds = list()
             wasUnfiltered = True
 
-        self.setFilteredItemIds(ListSet())
+        self.setFilteredItemIds( ListSet() )
 
         # Filter
         equal = True
@@ -304,8 +322,8 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
 
 
     def passesFilters(self, itemId):
-        """Checks if the given itemId passes the filters set for the container. The
-        caller should make sure the itemId exists in the container. For
+        """Checks if the given itemId passes the filters set for the container.
+        The caller should make sure the itemId exists in the container. For
         non-existing itemIds the behavior is undefined.
 
         @param itemId
@@ -449,7 +467,8 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
              boolean[])
         """
         if not isinstance(self, ISortable):
-            raise NotImplementedError, 'Cannot sort a IContainer that does not implement ISortable'
+            raise NotImplementedError, ('Cannot sort a IContainer '
+                    'that does not implement ISortable')
 
         # Set up the item sorter for the sort operation
         self.getItemSorter().setSortProperties(self, propertyId, ascending)
@@ -482,15 +501,16 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
 
         for propertyId in self.getContainerPropertyIds():
             propertyType = self.getType(propertyId)
-            if hasattr(propertyType, '__eq__') or isinstance(propertyType, (int, float, bool)):  # FIXME: Comparable isPrimitive
+            if (hasattr(propertyType, '__eq__')
+                    or isinstance(propertyType, (int, float, bool))):  # FIXME: Comparable isPrimitive
                 sortables.append(propertyId)
 
         return sortables
 
 
     def internalRemoveAllItems(self):
-        """Removes all items from the internal data structures of this class. This
-        can be used to implement {@link #removeAllItems()} in subclasses.
+        """Removes all items from the internal data structures of this class.
+        This can be used to implement {@link #removeAllItems()} in subclasses.
 
         No notification is sent, the caller has to fire a suitable item set
         change notification.
@@ -528,9 +548,7 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
         Fails if an item with itemId is already in the container. Returns a the
         item if it was added successfully, null otherwise.
 
-        <p>
         Caller should initiate filtering after calling this method.
-        </p>
 
         For internal use only - subclasses should use
         {@link #internalAddItemAtEnd(Object, Item, boolean)},
@@ -547,8 +565,8 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
 
         @return ITEMCLASS if the item was added successfully, null otherwise
         """
-        if position < 0 or position > len(self.getAllItemIds()) \
-                or itemId is None or item is None:
+        if (position < 0 or position > len(self.getAllItemIds())
+                or itemId is None or item is None):
             return None
 
         # Make sure that the item has not been added previously
@@ -613,8 +631,9 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
         if previousItemId is None:
             newItem = self.internalAddAt(0, newItemId, item)
         elif self.containsId(previousItemId):
-            newItem = self.internalAddAt(self.getAllItemIds().index(previousItemId) + 1,
-                                         newItemId, item)
+            newItem = self.internalAddAt(
+                    self.getAllItemIds().index(previousItemId) + 1,
+                    newItemId, item)
 
         if newItem is not None and fltr:
             # TODO filter only this item, use fireItemAdded()
@@ -650,7 +669,7 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
         else:
             # if index==size(), adds immediately after last visible item
             return self.internalAddItemAfter(self.getIdByIndex(index - 1),
-                                             newItemId, item, fltr)
+                    newItemId, item, fltr)
 
 
     def registerNewItem(self, position, itemId, item):

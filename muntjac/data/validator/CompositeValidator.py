@@ -66,7 +66,7 @@ class CompositeValidator(AbstractValidator):
 
     def validate(self, value):
         """Validates the given value.
-        <p>
+
         The value is valid, if:
         <ul>
         <li><code>MODE_AND</code>: All of the sub-validators are valid
@@ -76,7 +76,6 @@ class CompositeValidator(AbstractValidator):
         If the value is invalid, validation error is thrown. If the error message
         is set (non-null), it is used. If the error message has not been set, the
         first error occurred is thrown.
-        </p>
 
         @param value
                    the value to check.
@@ -195,17 +194,13 @@ class CompositeValidator(AbstractValidator):
     def getSubValidators(self, validatorType):
         """Gets sub-validators by class.
 
-        <p>
         If the component contains directly or recursively (it contains another
         composite containing the validator) validators compatible with given type
         they are returned. This only applies to <code>AND</code> mode composite
         validators.
-        </p>
 
-        <p>
         If the validator is in <code>OR</code> mode or does not contain any
         validators of given type null is returned.
-        </p>
 
         @return Collection<Validator> of validators compatible with given type
                 that must apply or null if none fould.
@@ -218,8 +213,8 @@ class CompositeValidator(AbstractValidator):
             if issubclass(v.__class__, validatorType):
                 found.add(v)
 
-            if isinstance(v, CompositeValidator) \
-                    and v.getMode() == self.MODE_AND:
+            if (isinstance(v, CompositeValidator)
+                    and v.getMode() == self.MODE_AND):
                 c = v.getSubValidators(validatorType)
                 if c is not None:
                     for cc in c:

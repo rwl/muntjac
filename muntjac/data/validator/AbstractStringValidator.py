@@ -21,12 +21,10 @@ class AbstractStringValidator(AbstractValidator):
     """Validator base class for validating strings. See
     {@link com.vaadin.data.validator.AbstractValidator} for more information.
 
-    <p>
     To include the value that failed validation in the exception message you can
     use "{0}" in the error message. This will be replaced with the failed value
     (converted to string using {@link #toString()}) or "null" if the value is
     null.
-    </p>
 
     @author IT Mill Ltd.
     @author Richard Lincoln
@@ -37,10 +35,8 @@ class AbstractStringValidator(AbstractValidator):
     def __init__(self, errorMessage):
         """Constructs a validator for strings.
 
-        <p>
         Null and empty string values are always accepted. To reject empty values,
         set the field being validated as required.
-        </p>
 
         @param errorMessage
                    the message to be included in an {@link InvalidValueException}
@@ -65,8 +61,10 @@ class AbstractStringValidator(AbstractValidator):
         """
         if value is None:
             return True
+
         if not isinstance(value, str):
             value = str(value)
+
         return self.isValidString(value)
 
 

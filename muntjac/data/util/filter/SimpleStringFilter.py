@@ -36,21 +36,30 @@ class SimpleStringFilter(IFilter):
 
     def __init__(self, propertyId, filterString, ignoreCase, onlyMatchPrefix):
         self.propertyId = propertyId
-        self.filterString = filterString.toLowerCase() if ignoreCase else filterString
+
+        if ignoreCase:
+            self.filterString = filterString.lower()
+        else:
+            self.filterString = filterString
+
         self.ignoreCase = ignoreCase
         self.onlyMatchPrefix = onlyMatchPrefix
 
 
     def passesFilter(self, itemId, item):
         p = item.getItemProperty(self.propertyId)
-        if (p is None) or (str(p) is None):
+
+        if p is None or str(p) is None:
             return False
-        value = str(p).toLowerCase() if self.ignoreCase else str(p)
+
+        value = str(p).lower() if self.ignoreCase else str(p)
+
         if self.onlyMatchPrefix:
             if not value.startswith(self.filterString):
                 return False
-        elif not value.contains(self.filterString):
+        elif self.filterString not in value:
             return False
+
         return True
 
 
@@ -58,29 +67,35 @@ class SimpleStringFilter(IFilter):
         return self.propertyId == propertyId
 
 
-    def equals(self, obj):
+    def __eq__(self, obj):
         # Only ones of the objects of the same class can be equal
         if not isinstance(obj, SimpleStringFilter):
             return False
         o = obj
         # Checks the properties one by one
-        if (
-            self.propertyId != o.propertyId and o.propertyId is not None and not (o.propertyId == self.propertyId)
-        ):
+        if (self.propertyId != o.propertyId
+                and o.propertyId is not None
+                and o.propertyId != self.propertyId):
             return False
-        if (
-            self.filterString != o.filterString and o.filterString is not None and not (o.filterString == self.filterString)
-        ):
+
+        if (self.filterString != o.filterString
+                and o.filterString is not None
+                and not (o.filterString == self.filterString)):
             return False
+
         if self.ignoreCase != o.ignoreCase:
             return False
+
         if self.onlyMatchPrefix != o.onlyMatchPrefix:
             return False
+
         return True
 
 
-    def hashCode(self):
-        return (self.propertyId.hashCode() if self.propertyId is not None else 0) ^ (self.filterString.hashCode() if self.filterString is not None else 0)
+    def __hash__(self):
+        h1 = hash(self.propertyId) if self.propertyId is not None else 0
+        h2 = hash(self.filterString) if self.filterString is not None else 0
+        return h1 ^ h2
 
 
     def getPropertyId(self):
@@ -94,8 +109,8 @@ class SimpleStringFilter(IFilter):
     def getFilterString(self):
         """Returns the filter string.
 
-        Note: this method is intended only for implementations of lazy string
-        filters and may change in the future.
+        Note: this method is intended only for implementations of lazy
+        string filters and may change in the future.
 
         @return filter string given to the constructor
         """

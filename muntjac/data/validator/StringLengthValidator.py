@@ -18,8 +18,8 @@ from muntjac.data.validator.AbstractValidator import AbstractValidator
 
 
 class StringLengthValidator(AbstractValidator):
-    """This <code>StringLengthValidator</code> is used to validate the length of
-    strings.
+    """This <code>StringLengthValidator</code> is used to validate the length
+    of strings.
 
     @author IT Mill Ltd.
     @author Richard Lincoln
@@ -27,7 +27,8 @@ class StringLengthValidator(AbstractValidator):
     @since 3.0
     """
 
-    def __init__(self, errorMessage, minLength=None, maxLength=None, allowNull=None):
+    def __init__(self, errorMessage, minLength=None, maxLength=None,
+                allowNull=None):
         """Creates a new StringLengthValidator with a given error message.
 
         @param errorMessage
@@ -107,8 +108,8 @@ class StringLengthValidator(AbstractValidator):
 
 
     def setNullAllowed(self, allowNull):
-        """Sets whether null-strings are to be allowed. This can be better handled
-        by setting a field as required or not.
+        """Sets whether null-strings are to be allowed. This can be better
+        handled by setting a field as required or not.
         """
         self._allowNull = allowNull
 

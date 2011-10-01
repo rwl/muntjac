@@ -21,12 +21,11 @@ class AbstractValidator(IValidator):
     """Abstract {@link com.vaadin.data.IValidator IValidator} implementation that
     provides a basic IValidator implementation except the {@link #isValid(Object)}
     method. Sub-classes need to implement the {@link #isValid(Object)} method.
-    <p>
+
     To include the value that failed validation in the exception message you can
     use "{0}" in the error message. This will be replaced with the failed value
     (converted to string using {@link #toString()}) or "null" if the value is
     null.
-    </p>
 
     @author IT Mill Ltd.
     @author Richard Lincoln

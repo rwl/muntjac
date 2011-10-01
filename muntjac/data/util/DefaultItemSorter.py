@@ -14,16 +14,16 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.data.util.ItemSorter import ItemSorter
+from muntjac.data.util.IItemSorter import IItemSorter
 
 
-class DefaultItemSorter(ItemSorter):
-    """Provides a default implementation of an ItemSorter. The
+class DefaultItemSorter(IItemSorter):
+    """Provides a default implementation of an IItemSorter. The
     <code>DefaultItemSorter</code> adheres to the
     {@link Sortable#sort(Object[], boolean[])} rules and sorts the container
     according to the properties given using
     {@link #setSortProperties(Sortable, Object[], boolean[])}.
-    <p>
+
     A Comparator is used for comparing the individual <code>Property</code>
     values. The comparator can be set using the constructor. If no comparator is
     provided a default comparator is used.
@@ -52,7 +52,7 @@ class DefaultItemSorter(ItemSorter):
             self._propertyValueComparator = propertyValueComparator
 
 
-    def __cmp__(self, o1, o2):  # FIXME: Comparator
+    def compare(self, o1, o2):  # FIXME: Comparator
         item1 = self._container.getItem(o1)
         item2 = self._container.getItem(o2)
 
@@ -68,8 +68,7 @@ class DefaultItemSorter(ItemSorter):
 
         for i in range(len(self._sortPropertyIds)):
             result = self.compareProperty(self._sortPropertyIds[i],
-                                          self._sortDirections[i],
-                                          item1, item2)
+                    self._sortDirections[i], item1, item2)
 
             # If order can be decided
             if result != 0:
@@ -129,8 +128,8 @@ class DefaultItemSorter(ItemSorter):
 
         for i in range(len(propertyId)):
             if propertyId[i] in sortable:
-                ids.add(propertyId[i])
-                orders.add( bool(ascending[i] if i < len(ascending) else True) )
+                ids.append(propertyId[i])
+                orders.append( bool(ascending[i] if i < len(ascending) else True) )
         self._sortPropertyIds = list(ids)
         self._sortDirections = [None] * len(orders)
         for i in range(len(self._sortDirections)):
@@ -143,7 +142,7 @@ class DefaultPropertyValueComparator(object):
     compares can be cast to Comparable.
     """
 
-    def __cmp__(self, o1, o2):  # FIXME: Comparator
+    def compare(self, o1, o2):  # FIXME: Comparator
         r = 0
         # Normal non-null comparison
         if o1 is not None and o2 is not None:
