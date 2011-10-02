@@ -1,0 +1,29 @@
+# -*- coding: utf-8 -*-
+from com.vaadin.demo.sampler.features.buttons.ButtonLink import (ButtonLink,)
+from com.vaadin.demo.sampler.features.link.LinkSizedWindow import (LinkSizedWindow,)
+from com.vaadin.demo.sampler.APIResource import (APIResource,)
+from com.vaadin.demo.sampler.features.link.LinkNoDecorations import (LinkNoDecorations,)
+from com.vaadin.demo.sampler.Feature import (Feature,)
+Version = Feature.Version
+
+
+class LinkCurrentWindow(Feature):
+
+    def getSinceVersion(self):
+        return Version.OLD
+
+    def getName(self):
+        return 'Link'
+
+    def getDescription(self):
+        return 'By default, links open in the current browser window (use the browser back-button to get back).'
+
+    def getRelatedAPI(self):
+        return [APIResource(Link)]
+
+    def getRelatedFeatures(self):
+        return [LinkNoDecorations, LinkSizedWindow, ButtonLink]
+
+    def getRelatedResources(self):
+        # TODO Auto-generated method stub
+        return None

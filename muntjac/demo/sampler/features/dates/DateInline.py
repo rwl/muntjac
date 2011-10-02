@@ -1,0 +1,30 @@
+# -*- coding: utf-8 -*-
+from com.vaadin.demo.sampler.features.dates.DateLocale import (DateLocale,)
+from com.vaadin.demo.sampler.features.dates.DatePopupInputPrompt import (DatePopupInputPrompt,)
+from com.vaadin.demo.sampler.features.dates.DatePopup import (DatePopup,)
+from com.vaadin.demo.sampler.APIResource import (APIResource,)
+from com.vaadin.demo.sampler.features.dates.DateResolution import (DateResolution,)
+from com.vaadin.demo.sampler.Feature import (Feature,)
+Version = Feature.Version
+
+
+class DateInline(Feature):
+
+    def getSinceVersion(self):
+        return Version.OLD
+
+    def getName(self):
+        return 'Inline date selection'
+
+    def getDescription(self):
+        return 'In this example, the resolution is set to be one day' + ' and the DateField component is shown as an inline calendar' + ' component.'
+
+    def getRelatedAPI(self):
+        return [APIResource(DateField), APIResource(InlineDateField)]
+
+    def getRelatedFeatures(self):
+        return [DatePopup, DatePopupInputPrompt, DateLocale, DateResolution]
+
+    def getRelatedResources(self):
+        # TODO Auto-generated method stub
+        return None

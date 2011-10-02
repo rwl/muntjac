@@ -1,0 +1,28 @@
+# -*- coding: utf-8 -*-
+from com.vaadin.demo.sampler.features.trees.TreeMultiSelect import (TreeMultiSelect,)
+from com.vaadin.demo.sampler.features.trees.TreeActions import (TreeActions,)
+from com.vaadin.demo.sampler.APIResource import (APIResource,)
+from com.vaadin.demo.sampler.Feature import (Feature,)
+Version = Feature.Version
+
+
+class TreeSingleSelect(Feature):
+
+    def getSinceVersion(self):
+        return Version.OLD
+
+    def getName(self):
+        return 'Tree, single selection'
+
+    def getDescription(self):
+        return 'In this example, you can select any single tree node' + ' and modify its \'name\' property. Click again to de-select.'
+
+    def getRelatedAPI(self):
+        return [APIResource(Tree)]
+
+    def getRelatedFeatures(self):
+        return [TreeMultiSelect, TreeActions]
+
+    def getRelatedResources(self):
+        # TODO Auto-generated method stub
+        return None
