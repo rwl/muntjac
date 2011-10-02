@@ -14,18 +14,18 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.event.Action import Action, IContainer, IHandler, INotifier, IListener
+from muntjac.event import Action
+
 from muntjac.terminal.KeyMapper import KeyMapper
 from muntjac.event.ShortcutAction import ShortcutAction
 
 
-class ActionManager(Action, IContainer, IHandler, INotifier):
+class ActionManager(Action.IContainer, Action.IHandler, Action.INotifier):
     """Notes:
-    <p>
+
     Empties the keymapper for each repaint to avoid leaks; can cause problems in
     the future if the client assumes key don't change. (if lazyloading, one must
     not cache results)
-    </p>
     """
 
     def __init__(self, viewer=None):
@@ -92,8 +92,8 @@ class ActionManager(Action, IContainer, IHandler, INotifier):
 
 
     def removeActionHandler(self, actionHandler):
-        if self.actionHandlers is not None \
-                and actionHandler in self.actionHandlers:
+        if (self.actionHandlers is not None
+                and actionHandler in self.actionHandlers):
             if self.actionHandlers.remove(actionHandler):
                 self.requestRepaint()
 
@@ -124,8 +124,8 @@ class ActionManager(Action, IContainer, IHandler, INotifier):
             actions.union(self.ownActions)
 
 
-        # Must repaint whenever there are actions OR if all actions have been
-        # removed but still exist on client side
+        # Must repaint whenever there are actions OR if all actions have
+        # been removed but still exist on client side
         if len(actions) > 0 or self._clientHasActions:
             actionMapper = KeyMapper()
 
@@ -153,9 +153,7 @@ class ActionManager(Action, IContainer, IHandler, INotifier):
 
                         paintTarget.addAttribute("mk", smodifiers)
 
-
                 paintTarget.endTag("action")
-
 
             paintTarget.endTag("actions")
 
@@ -196,7 +194,7 @@ class ActionManager(Action, IContainer, IHandler, INotifier):
             for handler in arry:
                 handler.handleAction(action, sender, target)
 
-        if self.ownActions is not None \
-                and action in self.ownActions \
-                and isinstance(action, IListener):
+        if (self.ownActions is not None
+                and action in self.ownActions
+                and isinstance(action, Action.IListener)):
             action.handleAction(sender, target)

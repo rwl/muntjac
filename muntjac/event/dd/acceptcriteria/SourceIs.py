@@ -14,8 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.event.dd.acceptcriteria.ClientSideCriterion import ClientSideCriterion
 from muntjac.event.TransferableImpl import TransferableImpl
+
+from muntjac.event.dd.acceptcriteria.ClientSideCriterion import \
+    ClientSideCriterion
 
 
 class SourceIs(ClientSideCriterion):

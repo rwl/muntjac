@@ -16,8 +16,8 @@
 
 
 class Action(object):
-    """Implements the action framework. This class contains subinterfaces for action
-    handling and listing, and for action handler registrations and
+    """Implements the action framework. This class contains subinterfaces for
+    action handling and listing, and for action handler registrations and
     unregistration.
 
     @author IT Mill Ltd.
@@ -137,7 +137,7 @@ class INotifier(IContainer):
         raise NotImplementedError
 
 
-class ShortcutNotifier(object):
+class IShortcutNotifier(object):
 
     def addShortcutListener(self, shortcut):
         raise NotImplementedError

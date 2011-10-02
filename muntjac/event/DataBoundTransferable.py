@@ -48,7 +48,8 @@ class DataBoundTransferable(TransferableImpl):
     def getPropertyId(self):
         """Returns the optional property identifier that the transfer concerns.
 
-        This can be e.g. the table column from which a drag operation originated.
+        This can be e.g. the table column from which a drag operation
+        originated.
 
         @return property identifier
         """
@@ -58,8 +59,8 @@ class DataBoundTransferable(TransferableImpl):
     def getSourceContainer(self):
         """Returns the container data source from which the transfer occurs.
 
-        {@link com.vaadin.data.Container.IViewer#getContainerDataSource()} is used
-        to obtain the underlying container of the source component.
+        {@link com.vaadin.data.Container.IViewer#getContainerDataSource()} is
+        used to obtain the underlying container of the source component.
 
         @return Container
         """

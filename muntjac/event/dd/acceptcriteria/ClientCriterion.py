@@ -19,7 +19,7 @@
 a {@link AcceptCriterion} class. Usage is pretty similar to
 {@link ClientWidget} which is used with Vaadin components that have a
 specialized client side counterpart.
-<p>
+
 Annotations are used at GWT compilation phase, so remember to rebuild your
 widgetset if you do changes for {@link ClientCriterion} mappings.
 

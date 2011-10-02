@@ -14,12 +14,16 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.event.dd.acceptcriteria.ClientSideCriterion import ClientSideCriterion
+from muntjac.terminal import clsname
+
+from muntjac.event.dd.acceptcriteria.ClientSideCriterion import \
+    ClientSideCriterion
 
 
 class TargetDetailIs(ClientSideCriterion):
-    """Criterion for checking if drop target details contains the specific property
-    with the specific value. Currently only String values are supported.
+    """Criterion for checking if drop target details contains the specific
+    property with the specific value. Currently only String values are
+    supported.
 
     @since 6.3
 
@@ -27,14 +31,14 @@ class TargetDetailIs(ClientSideCriterion):
     """
 
     def __init__(self, dataFlavor, value):
-        """Constructs a criterion which ensures that the value there is a value in
-        {@link TargetDetails} that equals the reference value.
+        """Constructs a criterion which ensures that the value there is a
+        value in {@link TargetDetails} that equals the reference value.
 
         @param dataFlavor
                    the type of data to be checked
         @param value
-                   the reference value to which the drop target detail will be
-                   compared
+                   the reference value to which the drop target detail will
+                   be compared
         """
         self._propertyName = dataFlavor
         self._value = value
@@ -43,6 +47,7 @@ class TargetDetailIs(ClientSideCriterion):
     def paintContent(self, target):
         super(TargetDetailIs, self).paintContent(target)
         target.addAttribute('p', self._propertyName)
+
         if isinstance(self._value, bool):
             target.addAttribute('v', self._value.booleanValue())
             target.addAttribute('t', 'b')
@@ -57,4 +62,4 @@ class TargetDetailIs(ClientSideCriterion):
 
     def getIdentifier(self):
         # sub classes by default use VDropDetailEquals a client implementation
-        return TargetDetailIs.getCanonicalName()
+        return clsname(TargetDetailIs)

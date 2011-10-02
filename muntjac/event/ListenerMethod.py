@@ -19,26 +19,23 @@ import logging
 from muntjac.event import IEventListener
 
 
+logger = logging.getLogger(__name__)
+
+
 class ListenerMethod(IEventListener):
-    """<p>
-    One registered event listener. This class contains the listener object
+    """One registered event listener. This class contains the listener object
     reference, listened event type, the trigger method to call when the event
     fires, and the optional argument list to pass to the method and the index of
     the argument to replace with the event object.
-    </p>
 
-    <p>
     This Class provides several constructors that allow omission of the optional
     arguments, and giving the listener method directly, or having the constructor
     to reflect it using merely the name of the method.
-    </p>
 
-    <p>
     It should be pointed out that the method
     {@link #receiveEvent(EventObject event)} is the one that filters out the
     events that do not match with the given event type and thus do not result in
     calling of the trigger method.
-    </p>
 
     @author IT Mill Ltd.
     @author Richard Lincoln
@@ -46,25 +43,26 @@ class ListenerMethod(IEventListener):
     @since 3.0
     """
 
-    _logger = logging.getLogger(ListenerMethod.getName())
-
-
     def writeObject(self, out):
+        raise NotImplementedError
+
         # Special serialization to handle method references
         try:
             out.defaultWriteObject()
-            name = self._method.getName()
+            name = self._method.__name__
             paramTypes = self._method.getParameterTypes()
             out.writeObject(name)
             out.writeObject(paramTypes)
         except Exception, e:  # FIXME: NotSerializableException
-            self._logger.warning('Error in serialization of the application: Class ' \
-                                 + self._target.__class__.__name__ \
-                                 + ' must implement serialization.')
+            logger.warning(('Error in serialization of the application: Class '
+                    + self._target.__class__.__name__
+                    + ' must implement serialization.'))
             raise e
 
 
     def readObject(self, in_):
+        raise NotImplementedError
+
         # Special serialization to handle method references
         in_.defaultReadObject()
         try:
@@ -72,9 +70,10 @@ class ListenerMethod(IEventListener):
             paramTypes = in_.readObject()
             # We can not use getMethod directly as we want to support anonymous
             # inner classes
-            self._method = self.findHighestMethod(self._target.getClass(), name, paramTypes)
+            self._method = self.findHighestMethod(self._target.__class__,
+                    name, paramTypes)
         except Exception:  # FIXME: SecurityException
-            self._logger.critical('Internal deserialization error')
+            logger.critical('Internal deserialization error')
 
 
     @classmethod
@@ -276,9 +275,9 @@ class ListenerMethod(IEventListener):
         # Optional argument set to pass to the trigger method.
         self._arguments = None
 
-        # Optional index to <code>arguments</code> that point out which one should
-        # be replaced with the triggering event object and thus be passed to the
-        # trigger method.
+        # Optional index to <code>arguments</code> that point out which one
+        # should be replaced with the triggering event object and thus be
+        # passed to the trigger method.
         self._eventArgumentIndex = None
 
 
@@ -309,7 +308,7 @@ class ListenerMethod(IEventListener):
                 else:
                     raise ValueError
             else:
-                if not issubclass(target.__class__, method.getDeclaringClass()):  # FIXME: getDeclaringClass
+                if not issubclass(target.__class__, method.im_class):
                     raise ValueError
 
                 self._eventType = eventType
@@ -341,7 +340,7 @@ class ListenerMethod(IEventListener):
                 self._arguments = arguments
                 self._eventArgumentIndex = -1
             else:
-                if not issubclass(target.__class__, method.getDeclaringClass()):  # FIXME: getDeclaringClass
+                if not issubclass(target.__class__, method.im_class):
                     raise ValueError
 
                 self._eventType = eventType
@@ -361,12 +360,14 @@ class ListenerMethod(IEventListener):
                     raise ValueError
 
                 # Checks that the event argument is null
-                if eventArgumentIndex >= 0 and arguments[eventArgumentIndex] is not None:
+                if (eventArgumentIndex >= 0
+                        and arguments[eventArgumentIndex] is not None):
                     raise ValueError
 
                 # Checks the event type is supported by the method
-                if eventArgumentIndex >= 0 \
-                        and not issubclass(eventType, method.getParameterTypes()[eventArgumentIndex]):
+                if (eventArgumentIndex >= 0
+                        and not issubclass(eventType,
+                            method.getParameterTypes()[eventArgumentIndex])):
                     raise ValueError
 
                 self._eventType = eventType
@@ -375,16 +376,18 @@ class ListenerMethod(IEventListener):
                 self._arguments = arguments
                 self._eventArgumentIndex = eventArgumentIndex
             else:
-                if not issubclass(target.__class__, method.getDeclaringClass()):
+                if not issubclass(target.__class__, method.im_class):
                     raise ValueError
 
                 # Checks that the event argument is null
-                if eventArgumentIndex >= 0 and arguments[eventArgumentIndex] is not None:
+                if (eventArgumentIndex >= 0
+                        and arguments[eventArgumentIndex] is not None):
                     raise ValueError
 
                 # Checks the event type is supported by the method
-                if eventArgumentIndex >= 0 \
-                        and not issubclass(eventType, method.getParameterTypes()[eventArgumentIndex]):
+                if (eventArgumentIndex >= 0
+                        and not issubclass(eventType,
+                            method.getParameterTypes()[eventArgumentIndex])):
                     raise ValueError
 
                 self._eventType = eventType
@@ -395,21 +398,22 @@ class ListenerMethod(IEventListener):
 
 
     def receiveEvent(self, event):
-        """Receives one event from the <code>EventRouter</code> and calls the
-        trigger method if it matches with the criteria defined for the listener.
-        Only the events of the same or subclass of the specified event class
-        result in the trigger method to be called.
+        """Receives one event from the <code>EventRouter</code> and calls
+        the trigger method if it matches with the criteria defined for the
+        listener. Only the events of the same or subclass of the specified
+        event class result in the trigger method to be called.
 
         @param event
-                   the fired event. Unless the trigger method's argument list and
-                   the index to the to be replaced argument is specified, this
-                   event will not be passed to the trigger method.
+                   the fired event. Unless the trigger method's argument list
+                   and the index to the to be replaced argument is specified,
+                   this event will not be passed to the trigger method.
         """
         # Only send events supported by the method
         if issubclass(event.__class__, self._eventType):
             try:
                 if self._eventArgumentIndex >= 0:
-                    if self._eventArgumentIndex == 0 and len(self._arguments) == 1:
+                    if (self._eventArgumentIndex == 0
+                            and len(self._arguments) == 1):
                         self._method(self._target, [event])  # FIXME: invoke
                     else:
                         arg = [None] * len(self._arguments)
@@ -423,21 +427,20 @@ class ListenerMethod(IEventListener):
             except Exception:  # IllegalAccessException
                 raise RuntimeError, 'Internal error - please report'
             except Exception:  # FIXME: InvocationTargetException
-                raise MethodException, 'Invocation of method ' \
-                        + self._method \
-                        + ' failed.'
+                raise MethodException, ('Invocation of method '
+                        + self._method + ' failed.')
 
 
     def matches(self, eventType, target, method=None):
-        """Checks if the given object and event match with the ones stored in this
-        listener.
+        """Checks if the given object and event match with the ones stored in
+        this listener.
 
         @param target
                    the object to be matched against the object stored by this
                    listener.
         @param eventType
-                   the type to be tested for equality against the type stored by
-                   this listener.
+                   the type to be tested for equality against the type stored
+                   by this listener.
         @return <code>true</code> if <code>target</code> is the same object as
                 the one stored in this object and <code>eventType</code> equals
                 the event type stored in this object. *
@@ -449,32 +452,34 @@ class ListenerMethod(IEventListener):
                    the object to be matched against the object stored by this
                    listener.
         @param eventType
-                   the type to be tested for equality against the type stored by
-                   this listener.
-        @param method
-                   the method to be tested for equality against the method stored
+                   the type to be tested for equality against the type stored
                    by this listener.
+        @param method
+                   the method to be tested for equality against the method
+                   stored by this listener.
         @return <code>true</code> if <code>target</code> is the same object as
-                the one stored in this object, <code>eventType</code> equals with
-                the event type stored in this object and <code>method</code>
-                equals with the method stored in this object
+                the one stored in this object, <code>eventType</code> equals
+                with the event type stored in this object and
+                <code>method</code> equals with the method stored in this
+                object
         """
         if method is None:
             return self._target == target and eventType == self._eventType
         else:
-            return self._target == target and eventType == self._eventType and method == self._method
+            return (self._target == target and eventType == self._eventType
+                    and method == self._method)
 
 
-    def hashCode(self):
+    def __hash__(self):
         hsh = 7
         hsh = (31 * hsh) + self._eventArgumentIndex
-        hsh = (31 * hsh) + (0 if self._eventType is None else self._eventType.hashCode())
-        hsh = (31 * hsh) + (0 if self._target is None else self._target.hashCode())
-        hsh = (31 * hsh) + (0 if self._method is None else self._method.hashCode())
-        return hash
+        hsh = (31 * hsh) + (0 if self._eventType is None else hash(self._eventType))
+        hsh = (31 * hsh) + (0 if self._target is None else hash(self._target))
+        hsh = (31 * hsh) + (0 if self._method is None else hash(self._method))
+        return hsh
 
 
-    def equals(self, obj):
+    def __eq__(self, obj):
 
         if self == obj:
             return True
@@ -486,11 +491,18 @@ class ListenerMethod(IEventListener):
         # obj is of same class, test it further
         t = obj
 
-        return self._eventArgumentIndex == t.eventArgumentIndex \
-                and (self._eventType == t.eventType or (self._eventType != None and self._eventType == t.eventType)) \
-                and (self._target == t.target or (self._target != None and self._target == t.target)) \
-                and (self._method == t.method or (self._method != None and self._method == t.method)) \
-                and (self._arguments == t.arguments or (self._arguments == t.arguments))  # FIXME: Arrays.equals
+        return (self._eventArgumentIndex == t.eventArgumentIndex
+                and (self._eventType == t.eventType
+                        or (self._eventType != None
+                                and self._eventType == t.eventType))
+                and (self._target == t.target
+                        or (self._target != None
+                                and self._target == t.target))
+                and (self._method == t.method
+                        or (self._method != None
+                                and self._method == t.method))
+                and (self._arguments == t.arguments
+                        or (self._arguments == t.arguments)))  # FIXME: Arrays.equals
 
 
     def isType(self, eventType):
@@ -498,8 +510,8 @@ class ListenerMethod(IEventListener):
 
         @param eventType
                    The type to compare with
-        @return true if this type of this ListenerMethod matches the given type,
-                false otherwise
+        @return true if this type of this ListenerMethod matches the given
+                type, false otherwise
         """
         return self._eventType == eventType
 
@@ -509,8 +521,8 @@ class ListenerMethod(IEventListener):
 
         @param eventType
                    The type to compare with
-        @return true if this event type can be assigned to the given type, false
-                otherwise
+        @return true if this event type can be assigned to the given type,
+                false otherwise
         """
         return issubclass(self._eventType, eventType)
 
@@ -560,9 +572,11 @@ class MethodException(RuntimeError):
         return self._message
 
 
-    def toString(self):
+    def __str__(self):
         """@see java.lang.Throwable#toString()"""
         msg = str(super(MethodException, self))
+
         if self._cause is not None:
             msg += '\nCause: ' + str(self._cause)
+
         return msg

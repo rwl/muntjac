@@ -14,19 +14,22 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.event.dd.acceptcriteria.ClientSideCriterion import ClientSideCriterion
 from muntjac.event.TransferableImpl import TransferableImpl
+
+from muntjac.event.dd.acceptcriteria.ClientSideCriterion import \
+    ClientSideCriterion
 
 
 class SourceIsTarget(ClientSideCriterion):
-    """A criterion that ensures the drag source is the same as drop target. Eg.
-    {@link Tree} or {@link Table} could support only re-ordering of items, but no
-    {@link Transferable}s coming outside.
-    <p>
+    """A criterion that ensures the drag source is the same as drop target.
+    Eg. {@link Tree} or {@link Table} could support only re-ordering of items,
+    but no {@link Transferable}s coming outside.
+
     Note! Class is singleton, use {@link #get()} method to get the instance.
 
     @since 6.3
     """
+
     _instance = None
 
     def __init__(self):

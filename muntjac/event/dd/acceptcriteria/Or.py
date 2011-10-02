@@ -14,12 +14,13 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.event.dd.acceptcriteria.ClientSideCriterion import ClientSideCriterion
+from muntjac.event.dd.acceptcriteria.ClientSideCriterion import \
+    ClientSideCriterion
 
 
 class Or(ClientSideCriterion):
-    """A compound criterion that accepts the drag if any of its criterion accepts
-    it.
+    """A compound criterion that accepts the drag if any of its criterion
+    accepts it.
 
     @see And
 

@@ -85,7 +85,8 @@ class LayoutClickEvent(ClickEvent):
     that was clicked. If no child component was found it is set to null.
     """
 
-    def __init__(self, source, mouseEventDetails, clickedComponent, childComponent):
+    def __init__(self, source, mouseEventDetails, clickedComponent,
+                childComponent):
         super(LayoutClickEvent, self)(source, mouseEventDetails)
         self._clickedComponent = clickedComponent
         self._childComponent = childComponent

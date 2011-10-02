@@ -22,18 +22,16 @@ from muntjac.event.Action import Action
 class ShortcutAction(Action):
     """Shortcuts are a special type of {@link Action}s used to create keyboard
     shortcuts.
-    <p>
+
     The ShortcutAction is triggered when the user presses a given key in
     combination with the (optional) given modifier keys.
-    </p>
-    <p>
+
     ShortcutActions can be global (by attaching to the {@link Window}), or
     attached to different parts of the UI so that a specific shortcut is only
     valid in part of the UI. For instance, one can attach shortcuts to a specific
     {@link Panel} - look for {@link ComponentContainer}s implementing
     {@link Handler Action.Handler} or {@link Notifier Action.Notifier}.
-    </p>
-    <p>
+
     ShortcutActions have a caption that may be used to display the shortcut
     visually. This allows the ShortcutAction to be used as a plain Action while
     still reacting to a keyboard shortcut. Note that this functionality is not
@@ -62,21 +60,21 @@ class ShortcutAction(Action):
     _SHORTHAND_CTRL = re.escape(SHORTHAND_CHAR_CTRL)
 
     # Used for replacing escaped chars, e.g && with &
-    _SHORTHAND_ESCAPE = re.compile('(' + _SHORTHAND_ALT + '?)' \
-            + _SHORTHAND_ALT + '|(' + _SHORTHAND_SHIFT + '?)' \
-            + _SHORTHAND_SHIFT + '|(' + _SHORTHAND_CTRL + '?)' \
-            + _SHORTHAND_CTRL)
+    _SHORTHAND_ESCAPE = re.compile(('(' + _SHORTHAND_ALT + '?)'
+            + _SHORTHAND_ALT + '|(' + _SHORTHAND_SHIFT + '?)'
+            + _SHORTHAND_SHIFT + '|(' + _SHORTHAND_CTRL + '?)'
+            + _SHORTHAND_CTRL))
 
     # Used for removing escaped chars, only leaving real shorthands
-    _SHORTHAND_REMOVE = re.compile('([' + _SHORTHAND_ALT + '|' \
-            + _SHORTHAND_SHIFT + '|' + _SHORTHAND_CTRL + '])\\1')
+    _SHORTHAND_REMOVE = re.compile(('([' + _SHORTHAND_ALT + '|'
+            + _SHORTHAND_SHIFT + '|' + _SHORTHAND_CTRL + '])\\1'))
 
     # Mnemonic char, optionally followed by another, and optionally a third
-    _SHORTHANDS = re.compile('(' + _SHORTHAND_ALT + '|' + _SHORTHAND_SHIFT \
-            + '|' + _SHORTHAND_CTRL + ')(?!\\1)(?:(' + _SHORTHAND_ALT \
-            + '|' + _SHORTHAND_SHIFT + '|' + _SHORTHAND_CTRL \
-            + ')(?!\\1|\\2))?(?:(' + _SHORTHAND_ALT + '|' + _SHORTHAND_SHIFT \
-            + '|' + _SHORTHAND_CTRL + ')(?!\\1|\\2|\\3))?.')
+    _SHORTHANDS = re.compile(('(' + _SHORTHAND_ALT + '|' + _SHORTHAND_SHIFT
+            + '|' + _SHORTHAND_CTRL + ')(?!\\1)(?:(' + _SHORTHAND_ALT
+            + '|' + _SHORTHAND_SHIFT + '|' + _SHORTHAND_CTRL
+            + ')(?!\\1|\\2))?(?:(' + _SHORTHAND_ALT + '|' + _SHORTHAND_SHIFT
+            + '|' + _SHORTHAND_CTRL + ')(?!\\1|\\2|\\3))?.'))
 
 
     def __init__(self, *args):
@@ -153,10 +151,13 @@ class ShortcutAction(Action):
             shorthandCaption, modifierKeys = args
 
             # && -> & etc
-            super(ShortcutAction, self)(self._SHORTHAND_ESCAPE.sub(shorthandCaption, '$1$2$3'))
+            super(ShortcutAction, self)(self._SHORTHAND_ESCAPE.sub(
+                    shorthandCaption, '$1$2$3'))
 
-            # replace escaped chars with something that won't accidentally match
-            shorthandCaption = self._SHORTHAND_REMOVE.sub(shorthandCaption, '\u001A')
+            # replace escaped chars with something that won't
+            # accidentally match
+            shorthandCaption = self._SHORTHAND_REMOVE.sub(
+                    shorthandCaption, '\u001A')
 
             m = self._SHORTHANDS.search(shorthandCaption)  # FIXME: check regex
             if m is not None:
@@ -202,8 +203,8 @@ class ShortcutAction(Action):
 
 
     def getKeyCode(self):
-        """Get the {@link KeyCode} that this shortcut reacts to (in combination with
-        the {@link ModifierKey}s).
+        """Get the {@link KeyCode} that this shortcut reacts to (in
+        combination with the {@link ModifierKey}s).
 
         @return keycode for this shortcut
         """

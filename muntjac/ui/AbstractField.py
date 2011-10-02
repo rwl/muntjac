@@ -34,7 +34,7 @@ from muntjac.terminal.CompositeErrorMessage import CompositeErrorMessage
 
 
 class AbstractField(AbstractComponent, IField.IField,
-            Action.ShortcutNotifier, IProperty.IReadOnlyStatusChangeNotifier,
+            Action.IShortcutNotifier, IProperty.IReadOnlyStatusChangeNotifier,
             IProperty.IReadOnlyStatusChangeListener):
     """Abstract field component for implementing buffered property editors.
     The field may hold an internal value, or it may be connected to any data

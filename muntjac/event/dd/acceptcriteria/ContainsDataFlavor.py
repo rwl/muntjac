@@ -14,7 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.event.dd.acceptcriteria.ClientSideCriterion import ClientSideCriterion
+from muntjac.terminal import clsname
+
+from muntjac.event.dd.acceptcriteria.ClientSideCriterion import \
+    ClientSideCriterion
 
 
 class ContainsDataFlavor(ClientSideCriterion):
@@ -41,9 +44,10 @@ class ContainsDataFlavor(ClientSideCriterion):
 
 
     def accept(self, dragEvent):
-        return self._dataFlavorId in dragEvent.getTransferable().getDataFlavors()
+        return (self._dataFlavorId
+                in dragEvent.getTransferable().getDataFlavors())
 
 
     def getIdentifier(self):
         # extending classes use client side implementation from this class
-        return ContainsDataFlavor.__class__.__name__  # FIXME: getCanonicalName
+        return clsname(ContainsDataFlavor)

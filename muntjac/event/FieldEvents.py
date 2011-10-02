@@ -23,14 +23,13 @@ class IFocusNotifier(object):
     """The interface for adding and removing <code>FocusEvent</code> listeners.
     By implementing this interface a class explicitly announces that it will
     generate a <code>FocusEvent</code> when it receives keyboard focus.
-    <p>
+
     Note: The general Java convention is not to explicitly declare that a
     class generates events, but to directly define the
     <code>addListener</code> and <code>removeListener</code> methods. That
     way the caller of these methods has no real way of finding out if the
     class really will send the events, or if it just defines the methods to
     be able to implement an interface.
-    </p>
 
     @since 6.2
     @see IFocusListener
@@ -62,14 +61,13 @@ class IBlurNotifier(object):
     """The interface for adding and removing <code>BlurEvent</code> listeners.
     By implementing this interface a class explicitly announces that it will
     generate a <code>BlurEvent</code> when it loses keyboard focus.
-    <p>
+
     Note: The general Java convention is not to explicitly declare that a
     class generates events, but to directly define the
     <code>addListener</code> and <code>removeListener</code> methods. That
     way the caller of these methods has no real way of finding out if the
     class really will send the events, or if it just defines the methods to
     be able to implement an interface.
-    </p>
 
     @since 6.2
     @see IBlurListener
@@ -167,7 +165,7 @@ class TextChangeEvent(ComponentEvent):
     field. Most commonly text change events are triggered by typing text with
     keyboard, but e.g. pasting content from clip board to a text field also
     triggers an event.
-    <p>
+
     TextChangeEvents differ from {@link ValueChangeEvent}s so that they are
     triggered repeatedly while the end user is filling the field.
     ValueChangeEvents are not fired until the user for example hits enter or
@@ -175,7 +173,7 @@ class TextChangeEvent(ComponentEvent):
     only fired if the change is triggered from the user, while
     ValueChangeEvents are also fired if the field value is set by the
     application code.
-    <p>
+
     The {@link ITextChangeNotifier}s implementation may decide when exactly
     TextChangeEvents are fired. TextChangeEvents are not necessary fire for
     example on each key press, but buffered with a small delay. The
@@ -184,7 +182,7 @@ class TextChangeEvent(ComponentEvent):
 
     @see ITextChangeListener
     @see ITextChangeNotifier
-    @see TextField#setTextChangeEventMode(com.vaadin.ui.TextField.TextChangeEventMode)
+    @see TextField#setTextChangeEventMode(TextField.TextChangeEventMode)
     @since 6.5
     """
 
@@ -200,7 +198,8 @@ class TextChangeEvent(ComponentEvent):
 
 
     def getCursorPosition(self):
-        """@return the cursor position during after the {@link TextChangeEvent}"""
+        """@return the cursor position during after the
+        {@link TextChangeEvent}"""
         pass
 
 
@@ -210,15 +209,17 @@ class ITextChangeListener(IComponentEventListener):
     @since 6.5
     """
 
+    EVENT_ID = 'ie'
+
     def textChange(self, event):
-        """This method is called repeatedly while the text is edited by a user.
+        """This method is called repeatedly while the text is edited by a
+        user.
 
         @param event
                    the event providing details of the text change
         """
         raise NotImplementedError
 
-    EVENT_ID = 'ie'
     EVENT_METHOD = textChange
 
 
