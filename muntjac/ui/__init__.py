@@ -46,10 +46,12 @@ display and manipulation.
 
 from muntjac.ui.absolute_layout import AbsoluteLayout
 from muntjac.ui.accordion import Accordion
+from muntjac.ui.alignment import Alignment
 from muntjac.ui.button import Button
 from muntjac.ui.check_box import CheckBox
 from muntjac.ui.combo_box import ComboBox
 from muntjac.ui.css_layout import CssLayout
+from muntjac.ui.custom_component import CustomComponent
 from muntjac.ui.date_field import DateField
 from muntjac.ui.embedded import Embedded
 from muntjac.ui.expand_layout import ExpandLayout
