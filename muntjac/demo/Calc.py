@@ -1,6 +1,7 @@
-# -*- coding: utf-8 -*-
-# from com.vaadin.ui.Button.ClickListener import (ClickListener,)
-# from com.vaadin.ui.GridLayout import (GridLayout,)
+
+from muntjac import Application
+from com.vaadin.ui.Button.ClickListener import (ClickListener,)
+from com.vaadin.ui.GridLayout import (GridLayout,)
 
 
 class Calc(Application, ClickListener):

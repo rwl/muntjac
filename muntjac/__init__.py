@@ -16,4 +16,4 @@ This allows Vaadin applications to run in cluster and cloud
 environments.</p>
 """
 
-from muntjac.Application import Application
+from muntjac.application import Application

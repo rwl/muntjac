@@ -1,7 +1,7 @@
 
-from muntjac.Application import Application
-from muntjac.ui.Window import Window
-from muntjac.ui.Label import Label
+from muntjac.application import Application
+from muntjac.ui.window import Window
+from muntjac.ui.label import Label
 
 class MyClass(Application):
 
