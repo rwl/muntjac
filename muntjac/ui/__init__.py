@@ -87,6 +87,7 @@ from muntjac.ui.text_field import TextField
 from muntjac.ui.tree import Tree
 from muntjac.ui.twin_col_select import TwinColSelect
 from muntjac.ui.upload import Upload
+from muntjac.ui.uri_fragment_utility import UriFragmentUtility
 from muntjac.ui.vertical_layout import VerticalLayout
 from muntjac.ui.vertical_split_panel import VerticalSplitPanel
 from muntjac.ui.window import Window
