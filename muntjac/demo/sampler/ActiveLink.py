@@ -1,41 +1,38 @@
-# -*- coding: utf-8 -*-
-from __pyjamas__ import (ARGERROR,)
-# from com.vaadin.terminal.PaintException import (PaintException,)
-# from com.vaadin.terminal.PaintTarget import (PaintTarget,)
-# from com.vaadin.terminal.Resource import (Resource,)
-# from com.vaadin.ui.Button.ClickEvent import (ClickEvent,)
-# from com.vaadin.ui.ClientWidget import (ClientWidget,)
-# from com.vaadin.ui.Component import (Component,)
-# from com.vaadin.ui.Link import (Link,)
-# from java.io.Serializable import (Serializable,)
-# from java.lang.reflect.Method import (Method,)
-# from java.util.HashSet import (HashSet,)
-# from java.util.Map import (Map,)
+
+from muntjac.ui import Link
+from muntjac.ui.button import ClickEvent
+from muntjac.ui.abstract_component import AbstractComponent
+from muntjac.ui.component import Event
+
+
+class ILinkActivatedListener(object):
+    """ActiveLink click listener"""
+
+    def linkActivated(self, event):
+        """ActiveLink has been activated.
+
+        @param event
+                   ActiveLink click event.
+        """
+        raise NotImplementedError
 
 
 class ActiveLink(Link):
-    _LINK_FOLLOWED_METHOD = None
-    _listeners = set()
 
-    def __init__(self, *args):
-        _0 = args
-        _1 = len(args)
-        if _1 == 0:
+    _LINK_FOLLOWED_METHOD = getattr(ILinkActivatedListener, 'linkActivated')
+
+    def __init__(self, caption=None, resource=None, targetName=None,
+                width=None, height=None, border=None):
+        self._listeners = set()
+
+        if caption is None:
             super(ActiveLink, self)()
-        elif _1 == 2:
-            caption, resource = _0
+        elif targetName is None:
             super(ActiveLink, self)(caption, resource)
-        elif _1 == 6:
-            caption, resource, targetName, width, height, border = _0
-            super(ActiveLink, self)(caption, resource, targetName, width, height, border)
         else:
-            raise ARGERROR(0, 6)
+            super(ActiveLink, self)(caption, resource, targetName,
+                    width, height, border)
 
-    # This should never happen
-    try:
-        _LINK_FOLLOWED_METHOD = LinkActivatedListener.getDeclaredMethod('linkActivated', [LinkActivatedEvent])
-    except java.lang.NoSuchMethodException, e:
-        raise java.lang.RuntimeException('Internal error finding methods in ActiveLink')
 
     def addListener(self, listener):
         """Adds the link activated listener.
@@ -44,9 +41,11 @@ class ActiveLink(Link):
                    the Listener to be added.
         """
         self._listeners.add(listener)
-        self.addListener(self.LinkActivatedEvent, listener, self._LINK_FOLLOWED_METHOD)
+        AbstractComponent.addListener(self, LinkActivatedEvent,
+                listener, self._LINK_FOLLOWED_METHOD)
         if len(self._listeners) == 1:
             self.requestRepaint()
+
 
     def removeListener(self, listener):
         """Removes the link activated listener.
@@ -55,13 +54,16 @@ class ActiveLink(Link):
                    the Listener to be removed.
         """
         self._listeners.remove(listener)
-        self.removeListener(ClickEvent, listener, self._LINK_FOLLOWED_METHOD)
+        AbstractComponent.removeListener(self, ClickEvent,
+                listener, self._LINK_FOLLOWED_METHOD)
         if len(self._listeners) == 0:
             self.requestRepaint()
 
+
     def fireClick(self, linkOpened):
         """Emits the options change event."""
-        self.fireEvent(self.LinkActivatedEvent(self, linkOpened))
+        self.fireEvent( LinkActivatedEvent(self, linkOpened) )
+
 
     def paintContent(self, target):
         super(ActiveLink, self).paintContent(target)
@@ -69,51 +71,45 @@ class ActiveLink(Link):
             target.addVariable(self, 'activated', False)
             target.addVariable(self, 'opened', False)
 
+
     def changeVariables(self, source, variables):
         super(ActiveLink, self).changeVariables(source, variables)
         if not self.isReadOnly() and 'activated' in variables:
             activated = variables['activated']
             opened = variables['opened']
-            if (
-                activated is not None and activated.booleanValue() and not self.isReadOnly()
-            ):
-                self.fireClick(True if opened is not None and opened.booleanValue() else False)
+            if (activated is not None and bool(activated)
+                    and not self.isReadOnly()):
+                if opened is not None and bool(opened):
+                    self.fireClick(True)
+                else:
+                    self.fireClick(False)
 
-    class LinkActivatedEvent(Component.Event):
-        _linkOpened = None
 
-        def __init__(self, source, linkOpened):
-            """New instance of text change event.
+class LinkActivatedEvent(Event):
 
-            @param source
-                       the Source of the event.
-            """
-            super(LinkActivatedEvent, self)(source)
-            self._linkOpened = linkOpened
+    def __init__(self, source, linkOpened):
+        """New instance of text change event.
 
-        def getActiveLink(self):
-            """Gets the ActiveLink where the event occurred.
+        @param source
+                   the Source of the event.
+        """
+        super(LinkActivatedEvent, self)(source)
+        self._linkOpened = linkOpened
 
-            @return the Source of the event.
-            """
-            return self.getSource()
 
-        def isLinkOpened(self):
-            """Indicates whether or not the link was opened on the client, i.e in a
-            new window/tab. If the link was not opened, the listener should react
-            to the event and "do something", otherwise the link does nothing.
+    def getActiveLink(self):
+        """Gets the ActiveLink where the event occurred.
 
-            @return true if the link was opened on the client
-            """
-            return self._linkOpened
+        @return the Source of the event.
+        """
+        return self.getSource()
 
-    class LinkActivatedListener(Serializable):
-        """ActiveLink click listener"""
 
-        def linkActivated(self, event):
-            """ActiveLink has been activated.
+    def isLinkOpened(self):
+        """Indicates whether or not the link was opened on the client, i.e in a
+        new window/tab. If the link was not opened, the listener should react
+        to the event and "do something", otherwise the link does nothing.
 
-            @param event
-                       ActiveLink click event.
-            """
-            pass
+        @return true if the link was opened on the client
+        """
+        return self._linkOpened
