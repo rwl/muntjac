@@ -1,25 +1,34 @@
-# -*- coding: utf-8 -*-
-# from java.text.DateFormat import (DateFormat,)
+
+import locale
+from datetime import datetime
+
+from muntjac.ui import VerticalLayout, InlineDateField
+from muntjac.data.property import IValueChangeListener
 
 
-class DateInlineExample(VerticalLayout, Property.ValueChangeListener):
-    _datetime = None
+class DateInlineExample(VerticalLayout, IValueChangeListener):
 
     def __init__(self):
         self.setSpacing(True)
+
         self._datetime = InlineDateField('Please select the starting time:')
+
         # Set the value of the PopupDateField to current date
-        self._datetime.setValue(java.util.Date())
+        self._datetime.setValue(datetime.today())
+
         # Set the correct resolution
         self._datetime.setResolution(InlineDateField.RESOLUTION_DAY)
+
         # Add valuechangelistener
         self._datetime.addListener(self)
         self._datetime.setImmediate(True)
+
         self.addComponent(self._datetime)
+
 
     def valueChange(self, event):
         # Get the new value and format it to the current locale
-        dateFormatter = DateFormat.getDateInstance(DateFormat.SHORT)
-        dateOut = dateFormatter.format(event.getProperty().getValue())
+        dateFormatter = locale.D_FMT
+        dateOut = event.getProperty().getValue().strftime(dateFormatter)
         # Show notification
         self.getWindow().showNotification('Starting date: ' + dateOut)

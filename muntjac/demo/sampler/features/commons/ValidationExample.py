@@ -1,52 +1,71 @@
-# -*- coding: utf-8 -*-
-# from com.vaadin.data.Property.ValueChangeEvent import (ValueChangeEvent,)
-# from com.vaadin.data.Property.ValueChangeListener import (ValueChangeListener,)
-# from com.vaadin.data.validator.CompositeValidator import (CompositeValidator,)
-# from com.vaadin.data.validator.StringLengthValidator import (StringLengthValidator,)
-# from com.vaadin.ui.TextField import (TextField,)
-# from java.util.HashSet import (HashSet,)
+
+from muntjac.ui import VerticalLayout, TextField, Label
+from muntjac.data.validator import InvalidValueException
+
+from muntjac.data.validators.string_length_validator import \
+    StringLengthValidator
+
+from muntjac.data.validators.composite_validator import CompositeValidator
+from muntjac.data.validator import IValidator
+from muntjac.data.property import IValueChangeListener
 
 
 class ValidationExample(VerticalLayout):
-    _usernames = set()
 
     def __init__(self):
+        self._usernames = set()
+
         self.setSpacing(True)
+
         pin = TextField('PIN')
         pin.setWidth('50px')
         # optional; validate at once instead of when clicking 'save' (e.g)
         pin.setImmediate(True)
         self.addComponent(pin)
         # add the validator
-        pin.addValidator(StringLengthValidator('Must be 4-6 characters', 4, 6, False))
+        pin.addValidator(StringLengthValidator('Must be 4-6 characters',
+                4, 6, False))
+
         username = TextField('Username')
         # optional; validate at once instead of when clicking 'save' (e.g)
         username.setImmediate(True)
         self.addComponent(username)
         usernameValidator = CompositeValidator()
         username.addValidator(usernameValidator)
-        usernameValidator.addValidator(StringLengthValidator('Username must be at least 4 characters', 4, 255, False))
+        usernameValidator.addValidator(StringLengthValidator('Username'
+                ' must be at least 4 characters', 4, 255, False))
 
-        class _0_(Validator):
+
+        class UsernameValidator(IValidator):
+
+            def __init__(self, component):
+                self._component = component
+
 
             def isValid(self, value):
-                return not (value in ValidationExample_this._usernames)
+                return not (value in self._component._usernames)
+
 
             def validate(self, value):
                 if not self.isValid(value):
-                    raise Validator.InvalidValueException('Username ' + value + ' already in use')
+                    raise InvalidValueException('Username '
+                            + value + ' already in use')
 
-        _0_ = _0_()
-        usernameValidator.addValidator(_0_)
+        usernameValidator.addValidator(UsernameValidator(self))
 
-        class _1_(ValueChangeListener):
+
+        class UsernameListener(IValueChangeListener):
+
+            def __init__(self, component):
+                self._component = component
+
 
             def valueChange(self, event):
                 tf = event.getProperty()
                 tf.validate()
                 if tf.getValue() is not None:
-                    ValidationExample_this._usernames.add(str(tf.getValue()))
-                    self.addComponent(Label('Added ' + tf.getValue() + ' to usernames'))
+                    self._component._usernames.add(str(tf.getValue()))
+                    self.addComponent(Label('Added ' + tf.getValue()
+                            + ' to usernames'))
 
-        _1_ = _1_()
-        username.addListener(_1_)
+        username.addListener(UsernameListener(self))
