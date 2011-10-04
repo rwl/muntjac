@@ -21,8 +21,8 @@ class TextAreaExample(HorizontalLayout, Property.ValueChangeListener):
         # the TextArea is immediate, and it's valueCahnge updates the Label,
         # so this button actually does nothing
         self.addComponent(Button('>'))
-        self._plainText = ALabel(self._initialText)
-        self._plainText.setContentMode(ALabel.CONTENT_XHTML)
+        self._plainText = Label(self._initialText)
+        self._plainText.setContentMode(Label.CONTENT_XHTML)
         self.addComponent(self._plainText)
         self.setExpandRatio(self._plainText, 1)
 

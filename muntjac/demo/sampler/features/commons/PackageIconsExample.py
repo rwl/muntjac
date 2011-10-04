@@ -28,7 +28,7 @@ class PackageIconsExample(VerticalLayout):
                 # Set size to avoid flickering when loading
                 e.setWidth(size + 'px')
                 e.setHeight(size + 'px')
-                name = ALabel(icon)
+                name = Label(icon)
                 if size == '64':
                     name.setWidth('185px')
                 else:

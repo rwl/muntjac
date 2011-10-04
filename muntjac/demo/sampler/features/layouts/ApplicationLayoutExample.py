@@ -33,7 +33,7 @@ class ApplicationLayoutExample(VerticalLayout):
 
         _1_ = _1_()
         self._open.addListener(_1_)
-        self.addComponent(ALabel('Don\'t worry: the content of the window is not supposed to make sense...'))
+        self.addComponent(Label('Don\'t worry: the content of the window is not supposed to make sense...'))
 
     class ApplicationLayoutWindow(Window):
 
@@ -83,7 +83,7 @@ class ApplicationLayoutExample(VerticalLayout):
             left.addComponent(textPanel)
             left.setExpandRatio(textPanel, 1.0)
             # use all available space
-            text = ALabel(ExampleUtil.lorem, ALabel.CONTENT_XHTML)
+            text = Label(ExampleUtil.lorem, Label.CONTENT_XHTML)
             text.setWidth('500px')
             # some limit is good for text
             textPanel.addComponent(text)

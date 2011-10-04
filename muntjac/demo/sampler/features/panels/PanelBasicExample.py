@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# from com.vaadin.ui.ALabel import (ALabel,)
+# from com.vaadin.ui.Label import (Label,)
 # from com.vaadin.ui.Button.ClickListener import (ClickListener,)
 
 
@@ -29,7 +29,7 @@ class PanelBasicExample(VerticalLayout, ClickListener):
                 i += 1
             if not (i < 20):
                 break
-            self._panel.addComponent(ALabel('The quick brown fox jumps over the lazy dog.'))
+            self._panel.addComponent(Label('The quick brown fox jumps over the lazy dog.'))
         # Caption toggle:
         b = Button('Toggle caption')
         b.addListener(self)

@@ -5,7 +5,7 @@
 # from com.vaadin.terminal.StreamVariable import (StreamVariable,)
 # from com.vaadin.terminal.gwt.server.AbstractWebApplicationContext import (AbstractWebApplicationContext,)
 # from com.vaadin.terminal.gwt.server.WebBrowser import (WebBrowser,)
-# from com.vaadin.ui.ALabel import (ALabel,)
+# from com.vaadin.ui.Label import (Label,)
 # from com.vaadin.ui.Component import (Component,)
 # from com.vaadin.ui.CssLayout import (CssLayout,)
 # from com.vaadin.ui.Embedded import (Embedded,)
@@ -23,7 +23,7 @@ class DragDropHtml5FromDesktopExample(VerticalLayout):
     _progress = None
 
     def __init__(self):
-        self.addComponent(ALabel('Drag text from desktop application or image files from the ' + 'file system to the drop box below (dragging files requires HTML5 capable browser like FF 3.6, Safari or Chrome)'))
+        self.addComponent(Label('Drag text from desktop application or image files from the ' + 'file system to the drop box below (dragging files requires HTML5 capable browser like FF 3.6, Safari or Chrome)'))
         dropPane = CssLayout()
         dropPane.setWidth('200px')
         dropPane.setHeight('200px')
@@ -112,7 +112,7 @@ class DragDropHtml5FromDesktopExample(VerticalLayout):
                     self.showText(text)
 
         def showText(self, text):
-            self.showComponent(ALabel(text), 'Wrapped text content')
+            self.showComponent(Label(text), 'Wrapped text content')
 
         def showFile(self, name, type, bas):
             # resource for serving the file contents

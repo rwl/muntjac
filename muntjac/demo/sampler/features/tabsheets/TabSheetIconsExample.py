@@ -12,15 +12,15 @@ class TabSheetIconsExample(VerticalLayout, TabSheet.SelectedTabChangeListener):
         # Tab 1 content
         l1 = VerticalLayout()
         l1.setMargin(True)
-        l1.addComponent(ALabel('There are no previously saved actions.'))
+        l1.addComponent(Label('There are no previously saved actions.'))
         # Tab 2 content
         l2 = VerticalLayout()
         l2.setMargin(True)
-        l2.addComponent(ALabel('There are no saved notes.'))
+        l2.addComponent(Label('There are no saved notes.'))
         # Tab 3 content
         l3 = VerticalLayout()
         l3.setMargin(True)
-        l3.addComponent(ALabel('There are currently no issues.'))
+        l3.addComponent(Label('There are currently no issues.'))
         self._t = TabSheet()
         self._t.setHeight('200px')
         self._t.setWidth('400px')

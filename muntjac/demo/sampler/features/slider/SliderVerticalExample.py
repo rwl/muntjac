@@ -6,7 +6,7 @@ class SliderVerticalExample(VerticalLayout):
 
     def __init__(self):
         self.setSpacing(True)
-        value = ALabel('0')
+        value = Label('0')
         value.setSizeUndefined()
         slider = Slider('Select a value between 0 and 100')
         slider.setOrientation(Slider.ORIENTATION_VERTICAL)

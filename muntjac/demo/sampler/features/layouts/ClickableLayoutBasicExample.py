@@ -26,16 +26,16 @@ class ClickableLayoutBasicExample(VerticalLayout):
         layout.addStyleName('border')
         layout.setMargin(True)
         # Add some components inside the layout
-        layout.addComponent(ALabel('<b>This is a vertical layout with a click listener attached. ' + 'Try clicking anywhere inside this layout.</b>', ALabel.CONTENT_RAW))
-        clickX = ALabel('X-coordinate: <i>Not available.</i>', ALabel.CONTENT_RAW)
+        layout.addComponent(Label('<b>This is a vertical layout with a click listener attached. ' + 'Try clicking anywhere inside this layout.</b>', Label.CONTENT_RAW))
+        clickX = Label('X-coordinate: <i>Not available.</i>', Label.CONTENT_RAW)
         layout.addComponent(clickX)
-        clickY = ALabel('Y-coordinate: <i>Not available.</i>', ALabel.CONTENT_RAW)
+        clickY = Label('Y-coordinate: <i>Not available.</i>', Label.CONTENT_RAW)
         layout.addComponent(clickY)
-        clickRelativeX = ALabel('X-coordinate relative to the layout: <i>Not available.</i>', ALabel.CONTENT_RAW)
+        clickRelativeX = Label('X-coordinate relative to the layout: <i>Not available.</i>', Label.CONTENT_RAW)
         layout.addComponent(clickRelativeX)
-        clickRelativeY = ALabel('Y-coordinate relative to the layout: <i>Not available.</i>', ALabel.CONTENT_RAW)
+        clickRelativeY = Label('Y-coordinate relative to the layout: <i>Not available.</i>', Label.CONTENT_RAW)
         layout.addComponent(clickRelativeY)
-        button = ALabel('Mouse button: <i>Not available.</i>', ALabel.CONTENT_RAW)
+        button = Label('Mouse button: <i>Not available.</i>', Label.CONTENT_RAW)
         layout.addComponent(button)
         # Listen for layout click events
 
@@ -63,7 +63,7 @@ class ClickableLayoutBasicExample(VerticalLayout):
         layout.setWidth('90%')
         layout.setMargin(True)
         # Add some components to the layout
-        layout.addComponent(ALabel('<b>Clickable layout events include a reference to the ' + 'child component beneath the click. ' + 'Try clicking anywhere in this layout.</b>', ALabel.CONTENT_RAW), 0, 0, 4, 0)
+        layout.addComponent(Label('<b>Clickable layout events include a reference to the ' + 'child component beneath the click. ' + 'Try clicking anywhere in this layout.</b>', Label.CONTENT_RAW), 0, 0, 4, 0)
         layout.addComponent(TextField(None, 'Click here'))
         layout.addComponent(Link('Click here', None))
         select = Select(None, Arrays.asList('Click here'))
@@ -95,7 +95,7 @@ class ClickableLayoutBasicExample(VerticalLayout):
         layout.addStyleName('border')
         layout.setMargin(True)
         # Add some components inside the layout
-        layout.addComponent(ALabel('<b>Layout click events register if control keys are pressed during the click and double clicks. ' + 'Try clicking anywhere inside this layout while holding CTRL, ALT, SHIFT or META key down.</b>', ALabel.CONTENT_RAW))
+        layout.addComponent(Label('<b>Layout click events register if control keys are pressed during the click and double clicks. ' + 'Try clicking anywhere inside this layout while holding CTRL, ALT, SHIFT or META key down.</b>', Label.CONTENT_RAW))
         # Listen for layout click events
 
         class _2_(LayoutClickListener):

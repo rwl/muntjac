@@ -6,17 +6,17 @@ LineBreakCounter = UploadBasicExample.LineBreakCounter
 
 
 class UploadWithProgressMonitoringExample(VerticalLayout):
-    _state = ALabel()
-    _result = ALabel()
-    _fileName = ALabel()
-    _textualProgress = ALabel()
+    _state = Label()
+    _result = Label()
+    _fileName = Label()
+    _textualProgress = Label()
     _pi = ProgressIndicator()
     _counter = LineBreakCounter()
     _upload = Upload(None, _counter)
 
     def __init__(self):
         self.setSpacing(True)
-        self.addComponent(ALabel('Upload a file and we\'ll count the number of line break characters (\\n) found in it.'))
+        self.addComponent(Label('Upload a file and we\'ll count the number of line break characters (\\n) found in it.'))
         # make analyzing start immediatedly when file is selected
         self._upload.setImmediate(True)
         self._upload.setButtonCaption('Upload File')

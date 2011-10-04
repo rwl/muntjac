@@ -24,7 +24,7 @@ class OptionGroupDisabledItemsExample(VerticalLayout, Property.ValueChangeListen
         citySelect.addListener(self)
         # react when the user selects something
         self.addComponent(citySelect)
-        self.addComponent(ALabel('<h3>Multi-selection</h3>', ALabel.CONTENT_XHTML))
+        self.addComponent(Label('<h3>Multi-selection</h3>', Label.CONTENT_XHTML))
         # Create the multiselect option group
         # 'Shorthand' constructor - also supports data binding using Containers
         citySelect = OptionGroup('Please select cities', self._cities)

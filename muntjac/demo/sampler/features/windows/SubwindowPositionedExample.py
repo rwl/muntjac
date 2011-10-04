@@ -18,7 +18,7 @@ class SubwindowPositionedExample(VerticalLayout):
         # make it fill the whole window
         layout.setSizeFull()
         # Add some content; a label and a close-button
-        message = ALabel('This is a positioned window')
+        message = Label('This is a positioned window')
         self._subwindow.addComponent(message)
 
         class _0_(Button.ClickListener):

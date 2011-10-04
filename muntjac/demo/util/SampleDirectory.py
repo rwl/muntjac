@@ -2,7 +2,7 @@
 # @ITMillApache2LicenseForJavaFiles@
 # from com.vaadin.Application import (Application,)
 # from com.vaadin.terminal.SystemError import (SystemError,)
-# from com.vaadin.ui.ALabel import (ALabel,)
+# from com.vaadin.ui.Label import (Label,)
 # from com.vaadin.ui.Panel import (Panel,)
 # from java.io.File import (File,)
 
@@ -47,7 +47,7 @@ class SampleDirectory(object):
         errorPanel = Panel('Demo application error')
         errorPanel.setStyleName('strong')
         errorPanel.setComponentError(SystemError('Cannot provide sample directory'))
-        errorPanel.addComponent(ALabel(errorMessage, ALabel.CONTENT_XHTML))
+        errorPanel.addComponent(Label(errorMessage, Label.CONTENT_XHTML))
         # Remove all components from applications main window
         application.getMainWindow().getContent().removeAllComponents()
         # Add error panel

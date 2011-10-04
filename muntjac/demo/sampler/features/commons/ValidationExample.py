@@ -46,7 +46,7 @@ class ValidationExample(VerticalLayout):
                 tf.validate()
                 if tf.getValue() is not None:
                     ValidationExample_this._usernames.add(str(tf.getValue()))
-                    self.addComponent(ALabel('Added ' + tf.getValue() + ' to usernames'))
+                    self.addComponent(Label('Added ' + tf.getValue() + ' to usernames'))
 
         _1_ = _1_()
         username.addListener(_1_)

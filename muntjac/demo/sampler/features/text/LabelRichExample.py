@@ -8,8 +8,8 @@ class LabelRichExample(VerticalLayout, ClickListener):
 
     def __init__(self):
         self.setSpacing(True)
-        self._richText = ALabel('<h1>Rich text example</h1>' + '<p>The <b>quick</b> brown fox jumps <sup>over</sup> the <b>lazy</b> dog.</p>' + '<p>This text can be edited with the <i>Edit</i> -button</p>')
-        self._richText.setContentMode(ALabel.CONTENT_XHTML)
+        self._richText = Label('<h1>Rich text example</h1>' + '<p>The <b>quick</b> brown fox jumps <sup>over</sup> the <b>lazy</b> dog.</p>' + '<p>This text can be edited with the <i>Edit</i> -button</p>')
+        self._richText.setContentMode(Label.CONTENT_XHTML)
         self.addComponent(self._richText)
         self._b = Button('Edit')
         self._b.addListener(self)

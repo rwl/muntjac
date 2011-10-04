@@ -30,7 +30,7 @@ class DragDropRearrangeComponentsExample(VerticalLayout):
 
     def createComponents(self):
         components = list()
-        label = ALabel('This is a long text block that will wrap.')
+        label = Label('This is a long text block that will wrap.')
         label.setWidth('120px')
         components.add(label)
         image = Embedded('', ThemeResource('../runo/icons/64/document.png'))

@@ -1,30 +1,43 @@
-# -*- coding: utf-8 -*-
-# from com.vaadin.terminal.UserError import (UserError,)
-# from com.vaadin.ui.FormLayout import (FormLayout,)
+
+from muntjac.ui import Label, VerticalLayout, TextField, FormLayout
+from muntjac.terminal.user_error import UserError
 
 
 class ErrorsExample(VerticalLayout):
 
     def __init__(self):
         self.setSpacing(True)
-        self.addComponent(ALabel('<h3>Errors in caption</h3>', ALabel.CONTENT_XHTML))
-        self.addComponent(ALabel('Error indicators are usually placed on the right side of the component\'s caption.'))
-        input = TextField('Field caption')
-        input.setComponentError(UserError('This field is never satisfied'))
-        self.addComponent(input)
-        self.addComponent(ALabel('<h3>Errors without caption</h3>', ALabel.CONTENT_XHTML))
-        self.addComponent(ALabel('If the component has no caption, the error indicator is usually placed on the right side of the component.'))
-        input = TextField()
-        input.setInputPrompt('This field has an error')
-        input.setComponentError(UserError('This field is never satisfied.'))
-        self.addComponent(input)
-        self.addComponent(ALabel('<h3>Error icon placement depends on the layout</h3>', ALabel.CONTENT_XHTML))
-        self.addComponent(ALabel('FormLayout for example places the error between the component caption and the actual field.'))
+
+        self.addComponent(Label('<h3>Errors in caption</h3>',
+                Label.CONTENT_XHTML))
+        self.addComponent(Label('Error indicators are usually placed on the '
+                'right side of the component\'s caption.'))
+
+        inpt = TextField('Field caption')
+        inpt.setComponentError(UserError('This field is never satisfied'))
+        self.addComponent(inpt)
+
+        self.addComponent(Label('<h3>Errors without caption</h3>',
+                Label.CONTENT_XHTML))
+        self.addComponent(Label('If the component has no caption, the error '
+                'indicator is usually placed on the right side of the '
+                'component.'))
+
+        inpt = TextField()
+        inpt.setInputPrompt('This field has an error')
+        inpt.setComponentError(UserError('This field is never satisfied.'))
+        self.addComponent(inpt)
+
+        self.addComponent(Label('<h3>Error icon placement depends on the '
+                'layout</h3>', Label.CONTENT_XHTML))
+        self.addComponent(Label('FormLayout for example places the error '
+                'between the component caption and the actual field.'))
+
         fl = FormLayout()
         fl.setMargin(False)
         fl.setSpacing(False)
         self.addComponent(fl)
-        input = TextField('Field caption')
-        input.setInputPrompt('This field has an error')
-        input.setComponentError(UserError('This field is never satisfied.'))
-        fl.addComponent(input)
+        inpt = TextField('Field caption')
+        inpt.setInputPrompt('This field has an error')
+        inpt.setComponentError(UserError('This field is never satisfied.'))
+        fl.addComponent(inpt)

@@ -11,7 +11,7 @@ class HorizontalLayoutBasicExample(HorizontalLayout):
         tf.setWidth('70px')
         self.addComponent(tf)
         # A dash
-        dash = ALabel('-')
+        dash = Label('-')
         self.addComponent(dash)
         self.setComponentAlignment(dash, Alignment.MIDDLE_LEFT)
         # Second TextField
@@ -19,7 +19,7 @@ class HorizontalLayoutBasicExample(HorizontalLayout):
         tf.setWidth('70px')
         self.addComponent(tf)
         # Another dash
-        dash = ALabel('-')
+        dash = Label('-')
         self.addComponent(dash)
         self.setComponentAlignment(dash, Alignment.MIDDLE_LEFT)
         # Third TextField
@@ -27,7 +27,7 @@ class HorizontalLayoutBasicExample(HorizontalLayout):
         tf.setWidth('70px')
         self.addComponent(tf)
         # Yet another dash
-        dash = ALabel('-')
+        dash = Label('-')
         self.addComponent(dash)
         self.setComponentAlignment(dash, Alignment.MIDDLE_LEFT)
         # Forth and last TextField

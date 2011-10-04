@@ -19,7 +19,7 @@ class LabelRich(Feature):
         return 'In this example the content mode is set to' + ' CONTENT_XHTML. This content mode assumes that the' + ' content set to the label will be valid XHTML.<br/>' + 'Click the <i>Edit</i> button to edit the label content.'
 
     def getRelatedAPI(self):
-        return [APIResource(ALabel)]
+        return [APIResource(Label)]
 
     def getRelatedFeatures(self):
         return [LabelPlain, LabelPreformatted, RichTextEditor]

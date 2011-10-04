@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __pyjamas__ import (POSTINC,)
 # from com.vaadin.terminal.ThemeResource import (ThemeResource,)
-# from com.vaadin.ui.ALabel import (ALabel,)
+# from com.vaadin.ui.Label import (Label,)
 # from com.vaadin.ui.Button import (Button,)
 # from com.vaadin.ui.Button.ClickEvent import (ClickEvent,)
 # from com.vaadin.ui.Layout import (Layout,)
@@ -14,7 +14,7 @@ from __pyjamas__ import (POSTINC,)
 class JSApiExample(VerticalLayout):
     _toBeUpdatedFromThread = None
     _startThread = None
-    _running = ALabel('')
+    _running = Label('')
 
     def __init__(self):
         self.setSpacing(True)
@@ -40,7 +40,7 @@ class JSApiExample(VerticalLayout):
         # Label sync = new Label("<h3>Force Server Syncronization</h3>",
         # Label.CONTENT_XHTML);
         self.addComponent(self.sync)
-        self.addComponent(ALabel('For advanced client side programmers Vaadin offers a simple ' + 'method which can be used to force the client to synchronize with the ' + 'server. This may be needed for example if another part of a mashup ' + 'changes things on server.'))
+        self.addComponent(Label('For advanced client side programmers Vaadin offers a simple ' + 'method which can be used to force the client to synchronize with the ' + 'server. This may be needed for example if another part of a mashup ' + 'changes things on server.'))
         # toBeUpdatedFromThread = new Label(
         # "This Label component will be updated by a background thread. Click \"Start "
         # + "background thread\" button and start clicking on the link below to force "

@@ -2,7 +2,7 @@
 
 
 class UploadBasicExample(VerticalLayout):
-    _result = ALabel()
+    _result = Label()
     _counter = LineBreakCounter()
     _upload = Upload('Upload a file', _counter)
 

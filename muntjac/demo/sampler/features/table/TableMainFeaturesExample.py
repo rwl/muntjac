@@ -18,7 +18,7 @@ class TableMainFeaturesExample(VerticalLayout):
     def __init__(self):
         self.addComponent(self._table)
         # Label to indicate current selection
-        selected = ALabel('No selection')
+        selected = Label('No selection')
         self.addComponent(selected)
         # set a style name, so we can style rows and cells
         self._table.setStyleName('iso3166')
@@ -70,7 +70,7 @@ class TableMainFeaturesExample(VerticalLayout):
                     TableMainFeaturesExample_this._table.requestRepaint()
                 elif TableMainFeaturesExample_this.ACTION_LOG == action:
                     item = TableMainFeaturesExample_this._table.getItem(target)
-                    self.addComponent(ALabel('Saved: ' + target + ', ' + item.getItemProperty(ExampleUtil.iso3166_PROPERTY_NAME).getValue()))
+                    self.addComponent(Label('Saved: ' + target + ', ' + item.getItemProperty(ExampleUtil.iso3166_PROPERTY_NAME).getValue()))
 
         _0_ = _0_()
         self._table.addActionHandler(_0_)

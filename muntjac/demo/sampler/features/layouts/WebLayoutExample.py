@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from muntjac.demo.sampler.ExampleUtil import (ExampleUtil,)
-# from com.vaadin.ui.ALabel import (ALabel,)
+# from com.vaadin.ui.Label import (Label,)
 # from com.vaadin.ui.Button import (Button,)
 # from com.vaadin.ui.Button.ClickEvent import (ClickEvent,)
 # from com.vaadin.ui.Table import (Table,)
@@ -40,7 +40,7 @@ class WebLayoutExample(VerticalLayout):
 
         _1_ = _1_()
         self._open.addListener(_1_)
-        self.addComponent(ALabel('Don\'t worry: the content of the window is not supposed to make sense...'))
+        self.addComponent(Label('Don\'t worry: the content of the window is not supposed to make sense...'))
 
     class WebLayoutWindow(Window):
 
@@ -75,7 +75,7 @@ class WebLayoutExample(VerticalLayout):
             tbl.setPageLength(7)
             left.addComponent(tbl)
             # Label on bottom
-            text = ALabel(ExampleUtil.lorem, ALabel.CONTENT_XHTML)
+            text = Label(ExampleUtil.lorem, Label.CONTENT_XHTML)
             text.setWidth('500px')
             # some limit is good for text
             left.addComponent(text)

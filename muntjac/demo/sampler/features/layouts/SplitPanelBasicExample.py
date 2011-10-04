@@ -12,16 +12,16 @@ class SplitPanelBasicExample(VerticalLayout):
         vert.setSplitPosition(150, Sizeable.UNITS_PIXELS)
         self.addComponent(vert)
         # add a label to the upper area
-        vert.addComponent(ALabel(self.brownFox))
+        vert.addComponent(Label(self.brownFox))
         # Add a horizontal SplitPanel to the lower area
         horiz = HorizontalSplitPanel()
         horiz.setSplitPosition(50)
         # percent
         vert.addComponent(horiz)
         # left component:
-        horiz.addComponent(ALabel(self.brownFox))
+        horiz.addComponent(Label(self.brownFox))
         # right component:
-        horiz.addComponent(ALabel(self.brownFox))
+        horiz.addComponent(Label(self.brownFox))
         # Lock toggle button
 
         class _0_(Button.ClickListener):

@@ -12,7 +12,7 @@ class ProgressIndicatorsExample(VerticalLayout):
 
     def __init__(self):
         self.setSpacing(True)
-        self.addComponent(ALabel('<strong>Normal mode</strong> Runs for 20 seconds', ALabel.CONTENT_XHTML))
+        self.addComponent(Label('<strong>Normal mode</strong> Runs for 20 seconds', Label.CONTENT_XHTML))
         hl = HorizontalLayout()
         hl.setSpacing(True)
         self.addComponent(hl)
@@ -37,7 +37,7 @@ class ProgressIndicatorsExample(VerticalLayout):
         self._startButton1 = _0_
         self._startButton1.setStyleName('small')
         hl.addComponent(self._startButton1)
-        self.addComponent(ALabel('<strong>Indeterminate mode</strong> Runs for 10 seconds', ALabel.CONTENT_XHTML))
+        self.addComponent(Label('<strong>Indeterminate mode</strong> Runs for 10 seconds', Label.CONTENT_XHTML))
         hl = HorizontalLayout()
         hl.setSpacing(True)
         self.addComponent(hl)

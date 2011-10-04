@@ -14,7 +14,7 @@ class SubwindowModalExample(VerticalLayout):
         layout.setMargin(True)
         layout.setSpacing(True)
         # Add some content; a label and a close-button
-        message = ALabel('This is a modal subwindow.')
+        message = Label('This is a modal subwindow.')
         self._subwindow.addComponent(message)
 
         class _0_(Button.ClickListener):

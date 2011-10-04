@@ -9,7 +9,7 @@
 
 
 class ImmediateUploadExample(VerticalLayout):
-    _status = ALabel('Please select a file to upload')
+    _status = Label('Please select a file to upload')
     _pi = ProgressIndicator()
     _receiver = MyReceiver()
     _progressLayout = HorizontalLayout()

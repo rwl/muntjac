@@ -10,7 +10,7 @@ class PopupViewContentsExample(VerticalLayout):
         # Static content for the minimized view
         # ------
         # Create the content for the popup
-        content = ALabel('This is a simple Label component inside the popup. You can place any Vaadin components here.')
+        content = Label('This is a simple Label component inside the popup. You can place any Vaadin components here.')
         # The PopupView popup will be as large as needed by the content
         content.setWidth('300px')
         # Construct the PopupView with simple HTML text representing the
@@ -35,7 +35,7 @@ class PopupViewContentsExample(VerticalLayout):
             self._root.setSizeUndefined()
             self._root.setSpacing(True)
             self._root.setMargin(True)
-            self._root.addComponent(ALabel('The changes made to any components inside the popup are reflected automatically when the popup is closed, but you might want to provide explicit action buttons for the user, like \"Save\" or \"Close\".'))
+            self._root.addComponent(Label('The changes made to any components inside the popup are reflected automatically when the popup is closed, but you might want to provide explicit action buttons for the user, like \"Save\" or \"Close\".'))
             self._root.addComponent(self._tf)
             self._tf.setValue('Initial dynamic content')
             self._tf.setWidth('300px')

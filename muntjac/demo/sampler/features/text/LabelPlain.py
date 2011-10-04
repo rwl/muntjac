@@ -21,7 +21,7 @@ class LabelPlain(Feature):
         return 'In this example the content mode is set to' + ' CONTENT_TEXT, meaning that the label will contain' + ' only plain text.'
 
     def getRelatedAPI(self):
-        return [APIResource(ALabel)]
+        return [APIResource(Label)]
 
     def getRelatedFeatures(self):
         return [LabelPreformatted, LabelRich, TextFieldSingle, TextArea, RichTextEditor]

@@ -30,7 +30,7 @@ class PanelLightExample(VerticalLayout, ClickListener):
                 i += 1
             if not (i < 20):
                 break
-            self._panel.addComponent(ALabel('The quick brown fox jumps over the lazy dog.'))
+            self._panel.addComponent(Label('The quick brown fox jumps over the lazy dog.'))
         # Caption toggle:
         b = Button('Toggle caption')
         b.addListener(self)

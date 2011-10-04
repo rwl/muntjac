@@ -43,7 +43,7 @@ class NativeWindowExample(VerticalLayout):
             layout.setMargin(True)
             layout.setSpacing(True)
             # Add some content; a label and a close-button
-            message = ALabel('This is a native window, created at ' + Date())
+            message = Label('This is a native window, created at ' + Date())
             self.addComponent(message)
             # It's a good idea to remove the window when it's closed (also
             # when the browser window 'x' is used), unless you explicitly

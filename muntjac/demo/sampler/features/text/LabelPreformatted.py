@@ -21,7 +21,7 @@ class LabelPreformatted(Feature):
         return 'In this example the content mode is set to' + ' CONTENT_PREFORMATTED. The text for this content type' + ' is by default rendered with fixed-width font. Line breaks' + ' can be inserted with \\n and tabulator characters with \\t.'
 
     def getRelatedAPI(self):
-        return [APIResource(ALabel)]
+        return [APIResource(Label)]
 
     def getRelatedFeatures(self):
         return [LabelPlain, LabelRich, TextFieldSingle, TextArea, RichTextEditor]

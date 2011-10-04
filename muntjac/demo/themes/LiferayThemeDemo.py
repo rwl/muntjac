@@ -69,8 +69,8 @@ class LiferayThemeDemo(Application):
         l.setSpacing(True)
         l.setMargin(True)
         l.setCaption('Labels')
-        l.addComponent(ALabel('Normal Label', ALabel.CONTENT_XHTML))
-        l.addComponent(ALabel('Lorem ipsum dolor sit amet, consectetur adipiscing elit.'))
+        l.addComponent(Label('Normal Label', Label.CONTENT_XHTML))
+        l.addComponent(Label('Lorem ipsum dolor sit amet, consectetur adipiscing elit.'))
         return l
 
     def buildButtons(self):
@@ -128,11 +128,11 @@ class LiferayThemeDemo(Application):
         l.setSpacing(True)
         l.setWidth('400px')
         l.setColumnExpandRatio(0, 1)
-        l.addComponent(ALabel('Normal TextField', ALabel.CONTENT_XHTML))
+        l.addComponent(Label('Normal TextField', Label.CONTENT_XHTML))
         tf = TextField()
         tf.setInputPrompt('Enter text')
         l.addComponent(tf)
-        l.addComponent(ALabel('Normal TextArea', ALabel.CONTENT_XHTML))
+        l.addComponent(Label('Normal TextArea', Label.CONTENT_XHTML))
         tf = TextField()
         tf.setHeight('5em')
         tf.setInputPrompt('Enter text')
@@ -217,7 +217,7 @@ class LiferayThemeDemo(Application):
                 i += 1
             if not (i < 10):
                 break
-            t = ts.addTab(ALabel(), 'Tab ' + i, None)
+            t = ts.addTab(Label(), 'Tab ' + i, None)
             if i % 2 == 0:
                 t.setIcon(self._ICON_GLOBE)
             if i == 2:
@@ -248,15 +248,15 @@ class LiferayThemeDemo(Application):
         l.setWidth('700px')
         l.setColumnExpandRatio(0, 2)
         l.setColumnExpandRatio(1, 5)
-        l.addComponent(ALabel('Normal Panel', ALabel.CONTENT_XHTML))
+        l.addComponent(Label('Normal Panel', Label.CONTENT_XHTML))
         p = Panel('Normal Panel')
         p.setHeight('100px')
-        p.addComponent(ALabel('Panel content'))
+        p.addComponent(Label('Panel content'))
         l.addComponent(p)
-        l.addComponent(ALabel('Light Style (<code>LiferayTheme.PANEL_LIGHT</code>)', ALabel.CONTENT_XHTML))
+        l.addComponent(Label('Light Style (<code>LiferayTheme.PANEL_LIGHT</code>)', Label.CONTENT_XHTML))
         p2 = Panel('Light Style Panel')
         p2.setStyleName(LiferayTheme.PANEL_LIGHT)
-        p2.addComponent(ALabel('Panel content'))
+        p2.addComponent(Label('Panel content'))
         l.addComponent(p2)
         return l
 
@@ -308,7 +308,7 @@ class LiferayThemeDemo(Application):
         w2.setHeight('180px')
         w2.setPositionX(350)
         w2.setPositionY(160)
-        w2.addComponent(ALabel('<code>Window.setResizable(false)</code>', ALabel.CONTENT_XHTML))
+        w2.addComponent(Label('<code>Window.setResizable(false)</code>', Label.CONTENT_XHTML))
 
         class _2_(TabSheet.SelectedTabChangeListener):
 
@@ -336,7 +336,7 @@ class LiferayThemeDemo(Application):
         lockCheckBox.setImmediate(True)
         l.addComponent(lockCheckBox, 1, 0)
         l.newLine()
-        label = ALabel('Normal SplitPanel', ALabel.CONTENT_XHTML)
+        label = Label('Normal SplitPanel', Label.CONTENT_XHTML)
         label.setWidth(None)
         l.addComponent(label)
         sp = HorizontalSplitPanel()
@@ -346,7 +346,7 @@ class LiferayThemeDemo(Application):
         sp2.setSizeFull()
         sp.setSecondComponent(sp2)
         l.addComponent(sp)
-        label = ALabel('Small Style<br />(<code>LiferayTheme.SPLITPANEL_SMALL</code>)', ALabel.CONTENT_XHTML)
+        label = Label('Small Style<br />(<code>LiferayTheme.SPLITPANEL_SMALL</code>)', Label.CONTENT_XHTML)
         label.setWidth(None)
         l.addComponent(label)
         sp3 = HorizontalSplitPanel()
@@ -390,7 +390,7 @@ class LiferayThemeDemo(Application):
                 i += 1
             if not (i < 5):
                 break
-            t = a.addTab(ALabel(), 'Sheet ' + i, None)
+            t = a.addTab(Label(), 'Sheet ' + i, None)
             if i % 2 == 0:
                 t.setIcon(self._ICON_GLOBE)
             if i == 2:
@@ -404,7 +404,7 @@ class LiferayThemeDemo(Application):
         l.setSpacing(True)
         l.setWidth('400px')
         l.setColumnExpandRatio(0, 1)
-        l.addComponent(ALabel('Horizontal Slider', ALabel.CONTENT_XHTML))
+        l.addComponent(Label('Horizontal Slider', Label.CONTENT_XHTML))
         s = Slider()
         s.setWidth('200px')
         # TODO Auto-generated catch block
@@ -413,7 +413,7 @@ class LiferayThemeDemo(Application):
         except ValueOutOfBoundsException, e:
             e.printStackTrace()
         l.addComponent(s)
-        l.addComponent(ALabel('Vertical Slider', ALabel.CONTENT_XHTML))
+        l.addComponent(Label('Vertical Slider', Label.CONTENT_XHTML))
         s = Slider()
         s.setOrientation(Slider.ORIENTATION_VERTICAL)
         s.setHeight('200px')
@@ -466,9 +466,9 @@ class LiferayThemeDemo(Application):
         message = TextField('Notification description')
         message.setValue('Jumped over the lazy dog.')
         message.setWidth('15em')
-        l.addComponent(ALabel('<h3>Type</h3>', ALabel.CONTENT_XHTML))
-        l.addComponent(ALabel('<h3>Preview</h3>', ALabel.CONTENT_XHTML))
-        l.addComponent(ALabel('Humanized', ALabel.CONTENT_XHTML))
+        l.addComponent(Label('<h3>Type</h3>', Label.CONTENT_XHTML))
+        l.addComponent(Label('<h3>Preview</h3>', Label.CONTENT_XHTML))
+        l.addComponent(Label('Humanized', Label.CONTENT_XHTML))
 
         class _4_(Button.ClickListener):
 
@@ -478,7 +478,7 @@ class LiferayThemeDemo(Application):
         _4_ = _4_()
         show = Button('Humanized Notification', _4_)
         l.addComponent(show)
-        l.addComponent(ALabel('Warning', ALabel.CONTENT_XHTML))
+        l.addComponent(Label('Warning', Label.CONTENT_XHTML))
 
         class _4_(Button.ClickListener):
 
@@ -489,7 +489,7 @@ class LiferayThemeDemo(Application):
         Button('Warning Notification', _4_)
         show = _4_
         l.addComponent(show)
-        l.addComponent(ALabel('Error', ALabel.CONTENT_XHTML))
+        l.addComponent(Label('Error', Label.CONTENT_XHTML))
 
         class _4_(Button.ClickListener):
 
@@ -500,7 +500,7 @@ class LiferayThemeDemo(Application):
         Button('Error Notification', _4_)
         show = _4_
         l.addComponent(show)
-        l.addComponent(ALabel('Tray', ALabel.CONTENT_XHTML))
+        l.addComponent(Label('Tray', Label.CONTENT_XHTML))
 
         class _4_(Button.ClickListener):
 
@@ -521,7 +521,7 @@ class LiferayThemeDemo(Application):
         l.setMargin(True)
         l.setSpacing(True)
         l.setWidth('400px')
-        content = ALabel('Lorem ipsum dolor sit amet, consectetur adipiscing elit.')
+        content = Label('Lorem ipsum dolor sit amet, consectetur adipiscing elit.')
         content.setWidth('200px')
         pw = PopupView('Click me!', content)
         l.addComponent(pw)

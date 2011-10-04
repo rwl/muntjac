@@ -34,7 +34,7 @@ class SubwindowCloseExample(VerticalLayout):
         layout.setMargin(True)
         layout.setSpacing(True)
         # Add some content; a label and a close-button
-        message = ALabel('This is a subwindow with a close-listener.')
+        message = Label('This is a subwindow with a close-listener.')
         self._subwindow.addComponent(message)
         # Add a button for opening the subwindow
         # openCloseButton = new Button("Open window", new Button.ClickListener() {

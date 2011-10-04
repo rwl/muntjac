@@ -28,7 +28,7 @@ class SplitPanelPositioningExample(VerticalLayout):
         self._verticalSplitPanel.setWidth('100%')
         self.addComponent(self._verticalSplitPanel)
         # Add some content to the top
-        topArea = ALabel()
+        topArea = Label()
         topArea.setStyleName('top-area')
         topArea.addStyleName('measured-from-top')
         topArea.setSizeFull()
@@ -40,12 +40,12 @@ class SplitPanelPositioningExample(VerticalLayout):
         self._horizontalSplitPanel.setLocked(True)
         self._verticalSplitPanel.addComponent(self._horizontalSplitPanel)
         # Add some content to the left and right sides of the vertical layout
-        leftArea = ALabel()
+        leftArea = Label()
         leftArea.setStyleName('left-area')
         leftArea.addStyleName('measured-from-left')
         leftArea.setSizeFull()
         self._horizontalSplitPanel.addComponent(leftArea)
-        rightArea = ALabel()
+        rightArea = Label()
         rightArea.setStyleName('right-area')
         rightArea.setSizeFull()
         self._horizontalSplitPanel.addComponent(rightArea)

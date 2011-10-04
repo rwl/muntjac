@@ -12,7 +12,7 @@ class SubwindowExample(VerticalLayout):
         layout.setMargin(True)
         layout.setSpacing(True)
         # Add some content; a label and a close-button
-        message = ALabel('This is a subwindow')
+        message = Label('This is a subwindow')
         self._subwindow.addComponent(message)
 
         class _0_(Button.ClickListener):

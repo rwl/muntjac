@@ -20,15 +20,15 @@ class TabSheetDisabledExample(VerticalLayout, TabSheet.SelectedTabChangeListener
         # Tab 1 content
         self._l1 = VerticalLayout()
         self._l1.setMargin(True)
-        self._l1.addComponent(ALabel('There are no previously saved actions.'))
+        self._l1.addComponent(Label('There are no previously saved actions.'))
         # Tab 2 content
         self._l2 = VerticalLayout()
         self._l2.setMargin(True)
-        self._l2.addComponent(ALabel('There are no saved notes.'))
+        self._l2.addComponent(Label('There are no saved notes.'))
         # Tab 3 content
         self._l3 = VerticalLayout()
         self._l3.setMargin(True)
-        self._l3.addComponent(ALabel('There are currently no issues.'))
+        self._l3.addComponent(Label('There are currently no issues.'))
         self._t = TabSheet()
         self._t.setHeight('200px')
         self._t.setWidth('400px')

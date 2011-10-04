@@ -15,8 +15,8 @@ class CssLayoutsExample(VerticalLayout):
         panel.setStyleName('floatedpanel')
         panel.setWidth('30%')
         panel.setHeight('370px')
-        panel.addComponent(ALabel('This panel is 30% wide ' + 'and 370px high (defined on the server side) ' + 'and floated right (with custom css). ' + 'Try resizing the browser window to see ' + 'how the black boxes (floated left) ' + 'behave. Every third of them has colored text ' + 'to demonstrate the dynamic css injection.'))
-        bottomCenter = ALabel('I\'m a 3 inches wide footer at the bottom of the layout')
+        panel.addComponent(Label('This panel is 30% wide ' + 'and 370px high (defined on the server side) ' + 'and floated right (with custom css). ' + 'Try resizing the browser window to see ' + 'how the black boxes (floated left) ' + 'behave. Every third of them has colored text ' + 'to demonstrate the dynamic css injection.'))
+        bottomCenter = Label('I\'m a 3 inches wide footer at the bottom of the layout')
         bottomCenter.setSizeUndefined()
         # disable 100% default width
         bottomCenter.setStyleName('footer')
@@ -49,7 +49,7 @@ class CssLayoutsExample(VerticalLayout):
         cssLayout.addComponent(bottomCenter)
         self.addComponent(cssLayout)
 
-    class Brick(ALabel):
+    class Brick(Label):
         """A simple label containing text "Brick" and themed black square."""
 
         def __init__(self):
