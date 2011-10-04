@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-from com.vaadin.demo.sampler.features.menubar.MenuBarTooltips import (MenuBarTooltips,)
-from com.vaadin.demo.sampler.features.menubar.MenuBarHiddenItems import (MenuBarHiddenItems,)
-from com.vaadin.demo.sampler.APIResource import (APIResource,)
-from com.vaadin.demo.sampler.features.menubar.MenuBarWithIcons import (MenuBarWithIcons,)
-from com.vaadin.demo.sampler.features.menubar.MenuBarItemStyles import (MenuBarItemStyles,)
-from com.vaadin.demo.sampler.features.menubar.MenuBarCollapsing import (MenuBarCollapsing,)
-from com.vaadin.demo.sampler.Feature import (Feature,)
+from muntjac.demo.sampler.features.menubar.MenuBarTooltips import (MenuBarTooltips,)
+from muntjac.demo.sampler.features.menubar.MenuBarHiddenItems import (MenuBarHiddenItems,)
+from muntjac.demo.sampler.APIResource import (APIResource,)
+from muntjac.demo.sampler.features.menubar.MenuBarWithIcons import (MenuBarWithIcons,)
+from muntjac.demo.sampler.features.menubar.MenuBarItemStyles import (MenuBarItemStyles,)
+from muntjac.demo.sampler.features.menubar.MenuBarCollapsing import (MenuBarCollapsing,)
+from muntjac.demo.sampler.Feature import (Feature,)
 Version = Feature.Version
 
 

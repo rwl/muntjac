@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __pyjamas__ import (POSTINC,)
-from com.vaadin.demo.sampler.ExampleUtil import (ExampleUtil,)
+from muntjac.demo.sampler.ExampleUtil import (ExampleUtil,)
 
 
 class TreeMouseEventsExample(VerticalLayout, ItemClickListener):

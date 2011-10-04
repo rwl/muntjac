@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from com.vaadin.demo.sampler.ExampleUtil import (ExampleUtil,)
+from muntjac.demo.sampler.ExampleUtil import (ExampleUtil,)
 
 
 class TreeSingleSelectExample(HorizontalLayout, Property.ValueChangeListener, Button.ClickListener, Action.Handler):

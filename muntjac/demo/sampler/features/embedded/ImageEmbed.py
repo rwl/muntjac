@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-from com.vaadin.demo.sampler.features.embedded.FlashEmbed import (FlashEmbed,)
-from com.vaadin.demo.sampler.APIResource import (APIResource,)
-from com.vaadin.demo.sampler.features.embedded.WebEmbed import (WebEmbed,)
-from com.vaadin.demo.sampler.Feature import (Feature,)
+from muntjac.demo.sampler.features.embedded.FlashEmbed import (FlashEmbed,)
+from muntjac.demo.sampler.APIResource import (APIResource,)
+from muntjac.demo.sampler.features.embedded.WebEmbed import (WebEmbed,)
+from muntjac.demo.sampler.Feature import (Feature,)
 Version = Feature.Version
 
 

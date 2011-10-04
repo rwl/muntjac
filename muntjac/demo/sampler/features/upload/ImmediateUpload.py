@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-from com.vaadin.demo.sampler.features.upload.UploadBasic import (UploadBasic,)
-from com.vaadin.demo.sampler.features.upload.UploadWithProgressMonitoring import (UploadWithProgressMonitoring,)
-from com.vaadin.demo.sampler.APIResource import (APIResource,)
-from com.vaadin.demo.sampler.Feature import (Feature,)
+from muntjac.demo.sampler.features.upload.UploadBasic import (UploadBasic,)
+from muntjac.demo.sampler.features.upload.UploadWithProgressMonitoring import (UploadWithProgressMonitoring,)
+from muntjac.demo.sampler.APIResource import (APIResource,)
+from muntjac.demo.sampler.Feature import (Feature,)
 Version = Feature.Version
 
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from com.vaadin.demo.sampler.ExampleUtil import (ExampleUtil,)
+from muntjac.demo.sampler.ExampleUtil import (ExampleUtil,)
 # from com.vaadin.ui.Table.FooterClickEvent import (FooterClickEvent,)
 # from com.vaadin.ui.Table.HeaderClickEvent import (HeaderClickEvent,)
 

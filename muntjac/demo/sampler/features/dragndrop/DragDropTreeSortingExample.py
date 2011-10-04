@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from com.vaadin.demo.sampler.ExampleUtil import (ExampleUtil,)
+from muntjac.demo.sampler.ExampleUtil import (ExampleUtil,)
 # from com.vaadin.data.util.HierarchicalContainer import (HierarchicalContainer,)
 # from com.vaadin.event.Transferable import (Transferable,)
 # from com.vaadin.event.dd.acceptcriteria.AcceptAll import (AcceptAll,)

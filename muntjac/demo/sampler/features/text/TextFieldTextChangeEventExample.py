@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from com.vaadin.demo.sampler.ExampleUtil import (ExampleUtil,)
+from muntjac.demo.sampler.ExampleUtil import (ExampleUtil,)
 # from com.vaadin.event.FieldEvents.TextChangeEvent import (TextChangeEvent,)
 # from com.vaadin.event.FieldEvents.TextChangeListener import (TextChangeListener,)
 # from com.vaadin.ui.AbstractTextField.TextChangeEventMode import (TextChangeEventMode,)

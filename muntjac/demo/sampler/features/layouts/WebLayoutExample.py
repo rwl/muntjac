@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from com.vaadin.demo.sampler.ExampleUtil import (ExampleUtil,)
+from muntjac.demo.sampler.ExampleUtil import (ExampleUtil,)
 # from com.vaadin.ui.ALabel import (ALabel,)
 # from com.vaadin.ui.Button import (Button,)
 # from com.vaadin.ui.Button.ClickEvent import (ClickEvent,)

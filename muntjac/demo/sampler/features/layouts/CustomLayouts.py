@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from com.vaadin.demo.sampler.features.layouts.WebLayout import (WebLayout,)
-from com.vaadin.demo.sampler.features.layouts.ApplicationLayout import (ApplicationLayout,)
-from com.vaadin.demo.sampler.NamedExternalResource import (NamedExternalResource,)
-from com.vaadin.demo.sampler.APIResource import (APIResource,)
-from com.vaadin.demo.sampler.Feature import (Feature,)
+from muntjac.demo.sampler.features.layouts.WebLayout import (WebLayout,)
+from muntjac.demo.sampler.features.layouts.ApplicationLayout import (ApplicationLayout,)
+from muntjac.demo.sampler.NamedExternalResource import (NamedExternalResource,)
+from muntjac.demo.sampler.APIResource import (APIResource,)
+from muntjac.demo.sampler.Feature import (Feature,)
 # from com.vaadin.ui.CustomLayout import (CustomLayout,)
 Version = Feature.Version
 

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from com.vaadin.demo.sampler.features.text.LabelRichExample import (LabelRichExample,)
-from com.vaadin.demo.sampler.features.text.TextArea import (TextArea,)
-from com.vaadin.demo.sampler.APIResource import (APIResource,)
-from com.vaadin.demo.sampler.features.text.LabelRich import (LabelRich,)
-from com.vaadin.demo.sampler.Feature import (Feature,)
+from muntjac.demo.sampler.features.text.LabelRichExample import (LabelRichExample,)
+from muntjac.demo.sampler.features.text.TextArea import (TextArea,)
+from muntjac.demo.sampler.APIResource import (APIResource,)
+from muntjac.demo.sampler.features.text.LabelRich import (LabelRich,)
+from muntjac.demo.sampler.Feature import (Feature,)
 Version = Feature.Version
 
 

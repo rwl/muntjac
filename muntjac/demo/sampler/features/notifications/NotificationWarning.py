@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-from com.vaadin.demo.sampler.features.notifications.NotificationHumanized import (NotificationHumanized,)
-from com.vaadin.demo.sampler.features.notifications.NotificationError import (NotificationError,)
-from com.vaadin.demo.sampler.features.notifications.NotificationTray import (NotificationTray,)
-from com.vaadin.demo.sampler.NamedExternalResource import (NamedExternalResource,)
-from com.vaadin.demo.sampler.APIResource import (APIResource,)
-from com.vaadin.demo.sampler.features.notifications.NotificationCustom import (NotificationCustom,)
-from com.vaadin.demo.sampler.Feature import (Feature,)
+from muntjac.demo.sampler.features.notifications.NotificationHumanized import (NotificationHumanized,)
+from muntjac.demo.sampler.features.notifications.NotificationError import (NotificationError,)
+from muntjac.demo.sampler.features.notifications.NotificationTray import (NotificationTray,)
+from muntjac.demo.sampler.NamedExternalResource import (NamedExternalResource,)
+from muntjac.demo.sampler.APIResource import (APIResource,)
+from muntjac.demo.sampler.features.notifications.NotificationCustom import (NotificationCustom,)
+from muntjac.demo.sampler.Feature import (Feature,)
 # from com.vaadin.ui.Window import (Window,)
 Version = Feature.Version
 

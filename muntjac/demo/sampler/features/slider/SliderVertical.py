@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from com.vaadin.demo.sampler.features.slider.SliderHorizontal import (SliderHorizontal,)
-from com.vaadin.demo.sampler.APIResource import (APIResource,)
-from com.vaadin.demo.sampler.Feature import (Feature,)
+from muntjac.demo.sampler.features.slider.SliderHorizontal import (SliderHorizontal,)
+from muntjac.demo.sampler.APIResource import (APIResource,)
+from muntjac.demo.sampler.Feature import (Feature,)
 Version = Feature.Version
 
 

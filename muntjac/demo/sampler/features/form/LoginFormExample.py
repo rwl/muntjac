@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from com.vaadin.demo.sampler.features.form.LoginForm import (LoginForm,)
+from muntjac.demo.sampler.features.form.LoginForm import (LoginForm,)
 # from com.vaadin.ui.LoginForm import (LoginForm,)
 # from com.vaadin.ui.LoginForm.LoginEvent import (LoginEvent,)
 # from com.vaadin.ui.VerticalLayout import (VerticalLayout,)

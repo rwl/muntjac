@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from com.vaadin.demo.sampler.features.tabsheets.TabSheetIcons import (TabSheetIcons,)
-from com.vaadin.demo.sampler.features.tabsheets.TabSheetScrolling import (TabSheetScrolling,)
-from com.vaadin.demo.sampler.features.tabsheets.TabSheetDisabled import (TabSheetDisabled,)
-from com.vaadin.demo.sampler.APIResource import (APIResource,)
-from com.vaadin.demo.sampler.Feature import (Feature,)
+from muntjac.demo.sampler.features.tabsheets.TabSheetIcons import (TabSheetIcons,)
+from muntjac.demo.sampler.features.tabsheets.TabSheetScrolling import (TabSheetScrolling,)
+from muntjac.demo.sampler.features.tabsheets.TabSheetDisabled import (TabSheetDisabled,)
+from muntjac.demo.sampler.APIResource import (APIResource,)
+from muntjac.demo.sampler.Feature import (Feature,)
 Version = Feature.Version
 
 

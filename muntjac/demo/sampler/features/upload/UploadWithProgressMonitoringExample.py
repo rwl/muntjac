@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from com.vaadin.demo.sampler.features.upload.UploadBasicExample import (UploadBasicExample,)
+from muntjac.demo.sampler.features.upload.UploadBasicExample import (UploadBasicExample,)
 # from com.vaadin.ui.CheckBox import (CheckBox,)
 # from com.vaadin.ui.FormLayout import (FormLayout,)
 LineBreakCounter = UploadBasicExample.LineBreakCounter

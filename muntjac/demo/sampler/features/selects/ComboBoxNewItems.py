@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from com.vaadin.demo.sampler.features.selects.ComboBoxPlain import (ComboBoxPlain,)
-from com.vaadin.demo.sampler.features.selects.ComboBoxContains import (ComboBoxContains,)
-from com.vaadin.demo.sampler.features.selects.ComboBoxStartsWith import (ComboBoxStartsWith,)
-from com.vaadin.demo.sampler.APIResource import (APIResource,)
-from com.vaadin.demo.sampler.Feature import (Feature,)
+from muntjac.demo.sampler.features.selects.ComboBoxPlain import (ComboBoxPlain,)
+from muntjac.demo.sampler.features.selects.ComboBoxContains import (ComboBoxContains,)
+from muntjac.demo.sampler.features.selects.ComboBoxStartsWith import (ComboBoxStartsWith,)
+from muntjac.demo.sampler.APIResource import (APIResource,)
+from muntjac.demo.sampler.Feature import (Feature,)
 Version = Feature.Version
 
 

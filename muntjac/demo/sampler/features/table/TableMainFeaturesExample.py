@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from com.vaadin.demo.sampler.ExampleUtil import (ExampleUtil,)
+from muntjac.demo.sampler.ExampleUtil import (ExampleUtil,)
 # from com.vaadin.event.Action import (Action,)
 # from com.vaadin.ui.Table.CellStyleGenerator import (CellStyleGenerator,)
 # from java.util.HashSet import (HashSet,)

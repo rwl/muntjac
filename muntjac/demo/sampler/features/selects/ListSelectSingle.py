@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-from com.vaadin.demo.sampler.features.selects.OptionGroupDisabledItems import (OptionGroupDisabledItems,)
-from com.vaadin.demo.sampler.features.selects.TwinColumnSelect import (TwinColumnSelect,)
-from com.vaadin.demo.sampler.features.selects.OptionGroups import (OptionGroups,)
-from com.vaadin.demo.sampler.features.selects.NativeSelection import (NativeSelection,)
-from com.vaadin.demo.sampler.features.selects.ListSelectMultiple import (ListSelectMultiple,)
-from com.vaadin.demo.sampler.APIResource import (APIResource,)
-from com.vaadin.demo.sampler.Feature import (Feature,)
+from muntjac.demo.sampler.features.selects.OptionGroupDisabledItems import (OptionGroupDisabledItems,)
+from muntjac.demo.sampler.features.selects.TwinColumnSelect import (TwinColumnSelect,)
+from muntjac.demo.sampler.features.selects.OptionGroups import (OptionGroups,)
+from muntjac.demo.sampler.features.selects.NativeSelection import (NativeSelection,)
+from muntjac.demo.sampler.features.selects.ListSelectMultiple import (ListSelectMultiple,)
+from muntjac.demo.sampler.APIResource import (APIResource,)
+from muntjac.demo.sampler.Feature import (Feature,)
 Version = Feature.Version
 
 

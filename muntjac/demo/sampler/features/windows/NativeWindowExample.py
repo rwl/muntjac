@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from com.vaadin.demo.sampler.features.windows.NativeWindow import (NativeWindow,)
+from muntjac.demo.sampler.features.windows.NativeWindow import (NativeWindow,)
 # from java.util.Date import (Date,)
 
 

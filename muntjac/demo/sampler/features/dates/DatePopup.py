@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-from com.vaadin.demo.sampler.features.dates.DateInline import (DateInline,)
-from com.vaadin.demo.sampler.features.dates.DateLocale import (DateLocale,)
-from com.vaadin.demo.sampler.features.dates.DatePopupInputPrompt import (DatePopupInputPrompt,)
-from com.vaadin.demo.sampler.APIResource import (APIResource,)
-from com.vaadin.demo.sampler.features.dates.DateResolution import (DateResolution,)
-from com.vaadin.demo.sampler.Feature import (Feature,)
+from muntjac.demo.sampler.features.dates.DateInline import (DateInline,)
+from muntjac.demo.sampler.features.dates.DateLocale import (DateLocale,)
+from muntjac.demo.sampler.features.dates.DatePopupInputPrompt import (DatePopupInputPrompt,)
+from muntjac.demo.sampler.APIResource import (APIResource,)
+from muntjac.demo.sampler.features.dates.DateResolution import (DateResolution,)
+from muntjac.demo.sampler.Feature import (Feature,)
 # from com.vaadin.ui.DateField import (DateField,)
 # from com.vaadin.ui.PopupDateField import (PopupDateField,)
 Version = Feature.Version

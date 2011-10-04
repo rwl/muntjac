@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-from com.vaadin.demo.sampler.features.trees.TreeMouseEvents import (TreeMouseEvents,)
-from com.vaadin.demo.sampler.features.trees.TreeMultiSelectExample import (TreeMultiSelectExample,)
-from com.vaadin.demo.sampler.features.trees.TreeSingleSelect import (TreeSingleSelect,)
-from com.vaadin.demo.sampler.features.trees.TreeMultiSelect import (TreeMultiSelect,)
-from com.vaadin.demo.sampler.features.trees.TreeActions import (TreeActions,)
-from com.vaadin.demo.sampler.APIResource import (APIResource,)
-from com.vaadin.demo.sampler.Feature import (Feature,)
+from muntjac.demo.sampler.features.trees.TreeMouseEvents import (TreeMouseEvents,)
+from muntjac.demo.sampler.features.trees.TreeMultiSelectExample import (TreeMultiSelectExample,)
+from muntjac.demo.sampler.features.trees.TreeSingleSelect import (TreeSingleSelect,)
+from muntjac.demo.sampler.features.trees.TreeMultiSelect import (TreeMultiSelect,)
+from muntjac.demo.sampler.features.trees.TreeActions import (TreeActions,)
+from muntjac.demo.sampler.APIResource import (APIResource,)
+from muntjac.demo.sampler.Feature import (Feature,)
 # from com.vaadin.ui.Tree import (Tree,)
 Version = Feature.Version
 

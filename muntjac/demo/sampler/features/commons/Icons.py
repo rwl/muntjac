@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-from com.vaadin.demo.sampler.features.commons.PackageIcons import (PackageIcons,)
-from com.vaadin.demo.sampler.features.embedded.ImageEmbed import (ImageEmbed,)
-from com.vaadin.demo.sampler.APIResource import (APIResource,)
-from com.vaadin.demo.sampler.Feature import (Feature,)
+from muntjac.demo.sampler.features.commons.PackageIcons import (PackageIcons,)
+from muntjac.demo.sampler.features.embedded.ImageEmbed import (ImageEmbed,)
+from muntjac.demo.sampler.APIResource import (APIResource,)
+from muntjac.demo.sampler.Feature import (Feature,)
 # from com.vaadin.terminal.ApplicationResource import (ApplicationResource,)
 # from com.vaadin.terminal.ClassResource import (ClassResource,)
 # from com.vaadin.terminal.ExternalResource import (ExternalResource,)

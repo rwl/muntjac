@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-from com.vaadin.demo.sampler.features.layouts.LayoutSpacing import (LayoutSpacing,)
-from com.vaadin.demo.sampler.features.layouts.HorizontalLayoutBasic import (HorizontalLayoutBasic,)
-from com.vaadin.demo.sampler.features.layouts.VerticalLayoutBasic import (VerticalLayoutBasic,)
-from com.vaadin.demo.sampler.NamedExternalResource import (NamedExternalResource,)
-from com.vaadin.demo.sampler.features.layouts.LayoutMargin import (LayoutMargin,)
-from com.vaadin.demo.sampler.APIResource import (APIResource,)
-from com.vaadin.demo.sampler.Feature import (Feature,)
+from muntjac.demo.sampler.features.layouts.LayoutSpacing import (LayoutSpacing,)
+from muntjac.demo.sampler.features.layouts.HorizontalLayoutBasic import (HorizontalLayoutBasic,)
+from muntjac.demo.sampler.features.layouts.VerticalLayoutBasic import (VerticalLayoutBasic,)
+from muntjac.demo.sampler.NamedExternalResource import (NamedExternalResource,)
+from muntjac.demo.sampler.features.layouts.LayoutMargin import (LayoutMargin,)
+from muntjac.demo.sampler.APIResource import (APIResource,)
+from muntjac.demo.sampler.Feature import (Feature,)
 Version = Feature.Version
 
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from com.vaadin.demo.sampler.ExampleUtil import (ExampleUtil,)
+from muntjac.demo.sampler.ExampleUtil import (ExampleUtil,)
 # from com.vaadin.data.Container import (Container,)
 # from com.vaadin.data.util.BeanItemContainer import (BeanItemContainer,)
 # from com.vaadin.event.dd.acceptcriteria.And import (And,)

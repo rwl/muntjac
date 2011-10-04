@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-from com.vaadin.demo.sampler.features.table.TableMainFeaturesExample import (TableMainFeaturesExample,)
-from com.vaadin.demo.sampler.FeatureSet import (FeatureSet,)
-from com.vaadin.demo.sampler.APIResource import (APIResource,)
-from com.vaadin.demo.sampler.Feature import (Feature,)
+from muntjac.demo.sampler.features.table.TableMainFeaturesExample import (TableMainFeaturesExample,)
+from muntjac.demo.sampler.FeatureSet import (FeatureSet,)
+from muntjac.demo.sampler.APIResource import (APIResource,)
+from muntjac.demo.sampler.Feature import (Feature,)
 Version = Feature.Version
 
 

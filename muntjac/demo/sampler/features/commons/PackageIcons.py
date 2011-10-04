@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from com.vaadin.demo.sampler.features.commons.Icons import (Icons,)
-from com.vaadin.demo.sampler.Feature import (Feature,)
+from muntjac.demo.sampler.features.commons.Icons import (Icons,)
+from muntjac.demo.sampler.Feature import (Feature,)
 Version = Feature.Version
 
 

@@ -1,19 +1,16 @@
-# -*- coding: utf-8 -*-
-# from com.vaadin.ui.Alignment import (Alignment,)
-# from com.vaadin.ui.Button.ClickEvent import (ClickEvent,)
-# from com.vaadin.ui.HorizontalLayout import (HorizontalLayout,)
-# from com.vaadin.ui.VerticalLayout import (VerticalLayout,)
-# from com.vaadin.ui.themes.BaseTheme import (BaseTheme,)
+
+from muntjac.ui import \
+    (VerticalLayout, HorizontalLayout, Button, button, Alignment)
+
+from muntjac.ui.themes import BaseTheme
 
 
-class ProminentPrimaryActionExample(VerticalLayout, Button.ClickListener):
+class ProminentPrimaryActionExample(VerticalLayout, button.IClickListener):
 
     def __init__(self):
-        # Cancel / Save
-        # Sign up / Sign in
-        # Login / Forgot password?
-        # Shows a notification when a button is clicked.
         self.setSpacing(True)
+
+        # Cancel / Save
         horiz = HorizontalLayout()
         horiz.setCaption('Save/cancel example:')
         horiz.setSpacing(True)
@@ -24,6 +21,8 @@ class ProminentPrimaryActionExample(VerticalLayout, Button.ClickListener):
         horiz.addComponent(secondary)
         primary = Button('Save', self)
         horiz.addComponent(primary)
+
+        # Sign up / Sign in
         horiz = HorizontalLayout()
         horiz.setCaption('Sign up example:')
         horiz.setSpacing(True)
@@ -36,6 +35,8 @@ class ProminentPrimaryActionExample(VerticalLayout, Button.ClickListener):
         secondary.setStyleName(BaseTheme.BUTTON_LINK)
         horiz.addComponent(secondary)
         horiz.setComponentAlignment(secondary, Alignment.MIDDLE_LEFT)
+
+        # Login / Forgot password?
         vert = VerticalLayout()
         vert.setCaption('Login example:')
         vert.setSizeUndefined()
@@ -50,5 +51,8 @@ class ProminentPrimaryActionExample(VerticalLayout, Button.ClickListener):
         vert.addComponent(secondary)
         vert.setComponentAlignment(secondary, Alignment.BOTTOM_RIGHT)
 
+
+    # Shows a notification when a button is clicked.
     def buttonClick(self, event):
-        self.getWindow().showNotification('\"' + event.getButton().getCaption() + '\" clicked')
+        self.getWindow().showNotification('\"'
+                + event.getButton().getCaption() + '\" clicked')

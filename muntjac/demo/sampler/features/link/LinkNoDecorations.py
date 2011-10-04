@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from com.vaadin.demo.sampler.features.buttons.ButtonLink import (ButtonLink,)
-from com.vaadin.demo.sampler.features.link.LinkCurrentWindow import (LinkCurrentWindow,)
-from com.vaadin.demo.sampler.features.link.LinkSizedWindow import (LinkSizedWindow,)
-from com.vaadin.demo.sampler.APIResource import (APIResource,)
-from com.vaadin.demo.sampler.Feature import (Feature,)
+from muntjac.demo.sampler.features.buttons.ButtonLink import (ButtonLink,)
+from muntjac.demo.sampler.features.link.LinkCurrentWindow import (LinkCurrentWindow,)
+from muntjac.demo.sampler.features.link.LinkSizedWindow import (LinkSizedWindow,)
+from muntjac.demo.sampler.APIResource import (APIResource,)
+from muntjac.demo.sampler.Feature import (Feature,)
 Version = Feature.Version
 
 

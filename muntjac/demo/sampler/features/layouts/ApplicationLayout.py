@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-from com.vaadin.demo.sampler.features.layouts.CustomLayouts import (CustomLayouts,)
-from com.vaadin.demo.sampler.features.layouts.WebLayout import (WebLayout,)
-from com.vaadin.demo.sampler.APIResource import (APIResource,)
-from com.vaadin.demo.sampler.Feature import (Feature,)
+from muntjac.demo.sampler.features.layouts.CustomLayouts import (CustomLayouts,)
+from muntjac.demo.sampler.features.layouts.WebLayout import (WebLayout,)
+from muntjac.demo.sampler.APIResource import (APIResource,)
+from muntjac.demo.sampler.Feature import (Feature,)
 Version = Feature.Version
 
 

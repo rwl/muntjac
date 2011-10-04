@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from com.vaadin.demo.sampler.features.form.FormPojoExample import (FormPojoExample,)
-from com.vaadin.demo.sampler.ExampleUtil import (ExampleUtil,)
+from muntjac.demo.sampler.features.form.FormPojoExample import (FormPojoExample,)
+from muntjac.demo.sampler.ExampleUtil import (ExampleUtil,)
 # from com.vaadin.data.Item import (Item,)
 # from com.vaadin.data.util.BeanItem import (BeanItem,)
 # from com.vaadin.data.validator.IntegerValidator import (IntegerValidator,)

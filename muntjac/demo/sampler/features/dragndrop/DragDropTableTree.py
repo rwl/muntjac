@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-from com.vaadin.demo.sampler.features.dragndrop.DragDropHtml5FromDesktop import (DragDropHtml5FromDesktop,)
-from com.vaadin.demo.sampler.features.dragndrop.DragDropTreeSorting import (DragDropTreeSorting,)
-from com.vaadin.demo.sampler.features.dragndrop.DragDropServerValidation import (DragDropServerValidation,)
-from com.vaadin.demo.sampler.features.dragndrop.DragDropRearrangeComponents import (DragDropRearrangeComponents,)
-from com.vaadin.demo.sampler.APIResource import (APIResource,)
-from com.vaadin.demo.sampler.Feature import (Feature,)
+from muntjac.demo.sampler.features.dragndrop.DragDropHtml5FromDesktop import (DragDropHtml5FromDesktop,)
+from muntjac.demo.sampler.features.dragndrop.DragDropTreeSorting import (DragDropTreeSorting,)
+from muntjac.demo.sampler.features.dragndrop.DragDropServerValidation import (DragDropServerValidation,)
+from muntjac.demo.sampler.features.dragndrop.DragDropRearrangeComponents import (DragDropRearrangeComponents,)
+from muntjac.demo.sampler.APIResource import (APIResource,)
+from muntjac.demo.sampler.Feature import (Feature,)
 Version = Feature.Version
 
 

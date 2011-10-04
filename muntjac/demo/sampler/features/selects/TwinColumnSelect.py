@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-from com.vaadin.demo.sampler.features.selects.NativeSelection import (NativeSelection,)
-from com.vaadin.demo.sampler.features.selects.ListSelectMultiple import (ListSelectMultiple,)
-from com.vaadin.demo.sampler.NamedExternalResource import (NamedExternalResource,)
-from com.vaadin.demo.sampler.APIResource import (APIResource,)
-from com.vaadin.demo.sampler.features.selects.ListSelectSingle import (ListSelectSingle,)
-from com.vaadin.demo.sampler.Feature import (Feature,)
+from muntjac.demo.sampler.features.selects.NativeSelection import (NativeSelection,)
+from muntjac.demo.sampler.features.selects.ListSelectMultiple import (ListSelectMultiple,)
+from muntjac.demo.sampler.NamedExternalResource import (NamedExternalResource,)
+from muntjac.demo.sampler.APIResource import (APIResource,)
+from muntjac.demo.sampler.features.selects.ListSelectSingle import (ListSelectSingle,)
+from muntjac.demo.sampler.Feature import (Feature,)
 Version = Feature.Version
 
 

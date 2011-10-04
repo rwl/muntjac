@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from com.vaadin.demo.sampler.features.notifications.NotificationError import (NotificationError,)
-from com.vaadin.demo.sampler.features.form.FormBasic import (FormBasic,)
-from com.vaadin.demo.sampler.features.commons.Validation import (Validation,)
-from com.vaadin.demo.sampler.APIResource import (APIResource,)
-from com.vaadin.demo.sampler.Feature import (Feature,)
+from muntjac.demo.sampler.features.notifications.NotificationError import (NotificationError,)
+from muntjac.demo.sampler.features.form.FormBasic import (FormBasic,)
+from muntjac.demo.sampler.features.commons.Validation import (Validation,)
+from muntjac.demo.sampler.APIResource import (APIResource,)
+from muntjac.demo.sampler.Feature import (Feature,)
 Version = Feature.Version
 
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from com.vaadin.demo.sampler.Feature import (Feature,)
+from muntjac.demo.sampler.Feature import (Feature,)
 Version = Feature.Version
 
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from com.vaadin.demo.sampler.ExampleUtil import (ExampleUtil,)
+from muntjac.demo.sampler.ExampleUtil import (ExampleUtil,)
 # from com.vaadin.data.util.IndexedContainer import (IndexedContainer,)
 # from com.vaadin.ui.Table import (Table,)
 # from java.text.NumberFormat import (NumberFormat,)

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from com.vaadin.demo.sampler.features.windows.Subwindow import (Subwindow,)
-from com.vaadin.demo.sampler.APIResource import (APIResource,)
-from com.vaadin.demo.sampler.Feature import (Feature,)
+from muntjac.demo.sampler.features.windows.Subwindow import (Subwindow,)
+from muntjac.demo.sampler.APIResource import (APIResource,)
+from muntjac.demo.sampler.Feature import (Feature,)
 Links = FeatureSet.Links
 Windows = FeatureSet.Windows
 Version = Feature.Version

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from com.vaadin.demo.sampler.features.popupviews.PopupViewClosing import (PopupViewClosing,)
-from com.vaadin.demo.sampler.APIResource import (APIResource,)
-from com.vaadin.demo.sampler.Feature import (Feature,)
+from muntjac.demo.sampler.features.popupviews.PopupViewClosing import (PopupViewClosing,)
+from muntjac.demo.sampler.APIResource import (APIResource,)
+from muntjac.demo.sampler.Feature import (Feature,)
 # from com.vaadin.ui.PopupView import (PopupView,)
 Version = Feature.Version
 

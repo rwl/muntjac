@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from com.vaadin.demo.sampler.features.text.RichTextEditor import (RichTextEditor,)
-from com.vaadin.demo.sampler.features.text.LabelPreformatted import (LabelPreformatted,)
-from com.vaadin.demo.sampler.features.text.LabelPlain import (LabelPlain,)
-from com.vaadin.demo.sampler.APIResource import (APIResource,)
-from com.vaadin.demo.sampler.Feature import (Feature,)
+from muntjac.demo.sampler.features.text.RichTextEditor import (RichTextEditor,)
+from muntjac.demo.sampler.features.text.LabelPreformatted import (LabelPreformatted,)
+from muntjac.demo.sampler.features.text.LabelPlain import (LabelPlain,)
+from muntjac.demo.sampler.APIResource import (APIResource,)
+from muntjac.demo.sampler.Feature import (Feature,)
 Version = Feature.Version
 
 
