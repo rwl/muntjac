@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-from muntjac.demo.sampler.features.form.LoginForm import (LoginForm,)
-# from com.vaadin.ui.LoginForm import (LoginForm,)
-# from com.vaadin.ui.LoginForm.LoginEvent import (LoginEvent,)
-# from com.vaadin.ui.VerticalLayout import (VerticalLayout,)
+
+from muntjac.demo.sampler.features.form.LoginForm import LoginForm
+from muntjac.ui import VerticalLayout, login_form
 
 
 class LoginFormExample(VerticalLayout):
@@ -12,11 +10,17 @@ class LoginFormExample(VerticalLayout):
         login.setWidth('100%')
         login.setHeight('300px')
 
-        class _0_(LoginForm.LoginListener):
+
+        class NewLoginListener(login_form.ILoginListener):
+
+            def __init__(self, c):
+                self._c = c
 
             def onLogin(self, event):
-                self.getWindow().showNotification('New Login', 'Username: ' + event.getLoginParameter('username') + ', password: ' + event.getLoginParameter('password'))
+                self._c.getWindow().showNotification('New Login', 'Username: '
+                        + event.getLoginParameter('username')
+                        + ', password: ' + event.getLoginParameter('password'))
 
-        _0_ = _0_()
-        login.addListener(_0_)
+
+        login.addListener( NewLoginListener(self) )
         self.addComponent(login)
