@@ -1,4 +1,5 @@
-# -*- coding: utf-8 -*-
+
+from muntjac.ui import VerticalLayout, TextField, button, Button, Alignment
 
 
 class NotificationHumanizedExample(VerticalLayout):
@@ -14,12 +15,15 @@ class NotificationHumanizedExample(VerticalLayout):
         description.setWidth('300px')
         self.addComponent(description)
 
-        class _0_(Button.ClickListener):
+        class ShowListener(button.IClickListener):
+
+            def __init__(self, c):
+                self._c = c
 
             def buttonClick(self, event):
-                self.getWindow().showNotification(self.caption.getValue(), self.description.getValue())
+                self._c.getWindow().showNotification(self.caption.getValue(),
+                        self.description.getValue())
 
-        _0_ = _0_()
-        show = Button('Show notification', _0_)
+        show = Button('Show notification', ShowListener(self))
         self.addComponent(show)
         self.setComponentAlignment(show, Alignment.MIDDLE_RIGHT)
