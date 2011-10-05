@@ -1,5 +1,6 @@
-# -*- coding: utf-8 -*-
-# from com.vaadin.data.Property.ValueChangeListener import (ValueChangeListener,)
+
+from muntjac.ui import VerticalLayout, Label, Slider, Alignment
+from muntjac.data.property import IValueChangeListener
 
 
 class SliderVerticalExample(VerticalLayout):
@@ -8,6 +9,7 @@ class SliderVerticalExample(VerticalLayout):
         self.setSpacing(True)
         value = Label('0')
         value.setSizeUndefined()
+
         slider = Slider('Select a value between 0 and 100')
         slider.setOrientation(Slider.ORIENTATION_VERTICAL)
         slider.setHeight('200px')
@@ -15,14 +17,18 @@ class SliderVerticalExample(VerticalLayout):
         slider.setMax(100)
         slider.setImmediate(True)
 
-        class _0_(ValueChangeListener):
+        class SliderListener(IValueChangeListener):
+
+            def __init__(self, value):
+                self._value = value
 
             def valueChange(self, event):
-                self.value.setValue(event.getProperty().getValue())
+                self._value.setValue(event.getProperty().getValue())
 
-        _0_ = _0_()
-        slider.addListener(_0_)
+        slider.addListener( SliderListener(value) )
+
         self.addComponent(slider)
         self.addComponent(value)
+
         self.setComponentAlignment(slider, Alignment.TOP_CENTER)
         self.setComponentAlignment(value, Alignment.TOP_CENTER)
