@@ -1,57 +1,75 @@
-# -*- coding: utf-8 -*-
+
+from muntjac.ui import VerticalLayout, MenuBar
+from muntjac.ui.menu_bar import ICommand
+from muntjac.terminal.external_resource import ExternalResource
 
 
 class BasicMenuBarExample(VerticalLayout):
-    _menubar = MenuBar()
 
     def __init__(self):
-        # Save reference to individual items so we can add sub-menu items to
-        # them
-        file = self._menubar.addItem('File', None)
-        newItem = file.addItem('New', None)
-        file.addItem('Open file...', self.menuCommand)
-        file.addSeparator()
-        newItem.addItem('File', self.menuCommand)
-        newItem.addItem('Folder', self.menuCommand)
-        newItem.addItem('Project...', self.menuCommand)
-        file.addItem('Close', self.menuCommand)
-        file.addItem('Close All', self.menuCommand)
-        file.addSeparator()
-        file.addItem('Save', self.menuCommand)
-        file.addItem('Save As...', self.menuCommand)
-        file.addItem('Save All', self.menuCommand)
-        edit = self._menubar.addItem('Edit', None)
-        edit.addItem('Undo', self.menuCommand)
-        edit.addItem('Redo', self.menuCommand).setEnabled(False)
-        edit.addSeparator()
-        edit.addItem('Cut', self.menuCommand)
-        edit.addItem('Copy', self.menuCommand)
-        edit.addItem('Paste', self.menuCommand)
-        edit.addSeparator()
-        find = edit.addItem('Find/Replace', self.menuCommand)
-        # Actions can be added inline as well, of course
+        self._menubar = MenuBar()
 
-        class _0_(Command):
+        menuCommand = MenuCommand(self)
+
+        # Save reference to individual items so we can add sub-menu
+        # items to them
+        f = self._menubar.addItem('File', None)
+        newItem = f.addItem('New', None)
+        f.addItem('Open f...', menuCommand)
+        f.addSeparator()
+        newItem.addItem('File', menuCommand)
+        newItem.addItem('Folder', menuCommand)
+        newItem.addItem('Project...', menuCommand)
+        f.addItem('Close', menuCommand)
+        f.addItem('Close All', menuCommand)
+        f.addSeparator()
+        f.addItem('Save', menuCommand)
+        f.addItem('Save As...', menuCommand)
+        f.addItem('Save All', menuCommand)
+
+        edit = self._menubar.addItem('Edit', None)
+        edit.addItem('Undo', menuCommand)
+        edit.addItem('Redo', menuCommand).setEnabled(False)
+        edit.addSeparator()
+        edit.addItem('Cut', menuCommand)
+        edit.addItem('Copy', menuCommand)
+        edit.addItem('Paste', menuCommand)
+
+        edit.addSeparator()
+        find = edit.addItem('Find/Replace', menuCommand)
+
+        # Actions can be added inline as well, of course
+        class SearchCommand(ICommand):
+
+            def __init__(self, c):
+                self._c = c
 
             def menuSelected(self, selectedItem):
-                self.getWindow().open(ExternalResource('http://www.google.com'))
+                er = ExternalResource('http://www.google.com')
+                self._c.getWindow().open(er)
 
-        _0_ = _0_()
-        find.addItem('Google Search', _0_)
+        find.addItem('Google Search', SearchCommand(self))
         find.addSeparator()
-        find.addItem('Find/Replace...', self.menuCommand)
-        find.addItem('Find Next', self.menuCommand)
-        find.addItem('Find Previous', self.menuCommand)
+        find.addItem('Find/Replace...', menuCommand)
+        find.addItem('Find Next', menuCommand)
+        find.addItem('Find Previous', menuCommand)
+
         view = self._menubar.addItem('View', None)
-        view.addItem('Show/Hide Status Bar', self.menuCommand)
-        view.addItem('Customize Toolbar...', self.menuCommand)
+        view.addItem('Show/Hide Status Bar', menuCommand)
+        view.addItem('Customize Toolbar...', menuCommand)
         view.addSeparator()
-        view.addItem('Actual Size', self.menuCommand)
-        view.addItem('Zoom In', self.menuCommand)
-        view.addItem('Zoom Out', self.menuCommand)
+        view.addItem('Actual Size', menuCommand)
+        view.addItem('Zoom In', menuCommand)
+        view.addItem('Zoom Out', menuCommand)
+
         self.addComponent(self._menubar)
 
-    class menuCommand(Command):
 
-        def menuSelected(self, selectedItem):
-            self.getWindow().showNotification('Action ' + selectedItem.getText())
+class MenuCommand(ICommand):
+
+    def __init__(self, c):
+        self._c = c
+
+    def menuSelected(self, selectedItem):
+        note = 'Action ' + selectedItem.getText()
+        self._c.getWindow().showNotification(note)
