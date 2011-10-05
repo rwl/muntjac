@@ -1,21 +1,23 @@
-# -*- coding: utf-8 -*-
-# from com.vaadin.ui.ProgressIndicator import (ProgressIndicator,)
+
+import time
+import threading
+
+from muntjac.ui import \
+    (VerticalLayout, Label, ProgressIndicator, HorizontalLayout,
+     Alignment, Button, button)
 
 
 class ProgressIndicatorsExample(VerticalLayout):
-    _pi1 = None
-    _pi2 = None
-    _worker1 = None
-    _worker2 = None
-    _startButton1 = None
-    _startButton2 = None
 
     def __init__(self):
         self.setSpacing(True)
-        self.addComponent(Label('<strong>Normal mode</strong> Runs for 20 seconds', Label.CONTENT_XHTML))
+
+        self.addComponent(Label('<strong>Normal mode</strong> '
+                'Runs for 20 seconds', Label.CONTENT_XHTML))
         hl = HorizontalLayout()
         hl.setSpacing(True)
         self.addComponent(hl)
+
         # Add a normal progress indicator
         self._pi1 = ProgressIndicator()
         self._pi1.setIndeterminate(False)
@@ -23,24 +25,27 @@ class ProgressIndicatorsExample(VerticalLayout):
         hl.addComponent(self._pi1)
         hl.setComponentAlignment(self._pi1, Alignment.MIDDLE_LEFT)
 
-        class _0_(Button.ClickListener):
+        class NormalListener(button.IClickListener):
+
+            def __init__(self, c):
+                self._c = c
 
             def buttonClick(self, event):
-                ProgressIndicatorsExample_this._worker1 = ProgressIndicatorsExample_this.Worker1()
-                ProgressIndicatorsExample_this._worker1.start()
-                ProgressIndicatorsExample_this._pi1.setEnabled(True)
-                ProgressIndicatorsExample_this._pi1.setValue(0.0)
-                ProgressIndicatorsExample_this._startButton1.setEnabled(False)
+                self._c._worker1 = Worker1(self)
+                self._c._worker1.start()
+                self._c._pi1.setEnabled(True)
+                self._c._pi1.setValue(0.0)
+                self._c._startButton1.setEnabled(False)
 
-        _0_ = _0_()
-        Button('Start normal', _0_)
-        self._startButton1 = _0_
+        self._startButton1 = Button('Start normal', NormalListener(self))
         self._startButton1.setStyleName('small')
         hl.addComponent(self._startButton1)
-        self.addComponent(Label('<strong>Indeterminate mode</strong> Runs for 10 seconds', Label.CONTENT_XHTML))
+        self.addComponent(Label('<strong>Indeterminate mode</strong> '
+                'Runs for 10 seconds', Label.CONTENT_XHTML))
         hl = HorizontalLayout()
         hl.setSpacing(True)
         self.addComponent(hl)
+
         # Add an indeterminate progress indicator
         self._pi2 = ProgressIndicator()
         self._pi2.setIndeterminate(True)
@@ -48,74 +53,81 @@ class ProgressIndicatorsExample(VerticalLayout):
         self._pi2.setEnabled(False)
         hl.addComponent(self._pi2)
 
-        class _0_(Button.ClickListener):
+        class IndeterminateListener(button.IClickListener):
+
+            def __init__(self, c):
+                self._c = c
 
             def buttonClick(self, event):
-                ProgressIndicatorsExample_this._worker2 = ProgressIndicatorsExample_this.Worker2()
-                ProgressIndicatorsExample_this._worker2.start()
-                ProgressIndicatorsExample_this._pi2.setEnabled(True)
-                ProgressIndicatorsExample_this._pi2.setVisible(True)
-                ProgressIndicatorsExample_this._startButton2.setEnabled(False)
+                self._c._worker2 = Worker2(self)
+                self._c._worker2.start()
+                self._c._pi2.setEnabled(True)
+                self._c._pi2.setVisible(True)
+                self._c._startButton2.setEnabled(False)
 
-        _0_ = _0_()
-        Button('Start indeterminate', _0_)
-        self._startButton2 = _0_
+        l = IndeterminateListener(self)
+        self._startButton2 = Button('Start indeterminate', l)
         self._startButton2.setStyleName('small')
         hl.addComponent(self._startButton2)
 
+
     def prosessed(self):
         i = self._worker1.getCurrent()
-        if i == self.Worker1.MAX:
+        if i == Worker1.MAX:
             self._pi1.setEnabled(False)
             self._startButton1.setEnabled(True)
             self._pi1.setValue(1.0)
         else:
             self._pi1.setValue(i / self.Worker1.MAX)
 
+
     def prosessed2(self):
         self._pi2.setEnabled(False)
         self._startButton2.setEnabled(True)
 
-    def Worker1(ProgressIndicatorsExample_this, *args, **kwargs):
 
-        class Worker1(VerticalLayout.Thread):
-            _current = 1
-            MAX = 20
 
-            def run(self):
-                _0 = True
-                while True:
-                    if _0 is True:
-                        _0 = False
-                    else:
-                        self._current += 1
-                    if not (self._current <= self.MAX):
-                        break
-                    # All modifications to Vaadin components should be synchronized
-                    # over application instance. For normal requests this is done
-                    # by the servlet. Here we are changing the application state
-                    # via a separate thread.
-                    try:
-                        self.Thread.sleep(1000)
-                    except self.InterruptedException, e:
-                        e.printStackTrace()
-                    ProgressIndicatorsExample_this.prosessed()
+class Worker1(threading.Thread):
 
-            def getCurrent(self):
-                return self._current
+    MAX = 20
 
-        return Worker1(*args, **kwargs)
+    def __init__(self, c):
+        self._c = c
+        self._current = 1
 
-    def Worker2(ProgressIndicatorsExample_this, *args, **kwargs):
 
-        class Worker2(VerticalLayout.Thread):
+    def run(self):
+        while self._current <= self.MAX:
+            try:
+                time.sleep(1000)
+            except self.InterruptedException, e:
+                print str(e)
 
-            def run(self):
-                # synchronize changes over application
-                try:
-                    self.Thread.sleep(10000)
-                except self.InterruptedException, e:
-                    e.printStackTrace()
-                ProgressIndicatorsExample_this.prosessed2()
+            # All modifications to Vaadin components should be synchronized
+            # over application instance. For normal requests this is done
+            # by the servlet. Here we are changing the application state
+            # via a separate thread.
+            self._c.prosessed()
 
-        return Worker2(*args, **kwargs)
+            self._current += 1
+
+
+    def getCurrent(self):
+        return self._current
+
+
+class Worker2(threading.Thread):
+
+    def __init__(self, c):
+        self._c = c
+
+
+    def run(self):
+        try:
+            time.sleep(10000)
+        except self.InterruptedException, e:
+            print str(e)
+
+        # synchronize changes over application
+        self._c.prosessed2()
+

@@ -1,23 +1,21 @@
-# -*- coding: utf-8 -*-
+
+from muntjac.ui import VerticalLayout, ListSelect
+from muntjac.data.property import IValueChangeListener
 
 
-class ListSelectMultipleExample(VerticalLayout, Property.ValueChangeListener):
-    _cities = ['Berlin', 'Brussels', 'Helsinki', 'Madrid', 'Oslo', 'Paris', 'Stockholm']
+class ListSelectMultipleExample(VerticalLayout, IValueChangeListener):
+
+    _cities = ['Berlin', 'Brussels', 'Helsinki', 'Madrid', 'Oslo',
+            'Paris', 'Stockholm']
 
     def __init__(self):
-        # Shows a notification when a selection is made.
         self.setSpacing(True)
+
         l = ListSelect('Please select some cities')
-        _0 = True
-        i = 0
-        while True:
-            if _0 is True:
-                _0 = False
-            else:
-                i += 1
-            if not (i < len(self._cities)):
-                break
-            l.addItem(self._cities[i])
+
+        for c in self._cities:
+            l.addItem(c)
+
         l.setRows(7)
         l.setNullSelectionAllowed(True)
         l.setMultiSelect(True)
@@ -25,5 +23,7 @@ class ListSelectMultipleExample(VerticalLayout, Property.ValueChangeListener):
         l.addListener(self)
         self.addComponent(l)
 
+    # Shows a notification when a selection is made.
     def valueChange(self, event):
-        self.getWindow().showNotification('Selected cities: ' + event.getProperty())
+        self.getWindow().showNotification('Selected cities: '
+                + event.getProperty())
