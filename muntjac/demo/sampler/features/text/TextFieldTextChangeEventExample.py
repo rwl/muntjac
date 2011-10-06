@@ -1,8 +1,8 @@
-# -*- coding: utf-8 -*-
-from muntjac.demo.sampler.ExampleUtil import (ExampleUtil,)
-# from com.vaadin.event.FieldEvents.TextChangeEvent import (TextChangeEvent,)
-# from com.vaadin.event.FieldEvents.TextChangeListener import (TextChangeListener,)
-# from com.vaadin.ui.AbstractTextField.TextChangeEventMode import (TextChangeEventMode,)
+
+from muntjac.demo.sampler.ExampleUtil import ExampleUtil
+from muntjac.ui import VerticalLayout, TextField, Table
+from muntjac.ui.abstract_text_field import TextChangeEventMode
+from muntjac.event.field_events import ITextChangeListener
 
 
 class TextFieldTextChangeEventExample(VerticalLayout):
@@ -13,18 +13,26 @@ class TextFieldTextChangeEventExample(VerticalLayout):
         filterField.setTextChangeEventMode(TextChangeEventMode.LAZY)
         filterField.setTextChangeTimeout(200)
 
-        class _0_(TextChangeListener):
+        class FilterListener(ITextChangeListener):
+
+            def __init__(self, nameContainer):
+                self._nameContainer = nameContainer
 
             def textChange(self, event):
-                self.nameContainer.removeAllContainerFilters()
-                self.nameContainer.addContainerFilter(ExampleUtil.PERSON_PROPERTY_NAME, event.getText(), True, False)
+                self._nameContainer.removeAllContainerFilters()
+                self._nameContainer.addContainerFilter(
+                        ExampleUtil.PERSON_PROPERTY_NAME,
+                        event.getText(), True, False)
 
-        _0_ = _0_()
-        filterField.addListener(_0_)
+
+        filterField.addListener( FilterListener(nameContainer) )
         table = Table(None, nameContainer)
         table.setColumnHeaderMode(Table.COLUMN_HEADER_MODE_HIDDEN)
+
         self.setSpacing(False)
+
         self.addComponent(filterField)
         self.addComponent(table)
+
         filterField.setWidth('150px')
         table.setWidth('150px')

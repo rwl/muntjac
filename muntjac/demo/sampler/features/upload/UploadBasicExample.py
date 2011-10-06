@@ -1,49 +1,66 @@
-# -*- coding: utf-8 -*-
+
+from StringIO import StringIO
+
+from muntjac.ui import VerticalLayout, Label, upload
+from muntjac.ui.upload import Upload, IReceiver
 
 
 class UploadBasicExample(VerticalLayout):
-    _result = Label()
-    _counter = LineBreakCounter()
-    _upload = Upload('Upload a file', _counter)
 
     def __init__(self):
+        self._result = Label()
+        self._counter = LineBreakCounter()
+        self._upload = Upload('Upload a file', self._counter)
+
         self.addComponent(self._upload)
         self.addComponent(self._result)
 
-        class _0_(Upload.FinishedListener):
+        class FinishedListener(upload.IFinishedListener):
+
+            def __init__(self, c):
+                self._c = c
 
             def uploadFinished(self, event):
-                UploadBasicExample_this._result.setValue('Uploaded file contained ' + UploadBasicExample_this._counter.getLineBreakCount() + ' linebreaks')
+                self._c._result.setValue('Uploaded file contained '
+                    + self._c._counter.getLineBreakCount() + ' linebreaks')
 
-        _0_ = _0_()
-        self._upload.addListener(_0_)
+        self._upload.addListener(FinishedListener(self))
 
-    class LineBreakCounter(Receiver):
-        _fileName = None
-        _mtype = None
-        _counter = None
 
-        def receiveUpload(self, filename, MIMEType):
-            """return an OutputStream that simply counts lineends"""
-            self._counter = 0
-            self._fileName = filename
-            self._mtype = MIMEType
+class LineBreakCounter(IReceiver):
 
-            class _1_(OutputStream):
-                _searchedByte = '\n'
+    def __init__(self):
+        self._fileName = None
+        self._mtype = None
+        self._counter = None
 
-                def write(self, b):
-                    if b == self._searchedByte:
-                        LineBreakCounter_this._counter += 1
 
-            _1_ = _1_()
-            return _1_
+    def receiveUpload(self, filename, MIMEType):
+        """return an OutputStream that simply counts lineends"""
+        self._counter = 0
+        self._fileName = filename
+        self._mtype = MIMEType
 
-        def getFileName(self):
-            return self._fileName
+        class OutputStream(StringIO):
 
-        def getMimeType(self):
-            return self._mtype
+            def __init__(self, lbc):
+                super(OutputStream, self).__init__()
+                self._lbc = lbc
 
-        def getLineBreakCount(self):
-            return self._counter
+            def write(self, b):
+                if b == '\n':
+                    self._lbc._counter += 1
+
+        return OutputStream(self)
+
+
+    def getFileName(self):
+        return self._fileName
+
+
+    def getMimeType(self):
+        return self._mtype
+
+
+    def getLineBreakCount(self):
+        return self._counter
