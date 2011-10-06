@@ -49,7 +49,7 @@ from muntjac.event.item_click_event import \
 from muntjac.data.util.indexed_container import \
     IItemSetChangeEvent, IndexedContainer
 
-from muntjac.terminal import clsname
+from muntjac.util import clsname
 
 
 logger = logging.getLogger(__name__)

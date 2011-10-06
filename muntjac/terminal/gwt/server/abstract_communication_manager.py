@@ -29,7 +29,7 @@ except ImportError, e:
     from StringIO import StringIO as cStringIO
     from StringIO import StringIO
 
-from muntjac.terminal import clsname
+from muntjac.util import clsname
 
 from muntjac.terminal.gwt.server.json_paint_target import JsonPaintTarget
 from muntjac.terminal.gwt.server.exceptions import UploadException

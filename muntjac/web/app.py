@@ -3,7 +3,7 @@ from paste.deploy import CONFIG
 
 from muntjac.terminal.gwt.server.application_servlet import ApplicationServlet
 from muntjac.terminal.gwt.server.exceptions import ServletException
-from muntjac.terminal.gwt.server.util import loadClass
+from muntjac.util import loadClass
 
 
 class app(ApplicationServlet):

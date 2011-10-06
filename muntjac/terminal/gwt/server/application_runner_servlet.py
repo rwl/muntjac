@@ -24,7 +24,7 @@ from muntjac.terminal.gwt.server.exceptions import ServletException
 from muntjac.terminal.gwt.server.abstract_application_servlet import \
     AbstractApplicationServlet
 
-from muntjac.terminal.gwt.server.util import loadClass
+from muntjac.util import loadClass
 
 
 logger = logging.getLogger(__name__)

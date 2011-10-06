@@ -17,7 +17,7 @@
 from collections import deque
 from Queue import LifoQueue
 
-from muntjac.terminal import clsname
+from muntjac.util import clsname
 from muntjac.terminal.key_mapper import KeyMapper
 from muntjac.terminal.gwt.client.mouse_event_details import MouseEventDetails
 

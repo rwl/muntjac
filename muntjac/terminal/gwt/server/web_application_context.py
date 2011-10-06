@@ -17,7 +17,7 @@
 from muntjac.terminal.gwt.server.abstract_web_application_context import \
         AbstractWebApplicationContext
 
-from muntjac.terminal import clsname
+from muntjac.util import clsname
 
 
 class WebApplicationContext(AbstractWebApplicationContext):

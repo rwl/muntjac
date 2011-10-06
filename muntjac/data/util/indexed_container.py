@@ -31,7 +31,7 @@ from muntjac.data.util.abstract_container import BaseItemSetChangeEvent
 
 from muntjac.data import container
 from muntjac.event import EventObject
-from muntjac.terminal import fullname
+from muntjac.util import fullname
 
 # item type is really IndexedContainerItem, but using IItem
 # not to show it in public API

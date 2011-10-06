@@ -28,7 +28,7 @@ from muntjac.terminal.gwt.client.event_id import EventId
 from muntjac.event.layout_events import \
     ILayoutClickNotifier, LayoutClickEvent, ILayoutClickListener
 
-from muntjac.terminal import fullname
+from muntjac.util import fullname
 
 
 class GridLayout(AbstractLayout, ILayout, IAlignmentHandler, ILayout,

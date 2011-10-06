@@ -3,7 +3,7 @@ from muntjac.ui import \
     VerticalLayout, Label, GridLayout, TextField, Select, Link
 
 from muntjac.event.layout_events import ILayoutClickListener
-from muntjac.terminal import fullname
+from muntjac.util import fullname
 
 
 class ClickableLayoutBasicExample(VerticalLayout):

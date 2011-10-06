@@ -20,7 +20,7 @@ from muntjac.event.method_event_source import IMethodEventSource
 from muntjac.event.event_router import EventRouter
 from muntjac.terminal.terminal import IErrorEvent as ITerminalErrorEvent
 from muntjac.terminal.paintable import RepaintRequestEvent
-from muntjac.terminal import fullname
+from muntjac.util import fullname
 
 from muntjac.ui.component import \
     IComponent, IListener, IFocusable, Event as ComponentEvent

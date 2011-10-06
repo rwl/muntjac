@@ -1,6 +1,6 @@
 
-from muntjac.terminal import fullname
-from muntjac.terminal.gwt.server.util import loadClass
+from muntjac.util import fullname
+from muntjac.util import loadClass
 from muntjac.demo.sampler.SamplerApplication import SamplerApplication
 
 from muntjac.terminal.gwt.server.abstract_application_servlet import \

@@ -28,7 +28,7 @@ try:
 except ImportError, e:
     from StringIO import StringIO
 
-from muntjac.terminal import clsname
+from muntjac.util import clsname
 from muntjac.application import Application
 
 from muntjac.terminal.gwt.server.constants import Constants
