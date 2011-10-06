@@ -1,56 +1,72 @@
-# -*- coding: utf-8 -*-
-# from com.vaadin.ui.Window.CloseEvent import (CloseEvent,)
+
+from muntjac.ui import VerticalLayout, CheckBox, Window, Label, Button
+from muntjac.data.property import IValueChangeListener
+from muntjac.ui.window import ICloseListener
+from muntjac.ui.button import IClickListener
 
 
 class SubwindowCloseExample(VerticalLayout):
+
     _openWindowText = 'Open a window'
     _closeWindowText = 'Close the window'
-    _subwindow = None
-    _openCloseButton = None
-    _closableWindow = None
+
 
     def __init__(self):
         self._closableWindow = CheckBox('Allow user to close the window', True)
         self._closableWindow.setImmediate(True)
 
-        class _0_(ValueChangeListener):
+        class ClosableChangeListener(IValueChangeListener):
+
+            def __init__(self, c):
+                self._c = c
 
             def valueChange(self, event):
-                SubwindowCloseExample_this._subwindow.setClosable(SubwindowCloseExample_this._closableWindow.booleanValue())
+                self._c._subwindow.setClosable(bool(self._c._closableWindow))
 
-        _0_ = _0_()
-        self._closableWindow.addListener(_0_)
+        self._closableWindow.addListener(ClosableChangeListener(self))
+
         # Create the window
         self._subwindow = Window('A subwindow w/ close-listener')
-        # subwindow.addListener(new Window.CloseListener() {
-        # // inline close-listener
-        # public void windowClose(CloseEvent e) {
-        # getWindow().showNotification("Window closed by user");
-        # openCloseButton.setCaption(openWindowText);
-        # }
-        # });
+
+        class CloseListener(ICloseListener):
+
+            def __init__(self, c):
+                self._c = c
+
+            def windowClose(self, e):
+                self._c.getWindow().showNotification("Window closed by user")
+                self._c._openCloseButton.setCaption(self._c._openWindowText)
+
+        self._subwindow.addListener(CloseListener(self))
+
         # Configure the windws layout; by default a VerticalLayout
         layout = self._subwindow.getContent()
         layout.setMargin(True)
         layout.setSpacing(True)
+
         # Add some content; a label and a close-button
         message = Label('This is a subwindow with a close-listener.')
         self._subwindow.addComponent(message)
+
         # Add a button for opening the subwindow
-        # openCloseButton = new Button("Open window", new Button.ClickListener() {
-        # // inline click-listener
-        # public void buttonClick(ClickEvent event) {
-        # if (subwindow.getParent() != null) {
-        # // window is already showing
-        # (subwindow.getParent()).removeWindow(subwindow);
-        # openCloseButton.setCaption(openWindowText);
-        # } else {
-        # // Open the subwindow by adding it to the parent window
-        # getWindow().addWindow(subwindow);
-        # openCloseButton.setCaption(closeWindowText);
-        # }
-        # }
-        # });
+        class ClickListener(IClickListener):
+
+            def __init__(self, c):
+                self._c = c
+
+            def buttonClick(self, event):
+                if (self._c._subwindow.getParent() is not None):
+                    # window is already showing
+                    self._c._subwindow.getParent().removeWindow(self._c._subwindow)
+
+                    self._c._openCloseButton.setCaption(self._copenWindowText)
+                else:
+                    # Open the subwindow by adding it to the parent window
+                    self._c.getWindow().addWindow(self._c._subwindow)
+                    self._c._openCloseButton.setCaption(self._ccloseWindowText)
+
+        self._c.openCloseButton = Button("Open window", ClickListener(self))
+
         self.setSpacing(True)
         self.addComponent(self._closableWindow)
         self.addComponent(self._openCloseButton)
