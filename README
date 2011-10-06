@@ -1,4 +1,52 @@
 Muntjac
 =======
 
-A web application GUI toolkit.
+A web application GUI toolkit. Muntjac is a translation of Vaadin to the
+Python programming language. It is akin to PyQT, wxPython, PyGTK etc, but
+can be used to create web applications.
+
+
+Installation
+------------
+
+Muntjac depend upon:
+
+ - Python > v2.5
+ - PasteWebKit > v1.0
+
+It can be installed using setuptools::
+
+	$ easy_install muntjac
+
+
+Quick Start
+-----------
+
+Define a subclass of ``Application``::
+
+	class HelloWorld(Application):
+
+	    def init(self):
+	        main = Window('Hello window')
+	        self.setMainWindow(main)
+
+	        main.addComponent(Label('Hello World!'))
+
+Pass the application class to a servlet and serve:
+
+    wsgi_app = ApplicationServlet(HelloWorld, debug=True)
+
+    httpd = wsgiref.simple_server.make_server('localhost', 8080, wsgi_app)
+    httpd.serve_forever()
+
+Navigate your browser to: http://localhost:8080/
+
+
+License and Copyright
+---------------------
+
+Copyright (C) 2010 IT Mill Ltd.
+Copyright (C) 2011 Richard Lincoln
+
+Muntjac is available under either the terms of the GNU Affero General Public
+License or a commercial license.
