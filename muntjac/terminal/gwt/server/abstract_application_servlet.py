@@ -28,9 +28,6 @@ try:
 except ImportError, e:
     from StringIO import StringIO
 
-from paste.webkit.wkservlet import Servlet
-from paste.deploy import CONFIG
-
 from muntjac.terminal import clsname
 from muntjac.application import Application
 
@@ -41,6 +38,9 @@ from muntjac.terminal.gwt.server.application_servlet import ApplicationServlet
 
 from muntjac.terminal.uri_handler import IErrorEvent as URIHandlerErrorEvent
 from muntjac.terminal.terminal import IErrorEvent as TerminalErrorEvent
+
+from muntjac.terminal.gwt.server.contextual_http_servlet import \
+    ContextualHttpServlet
 
 from muntjac.terminal.gwt.server.exceptions import \
     SessionExpiredException, SystemMessageException
@@ -59,10 +59,6 @@ from muntjac.terminal.gwt.server.http_servlet_request_listener import \
 
 from muntjac.terminal.parameter_handler import \
     IErrorEvent as ParameterHandlerErrorEvent
-
-from muntjac.terminal.gwt.server.util import \
-    getContextPath, originalContextPath, getUrlPath, getServletPath, \
-    getLocale, isSecure, serverPort, serverName, getPathInfo
 
 
 logger = logging.getLogger(__name__)
@@ -83,7 +79,7 @@ class RequestType(object):
         return cls._values[:]
 
 
-class AbstractApplicationServlet(Servlet, Constants):
+class AbstractApplicationServlet(ContextualHttpServlet, Constants):
     """Abstract implementation of the ApplicationServlet which handles all
     communication between the client and the server.
 
@@ -183,11 +179,28 @@ class AbstractApplicationServlet(Servlet, Constants):
     UPLOAD_URL_PREFIX = 'APP/UPLOAD/'
 
 
-    def __init__(self):
-        self._applicationProperties = None
+    def __init__(self, productionMode=False, debug=False, widgetset=None,
+                 resourceCacheTime=3600, disableXsrfProtection=False):
+
+        self._applicationProperties = dict()
         self._productionMode = False
         self._resourcePath = None
         self._resourceCacheTime = 3600
+
+        self._applicationProperties[
+                self.SERVLET_PARAMETER_PRODUCTION_MODE] = \
+                        'true' if productionMode else 'false'
+
+        self._applicationProperties[self.SERVLET_PARAMETER_DEBUG] = \
+                'true' if debug else 'false'
+
+        self._applicationProperties[
+                self.SERVLET_PARAMETER_RESOURCE_CACHE_TIME] = \
+                        str(resourceCacheTime)
+
+        self._applicationProperties[
+                self.SERVLET_PARAMETER_DISABLE_XSRF_PROTECTION] = \
+                        'true' if disableXsrfProtection else 'false'
 
 
     def awake(self, transaction):
@@ -202,9 +215,9 @@ class AbstractApplicationServlet(Servlet, Constants):
         super(AbstractApplicationServlet, self).awake(transaction)
 
         # Stores the application parameters into Properties object
-        self._applicationProperties = dict()
-        for name in CONFIG:
-            self._applicationProperties[name] = CONFIG[name]
+        #self._applicationProperties = dict()
+        #for name in CONFIG:
+        #    self._applicationProperties[name] = CONFIG[name]
 
         ## Overrides with server.xml parameters
         #context = servletConfig.getServletContext()
@@ -240,7 +253,7 @@ class AbstractApplicationServlet(Servlet, Constants):
         """Check if the application is in production mode."""
         # We are in production mode if debug=false or productionMode=true
         if self.getApplicationOrSystemProperty(self.SERVLET_PARAMETER_DEBUG,
-                                               'true') == 'false':
+                'true') == 'false':
             # "dDebug=true" is the old way and should no longer be used
             self._productionMode = True
         elif self.getApplicationOrSystemProperty(
@@ -498,9 +511,9 @@ class AbstractApplicationServlet(Servlet, Constants):
 
     def updateBrowserProperties(self, browser, request):
         # request based details updated always
-        browser.updateRequestDetails(getLocale(request),
+        browser.updateRequestDetails(self.getLocale(request),
                 request.environ()['REMOTE_ADDR'],
-                self._isSecure(request),
+                self.isSecure(request),
                 request.header('user-agent'))
 
         if request.field('repaintAll') is not None:
@@ -975,7 +988,7 @@ class AbstractApplicationServlet(Servlet, Constants):
             applicationUrl = self.getApplicationUrl(request)
 
             # Initial locale comes from the request
-            locale = getLocale(request)
+            locale = self.getLocale(request)
             application.setLocale(locale)
             application.start(applicationUrl,
                               self._applicationProperties,
@@ -994,11 +1007,11 @@ class AbstractApplicationServlet(Servlet, Constants):
         @throws ServletException
         """
         # FIXME: What does 10 refer to?
-        pathInfo = getPathInfo(request)
+        pathInfo = self.getPathInfo(request)
         if (pathInfo is None) or (len(pathInfo) <= 10):
             return False
 
-        contextPath = getContextPath(request)
+        contextPath = self.getContextPath(request)
         if (contextPath is not None and request.uri().startswith('/VAADIN/')):
             self.serveStaticResourcesInVAADIN(request.uri(), request, response)
             return True
@@ -1022,7 +1035,7 @@ class AbstractApplicationServlet(Servlet, Constants):
         @throws ServletException
         """
         #sc = self.getServletContext()  # FIXME: ServletContext
-        resourceUrl = join(getContextPath(request), filename)
+        resourceUrl = join(self.getContextPath(request), filename)
 
         if not exists(resourceUrl):
             # cannot serve requested file
@@ -1143,7 +1156,7 @@ class AbstractApplicationServlet(Servlet, Constants):
         if (pathInfo is None) or (len(pathInfo) <= 10):
             return False
 
-        contextPath = getContextPath(request)
+        contextPath = self.getContextPath(request)
         if (contextPath is not None and request.uri().startswith('/VAADIN/')):
             return True
 
@@ -1245,14 +1258,15 @@ class AbstractApplicationServlet(Servlet, Constants):
         # from request
 
         # if context is specified add it to widgetsetUrl
-        ctxPath = getContextPath(request)
+        ctxPath = self.getContextPath(request)
 
         # FIXME: ctxPath.length() == 0 condition is probably unnecessary and
         # might even be wrong.
-        if (len(ctxPath) == 0 and originalContextPath(request) is not None):
+        if (len(ctxPath) == 0
+                and self.originalContextPath(request) is not None):
             # include request (e.g portlet), get context path from
             # attribute
-            ctxPath = originalContextPath(request)
+            ctxPath = self.originalContextPath(request)
 
         # Remove heading and trailing slashes from the context path
         ctxPath = self.removeHeadingOrTrailing(ctxPath, '/')
@@ -1347,7 +1361,7 @@ class AbstractApplicationServlet(Servlet, Constants):
         # Fetch relative url to application
         # don't use server and port in uri. It may cause problems with some
         # virtual server configurations which lose the server name
-        appUrl = getUrlPath( self.getApplicationUrl(request) )
+        appUrl = self.getUrlPath( self.getApplicationUrl(request) )
         if appUrl.endswith('/'):
             appUrl = appUrl[:-1]
 
@@ -1746,13 +1760,14 @@ class AbstractApplicationServlet(Servlet, Constants):
                     if the application is denied access to the persistent
                     data store represented by the given URL.
         """
-        reqURL = 'https://' if isSecure(request) else 'http://'
-        reqURL += serverName(request)
-        if (isSecure(request) and serverPort(request) == 443
-                or (not isSecure(request) and serverPort(request) == 80)):
+        reqURL = 'https://' if self.isSecure(request) else 'http://'
+        reqURL += self.getServerName(request)
+        if (self.isSecure(request) and self.getServerPort(request) == 443
+                or (not self.isSecure(request)
+                        and self.getServerPort(request) == 80)):
             reqURL += ''
         else:
-            reqURL += ':' + serverPort(request)
+            reqURL += ':' + self.getServerPort(request)
         reqURL += request.uri()
 
         # FIXME: implement include requests
@@ -1763,7 +1778,8 @@ class AbstractApplicationServlet(Servlet, Constants):
             #servletPath = (request.originalContextPath
             #        + request.originalServletPath())
         else:
-            servletPath = getContextPath(request) + getServletPath(request)
+            servletPath = (self.getContextPath(request)
+                    + self.getServletPath(request))
 
         if len(servletPath) == 0 or servletPath[len(servletPath) - 1] != '/':
             servletPath = servletPath + '/'
@@ -1804,9 +1820,9 @@ class AbstractApplicationServlet(Servlet, Constants):
         # Search for the application (using the application URI) from the list
         for sessionApplication in applications:
             sessionApplicationPath = \
-                    getUrlPath(sessionApplication.getURL())
+                    self.getUrlPath(sessionApplication.getURL())
             requestApplicationPath = \
-                    getUrlPath(self.getApplicationUrl(request))
+                    self.getUrlPath(self.getApplicationUrl(request))
 
             if requestApplicationPath == sessionApplicationPath:
                 # Found a running application
@@ -1901,7 +1917,7 @@ class AbstractApplicationServlet(Servlet, Constants):
         @param request
         @return
         """
-        return getPathInfo(request)
+        return self.getPathInfo(request)
 
 
     def getResourceLocation(self, theme, resource):

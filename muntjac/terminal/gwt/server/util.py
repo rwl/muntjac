@@ -18,86 +18,10 @@
 TODO: Move to PasteWebKit.
 """
 
-import locale
-import urlparse
-
-def getContextPath(request):
-    ## FIXME: implement request.contextPath()
-    return request.serverSideContextPath()
-
-
-def originalContextPath(request):
-    ## FIXME: implement request.originalContextPath()
-    return getContextPath(request)
-
-
-def getServletPath(request):
-    ## FIXME: implement request.servletPath()
-    servletPath = request.environ().get('SCRIPT_NAME', '')
-    pathInfo = request.environ().get('PATH_INFO', '')
-
-    if 'REQUEST_URI' in request.environ():
-        uri = request.environ()['REQUEST_URI']
-        # correct servletPath if there was a redirection
-        if not (uri + '/').startswith(servletPath + '/'):
-            i = uri.find(pathInfo)
-            servletPath = i > 0 and uri[:i] or ''
-
-    return servletPath
-
-
-def getLocale(request):
-    ## FIXME: implement request.locale()
-    l = request.environ().get('Accept-Language')
-    if l is None:
-        l, _ = locale.getlocale()  # server default
-    return l
-
-
-def serverName(request):
-    return request.environ().get('SERVER_NAME', '')
-
-
-def isSecure(request):
-    """Check whether the request is a HTTPS connection."""
-    return request.environ().get('HTTPS', '').lower() == 'on'
-
-
-def serverPort(request):
-    portStr = request.environ().get('SERVER_PORT')
-    if portStr is not None:
-        return int(portStr)
-    else:
-        return None
-
-
-def getUrlPath(url):
-    """
-    @param url: URL of the form scheme://netloc/path;parameters?query#fragment
-    @return: the path part or the url
-    """
-    urlparse(url)[2]
-
-
 def loadClass(className):
     return (lambda x: getattr(__import__(x.rsplit('.', 1)[0],
                                          fromlist=x.rsplit('.', 1)[0]),
                               x.split('.')[-1]))(className)
-
-
-def getPathInfo(request):
-    return request.extraURLPath()
-
-
-def getResourceAsStream(servlet, path):
-    # FIXME: make relative to context root
-    stream = open(path, 'rb')
-    return stream
-
-
-def getResourcePath(session, path):
-    # FIXME: make relative to context root
-    return path
 
 
 def getSuperClass(cls):

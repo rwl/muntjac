@@ -24,8 +24,7 @@ from muntjac.terminal.gwt.server.exceptions import ServletException
 from muntjac.terminal.gwt.server.abstract_application_servlet import \
     AbstractApplicationServlet
 
-from muntjac.terminal.gwt.server.util import \
-    getContextPath, loadClass, getPathInfo
+from muntjac.terminal.gwt.server.util import loadClass
 
 
 logger = logging.getLogger(__name__)
@@ -99,7 +98,7 @@ class ApplicationRunnerServlet(AbstractApplicationServlet):
         # String runner = null;
         uris = URIS()
         applicationClassname = None
-        contextPath = getContextPath(request)
+        contextPath = self.getContextPath(request)
         if urlParts[1] == re.sub('\\/', '', contextPath):
             # class name comes after web context and runner application
             context = urlParts[1]
@@ -161,7 +160,7 @@ class ApplicationRunnerServlet(AbstractApplicationServlet):
 
 
     def getRequestPathInfo(self, request):
-        path = getPathInfo(request)
+        path = self.getPathInfo(request)
         if path is None:
             return None
         clsName = self.getApplicationRunnerApplicationClassName(request)

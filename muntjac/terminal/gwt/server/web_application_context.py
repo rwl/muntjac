@@ -14,10 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.terminal.gwt.server.util import getResourcePath
-
 from muntjac.terminal.gwt.server.abstract_web_application_context import \
         AbstractWebApplicationContext
+
 from muntjac.terminal import clsname
 
 
@@ -99,7 +98,7 @@ class WebApplicationContext(AbstractWebApplicationContext):
 
         @see com.vaadin.service.ApplicationContext#getBaseDirectory()
         """
-        realPath = getResourcePath(self.session, '/')
+        realPath = self.getResourcePath(self.session, '/')
         if realPath is None:
             return None
         return realPath

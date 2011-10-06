@@ -23,8 +23,6 @@ from muntjac.terminal.gwt.server.abstract_communication_manager import \
 from muntjac.terminal.gwt.server.abstract_application_servlet import \
     AbstractApplicationServlet
 
-from muntjac.terminal.gwt.server.util import getPathInfo, getResourceAsStream
-
 
 class CommunicationManager(AbstractCommunicationManager):
     """Application manager processes changes and paints for single application
@@ -70,7 +68,7 @@ class CommunicationManager(AbstractCommunicationManager):
         """
         # URI pattern: APP/UPLOAD/[PID]/[NAME]/[SECKEY] See #createReceiverUrl
 
-        pathInfo = getPathInfo(request)
+        pathInfo = self.getPathInfo(request)
         # strip away part until the data we are interested starts
         startOfData = \
                 pathInfo.find(AbstractApplicationServlet.UPLOAD_URL_PREFIX) \
@@ -350,6 +348,6 @@ class AbstractApplicationServletWrapper(Callback):
 
 
     def getThemeResourceAsStream(self, themeName, resource):
-        return getResourceAsStream(self._servlet,
+        return self.getResourceAsStream(self._servlet,
                 ('/' + AbstractApplicationServlet.THEME_DIRECTORY_PATH
                 + themeName + '/' + resource))
