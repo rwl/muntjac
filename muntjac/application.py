@@ -19,7 +19,7 @@ import locale
 
 from warnings import warn
 
-from muntjac.event import EventObject, IEventListener
+from muntjac.util import EventObject, IEventListener
 from muntjac.terminal.uri_handler import IUriHandler
 from muntjac.terminal.system_error import SystemErr
 from muntjac.terminal.terminal import IErrorListener, ITerminal

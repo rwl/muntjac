@@ -16,7 +16,7 @@
 
 import logging
 
-from muntjac.event import IEventListener
+from muntjac.util import IEventListener
 from muntjac.util import getSuperClass
 
 

@@ -17,7 +17,7 @@
 from muntjac.terminal.variable_owner import IVariableOwner
 from muntjac.terminal.sizeable import ISizeable
 from muntjac.terminal.paintable import IPaintable
-from muntjac.event import EventObject, IEventListener
+from muntjac.util import EventObject, IEventListener
 
 
 class IComponent(IPaintable, IVariableOwner, ISizeable):

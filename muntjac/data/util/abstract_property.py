@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.data import property
-from muntjac.event import EventObject
+from muntjac.util import EventObject
 
 
 class AbstractProperty(property.IProperty, property.IValueChangeNotifier,

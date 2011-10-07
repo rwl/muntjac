@@ -102,3 +102,17 @@ class Locale(object):
         #if self._variant is not None:
         #    s += '_%s' % self._variant
         return s
+
+
+class EventObject(object):
+
+    def __init__(self, source):
+        self._source = source
+
+
+    def getSource(self):
+        return self._source
+
+
+class IEventListener(object):
+    pass

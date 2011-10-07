@@ -42,17 +42,3 @@ a method to actually fire the events.</p>
 type {@link com.vaadin.event.ListenerMethod ListenerMethod}. The
 listener then checks if the event type matches with the specified event
 type and calls the specified trigger method if it does.</p>"""
-
-
-class EventObject(object):
-
-    def __init__(self, source):
-        self._source = source
-
-
-    def getSource(self):
-        return self._source
-
-
-class IEventListener(object):
-    pass
