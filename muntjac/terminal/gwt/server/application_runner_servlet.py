@@ -98,7 +98,7 @@ class ApplicationRunnerServlet(AbstractApplicationServlet):
         # String runner = null;
         uris = URIS()
         applicationClassname = None
-        contextPath = self.getContextPath(request)
+        contextPath = cls.getContextPath(request)
         if urlParts[1] == re.sub('\\/', '', contextPath):
             # class name comes after web context and runner application
             context = urlParts[1]

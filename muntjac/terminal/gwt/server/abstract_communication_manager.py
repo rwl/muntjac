@@ -1685,7 +1685,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         raise NotImplementedError
 
 
-class Request(object):
+class IRequest(object):
     """Generic interface of a (HTTP or Portlet) request to the application.
 
     This is a wrapper interface that allows
@@ -1705,7 +1705,7 @@ class Request(object):
 
         @return Session
         """
-        pass
+        raise NotImplementedError
 
 
     def isRunningInPortlet(self):
@@ -1714,7 +1714,7 @@ class Request(object):
 
         @return true if in a portlet
         """
-        pass
+        raise NotImplementedError
 
 
     def getParameter(self, name):
@@ -1726,7 +1726,7 @@ class Request(object):
         @param name
         @return
         """
-        pass
+        raise NotImplementedError
 
 
     def getContentLength(self):
@@ -1735,7 +1735,7 @@ class Request(object):
 
         @return content length in bytes
         """
-        pass
+        raise NotImplementedError
 
 
     def getInputStream(self):
@@ -1746,7 +1746,7 @@ class Request(object):
         @return
         @throws IOException
         """
-        pass
+        raise NotImplementedError
 
 
     def getRequestID(self):
@@ -1755,21 +1755,21 @@ class Request(object):
 
         @return String identifier for the request target window
         """
-        pass
+        raise NotImplementedError
 
 
     def getAttribute(self, name):
         """@see javax.servlet.ServletRequest#getAttribute(String)
         @see javax.portlet.PortletRequest#getAttribute(String)
         """
-        pass
+        raise NotImplementedError
 
 
     def setAttribute(self, name, value):
         """@see javax.servlet.ServletRequest#setAttribute(String, Object)
         @see javax.portlet.PortletRequest#setAttribute(String, Object)
         """
-        pass
+        raise NotImplementedError
 
 
     def getWrappedRequest(self):
@@ -1778,10 +1778,10 @@ class Request(object):
 
         @return wrapped request object
         """
-        pass
+        raise NotImplementedError
 
 
-class Response(object):
+class IResponse(object):
     """Generic interface of a (HTTP or Portlet) response from the application.
 
     This is a wrapper interface that allows
@@ -1799,7 +1799,7 @@ class Response(object):
         @return
         @throws IOException
         """
-        pass
+        raise NotImplementedError
 
 
     def setContentType(self, typ):
@@ -1808,7 +1808,7 @@ class Response(object):
 
         @param typ
         """
-        pass
+        raise NotImplementedError
 
 
     def getWrappedResponse(self):
@@ -1817,10 +1817,10 @@ class Response(object):
 
         @return wrapped request object
         """
-        pass
+        raise NotImplementedError
 
 
-class Session(object):
+class ISession(object):
     """Generic wrapper interface for a (HTTP or Portlet) session.
 
     Several applications can be associated with a single session.
@@ -1834,26 +1834,26 @@ class Session(object):
     """
 
     def isNew(self):
-        pass
+        raise NotImplementedError
 
 
     def getAttribute(self, name):
-        pass
+        raise NotImplementedError
 
 
     def setAttribute(self, name, o):
-        pass
+        raise NotImplementedError
 
 
     def getMaxInactiveInterval(self):
-        pass
+        raise NotImplementedError
 
 
     def getWrappedSession(self):
-        pass
+        raise NotImplementedError
 
 
-class Callback(object):
+class ICallback(object):
     """TODO Document me!
 
     @author peholmst
@@ -1861,15 +1861,15 @@ class Callback(object):
 
     def criticalNotification(self, request, response, cap, msg,
                              details, outOfSyncURL):
-        pass
+        raise NotImplementedError
 
 
     def getRequestPathInfo(self, request):
-        pass
+        raise NotImplementedError
 
 
     def getThemeResourceAsStream(self, themeName, resource):
-        pass
+        raise NotImplementedError
 
 
 class UploadInterruptedException(Exception):

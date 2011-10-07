@@ -15,11 +15,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import re
-import time
 import logging
 import mimetypes
 import locale
 
+from time import time
 from warnings import warn
 
 from urlparse import urljoin
@@ -445,7 +445,7 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
                 window.setTerminal(webApplicationContext.getBrowser())
 
             # Handle parameters
-            parameters = request.getParameterMap()
+            parameters = request.fields()
             if window is not None and parameters is not None:
                 window.handleParameters(parameters)
 
@@ -825,14 +825,14 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
         @return
         """
         # Finds theme name
-        if request.field(self.URL_PARAMETER_THEME) is not None:
+        if request.field(self.URL_PARAMETER_THEME, None) is not None:
             themeName = request.field(self.URL_PARAMETER_THEME)
         else:
             themeName = window.getTheme()
 
         if themeName is None:
             # no explicit theme for window defined
-            if request.field(self.REQUEST_DEFAULT_THEME) is not None:
+            if request.field(self.REQUEST_DEFAULT_THEME, None) is not None:
                 # the default theme is defined in request (by portal)
                 themeName = request.field(self.REQUEST_DEFAULT_THEME)
             else:
@@ -1341,7 +1341,7 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
                     store represented by the given URL.
         """
         # e.g portlets only want a html fragment
-        fragment = request.field(self.REQUEST_FRAGMENT) is not None
+        fragment = request.field(self.REQUEST_FRAGMENT, None) is not None
         if fragment:
             # if this is a fragment request, the actual application is put to
             # request so ApplicationPortlet can save it for a later use
@@ -1381,7 +1381,7 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
         hashCode = hash(appId)
         if hashCode < 0:
             hashCode = -hashCode
-        appId = appId + '-' + hashCode
+        appId = appId + '-' + str(hashCode)
 
         self.writeAjaxPageHtmlVaadinScripts(window, themeName, application,
                 page, appUrl, themeUri, appId, request)
@@ -1404,7 +1404,7 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
         classNames = 'v-app ' + themeClass + ' ' + appClass
 
         divStyle = None
-        if request.field(self.REQUEST_APPSTYLE) is not None:
+        if request.field(self.REQUEST_APPSTYLE, None) is not None:
             divStyle = ('style=\"'
                     + request.getAttribute(self.REQUEST_APPSTYLE) + '\"')
 
@@ -1445,7 +1445,7 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
         @param request
         @return
         """
-        if themeName == request.field(self.REQUEST_DEFAULT_THEME):
+        if themeName == request.field(self.REQUEST_DEFAULT_THEME, None):
             # our window theme is the portal wide default theme, make it load
             # from portals directory is defined
             staticFilePath = self.getStaticFilesLocation(request)
@@ -1503,8 +1503,8 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
         @raise IOException
         """
         # request widgetset takes precedence (e.g portlet include)
-        requestWidgetset = request.field(self.REQUEST_WIDGETSET)
-        sharedWidgetset = request.field(self.REQUEST_SHARED_WIDGETSET)
+        requestWidgetset = request.field(self.REQUEST_WIDGETSET, None)
+        sharedWidgetset = request.field(self.REQUEST_SHARED_WIDGETSET, None)
         if requestWidgetset is None and sharedWidgetset is None:
             # Use the value from configuration or DEFAULT_WIDGETSET.
             # If no shared widgetset is specified, the default widgetset is
@@ -1587,6 +1587,8 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
             url = systemMessages.getCommunicationErrorURL()
             if url is not None:
                 url = '\"' + JsonPaintTarget.escapeJSON(url) + '\"'
+            else:
+                url = ''
 
             page.write(',\"comErrMsg\": {' + '\"caption\":'
                     + caption + ',' + '\"message\" : ' + message + ','
@@ -1604,6 +1606,8 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
             url = systemMessages.getAuthenticationErrorURL()
             if url is not None:
                 url = '\"' + JsonPaintTarget.escapeJSON(url) + '\"'
+            else:
+                url = ''
 
             page.write(',\"authErrMsg\": {' + '\"caption\":'
                     + caption + ',' + '\"message\" : ' + message
@@ -1735,7 +1739,7 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
         # Window renders are not cacheable
         response.setHeader('Cache-Control', 'no-cache')
         response.setHeader('Pragma', 'no-cache')
-        response.setHeader('Expires', 0)
+        response.setHeader('Expires', '0')
         response.setHeader('Content-Type', 'text/html; charset=UTF-8')
 
 

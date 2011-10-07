@@ -1,6 +1,6 @@
 
 import locale
-import urlparse
+from urlparse import urlparse
 
 from paste.webkit.wsgiapp import sys_path_install
 from muntjac.util import Locale
@@ -74,7 +74,7 @@ class ContextualHttpServlet(HTTPServlet):
         @param url: URL of the form scheme://netloc/path;parameters?query#fragment
         @return: the path part or the url
         """
-        urlparse(url)[2]
+        return urlparse(url)[2]
 
 
 

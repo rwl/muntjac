@@ -19,8 +19,8 @@ import uuid
 from warnings import warn
 
 from muntjac.terminal.gwt.server.abstract_communication_manager import \
-    AbstractCommunicationManager, Callback, Request, Response, \
-    InvalidUIDLSecurityKeyException, Session
+    AbstractCommunicationManager, ICallback, IRequest, IResponse, \
+    InvalidUIDLSecurityKeyException, ISession
 
 from muntjac.terminal.gwt.server.abstract_application_servlet import \
     AbstractApplicationServlet
@@ -173,8 +173,7 @@ class CommunicationManager(AbstractCommunicationManager):
         @param applicationServlet
         @return
         """
-        return self.handleURI(
-                window,
+        return AbstractCommunicationManager.handleURI(self, window,
                 HttpServletRequestWrapper(request),
                 HttpServletResponseWrapper(response),
                 AbstractApplicationServletWrapper(applicationServlet))
@@ -234,7 +233,7 @@ class CommunicationManager(AbstractCommunicationManager):
             del self._pidToNameToStreamVariable[self.getPaintableId(owner)]
 
 
-class HttpServletRequestWrapper(Request):
+class HttpServletRequestWrapper(IRequest):
     """Concrete wrapper class for {@link HttpServletRequest}.
 
     @see Request
@@ -280,7 +279,7 @@ class HttpServletRequestWrapper(Request):
         self._request.setField(name, o)
 
 
-class HttpServletResponseWrapper(Response):
+class HttpServletResponseWrapper(IResponse):
     """Concrete wrapper class for {@link HttpServletResponse}.
 
     @see Response
@@ -302,7 +301,7 @@ class HttpServletResponseWrapper(Response):
         self._response.setHeader('Content-Type', typ)
 
 
-class HttpSessionWrapper(Session):
+class HttpSessionWrapper(ISession):
     """Concrete wrapper class for {@link HttpSession}.
 
     @see Session
@@ -332,7 +331,7 @@ class HttpSessionWrapper(Session):
         self._session.setValue(name, o)
 
 
-class AbstractApplicationServletWrapper(Callback):
+class AbstractApplicationServletWrapper(ICallback):
 
     def __init__(self, servlet):
         self._servlet = servlet
