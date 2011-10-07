@@ -1,5 +1,6 @@
 
 import sys
+import locale
 import logging
 import webbrowser
 
@@ -47,3 +48,57 @@ def clsname(cls):
 def fullname(obj):
     """@return fully qualified name of given object's class"""
     return clsname(obj.__class__)
+
+
+class Locale(object):
+
+    def __init__(self, lang, country=None, variant=None):
+        """
+        @param lang: lower-case, two-letter code as defined by ISO-639
+        @param country: upper-case, two-letter code as defined by ISO-3166
+        @param variant: vendor or browser-specific code (ignored)
+        """
+        self._language = lang.lower()
+
+        if country is not None:
+            country = country.upper()
+        self._country = country
+
+        self._variant = variant
+
+
+    def getLanguage(self):
+        return self._language
+
+
+    def getCountry(self):
+        return self._country
+
+
+    def getVariant(self):
+        return self._variant
+
+
+    @classmethod
+    def getDefault(cls):
+        lang, _ = locale.getdefaultlocale()
+        args = cls.splitCode(lang)
+        return Locale(*args)
+
+
+    @classmethod
+    def splitCode(cls, code, sep='_'):
+        if sep in code:
+            parts = code.split(sep)
+            return parts[0], parts[1]
+        else:
+            return code
+
+
+    def __str__(self):
+        s = self._language
+        if self._country is not None:
+            s += '_%s' % self._country
+        #if self._variant is not None:
+        #    s += '_%s' % self._variant
+        return s

@@ -52,7 +52,7 @@ class CommunicationManager(AbstractCommunicationManager):
         if applicationServlet is not None:
             warn("deprecated", DeprecationWarning)
 
-        super(CommunicationManager, self)(application)
+        super(CommunicationManager, self).__init__(application)
 
         self._pidToNameToStreamVariable = None
         self._streamVariableToSeckey = None

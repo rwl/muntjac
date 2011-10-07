@@ -3,6 +3,7 @@ import locale
 import urlparse
 
 from paste.webkit.wsgiapp import sys_path_install
+from muntjac.util import Locale
 
 # Add 'FakeWebware' to sys path
 sys_path_install()
@@ -39,10 +40,12 @@ class ContextualHttpServlet(HTTPServlet):
 
     def getLocale(self, request):
         ## FIXME: implement request.locale()
-        l = request.environ().get('Accept-Language')
-        if l is None:
-            l, _ = locale.getlocale()  # server default
-        return l
+        lang = request.environ().get('Accept-Language')
+        if l is not None:
+            args = Locale.splitCode(lang, sep='-')
+            return Locale(*args)
+        else:
+            return Locale.getDefault()  # server default
 
 
     def getServerName(self, request):

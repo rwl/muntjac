@@ -31,7 +31,7 @@ except ImportError, e:
     from StringIO import StringIO as cStringIO
     from StringIO import StringIO
 
-from muntjac.util import clsname
+from muntjac.util import clsname, Locale
 
 from muntjac.terminal.gwt.server.json_paint_target import JsonPaintTarget
 from muntjac.terminal.gwt.server.exceptions import UploadException
@@ -1117,9 +1117,9 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         return values
 
 
-    def _getMonths(self, code):
+    def _getMonths(self, l):
         locSave = locale.getlocale(locale.LC_TIME)
-        locale.setlocale(locale.LC_TIME, code)
+        locale.setlocale(locale.LC_TIME, str(l))
 
         short_months = [
             locale.nl_langinfo(locale.MON_1),
@@ -1155,9 +1155,9 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         return short_months, months
 
 
-    def _getWeekdays(self, code):
+    def _getWeekdays(self, l):
         locSave = locale.getlocale(locale.LC_TIME)
-        locale.setlocale(locale.LC_TIME, code)
+        locale.setlocale(locale.LC_TIME, str(l))
 
         short_days = [
             locale.nl_langinfo(locale.ABDAY_1),
@@ -1183,9 +1183,9 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         return short_days, days
 
 
-    def _getDateFormat(self, code):
+    def _getDateFormat(self, l):
         locSave = locale.getlocale(locale.LC_TIME)
-        locale.setlocale(locale.LC_TIME, code)
+        locale.setlocale(locale.LC_TIME, str(l))
 
         fmt = locale.nl_langinfo(locale.ERA_D_FMT)
 
@@ -1194,9 +1194,9 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         return fmt
 
 
-    def _getAmPmStrings(self, code):
+    def _getAmPmStrings(self, l):
         locSave = locale.getlocale(locale.LC_TIME)
-        locale.setlocale(locale.LC_TIME, code)
+        locale.setlocale(locale.LC_TIME, str(l))
 
         ampm = [
             locale.nl_langinfo(locale.AM_STR),
@@ -1220,10 +1220,9 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
 
         while self._pendingLocalesIndex < len(self._locales):
             l = self.generateLocale(self._locales[self._pendingLocalesIndex])
-            code = l[0]  # language code
 
             # Locale name
-            outWriter.write('{\"name\":\"' + code + '\",')
+            outWriter.write('{\"name\":\"' + l + '\",')
 
             # Month names (both short and full)
             short_months, months = self._getMonths(l[0])
@@ -1245,7 +1244,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                     + '],')
 
             # Weekday names (both short and full)
-            short_days, days = self._getWeekdays(code)
+            short_days, days = self._getWeekdays(l)
             outWriter.write('\"sdn\":[\"'
                     + short_days[0] + '\",\"' + short_days[1] + '\",\"'
                     + short_days[2] + '\",\"' + short_days[3] + '\",\"'
@@ -1264,10 +1263,10 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
 
             # Date formatting (MM/DD/YYYY etc.)
 
-            dateFormat = self._getDateFormat(code)
+            dateFormat = self._getDateFormat(l)
             if dateFormat == "":
                 logger.warning('Unable to get default date '
-                               'pattern for locale ' + code)
+                               'pattern for locale ' + l)
                 dateFormat = locale.nl_langinfo(locale.ERA_D_FMT)
             df = dateFormat
 
@@ -1308,7 +1307,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
             outWriter.write('\"thc\":' + twelve_hour_clock + ',')
             outWriter.write('\"hmd\":\"' + hour_min_delimiter + '\"')
             if twelve_hour_clock:
-                ampm = self._getAmPmStrings(code)
+                ampm = self._getAmPmStrings(l)
                 outWriter.write(',\"ampm\":[\"' + ampm[0] + '\",\"'
                                 + ampm[1] + '\"]')
             outWriter.write('}')
@@ -1568,8 +1567,8 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         """
         if self._locales is None:
             self._locales = list()
-            code = self._application.getLocale()
-            self._locales.append(code)
+            l = self._application.getLocale()
+            self._locales.append(str(l))
             self._pendingLocalesIndex = 0
 
         if value not in self._locales:
@@ -1585,13 +1584,13 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         @param value
         @return
         """
-#        temp = value.split('_')
-#        if len(temp) == 1:
-#            return temp[0]
-#        elif len(temp) == 2:
-#            return (temp[0], temp[1])
-#        else:
-#            return (temp[0], temp[1], temp[2])
+        temp = value.split('_')
+        if len(temp) == 1:
+            return Locale(temp[0])
+        elif len(temp) == 2:
+            return Locale(temp[0], temp[1])
+        else:
+            return Locale(temp[0], temp[1], temp[2])
         return value
 
 
