@@ -47,7 +47,7 @@ class DefaultItemSorter(IItemSorter):
         self._propertyValueComparator = None
 
         if propertyValueComparator is None:
-            self.__init__( DefaultPropertyValueComparator() )
+            DefaultItemSorter.__init__(self, DefaultPropertyValueComparator())
         else:
             self._propertyValueComparator = propertyValueComparator
 

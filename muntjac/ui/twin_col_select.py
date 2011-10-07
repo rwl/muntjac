@@ -41,7 +41,7 @@ class TwinColSelect(AbstractSelect):
         self._leftColumnCaption = None
         self._rightColumnCaption = None
 
-        super(TwinColSelect, self)(args)
+        super(TwinColSelect, self).__init__(args)
 
 
     def setColumns(self, columns):

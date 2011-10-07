@@ -64,20 +64,20 @@ class TextArea(AbstractTextField):
         elif nargs == 1:
             if isinstance(args[0], IProperty):
                 dataSource, = args
-                self.__init__()
+                TextArea.__init__(self)
                 self.setPropertyDataSource(dataSource)
             else:
                 caption, = args
-                self.__init__()
+                TextArea.__init__(self)
                 self.setCaption(caption)
         elif nargs == 2:
             if isinstance(args[1], IProperty):
                 caption, dataSource = args
-                self.__init__(dataSource)
+                TextArea.__init__(self, dataSource)
                 self.setCaption(caption)
             else:
                 caption, value = args
-                self.__init__(caption)
+                TextArea.__init__(self, caption)
                 self.setValue(value)
         else:
             raise ValueError, 'too many arguments'

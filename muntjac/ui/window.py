@@ -1478,7 +1478,7 @@ class CloseEvent(ComponentEvent):
 
     def __init__(self, source):
         """@param source"""
-        super(CloseEvent, self)(source)
+        super(CloseEvent, self).__init__(source)
 
 
     def getWindow(self):
@@ -1497,7 +1497,7 @@ class ResizeEvent(ComponentEvent):
 
     def __init__(self, source):
         """@param source"""
-        super(ResizeEvent, self)(source)
+        super(ResizeEvent, self).__init__(source)
 
 
     def getWindow(self):
@@ -1604,14 +1604,16 @@ class Notification(object):
         nargs = len(args)
         if nargs == 1:
             caption, = args
-            self.__init__(caption, None, self.TYPE_HUMANIZED_MESSAGE)
+            Notification.__init__(self, caption, None,
+                    self.TYPE_HUMANIZED_MESSAGE)
         elif nargs == 2:
             if isinstance(args[1], int):
                 caption, typ = args
-                self.__init__(caption, None, typ)
+                Notification.__init__(self, caption, None, typ)
             else:
                 caption, description = args
-                self.__init__(caption, description, self.TYPE_HUMANIZED_MESSAGE)
+                Notification.__init__(self, caption, description,
+                        self.TYPE_HUMANIZED_MESSAGE)
         elif nargs == 3:
             caption, description, typ = args
             self._caption = caption
@@ -1803,15 +1805,15 @@ class CloseShortcut(ShortcutListener):
         if nargs == 2:
             if isinstance(args[1], int):
                 window, keyCode = args
-                self.__init__(window, keyCode, None)
+                CloseShortcut.__init__(self, window, keyCode, None)
             else:
                 window, shorthandCaption = args
-                super(CloseShortcut, self)(shorthandCaption)
+                super(CloseShortcut, self).__init__(shorthandCaption)
                 self.window = window
         elif nargs == 3:
             window, keyCode = args[:2]
             modifiers = args[2:]
-            super(CloseShortcut, self)(None, keyCode, modifiers)
+            super(CloseShortcut, self).__init__(None, keyCode, modifiers)
             self.window = window
         else:
             raise ValueError, 'invalid number of arguments'

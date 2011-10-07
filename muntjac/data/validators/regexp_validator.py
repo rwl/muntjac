@@ -63,10 +63,10 @@ class RegexpValidator(AbstractStringValidator):
         nargs = len(args)
         if nargs == 2:
             regexp, errorMessage = args
-            self.__init__(regexp, True, errorMessage)
+            RegexpValidator.__init__(self, regexp, True, errorMessage)
         elif nargs == 3:
             regexp, complete, errorMessage = args
-            super(RegexpValidator, self)(errorMessage)
+            super(RegexpValidator, self).__init__(errorMessage)
             self._pattern = re.compile(regexp)  # FIXME: check re use
             self._complete = complete
         else:

@@ -149,7 +149,7 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
                 self.setCaption(caption)
             else:
                 caption, dataSource = args
-                self.__init__(dataSource)
+                DateField.__init__(self, dataSource)
                 self.setCaption(caption)
         else:
             raise ValueError, 'too many arguments'
@@ -641,7 +641,7 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
 class UnparsableDateString(InvalidValueException):
 
     def __init__(self, message):
-        super(UnparsableDateString, self)(message)
+        super(UnparsableDateString, self).__init__(message)
 
 
 def totalseconds(td):

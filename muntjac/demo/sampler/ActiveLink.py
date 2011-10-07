@@ -26,11 +26,11 @@ class ActiveLink(Link):
         self._listeners = set()
 
         if caption is None:
-            super(ActiveLink, self)()
+            super(ActiveLink, self).__init__()
         elif targetName is None:
-            super(ActiveLink, self)(caption, resource)
+            super(ActiveLink, self).__init__(caption, resource)
         else:
-            super(ActiveLink, self)(caption, resource, targetName,
+            super(ActiveLink, self).__init__(caption, resource, targetName,
                     width, height, border)
 
 
@@ -93,7 +93,7 @@ class LinkActivatedEvent(Event):
         @param source
                    the Source of the event.
         """
-        super(LinkActivatedEvent, self)(source)
+        super(LinkActivatedEvent, self).__init__(source)
         self._linkOpened = linkOpened
 
 

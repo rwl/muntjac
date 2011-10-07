@@ -3336,7 +3336,7 @@ class TableTransferable(DataBoundTransferable):
     """
 
     def __init__(self, rawVariables, _Table_this):
-        super(TableTransferable, self)(_Table_this, rawVariables)
+        super(TableTransferable, self).__init__(_Table_this, rawVariables)
         obj = rawVariables.get('itemId')
         if obj is not None:
             self.setData('itemId', self.itemIdMapper.get(object))
@@ -3445,7 +3445,7 @@ class HeaderClickEvent(ClickEvent):
     HEADER_CLICK_METHOD = getattr(IHeaderClickListener, 'headerClick')
 
     def __init__(self, source, propertyId, details):
-        super(HeaderClickEvent, self)(source, details)
+        super(HeaderClickEvent, self).__init__(source, details)
         self._columnPropertyId = propertyId
 
 
@@ -3491,7 +3491,7 @@ class FooterClickEvent(ClickEvent):
         @param details
                    The mouse details of the click
         """
-        super(FooterClickEvent, self)(source, details)
+        super(FooterClickEvent, self).__init__(source, details)
         self._columnPropertyId = propertyId
 
 
@@ -3537,7 +3537,7 @@ class ColumnResizeEvent(ComponentEvent):
         @param current
                    The width in pixels of the column after the resize event
         """
-        super(ColumnResizeEvent, self)(source)
+        super(ColumnResizeEvent, self).__init__(source)
         self._previousWidth = previous
         self._currentWidth = current
         self._columnPropertyId = propertyId
@@ -3589,4 +3589,4 @@ class ColumnReorderEvent(ComponentEvent):
         @param source
                    The source of the event
         """
-        super(ColumnReorderEvent, self)(source)
+        super(ColumnReorderEvent, self).__init__(source)

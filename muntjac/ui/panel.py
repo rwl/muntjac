@@ -103,7 +103,7 @@ class Panel(AbstractComponentContainer, IScrollable,
 
         nargs = len(args)
         if nargs == 0:
-            self.__init__(None)
+            Panel.__init__(self, None)
         elif nargs == 1:
             if isinstance(args[0], component_container.IComponentContainer):
                 content, = args
@@ -111,10 +111,10 @@ class Panel(AbstractComponentContainer, IScrollable,
                 self.setWidth(100, self.UNITS_PERCENTAGE)
             else:
                 caption, = args
-                self.__init__(caption, None)
+                Panel.__init__(self, caption, None)
         elif nargs == 2:
             caption, content = args
-            self.__init__(content)
+            Panel.__init__(self, content)
             self.setCaption(caption)
         else:
             raise ValueError, 'too many arguments'

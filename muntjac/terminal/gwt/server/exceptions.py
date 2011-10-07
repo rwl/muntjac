@@ -27,10 +27,10 @@ class SystemMessageException(RuntimeError):
                 self._cause = args[0]
             else:
                 msg = args[0]
-                super(SystemMessageException, self)(msg)
+                super(SystemMessageException, self).__init__(msg)
         elif nargs == 2:
             msg, cause = args
-            super(SystemMessageException, self)(msg)
+            super(SystemMessageException, self).__init__(msg)
             self._cause = cause
         else:
             raise ValueError, 'too many arguments'
@@ -45,10 +45,10 @@ class UploadException(Exception):
     def __init__(self, arg):
         if isinstance(arg, Exception):
             e = arg
-            super(UploadException, self)('Upload failed', e)
+            super(UploadException, self).__init__('Upload failed', e)
         else:
             msg = arg
-            super(UploadException, self)(msg)
+            super(UploadException, self).__init__(msg)
 
 
 class NoInputStreamException(Exception):

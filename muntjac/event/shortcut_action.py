@@ -146,12 +146,12 @@ class ShortcutAction(Action):
         nargs = len(args)
         if nargs == 1:
             shorthandCaption, = args
-            self.__init__(shorthandCaption, None)
+            ShortcutAction.__init__(self, shorthandCaption, None)
         elif nargs == 2:
             shorthandCaption, modifierKeys = args
 
             # && -> & etc
-            super(ShortcutAction, self)(self._SHORTHAND_ESCAPE.sub(
+            super(ShortcutAction, self).__init__(self._SHORTHAND_ESCAPE.sub(
                     shorthandCaption, '$1$2$3'))
 
             # replace escaped chars with something that won't
@@ -190,12 +190,12 @@ class ShortcutAction(Action):
                 self._modifiers = modifierKeys
         elif nargs == 3:
             caption, kc, m = args
-            super(ShortcutAction, self)(caption)
+            super(ShortcutAction, self).__init__(caption)
             self._keyCode = kc
             self._modifiers = m
         elif nargs == 4:
             caption, icon, kc, m = args
-            super(ShortcutAction, self)(caption, icon)
+            super(ShortcutAction, self).__init__(caption, icon)
             self._keyCode = kc
             self._modifiers = m
         else:

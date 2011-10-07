@@ -32,17 +32,17 @@ class NativeSelect(AbstractSelect):
         args = args
         nargs = len(args)
         if nargs == 0:
-            super(NativeSelect, self)()
+            super(NativeSelect, self).__init__()
         elif nargs == 1:
             caption, = args
-            super(NativeSelect, self)(caption)
+            super(NativeSelect, self).__init__(caption)
         elif nargs == 2:
             if isinstance(args[1], IContainer):
                 caption, dataSource = args
-                super(NativeSelect, self)(caption, dataSource)
+                super(NativeSelect, self).__init__(caption, dataSource)
             else:
                 caption, options = args
-                super(NativeSelect, self)(caption, options)
+                super(NativeSelect, self).__init__(caption, options)
         else:
             raise ValueError, 'too many arguments'
 

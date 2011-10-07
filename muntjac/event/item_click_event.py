@@ -33,7 +33,7 @@ class ItemClickEvent(ClickEvent):
     """
 
     def __init__(self, source, item, itemId, propertyId, details):
-        super(ItemClickEvent, self)(source, details)
+        super(ItemClickEvent, self).__init__(source, details)
         self._item = item
         self._itemId = itemId
         self._propertyId = propertyId

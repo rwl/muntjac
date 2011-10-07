@@ -90,7 +90,7 @@ class IndexedContainer(AbstractInMemoryContainer,
 
         _nextGeneratedItemId = 1
 
-        super(IndexedContainer, self)()
+        super(IndexedContainer, self).__init__()
 
         if self._items is not None:
             for itemId in itemIds:
@@ -785,7 +785,7 @@ class IItemSetChangeEvent(BaseItemSetChangeEvent):
     """
 
     def __init__(self, source, addedItemIndex):
-        super(IItemSetChangeEvent, self)(source)
+        super(IItemSetChangeEvent, self).__init__(source)
         self._addedItemIndex = addedItemIndex
 
 
@@ -809,7 +809,7 @@ class PropertyValueChangeEvent(EventObject, property.ValueChangeEvent):
     """
 
     def __init__(self, source):
-        super(PropertyValueChangeEvent, self)(source)
+        super(PropertyValueChangeEvent, self).__init__(source)
 
 
     def getProperty(self):

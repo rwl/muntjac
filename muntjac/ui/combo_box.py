@@ -37,18 +37,18 @@ class ComboBox(Select):
             self.setNewItemsAllowed(False)
         elif nargs == 1:
             caption, = args
-            super(ComboBox, self)(caption)
+            super(ComboBox, self).__init__(caption)
             self.setMultiSelect(False)
             self.setNewItemsAllowed(False)
         elif nargs == 2:
             if isinstance(args[1], IContainer):
                 caption, dataSource = args
-                super(ComboBox, self)(caption, dataSource)
+                super(ComboBox, self).__init__(caption, dataSource)
                 self.setMultiSelect(False)
                 self.setNewItemsAllowed(False)
             else:
                 caption, options = args
-                super(ComboBox, self)(caption, options)
+                super(ComboBox, self).__init__(caption, options)
                 self.setMultiSelect(False)
                 self.setNewItemsAllowed(False)
         else:

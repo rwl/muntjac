@@ -42,7 +42,7 @@ class ExpandLayout(OrderedLayout):
         if orientation is None:
             self.ORIENTATION_VERTICAL
 
-        super(ExpandLayout, self)(orientation)
+        super(ExpandLayout, self).__init__(orientation)
         self.setSizeFull()
 
 

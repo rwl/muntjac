@@ -1876,7 +1876,7 @@ class UploadInterruptedException(Exception):
 
     def __init__(self):
         msg = 'Upload interrupted by other thread'
-        super(UploadInterruptedException, self)(msg)
+        super(UploadInterruptedException, self).__init__(msg)
 
 
 class ErrorHandlerErrorEvent(TerminalErrorEvent):
@@ -1913,7 +1913,7 @@ class URIHandlerErrorImpl(URIHandlerErrorEvent):
 class InvalidUIDLSecurityKeyException(Exception):
 
     def __init__(self, message):
-        super(InvalidUIDLSecurityKeyException, self)(message)
+        super(InvalidUIDLSecurityKeyException, self).__init__(message)
 
 
 class OpenWindowCache(object):

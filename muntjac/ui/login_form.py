@@ -36,7 +36,7 @@ class LoginEvent(Event):
     """This event is sent when login form is submitted."""
 
     def __init__(self, params, form):
-        super(LoginEvent, self)(form)
+        super(LoginEvent, self).__init__(form)
         self._params = params
 
 

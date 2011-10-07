@@ -43,7 +43,7 @@ class AbstractStringValidator(AbstractValidator):
                    (with "{0}" replaced by the value that failed validation).
              *
         """
-        super(AbstractStringValidator, self)(errorMessage)
+        super(AbstractStringValidator, self).__init__(errorMessage)
 
 
     def isValid(self, value):

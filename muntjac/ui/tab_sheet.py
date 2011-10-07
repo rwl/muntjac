@@ -84,7 +84,7 @@ class TabSheet(AbstractComponentContainer):
         """Constructs a new Tabsheet. Tabsheet is immediate by default, and
         the default close handler removes the tab being closed.
         """
-        super(TabSheet, self)()
+        super(TabSheet, self).__init__()
 
         # List of component tabs (tab contents). In addition to being on this
         # list, there is a {@link ITab} object in tabs for each tab with
@@ -764,7 +764,7 @@ class SelectedTabChangeEvent(ComponentEvent):
         @param source
                    the Source of the event.
         """
-        super(SelectedTabChangeEvent, self)(source)
+        super(SelectedTabChangeEvent, self).__init__(source)
 
 
     def getTabSheet(self):

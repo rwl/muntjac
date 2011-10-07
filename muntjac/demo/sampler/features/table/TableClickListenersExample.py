@@ -12,7 +12,7 @@ from muntjac.ui.table import IHeaderClickListener, IFooterClickListener
 class TableClickListenersExample(VerticalLayout):
 
     def __init__(self):
-        super(TableClickListenersExample, self)()
+        super(TableClickListenersExample, self).__init__()
 
         # Create our data source
         dataSource = ExampleUtil.getOrderContainer()

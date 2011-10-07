@@ -76,22 +76,22 @@ class CheckBox(Button):
             self.setSwitchMode(True)
         elif nargs == 1:
             caption, = args
-            super(CheckBox, self)(caption, False)
+            super(CheckBox, self).__init__(caption, False)
         elif nargs == 2:
             if isinstance(args[1], IClickListener):
                 caption, listener = args
-                super(CheckBox, self)(caption, listener)
+                super(CheckBox, self).__init__(caption, listener)
                 self.setSwitchMode(True)
             elif isinstance(args[1], IProperty):
                 caption, dataSource = args
-                super(CheckBox, self)(caption, dataSource)
+                super(CheckBox, self).__init__(caption, dataSource)
                 self.setSwitchMode(True)
             else:
                 caption, initialState = args
-                super(CheckBox, self)(caption, initialState)
+                super(CheckBox, self).__init__(caption, initialState)
         elif nargs == 3:
             caption, target, methodName = args
-            super(CheckBox, self)(caption, target, methodName)
+            super(CheckBox, self).__init__(caption, target, methodName)
             self.setSwitchMode(True)
         else:
             raise ValueError, 'too many arguments'

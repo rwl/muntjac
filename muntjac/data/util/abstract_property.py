@@ -146,7 +146,7 @@ class IReadOnlyStatusChangeEvent(EventObject, property.IProperty,
         @param source
                    source object of the event.
         """
-        super(IReadOnlyStatusChangeEvent, self)(source)
+        super(IReadOnlyStatusChangeEvent, self).__init__(source)
 
 
     def getProperty(self):
@@ -168,7 +168,7 @@ class ValueChangeEvent(EventObject, property.ValueChangeEvent):
         @param source
                    source object of the event.
         """
-        super(ValueChangeEvent, self)(source)
+        super(ValueChangeEvent, self).__init__(source)
 
 
     def getProperty(self):

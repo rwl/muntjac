@@ -549,7 +549,7 @@ class MethodException(RuntimeError):
     """
 
     def __init__(self, message, cause):
-        super(MethodException, self)(message)
+        super(MethodException, self).__init__(message)
         self._cause = cause
 
 

@@ -48,7 +48,7 @@ class ExternalResource(IResource):
                 raise RuntimeError('Source must be non-null')
             self._sourceURL = sourceURL
         else:
-            self.__init__(sourceURL)
+            ExternalResource.__init__(self, sourceURL)
             self._mimeType = mimeType
 
 

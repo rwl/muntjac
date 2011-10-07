@@ -34,7 +34,8 @@ class DataBoundTransferable(TransferableImpl):
     """
 
     def __init__(self, sourceComponent, rawVariables):
-        super(DataBoundTransferable, self)(sourceComponent, rawVariables)
+        super(DataBoundTransferable, self).__init__(sourceComponent,
+                rawVariables)
 
 
     def getItemId(self):

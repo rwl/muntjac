@@ -84,17 +84,17 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
 
         nargs = len(args)
         if nargs == 0:
-            super(Select, self)()
+            super(Select, self).__init__()
         elif nargs == 1:
             caption, = args
-            super(Select, self)(caption)
+            super(Select, self).__init__(caption)
         elif nargs == 2:
             if isinstance(args[1], IContainer):
                 caption, dataSource = args
-                super(Select, self)(caption, dataSource)
+                super(Select, self).__init__(caption, dataSource)
             else:
                 caption, options = args
-                super(Select, self)(caption, options)
+                super(Select, self).__init__(caption, options)
         else:
             raise ValueError, 'too many arguments'
 

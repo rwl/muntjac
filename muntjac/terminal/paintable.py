@@ -123,7 +123,7 @@ class RepaintRequestEvent(EventObject):
         @param source
                    the paintable needing repaint.
         """
-        super(RepaintRequestEvent, self)(source)
+        super(RepaintRequestEvent, self).__init__(source)
 
 
     def getPaintable(self):

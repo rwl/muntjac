@@ -25,16 +25,19 @@ class ShortcutListener(ShortcutAction, IListener):
         nargs = len(args)
         if nargs == 1:
             shorthandCaption, = args
-            super(ShortcutListener, self)(shorthandCaption)
+            super(ShortcutListener, self).__init__(shorthandCaption)
         elif nargs == 2:
             shorthandCaption, modifierKeys = args
-            super(ShortcutListener, self)(shorthandCaption, modifierKeys)
+            super(ShortcutListener, self).__init__(shorthandCaption,
+                    modifierKeys)
         elif nargs == 3:
             caption, keyCode, modifierKeys = args
-            super(ShortcutListener, self)(caption, keyCode, modifierKeys)
+            super(ShortcutListener, self).__init__(caption, keyCode,
+                    modifierKeys)
         elif nargs == 4:
             caption, icon, keyCode, modifierKeys = args
-            super(ShortcutListener, self)(caption, icon, keyCode, modifierKeys)
+            super(ShortcutListener, self).__init__(caption, icon, keyCode,
+                    modifierKeys)
         else:
             raise ValueError
 

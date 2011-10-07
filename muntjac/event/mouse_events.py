@@ -39,7 +39,7 @@ class ClickEvent(ComponentEvent):
     BUTTON_RIGHT = MouseEventDetails.BUTTON_RIGHT
 
     def __init__(self, source, mouseEventDetails):
-        super(ClickEvent, self)(source)
+        super(ClickEvent, self).__init__(source)
         self._details = mouseEventDetails
 
 
@@ -182,7 +182,7 @@ class DoubleClickEvent(ComponentEvent):
     """
 
     def __init__(self, source):
-        super(DoubleClickEvent, self)(source)
+        super(DoubleClickEvent, self).__init__(source)
 
 
 class IDoubleClickListener(IComponentEventListener):

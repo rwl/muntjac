@@ -58,9 +58,9 @@ class CompositeValidator(AbstractValidator):
         self._validators = list()
 
         if mode is None:
-            super(CompositeValidator, self)('')
+            super(CompositeValidator, self).__init__('')
         else:
-            super(CompositeValidator, self)(errorMessage)
+            super(CompositeValidator, self).__init__(errorMessage)
             self.setMode(mode)
 
 

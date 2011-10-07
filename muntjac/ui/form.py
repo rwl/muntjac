@@ -135,7 +135,7 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
         if fieldFactory is None:
             fieldFactory = DefaultFieldFactory.get()
 
-        super(Form, self)()
+        super(Form, self).__init__()
         self.setLayout(formLayout)
         self.setFormFieldFactory(fieldFactory)
         self.setValidationVisible(False)

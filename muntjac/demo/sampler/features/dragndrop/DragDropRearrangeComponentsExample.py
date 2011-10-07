@@ -105,7 +105,7 @@ class SortableLayout(CustomComponent):
 class WrappedComponent(DragAndDropWrapper):
 
     def __init__(self, content, dropHandler):
-        super(WrappedComponent, self)(content)
+        super(WrappedComponent, self).__init__(content)
         self._dropHandler = dropHandler
         self.setDragStartMode(DragStartMode.WRAPPER)
 

@@ -157,10 +157,10 @@ class FeatureSet(Feature):
         nargs = len(args)
         if nargs == 2:
             pathname, content = args
-            self.__init__(pathname, pathname, '', content)
+            FeatureSet.__init__(self, pathname, pathname, '', content)
         elif nargs == 3:
             pathname, name, content = args
-            self.__init__(pathname, name, '', content)
+            FeatureSet.__init__(self, pathname, name, '', content)
         elif nargs == 4:
             pathname, name, desc, content = args
             self._pathname = pathname
@@ -258,13 +258,14 @@ class FeatureSet(Feature):
 class Blueprints(FeatureSet):
 
     def __init__(self):
-        super(Blueprints, self)('Blueprints', [ProminentPrimaryAction()])
+        super(Blueprints, self).__init__('Blueprints',
+                [ProminentPrimaryAction()])
 
 
 class Basics(FeatureSet):
 
     def __init__(self):
-        super(Basics, self)('Basics',
+        super(Basics, self).__init__('Basics',
                 'UI Basics',
                 'The building blocks of any web application interface',
                 [Tooltips(),
@@ -284,7 +285,7 @@ class Basics(FeatureSet):
 class Shortcuts(FeatureSet):
 
     def __init__(self):
-        super(Shortcuts, self)('Shortcuts',
+        super(Shortcuts, self).__init__('Shortcuts',
                 'Keyboard shortcuts',
                 'Binding keyboard shortcuts to actions',
                 [ShortcutBasics(),
@@ -298,7 +299,7 @@ class Shortcuts(FeatureSet):
 class ValueInput(FeatureSet):
 
     def __init__(self):
-        super(ValueInput, self)('Input',
+        super(ValueInput, self).__init__('Input',
                 'Value Input Components',
                 'Components used for gathering input from the user',
                 [Dates(),
@@ -311,7 +312,7 @@ class ValueInput(FeatureSet):
 class FormsAndData(FeatureSet):
 
     def __init__(self):
-        super(FormsAndData, self)('FormsAndData',
+        super(FormsAndData, self).__init__('FormsAndData',
                 'Forms and Data Model',
                 'Grouping fields and data manipulation samples',
                 [Forms()])
@@ -320,7 +321,7 @@ class FormsAndData(FeatureSet):
 class GridsAndTrees(FeatureSet):
 
     def __init__(self):
-        super(GridsAndTrees, self)('GridsAndTrees',
+        super(GridsAndTrees, self).__init__('GridsAndTrees',
                 'Grids and Trees',
                 'For large sets of data, the Table (Grid) and Tree components come in handy',
                 [Tables(),
@@ -330,7 +331,7 @@ class GridsAndTrees(FeatureSet):
 class Layouting(FeatureSet):
 
     def __init__(self):
-        super(Layouting, self)('ComponentContainers',
+        super(Layouting, self).__init__('ComponentContainers',
                 'Layouts & Component Containers',
                 'Laying out and grouping components together',
                 [Layouts(),
@@ -342,7 +343,7 @@ class Layouting(FeatureSet):
 class Windowing(FeatureSet):
 
     def __init__(self):
-        super(Windowing, self)('Windowing',
+        super(Windowing, self).__init__('Windowing',
                 'Windows, Popups and Navigation',
                 '',
                 [MenuBars(),
@@ -354,7 +355,7 @@ class Windowing(FeatureSet):
 class Buttons(FeatureSet):
 
     def __init__(self):
-        super(Buttons, self)('Buttons',
+        super(Buttons, self).__init__('Buttons',
                 'Buttons',
                 'A button is one of the fundamental building blocks of any application.',
                 [ButtonPush(),
@@ -365,7 +366,7 @@ class Buttons(FeatureSet):
 class Links(FeatureSet):
 
     def __init__(self):
-        super(Links, self)('Links',
+        super(Links, self).__init__('Links',
                 'Links',
                 ('An external link. This is the basic HTML-style link, '
                  'changing the url of the browser w/o triggering a '
@@ -378,7 +379,7 @@ class Links(FeatureSet):
 class MenuBars(FeatureSet):
 
     def __init__(self):
-        super(MenuBars, self)('Menubars',
+        super(MenuBars, self).__init__('Menubars',
                 'Menubars',
                 ('MenuBar has hierarchical set of actions that are presented '
                  'in drop down menus. The root level is a horizontal list of '
@@ -396,7 +397,7 @@ class MenuBars(FeatureSet):
 class Notifications(FeatureSet):
 
     def __init__(self):
-        super(Notifications, self)('Notifications',
+        super(Notifications, self).__init__('Notifications',
                 'Notifications',
                 ('Notifications are lightweight informational messages, used '
                  'to inform the user of various events.'),
@@ -410,7 +411,7 @@ class Notifications(FeatureSet):
 class Selects(FeatureSet):
 
     def __init__(self):
-        super(Selects, self)('Selects',
+        super(Selects, self).__init__('Selects',
                 [ListSelectSingle(),
                  ListSelectMultiple(),
                  TwinColumnSelect(),
@@ -427,7 +428,7 @@ class Selects(FeatureSet):
 class Sliders(FeatureSet):
 
     def __init__(self):
-        super(Sliders, self)('Sliders',
+        super(Sliders, self).__init__('Sliders',
                 'Sliders',
                 ('Slider component allows the user to select a numeric value '
                  'from a specified range of values.'),
@@ -439,7 +440,7 @@ class Sliders(FeatureSet):
 class Layouts(FeatureSet):
 
     def __init__(self):
-        super(Layouts, self)('Layouts',
+        super(Layouts, self).__init__('Layouts',
                 'Layouts',
                 ('Making a usable, good looking, dynamic layout can be '
                  'tricky, but with the right tools almost anything is '
@@ -464,7 +465,7 @@ class Layouts(FeatureSet):
 class Tabsheets(FeatureSet):
 
     def __init__(self):
-        super(Tabsheets, self)('Tabsheets',
+        super(Tabsheets, self).__init__('Tabsheets',
                 'Tabsheets',
                 ('A Tabsheet organizes multiple components so that only the '
                  'one component associated with the currently selected '
@@ -479,7 +480,7 @@ class Tabsheets(FeatureSet):
 class Accordions(FeatureSet):
 
     def __init__(self):
-        super(Accordions, self)('Accordions',
+        super(Accordions, self).__init__('Accordions',
                 'Accordions',
                 ('An accordion component is a specialized case of a tabsheet.'
                  ' Within an accordion, the tabs are organized vertically,'
@@ -491,7 +492,7 @@ class Accordions(FeatureSet):
 class Panels(FeatureSet):
 
     def __init__(self):
-        super(Panels, self)('Panels',
+        super(Panels, self).__init__('Panels',
                 'Panels',
                 ('Panel is a simple container that supports scrolling.<br/>'
                  'It\'s internal layout (by default VerticalLayout) can be '
@@ -505,7 +506,7 @@ class Panels(FeatureSet):
 class PopupViews(FeatureSet):
 
     def __init__(self):
-        super(PopupViews, self)('PopupViews',
+        super(PopupViews, self).__init__('PopupViews',
                 'PopupViews',
                 ('PopupView is a container that allows to disclose parts of '
                  'the interface to a popup dialog. It only presents a minimal '
@@ -517,7 +518,7 @@ class PopupViews(FeatureSet):
 class Forms(FeatureSet):
 
     def __init__(self):
-        super(Forms, self)('Forms',
+        super(Forms, self).__init__('Forms',
                 'Forms',
                 ('The Form -component provides a convenient way to organize'
                  ' related fields visually.'),
@@ -529,7 +530,7 @@ class Forms(FeatureSet):
 class Uploads(FeatureSet):
 
     def __init__(self):
-        super(Uploads, self)('Uploads',
+        super(Uploads, self).__init__('Uploads',
                 'Uploads',
                 ('Upload is a component providing a method for clients to '
                  'send files to server.'),
@@ -541,7 +542,7 @@ class Uploads(FeatureSet):
 class Windows(FeatureSet):
 
     def __init__(self):
-        super(Windows, self)('Windows',
+        super(Windows, self).__init__('Windows',
                 'Windows',
                 ('Windows are one essential part of desktop style '
                  'applications. Windows can (for instance) organize the '
@@ -561,7 +562,7 @@ class Windows(FeatureSet):
 class Tables(FeatureSet):
 
     def __init__(self):
-        super(Tables, self)('Table (Grid)',
+        super(Tables, self).__init__('Table (Grid)',
                 'Table (Grid)',
                 ('A Table, also known as a (Data)Grid, can be used to show '
                  'data in a tabular fashion. It\'s well suited for showing '
@@ -587,7 +588,7 @@ class Tables(FeatureSet):
 class Texts(FeatureSet):
 
     def __init__(self):
-        super(Texts, self)('Texts',
+        super(Texts, self).__init__('Texts',
                 'Texts',
                 ('A label is a simple component that allows you to add '
                  '(optionally formatted) text components to your application'),
@@ -599,7 +600,7 @@ class Texts(FeatureSet):
 class Embedding(FeatureSet):
 
     def __init__(self):
-        super(Embedding, self)('Embedding',
+        super(Embedding, self).__init__('Embedding',
                 'Embedding',
                 'How to add non-textual content to your applications',
                 [ImageEmbed(),
@@ -610,7 +611,7 @@ class Embedding(FeatureSet):
 class TextFields(FeatureSet):
 
     def __init__(self):
-        super(TextFields, self)('TextFields',
+        super(TextFields, self).__init__('TextFields',
                 'Text inputs',
                 ('Text inputs are probably the most needed components in '
                  'any application that require user input or editing.'),
@@ -625,7 +626,7 @@ class TextFields(FeatureSet):
 class Trees(FeatureSet):
 
     def __init__(self):
-        super(Trees, self)('Trees',
+        super(Trees, self).__init__('Trees',
                 'Trees',
                 ('The Tree component provides a natural way to represent '
                  'data that has hierarchical relationships, such as '
@@ -640,7 +641,7 @@ class Trees(FeatureSet):
 class Dates(FeatureSet):
 
     def __init__(self):
-        super(Dates, self)('Dates',
+        super(Dates, self).__init__('Dates',
                 'Dates',
                 ('The DateField component can be used to produce various '
                  'date and time input fields with different resolutions. '
@@ -657,7 +658,7 @@ class Dates(FeatureSet):
 class DragDrop(FeatureSet):
 
     def __init__(self):
-        super(DragDrop, self)('Dragdrop',
+        super(DragDrop, self).__init__('Dragdrop',
                 'Drag\'n\'drop',
                 ('Drag\'n\'drop supports dragging data and components to '
                  'other components or items within a component.'),

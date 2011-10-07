@@ -25,7 +25,7 @@ class Comment(TestRow):
 class Command(TestRow):
 
     def __init__(self, cmd, target, value):
-        super(Command, self)()
+        super(Command, self).__init__()
         self._cmd = cmd
         self._target = target
         self._value = value
@@ -39,7 +39,7 @@ class Command(TestRow):
 class WaitForVaadinCommand(Command):
 
     def __init__(self):
-        super(WaitForVaadinCommand, self)('waitForVaadin', '', '')
+        super(WaitForVaadinCommand, self).__init__('waitForVaadin', '', '')
 
 
 class VaadinTestBenchTest(object):

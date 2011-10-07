@@ -83,12 +83,12 @@ class RichTextArea(AbstractField):
                 self.setPropertyDataSource(dataSource)
             else:
                 caption, = args
-                self.__init__()
+                RichTextArea.__init__(self)
                 self.setCaption(caption)
         elif nargs == 2:
             if isinstance(args[1], IProperty):
                 caption, dataSource = args
-                self.__init__(dataSource)
+                RichTextArea.__init__(self, dataSource)
                 self.setCaption(caption)
             else:
                 caption, value = args

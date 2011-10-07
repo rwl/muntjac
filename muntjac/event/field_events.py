@@ -105,7 +105,7 @@ class FocusEvent(ComponentEvent):
     EVENT_ID = EventId.FOCUS
 
     def __init__(self, source):
-        super(FocusEvent, self)(source)
+        super(FocusEvent, self).__init__(source)
 
 
 class IFocusListener(IComponentEventListener):
@@ -138,7 +138,7 @@ class BlurEvent(ComponentEvent):
     EVENT_ID = EventId.BLUR
 
     def __init__(self, source):
-        super(BlurEvent, self)(source)
+        super(BlurEvent, self).__init__(source)
 
 
 class IBlurListener(IComponentEventListener):
@@ -187,7 +187,7 @@ class TextChangeEvent(ComponentEvent):
     """
 
     def __init__(self, source):
-        super(TextChangeEvent, self)(source)
+        super(TextChangeEvent, self).__init__(source)
 
 
     def getText(self):

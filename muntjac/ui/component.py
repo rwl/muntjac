@@ -416,7 +416,7 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
         {@link com.vaadin.terminal.IPaintable.RepaintRequestEvent
         RepaintRequestEvent}. A reimplementation should call the superclass
         implementation.
-        
+
         @param caption
                    the new caption for the component. If the caption is
                    {@code null}, no caption is shown and it does not normally
@@ -445,10 +445,10 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
         closely related to caption (see {@link #setCaption(String) setCaption()})
         and is usually displayed horizontally before or after it, depending on
         the component and the containing layout.
-        
+
         The image is loaded by the browser from a resource, typically a
         {@link com.vaadin.terminal.ThemeResource}.
-        
+
         <pre>
         // IComponent with an icon from a custom theme
         TextField name = new TextField(&quot;Name&quot;);
@@ -470,12 +470,12 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
         in their own columns. The {@link CustomComponent} does not manage the
         icon of its composition root, so if the root component has an icon, it
         will not be rendered.
-        
+
         An icon will be rendered inside an HTML element that has the
         {@code v-icon} CSS style class. The containing layout may enclose an icon
         and a caption inside elements related to the caption, such as
         {@code v-caption} .
-        
+
         This method will trigger a
         {@link com.vaadin.terminal.IPaintable.RepaintRequestEvent
         RepaintRequestEvent}.
@@ -494,11 +494,11 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
 
         If the component is not attached to a window through a component
         containment hierarchy, <code>null</code> is returned.
-        
+
         The window can be either an application-level window or a sub-window. If
         the component is itself a window, it returns a reference to itself, not
         to its containing window (of a sub-window).
-        
+
         @return the parent window of the component or <code>null</code> if it is
                 not attached to a window or is itself a window
         """
@@ -514,7 +514,7 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
         components. A standard workaround is to move the problematic
         initialization to {@link #attach()}, as described in the documentation of
         the method.
-        
+
         @return the parent application of the component or <code>null</code>.
         @see #attach()
         """
@@ -529,14 +529,14 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
         call the {@link #attach()} for all its children when it is attached to
         the application. This method is always called before the component is
         painted for the first time.
-        
+
         Reimplementing the {@code attach()} method is useful for tasks that need
         to get a reference to the parent, window, or application object with the
         {@link #getParent()}, {@link #getWindow()}, and {@link #getApplication()}
         methods. A component does not yet know these objects in the constructor,
         so in such case, the methods will return {@code null}. For example, the
         following is invalid:
-        
+
         <pre>
         public class AttachExample extends CustomComponent {
             public AttachExample() {
@@ -554,7 +554,7 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
         If the parent of an added component is already connected to the
         application, the {@code attach()} is called immediately from
         {@link #setParent(IComponent)}.
-        
+
         <pre>
         public class AttachExample extends CustomComponent {
             public AttachExample() {
@@ -573,7 +573,7 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
         </pre>
 
         The attachment logic is implemented in {@link AbstractComponent}.
-        
+
         @see #getApplication()
         """
         raise NotImplementedError
@@ -584,7 +584,7 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
 
         The {@link #getApplication()} and {@link #getWindow()} methods might
         return <code>null</code> after this method is called.
-        
+
         The caller of this method is {@link #setParent(IComponent)} if the parent
         is in the application. When the parent is detached from the application
         it is its response to call {@link #detach()} for all the children and to
@@ -600,12 +600,12 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
         returned, and so on. Eventually, if no parent has locale set, the locale
         of the application is returned. If the application does not have a locale
         set, it is determined by <code>Locale.getDefault()</code>.
-        
+
         As the component must be attached before its locale can be acquired,
         using this method in the internationalization of component captions, etc.
         is generally not feasible. For such use case, we recommend using an
         otherwise acquired reference to the application locale.
-        
+
         @return Locale of this component or {@code null} if the component and
                 none of its parents has a locale set and the component is not yet
                 attached to an application.
@@ -619,12 +619,12 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
         children sent the repaint request themselves.
 
         A repaint request is ignored if the component is invisible.
-        
+
         This method is called automatically by {@link AbstractComponent}, which
         also provides a default implementation of it. As this is a somewhat
         internal feature, it is rarely necessary to reimplement this or call it
         explicitly.
-        
+
         @param alreadyNotified
                    the collection of repaint request listeners that have been
                    already notified by the child. This component should not
@@ -708,7 +708,7 @@ class Event(EventObject):
     Events are the basis of all user interaction handling in Vaadin. To
     handle events, you provide a listener object that receives the events of
     the particular event type.
-    
+
     <pre>
     Button button = new Button(&quot;Click Me!&quot;);
     button.addListener(new Button.ClickListener() {
@@ -723,7 +723,7 @@ class Event(EventObject):
     Notice that while each of the event types have their corresponding
     listener types; the listener interfaces are not required to inherit the
     {@code IComponent.IListener} interface.
-    
+
     @see IComponent.IListener
     """
 
@@ -733,7 +733,7 @@ class Event(EventObject):
         @param source
                    the source component of the event
         """
-        super(Event, self)(source)
+        super(Event, self).__init__(source)
 
 
     def getComponent(self):
@@ -753,14 +753,14 @@ class IListener(IEventListener):
     All event types have their corresponding listener types; they are not,
     however, required to inherit the {@code IComponent.IListener} interface,
     and they rarely do so.
-    
+
     <p>
     This generic listener interface is useful typically when you wish to
     handle events from different component types in a single listener method
     ({@code componentEvent()}. If you handle component events in an anonymous
     listener class, you normally use the component specific listener class,
     such as {@link com.vaadin.ui.Button.ClickEvent}.
-    
+
     <pre>
     class Listening extends CustomComponent implements IListener {
         Button ok; // Stored for determining the source of an event
@@ -814,7 +814,7 @@ class IListener(IEventListener):
         As the event can typically come from one of many source components,
         you may need to differentiate between the event source by component
         reference, class, etc.
-        
+
         <pre>
         public void componentEvent(Event event) {
             // Act according to the source of the event
@@ -851,7 +851,7 @@ class IErrorEvent(Event):
         @param component
                    the source component.
         """
-        super(IErrorEvent, self)(component)
+        super(IErrorEvent, self).__init__(component)
         self._message = message
 
 
@@ -886,7 +886,7 @@ class IFocusable(IComponent):
     focus information can be acquired for some (but not all) {@link Field}
     components through the {@link com.vaadin.event.FieldEvents.FocusListener}
     and {@link com.vaadin.event.FieldEvents.BlurListener} interfaces.
-    
+
     @see FieldEvents
     """
 
@@ -917,7 +917,7 @@ class IFocusable(IComponent):
         can be acquired for some (but not all) {@link Field} components
         through the {@link com.vaadin.event.FieldEvents.FocusListener} and
         {@link com.vaadin.event.FieldEvents.BlurListener} interfaces.
-        
+
         @see com.vaadin.event.FieldEvents
         @see com.vaadin.event.FieldEvents.FocusEvent
         @see com.vaadin.event.FieldEvents.FocusListener
@@ -975,15 +975,15 @@ class IFocusable(IComponent):
         After all focusable user interface components are done, the browser
         can begin again from the component with the smallest tab index, or it
         can take the focus out of the page, for example, to the location bar.
-        
+
         If the tab index is not set (is set to zero), the default tab order
         is used. The order is somewhat browser-dependent, but generally
         follows the HTML structure of the page.
-        
+
         A negative value means that the component is completely removed from
         the tabulation order and can not be reached by pressing the Tab key
         at all.
-        
+
         @param tabIndex
                    the tab order of this component. Indexes usually start
                    from 1. Zero means that default tab order should be used.

@@ -158,7 +158,7 @@ class ComponentAttachEvent(Event):
         @param attachedComponent
                    the component that has been attached.
         """
-        super(ComponentAttachEvent, self)(container)
+        super(ComponentAttachEvent, self).__init__(container)
         self._component = attachedComponent
 
 
@@ -192,7 +192,7 @@ class ComponentDetachEvent(Event):
         @param detachedComponent
                    the component that has been detached.
         """
-        super(ComponentDetachEvent, self)(container)
+        super(ComponentDetachEvent, self).__init__(container)
         self._component = detachedComponent
 
 

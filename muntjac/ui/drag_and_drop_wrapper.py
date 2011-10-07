@@ -43,7 +43,7 @@ class DragAndDropWrapper(CustomComponent, IDropTarget, IDragSource):
 
         @param root: the component to be wrapped
         """
-        super(DragAndDropWrapper, self)(root)
+        super(DragAndDropWrapper, self).__init__(root)
 
         self._receivers = dict()
 
@@ -102,7 +102,7 @@ class DragAndDropWrapper(CustomComponent, IDropTarget, IDragSource):
 class WrapperTransferable(TransferableImpl):
 
     def __init__(self, sourceComponent, rawVariables):
-        super(WrapperTransferable, self)(sourceComponent, rawVariables)
+        super(WrapperTransferable, self).__init__(sourceComponent, rawVariables)
 
         self._files = None
 
@@ -162,7 +162,7 @@ class WrapperTransferable(TransferableImpl):
 class WrapperTargetDetails(TargetDetailsImpl):
 
     def __init__(self, rawDropData, wrapper):
-        super(WrapperTargetDetails, self)(rawDropData, wrapper)
+        super(WrapperTargetDetails, self).__init__(rawDropData, wrapper)
 
 
     def getAbsoluteLeft(self):

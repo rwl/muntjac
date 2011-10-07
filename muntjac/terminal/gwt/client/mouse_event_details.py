@@ -41,7 +41,7 @@ class MouseEventDetails(object):
         if evt is None:
             pass
         elif relativeToElement is None:
-            self.__init__(evt, None)
+            MouseEventDetails.__init__(self, evt, None)
         else:
             raise NotImplementedError
             # FIXME: com.google.gwt.user.client.Event

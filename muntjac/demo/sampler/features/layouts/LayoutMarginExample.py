@@ -6,7 +6,7 @@ from muntjac.ui.button import IClickListener
 class LayoutMarginExample(GridLayout, IClickListener):
 
     def __init__(self):
-        super(LayoutMarginExample, self)(3, 3)
+        super(LayoutMarginExample, self).__init__(3, 3)
         self.setWidth('100%')
         self.setSpacing(True)
 

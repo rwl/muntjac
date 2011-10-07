@@ -117,7 +117,7 @@ class FragmentChangedEvent(ComponentEvent):
         @param source
                    the Source of the event.
         """
-        super(FragmentChangedEvent, self)(source)
+        super(FragmentChangedEvent, self).__init__(source)
 
 
     def getUriFragmentUtility(self):

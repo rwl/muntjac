@@ -100,28 +100,28 @@ class Slider(AbstractField):
         args = args
         nargs = len(args)
         if nargs == 0:
-            super(Slider, self)()
+            super(Slider, self).__init__()
             super(Slider, self).setValue(float(self._min))
         elif nargs == 1:
             caption, = args
-            self.__init__()
+            Slider.__init__(self)
             self.setCaption(caption)
         elif nargs == 2:
             minn, maxx = args
-            self.__init__()
+            Slider.__init__(self)
             self.setMin(minn)
             self.setMax(maxx)
             self.setResolution(0)
         elif nargs == 3:
             if isinstance(args[0], float):
                 minn, maxx, resolution = args
-                self.__init__()
+                Slider.__init__(self)
                 self.setMin(minn)
                 self.setMax(maxx)
                 self.setResolution(resolution)
             else:
                 caption, minn, maxx = args
-                self.__init__(minn, maxx)
+                Slider.__init__(self, minn, maxx)
                 self.setCaption(caption)
         else:
             raise ValueError, 'too many arguments'

@@ -34,17 +34,17 @@ class OptionGroup(AbstractSelect, IBlurNotifier, IFocusNotifier):
         args = args
         nargs = len(args)
         if nargs == 0:
-            super(OptionGroup, self)()
+            super(OptionGroup, self).__init__()
         elif nargs == 1:
             caption, = args
-            super(OptionGroup, self)(caption)
+            super(OptionGroup, self).__init__(caption)
         elif nargs == 2:
             if isinstance(args[1], IContainer):
                 caption, dataSource = args
-                super(OptionGroup, self)(caption, dataSource)
+                super(OptionGroup, self).__init__(caption, dataSource)
             else:
                 caption, options = args
-                super(OptionGroup, self)(caption, options)
+                super(OptionGroup, self).__init__(caption, options)
         else:
             raise ValueError, 'too many arguments'
 

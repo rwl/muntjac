@@ -73,14 +73,14 @@ class ObjectProperty(AbstractProperty):
         nargs = len(args)
         if nargs == 1:
             value, = args
-            self.__init__(value, value.getClass())
+            ObjectProperty.__init__(self, value, value.getClass())
         elif nargs == 2:
             value, typ = args
             self._type = typ
             self.setValue(value)
         elif nargs == 3:
             value, typ, readOnly = args
-            self.__init__(value, typ)
+            ObjectProperty.__init__(self, value, typ)
             self.setReadOnly(readOnly)
         else:
             raise ValueError

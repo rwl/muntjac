@@ -596,7 +596,7 @@ class TextChangeEventMode(object):
 class TextChangeEventImpl(TextChangeEvent):
 
     def __init__(self, tf):
-        super(TextChangeEventImpl, self)(tf)
+        super(TextChangeEventImpl, self).__init__(tf)
         self._curText = tf.getCurrentTextContent()
         self._cursorPosition = tf.getCursorPosition()
 

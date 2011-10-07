@@ -87,7 +87,7 @@ class LayoutClickEvent(ClickEvent):
 
     def __init__(self, source, mouseEventDetails, clickedComponent,
                 childComponent):
-        super(LayoutClickEvent, self)(source, mouseEventDetails)
+        super(LayoutClickEvent, self).__init__(source, mouseEventDetails)
         self._clickedComponent = clickedComponent
         self._childComponent = childComponent
 

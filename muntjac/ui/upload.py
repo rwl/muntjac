@@ -672,7 +672,7 @@ class FinishedEvent(ComponentEvent):
         @param length
                    the length of the received file.
         """
-        super(FinishedEvent, self)(source)
+        super(FinishedEvent, self).__init__(source)
 
         # MIME type of the received file.
         self._type = MIMEType
@@ -733,7 +733,7 @@ class FailedEvent(FinishedEvent):
         @param length
         @param exception
         """
-        super(FailedEvent, self)(source, filename, MIMEType, length)
+        super(FailedEvent, self).__init__(source, filename, MIMEType, length)
 
         self._reason = reason
 
@@ -756,7 +756,7 @@ class NoOutputStreamEvent(FailedEvent):
         @param MIMEType
         @param length
         """
-        super(NoOutputStreamEvent, self)(source, filename, MIMEType, length)
+        super(NoOutputStreamEvent, self).__init__(source, filename, MIMEType, length)
 
 
 class NoInputStreamEvent(FailedEvent):
@@ -769,7 +769,7 @@ class NoInputStreamEvent(FailedEvent):
         @param MIMEType
         @param length
         """
-        super(NoInputStreamEvent, self)(source, filename, MIMEType, length)
+        super(NoInputStreamEvent, self).__init__(source, filename, MIMEType, length)
 
 
 class SucceededEvent(FinishedEvent):
@@ -788,7 +788,7 @@ class SucceededEvent(FinishedEvent):
         @param MIMEType
         @param length
         """
-        super(SucceededEvent, self)(source, filename, MIMEType, length)
+        super(SucceededEvent, self).__init__(source, filename, MIMEType, length)
 
 
 class StartedEvent(ComponentEvent):
@@ -807,7 +807,7 @@ class StartedEvent(ComponentEvent):
         @param MIMEType
         @param length
         """
-        super(StartedEvent, self)(source)
+        super(StartedEvent, self).__init__(source)
 
         self._filename = filename
 

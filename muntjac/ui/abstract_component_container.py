@@ -34,7 +34,7 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
 
     def __init__(self):
         """Constructs a new component container."""
-        super(AbstractComponentContainer, self)()
+        super(AbstractComponentContainer, self).__init__()
 
 
     def removeAllComponents(self):

@@ -186,7 +186,7 @@ class BasePropertySetChangeEvent(EventObject, IContainer,
     """
 
     def __init__(self, source):
-        super(BasePropertySetChangeEvent, self)(source)
+        super(BasePropertySetChangeEvent, self).__init__(source)
 
 
     def getContainer(self):
@@ -203,7 +203,7 @@ class BaseItemSetChangeEvent(EventObject, IContainer, IItemSetChangeEvent):
     """
 
     def __init__(self, source):
-        super(BaseItemSetChangeEvent, self)(source)
+        super(BaseItemSetChangeEvent, self).__init__(source)
 
 
     def getContainer(self):

@@ -987,15 +987,15 @@ class FocusShortcut(ShortcutListener):
         if nargs == 2:
             if isinstance(args[1], int):
                 focusable, keyCode = args
-                self.__init__(focusable, keyCode, None)
+                FocusShortcut.__init__(self, focusable, keyCode, None)
             else:
                 focusable, shorthandCaption = args
-                super(FocusShortcut, self)(shorthandCaption)
+                super(FocusShortcut, self).__init__(shorthandCaption)
                 self.focusable = focusable
         else:
             focusable, keyCode = args[:2]
             modifiers = args[2:]
-            super(FocusShortcut, self)(None, keyCode, modifiers)
+            super(FocusShortcut, self).__init__(None, keyCode, modifiers)
             self.focusable = focusable
 
 
@@ -1020,7 +1020,7 @@ class IReadOnlyStatusChangeEvent(ComponentEvent, property.IProperty,
         @param source
                    the Source of the event.
         """
-        super(IReadOnlyStatusChangeEvent, self)(source)
+        super(IReadOnlyStatusChangeEvent, self).__init__(source)
 
 
     def getProperty(self):

@@ -59,7 +59,7 @@ class Brick(Label):
     """A simple label containing text "Brick" and themed black square."""
 
     def __init__(self):
-        super(Brick, self)('Brick')
+        super(Brick, self).__init__('Brick')
         # disable 100% width that label has by default
         self.setSizeUndefined()
         self.setStyleName('brick')

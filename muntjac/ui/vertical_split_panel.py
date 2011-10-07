@@ -37,5 +37,5 @@ class VerticalSplitPanel(AbstractSplitPanel):
     #CLIENT_WIDGET = ClientWidget(VSplitPanelVertical, LoadStyle.EAGER)
 
     def __init__(self):
-        super(VerticalSplitPanel, self)()
+        super(VerticalSplitPanel, self).__init__()
         self.setSizeFull()

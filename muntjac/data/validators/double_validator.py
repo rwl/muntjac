@@ -36,7 +36,7 @@ class DoubleValidator(AbstractStringValidator):
         @param errorMessage
                    the message to display in case the value does not validate.
         """
-        super(DoubleValidator, self)(errorMessage)
+        super(DoubleValidator, self).__init__(errorMessage)
 
 
     def isValidString(self, value):

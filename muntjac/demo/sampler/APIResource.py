@@ -18,10 +18,11 @@ class APIResource(NamedExternalResource):
         _1 = len(args)
         if _1 == 1:
             clazz, = _0
-            self.__init__(self.resolveBaseUrl(clazz), clazz)
+            APIResource.__init__(self, self.resolveBaseUrl(clazz), clazz)
         elif _1 == 2:
             baseUrl, clazz = _0
-            super(APIResource, self)(self.resolveName(clazz), self.getJavadocUrl(baseUrl, clazz))
+            super(APIResource, self).__init__(self.resolveName(clazz),
+                    self.getJavadocUrl(baseUrl, clazz))
         else:
             raise ValueError
 

@@ -927,7 +927,7 @@ class ExpandEvent(ComponentEvent):
                    the Source of the event.
         @param expandedItemId
         """
-        super(ExpandEvent, self)(source)
+        super(ExpandEvent, self).__init__(source)
         self._expandedItemId = expandedItemId
 
 
@@ -976,7 +976,7 @@ class CollapseEvent(ComponentEvent):
                    the Source of the event.
         @param collapsedItemId
         """
-        super(CollapseEvent, self)(source)
+        super(CollapseEvent, self).__init__(source)
         self._collapsedItemId = collapsedItemId
 
 
@@ -1032,7 +1032,7 @@ class TreeTargetDetails(AbstractSelectTargetDetails):
     """
 
     def __init__(self, rawVariables):
-        super(TreeTargetDetails, self)(rawVariables)
+        super(TreeTargetDetails, self).__init__(rawVariables)
 
 
     def getTarget(self):
@@ -1111,7 +1111,7 @@ class TreeTransferable(DataBoundTransferable):
     """
 
     def __init__(self, sourceComponent, rawVariables):
-        super(TreeTransferable, self)(sourceComponent, rawVariables)
+        super(TreeTransferable, self).__init__(sourceComponent, rawVariables)
 
 
     def getItemId(self):
@@ -1185,7 +1185,7 @@ class TargetItemAllowsChildren(TargetDetailIs):
 
     def __init__(self):
         # Uses enhanced server side check
-        super(TargetItemAllowsChildren, self)('itemIdOverIsNode', True)
+        super(TargetItemAllowsChildren, self).__init__('itemIdOverIsNode', True)
 
 
     def accept(self, dragEvent):

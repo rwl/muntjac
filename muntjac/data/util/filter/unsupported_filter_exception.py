@@ -34,12 +34,12 @@ class UnsupportedFilterException(RuntimeError):
         elif nargs == 1:
             if isinstance(args[0], Exception):
                 cause, = args
-                super(UnsupportedFilterException, self)(cause)
+                super(UnsupportedFilterException, self).__init__(cause)
             else:
                 message, = args
-                super(UnsupportedFilterException, self)(message)
+                super(UnsupportedFilterException, self).__init__(message)
         elif nargs == 2:
             message, cause = args
-            super(UnsupportedFilterException, self)(message, cause)
+            super(UnsupportedFilterException, self).__init__(message, cause)
         else:
             raise ValueError

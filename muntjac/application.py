@@ -1489,7 +1489,7 @@ class UserChangeEvent(EventObject):
         @param prevUser
                    the previous User.
         """
-        super(UserChangeEvent, self)(source)
+        super(UserChangeEvent, self).__init__(source)
 
         # New user of the application.
         self._newUser = newUser
@@ -1554,7 +1554,7 @@ class WindowDetachEvent(EventObject):
         @param window
                    the Detached window.
         """
-        super(WindowDetachEvent, self)(self)
+        super(WindowDetachEvent, self).__init__(self)
         self._window = window
 
 
@@ -1587,7 +1587,7 @@ class WindowAttachEvent(EventObject):
         @param window
                    the Attached window.
         """
-        super(WindowAttachEvent, self)(self)
+        super(WindowAttachEvent, self).__init__(self)
         self._window = window
 
 

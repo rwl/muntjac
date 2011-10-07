@@ -26,7 +26,7 @@ class ListSelect(AbstractSelect):
         self._columns = 0
         self._rows = 0
 
-        super(ListSelect, self)(args)
+        super(ListSelect, self).__init__(args)
 
 
     def setColumns(self, columns):

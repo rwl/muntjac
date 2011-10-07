@@ -142,7 +142,7 @@ class ReadOnlyException(RuntimeError):
                    the detail message
         """
         if msg is not None:
-            super(ReadOnlyException, self)(msg)
+            super(ReadOnlyException, self).__init__(msg)
 
 
 class ConversionException(RuntimeError):
@@ -179,7 +179,7 @@ class ConversionException(RuntimeError):
         @param cause
                    The cause of the the conversion failure
         """
-        super(ConversionException, self)(args)
+        super(ConversionException, self).__init__(args)
 
 
 class IViewer(object):

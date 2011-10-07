@@ -77,7 +77,7 @@ class ImageDropBox(DragAndDropWrapper, IDropHandler):
     _FILE_SIZE_LIMIT = 2 * 1024 * 1024  # 2MB
 
     def __init__(self, root, component):
-        super(ImageDropBox, self)(root)
+        super(ImageDropBox, self).__init__(root)
         self.setDropHandler(self)
 
         self._component = component

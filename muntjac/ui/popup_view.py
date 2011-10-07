@@ -107,7 +107,7 @@ class PopupView(AbstractComponentContainer):
         nargs = len(args)
         if nargs == 1:
             content, = args
-            super(PopupView, self)()
+            super(PopupView, self).__init__()
             self._hideOnMouseOut = True
             self.setContent(content)
         elif nargs == 2:
@@ -126,7 +126,7 @@ class PopupView(AbstractComponentContainer):
                     return self._large
 
             c = InnerContent(small, large)
-            self.__init__(c)
+            PopupView.__init__(self, c)
         else:
             raise ValueError, 'invalid number of arguments'
 
@@ -345,7 +345,7 @@ class PopupVisibilityEvent(ComponentEvent):
     """
 
     def __init__(self, source):
-        super(PopupVisibilityEvent, self)(source)
+        super(PopupVisibilityEvent, self).__init__(source)
 
 
     def getPopupView(self):

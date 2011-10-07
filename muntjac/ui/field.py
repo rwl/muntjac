@@ -108,7 +108,7 @@ class ValueChangeEvent(ComponentEvent, property.ValueChangeEvent):
         @param source
                    the field that caused the event.
         """
-        super(ValueChangeEvent, self)(source)
+        super(ValueChangeEvent, self).__init__(source)
 
 
     def getProperty(self):

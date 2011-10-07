@@ -35,16 +35,16 @@ class ListSet(list):
 
         nargs = len(args)
         if nargs == 0:
-            super(ListSet, self)()
+            super(ListSet, self).__init__()
             self._itemSet = set()
         elif nargs == 1:
             if isinstance(args[0], int):
                 initialCapacity, = args
-                super(ListSet, self)(initialCapacity)
+                super(ListSet, self).__init__(initialCapacity)
                 self._itemSet = set(initialCapacity)
             else:
                 c, = args
-                super(ListSet, self)(c)
+                super(ListSet, self).__init__(c)
                 self._itemSet = set(len(c))
                 self._itemSet.union(c)
         else:

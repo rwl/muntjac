@@ -52,9 +52,9 @@ class StringLengthValidator(AbstractValidator):
         self._allowNull = True
 
         if minLength is None:
-            super(StringLengthValidator, self)(errorMessage)
+            super(StringLengthValidator, self).__init__(errorMessage)
         else:
-            self.__init__(errorMessage)
+            StringLengthValidator.__init__(self, errorMessage)
             self.setMinLength(minLength)
             self.setMaxLength(maxLength)
             self.setNullAllowed(allowNull)

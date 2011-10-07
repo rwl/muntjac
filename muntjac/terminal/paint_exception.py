@@ -38,4 +38,4 @@ class PaintException(IOError):
         @param exception
                    the original exception.
         """
-        super(PaintException, self)( str(arg) )
+        super(PaintException, self).__init__( str(arg) )

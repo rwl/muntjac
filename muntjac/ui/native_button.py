@@ -39,22 +39,22 @@ class NativeButton(Button):
         """
         nargs = len(args)
         if nargs == 0:
-            super(NativeButton, self)()
+            super(NativeButton, self).__init__()
         elif nargs == 1:
             caption, = args
-            super(NativeButton, self)(caption)
+            super(NativeButton, self).__init__(caption)
         elif nargs == 2:
             if isinstance(args[1], IClickListener):
                 caption, listener = args
-                super(NativeButton, self)(caption, listener)
+                super(NativeButton, self).__init__(caption, listener)
             elif isinstance(args[1], IProperty):
                 caption, dataSource = args
-                super(NativeButton, self)(caption, dataSource)
+                super(NativeButton, self).__init__(caption, dataSource)
             else:
                 caption, initialState = args
-                super(NativeButton, self)(caption, initialState)
+                super(NativeButton, self).__init__(caption, initialState)
         elif nargs == 3:
             caption, target, methodName = args
-            super(NativeButton, self)(caption, target, methodName)
+            super(NativeButton, self).__init__(caption, target, methodName)
         else:
             raise ValueError, 'too many arguments'

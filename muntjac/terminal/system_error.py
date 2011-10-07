@@ -63,10 +63,10 @@ class SystemErr(RuntimeError, IErrorMessage):
             if isinstance(args[0], Exception):
                 self._cause = args[0]
             else:
-                super(SystemErr, self)(args[0])
+                super(SystemErr, self).__init__(args[0])
         elif nargs == 2:
             message, cause = args
-            super(SystemErr, self)(message)
+            super(SystemErr, self).__init__(message)
             self._cause = cause
         else:
             raise ValueError, 'too many arguments'

@@ -91,7 +91,7 @@ class InvalidValueException(RuntimeError, IErrorMessage):
                    One or more {@code InvalidValueException}s that caused
                    this exception.
         """
-        super(InvalidValueException, self)(message)
+        super(InvalidValueException, self).__init__(message)
 
         # Array of one or more validation errors that are causing this
         # validation error.
@@ -189,4 +189,4 @@ class EmptyValueException(InvalidValueException):
     """
 
     def __init__(self, message):
-        super(EmptyValueException, self)(message)
+        super(EmptyValueException, self).__init__(message)

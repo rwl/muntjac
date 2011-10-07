@@ -35,6 +35,6 @@ class FormLayout(OrderedLayout):
     #CLIENT_WIDGET = ClientWidget(VFormLayout, LoadStyle.EAGER)
 
     def __init__(self):
-        super(FormLayout, self)()
+        super(FormLayout, self).__init__()
         self.setSpacing(True)
         self.setMargin(True, False, True, False)

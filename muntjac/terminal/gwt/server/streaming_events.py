@@ -25,15 +25,15 @@ from muntjac.terminal.gwt.server.abstract_streaming_event import \
 class StreamingEndEventImpl(AbstractStreamingEvent, IStreamingEndEvent):
 
     def __init__(self, filename, typ, totalBytes):
-        super(StreamingEndEventImpl, self)(filename, typ, totalBytes,
+        super(StreamingEndEventImpl, self).__init__(filename, typ, totalBytes,
                 totalBytes)
 
 
 class StreamingErrorEventImpl(AbstractStreamingEvent, IStreamingErrorEvent):
 
     def __init__(self, filename, typ, contentLength, bytesReceived, exception):
-        super(StreamingErrorEventImpl, self)(filename, typ, contentLength,
-                bytesReceived)
+        super(StreamingErrorEventImpl, self).__init__(filename, typ,
+                contentLength, bytesReceived)
         self._exception = exception
 
 
@@ -45,14 +45,15 @@ class StreamingProgressEventImpl(AbstractStreamingEvent,
             IStreamingProgressEvent):
 
     def __init__(self, filename, typ, contentLength, bytesReceived):
-        super(StreamingProgressEventImpl, self)(filename, typ, contentLength,
-                bytesReceived)
+        super(StreamingProgressEventImpl, self).__init__(filename, typ,
+                contentLength, bytesReceived)
 
 
 class StreamingStartEventImpl(AbstractStreamingEvent, IStreamingStartEvent):
 
     def __init__(self, filename, typ, contentLength):
-        super(StreamingStartEventImpl, self)(filename, typ, contentLength, 0)
+        super(StreamingStartEventImpl, self).__init__(filename, typ,
+                contentLength, 0)
         self._disposed = None
 
 

@@ -114,12 +114,12 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
             self.setValue(False)
         elif nargs == 1:
             caption, = args
-            self.__init__()
+            Button.__init__(self)
             self.setCaption(caption)
         elif nargs == 2:
             if isinstance(args[1], IClickListener):
                 caption, listener = args
-                self.__init__(caption)
+                Button.__init__(self, caption)
                 self.addListener(listener)
             elif isinstance(args[1], IProperty):
                 caption, dataSource = args
@@ -133,7 +133,7 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
                 self.setSwitchMode(True)
         elif nargs == 3:
             caption, target, methodName = args
-            self.__init__(caption)
+            Button.__init__(self, caption)
             self.addListener(self.ClickEvent, target, methodName)
         else:
             raise ValueError, 'too many arguments'
@@ -368,7 +368,6 @@ class ClickShortcut(ShortcutListener):
     """A {@link ShortcutListener} specifically made to define a keyboard
     shortcut that invokes a click on the given button.
     """
-    button = None
 
     def __init__(self, *args):
         """Creates a keyboard shortcut for clicking the given button using
@@ -402,15 +401,15 @@ class ClickShortcut(ShortcutListener):
         if nargs == 2:
             if isinstance(args[1], int):
                 button, keyCode = args
-                self.__init__(button, keyCode, None)
+                ClickShortcut.__init__(self, button, keyCode, None)
             else:
                 button, shorthandCaption = args
-                super(ClickShortcut, self)(shorthandCaption)
+                super(ClickShortcut, self).__init__(shorthandCaption)
                 self.button = button
         elif nargs >= 3:
             button, keyCode = args[:2]
             modifiers = args[2:]
-            super(ClickShortcut, self)(None, keyCode, modifiers)
+            super(ClickShortcut, self).__init__(None, keyCode, modifiers)
             self.button = button
         else:
             raise ValueError, 'too few arguments'
@@ -444,7 +443,7 @@ class ClickEvent(ComponentEvent):
         @param details
                    Details about the mouse click
         """
-        super(ClickEvent, self)(source)
+        super(ClickEvent, self).__init__(source)
         self._details = details
 
 

@@ -383,4 +383,4 @@ class ISplitterClickListener(IComponentEventListener):
 class SplitterClickEvent(MouseClickEvent):
 
     def __init__(self, source, mouseEventDetails):
-        super(SplitterClickEvent, self)(source, mouseEventDetails)
+        super(SplitterClickEvent, self).__init__(source, mouseEventDetails)

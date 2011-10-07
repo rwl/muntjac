@@ -62,12 +62,12 @@ class PasswordField(AbstractTextField):
                 self.setPropertyDataSource(dataSource)
             else:
                 caption, = args
-                self.__init__()
+                PasswordField.__init__(self)
                 self.setCaption(caption)
         elif nargs == 2:
             if isinstance(args[1], IProperty):
                 caption, dataSource = args
-                self.__init__(dataSource)
+                PasswordField.__init__(self, dataSource)
                 self.setCaption(caption)
             else:
                 caption, value = args

@@ -1405,7 +1405,7 @@ class AbstractSelectTargetDetails(TargetDetailsImpl):
         """Constructor that automatically converts itemIdOver key to
         corresponding item Id
         """
-        super(AbstractSelectTargetDetails, self)(rawVariables, select)
+        super(AbstractSelectTargetDetails, self).__init__(rawVariables, select)
 
         # The item id over which the drag event happened.
         self.idOver = None
@@ -1540,7 +1540,7 @@ class TargetItemIs(AbstractItemSetCriterion):
         @param itemId
                    the identifier(s) that are valid drop locations
         """
-        super(TargetItemIs, self)(select, itemId)
+        super(TargetItemIs, self).__init__(select, itemId)
 
 
     def accept(self, dragEvent):
@@ -1563,7 +1563,7 @@ class AcceptItem(AbstractItemSetCriterion):
         @param itemId
                    the item identifier(s) of the select that are accepted
         """
-        super(AcceptItem, self)(select, itemId)
+        super(AcceptItem, self).__init__(select, itemId)
 
 
     def accept(self, dragEvent):

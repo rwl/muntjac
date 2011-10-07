@@ -35,21 +35,21 @@ class PopupDateField(DateField):
 
         nargs = len(args)
         if nargs == 0:
-            super(PopupDateField, self)()
+            super(PopupDateField, self).__init__()
         elif nargs == 1:
             if isinstance(args[0], IProperty):
                 dataSource, = args
-                super(PopupDateField, self)(dataSource)
+                super(PopupDateField, self).__init__(dataSource)
             else:
                 caption, = args
-                super(PopupDateField, self)(caption)
+                super(PopupDateField, self).__init__(caption)
         elif nargs == 2:
             if isinstance(args[1], IProperty):
                 caption, dataSource = args
-                super(PopupDateField, self)(caption, dataSource)
+                super(PopupDateField, self).__init__(caption, dataSource)
             else:
                 caption, value = args
-                super(PopupDateField, self)(caption, value)
+                super(PopupDateField, self).__init__(caption, value)
         else:
             raise ValueError, 'too many arguments'
 
