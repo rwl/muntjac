@@ -24,10 +24,6 @@ except ImportError, e:
 from muntjac.data.item import IItem
 from muntjac.ui.table_field_factory import ITableFieldFactory
 from muntjac.ui.form_field_factory import IFormFieldFactory
-from muntjac.ui.date_field import DateField
-from muntjac.ui.text_field import TextField
-from muntjac.ui.check_box import CheckBox
-from muntjac.ui.form import Form
 
 
 class DefaultFieldFactory(IFormFieldFactory, ITableFieldFactory):
@@ -124,6 +120,11 @@ class DefaultFieldFactory(IFormFieldFactory, ITableFieldFactory):
                    the type of the property
         @return the most suitable generic {@link Field} for given type
         """
+        from muntjac.ui.date_field import DateField  # FIXME: circular import
+        from muntjac.ui.text_field import TextField
+        from muntjac.ui.check_box import CheckBox
+        from muntjac.ui.form import Form
+
         # Null typed properties can not be edited
         if typ is None:
             return None

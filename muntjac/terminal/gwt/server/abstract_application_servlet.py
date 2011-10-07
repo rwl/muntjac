@@ -34,7 +34,6 @@ from muntjac.application import Application
 from muntjac.terminal.gwt.server.constants import Constants
 from muntjac.terminal.gwt.server.json_paint_target import JsonPaintTarget
 from muntjac.terminal.gwt.server.exceptions import ServletException
-from muntjac.terminal.gwt.server.application_servlet import ApplicationServlet
 
 from muntjac.terminal.uri_handler import IErrorEvent as URIHandlerErrorEvent
 from muntjac.terminal.terminal import IErrorEvent as TerminalErrorEvent
@@ -50,9 +49,6 @@ from muntjac.terminal.gwt.client.application_connection import \
 
 from muntjac.terminal.gwt.server.web_application_context import \
     WebApplicationContext
-
-from muntjac.terminal.gwt.server.communication_manager import \
-    CommunicationManager
 
 from muntjac.terminal.gwt.server.http_servlet_request_listener import \
     IHttpServletRequestListener
@@ -131,7 +127,7 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
     #
     # It is set to "true" by the {@link ApplicationPortlet} (Portlet 1.0) and
     # read by {@link AbstractApplicationServlet}.
-    REQUEST_FRAGMENT = clsname(ApplicationServlet) + '.fragment'
+    REQUEST_FRAGMENT = ''#clsname(ApplicationServlet) + '.fragment'
 
     # This request attribute forces widgetsets to be loaded from under the
     # specified base path; e.g shared widgetset for all portlets in a portal.
@@ -139,8 +135,7 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
     # It is set by the {@link ApplicationPortlet} (Portlet 1.0) based on
     # {@link Constants.PORTAL_PARAMETER_VAADIN_RESOURCE_PATH} and read by
     # {@link AbstractApplicationServlet}.
-    REQUEST_VAADIN_STATIC_FILE_PATH = clsname(ApplicationServlet) \
-            + '.widgetsetPath'
+    REQUEST_VAADIN_STATIC_FILE_PATH = ''#clsname(ApplicationServlet) + '.widgetsetPath'
 
     # This request attribute forces widgetset used; e.g for portlets that can
     # not have different widgetsets.
@@ -148,7 +143,7 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
     # It is set by the {@link ApplicationPortlet} (Portlet 1.0) based on
     # {@link ApplicationPortlet.PORTLET_PARAMETER_WIDGETSET} and read by
     # {@link AbstractApplicationServlet}.
-    REQUEST_WIDGETSET = clsname(ApplicationServlet) + '.widgetset'
+    REQUEST_WIDGETSET = ''#clsname(ApplicationServlet) + '.widgetset'
 
     # This request attribute indicates the shared widgetset (e.g. portal-wide
     # default widgetset).
@@ -156,8 +151,7 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
     # It is set by the {@link ApplicationPortlet} (Portlet 1.0) based on
     # {@link Constants.PORTAL_PARAMETER_VAADIN_WIDGETSET} and read by
     # {@link AbstractApplicationServlet}.
-    REQUEST_SHARED_WIDGETSET = clsname(ApplicationServlet) \
-            + '.sharedWidgetset'
+    REQUEST_SHARED_WIDGETSET = ''#clsname(ApplicationServlet) + '.sharedWidgetset'
 
     # If set, do not load the default theme but assume that loading it is
     # handled e.g. by ApplicationPortlet.
@@ -165,7 +159,7 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
     # It is set by the {@link ApplicationPortlet} (Portlet 1.0) based on
     # {@link Constants.PORTAL_PARAMETER_VAADIN_THEME} and read by
     # {@link AbstractApplicationServlet}.
-    REQUEST_DEFAULT_THEME = clsname(ApplicationServlet) + '.defaultThemeUri'
+    REQUEST_DEFAULT_THEME = ''#clsname(ApplicationServlet) + '.defaultThemeUri'
 
     # This request attribute is used to add styles to the main element. E.g
     # "height:500px" generates a style="height:500px" to the main element,
@@ -174,7 +168,7 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
     # It is typically set by the {@link ApplicationPortlet} (Portlet 1.0) based
     # on {@link ApplicationPortlet.PORTLET_PARAMETER_STYLE} and read by
     # {@link AbstractApplicationServlet}.
-    REQUEST_APPSTYLE = clsname(ApplicationServlet) + '.style'
+    REQUEST_APPSTYLE = ''#clsname(ApplicationServlet) + '.style'
 
     UPLOAD_URL_PREFIX = 'APP/UPLOAD/'
 
@@ -463,11 +457,11 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
 
         except SessionExpiredException, e:
             # Session has expired, notify user
-            self._handleServiceSessionExpired(request, response)
+            self.handleServiceSessionExpired(request, response)
         #except GeneralSecurityException, e:
         #    self._handleServiceSecurityException(request, response)
-        except Exception, e:
-            self._handleServiceException(request, response, application, e)
+#        except Exception, e:
+#            self.handleServiceException(request, response, application, e)
         finally:
             # Notifies transaction end
             try:
@@ -818,7 +812,7 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
                 raise ServletException(e)
         else:
             # Re-throw other exceptions
-            raise ServletException(e)
+            raise ServletException, str(e)
 
 
     def getThemeForWindow(self, request, window):
@@ -1135,10 +1129,10 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
         elif self.isApplicationRequest(request):
             return RequestType.APPLICATION_RESOURCE
 
-        elif request.getHeader('FileId') is not None:
+        elif request.field('FileId', None) is not None:  # FIXME: getHeader
             return RequestType.FILE_UPLOAD
 
-        return self.RequestType.OTHER
+        return RequestType.OTHER
 
 
     def isApplicationRequest(self, request):
@@ -1151,7 +1145,7 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
 
 
     def isStaticResourceRequest(self, request):
-        pathInfo = request.getPathInfo()
+        pathInfo = self.getPathInfo(request)
 
         if (pathInfo is None) or (len(pathInfo) <= 10):
             return False
@@ -1936,8 +1930,8 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
 
 
     def isRepaintAll(self, request):
-        return request.field(self.URL_PARAMETER_REPAINT_ALL) is not None \
-                and request.field(self.URL_PARAMETER_REPAINT_ALL) == '1'
+        return (request.field(self.URL_PARAMETER_REPAINT_ALL, None) is not None
+                and request.field(self.URL_PARAMETER_REPAINT_ALL, '') == '1')
 
 
     def closeApplication(self, application, session):
@@ -1981,6 +1975,10 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
         @return
         """
         raise DeprecationWarning
+
+        from muntjac.terminal.gwt.server.communication_manager import \
+            CommunicationManager
+
         return CommunicationManager(application)
 
 

@@ -14,24 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#from muntjac.ui.abstract_component import IComponentErrorEvent
 
+class VView(object):
 
-class ChangeVariablesErrorEvent(object):#IComponentErrorEvent):
-
-    def __init__(self, component, throwable, variableChanges):
-        self._component = component
-        self._throwable = throwable
-        self._variableChanges = variableChanges
-
-
-    def getThrowable(self):
-        return self._throwable
-
-
-    def getComponent(self):
-        return self._component
-
-
-    def getVariableChanges(self):
-        return self._variableChanges
+    RESIZE_LAZY = "rL"

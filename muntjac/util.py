@@ -5,7 +5,6 @@ import webbrowser
 
 from wsgiref.simple_server import make_server
 
-from muntjac.terminal.gwt.server.application_servlet import ApplicationServlet
 
 
 def run_app(applicationClass, host='127.0.0.1', port=8080, nogui=False):
@@ -13,6 +12,7 @@ def run_app(applicationClass, host='127.0.0.1', port=8080, nogui=False):
     logging.basicConfig(stream=sys.stdout, level=logging.DEBUG,
             format="%(levelname)s: %(message)s")
 
+    from muntjac.terminal.gwt.server.application_servlet import ApplicationServlet
     wsgi_app = ApplicationServlet(applicationClass, debug=True)
 
     if nogui == False:
@@ -21,7 +21,9 @@ def run_app(applicationClass, host='127.0.0.1', port=8080, nogui=False):
     httpd = make_server(host, port, wsgi_app)
 
     # Respond to requests until process is killed
-    httpd.serve_forever()
+    #httpd.serve_forever()
+    # Serve one request, then exit
+    httpd.handle_request()
 
 
 def loadClass(className):

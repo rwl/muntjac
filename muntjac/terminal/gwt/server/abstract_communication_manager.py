@@ -47,9 +47,6 @@ from muntjac.terminal.gwt.server.streaming_events import \
 from muntjac.terminal.gwt.server.drag_and_drop_service import \
     DragAndDropService
 
-from muntjac.terminal.gwt.server.component_size_validator import \
-    ComponentSizeValidator
-
 from muntjac.terminal.gwt.client.application_connection import \
     ApplicationConnection
 
@@ -659,6 +656,11 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                 self.paintablePainted(p)
 
                 if analyzeLayouts:
+
+                    # FIXME: circular import
+                    from muntjac.terminal.gwt.server.component_size_validator \
+                        import ComponentSizeValidator
+
                     w = p
                     invalidComponentRelativeSizes = \
                             ComponentSizeValidator.\

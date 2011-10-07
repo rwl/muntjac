@@ -22,7 +22,7 @@ try:
 except ImportError, e:
     from StringIO import StringIO
 
-from muntjac.terminal.ErrorMessage import IErrorMessage
+from muntjac.terminal.error_message import IErrorMessage
 
 
 class SystemErr(RuntimeError, IErrorMessage):

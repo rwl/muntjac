@@ -14,13 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.ui.panel import Panel
-from muntjac.ui.form import Form
-from muntjac.ui.table import Table
 from muntjac.ui.abstract_component import AbstractComponent
-
-from muntjac.terminal.gwt.server.component_size_validator import \
-    ComponentSizeValidator
 
 from muntjac.ui.component_container import \
     ComponentAttachEvent, IComponentAttachListener, IComponentContainer, \
@@ -192,6 +186,10 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
 
 
     def setWidth(self, width, unit):
+
+        from muntjac.terminal.gwt.server.component_size_validator import \
+            ComponentSizeValidator  # FIXME: circular import
+
         # child tree repaints may be needed, due to our fall back support
         # for invalid relative sizes
         dirtyChildren = None
@@ -247,6 +245,10 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
     def getInvalidSizedChildren(self, vertical):
         components = None
 
+        from muntjac.ui.panel import Panel  # FIXME: circular import
+        from muntjac.terminal.gwt.server.component_size_validator import \
+            ComponentSizeValidator  # FIXME: circular import
+
         if isinstance(self, Panel):
             p = self
             content = p.getContent()
@@ -280,6 +282,10 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
 
 
     def setHeight(self, height, unit):
+
+        from muntjac.terminal.gwt.server.component_size_validator import \
+            ComponentSizeValidator  # FIXME: circular import
+
         # child tree repaints may be needed, due to our fall back support
         # for invalid relative sizes
         dirtyChildren = None
@@ -309,6 +315,9 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
 
     def requestRepaintAll(self):
         self.requestRepaint()
+
+        from muntjac.ui.form import Form  # FIXME: circular import
+        from muntjac.ui.table import Table
 
         for c in self.getComponentIterator():
             if isinstance(c, Form):

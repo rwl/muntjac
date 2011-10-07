@@ -32,7 +32,7 @@ class ApplicationServlet(AbstractApplicationServlet):
     def __init__(self, applicationClass, *args, **kw_args):
         super(ApplicationServlet, self).__init__(*args, **kw_args)
 
-        self.applicationClass = applicationClass
+        self._applicationClass = applicationClass
 
 
 #    def awake(self, transaction):

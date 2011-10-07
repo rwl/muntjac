@@ -38,7 +38,7 @@ class AlignmentUtils(object):
     @deprecated replaced by {@link Alignment}.
     """
 
-    raise DeprecationWarning, 'AlignmentUtils replaced by Alignment'
+#    raise DeprecationWarning, 'AlignmentUtils replaced by Alignment'
 
     _horizontalMask = (IAlignmentHandler.ALIGNMENT_LEFT
                 | IAlignmentHandler.ALIGNMENT_HORIZONTAL_CENTER
@@ -54,14 +54,6 @@ class AlignmentUtils(object):
     def addMapping(cls, alignment, *values):
         for s in values:
             cls._alignmentStrings[s] = alignment
-
-
-    addMapping(IAlignmentHandler.ALIGNMENT_TOP, 't', 'top')
-    addMapping(IAlignmentHandler.ALIGNMENT_BOTTOM, 'b', 'bottom')
-    addMapping(IAlignmentHandler.ALIGNMENT_VERTICAL_CENTER, 'm', 'middle')
-    addMapping(IAlignmentHandler.ALIGNMENT_LEFT, 'l', 'left')
-    addMapping(IAlignmentHandler.ALIGNMENT_RIGHT, 'r', 'right')
-    addMapping(IAlignmentHandler.ALIGNMENT_HORIZONTAL_CENTER, 'c', 'center')
 
 
     @classmethod
@@ -147,3 +139,11 @@ class AlignmentUtils(object):
             alignment = horizontal | parsed
 
         return alignment
+
+
+AlignmentUtils.addMapping(IAlignmentHandler.ALIGNMENT_TOP, 't', 'top')
+AlignmentUtils.addMapping(IAlignmentHandler.ALIGNMENT_BOTTOM, 'b', 'bottom')
+AlignmentUtils.addMapping(IAlignmentHandler.ALIGNMENT_VERTICAL_CENTER, 'm', 'middle')
+AlignmentUtils.addMapping(IAlignmentHandler.ALIGNMENT_LEFT, 'l', 'left')
+AlignmentUtils.addMapping(IAlignmentHandler.ALIGNMENT_RIGHT, 'r', 'right')
+AlignmentUtils.addMapping(IAlignmentHandler.ALIGNMENT_HORIZONTAL_CENTER, 'c', 'center')

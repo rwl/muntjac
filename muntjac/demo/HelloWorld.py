@@ -1,6 +1,7 @@
 
-from muntjac import Application
-from muntjac.ui import Window, Label
+from muntjac.application import Application
+from muntjac.ui.window import Window
+from muntjac.ui.label import Label
 
 
 class HelloWorld(Application):
@@ -19,4 +20,4 @@ class HelloWorld(Application):
 
 if __name__ == '__main__':
     from muntjac.util import run_app
-    run_app(HelloWorld)
+    run_app(HelloWorld, nogui=True)

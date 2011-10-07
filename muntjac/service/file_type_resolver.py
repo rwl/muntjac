@@ -193,19 +193,6 @@ class FileTypeResolver(object):
     # MIME type to Icon mapping.
     _MIMEToIconMap = dict()
 
-    # Initialize extension to MIME map
-    lines = _initialExtToMIMEMap.split(',')
-    for line in lines:
-        exts = line.split()
-        typ = exts[0]
-        for ext in exts[1:]:
-            addExtension(ext, type)
-
-    # Initialize Icons
-    folder = ThemeResource('../runo/icons/16/folder.png')
-    addIcon('inode/drive', folder)
-    addIcon('inode/directory', folder)
-
 
     @classmethod
     def getMIMEType(cls, file_or_filename):
@@ -337,3 +324,17 @@ class FileTypeResolver(object):
         @return unmodifiable map containing the current mime-type to icon mapping
         """
         return dict(cls._MIMEToIconMap)
+
+
+# Initialize extension to MIME map
+lines = FileTypeResolver._initialExtToMIMEMap.split(',')
+for line in lines:
+    exts = line.split()
+    typ = exts[0]
+    for ext in exts[1:]:
+        FileTypeResolver.addExtension(ext, type)
+
+# Initialize Icons
+folder = ThemeResource('../runo/icons/16/folder.png')
+FileTypeResolver.addIcon('inode/drive', folder)
+FileTypeResolver.addIcon('inode/directory', folder)

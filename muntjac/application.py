@@ -30,6 +30,9 @@ from muntjac.terminal.gwt.server.change_variables_error_event import ChangeVaria
 from muntjac.ui.abstract_component import AbstractComponent
 
 
+logger = logging.getLogger(__name__)
+
+
 class SystemMessages(object):
     """Contains the system messages used to notify the user about various
     critical situations that can occur.
@@ -596,7 +599,6 @@ class Application(IUriHandler, ITerminal, IErrorListener):
     @version @VERSION@
     @since 3.0
     """
-    _logger = logging.getLogger(Application.getName())
 
     # The default SystemMessages (read-only). Change by overriding
     # getSystemMessages() and returning CustomizedSystemMessages
@@ -1384,7 +1386,7 @@ class Application(IUriHandler, ITerminal, IErrorListener):
         t = event.getThrowable()
         if isinstance(t, IOError):  #SocketException
             # Most likely client browser closed socket
-            self._logger.info('SocketException in CommunicationManager.' \
+            logger.info('SocketException in CommunicationManager.' \
                               ' Most likely client (browser) closed socket.')
             return
 
@@ -1405,7 +1407,7 @@ class Application(IUriHandler, ITerminal, IErrorListener):
             else:
                 owner.setComponentError( SystemErr(t) )
         # also print the error on console
-        self._logger.critical('ITerminal error: ' + str(t))
+        logger.critical('ITerminal error: ' + str(t))
 
 
     def getContext(self):

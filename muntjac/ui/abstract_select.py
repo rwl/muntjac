@@ -1589,12 +1589,12 @@ class VerticalLocationIs(TargetDetailIs):
     implementations.
     """
 
-    VerticalLocationIs.TOP = None
-    VerticalLocationIs.BOTTOM = None
-    VerticalLocationIs.MIDDLE = None
+    TOP = None
+    BOTTOM = None
+    MIDDLE = None
 
     def __init__(self, l):
-        super(VerticalLocationIs, self)('detail', l)
+        super(VerticalLocationIs, self).__init__('detail', l)
 
 VerticalLocationIs.TOP    = VerticalLocationIs(VerticalDropLocation.TOP)
 VerticalLocationIs.BOTTOM = VerticalLocationIs(VerticalDropLocation.BOTTOM)

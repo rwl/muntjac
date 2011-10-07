@@ -25,9 +25,6 @@ from muntjac.util import fullname
 from muntjac.ui.component import \
     IComponent, IListener, IFocusable, Event as ComponentEvent
 
-from muntjac.terminal.gwt.server.component_size_validator import \
-    ComponentSizeValidator
-
 
 class AbstractComponent(IComponent, IMethodEventSource):
     """An abstract class that defines default implementation for the
@@ -556,6 +553,9 @@ class AbstractComponent(IComponent, IMethodEventSource):
 
             # Only paint content of visible components.
             if self.isVisible():
+                from muntjac.terminal.gwt.server.component_size_validator \
+                    import ComponentSizeValidator  # FIXME: circular import
+
                 if (self.getHeight() >= 0
                     and (self.getHeightUnits() != self.UNITS_PERCENTAGE
                     or ComponentSizeValidator.parentCanDefineHeight(self))):

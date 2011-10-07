@@ -865,7 +865,7 @@ class IEditor(IViewer):
     does not restrict the class from editing the IContainer contents
     internally.
     """
-    raise NotImplementedError
+    pass
 
 
 class IItemSetChangeEvent(object):

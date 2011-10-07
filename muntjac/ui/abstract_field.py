@@ -17,7 +17,6 @@
 from muntjac.event.shortcut_listener import ShortcutListener
 from muntjac.event.action_manager import ActionManager
 
-from muntjac.ui.default_field_factory import DefaultFieldFactory
 from muntjac.ui.abstract_component import AbstractComponent
 from muntjac.ui.component import Event as ComponentEvent
 
@@ -772,6 +771,10 @@ class AbstractField(AbstractComponent, field.IField,
                 instead
         """
         raise DeprecationWarning, 'use createFieldByPropertyType() instead'
+
+        # FIXME: circular import
+        from muntjac.ui.default_field_factory import DefaultFieldFactory
+
         return DefaultFieldFactory.createFieldByPropertyType(propertyType)
 
 

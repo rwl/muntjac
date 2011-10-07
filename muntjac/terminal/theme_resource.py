@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.service.file_type_resolver import FileTypeResolver
 from muntjac.terminal.resource import IResource
 
 
@@ -88,4 +87,8 @@ class ThemeResource(IResource):
 
     def getMIMEType(self):
         """@see com.vaadin.terminal.IResource#getMIMEType()"""
+
+        # FIXME: circular import
+        from muntjac.service.file_type_resolver import FileTypeResolver
+
         return FileTypeResolver.getMIMEType(self.getResourceId())

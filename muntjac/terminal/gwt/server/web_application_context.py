@@ -34,6 +34,7 @@ class WebApplicationContext(AbstractWebApplicationContext):
 
     def __init__(self):
         """Creates a new Web Application Context."""
+        super(WebApplicationContext, self).__init__()
 
         self.session = None
         self._reinitializingSession = False
@@ -120,7 +121,7 @@ class WebApplicationContext(AbstractWebApplicationContext):
                    the HTTP session.
         @return the application context for HttpSession.
         """
-        cx = session.value( clsname(WebApplicationContext) )
+        cx = session.value( clsname(WebApplicationContext), None )
         if cx is None:
             cx = WebApplicationContext()
             session.setValue(clsname(WebApplicationContext), cx)

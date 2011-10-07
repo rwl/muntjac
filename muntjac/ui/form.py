@@ -32,13 +32,12 @@ from muntjac.ui.field_factory import IFieldFactory
 from muntjac.ui.form_layout import FormLayout
 from muntjac.ui.horizontal_layout import HorizontalLayout
 from muntjac.ui.select import Select
-from muntjac.event.action import Action, INotifier
+from muntjac.event.action import INotifier
 
 from muntjac.terminal.composite_error_message import CompositeErrorMessage
 
 
-class Form(AbstractField, IItem, IEditor, IBuffered, IItem, IValidatable, Action,
-           INotifier):
+class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
     """Form component provides easy way of creating and managing sets fields.
 
     <code>Form</code> is a container for fields implementing {@link IField}

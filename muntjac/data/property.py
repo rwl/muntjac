@@ -224,7 +224,7 @@ class IEditor(IViewer):
     @version @VERSION@
     @since 3.0
     """
-    raise NotImplementedError
+    pass
 
 
 class ValueChangeEvent(object):

@@ -19,10 +19,10 @@ from muntjac.data import property
 from muntjac.data.buffered import IBufferedValidatable
 
 from muntjac.ui.component import \
-    IComponent, IFocusable, Event as ComponentEvent
+    IFocusable, Event as ComponentEvent
 
 
-class IField(IComponent, IBufferedValidatable, property.IValueChangeNotifier,
+class IField(IBufferedValidatable, property.IValueChangeNotifier, # IComponent,
             property.IValueChangeListener, property.IEditor, IFocusable):
     """@author IT Mill Ltd.
     @author Richard Lincoln

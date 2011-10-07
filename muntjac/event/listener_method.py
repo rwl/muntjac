@@ -17,6 +17,7 @@
 import logging
 
 from muntjac.event import IEventListener
+from muntjac.util import getSuperClass
 
 
 logger = logging.getLogger(__name__)
@@ -77,19 +78,19 @@ class ListenerMethod(IEventListener):
 
 
     @classmethod
-    def findHighestMethod(cls, cls, method, paramTypes):
-        ifaces = cls.getInterfaces()
+    def findHighestMethod(cls, klass, method, paramTypes):
+        ifaces = klass.getInterfaces()
         for i in range(len(ifaces)):
             ifaceMethod = cls.findHighestMethod(ifaces[i], method, paramTypes)
             if ifaceMethod is not None:
                 return ifaceMethod
 
-        if cls.getSuperclass() is not None:
-            parentMethod = cls.findHighestMethod(cls.getSuperclass(), method, paramTypes)
+        if getSuperClass(klass) is not None:
+            parentMethod = cls.findHighestMethod(getSuperClass(klass), method, paramTypes)
             if parentMethod is not None:
                 return parentMethod
 
-        methods = cls.getMethods()
+        methods = klass.getMethods()
         for i in range(len(methods)):
             # we ignore parameter types for now - you need to add this
             if methods[i].getName() == method:

@@ -17,14 +17,14 @@
 from muntjac.data.util.default_item_sorter import DefaultItemSorter
 
 from muntjac.data.container import \
-    IContainer, IIndexed, IItemSetChangeNotifier, ISortable
+    IIndexed, IItemSetChangeNotifier, ISortable
 
 from muntjac.data.util.abstract_container import AbstractContainer
 from muntjac.data.util.list_set import ListSet
 
 
 class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
-            IContainer, IIndexed):
+            IIndexed):  #IContainer,
     """Abstract {@link IContainer} class that handles common functionality for
     in-memory containers. Concrete in-memory container classes can either inherit
     this class, inherit {@link AbstractContainer}, or implement the

@@ -17,13 +17,12 @@
 from urlparse import urljoin
 
 from muntjac.event.shortcut_listener import ShortcutListener
-from muntjac.terminal.URIHandler import IUriHandler
-from muntjac.terminal.gwt.client.ui.VView import VView
-from muntjac.terminal.ParameterHandler import IParameterHandler
-from muntjac.terminal.Sizeable import ISizeable
-from muntjac.terminal.gwt.client.ui.VWindow import VWindow
+from muntjac.terminal.uri_handler import IUriHandler
+from muntjac.terminal.gwt.client.ui.v_view import VView
+from muntjac.terminal.parameter_handler import IParameterHandler
+from muntjac.terminal.sizeable import ISizeable
 
-from muntjac.ui.ClientWidget import LoadStyle
+from muntjac.ui.client_widget import LoadStyle
 from muntjac.ui.panel import Panel
 from muntjac.ui.component import Event as ComponentEvent
 from muntjac.ui.abstract_component import AbstractComponent

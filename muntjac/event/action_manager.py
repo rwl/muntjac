@@ -20,7 +20,7 @@ from muntjac.terminal.key_mapper import KeyMapper
 from muntjac.event.shortcut_action import ShortcutAction
 
 
-class ActionManager(action.IContainer, action.IHandler, action.INotifier):
+class ActionManager(action.IHandler, action.INotifier):  #action.IContainer
     """Notes:
 
     Empties the keymapper for each repaint to avoid leaks; can cause problems in

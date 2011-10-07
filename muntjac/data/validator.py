@@ -177,7 +177,7 @@ class InvalidValueException(RuntimeError, IErrorMessage):
         return self._causes
 
 
-class EmptyValueException(IValidator.InvalidValueException):
+class EmptyValueException(InvalidValueException):
     """A specific type of {@link InvalidValueException} that indicates that
     validation failed because the value was empty. What empty means is up to
     the thrower.

@@ -136,14 +136,14 @@ class IStreamingProgressEvent(IStreamingEvent):
     """Event passed to {@link #onProgress(IStreamingProgressEvent)} method
     during the streaming progresses.
     """
-    raise NotImplementedError
+    pass
 
 
 class IStreamingEndEvent(IStreamingEvent):
     """Event passed to {@link #uploadFinished(IStreamingEndEvent)} method
     the contents have been streamed to IStreamVariable successfully.
     """
-    raise NotImplementedError
+    pass
 
 
 class IStreamingErrorEvent(IStreamingEvent):

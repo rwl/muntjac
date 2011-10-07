@@ -107,7 +107,7 @@ class IEditor(IViewer):
     Note : Not implementing the <code>IItem.IEditor</code> interface does not
     restrict the class from editing the contents of an internally.
     """
-    raise NotImplementedError
+    pass
 
 
 class IPropertySetChangeEvent(object):
