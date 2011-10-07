@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from warnings import warn
+
 from muntjac.ui.ordered_layout import OrderedLayout
 
 
@@ -33,7 +35,7 @@ class ExpandLayout(OrderedLayout):
     """
 
     def __init__(self, orientation=None):
-        raise DeprecationWarning, 'use OrderedLayout'
+        warn('use OrderedLayout', DeprecationWarning)
 
         self._expanded = None
 

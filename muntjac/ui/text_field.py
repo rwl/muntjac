@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from warnings import warn
+
 from muntjac.ui.abstract_text_field import AbstractTextField
 from muntjac.data.property import IProperty
 
@@ -115,7 +117,7 @@ class TextField(AbstractTextField):
         @deprecated Starting from 6.5 use {@link PasswordField} instead for
                     secret text input.
         """
-        raise DeprecationWarning, 'use PasswordField instead'
+        warn('use PasswordField instead', DeprecationWarning)
 
         return self._secret
 
@@ -130,7 +132,7 @@ class TextField(AbstractTextField):
         @deprecated Starting from 6.5 use {@link PasswordField} instead for
                     secret text input.
         """
-        raise DeprecationWarning, 'use PasswordField instead'
+        warn('use PasswordField instead', DeprecationWarning)
 
         if self._secret != secret:
             self._secret = secret
@@ -163,7 +165,7 @@ class TextField(AbstractTextField):
         @deprecated Starting from 6.5 use {@link TextArea} for a multi-line
                     text input.
         """
-        raise DeprecationWarning, 'use TextArea for a multi-line text input'
+        warn('use TextArea for a multi-line text input', DeprecationWarning)
 
         return self._rows
 
@@ -177,7 +179,7 @@ class TextField(AbstractTextField):
         @deprecated Starting from 6.5 use {@link TextArea} for a multi-line
                     text input.
         """
-        raise DeprecationWarning, 'use TextArea for a multi-line text input'
+        warn('use TextArea for a multi-line text input', DeprecationWarning)
 
         if rows < 0:
             rows = 0
@@ -195,7 +197,7 @@ class TextField(AbstractTextField):
         @deprecated Starting from 6.5 use {@link TextArea} for a multi-line
                     text input.
         """
-        raise DeprecationWarning, 'use TextArea for a multi-line text input'
+        warn('use TextArea for a multi-line text input', DeprecationWarning)
         return self._wordwrap
 
 
@@ -209,7 +211,7 @@ class TextField(AbstractTextField):
         @deprecated Starting from 6.5 use {@link TextArea} for a multi-line
                     text input.
         """
-        raise DeprecationWarning, 'use TextArea for a multi-line text input'
+        warn('use TextArea for a multi-line text input', DeprecationWarning)
         if self._wordwrap != wordwrap:
             self._wordwrap = wordwrap
             self.requestRepaint()

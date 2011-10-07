@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from warnings import warn
+
 from muntjac.event.shortcut_listener import ShortcutListener
 from muntjac.event.action_manager import ActionManager
 
@@ -770,7 +772,7 @@ class AbstractField(AbstractComponent, field.IField,
                 {@link DefaultFieldFactory#createFieldByPropertyType(Class)}
                 instead
         """
-        raise DeprecationWarning, 'use createFieldByPropertyType() instead'
+        warn('use createFieldByPropertyType() instead', DeprecationWarning)
 
         # FIXME: circular import
         from muntjac.ui.default_field_factory import DefaultFieldFactory

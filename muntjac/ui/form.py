@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from warnings import warn
+
 from muntjac.data.item import IEditor, IItem
 from muntjac.data.buffered import IBuffered, SourceException
 from muntjac.data.validatable import IValidatable
@@ -838,7 +840,7 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
         @see FormFieldFactory
         @deprecated use {@link #setFormFieldFactory()} instead
         """
-        raise DeprecationWarning, 'use setFormFieldFactory() instead'
+        warn('use setFormFieldFactory() instead', DeprecationWarning)
         self._fieldFactory = fieldFactory
 
 
@@ -873,7 +875,7 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
                     FormFieldFactory using
                     {@link #setFormFieldFactory(FormFieldFactory)}.
         """
-        raise DeprecationWarning, 'Use getFormFieldFactory() instead'
+        warn('Use getFormFieldFactory() instead', DeprecationWarning)
 
         if isinstance(self._fieldFactory, IFieldFactory):
             return self._fieldFactory

@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from warnings import warn
+
 from muntjac.event import field_events
 from muntjac.data.util.filter.simple_string_filter import SimpleStringFilter
 from muntjac.data.container import IContainer, IFilterable, IIndexed
@@ -641,7 +643,7 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
         @param columns
                    the number of columns to set.
         """
-        raise DeprecationWarning
+        warn('deprecated', DeprecationWarning)
 
         if columns < 0:
             columns = 0
@@ -655,7 +657,7 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
         """@deprecated see setter function
         @return
         """
-        raise DeprecationWarning, 'see setter function'
+        warn('see setter function', DeprecationWarning)
         return self._columns
 
 

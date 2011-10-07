@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from warnings import warn
+
 from muntjac.ui.abstract_ordered_layout import AbstractOrderedLayout
 
 
@@ -55,7 +57,7 @@ class OrderedLayout(AbstractOrderedLayout):
 
         @deprecated Use VerticalLayout/HorizontalLayout instead.
         """
-        raise DeprecationWarning, 'use VerticalLayout/HorizontalLayout instead'
+        warn('use VerticalLayout/HorizontalLayout instead', DeprecationWarning)
 
         # Orientation of the layout.
         self._orientation = None

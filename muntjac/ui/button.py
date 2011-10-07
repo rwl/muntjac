@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from warnings import warn
+
 from muntjac.ui.abstract_field import AbstractField
 from muntjac.ui.component import Event as ComponentEvent
 from muntjac.event.shortcut_listener import ShortcutListener
@@ -215,7 +217,7 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
         @deprecated the {@link CheckBox} component should be used instead
                     of Button in switch mode
         """
-        raise DeprecationWarning, 'use CheckBox instead'
+        warn('use CheckBox instead', DeprecationWarning)
         return self._switchMode
 
 

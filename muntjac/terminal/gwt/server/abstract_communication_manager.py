@@ -19,6 +19,8 @@ import uuid
 import locale
 import logging
 
+from warnings import warn
+
 from sys import stderr
 from urlparse import urljoin
 
@@ -1627,7 +1629,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                     processing should be suppressed, null otherwise.
         @see com.vaadin.terminal.URIHandler
         """
-        raise DeprecationWarning
+        warn("deprecated", DeprecationWarning)
 
         uri = callback.getRequestPathInfo(request)
 

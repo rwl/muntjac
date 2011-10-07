@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from warnings import warn
+
 from muntjac.ui.abstract_component import AbstractComponent
 
 from muntjac.ui.component import \
@@ -471,7 +473,7 @@ class Upload(AbstractComponent, IComponent, IFocusable):
         @deprecated Use addListener(IProgressListener) instead.
         @param progressListener
         """
-        raise DeprecationWarning, 'use addListener() instead'
+        warn('use addListener() instead', DeprecationWarning)
 
         self.addListener(progressListener)
 
@@ -482,7 +484,7 @@ class Upload(AbstractComponent, IComponent, IFocusable):
         @deprecated Replaced with addListener/removeListener
         @return listener
         """
-        raise DeprecationWarning, 'replaced with addListener/removeListener'
+        warn('replaced with addListener/removeListener', DeprecationWarning)
 
         if (self._progressListeners is None
                 or len(self._progressListeners) == 0):

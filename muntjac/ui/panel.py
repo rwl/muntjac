@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from warnings import warn
+
 from muntjac.terminal.scrollable import IScrollable
 from muntjac.event.action_manager import ActionManager
 from muntjac.event import action
@@ -125,7 +127,7 @@ class Panel(AbstractComponentContainer, IScrollable,
         @deprecated A Panel can now contain a IComponentContainer which is not
                     necessarily a ILayout. Use {@link #getContent()} instead.
         """
-        raise DeprecationWarning, 'Use getContent() instead'
+        warn('Use getContent() instead', DeprecationWarning)
 
         if isinstance(self._content, ILayout):
             return self._content
@@ -303,7 +305,7 @@ class Panel(AbstractComponentContainer, IScrollable,
 
     def getScrollOffsetX(self):
         """@deprecated use {@link #getScrollLeft()} instead"""
-        raise DeprecationWarning, 'use getScrollLeft() instead'
+        warn('use getScrollLeft() instead', DeprecationWarning)
         return self.getScrollLeft()
 
 
@@ -313,7 +315,7 @@ class Panel(AbstractComponentContainer, IScrollable,
 
     def getScrollOffsetY(self):
         """@deprecated use {@link #getScrollTop()} instead"""
-        raise DeprecationWarning, 'use getScrollTop() instead'
+        warn('use getScrollTop() instead', DeprecationWarning)
         return self.getScrollTop()
 
 
@@ -338,7 +340,7 @@ class Panel(AbstractComponentContainer, IScrollable,
 
     def setScrollOffsetX(self, pixels):
         """@deprecated use setScrollLeft() method instead"""
-        raise DeprecationWarning, 'use setScrollLeft() method instead'
+        warn('use setScrollLeft() method instead', DeprecationWarning)
         self.setScrollLeft(pixels)
 
 
@@ -352,7 +354,7 @@ class Panel(AbstractComponentContainer, IScrollable,
 
     def setScrollOffsetY(self, pixels):
         """@deprecated use setScrollTop() method instead"""
-        raise DeprecationWarning, 'use setScrollTop() method instead'
+        warn('use setScrollTop() method instead', DeprecationWarning)
         self.setScrollTop(pixels)
 
 

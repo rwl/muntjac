@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from warnings import warn
+
 from muntjac.ui.default_field_factory import DefaultFieldFactory
 from muntjac.ui.field_factory import IFieldFactory
 from muntjac.data.property import IProperty
@@ -39,7 +41,7 @@ class BaseFieldFactory(IFieldFactory):
     """
 
     def __init__(self):
-        raise DeprecationWarning, 'use DefaultFieldFactory'
+        warn('use DefaultFieldFactory', DeprecationWarning)
 
 
     def createField(self, *args):

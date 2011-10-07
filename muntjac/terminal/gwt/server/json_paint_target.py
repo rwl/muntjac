@@ -16,6 +16,8 @@
 
 import logging
 
+from warnings import warn
+
 from Queue import LifoQueue
 from muntjac.util import getSuperClass
 from muntjac.util import clsname
@@ -539,7 +541,7 @@ class JsonPaintTarget(IPaintTarget):
 
 
     def paintReference(self, paintable, referenceName):
-        raise DeprecationWarning
+        warn("deprecated", DeprecationWarning)
         self.addAttribute(referenceName, paintable)
 
 

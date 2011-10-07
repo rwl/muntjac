@@ -17,6 +17,8 @@
 import logging
 import locale
 
+from warnings import warn
+
 from muntjac.event import EventObject, IEventListener
 from muntjac.terminal.uri_handler import IUriHandler
 from muntjac.terminal.system_error import SystemErr
@@ -1156,8 +1158,9 @@ class Application(IUriHandler, ITerminal, IErrorListener):
         @deprecated: this method is intended to be used by the terminal only. It
                     may be removed or moved in the future.
         """
-        raise DeprecationWarning, "this method is intended to be used by the " \
-            "terminal only. It may be removed or moved in the future."
+        warn(("this method is intended to be used by the "
+            "terminal only. It may be removed or moved in the future."),
+            DeprecationWarning)
 
         # Gets the key
         key = self._resourceKeyMap.get(resource)
@@ -1188,11 +1191,11 @@ class Application(IUriHandler, ITerminal, IErrorListener):
                     level {@link Window} (eg.
                     getMainWindow().addUriHanler(handler) instead.
         """
-        raise DeprecationWarning, "this method is called be the terminal " \
-            "implementation only and might be removed or moved in the future. " \
-            "Instead of overriding this method, add your {@link IUriHandler} to " \
-            "a top level {@link Window} (eg. getMainWindow().addUriHanler(handler) " \
-            "instead."
+        warn(("this method is called be the terminal "
+            "implementation only and might be removed or moved in the future. "
+            "Instead of overriding this method, add your {@link IUriHandler} to "
+            "a top level {@link Window} (eg. getMainWindow().addUriHanler(handler) "
+            "instead."), DeprecationWarning)
 
         if self._context.isApplicationResourceURL(context, relativeUri):
 

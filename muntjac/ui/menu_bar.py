@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from warnings import warn
+
 from Queue import LifoQueue
 
 from muntjac.ui.abstract_component import AbstractComponent
@@ -260,7 +262,7 @@ class MenuBar(AbstractComponent):
         @deprecated (since 6.2, will be removed in 7.0) Icon is set in theme,
                     no need to worry about the visual representation here.
         """
-        raise DeprecationWarning, 'icon is set in theme'
+        warn('icon is set in theme', DeprecationWarning)
         self._submenuIcon = icon
         self.requestRepaint()
 
@@ -269,7 +271,7 @@ class MenuBar(AbstractComponent):
         """@deprecated
         @see #setSubmenuIcon(Resource)
         """
-        raise DeprecationWarning, 'icon is set in theme'
+        warn('icon is set in theme', DeprecationWarning)
         return self._submenuIcon
 
 
@@ -292,7 +294,7 @@ class MenuBar(AbstractComponent):
         """@see #setCollapse(boolean)
         @deprecated
         """
-        raise DeprecationWarning
+        warn('deprecated', DeprecationWarning)
         return self._collapseItems
 
 

@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from warnings import warn
+
 try:
     from cStringIO import StringIO
 except ImportError, e:
@@ -726,7 +728,7 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
         @param alignment
                    A short hand notation described in {@link AlignmentUtils}
         """
-        raise DeprecationWarning, 'replaced by setComponentAlignment'
+        warn('replaced by setComponentAlignment', DeprecationWarning)
 
         nargs = len(args)
         if nargs == 2:
@@ -1018,7 +1020,7 @@ class Area(object):
 
         @see com.vaadin.ui.GridLayout#getColumn1()
         """
-        raise DeprecationWarning, 'Use getColumn1() instead.'
+        warn('Use getColumn1() instead.', DeprecationWarning)
         return self.getColumn1()
 
 
@@ -1035,7 +1037,7 @@ class Area(object):
 
         @see com.vaadin.ui.GridLayout#getColumn2()
         """
-        raise DeprecationWarning, 'Use getColumn2() instead.'
+        warn('Use getColumn2() instead.', DeprecationWarning)
         return self.getColumn2()
 
 
@@ -1052,7 +1054,7 @@ class Area(object):
 
         @see com.vaadin.ui.GridLayout#getRow1()
         """
-        raise DeprecationWarning, 'Use getRow1() instead.'
+        warn('Use getRow1() instead.', DeprecationWarning)
         return self.getRow1()
 
 
@@ -1069,7 +1071,7 @@ class Area(object):
 
         @see com.vaadin.ui.GridLayout#getRow2()
         """
-        raise DeprecationWarning, 'Use getRow2() instead.'
+        warn('Use getRow2() instead.', DeprecationWarning)
         return self.getRow2()
 
 

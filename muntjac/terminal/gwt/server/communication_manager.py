@@ -16,6 +16,8 @@
 
 import uuid
 
+from warnings import warn
+
 from muntjac.terminal.gwt.server.abstract_communication_manager import \
     AbstractCommunicationManager, Callback, Request, Response, \
     InvalidUIDLSecurityKeyException, Session
@@ -48,7 +50,7 @@ class CommunicationManager(AbstractCommunicationManager):
         @param application
         """
         if applicationServlet is not None:
-            raise DeprecationWarning
+            warn("deprecated", DeprecationWarning)
 
         super(CommunicationManager, self)(application)
 

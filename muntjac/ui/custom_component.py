@@ -116,7 +116,7 @@ class CustomComponent(AbstractComponentContainer):
 
         @return the component type.
         """
-        raise DeprecationWarning, 'tag system has been removed'
+        warn('tag system has been removed', DeprecationWarning)
         return self._componentType
 
 
@@ -131,7 +131,7 @@ class CustomComponent(AbstractComponentContainer):
         @param componentType
                    the componentType to set.
         """
-        raise DeprecationWarning, 'tag system has been removed'
+        warn('tag system has been removed', DeprecationWarning)
         self._componentType = componentType
 
 

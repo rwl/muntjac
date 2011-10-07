@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from warnings import warn
+
 from muntjac.ui.abstract_component_container import AbstractComponentContainer
 from muntjac.ui.component import Event as ComponentEvent
 from muntjac.ui.abstract_component import AbstractComponent
@@ -156,12 +158,12 @@ class PopupView(AbstractComponentContainer):
 
     def setPopupVisibility(self, visible):
         """@deprecated Use {@link #setPopupVisible()} instead."""
-        raise DeprecationWarning, 'use setPopupVisible() instead'
+        warn('use setPopupVisible() instead', DeprecationWarning)
         self.setPopupVisible(visible)
 
     def getPopupVisibility(self):
         """@deprecated Use {@link #isPopupVisible()} instead."""
-        raise DeprecationWarning, 'use isPopupVisible() instead'
+        warn('use isPopupVisible() instead', DeprecationWarning)
         return self.isPopupVisible()
 
 

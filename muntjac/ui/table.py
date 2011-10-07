@@ -16,6 +16,8 @@
 
 import logging
 
+from warnings import warn
+
 from muntjac.ui.field import IField
 from muntjac.ui.field_factory import IFieldFactory
 from muntjac.ui.form import Form
@@ -1076,8 +1078,8 @@ class Table(AbstractSelect, action.IContainer, container.IOrdered,
         @param pageBuffering
                    the New value of property pageBuffering.
         """
-        raise DeprecationWarning, \
-                'functionality is not needed in ajax rendering model'
+        warn('functionality is not needed in ajax rendering model',
+             DeprecationWarning)
 
 
     def isSelectable(self):
@@ -1383,7 +1385,7 @@ class Table(AbstractSelect, action.IContainer, container.IOrdered,
 
         @deprecated should not need to be used
         """
-        raise DeprecationWarning, 'should not need to be used'
+        warn('should not need to be used', DeprecationWarning)
 
 
     def setRowHeaderMode(self, mode):
@@ -2829,7 +2831,7 @@ class Table(AbstractSelect, action.IContainer, container.IOrdered,
         @see BaseFieldFactory
         @deprecated use {@link setTableFieldFactory()} instead
         """
-        raise DeprecationWarning, 'use setTableFieldFactory() instead'
+        warn('use setTableFieldFactory() instead', DeprecationWarning)
 
         self._fieldFactory = fieldFactory
         # Assure visual refresh

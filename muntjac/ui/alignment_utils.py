@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from warnings import warn
+
 from muntjac.ui.alignment import Alignment
 from muntjac.ui.layout import IAlignmentHandler
 
@@ -37,8 +39,7 @@ class AlignmentUtils(object):
 
     @deprecated replaced by {@link Alignment}.
     """
-
-#    raise DeprecationWarning, 'AlignmentUtils replaced by Alignment'
+    warn('AlignmentUtils replaced by Alignment', DeprecationWarning)
 
     _horizontalMask = (IAlignmentHandler.ALIGNMENT_LEFT
                 | IAlignmentHandler.ALIGNMENT_HORIZONTAL_CENTER

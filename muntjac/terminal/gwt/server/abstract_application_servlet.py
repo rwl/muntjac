@@ -20,6 +20,8 @@ import logging
 import mimetypes
 import locale
 
+from warnings import warn
+
 from urlparse import urljoin
 from os.path import join, exists, getmtime
 
@@ -1974,7 +1976,7 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
         @param application
         @return
         """
-        raise DeprecationWarning
+        warn("deprecated", DeprecationWarning)
 
         from muntjac.terminal.gwt.server.communication_manager import \
             CommunicationManager

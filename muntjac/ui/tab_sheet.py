@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from warnings import warn
+
 from muntjac.terminal.key_mapper import KeyMapper
 from muntjac.terminal.paintable import IRepaintRequestListener
 
@@ -415,7 +417,7 @@ class TabSheet(AbstractComponentContainer):
         @deprecated Use {@link #getTab(IComponent)} and
                     {@link ITab#getCaption()} instead.
         """
-        raise DeprecationWarning, 'use getTab() and ITab.getCaption() instead'
+        warn('use getTab() and ITab.getCaption() instead', DeprecationWarning)
 
         info = self._tabs.get(c)
         if info is None:
@@ -433,7 +435,7 @@ class TabSheet(AbstractComponentContainer):
         @deprecated Use {@link #getTab(IComponent)} and
                     {@link ITab#setCaption(String)} instead.
         """
-        raise DeprecationWarning, 'use getTab() and ITab.getCaption() instead'
+        warn('use getTab() and ITab.getCaption() instead', DeprecationWarning)
 
         info = self._tabs.get(c)
         if info is not None:
@@ -449,7 +451,7 @@ class TabSheet(AbstractComponentContainer):
         @deprecated Use {@link #getTab(IComponent)} and {@link ITab#getIcon()}
                     instead.
         """
-        raise DeprecationWarning, 'use getTab() and ITab.getIcon() instead'
+        warn('use getTab() and ITab.getIcon() instead', DeprecationWarning)
 
         info = self._tabs.get(c)
         if info is None:
@@ -469,7 +471,7 @@ class TabSheet(AbstractComponentContainer):
         @deprecated Use {@link #getTab(IComponent)} and
                     {@link ITab#setIcon(Resource)} instead.
         """
-        raise DeprecationWarning, 'use getTab() and ITab.getIcon() instead'
+        warn('use getTab() and ITab.getIcon() instead', DeprecationWarning)
 
         info = self._tabs.get(c)
         if info is not None:

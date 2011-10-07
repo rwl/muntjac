@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from warnings import warn
+
 from muntjac.ui.abstract_field import AbstractField
 from muntjac.terminal.gwt.client.ui.v_text_field import VTextField
 
@@ -122,7 +124,7 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
         @see Format
         @deprecated
         """
-        raise DeprecationWarning
+        warn('deprecated', DeprecationWarning)
 
         v = self.getValue()
         if v is None:
@@ -136,7 +138,7 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
             return v
 
         try:
-            raise DeprecationWarning
+            warn('deprecated', DeprecationWarning)
             return self._format.format(v)  # FIXME format
         except ValueError:
             return v
@@ -282,7 +284,7 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
         @return the Format used to format the value.
         @deprecated replaced by {@link com.vaadin.data.util.PropertyFormatter}
         """
-        raise DeprecationWarning, 'replaced by PropertyFormatter'
+        warn('replaced by PropertyFormatter', DeprecationWarning)
         return self._format
 
 
@@ -294,7 +296,7 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
                    formatting.
         @deprecated replaced by {@link com.vaadin.data.util.PropertyFormatter}
         """
-        raise DeprecationWarning, 'replaced by PropertyFormatter'
+        warn('replaced by PropertyFormatter', DeprecationWarning)
         self._format = fmt
         self.requestRepaint()
 

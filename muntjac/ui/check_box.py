@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from warnings import warn
+
 from muntjac.ui.button import Button, IClickListener
 from muntjac.data.property import IProperty
 
@@ -96,7 +98,7 @@ class CheckBox(Button):
 
 
     def setSwitchMode(self, switchMode):
-        raise DeprecationWarning, 'CheckBox is always in switch mode'
+        warn('CheckBox is always in switch mode', DeprecationWarning)
 
         if self.switchMode and not switchMode:
             raise NotImplementedError, ('CheckBox is always in switch '

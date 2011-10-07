@@ -16,6 +16,8 @@
 
 import re
 
+from warnings import warn
+
 from muntjac.event.method_event_source import IMethodEventSource
 from muntjac.event.event_router import EventRouter
 from muntjac.terminal.terminal import IErrorEvent as ITerminalErrorEvent
@@ -132,7 +134,7 @@ class AbstractComponent(IComponent, IMethodEventSource):
                     terminal.
         @see ClientWidget
         """
-        raise DeprecationWarning, 'tags are no more required for components'
+        warn('tags are no more required for components', DeprecationWarning)
         return ''
 
 
@@ -152,7 +154,7 @@ class AbstractComponent(IComponent, IMethodEventSource):
                     to indicate that "style" should not be used to switch
                     client side implementation, only to style the component.
         """
-        raise DeprecationWarning, 'Use getStyleName() instead'
+        warn('Use getStyleName() instead', DeprecationWarning)
         return self.getStyleName()
 
 
@@ -166,7 +168,7 @@ class AbstractComponent(IComponent, IMethodEventSource):
                     to indicate that "style" should not be used to switch
                     client side implementation, only to style the component.
         """
-        raise DeprecationWarning, 'Use setStyleName() instead'
+        warn('Use setStyleName() instead', DeprecationWarning)
         self.setStyleName(style)
 
 
