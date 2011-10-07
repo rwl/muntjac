@@ -21,6 +21,8 @@ from muntjac.terminal.gwt.client.event_id import EventId
 
 from muntjac.event.layout_events import \
     ILayoutClickNotifier, ILayoutClickListener, LayoutClickEvent
+from muntjac.ui.abstract_component_container import AbstractComponentContainer
+from muntjac.ui.abstract_component import AbstractComponent
 
 
 class AbstractOrderedLayout(AbstractLayout, IAlignmentHandler,
@@ -31,6 +33,8 @@ class AbstractOrderedLayout(AbstractLayout, IAlignmentHandler,
     ALIGNMENT_DEFAULT = Alignment.TOP_LEFT
 
     def __init__(self):
+        super(AbstractOrderedLayout, self).__init__()
+
         # Custom layout slots containing the components.
         self.components = list()
 
@@ -266,12 +270,13 @@ class AbstractOrderedLayout(AbstractLayout, IAlignmentHandler,
 
 
     def addListener(self, listener):
-        self.addListener(self._CLICK_EVENT, LayoutClickEvent, listener,
-                ILayoutClickListener.clickMethod)
+        AbstractComponent.addListener(self, self._CLICK_EVENT,
+                LayoutClickEvent, listener, ILayoutClickListener.clickMethod)
 
 
     def removeListener(self, listener):
-        self.removeListener(self._CLICK_EVENT, LayoutClickEvent, listener)
+        AbstractComponent.removeListener(self, self._CLICK_EVENT,
+                LayoutClickEvent, listener)
 
 
     def getComponentIndex(self, component):

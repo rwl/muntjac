@@ -80,6 +80,8 @@ class Panel(AbstractComponentContainer, IScrollable,
         @param content
                    the content used in the panel.
         """
+        super(Panel, self).__init__()
+
         # Content of the panel.
         self._content = None
 
@@ -105,13 +107,13 @@ class Panel(AbstractComponentContainer, IScrollable,
         if nargs == 0:
             Panel.__init__(self, None)
         elif nargs == 1:
-            if isinstance(args[0], component_container.IComponentContainer):
+            if isinstance(args[0], basestring):
+                caption, = args
+                self.setCaption(caption)
+            else:
                 content, = args
                 self.setContent(content)
                 self.setWidth(100, self.UNITS_PERCENTAGE)
-            else:
-                caption, = args
-                Panel.__init__(self, caption, None)
         elif nargs == 2:
             caption, content = args
             Panel.__init__(self, content)
@@ -192,8 +194,8 @@ class Panel(AbstractComponentContainer, IScrollable,
         self._content = newContent
 
         # Adds the event listeners for new content
-        newContent.addListener(self)
-        newContent.addListener(self)
+        AbstractComponentContainer.addListener(newContent, self)
+        AbstractComponentContainer.addListener(newContent, self)
 
         self._content = newContent
 

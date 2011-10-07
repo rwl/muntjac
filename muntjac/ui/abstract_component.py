@@ -1098,8 +1098,8 @@ class AbstractComponent(IComponent, IMethodEventSource):
         if s == '':
             return values
 
-        match = self.sizePattern.match(s)
-        if match == True:
+        match = self._sizePattern.match(s)
+        if bool(match) == True:
             values[0] = float( match.group(1) )
             if values[0] < 0:
                 values[0] = -1

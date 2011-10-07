@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import inspect
 import logging
 
 from muntjac.util import IEventListener
@@ -317,10 +318,10 @@ class ListenerMethod(IEventListener):
                 self._method = method
                 self._eventArgumentIndex = -1
 
-                params = method.getParameterTypes()
-                if len(params) == 0:
-                    self._arguments = [None] * 0
-                elif len(params) == 1 and issubclass(eventType, params[0]):
+                params, _, _, _ = inspect.getargspec(method)
+                if len(params) == 1:
+                    self._arguments = []
+                elif len(params) == 2:# and issubclass(eventType, params[1]):
                     self._arguments = [None]
                     self._eventArgumentIndex = 0
                 else:
@@ -412,22 +413,25 @@ class ListenerMethod(IEventListener):
         # Only send events supported by the method
         if issubclass(event.__class__, self._eventType):
             try:
+                m_name = self._method.im_func.func_name
+                m = getattr(self._target, m_name)
+
                 if self._eventArgumentIndex >= 0:
                     if (self._eventArgumentIndex == 0
                             and len(self._arguments) == 1):
-                        self._method(self._target, [event])  # FIXME: invoke
+                        m(event)
                     else:
                         arg = [None] * len(self._arguments)
                         for i in range(len(arg)):
                             arg[i] = self._arguments[i]
 
                         arg[self._eventArgumentIndex] = event
-                        self._method(self._target, arg)  # FIXME: invoke
+                        m(*arg)
                 else:
-                    self._method(self._target, self._arguments)  # FIXME: invoke
-            except Exception:  # IllegalAccessException
-                raise RuntimeError, 'Internal error - please report'
-            except Exception:  # FIXME: InvocationTargetException
+                    m()
+#            except Exception:  # IllegalAccessException
+#                raise RuntimeError, 'Internal error - please report'
+            except AttributeError:  # FIXME: InvocationTargetException
                 raise MethodException, ('Invocation of method '
                         + self._method + ' failed.')
 
@@ -482,9 +486,6 @@ class ListenerMethod(IEventListener):
 
     def __eq__(self, obj):
 
-        if self == obj:
-            return True
-
         # return false if obj is a subclass (do not use instanceof check)
         if (obj is None) or (obj.__class__ != self.__class__):
             return False
@@ -492,18 +493,18 @@ class ListenerMethod(IEventListener):
         # obj is of same class, test it further
         t = obj
 
-        return (self._eventArgumentIndex == t.eventArgumentIndex
-                and (self._eventType == t.eventType
+        return (self._eventArgumentIndex == t._eventArgumentIndex
+                and (self._eventType == t._eventType
                         or (self._eventType != None
-                                and self._eventType == t.eventType))
-                and (self._target == t.target
+                                and self._eventType == t._eventType))
+                and (self._target == t._target
                         or (self._target != None
-                                and self._target == t.target))
-                and (self._method == t.method
+                                and self._target == t._target))
+                and (self._method == t._method
                         or (self._method != None
-                                and self._method == t.method))
-                and (self._arguments == t.arguments
-                        or (self._arguments == t.arguments)))  # FIXME: Arrays.equals
+                                and self._method == t._method))
+                and (self._arguments == t._arguments
+                        or (self._arguments == t._arguments)))  # FIXME: Arrays.equals
 
 
     def isType(self, eventType):

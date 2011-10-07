@@ -257,7 +257,7 @@ class HttpServletRequestWrapper(Request):
 
 
     def getParameter(self, name):
-        return self._request.field(name)
+        return self._request.field(name, None)
 
 
     def getRequestID(self):

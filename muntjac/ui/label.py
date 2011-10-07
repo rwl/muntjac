@@ -99,6 +99,8 @@ class Label(AbstractComponent, property.IProperty, property.IViewer,
         @param contentSource
         @param contentMode
         """
+        super(Label, self).__init__()
+
         self._dataSource = None
         self._contentMode = self.CONTENT_DEFAULT
 

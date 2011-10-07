@@ -63,6 +63,8 @@ class ObjectProperty(AbstractProperty):
         @param readOnly
                    Sets the read-only mode.
         """
+        super(ObjectProperty, self).__init__()
+
         # The value contained by the Property.
         self._value = None
 

@@ -34,6 +34,8 @@ class AbstractLayout(AbstractComponentContainer, ILayout, IMarginHandler):
     _CLICK_EVENT = EventId.LAYOUT_CLICK
 
     def __init__(self):
+        super(AbstractLayout, self).__init__()
+
         self.margins = MarginInfo(False)
 
 

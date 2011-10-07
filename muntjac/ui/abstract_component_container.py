@@ -99,10 +99,10 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
 
     def addListener(self, listener):
         if isinstance(listener, IComponentAttachListener):
-            self.addListener(ComponentAttachEvent, listener,
+            AbstractComponent.addListener(self, ComponentAttachEvent, listener,
                     self._COMPONENT_ATTACHED_METHOD)
         else:
-            self.addListener(ComponentDetachEvent, listener,
+            AbstractComponent.addListener(self, ComponentDetachEvent, listener,
                     self._COMPONENT_DETACHED_METHOD)
 
 
