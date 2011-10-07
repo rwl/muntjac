@@ -148,6 +148,6 @@ class WebApplicationContext(AbstractWebApplicationContext):
         if mgr is None:
             # Creates new manager
             mgr = servlet.createCommunicationManager(application)
-            self.applicationToAjaxAppMgrMap.put(application, mgr)
+            self.applicationToAjaxAppMgrMap[application] = mgr
 
         return mgr

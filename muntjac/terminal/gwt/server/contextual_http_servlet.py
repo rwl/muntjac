@@ -38,10 +38,14 @@ class ContextualHttpServlet(HTTPServlet):
         return servletPath
 
 
+    def getHeader(self, request, field):
+        return request.serverDictionary().get(field)
+
+
     def getLocale(self, request):
         ## FIXME: implement request.locale()
         lang = request.environ().get('Accept-Language')
-        if l is not None:
+        if lang is not None:
             args = Locale.splitCode(lang, sep='-')
             return Locale(*args)
         else:

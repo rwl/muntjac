@@ -508,19 +508,19 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
     def updateBrowserProperties(self, browser, request):
         # request based details updated always
         browser.updateRequestDetails(self.getLocale(request),
-                request.environ()['REMOTE_ADDR'],
+                self.getHeader(request, 'REMOTE_ADDR'),
                 self.isSecure(request),
-                request.header('user-agent'))
+                self.getHeader(request, 'User-Agent'))
 
-        if request.field('repaintAll') is not None:
+        if request.field('repaintAll', None) is not None:
             browser.updateClientSideDetails(request.field('sw'),
-                    request.field('sh'),
-                    request.field('tzo'),
-                    request.field('rtzo'),
-                    request.field('dstd'),
-                    request.field('dston'),
-                    request.field('curdate'),
-                    request.field('td') is not None)
+                    request.field('sh', None),
+                    request.field('tzo', None),
+                    request.field('rtzo', None),
+                    request.field('dstd', None),
+                    request.field('dston', None),
+                    request.field('curdate', None),
+                    request.field('td', None) is not None)
 
 
     def criticalNotification(self, request, response, caption, message,
@@ -1763,14 +1763,14 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
                         and self.getServerPort(request) == 80)):
             reqURL += ''
         else:
-            reqURL += ':' + self.getServerPort(request)
+            reqURL += ':%d' % self.getServerPort(request)
         reqURL += request.uri()
 
         # FIXME: implement include requests
-        if request.field('javax.servlet.include.servlet_path') is not None:
+        if request.field('javax.servlet.include.servlet_path', None) is not None:
             # this is an include request
-            servletPath = (request.field('javax.servlet.include.context_path')
-                    + request.field('avax.servlet.include.servlet_path'))
+            servletPath = (request.field('javax.servlet.include.context_path', None)
+                    + request.field('avax.servlet.include.servlet_path', None))
             #servletPath = (request.originalContextPath
             #        + request.originalServletPath())
         else:

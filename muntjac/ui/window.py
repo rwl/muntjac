@@ -205,7 +205,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
         # repaint. Null if nothing should be scrolled into view.
         self._scrollIntoView = None
 
-        super(Window, self)(caption, content)
+        super(Window, self).__init__(caption, content)
 
         self.setScrollable(True)
 

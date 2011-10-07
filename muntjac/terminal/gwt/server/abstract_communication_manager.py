@@ -146,8 +146,6 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
 
         self._idSequence = 0
 
-        self._application = None
-
         # Note that this is only accessed from synchronized block and
         # thus should be thread-safe.
         self._closingWindowName = None

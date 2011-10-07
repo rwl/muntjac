@@ -20,4 +20,4 @@ class HelloWorld(Application):
 
 if __name__ == '__main__':
     from muntjac.util import run_app
-    run_app(HelloWorld, nogui=True)
+    run_app(HelloWorld, nogui=True, forever=False, debug=True)
