@@ -689,8 +689,8 @@ class AbstractField(AbstractComponent, field.IField,
                     property.IReadOnlyStatusChangeEvent, listener,
                     self._READ_ONLY_STATUS_CHANGE_METHOD)
         else:
-            self.addListener(field.ValueChangeEvent, listener,
-                    self._VALUE_CHANGE_METHOD)
+            AbstractComponent.addListener(self, field.ValueChangeEvent,
+                    listener, self._VALUE_CHANGE_METHOD)
 
 
     def removeListener(self, listener):
@@ -700,8 +700,8 @@ class AbstractField(AbstractComponent, field.IField,
                     property.IReadOnlyStatusChangeEvent, listener,
                     self._READ_ONLY_STATUS_CHANGE_METHOD)
         else:
-            self.removeListener(field.ValueChangeEvent, listener,
-                    self._VALUE_CHANGE_METHOD)
+            AbstractComponent.removeListener(self, field.ValueChangeEvent,
+                    listener, self._VALUE_CHANGE_METHOD)
 
 
     def fireValueChange(self, repaintIsNotNeeded):

@@ -25,6 +25,7 @@ from muntjac.terminal.gwt.client.mouse_event_details import MouseEventDetails
 
 from muntjac.event.field_events import \
     (BlurEvent, IBlurListener, IBlurNotifier, FocusEvent,
+from muntjac.ui.abstract_component import AbstractComponent
     IFocusListener, IFocusNotifier)
 
 
@@ -134,7 +135,8 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
         elif nargs == 3:
             caption, target, methodName = args
             Button.__init__(self, caption)
-            self.addListener(self.ClickEvent, target, methodName)
+            AbstractComponent.addListener(self, self.ClickEvent, target,
+                    methodName)
         else:
             raise ValueError, 'too many arguments'
 
@@ -278,16 +280,16 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
                    the Listener to be added.
         """
         if isinstance(listener, IBlurListener):
-            self.addListener(BlurEvent.EVENT_ID, BlurEvent, listener,
-                    IBlurListener.blurMethod)
+            AbstractComponent.addListener(self, BlurEvent.EVENT_ID,
+                    BlurEvent, listener, IBlurListener.blurMethod)
 
         elif isinstance(listener, IClickListener):
-            self.addListener(self.ClickEvent, listener,
+            AbstractComponent.addListener(self, ClickEvent, listener,
                     self._BUTTON_CLICK_METHOD)
 
         else:
-            self.addListener(FocusEvent.EVENT_ID, FocusEvent, listener,
-                    IFocusListener.focusMethod)
+            AbstractComponent.addListener(self, FocusEvent.EVENT_ID,
+                    FocusEvent, listener, IFocusListener.focusMethod)
 
 
     def removeListener(self, listener):
@@ -297,14 +299,16 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
                    the Listener to be removed.
         """
         if isinstance(listener, IBlurListener):
-            self.removeListener(BlurEvent.EVENT_ID, BlurEvent, listener)
+            AbstractComponent.removeListener(self, BlurEvent.EVENT_ID,
+                    BlurEvent, listener)
 
         elif isinstance(listener, IClickListener):
-            self.removeListener(self.ClickEvent, listener,
+            AbstractComponent.removeListener(self, ClickEvent, listener,
                     self._BUTTON_CLICK_METHOD)
 
         else:
-            self.removeListener(FocusEvent.EVENT_ID, FocusEvent, listener)
+            AbstractComponent.removeListener(self, FocusEvent.EVENT_ID,
+                    FocusEvent, listener)
 
 
     def fireClick(self, details=None):

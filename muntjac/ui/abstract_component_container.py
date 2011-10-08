@@ -108,11 +108,11 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
 
     def removeListener(self, listener):
         if isinstance(listener, IComponentAttachListener):
-            self.removeListener(ComponentAttachEvent, listener,
-                    self._COMPONENT_ATTACHED_METHOD)
+            AbstractComponent.removeListener(self, ComponentAttachEvent,
+                    listener, self._COMPONENT_ATTACHED_METHOD)
         else:
-            self.removeListener(ComponentDetachEvent, listener,
-                    self._COMPONENT_DETACHED_METHOD)
+            AbstractComponent.removeListener(self, ComponentDetachEvent,
+                    listener, self._COMPONENT_DETACHED_METHOD)
 
 
     def fireComponentAttachEvent(self, component):

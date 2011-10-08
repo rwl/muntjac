@@ -389,8 +389,8 @@ class Embedded(AbstractComponent):
         @param listener
                    The listener to add
         """
-        self.addListener(self._CLICK_EVENT, ClickEvent, listener,
-                IClickListener.clickMethod)
+        AbstractComponent.addListener(self, self._CLICK_EVENT, ClickEvent,
+                listener, IClickListener.clickMethod)
 
 
     def removeListener(self, listener):
@@ -400,7 +400,8 @@ class Embedded(AbstractComponent):
         @param listener
                    The listener to remove
         """
-        self.removeListener(self._CLICK_EVENT, ClickEvent, listener)
+        AbstractComponent.removeListener(self, self._CLICK_EVENT, ClickEvent,
+                listener)
 
 
     def changeVariables(self, source, variables):

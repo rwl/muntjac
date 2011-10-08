@@ -21,6 +21,7 @@ from muntjac.event.mouse_events import ClickEvent as MouseClickEvent
 from muntjac.event.component_event_listener import IComponentEventListener
 
 from muntjac.terminal.gwt.client.ui.v_split_panel import VSplitPanel
+from muntjac.ui.abstract_component import AbstractComponent
 
 
 class ComponentIterator(object):
@@ -352,13 +353,14 @@ class AbstractSplitPanel(AbstractLayout):
 
 
     def addListener(self, listener):
-        self.addListener(self._SPLITTER_CLICK_EVENT, SplitterClickEvent,
-                listener, SplitterClickListener.clickMethod)
+        AbstractComponent.addListener(self, self._SPLITTER_CLICK_EVENT,
+                SplitterClickEvent, listener,
+                SplitterClickListener.clickMethod)
 
 
     def removeListener(self, listener):
-        self.removeListener(self._SPLITTER_CLICK_EVENT, SplitterClickEvent,
-                listener)
+        AbstractComponent.removeListener(self, self._SPLITTER_CLICK_EVENT,
+                SplitterClickEvent, listener)
 
 
 class ISplitterClickListener(IComponentEventListener):

@@ -15,6 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from warnings import warn
+from muntjac.ui.abstract_component import AbstractComponent
 
 try:
     from cStringIO import StringIO
@@ -924,12 +925,13 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
 
 
     def addListener(self, listener):
-        self.addListener(self._CLICK_EVENT, LayoutClickEvent, listener,
-                ILayoutClickListener.clickMethod)
+        AbstractComponent.addListener(self, self._CLICK_EVENT,
+                LayoutClickEvent, listener, ILayoutClickListener.clickMethod)
 
 
     def removeListener(self, listener):
-        self.removeListener(self._CLICK_EVENT, LayoutClickEvent, listener)
+        AbstractComponent.removeListener(self, self._CLICK_EVENT,
+                LayoutClickEvent, listener)
 
 
 class Area(object):

@@ -22,6 +22,7 @@ from muntjac.terminal.gwt.client.ui.v_text_field import VTextField
 from muntjac.event.field_events import \
     BlurEvent, IBlurListener, IBlurNotifier, FocusEvent, IFocusListener, \
     IFocusNotifier, TextChangeEvent, ITextChangeListener, ITextChangeNotifier
+from muntjac.ui.abstract_component import AbstractComponent
 
 
 class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
@@ -431,27 +432,29 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
 
     def addListener(self, listener):
         if isinstance(listener, IBlurListener):
-            self.addListener(BlurEvent.EVENT_ID, BlurEvent, listener,
-                    IBlurListener.blurMethod)
+            AbstractComponent.addListener(self, BlurEvent.EVENT_ID,
+                    BlurEvent, listener, IBlurListener.blurMethod)
 
         elif isinstance(listener, IFocusListener):
-            self.addListener(FocusEvent.EVENT_ID, FocusEvent, listener,
-                    IFocusListener.focusMethod)
+            AbstractComponent.addListener(self, FocusEvent.EVENT_ID,
+                    FocusEvent, listener, IFocusListener.focusMethod)
 
         else:
-            self.addListener(ITextChangeListener.EVENT_ID, TextChangeEvent,
-                    listener, ITextChangeListener.EVENT_METHOD)
+            AbstractComponent.addListener(self, ITextChangeListener.EVENT_ID,
+                    TextChangeEvent, listener, ITextChangeListener.EVENT_METHOD)
 
 
     def removeListener(self, listener):
         if isinstance(listener, IBlurListener):
-            self.removeListener(BlurEvent.EVENT_ID, BlurEvent, listener)
+            AbstractComponent.removeListener(self, BlurEvent.EVENT_ID,
+                    BlurEvent, listener)
 
         elif isinstance(listener, IFocusListener):
-            self.removeListener(FocusEvent.EVENT_ID, FocusEvent, listener)
+            AbstractComponent.removeListener(self, FocusEvent.EVENT_ID,
+                    FocusEvent, listener)
 
         else:
-            self.removeListener(ITextChangeListener.EVENT_ID,
+            AbstractComponent.removeListener(self, ITextChangeListener.EVENT_ID,
                     TextChangeEvent, listener)
 
 

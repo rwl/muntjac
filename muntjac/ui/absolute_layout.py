@@ -22,6 +22,7 @@ from muntjac.terminal.sizeable import ISizeable
 
 from muntjac.event.layout_events import \
     LayoutClickEvent, ILayoutClickListener, ILayoutClickNotifier
+from muntjac.ui.abstract_component import AbstractComponent
 
 
 class AbsoluteLayout(AbstractLayout, ILayoutClickNotifier):
@@ -143,12 +144,14 @@ class AbsoluteLayout(AbstractLayout, ILayoutClickNotifier):
 
 
     def addListener(self, listener):
-        self.addListener(self._CLICK_EVENT, LayoutClickEvent, listener,
+        AbstractComponent.addListener(self, self._CLICK_EVENT,
+                LayoutClickEvent, listener,
                 ILayoutClickListener.clickMethod)
 
 
     def removeListener(self, listener):
-        self.removeListener(self._CLICK_EVENT, LayoutClickEvent, listener)
+        AbstractComponent.removeListener(self, self._CLICK_EVENT,
+                LayoutClickEvent, listener)
 
 
 class ComponentPosition(object):

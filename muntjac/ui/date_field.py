@@ -26,6 +26,7 @@ from muntjac.terminal.gwt.client.ui.v_date_field import VDateField
 
 from muntjac.event.field_events import \
     (BlurEvent, IBlurListener, IBlurNotifier, FocusEvent, IFocusListener,
+from muntjac.ui.abstract_component import AbstractComponent
      IFocusNotifier)
 
 
@@ -554,18 +555,20 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
 
     def addListener(self, listener):
         if isinstance(listener, IBlurListener):
-            self.addListener(BlurEvent.EVENT_ID, BlurEvent, listener,
-                    IBlurListener.blurMethod)
+            AbstractComponent.addListener(self, BlurEvent.EVENT_ID,
+                    BlurEvent, listener, IBlurListener.blurMethod)
         else:
-            self.addListener(FocusEvent.EVENT_ID, FocusEvent, listener,
-                    IFocusListener.focusMethod)
+            AbstractComponent.addListener(self, FocusEvent.EVENT_ID,
+                    FocusEvent, listener, IFocusListener.focusMethod)
 
 
     def removeListener(self, listener):
         if isinstance(listener, IBlurListener):
-            self.removeListener(BlurEvent.EVENT_ID, BlurEvent, listener)
+            AbstractComponent.removeListener(self, BlurEvent.EVENT_ID,
+                    BlurEvent, listener)
         else:
-            self.removeListener(FocusEvent.EVENT_ID, FocusEvent, listener)
+            AbstractComponent.removeListener(self, FocusEvent.EVENT_ID,
+                    FocusEvent, listener)
 
 
     def isShowISOWeekNumbers(self):

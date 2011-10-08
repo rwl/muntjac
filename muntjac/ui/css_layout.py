@@ -19,6 +19,7 @@ from muntjac.terminal.gwt.client.event_id import EventId
 
 from muntjac.event.layout_events import \
     ILayoutClickNotifier, LayoutClickEvent, ILayoutClickListener
+from muntjac.ui.abstract_component import AbstractComponent
 
 
 class CssLayout(AbstractLayout, ILayoutClickNotifier):
@@ -222,9 +223,10 @@ class CssLayout(AbstractLayout, ILayoutClickNotifier):
 
 
     def addListener(self, listener):
-        self.addListener(self._CLICK_EVENT, LayoutClickEvent, listener,
-                ILayoutClickListener.clickMethod)
+        AbstractComponent.addListener(self, self._CLICK_EVENT,
+                LayoutClickEvent, listener, ILayoutClickListener.clickMethod)
 
 
     def removeListener(self, listener):
-        self.removeListener(self._CLICK_EVENT, LayoutClickEvent, listener)
+        AbstractComponent.removeListener(self, self._CLICK_EVENT,
+                LayoutClickEvent, listener)
