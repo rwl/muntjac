@@ -25,7 +25,7 @@ from warnings import warn
 from urlparse import urljoin
 from os.path import join, exists, getmtime
 
-from paste.httpheaders import USER_AGENT
+from paste.httpheaders import USER_AGENT, CONTENT_LENGTH, IF_MODIFIED_SINCE
 
 try:
     from cStringIO import StringIO
@@ -242,15 +242,16 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
 
         @param request
         """
-        if not (self.VERSION == request.field('wsver')):
+        if not (self.VERSION == request.field('wsver', '')):
             logger.warning(self.WIDGETSET_MISMATCH_INFO %
-                           (self.VERSION, request.field('wsver')))
+                    (self.VERSION, request.field('wsver', '')))
 
 
     def checkProductionMode(self):
         """Check if the application is in production mode."""
         # We are in production mode if debug=false or productionMode=true
-        if self.getApplicationOrSystemProperty(self.SERVLET_PARAMETER_DEBUG,
+        if self.getApplicationOrSystemProperty(
+                self.SERVLET_PARAMETER_DEBUG,
                 'true') == 'false':
             # "dDebug=true" is the old way and should no longer be used
             self._productionMode = True
@@ -379,9 +380,9 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
             # based on the real one having content (at least the UIDL security
             # key).
             if (requestType == RequestType.UIDL
-                    and ApplicationConnection.PARAM_UNLOADBURST \
+                    and ApplicationConnection.PARAM_UNLOADBURST
                         in request.fields()
-                    and request.getHeader('Content-Length') < 1
+                    and CONTENT_LENGTH(request.environ) < 1
                     and self.getExistingApplication(request, False) is None):
                 self.redirectToApplication(request, response)
                 return
@@ -396,8 +397,8 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
             webApplicationContext = \
                     self.getApplicationContext(request.session())
             applicationManager = \
-                    webApplicationContext.getApplicationManager(application,
-                                                                self)
+                    webApplicationContext.getApplicationManager(
+                            application, self)
 
             # Update browser information from the request
             self.updateBrowserProperties(
@@ -423,9 +424,8 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
                 return
             elif requestType == RequestType.UIDL:
                 # Handles AJAX UIDL requests
-                window = \
-                    applicationManager.getApplicationWindow(
-                            request, self, application, None)
+                window = applicationManager.getApplicationWindow(
+                        request, self, application, None)
                 applicationManager.handleUidlRequest(
                         request, response, self, window)
                 return
@@ -609,7 +609,7 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
                    Output to write (UTF-8 encoded)
         @throws IOException
         """
-        response.setHeader('Content-type', contentType)
+        response.setHeader('Content-Type', contentType)
         response.write(output)
 
 
@@ -635,23 +635,25 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
             # There is an existing application. We can use this as long as the
             # user not specifically requested to close or restart it.
             restartApplication = \
-                    (request.field(self.URL_PARAMETER_RESTART_APPLICATION)
+                    (request.field(self.URL_PARAMETER_RESTART_APPLICATION,
+                                   None)
                     is not None)
 
             closeApplication = \
-                    (request.field(self.URL_PARAMETER_CLOSE_APPLICATION)
+                    (request.field(self.URL_PARAMETER_CLOSE_APPLICATION,
+                                   None)
                      is not None)
 
             if restartApplication:
                 # avoid session creation
-                self.closeApplication(
-                        application, request.transaction()._session)
+                self.closeApplication(application,
+                        request.transaction()._session)
                 return self.createApplication(request)
 
             elif closeApplication:
                 # avoid session creation
-                self.closeApplication(
-                        application, request.transaction()._session)
+                self.closeApplication(application,
+                        request.transaction()._session)
                 return None
 
             else:
@@ -743,7 +745,7 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
         data = stream.getStream()
         if data is not None:
             # Sets content type
-            response.setHeader('Content-type', stream.getContentType())
+            response.setHeader('Content-Type', stream.getContentType())
 
             # Sets cache headers
             cacheTime = stream.getCacheTime()
@@ -772,10 +774,9 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
                     stream.getParameter('Content-Disposition')
             if contentDispositionValue is None:
                 contentDispositionValue = ('filename=\"'
-                                           + stream.getFileName()
-                                           + '\"')
+                        + stream.getFileName() + '\"')
                 response.setHeader('Content-Disposition',
-                                   contentDispositionValue)
+                        contentDispositionValue)
 
             response.write( data.getvalue() )
             data.close()
@@ -890,8 +891,8 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
         @throws IOException
         """
         # Handles the URI
-        download = applicationManager.handleURI(
-                window, request, response, self)
+        download = applicationManager.handleURI(window, request,
+                response, self)
 
         # A download request
         if download is not None:
@@ -988,9 +989,8 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
             # Initial locale comes from the request
             locale = self.getLocale(request)
             application.setLocale(locale)
-            application.start(applicationUrl,
-                              self._applicationProperties,
-                              webApplicationContext)
+            application.start(applicationUrl, self._applicationProperties,
+                    webApplicationContext)
 
 
     def serveStaticResources(self, request, response):
@@ -1062,7 +1062,7 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
 
         mimetype, _ = mimetypes.guess_type(filename)
         if mimetype is not None:
-            response.setHeader('Content-type', mimetype)
+            response.setHeader('Content-Type', mimetype)
 
         # Provide modification timestamp to the browser if it is known.
         if lastModifiedTime > 0:
@@ -1108,7 +1108,7 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
         try:
             # If-Modified-Since represents the timestamp of the version cached
             # in the browser
-            headerIfModifiedSince = request.getHeader('If-Modified-Since')
+            headerIfModifiedSince = IF_MODIFIED_SINCE(request.environ())
             if headerIfModifiedSince >= resourceLastModifiedTimestamp:
                 # Browser has this an up-to-date version of the resource
                 return True
@@ -1408,7 +1408,7 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
         divStyle = None
         if request.field(self.REQUEST_APPSTYLE, None) is not None:
             divStyle = ('style=\"'
-                    + request.getAttribute(self.REQUEST_APPSTYLE) + '\"')
+                    + request.field(self.REQUEST_APPSTYLE) + '\"')
 
         self.writeAjaxPageHtmlMainDiv(page, appId, classNames,
                 divStyle, request)
@@ -1417,7 +1417,6 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
             page.write('</body>\n</html>\n')
 
         response.write(page.getvalue())
-
         page.close()
 
 
@@ -1463,7 +1462,7 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
 
 
     def writeAjaxPageHtmlMainDiv(self, page, appId, classNames,
-                                 divStyle, request):
+                divStyle, request):
         """Method to write the div element into which that actual Vaadin
         application is rendered.
 
@@ -1773,9 +1772,11 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
         reqURL += request.uri()
 
         # FIXME: implement include requests
-        if request.field('javax.servlet.include.servlet_path', None) is not None:
+        if request.field('javax.servlet.include.servlet_path',
+                    None) is not None:
             # this is an include request
-            servletPath = (request.field('javax.servlet.include.context_path', None)
+            servletPath = (request.field('javax.servlet.include.context_path',
+                    None)
                     + request.field('avax.servlet.include.servlet_path', None))
             #servletPath = (request.originalContextPath
             #        + request.originalServletPath())

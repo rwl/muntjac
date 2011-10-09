@@ -3,7 +3,7 @@ import locale
 from urlparse import urlparse
 
 from paste.webkit.wsgiapp import sys_path_install
-from paste.httpheaders import ACCEPT_LANGUAGE
+from paste.httpheaders import ACCEPT_LANGUAGE, SCRIPT_NAME, PATH_INFO
 
 from muntjac.util import Locale
 
@@ -27,8 +27,8 @@ class ContextualHttpServlet(HTTPServlet):
 
     def getServletPath(self, request):
         ## FIXME: implement request.servletPath()
-        servletPath = request.environ().get('SCRIPT_NAME', '')
-        pathInfo = request.environ().get('PATH_INFO', '')
+        servletPath = SCRIPT_NAME(request.environ())
+        pathInfo = PATH_INFO(request.environ())
 
         if 'REQUEST_URI' in request.environ():
             uri = request.environ()['REQUEST_URI']
@@ -81,7 +81,7 @@ class ContextualHttpServlet(HTTPServlet):
 
 
     def getPathInfo(self, request):
-        return request.extraURLPath()
+        return PATH_INFO(request.environ())
 
 
     def getResourceAsStream(self, path):

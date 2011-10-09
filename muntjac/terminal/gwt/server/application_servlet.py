@@ -71,7 +71,8 @@ class ApplicationServlet(AbstractApplicationServlet):
     def getNewApplication(self, request):
         # Creates a new application instance
         try:
-            application = self.getApplicationClass()()
+            appClass = self.getApplicationClass()
+            application = appClass()
         except TypeError:
             raise ServletException, "getNewApplication failed"
         return application

@@ -18,6 +18,9 @@ import uuid
 
 from warnings import warn
 
+from paste.webkit.wkcommon import NoDefault
+from paste.httpheaders import CONTENT_TYPE, CONTENT_LENGTH
+
 from muntjac.terminal.gwt.server.abstract_communication_manager import \
     AbstractCommunicationManager, ICallback, IRequest, IResponse, \
     InvalidUIDLSecurityKeyException, ISession
@@ -86,8 +89,8 @@ class CommunicationManager(AbstractCommunicationManager):
         if secKey == parts[2]:
 
             source = self.getVariableOwner(paintableId)
-            contentType = request.getHeader('Content-type')
-            if 'boundary' in request.getHeader('Content-type'):
+            contentType = CONTENT_TYPE(request.environ())
+            if 'boundary' in CONTENT_TYPE(request.environ()):
                 # Multipart requests contain boundary string
                 self.doHandleSimpleMultipartFileUpload(
                         HttpServletRequestWrapper(request),
@@ -105,7 +108,7 @@ class CommunicationManager(AbstractCommunicationManager):
                         streamVariable,
                         variableName,
                         source,
-                        request.getHeader('Content-Length'))
+                        CONTENT_LENGTH(request.environ()))
         else:
             raise InvalidUIDLSecurityKeyException, \
                     'Security key in upload post did not match!'
@@ -243,12 +246,12 @@ class HttpServletRequestWrapper(IRequest):
         self._request = request
 
 
-    def getAttribute(self, name):
-        return self._request.field(name)
+    def getAttribute(self, name, default=NoDefault):
+        return self._request.field(name, default)
 
 
     def getContentLength(self):
-        return self._request.getHeader('Content-Length')
+        return CONTENT_LENGTH(self._request.environ())
 
 
     def getInputStream(self):
