@@ -25,6 +25,8 @@ from warnings import warn
 from urlparse import urljoin
 from os.path import join, exists, getmtime
 
+from paste.httpheaders import USER_AGENT
+
 try:
     from cStringIO import StringIO
 except ImportError, e:
@@ -510,10 +512,10 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
         browser.updateRequestDetails(self.getLocale(request),
                 self.getHeader(request, 'REMOTE_ADDR'),
                 self.isSecure(request),
-                self.getHeader(request, 'User-Agent'))
+                USER_AGENT(request.environ()))
 
         if request.field('repaintAll', None) is not None:
-            browser.updateClientSideDetails(request.field('sw'),
+            browser.updateClientSideDetails(request.field('sw', None),
                     request.field('sh', None),
                     request.field('tzo', None),
                     request.field('rtzo', None),

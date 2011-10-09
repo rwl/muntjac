@@ -72,11 +72,11 @@ class VBrowserDetails(object):
                 rvPos = userAgent.find('rv:')
                 if rvPos >= 0:
                     tmp = userAgent[rvPos + 3:]
-                    tmp = re.sub('(\\.[0-9]+).+', '$1', tmp, count=1)
+                    tmp = re.sub('(\\.[0-9]+).+', '\\1', tmp, count=1)
                     self._browserEngineVersion = float(tmp)
             elif self._isWebKit:
                 tmp = userAgent[userAgent.find('webkit/') + 7:]
-                tmp = re.sub('([0-9]+)[^0-9].+', '$1', tmp, count=1)
+                tmp = re.sub('([0-9]+)[^0-9].+', '\\1', tmp, count=1)
                 self._browserEngineVersion = float(tmp)
         except Exception:
             # Browser engine version parsing failed
