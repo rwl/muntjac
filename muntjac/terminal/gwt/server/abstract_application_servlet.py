@@ -23,7 +23,7 @@ from time import time
 from warnings import warn
 
 from urlparse import urljoin
-from os.path import join, exists, getmtime
+from os.path import join, exists, getmtime, dirname
 
 from paste.httpheaders import USER_AGENT, CONTENT_LENGTH, IF_MODIFIED_SINCE
 
@@ -31,6 +31,8 @@ try:
     from StringIO import StringIO
 except ImportError, e:
     from StringIO import StringIO
+
+import muntjac
 
 from muntjac.util import clsname
 from muntjac.application import Application
@@ -179,7 +181,7 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
 
     def __init__(self, productionMode=False, debug=False, widgetset=None,
                  resourceCacheTime=3600, disableXsrfProtection=False,
-                 *args, **kw_args):
+                 resources=None, *args, **kw_args):
         super(AbstractApplicationServlet, self).__init__(*args, **kw_args)
 
         self._applicationProperties = dict()
@@ -201,6 +203,10 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
         self._applicationProperties[
                 self.SERVLET_PARAMETER_DISABLE_XSRF_PROTECTION] = \
                         'true' if disableXsrfProtection else 'false'
+
+        path = None#join(dirname(muntjac.__file__), '..')
+        self._applicationProperties[self.PARAMETER_VAADIN_RESOURCES] = \
+            path if resources is None else resources
 
 
     def awake(self, transaction):
@@ -1194,7 +1200,7 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
 
     def isOnUnloadRequest(self, request):
         param = ApplicationConnection.PARAM_UNLOADBURST
-        return request.field(param) is not None
+        return request.field(param, None) is not None
 
 
     def getSystemMessages(self):
@@ -1592,7 +1598,7 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
             if url is not None:
                 url = '\"' + JsonPaintTarget.escapeJSON(url) + '\"'
             else:
-                url = ''
+                url = 'null'
 
             page.write(',\"comErrMsg\": {' + '\"caption\":'
                     + caption + ',' + '\"message\" : ' + message + ','
@@ -1611,7 +1617,7 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
             if url is not None:
                 url = '\"' + JsonPaintTarget.escapeJSON(url) + '\"'
             else:
-                url = ''
+                url = 'null'
 
             page.write(',\"authErrMsg\": {' + '\"caption\":'
                     + caption + ',' + '\"message\" : ' + message
