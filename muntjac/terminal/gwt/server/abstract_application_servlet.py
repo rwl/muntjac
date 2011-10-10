@@ -28,7 +28,7 @@ from os.path import join, exists, getmtime
 from paste.httpheaders import USER_AGENT, CONTENT_LENGTH, IF_MODIFIED_SINCE
 
 try:
-    from cStringIO import StringIO
+    from StringIO import StringIO
 except ImportError, e:
     from StringIO import StringIO
 
@@ -178,7 +178,9 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
 
 
     def __init__(self, productionMode=False, debug=False, widgetset=None,
-                 resourceCacheTime=3600, disableXsrfProtection=False):
+                 resourceCacheTime=3600, disableXsrfProtection=False,
+                 *args, **kw_args):
+        super(AbstractApplicationServlet, self).__init__(*args, **kw_args)
 
         self._applicationProperties = dict()
         self._productionMode = False
@@ -1524,7 +1526,8 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
         widgetset = self.stripSpecialChars(widgetset)
         widgetsetFilePath = (widgetsetBasePath
                 + '/' + self.WIDGETSET_DIRECTORY_PATH + widgetset
-                + '/' + widgetset + '.nocache.js?' + str(time()))
+                + '/' + widgetset + '.nocache.js?'
+                + str( int(time() * 1000) ))  # ms since epoch
 
         # Get system messages
         systemMessages = None
@@ -1781,13 +1784,13 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
             #servletPath = (request.originalContextPath
             #        + request.originalServletPath())
         else:
-            servletPath = (self.getContextPath(request)
+            servletPath = (self.getContextPath(request)  # FIXME: context path
                     + self.getServletPath(request))
 
         if len(servletPath) == 0 or servletPath[len(servletPath) - 1] != '/':
             servletPath = servletPath + '/'
 
-        return urljoin(reqURL, servletPath)
+        return urljoin(reqURL, servletPath)  # FIXME: urljoin
 
 
     def getExistingApplication(self, request, allowSessionCreation):
@@ -2001,11 +2004,11 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
         """
         safe = StringIO()
         for c in unsafe:
-            if cls.isSafe(c):
+            if cls.isSafe(ord(c)):
                 safe.write(c)
             else:
                 safe.write('&#')
-                safe.write(c)
+                safe.write(ord(c))
                 safe.write(';')
         result = safe.getvalue()
         safe.close()

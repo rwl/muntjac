@@ -15,9 +15,13 @@ from WebKit.HTTPServlet import HTTPServlet  #@PydevCodeAnalysisIgnore
 
 class ContextualHttpServlet(HTTPServlet):
 
+    def __init__(self, contextPath=''):
+        self._contextPath = contextPath
+
+
     def getContextPath(self, request):
         ## FIXME: implement request.contextPath()
-        return request.serverSideContextPath()
+        return self._contextPath
 
 
     def originalContextPath(self, request):
@@ -28,14 +32,14 @@ class ContextualHttpServlet(HTTPServlet):
     def getServletPath(self, request):
         ## FIXME: implement request.servletPath()
         servletPath = SCRIPT_NAME(request.environ())
-        pathInfo = PATH_INFO(request.environ())
-
-        if 'REQUEST_URI' in request.environ():
-            uri = request.environ()['REQUEST_URI']
-            # correct servletPath if there was a redirection
-            if not (uri + '/').startswith(servletPath + '/'):
-                i = uri.find(pathInfo)
-                servletPath = i > 0 and uri[:i] or ''
+#        pathInfo = PATH_INFO(request.environ())
+#
+#        if 'REQUEST_URI' in request.environ():
+#            uri = request.environ()['REQUEST_URI']
+#            # correct servletPath if there was a redirection
+#            if not (uri + '/').startswith(servletPath + '/'):
+#                i = uri.find(pathInfo)
+#                servletPath = i > 0 and uri[:i] or ''
 
         return servletPath
 
