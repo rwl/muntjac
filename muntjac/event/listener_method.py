@@ -315,7 +315,9 @@ class ListenerMethod(IEventListener):
 
                 self._eventType = eventType
                 self._target = target
-                self._method = method
+
+                self._method = method.im_func.func_name  # can't pickle unbound method
+
                 self._eventArgumentIndex = -1
 
                 params, _, _, _ = inspect.getargspec(method)
@@ -413,7 +415,7 @@ class ListenerMethod(IEventListener):
         # Only send events supported by the method
         if issubclass(event.__class__, self._eventType):
             try:
-                m_name = self._method.im_func.func_name
+                m_name = self._method#.im_func.func_name
                 m = getattr(self._target, m_name)
 
                 if self._eventArgumentIndex >= 0:

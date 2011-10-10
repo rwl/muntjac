@@ -90,29 +90,35 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
             c.detach()
 
 
-    _COMPONENT_ATTACHED_METHOD = getattr(IComponentAttachListener,
-            'componentAttachedToContainer')
-
-    _COMPONENT_DETACHED_METHOD = getattr(IComponentDetachListener,
-            'componentDetachedFromContainer')
+#    _COMPONENT_ATTACHED_METHOD = getattr(IComponentAttachListener,
+#            'componentAttachedToContainer')
+#
+#    _COMPONENT_DETACHED_METHOD = getattr(IComponentDetachListener,
+#            'componentDetachedFromContainer')
 
 
     def addListener(self, listener):
         if isinstance(listener, IComponentAttachListener):
             AbstractComponent.addListener(self, ComponentAttachEvent, listener,
-                    self._COMPONENT_ATTACHED_METHOD)
+                    IComponentAttachListener.componentAttachedToContainer)
+#                    self._COMPONENT_ATTACHED_METHOD)
         else:
             AbstractComponent.addListener(self, ComponentDetachEvent, listener,
-                    self._COMPONENT_DETACHED_METHOD)
+                    IComponentDetachListener.componentDetachedFromContainer)
+#                    self._COMPONENT_DETACHED_METHOD)
 
 
     def removeListener(self, listener):
         if isinstance(listener, IComponentAttachListener):
             AbstractComponent.removeListener(self, ComponentAttachEvent,
-                    listener, self._COMPONENT_ATTACHED_METHOD)
+                    listener,
+                    IComponentAttachListener.componentAttachedToContainer)
+#                    self._COMPONENT_ATTACHED_METHOD)
         else:
             AbstractComponent.removeListener(self, ComponentDetachEvent,
-                    listener, self._COMPONENT_DETACHED_METHOD)
+                    listener,
+                    IComponentDetachListener.componentDetachedFromContainer)
+#                    self._COMPONENT_DETACHED_METHOD)
 
 
     def fireComponentAttachEvent(self, component):
