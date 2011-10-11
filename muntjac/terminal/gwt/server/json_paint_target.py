@@ -18,7 +18,7 @@ import logging
 
 from warnings import warn
 
-from Queue import LifoQueue
+from collections import deque
 from muntjac.util import getSuperClass
 from muntjac.util import clsname
 from muntjac.ui.abstract_component import AbstractComponent
@@ -73,9 +73,9 @@ class JsonPaintTarget(IPaintTarget):
         self._uidlBuffer = outWriter
 
         # Initialize tag-writing
-        self._mOpenTags = LifoQueue()
+        self._mOpenTags = deque()
 
-        self._openJsonTags = LifoQueue()
+        self._openJsonTags = deque()
 
         self._cacheEnabled = cachingRequired
 
@@ -132,10 +132,10 @@ class JsonPaintTarget(IPaintTarget):
                         'Attempted to write to a closed IPaintTarget.'
 
             if self._tag is not None:
-                self._openJsonTags.put(self._tag)
+                self._openJsonTags.append(self._tag)
 
             # Checks tagName and attributes here
-            self._mOpenTags.put(tagName)
+            self._mOpenTags.append(tagName)
 
             self._tag = JsonTag(tagName, self)
 

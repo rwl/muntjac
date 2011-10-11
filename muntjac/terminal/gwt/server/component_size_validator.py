@@ -17,7 +17,7 @@
 import logging
 import traceback
 
-from Queue import LifoQueue
+from collections import deque
 
 try:
     from cStringIO import StringIO
@@ -103,7 +103,7 @@ class ComponentSizeValidator(object):
         if attributes is not None:
             while len(attributes) > cls._LAYERS_SHOWN:
                 attributes.pop()
-            while not attributes.empty():
+            while len(attributes) > 0:
                 ci = attributes.pop()
                 cls.showComponent(ci.component, ci.info, err, indent,
                         widthError)
@@ -155,16 +155,16 @@ class ComponentSizeValidator(object):
 
     @classmethod
     def getHeightAttributes(cls, component):
-        attributes = LifoQueue()
+        attributes = deque()
         info = ComponentInfo(component, cls.getHeightString(component))
-        attributes.put(info)
+        attributes.append(info)
         parent = component.getParent()
         info = ComponentInfo(parent, cls.getHeightString(parent))
-        attributes.put(info)
+        attributes.append(info)
 
         while parent is not None:
             info = ComponentInfo(parent, cls.getHeightString(parent))
-            attributes.put(info)
+            attributes.append(info)
             parent = parent.getParent()
 
         return attributes
@@ -172,16 +172,16 @@ class ComponentSizeValidator(object):
 
     @classmethod
     def getWidthAttributes(cls, component):
-        attributes = LifoQueue()
+        attributes = deque()
         info = ComponentInfo(component, cls.getWidthString(component))
-        attributes.put(info)
+        attributes.append(info)
         parent = component.getParent()
         info = ComponentInfo(parent, cls.getWidthString(parent))
-        attributes.put(info)
+        attributes.append(info)
 
         while parent is not None:
             info = ComponentInfo(parent, cls.getWidthString(parent))
-            attributes.put(info)
+            attributes.append(info)
             parent = parent.getParent()
 
         return attributes

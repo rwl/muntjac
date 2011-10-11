@@ -16,7 +16,7 @@
 
 from warnings import warn
 
-from Queue import LifoQueue
+from collections import deque
 
 from muntjac.ui.abstract_component import AbstractComponent
 
@@ -125,24 +125,24 @@ class MenuBar(AbstractComponent):
 
     def changeVariables(self, source, variables):
         """Deserialize changes received from client."""
-        items = LifoQueue()
+        items = deque()
         found = False
 
         if 'clickedId' in variables:
             clickedId = variables.get('clickedId')
             for itm in self.getItems():
-                items.put(itm)
+                items.append(itm)
 
             tmpItem = None
 
             # Go through all the items in the menu
-            while not found and not items.empty():
+            while not found and len(items) > 0:
                 tmpItem = items.pop()
                 found = clickedId.intValue() == tmpItem.getId()
 
                 if tmpItem.hasChildren():
                     for c in tmpItem.getChildren():
-                        items.put(c)
+                        items.append(c)
 
             # If we got the clicked item, launch the command.
             if found and tmpItem.isEnabled():

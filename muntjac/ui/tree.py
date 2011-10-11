@@ -15,7 +15,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from collections import deque
-from Queue import LifoQueue
 
 from muntjac.util import clsname
 from muntjac.terminal.key_mapper import KeyMapper
@@ -182,17 +181,17 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
         result = True
 
         # Initial stack
-        todo = LifoQueue
-        todo.put(startItemId)
+        todo = deque()
+        todo.append(startItemId)
         # Expands recursively
-        while not todo.empty():
-            idd = todo.get()
+        while len(todo) > 0:
+            idd = todo.pop()
             if (self.areChildrenAllowed(idd)
                     and not self.expandItem(idd, False)):
                 result = False
             if self.hasChildren(idd):
                 for c in self.getChildren(idd):
-                    todo.put(c)
+                    todo.append(c)
 
         self.requestRepaint()
         return result
@@ -228,17 +227,17 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
         result = True
 
         # Initial stack
-        todo = LifoQueue
-        todo.put(startItemId)
+        todo = deque()
+        todo.append(startItemId)
 
         # Collapse recursively
-        while not todo.isEmpty():
-            idd = todo.get()
+        while len(todo) > 0:
+            idd = todo.pop()
             if self.areChildrenAllowed(idd) and not self.collapseItem(idd):
                 result = False
             if self.hasChildren(idd):
                 for c in self.getChildren(idd):
-                    todo.put(c)
+                    todo.append(c)
 
         return result
 
