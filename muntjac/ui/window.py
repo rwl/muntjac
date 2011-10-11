@@ -28,7 +28,8 @@ from muntjac.ui.component import Event as ComponentEvent
 from muntjac.ui.abstract_component import AbstractComponent
 
 from muntjac.event.field_events import \
-    (IFocusNotifier, IBlurNotifier, FocusEvent, BlurEvent)
+    (IFocusNotifier, IBlurNotifier, FocusEvent, BlurEvent, IBlurListener,
+    IFocusListener)
 
 
 class ICloseListener(object):

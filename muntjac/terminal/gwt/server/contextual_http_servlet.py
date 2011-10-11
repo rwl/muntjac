@@ -2,9 +2,14 @@
 import locale
 from urlparse import urlparse
 
-from paste.webkit.wsgiapp import sys_path_install
-from paste.httpheaders import ACCEPT_LANGUAGE, SCRIPT_NAME, PATH_INFO
+from os.path import join, dirname
 
+from paste.webkit.wsgiapp import sys_path_install
+
+from paste.httpheaders import \
+    ACCEPT_LANGUAGE, SCRIPT_NAME, PATH_INFO, IF_MODIFIED_SINCE
+
+import muntjac
 from muntjac.util import Locale
 
 # Add 'FakeWebware' to sys path
@@ -15,13 +20,17 @@ from WebKit.HTTPServlet import HTTPServlet  #@PydevCodeAnalysisIgnore
 
 class ContextualHttpServlet(HTTPServlet):
 
-    def __init__(self, contextPath=''):
-        self._contextPath = contextPath
+    def __init__(self, contextRoot=None):
+
+        if contextRoot is not None:
+            self._contextRoot = contextRoot
+        else:
+            self._contextRoot = join(dirname(muntjac.__file__), '..')
 
 
     def getContextPath(self, request):
         ## FIXME: implement request.contextPath()
-        return self._contextPath
+        return ''  # default web app
 
 
     def originalContextPath(self, request):
@@ -75,13 +84,25 @@ class ContextualHttpServlet(HTTPServlet):
             return None
 
 
+    def getDateHeader(self, request):
+        dh = IF_MODIFIED_SINCE(request.environ())
+        if dh:
+            return int(dh)
+        else:
+            return -1
+
+
     def getUrlPath(self, url):
         """
         @param url: URL of the form scheme://netloc/path;parameters?query#fragment
         @return: the path part or the url
         """
-        return urlparse(url)[2]
+        return urlparse(url)[2]  # FIXME remove URL query
 
+
+    def getRequestURI(self, request):
+        """The request's URL from the protocol name up to the query string"""
+        return urlparse(request.uri())[2]
 
 
     def getPathInfo(self, request):
@@ -89,11 +110,17 @@ class ContextualHttpServlet(HTTPServlet):
 
 
     def getResourceAsStream(self, path):
-        # FIXME: make relative to context root
-        stream = open(path, 'rb')
+        # FIXME:
+        stream = open(join(self._contextRoot, path.lstrip('/')), 'rb')
         return stream
 
 
-    def getResourcePath(self, session, path):
-        # FIXME: make relative to context root
+    def getResource(self, filename):
+        # FIXME:
+        path = join(self._contextRoot, filename.lstrip('/'))
         return path
+
+
+    def getResourcePath(self, session, path):
+        # FIXME:
+        return join(self._contextRoot, path.lstrip('/'))

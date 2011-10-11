@@ -314,12 +314,14 @@ class HttpSessionWrapper(ISession):
         self._session = session
 
 
-    def getAttribute(self, name):
-        return self._session.value(name)
+    def getAttribute(self, name, default=NoDefault):
+        return self._session.value(name, default)
 
 
     def getMaxInactiveInterval(self):
-        return self._session.timeout()
+        """maximum time interval, in seconds, between client accesses"""
+        default = 1800  # 30 minutes  FIXME: configurable parameter
+        return self._session.value('timeout', default)
 
 
     def getWrappedSession(self):

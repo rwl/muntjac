@@ -634,7 +634,7 @@ class JsonTag(object):
         self._childNode = False
         self._tagClosed = False
 
-        self._data.append('[\"' + tagName + '\"')
+        self._data.write('[\"' + tagName + '\"')
 
         self._target = target
 

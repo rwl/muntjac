@@ -204,9 +204,9 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
                 self.SERVLET_PARAMETER_DISABLE_XSRF_PROTECTION] = \
                         'true' if disableXsrfProtection else 'false'
 
-        path = None#join(dirname(muntjac.__file__), '..')
-        self._applicationProperties[self.PARAMETER_VAADIN_RESOURCES] = \
-            path if resources is None else resources
+#        path = None#join(dirname(muntjac.__file__), '..')
+#        self._applicationProperties[self.PARAMETER_VAADIN_RESOURCES] = \
+#            path if resources is None else resources
 
 
     def awake(self, transaction):
@@ -1019,12 +1019,14 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
 
         contextPath = self.getContextPath(request)
         if (contextPath is not None and request.uri().startswith('/VAADIN/')):
-            self.serveStaticResourcesInVAADIN(request.uri(), request, response)
+            self.serveStaticResourcesInVAADIN(self.getRequestURI(request),
+                    request, response)
             return True
 
-        elif request.uri().startswith(contextPath + '/VAADIN/'):
+        elif self.getRequestURI(request).startswith(contextPath + '/VAADIN/'):
             self.serveStaticResourcesInVAADIN(
-                    request.uri()[len(contextPath):], request, response)
+                    self.getRequestURI(request)[len(contextPath):],
+                    request, response)
             return True
 
         return False
@@ -1041,7 +1043,7 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
         @throws ServletException
         """
         #sc = self.getServletContext()  # FIXME: ServletContext
-        resourceUrl = join(self.getContextPath(request), filename)
+        resourceUrl = self.getResource(filename)
 
         if not exists(resourceUrl):
             # cannot serve requested file
@@ -1053,7 +1055,7 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
         # Find the modification timestamp
         lastModifiedTime = 0
         try:
-            lastModifiedTime = getmtime(resourceUrl)
+            lastModifiedTime = int(getmtime(resourceUrl) * 1000)
             # Remove milliseconds to avoid comparison problems (milliseconds
             # are not returned by the browser in the "If-Modified-Since"
             # header).
@@ -1074,7 +1076,7 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
 
         # Provide modification timestamp to the browser if it is known.
         if lastModifiedTime > 0:
-            response.setHeader('Last-Modified', lastModifiedTime)
+            response.setHeader('Last-Modified', str(lastModifiedTime))
 
             # The browser is allowed to cache for 1 hour without checking if
             # the file has changed. This forces browsers to fetch a new version
@@ -1116,7 +1118,7 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
         try:
             # If-Modified-Since represents the timestamp of the version cached
             # in the browser
-            headerIfModifiedSince = IF_MODIFIED_SINCE(request.environ())
+            headerIfModifiedSince = self.getDateHeader(request)
             if headerIfModifiedSince >= resourceLastModifiedTimestamp:
                 # Browser has this an up-to-date version of the resource
                 return True

@@ -110,13 +110,13 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
     _VTYPE_STRINGARRAY = 'c'
     _VTYPE_MAP = 'm'
 
-    _VAR_RECORD_SEPARATOR = '\u001e'
+    _VAR_RECORD_SEPARATOR = u'\u001e'
 
-    _VAR_FIELD_SEPARATOR = '\u001f'
+    _VAR_FIELD_SEPARATOR = u'\u001f'
 
-    VAR_BURST_SEPARATOR = '\u001d'
+    VAR_BURST_SEPARATOR = u'\u001d'
 
-    VAR_ARRAYITEM_SEPARATOR = '\u001c'
+    VAR_ARRAYITEM_SEPARATOR = u'\u001c'
 
     _MAX_BUFFER_SIZE = 64 * 1024
 
@@ -532,11 +532,11 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
 
         # security key
         writeSecurityTokenFlag = \
-                request.getAttribute(self._WRITE_SECURITY_TOKEN_FLAG)
+                request.getAttribute(self._WRITE_SECURITY_TOKEN_FLAG, None)
 
         if writeSecurityTokenFlag is not None:
             seckey = request.getSession().getAttribute(
-                    ApplicationConnection.UIDL_SECURITY_TOKEN_ID)
+                    ApplicationConnection.UIDL_SECURITY_TOKEN_ID, None)
             if seckey is None:
                 seckey = str(uuid.uuid4())
                 request.getSession().setAttribute(
@@ -570,14 +570,14 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
     def writeUidlResponce(self, callback, repaintAll, outWriter,
                           window, analyzeLayouts):
 
-        outWriter.print_('\"changes\":[')
+        outWriter.write('\"changes\":[')
 
         paintables = None
 
         invalidComponentRelativeSizes = None
 
         paintTarget = JsonPaintTarget(self, outWriter, not repaintAll)
-        windowCache = self._currentlyOpenWindowsInClient[window.getName()]
+        windowCache = self._currentlyOpenWindowsInClient.get(window.getName())
         if windowCache is None:
             windowCache = OpenWindowCache()
             self._currentlyOpenWindowsInClient[window.getName()] = windowCache
@@ -824,7 +824,8 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                 del self._paintableIdMap[c]
 
         # clean WindowCache
-        openWindowCache = self._currentlyOpenWindowsInClient[window.getName()]
+        openWindowCache = \
+                self._currentlyOpenWindowsInClient.get(window.getName())
 
         if openWindowCache is not None:
             openWindowCache.clear()
@@ -839,7 +840,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         p.removeListener(self)
 
 
-    def _handleVariables(self, request, response, callback,
+    def handleVariables(self, request, response, callback,
                          application2, window):
         """TODO document
 
@@ -855,7 +856,10 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         if changes is not None:
 
             # Manage bursts one by one
-            bursts = changes.split(self.VAR_BURST_SEPARATOR)
+            bursts = re.split(self.VAR_BURST_SEPARATOR, changes)
+            # FIXME: remove trailing empty string using re
+            if (len(bursts) > 0) & (bursts[-1] == ''):
+                bursts = bursts[:-1]
 
             # Security: double cookie submission pattern unless disabled by
             # property
@@ -872,7 +876,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                     # ApplicationServlet has stored the security token in the
                     # session; check that it matched the one sent in the UIDL
                     sessId = request.getSession().getAttribute(
-                            ApplicationConnection.UIDL_SECURITY_TOKEN_ID)
+                            ApplicationConnection.UIDL_SECURITY_TOKEN_ID, '')
 
                     if (sessId is None) or (not (sessId == bursts[0])):
                         msg = 'Security key mismatch'
@@ -1014,7 +1018,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
             return None
 
         inputStream = request.getInputStream()
-        return inputStream.getvalue()
+        return inputStream.read()
 
 
     def _handleChangeVariablesError(self, application, owner, e, m):
@@ -1569,8 +1573,8 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
             self._locales.append(str(l))
             self._pendingLocalesIndex = 0
 
-        if value not in self._locales:
-            self._locales.append(value)
+        if str(value) not in self._locales:
+            self._locales.append(str(value))
 
 
     def generateLocale(self, value):
@@ -1668,7 +1672,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
             return None
 
 
-    def _getTagForType(self, class1):
+    def getTagForType(self, class1):
         obj = self._typeToKey.get(class1)
         if obj is None:
             obj = self._nextTypeKey
