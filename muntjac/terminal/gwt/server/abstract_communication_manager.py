@@ -625,7 +625,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                     return 1
                 return 0
 
-            paintables.sort(cmp=compare)
+            paintables.sort(cmp=compare)  # FIXME: check sort
 
             for p in paintables:
                 # TODO CLEAN
@@ -1462,9 +1462,9 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         idd = self._paintableIdMap.get(paintable)
         if idd is None:
             # use testing identifier as id if set
-            ids = paintable.getDebugId()
-            if ids is None:
-                ids = 'PID' + str(self._idSequence)
+            idd = paintable.getDebugId()
+            if idd is None:
+                idd = 'PID' + str(self._idSequence)
                 self._idSequence += 1  # post increment
             else:
                 idd = 'PID_S' + idd
@@ -1478,15 +1478,15 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
 
                 if (isinstance(old, IComponent)
                         and old.getApplication() is not None):
-                    raise ValueError('Two paintables (' \
-                            + paintable.getClass().getSimpleName() \
-                            + ',' + old.getClass().getSimpleName() \
-                            + ') have been assigned the same id: ' \
-                            + paintable.getDebugId())
+                    raise ValueError(('Two paintables ('
+                            + paintable.__class__.__name__
+                            + ',' + old.__class__.__name__
+                            + ') have been assigned the same id: '
+                            + paintable.getDebugId()))
 
-            self._paintableIdMap[paintable] = id
+            self._paintableIdMap[paintable] = idd
 
-        return id
+        return idd
 
 
     def hasPaintableId(self, paintable):

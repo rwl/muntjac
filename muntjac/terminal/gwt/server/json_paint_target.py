@@ -21,6 +21,7 @@ from warnings import warn
 from Queue import LifoQueue
 from muntjac.util import getSuperClass
 from muntjac.util import clsname
+from muntjac.ui.abstract_component import AbstractComponent
 
 try:
     from cStringIO import StringIO
@@ -112,7 +113,7 @@ class JsonPaintTarget(IPaintTarget):
                 and (self._identifiersCreatedDueRefPaint is None
                 or paintable not in self._identifiersCreatedDueRefPaint))
             idd = self._manager.getPaintableId(paintable)
-            paintable.addListener(self._manager)
+            AbstractComponent.addListener(paintable, self._manager)
             self.addAttribute('id', idd)
             self._paintedComponents.add(paintable)
 
@@ -609,7 +610,8 @@ class JsonPaintTarget(IPaintTarget):
 
 
     def hasClientWidgetMapping(self, class1):
-        return hasattr(class1, 'CLIENT_WIDGET')  # isAnnotationPresent
+        return True  # ignore client widget warning
+        #return hasattr(class1, 'CLIENT_WIDGET')  # FIXME: client widgets
 
 
     def getUsedPaintableTypes(self):

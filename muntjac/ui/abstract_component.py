@@ -628,9 +628,11 @@ class AbstractComponent(IComponent, IMethodEventSource):
         @return CSS width
         """
         if self.getWidthUnits() == self.UNITS_PIXELS:
-            return self.getWidth() + self.UNIT_SYMBOLS[self.getWidthUnits()]
+            return (str(self.getWidth())
+                    + self.UNIT_SYMBOLS[self.getWidthUnits()])
         else:
-            return self.getWidth() + self.UNIT_SYMBOLS[self.getWidthUnits()]
+            return (str(self.getWidth())
+                    + self.UNIT_SYMBOLS[self.getWidthUnits()])
 
 
     def paintContent(self, target):
