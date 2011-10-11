@@ -777,7 +777,7 @@ class IntVariable(Variable):
 
 
     def getJsonPresentation(self):
-        return '\"' + self.name + '\":' + self._value
+        return '\"' + self.name + '\":' + str(self._value)
 
 
 class LongVariable(Variable):
@@ -788,7 +788,7 @@ class LongVariable(Variable):
 
 
     def getJsonPresentation(self):
-        return '\"' + self.name + '\":' + self._value
+        return '\"' + self.name + '\":' + str(self._value)
 
 
 class FloatVariable(Variable):
@@ -799,7 +799,7 @@ class FloatVariable(Variable):
 
 
     def getJsonPresentation(self):
-        return '\"' + self.name + '\":' + self._value
+        return '\"' + self.name + '\":' + str(self._value)
 
 
 class DoubleVariable(Variable):
@@ -810,7 +810,7 @@ class DoubleVariable(Variable):
 
 
     def getJsonPresentation(self):
-        return '\"' + self.name + '\":' + self._value
+        return '\"' + self.name + '\":' + str(self._value)
 
 
 class ArrayVariable(Variable):
@@ -827,7 +827,7 @@ class ArrayVariable(Variable):
         sb.write('\":[')
         for i in range(len(self._value)):
             sb.write('\"')
-            sb.write( self.escapeJSON(self._value[i]) )
+            sb.write(self.escapeJSON( str(self._value[i]) ))
             sb.write('\"')
             if i < len(self._value) - 1:
                 sb.write(',')

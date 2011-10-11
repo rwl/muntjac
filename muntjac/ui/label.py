@@ -202,7 +202,7 @@ class Label(AbstractComponent, property.IProperty, property.IViewer,
         self._dataSource.setValue(newValue)
 
 
-    def toString(self):
+    def __str__(self):
         """@see java.lang.Object#toString()"""
         if self._dataSource is None:
             raise ValueError, self._DATASOURCE_MUST_BE_SET

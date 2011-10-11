@@ -57,7 +57,7 @@ class AbstractProperty(property.IProperty, property.IValueChangeNotifier,
             self.fireReadOnlyStatusChange()
 
 
-    def toString(self):
+    def __str__(self):
         """Returns the value of the <code>IProperty</code> in human readable
         textual format. The return value should be assignable to the
         <code>setValue</code> method if the IProperty is not in read-only mode.

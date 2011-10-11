@@ -502,7 +502,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
             self._closingWindowName = None
 
         # Finds the window within the application
-        outWriter.close()
+        #outWriter.close()
         self._requestThemeName = None
 
 
@@ -564,7 +564,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
 
         self.closeJsonMessage(outWriter)
 
-        outWriter.close()
+        #outWriter.close()
 
 
     def writeUidlResponce(self, callback, repaintAll, outWriter,
@@ -680,9 +680,9 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                                             None)
 
         paintTarget.close()
-        outWriter.print_(']')  # close changes
+        outWriter.write(']')  # close changes
 
-        outWriter.print_(', \"meta\" : {')
+        outWriter.write(', \"meta\" : {')
         metaOpen = False
 
         if repaintAll:
@@ -785,7 +785,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                 outWriter.write(self.getTagForType(class1))
 
         if typeMappingsOpen:
-            outWriter.print_(' }')
+            outWriter.write(' }')
 
         # add any pending locale definitions requested by the client
         self.printLocaleDeclarations(outWriter)
@@ -1121,7 +1121,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
 
     def _getMonths(self, l):
         locSave = locale.getlocale(locale.LC_TIME)
-        locale.setlocale(locale.LC_TIME, str(l))
+        locale.setlocale(locale.LC_TIME, (str(l), 'utf-8'))  # FIXME: encoding
 
         short_months = [
             locale.nl_langinfo(locale.MON_1),
@@ -1159,7 +1159,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
 
     def _getWeekdays(self, l):
         locSave = locale.getlocale(locale.LC_TIME)
-        locale.setlocale(locale.LC_TIME, str(l))
+        locale.setlocale(locale.LC_TIME, (str(l), 'utf-8'))  # FIXME: encoding
 
         short_days = [
             locale.nl_langinfo(locale.ABDAY_1),
@@ -1187,9 +1187,9 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
 
     def _getDateFormat(self, l):
         locSave = locale.getlocale(locale.LC_TIME)
-        locale.setlocale(locale.LC_TIME, str(l))
+        locale.setlocale(locale.LC_TIME, (str(l), 'utf-8'))  # FIXME: encoding
 
-        fmt = locale.nl_langinfo(locale.ERA_D_FMT)
+        fmt = locale.nl_langinfo(locale.D_T_FMT)
 
         locale.setlocale(locale.LC_TIME, locSave)
 
@@ -1210,7 +1210,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         return ampm
 
 
-    def _printLocaleDeclarations(self, outWriter):
+    def printLocaleDeclarations(self, outWriter):
         """Prints the queued (pending) locale definitions to a PrintWriter
         in a (UIDL) format that can be sent to the client and used there in
         formatting dates, times etc.
@@ -1224,10 +1224,10 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
             l = self.generateLocale(self._locales[self._pendingLocalesIndex])
 
             # Locale name
-            outWriter.write('{\"name\":\"' + l + '\",')
+            outWriter.write('{\"name\":\"' + str(l) + '\",')
 
             # Month names (both short and full)
-            short_months, months = self._getMonths(l[0])
+            short_months, months = self._getMonths(l)
             outWriter.write('\"smn\":[\"'
                     + short_months[0] + '\",\"' + short_months[1] + '\",\"'
                     + short_months[2] + '\",\"' + short_months[3] + '\",\"'
@@ -1261,16 +1261,18 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                     + '],')
 
             # First day of week (0 = sunday, 1 = monday)
-            outWriter.write('\"fdow\":' + (0) + ',')
+            outWriter.write('\"fdow\":' + ('1') + ',')  # FIXME: FDOW
 
             # Date formatting (MM/DD/YYYY etc.)
 
             dateFormat = self._getDateFormat(l)
             if dateFormat == "":
                 logger.warning('Unable to get default date '
-                               'pattern for locale ' + l)
-                dateFormat = locale.nl_langinfo(locale.ERA_D_FMT)
+                               'pattern for locale ' + str(l))
+                dateFormat = locale.nl_langinfo(locale.D_T_FMT)
             df = dateFormat
+
+            df = 'dd/MM/yy HH:mm'  # FIXME:
 
             timeStart = df.find('H')
             if timeStart < 0:
@@ -1306,7 +1308,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
             hour_min_delimiter = '.' if timeformat.find('.') > -1 else ':'
 
             # outWriter.write("\"tf\":\"" + timeformat + "\",");
-            outWriter.write('\"thc\":' + twelve_hour_clock + ',')
+            outWriter.write('\"thc\":' + str(twelve_hour_clock).lower() + ',')
             outWriter.write('\"hmd\":\"' + hour_min_delimiter + '\"')
             if twelve_hour_clock:
                 ampm = self._getAmPmStrings(l)
@@ -1392,7 +1394,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
 
             while newWindowName in self._currentlyOpenWindowsInClient:
                 newWindowName = (window.getName()
-                        + '_' + self._nextUnusedWindowSuffix)
+                        + '_' + str(self._nextUnusedWindowSuffix))
                 self._nextUnusedWindowSuffix += 1
 
             window = application.getWindow(newWindowName)
@@ -1554,7 +1556,8 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
 
         @param paintable
         """
-        self._dirtyPaintables.remove(paintable)
+        if paintable in self._dirtyPaintables:
+            self._dirtyPaintables.remove(paintable)
         paintable.requestRepaintRequests()
 
 
@@ -1932,7 +1935,7 @@ class OpenWindowCache(object):
         @return true if the given class was added to cache
         """
         self._res = set()
-        return self._res.append(obj)
+        return self._res.add(obj)
 
 
     def clear(self):
