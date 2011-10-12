@@ -59,9 +59,12 @@ class SystemErr(RuntimeError, IErrorMessage):
         self._cause = None
 
         nargs = len(args)
-        if nargs == 1:
+        if nargs == 0:
+            super(SystemErr, self).__init__()
+        elif nargs == 1:
             if isinstance(args[0], Exception):
                 self._cause = args[0]
+                super(SystemErr, self).__init__()
             else:
                 super(SystemErr, self).__init__(args[0])
         elif nargs == 2:
@@ -69,7 +72,7 @@ class SystemErr(RuntimeError, IErrorMessage):
             super(SystemErr, self).__init__(message)
             self._cause = cause
         else:
-            raise ValueError, 'too many arguments'
+            raise ValueError, ('too many arguments: %d' % nargs)
 
 
     def getErrorLevel(self):
@@ -83,26 +86,38 @@ class SystemErr(RuntimeError, IErrorMessage):
         target.startTag('error')
         target.addAttribute('level', 'system')
 
+        message = self.getHtmlMessage()
+
+        target.addXMLSection('div', message,
+                'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd')
+
+        target.endTag('error')
+
+
+    def getHtmlMessage(self):
         sb = StringIO()
-        message = self.getLocalizedMessage()
+        message = self.message
         if message is not None:
             sb.write('<h2>')
             sb.write(message)
             sb.write('</h2>')
+
         # Paint the exception
         if self._cause is not None:
             sb.write('<h3>Exception</h3>')
             buff = StringIO()
-            traceback.print_exception(sys.exc_type, self._cause,
-                    sys.last_traceback, file=buff)  #@PydevCodeAnalysisIgnore
+            exc_type, exc_value, exc_traceback = sys.exc_info()
+            traceback.print_exception(exc_type, self._cause,
+                    exc_traceback, file=buff)
+
             sb.write('<pre>')
             sb.write(buff.getvalue())
             buff.close()
             sb.write('</pre>')
-        target.addXMLSection('div', sb.getvalue(),
-                'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd')
+
+        result = sb.getvalue()
         sb.close()
-        target.endTag('error')
+        return result
 
 
     def getCause(self):
