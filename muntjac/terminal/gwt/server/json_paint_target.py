@@ -84,7 +84,7 @@ class JsonPaintTarget(IPaintTarget):
         self._usedResources = set()
         self._customLayoutArgumentsOpen = False
         self._tag = None
-        self._errorsOpen = None
+        self._errorsOpen = 0
         self._paintedComponents = set()
         self._identifiersCreatedDueRefPaint = None
         self._usedPaintableTypes = list()
@@ -532,13 +532,13 @@ class JsonPaintTarget(IPaintTarget):
         """
         if self._tag is not None:
             self._uidlBuffer.write(self._tag.getJSON())
-        self._flush()
+        self.flush()
         self._closed = True
 
 
-    def _flush(self):
+    def flush(self):
         """Method flush."""
-        self._uidlBuffer.flush()
+        #self._uidlBuffer.flush()  # don't flush HTTPResponse
 
 
     def paintReference(self, paintable, referenceName):

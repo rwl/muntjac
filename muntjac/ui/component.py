@@ -833,7 +833,7 @@ class IListener(IEventListener):
         raise NotImplementedError
 
 
-class IErrorEvent(Event):
+class ErrorEvent(Event):
     """Class of all component originated error events.
 
     <p>
@@ -851,7 +851,7 @@ class IErrorEvent(Event):
         @param component
                    the source component.
         """
-        super(IErrorEvent, self).__init__(component)
+        super(ErrorEvent, self).__init__(component)
         self._message = message
 
 

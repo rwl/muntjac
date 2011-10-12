@@ -790,14 +790,14 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
         # Positioning
         positionx = variables.get('positionx')
         if positionx is not None:
-            x = int(positionx)
+            x = positionx
             # This is information from the client so it is already using the
             # position. No need to repaint.
             self.setPositionX(-1 if x < 0 else x, False)
 
         positiony = variables.get('positiony')
         if positiony is not None:
-            y = int(positiony)
+            y = positiony
             # This is information from the client so it is already using the
             # position. No need to repaint.
             self.setPositionY(-1 if y < 0 else y, False)

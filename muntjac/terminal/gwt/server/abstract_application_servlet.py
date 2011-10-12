@@ -181,13 +181,14 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
 
     def __init__(self, productionMode=False, debug=False, widgetset=None,
                  resourceCacheTime=3600, disableXsrfProtection=False,
-                 resources=None, *args, **kw_args):
+                 *args, **kw_args):
         super(AbstractApplicationServlet, self).__init__(*args, **kw_args)
 
         self._applicationProperties = dict()
         self._productionMode = False
         self._resourcePath = None
         self._resourceCacheTime = 3600
+        self._firstTransaction = True
 
         self._applicationProperties[
                 self.SERVLET_PARAMETER_PRODUCTION_MODE] = \
@@ -203,10 +204,6 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
         self._applicationProperties[
                 self.SERVLET_PARAMETER_DISABLE_XSRF_PROTECTION] = \
                         'true' if disableXsrfProtection else 'false'
-
-#        path = None#join(dirname(muntjac.__file__), '..')
-#        self._applicationProperties[self.PARAMETER_VAADIN_RESOURCES] = \
-#            path if resources is None else resources
 
 
     def awake(self, transaction):
@@ -230,9 +227,11 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
         #for name in context.getInitParameterNames():
         #    self._applicationProperties[name] = context.getInitParameter(name)
 
-        self.checkProductionMode()
-        self.checkCrossSiteProtection()
-        self.checkResourceCacheTime()
+        if self._firstTransaction:
+            self._firstTransaction = False
+            self.checkProductionMode()
+            self.checkCrossSiteProtection()
+            self.checkResourceCacheTime()
 
 
     def checkCrossSiteProtection(self):
@@ -652,16 +651,20 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
                                    None)
                      is not None)
 
+            if restartApplication or closeApplication:
+                if request.transaction().hasSession():
+                    session = request.session()
+                else:
+                    session = None
+
             if restartApplication:
                 # avoid session creation
-                self.closeApplication(application,
-                        request.transaction()._session)
+                self.closeApplication(application, session)
                 return self.createApplication(request)
 
             elif closeApplication:
                 # avoid session creation
-                self.closeApplication(application,
-                        request.transaction()._session)
+                self.closeApplication(application, session)
                 return None
 
             else:
@@ -1821,7 +1824,10 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
         if allowSessionCreation:
             session = request.session()
         else:
-            session = request.transaction()._session
+            if request.transaction().hasSession():
+                session = request.session()
+            else:
+                session = None
 
         if session is None:
             raise SessionExpiredException()

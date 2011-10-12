@@ -26,6 +26,7 @@ from muntjac.util import fullname
 
 from muntjac.ui.component import \
     IComponent, IListener, IFocusable, Event as ComponentEvent
+from muntjac.ui import component
 
 
 class AbstractComponent(IComponent, IMethodEventSource):
@@ -617,9 +618,11 @@ class AbstractComponent(IComponent, IMethodEventSource):
         @return CSS height
         """
         if self.getHeightUnits() == self.UNITS_PIXELS:
-            return self.getHeight() + self.UNIT_SYMBOLS[self.getHeightUnits()]
+            return (str(self.getHeight())
+                    + self.UNIT_SYMBOLS[self.getHeightUnits()])
         else:
-            return self.getHeight() + self.UNIT_SYMBOLS[self.getHeightUnits()]
+            return (str(self.getHeight())
+                    + self.UNIT_SYMBOLS[self.getHeightUnits()])
 
 
     def getCSSWidth(self):
@@ -991,7 +994,7 @@ class AbstractComponent(IComponent, IMethodEventSource):
         """Emits the component error event. It is transmitted to all
         registered listeners interested in such events.
         """
-        self.fireEvent( IComponentErrorEvent(self.getComponentError(), self) )
+        self.fireEvent( component.ErrorEvent(self.getComponentError(), self) )
 
 
     def setData(self, data):

@@ -778,7 +778,14 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                     outWriter.write(', \"typeMappings\" : { ')
                 else:
                     outWriter.write(' , ')
-                canonicalName = clsname(class1) # canonicalName
+                canonicalName = clsname(class1)
+
+                if canonicalName.startswith('muntjac.ui'):
+                    # use Vaadin package names  FIXME: Python client side
+                    canonicalName = 'com.vaadin.ui.' + class1.__name__
+                else:
+                    raise ValueError, 'use Vaadin package name'
+
                 outWriter.write('\"')
                 outWriter.write(canonicalName)
                 outWriter.write('\" : ')
@@ -882,7 +889,8 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                         msg = 'Security key mismatch'
                         raise InvalidUIDLSecurityKeyException(msg)
 
-            for bi, burst in enumerate(bursts):
+            for bi in range(1, len(bursts)):
+                burst = bursts[bi]
                 success = self.handleVariableBurst(request,
                         application2, success, burst)
 
@@ -906,13 +914,13 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         return success or (self._closingWindowName is not None)
 
 
-    def _handleVariableBurst(self, source, app, success, burst):
+    def handleVariableBurst(self, source, app, success, burst):
         # extract variables to two dim string array
-        tmp = burst.split(self._VAR_RECORD_SEPARATOR)
+        tmp = re.split(self._VAR_RECORD_SEPARATOR, burst)
         variableRecords = [None] * len(tmp)
 
         for i in range(len(tmp)):
-            variableRecords[i] = tmp[i].split(self._VAR_FIELD_SEPARATOR)
+            variableRecords[i] = re.split(self._VAR_FIELD_SEPARATOR, tmp[i])
 
         for i in range(len(variableRecords)):
             variable = variableRecords[i]
@@ -1057,23 +1065,28 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
             application.getErrorHandler().terminalError(errorEvent)
 
 
-    def _convertVariableValue(self, variableType, strValue):
+    def convertVariableValue(self, variableType, strValue):
 
-        return {
-            self._VTYPE_ARRAY: self.convertArray(strValue),
-            self._VTYPE_MAP: self.convertMap(strValue),
-            self._VTYPE_STRINGARRAY: self.convertStringArray(strValue),
-            self._VTYPE_STRING: strValue,
-            self._VTYPE_INTEGER: int(strValue),
-            self._VTYPE_LONG: long(strValue),
-            self._VTYPE_FLOAT: float(strValue),
-            self._VTYPE_DOUBLE: float(strValue),
-            self._VTYPE_BOOLEAN: bool(strValue),
-            self._VTYPE_PAINTABLE: self._idPaintableMap.get(strValue)
+        m = {
+            self._VTYPE_ARRAY: lambda s: self.convertArray(s),
+            self._VTYPE_MAP: lambda s: self.convertMap(s),
+            self._VTYPE_STRINGARRAY: lambda s: self.convertStringArray(s),
+            self._VTYPE_STRING: lambda s: s,
+            self._VTYPE_INTEGER: lambda s: int(s),
+            self._VTYPE_LONG: lambda s: long(s),
+            self._VTYPE_FLOAT: lambda s: float(s),
+            self._VTYPE_DOUBLE: lambda s: float(s),
+            self._VTYPE_BOOLEAN: lambda s: bool(s),
+            self._VTYPE_PAINTABLE: lambda s: self._idPaintableMap.get(s)
         }.get(variableType)
 
+        if m is not None:
+            return m(strValue)
+        else:
+            return None
 
-    def _convertMap(self, strValue):
+
+    def convertMap(self, strValue):
         parts = strValue.split(self.VAR_ARRAYITEM_SEPARATOR)
         mapp = dict()
         for i in range(len(parts)):
@@ -1085,7 +1098,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         return mapp
 
 
-    def _convertStringArray(self, strValue):
+    def convertStringArray(self, strValue):
         # need to return delimiters and filter them out; otherwise empty
         # strings are lost
         # an extra empty delimiter at the end is automatically eliminated
@@ -1103,7 +1116,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         return tokens
 
 
-    def _convertArray(self, strValue):
+    def convertArray(self, strValue):
         val = strValue.split(self.VAR_ARRAYITEM_SEPARATOR)
 
         if len(val) == 0 or (len(val) == 1 and len(val[0]) == 0):
@@ -1114,7 +1127,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
             string = val[i]
             # first char of string is type
             variableType = string[0]
-            values[i] = self._convertVariableValue(variableType, string[1:])
+            values[i] = self.convertVariableValue(variableType, string[1:])
 
         return values
 
@@ -1495,7 +1508,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         return paintable in self._paintableIdMap
 
 
-    def _getDirtyVisibleComponents(self, w):
+    def getDirtyVisibleComponents(self, w):
         """Returns dirty components which are in given window. Components
         in an invisible subtrees are omitted.
 
@@ -1680,7 +1693,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         if obj is None:
             obj = self._nextTypeKey
             self._nextTypeKey += 1
-            self._typeToKey[class1] = object
+            self._typeToKey[class1] = obj
         return str(obj)
 
 
@@ -1930,12 +1943,19 @@ class OpenWindowCache(object):
     TODO make customlayout templates (from theme) to be cached here.
     """
 
+    def __init__(self):
+        self._res = set()
+
+
     def cache(self, obj):
         """@param paintable
         @return true if the given class was added to cache
         """
-        self._res = set()
-        return self._res.add(obj)
+        if obj in self._res:
+            return False
+        else:
+            self._res.add(obj)
+            return True
 
 
     def clear(self):

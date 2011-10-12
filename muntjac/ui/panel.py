@@ -279,22 +279,22 @@ class Panel(AbstractComponentContainer, IScrollable,
         newWidth = variables.get('width')
         newHeight = variables.get('height')
 
-        if newWidth is not None and int(newWidth) != self.getWidth():
-            self.setWidth(int(newWidth), self.UNITS_PIXELS)
+        if newWidth is not None and newWidth != self.getWidth():
+            self.setWidth(newWidth, self.UNITS_PIXELS)
 
-        if newHeight is not None and int(newHeight) != self.getHeight():
-            self.setHeight(int(newHeight), self.UNITS_PIXELS)
+        if newHeight is not None and newHeight != self.getHeight():
+            self.setHeight(newHeight, self.UNITS_PIXELS)
 
         # Scrolling
         newScrollX = variables.get('scrollLeft')
         newScrollY = variables.get('scrollTop')
-        if newScrollX is not None and int(newScrollX) != self.getScrollLeft():
+        if newScrollX is not None and newScrollX != self.getScrollLeft():
             # set internally, not to fire request repaint
-            self._scrollOffsetX = int(newScrollX)
+            self._scrollOffsetX = newScrollX
 
-        if newScrollY is not None and int(newScrollY) != self.getScrollTop():
+        if newScrollY is not None and newScrollY != self.getScrollTop():
             # set internally, not to fire request repaint
-            self._scrollOffsetY = int(newScrollY)
+            self._scrollOffsetY = newScrollY
 
         # Actions
         if self.actionManager is not None:
