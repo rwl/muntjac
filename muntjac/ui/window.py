@@ -806,7 +806,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
             # Closing
             close = variables.get('close')
             if close is not None and bool(close):
-                close()
+                self.close()
 
         # fire event if size has really changed
         if sizeHasChanged:
