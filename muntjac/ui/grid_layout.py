@@ -70,6 +70,7 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
         ---
         Constructs an empty grid layout that is extended as needed.
         """
+        super(GridLayout, self).__init__()
 
         # Initial grid columns.
         self._cols = 0
@@ -230,8 +231,8 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
                 index += 1
 
             if not done:
-                self._areas.addLast(area)
-                self._components.addLast(component)
+                self._areas.append(area)
+                self._components.append(component)
 
             # Attempt to add to super
             try:

@@ -60,6 +60,7 @@ class TextArea(AbstractTextField):
 
         nargs = len(args)
         if nargs == 0:
+            super(TextArea, self).__init__()
             self.setValue('')
         elif nargs == 1:
             if isinstance(args[0], IProperty):

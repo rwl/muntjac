@@ -25,8 +25,9 @@ from muntjac.terminal.gwt.client.mouse_event_details import MouseEventDetails
 
 from muntjac.event.field_events import \
     (BlurEvent, IBlurListener, IBlurNotifier, FocusEvent,
-from muntjac.ui.abstract_component import AbstractComponent
     IFocusListener, IFocusNotifier)
+
+from muntjac.ui.abstract_component import AbstractComponent
 
 
 class IClickListener(object):
@@ -107,6 +108,8 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
         @param dataSource
         @deprecated use {@link CheckBox} instead of Button in "switchmode"
         """
+        super(Button, self).__init__()
+
         self._switchMode = False
         self.clickShortcut = None
 

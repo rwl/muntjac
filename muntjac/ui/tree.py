@@ -70,6 +70,8 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
         @param caption
         @param dataSource
         """
+        super(Tree, self).__init__()
+
         # Set of expanded nodes.
         self._expanded = set()
 

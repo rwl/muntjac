@@ -65,6 +65,8 @@ class CustomLayout(AbstractLayout):
         Constructor for custom layout with given template name. Template
         file is fetched from "<theme>/layout/<templateName>".
         """
+        super(CustomLayout, self).__init__()
+
         # Custom layout slots containing the components.
         self._slots = dict()
         self._templateContents = None

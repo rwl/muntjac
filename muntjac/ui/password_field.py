@@ -53,6 +53,8 @@ class PasswordField(AbstractTextField):
         @param caption
                    the caption for the field
         """
+        super(PasswordField, self).__init__()
+
         nargs = len(args)
         if nargs == 0:
             self.setValue('')

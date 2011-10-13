@@ -1,13 +1,17 @@
 
-from muntjac import Application
-from muntjac.ui.button import IClickListener
-from muntjac.ui import GridLayout, Label, Window, Button
+from muntjac.application import Application
+from muntjac.ui.button import Button, IClickListener
+from muntjac.ui.grid_layout import GridLayout
+from muntjac.ui.label import Label
+from muntjac.ui.window import Window
 
 
 class Calc(Application, IClickListener):
     """A simple calculator using Vaadin."""
 
     def __init__(self):
+        super(Calc, self).__init__()
+
         # All variables are automatically stored in the session.
         self._current = 0.0
         self._stored = 0.0
@@ -16,9 +20,11 @@ class Calc(Application, IClickListener):
         # User interface components
         self._display = Label('0.0')
 
-    # Application.init is called once for each application. Here it creates
-    # the UI and connects it to the business logic.
+
     def init(self):
+        # Application.init is called once for each application. Here it
+        # creates the UI and connects it to the business logic.
+
         # Create the main layout for our application (4 columns, 5 rows)
         layout = GridLayout(4, 5)
 
@@ -42,9 +48,11 @@ class Calc(Application, IClickListener):
             # Add the button to our main layout
             layout.addComponent(button)
 
-    # Event handler for button clicks. Called for all the buttons in the
-    # application.
+
     def buttonClick(self, event):
+        # Event handler for button clicks. Called for all the buttons in
+        # the application.
+
         # Get the button that was clicked
         button = event.getButton()
 
@@ -57,8 +65,11 @@ class Calc(Application, IClickListener):
         # Update the result label with the new value
         self._display.setValue(newValue)
 
-    # Calculator "business logic" implemented here to keep the example minimal
+
     def calculate(self, requestedOperation):
+        # Calculator "business logic" implemented here to keep the example
+        # minimal
+
         if '0' <= requestedOperation and requestedOperation <= '9':
             self._current = ((self._current * 10) +
                     float('' + requestedOperation))
@@ -83,3 +94,8 @@ class Calc(Application, IClickListener):
             self._stored = 0.0
 
         return self._stored
+
+
+if __name__ == '__main__':
+    from muntjac.util import run_app
+    run_app(Calc, nogui=True, forever=True, debug=True)

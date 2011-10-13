@@ -32,4 +32,4 @@ class HorizontalLayout(AbstractOrderedLayout):
     #CLIENT_WIDGET = ClientWidget(VHorizontalLayout, LoadStyle.EAGER)
 
     def __init__(self):
-        pass
+        super(HorizontalLayout, self).__init__()

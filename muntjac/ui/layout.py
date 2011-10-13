@@ -199,4 +199,4 @@ class IMarginHandler(object):
 class MarginInfo(VMarginInfo):
 
     def __init__(self, *args):
-        pass
+        super(MarginInfo, self).__init__(*args)

@@ -64,6 +64,8 @@ class Link(AbstractComponent):
         @param border
                    the Border style of the target window.
         """
+        super(Link, self).__init__()
+
         self._resource = None
         self._targetName = None
         self._targetBorder = self.TARGET_BORDER_DEFAULT

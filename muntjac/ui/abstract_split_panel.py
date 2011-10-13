@@ -82,6 +82,8 @@ class AbstractSplitPanel(AbstractLayout):
     _SPLITTER_CLICK_EVENT = VSplitPanel.SPLITTER_CLICK_EVENT_IDENTIFIER
 
     def __init__(self):
+        super(AbstractSplitPanel, self).__init__()
+
         self._firstComponent = None
         self._secondComponent = None
         self._pos = 50

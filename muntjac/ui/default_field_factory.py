@@ -43,7 +43,7 @@ class DefaultFieldFactory(IFormFieldFactory, ITableFieldFactory):
 
         @return an instance of DefaultFieldFactory
         """
-        return INSTANCE
+        return cls.INSTANCE
 
 
     def createField(self, *args):
@@ -145,4 +145,4 @@ class DefaultFieldFactory(IFormFieldFactory, ITableFieldFactory):
 
         return TextField()
 
-INSTANCE = DefaultFieldFactory()
+DefaultFieldFactory.INSTANCE = DefaultFieldFactory()

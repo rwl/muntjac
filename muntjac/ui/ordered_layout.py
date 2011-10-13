@@ -59,6 +59,8 @@ class OrderedLayout(AbstractOrderedLayout):
         """
         warn('use VerticalLayout/HorizontalLayout instead', DeprecationWarning)
 
+        super(OrderedLayout, self).__init__()
+
         # Orientation of the layout.
         self._orientation = None
 

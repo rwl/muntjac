@@ -58,6 +58,7 @@ class AbstractField(AbstractComponent, field.IField,
     """
 
     def __init__(self):
+        super(AbstractField, self).__init__()
 
         # Value of the abstract field.
         self._value = None

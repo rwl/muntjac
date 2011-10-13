@@ -89,6 +89,8 @@ class LoginForm(CustomComponent):
     """
 
     def __init__(self):
+        super(LoginForm, self).__init__()
+
         self._usernameCaption = 'Username'
         self._passwordCaption = 'Password'
         self._loginButtonCaption = 'Login'

@@ -50,6 +50,8 @@ class UriFragmentUtility(AbstractComponent):
 
 
     def __init__(self):
+        super(UriFragmentUtility, self).__init__()
+
         self._fragment = None
 
         # immediate by default

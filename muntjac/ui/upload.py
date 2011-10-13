@@ -156,6 +156,7 @@ class Upload(AbstractComponent, IComponent, IFocusable):
 
         The receiver must be set before performing an upload.
         """
+        super(Upload, self).__init__()
 
         # Should the field be focused on next repaint?
         self._focus = False

@@ -60,6 +60,8 @@ class RichTextArea(AbstractField):
         @param value
                    the initial text content of the editor.
         """
+        super(RichTextArea, self).__init__()
+
         # Value formatter used to format the string contents.
         self._format = None
 

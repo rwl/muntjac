@@ -51,6 +51,8 @@ class CustomComponent(AbstractComponentContainer):
         @param compositionRoot
                    the root of the composition component tree.
         """
+        super(CustomComponent, self).__init__()
+
         # The root component implementing the custom component.
         self._root = None
 

@@ -26,8 +26,9 @@ from muntjac.terminal.gwt.client.ui.v_date_field import VDateField
 
 from muntjac.event.field_events import \
     (BlurEvent, IBlurListener, IBlurNotifier, FocusEvent, IFocusListener,
-from muntjac.ui.abstract_component import AbstractComponent
      IFocusNotifier)
+
+from muntjac.ui.abstract_component import AbstractComponent
 
 
 class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
@@ -105,6 +106,8 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
         @param value
                    the Date value.
         """
+        super(DateField, self).__init__()
+
         # The internal calendar to be used in java.utl.Date conversions.
         self._calendar = None
 

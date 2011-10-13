@@ -58,6 +58,8 @@ class Embedded(AbstractComponent):
         @param source
                    the Source of the embedded object.
         """
+        super(Embedded, self).__init__()
+
         # Type of the object.
         self._type = self.TYPE_OBJECT
 

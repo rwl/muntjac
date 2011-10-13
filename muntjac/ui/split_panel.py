@@ -50,6 +50,8 @@ class SplitPanel(AbstractSplitPanel):
         @param orientation
                    the Orientation of the layout.
         """
+        super(SplitPanel, self).__init__()
+
         # Orientation of the layout.
         if orientation is None:
             self._orientation = self.ORIENTATION_VERTICAL

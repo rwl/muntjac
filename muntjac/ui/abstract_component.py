@@ -43,6 +43,7 @@ class AbstractComponent(IComponent, IMethodEventSource):
 
     def __init__(self):
         """Constructs a new IComponent."""
+        super(AbstractComponent, self).__init__()
 
         # Style names.
         self._styles = None

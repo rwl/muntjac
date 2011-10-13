@@ -24,6 +24,7 @@ class SystemMessageException(RuntimeError):
         nargs = len(args)
         if nargs == 1:
             if isinstance(args[0], Exception):
+                super(SystemMessageException, self).__init__()
                 self._cause = args[0]
             else:
                 msg = args[0]

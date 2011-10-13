@@ -106,6 +106,7 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
         @param options
                    the Collection containing the options.
         """
+        super(AbstractSelect, self).__init__()
 
         # Is the select in multiselect mode?
         self._multiSelect = False

@@ -156,6 +156,8 @@ class Table(AbstractSelect, action.IContainer, container.IOrdered,
         @param caption
         @param dataSource
         """
+        super(Table, self).__init__()
+
         # True if column collapsing is allowed.
         self._columnCollapsingAllowed = False
 

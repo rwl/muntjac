@@ -85,6 +85,7 @@ class TextField(AbstractTextField):
 
         nargs = len(args)
         if nargs == 0:
+            super(TextField, self).__init__()
             self.setValue('')
         elif nargs == 1:
             if isinstance(args[0], IProperty):

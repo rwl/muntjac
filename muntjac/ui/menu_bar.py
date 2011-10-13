@@ -33,6 +33,8 @@ class MenuBar(AbstractComponent):
 
     def __init__(self):
         """Constructs an empty, horizontal menu"""
+        super(MenuBar, self).__init__()
+
         # Items of the top-level menu
         self._menuItems = list()
 
