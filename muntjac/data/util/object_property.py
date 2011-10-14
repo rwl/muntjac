@@ -127,15 +127,14 @@ class ObjectProperty(AbstractProperty):
 
         # Tries to assign the compatible value directly
         if newValue is None or issubclass(newValue.__class__, self._type):
-            value = newValue
-            self._value = value
+            self._value = newValue
         else:
             # Gets the string constructor
             try:
                 #constr = self.getType().getConstructor([str])
                 constr = self.getType()  # FIXME: getConstructor
                 # Creates new object from the string
-                value = constr(str(newValue))
+                self._value = constr(str(newValue))  # FIXME: *args
             except Exception, e:
                 raise ConversionException(e)
 
