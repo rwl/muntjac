@@ -18,7 +18,7 @@ from muntjac.ui.abstract_field import AbstractField
 from muntjac.terminal.resource import IResource
 from muntjac.terminal.key_mapper import KeyMapper
 
-from muntjac.data import property
+from muntjac.data import property as prop
 from muntjac.data import container
 from muntjac.data import item
 
@@ -1341,7 +1341,7 @@ class DefaultNewItemHandler(INewItemHandler):
     def addNewItem(self, newItemCaption):
         # Checks for readonly
         if self.isReadOnly():
-            raise property.ReadOnlyException()
+            raise prop.ReadOnlyException()
 
         # Adds new option
         if self.addItem(newItemCaption) is not None:
@@ -1352,7 +1352,7 @@ class DefaultNewItemHandler(INewItemHandler):
                     prop = self.getContainerProperty(newItemCaption,
                             self.getItemCaptionPropertyId())
                     prop.setValue(newItemCaption)
-                except property.ConversionException:
+                except prop.ConversionException:
                     # The conversion exception is safely ignored, the
                     # caption is just missing
                     pass
@@ -1435,7 +1435,7 @@ class AbstractSelectTargetDetails(TargetDetailsImpl):
 
 
 class CaptionChangeListener(item.IPropertySetChangeListener,
-            property.IValueChangeListener):
+            prop.IValueChangeListener):
     """This is a listener helper for IItem and IProperty changes that should
     cause a repaint. It should be attached to all items that are displayed,
     and the default implementation does this in paintContent(). Especially
@@ -1468,14 +1468,14 @@ class CaptionChangeListener(item.IPropertySetChangeListener,
                 for pid in pids:
                     p = i.getItemProperty(pid)
                     if (p is not None
-                            and isinstance(p, property.IValueChangeNotifier)):
+                            and isinstance(p, prop.IValueChangeNotifier)):
                         p.addListener(self.getCaptionChangeListener())
                         self._captionChangeNotifiers.add(p)
 
         elif test == self.ITEM_CAPTION_MODE_PROPERTY:
             p = self.getContainerProperty(itemId,
                     self.getItemCaptionPropertyId())
-            if p is not None and isinstance(p, property.IValueChangeNotifier):
+            if p is not None and isinstance(p, prop.IValueChangeNotifier):
                 p.addListener(self.getCaptionChangeListener())
                 self._captionChangeNotifiers.add(p)
 

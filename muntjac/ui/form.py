@@ -729,7 +729,7 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
         newField.setWriteThrough(oldField.isWriteThrough())
 
         # Creates the options list
-        newField.addContainerProperty('desc', basestring, '')
+        newField.addContainerProperty('desc', str, '')
         newField.setItemCaptionPropertyId('desc')
         for idd in values:
             if idd is None:

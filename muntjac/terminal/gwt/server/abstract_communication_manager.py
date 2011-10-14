@@ -959,6 +959,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                                                   variable[self._VAR_VALUE])
 
                 try:
+
                     owner.changeVariables(source, m)
 
                     # Special-case of closing browser-level windows:
@@ -967,6 +968,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                         close = m.get('close')
                         if close is not None and bool(close):
                             self._closingWindowName = owner.getName()
+
                 except Exception, e:
                     if isinstance(owner, IComponent):
                         self._handleChangeVariablesError(app, owner, e, m)
@@ -1136,7 +1138,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         locSave = locale.getlocale(locale.LC_TIME)
         locale.setlocale(locale.LC_TIME, (str(l), 'utf-8'))  # FIXME: encoding
 
-        short_months = [
+        months = [
             locale.nl_langinfo(locale.MON_1),
             locale.nl_langinfo(locale.MON_2),
             locale.nl_langinfo(locale.MON_3),
@@ -1150,7 +1152,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
             locale.nl_langinfo(locale.MON_11),
             locale.nl_langinfo(locale.MON_12)
         ]
-        months = [
+        short_months = [
             locale.nl_langinfo(locale.ABMON_1),
             locale.nl_langinfo(locale.ABMON_2),
             locale.nl_langinfo(locale.ABMON_3),

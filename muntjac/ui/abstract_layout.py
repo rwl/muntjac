@@ -65,7 +65,7 @@ class AbstractLayout(AbstractComponentContainer, ILayout, IMarginHandler):
 
     def paintContent(self, target):
         # Add margin info. Defaults to false.
-        target.addAttribute('margins', self.margins.getBitMask())
+        target.addAttribute('margins', int( self.margins.getBitMask() ))
 
 
     def changeVariables(self, source, variables):

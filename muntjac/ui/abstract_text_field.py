@@ -204,7 +204,7 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
 
 
     def getType(self):
-        return basestring
+        return str
 
 
     def getNullRepresentation(self):

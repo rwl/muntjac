@@ -133,9 +133,9 @@ class ObjectProperty(AbstractProperty):
             # Gets the string constructor
             try:
                 #constr = self.getType().getConstructor([str])
-                constr = self.getType().__init__  # FIXME: getConstructor
+                constr = self.getType()  # FIXME: getConstructor
                 # Creates new object from the string
-                value = constr([str(newValue)])
+                value = constr(str(newValue))
             except Exception, e:
                 raise ConversionException(e)
 

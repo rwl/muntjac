@@ -24,7 +24,7 @@ from muntjac.ui.component import Event as ComponentEvent
 
 from muntjac.event import action
 from muntjac.ui import field
-from muntjac.data import property
+from muntjac.data import property as prop
 
 from muntjac.data.validator import EmptyValueException
 from muntjac.data.buffered import SourceException
@@ -35,8 +35,8 @@ from muntjac.terminal.composite_error_message import CompositeErrorMessage
 
 
 class AbstractField(AbstractComponent, field.IField,
-            action.IShortcutNotifier, property.IReadOnlyStatusChangeNotifier,
-            property.IReadOnlyStatusChangeListener):
+            action.IShortcutNotifier, prop.IReadOnlyStatusChangeNotifier,
+            prop.IReadOnlyStatusChangeListener):
     """Abstract field component for implementing buffered property editors.
     The field may hold an internal value, or it may be connected to any data
     source that implements the {@link com.vaadin.data.IProperty}interface.
@@ -360,7 +360,7 @@ class AbstractField(AbstractComponent, field.IField,
 
             # Read only fields can not be changed
             if self.isReadOnly():
-                raise property.ReadOnlyException()
+                raise prop.ReadOnlyException()
 
             # Repaint is needed even when the client thinks that it knows
             # the new state if validity of the component may change
@@ -379,8 +379,9 @@ class AbstractField(AbstractComponent, field.IField,
 
             # In write through mode , try to commit
             if (self.isWriteThrough() and (self._dataSource is not None)
-                    and self.isInvalidCommitted() or self.isValid()):
+                    and (self.isInvalidCommitted() or self.isValid())):
                 try:
+
                     # Commits the value to datasource
                     self._suppressValueChangePropagation = True
                     self._dataSource.setValue(newValue)
@@ -446,14 +447,14 @@ class AbstractField(AbstractComponent, field.IField,
         # Stops listening the old data source changes
         if (self._dataSource is not None \
                 and issubclass(self._dataSource,
-                        property.IValueChangeNotifier)):
+                        prop.IValueChangeNotifier)):
 
             self._dataSource.removeListener(self)
 
 
         if (self._dataSource is not None \
                 and issubclass(self._dataSource,
-                        property.IReadOnlyStatusChangeNotifier)):
+                        prop.IReadOnlyStatusChangeNotifier)):
 
             self._dataSource.removeListener(self)
 
@@ -475,11 +476,11 @@ class AbstractField(AbstractComponent, field.IField,
             self._modified = True
 
         # Listens the new data source if possible
-        if isinstance(self._dataSource, property.IValueChangeNotifier):
+        if isinstance(self._dataSource, prop.IValueChangeNotifier):
             self._dataSource.addListener(self)
 
         if isinstance(self._dataSource,
-                property.IReadOnlyStatusChangeNotifier):
+                prop.IReadOnlyStatusChangeNotifier):
             self._dataSource.addListener(self)
 
         # Copy the validators from the data source
@@ -680,14 +681,14 @@ class AbstractField(AbstractComponent, field.IField,
 
 
     _VALUE_CHANGE_METHOD = \
-            getattr(property.IValueChangeListener, 'valueChange')
+            getattr(prop.IValueChangeListener, 'valueChange')
 
 
     def addListener(self, listener):
         # Adds a value change listener for the field.
-        if isinstance(listener, property.IReadOnlyStatusChangeListener):
+        if isinstance(listener, prop.IReadOnlyStatusChangeListener):
             AbstractComponent.addListener(self,
-                    property.IReadOnlyStatusChangeEvent, listener,
+                    prop.IReadOnlyStatusChangeEvent, listener,
                     self._READ_ONLY_STATUS_CHANGE_METHOD)
         else:
             AbstractComponent.addListener(self, field.ValueChangeEvent,
@@ -696,9 +697,9 @@ class AbstractField(AbstractComponent, field.IField,
 
     def removeListener(self, listener):
         # Removes a value change listener from the field.
-        if isinstance(listener, property.IReadOnlyStatusChangeListener):
+        if isinstance(listener, prop.IReadOnlyStatusChangeListener):
             AbstractComponent.removeListener(self,
-                    property.IReadOnlyStatusChangeEvent, listener,
+                    prop.IReadOnlyStatusChangeEvent, listener,
                     self._READ_ONLY_STATUS_CHANGE_METHOD)
         else:
             AbstractComponent.removeListener(self, field.ValueChangeEvent,
@@ -715,7 +716,7 @@ class AbstractField(AbstractComponent, field.IField,
 
 
     _READ_ONLY_STATUS_CHANGE_METHOD = \
-            getattr(property.IReadOnlyStatusChangeListener,
+            getattr(prop.IReadOnlyStatusChangeListener,
                     'readOnlyStatusChange')
 
 
@@ -1004,8 +1005,8 @@ class FocusShortcut(ShortcutListener):
         self.focusable.focus()
 
 
-class IReadOnlyStatusChangeEvent(ComponentEvent, property.IProperty,
-            property.IReadOnlyStatusChangeEvent):
+class IReadOnlyStatusChangeEvent(ComponentEvent, prop.IProperty,
+            prop.IReadOnlyStatusChangeEvent):
     """An <code>Event</code> object specifying the IProperty whose
     read-only status has changed.
 

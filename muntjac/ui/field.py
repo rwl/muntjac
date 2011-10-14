@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.data import property
+from muntjac.data import property as prop
 
 from muntjac.data.buffered import IBufferedValidatable
 
@@ -22,8 +22,8 @@ from muntjac.ui.component import \
     IFocusable, Event as ComponentEvent
 
 
-class IField(IBufferedValidatable, property.IValueChangeNotifier, # IComponent,
-            property.IValueChangeListener, property.IEditor, IFocusable):
+class IField(IBufferedValidatable, prop.IValueChangeNotifier, # IComponent,
+            prop.IValueChangeListener, prop.IEditor, IFocusable):
     """@author IT Mill Ltd.
     @author Richard Lincoln
     """
@@ -91,7 +91,7 @@ class IField(IBufferedValidatable, property.IValueChangeNotifier, # IComponent,
         raise NotImplementedError
 
 
-class ValueChangeEvent(ComponentEvent, property.ValueChangeEvent):
+class ValueChangeEvent(ComponentEvent, prop.ValueChangeEvent):
     """An <code>Event</code> object specifying the IField whose value has
     been changed.
 

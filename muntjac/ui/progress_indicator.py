@@ -17,11 +17,11 @@
 from muntjac.data.util.object_property import ObjectProperty
 from muntjac.ui.abstract_field import AbstractField
 
-from muntjac.data import property
+from muntjac.data import property as prop
 
 
-class ProgressIndicator(AbstractField, property.IProperty, property.IViewer,
-                        property.IValueChangeListener):
+class ProgressIndicator(AbstractField, prop.IProperty, prop.IViewer,
+                        prop.IValueChangeListener):
     """<code>ProgressIndicator</code> is component that shows user state of
     a process (like long computing or file upload)
 
@@ -66,7 +66,7 @@ class ProgressIndicator(AbstractField, property.IProperty, property.IViewer,
         if nargs == 0:
             self.setPropertyDataSource( ObjectProperty(0.0, float) )
         elif nargs == 1:
-            if isinstance(args[0], property.IProperty):
+            if isinstance(args[0], prop.IProperty):
                 contentSource, = args
                 self.setPropertyDataSource(contentSource)
             else:
@@ -175,7 +175,7 @@ class ProgressIndicator(AbstractField, property.IProperty, property.IViewer,
         # Stops listening the old data source changes
         if (self._dataSource is not None
                 and issubclass(self._dataSource.__class__,
-                        property.IValueChangeNotifier)):
+                        prop.IValueChangeNotifier)):
             self._dataSource.removeListener(self)
 
         # Sets the new data source
@@ -184,7 +184,7 @@ class ProgressIndicator(AbstractField, property.IProperty, property.IViewer,
         # Listens the new data source if possible
         if (self._dataSource is not None
                 and issubclass(self._dataSource.__class__,
-                        property.IValueChangeNotifier)):
+                        prop.IValueChangeNotifier)):
             self._dataSource.addListener(self)
 
 

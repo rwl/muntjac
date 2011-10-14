@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.data import property
+from muntjac.data import property as prop
 
 from muntjac.data.item import IItem
 
@@ -37,7 +37,7 @@ from muntjac.util import fullname
 # not to show it in public API
 class IndexedContainer(AbstractInMemoryContainer,
             container.IPropertySetChangeNotifier,
-            property.IValueChangeNotifier, container.ISortable,
+            prop.IValueChangeNotifier, container.ISortable,
             container.IFilterable, container.ISimpleFilterable):
     """An implementation of the <code>{@link IContainer.Indexed}</code> interface
     with all important features.
@@ -336,7 +336,7 @@ class IndexedContainer(AbstractInMemoryContainer,
 
 
     def getListeners(self, eventType):
-        if issubclass(eventType, property.ValueChangeEvent):
+        if issubclass(eventType, prop.ValueChangeEvent):
             if self._propertyValueChangeListeners is None:
                 return list()
             else:
@@ -630,7 +630,7 @@ class IndexedContainerItem(IItem):
                 'Indexed container item does not support property removal'
 
 
-class IndexedContainerProperty(property.IProperty, property.IValueChangeNotifier):
+class IndexedContainerProperty(prop.IProperty, prop.IValueChangeNotifier):
     """A class implementing the {@link IProperty} interface to be contained in
     the {@link IndexedContainerItem} contained in the
     {@link IndexedContainer}.
@@ -702,7 +702,7 @@ class IndexedContainerProperty(property.IProperty, property.IValueChangeNotifier
                 # Creates new object from the string
                 propertySet[self._propertyId] = constr([str(newValue)])
             except Exception:
-                raise property.ConversionException, ('Conversion for value \''
+                raise prop.ConversionException, ('Conversion for value \''
                         + newValue + '\' of class ' + fullname(newValue)
                         + ' to ' + self.getType().__name__ + ' failed')
 
@@ -798,7 +798,7 @@ class IItemSetChangeEvent(BaseItemSetChangeEvent):
         return self._addedItemIndex
 
 
-class PropertyValueChangeEvent(EventObject, property.ValueChangeEvent):
+class PropertyValueChangeEvent(EventObject, prop.ValueChangeEvent):
     """An <code>event</code> object specifying the IProperty in a list whose
     value has changed.
 

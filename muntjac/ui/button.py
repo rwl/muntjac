@@ -194,7 +194,7 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
                         self.fireClick()
             else:
                 # Only send click event if the button is pushed
-                if newValue.booleanValue():
+                if bool(newValue):
                     if 'mousedetails' in variables:
                         self.fireClick(MouseEventDetails.deSerialize(
                                 variables.get('mousedetails')))

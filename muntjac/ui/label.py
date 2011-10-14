@@ -23,11 +23,11 @@ from muntjac.data.util.object_property import ObjectProperty
 from muntjac.ui.abstract_component import AbstractComponent
 from muntjac.ui.component import Event as ComponentEvent
 
-from muntjac.data import property
+from muntjac.data import property as prop
 
 
-class Label(AbstractComponent, property.IProperty, property.IViewer,
-            property.IValueChangeListener, property.IValueChangeNotifier):
+class Label(AbstractComponent, prop.IProperty, prop.IViewer,
+            prop.IValueChangeListener, prop.IValueChangeNotifier):
     """Label component for showing non-editable short texts.
 
     The label content can be set to the modes specified by the final members
@@ -105,7 +105,7 @@ class Label(AbstractComponent, property.IProperty, property.IViewer,
         self._contentMode = self.CONTENT_DEFAULT
 
         if isinstance(contentSource, basestring):
-            contentSource = ObjectProperty(contentSource, basestring)
+            contentSource = ObjectProperty(contentSource, str)
 
         if contentMode is None:
             contentMode = self.CONTENT_DEFAULT
@@ -238,7 +238,7 @@ class Label(AbstractComponent, property.IProperty, property.IViewer,
         # Stops listening the old data source changes
         if (self._dataSource is not None
                 and issubclass(self._dataSource.__class__,
-                        property.IValueChangeNotifier)):
+                        prop.IValueChangeNotifier)):
             self._dataSource.removeListener(self)
 
         # Sets the new data source
@@ -247,7 +247,7 @@ class Label(AbstractComponent, property.IProperty, property.IViewer,
         # Listens the new data source if possible
         if (self._dataSource is not None
                 and issubclass(self._dataSource.__class__,
-                        property.IValueChangeNotifier)):
+                        prop.IValueChangeNotifier)):
             self._dataSource.addListener(self)
 
         self.requestRepaint()
@@ -317,7 +317,7 @@ class Label(AbstractComponent, property.IProperty, property.IViewer,
             self.requestRepaint()
 
 
-    _VALUE_CHANGE_METHOD = getattr(property.IValueChangeListener, "valueChange")
+    _VALUE_CHANGE_METHOD = getattr(prop.IValueChangeListener, "valueChange")
 
 
     def addListener(self, listener):
@@ -403,7 +403,7 @@ class Label(AbstractComponent, property.IProperty, property.IViewer,
         return result
 
 
-class ValueChangeEvent(ComponentEvent, property.ValueChangeEvent):
+class ValueChangeEvent(ComponentEvent, prop.ValueChangeEvent):
     """Value change event."""
 
     def __init__(self, source):

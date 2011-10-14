@@ -110,7 +110,7 @@ class AbstractComponent(IComponent, IMethodEventSource):
         self._sizePattern = \
                 re.compile('^(-?\\d+(\\.\\d+)?)(%|px|em|ex|in|cm|mm|pt|pc)?$')
 
-        self._errorHandler = None
+        self.errorHandler = None
 
         #ComponentSizeValidator.setCreationLocation(this);
 

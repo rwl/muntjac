@@ -222,9 +222,9 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
             done = False
             while not done and index < len(self._areas):
                 existingArea = self._areas[index]
-                if ((existingArea.row1 >= row1
-                        and existingArea.column1 > column1)
-                                or (existingArea.row1 > row1)):
+                if ((existingArea._row1 >= row1
+                        and existingArea._column1 > column1)
+                                or (existingArea._row1 > row1)):
                     self._areas.insert(index, area)
                     self._components.insert(index, component)
                     done = True
@@ -401,15 +401,16 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
         if colSum == 0:
             # no columns has been expanded, all cols have same
             # expand rate
-            equalSize = 1 / self._cols
-            myRatio = round(equalSize * 1000)
+            equalSize = 1 / float(self._cols)
+            myRatio = int( round(equalSize * 1000) )
             for i in range(self._cols):
                 columnExpandRatioArray[i] = myRatio
 
             realColExpandRatioSum = myRatio * self._cols
         else:
             for i in range(self._cols):
-                myRatio = round((self.getColumnExpandRatio(i) / colSum) * 1000)
+                myRatio = int( round((self.getColumnExpandRatio(i) / colSum)
+                        * 1000) )
                 columnExpandRatioArray[i] = myRatio
                 realColExpandRatioSum += myRatio
 
@@ -419,8 +420,8 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
         if rowSum == 0:
             # no rows have been expanded
             equallyDividedRows = True
-            equalSize = 1 / self._rows
-            myRatio = round(equalSize * 1000)
+            equalSize = 1 / float(self._rows)
+            myRatio = int( round(equalSize * 1000) )
             for i in range(self._rows):
                 rowExpandRatioArray[i] = myRatio
             realRowExpandRatioSum = myRatio * self._rows
@@ -431,7 +432,8 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
             target.startTag('gr')
 
             if not equallyDividedRows:
-                myRatio = round((self.getRowExpandRatio(cury) / rowSum) * 1000)
+                myRatio = int( round((self.getRowExpandRatio(cury) / rowSum)
+                        * 1000) )
                 rowExpandRatioArray[cury] = myRatio
                 realRowExpandRatioSum += myRatio
 
@@ -439,8 +441,8 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
             for curx in range(self._cols):
 
                 # Checks if current item is located at curx,cury
-                if (area is not None and area.row1 == cury
-                        and area.column1 == curx):
+                if (area is not None and area._row1 == cury
+                        and area._column1 == curx):
 
                     # First check if empty cell needs to be rendered
                     if emptyCells > 0:
@@ -454,8 +456,8 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
                         emptyCells = 0
 
                     # Now proceed rendering current item
-                    cols = (area.column2 - area.column1) + 1
-                    rows = (area.row2 - area.row1) + 1
+                    cols = (area._column2 - area._column1) + 1
+                    rows = (area._row2 - area._row1) + 1
                     target.startTag('gc')
 
                     target.addAttribute('x', curx)
