@@ -1,0 +1,227 @@
+# -*- coding: utf-8 -*-
+from com.vaadin.data.util.AbstractInMemoryContainerTest import (AbstractInMemoryContainerTest,)
+
+
+class TestIndexedContainer(AbstractInMemoryContainerTest):
+
+    def testBasicOperations(self):
+        self.testBasicContainerOperations(IndexedContainer())
+
+    def testFiltering(self):
+        self.testContainerFiltering(IndexedContainer())
+
+    def testSorting(self):
+        self.testContainerSorting(IndexedContainer())
+
+    def testSortingAndFiltering(self):
+        self.testContainerSortingAndFiltering(IndexedContainer())
+
+    def testContainerOrdered(self):
+        self.testContainerOrdered(IndexedContainer())
+
+    def testContainerIndexed(self):
+        self.testContainerIndexed(IndexedContainer(), self.sampleData[2], 2, True, 'newItemId', True)
+
+    def testItemSetChangeListeners(self):
+        container = IndexedContainer()
+        counter = self.ItemSetChangeCounter()
+        container.addListener(counter)
+        id1 = 'id1'
+        id2 = 'id2'
+        id3 = 'id3'
+        self.initializeContainer(container)
+        counter.reset()
+        container.addItem()
+        counter.assertOnce()
+        container.addItem(id1)
+        counter.assertOnce()
+        self.initializeContainer(container)
+        counter.reset()
+        container.addItemAt(0)
+        counter.assertOnce()
+        container.addItemAt(0, id1)
+        counter.assertOnce()
+        container.addItemAt(0, id2)
+        counter.assertOnce()
+        container.addItemAt(len(container), id3)
+        counter.assertOnce()
+        # no notification if already in container
+        container.addItemAt(0, id1)
+        counter.assertNone()
+        self.initializeContainer(container)
+        counter.reset()
+        container.addItemAfter(None)
+        counter.assertOnce()
+        container.addItemAfter(None, id1)
+        counter.assertOnce()
+        container.addItemAfter(id1)
+        counter.assertOnce()
+        container.addItemAfter(id1, id2)
+        counter.assertOnce()
+        container.addItemAfter(container.firstItemId())
+        counter.assertOnce()
+        container.addItemAfter(container.lastItemId())
+        counter.assertOnce()
+        container.addItemAfter(container.lastItemId(), id3)
+        counter.assertOnce()
+        # no notification if already in container
+        container.addItemAfter(0, id1)
+        counter.assertNone()
+        self.initializeContainer(container)
+        counter.reset()
+        container.removeItem(self.sampleData[0])
+        counter.assertOnce()
+        self.initializeContainer(container)
+        counter.reset()
+        # no notification for removing a non-existing item
+        container.removeItem(id1)
+        counter.assertNone()
+        self.initializeContainer(container)
+        counter.reset()
+        container.removeAllItems()
+        counter.assertOnce()
+        # already empty
+        container.removeAllItems()
+        counter.assertNone()
+
+    def testAddRemoveContainerFilter(self):
+        # TODO other tests should check positions after removing filter etc,
+        # here concentrating on listeners
+        container = IndexedContainer()
+        counter = self.ItemSetChangeCounter()
+        container.addListener(counter)
+        # simply adding or removing container filters should cause events
+        # (content changes)
+        self.initializeContainer(container)
+        counter.reset()
+        container.addContainerFilter(self.SIMPLE_NAME, 'a', True, False)
+        counter.assertOnce()
+        container.removeContainerFilters(self.SIMPLE_NAME)
+        counter.assertOnce()
+        container.addContainerFilter(self.SIMPLE_NAME, 'a', True, False)
+        counter.assertOnce()
+        container.removeAllContainerFilters()
+        counter.assertOnce()
+
+    def testItemSetChangeListenersFiltering(self):
+        container = IndexedContainer()
+        counter = self.ItemSetChangeCounter()
+        container.addListener(counter)
+        counter.reset()
+        container.addContainerFilter(self.FULLY_QUALIFIED_NAME, 'Test', True, False)
+        # no real change, so no notification required
+        counter.assertNone()
+        id1 = 'com.example.Test1'
+        id2 = 'com.example.Test2'
+        id3 = 'com.example.Other'
+        # perform operations while filtering container
+        self.initializeContainer(container)
+        counter.reset()
+        # passes filter
+        item = container.addItem(id1)
+        # no event if filtered out
+        counter.assertNone()
+        item.getItemProperty(self.FULLY_QUALIFIED_NAME).setValue(id1)
+        counter.assertOnce()
+        # passes filter but already in the container
+        item = container.addItem(id1)
+        counter.assertNone()
+        self.initializeContainer(container)
+        counter.reset()
+        # passes filter after change
+        item = container.addItemAt(0, id1)
+        counter.assertNone()
+        item.getItemProperty(self.FULLY_QUALIFIED_NAME).setValue(id1)
+        counter.assertOnce()
+        item = container.addItemAt(len(container), id2)
+        counter.assertNone()
+        item.getItemProperty(self.FULLY_QUALIFIED_NAME).setValue(id2)
+        counter.assertOnce()
+        # passes filter but already in the container
+        item = container.addItemAt(0, id1)
+        counter.assertNone()
+        item = container.addItemAt(len(container), id2)
+        counter.assertNone()
+        self.initializeContainer(container)
+        counter.reset()
+        # passes filter
+        item = container.addItemAfter(None, id1)
+        counter.assertNone()
+        item.getItemProperty(self.FULLY_QUALIFIED_NAME).setValue(id1)
+        counter.assertOnce()
+        item = container.addItemAfter(container.lastItemId(), id2)
+        counter.assertNone()
+        item.getItemProperty(self.FULLY_QUALIFIED_NAME).setValue(id2)
+        counter.assertOnce()
+        # passes filter but already in the container
+        item = container.addItemAfter(None, id1)
+        counter.assertNone()
+        item = container.addItemAfter(container.lastItemId(), id2)
+        counter.assertNone()
+        # does not pass filter
+        # TODO implement rest
+        self.initializeContainer(container)
+        counter.reset()
+        item = container.addItemAfter(None, id3)
+        counter.assertNone()
+        item.getItemProperty(self.FULLY_QUALIFIED_NAME).setValue(id3)
+        counter.assertNone()
+        self.initializeContainer(container)
+        counter.reset()
+        item = container.addItemAfter(container.firstItemId(), id3)
+        counter.assertNone()
+        item.getItemProperty(self.FULLY_QUALIFIED_NAME).setValue(id3)
+        counter.assertNone()
+        self.initializeContainer(container)
+        counter.reset()
+        item = container.addItemAfter(container.lastItemId(), id3)
+        counter.assertNone()
+        item.getItemProperty(self.FULLY_QUALIFIED_NAME).setValue(id3)
+        counter.assertNone()
+        self.initializeContainer(container)
+        counter.reset()
+        item = container.addItemAt(0, id3)
+        counter.assertNone()
+        item.getItemProperty(self.FULLY_QUALIFIED_NAME).setValue(id3)
+        counter.assertNone()
+        self.initializeContainer(container)
+        counter.reset()
+        item = container.addItemAt(1, id3)
+        counter.assertNone()
+        item.getItemProperty(self.FULLY_QUALIFIED_NAME).setValue(id3)
+        counter.assertNone()
+        self.initializeContainer(container)
+        counter.reset()
+        item = container.addItemAt(len(container), id3)
+        counter.assertNone()
+        item.getItemProperty(self.FULLY_QUALIFIED_NAME).setValue(id3)
+        counter.assertNone()
+        # passes filter
+        self.initializeContainer(container)
+        counter.reset()
+        item = container.addItem(id1)
+        counter.assertNone()
+        item.getItemProperty(self.FULLY_QUALIFIED_NAME).setValue(id1)
+        counter.assertOnce()
+        container.removeItem(id1)
+        counter.assertOnce()
+        # already removed
+        container.removeItem(id1)
+        counter.assertNone()
+        item = container.addItem(id3)
+        counter.assertNone()
+        item.getItemProperty(self.FULLY_QUALIFIED_NAME).setValue(id3)
+        counter.assertNone()
+        # not visible
+        container.removeItem(id3)
+        counter.assertNone()
+        # remove all
+        self.initializeContainer(container)
+        item = container.addItem(id1)
+        item.getItemProperty(self.FULLY_QUALIFIED_NAME).setValue(id1)
+        counter.reset()
+        container.removeAllItems()
+        counter.assertOnce()
+        # no visible items
+        container.removeAllItems()
+        counter.assertNone()

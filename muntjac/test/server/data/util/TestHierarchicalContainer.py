@@ -1,0 +1,191 @@
+# -*- coding: utf-8 -*-
+from com.vaadin.data.util.AbstractHierarchicalContainerTest import (AbstractHierarchicalContainerTest,)
+# from com.vaadin.data.Container.Filter import (Filter,)
+# from com.vaadin.data.util.HierarchicalContainer import (HierarchicalContainer,)
+
+
+class TestHierarchicalContainer(AbstractHierarchicalContainerTest):
+
+    def testBasicOperations(self):
+        self.testBasicContainerOperations(HierarchicalContainer())
+
+    def testFiltering(self):
+        self.testContainerFiltering(HierarchicalContainer())
+
+    def testSorting(self):
+        self.testContainerSorting(HierarchicalContainer())
+
+    def testOrdered(self):
+        self.testContainerOrdered(HierarchicalContainer())
+
+    def testHierarchicalSorting(self):
+        self.testHierarchicalSorting(HierarchicalContainer())
+
+    def testSortingAndFiltering(self):
+        self.testContainerSortingAndFiltering(HierarchicalContainer())
+
+    def testRemovingItemsFromFilteredContainer(self):
+        container = HierarchicalContainer()
+        self.initializeContainer(container)
+        container.setIncludeParentsWhenFiltering(True)
+        container.addContainerFilter(self.FULLY_QUALIFIED_NAME, 'ab', False, False)
+        p1 = container.getParent('com.vaadin.ui.TabSheet')
+        self.assertEquals('com.vaadin.ui', p1)
+        container.removeItem('com.vaadin.ui.TabSheet')
+        # Parent for the removed item must be null because the item is no
+        # longer in the container
+        p1 = container.getParent('com.vaadin.ui.TabSheet')
+        self.assertNull('Parent should be null, is ' + p1, p1)
+        container.removeAllItems()
+        p1 = container.getParent('com.vaadin.terminal.gwt.client.Focusable')
+        self.assertNull('Parent should be null, is ' + p1, p1)
+
+    def testParentWhenRemovingFilterFromContainer(self):
+        container = HierarchicalContainer()
+        self.initializeContainer(container)
+        container.setIncludeParentsWhenFiltering(True)
+        container.addContainerFilter(self.FULLY_QUALIFIED_NAME, 'ab', False, False)
+        p1 = container.getParent('com.vaadin.ui.TabSheet')
+        self.assertEquals('com.vaadin.ui', p1)
+        p1 = container.getParent('com.vaadin.terminal.gwt.client.ui.VPopupCalendar')
+        self.assertNull(p1)
+        container.removeAllContainerFilters()
+        p1 = container.getParent('com.vaadin.terminal.gwt.client.ui.VPopupCalendar')
+        self.assertEquals('com.vaadin.terminal.gwt.client.ui', p1)
+
+    def testChangeParentInFilteredContainer(self):
+        container = HierarchicalContainer()
+        self.initializeContainer(container)
+        container.setIncludeParentsWhenFiltering(True)
+        container.addContainerFilter(self.FULLY_QUALIFIED_NAME, 'Tab', False, False)
+        # Change parent of filtered item
+        p1 = container.getParent('com.vaadin.ui.TabSheet')
+        self.assertEquals('com.vaadin.ui', p1)
+        container.setParent('com.vaadin.ui.TabSheet', 'com.vaadin')
+        p1 = container.getParent('com.vaadin.ui.TabSheet')
+        self.assertEquals('com.vaadin', p1)
+        container.setParent('com.vaadin.ui.TabSheet', 'com')
+        p1 = container.getParent('com.vaadin.ui.TabSheet')
+        self.assertEquals('com', p1)
+        container.setParent('com.vaadin.ui.TabSheet', None)
+        p1 = container.getParent('com.vaadin.ui.TabSheet')
+        self.assertNull(p1)
+        # root -> non-root
+        container.setParent('com.vaadin.ui.TabSheet', 'com')
+        p1 = container.getParent('com.vaadin.ui.TabSheet')
+        self.assertEquals('com', p1)
+
+    def testHierarchicalFilteringWithParents(self):
+        container = HierarchicalContainer()
+        self.initializeContainer(container)
+        container.setIncludeParentsWhenFiltering(True)
+        # Filter by "contains ab"
+        container.addContainerFilter(self.FULLY_QUALIFIED_NAME, 'ab', False, False)
+        # 20 items match the filters and the have 8 parents that should also be
+        # included
+        # only one root "com" should exist
+        # filtered
+        expectedSize = 29
+        expectedRoots = 1
+        self.validateHierarchicalContainer(container, 'com', 'com.vaadin.ui.TabSheet', 'com.vaadin.terminal.gwt.client.Focusable', 'blah', True, expectedSize, expectedRoots, True)
+        # only include .gwt.client classes
+        container.removeAllContainerFilters()
+        container.addContainerFilter(self.FULLY_QUALIFIED_NAME, '.gwt.client.', False, False)
+        packages = 6
+        classes = 112
+        expectedSize = packages + classes
+        expectedRoots = 1
+        self.validateHierarchicalContainer(container, 'com', 'com.vaadin.terminal.gwt.client.WidgetSet', 'com.vaadin.terminal.gwt.client.ui.VSplitPanelVertical', 'blah', True, expectedSize, expectedRoots, True)
+        # Additionally remove all without 'm' in the simple name.
+        container.addContainerFilter(self.SIMPLE_NAME, 'm', False, False)
+        expectedSize = 7 + 18
+        expectedRoots = 1
+        self.validateHierarchicalContainer(container, 'com', 'com.vaadin.terminal.gwt.client.ui.VUriFragmentUtility', 'com.vaadin.terminal.gwt.client.ui.layout.ChildComponentContainer', 'blah', True, expectedSize, expectedRoots, True)
+
+    def testRemoveLastChild(self):
+        c = HierarchicalContainer()
+        c.addItem('root')
+        self.assertEquals(False, c.hasChildren('root'))
+        c.addItem('child')
+        c.setParent('child', 'root')
+        self.assertEquals(True, c.hasChildren('root'))
+        c.removeItem('child')
+        self.assertFalse(c.containsId('child'))
+        self.assertNull(c.getChildren('root'))
+        self.assertNull(c.getChildren('child'))
+        self.assertFalse(c.hasChildren('child'))
+        self.assertFalse(c.hasChildren('root'))
+
+    def testRemoveLastChildFromFiltered(self):
+        c = HierarchicalContainer()
+        c.addItem('root')
+        self.assertEquals(False, c.hasChildren('root'))
+        c.addItem('child')
+        c.setParent('child', 'root')
+        self.assertEquals(True, c.hasChildren('root'))
+        # Dummy filter that does not remove any items
+
+        class _0_(Filter):
+
+            def passesFilter(self, itemId, item):
+                return True
+
+            def appliesToProperty(self, propertyId):
+                return True
+
+        _0_ = _0_()
+        c.addContainerFilter(_0_)
+        c.removeItem('child')
+        self.assertFalse(c.containsId('child'))
+        self.assertNull(c.getChildren('root'))
+        self.assertNull(c.getChildren('child'))
+        self.assertFalse(c.hasChildren('child'))
+        self.assertFalse(c.hasChildren('root'))
+
+    def testHierarchicalFilteringWithoutParents(self):
+        container = HierarchicalContainer()
+        self.initializeContainer(container)
+        container.setIncludeParentsWhenFiltering(False)
+        # Filter by "contains ab"
+        container.addContainerFilter(self.SIMPLE_NAME, 'ab', False, False)
+        # 20 items match the filter.
+        # com.vaadin.data.BufferedValidatable
+        # com.vaadin.data.Validatable
+        # com.vaadin.terminal.gwt.client.Focusable
+        # com.vaadin.terminal.gwt.client.Paintable
+        # com.vaadin.terminal.gwt.client.ui.Table
+        # com.vaadin.terminal.gwt.client.ui.VLabel
+        # com.vaadin.terminal.gwt.client.ui.VScrollTable
+        # com.vaadin.terminal.gwt.client.ui.VTablePaging
+        # com.vaadin.terminal.gwt.client.ui.VTabsheet
+        # com.vaadin.terminal.gwt.client.ui.VTabsheetBase
+        # com.vaadin.terminal.gwt.client.ui.VTabsheetPanel
+        # com.vaadin.terminal.gwt.server.ChangeVariablesErrorEvent
+        # com.vaadin.terminal.Paintable
+        # com.vaadin.terminal.Scrollable
+        # com.vaadin.terminal.Sizeable
+        # com.vaadin.terminal.VariableOwner
+        # com.vaadin.ui.Label
+        # com.vaadin.ui.Table
+        # com.vaadin.ui.TableFieldFactory
+        # com.vaadin.ui.TabSheet
+        # all become roots.
+        expectedSize = 20
+        expectedRoots = 20
+        self.validateHierarchicalContainer(container, 'com.vaadin.data.BufferedValidatable', 'com.vaadin.ui.TabSheet', 'com.vaadin.terminal.gwt.client.ui.VTabsheetBase', 'blah', True, expectedSize, expectedRoots, False)
+        # only include .gwt.client classes
+        container.removeAllContainerFilters()
+        container.addContainerFilter(self.FULLY_QUALIFIED_NAME, '.gwt.client.', False, False)
+        packages = 3
+        classes = 110
+        expectedSize = packages + classes
+        expectedRoots = 35 + 1
+        # com.vaadin.terminal.gwt.client.ui +
+        # com.vaadin.terminal.gwt.client.*
+        # Sorting is case insensitive
+        self.validateHierarchicalContainer(container, 'com.vaadin.terminal.gwt.client.ApplicationConfiguration', 'com.vaadin.terminal.gwt.client.WidgetSet', 'com.vaadin.terminal.gwt.client.ui.VOptionGroup', 'blah', True, expectedSize, expectedRoots, False)
+        # Additionally remove all without 'P' in the simple name.
+        container.addContainerFilter(self.SIMPLE_NAME, 'P', False, False)
+        expectedSize = 13
+        expectedRoots = expectedSize
+        self.validateHierarchicalContainer(container, 'com.vaadin.terminal.gwt.client.Paintable', 'com.vaadin.terminal.gwt.client.ui.VTabsheetPanel', 'com.vaadin.terminal.gwt.client.ui.VPopupCalendar', 'blah', True, expectedSize, expectedRoots, False)
