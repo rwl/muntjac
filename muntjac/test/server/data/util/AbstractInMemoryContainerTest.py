@@ -14,7 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from com.vaadin.data.util.AbstractContainerTest import (AbstractContainerTest,)
+from muntjac.test.server.data.util.AbstractContainerTest import \
+    AbstractContainerTest
 
 
 class AbstractInMemoryContainerTest(AbstractContainerTest):

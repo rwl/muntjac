@@ -14,63 +14,65 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from com.vaadin.data.util.AbstractContainerTest import (AbstractContainerTest,)
-from com.vaadin.data.util.AbstractInMemoryContainerTest import (AbstractInMemoryContainerTest,)
-# from com.vaadin.data.util.AbstractBeanContainer import (AbstractBeanContainer,)
+from muntjac.test.server.data.util.AbstractContainerTest import \
+    AbstractContainerTest
+
+from muntjac.test.server.data.util.AbstractInMemoryContainerTest import \
+    AbstractInMemoryContainerTest
 
 
 class AbstractBeanContainerTest(AbstractInMemoryContainerTest):
     """Automated test for {@link AbstractBeanContainer}.
 
-    Only a limited subset of the functionality is tested here, the rest in tests
-    of subclasses including {@link BeanItemContainer} and {@link BeanContainer}.
+    Only a limited subset of the functionality is tested here, the
+    rest in tests of subclasses including {@link BeanItemContainer}
+    and {@link BeanContainer}.
     """
+    pass
 
-    class Person(object):
-        _name = None
 
-        def __init__(self, name):
-            self.setName(name)
+class Person(object):
 
-        def setName(self, name):
-            self._name = name
+    def __init__(self, name):
+        self._name = None
+        self.setName(name)
 
-        def getName(self):
-            return self._name
+    def setName(self, name):
+        self._name = name
 
-    class ClassName(object):
-        # field names match constants in parent test class
-        _fullyQualifiedName = None
-        _simpleName = None
-        _reverseFullyQualifiedName = None
-        _idNumber = None
+    def getName(self):
+        return self._name
 
-        def __init__(self, fullyQualifiedName, idNumber):
-            self._fullyQualifiedName = fullyQualifiedName
-            self._simpleName = AbstractContainerTest.getSimpleName(fullyQualifiedName)
-            self._reverseFullyQualifiedName = self.reverse(fullyQualifiedName)
-            self._idNumber = idNumber
 
-        def getFullyQualifiedName(self):
-            return self._fullyQualifiedName
+class ClassName(object):
 
-        def setFullyQualifiedName(self, fullyQualifiedName):
-            self._fullyQualifiedName = fullyQualifiedName
+    def __init__(self, fullyQualifiedName, idNumber):
+        self._fullyQualifiedName = fullyQualifiedName
+        self._simpleName = \
+                AbstractContainerTest.getSimpleName(fullyQualifiedName)
+        self._reverseFullyQualifiedName = self.reverse(fullyQualifiedName)
+        self._idNumber = idNumber
 
-        def getSimpleName(self):
-            return self._simpleName
+    def getFullyQualifiedName(self):
+        return self._fullyQualifiedName
 
-        def setSimpleName(self, simpleName):
-            self._simpleName = simpleName
+    def setFullyQualifiedName(self, fullyQualifiedName):
+        self._fullyQualifiedName = fullyQualifiedName
 
-        def getReverseFullyQualifiedName(self):
-            return self._reverseFullyQualifiedName
+    def getSimpleName(self):
+        return self._simpleName
 
-        def setReverseFullyQualifiedName(self, reverseFullyQualifiedName):
-            self._reverseFullyQualifiedName = reverseFullyQualifiedName
+    def setSimpleName(self, simpleName):
+        self._simpleName = simpleName
 
-        def getIdNumber(self):
-            return self._idNumber
+    def getReverseFullyQualifiedName(self):
+        return self._reverseFullyQualifiedName
 
-        def setIdNumber(self, idNumber):
-            self._idNumber = idNumber
+    def setReverseFullyQualifiedName(self, reverseFullyQualifiedName):
+        self._reverseFullyQualifiedName = reverseFullyQualifiedName
+
+    def getIdNumber(self):
+        return self._idNumber
+
+    def setIdNumber(self, idNumber):
+        self._idNumber = idNumber
