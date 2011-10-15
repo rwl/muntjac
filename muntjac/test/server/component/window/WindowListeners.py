@@ -14,24 +14,29 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.test.server.component.AbstractListenerMethodsTest import (AbstractListenerMethodsTest,)
-# from com.vaadin.ui.Window import (Window,)
-# from com.vaadin.ui.Window.CloseEvent import (CloseEvent,)
-# from com.vaadin.ui.Window.CloseListener import (CloseListener,)
-# from com.vaadin.ui.Window.ResizeEvent import (ResizeEvent,)
-# from com.vaadin.ui.Window.ResizeListener import (ResizeListener,)
+from muntjac.test.server.component.AbstractListenerMethodsTest import \
+    AbstractListenerMethodsTest
+
+from muntjac.ui.window import \
+    Window, ResizeEvent, IResizeListener, CloseEvent, ICloseListener
+
+from muntjac.event.field_events import \
+    FocusEvent, IFocusListener, BlurEvent, IBlurListener
 
 
 class WindowListeners(AbstractListenerMethodsTest):
 
     def testFocusListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Window, FocusEvent, FocusListener)
+        self.testListenerAddGetRemove(Window, FocusEvent, IFocusListener)
+
 
     def testBlurListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Window, BlurEvent, BlurListener)
+        self.testListenerAddGetRemove(Window, BlurEvent, IBlurListener)
+
 
     def testResizeListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Window, ResizeEvent, ResizeListener)
+        self.testListenerAddGetRemove(Window, ResizeEvent, IResizeListener)
+
 
     def testCloseListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Window, CloseEvent, CloseListener)
+        self.testListenerAddGetRemove(Window, CloseEvent, ICloseListener)

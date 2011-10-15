@@ -14,21 +14,12 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# from com.vaadin.Application import (Application,)
-# from org.junit.Assert.assertEquals import (assertEquals,)
-# from org.junit.Assert.assertFalse import (assertFalse,)
-# from org.junit.Assert.assertNull import (assertNull,)
-# from org.junit.Assert.assertTrue import (assertTrue,)
-# from org.junit.Test import (Test,)
+from unittest import TestCase
+from muntjac.ui.window import Window
+from muntjac.application import Application
 
 
-class AddRemoveSubWindow(object):
-
-    class TestApp(Application):
-
-        def init(self):
-            w = Window('Main window')
-            self.setMainWindow(w)
+class AddRemoveSubWindow(TestCase):
 
     def addSubWindow(self):
         app = self.TestApp()
@@ -36,25 +27,31 @@ class AddRemoveSubWindow(object):
         subWindow = Window('Sub window')
         mainWindow = app.getMainWindow()
         mainWindow.addWindow(subWindow)
+
         # Added to main window so the parent of the sub window should be the
         # main window
-        assertEquals(subWindow.getParent(), mainWindow)
-        # Should throw an exception as it has already been added to the
-        # main window
+        self.assertEquals(subWindow.getParent(), mainWindow)
+
         # Try to add the same sub window to another window
         try:
             mainWindow.addWindow(subWindow)
-            assertTrue('Window.addWindow did not throw the expected exception', False)
-        except self.IllegalArgumentException, e:
-            pass # astStmt: [Stmt([]), None]
-        # Should throw an exception as it has already been added to the
-        # main window
+            self.assertTrue(('Window.addWindow did not throw the '
+                    'expected exception'), False)
+        except ValueError:
+            # Should throw an exception as it has already been added to the
+            # main window
+            pass
+
         try:
             w = Window()
             w.addWindow(subWindow)
-            assertTrue('Window.addWindow did not throw the expected exception', False)
-        except self.IllegalArgumentException, e:
-            pass # astStmt: [Stmt([]), None]
+            self.assertTrue(('Window.addWindow did not throw the '
+                    'expected exception'), False)
+        except ValueError:
+            # Should throw an exception as it has already been added to the
+            # main window
+            pass
+
 
     def removeSubWindow(self):
         app = self.TestApp()
@@ -62,15 +59,27 @@ class AddRemoveSubWindow(object):
         subWindow = Window('Sub window')
         mainWindow = app.getMainWindow()
         mainWindow.addWindow(subWindow)
+
         # Added to main window so the parent of the sub window should be the
         # main window
-        assertEquals(subWindow.getParent(), mainWindow)
+        self.assertEquals(subWindow.getParent(), mainWindow)
+
         # Remove from the wrong window, should result in an exception
         removed = subWindow.removeWindow(subWindow)
-        assertFalse('Window was removed even though it should not have been', removed)
+        self.assertFalse(('Window was removed even though it should '
+                'not have been'), removed)
+
         # Parent should still be set
-        assertEquals(subWindow.getParent(), mainWindow)
+        self.assertEquals(subWindow.getParent(), mainWindow)
+
         # Remove from the main window and assert it has been removed
         removed = mainWindow.removeWindow(subWindow)
-        assertTrue('Window was not removed correctly', removed)
-        assertNull(subWindow.getParent())
+        self.assertTrue('Window was not removed correctly', removed)
+        self.assertEquals(subWindow.getParent(), None)
+
+
+class TestApp(Application):
+
+    def init(self):
+        w = Window('Main window')
+        self.setMainWindow(w)

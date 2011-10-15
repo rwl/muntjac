@@ -14,16 +14,24 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.test.server.component.AbstractListenerMethodsTest import (AbstractListenerMethodsTest,)
+from muntjac.test.server.component.AbstractListenerMethodsTest import \
+    AbstractListenerMethodsTest
+
+from muntjac.ui.tree import \
+    Tree, ExpandEvent, IExpandListener, CollapseEvent, ICollapseListener
+
+from muntjac.event.item_click_event import ItemClickEvent, IItemClickListener
 
 
 class TreeListeners(AbstractListenerMethodsTest):
 
     def testExpandListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Tree, ExpandEvent, ExpandListener)
+        self.testListenerAddGetRemove(Tree, ExpandEvent, IExpandListener)
+
 
     def testItemClickListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Tree, ItemClickEvent, ItemClickListener)
+        self.testListenerAddGetRemove(Tree, ItemClickEvent, IItemClickListener)
+
 
     def testCollapseListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Tree, CollapseEvent, CollapseListener)
+        self.testListenerAddGetRemove(Tree, CollapseEvent, ICollapseListener)

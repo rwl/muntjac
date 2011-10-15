@@ -14,32 +14,40 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.test.server.component.AbstractListenerMethodsTest import (AbstractListenerMethodsTest,)
-# from com.vaadin.event.ItemClickEvent import (ItemClickEvent,)
-# from com.vaadin.event.ItemClickEvent.ItemClickListener import (ItemClickListener,)
-# from com.vaadin.ui.Table.ColumnReorderEvent import (ColumnReorderEvent,)
-# from com.vaadin.ui.Table.ColumnReorderListener import (ColumnReorderListener,)
-# from com.vaadin.ui.Table.ColumnResizeEvent import (ColumnResizeEvent,)
-# from com.vaadin.ui.Table.ColumnResizeListener import (ColumnResizeListener,)
-# from com.vaadin.ui.Table.FooterClickEvent import (FooterClickEvent,)
-# from com.vaadin.ui.Table.FooterClickListener import (FooterClickListener,)
-# from com.vaadin.ui.Table.HeaderClickEvent import (HeaderClickEvent,)
-# from com.vaadin.ui.Table.HeaderClickListener import (HeaderClickListener,)
+from muntjac.test.server.component.AbstractListenerMethodsTest import \
+    AbstractListenerMethodsTest
+
+from muntjac.ui.table import \
+    (Table, ColumnResizeEvent, IColumnResizeListener, FooterClickEvent,
+     IFooterClickListener, HeaderClickEvent, IHeaderClickListener,
+     ColumnReorderEvent, IColumnReorderListener)
+
+from muntjac.event.item_click_event import ItemClickEvent, IItemClickListener
+
 
 
 class TableListeners(AbstractListenerMethodsTest):
 
     def testColumnResizeListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Table, ColumnResizeEvent, ColumnResizeListener)
+        self.testListenerAddGetRemove(Table, ColumnResizeEvent,
+                IColumnResizeListener)
+
 
     def testItemClickListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Table, ItemClickEvent, ItemClickListener)
+        self.testListenerAddGetRemove(Table, ItemClickEvent,
+                IItemClickListener)
+
 
     def testFooterClickListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Table, FooterClickEvent, FooterClickListener)
+        self.testListenerAddGetRemove(Table, FooterClickEvent,
+                IFooterClickListener)
+
 
     def testHeaderClickListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Table, HeaderClickEvent, HeaderClickListener)
+        self.testListenerAddGetRemove(Table, HeaderClickEvent,
+                IHeaderClickListener)
+
 
     def testColumnReorderListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Table, ColumnReorderEvent, ColumnReorderListener)
+        self.testListenerAddGetRemove(Table, ColumnReorderEvent,
+                IColumnReorderListener)

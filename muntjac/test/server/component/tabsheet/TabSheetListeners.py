@@ -14,12 +14,15 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.test.server.component.AbstractListenerMethodsTest import (AbstractListenerMethodsTest,)
-# from com.vaadin.ui.TabSheet.SelectedTabChangeEvent import (SelectedTabChangeEvent,)
-# from com.vaadin.ui.TabSheet.SelectedTabChangeListener import (SelectedTabChangeListener,)
+from muntjac.test.server.component.AbstractListenerMethodsTest import \
+    AbstractListenerMethodsTest
+
+from muntjac.ui.tab_sheet import \
+    TabSheet, SelectedTabChangeEvent, ISelectedTabChangeListener
 
 
 class TabSheetListeners(AbstractListenerMethodsTest):
 
     def testSelectedTabChangeListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(TabSheet, SelectedTabChangeEvent, SelectedTabChangeListener)
+        self.testListenerAddGetRemove(TabSheet, SelectedTabChangeEvent,
+                ISelectedTabChangeListener)

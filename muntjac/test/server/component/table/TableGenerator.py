@@ -14,50 +14,33 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# from org.junit.Test import (Test,)
+from unittest import TestCase
+from muntjac.ui.table import Table
 
 
-class TableGenerator(object):
+class TableGenerator(TestCase):
 
     @classmethod
     def createTableWithDefaultContainer(cls, properties, items):
         t = Table()
-        _0 = True
-        i = 0
-        while True:
-            if _0 is True:
-                _0 = False
-            else:
-                i += 1
-            if not (i < properties):
-                break
+
+        for i in range(properties):
             t.addContainerProperty('Property ' + i, str, None)
-        _1 = True
-        j = 0
-        while True:
-            if _1 is True:
-                _1 = False
-            else:
-                j += 1
-            if not (j < items):
-                break
+
+        for j in range(items):
             item = t.addItem('Item ' + j)
-            _2 = True
-            i = 0
-            while True:
-                if _2 is True:
-                    _2 = False
-                else:
-                    i += 1
-                if not (i < properties):
-                    break
-                item.getItemProperty('Property ' + i).setValue('Item ' + j + '/Property ' + i)
+            for i in range(properties):
+                v = 'Item ' + j + '/Property ' + i
+                item.getItemProperty('Property ' + i).setValue(v)
+
         return t
+
 
     def testTableGenerator(self):
         t = self.createTableWithDefaultContainer(1, 1)
-        self.junit.framework.Assert.assertEquals(len(t), 1)
-        self.junit.framework.Assert.assertEquals(len(t.getContainerPropertyIds()), 1)
+        self.assertEquals(len(t), 1)
+        self.assertEquals(len(t.getContainerPropertyIds()), 1)
+
         t = self.createTableWithDefaultContainer(100, 50)
-        self.junit.framework.Assert.assertEquals(len(t), 50)
-        self.junit.framework.Assert.assertEquals(len(t.getContainerPropertyIds()), 100)
+        self.assertEquals(len(t), 50)
+        self.assertEquals(len(t.getContainerPropertyIds()), 100)

@@ -14,17 +14,13 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-# from muntjac.test.VaadinClasses import (VaadinClasses,)
-# from com.vaadin.ui.Component import (Component,)
-# from java.lang.reflect.InvocationTargetException import (InvocationTargetException,)
-# from java.lang.reflect.Method import (Method,)
-# from java.util.Collection import (Collection,)
-# from java.util.HashSet import (HashSet,)
-# from java.util.Set import (Set,)
-# from junit.framework.TestCase import (TestCase,)
-# from org.easymock.EasyMock import (EasyMock,)
-# from org.junit.Assert import (Assert,)
+import inspect
+
+from unittest import TestCase
+from muntjac.util import clsname, getSuperClass
+from muntjac.ui.component import IComponent
+
+from muntjac.test.VaadinClasses import VaadinClasses
 
 
 class AbstractListenerMethodsTest(TestCase):
@@ -33,22 +29,24 @@ class AbstractListenerMethodsTest(TestCase):
     def main(cls, args):
         cls.findAllListenerMethods()
 
+
     @classmethod
     def findAllListenerMethods(cls):
         classes = set()
         for c in VaadinClasses.getAllServerSideClasses():
-            while c is not None and c.getName().startswith('com.vaadin.'):
+            while c is not None and clsname(c).startswith('com.vaadin.'):
                 classes.add(c)
-                c = c.getSuperclass()
+                c = getSuperClass(c)
+
         for c in classes:
             found = False
-            for m in c.getDeclaredMethods():
-                if m.getName() == 'addListener':
-                    if m.getParameterTypes().length != 1:
+            for name, m in inspect.getmembers(c, inspect.ismethod):
+                if name == 'addListener':
+                    if len(inspect.getargspec(m).args) != 1:
                         continue
-                    packageName = 'com.vaadin.tests.server'
-                    if Component.isAssignableFrom(c):
-                        packageName += '.component.' + c.__name__.toLowerCase()
+                    packageName = 'muntjac.test.server'
+                    if issubclass(c, IComponent):
+                        packageName += '.component.' + c.__name__.lower()
                         continue
                     if not found:
                         found = True
@@ -63,65 +61,75 @@ class AbstractListenerMethodsTest(TestCase):
                     print '}'
             if found:
                 print '}'
-                print 
+                print
 
-    def testListenerAddGetRemove(self, *args):
+
+    def testListenerAddGetRemove(self, testClass, eventClass,
+                listenerClass, c=None):
         # Create a component for testing
-        _0 = args
-        _1 = len(args)
-        if _1 == 3:
-            testClass, eventClass, listenerClass = _0
+        if c is None:
             c = testClass()
-            self.testListenerAddGetRemove(testClass, eventClass, listenerClass, c)
-        elif _1 == 4:
-            cls, eventClass, listenerClass, c = _0
-            mockListener1 = EasyMock.createMock(listenerClass)
-            mockListener2 = EasyMock.createMock(listenerClass)
-            # Verify we start from no listeners
-            self.verifyListeners(c, eventClass)
-            # Add one listener and verify
-            self.addListener(c, mockListener1, listenerClass)
-            self.verifyListeners(c, eventClass, mockListener1)
-            # Add another listener and verify
-            self.addListener(c, mockListener2, listenerClass)
-            self.verifyListeners(c, eventClass, mockListener1, mockListener2)
-            # Ensure we can fetch using parent class also
-            if eventClass.getSuperclass() is not None:
-                self.verifyListeners(c, eventClass.getSuperclass(), mockListener1, mockListener2)
-            # Remove the first and verify
-            self.removeListener(c, mockListener1, listenerClass)
-            self.verifyListeners(c, eventClass, mockListener2)
-            # Remove the remaining and verify
-            self.removeListener(c, mockListener2, listenerClass)
-            self.verifyListeners(c, eventClass)
-        else:
-            raise ARGERROR(3, 4)
+
+        mockListener1 = EasyMock.createMock(listenerClass)
+        mockListener2 = EasyMock.createMock(listenerClass)
+
+        # Verify we start from no listeners
+        self.verifyListeners(c, eventClass)
+
+        # Add one listener and verify
+        self.addListener(c, mockListener1, listenerClass)
+        self.verifyListeners(c, eventClass, mockListener1)
+
+        # Add another listener and verify
+        self.addListener(c, mockListener2, listenerClass)
+        self.verifyListeners(c, eventClass, mockListener1, mockListener2)
+
+        # Ensure we can fetch using parent class also
+        if eventClass.getSuperclass() is not None:
+            self.verifyListeners(c, getSuperClass(eventClass),
+                    mockListener1, mockListener2)
+
+        # Remove the first and verify
+        self.removeListener(c, mockListener1, listenerClass)
+        self.verifyListeners(c, eventClass, mockListener2)
+
+        # Remove the remaining and verify
+        self.removeListener(c, mockListener2, listenerClass)
+        self.verifyListeners(c, eventClass)
+
 
     def removeListener(self, c, listener, listenerClass):
-        method = self.getRemoveListenerMethod(c.getClass(), listenerClass)
-        method.invoke(c, listener)
+        method = self.getRemoveListenerMethod(c.__class__, listenerClass)
+        method(c, listener)
+
 
     def addListener(self, c, listener1, listenerClass):
-        method = self.getAddListenerMethod(c.getClass(), listenerClass)
-        method.invoke(c, listener1)
+        method = self.getAddListenerMethod(c.__class__, listenerClass)
+        method(c, listener1)
+
 
     def getListeners(self, c, eventType):
-        method = self.getGetListenersMethod(c.getClass())
-        return method.invoke(c, eventType)
+        method = self.getGetListenersMethod(c.__class__)
+        return method(c, eventType)
+
 
     def getGetListenersMethod(self, cls):
-        return cls.getMethod('getListeners', self.Class)
+        return getattr(cls, 'getListeners')
+
 
     def getAddListenerMethod(self, cls, listenerClass):
-        return cls.getMethod('addListener', listenerClass)
+        return getattr(cls, 'addListener')
+
 
     def getRemoveListenerMethod(self, cls, listenerClass):
-        return cls.getMethod('removeListener', listenerClass)
+        return getattr(cls, 'removeListener')
+
 
     def verifyListeners(self, c, eventClass, *expectedListeners):
         registeredListeners = self.getListeners(c, eventClass)
-        self.assertEquals('Number of listeners', expectedListeners.length, len(registeredListeners))
-        Assert.assertArrayEquals(expectedListeners, list(registeredListeners))
+        self.assertEquals('Number of listeners', len(expectedListeners),
+                len(registeredListeners))
+        self.assertEquals(expectedListeners, list(registeredListeners))
 
 
 if __name__ == '__main__':

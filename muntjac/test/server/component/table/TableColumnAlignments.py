@@ -14,122 +14,133 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.test.server.component.table.TableGenerator import (TableGenerator,)
-# from org.junit.Assert.assertArrayEquals import (assertArrayEquals,)
-# from org.junit.Test import (Test,)
+from unittest import TestCase
+
+from muntjac.test.server.component.table.TableGenerator import TableGenerator
+from muntjac.ui.table import Table
 
 
-class TableColumnAlignments(object):
+class TableColumnAlignments(TestCase):
 
-    def defaultColumnAlignments(self):
-        _0 = True
-        properties = 0
-        while True:
-            if _0 is True:
-                _0 = False
-            else:
-                properties += 1
-            if not (properties < 10):
-                break
+    def testDefaultColumnAlignments(self):
+        for properties in range(10):
             t = TableGenerator.createTableWithDefaultContainer(properties, 10)
             expected = [None] * properties
-            _1 = True
-            i = 0
-            while True:
-                if _1 is True:
-                    _1 = False
-                else:
-                    i += 1
-                if not (i < properties):
-                    break
+            for i in range(properties):
                 expected[i] = Table.ALIGN_LEFT
-            self.org.junit.Assert.assertArrayEquals('getColumnAlignments', expected, t.getColumnAlignments())
+            self.assertEquals(expected, t.getColumnAlignments(),
+                    'getColumnAlignments')
 
-    def explicitColumnAlignments(self):
+
+    def testExplicitColumnAlignments(self):
         properties = 5
         t = TableGenerator.createTableWithDefaultContainer(properties, 10)
-        explicitAlignments = [Table.ALIGN_CENTER, Table.ALIGN_LEFT, Table.ALIGN_RIGHT, Table.ALIGN_RIGHT, Table.ALIGN_LEFT]
+        explicitAlignments = [Table.ALIGN_CENTER, Table.ALIGN_LEFT,
+                Table.ALIGN_RIGHT, Table.ALIGN_RIGHT, Table.ALIGN_LEFT]
         t.setColumnAlignments(explicitAlignments)
-        assertArrayEquals('Explicit visible columns, 5 properties', explicitAlignments, t.getColumnAlignments())
+        self.assertEquals(explicitAlignments, t.getColumnAlignments(),
+                'Explicit visible columns, 5 properties')
 
-    def invalidColumnAlignmentStrings(self):
+
+    def testInvalidColumnAlignmentStrings(self):
         t = TableGenerator.createTableWithDefaultContainer(3, 7)
-        defaultAlignments = [Table.ALIGN_LEFT, Table.ALIGN_LEFT, Table.ALIGN_LEFT]
-        # Ok, expected
+        defaultAlignments = [Table.ALIGN_LEFT, Table.ALIGN_LEFT,
+                Table.ALIGN_LEFT]
+
         try:
             t.setColumnAlignments(['a', 'b', 'c'])
-            self.junit.framework.Assert.fail('No exception thrown for invalid array length')
-        except self.IllegalArgumentException, e:
-            pass # astStmt: [Stmt([]), None]
-        assertArrayEquals('Invalid change affected alignments', defaultAlignments, t.getColumnAlignments())
+            self.fail('No exception thrown for invalid array length')
+        except ValueError:
+            pass  # Ok, expected
 
-    def invalidColumnAlignmentString(self):
+        self.assertEquals('Invalid change affected alignments',
+                defaultAlignments, t.getColumnAlignments())
+
+
+    def testInvalidColumnAlignmentString(self):
         t = TableGenerator.createTableWithDefaultContainer(3, 7)
-        defaultAlignments = [Table.ALIGN_LEFT, Table.ALIGN_LEFT, Table.ALIGN_LEFT]
-        # Ok, expected
+        defaultAlignments = [Table.ALIGN_LEFT, Table.ALIGN_LEFT,
+                Table.ALIGN_LEFT]
+
         try:
             t.setColumnAlignment('Property 1', 'a')
-            self.junit.framework.Assert.fail('No exception thrown for invalid array length')
-        except self.IllegalArgumentException, e:
-            pass # astStmt: [Stmt([]), None]
-        assertArrayEquals('Invalid change affected alignments', defaultAlignments, t.getColumnAlignments())
+            self.fail('No exception thrown for invalid array length')
+        except ValueError:
+            pass  # Ok, expected
 
-    def columnAlignmentForPropertyNotInContainer(self):
+        self.assertEquals('Invalid change affected alignments',
+                defaultAlignments, t.getColumnAlignments())
+
+
+    def testColumnAlignmentForPropertyNotInContainer(self):
         t = TableGenerator.createTableWithDefaultContainer(3, 7)
-        defaultAlignments = [Table.ALIGN_LEFT, Table.ALIGN_LEFT, Table.ALIGN_LEFT]
-        # Ok, expected
+        defaultAlignments = [Table.ALIGN_LEFT, Table.ALIGN_LEFT,
+                Table.ALIGN_LEFT]
+
         try:
             t.setColumnAlignment('Property 1200', Table.ALIGN_LEFT)
             # FIXME: Uncomment as there should be an exception (#6475)
-            # junit.framework.Assert
-            # .fail("No exception thrown for property not in container");
-        except self.IllegalArgumentException, e:
-            pass # astStmt: [Stmt([]), None]
-        assertArrayEquals('Invalid change affected alignments', defaultAlignments, t.getColumnAlignments())
-        # FIXME: Uncomment as null should be returned (#6474)
-        # junit.framework.Assert.assertEquals(
-        # "Column alignment for property not in container returned",
-        # null, t.getColumnAlignment("Property 1200"));
+            #self.fail("No exception thrown for property not in container")
+        except ValueError:
+            pass  # Ok, expected
 
-    def invalidColumnAlignmentsLength(self):
+        self.assertEquals('Invalid change affected alignments',
+                defaultAlignments, t.getColumnAlignments())
+
+        # FIXME: Uncomment as null should be returned (#6474)
+        # self.assertEquals(
+        # None, t.getColumnAlignment("Property 1200"),
+        # "Column alignment for property not in container returned")
+
+
+    def testInvalidColumnAlignmentsLength(self):
         t = TableGenerator.createTableWithDefaultContainer(7, 7)
-        defaultAlignments = [Table.ALIGN_LEFT, Table.ALIGN_LEFT, Table.ALIGN_LEFT, Table.ALIGN_LEFT, Table.ALIGN_LEFT, Table.ALIGN_LEFT, Table.ALIGN_LEFT]
-        # Ok, expected
+        defaultAlignments = [Table.ALIGN_LEFT, Table.ALIGN_LEFT,
+                Table.ALIGN_LEFT, Table.ALIGN_LEFT, Table.ALIGN_LEFT,
+                Table.ALIGN_LEFT, Table.ALIGN_LEFT]
+
         try:
             t.setColumnAlignments([Table.ALIGN_LEFT])
-            self.junit.framework.Assert.fail('No exception thrown for invalid array length')
-        except self.IllegalArgumentException, e:
-            pass # astStmt: [Stmt([]), None]
-        assertArrayEquals('Invalid change affected alignments', defaultAlignments, t.getColumnAlignments())
-        # Ok, expected
+            self.fail('No exception thrown for invalid array length')
+        except ValueError:
+            pass  # Ok, expected
+
+        self.assertEquals('Invalid change affected alignments',
+                defaultAlignments, t.getColumnAlignments())
+
         try:
             t.setColumnAlignments([])
-            self.junit.framework.Assert.fail('No exception thrown for invalid array length')
-        except self.IllegalArgumentException, e:
-            pass # astStmt: [Stmt([]), None]
-        assertArrayEquals('Invalid change affected alignments', defaultAlignments, t.getColumnAlignments())
-        # Ok, expected
-        try:
-            t.setColumnAlignments([Table.ALIGN_LEFT, Table.ALIGN_LEFT, Table.ALIGN_LEFT, Table.ALIGN_LEFT, Table.ALIGN_LEFT, Table.ALIGN_LEFT, Table.ALIGN_LEFT, Table.ALIGN_LEFT])
-            self.junit.framework.Assert.fail('No exception thrown for invalid array length')
-        except self.IllegalArgumentException, e:
-            pass # astStmt: [Stmt([]), None]
-        assertArrayEquals('Invalid change affected alignments', defaultAlignments, t.getColumnAlignments())
+            self.fail('No exception thrown for invalid array length')
+        except ValueError:
+            pass  # Ok, expected
 
-    def explicitColumnAlignmentOneByOne(self):
+        self.assertEquals('Invalid change affected alignments',
+                defaultAlignments, t.getColumnAlignments())
+
+        try:
+            t.setColumnAlignments([Table.ALIGN_LEFT, Table.ALIGN_LEFT,
+                    Table.ALIGN_LEFT, Table.ALIGN_LEFT, Table.ALIGN_LEFT,
+                    Table.ALIGN_LEFT, Table.ALIGN_LEFT, Table.ALIGN_LEFT])
+            self.fail('No exception thrown for invalid array length')
+        except ValueError:
+            pass  # Ok, expected
+
+        self.assertEquals('Invalid change affected alignments',
+                defaultAlignments, t.getColumnAlignments())
+
+
+    def testExplicitColumnAlignmentOneByOne(self):
         properties = 5
         t = TableGenerator.createTableWithDefaultContainer(properties, 10)
-        explicitAlignments = [Table.ALIGN_CENTER, Table.ALIGN_LEFT, Table.ALIGN_RIGHT, Table.ALIGN_RIGHT, Table.ALIGN_LEFT]
-        currentAlignments = [Table.ALIGN_LEFT, Table.ALIGN_LEFT, Table.ALIGN_LEFT, Table.ALIGN_LEFT, Table.ALIGN_LEFT]
-        _0 = True
-        i = 0
-        while True:
-            if _0 is True:
-                _0 = False
-            else:
-                i += 1
-            if not (i < properties):
-                break
+        explicitAlignments = [Table.ALIGN_CENTER, Table.ALIGN_LEFT,
+                Table.ALIGN_RIGHT, Table.ALIGN_RIGHT, Table.ALIGN_LEFT]
+
+        currentAlignments = [Table.ALIGN_LEFT, Table.ALIGN_LEFT,
+                Table.ALIGN_LEFT, Table.ALIGN_LEFT, Table.ALIGN_LEFT]
+
+        for i in range(properties):
             t.setColumnAlignment('Property ' + i, explicitAlignments[i])
             currentAlignments[i] = explicitAlignments[i]
-            assertArrayEquals('Explicit visible columns, ' + i + ' alignments set', currentAlignments, t.getColumnAlignments())
+            self.assertEquals(('Explicit visible columns, ' + i +
+                    ' alignments set'), currentAlignments,
+                    t.getColumnAlignments())

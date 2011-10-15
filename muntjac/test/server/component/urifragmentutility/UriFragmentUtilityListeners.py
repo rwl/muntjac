@@ -14,13 +14,15 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.test.server.component.AbstractListenerMethodsTest import (AbstractListenerMethodsTest,)
-# from com.vaadin.ui.UriFragmentUtility import (UriFragmentUtility,)
-# from com.vaadin.ui.UriFragmentUtility.FragmentChangedEvent import (FragmentChangedEvent,)
-# from com.vaadin.ui.UriFragmentUtility.FragmentChangedListener import (FragmentChangedListener,)
+from muntjac.test.server.component.AbstractListenerMethodsTest import \
+    AbstractListenerMethodsTest
+
+from muntjac.ui.uri_fragment_utility import \
+    UriFragmentUtility, FragmentChangedEvent, IFragmentChangedListener
 
 
 class UriFragmentUtilityListeners(AbstractListenerMethodsTest):
 
     def testFragmentChangedListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(UriFragmentUtility, FragmentChangedEvent, FragmentChangedListener)
+        self.testListenerAddGetRemove(UriFragmentUtility, FragmentChangedEvent,
+                IFragmentChangedListener)

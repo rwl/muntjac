@@ -14,33 +14,36 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.test.server.component.AbstractListenerMethodsTest import (AbstractListenerMethodsTest,)
-# from com.vaadin.terminal.StreamVariable.StreamingProgressEvent import (StreamingProgressEvent,)
-# from com.vaadin.ui.Upload import (Upload,)
-# from com.vaadin.ui.Upload.FailedEvent import (FailedEvent,)
-# from com.vaadin.ui.Upload.FailedListener import (FailedListener,)
-# from com.vaadin.ui.Upload.FinishedEvent import (FinishedEvent,)
-# from com.vaadin.ui.Upload.FinishedListener import (FinishedListener,)
-# from com.vaadin.ui.Upload.ProgressListener import (ProgressListener,)
-# from com.vaadin.ui.Upload.StartedEvent import (StartedEvent,)
-# from com.vaadin.ui.Upload.StartedListener import (StartedListener,)
-# from com.vaadin.ui.Upload.SucceededEvent import (SucceededEvent,)
-# from com.vaadin.ui.Upload.SucceededListener import (SucceededListener,)
+from muntjac.test.server.component.AbstractListenerMethodsTest import \
+    AbstractListenerMethodsTest
+
+from muntjac.ui.upload import \
+    (Upload, IProgressListener, SucceededEvent, ISucceededListener,
+     StartedEvent, IStartedListener, FailedEvent, IFailedListener,
+     FinishedEvent, IFinishedListener)
+
+from muntjac.terminal.stream_variable import IStreamingProgressEvent
 
 
 class UploadListeners(AbstractListenerMethodsTest):
 
     def testProgressListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Upload, StreamingProgressEvent, ProgressListener)
+        self.testListenerAddGetRemove(Upload, IStreamingProgressEvent,
+                IProgressListener)
 
     def testSucceededListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Upload, SucceededEvent, SucceededListener)
+        self.testListenerAddGetRemove(Upload, SucceededEvent,
+                ISucceededListener)
 
     def testStartedListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Upload, StartedEvent, StartedListener)
+        self.testListenerAddGetRemove(Upload, StartedEvent,
+                IStartedListener)
+
 
     def testFailedListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Upload, FailedEvent, FailedListener)
+        self.testListenerAddGetRemove(Upload, FailedEvent,
+                IFailedListener)
 
     def testFinishedListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Upload, FinishedEvent, FinishedListener)
+        self.testListenerAddGetRemove(Upload, FinishedEvent,
+                IFinishedListener)
