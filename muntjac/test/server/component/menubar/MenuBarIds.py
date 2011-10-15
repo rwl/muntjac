@@ -1,24 +1,24 @@
-# -*- coding: utf-8 -*-
-from __pyjamas__ import (ARGERROR,)
-# from com.vaadin.ui.MenuBar import (MenuBar,)
-# from com.vaadin.ui.MenuBar.Command import (Command,)
-# from com.vaadin.ui.MenuBar.MenuItem import (MenuItem,)
-# from junit.framework.TestCase import (TestCase,)
+# Copyright (C) 2010 IT Mill Ltd.
+# Copyright (C) 2011 Richard Lincoln
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+from unittest import TestCase
+from muntjac.ui.menu_bar import ICommand, MenuBar
 
 
-class MenuBarIds(TestCase, Command):
-    _lastSelectedItem = None
-    _menuFile = None
-    _menuEdit = None
-    _menuEditCopy = None
-    _menuEditCut = None
-    _menuEditPaste = None
-    _menuEditFind = None
-    _menuFileOpen = None
-    _menuFileSave = None
-    _menuFileExit = None
-    _menuItems = set()
-    _menuBar = None
+class MenuBarIds(TestCase, ICommand):
 
     def setUp(self):
         self._menuBar = MenuBar()
@@ -33,6 +33,8 @@ class MenuBarIds(TestCase, Command):
         self._menuFileSave = self._menuFile.addItem('Save', self)
         self._menuFile.addSeparator()
         self._menuFileExit = self._menuFile.addItem('Exit', self)
+
+        self._menuItems = set()
         self._menuItems.add(self._menuFile)
         self._menuItems.add(self._menuEdit)
         self._menuItems.add(self._menuEditCopy)
@@ -43,9 +45,13 @@ class MenuBarIds(TestCase, Command):
         self._menuItems.add(self._menuFileSave)
         self._menuItems.add(self._menuFileExit)
 
+        self._lastSelectedItem = None
+
+
     def testMenubarIdUniqueness(self):
         # Ids within a menubar must be unique
         self.assertUniqueIds(self._menuBar)
+
         self._menuBar.removeItem(self._menuFile)
         file2 = self._menuBar.addItem('File2', self)
         file3 = self._menuBar.addItem('File3', self)
@@ -53,29 +59,32 @@ class MenuBarIds(TestCase, Command):
         self._menuItems.add(file2)
         self._menuItems.add(file2sub)
         self._menuItems.add(file3)
+
         self.assertUniqueIds(self._menuBar)
+
 
     @classmethod
     def assertUniqueIds(cls, *args):
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            menuBar, = _0
+        nargs = len(args)
+        if nargs == 1:
+            menuBar, = args
             ids = set()
             for item in menuBar.getItems():
                 cls.assertUniqueIds(ids, item)
-        elif _1 == 2:
-            ids, item = _0
-            id = item.getId()
-            print 'Item ' + item.getText() + ', id: ' + id
-            cls.assertFalse(ids.contains(id))
-            ids.add(id)
+        elif nargs == 2:
+            ids, item = args
+            idd = item.getId()
+            print 'Item ' + item.getText() + ', id: ' + idd
+            cls.assertFalse(idd in ids)
+            ids.add(idd)
             if item.getChildren() is not None:
                 for subItem in item.getChildren():
                     cls.assertUniqueIds(ids, subItem)
         else:
-            raise ARGERROR(1, 2)
+            raise ValueError
+
 
     def menuSelected(self, selectedItem):
-        self.assertNull('lastSelectedItem was not cleared before selecting an item', self._lastSelectedItem)
+        self.assertEquals(('lastSelectedItem was not cleared before '
+                'selecting an item'), self._lastSelectedItem)
         self._lastSelectedItem = selectedItem
