@@ -14,15 +14,15 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.test.server.components.AbstractTestFieldValueChange import (AbstractTestFieldValueChange,)
-# from com.vaadin.ui.ComboBox import (ComboBox,)
+from muntjac.test.server.components.AbstractTestFieldValueChange import \
+    AbstractTestFieldValueChange
+
+from muntjac.ui.combo_box import ComboBox
 
 
 class TestComboBoxValueChange(AbstractTestFieldValueChange):
-    """Check that the value change listener for a combo box is triggered exactly
-    once when setting the value, at the correct time.
-
-    See <a href="http://dev.vaadin.com/ticket/4394">Ticket 4394</a>.
+    """Check that the value change listener for a combo box is triggered
+    exactly once when setting the value, at the correct time.
     """
 
     def setUp(self):
@@ -30,7 +30,8 @@ class TestComboBoxValueChange(AbstractTestFieldValueChange):
         combo.addItem('myvalue')
         super(TestComboBoxValueChange, self).setUp(combo)
 
+
     def setValue(self, field):
         variables = dict()
-        variables.put('selected', ['myvalue'])
+        variables['selected'] = 'myvalue'
         field.changeVariables(field, variables)

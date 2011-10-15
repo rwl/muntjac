@@ -14,65 +14,78 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# from com.vaadin.ui.Window import (Window,)
-# from com.vaadin.ui.Window.CloseEvent import (CloseEvent,)
-# from com.vaadin.ui.Window.CloseListener import (CloseListener,)
-# from com.vaadin.ui.Window.ResizeEvent import (ResizeEvent,)
-# from com.vaadin.ui.Window.ResizeListener import (ResizeListener,)
-# from junit.framework.TestCase import (TestCase,)
-# from org.easymock.EasyMock import (EasyMock,)
+from unittest import TestCase
+from muntjac.ui.window import Window
+
+from muntjac.ui import window
 
 
 class TestWindow(TestCase):
-    _window = None
 
     def setUp(self):
+        super(TestWindow, self).setUp()
+
         self._window = Window()
 
     def testCloseListener(self):
-        cl = EasyMock.createMock(Window.CloseListener)
+        cl = EasyMock.createMock(window.ICloseListener)
+
         # Expectations
-        cl.windowClose(EasyMock.isA(CloseEvent))
+        cl.windowClose(EasyMock.isA(window.CloseEvent))
+
         # Start actual test
         EasyMock.replay(cl)
+
         # Add listener and send a close event -> should end up in listener once
         self._window.addListener(cl)
         self.sendClose(self._window)
+
         # Ensure listener was called once
         EasyMock.verify(cl)
+
         # Remove the listener and send close event -> should not end up in
         # listener
         self._window.removeListener(cl)
         self.sendClose(self._window)
+
         # Ensure listener still has been called only once
         EasyMock.verify(cl)
 
+
     def testResizeListener(self):
-        rl = EasyMock.createMock(Window.ResizeListener)
+        rl = EasyMock.createMock(window.IResizeListener)
+
         # Expectations
-        rl.windowResized(EasyMock.isA(ResizeEvent))
+        rl.windowResized(EasyMock.isA(window.ResizeEvent))
+
         # Start actual test
         EasyMock.replay(rl)
-        # Add listener and send a resize event -> should end up in listener
-        # once
+
+        # Add listener and send a resize event -> should end up
+        # in listener once
         self._window.addListener(rl)
         self.sendResize(self._window)
+
         # Ensure listener was called once
         EasyMock.verify(rl)
-        # Remove the listener and send close event -> should not end up in
-        # listener
+
+        # Remove the listener and send close event -> should not
+        # end up in listener
         self._window.removeListener(rl)
         self.sendResize(self._window)
+
         # Ensure listener still has been called only once
         EasyMock.verify(rl)
 
+
     def sendResize(self, window2):
         variables = dict()
-        variables.put('height', 1234)
+        variables['height'] = 1234
         self._window.changeVariables(self._window, variables)
+
 
     @classmethod
     def sendClose(cls, window):
         variables = dict()
-        variables.put('close', True)
+        variables['close'] = True
         window.changeVariables(window, variables)

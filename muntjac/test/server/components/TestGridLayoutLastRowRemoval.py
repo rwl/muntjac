@@ -14,9 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# from com.vaadin.ui.GridLayout import (GridLayout,)
-# from com.vaadin.ui.Label import (Label,)
-# from junit.framework.TestCase import (TestCase,)
+from unittest import TestCase
+
+from muntjac.ui.grid_layout import GridLayout
+from muntjac.ui.label import Label
 
 
 class TestGridLayoutLastRowRemoval(TestCase):
@@ -25,20 +26,27 @@ class TestGridLayoutLastRowRemoval(TestCase):
         grid = GridLayout(2, 1)
         grid.addComponent(Label('Col1'))
         grid.addComponent(Label('Col2'))
-        # Removing the last row in the grid
-        # Removing the last row should not throw an
-        # IllegalArgumentException
-        # The column amount should be preserved
+
         try:
+            # Removing the last row in the grid
             grid.removeRow(0)
-        except self.IllegalArgumentException, iae:
-            self.fail('removeRow(0) threw an IllegalArgumentExcetion when removing the last row')
+        except ValueError:
+            # Removing the last row should not throw a ValueError
+            self.fail(('removeRow(0) threw an ValueError '
+                    'when removing the last row'))
+
+        # The column amount should be preserved
         self.assertEquals(2, grid.getColumns())
+
         # There should be one row left
         self.assertEquals(1, grid.getRows())
+
         # There should be no component left in the grid layout
-        self.assertNull('A component should not be left in the layout', grid.getComponent(0, 0))
-        self.assertNull('A component should not be left in the layout', grid.getComponent(1, 0))
+        self.assertEquals(grid.getComponent(0, 0), None,
+                'A component should not be left in the layout')
+        self.assertEquals(grid.getComponent(1, 0), None,
+                'A component should not be left in the layout')
+
         # The cursor should be in the first cell
         self.assertEquals(0, grid.getCursorX())
         self.assertEquals(0, grid.getCursorY())

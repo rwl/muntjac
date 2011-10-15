@@ -14,34 +14,29 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR,)
-# from muntjac.test.VaadinClasses import (VaadinClasses,)
-# from com.vaadin.ui.ComponentContainer import (ComponentContainer,)
-# from com.vaadin.ui.CustomLayout import (CustomLayout,)
-# from com.vaadin.ui.HorizontalLayout import (HorizontalLayout,)
-# from com.vaadin.ui.Label import (Label,)
-# from java.util.List import (List,)
-# from junit.framework.TestCase import (TestCase,)
+from unittest import TestCase
+
+from muntjac.test.VaadinClasses import VaadinClasses
+from muntjac.ui.custom_layout import CustomLayout
+from muntjac.ui.horizontal_layout import HorizontalLayout
+from muntjac.ui.label import Label
 
 
 class AddRemoveComponentTest(TestCase):
 
-    def testRemoveComponentFromWrongContainer(self, *args):
-        _0 = args
-        _1 = len(args)
-        if _1 == 0:
-            containerClasses = VaadinClasses.getComponentContainersSupportingAddRemoveComponent()
+    def testRemoveComponentFromWrongContainer(self, componentContainer=None):
+        if componentContainer is None:
+            containerClasses = VaadinClasses.\
+                getComponentContainersSupportingAddRemoveComponent()
             # No default constructor, special case
             containerClasses.remove(CustomLayout)
             self.testRemoveComponentFromWrongContainer(CustomLayout('dummy'))
             for c in containerClasses:
                 self.testRemoveComponentFromWrongContainer(c())
-        elif _1 == 1:
-            componentContainer, = _0
+        else:
             hl = HorizontalLayout()
             label = Label()
             hl.addComponent(label)
             componentContainer.removeComponent(label)
-            self.assertEquals('Parent no longer correct for ' + componentContainer.getClass(), hl, label.getParent())
-        else:
-            raise ARGERROR(0, 1)
+            self.assertEquals(('Parent no longer correct for ' +
+                    componentContainer.getClass()), hl, label.getParent())

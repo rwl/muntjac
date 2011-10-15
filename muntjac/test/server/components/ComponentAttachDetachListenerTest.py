@@ -14,101 +14,20 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# from com.vaadin.ui.AbsoluteLayout import (AbsoluteLayout,)
-# from com.vaadin.ui.AbsoluteLayout.ComponentPosition import (ComponentPosition,)
-# from com.vaadin.ui.AbstractOrderedLayout import (AbstractOrderedLayout,)
-# from com.vaadin.ui.Component import (Component,)
-# from com.vaadin.ui.ComponentContainer import (ComponentContainer,)
-# from com.vaadin.ui.ComponentContainer.ComponentAttachEvent import (ComponentAttachEvent,)
-# from com.vaadin.ui.ComponentContainer.ComponentAttachListener import (ComponentAttachListener,)
-# from com.vaadin.ui.ComponentContainer.ComponentDetachEvent import (ComponentDetachEvent,)
-# from com.vaadin.ui.ComponentContainer.ComponentDetachListener import (ComponentDetachListener,)
-# from com.vaadin.ui.CssLayout import (CssLayout,)
-# from com.vaadin.ui.GridLayout.Area import (Area,)
-# from com.vaadin.ui.HorizontalLayout import (HorizontalLayout,)
-# from java.util.Iterator import (Iterator,)
-# from junit.framework.TestCase import (TestCase,)
+from unittest import TestCase
+
+from muntjac.ui.label import Label
+from muntjac.ui.horizontal_layout import HorizontalLayout
+from muntjac.ui.grid_layout import GridLayout
+from muntjac.ui.absolute_layout import AbsoluteLayout
+from muntjac.ui.css_layout import CssLayout
+from muntjac.ui.abstract_ordered_layout import AbstractOrderedLayout
+
+from muntjac.ui.component_container import \
+    IComponentAttachListener, IComponentDetachListener
 
 
 class ComponentAttachDetachListenerTest(TestCase):
-    _olayout = None
-    _gridlayout = None
-    _absolutelayout = None
-    _csslayout = None
-    # General variables
-    _attachCounter = 0
-    _attachedComponent = None
-    _attachTarget = None
-    _foundInContainer = False
-    _detachCounter = 0
-    _detachedComponent = None
-    _detachedTarget = None
-    # Ordered layout specific variables
-    _indexOfComponent = -1
-    # Grid layout specific variables
-    _componentArea = None
-    # Absolute layout specific variables
-    _componentPosition = None
-
-    def MyAttachListener(ComponentAttachDetachListenerTest_this, *args, **kwargs):
-
-        class MyAttachListener(ComponentAttachListener):
-
-            def componentAttachedToContainer(self, event):
-                ComponentAttachDetachListenerTest_this._attachCounter += 1
-                ComponentAttachDetachListenerTest_this._attachedComponent = event.getAttachedComponent()
-                ComponentAttachDetachListenerTest_this._attachTarget = event.getContainer()
-                # Search for component in container (should be found)
-                iter = ComponentAttachDetachListenerTest_this._attachTarget.getComponentIterator()
-                while iter.hasNext():
-                    if iter.next() == ComponentAttachDetachListenerTest_this._attachedComponent:
-                        ComponentAttachDetachListenerTest_this._foundInContainer = True
-                        break
-                # Get layout specific variables
-                if (
-                    isinstance(ComponentAttachDetachListenerTest_this._attachTarget, AbstractOrderedLayout)
-                ):
-                    ComponentAttachDetachListenerTest_this._indexOfComponent = ComponentAttachDetachListenerTest_this._attachTarget.getComponentIndex(ComponentAttachDetachListenerTest_this._attachedComponent)
-                elif (
-                    isinstance(ComponentAttachDetachListenerTest_this._attachTarget, GridLayout)
-                ):
-                    ComponentAttachDetachListenerTest_this._componentArea = ComponentAttachDetachListenerTest_this._attachTarget.getComponentArea(ComponentAttachDetachListenerTest_this._attachedComponent)
-                elif (
-                    isinstance(ComponentAttachDetachListenerTest_this._attachTarget, AbsoluteLayout)
-                ):
-                    ComponentAttachDetachListenerTest_this._componentPosition = ComponentAttachDetachListenerTest_this._attachTarget.getPosition(ComponentAttachDetachListenerTest_this._attachedComponent)
-
-        return MyAttachListener(*args, **kwargs)
-
-    def MyDetachListener(ComponentAttachDetachListenerTest_this, *args, **kwargs):
-
-        class MyDetachListener(ComponentDetachListener):
-
-            def componentDetachedFromContainer(self, event):
-                ComponentAttachDetachListenerTest_this._detachCounter += 1
-                ComponentAttachDetachListenerTest_this._detachedComponent = event.getDetachedComponent()
-                ComponentAttachDetachListenerTest_this._detachedTarget = event.getContainer()
-                # Search for component in container (should NOT be found)
-                iter = ComponentAttachDetachListenerTest_this._detachedTarget.getComponentIterator()
-                while iter.hasNext():
-                    if iter.next() == ComponentAttachDetachListenerTest_this._detachedComponent:
-                        ComponentAttachDetachListenerTest_this._foundInContainer = True
-                        break
-                # Get layout specific variables
-                if (
-                    isinstance(ComponentAttachDetachListenerTest_this._detachedTarget, AbstractOrderedLayout)
-                ):
-                    ComponentAttachDetachListenerTest_this._indexOfComponent = ComponentAttachDetachListenerTest_this._detachedTarget.getComponentIndex(ComponentAttachDetachListenerTest_this._detachedComponent)
-                elif (
-                    isinstance(ComponentAttachDetachListenerTest_this._detachedTarget, GridLayout)
-                ):
-                    ComponentAttachDetachListenerTest_this._componentArea = ComponentAttachDetachListenerTest_this._detachedTarget.getComponentArea(ComponentAttachDetachListenerTest_this._detachedComponent)
-                elif (
-                    isinstance(ComponentAttachDetachListenerTest_this._detachedTarget, AbsoluteLayout)
-                ):
-                    ComponentAttachDetachListenerTest_this._componentPosition = ComponentAttachDetachListenerTest_this._detachedTarget.getPosition(ComponentAttachDetachListenerTest_this._detachedComponent)
-
-        return MyDetachListener(*args, **kwargs)
 
     def resetVariables(self):
         # Attach
@@ -116,166 +35,314 @@ class ComponentAttachDetachListenerTest(TestCase):
         self._attachedComponent = None
         self._attachTarget = None
         self._foundInContainer = False
+
         # Detach
         self._detachCounter = 0
         self._detachedComponent = None
         self._detachedTarget = None
+
         # Common
         self._indexOfComponent = -1
         self._componentArea = None
         self._componentPosition = None
 
+
     def setUp(self):
         super(ComponentAttachDetachListenerTest, self).setUp()
+
+        # General variables
+        self._attachCounter = 0
+        self._attachedComponent = None
+        self._attachTarget = None
+        self._foundInContainer = False
+        self._detachCounter = 0
+        self._detachedComponent = None
+        self._detachedTarget = None
+
+        # Ordered layout specific variables
+        self._indexOfComponent = -1
+
+        # Grid layout specific variables
+        self._componentArea = None
+
+        # Absolute layout specific variables
+        self._componentPosition = None
+
         self._olayout = HorizontalLayout()
-        self._olayout.addListener(self.MyAttachListener())
-        self._olayout.addListener(self.MyDetachListener())
+        self._olayout.addListener(MyAttachListener(self))
+        self._olayout.addListener(MyDetachListener(self))
+
         self._gridlayout = GridLayout()
-        self._gridlayout.addListener(self.MyAttachListener())
-        self._gridlayout.addListener(self.MyDetachListener())
+        self._gridlayout.addListener(MyAttachListener(self))
+        self._gridlayout.addListener(MyDetachListener(self))
+
         self._absolutelayout = AbsoluteLayout()
-        self._absolutelayout.addListener(self.MyAttachListener())
-        self._absolutelayout.addListener(self.MyDetachListener())
+        self._absolutelayout.addListener(MyAttachListener(self))
+        self._absolutelayout.addListener(MyDetachListener(self))
+
         self._csslayout = CssLayout()
-        self._csslayout.addListener(self.MyAttachListener())
-        self._csslayout.addListener(self.MyDetachListener())
+        self._csslayout.addListener(MyAttachListener(self))
+        self._csslayout.addListener(MyDetachListener(self))
+
 
     def testOrderedLayoutAttachListener(self):
         # Reset state variables
         self.resetVariables()
+
         # Add component -> Should trigger attach listener
         comp = Label()
         self._olayout.addComponent(comp)
+
         # Attach counter should get incremented
         self.assertEquals(1, self._attachCounter)
+
         # The attached component should be the label
         self.assertSame(comp, self._attachedComponent)
+
         # The attached target should be the layout
         self.assertSame(self._olayout, self._attachTarget)
+
         # The attached component should be found in the container
         self.assertTrue(self._foundInContainer)
+
         # The index of the component should not be -1
         self.assertFalse(self._indexOfComponent == -1)
+
 
     def testOrderedLayoutDetachListener(self):
         # Add a component to detach
         comp = Label()
         self._olayout.addComponent(comp)
+
         # Reset state variables (since they are set by the attach listener)
         self.resetVariables()
+
         # Detach the component -> triggers the detach listener
         self._olayout.removeComponent(comp)
+
         # Detach counter should get incremented
         self.assertEquals(1, self._detachCounter)
+
         # The detached component should be the label
         self.assertSame(comp, self._detachedComponent)
+
         # The detached target should be the layout
         self.assertSame(self._olayout, self._detachedTarget)
+
         # The detached component should not be found in the container
         self.assertFalse(self._foundInContainer)
+
         # The index of the component should be -1
         self.assertEquals(-1, self._indexOfComponent)
+
 
     def testGridLayoutAttachListener(self):
         # Reset state variables
         self.resetVariables()
+
         # Add component -> Should trigger attach listener
         comp = Label()
         self._gridlayout.addComponent(comp)
+
         # Attach counter should get incremented
         self.assertEquals(1, self._attachCounter)
+
         # The attached component should be the label
         self.assertSame(comp, self._attachedComponent)
+
         # The attached target should be the layout
         self.assertSame(self._gridlayout, self._attachTarget)
+
         # The attached component should be found in the container
         self.assertTrue(self._foundInContainer)
+
         # The grid area should not be null
         self.assertNotNull(self._componentArea)
+
 
     def testGridLayoutDetachListener(self):
         # Add a component to detach
         comp = Label()
         self._gridlayout.addComponent(comp)
+
         # Reset state variables (since they are set by the attach listener)
         self.resetVariables()
+
         # Detach the component -> triggers the detach listener
         self._gridlayout.removeComponent(comp)
+
         # Detach counter should get incremented
         self.assertEquals(1, self._detachCounter)
+
         # The detached component should be the label
         self.assertSame(comp, self._detachedComponent)
+
         # The detached target should be the layout
         self.assertSame(self._gridlayout, self._detachedTarget)
+
         # The detached component should not be found in the container
         self.assertFalse(self._foundInContainer)
+
         # The grid area should be null
         self.assertNull(self._componentArea)
+
 
     def testAbsoluteLayoutAttachListener(self):
         # Reset state variables
         self.resetVariables()
+
         # Add component -> Should trigger attach listener
         comp = Label()
         self._absolutelayout.addComponent(comp)
+
         # Attach counter should get incremented
         self.assertEquals(1, self._attachCounter)
+
         # The attached component should be the label
         self.assertSame(comp, self._attachedComponent)
+
         # The attached target should be the layout
         self.assertSame(self._absolutelayout, self._attachTarget)
+
         # The attached component should be found in the container
         self.assertTrue(self._foundInContainer)
+
         # The component position should not be null
         self.assertNotNull(self._componentPosition)
+
 
     def testAbsoluteLayoutDetachListener(self):
         # Add a component to detach
         comp = Label()
         self._absolutelayout.addComponent(comp)
+
         # Reset state variables (since they are set by the attach listener)
         self.resetVariables()
+
         # Detach the component -> triggers the detach listener
         self._absolutelayout.removeComponent(comp)
+
         # Detach counter should get incremented
         self.assertEquals(1, self._detachCounter)
+
         # The detached component should be the label
         self.assertSame(comp, self._detachedComponent)
+
         # The detached target should be the layout
         self.assertSame(self._absolutelayout, self._detachedTarget)
+
         # The detached component should not be found in the container
         self.assertFalse(self._foundInContainer)
+
         # The component position should be null
         self.assertNull(self._componentPosition)
+
 
     def testCSSLayoutAttachListener(self):
         # Reset state variables
         self.resetVariables()
+
         # Add component -> Should trigger attach listener
         comp = Label()
         self._csslayout.addComponent(comp)
+
         # Attach counter should get incremented
         self.assertEquals(1, self._attachCounter)
+
         # The attached component should be the label
         self.assertSame(comp, self._attachedComponent)
+
         # The attached target should be the layout
         self.assertSame(self._csslayout, self._attachTarget)
+
         # The attached component should be found in the container
         self.assertTrue(self._foundInContainer)
+
 
     def testCSSLayoutDetachListener(self):
         # Add a component to detach
         comp = Label()
         self._csslayout.addComponent(comp)
+
         # Reset state variables (since they are set by the attach listener)
         self.resetVariables()
+
         # Detach the component -> triggers the detach listener
         self._csslayout.removeComponent(comp)
+
         # Detach counter should get incremented
         self.assertEquals(1, self._detachCounter)
+
         # The detached component should be the label
         self.assertSame(comp, self._detachedComponent)
+
         # The detached target should be the layout
         self.assertSame(self._csslayout, self._detachedTarget)
+
         # The detached component should not be found in the container
         self.assertFalse(self._foundInContainer)
+
+
+class MyAttachListener(IComponentAttachListener):
+
+    def __init__(self, test):
+        self._test = test
+
+    def componentAttachedToContainer(self, event):
+        self._test._attachCounter += 1
+        self._test._attachedComponent = event.getAttachedComponent()
+        self._test._attachTarget = event.getContainer()
+
+        # Search for component in container (should be found)
+        it = self._test._attachTarget.getComponentIterator()
+        while it.hasNext():
+            if it.next() == self._test._attachedComponent:
+                self._test._foundInContainer = True
+                break
+
+        # Get layout specific variables
+        if isinstance(self._test._attachTarget, AbstractOrderedLayout):
+            self._test._indexOfComponent = \
+                    self._test._attachTarget.getComponentIndex(
+                            self._test._attachedComponent)
+        elif isinstance(self._test._attachTarget, GridLayout):
+            self._test._componentArea = \
+                    self._test._attachTarget.getComponentArea(
+                            self._test._attachedComponent)
+        elif isinstance(self._test._attachTarget, AbsoluteLayout):
+            self._test._componentPosition = \
+                    self._test._attachTarget.getPosition(
+                            self._test._attachedComponent)
+
+
+
+class MyDetachListener(IComponentDetachListener):
+
+    def __init__(self, test):
+        self._test = test
+
+    def componentDetachedFromContainer(self, event):
+        self._test._detachCounter += 1
+        self._test._detachedComponent = event.getDetachedComponent()
+        self._test._detachedTarget = event.getContainer()
+
+        # Search for component in container (should NOT be found)
+        it = self._test._detachedTarget.getComponentIterator()
+        while it.hasNext():
+            if it.next() == self._test._detachedComponent:
+                self._test._foundInContainer = True
+                break
+
+        # Get layout specific variables
+        if isinstance(self._test._detachedTarget, AbstractOrderedLayout):
+            self._test._indexOfComponent = \
+                    self._test._detachedTarget.getComponentIndex(
+                            self._test._detachedComponent)
+        elif isinstance(self._test._detachedTarget, GridLayout):
+            self._test._componentArea = \
+                    self._test._detachedTarget.getComponentArea(
+                            self._test._detachedComponent)
+        elif isinstance(self._test._detachedTarget, AbsoluteLayout):
+            self._test._componentPosition = \
+                    self._test._detachedTarget.getPosition(
+                            self._test._detachedComponent)
