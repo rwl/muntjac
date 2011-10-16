@@ -68,6 +68,20 @@ class ContextualHttpServlet(HTTPServlet):
             return Locale.getDefault()  # server default
 
 
+    def getSession(self, request, allowSessionCreation=True):
+        if allowSessionCreation:
+            return request.session()
+        else:
+            if request.transaction().hasSession():
+                return request.session()
+            else:
+                return None
+
+
+    def invalidateSession(self, request):
+        request.session().invalidate()
+
+
     def getServerName(self, request):
         return request.environ().get('SERVER_NAME', '')
 

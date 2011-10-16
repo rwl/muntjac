@@ -402,7 +402,7 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
             # Get or create a WebApplicationContext and an ApplicationManager
             # for the session
             webApplicationContext = \
-                    self.getApplicationContext(request.session())
+                    self.getApplicationContext(self.getSession(request))
             applicationManager = \
                     webApplicationContext.getApplicationManager(
                             application, self)
@@ -651,19 +651,13 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
                                    None)
                      is not None)
 
-            if restartApplication or closeApplication:
-                if request.transaction().hasSession():
-                    session = request.session()
-                else:
-                    session = None
-
             if restartApplication:
-                # avoid session creation
+                session = self.getSession(request, False)
                 self.closeApplication(application, session)
                 return self.createApplication(request)
 
             elif closeApplication:
-                # avoid session creation
+                session = self.getSession(request, False)
                 self.closeApplication(application, session)
                 return None
 
@@ -806,7 +800,7 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
         """
         newApplication = self.getNewApplication(request)
 
-        context = self.getApplicationContext(request.session())
+        context = self.getApplicationContext(self.getSession(request))
         context.addApplication(newApplication)
 
         return newApplication
@@ -933,7 +927,7 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
                 #
                 # Session must be invalidated before criticalNotification
                 # as it commits the response.
-                request.session().invalidate()
+                self.invalidateSession(request)
 
                 # send uidl redirect
                 self.criticalNotification(request, response,
@@ -965,7 +959,7 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
                         ci.getCommunicationErrorURL())
                 # Invalidate session. Portal integration will fail otherwise
                 # since the session is not created by the portal.
-                request.session().invalidate()
+                self.invalidateSession(request)
         except SystemMessageException, ee:
             raise ServletException(ee)
 
@@ -1700,7 +1694,8 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
         page.write('<meta http-equiv=\"Content-Type\" '
                 + 'content=\"text/html; charset=utf-8\"/>\n')
 
-        browser = self.getApplicationContext(request.session()).getBrowser()
+        context = self.getApplicationContext(self.getSession(request))
+        browser = context.getBrowser()
         if browser.isIE():
             # Chrome frame in all versions of IE (only if Chrome frame is
             # installed)
@@ -1821,13 +1816,7 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
         @throws SessionExpiredException
         """
         # Ensures that the session is still valid
-        if allowSessionCreation:
-            session = request.session()
-        else:
-            if request.transaction().hasSession():
-                session = request.session()
-            else:
-                session = None
+        session = self.getSession(request, allowSessionCreation)
 
         if session is None:
             raise SessionExpiredException()
@@ -1876,7 +1865,7 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
         if logoutUrl is None:
             logoutUrl = application.getURL()
 
-        session = request.getSession()
+        session = self.getSession(request)
         if session is not None:
             self.getApplicationContext(session).removeApplication(application)
 
