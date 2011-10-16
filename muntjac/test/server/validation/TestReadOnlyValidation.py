@@ -14,14 +14,16 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# from com.vaadin.data.validator.IntegerValidator import (IntegerValidator,)
-# from org.junit.Test import (Test,)
+from unittest import TestCase
+
+from muntjac.data.validator.integer_validator import IntegerValidator
+from muntjac.ui.text_field import TextField
 
 
-class TestReadOnlyValidation(object):
+class TestReadOnlyValidation(TestCase):
 
     def testIntegerValidation(self):
         field = TextField()
         field.addValidator(IntegerValidator('Enter a Valid Number'))
-        field.setValue(Integer.valueOf.valueOf(10))
+        field.setValue(int(10))
         field.validate()

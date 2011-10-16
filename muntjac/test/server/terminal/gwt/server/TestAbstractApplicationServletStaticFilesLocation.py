@@ -14,6 +14,13 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from unittest import TestCase
+
+from muntjac.terminal.gwt.server.application_servlet import ApplicationServlet
+
+from muntjac.terminal.gwt.server.abstract_application_servlet import \
+    AbstractApplicationServlet
+
 # from com.vaadin.terminal.gwt.server.AbstractApplicationServlet import (AbstractApplicationServlet,)
 # from com.vaadin.terminal.gwt.server.ApplicationServlet import (ApplicationServlet,)
 # from java.lang.reflect.Field import (Field,)
@@ -32,96 +39,92 @@
 
 
 class TestAbstractApplicationServletStaticFilesLocation(TestCase):
-    _servlet = None
-    _getStaticFilesLocationMethod = None
 
     def setUp(self):
         super(TestAbstractApplicationServletStaticFilesLocation, self).setUp()
+
         self._servlet = ApplicationServlet()
+
         # Workaround to avoid calling init and creating servlet config
-        f = AbstractApplicationServlet.getDeclaredField('applicationProperties')
-        f.setAccessible(True)
-        setattr(self._servlet, f, Properties())
-        self._getStaticFilesLocationMethod = AbstractApplicationServlet.getDeclaredMethod('getStaticFilesLocation', [self.javax.servlet.http.HttpServletRequest])
-        self._getStaticFilesLocationMethod.setAccessible(True)
+        f = getattr(AbstractApplicationServlet, 'applicationProperties')
+        #f.setAccessible(True)
+        setattr(self._servlet, f, {})
 
-    class DummyServletConfig(ServletConfig):
-        # public DummyServletConfig(Map<String,String> initParameters, )
+        self._getStaticFilesLocationMethod = \
+                getattr(AbstractApplicationServlet, 'getStaticFilesLocation')
+        #self._getStaticFilesLocationMethod.setAccessible(True)
 
-        def getInitParameter(self, name):
-            # TODO Auto-generated method stub
-            return None
-
-        def getInitParameterNames(self):
-
-            class _0_(Enumeration):
-
-                def hasMoreElements(self):
-                    return False
-
-                def nextElement(self):
-                    return None
-
-            _0_ = _0_()
-            return _0_
-
-        def getServletContext(self):
-            # TODO Auto-generated method stub
-            return None
-
-        def getServletName(self):
-            # TODO Auto-generated method stub
-            return None
 
     def testWidgetSetLocation(self):
         # SERVLETS
         # http://dummy.host:8080/contextpath/servlet
         # should return /contextpath
-        location = self.testLocation('http://dummy.host:8080', '/contextpath', '/servlet', '')
+        location = self.testLocation('http://dummy.host:8080', '/contextpath',
+                '/servlet', '')
         self.assertEquals('/contextpath', location)
+
         # http://dummy.host:8080/servlet
         # should return ""
-        location = self.testLocation('http://dummy.host:8080', '', '/servlet', '')
+        location = self.testLocation('http://dummy.host:8080', '',
+                '/servlet', '')
         self.assertEquals('', location)
+
         # http://dummy.host/contextpath/servlet/extra/stuff
         # should return /contextpath
-        location = self.testLocation('http://dummy.host', '/contextpath', '/servlet', '/extra/stuff')
+        location = self.testLocation('http://dummy.host', '/contextpath',
+                '/servlet', '/extra/stuff')
         self.assertEquals('/contextpath', location)
+
         # http://dummy.host/context/path/servlet/extra/stuff
         # should return /context/path
-        location = self.testLocation('http://dummy.host', '/context/path', '/servlet', '/extra/stuff')
+        location = self.testLocation('http://dummy.host', '/context/path',
+                '/servlet', '/extra/stuff')
         self.assertEquals('/context/path', location)
+
         # Include requests
-        location = self.testIncludedLocation('http://my.portlet.server', '/user', '/tmpservletlocation1', '')
+        location = self.testIncludedLocation('http://my.portlet.server',
+                '/user', '/tmpservletlocation1', '')
         self.assertEquals('Wrong widgetset location', '/user', location)
 
+
     def testLocation(self, base, contextPath, servletPath, pathInfo):
-        request = self.createNonIncludeRequest(base, contextPath, servletPath, pathInfo)
+        request = self.createNonIncludeRequest(base, contextPath,
+                servletPath, pathInfo)
         # Set request into replay mode
         replay(request)
-        location = self._getStaticFilesLocationMethod.invoke(self._servlet, request)
+
+        location = self._getStaticFilesLocationMethod(self._servlet, request)
         return location
+
 
     def testIncludedLocation(self, base, portletContextPath, servletPath, pathInfo):
-        request = self.createIncludeRequest(base, portletContextPath, servletPath, pathInfo)
+        request = self.createIncludeRequest(base, portletContextPath,
+                servletPath, pathInfo)
         # Set request into replay mode
         replay(request)
-        location = self._getStaticFilesLocationMethod.invoke(self._servlet, request)
+
+        location = self._getStaticFilesLocationMethod(self._servlet, request)
         return location
 
-    def createIncludeRequest(self, base, realContextPath, realServletPath, pathInfo):
+
+    def createIncludeRequest(self, base, realContextPath, realServletPath,
+                pathInfo):
         request = self.createRequest(base, '', '', pathInfo)
         expect(request.getAttribute('javax.servlet.include.context_path')).andReturn(realContextPath).anyTimes()
         expect(request.getAttribute('javax.servlet.include.servlet_path')).andReturn(realServletPath).anyTimes()
         expect(request.getAttribute(AbstractApplicationServlet.REQUEST_VAADIN_STATIC_FILE_PATH)).andReturn(None).anyTimes()
         return request
 
-    def createNonIncludeRequest(self, base, realContextPath, realServletPath, pathInfo):
-        request = self.createRequest(base, realContextPath, realServletPath, pathInfo)
+
+    def createNonIncludeRequest(self, base, realContextPath, realServletPath,
+                pathInfo):
+        request = self.createRequest(base, realContextPath, realServletPath,
+                pathInfo)
         expect(request.getAttribute('javax.servlet.include.context_path')).andReturn(None).anyTimes()
         expect(request.getAttribute('javax.servlet.include.servlet_path')).andReturn(None).anyTimes()
         expect(request.getAttribute(ApplicationServlet.REQUEST_VAADIN_STATIC_FILE_PATH)).andReturn(None).anyTimes()
         return request
+
 
     def createRequest(self, base, contextPath, servletPath, pathInfo):
         """Creates a HttpServletRequest mock using the supplied parameters.
@@ -141,7 +144,8 @@ class TestAbstractApplicationServletStaticFilesLocation(TestCase):
         """
         url = URL(base + contextPath + pathInfo)
         request = createMock(HttpServletRequest)
-        expect(request.isSecure()).andReturn(url.getProtocol().equalsIgnoreCase('https')).anyTimes()
+        expect(request.isSecure()).andReturn(
+                url.getProtocol().equalsIgnoreCase('https')).anyTimes()
         expect(request.getServerName()).andReturn(url.getHost()).anyTimes()
         expect(request.getServerPort()).andReturn(url.getPort()).anyTimes()
         expect(request.getRequestURI()).andReturn(url.getPath()).anyTimes()
@@ -149,3 +153,32 @@ class TestAbstractApplicationServletStaticFilesLocation(TestCase):
         expect(request.getPathInfo()).andReturn(pathInfo).anyTimes()
         expect(request.getServletPath()).andReturn(servletPath).anyTimes()
         return request
+
+
+class DummyServletConfig(ServletConfig):
+    # public DummyServletConfig(Map<String,String> initParameters, )
+
+    def getInitParameter(self, name):
+        # TODO Auto-generated method stub
+        return None
+
+    def getInitParameterNames(self):
+
+        class _0_(Enumeration):
+
+            def hasMoreElements(self):
+                return False
+
+            def nextElement(self):
+                return None
+
+        _0_ = _0_()
+        return _0_
+
+    def getServletContext(self):
+        # TODO Auto-generated method stub
+        return None
+
+    def getServletName(self):
+        # TODO Auto-generated method stub
+        return None
