@@ -14,12 +14,13 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __pyjamas__ import (ARGERROR, POSTINC,)
-# from java.util.HashMap import (HashMap,)
-# from junit.framework.TestCase import (TestCase,)
+from unittest import TestCase
+from muntjac.data.util.indexed_container import IndexedContainer
+from muntjac.data.util.hierarchical_container import HierarchicalContainer
 
 
 class TestContainerSorting(TestCase):
+
     _ITEM_DATA_MINUS2_NULL = 'Data -2 null'
     _ITEM_DATA_MINUS2 = 'Data -2'
     _ITEM_DATA_MINUS1 = 'Data -1'
@@ -28,20 +29,25 @@ class TestContainerSorting(TestCase):
     _ITEM_STRING_2 = 'String 2'
     _ITEM_STRING_NULL2 = 'String null'
     _ITEM_STRING_1 = 'String 1'
+
     _PROPERTY_INTEGER_NULL2 = 'integer-null'
     _PROPERTY_INTEGER_NOT_NULL = 'integer-not-null'
     _PROPERTY_STRING_NULL = 'string-null'
     _PROPERTY_STRING_ID = 'string-not-null'
 
+
     def setUp(self):
         super(TestContainerSorting, self).setUp()
+
 
     def testEmptyFilteredIndexedContainer(self):
         ic = IndexedContainer()
         self.addProperties(ic)
         self.populate(ic)
-        ic.addContainerFilter(self._PROPERTY_STRING_ID, 'aasdfasdfasdf', True, False)
+        ic.addContainerFilter(self._PROPERTY_STRING_ID, 'aasdfasdfasdf',
+                True, False)
         ic.sort([self._PROPERTY_STRING_ID], [True])
+
 
     def testFilteredIndexedContainer(self):
         ic = IndexedContainer()
@@ -49,26 +55,57 @@ class TestContainerSorting(TestCase):
         self.populate(ic)
         ic.addContainerFilter(self._PROPERTY_STRING_ID, 'a', True, False)
         ic.sort([self._PROPERTY_STRING_ID], [True])
-        self.verifyOrder(ic, [self._ITEM_ANOTHER_NULL, self._ITEM_DATA_MINUS1, self._ITEM_DATA_MINUS1_NULL, self._ITEM_DATA_MINUS2, self._ITEM_DATA_MINUS2_NULL])
+        self.verifyOrder(ic, [self._ITEM_ANOTHER_NULL, self._ITEM_DATA_MINUS1,
+                self._ITEM_DATA_MINUS1_NULL, self._ITEM_DATA_MINUS2,
+                self._ITEM_DATA_MINUS2_NULL])
+
 
     def testIndexedContainer(self):
         ic = IndexedContainer()
+
         self.addProperties(ic)
         self.populate(ic)
+
         ic.sort([self._PROPERTY_STRING_ID], [True])
-        self.verifyOrder(ic, [self._ITEM_ANOTHER_NULL, self._ITEM_DATA_MINUS1, self._ITEM_DATA_MINUS1_NULL, self._ITEM_DATA_MINUS2, self._ITEM_DATA_MINUS2_NULL, self._ITEM_STRING_1, self._ITEM_STRING_2, self._ITEM_STRING_NULL2])
-        ic.sort([self._PROPERTY_INTEGER_NOT_NULL, self._PROPERTY_INTEGER_NULL2, self._PROPERTY_STRING_ID], [True, False, True])
-        self.verifyOrder(ic, [self._ITEM_DATA_MINUS2, self._ITEM_DATA_MINUS2_NULL, self._ITEM_DATA_MINUS1, self._ITEM_DATA_MINUS1_NULL, self._ITEM_ANOTHER_NULL, self._ITEM_STRING_NULL2, self._ITEM_STRING_1, self._ITEM_STRING_2])
-        ic.sort([self._PROPERTY_INTEGER_NOT_NULL, self._PROPERTY_INTEGER_NULL2, self._PROPERTY_STRING_ID], [True, True, True])
-        self.verifyOrder(ic, [self._ITEM_DATA_MINUS2_NULL, self._ITEM_DATA_MINUS2, self._ITEM_DATA_MINUS1_NULL, self._ITEM_DATA_MINUS1, self._ITEM_ANOTHER_NULL, self._ITEM_STRING_NULL2, self._ITEM_STRING_1, self._ITEM_STRING_2])
+        self.verifyOrder(ic, [self._ITEM_ANOTHER_NULL, self._ITEM_DATA_MINUS1,
+                self._ITEM_DATA_MINUS1_NULL, self._ITEM_DATA_MINUS2,
+                self._ITEM_DATA_MINUS2_NULL, self._ITEM_STRING_1,
+                self._ITEM_STRING_2, self._ITEM_STRING_NULL2])
+
+        ic.sort([self._PROPERTY_INTEGER_NOT_NULL, self._PROPERTY_INTEGER_NULL2,
+                self._PROPERTY_STRING_ID], [True, False, True])
+        self.verifyOrder(ic, [self._ITEM_DATA_MINUS2,
+                self._ITEM_DATA_MINUS2_NULL, self._ITEM_DATA_MINUS1,
+                self._ITEM_DATA_MINUS1_NULL, self._ITEM_ANOTHER_NULL,
+                self._ITEM_STRING_NULL2, self._ITEM_STRING_1,
+                self._ITEM_STRING_2])
+
+        ic.sort([self._PROPERTY_INTEGER_NOT_NULL, self._PROPERTY_INTEGER_NULL2,
+                 self._PROPERTY_STRING_ID], [True, True, True])
+        self.verifyOrder(ic, [self._ITEM_DATA_MINUS2_NULL,
+                self._ITEM_DATA_MINUS2, self._ITEM_DATA_MINUS1_NULL,
+                self._ITEM_DATA_MINUS1, self._ITEM_ANOTHER_NULL,
+                self._ITEM_STRING_NULL2, self._ITEM_STRING_1,
+                self._ITEM_STRING_2])
+
 
     def testHierarchicalContainer(self):
         hc = HierarchicalContainer()
         self.populateContainer(hc)
         hc.sort(['name'], [True])
-        self.verifyOrder(hc, ['Audi', 'C++', 'Call of Duty', 'Cars', 'English', 'Fallout', 'Finnish', 'Ford', 'Games', 'Java', 'Might and Magic', 'Natural languages', 'PHP', 'Programming languages', 'Python', 'Red Alert', 'Swedish', 'Toyota', 'Volvo'])
-        self.assertArrays(list(hc.rootItemIds()), [self._nameToId['Cars'], self._nameToId['Games'], self._nameToId['Natural languages'], self._nameToId['Programming languages']])
-        self.assertArrays(list(hc.getChildren(self._nameToId['Games'])), [self._nameToId['Call of Duty'], self._nameToId['Fallout'], self._nameToId['Might and Magic'], self._nameToId['Red Alert']])
+        self.verifyOrder(hc, ['Audi', 'C++', 'Call of Duty', 'Cars',
+                'English', 'Fallout', 'Finnish', 'Ford', 'Games', 'Java',
+                'Might and Magic', 'Natural languages', 'PHP',
+                'Programming languages', 'Python', 'Red Alert', 'Swedish',
+                'Toyota', 'Volvo'])
+        self.assertArrays(list(hc.rootItemIds()), [self._nameToId['Cars'],
+                self._nameToId['Games'], self._nameToId['Natural languages'],
+                self._nameToId['Programming languages']])
+        self.assertArrays(list(hc.getChildren(self._nameToId['Games'])),
+                [self._nameToId['Call of Duty'], self._nameToId['Fallout'],
+                 self._nameToId['Might and Magic'],
+                 self._nameToId['Red Alert']])
+
 
     @classmethod
     def populateContainer(cls, container):
@@ -99,10 +136,9 @@ class TestContainerSorting(TestCase):
 
     @classmethod
     def addItem(cls, *args):
-        _0 = args
-        _1 = len(args)
-        if _1 == 3:
-            container, string, parent = _0
+        nargs = len(args)
+        if nargs == 3:
+            container, string, parent = args
             cls._nameToId.put(string, cls._index)
             cls._idToName.put(cls._index, string)
             item = container.addItem(cls._index)
@@ -110,16 +146,17 @@ class TestContainerSorting(TestCase):
             if parent is not None and isinstance(container, HierarchicalContainer):
                 container.setParent(cls._index, cls._nameToId[parent])
             cls._index += 1
-        elif _1 == 5:
-            ic, id, string_null, integer, integer_null = _0
-            i = ic.addItem(id)
-            i.getItemProperty(cls._PROPERTY_STRING_ID).setValue(id)
+        elif nargs == 5:
+            ic, idd, string_null, integer, integer_null = args
+            i = ic.addItem(idd)
+            i.getItemProperty(cls._PROPERTY_STRING_ID).setValue(idd)
             i.getItemProperty(cls._PROPERTY_STRING_NULL).setValue(string_null)
             i.getItemProperty(cls._PROPERTY_INTEGER_NOT_NULL).setValue(integer)
             i.getItemProperty(cls._PROPERTY_INTEGER_NULL2).setValue(integer_null)
             return i
         else:
-            raise ARGERROR(3, 5)
+            raise ValueError
+
 
     def verifyOrder(self, ic, idOrder):
         size = len(ic)
@@ -128,25 +165,22 @@ class TestContainerSorting(TestCase):
         index = 0
         while i.hasNext():
             o = i.next()
-            if o.getClass() == int and idOrder[index].getClass() == str:
+            if o.__class__ == int and idOrder[index].__class__ == str:
                 o = self._idToName[o]
-            actual[POSTINC(globals(), locals(), 'index')] = o
+            actual[index] = o
+            index += 1
         self.assertArrays(actual, idOrder)
 
+
     def assertArrays(self, actualObjects, expectedObjects):
-        self.assertEquals('Actual contains a different number of values than was expected', len(expectedObjects), len(actualObjects))
-        _0 = True
-        i = 0
-        while True:
-            if _0 is True:
-                _0 = False
-            else:
-                i += 1
-            if not (i < len(actualObjects)):
-                break
+        self.assertEquals(len(expectedObjects), len(actualObjects),
+            'Actual contains a different number of values than was expected')
+
+        for i in range(len(actualObjects)):
             actual = actualObjects[i]
             expected = expectedObjects[i]
             self.assertEquals('Item[' + i + '] does not match', expected, actual)
+
 
     def populate(self, ic):
         self.addItem(ic, self._ITEM_STRING_1, self._ITEM_STRING_1, 1, 1)
@@ -158,6 +192,7 @@ class TestContainerSorting(TestCase):
         self.addItem(ic, self._ITEM_DATA_MINUS2, self._ITEM_DATA_MINUS2, -2, -2)
         self.addItem(ic, self._ITEM_DATA_MINUS2_NULL, None, -2, None)
 
+
     def addProperties(self, ic):
         ic.addContainerProperty('id', str, None)
         ic.addContainerProperty(self._PROPERTY_STRING_ID, str, '')
@@ -166,15 +201,18 @@ class TestContainerSorting(TestCase):
         ic.addContainerProperty(self._PROPERTY_INTEGER_NOT_NULL, int, 0)
         ic.addContainerProperty('comparable-null', int, 0)
 
-    class MyObject(TestCase.Comparable):
+
+class MyObject(object):
+
+    def __init__(self):
         _data = None
 
-        def compareTo(self, o):
-            if o is None:
-                return 1
-            if o.data is None:
-                return 0 if self._data is None else 1
-            elif self._data is None:
-                return -1
-            else:
-                return self._data.compareTo(o.data)
+    def __eq__(self, o):
+        if o is None:
+            return 1
+        if o.data is None:
+            return 0 if self._data is None else 1
+        elif self._data is None:
+            return -1
+        else:
+            return self._data == o.data

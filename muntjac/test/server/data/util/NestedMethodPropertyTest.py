@@ -14,250 +14,271 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# from com.vaadin.data.util.NestedMethodProperty import (NestedMethodProperty,)
-# from java.io.ByteArrayInputStream import (ByteArrayInputStream,)
-# from java.io.ByteArrayOutputStream import (ByteArrayOutputStream,)
-# from java.io.IOException import (IOException,)
-# from java.io.ObjectInputStream import (ObjectInputStream,)
-# from java.io.ObjectOutputStream import (ObjectOutputStream,)
-# from java.io.Serializable import (Serializable,)
-# from junit.framework.Assert import (Assert,)
-# from junit.framework.TestCase import (TestCase,)
+import pickle
+
+from unittest import TestCase
+
+from muntjac.data.util.nested_method_property import NestedMethodProperty
 
 
 class NestedMethodPropertyTest(TestCase):
 
-    class Address(Serializable):
-        _street = None
-        _postalCodePrimitive = None
-        _postalCodeObject = None
-
-        def __init__(self, street, postalCode):
-            self._street = street
-            self._postalCodePrimitive = postalCode
-            self._postalCodeObject = postalCode
-
-        def setStreet(self, street):
-            self._street = street
-
-        def getStreet(self):
-            return self._street
-
-        def setPostalCodePrimitive(self, postalCodePrimitive):
-            self._postalCodePrimitive = postalCodePrimitive
-
-        def getPostalCodePrimitive(self):
-            return self._postalCodePrimitive
-
-        def setPostalCodeObject(self, postalCodeObject):
-            self._postalCodeObject = postalCodeObject
-
-        def getPostalCodeObject(self):
-            # read-only boolean property
-            return self._postalCodeObject
-
-        def isBoolean(self):
-            return True
-
-    class Person(Serializable):
-        _name = None
-        _address = None
-
-        def __init__(self, name, address):
-            self._name = name
-            self._address = address
-
-        def setName(self, name):
-            self._name = name
-
-        def getName(self):
-            return self._name
-
-        def setAddress(self, address):
-            self._address = address
-
-        def getAddress(self):
-            return self._address
-
-    class Team(Serializable):
-        _name = None
-        _manager = None
-
-        def __init__(self, name, manager):
-            self._name = name
-            self._manager = manager
-
-        def setName(self, name):
-            self._name = name
-
-        def getName(self):
-            return self._name
-
-        def setManager(self, manager):
-            self._manager = manager
-
-        def getManager(self):
-            return self._manager
-
-    _oldMill = None
-    _joonas = None
-    _vaadin = None
-
     def setUp(self):
-        self._oldMill = self.Address('Ruukinkatu 2-4', 20540)
-        self._joonas = self.Person('Joonas', self._oldMill)
-        self._vaadin = self.Team('Vaadin', self._joonas)
+        self._oldMill = Address('Ruukinkatu 2-4', 20540)
+        self._joonas = Person('Joonas', self._oldMill)
+        self._vaadin = Team('Vaadin', self._joonas)
+
 
     def tearDown(self):
         self._vaadin = None
         self._joonas = None
         self._oldMill = None
 
+
     def testSingleLevelNestedSimpleProperty(self):
         nameProperty = NestedMethodProperty(self._vaadin, 'name')
-        Assert.assertEquals(str, nameProperty.getType())
-        Assert.assertEquals('Vaadin', nameProperty.getValue())
+        self.assertEquals(str, nameProperty.getType())
+        self.assertEquals('Vaadin', nameProperty.getValue())
+
 
     def testSingleLevelNestedObjectProperty(self):
         managerProperty = NestedMethodProperty(self._vaadin, 'manager')
-        Assert.assertEquals(self.Person, managerProperty.getType())
-        Assert.assertEquals(self._joonas, managerProperty.getValue())
+        self.assertEquals(Person, managerProperty.getType())
+        self.assertEquals(self._joonas, managerProperty.getValue())
+
 
     def testMultiLevelNestedProperty(self):
-        managerNameProperty = NestedMethodProperty(self._vaadin, 'manager.name')
-        addressProperty = NestedMethodProperty(self._vaadin, 'manager.address')
-        streetProperty = NestedMethodProperty(self._vaadin, 'manager.address.street')
-        postalCodePrimitiveProperty = NestedMethodProperty(self._vaadin, 'manager.address.postalCodePrimitive')
-        postalCodeObjectProperty = NestedMethodProperty(self._vaadin, 'manager.address.postalCodeObject')
-        booleanProperty = NestedMethodProperty(self._vaadin, 'manager.address.boolean')
-        Assert.assertEquals(str, managerNameProperty.getType())
-        Assert.assertEquals('Joonas', managerNameProperty.getValue())
-        Assert.assertEquals(self.Address, addressProperty.getType())
-        Assert.assertEquals(self._oldMill, addressProperty.getValue())
-        Assert.assertEquals(str, streetProperty.getType())
-        Assert.assertEquals('Ruukinkatu 2-4', streetProperty.getValue())
-        Assert.assertEquals(int, postalCodePrimitiveProperty.getType())
-        Assert.assertEquals(20540, postalCodePrimitiveProperty.getValue())
-        Assert.assertEquals(int, postalCodeObjectProperty.getType())
-        Assert.assertEquals(20540, postalCodeObjectProperty.getValue())
-        Assert.assertEquals(bool, booleanProperty.getType())
-        Assert.assertEquals(True, booleanProperty.getValue())
+        managerNameProperty = NestedMethodProperty(self._vaadin,
+                'manager.name')
+        addressProperty = NestedMethodProperty(self._vaadin,
+                'manager.address')
+        streetProperty = NestedMethodProperty(self._vaadin,
+                'manager.address.street')
+        postalCodePrimitiveProperty = NestedMethodProperty(self._vaadin,
+                'manager.address.postalCodePrimitive')
+        postalCodeObjectProperty = NestedMethodProperty(self._vaadin,
+                'manager.address.postalCodeObject')
+        booleanProperty = NestedMethodProperty(self._vaadin,
+                'manager.address.boolean')
+
+        self.assertEquals(str, managerNameProperty.getType())
+        self.assertEquals('Joonas', managerNameProperty.getValue())
+
+        self.assertEquals(Address, addressProperty.getType())
+        self.assertEquals(self._oldMill, addressProperty.getValue())
+
+        self.assertEquals(str, streetProperty.getType())
+        self.assertEquals('Ruukinkatu 2-4', streetProperty.getValue())
+
+        self.assertEquals(int, postalCodePrimitiveProperty.getType())
+        self.assertEquals(20540, postalCodePrimitiveProperty.getValue())
+
+        self.assertEquals(int, postalCodeObjectProperty.getType())
+        self.assertEquals(20540, postalCodeObjectProperty.getValue())
+
+        self.assertEquals(bool, booleanProperty.getType())
+        self.assertEquals(True, booleanProperty.getValue())
+
 
     def testEmptyPropertyName(self):
-        # should get exception
         try:
             NestedMethodProperty(self._vaadin, '')
             self.fail()
-        except self.IllegalArgumentException, e:
-            pass # astStmt: [Stmt([]), None]
-        # should get exception
+        except ValueError:
+            pass  # should get exception
+
         try:
             NestedMethodProperty(self._vaadin, ' ')
             self.fail()
-        except self.IllegalArgumentException, e:
-            pass # astStmt: [Stmt([]), None]
+        except ValueError:
+            pass  # should get exception
+
 
     def testInvalidPropertyName(self):
-        # should get exception
         try:
             NestedMethodProperty(self._vaadin, '.')
             self.fail()
-        except self.IllegalArgumentException, e:
-            pass # astStmt: [Stmt([]), None]
-        # should get exception
+        except ValueError:
+            pass  # should get exception
+
         try:
             NestedMethodProperty(self._vaadin, '.manager')
             self.fail()
-        except self.IllegalArgumentException, e:
-            pass # astStmt: [Stmt([]), None]
-        # should get exception
+        except ValueError:
+            pass  # should get exception
+
         try:
             NestedMethodProperty(self._vaadin, 'manager.')
             self.fail()
-        except self.IllegalArgumentException, e:
-            pass # astStmt: [Stmt([]), None]
-        # should get exception
+        except ValueError:
+            pass  # should get exception
+
         try:
             NestedMethodProperty(self._vaadin, 'manager..name')
             self.fail()
-        except self.IllegalArgumentException, e:
-            pass # astStmt: [Stmt([]), None]
+        except ValueError:
+            pass  # should get exception
+
 
     def testInvalidNestedPropertyName(self):
-        # should get exception
         try:
             NestedMethodProperty(self._vaadin, 'member')
             self.fail()
-        except self.IllegalArgumentException, e:
-            pass # astStmt: [Stmt([]), None]
-        # should get exception
+        except ValueError:
+            pass  # should get exception
+
         try:
             NestedMethodProperty(self._vaadin, 'manager.pet')
             self.fail()
-        except self.IllegalArgumentException, e:
-            pass # astStmt: [Stmt([]), None]
-        # should get exception
+        except ValueError:
+            pass  # should get exception
+
         try:
             NestedMethodProperty(self._vaadin, 'manager.address.city')
             self.fail()
-        except self.IllegalArgumentException, e:
-            pass # astStmt: [Stmt([]), None]
+        except ValueError:
+            pass  # should get exception
+
 
     def testNullNestedProperty(self):
-        managerNameProperty = NestedMethodProperty(self._vaadin, 'manager.name')
-        streetProperty = NestedMethodProperty(self._vaadin, 'manager.address.street')
+        managerNameProperty = NestedMethodProperty(self._vaadin,
+                'manager.name')
+        streetProperty = NestedMethodProperty(self._vaadin,
+                'manager.address.street')
+
         self._joonas.setAddress(None)
-        # should get exception
         try:
             streetProperty.getValue()
             self.fail()
-        except Exception, e:
-            pass # astStmt: [Stmt([]), None]
+        except Exception:
+            pass  # should get exception
+
         self._vaadin.setManager(None)
-        # should get exception
         try:
             managerNameProperty.getValue()
             self.fail()
-        except Exception, e:
-            pass # astStmt: [Stmt([]), None]
-        # should get exception
+        except Exception:
+            pass  # should get exception
+
         try:
             streetProperty.getValue()
             self.fail()
-        except Exception, e:
-            pass # astStmt: [Stmt([]), None]
+        except Exception:
+            pass  # should get exception
+
         self._vaadin.setManager(self._joonas)
-        Assert.assertEquals('Joonas', managerNameProperty.getValue())
+        self.assertEquals('Joonas', managerNameProperty.getValue())
+
 
     def testMultiLevelNestedPropertySetValue(self):
-        managerNameProperty = NestedMethodProperty(self._vaadin, 'manager.name')
-        addressProperty = NestedMethodProperty(self._vaadin, 'manager.address')
-        streetProperty = NestedMethodProperty(self._vaadin, 'manager.address.street')
-        postalCodePrimitiveProperty = NestedMethodProperty(self._vaadin, 'manager.address.postalCodePrimitive')
-        postalCodeObjectProperty = NestedMethodProperty(self._vaadin, 'manager.address.postalCodeObject')
+        managerNameProperty = NestedMethodProperty(self._vaadin,
+                'manager.name')
+        addressProperty = NestedMethodProperty(self._vaadin,
+                'manager.address')
+        streetProperty = NestedMethodProperty(self._vaadin,
+                'manager.address.street')
+        postalCodePrimitiveProperty = NestedMethodProperty(self._vaadin,
+                'manager.address.postalCodePrimitive')
+        postalCodeObjectProperty = NestedMethodProperty(self._vaadin,
+                'manager.address.postalCodeObject')
+
         managerNameProperty.setValue('Joonas L')
-        Assert.assertEquals('Joonas L', self._joonas.getName())
+        self.assertEquals('Joonas L', self._joonas.getName())
         streetProperty.setValue('Ruukinkatu')
-        Assert.assertEquals('Ruukinkatu', self._oldMill.getStreet())
+        self.assertEquals('Ruukinkatu', self._oldMill.getStreet())
         postalCodePrimitiveProperty.setValue(0)
         postalCodeObjectProperty.setValue(1)
-        Assert.assertEquals(0, self._oldMill.getPostalCodePrimitive())
-        Assert.assertEquals(Integer.valueOf.valueOf(1), self._oldMill.getPostalCodeObject())
+        self.assertEquals(0, self._oldMill.getPostalCodePrimitive())
+        self.assertEquals(int(1), self._oldMill.getPostalCodeObject())
+
         postalCodeObjectProperty.setValue(None)
-        Assert.assertNull(self._oldMill.getPostalCodeObject())
+        self.assertNull(self._oldMill.getPostalCodeObject())
+
         address2 = self.Address('Other street', 12345)
         addressProperty.setValue(address2)
-        Assert.assertEquals('Other street', streetProperty.getValue())
+        self.assertEquals('Other street', streetProperty.getValue())
+
 
     def testSerialization(self):
-        streetProperty = NestedMethodProperty(self._vaadin, 'manager.address.street')
-        baos = ByteArrayOutputStream()
-        ObjectOutputStream(baos).writeObject(streetProperty)
-        property2 = ObjectInputStream(ByteArrayInputStream(baos.toByteArray())).readObject()
-        Assert.assertEquals('Ruukinkatu 2-4', property2.getValue())
+        streetProperty = NestedMethodProperty(self._vaadin,
+                'manager.address.street')
+        baos = pickle.dumps(streetProperty)
+        property2 = pickle.loads(baos)
+        self.assertEquals('Ruukinkatu 2-4', property2.getValue())
+
 
     def testIsReadOnly(self):
-        streetProperty = NestedMethodProperty(self._vaadin, 'manager.address.street')
-        booleanProperty = NestedMethodProperty(self._vaadin, 'manager.address.boolean')
-        Assert.assertFalse(streetProperty.isReadOnly())
-        Assert.assertTrue(booleanProperty.isReadOnly())
+        streetProperty = NestedMethodProperty(self._vaadin,
+                'manager.address.street')
+        booleanProperty = NestedMethodProperty(self._vaadin,
+                'manager.address.boolean')
+        self.assertFalse(streetProperty.isReadOnly())
+        self.assertTrue(booleanProperty.isReadOnly())
+
+
+class Address(object):
+
+    def __init__(self, street, postalCode):
+        self._street = street
+        self._postalCodePrimitive = postalCode
+        self._postalCodeObject = postalCode
+
+    def setStreet(self, street):
+        self._street = street
+
+    def getStreet(self):
+        return self._street
+
+    def setPostalCodePrimitive(self, postalCodePrimitive):
+        self._postalCodePrimitive = postalCodePrimitive
+
+    def getPostalCodePrimitive(self):
+        return self._postalCodePrimitive
+
+    def setPostalCodeObject(self, postalCodeObject):
+        self._postalCodeObject = postalCodeObject
+
+    def getPostalCodeObject(self):
+        # read-only boolean property
+        return self._postalCodeObject
+
+    def isBoolean(self):
+        return True
+
+
+class Person(object):
+
+    def __init__(self, name, address):
+        self._name = name
+        self._address = address
+
+    def setName(self, name):
+        self._name = name
+
+    def getName(self):
+        return self._name
+
+    def setAddress(self, address):
+        self._address = address
+
+    def getAddress(self):
+        return self._address
+
+
+class Team(object):
+
+    def __init__(self, name, manager):
+        self._name = name
+        self._manager = manager
+
+    def setName(self, name):
+        self._name = name
+
+    def getName(self):
+        return self._name
+
+    def setManager(self, manager):
+        self._manager = manager
+
+    def getManager(self):
+        return self._manager

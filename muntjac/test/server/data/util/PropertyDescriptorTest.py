@@ -14,15 +14,20 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from com.vaadin.data.util.NestedMethodPropertyTest import (NestedMethodPropertyTest,)
-from com.vaadin.data.util.AbstractBeanContainerTest import (AbstractBeanContainerTest,)
-# from com.vaadin.data.Property import (Property,)
-# from com.vaadin.data.util.NestedPropertyDescriptor import (NestedPropertyDescriptor,)
-# from java.beans.Introspector import (Introspector,)
-# from java.beans.PropertyDescriptor import (PropertyDescriptor,)
-# from junit.framework.Assert import (Assert,)
-# from junit.framework.TestCase import (TestCase,)
-Person = NestedMethodPropertyTest.Person
+import pickle
+
+from unittest import TestCase
+
+from muntjac.test.server.data.util.NestedMethodPropertyTest import \
+    NestedMethodPropertyTest
+
+from muntjac.test.server.data.util.AbstractBeanContainerTest import Person
+
+from muntjac.data.util.nested_property_descriptor import \
+    NestedPropertyDescriptor
+
+from muntjac.data.util.method_property_descriptor import \
+    MethodPropertyDescriptor
 
 
 class PropertyDescriptorTest(TestCase):
@@ -32,18 +37,18 @@ class PropertyDescriptorTest(TestCase):
         descriptor = None
         for pd in pds:
             if 'name' == pd.getName():
-                descriptor = MethodPropertyDescriptor(pd.getName(), str, pd.getReadMethod(), pd.getWriteMethod())
+                descriptor = MethodPropertyDescriptor(pd.getName(), str,
+                        pd.getReadMethod(), pd.getWriteMethod())
                 break
-        baos = ByteArrayOutputStream()
-        ObjectOutputStream(baos).writeObject(descriptor)
-        descriptor2 = ObjectInputStream(ByteArrayInputStream(baos.toByteArray())).readObject()
-        property = descriptor2.createProperty(Person('John', None))
-        Assert.assertEquals('John', property.getValue())
+        baos = pickle.dumps(descriptor)
+        descriptor2 = pickle.loads(baos)
+        prop = descriptor2.createProperty(Person('John', None))
+        self.assertEquals('John', prop.getValue())
+
 
     def testNestedPropertyDescriptorSerialization(self):
         pd = NestedPropertyDescriptor('name', Person)
-        baos = ByteArrayOutputStream()
-        ObjectOutputStream(baos).writeObject(pd)
-        pd2 = ObjectInputStream(ByteArrayInputStream(baos.toByteArray())).readObject()
-        property = pd2.createProperty(Person('John', None))
-        Assert.assertEquals('John', property.getValue())
+        baos = pickle.dumps(pd)
+        pd2 = pickle.loads(baos)
+        prop = pd2.createProperty(Person('John', None))
+        self.assertEquals('John', prop.getValue())
