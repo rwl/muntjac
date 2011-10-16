@@ -4,7 +4,7 @@ from urlparse import urlparse
 
 from os.path import join, dirname
 
-from paste.webkit.wsgiapp import sys_path_install
+from muntjac.util import sys_path_install
 
 from paste.httpheaders import \
     ACCEPT_LANGUAGE, SCRIPT_NAME, PATH_INFO, IF_MODIFIED_SINCE
@@ -15,7 +15,8 @@ from muntjac.util import Locale
 # Add 'FakeWebware' to sys path
 sys_path_install()
 
-from WebKit.HTTPServlet import HTTPServlet  #@PydevCodeAnalysisIgnore
+#from paste.webkit.wkservlet import HTTPServlet
+from WebKit.HTTPServlet import HTTPServlet
 
 
 class ContextualHttpServlet(HTTPServlet):

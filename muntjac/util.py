@@ -1,4 +1,5 @@
 
+import os
 import sys
 import locale
 import logging
@@ -7,6 +8,8 @@ import webbrowser
 from wsgiref.simple_server import make_server
 
 from paste.session import SessionMiddleware
+
+import paste.webkit
 
 
 def run_app(applicationClass, host='127.0.0.1', port=8080, nogui=False,
@@ -31,6 +34,14 @@ def run_app(applicationClass, host='127.0.0.1', port=8080, nogui=False,
     else:
         # Serve one request, then exit
         httpd.handle_request()
+
+
+# Copied from paste.webkit.wsgiapp to avoid paste.deploy dependency.
+def sys_path_install():
+    webware_dir = os.path.join(os.path.dirname(paste.webkit.__file__),
+                               'FakeWebware')
+    if webware_dir not in sys.path:
+        sys.path.append(webware_dir)
 
 
 def loadClass(className):
