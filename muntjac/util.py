@@ -7,8 +7,6 @@ import webbrowser
 
 from wsgiref.simple_server import make_server
 
-from paste.session import SessionMiddleware
-
 import paste.webkit
 
 
@@ -21,6 +19,7 @@ def run_app(applicationClass, host='127.0.0.1', port=8080, nogui=False,
     from muntjac.terminal.gwt.server.application_servlet import ApplicationServlet
     wsgi_app = ApplicationServlet(applicationClass, debug=debug)
 
+    from paste.session import SessionMiddleware
     wsgi_app = SessionMiddleware(wsgi_app)  # wrap in middleware
 
     if nogui == False:
@@ -96,7 +95,12 @@ class Locale(object):
     @classmethod
     def getDefault(cls):
         lang, _ = locale.getdefaultlocale()
-        args = cls.splitCode(lang)
+
+        if lang is not None:
+            args = cls.splitCode(lang)
+        else:
+            args = ['en', 'GB']  # FIXME: why GB?
+
         return Locale(*args)
 
 

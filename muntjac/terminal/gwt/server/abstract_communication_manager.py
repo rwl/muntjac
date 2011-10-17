@@ -1134,9 +1134,10 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         return values
 
 
-    def _getMonths(self, l):
-        locSave = locale.getlocale(locale.LC_TIME)
-        locale.setlocale(locale.LC_TIME, (str(l), 'utf-8'))  # FIXME: encoding
+    def _getMonths(self, l=None):
+        if l is not None:
+            locSave = locale.getlocale(locale.LC_TIME)
+            locale.setlocale(locale.LC_TIME, (str(l), 'utf-8'))  # FIXME: encoding
 
         months = [
             locale.nl_langinfo(locale.MON_1),
@@ -1167,14 +1168,17 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
             locale.nl_langinfo(locale.ABMON_12)
         ]
 
-        locale.setlocale(locale.LC_TIME, locSave)
+        if l is not None:
+            locale.setlocale(locale.LC_TIME, locSave)
 
         return short_months, months
 
 
-    def _getWeekdays(self, l):
-        locSave = locale.getlocale(locale.LC_TIME)
-        locale.setlocale(locale.LC_TIME, (str(l), 'utf-8'))  # FIXME: encoding
+    def _getWeekdays(self, l=None):
+
+        if l is not None:
+            locSave = locale.getlocale(locale.LC_TIME)
+            locale.setlocale(locale.LC_TIME, (str(l), 'utf-8'))  # FIXME: encoding
 
         short_days = [
             locale.nl_langinfo(locale.ABDAY_1),
@@ -1195,32 +1199,37 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
             locale.nl_langinfo(locale.DAY_7)
         ]
 
-        locale.setlocale(locale.LC_TIME, locSave)
+        if l is not None:
+            locale.setlocale(locale.LC_TIME, locSave)
 
         return short_days, days
 
 
-    def _getDateFormat(self, l):
-        locSave = locale.getlocale(locale.LC_TIME)
-        locale.setlocale(locale.LC_TIME, (str(l), 'utf-8'))  # FIXME: encoding
+    def _getDateFormat(self, l=None):
+        if l is not None:
+            locSave = locale.getlocale(locale.LC_TIME)
+            locale.setlocale(locale.LC_TIME, (str(l), 'utf-8'))  # FIXME: encoding
 
         fmt = locale.nl_langinfo(locale.D_T_FMT)
 
-        locale.setlocale(locale.LC_TIME, locSave)
+        if l is not None:
+            locale.setlocale(locale.LC_TIME, locSave)
 
         return fmt
 
 
-    def _getAmPmStrings(self, l):
-        locSave = locale.getlocale(locale.LC_TIME)
-        locale.setlocale(locale.LC_TIME, str(l))
+    def _getAmPmStrings(self, l=None):
+        if l is not None:
+            locSave = locale.getlocale(locale.LC_TIME)
+            locale.setlocale(locale.LC_TIME, str(l))
 
         ampm = [
             locale.nl_langinfo(locale.AM_STR),
             locale.nl_langinfo(locale.PM_STR)
         ]
 
-        locale.setlocale(locale.LC_TIME, locSave)
+        if l is not None:
+            locale.setlocale(locale.LC_TIME, locSave)
 
         return ampm
 

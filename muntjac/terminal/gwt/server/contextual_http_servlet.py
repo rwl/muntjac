@@ -82,6 +82,10 @@ class ContextualHttpServlet(HTTPServlet):
         request.session().invalidate()
 
 
+    def getSessionId(self, request):
+        return request.sessionId()
+
+
     def getServerName(self, request):
         return request.environ().get('SERVER_NAME', '')
 

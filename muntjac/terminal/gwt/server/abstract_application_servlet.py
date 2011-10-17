@@ -502,7 +502,7 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
             # In all other but the first UIDL request a cookie should be
             # returned by the browser.
             # This can be removed if cookieless mode (#3228) is supported
-            if request.sessionId() is None:
+            if self.getSessionId(request) is None:
                 # User has cookies disabled
                 self.criticalNotification(request, response,
                         self.getSystemMessages().getCookiesDisabledCaption(),
@@ -558,7 +558,7 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
         @throws IOException
                     if the writing failed due to input/output error.
         """
-        if self._isUIDLRequest(request):
+        if self.isUIDLRequest(request):
 
             if caption is not None:
                 caption = '\"' + JsonPaintTarget.escapeJSON(caption) + '\"'
@@ -571,9 +571,13 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
 
             if message is not None:
                 message = '\"' + JsonPaintTarget.escapeJSON(message) + '\"'
+            else:
+                message = 'null'
 
             if url is not None:
                 url = '\"' + JsonPaintTarget.escapeJSON(url) + '\"'
+            else:
+                url = 'null'
 
             output = ('for(;;);[{\"changes\":[], \"meta\" : {'
                 '\"appError\": {' + '\"caption\":' + caption + ','
