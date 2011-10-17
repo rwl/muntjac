@@ -1304,7 +1304,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
             # Assures that all the rows of the cell-buffer are valid
             if filledRows != len(cells[0]):
-                temp = [[None] * len(cells)] * filledRows
+                temp = [[None] * filledRows] * len(cells)
                 for i in range(len(cells)):
                     for j in range(filledRows):
                         temp[i][j] = cells[i][j]
