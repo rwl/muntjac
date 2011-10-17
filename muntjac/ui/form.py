@@ -117,7 +117,7 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
         # Visible item properties.
         self._visibleItemProperties = None
 
-        _formFooter = None
+        self._formFooter = None
 
         # If this is true, commit implicitly calls setValidationVisible(true).
         self._validationVisibleOnCommit = True

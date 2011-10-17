@@ -86,7 +86,7 @@ class ListSet(list):
             if element in self:
                 # Duplicates are not allowed
                 return
-            super(ListSet, self).add(index, element)
+            super(ListSet, self).insert(index, element)
             self._itemSet.add(element)
         else:
             raise ValueError, 'invalid number of arguments'

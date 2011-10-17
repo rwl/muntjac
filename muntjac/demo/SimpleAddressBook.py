@@ -10,6 +10,8 @@ from muntjac.api import \
     (Application, Form, TextField, Table, HorizontalLayout,
      HorizontalSplitPanel, Window, VerticalLayout, Button)
 
+from muntjac.ui.abstract_component import AbstractComponent
+
 
 class SimpleAddressBook(Application):
 
@@ -20,6 +22,8 @@ class SimpleAddressBook(Application):
     _visibleCols = ['Last Name', 'First Name', 'Company']
 
     def __init__(self):
+        super(SimpleAddressBook, self).__init__()
+
         self._contactList = Table()
         self._contactEditor = Form()
         self._bottomLeftCorner = HorizontalLayout()
@@ -47,7 +51,7 @@ class SimpleAddressBook(Application):
         self._contactEditor.setSizeFull()
         self._contactEditor.getLayout().setMargin(True)
         self._contactEditor.setImmediate(True)
-        self._bottomLeftCorner.setWidth('100%')
+        AbstractComponent.setWidth(self._bottomLeftCorner, '100%')
         left.addComponent(self._bottomLeftCorner)
 
 
@@ -149,9 +153,14 @@ class SimpleAddressBook(Application):
 
         for _ in range(1000):
             idd = ic.addItem()
-            fname = fnames[len(fnames) * random()]
+            fname = fnames[int( len(fnames) * random() )]
             ic.getContainerProperty(idd, 'First Name').setValue(fname)
-            lname = lnames[len(lnames) * random()]
+            lname = lnames[int( len(lnames) * random() )]
             ic.getContainerProperty(idd, 'Last Name').setValue(lname)
 
         return ic
+
+
+if __name__ == '__main__':
+    from muntjac.util import run_app
+    run_app(SimpleAddressBook, nogui=True, forever=True, debug=True)

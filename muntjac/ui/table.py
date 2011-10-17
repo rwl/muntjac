@@ -49,7 +49,7 @@ from muntjac.event.item_click_event import \
     ItemClickEvent, IItemClickNotifier, IItemClickSource
 
 from muntjac.data.util.indexed_container import \
-    IItemSetChangeEvent, IndexedContainer
+    ItemSetChangeEvent, IndexedContainer
 
 from muntjac.util import clsname
 
@@ -156,7 +156,6 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         @param caption
         @param dataSource
         """
-        super(Table, self).__init__()
 
         # True if column collapsing is allowed.
         self._columnCollapsingAllowed = False
@@ -283,6 +282,8 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
         self._associatedProperties = dict()
 
+        super(Table, self).__init__()
+
         self.setRowHeaderMode(self.ROW_HEADER_MODE_HIDDEN)
 
         if caption is not None:
@@ -290,6 +291,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
         if dataSource is not None:
             self.setContainerDataSource(dataSource)
+
 
     def getVisibleColumns(self):
         """Gets the array of visible column id:s, including generated columns.
@@ -1177,7 +1179,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
             else:
                 rows = 0
 
-            cells = [[None] * cols + self.CELL_FIRSTCOL] * rows
+            cells = [[None] * (cols + self.CELL_FIRSTCOL)] * rows
             if rows == 0:
                 self._pageBuffer = cells
                 self.unregisterPropertiesAndComponents(oldListenedProperties,
@@ -1224,7 +1226,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                     cells[self.CELL_ICON][i] = self.getItemIcon(idd)
 
                 if cols > 0:
-                    for j in cols:
+                    for j in range(cols):
                         if self.isColumnCollapsed(colids[j]):
                             continue
 
@@ -2639,7 +2641,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         """
         super(Table, self).containerItemSetChange(event)
 
-        if isinstance(event, IItemSetChangeEvent):
+        if isinstance(event, ItemSetChangeEvent):
             evt = event
             # if the event is not a global one and the added item is outside
             # the visible/buffered area, no need to do anything

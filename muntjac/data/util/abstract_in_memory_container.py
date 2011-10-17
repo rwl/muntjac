@@ -89,6 +89,7 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
 
     def __init__(self):
         """Constructor for an abstract in-memory container."""
+        super(AbstractInMemoryContainer, self).__init__()
 
         # An ordered {@link List} of all item identifiers in the container,
         # including those that have been filtered out.
@@ -207,7 +208,7 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
 
 
     def getIdByIndex(self, index):
-        return self.getVisibleItemIds().get(index)
+        return self.getVisibleItemIds()[index]
 
 
     def indexOfId(self, itemId):

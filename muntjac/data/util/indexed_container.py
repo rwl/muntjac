@@ -27,7 +27,8 @@ from muntjac.data.util.filter.simple_string_filter import \
 from muntjac.data.util.filter.unsupported_filter_exception import \
     UnsupportedFilterException
 
-from muntjac.data.util.abstract_container import BaseItemSetChangeEvent
+from muntjac.data.util.abstract_container import BaseItemSetChangeEvent,\
+    AbstractContainer
 
 from muntjac.data import container
 from muntjac.util import EventObject
@@ -64,38 +65,38 @@ class IndexedContainer(AbstractInMemoryContainer,
 
         # Internal structure
         # Linked list of ordered IProperty IDs.
-        _propertyIds = list()
+        self._propertyIds = list()
 
         # IProperty ID to type mapping.
-        _types = dict()
+        self._types = dict()
 
         # Hash of Items, where each IItem is implemented as a mapping from
         # IProperty ID to IProperty value.
-        _items = dict()
+        self._items = dict()
 
         # Set of properties that are read-only.
-        _readOnlyProperties = set()
+        self._readOnlyProperties = set()
 
         # List of all IProperty value change event listeners listening all
         # the properties.
-        _propertyValueChangeListeners = None
+        self._propertyValueChangeListeners = None
 
         # Data structure containing all listeners interested in changes to single
         # Properties. The data structure is a hashtable mapping IProperty IDs to a
         # hashtable that maps IItem IDs to a linked list of listeners listening
         # IProperty identified by given IProperty ID and IItem ID.
-        _singlePropertyValueChangeListeners = None
+        self._singlePropertyValueChangeListeners = None
 
-        _defaultPropertyValues = None
+        self._defaultPropertyValues = None
 
-        _nextGeneratedItemId = 1
+        self._nextGeneratedItemId = 1
 
         super(IndexedContainer, self).__init__()
 
-        if self._items is not None:
+        if itemIds is not None:
             for itemId in itemIds:
                 self.internalAddItemAtEnd(itemId,
-                        IndexedContainerItem(itemId), False)
+                        IndexedContainerItem(itemId, self), False)
 
             self.filterAll()
 
@@ -126,7 +127,7 @@ class IndexedContainer(AbstractInMemoryContainer,
         if not self.containsId(itemId):
             return None
 
-        return IndexedContainerProperty(itemId, propertyId)
+        return IndexedContainerProperty(itemId, propertyId, self)
 
 
     def addContainerProperty(self, propertyId, typ, defaultValue):
@@ -185,7 +186,7 @@ class IndexedContainer(AbstractInMemoryContainer,
             return idd
         else:
             item = self.internalAddItemAtEnd(itemId,
-                    IndexedContainerItem(itemId), False)
+                    IndexedContainerItem(itemId, self), False)
             if not self.isFiltered():
                 # always the last item
                 self.fireItemAdded(self.size() - 1, itemId, item)
@@ -256,7 +257,7 @@ class IndexedContainer(AbstractInMemoryContainer,
         else:
 
             return self.internalAddItemAfter(previousItemId, newItemId,
-                    IndexedContainerItem(newItemId), True)
+                    IndexedContainerItem(newItemId, self), True)
 
 
     def addItemAt(self, index, newItemId=None):
@@ -267,7 +268,7 @@ class IndexedContainer(AbstractInMemoryContainer,
             return idd
         else:
             return self.internalAddItemAt(index, newItemId,
-                    IndexedContainerItem(newItemId), True)
+                    IndexedContainerItem(newItemId, self), True)
 
 
     def generateId(self):
@@ -346,11 +347,12 @@ class IndexedContainer(AbstractInMemoryContainer,
 
     def fireItemAdded(self, position, itemId, item):
         if position >= 0:
-            self.fireItemSetChange( IItemSetChangeEvent(self, position) )
+            AbstractContainer.fireItemSetChange(self,
+                    ItemSetChangeEvent(self, position))
 
 
     def fireItemSetChange(self):
-        self.fireItemSetChange( IItemSetChangeEvent(self, -1) )
+        AbstractContainer.fireItemSetChange(self, ItemSetChangeEvent(self, -1))
 
 
     def addSinglePropertyChangeListener(self, propertyId, itemId, listener):
@@ -551,7 +553,7 @@ class IndexedContainerItem(IItem):
 
 
     def getItemProperty(self, idd):
-        return IndexedContainerProperty(self._itemId, idd)
+        return IndexedContainerProperty(self._itemId, idd, self)
 
 
     def getItemPropertyIds(self):
@@ -667,27 +669,27 @@ class IndexedContainerProperty(prop.IProperty, prop.IValueChangeNotifier):
 
 
     def getType(self):
-        return self.types.get(self._propertyId)
+        return self._container._types.get(self._propertyId)
 
 
     def getValue(self):
-        return self.items.get(self._itemId).get(self._propertyId)
+        return self._container._items.get(self._itemId).get(self._propertyId)
 
 
     def isReadOnly(self):
-        return self in self._container.readOnlyProperties
+        return self in self._container._readOnlyProperties
 
 
     def setReadOnly(self, newStatus):
         if newStatus:
-            self._container.readOnlyProperties.add(self)
+            self._container._readOnlyProperties.add(self)
         else:
-            self._container.readOnlyProperties.remove(self)
+            self._container._readOnlyProperties.remove(self)
 
 
     def setValue(self, newValue):
         # Gets the IProperty set
-        propertySet = self.items.get(self._itemId)
+        propertySet = self._container._items.get(self._itemId)
 
         # Support null values on all types
         if newValue is None:
@@ -700,17 +702,17 @@ class IndexedContainerProperty(prop.IProperty, prop.IValueChangeNotifier):
                 #constr = self.getType().getConstructor([str])
                 constr = self.getType().__init__  # FIXME: getConstructor
                 # Creates new object from the string
-                propertySet[self._propertyId] = constr([str(newValue)])
+                propertySet[self._propertyId] = constr(*[str(newValue)])
             except Exception:
                 raise prop.ConversionException, ('Conversion for value \''
                         + newValue + '\' of class ' + fullname(newValue)
                         + ' to ' + self.getType().__name__ + ' failed')
 
         # update the container filtering if this property is being filtered
-        if self.isPropertyFiltered(self._propertyId):
+        if self._container.isPropertyFiltered(self._propertyId):
             self.filterAll()
 
-        self.firePropertyValueChange(self)
+        self._container.firePropertyValueChange(self)
 
 
     def __str__(self):
@@ -761,12 +763,12 @@ class IndexedContainerProperty(prop.IProperty, prop.IValueChangeNotifier):
 
 
     def addListener(self, listener):
-        self.addSinglePropertyChangeListener(self._propertyId,
+        self._container.addSinglePropertyChangeListener(self._propertyId,
                 self._itemId, listener)
 
 
     def removeListener(self, listener):
-        self.removeSinglePropertyChangeListener(self._propertyId,
+        self._container.removeSinglePropertyChangeListener(self._propertyId,
                 self._itemId, listener)
 
 
@@ -774,7 +776,7 @@ class IndexedContainerProperty(prop.IProperty, prop.IValueChangeNotifier):
         return self._container
 
 
-class IItemSetChangeEvent(BaseItemSetChangeEvent):
+class ItemSetChangeEvent(BaseItemSetChangeEvent):
     """An <code>event</code> object specifying the list whose IItem set has
     changed.
 
@@ -785,7 +787,7 @@ class IItemSetChangeEvent(BaseItemSetChangeEvent):
     """
 
     def __init__(self, source, addedItemIndex):
-        super(IItemSetChangeEvent, self).__init__(source)
+        super(ItemSetChangeEvent, self).__init__(source)
         self._addedItemIndex = addedItemIndex
 
 
