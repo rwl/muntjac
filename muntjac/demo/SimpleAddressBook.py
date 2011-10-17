@@ -11,6 +11,7 @@ from muntjac.api import \
      HorizontalSplitPanel, Window, VerticalLayout, Button)
 
 from muntjac.ui.abstract_component import AbstractComponent
+from muntjac.ui.abstract_field import AbstractField
 
 
 class SimpleAddressBook(Application):
@@ -57,30 +58,10 @@ class SimpleAddressBook(Application):
 
     def initContactAddRemoveButtons(self):
         # New item button
-        class NewItemListener(button.IClickListener):
-
-            def __init__(self, book):
-                self._book = book
-
-            def buttonClick(self, event):
-                idd = self._book._contactList.addItem()
-                self._book._contactList.setValue(idd)
-
-
         newItem = Button('+', NewItemListener(self))
         self._bottomLeftCorner.addComponent(newItem)
 
         # Remove item button
-        class RemoveItemListener(button.IClickListener):
-
-            def __init__(self, book):
-                self._book = book
-
-            def buttonClick(self, event):
-                self._book._contactList.removeItem(
-                        self._book._contactList.getValue())
-                self._book._contactList.select(None)
-
         self._contactRemovalButton = Button('-', RemoveItemListener(self))
         self._contactRemovalButton.setVisible(False)
         self._bottomLeftCorner.addComponent(self._contactRemovalButton)
@@ -92,23 +73,9 @@ class SimpleAddressBook(Application):
         self._contactList.setSelectable(True)
         self._contactList.setImmediate(True)
 
-        class ChangeListener(IValueChangeListener):
+        AbstractField.addListener(self._contactList,
+                ContactChangeListener(self))
 
-            def __init__(self, book):
-                self._book = book
-
-            def valueChange(self, event):
-                idd = self._book._contactList.getValue()
-
-                if idd is None:
-                    self._book._contactEditor.setItemDataSource(None)
-                else:
-                    item = self._book._contactList.getItem(idd)
-                    self._book._contactEditor.setItemDataSource(item)
-
-                self._book._contactRemovalButton.setVisible(id is not None)
-
-        self._contactList.addListener( ChangeListener(self) )
         return self._visibleCols
 
 
@@ -121,22 +88,7 @@ class SimpleAddressBook(Application):
             sf.setImmediate(True)
             self._bottomLeftCorner.setExpandRatio(sf, 1)
 
-            class ChangeListener(IValueChangeListener):
-
-                def __init__(self, book):
-                    self._book = book
-
-                def valueChange(self, event):
-                    self._book._addressBookData.removeContainerFilters(pn)
-                    if len(str(sf)) > 0 and pn != str(sf):
-                        self._book._addressBookData.addContainerFilter(pn,
-                                str(sf), True, False)
-
-                    self._book._getMainWindow().showNotification((""
-                            + self._book._addressBookData.size()
-                            + " matches found"))
-
-            sf.addListener(ChangeListener(self))
+            AbstractField.addListener(sf, TextChangeListener(pn, sf, self))
 
     @classmethod
     def createDummyData(cls):
@@ -159,6 +111,62 @@ class SimpleAddressBook(Application):
             ic.getContainerProperty(idd, 'Last Name').setValue(lname)
 
         return ic
+
+
+class NewItemListener(button.IClickListener):
+
+    def __init__(self, book):
+        self._book = book
+
+    def buttonClick(self, event):
+        idd = self._book._contactList.addItem()
+        self._book._contactList.setValue(idd)
+
+
+class RemoveItemListener(button.IClickListener):
+
+    def __init__(self, book):
+        self._book = book
+
+    def buttonClick(self, event):
+        self._book._contactList.removeItem(
+                self._book._contactList.getValue())
+        self._book._contactList.select(None)
+
+
+class ContactChangeListener(IValueChangeListener):
+
+    def __init__(self, book):
+        self._book = book
+
+    def valueChange(self, event):
+        idd = self._book._contactList.getValue()
+
+        if idd is None:
+            self._book._contactEditor.setItemDataSource(None)
+        else:
+            item = self._book._contactList.getItem(idd)
+            self._book._contactEditor.setItemDataSource(item)
+
+        self._book._contactRemovalButton.setVisible(id is not None)
+
+
+class TextChangeListener(IValueChangeListener):
+
+    def __init__(self, name, text, book):
+        self._name = name
+        self._text = text
+        self._book = book
+
+    def valueChange(self, event):
+        self._book._addressBookData.removeContainerFilters(self._name)
+        if len(str(self._text)) > 0 and self._name != str(self._text):
+            self._book._addressBookData.addContainerFilter(self._name,
+                    str(self._text), True, False)
+
+        self._book._getMainWindow().showNotification((""
+                + self._book._addressBookData.size()
+                + " matches found"))
 
 
 if __name__ == '__main__':

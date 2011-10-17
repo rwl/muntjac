@@ -324,14 +324,14 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         # Checks that the new visible columns contains no nulls and
         # properties exist
         properties = self.getContainerPropertyIds()
-        for i in range(len(properties)):
+        for i in range(len(visibleColumns)):
             if visibleColumns[i] is None:
                 raise ValueError, 'Ids must be non-nulls'
             elif (visibleColumns[i] not in properties
                     and (visibleColumns[i] not in self._columnGenerators)):
-                raise ValueError, ('Ids must exist in the IContainer or '
-                    'as a generated column , missing id: '
-                    + visibleColumns[i])
+                raise ValueError, ('Ids must exist in the IContainer '
+                        'or as a generated column , missing id: '
+                        + visibleColumns[i])
 
         # If this is called before the constructor is finished, it might be
         # uninitialized
@@ -1179,7 +1179,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
             else:
                 rows = 0
 
-            cells = [[None] * (cols + self.CELL_FIRSTCOL)] * rows
+            cells = [[None] * rows] * (cols + self.CELL_FIRSTCOL)
             if rows == 0:
                 self._pageBuffer = cells
                 self.unregisterPropertiesAndComponents(oldListenedProperties,
@@ -1300,6 +1300,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                     idd = self.nextItemId(idd)
 
                 filledRows += 1
+                i += 1
 
             # Assures that all the rows of the cell-buffer are valid
             if filledRows != len(cells[0]):
@@ -1889,11 +1890,11 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         if self.getTabIndex() > 0:
             target.addAttribute('tabindex', self.getTabIndex())
 
-        if self._dragMode != self.TableDragMode.NONE:
+        if self._dragMode != TableDragMode.NONE:
             target.addAttribute('dragmode',
                     TableDragMode.values().index(self._dragMode))
 
-        if self._multiSelectMode != self.MultiSelectMode.DEFAULT:
+        if self._multiSelectMode != MultiSelectMode.DEFAULT:
             target.addAttribute('multiselectmode',
                     MultiSelectMode.values().index(self._multiSelectMode))
 
@@ -2238,7 +2239,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
             self.paintRowHeader(target, cells, indexInRowbuffer)
 
             target.addAttribute('key',
-                    int(str(cells[self.CELL_KEY][indexInRowbuffer])))
+                    int( str(cells[self.CELL_KEY][indexInRowbuffer]) ))
 
             if self.isSelected(itemId):
                 target.addAttribute('selected', True)

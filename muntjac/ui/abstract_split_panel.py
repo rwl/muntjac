@@ -190,7 +190,7 @@ class AbstractSplitPanel(AbstractLayout):
         """
         super(AbstractSplitPanel, self).paintContent(target)
 
-        position = self._pos + self.UNIT_SYMBOLS[self._posUnit]
+        position = str(self._pos) + self.UNIT_SYMBOLS[self._posUnit]
 
         target.addAttribute('position', position)
 

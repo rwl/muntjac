@@ -34,6 +34,10 @@ from muntjac.data.validatable import IValidatable
 from muntjac.terminal.composite_error_message import CompositeErrorMessage
 
 
+_VALUE_CHANGE_METHOD = \
+        getattr(prop.IValueChangeListener, 'valueChange')
+
+
 class AbstractField(AbstractComponent, field.IField,
             action.IShortcutNotifier, prop.IReadOnlyStatusChangeNotifier,
             prop.IReadOnlyStatusChangeListener):
@@ -680,10 +684,6 @@ class AbstractField(AbstractComponent, field.IField,
                 self._currentBufferedSourceException])
 
 
-    _VALUE_CHANGE_METHOD = \
-            getattr(prop.IValueChangeListener, 'valueChange')
-
-
     def addListener(self, listener):
         # Adds a value change listener for the field.
         if isinstance(listener, prop.IReadOnlyStatusChangeListener):
@@ -692,7 +692,7 @@ class AbstractField(AbstractComponent, field.IField,
                     self._READ_ONLY_STATUS_CHANGE_METHOD)
         else:
             AbstractComponent.addListener(self, field.ValueChangeEvent,
-                    listener, self._VALUE_CHANGE_METHOD)
+                    listener, _VALUE_CHANGE_METHOD)
 
 
     def removeListener(self, listener):
@@ -703,7 +703,7 @@ class AbstractField(AbstractComponent, field.IField,
                     self._READ_ONLY_STATUS_CHANGE_METHOD)
         else:
             AbstractComponent.removeListener(self, field.ValueChangeEvent,
-                    listener, self._VALUE_CHANGE_METHOD)
+                    listener, _VALUE_CHANGE_METHOD)
 
 
     def fireValueChange(self, repaintIsNotNeeded):

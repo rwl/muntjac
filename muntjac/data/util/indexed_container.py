@@ -758,8 +758,8 @@ class IndexedContainerProperty(prop.IProperty, prop.IValueChangeNotifier):
         lp = obj
 
         return (lp.getHost() == self.getHost()
-                and lp.propertyId == self._propertyId
-                and lp.itemId == self._itemId)
+                and lp._propertyId == self._propertyId
+                and lp._itemId == self._itemId)
 
 
     def addListener(self, listener):
