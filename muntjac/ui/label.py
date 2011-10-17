@@ -26,6 +26,9 @@ from muntjac.ui.component import Event as ComponentEvent
 from muntjac.data import property as prop
 
 
+_VALUE_CHANGE_METHOD = getattr(prop.IValueChangeListener, "valueChange")
+
+
 class Label(AbstractComponent, prop.IProperty, prop.IViewer,
             prop.IValueChangeListener, prop.IValueChangeNotifier):
     """Label component for showing non-editable short texts.
@@ -317,19 +320,16 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
             self.requestRepaint()
 
 
-    _VALUE_CHANGE_METHOD = getattr(prop.IValueChangeListener, "valueChange")
-
-
     def addListener(self, listener):
         """Adds the value change listener."""
-        AbstractComponent.addListener(self, ValueChangeEvent, listener,
-                self._VALUE_CHANGE_METHOD)
+        AbstractComponent.addListener(self, ValueChangeEvent,
+                listener, _VALUE_CHANGE_METHOD)
 
 
     def removeListener(self, listener):
         """Removes the value change listener."""
-        AbstractComponent.removeListener(self, ValueChangeEvent, listener,
-                self._VALUE_CHANGE_METHOD)
+        AbstractComponent.removeListener(self, ValueChangeEvent,
+                listener, _VALUE_CHANGE_METHOD)
 
 
     def fireValueChange(self):

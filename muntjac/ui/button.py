@@ -50,6 +50,9 @@ class IClickListener(object):
         raise NotImplementedError
 
 
+_BUTTON_CLICK_METHOD = getattr(IClickListener, "buttonClick")
+
+
 class Button(AbstractField, IBlurNotifier, IFocusNotifier):
     """A generic button component.
 
@@ -268,9 +271,6 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
         """
         return bool
 
-
-    _BUTTON_CLICK_METHOD = getattr(IClickListener, "buttonClick")
-
     # Button style with no decorations. Looks like a link, acts like a button
     # @deprecated use {@link BaseTheme#BUTTON_LINK} instead.
     STYLE_LINK = 'link'
@@ -287,8 +287,8 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
                     BlurEvent, listener, IBlurListener.blurMethod)
 
         elif isinstance(listener, IClickListener):
-            AbstractComponent.addListener(self, ClickEvent, listener,
-                    self._BUTTON_CLICK_METHOD)
+            AbstractComponent.addListener(self, ClickEvent,
+                    listener, _BUTTON_CLICK_METHOD)
 
         else:
             AbstractComponent.addListener(self, FocusEvent.EVENT_ID,
@@ -306,8 +306,8 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
                     BlurEvent, listener)
 
         elif isinstance(listener, IClickListener):
-            AbstractComponent.removeListener(self, ClickEvent, listener,
-                    self._BUTTON_CLICK_METHOD)
+            AbstractComponent.removeListener(self, ClickEvent,
+                    listener, _BUTTON_CLICK_METHOD)
 
         else:
             AbstractComponent.removeListener(self, FocusEvent.EVENT_ID,

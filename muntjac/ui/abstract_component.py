@@ -29,6 +29,9 @@ from muntjac.ui.component import \
 from muntjac.ui import component
 
 
+_COMPONENT_EVENT_METHOD = getattr(IListener, 'componentEvent')
+
+
 class AbstractComponent(IComponent, IMethodEventSource):
     """An abstract class that defines default implementation for the
     {@link IComponent} interface. Basic UI components that are not derived
@@ -768,7 +771,7 @@ class AbstractComponent(IComponent, IMethodEventSource):
             if isinstance(args[0], IListener):
                 listener = args[0]
                 self.addListener(ComponentEvent, listener,
-                        self._COMPONENT_EVENT_METHOD)
+                        _COMPONENT_EVENT_METHOD)
             else:
                 listener = args[0]  # RepaintRequestListener
 
@@ -894,7 +897,7 @@ class AbstractComponent(IComponent, IMethodEventSource):
             if isinstance(args[0], IListener):
                 listener = [0]
                 self.removeListener(ComponentEvent, listener,
-                        self._COMPONENT_EVENT_METHOD)
+                        _COMPONENT_EVENT_METHOD)
             else:
                 listener = args[0]
                 if self._repaintRequestListeners is not None:
@@ -935,9 +938,6 @@ class AbstractComponent(IComponent, IMethodEventSource):
     def changeVariables(self, source, variables):
         # Invoked when the value of a variable has changed.
         pass
-
-
-    _COMPONENT_EVENT_METHOD = getattr(IListener, 'componentEvent')
 
 
     def hasListeners(self, eventType):

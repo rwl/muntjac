@@ -25,6 +25,9 @@ class IFragmentChangedListener(object):
         raise NotImplementedError
 
 
+_FRAGMENT_CHANGED_METHOD = getattr(IFragmentChangedListener, 'fragmentChanged')
+
+
 class UriFragmentUtility(AbstractComponent):
     """Experimental web browser dependent component for URI fragment (part
     after hash mark "#") reading and writing.
@@ -35,18 +38,15 @@ class UriFragmentUtility(AbstractComponent):
 
     #CLIENT_WIDGET = ClientWidget(VUriFragmentUtility, LoadStyle.EAGER)
 
-    _FRAGMENT_CHANGED_METHOD = getattr(IFragmentChangedListener,
-            'fragmentChanged')
-
 
     def addListener(self, listener):
-        AbstractComponent.addListener(self, FragmentChangedEvent, listener,
-                self._FRAGMENT_CHANGED_METHOD)
+        AbstractComponent.addListener(self, FragmentChangedEvent,
+                listener, _FRAGMENT_CHANGED_METHOD)
 
 
     def removeListener(self, listener):
-        AbstractComponent.removeListener(self, FragmentChangedEvent, listener,
-                self._FRAGMENT_CHANGED_METHOD)
+        AbstractComponent.removeListener(self, FragmentChangedEvent,
+                listener, _FRAGMENT_CHANGED_METHOD)
 
 
     def __init__(self):

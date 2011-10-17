@@ -37,7 +37,7 @@ from muntjac.event.dd.acceptcriteria.client_side_criterion import \
     ClientSideCriterion
 
 from muntjac.event.item_click_event import \
-    ItemClickEvent, IItemClickNotifier, IItemClickSource
+    ItemClickEvent, IItemClickNotifier, IItemClickSource, ITEM_CLICK_METHOD
 
 from muntjac.ui.component import Event as ComponentEvent
 
@@ -673,14 +673,13 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
         """
         if isinstance(listener, ICollapseListener):
             AbstractComponent.addListener(self, CollapseEvent, listener,
-                    ICollapseListener.COLLAPSE_METHOD)
+                    COLLAPSE_METHOD)
         elif isinstance(listener, IExpandListener):
             AbstractComponent.addListener(self, ExpandEvent, listener,
-                    IExpandListener.EXPAND_METHOD)
+                    EXPAND_METHOD)
         else:
             AbstractComponent.addListener(self, VTree.ITEM_CLICK_EVENT_ID,
-                    ItemClickEvent, listener,
-                    ItemClickEvent.ITEM_CLICK_METHOD)
+                    ItemClickEvent, listener, ITEM_CLICK_METHOD)
 
 
     def removeListener(self, listener):
@@ -695,11 +694,11 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
                    the Listener to be removed.
         """
         if isinstance(listener, ICollapseListener):
-            AbstractComponent.removeListener(self, CollapseEvent, listener,
-                    ICollapseListener.COLLAPSE_METHOD)
+            AbstractComponent.removeListener(self, CollapseEvent,
+                    listener, COLLAPSE_METHOD)
         elif isinstance(listener, IExpandListener):
-            AbstractComponent.removeListener(self, ExpandEvent, listener,
-                    IExpandListener.EXPAND_METHOD)
+            AbstractComponent.removeListener(self, ExpandEvent,
+                    listener, EXPAND_METHOD)
         else:
             AbstractComponent.removeListener(self, VTree.ITEM_CLICK_EVENT_ID,
                     ItemClickEvent, listener)
@@ -958,7 +957,7 @@ class IExpandListener(object):
         raise NotImplementedError
 
 
-    EXPAND_METHOD = nodeExpand
+EXPAND_METHOD = IExpandListener.nodeExpand
 
 
 class CollapseEvent(ComponentEvent):
@@ -1006,7 +1005,8 @@ class ICollapseListener(object):
         """
         raise NotImplementedError
 
-    COLLAPSE_METHOD = nodeCollapse
+
+COLLAPSE_METHOD = ICollapseListener.nodeCollapse
 
 
 class IItemStyleGenerator(object):

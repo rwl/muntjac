@@ -65,6 +65,9 @@ class ILoginListener(object):
         raise NotImplementedError
 
 
+_ON_LOGIN_METHOD = getattr(ILoginListener, 'onLogin')
+
+
 class LoginForm(CustomComponent):
     """LoginForm is a Vaadin component to handle common problem among Ajax
     applications: browsers password managers don't fill dynamically created
@@ -183,7 +186,6 @@ class LoginForm(CustomComponent):
         super(LoginForm, self).detach()
 
 
-    _ON_LOGIN_METHOD = getattr(ILoginListener, 'onLogin')
     _UNDEFINED_HEIGHT = '140px'
     _UNDEFINED_WIDTH = '200px'
 
@@ -194,7 +196,7 @@ class LoginForm(CustomComponent):
         @param listener
         """
         AbstractComponent.addListener(self, LoginEvent, listener,
-                self._ON_LOGIN_METHOD)
+                _ON_LOGIN_METHOD)
 
 
     def removeListener(self, listener):
@@ -203,7 +205,7 @@ class LoginForm(CustomComponent):
         @param listener
         """
         AbstractComponent.removeListener(self, self.LoginEvent, listener,
-                self._ON_LOGIN_METHOD)
+                _ON_LOGIN_METHOD)
 
 
     def setWidth(self, width, unit):

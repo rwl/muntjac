@@ -52,6 +52,9 @@ class ICloseListener(object):
         raise NotImplementedError
 
 
+_WINDOW_CLOSE_METHOD = getattr(ICloseListener, 'windowClose')
+
+
 class IResizeListener(object):
     """Listener for window resize events.
 
@@ -60,6 +63,9 @@ class IResizeListener(object):
 
     def windowResized(self, e):
         raise NotImplementedError
+
+
+_WINDOW_RESIZE_METHOD = getattr(IResizeListener, 'windowResized')
 
 
 class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
@@ -910,9 +916,6 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
             self.requestRepaint()
 
 
-    _WINDOW_CLOSE_METHOD = getattr(ICloseListener, 'windowClose')
-
-
     def addListener(self, listener):
         """Adds a ICloseListener to the window.
 
@@ -951,14 +954,14 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
             AbstractComponent.addListener(self, BlurEvent.EVENT_ID,
                     BlurEvent, listener, IBlurListener.blurMethod)
         elif isinstance(listener, ICloseListener):
-            AbstractComponent.addListener(self, CloseEvent, listener,
-                    self._WINDOW_CLOSE_METHOD)
+            AbstractComponent.addListener(self, CloseEvent,
+                    listener, _WINDOW_CLOSE_METHOD)
         elif isinstance(listener, IFocusListener):
             AbstractComponent.addListener(self, FocusEvent.EVENT_ID,
                     FocusEvent, listener, IFocusListener.focusMethod)
         else:
-            AbstractComponent.addListener(self, ResizeEvent, listener,
-                    self._WINDOW_RESIZE_METHOD)
+            AbstractComponent.addListener(self, ResizeEvent,
+                    listener, _WINDOW_RESIZE_METHOD)
 
 
     def removeListener(self, listener):
@@ -978,7 +981,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
                     BlurEvent, listener)
         elif isinstance(listener, ICloseListener):
             AbstractComponent.removeListener(self, CloseEvent, listener,
-                    self._WINDOW_CLOSE_METHOD)
+                    _WINDOW_CLOSE_METHOD)
         elif isinstance(listener, IFocusListener):
             AbstractComponent.removeListener(self, FocusEvent.EVENT_ID,
                     FocusEvent, listener)
@@ -989,9 +992,6 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
     def fireClose(self):
         # Method for the resize event.
         self.fireEvent( CloseEvent(self) )
-
-
-    _WINDOW_RESIZE_METHOD = getattr(IResizeListener, 'windowResized')
 
 
     def fireResize(self):

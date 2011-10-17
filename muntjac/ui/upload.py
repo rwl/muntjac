@@ -114,6 +114,12 @@ class IProgressListener(object):
         raise NotImplementedError
 
 
+_UPLOAD_FINISHED_METHOD = getattr(IFinishedListener, 'uploadFinished')
+_UPLOAD_FAILED_METHOD = getattr(IFailedListener, 'uploadFailed')
+_UPLOAD_SUCCEEDED_METHOD = getattr(IStartedListener, 'uploadStarted')
+_UPLOAD_STARTED_METHOD = getattr(ISucceededListener, 'uploadSucceeded')
+
+
 class Upload(AbstractComponent, IFocusable): #IComponent,
     """IComponent for uploading files from client to server.
 
@@ -248,12 +254,6 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
         target.addVariable(self, 'action', self.getStreamVariable())
 
 
-    _UPLOAD_FINISHED_METHOD = getattr(IFinishedListener, 'uploadFinished')
-    _UPLOAD_FAILED_METHOD = getattr(IFailedListener, 'uploadFailed')
-    _UPLOAD_SUCCEEDED_METHOD = getattr(IStartedListener, 'uploadStarted')
-    _UPLOAD_STARTED_METHOD = getattr(ISucceededListener, 'uploadSucceeded')
-
-
     def addListener(self, listener):
         """Adds an event listener.
 
@@ -261,12 +261,12 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
                    the Listener to be added.
         """
         if isinstance(listener, IFailedListener):
-            AbstractComponent.addListener(self, FailedEvent, listener,
-                    self._UPLOAD_FAILED_METHOD)
+            AbstractComponent.addListener(self, FailedEvent,
+                    listener, _UPLOAD_FAILED_METHOD)
 
         elif isinstance(listener, IFinishedListener):
-            AbstractComponent.addListener(self, FinishedEvent, listener,
-                    self._UPLOAD_FINISHED_METHOD)
+            AbstractComponent.addListener(self, FinishedEvent,
+                    listener, _UPLOAD_FINISHED_METHOD)
 
         elif isinstance(listener, IProgressListener):
             if self._progressListeners is None:
@@ -274,12 +274,12 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
             self._progressListeners.add(listener)
 
         elif isinstance(listener, IStartedListener):
-            AbstractComponent.addListener(self, StartedEvent, listener,
-                    self._UPLOAD_STARTED_METHOD)
+            AbstractComponent.addListener(self, StartedEvent,
+                    listener, _UPLOAD_STARTED_METHOD)
 
         else:
-            AbstractComponent.addListener(self, SucceededEvent, listener,
-                    self._UPLOAD_SUCCEEDED_METHOD)
+            AbstractComponent.addListener(self, SucceededEvent,
+                    listener, _UPLOAD_SUCCEEDED_METHOD)
 
 
     def removeListener(self, listener):
@@ -289,24 +289,24 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
                    the Listener to be removed.
         """
         if isinstance(listener, IFailedListener):
-            AbstractComponent.removeListener(self, FailedEvent, listener,
-                    self._UPLOAD_FAILED_METHOD)
+            AbstractComponent.removeListener(self, FailedEvent,
+                    listener, _UPLOAD_FAILED_METHOD)
 
         elif isinstance(listener, IFinishedListener):
-            AbstractComponent.removeListener(self, FinishedEvent, listener,
-                    self._UPLOAD_FINISHED_METHOD)
+            AbstractComponent.removeListener(self, FinishedEvent,
+                    listener, _UPLOAD_FINISHED_METHOD)
 
         elif isinstance(listener, IProgressListener):
             if self._progressListeners is not None:
                 self._progressListeners.remove(listener)
 
         elif isinstance(listener, IStartedListener):
-            AbstractComponent.removeListener(self, StartedEvent, listener,
-                    self._UPLOAD_STARTED_METHOD)
+            AbstractComponent.removeListener(self, StartedEvent,
+                    listener, _UPLOAD_STARTED_METHOD)
 
         else:
-            AbstractComponent.removeListener(self, SucceededEvent, listener,
-                    self._UPLOAD_SUCCEEDED_METHOD)
+            AbstractComponent.removeListener(self, SucceededEvent,
+                    listener, _UPLOAD_SUCCEEDED_METHOD)
 
 
     def fireStarted(self, filename, MIMEType):

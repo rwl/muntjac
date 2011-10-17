@@ -220,7 +220,8 @@ class ITextChangeListener(IComponentEventListener):
         """
         raise NotImplementedError
 
-    EVENT_METHOD = textChange
+
+EVENT_METHOD = ITextChangeListener.textChange
 
 
 class ITextChangeNotifier(object):

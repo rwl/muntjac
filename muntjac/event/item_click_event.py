@@ -23,6 +23,9 @@ class IItemClickListener(object):
         raise NotImplementedError
 
 
+ITEM_CLICK_METHOD = getattr(IItemClickListener, 'itemClick')
+
+
 class ItemClickEvent(ClickEvent):
     """Click event fired by a {@link Component} implementing
     {@link com.vaadin.data.Container} interface. ItemClickEvents happens on an
@@ -64,8 +67,6 @@ class ItemClickEvent(ClickEvent):
                 on any distinct property.
         """
         return self._propertyId
-
-    ITEM_CLICK_METHOD = getattr(IItemClickListener, 'itemClick')
 
 
 class IItemClickNotifier(object):

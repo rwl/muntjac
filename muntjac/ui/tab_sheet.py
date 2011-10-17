@@ -47,6 +47,10 @@ class ISelectedTabChangeListener(object):
         raise NotImplementedError
 
 
+_SELECTED_TAB_CHANGE_METHOD = getattr(ISelectedTabChangeListener,
+        'selectedTabChange')
+
+
 class TabSheet(AbstractComponentContainer):
     """TabSheet component.
 
@@ -672,18 +676,14 @@ class TabSheet(AbstractComponentContainer):
             self.requestRepaint()
 
 
-    _SELECTED_TAB_CHANGE_METHOD = getattr(ISelectedTabChangeListener,
-            'selectedTabChange')
-
-
     def addListener(self, listener):
         """Adds a tab selection listener
 
         @param listener
                    the Listener to be added.
         """
-        AbstractComponent.addListener(self, SelectedTabChangeEvent, listener,
-                self._SELECTED_TAB_CHANGE_METHOD)
+        AbstractComponent.addListener(self, SelectedTabChangeEvent,
+                listener, _SELECTED_TAB_CHANGE_METHOD)
 
 
     def removeListener(self, listener):
@@ -700,7 +700,7 @@ class TabSheet(AbstractComponentContainer):
                 self._paintedTabs.clear()
         else:
             AbstractComponent.removeListener(self, SelectedTabChangeEvent,
-                    listener, self._SELECTED_TAB_CHANGE_METHOD)
+                    listener, _SELECTED_TAB_CHANGE_METHOD)
 
 
     def fireSelectedTabChange(self):

@@ -46,7 +46,7 @@ from muntjac.ui.abstract_select import \
     AbstractSelect, MultiSelectMode, AbstractSelectTargetDetails
 
 from muntjac.event.item_click_event import \
-    ItemClickEvent, IItemClickNotifier, IItemClickSource
+    ItemClickEvent, IItemClickNotifier, IItemClickSource, ITEM_CLICK_METHOD
 
 from muntjac.data.util.indexed_container import \
     ItemSetChangeEvent, IndexedContainer
@@ -3077,28 +3077,28 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         if isinstance(listener, IColumnReorderListener):
             AbstractComponent.addListener(self,
                     VScrollTable.COLUMN_REORDER_EVENT_ID,
-                    self.ColumnReorderEvent, listener,
-                    self.ColumnReorderEvent.METHOD)
+                    ColumnReorderEvent, listener,
+                    COLUMN_REORDER_METHOD)
         elif isinstance(listener, IColumnResizeListener):
             AbstractComponent.addListener(self,
                     VScrollTable.COLUMN_RESIZE_EVENT_ID,
-                    self.ColumnResizeEvent, listener,
-                    self.ColumnResizeEvent.COLUMN_RESIZE_METHOD)
+                    ColumnResizeEvent, listener,
+                    COLUMN_RESIZE_METHOD)
         elif isinstance(listener, IFooterClickListener):
             AbstractComponent.addListener(self,
                     VScrollTable.FOOTER_CLICK_EVENT_ID,
-                    self.FooterClickEvent, listener,
-                    self.FooterClickEvent.FOOTER_CLICK_METHOD)
+                    FooterClickEvent, listener,
+                    FOOTER_CLICK_METHOD)
         elif isinstance(listener, IHeaderClickListener):
             AbstractComponent.addListener(self,
                     VScrollTable.HEADER_CLICK_EVENT_ID,
-                    self.HeaderClickEvent, listener,
-                    self.HeaderClickEvent.HEADER_CLICK_METHOD)
+                    HeaderClickEvent, listener,
+                    HEADER_CLICK_METHOD)
         else:
             AbstractComponent.addListener(self,
                     VScrollTable.ITEM_CLICK_EVENT_ID,
                     ItemClickEvent, listener,
-                    ItemClickEvent.ITEM_CLICK_METHOD)
+                    ITEM_CLICK_METHOD)
 
 
     def removeListener(self, listener):
@@ -3110,19 +3110,19 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         if isinstance(listener, IColumnReorderListener):
             AbstractComponent.removeListener(self,
                     VScrollTable.COLUMN_REORDER_EVENT_ID,
-                    self.ColumnReorderEvent, listener)
+                    ColumnReorderEvent, listener)
         elif isinstance(listener, IColumnResizeListener):
             AbstractComponent.removeListener(self,
                     VScrollTable.COLUMN_RESIZE_EVENT_ID,
-                    self.ColumnResizeEvent, listener)
+                    ColumnResizeEvent, listener)
         elif isinstance(listener, IFooterClickListener):
             AbstractComponent.removeListener(self,
                     VScrollTable.FOOTER_CLICK_EVENT_ID,
-                    self.FooterClickEvent, listener)
+                    FooterClickEvent, listener)
         elif isinstance(listener, IHeaderClickListener):
             AbstractComponent.removeListener(self,
                     VScrollTable.HEADER_CLICK_EVENT_ID,
-                    self.HeaderClickEvent, listener)
+                    HeaderClickEvent, listener)
         else:
             AbstractComponent.removeListener(self,
                     VScrollTable.ITEM_CLICK_EVENT_ID,
@@ -3440,14 +3440,15 @@ class IHeaderClickListener(object):
         raise NotImplementedError
 
 
+HEADER_CLICK_METHOD = getattr(IHeaderClickListener, 'headerClick')
+
+
 class HeaderClickEvent(ClickEvent):
     """Click event fired when clicking on the Table headers. The event
     includes a reference the the Table the event originated from, the property
     id of the column which header was pressed and details about the mouse
     event itself.
     """
-
-    HEADER_CLICK_METHOD = getattr(IHeaderClickListener, 'headerClick')
 
     def __init__(self, source, propertyId, details):
         super(HeaderClickEvent, self).__init__(source, details)
@@ -3477,14 +3478,15 @@ class IFooterClickListener(object):
         raise NotImplementedError
 
 
+FOOTER_CLICK_METHOD = getattr(IFooterClickListener, 'footerClick')
+
+
 class FooterClickEvent(ClickEvent):
     """Click event fired when clicking on the Table footers. The event
     includes a reference the the Table the event originated from, the property
     id of the column which header was pressed and details about the mouse
     event itself.
     """
-
-    FOOTER_CLICK_METHOD = getattr(IFooterClickListener, 'footerClick')
 
     def __init__(self, source, propertyId, details):
         """Constructor
@@ -3522,13 +3524,14 @@ class IColumnResizeListener(object):
         raise NotImplementedError
 
 
+COLUMN_RESIZE_METHOD = getattr(IColumnResizeListener, 'columnResize')
+
+
 class ColumnResizeEvent(ComponentEvent):
     """This event is fired when a column is resized. The event contains the
     columns property id which was fired, the previous width of the column and
     the width of the column after the resize.
     """
-
-    COLUMN_RESIZE_METHOD = getattr(IColumnResizeListener, 'columnResize')
 
     def __init__(self, source, propertyId, previous, current):
         """Constructor
@@ -3583,10 +3586,12 @@ class IColumnReorderListener(object):
         raise NotImplementedError
 
 
+COLUMN_REORDER_METHOD = getattr(IColumnReorderListener, 'columnReorder')
+
+
 class ColumnReorderEvent(ComponentEvent):
     """This event is fired when a columns are reordered by the end user user."""
 
-    METHOD = getattr(IColumnReorderListener, 'columnReorder')
 
     def __init__(self, source):
         """Constructor

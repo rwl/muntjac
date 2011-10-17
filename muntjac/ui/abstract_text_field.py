@@ -21,7 +21,8 @@ from muntjac.terminal.gwt.client.ui.v_text_field import VTextField
 
 from muntjac.event.field_events import \
     BlurEvent, IBlurListener, IBlurNotifier, FocusEvent, IFocusListener, \
-    IFocusNotifier, TextChangeEvent, ITextChangeListener, ITextChangeNotifier
+    IFocusNotifier, TextChangeEvent, ITextChangeListener, ITextChangeNotifier,\
+    EVENT_METHOD
 from muntjac.ui.abstract_component import AbstractComponent
 
 
@@ -441,7 +442,7 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
 
         else:
             AbstractComponent.addListener(self, ITextChangeListener.EVENT_ID,
-                    TextChangeEvent, listener, ITextChangeListener.EVENT_METHOD)
+                    TextChangeEvent, listener, EVENT_METHOD)
 
 
     def removeListener(self, listener):

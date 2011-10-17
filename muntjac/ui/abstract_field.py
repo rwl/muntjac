@@ -34,8 +34,10 @@ from muntjac.data.validatable import IValidatable
 from muntjac.terminal.composite_error_message import CompositeErrorMessage
 
 
-_VALUE_CHANGE_METHOD = \
-        getattr(prop.IValueChangeListener, 'valueChange')
+_VALUE_CHANGE_METHOD = getattr(prop.IValueChangeListener, 'valueChange')
+
+_READ_ONLY_STATUS_CHANGE_METHOD = getattr(prop.IReadOnlyStatusChangeListener,
+        'readOnlyStatusChange')
 
 
 class AbstractField(AbstractComponent, field.IField,
@@ -689,7 +691,7 @@ class AbstractField(AbstractComponent, field.IField,
         if isinstance(listener, prop.IReadOnlyStatusChangeListener):
             AbstractComponent.addListener(self,
                     prop.IReadOnlyStatusChangeEvent, listener,
-                    self._READ_ONLY_STATUS_CHANGE_METHOD)
+                    _READ_ONLY_STATUS_CHANGE_METHOD)
         else:
             AbstractComponent.addListener(self, field.ValueChangeEvent,
                     listener, _VALUE_CHANGE_METHOD)
@@ -700,7 +702,7 @@ class AbstractField(AbstractComponent, field.IField,
         if isinstance(listener, prop.IReadOnlyStatusChangeListener):
             AbstractComponent.removeListener(self,
                     prop.IReadOnlyStatusChangeEvent, listener,
-                    self._READ_ONLY_STATUS_CHANGE_METHOD)
+                    _READ_ONLY_STATUS_CHANGE_METHOD)
         else:
             AbstractComponent.removeListener(self, field.ValueChangeEvent,
                     listener, _VALUE_CHANGE_METHOD)
@@ -713,11 +715,6 @@ class AbstractField(AbstractComponent, field.IField,
         self.fireEvent( field.ValueChangeEvent(self) )
         if not repaintIsNotNeeded:
             self.requestRepaint()
-
-
-    _READ_ONLY_STATUS_CHANGE_METHOD = \
-            getattr(prop.IReadOnlyStatusChangeListener,
-                    'readOnlyStatusChange')
 
 
     def readOnlyStatusChange(self, event):

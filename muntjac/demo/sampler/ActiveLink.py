@@ -17,9 +17,10 @@ class ILinkActivatedListener(object):
         raise NotImplementedError
 
 
-class ActiveLink(Link):
+_LINK_FOLLOWED_METHOD = getattr(ILinkActivatedListener, 'linkActivated')
 
-    _LINK_FOLLOWED_METHOD = getattr(ILinkActivatedListener, 'linkActivated')
+
+class ActiveLink(Link):
 
     def __init__(self, caption=None, resource=None, targetName=None,
                 width=None, height=None, border=None):
@@ -42,7 +43,7 @@ class ActiveLink(Link):
         """
         self._listeners.add(listener)
         AbstractComponent.addListener(self, LinkActivatedEvent,
-                listener, self._LINK_FOLLOWED_METHOD)
+                listener, _LINK_FOLLOWED_METHOD)
         if len(self._listeners) == 1:
             self.requestRepaint()
 
@@ -55,7 +56,7 @@ class ActiveLink(Link):
         """
         self._listeners.remove(listener)
         AbstractComponent.removeListener(self, ClickEvent,
-                listener, self._LINK_FOLLOWED_METHOD)
+                listener, _LINK_FOLLOWED_METHOD)
         if len(self._listeners) == 0:
             self.requestRepaint()
 

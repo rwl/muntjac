@@ -21,6 +21,13 @@ from muntjac.ui.component_container import \
     ComponentDetachEvent, IComponentDetachListener
 
 
+_COMPONENT_ATTACHED_METHOD = getattr(IComponentAttachListener,
+        'componentAttachedToContainer')
+
+_COMPONENT_DETACHED_METHOD = getattr(IComponentDetachListener,
+        'componentDetachedFromContainer')
+
+
 class AbstractComponentContainer(AbstractComponent, IComponentContainer):
     """Extension to {@link AbstractComponent} that defines the default
     implementation for the methods in {@link IComponentContainer}. Basic
@@ -90,35 +97,22 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
             c.detach()
 
 
-#    _COMPONENT_ATTACHED_METHOD = getattr(IComponentAttachListener,
-#            'componentAttachedToContainer')
-#
-#    _COMPONENT_DETACHED_METHOD = getattr(IComponentDetachListener,
-#            'componentDetachedFromContainer')
-
-
     def addListener(self, listener):
         if isinstance(listener, IComponentAttachListener):
-            AbstractComponent.addListener(self, ComponentAttachEvent, listener,
-                    IComponentAttachListener.componentAttachedToContainer)
-#                    self._COMPONENT_ATTACHED_METHOD)
+            AbstractComponent.addListener(self, ComponentAttachEvent,
+                    listener, _COMPONENT_ATTACHED_METHOD)
         else:
-            AbstractComponent.addListener(self, ComponentDetachEvent, listener,
-                    IComponentDetachListener.componentDetachedFromContainer)
-#                    self._COMPONENT_DETACHED_METHOD)
+            AbstractComponent.addListener(self, ComponentDetachEvent,
+                    listener, _COMPONENT_DETACHED_METHOD)
 
 
     def removeListener(self, listener):
         if isinstance(listener, IComponentAttachListener):
             AbstractComponent.removeListener(self, ComponentAttachEvent,
-                    listener,
-                    IComponentAttachListener.componentAttachedToContainer)
-#                    self._COMPONENT_ATTACHED_METHOD)
+                    listener, _COMPONENT_ATTACHED_METHOD)
         else:
             AbstractComponent.removeListener(self, ComponentDetachEvent,
-                    listener,
-                    IComponentDetachListener.componentDetachedFromContainer)
-#                    self._COMPONENT_DETACHED_METHOD)
+                    listener, _COMPONENT_DETACHED_METHOD)
 
 
     def fireComponentAttachEvent(self, component):

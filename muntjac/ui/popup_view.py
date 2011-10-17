@@ -38,6 +38,10 @@ class IPopupVisibilityListener(object):
         raise NotImplementedError
 
 
+_POPUP_VISIBILITY_METHOD = getattr(IPopupVisibilityListener,
+        'popupVisibilityChange')
+
+
 class SingleComponentIterator(object):
     """Iterator for the visible components (zero or one components), used by
     {@link PopupView#getComponentIterator()}.
@@ -79,9 +83,6 @@ class PopupView(AbstractComponentContainer):
     """
 
     #CLIENT_WIDGET = ClientWidget(VPopupView, LoadStyle.EAGER)
-
-    _POPUP_VISIBILITY_METHOD = getattr(IPopupVisibilityListener,
-            'popupVisibilityChange')
 
     def __init__(self, *args):
         """A simple way to create a PopupPanel. Note that the minimal
@@ -321,8 +322,8 @@ class PopupView(AbstractComponentContainer):
         @see PopupVisibilityEvent
         @see #removeListener(IPopupVisibilityListener)
         """
-        AbstractComponent.addListener(self, PopupVisibilityEvent, listener,
-                self._POPUP_VISIBILITY_METHOD)
+        AbstractComponent.addListener(self, PopupVisibilityEvent,
+                listener, _POPUP_VISIBILITY_METHOD)
 
 
     def removeListener(self, listener):
@@ -333,8 +334,8 @@ class PopupView(AbstractComponentContainer):
         @see IPopupVisibilityListener
         @see #addListener(IPopupVisibilityListener)
         """
-        AbstractComponent.removeListener(self, PopupVisibilityEvent, listener,
-                self._POPUP_VISIBILITY_METHOD)
+        AbstractComponent.removeListener(self, PopupVisibilityEvent,
+                listener, _POPUP_VISIBILITY_METHOD)
 
 
 class PopupVisibilityEvent(ComponentEvent):
