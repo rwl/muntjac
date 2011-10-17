@@ -1,16 +1,14 @@
 
 from random import random
 
-from muntjac import Application
-
 from muntjac.data.property import IValueChangeListener
 from muntjac.data.util.indexed_container import IndexedContainer
 
 from muntjac.ui import button
 
-from muntjac.ui import \
-    (Form, TextField, Table, HorizontalLayout, HorizontalSplitPanel,
-     Window, VerticalLayout, Button)
+from muntjac.api import \
+    (Application, Form, TextField, Table, HorizontalLayout,
+     HorizontalSplitPanel, Window, VerticalLayout, Button)
 
 
 class SimpleAddressBook(Application):

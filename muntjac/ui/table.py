@@ -57,7 +57,7 @@ from muntjac.util import clsname
 logger = logging.getLogger(__name__)
 
 
-class Table(AbstractSelect, action.IContainer, container.IOrdered,
+class Table(AbstractSelect, #container.IOrdered, action.IContainer,
             container.ISortable, IItemClickSource, IItemClickNotifier,
             IDragSource, IDropTarget):
     """<code>Table</code> is used for representing data or components in a

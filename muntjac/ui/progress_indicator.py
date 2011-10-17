@@ -20,8 +20,8 @@ from muntjac.ui.abstract_field import AbstractField
 from muntjac.data import property as prop
 
 
-class ProgressIndicator(AbstractField, prop.IProperty, prop.IViewer,
-                        prop.IValueChangeListener):
+class ProgressIndicator(AbstractField, prop.IValueChangeListener,
+                        prop.IProperty, prop.IViewer):
     """<code>ProgressIndicator</code> is component that shows user state of
     a process (like long computing or file upload)
 

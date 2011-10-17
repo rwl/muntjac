@@ -114,4 +114,4 @@ class IItemClickSource(IItemClickNotifier):
     @deprecated Use {@link ItemClickNotifier} instead. ItemClickSource was
                 deprecated in version 6.5.
     """
-    raise NotImplementedError
+    pass

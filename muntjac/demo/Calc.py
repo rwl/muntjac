@@ -1,12 +1,10 @@
 
-from muntjac.application import Application
-from muntjac.ui.button import Button, IClickListener
-from muntjac.ui.grid_layout import GridLayout
-from muntjac.ui.label import Label
-from muntjac.ui.window import Window
+from muntjac.api import Application, Button, GridLayout, Label, Window
+
+from muntjac.ui import button
 
 
-class Calc(Application, IClickListener):
+class Calc(Application, button.IClickListener):
     """A simple calculator using Vaadin."""
 
     def __init__(self):

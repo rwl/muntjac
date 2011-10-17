@@ -114,7 +114,7 @@ class IProgressListener(object):
         raise NotImplementedError
 
 
-class Upload(AbstractComponent, IComponent, IFocusable):
+class Upload(AbstractComponent, IFocusable): #IComponent,
     """IComponent for uploading files from client to server.
 
     The visible component consists of a file name input box and a browse
