@@ -270,7 +270,7 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
         items, and send a notification if the set of visible items changed in any
         way.
         """
-        if self.doFilterContainer(not self.getFilters().isEmpty()):
+        if self.doFilterContainer(len(self.getFilters()) > 0):
             self.fireItemSetChange()
 
 

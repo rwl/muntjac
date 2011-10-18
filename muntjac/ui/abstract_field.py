@@ -131,9 +131,9 @@ class AbstractField(AbstractComponent, field.IField,
             target.addAttribute('required', True)
 
         # Hide the error indicator if needed
-        if self.isRequired() and self.isEmpty() \
-                and self.getComponentError() is None \
-                and self.getErrorMessage() is not None:
+        if (self.isRequired() and self.isEmpty()
+                and self.getComponentError() is None
+                and self.getErrorMessage() is not None):
             target.addAttribute('hideErrors', True)
 
 

@@ -311,7 +311,8 @@ class ListenerMethod(IEventListener):
                     raise ValueError
             else:
                 if not issubclass(target.__class__, method.im_class):
-                    raise ValueError
+                    raise ValueError, ('%s : %s' % (target.__class__,
+                            method.im_class))
 
                 self._eventType = eventType
                 self._target = target

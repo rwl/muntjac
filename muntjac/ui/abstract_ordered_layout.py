@@ -72,7 +72,8 @@ class AbstractOrderedLayout(AbstractLayout, IAlignmentHandler,
             super(AbstractOrderedLayout, self).addComponent(c)
             self.requestRepaint()
         except ValueError, e:
-            self.components.remove(c)
+            if c in self.components:
+                self.components.remove(c)
             raise e
 
 
