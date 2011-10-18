@@ -37,7 +37,8 @@ from muntjac.event.dd.acceptcriteria.client_side_criterion import \
     ClientSideCriterion
 
 from muntjac.event.item_click_event import \
-    ItemClickEvent, IItemClickNotifier, IItemClickSource, ITEM_CLICK_METHOD
+    ItemClickEvent, IItemClickNotifier, IItemClickSource, ITEM_CLICK_METHOD,\
+    IItemClickListener
 
 from muntjac.ui.component import Event as ComponentEvent
 
@@ -660,7 +661,7 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
             #    ContainerHierarchicalWrapper(newDataSource))
 
 
-    def addListener(self, listener):
+    def addListener(self, *args):
         """Adds the expand listener.
 
         @param listener
@@ -671,15 +672,22 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
         @param listener
                    the Listener to be added.
         """
-        if isinstance(listener, ICollapseListener):
-            AbstractComponent.addListener(self, CollapseEvent, listener,
-                    COLLAPSE_METHOD)
-        elif isinstance(listener, IExpandListener):
-            AbstractComponent.addListener(self, ExpandEvent, listener,
-                    EXPAND_METHOD)
+        nargs = len(args)
+        if nargs == 1:
+            listener = args[0]
+            if isinstance(listener, ICollapseListener):
+                super(Tree, self).addListener(CollapseEvent,
+                        listener, COLLAPSE_METHOD)
+            elif isinstance(listener, IExpandListener):
+                super(Tree, self).addListener(ExpandEvent,
+                        listener, EXPAND_METHOD)
+            elif isinstance(listener, IItemClickListener):
+                super(Tree, self).addListener(VTree.ITEM_CLICK_EVENT_ID,
+                        ItemClickEvent, listener, ITEM_CLICK_METHOD)
+            else:
+                super(Tree, self).addListener(listener)
         else:
-            AbstractComponent.addListener(self, VTree.ITEM_CLICK_EVENT_ID,
-                    ItemClickEvent, listener, ITEM_CLICK_METHOD)
+            super(Tree, self).addListener(*args)
 
 
     def removeListener(self, listener):

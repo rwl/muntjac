@@ -21,7 +21,8 @@ from warnings import warn
 from muntjac.event.method_event_source import IMethodEventSource
 from muntjac.event.event_router import EventRouter
 from muntjac.terminal.terminal import IErrorEvent as ITerminalErrorEvent
-from muntjac.terminal.paintable import RepaintRequestEvent
+from muntjac.terminal.paintable import RepaintRequestEvent,\
+    IRepaintRequestListener
 from muntjac.util import fullname
 
 from muntjac.ui.component import \
@@ -768,33 +769,25 @@ class AbstractComponent(IComponent, IMethodEventSource):
         """
         nargs = len(args)
         if nargs == 1:
-            if isinstance(args[0], IListener):
-                listener = args[0]
+            listener = args[0]
+            if isinstance(listener, IListener):
                 self.addListener(ComponentEvent, listener,
                         _COMPONENT_EVENT_METHOD)
-            else:
-                listener = args[0]  # RepaintRequestListener
-
+            elif isinstance(listener, IRepaintRequestListener):
                 if self._repaintRequestListeners is None:
                     self._repaintRequestListeners = list()
 
                 if listener not in self._repaintRequestListeners:
                     self._repaintRequestListeners.append(listener)
-        elif nargs == 3:
-            if isinstance(args[2], basestring):
-                eventType, target, methodName = args
-
-                if self._eventRouter is None:
-                    self._eventRouter = EventRouter()
-
-                self._eventRouter.addListener(eventType, target, methodName)
             else:
-                eventType, target, method = args
+                super(AbstractComponent, self).addListener(listener)
+        elif nargs == 3:
+            eventType, target, method = args
 
-                if self._eventRouter is None:
-                    self._eventRouter = EventRouter()
+            if self._eventRouter is None:
+                self._eventRouter = EventRouter()
 
-                self._eventRouter.addListener(eventType, target, method)
+            self._eventRouter.addListener(eventType, target, method)
         elif nargs == 4:
             eventIdentifier, eventType, target, method = args
 

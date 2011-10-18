@@ -676,14 +676,22 @@ class TabSheet(AbstractComponentContainer):
             self.requestRepaint()
 
 
-    def addListener(self, listener):
+    def addListener(self, *args):
         """Adds a tab selection listener
 
         @param listener
                    the Listener to be added.
         """
-        AbstractComponent.addListener(self, SelectedTabChangeEvent,
-                listener, _SELECTED_TAB_CHANGE_METHOD)
+        nargs = len(args)
+        if nargs == 1:
+            listener = args[0]
+            if isinstance(listener, ISelectedTabChangeListener):
+                super(TabSheet, self).addListener(SelectedTabChangeEvent,
+                        listener, _SELECTED_TAB_CHANGE_METHOD)
+            else:
+                super(TabSheet, self).addListener(listener)
+        else:
+            super(TabSheet, self).addListener(*args)
 
 
     def removeListener(self, listener):

@@ -144,10 +144,18 @@ class AbsoluteLayout(AbstractLayout, ILayoutClickNotifier):
             target.endTag('cc')
 
 
-    def addListener(self, listener):
-        AbstractComponent.addListener(self, self._CLICK_EVENT,
-                LayoutClickEvent, listener,
-                ILayoutClickListener.clickMethod)
+    def addListener(self, *args):
+        nargs = len(args)
+        if nargs == 1:
+            listener = args[0]
+            if isinstance(listener, ILayoutClickListener):
+                super(AbsoluteLayout, self).addListener(self._CLICK_EVENT,
+                        LayoutClickEvent, listener,
+                        ILayoutClickListener.clickMethod)
+            else:
+                super(AbsoluteLayout, self).addListener(listener)
+        else:
+            super(AbsoluteLayout, self).addListener(*args)
 
 
     def removeListener(self, listener):

@@ -556,13 +556,20 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
         return self._lenient
 
 
-    def addListener(self, listener):
-        if isinstance(listener, IBlurListener):
-            AbstractComponent.addListener(self, BlurEvent.EVENT_ID,
-                    BlurEvent, listener, IBlurListener.blurMethod)
+    def addListener(self, *args):
+        nargs = len(args)
+        if nargs == 1:
+            listener = args[0]
+            if isinstance(listener, IBlurListener):
+                super(DateField, self).addListener(BlurEvent.EVENT_ID,
+                        BlurEvent, listener, IBlurListener.blurMethod)
+            elif isinstance(listener, IFocusListener):
+                super(DateField, self).addListener(FocusEvent.EVENT_ID,
+                        FocusEvent, listener, IFocusListener.focusMethod)
+            else:
+                super(DateField, self).addListener(listener)
         else:
-            AbstractComponent.addListener(self, FocusEvent.EVENT_ID,
-                    FocusEvent, listener, IFocusListener.focusMethod)
+            super(DateField, self).addListener(*args)
 
 
     def removeListener(self, listener):

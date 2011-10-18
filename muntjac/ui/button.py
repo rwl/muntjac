@@ -141,8 +141,8 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
         elif nargs == 3:
             caption, target, methodName = args
             Button.__init__(self, caption)
-            AbstractComponent.addListener(self, self.ClickEvent, target,
-                    methodName)
+            super(Button, self).addListener(self, ClickEvent,
+                    target, methodName)
         else:
             raise ValueError, 'too many arguments'
 
@@ -276,23 +276,30 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
     STYLE_LINK = 'link'
 
 
-    def addListener(self, listener):
+    def addListener(self, *args):
         """Adds the button click listener.
 
         @param listener
                    the Listener to be added.
         """
-        if isinstance(listener, IBlurListener):
-            AbstractComponent.addListener(self, BlurEvent.EVENT_ID,
-                    BlurEvent, listener, IBlurListener.blurMethod)
+        nargs = len(args)
+        if nargs == 1:
+            listener = args[0]
+            if isinstance(listener, IBlurListener):
+                super(Button, self).addListener(BlurEvent.EVENT_ID,
+                        BlurEvent, listener, IBlurListener.blurMethod)
 
-        elif isinstance(listener, IClickListener):
-            AbstractComponent.addListener(self, ClickEvent,
-                    listener, _BUTTON_CLICK_METHOD)
+            elif isinstance(listener, IClickListener):
+                super(Button, self).addListener(ClickEvent,
+                        listener, _BUTTON_CLICK_METHOD)
 
+            elif isinstance(listener, IFocusListener):
+                super(Button, self).addListener(FocusEvent.EVENT_ID,
+                        FocusEvent, listener, IFocusListener.focusMethod)
+            else:
+                super(Button, self).addListener(listener)
         else:
-            AbstractComponent.addListener(self, FocusEvent.EVENT_ID,
-                    FocusEvent, listener, IFocusListener.focusMethod)
+            super(Button, self).addListener(*args)
 
 
     def removeListener(self, listener):

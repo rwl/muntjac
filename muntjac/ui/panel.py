@@ -194,8 +194,8 @@ class Panel(AbstractComponentContainer, IScrollable,
         self._content = newContent
 
         # Adds the event listeners for new content
-        AbstractComponentContainer.addListener(newContent, self)
-        AbstractComponentContainer.addListener(newContent, self)
+        newContent.addListener(self)
+        newContent.addListener(self)
 
         self._content = newContent
 
@@ -441,7 +441,7 @@ class Panel(AbstractComponentContainer, IScrollable,
             self.actionManager.removeAllActionHandlers()
 
 
-    def addListener(self, listener):
+    def addListener(self, *args):
         """Add a click listener to the Panel. The listener is called whenever
         the user clicks inside the Panel. Also when the click targets a
         component inside the Panel, provided the targeted component does not
@@ -452,8 +452,16 @@ class Panel(AbstractComponentContainer, IScrollable,
         @param listener
                    The listener to add
         """
-        AbstractComponent.addListener(self, self._CLICK_EVENT, ClickEvent,
-                listener, IClickListener.clickMethod)
+        nargs = len(args)
+        if nargs == 1:
+            listener = args[0]
+            if isinstance(listener, IClickListener):
+                super(Panel, self).addListener(self._CLICK_EVENT, ClickEvent,
+                        listener, IClickListener.clickMethod)
+            else:
+                super(Panel, self).addListener(listener)
+        else:
+            super(Panel, self).addListener(*args)
 
 
     def removeListener(self, listener):

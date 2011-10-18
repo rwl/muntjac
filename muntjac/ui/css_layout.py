@@ -222,9 +222,18 @@ class CssLayout(AbstractLayout, ILayoutClickNotifier):
             self.requestRepaint()
 
 
-    def addListener(self, listener):
-        AbstractComponent.addListener(self, self._CLICK_EVENT,
-                LayoutClickEvent, listener, ILayoutClickListener.clickMethod)
+    def addListener(self, *args):
+        nargs = len(args)
+        if nargs == 1:
+            listener = args[0]
+            if isinstance(listener, ILayoutClickListener):
+                super(CssLayout, self).addListener(self._CLICK_EVENT,
+                        LayoutClickEvent, listener,
+                        ILayoutClickListener.clickMethod)
+            else:
+                super(CssLayout, self).addListener(listener)
+        else:
+            super(CssLayout, self).addListener(*args)
 
 
     def removeListener(self, listener):

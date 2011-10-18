@@ -916,7 +916,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
             self.requestRepaint()
 
 
-    def addListener(self, listener):
+    def addListener(self, *args):
         """Adds a ICloseListener to the window.
 
         For a sub window the ICloseListener is fired when the user closes it
@@ -950,18 +950,25 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
 
         @see FieldEvents.IBlurNotifier.addListener()
         """
-        if isinstance(listener, IBlurListener):
-            AbstractComponent.addListener(self, BlurEvent.EVENT_ID,
-                    BlurEvent, listener, IBlurListener.blurMethod)
-        elif isinstance(listener, ICloseListener):
-            AbstractComponent.addListener(self, CloseEvent,
-                    listener, _WINDOW_CLOSE_METHOD)
-        elif isinstance(listener, IFocusListener):
-            AbstractComponent.addListener(self, FocusEvent.EVENT_ID,
-                    FocusEvent, listener, IFocusListener.focusMethod)
+        nargs = len(args)
+        if nargs == 1:
+            listener = args[0]
+            if isinstance(listener, IBlurListener):
+                super(Window, self).addListener(BlurEvent.EVENT_ID,
+                        BlurEvent, listener, IBlurListener.blurMethod)
+            elif isinstance(listener, ICloseListener):
+                super(Window, self).addListener(CloseEvent,
+                        listener, _WINDOW_CLOSE_METHOD)
+            elif isinstance(listener, IFocusListener):
+                super(Window, self).addListener(FocusEvent.EVENT_ID,
+                        FocusEvent, listener, IFocusListener.focusMethod)
+            elif isinstance(listener, IResizeListener):
+                super(Window, self).addListener(ResizeEvent,
+                        listener, _WINDOW_RESIZE_METHOD)
+            else:
+                super(Window, self).addListener(listener)
         else:
-            AbstractComponent.addListener(self, ResizeEvent,
-                    listener, _WINDOW_RESIZE_METHOD)
+            super(Window, self).addListener(*args)
 
 
     def removeListener(self, listener):

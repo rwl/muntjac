@@ -80,12 +80,14 @@ class AbstractProperty(prop.IProperty, prop.IValueChangeNotifier,
             if self._readOnlyStatusChangeListeners is None:
                 self._readOnlyStatusChangeListeners = list()
 
-            self._readOnlyStatusChangeListeners.adppend(listener)
-        else:
+            self._readOnlyStatusChangeListeners.append(listener)
+        elif isinstance(listener, prop.IValueChangeListener):
             if self._valueChangeListeners is None:
                 self._valueChangeListeners = list()
 
             self._valueChangeListeners.append(listener)
+        else:
+            super(AbstractProperty, self).addListener(listener)
 
 
     def removeListener(self, listener):

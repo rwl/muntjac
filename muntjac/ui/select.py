@@ -661,13 +661,20 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
         return self._columns
 
 
-    def addListener(self, listener):
-        if isinstance(listener, IBlurListener):
-            AbstractComponent.addListener(self, BlurEvent.EVENT_ID,
-                    BlurEvent, listener, IBlurListener.blurMethod)
+    def addListener(self, *args):
+        nargs = len(args)
+        if nargs == 1:
+            listener = args[0]
+            if isinstance(listener, IBlurListener):
+                super(Select, self).addListener(BlurEvent.EVENT_ID,
+                        BlurEvent, listener, IBlurListener.blurMethod)
+            elif isinstance(listener, IFocusListener):
+                super(Select, self).addListener(FocusEvent.EVENT_ID,
+                        FocusEvent, listener, IFocusListener.focusMethod)
+            else:
+                super(Select, self).addListener(listener)
         else:
-            AbstractComponent.addListener(self, FocusEvent.EVENT_ID,
-                    FocusEvent, listener, IFocusListener.focusMethod)
+            super(Select, self).addListener(*args)
 
 
     def removeListener(self, listener):

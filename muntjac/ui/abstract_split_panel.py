@@ -354,10 +354,19 @@ class AbstractSplitPanel(AbstractLayout):
         self.fireEvent( SplitterClickEvent(self, mouseDetails) )
 
 
-    def addListener(self, listener):
-        AbstractComponent.addListener(self, self._SPLITTER_CLICK_EVENT,
-                SplitterClickEvent, listener,
-                SplitterClickListener.clickMethod)
+    def addListener(self, *args):
+        nargs = len(args)
+        if nargs == 1:
+            listener = args[0]
+            if isinstance(listener, ISplitterClickListener):
+                super(AbstractSplitPanel, self).addListener(
+                        self._SPLITTER_CLICK_EVENT,
+                        SplitterClickEvent, listener,
+                        SplitterClickListener.clickMethod)
+            else:
+                super(AbstractSplitPanel, self).addListener(listener)
+        else:
+            super(AbstractSplitPanel, self).addListener(*args)
 
 
     def removeListener(self, listener):

@@ -431,18 +431,26 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
         return self._textChangeEventMode
 
 
-    def addListener(self, listener):
-        if isinstance(listener, IBlurListener):
-            AbstractComponent.addListener(self, BlurEvent.EVENT_ID,
-                    BlurEvent, listener, IBlurListener.blurMethod)
+    def addListener(self, *args):
+        nargs = len(args)
+        if nargs == 1:
+            listener = args[0]
+            if isinstance(listener, IBlurListener):
+                super(AbstractTextField, self).addListener(BlurEvent.EVENT_ID,
+                        BlurEvent, listener, IBlurListener.blurMethod)
 
-        elif isinstance(listener, IFocusListener):
-            AbstractComponent.addListener(self, FocusEvent.EVENT_ID,
-                    FocusEvent, listener, IFocusListener.focusMethod)
+            elif isinstance(listener, IFocusListener):
+                super(AbstractTextField, self).addListener(FocusEvent.EVENT_ID,
+                        FocusEvent, listener, IFocusListener.focusMethod)
 
+            elif isinstance(listener, ITextChangeListener):
+                super(AbstractTextField, self).addListener(
+                        ITextChangeListener.EVENT_ID,
+                        TextChangeEvent, listener, EVENT_METHOD)
+            else:
+                super(AbstractTextField, self).addListener(listener)
         else:
-            AbstractComponent.addListener(self, ITextChangeListener.EVENT_ID,
-                    TextChangeEvent, listener, EVENT_METHOD)
+            super(AbstractTextField, self).addListener(*args)
 
 
     def removeListener(self, listener):

@@ -1271,20 +1271,20 @@ class Application(IUriHandler, ITerminal, IErrorListener):
         if isinstance(listener, UserChangeListener):
             if self._userChangeListeners is None:
                 self._userChangeListeners = list()
-            self._userChangeListeners.append(listener)
 
+            self._userChangeListeners.append(listener)
         elif isinstance(listener, WindowAttachListener):
             if self._windowAttachListeners is None:
                 self._windowAttachListeners = list()
-            self._windowAttachListeners.append(listener)
 
+            self._windowAttachListeners.append(listener)
         elif isinstance(listener, WindowDetachListener):
             if self._windowDetachListeners is None:
                 self._windowDetachListeners = list()
-            self._windowDetachListeners.append(listener)
 
+            self._windowDetachListeners.append(listener)
         else:
-            raise TypeError
+            super(Application, self).addListener(listener)
 
 
     def removeListener(self, listener):

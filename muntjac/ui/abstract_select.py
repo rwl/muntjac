@@ -1086,7 +1086,7 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
         self.firePropertySetChange()
 
 
-    def addListener(self, listener):
+    def addListener(self, *args):
         """Adds a new IProperty set change listener for this IContainer.
 
         @see IPropertySetChangeNotifier.addListener()
@@ -1095,14 +1095,23 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
 
         @see IItemSetChangeNotifier.addListener()
         """
-        if isinstance(listener, container.IItemSetChangeListener):
-            if self._itemSetEventListeners is None:
-                self._itemSetEventListeners = set()
-            self._itemSetEventListeners.add(listener)
+        nargs = len(args)
+        if nargs == 1:
+            listener = args[0]
+            if isinstance(listener, container.IItemSetChangeListener):
+                if self._itemSetEventListeners is None:
+                    self._itemSetEventListeners = set()
+
+                self._itemSetEventListeners.add(listener)
+            elif isinstance(listener, container.IPropertySetChangeListener):
+                if self._propertySetEventListeners is None:
+                    self._propertySetEventListeners = set()
+
+                self._propertySetEventListeners.add(listener)
+            else:
+                super(AbstractSelect, self).addListener(listener)
         else:
-            if self._propertySetEventListeners is None:
-                self._propertySetEventListeners = set()
-            self._propertySetEventListeners.add(listener)
+            super(AbstractSelect, self).addListener(*args)
 
 
     def removeListener(self, listener):

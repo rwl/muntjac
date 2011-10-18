@@ -381,7 +381,7 @@ class Embedded(AbstractComponent):
             self.requestRepaint()
 
 
-    def addListener(self, listener):
+    def addListener(self, *args):
         """Add a click listener to the component. The listener is called
         whenever the user clicks inside the component. Depending on the
         content the event may be blocked and in that case no event is fired.
@@ -391,8 +391,16 @@ class Embedded(AbstractComponent):
         @param listener
                    The listener to add
         """
-        AbstractComponent.addListener(self, self._CLICK_EVENT, ClickEvent,
-                listener, IClickListener.clickMethod)
+        nargs = len(args)
+        if nargs == 1:
+            listener = args[0]
+            if isinstance(listener, IClickListener):
+                super(Embedded, self).addListener(self._CLICK_EVENT,
+                        ClickEvent, listener, IClickListener.clickMethod)
+            else:
+                super(Embedded, self).addListener(listener)
+        else:
+            super(Embedded, self).addListener(*args)
 
 
     def removeListener(self, listener):

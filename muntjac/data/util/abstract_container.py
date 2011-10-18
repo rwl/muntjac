@@ -18,7 +18,7 @@ from muntjac.util import EventObject
 
 from muntjac.data.container import \
     (IContainer, IItemSetChangeEvent, IPropertySetChangeEvent,
-     IItemSetChangeListener)
+     IPropertySetChangeListener, IItemSetChangeListener)
 
 
 class AbstractContainer(IContainer):
@@ -61,10 +61,12 @@ class AbstractContainer(IContainer):
             if self.getItemSetChangeListeners() is None:
                 self.setItemSetChangeListeners( list() )
             self.getItemSetChangeListeners().append(listener)
-        else:
+        elif isinstance(listener, IPropertySetChangeListener):
             if self.getPropertySetChangeListeners() is None:
                 self.setPropertySetChangeListeners(list())
             self.getPropertySetChangeListeners().append(listener)
+        else:
+            super(AbstractContainer, self).addListener(listener)
 
 
     def removeListener(self, listener):

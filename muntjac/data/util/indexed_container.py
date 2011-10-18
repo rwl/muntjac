@@ -294,10 +294,13 @@ class IndexedContainer(AbstractInMemoryContainer,
     def addListener(self, listener):
         if isinstance(listener, container.IPropertySetChangeListener):
             super(IndexedContainer, self).addListener(listener)
-        else:
+        elif isinstance(listener, prop.IValueChangeListener):
             if self._propertyValueChangeListeners is None:
                 self._propertyValueChangeListeners = list()
-            self._propertyValueChangeListeners.add(listener)
+
+            self._propertyValueChangeListeners.append(listener)
+        else:
+            super(IndexedContainer, self).addListener(listener)
 
 
     def removeListener(self, listener):

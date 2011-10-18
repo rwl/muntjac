@@ -686,15 +686,22 @@ class AbstractField(AbstractComponent, field.IField,
                 self._currentBufferedSourceException])
 
 
-    def addListener(self, listener):
+    def addListener(self, *args):
         # Adds a value change listener for the field.
-        if isinstance(listener, prop.IReadOnlyStatusChangeListener):
-            AbstractComponent.addListener(self,
-                    prop.IReadOnlyStatusChangeEvent, listener,
-                    _READ_ONLY_STATUS_CHANGE_METHOD)
+        nargs = len(args)
+        if nargs == 1:
+            listener = args[0]
+            if isinstance(listener, prop.IReadOnlyStatusChangeListener):
+                super(AbstractField, self).addListener(
+                        prop.IReadOnlyStatusChangeEvent,
+                        listener, _READ_ONLY_STATUS_CHANGE_METHOD)
+            elif isinstance(listener, prop.IValueChangeListener):
+                super(AbstractField, self).addListener(field.ValueChangeEvent,
+                        listener, _VALUE_CHANGE_METHOD)
+            else:
+                super(AbstractField, self).addListener(listener)
         else:
-            AbstractComponent.addListener(self, field.ValueChangeEvent,
-                    listener, _VALUE_CHANGE_METHOD)
+            super(AbstractField, self).addListener(*args)
 
 
     def removeListener(self, listener):

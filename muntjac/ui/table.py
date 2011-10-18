@@ -46,7 +46,8 @@ from muntjac.ui.abstract_select import \
     AbstractSelect, MultiSelectMode, AbstractSelectTargetDetails
 
 from muntjac.event.item_click_event import \
-    ItemClickEvent, IItemClickNotifier, IItemClickSource, ITEM_CLICK_METHOD
+    ItemClickEvent, IItemClickNotifier, IItemClickSource, ITEM_CLICK_METHOD,\
+    IItemClickListener
 
 from muntjac.data.util.indexed_container import \
     ItemSetChangeEvent, IndexedContainer
@@ -3043,7 +3044,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         return self._cellStyleGenerator
 
 
-    def addListener(self, listener):
+    def addListener(self, *args):
         """Adds a header click listener which handles the click events when
         the user clicks on a column header cell in the Table.
 
@@ -3074,31 +3075,38 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         @param listener
                    The listener to attach to the Table
         """
-        if isinstance(listener, IColumnReorderListener):
-            AbstractComponent.addListener(self,
-                    VScrollTable.COLUMN_REORDER_EVENT_ID,
-                    ColumnReorderEvent, listener,
-                    COLUMN_REORDER_METHOD)
-        elif isinstance(listener, IColumnResizeListener):
-            AbstractComponent.addListener(self,
-                    VScrollTable.COLUMN_RESIZE_EVENT_ID,
-                    ColumnResizeEvent, listener,
-                    COLUMN_RESIZE_METHOD)
-        elif isinstance(listener, IFooterClickListener):
-            AbstractComponent.addListener(self,
-                    VScrollTable.FOOTER_CLICK_EVENT_ID,
-                    FooterClickEvent, listener,
-                    FOOTER_CLICK_METHOD)
-        elif isinstance(listener, IHeaderClickListener):
-            AbstractComponent.addListener(self,
-                    VScrollTable.HEADER_CLICK_EVENT_ID,
-                    HeaderClickEvent, listener,
-                    HEADER_CLICK_METHOD)
+        nargs = len(args)
+        if nargs == 1:
+            listener = args[0]
+            if isinstance(listener, IColumnReorderListener):
+                super(Table, self).addListener(
+                        VScrollTable.COLUMN_REORDER_EVENT_ID,
+                        ColumnReorderEvent, listener,
+                        COLUMN_REORDER_METHOD)
+            elif isinstance(listener, IColumnResizeListener):
+                super(Table, self).addListener(
+                        VScrollTable.COLUMN_RESIZE_EVENT_ID,
+                        ColumnResizeEvent, listener,
+                        COLUMN_RESIZE_METHOD)
+            elif isinstance(listener, IFooterClickListener):
+                super(Table, self).addListener(
+                        VScrollTable.FOOTER_CLICK_EVENT_ID,
+                        FooterClickEvent, listener,
+                        FOOTER_CLICK_METHOD)
+            elif isinstance(listener, IHeaderClickListener):
+                super(Table, self).addListener(
+                        VScrollTable.HEADER_CLICK_EVENT_ID,
+                        HeaderClickEvent, listener,
+                        HEADER_CLICK_METHOD)
+            elif isinstance(listener, IItemClickListener):
+                super(Table, self).addListener(
+                        VScrollTable.ITEM_CLICK_EVENT_ID,
+                        ItemClickEvent, listener,
+                        ITEM_CLICK_METHOD)
+            else:
+                super(Table, self).addListener(listener)
         else:
-            AbstractComponent.addListener(self,
-                    VScrollTable.ITEM_CLICK_EVENT_ID,
-                    ItemClickEvent, listener,
-                    ITEM_CLICK_METHOD)
+            super(Table, self).addListener(*args)
 
 
     def removeListener(self, listener):

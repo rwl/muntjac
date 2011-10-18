@@ -313,7 +313,7 @@ class PopupView(AbstractComponentContainer):
             self.setPopupVisible( bool(variables.get('popupVisibility')) )
 
 
-    def addListener(self, listener):
+    def addListener(self, *args):
         """Add a listener that is called whenever the visibility of the popup
         is changed.
 
@@ -322,8 +322,16 @@ class PopupView(AbstractComponentContainer):
         @see PopupVisibilityEvent
         @see #removeListener(IPopupVisibilityListener)
         """
-        AbstractComponent.addListener(self, PopupVisibilityEvent,
-                listener, _POPUP_VISIBILITY_METHOD)
+        nargs = len(args)
+        if nargs == 1:
+            listener = args[0]
+            if isinstance(listener, IPopupVisibilityListener):
+                super(PopupView, self).addListener(PopupVisibilityEvent,
+                        listener, _POPUP_VISIBILITY_METHOD)
+            else:
+                super(PopupView, self).addListener(listener)
+        else:
+            super(PopupView, self).addListener(*args)
 
 
     def removeListener(self, listener):

@@ -320,10 +320,18 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
             self.requestRepaint()
 
 
-    def addListener(self, listener):
+    def addListener(self, *args):
         """Adds the value change listener."""
-        AbstractComponent.addListener(self, ValueChangeEvent,
-                listener, _VALUE_CHANGE_METHOD)
+        nargs = len(args)
+        if nargs == 1:
+            listener = args[0]
+            if isinstance(listener, prop.IValueChangeListener):
+                super(Label, self).addListener(ValueChangeEvent,
+                        listener, _VALUE_CHANGE_METHOD)
+            else:
+                super(Label, self).addListener(listener)
+        else:
+            super(Label, self).addListener(*args)
 
 
     def removeListener(self, listener):

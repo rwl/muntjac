@@ -190,13 +190,21 @@ class LoginForm(CustomComponent):
     _UNDEFINED_WIDTH = '200px'
 
 
-    def addListener(self, listener):
+    def addListener(self, *args):
         """Adds ILoginListener to handle login logic
 
         @param listener
         """
-        AbstractComponent.addListener(self, LoginEvent, listener,
-                _ON_LOGIN_METHOD)
+        nargs = len(args)
+        if nargs == 1:
+            listener = args[0]
+            if isinstance(listener, ILoginListener):
+                super(LoginForm, self).addListener(LoginEvent,
+                        listener, _ON_LOGIN_METHOD)
+            else:
+                super(LoginForm, self).addListener(listener)
+        else:
+            super(LoginForm, self).addListener(*args)
 
 
     def removeListener(self, listener):

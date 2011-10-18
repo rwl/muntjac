@@ -39,9 +39,18 @@ class UriFragmentUtility(AbstractComponent):
     #CLIENT_WIDGET = ClientWidget(VUriFragmentUtility, LoadStyle.EAGER)
 
 
-    def addListener(self, listener):
-        AbstractComponent.addListener(self, FragmentChangedEvent,
-                listener, _FRAGMENT_CHANGED_METHOD)
+    def addListener(self, *args):
+        nargs = len(args)
+        if nargs == 1:
+            listener = args[0]
+            if isinstance(listener, IFragmentChangedListener):
+                super(UriFragmentUtility, self).addListener(
+                        FragmentChangedEvent,
+                        listener, _FRAGMENT_CHANGED_METHOD)
+            else:
+                super(UriFragmentUtility, self).addListener(listener)
+        else:
+            super(UriFragmentUtility, self).addListener(*args)
 
 
     def removeListener(self, listener):

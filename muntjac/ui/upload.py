@@ -254,32 +254,40 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
         target.addVariable(self, 'action', self.getStreamVariable())
 
 
-    def addListener(self, listener):
+    def addListener(self, *args):
         """Adds an event listener.
 
         @param listener
                    the Listener to be added.
         """
-        if isinstance(listener, IFailedListener):
-            AbstractComponent.addListener(self, FailedEvent,
-                    listener, _UPLOAD_FAILED_METHOD)
+        nargs = len(args)
+        if nargs == 1:
+            listener = args[0]
+            if isinstance(listener, IFailedListener):
+                super(Upload, self).addListener(FailedEvent,
+                        listener, _UPLOAD_FAILED_METHOD)
 
-        elif isinstance(listener, IFinishedListener):
-            AbstractComponent.addListener(self, FinishedEvent,
-                    listener, _UPLOAD_FINISHED_METHOD)
+            elif isinstance(listener, IFinishedListener):
+                super(Upload, self).addListener(FinishedEvent,
+                        listener, _UPLOAD_FINISHED_METHOD)
 
-        elif isinstance(listener, IProgressListener):
-            if self._progressListeners is None:
-                self._progressListeners = set()
-            self._progressListeners.add(listener)
+            elif isinstance(listener, IProgressListener):
+                if self._progressListeners is None:
+                    self._progressListeners = set()
+                self._progressListeners.add(listener)
 
-        elif isinstance(listener, IStartedListener):
-            AbstractComponent.addListener(self, StartedEvent,
-                    listener, _UPLOAD_STARTED_METHOD)
+            elif isinstance(listener, IStartedListener):
+                super(Upload, self).addListener(StartedEvent,
+                        listener, _UPLOAD_STARTED_METHOD)
 
+            elif isinstance(listener, ISucceededListener):
+                super(Upload, self).addListener(SucceededEvent,
+                        listener, _UPLOAD_SUCCEEDED_METHOD)
+
+            else:
+                super(Upload, self).addListener(listener)
         else:
-            AbstractComponent.addListener(self, SucceededEvent,
-                    listener, _UPLOAD_SUCCEEDED_METHOD)
+            super(Upload, self).addListener(*args)
 
 
     def removeListener(self, listener):
