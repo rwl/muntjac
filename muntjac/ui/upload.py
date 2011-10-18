@@ -290,31 +290,39 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
             super(Upload, self).addListener(*args)
 
 
-    def removeListener(self, listener):
+    def removeListener(self, *args):
         """Removes an event listener.
 
         @param listener
                    the Listener to be removed.
         """
-        if isinstance(listener, IFailedListener):
-            AbstractComponent.removeListener(self, FailedEvent,
-                    listener, _UPLOAD_FAILED_METHOD)
+        nargs = len(args)
+        if nargs == 1:
+            listener = args[0]
+            if isinstance(listener, IFailedListener):
+                super(Upload, self).removeListener(FailedEvent,
+                        listener, _UPLOAD_FAILED_METHOD)
 
-        elif isinstance(listener, IFinishedListener):
-            AbstractComponent.removeListener(self, FinishedEvent,
-                    listener, _UPLOAD_FINISHED_METHOD)
+            elif isinstance(listener, IFinishedListener):
+                super(Upload, self).removeListener(FinishedEvent,
+                        listener, _UPLOAD_FINISHED_METHOD)
 
-        elif isinstance(listener, IProgressListener):
-            if self._progressListeners is not None:
-                self._progressListeners.remove(listener)
+            elif isinstance(listener, IProgressListener):
+                if self._progressListeners is not None:
+                    self._progressListeners.remove(listener)
 
-        elif isinstance(listener, IStartedListener):
-            AbstractComponent.removeListener(self, StartedEvent,
-                    listener, _UPLOAD_STARTED_METHOD)
+            elif isinstance(listener, IStartedListener):
+                super(Upload, self).removeListener(StartedEvent,
+                        listener, _UPLOAD_STARTED_METHOD)
 
+            elif isinstance(listener, ISucceededListener):
+                super(Upload, self).removeListener(SucceededEvent,
+                        listener, _UPLOAD_SUCCEEDED_METHOD)
+
+            else:
+                super(Upload, self).removeListener(listener)
         else:
-            AbstractComponent.removeListener(self, SucceededEvent,
-                    listener, _UPLOAD_SUCCEEDED_METHOD)
+            super(Upload, self).removeListener(*args)
 
 
     def fireStarted(self, filename, MIMEType):

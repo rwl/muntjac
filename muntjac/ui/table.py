@@ -3109,32 +3109,39 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
             super(Table, self).addListener(*args)
 
 
-    def removeListener(self, listener):
+    def removeListener(self, *args):
         """Removes a listener from the Table.
 
         @param listener
                    The listener to remove
         """
-        if isinstance(listener, IColumnReorderListener):
-            AbstractComponent.removeListener(self,
-                    VScrollTable.COLUMN_REORDER_EVENT_ID,
-                    ColumnReorderEvent, listener)
-        elif isinstance(listener, IColumnResizeListener):
-            AbstractComponent.removeListener(self,
-                    VScrollTable.COLUMN_RESIZE_EVENT_ID,
-                    ColumnResizeEvent, listener)
-        elif isinstance(listener, IFooterClickListener):
-            AbstractComponent.removeListener(self,
-                    VScrollTable.FOOTER_CLICK_EVENT_ID,
-                    FooterClickEvent, listener)
-        elif isinstance(listener, IHeaderClickListener):
-            AbstractComponent.removeListener(self,
-                    VScrollTable.HEADER_CLICK_EVENT_ID,
-                    HeaderClickEvent, listener)
+        nargs = len(args)
+        if nargs == 1:
+            listener = args[0]
+            if isinstance(listener, IColumnReorderListener):
+                super(Table, self).removeListener(
+                        VScrollTable.COLUMN_REORDER_EVENT_ID,
+                        ColumnReorderEvent, listener)
+            elif isinstance(listener, IColumnResizeListener):
+                super(Table, self).removeListener(
+                        VScrollTable.COLUMN_RESIZE_EVENT_ID,
+                        ColumnResizeEvent, listener)
+            elif isinstance(listener, IFooterClickListener):
+                super(Table, self).removeListener(
+                        VScrollTable.FOOTER_CLICK_EVENT_ID,
+                        FooterClickEvent, listener)
+            elif isinstance(listener, IHeaderClickListener):
+                super(Table, self).removeListener(
+                        VScrollTable.HEADER_CLICK_EVENT_ID,
+                        HeaderClickEvent, listener)
+            elif isinstance(listener, IItemClickListener):
+                super(Table, self).removeListener(
+                        VScrollTable.ITEM_CLICK_EVENT_ID,
+                        ItemClickEvent, listener)
+            else:
+                super(Table, self).removeListener(listener)
         else:
-            AbstractComponent.removeListener(self,
-                    VScrollTable.ITEM_CLICK_EVENT_ID,
-                    ItemClickEvent, listener)
+            super(Table, self).removeListener(*args)
 
 
     def setEnabled(self, enabled):

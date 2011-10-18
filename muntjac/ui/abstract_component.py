@@ -887,16 +887,17 @@ class AbstractComponent(IComponent, IMethodEventSource):
         """
         nargs = len(args)
         if nargs == 1:
-            if isinstance(args[0], IListener):
-                listener = [0]
+            listener = [0]
+            if isinstance(listener, IListener):
                 self.removeListener(ComponentEvent, listener,
                         _COMPONENT_EVENT_METHOD)
-            else:
-                listener = args[0]
+            elif isinstance(listener, IRepaintRequestListener):
                 if self._repaintRequestListeners is not None:
                     self._repaintRequestListeners.remove(listener)
                     if len(self._repaintRequestListeners) == 0:
                         self._repaintRequestListeners = None
+            else:
+                super(AbstractComponent, self).removeListener(listener)
         elif nargs == 2:
             eventType, target = args
 

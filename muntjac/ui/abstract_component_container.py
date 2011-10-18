@@ -115,13 +115,22 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
             super(AbstractComponentContainer, self).addListener(*args)
 
 
-    def removeListener(self, listener):
-        if isinstance(listener, IComponentAttachListener):
-            AbstractComponent.removeListener(self, ComponentAttachEvent,
+    def removeListener(self, *args):
+        nargs = len(args)
+        if nargs == 1:
+            listener = args[0]
+            if isinstance(listener, IComponentAttachListener):
+                super(AbstractComponentContainer, self).removeListener(
+                    ComponentAttachEvent,
                     listener, _COMPONENT_ATTACHED_METHOD)
+            elif isinstance(listener, IComponentDetachListener):
+                super(AbstractComponentContainer, self).removeListener(
+                        ComponentDetachEvent,
+                        listener, _COMPONENT_DETACHED_METHOD)
+            else:
+                super(AbstractComponentContainer, self).removeListener(listener)
         else:
-            AbstractComponent.removeListener(self, ComponentDetachEvent,
-                    listener, _COMPONENT_DETACHED_METHOD)
+            super(AbstractComponentContainer, self).removeListener(*args)
 
 
     def fireComponentAttachEvent(self, component):

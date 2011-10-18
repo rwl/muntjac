@@ -99,9 +99,11 @@ class AbstractProperty(prop.IProperty, prop.IValueChangeNotifier,
         if isinstance(listener, prop.IReadOnlyStatusChangeListener):
             if self._readOnlyStatusChangeListeners is not None:
                 self._readOnlyStatusChangeListeners.remove(listener)
-        else:
+        elif isinstance(listener, prop.IValueChangeListener):
             if self._valueChangeListeners is not None:
                 self._valueChangeListeners.remove(listener)
+        else:
+            super(AbstractProperty, self).removeListener(listener)
 
 
     def fireReadOnlyStatusChange(self):

@@ -690,7 +690,7 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
             super(Tree, self).addListener(*args)
 
 
-    def removeListener(self, listener):
+    def removeListener(self, *args):
         """Removes the expand listener.
 
         @param listener
@@ -701,15 +701,22 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
         @param listener
                    the Listener to be removed.
         """
-        if isinstance(listener, ICollapseListener):
-            AbstractComponent.removeListener(self, CollapseEvent,
-                    listener, COLLAPSE_METHOD)
-        elif isinstance(listener, IExpandListener):
-            AbstractComponent.removeListener(self, ExpandEvent,
-                    listener, EXPAND_METHOD)
+        nargs = len(args)
+        if nargs == 1:
+            listener = args[0]
+            if isinstance(listener, ICollapseListener):
+                super(Tree, self).removeListener(CollapseEvent,
+                        listener, COLLAPSE_METHOD)
+            elif isinstance(listener, IExpandListener):
+                super(Tree, self).removeListener(ExpandEvent,
+                        listener, EXPAND_METHOD)
+            elif isinstance(listener, IItemClickListener):
+                super(Tree, self).removeListener(VTree.ITEM_CLICK_EVENT_ID,
+                        ItemClickEvent, listener)
+            else:
+                super(Tree, self).removeListener(listener)
         else:
-            AbstractComponent.removeListener(self, VTree.ITEM_CLICK_EVENT_ID,
-                    ItemClickEvent, listener)
+            super(Tree, self).removeListener(*args)
 
 
     def fireExpandEvent(self, itemId):

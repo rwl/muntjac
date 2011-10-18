@@ -1322,7 +1322,7 @@ class Application(IUriHandler, ITerminal, IErrorListener):
                 if len(self._windowDetachListeners) == 0:
                     self._windowDetachListeners = None
         else:
-            raise TypeError
+            super(Application, self).addListener(listener)
 
 
     def getLogoutURL(self):

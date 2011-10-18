@@ -86,13 +86,20 @@ class OptionGroup(AbstractSelect, IBlurNotifier, IFocusNotifier):
             super(OptionGroup, self).addListener(*args)
 
 
-    def removeListener(self, listener):
-        if isinstance(listener, IBlurListener):
-            AbstractComponent.removeListener(self, BlurEvent.EVENT_ID,
-                    BlurEvent, listener)
+    def removeListener(self, *args):
+        nargs = len(args)
+        if nargs == 1:
+            listener = args[0]
+            if isinstance(listener, IBlurListener):
+                super(OptionGroup, self).removeListener(BlurEvent.EVENT_ID,
+                        BlurEvent, listener)
+            elif isinstance(listener, IFocusListener):
+                super(OptionGroup, self).removeListener(FocusEvent.EVENT_ID,
+                        FocusEvent, listener)
+            else:
+                super(OptionGroup, self).removeListener(listener)
         else:
-            AbstractComponent.removeListener(self, FocusEvent.EVENT_ID,
-                    FocusEvent, listener)
+            super(OptionGroup, self).removeListener(*args)
 
 
     def setValue(self, newValue, repaintIsNotNeeded):

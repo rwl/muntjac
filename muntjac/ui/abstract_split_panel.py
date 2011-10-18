@@ -369,9 +369,18 @@ class AbstractSplitPanel(AbstractLayout):
             super(AbstractSplitPanel, self).addListener(*args)
 
 
-    def removeListener(self, listener):
-        AbstractComponent.removeListener(self, self._SPLITTER_CLICK_EVENT,
-                SplitterClickEvent, listener)
+    def removeListener(self, *args):
+        nargs = len(args)
+        if nargs == 1:
+            listener = args[0]
+            if isinstance(listener, ISplitterClickListener):
+                super(AbstractSplitPanel, self).removeListener(
+                        self._SPLITTER_CLICK_EVENT,
+                        SplitterClickEvent, listener)
+            else:
+                super(AbstractSplitPanel, self).removeListener(listener)
+        else:
+            super(AbstractSplitPanel, self).removeListener(*args)
 
 
 class ISplitterClickListener(IComponentEventListener):

@@ -403,15 +403,23 @@ class Embedded(AbstractComponent):
             super(Embedded, self).addListener(*args)
 
 
-    def removeListener(self, listener):
+    def removeListener(self, *args):
         """Remove a click listener from the component. The listener should
         earlier have been added using {@link #addListener(ClickListener)}.
 
         @param listener
                    The listener to remove
         """
-        AbstractComponent.removeListener(self, self._CLICK_EVENT, ClickEvent,
-                listener)
+        nargs = len(args)
+        if nargs == 1:
+            listener = args[0]
+            if isinstance(listener, IClickListener):
+                super(Embedded, self).removeListener(self._CLICK_EVENT,
+                        ClickEvent, listener)
+            else:
+                super(Embedded, self).removeListener(listener)
+        else:
+            super(Embedded, self).removeListener(*args)
 
 
     def changeVariables(self, source, variables):

@@ -677,13 +677,20 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
             super(Select, self).addListener(*args)
 
 
-    def removeListener(self, listener):
-        if isinstance(listener, IBlurListener):
-            AbstractComponent.removeListener(self, BlurEvent.EVENT_ID,
-                    BlurEvent, listener)
+    def removeListener(self, *args):
+        nargs = len(args)
+        if nargs == 1:
+            listener = args[0]
+            if isinstance(listener, IBlurListener):
+                super(Select, self).removeListener(BlurEvent.EVENT_ID,
+                        BlurEvent, listener)
+            elif isinstance(listener, IFocusListener):
+                super(Select, self).removeListener(FocusEvent.EVENT_ID,
+                        FocusEvent, listener)
+            else:
+                super(Select, self).removeListener(listener)
         else:
-            AbstractComponent.removeListener(self, FocusEvent.EVENT_ID,
-                    FocusEvent, listener)
+            super(Select, self).removeListener(*args)
 
 
     def setMultiSelect(self, multiSelect):

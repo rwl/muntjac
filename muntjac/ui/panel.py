@@ -464,15 +464,23 @@ class Panel(AbstractComponentContainer, IScrollable,
             super(Panel, self).addListener(*args)
 
 
-    def removeListener(self, listener):
+    def removeListener(self, *args):
         """Remove a click listener from the Panel. The listener should earlier
         have been added using {@link #addListener(ClickListener)}.
 
         @param listener
                    The listener to remove
         """
-        AbstractComponent.removeListener(self, self._CLICK_EVENT, ClickEvent,
-                listener)
+        nargs = len(args)
+        if nargs == 1:
+            listener = args[0]
+            if isinstance(listener, IClickListener):
+                super(Panel, self).removeListener(self._CLICK_EVENT,
+                        ClickEvent, listener)
+            else:
+                super(Panel, self).removeListener(listener)
+        else:
+            super(Panel, self).removeListener(*args)
 
 
     def fireClick(self, parameters):

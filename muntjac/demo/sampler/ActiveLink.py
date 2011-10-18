@@ -42,7 +42,7 @@ class ActiveLink(Link):
                    the Listener to be added.
         """
         self._listeners.add(listener)
-        AbstractComponent.addListener(self, LinkActivatedEvent,
+        super(ActiveLink, self).addListener(LinkActivatedEvent,
                 listener, _LINK_FOLLOWED_METHOD)
         if len(self._listeners) == 1:
             self.requestRepaint()
@@ -55,7 +55,7 @@ class ActiveLink(Link):
                    the Listener to be removed.
         """
         self._listeners.remove(listener)
-        AbstractComponent.removeListener(self, ClickEvent,
+        super(ActiveLink, self).removeListener(ClickEvent,
                 listener, _LINK_FOLLOWED_METHOD)
         if len(self._listeners) == 0:
             self.requestRepaint()

@@ -53,9 +53,18 @@ class UriFragmentUtility(AbstractComponent):
             super(UriFragmentUtility, self).addListener(*args)
 
 
-    def removeListener(self, listener):
-        AbstractComponent.removeListener(self, FragmentChangedEvent,
-                listener, _FRAGMENT_CHANGED_METHOD)
+    def removeListener(self, *args):
+        nargs = len(args)
+        if nargs == 1:
+            listener = args[0]
+            if isinstance(listener, IFragmentChangedListener):
+                super(UriFragmentUtility, self).removeListener(
+                        FragmentChangedEvent,
+                        listener, _FRAGMENT_CHANGED_METHOD)
+            else:
+                super(UriFragmentUtility, self).removeListener(listener)
+        else:
+            super(UriFragmentUtility, self).removeListener(*args)
 
 
     def __init__(self):

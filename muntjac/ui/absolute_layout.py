@@ -158,9 +158,17 @@ class AbsoluteLayout(AbstractLayout, ILayoutClickNotifier):
             super(AbsoluteLayout, self).addListener(*args)
 
 
-    def removeListener(self, listener):
-        AbstractComponent.removeListener(self, self._CLICK_EVENT,
-                LayoutClickEvent, listener)
+    def removeListener(self, *args):
+        nargs = len(args)
+        if nargs == 1:
+            listener = args[0]
+            if isinstance(listener, ILayoutClickListener):
+                super(AbsoluteLayout, self).removeListener(self._CLICK_EVENT,
+                        LayoutClickEvent, listener)
+            else:
+                super(AbsoluteLayout, self).removeListener(listener)
+        else:
+            super(AbsoluteLayout, self).removeListener(*args)
 
 
 class ComponentPosition(object):

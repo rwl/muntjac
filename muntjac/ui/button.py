@@ -296,29 +296,38 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
             elif isinstance(listener, IFocusListener):
                 super(Button, self).addListener(FocusEvent.EVENT_ID,
                         FocusEvent, listener, IFocusListener.focusMethod)
+
             else:
                 super(Button, self).addListener(listener)
         else:
             super(Button, self).addListener(*args)
 
 
-    def removeListener(self, listener):
+    def removeListener(self, *args):
         """Removes the button click listener.
 
         @param listener
                    the Listener to be removed.
         """
-        if isinstance(listener, IBlurListener):
-            AbstractComponent.removeListener(self, BlurEvent.EVENT_ID,
-                    BlurEvent, listener)
+        nargs = len(args)
+        if nargs == 1:
+            listener = args[0]
+            if isinstance(listener, IBlurListener):
+                super(Button, self).removeListener(BlurEvent.EVENT_ID,
+                        BlurEvent, listener)
 
-        elif isinstance(listener, IClickListener):
-            AbstractComponent.removeListener(self, ClickEvent,
-                    listener, _BUTTON_CLICK_METHOD)
+            elif isinstance(listener, IClickListener):
+                super(Button, self).removeListener(ClickEvent,
+                        listener, _BUTTON_CLICK_METHOD)
 
+            elif isinstance(listener, IFocusListener):
+                super(Button, self).removeListener(FocusEvent.EVENT_ID,
+                        FocusEvent, listener)
+
+            else:
+                super(Button, self).removeListener(listener)
         else:
-            AbstractComponent.removeListener(self, FocusEvent.EVENT_ID,
-                    FocusEvent, listener)
+            super(Button, self).removeListener(*args)
 
 
     def fireClick(self, details=None):

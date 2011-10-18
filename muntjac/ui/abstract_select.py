@@ -1114,7 +1114,7 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
             super(AbstractSelect, self).addListener(*args)
 
 
-    def removeListener(self, listener):
+    def removeListener(self, *args):
         """Removes a previously registered IProperty set change listener.
 
         @see IPropertySetChangeNotifier.removeListener()
@@ -1123,16 +1123,23 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
 
         @see IItemSetChangeNotifier.removeListener()
         """
-        if isinstance(listener, container.IItemSetChangeListener):
-            if self._itemSetEventListeners is not None:
-                self._itemSetEventListeners.remove(listener)
-                if len(self._itemSetEventListeners) == 0:
-                    self._itemSetEventListeners = None
+        nargs = len(args)
+        if nargs == 1:
+            listener = args[0]
+            if isinstance(listener, container.IItemSetChangeListener):
+                if self._itemSetEventListeners is not None:
+                    self._itemSetEventListeners.remove(listener)
+                    if len(self._itemSetEventListeners) == 0:
+                        self._itemSetEventListeners = None
+            elif isinstance(listener, container.IPropertySetChangeListener):
+                if self._propertySetEventListeners is not None:
+                    self._propertySetEventListeners.remove(listener)
+                    if len(self._propertySetEventListeners) == 0:
+                        self._propertySetEventListeners = None
+            else:
+                super(AbstractSelect, self).removeListener(listener)
         else:
-            if self._propertySetEventListeners is not None:
-                self._propertySetEventListeners.remove(listener)
-                if len(self._propertySetEventListeners) == 0:
-                    self._propertySetEventListeners = None
+            super(AbstractSelect, self).removeListener(*args)
 
 
     def getListeners(self, eventType):
