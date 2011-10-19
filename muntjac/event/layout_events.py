@@ -51,7 +51,7 @@ class ILayoutClickNotifier(object):
     @see LayoutClickEvent
     """
 
-    def addListener(self, listener):
+    def addListener(self, listener, iface):
         """Add a click listener to the layout. The listener is called whenever
         the user clicks inside the layout. An event is also triggered when
         the click targets a component inside a nested layout or Panel,
@@ -74,7 +74,7 @@ class ILayoutClickNotifier(object):
         raise NotImplementedError
 
 
-    def removeListener(self, listener):
+    def removeListener(self, listener, iface):
         """Removes an LayoutClickListener.
 
         @param listener

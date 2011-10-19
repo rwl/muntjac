@@ -185,7 +185,7 @@ class ProgressIndicator(AbstractField, prop.IValueChangeListener,
         if (self._dataSource is not None
                 and issubclass(self._dataSource.__class__,
                         prop.IValueChangeNotifier)):
-            self._dataSource.addListener(self)
+            self._dataSource.addListener(self, prop.IValueChangeNotifier)
 
 
     def getContentMode(self):

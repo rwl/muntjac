@@ -144,18 +144,12 @@ class AbsoluteLayout(AbstractLayout, ILayoutClickNotifier):
             target.endTag('cc')
 
 
-    def addListener(self, *args):
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, ILayoutClickListener):
-                super(AbsoluteLayout, self).addListener(self._CLICK_EVENT,
-                        LayoutClickEvent, listener,
-                        ILayoutClickListener.clickMethod)
-            else:
-                super(AbsoluteLayout, self).addListener(listener)
+    def addListener(self, listener, iface):
+        if iface == ILayoutClickListener:
+            self.registerListener(self._CLICK_EVENT, LayoutClickEvent,
+                    listener, ILayoutClickListener.clickMethod)
         else:
-            super(AbsoluteLayout, self).addListener(*args)
+            super(AbsoluteLayout, self).addListener(listener, iface)
 
 
     def addLayoutClickListener(self, listener):
@@ -164,17 +158,12 @@ class AbsoluteLayout(AbstractLayout, ILayoutClickNotifier):
                 ILayoutClickListener.clickMethod)
 
 
-    def removeListener(self, *args):
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, ILayoutClickListener):
-                super(AbsoluteLayout, self).removeListener(self._CLICK_EVENT,
-                        LayoutClickEvent, listener)
-            else:
-                super(AbsoluteLayout, self).removeListener(listener)
+    def removeListener(self, listener, iface):
+        if iface == ILayoutClickListener:
+            self.withdrawListener(self._CLICK_EVENT, LayoutClickEvent,
+                    listener)
         else:
-            super(AbsoluteLayout, self).removeListener(*args)
+            super(AbsoluteLayout, self).removeListener(listener, iface)
 
 
     def removeLayoutClickListener(self, listener):

@@ -670,10 +670,12 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
             if self.items is not None:
                 if isinstance(self.items,
                         container.IItemSetChangeNotifier):
-                    self.items.addListener(self)
+                    self.items.addListener(self,
+                            container.IItemSetChangeListener)
                 if isinstance(self.items,
                         container.IPropertySetChangeNotifier):
-                    self.items.addListener(self)
+                    self.items.addListener(self,
+                            container.IPropertySetChangeListener)
 
             # We expect changing the data source should also clean value.
             # See #810, #4607, #5281
@@ -1086,7 +1088,7 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
         self.firePropertySetChange()
 
 
-    def addListener(self, *args):
+    def addListener(self, listener, iface):
         """Adds a new IProperty set change listener for this IContainer.
 
         @see IPropertySetChangeNotifier.addListener()
@@ -1095,23 +1097,18 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
 
         @see IItemSetChangeNotifier.addListener()
         """
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, container.IItemSetChangeListener):
-                if self._itemSetEventListeners is None:
-                    self._itemSetEventListeners = set()
+        if iface == container.IItemSetChangeListener:
+            if self._itemSetEventListeners is None:
+                self._itemSetEventListeners = set()
 
-                self._itemSetEventListeners.add(listener)
-            elif isinstance(listener, container.IPropertySetChangeListener):
-                if self._propertySetEventListeners is None:
-                    self._propertySetEventListeners = set()
+            self._itemSetEventListeners.add(listener)
+        elif iface == container.IPropertySetChangeListener:
+            if self._propertySetEventListeners is None:
+                self._propertySetEventListeners = set()
 
-                self._propertySetEventListeners.add(listener)
-            else:
-                super(AbstractSelect, self).addListener(listener)
+            self._propertySetEventListeners.add(listener)
         else:
-            super(AbstractSelect, self).addListener(*args)
+            super(AbstractSelect, self).addListener(listener, iface)
 
 
     def addItemSetChangeListener(self, listener):
@@ -1128,7 +1125,7 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
         self._propertySetEventListeners.add(listener)
 
 
-    def removeListener(self, *args):
+    def removeListener(self, listener, iface):
         """Removes a previously registered IProperty set change listener.
 
         @see IPropertySetChangeNotifier.removeListener()
@@ -1137,23 +1134,18 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
 
         @see IItemSetChangeNotifier.removeListener()
         """
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, container.IItemSetChangeListener):
-                if self._itemSetEventListeners is not None:
-                    self._itemSetEventListeners.remove(listener)
-                    if len(self._itemSetEventListeners) == 0:
-                        self._itemSetEventListeners = None
-            elif isinstance(listener, container.IPropertySetChangeListener):
-                if self._propertySetEventListeners is not None:
-                    self._propertySetEventListeners.remove(listener)
-                    if len(self._propertySetEventListeners) == 0:
-                        self._propertySetEventListeners = None
-            else:
-                super(AbstractSelect, self).removeListener(listener)
+        if iface == container.IItemSetChangeListener:
+            if self._itemSetEventListeners is not None:
+                self._itemSetEventListeners.remove(listener)
+                if len(self._itemSetEventListeners) == 0:
+                    self._itemSetEventListeners = None
+        elif iface == container.IPropertySetChangeListener:
+            if self._propertySetEventListeners is not None:
+                self._propertySetEventListeners.remove(listener)
+                if len(self._propertySetEventListeners) == 0:
+                    self._propertySetEventListeners = None
         else:
-            super(AbstractSelect, self).removeListener(*args)
+            super(AbstractSelect, self).removeListener(listener, iface)
 
 
     def removeItemSetChangeListener(self, listener):
@@ -1504,7 +1496,8 @@ class CaptionChangeListener(item.IPropertySetChangeListener,
                 return
 
             if isinstance(i, item.IPropertySetChangeNotifier):
-                i.addListener(self.getCaptionChangeListener())
+                i.addListener(self.getCaptionChangeListener(),
+                        item.IPropertySetChangeListener)
                 self._captionChangeNotifiers.add(i)
 
             pids = i.getItemPropertyIds()
@@ -1513,14 +1506,16 @@ class CaptionChangeListener(item.IPropertySetChangeListener,
                     p = i.getItemProperty(pid)
                     if (p is not None
                             and isinstance(p, prop.IValueChangeNotifier)):
-                        p.addListener(self.getCaptionChangeListener())
+                        p.addListener(self.getCaptionChangeListener(),
+                                prop.IValueChangeListener)
                         self._captionChangeNotifiers.add(p)
 
         elif test == self.ITEM_CAPTION_MODE_PROPERTY:
             p = self.getContainerProperty(itemId,
                     self.getItemCaptionPropertyId())
             if p is not None and isinstance(p, prop.IValueChangeNotifier):
-                p.addListener(self.getCaptionChangeListener())
+                p.addListener(self.getCaptionChangeListener(),
+                        prop.IValueChangeListener)
                 self._captionChangeNotifiers.add(p)
 
 

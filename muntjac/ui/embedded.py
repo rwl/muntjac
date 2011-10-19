@@ -381,7 +381,7 @@ class Embedded(AbstractComponent):
             self.requestRepaint()
 
 
-    def addListener(self, *args):
+    def addListener(self, listener, iface):
         """Add a click listener to the component. The listener is called
         whenever the user clicks inside the component. Depending on the
         content the event may be blocked and in that case no event is fired.
@@ -391,16 +391,11 @@ class Embedded(AbstractComponent):
         @param listener
                    The listener to add
         """
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, IClickListener):
-                super(Embedded, self).addListener(self._CLICK_EVENT,
-                        ClickEvent, listener, IClickListener.clickMethod)
-            else:
-                super(Embedded, self).addListener(listener)
+        if iface == IClickListener:
+            self.registerListener(self._CLICK_EVENT, ClickEvent,
+                    listener, IClickListener.clickMethod)
         else:
-            super(Embedded, self).addListener(*args)
+            super(Embedded, self).addListener(listener, iface)
 
 
     def addClickListener(self, listener):
@@ -408,23 +403,17 @@ class Embedded(AbstractComponent):
                 ClickEvent, listener, IClickListener.clickMethod)
 
 
-    def removeListener(self, *args):
+    def removeListener(self, listener, iface):
         """Remove a click listener from the component. The listener should
         earlier have been added using {@link #addListener(ClickListener)}.
 
         @param listener
                    The listener to remove
         """
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, IClickListener):
-                super(Embedded, self).removeListener(self._CLICK_EVENT,
-                        ClickEvent, listener)
-            else:
-                super(Embedded, self).removeListener(listener)
+        if iface == IClickListener:
+            self.withdrawListener(self._CLICK_EVENT, ClickEvent, listener)
         else:
-            super(Embedded, self).removeListener(*args)
+            super(Embedded, self).removeListener(listener, iface)
 
 
     def removeClickListener(self, listener):

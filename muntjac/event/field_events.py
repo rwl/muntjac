@@ -36,7 +36,7 @@ class IFocusNotifier(object):
     @see FocusEvent
     """
 
-    def addListener(self, listener):
+    def addListener(self, listener, iface):
         """Adds a <code>IFocusListener</code> to the Component which gets fired
         when a <code>Field</code> receives keyboard focus.
 
@@ -51,7 +51,7 @@ class IFocusNotifier(object):
         raise NotImplementedError
 
 
-    def removeListener(self, listener):
+    def removeListener(self, listener, iface):
         """Removes a <code>IFocusListener</code> from the Component.
 
         @param listener
@@ -82,7 +82,7 @@ class IBlurNotifier(object):
     @see BlurEvent
     """
 
-    def addListener(self, listener):
+    def addListener(self, listener, iface):
         """Adds a <code>IBlurListener</code> to the Component which gets fired
         when a <code>Field</code> loses keyboard focus.
 
@@ -97,7 +97,7 @@ class IBlurNotifier(object):
         raise NotImplementedError
 
 
-    def removeListener(self, listener):
+    def removeListener(self, listener, iface):
         """Removes a <code>IBlurListener</code> from the Component.
 
         @param listener
@@ -246,7 +246,7 @@ class ITextChangeNotifier(object):
     {@link ITextChangeListener}s.
     """
 
-    def addListener(self, listener):
+    def addListener(self, listener, iface):
         raise NotImplementedError
 
 
@@ -254,7 +254,7 @@ class ITextChangeNotifier(object):
         raise NotImplementedError
 
 
-    def removeListener(self, listener):
+    def removeListener(self, listener, iface):
         raise NotImplementedError
 
 

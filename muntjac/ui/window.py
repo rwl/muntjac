@@ -916,7 +916,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
             self.requestRepaint()
 
 
-    def addListener(self, *args):
+    def addListener(self, listener, iface):
         """Adds a ICloseListener to the window.
 
         For a sub window the ICloseListener is fired when the user closes it
@@ -950,25 +950,19 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
 
         @see FieldEvents.IBlurNotifier.addListener()
         """
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, IBlurListener):
-                super(Window, self).addListener(BlurEvent.EVENT_ID,
-                        BlurEvent, listener, IBlurListener.blurMethod)
-            elif isinstance(listener, ICloseListener):
-                super(Window, self).addListener(CloseEvent,
-                        listener, _WINDOW_CLOSE_METHOD)
-            elif isinstance(listener, IFocusListener):
-                super(Window, self).addListener(FocusEvent.EVENT_ID,
-                        FocusEvent, listener, IFocusListener.focusMethod)
-            elif isinstance(listener, IResizeListener):
-                super(Window, self).addListener(ResizeEvent,
-                        listener, _WINDOW_RESIZE_METHOD)
-            else:
-                super(Window, self).addListener(listener)
+        if iface == IBlurListener:
+            self.registerListener(BlurEvent.EVENT_ID,
+                    BlurEvent, listener, IBlurListener.blurMethod)
+        elif iface == ICloseListener:
+            self.registerListener(CloseEvent,
+                    listener, _WINDOW_CLOSE_METHOD)
+        elif iface == IFocusListener:
+            self.registerListener(FocusEvent.EVENT_ID,
+                    FocusEvent, listener, IFocusListener.focusMethod)
+        elif iface == IResizeListener:
+            self.addListener(ResizeEvent, listener, _WINDOW_RESIZE_METHOD)
         else:
-            super(Window, self).addListener(*args)
+            super(Window, self).addListener(listener, iface)
 
 
     def addBlurListener(self, listener):
@@ -991,7 +985,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
                 listener, _WINDOW_RESIZE_METHOD)
 
 
-    def removeListener(self, *args):
+    def removeListener(self, listener, iface):
         """Removes the ICloseListener from the window.
 
         For more information on CloseListeners see {@link ICloseListener}.
@@ -1003,25 +997,20 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
 
         @param listener
         """
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, IBlurListener):
-                super(Window, self).removeListener(BlurEvent.EVENT_ID,
-                        BlurEvent, listener)
-            elif isinstance(listener, ICloseListener):
-                super(Window, self).removeListener(CloseEvent, listener,
-                        _WINDOW_CLOSE_METHOD)
-            elif isinstance(listener, IFocusListener):
-                super(Window, self).removeListener(FocusEvent.EVENT_ID,
-                        FocusEvent, listener)
-            elif isinstance(listener, IResizeListener):
-                super(Window, self).removeListener(ResizeEvent, listener)
+        if iface == IBlurListener:
+            self.withdrawListener(BlurEvent.EVENT_ID,
+                    BlurEvent, listener)
+        elif iface == ICloseListener:
+            self.withdrawListener(CloseEvent, listener,
+                    _WINDOW_CLOSE_METHOD)
+        elif iface == IFocusListener:
+            self.withdrawListener(FocusEvent.EVENT_ID,
+                    FocusEvent, listener)
+        elif iface == IResizeListener:
+            self.withdrawListener(ResizeEvent, listener)
 
-            else:
-                super(Window, self).removeListener(listener)
         else:
-            super(Window, self).removeListener(*args)
+            super(Window, self).removeListener(listener, iface)
 
 
     def removeBlurListener(self, listener):

@@ -242,7 +242,7 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
         if (self._dataSource is not None
                 and issubclass(self._dataSource.__class__,
                         prop.IValueChangeNotifier)):
-            self._dataSource.removeListener(self)
+            self._dataSource.removeListener(self, prop.IValueChangeListener)
 
         # Sets the new data source
         self._dataSource = newDataSource
@@ -251,7 +251,7 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
         if (self._dataSource is not None
                 and issubclass(self._dataSource.__class__,
                         prop.IValueChangeNotifier)):
-            self._dataSource.addListener(self)
+            self._dataSource.addListener(self, prop.IValueChangeListener)
 
         self.requestRepaint()
 
@@ -320,18 +320,13 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
             self.requestRepaint()
 
 
-    def addListener(self, *args):
+    def addListener(self, listener, iface):
         """Adds the value change listener."""
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, prop.IValueChangeListener):
-                super(Label, self).addListener(ValueChangeEvent,
-                        listener, _VALUE_CHANGE_METHOD)
-            else:
-                super(Label, self).addListener(listener)
+        if iface == prop.IValueChangeListener:
+            self.registerListener(ValueChangeEvent, listener,
+                    _VALUE_CHANGE_METHOD)
         else:
-            super(Label, self).addListener(*args)
+            super(Label, self).addListener(listener, iface)
 
 
     def addValueChangeListener(self, listener):
@@ -339,18 +334,13 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
                 listener, _VALUE_CHANGE_METHOD)
 
 
-    def removeListener(self, *args):
+    def removeListener(self, listener, iface):
         """Removes the value change listener."""
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, prop.IValueChangeListener):
-                super(Label, self).removeListener(ValueChangeEvent,
-                        listener, _VALUE_CHANGE_METHOD)
-            else:
-                super(Label, self).removeListener(listener)
+        if isinstance(listener, prop.IValueChangeListener):
+            self.withdrawListener(ValueChangeEvent, listener,
+                    _VALUE_CHANGE_METHOD)
         else:
-            super(Label, self).removeListener(*args)
+            super(Label, self).removeListener(listener, iface)
 
 
     def removeValueChangeListener(self, listener):

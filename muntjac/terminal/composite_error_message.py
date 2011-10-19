@@ -109,7 +109,7 @@ class CompositeErrorMessage(IErrorMessage):
             target.endTag('error')
 
 
-    def addListener(self, listener):
+    def addListener(self, listener, iface):
         pass
 
 
@@ -117,7 +117,7 @@ class CompositeErrorMessage(IErrorMessage):
         pass
 
 
-    def removeListener(self, listener):
+    def removeListener(self, listener, iface):
         pass
 
 

@@ -50,7 +50,7 @@ class IErrorMessage(IPaintable):
         raise NotImplementedError
 
 
-    def addListener(self, listener):
+    def addListener(self, listener, iface):
         """Error messages are inmodifiable and thus listeners are not needed.
         This method should be implemented as empty.
 
@@ -65,7 +65,7 @@ class IErrorMessage(IPaintable):
         raise NotImplementedError
 
 
-    def removeListener(self, listener):
+    def removeListener(self, listener, iface):
         """Error messages are inmodifiable and thus listeners are not needed.
         This method should be implemented as empty.
 

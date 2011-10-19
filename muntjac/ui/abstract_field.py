@@ -483,11 +483,12 @@ class AbstractField(AbstractComponent, field.IField,
 
         # Listens the new data source if possible
         if isinstance(self._dataSource, prop.IValueChangeNotifier):
-            self._dataSource.addListener(self)
+            self._dataSource.addListener(self, prop.IValueChangeListener)
 
         if isinstance(self._dataSource,
                 prop.IReadOnlyStatusChangeNotifier):
-            self._dataSource.addListener(self)
+            self._dataSource.addListener(self,
+                    prop.IReadOnlyStatusChangeListener)
 
         # Copy the validators from the data source
         if isinstance(self._dataSource, IValidatable):
@@ -686,22 +687,16 @@ class AbstractField(AbstractComponent, field.IField,
                 self._currentBufferedSourceException])
 
 
-    def addListener(self, *args):
+    def addListener(self, listener, iface):
         # Adds a value change listener for the field.
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, prop.IReadOnlyStatusChangeListener):
-                super(AbstractField, self).addListener(
-                        prop.IReadOnlyStatusChangeEvent,
-                        listener, _READ_ONLY_STATUS_CHANGE_METHOD)
-            elif isinstance(listener, prop.IValueChangeListener):
-                super(AbstractField, self).addListener(field.ValueChangeEvent,
-                        listener, _VALUE_CHANGE_METHOD)
-            else:
-                super(AbstractField, self).addListener(listener)
+        if iface == prop.IReadOnlyStatusChangeListener:
+            self.registerListener(prop.IReadOnlyStatusChangeEvent,
+                    listener, _READ_ONLY_STATUS_CHANGE_METHOD)
+        elif iface == prop.IValueChangeListener:
+            self.registerListener(field.ValueChangeEvent,
+                    listener, _VALUE_CHANGE_METHOD)
         else:
-            super(AbstractField, self).addListener(*args)
+            super(AbstractField, self).addListener(listener, iface)
 
 
     def addReadOnlyStatusChangeListener(self, listener):
@@ -714,23 +709,16 @@ class AbstractField(AbstractComponent, field.IField,
                 listener, _VALUE_CHANGE_METHOD)
 
 
-    def removeListener(self, *args):
+    def removeListener(self, listener, iface):
         # Removes a value change listener from the field.
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, prop.IReadOnlyStatusChangeListener):
-                super(AbstractField, self).removeListener(
-                        prop.IReadOnlyStatusChangeEvent, listener,
-                        _READ_ONLY_STATUS_CHANGE_METHOD)
-            elif isinstance(listener, prop.IValueChangeListener):
-                super(AbstractField, self).removeListener(
-                        field.ValueChangeEvent, listener,
-                        _VALUE_CHANGE_METHOD)
-            else:
-                super(AbstractField, self).removeListener(listener)
+        if iface == prop.IReadOnlyStatusChangeListener:
+            self.withdrawListener(prop.IReadOnlyStatusChangeEvent, listener,
+                    _READ_ONLY_STATUS_CHANGE_METHOD)
+        elif iface == prop.IValueChangeListener:
+            self.withdrawListener(field.ValueChangeEvent, listener,
+                    _VALUE_CHANGE_METHOD)
         else:
-            super(AbstractField, self).removeListener(*args)
+            super(AbstractField, self).removeListener(listener, iface)
 
 
     def removeReadOnlyStatusChangeListener(self, listener):

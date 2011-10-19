@@ -354,19 +354,13 @@ class AbstractSplitPanel(AbstractLayout):
         self.fireEvent( SplitterClickEvent(self, mouseDetails) )
 
 
-    def addListener(self, *args):
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, ISplitterClickListener):
-                super(AbstractSplitPanel, self).addListener(
-                        self._SPLITTER_CLICK_EVENT,
-                        SplitterClickEvent, listener,
-                        SplitterClickListener.clickMethod)
-            else:
-                super(AbstractSplitPanel, self).addListener(listener)
+    def addListener(self, listener, iface):
+        if iface == ISplitterClickListener:
+            self.registerListener(self._SPLITTER_CLICK_EVENT,
+                    SplitterClickEvent, listener,
+                    SplitterClickListener.clickMethod)
         else:
-            super(AbstractSplitPanel, self).addListener(*args)
+            super(AbstractSplitPanel, self).addListener(listener, iface)
 
 
     def addSplitterClickListener(self, listener):
@@ -374,18 +368,12 @@ class AbstractSplitPanel(AbstractLayout):
                 SplitterClickEvent, listener, SplitterClickListener.clickMethod)
 
 
-    def removeListener(self, *args):
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, ISplitterClickListener):
-                super(AbstractSplitPanel, self).removeListener(
-                        self._SPLITTER_CLICK_EVENT,
-                        SplitterClickEvent, listener)
-            else:
-                super(AbstractSplitPanel, self).removeListener(listener)
+    def removeListener(self, listener, iface):
+        if iface == ISplitterClickListener:
+            self.withdrawListener(self._SPLITTER_CLICK_EVENT,
+                    SplitterClickEvent, listener)
         else:
-            super(AbstractSplitPanel, self).removeListener(*args)
+            super(AbstractSplitPanel, self).removeListener(listener, iface)
 
 
     def removeSplitterClickListener(self, listener):

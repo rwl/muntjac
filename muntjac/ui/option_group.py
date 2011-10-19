@@ -70,20 +70,15 @@ class OptionGroup(AbstractSelect, IBlurNotifier, IFocusNotifier):
             self.fireEvent(BlurEvent(self))
 
 
-    def addListener(self, *args):
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, IBlurListener):
-                super(OptionGroup, self).addListener(BlurEvent.EVENT_ID,
-                        BlurEvent, listener, IBlurListener.blurMethod)
-            elif isinstance(listener, IFocusListener):
-                super(OptionGroup, self).addListener(FocusEvent.EVENT_ID,
-                        FocusEvent, listener, IFocusListener.focusMethod)
-            else:
-                super(OptionGroup, self).addListener(listener)
+    def addListener(self, listener, iface):
+        if isinstance(listener, IBlurListener):
+            self.registerListener(BlurEvent.EVENT_ID, BlurEvent,
+                    listener, IBlurListener.blurMethod)
+        elif iface == IFocusListener:
+            self.registerListener(FocusEvent.EVENT_ID, FocusEvent,
+                    listener, IFocusListener.focusMethod)
         else:
-            super(OptionGroup, self).addListener(*args)
+            super(OptionGroup, self).addListener(listener, iface)
 
 
     def addBlurListener(self, listener):
@@ -96,20 +91,13 @@ class OptionGroup(AbstractSelect, IBlurNotifier, IFocusNotifier):
                 FocusEvent, listener, IFocusListener.focusMethod)
 
 
-    def removeListener(self, *args):
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, IBlurListener):
-                super(OptionGroup, self).removeListener(BlurEvent.EVENT_ID,
-                        BlurEvent, listener)
-            elif isinstance(listener, IFocusListener):
-                super(OptionGroup, self).removeListener(FocusEvent.EVENT_ID,
-                        FocusEvent, listener)
-            else:
-                super(OptionGroup, self).removeListener(listener)
+    def removeListener(self, listener, iface):
+        if iface == IBlurListener:
+            self.withdrawListener(BlurEvent.EVENT_ID, BlurEvent, listener)
+        elif iface == IFocusListener:
+            self.withdrawListener(FocusEvent.EVENT_ID, FocusEvent, listener)
         else:
-            super(OptionGroup, self).removeListener(*args)
+            super(OptionGroup, self).removeListener(listener, iface)
 
 
     def removeBlurListener(self, listener):

@@ -35,7 +35,7 @@ from muntjac.terminal.application_resource import IApplicationResource
 from muntjac.terminal.theme_resource import ThemeResource
 from muntjac.ui.alignment import Alignment
 from muntjac.terminal.stream_variable import IStreamVariable
-from muntjac.terminal.paintable import IPaintable
+from muntjac.terminal.paintable import IPaintable, IRepaintRequestListener
 from muntjac.terminal.paint_target import IPaintTarget
 from muntjac.terminal.paint_exception import PaintException
 
@@ -113,7 +113,7 @@ class JsonPaintTarget(IPaintTarget):
                 and (self._identifiersCreatedDueRefPaint is None
                 or paintable not in self._identifiersCreatedDueRefPaint))
             idd = self._manager.getPaintableId(paintable)
-            paintable.addListener(self._manager)
+            paintable.addListener(self._manager, IRepaintRequestListener)
             self.addAttribute('id', idd)
             self._paintedComponents.add(paintable)
 

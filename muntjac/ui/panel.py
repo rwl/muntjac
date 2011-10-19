@@ -184,8 +184,10 @@ class Panel(AbstractComponentContainer, IScrollable,
         # detach old content if present
         if self._content is not None:
             self._content.setParent(None)
-            self._content.removeListener(self)
-            self._content.removeListener(self)
+            self._content.removeListener(self,
+                    component_container.IComponentAttachListener)
+            self._content.removeListener(self,
+                    component_container.IComponentDetachListener)
 
         # Sets the panel to be parent for the content
         newContent.setParent(self)
@@ -194,8 +196,10 @@ class Panel(AbstractComponentContainer, IScrollable,
         self._content = newContent
 
         # Adds the event listeners for new content
-        newContent.addListener(self)
-        newContent.addListener(self)
+        newContent.addListener(self,
+                component_container.IComponentAttachListener)
+        newContent.addListener(self,
+                component_container.IComponentDetachListener)
 
         self._content = newContent
 
@@ -441,7 +445,7 @@ class Panel(AbstractComponentContainer, IScrollable,
             self.actionManager.removeAllActionHandlers()
 
 
-    def addListener(self, *args):
+    def addListener(self, listener, iface):
         """Add a click listener to the Panel. The listener is called whenever
         the user clicks inside the Panel. Also when the click targets a
         component inside the Panel, provided the targeted component does not
@@ -452,16 +456,11 @@ class Panel(AbstractComponentContainer, IScrollable,
         @param listener
                    The listener to add
         """
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, IClickListener):
-                super(Panel, self).addListener(self._CLICK_EVENT, ClickEvent,
-                        listener, IClickListener.clickMethod)
-            else:
-                super(Panel, self).addListener(listener)
+        if iface == IClickListener:
+            self.registerListener(self._CLICK_EVENT, ClickEvent,
+                    listener, IClickListener.clickMethod)
         else:
-            super(Panel, self).addListener(*args)
+            super(Panel, self).addListener(listener, iface)
 
 
     def addClickListener(self, listener):
@@ -469,23 +468,17 @@ class Panel(AbstractComponentContainer, IScrollable,
                 listener, IClickListener.clickMethod)
 
 
-    def removeListener(self, *args):
+    def removeListener(self, listener, iface):
         """Remove a click listener from the Panel. The listener should earlier
         have been added using {@link #addListener(ClickListener)}.
 
         @param listener
                    The listener to remove
         """
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, IClickListener):
-                super(Panel, self).removeListener(self._CLICK_EVENT,
-                        ClickEvent, listener)
-            else:
-                super(Panel, self).removeListener(listener)
+        if iface == IClickListener:
+            self.withdrawListener(self._CLICK_EVENT, ClickEvent, listener)
         else:
-            super(Panel, self).removeListener(*args)
+            super(Panel, self).removeListener(listener)
 
 
     def removeClickListener(self, listener):

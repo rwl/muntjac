@@ -556,20 +556,15 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
         return self._lenient
 
 
-    def addListener(self, *args):
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, IBlurListener):
-                super(DateField, self).addListener(BlurEvent.EVENT_ID,
-                        BlurEvent, listener, IBlurListener.blurMethod)
-            elif isinstance(listener, IFocusListener):
-                super(DateField, self).addListener(FocusEvent.EVENT_ID,
-                        FocusEvent, listener, IFocusListener.focusMethod)
-            else:
-                super(DateField, self).addListener(listener)
+    def addListener(self, listener, iface):
+        if iface == IBlurListener:
+            self.registerListener(BlurEvent.EVENT_ID, BlurEvent,
+                    listener, IBlurListener.blurMethod)
+        elif iface == IFocusListener:
+            self.registerListener(FocusEvent.EVENT_ID, FocusEvent,
+                    listener, IFocusListener.focusMethod)
         else:
-            super(DateField, self).addListener(*args)
+            super(DateField, self).addListener(listener, iface)
 
 
     def addBlurListener(self, listener):
@@ -582,20 +577,13 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
                 FocusEvent, listener, IFocusListener.focusMethod)
 
 
-    def removeListener(self, *args):
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, IBlurListener):
-                super(DateField, self).removeListener(BlurEvent.EVENT_ID,
-                        BlurEvent, listener)
-            elif isinstance(listener, IFocusListener):
-                super(DateField, self).removeListener(FocusEvent.EVENT_ID,
-                        FocusEvent, listener)
-            else:
-                super(DateField, self).removeListener(listener)
+    def removeListener(self, listener, iface):
+        if iface == IBlurListener:
+            self.withdrawListener(BlurEvent.EVENT_ID, BlurEvent, listener)
+        elif iface == IFocusListener:
+            self.withdrawListener(FocusEvent.EVENT_ID, FocusEvent, listener)
         else:
-            super(DateField, self).removeListener(*args)
+            super(DateField, self).removeListener(listener, iface)
 
 
     def removeBlurListener(self, listener):

@@ -283,7 +283,7 @@ class IValueChangeNotifier(object):
     @since 3.0
     """
 
-    def addListener(self, listener):
+    def addListener(self, listener, iface):
         """Registers a new value change listener for this IProperty.
 
         @param listener
@@ -292,7 +292,7 @@ class IValueChangeNotifier(object):
         raise NotImplementedError
 
 
-    def removeListener(self, listener):
+    def removeListener(self, listener, iface):
         """Removes a previously registered value change listener.
 
         @param listener
@@ -358,7 +358,7 @@ class IReadOnlyStatusChangeNotifier(object):
     @since 3.0
     """
 
-    def addListener(self, listener):
+    def addListener(self, listener, iface):
         """Registers a new read-only status change listener for this IProperty.
 
         @param listener
@@ -367,7 +367,7 @@ class IReadOnlyStatusChangeNotifier(object):
         raise NotImplementedError
 
 
-    def removeListener(self, listener):
+    def removeListener(self, listener, iface):
         """Removes a previously registered read-only status change listener.
 
         @param listener

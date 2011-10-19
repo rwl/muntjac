@@ -97,22 +97,15 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
             c.detach()
 
 
-    def addListener(self, *args):
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, IComponentAttachListener):
-                super(AbstractComponentContainer, self).addListener(
-                        ComponentAttachEvent,
-                        listener, _COMPONENT_ATTACHED_METHOD)
-            elif isinstance(listener, IComponentDetachListener):
-                super(AbstractComponentContainer, self).addListener(
-                        ComponentDetachEvent,
-                        listener, _COMPONENT_DETACHED_METHOD)
-            else:
-                super(AbstractComponentContainer, self).addListener(listener)
+    def addListener(self, listener, iface):
+        if iface == IComponentAttachListener:
+            self.registerListener(ComponentAttachEvent, listener,
+                    _COMPONENT_ATTACHED_METHOD)
+        elif iface == IComponentDetachListener:
+            self.registerListener(ComponentDetachEvent, listener,
+                    _COMPONENT_DETACHED_METHOD)
         else:
-            super(AbstractComponentContainer, self).addListener(*args)
+            super(AbstractComponentContainer, self).addListener(listener, iface)
 
 
     def addComponentAttachListener(self, listener):
@@ -125,22 +118,16 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
                 ComponentDetachEvent, listener, _COMPONENT_DETACHED_METHOD)
 
 
-    def removeListener(self, *args):
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, IComponentAttachListener):
-                super(AbstractComponentContainer, self).removeListener(
-                    ComponentAttachEvent,
-                    listener, _COMPONENT_ATTACHED_METHOD)
-            elif isinstance(listener, IComponentDetachListener):
-                super(AbstractComponentContainer, self).removeListener(
-                        ComponentDetachEvent,
-                        listener, _COMPONENT_DETACHED_METHOD)
-            else:
-                super(AbstractComponentContainer, self).removeListener(listener)
+    def removeListener(self, listener, iface):
+        if iface == IComponentAttachListener:
+            self.withdrawListener(ComponentAttachEvent, listener,
+                    _COMPONENT_ATTACHED_METHOD)
+        elif iface == IComponentDetachListener:
+            self.withdrawListener(ComponentDetachEvent, listener,
+                    _COMPONENT_DETACHED_METHOD)
         else:
-            super(AbstractComponentContainer, self).removeListener(*args)
+            super(AbstractComponentContainer, self).removeListener(listener,
+                    iface)
 
 
     def removeComponentAttachListener(self, listener):

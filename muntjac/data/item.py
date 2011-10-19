@@ -154,7 +154,7 @@ class IPropertySetChangeNotifier(object):
     be able to implement an interface.
     """
 
-    def addListener(self, listener):
+    def addListener(self, listener, iface):
         """Registers a new property set change listener for this IItem.
 
         @param listener
@@ -167,7 +167,7 @@ class IPropertySetChangeNotifier(object):
         raise NotImplementedError
 
 
-    def removeListener(self, listener):
+    def removeListener(self, listener, iface):
         """Removes a previously registered property set change listener.
 
         @param listener

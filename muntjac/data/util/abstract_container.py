@@ -44,7 +44,7 @@ class AbstractContainer(IContainer):
         self._itemSetChangeListeners = None
 
 
-    def addListener(self, listener):
+    def addListener(self, listener, iface):
         """Implementation of the corresponding method in
         {@link PropertySetChangeNotifier}, override with the corresponding public
         method and implement the interface to use this.
@@ -57,18 +57,18 @@ class AbstractContainer(IContainer):
 
         @see ItemSetChangeNotifier#addListener(com.vaadin.data.IContainer.IItemSetChangeListener)
         """
-        if isinstance(listener, IItemSetChangeListener):
+        if iface == IItemSetChangeListener:
             if self.getItemSetChangeListeners() is None:
                 self.setItemSetChangeListeners( list() )
 
             self.getItemSetChangeListeners().append(listener)
-        elif isinstance(listener, IPropertySetChangeListener):
+        elif iface == IPropertySetChangeListener:
             if self.getPropertySetChangeListeners() is None:
                 self.setPropertySetChangeListeners(list())
 
             self.getPropertySetChangeListeners().append(listener)
         else:
-            super(AbstractContainer, self).addListener(listener)
+            super(AbstractContainer, self).addListener(listener, iface)
 
 
     def addItemSetChangeListener(self, listener):
@@ -85,7 +85,7 @@ class AbstractContainer(IContainer):
         self.getPropertySetChangeListeners().append(listener)
 
 
-    def removeListener(self, listener):
+    def removeListener(self, listener, iface):
         """Implementation of the corresponding method in
         {@link PropertySetChangeNotifier}, override with the corresponding public
         method and implement the interface to use this.
@@ -99,14 +99,14 @@ class AbstractContainer(IContainer):
 
         @see ItemSetChangeNotifier#removeListener(com.vaadin.data.IContainer.IItemSetChangeListener)
         """
-        if isinstance(listener, IItemSetChangeListener):
+        if iface == IItemSetChangeListener:
             if self.getItemSetChangeListeners() is not None:
                 self.getItemSetChangeListeners().remove(listener)
-        elif isinstance(listener, IPropertySetChangeListener):
+        elif iface == IPropertySetChangeListener:
             if self.getPropertySetChangeListeners() is not None:
                 self.getPropertySetChangeListeners().remove(listener)
         else:
-            super(AbstractContainer, self).removeListener(listener)
+            super(AbstractContainer, self).removeListener(listener, iface)
 
 
     def removeItemSetChangeListener(self, listener):

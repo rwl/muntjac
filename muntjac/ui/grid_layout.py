@@ -927,17 +927,12 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
         return None
 
 
-    def addListener(self, *args):
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, ILayoutClickListener):
-                super(GridLayout, self).addListener(self._CLICK_EVENT,
-                LayoutClickEvent, listener, ILayoutClickListener.clickMethod)
-            else:
-                super(GridLayout, self).addListener(listener)
+    def addListener(self, listener, iface):
+        if iface == ILayoutClickListener:
+            self.registerListener(self._CLICK_EVENT, LayoutClickEvent,
+                    listener, ILayoutClickListener.clickMethod)
         else:
-            super(GridLayout, self).addListener(*args)
+            super(GridLayout, self).addListener(listener, iface)
 
 
     def addLayoutClickListener(self, listener):
@@ -945,17 +940,12 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
                 LayoutClickEvent, listener, ILayoutClickListener.clickMethod)
 
 
-    def removeListener(self, *args):
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, ILayoutClickListener):
-                super(GridLayout, self).removeListener(self._CLICK_EVENT,
-                        LayoutClickEvent, listener)
-            else:
-                super(GridLayout, self).removeListener(listener)
+    def removeListener(self, listener, iface):
+        if iface == ILayoutClickListener:
+            self.withdrawListener(self._CLICK_EVENT, LayoutClickEvent,
+                    listener)
         else:
-            super(GridLayout, self).removeListener(*args)
+            super(GridLayout, self).removeListener(listener, iface)
 
 
     def removeLayoutClickListener(self, listener):

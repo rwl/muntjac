@@ -129,7 +129,7 @@ class SystemErr(RuntimeError, IErrorMessage):
         return self._cause
 
 
-    def addListener(self, listener):
+    def addListener(self, listener, iface):
         pass
 
 
@@ -137,7 +137,7 @@ class SystemErr(RuntimeError, IErrorMessage):
         pass
 
 
-    def removeListener(self, listener):
+    def removeListener(self, listener, iface):
         pass
 
 

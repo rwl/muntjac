@@ -102,7 +102,7 @@ class IComponentContainer(IComponent):
         raise NotImplementedError
 
 
-    def addListener(self, listener):
+    def addListener(self, listener, iface):
         """Listens the component attach events.
 
         @param listener
@@ -117,7 +117,7 @@ class IComponentContainer(IComponent):
         raise NotImplementedError
 
 
-    def removeListener(self, listener):
+    def removeListener(self, listener, iface):
         """Stops the listening component attach events.
 
         @param listener

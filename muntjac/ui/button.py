@@ -127,7 +127,7 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
             if isinstance(args[1], IClickListener):
                 caption, listener = args
                 Button.__init__(self, caption)
-                self.addListener(listener)
+                self.addListener(listener, IClickListener)
             elif isinstance(args[1], IProperty):
                 caption, dataSource = args
                 self.setCaption(caption)
@@ -141,8 +141,7 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
         elif nargs == 3:
             caption, target, methodName = args
             Button.__init__(self, caption)
-            super(Button, self).addListener(self, ClickEvent,
-                    target, methodName)
+            self.registerListener(ClickEvent, target, methodName)
         else:
             raise ValueError, 'too many arguments'
 
@@ -276,31 +275,25 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
     STYLE_LINK = 'link'
 
 
-    def addListener(self, *args):
+    def addListener(self, listener, iface):
         """Adds the button click listener.
 
         @param listener
                    the Listener to be added.
         """
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, IBlurListener):
-                super(Button, self).addListener(BlurEvent.EVENT_ID,
-                        BlurEvent, listener, IBlurListener.blurMethod)
+        if iface == IBlurListener:
+            self.registerListener(BlurEvent.EVENT_ID, BlurEvent,
+                    listener, IBlurListener.blurMethod)
 
-            elif isinstance(listener, IClickListener):
-                super(Button, self).addListener(ClickEvent,
-                        listener, _BUTTON_CLICK_METHOD)
+        elif iface == IClickListener:
+            self.registerListener(ClickEvent, listener, _BUTTON_CLICK_METHOD)
 
-            elif isinstance(listener, IFocusListener):
-                super(Button, self).addListener(FocusEvent.EVENT_ID,
-                        FocusEvent, listener, IFocusListener.focusMethod)
+        elif iface == IFocusListener:
+            self.registerListener(FocusEvent.EVENT_ID, FocusEvent,
+                    listener, IFocusListener.focusMethod)
 
-            else:
-                super(Button, self).addListener(listener)
         else:
-            super(Button, self).addListener(*args)
+            super(Button, self).addListener(listener, iface)
 
 
     def addBlurListener(self, listener):
@@ -318,31 +311,23 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
                 FocusEvent, listener, IFocusListener.focusMethod)
 
 
-    def removeListener(self, *args):
+    def removeListener(self, listener, iface):
         """Removes the button click listener.
 
         @param listener
                    the Listener to be removed.
         """
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, IBlurListener):
-                super(Button, self).removeListener(BlurEvent.EVENT_ID,
-                        BlurEvent, listener)
+        if iface == IBlurListener:
+            self.withdrawListener(BlurEvent.EVENT_ID, BlurEvent, listener)
 
-            elif isinstance(listener, IClickListener):
-                super(Button, self).removeListener(ClickEvent,
-                        listener, _BUTTON_CLICK_METHOD)
+        elif iface == IClickListener:
+            self.withdrawListener(ClickEvent, listener, _BUTTON_CLICK_METHOD)
 
-            elif isinstance(listener, IFocusListener):
-                super(Button, self).removeListener(FocusEvent.EVENT_ID,
-                        FocusEvent, listener)
+        elif iface == IFocusListener:
+            self.withdrawListener(FocusEvent.EVENT_ID, FocusEvent, listener)
 
-            else:
-                super(Button, self).removeListener(listener)
         else:
-            super(Button, self).removeListener(*args)
+            super(Button, self).removeListener(listener, iface)
 
 
     def removeBlurListener(self, listener):

@@ -222,18 +222,13 @@ class CssLayout(AbstractLayout, ILayoutClickNotifier):
             self.requestRepaint()
 
 
-    def addListener(self, *args):
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, ILayoutClickListener):
-                super(CssLayout, self).addListener(self._CLICK_EVENT,
-                        LayoutClickEvent, listener,
-                        ILayoutClickListener.clickMethod)
-            else:
-                super(CssLayout, self).addListener(listener)
+    def addListener(self, listener, iface):
+        if iface == ILayoutClickListener:
+            self.registerListener(self._CLICK_EVENT,
+                    LayoutClickEvent, listener,
+                    ILayoutClickListener.clickMethod)
         else:
-            super(CssLayout, self).addListener(*args)
+            super(CssLayout, self).addListener(listener, iface)
 
 
     def addLayoutClickListener(self, listener):
@@ -242,17 +237,12 @@ class CssLayout(AbstractLayout, ILayoutClickNotifier):
                 ILayoutClickListener.clickMethod)
 
 
-    def removeListener(self, *args):
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, ILayoutClickListener):
-                super(CssLayout, self).removeListener(self._CLICK_EVENT,
-                        LayoutClickEvent, listener)
-            else:
-                super(CssLayout, self).removeListener(listener)
+    def removeListener(self, listener, iface):
+        if isinstance(listener, ILayoutClickListener):
+            self.withdrawListener(self._CLICK_EVENT, LayoutClickEvent,
+                    listener)
         else:
-            super(CssLayout, self).removeListener(*args)
+            super(CssLayout, self).removeListener(listener, iface)
 
 
     def removeLayoutClickListener(self, listener):

@@ -271,7 +271,7 @@ class SourceException(RuntimeError, IErrorMessage):
         target.endTag('error')
 
 
-    def addListener(self, listener):
+    def addListener(self, listener, iface):
         raise NotImplementedError
 
 
@@ -279,7 +279,7 @@ class SourceException(RuntimeError, IErrorMessage):
         raise NotImplementedError
 
 
-    def removeListener(self, listener):
+    def removeListener(self, listener, iface):
         raise NotImplementedError
 
 

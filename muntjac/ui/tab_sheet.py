@@ -676,22 +676,17 @@ class TabSheet(AbstractComponentContainer):
             self.requestRepaint()
 
 
-    def addListener(self, *args):
+    def addListener(self, listener, iface):
         """Adds a tab selection listener
 
         @param listener
                    the Listener to be added.
         """
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, ISelectedTabChangeListener):
-                super(TabSheet, self).addListener(SelectedTabChangeEvent,
-                        listener, _SELECTED_TAB_CHANGE_METHOD)
-            else:
-                super(TabSheet, self).addListener(listener)
+        if iface == ISelectedTabChangeListener:
+            self.registerListener(SelectedTabChangeEvent,
+                    listener, _SELECTED_TAB_CHANGE_METHOD)
         else:
-            super(TabSheet, self).addListener(*args)
+            super(TabSheet, self).addListener(listener, iface)
 
 
     def addSelectedTabChangeListener(self, listener):
@@ -699,28 +694,23 @@ class TabSheet(AbstractComponentContainer):
                 listener, _SELECTED_TAB_CHANGE_METHOD)
 
 
-    def removeListener(self, *args):
+    def removeListener(self, listener, iface):
         """Removes a tab selection listener
 
         @param listener
                    the Listener to be removed.
         """
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, IRepaintRequestListener):
-                super(TabSheet, self).removeListener(listener)
-                if isinstance(listener, CommunicationManager):
-                    # clean the paintedTabs here instead of detach to avoid subtree
-                    # caching issues when detached-attached without render
-                    self._paintedTabs.clear()
-            elif isinstance(listener, ISelectedTabChangeListener):
-                super(TabSheet, self).removeListener(SelectedTabChangeEvent,
-                        listener, _SELECTED_TAB_CHANGE_METHOD)
-            else:
-                super(TabSheet, self).removeListener(listener)
+        if iface == IRepaintRequestListener:
+            super(TabSheet, self).removeListener(listener, iface)
+            if isinstance(listener, CommunicationManager):
+                # clean the paintedTabs here instead of detach to avoid subtree
+                # caching issues when detached-attached without render
+                self._paintedTabs.clear()
+        elif iface == ISelectedTabChangeListener:
+            self.withdrawListener(SelectedTabChangeEvent,
+                    listener, _SELECTED_TAB_CHANGE_METHOD)
         else:
-            super(TabSheet, self).removeListener(*args)
+            super(TabSheet, self).removeListener(listener, iface)
 
 
     def removeRepaintRequestListener(self, listener):

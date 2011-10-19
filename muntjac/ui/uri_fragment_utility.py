@@ -39,18 +39,12 @@ class UriFragmentUtility(AbstractComponent):
     #CLIENT_WIDGET = ClientWidget(VUriFragmentUtility, LoadStyle.EAGER)
 
 
-    def addListener(self, *args):
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, IFragmentChangedListener):
-                super(UriFragmentUtility, self).addListener(
-                        FragmentChangedEvent,
-                        listener, _FRAGMENT_CHANGED_METHOD)
-            else:
-                super(UriFragmentUtility, self).addListener(listener)
+    def addListener(self, listener, iface):
+        if iface == IFragmentChangedListener:
+            self.registerListener(FragmentChangedEvent,
+                    listener, _FRAGMENT_CHANGED_METHOD)
         else:
-            super(UriFragmentUtility, self).addListener(*args)
+            super(UriFragmentUtility, self).addListener(listener, iface)
 
 
     def addFragmentChangedListener(self, listener):
@@ -58,18 +52,12 @@ class UriFragmentUtility(AbstractComponent):
                 listener, _FRAGMENT_CHANGED_METHOD)
 
 
-    def removeListener(self, *args):
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, IFragmentChangedListener):
-                super(UriFragmentUtility, self).removeListener(
-                        FragmentChangedEvent,
-                        listener, _FRAGMENT_CHANGED_METHOD)
-            else:
-                super(UriFragmentUtility, self).removeListener(listener)
+    def removeListener(self, listener, iface):
+        if iface == IFragmentChangedListener:
+            self.withdrawListener(FragmentChangedEvent,
+                    listener, _FRAGMENT_CHANGED_METHOD)
         else:
-            super(UriFragmentUtility, self).removeListener(*args)
+            super(UriFragmentUtility, self).removeListener(listener, iface)
 
 
     def removeFragmentChangedListener(self, listener):

@@ -1243,7 +1243,7 @@ class Application(IUriHandler, ITerminal, IErrorListener):
         self._locale = locale
 
 
-    def addListener(self, listener):
+    def addListener(self, listener, iface):
         """Adds the user change listener.
 
         This allows one to get notification each time {@link #setUser(Object)} is
@@ -1268,23 +1268,23 @@ class Application(IUriHandler, ITerminal, IErrorListener):
         @param listener
                    the window detach listener to add.
         """
-        if isinstance(listener, UserChangeListener):
+        if iface == IUserChangeListener:
             if self._userChangeListeners is None:
                 self._userChangeListeners = list()
 
             self._userChangeListeners.append(listener)
-        elif isinstance(listener, WindowAttachListener):
+        elif iface == IWindowAttachListener:
             if self._windowAttachListeners is None:
                 self._windowAttachListeners = list()
 
             self._windowAttachListeners.append(listener)
-        elif isinstance(listener, WindowDetachListener):
+        elif iface == IWindowDetachListener:
             if self._windowDetachListeners is None:
                 self._windowDetachListeners = list()
 
             self._windowDetachListeners.append(listener)
         else:
-            super(Application, self).addListener(listener)
+            super(Application, self).addListener(listener, iface)
 
 
     def addUserChangeListener(self, listener):
@@ -1308,7 +1308,7 @@ class Application(IUriHandler, ITerminal, IErrorListener):
         self._windowDetachListeners.append(listener)
 
 
-    def removeListener(self, listener):
+    def removeListener(self, listener, iface):
         """Removes the user change listener.
 
         @param listener
@@ -1324,26 +1324,26 @@ class Application(IUriHandler, ITerminal, IErrorListener):
         @param listener
                    the window detach listener to remove.
         """
-        if isinstance(listener, UserChangeListener):
+        if iface == IUserChangeListener:
             if self._userChangeListeners is None:
                 return
             self._userChangeListeners.remove(listener)
             if len(self._userChangeListeners) == 0:
                 self._userChangeListeners = None
 
-        elif isinstance(listener, WindowAttachListener):
+        elif iface == IWindowAttachListener:
             if self._windowAttachListeners is not None:
                 self._windowAttachListeners.remove(listener)
                 if len(self._windowAttachListeners) == 0:
                     self._windowAttachListeners = None
 
-        elif isinstance(listener, WindowDetachListener):
+        elif iface == IWindowDetachListener:
             if self._windowDetachListeners is not None:
                 self._windowDetachListeners.remove(listener)
                 if len(self._windowDetachListeners) == 0:
                     self._windowDetachListeners = None
         else:
-            super(Application, self).addListener(listener)
+            super(Application, self).addListener(listener, iface)
 
 
     def removeUserChangeListener(self, listener):
@@ -1566,7 +1566,7 @@ class UserChangeEvent(EventObject):
         return self.getSource()
 
 
-class UserChangeListener(IEventListener):
+class IUserChangeListener(IEventListener):
     """The <code>UserChangeListener</code> interface for listening application
     user changes.
 
@@ -1650,7 +1650,7 @@ class WindowAttachEvent(EventObject):
         return self.getSource()
 
 
-class WindowAttachListener(object):
+class IWindowAttachListener(object):
     """Window attach listener interface."""
 
 
@@ -1663,7 +1663,7 @@ class WindowAttachListener(object):
         pass
 
 
-class WindowDetachListener(object):
+class IWindowDetachListener(object):
     """Window detach listener interface."""
 
 

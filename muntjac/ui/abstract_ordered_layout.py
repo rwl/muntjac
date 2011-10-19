@@ -270,18 +270,12 @@ class AbstractOrderedLayout(AbstractLayout, IAlignmentHandler,
         return 0 if ratio is None else float(ratio)
 
 
-    def addListener(self, *args):
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, ILayoutClickListener):
-                super(AbstractOrderedLayout, self).addListener(
-                        self._CLICK_EVENT, LayoutClickEvent,
-                        listener, ILayoutClickListener.clickMethod)
-            else:
-                super(AbstractOrderedLayout, self).addListener(listener)
+    def addListener(self, listener, iface):
+        if iface == ILayoutClickListener:
+            self.registerListener(self._CLICK_EVENT, LayoutClickEvent,
+                    listener, ILayoutClickListener.clickMethod)
         else:
-            super(AbstractOrderedLayout, self).addListener(*args)
+            super(AbstractOrderedLayout, self).addListener(listener, iface)
 
 
     def addLayoutClickListener(self, listener):
@@ -289,17 +283,11 @@ class AbstractOrderedLayout(AbstractLayout, IAlignmentHandler,
                 LayoutClickEvent, listener, ILayoutClickListener.clickMethod)
 
 
-    def removeListener(self, *args):
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, ILayoutClickListener):
-                super(AbstractOrderedLayout, self).removeListener(
-                        self._CLICK_EVENT, LayoutClickEvent, listener)
-            else:
-                super(AbstractOrderedLayout, self).removeListener(listener)
+    def removeListener(self, listener, iface):
+        if iface == ILayoutClickListener:
+            self.withdrawListener(self._CLICK_EVENT, LayoutClickEvent, listener)
         else:
-            super(AbstractOrderedLayout, self).removeListener(*args)
+            super(AbstractOrderedLayout, self).removeListener(listener, iface)
 
 
     def removeLayoutClickListener(self, listener):

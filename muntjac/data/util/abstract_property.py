@@ -70,24 +70,24 @@ class AbstractProperty(prop.IProperty, prop.IValueChangeNotifier,
         return str(value)
 
 
-    def addListener(self, listener):
+    def addListener(self, listener, iface):
         """Registers a new read-only status change listener for this IProperty.
 
         @param listener
                    the new Listener to be registered.
         """
-        if isinstance(listener, prop.IReadOnlyStatusChangeListener):
+        if iface == prop.IReadOnlyStatusChangeListener:
             if self._readOnlyStatusChangeListeners is None:
                 self._readOnlyStatusChangeListeners = list()
 
             self._readOnlyStatusChangeListeners.append(listener)
-        elif isinstance(listener, prop.IValueChangeListener):
+        elif iface == prop.IValueChangeListener:
             if self._valueChangeListeners is None:
                 self._valueChangeListeners = list()
 
             self._valueChangeListeners.append(listener)
         else:
-            super(AbstractProperty, self).addListener(listener)
+            super(AbstractProperty, self).addListener(listener, iface)
 
 
     def addReadOnlyStatusChangeListener(self, listener):
@@ -104,20 +104,20 @@ class AbstractProperty(prop.IProperty, prop.IValueChangeNotifier,
         self._valueChangeListeners.append(listener)
 
 
-    def removeListener(self, listener):
+    def removeListener(self, listener, iface):
         """Removes a previously registered read-only status change listener.
 
         @param listener
                    the listener to be removed.
         """
-        if isinstance(listener, prop.IReadOnlyStatusChangeListener):
+        if iface == prop.IReadOnlyStatusChangeListener:
             if self._readOnlyStatusChangeListeners is not None:
                 self._readOnlyStatusChangeListeners.remove(listener)
-        elif isinstance(listener, prop.IValueChangeListener):
+        elif iface == prop.IValueChangeListener:
             if self._valueChangeListeners is not None:
                 self._valueChangeListeners.remove(listener)
         else:
-            super(AbstractProperty, self).removeListener(listener)
+            super(AbstractProperty, self).removeListener(listener, iface)
 
 
     def removeReadOnlyStatusChangeListener(self, listener):

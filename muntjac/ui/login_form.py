@@ -190,21 +190,15 @@ class LoginForm(CustomComponent):
     _UNDEFINED_WIDTH = '200px'
 
 
-    def addListener(self, *args):
+    def addListener(self, listener, iface):
         """Adds ILoginListener to handle login logic
 
         @param listener
         """
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, ILoginListener):
-                super(LoginForm, self).addListener(LoginEvent,
-                        listener, _ON_LOGIN_METHOD)
-            else:
-                super(LoginForm, self).addListener(listener)
+        if iface == ILoginListener:
+            self.registerListener(LoginEvent, listener, _ON_LOGIN_METHOD)
         else:
-            super(LoginForm, self).addListener(*args)
+            super(LoginForm, self).addListener(listener, iface)
 
 
     def addLoginListener(self, listener):
@@ -212,21 +206,15 @@ class LoginForm(CustomComponent):
                 listener, _ON_LOGIN_METHOD)
 
 
-    def removeListener(self, *args):
+    def removeListener(self, listener, iface):
         """Removes ILoginListener
 
         @param listener
         """
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, ILoginListener):
-                super(LoginForm, self).removeListener(LoginEvent,
-                        listener, _ON_LOGIN_METHOD)
-            else:
-                super(LoginForm, self).removeListener(listener)
+        if iface == ILoginListener:
+            self.withdrawListener(LoginEvent, listener, _ON_LOGIN_METHOD)
         else:
-            super(LoginForm, self).removeListener(*args)
+            super(LoginForm, self).removeListener(listener, iface)
 
 
     def removeLoginListener(self, listener):

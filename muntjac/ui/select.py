@@ -661,20 +661,15 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
         return self._columns
 
 
-    def addListener(self, *args):
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, IBlurListener):
-                super(Select, self).addListener(BlurEvent.EVENT_ID,
-                        BlurEvent, listener, IBlurListener.blurMethod)
-            elif isinstance(listener, IFocusListener):
-                super(Select, self).addListener(FocusEvent.EVENT_ID,
-                        FocusEvent, listener, IFocusListener.focusMethod)
-            else:
-                super(Select, self).addListener(listener)
+    def addListener(self, listener, iface):
+        if iface == IBlurListener:
+            self.registerListener(BlurEvent.EVENT_ID,
+                    BlurEvent, listener, IBlurListener.blurMethod)
+        elif iface == IFocusListener:
+            self.registerListener(FocusEvent.EVENT_ID,
+                    FocusEvent, listener, IFocusListener.focusMethod)
         else:
-            super(Select, self).addListener(*args)
+            super(Select, self).addListener(listener, iface)
 
 
     def addBlurListener(self, listener):
@@ -686,20 +681,13 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
                 FocusEvent, listener, IFocusListener.focusMethod)
 
 
-    def removeListener(self, *args):
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, IBlurListener):
-                super(Select, self).removeListener(BlurEvent.EVENT_ID,
-                        BlurEvent, listener)
-            elif isinstance(listener, IFocusListener):
-                super(Select, self).removeListener(FocusEvent.EVENT_ID,
-                        FocusEvent, listener)
-            else:
-                super(Select, self).removeListener(listener)
+    def removeListener(self, listener, iface):
+        if iface == IBlurListener:
+            self.withdrawListener(BlurEvent.EVENT_ID, BlurEvent, listener)
+        elif iface == IFocusListener:
+            self.withdrawListener(FocusEvent.EVENT_ID, FocusEvent, listener)
         else:
-            super(Select, self).removeListener(*args)
+            super(Select, self).removeListener(listener, iface)
 
 
     def removeBlurListener(self, listener):

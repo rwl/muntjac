@@ -73,7 +73,7 @@ class UserError(IErrorMessage):
         return self._level
 
 
-    def addListener(self, listener):
+    def addListener(self, listener, iface):
         pass
 
 
@@ -81,7 +81,7 @@ class UserError(IErrorMessage):
         pass
 
 
-    def removeListener(self, listener):
+    def removeListener(self, listener, iface):
         pass
 
 

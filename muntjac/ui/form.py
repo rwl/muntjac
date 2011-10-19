@@ -427,7 +427,8 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
             return
 
         self._fields[propertyId] = field
-        field.addListener(self.fieldValueChangeListener)
+        field.addListener(self.fieldValueChangeListener,
+                prop.IValueChangeListener)
         if propertyId not in self._propertyIds:
             # adding a field directly
             self._propertyIds.addLast(propertyId)
@@ -750,8 +751,10 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
         # Replaces the old field with new one
         self._layout.replaceComponent(oldField, newField)
         self._fields[propertyId] = newField
-        newField.addListener(self.fieldValueChangeListener)
-        oldField.removeListener(self.fieldValueChangeListener)
+        newField.addListener(self.fieldValueChangeListener,
+                prop.IValueChangeListener)
+        oldField.removeListener(self.fieldValueChangeListener,
+                prop.IValueChangeListener)
 
         return newField
 

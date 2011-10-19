@@ -88,7 +88,7 @@ class IItemClickNotifier(object):
     @see ItemClickEvent
     """
 
-    def addListener(self, listener):
+    def addListener(self, listener, iface):
         """Register a listener to handle {@link ItemClickEvent}s.FieldEvents,
 
         @param listener
@@ -101,7 +101,7 @@ class IItemClickNotifier(object):
         raise NotImplementedError
 
 
-    def removeListener(self, listener):
+    def removeListener(self, listener, iface):
         """Removes an ItemClickListener.
 
         @param listener

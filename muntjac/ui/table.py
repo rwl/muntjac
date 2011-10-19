@@ -26,7 +26,7 @@ from muntjac.ui.component_container import IComponentContainer
 from muntjac.ui.component import IComponent, Event as ComponentEvent
 from muntjac.ui.abstract_component import AbstractComponent
 
-from muntjac.data.property import IValueChangeNotifier
+from muntjac.data.property import IValueChangeNotifier, IValueChangeListener
 from muntjac.event.mouse_events import ClickEvent
 from muntjac.event import action
 from muntjac.event.data_bound_transferable import DataBoundTransferable
@@ -1327,7 +1327,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         if isinstance(p, IValueChangeNotifier):
             if ((oldListenedProperties is None)
                     or (p not in oldListenedProperties)):
-                p.addListener(self)
+                p.addListener(self, IValueChangeListener)
 
             # register listened properties, so we can do proper cleanup to
             # free memory. Essential if table has loads of data and it is
@@ -3044,7 +3044,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         return self._cellStyleGenerator
 
 
-    def addListener(self, *args):
+    def addListener(self, listener, iface):
         """Adds a header click listener which handles the click events when
         the user clicks on a column header cell in the Table.
 
@@ -3075,38 +3075,33 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         @param listener
                    The listener to attach to the Table
         """
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, IColumnReorderListener):
-                super(Table, self).addListener(
-                        VScrollTable.COLUMN_REORDER_EVENT_ID,
-                        ColumnReorderEvent, listener,
-                        COLUMN_REORDER_METHOD)
-            elif isinstance(listener, IColumnResizeListener):
-                super(Table, self).addListener(
-                        VScrollTable.COLUMN_RESIZE_EVENT_ID,
-                        ColumnResizeEvent, listener,
-                        COLUMN_RESIZE_METHOD)
-            elif isinstance(listener, IFooterClickListener):
-                super(Table, self).addListener(
-                        VScrollTable.FOOTER_CLICK_EVENT_ID,
-                        FooterClickEvent, listener,
-                        FOOTER_CLICK_METHOD)
-            elif isinstance(listener, IHeaderClickListener):
-                super(Table, self).addListener(
-                        VScrollTable.HEADER_CLICK_EVENT_ID,
-                        HeaderClickEvent, listener,
-                        HEADER_CLICK_METHOD)
-            elif isinstance(listener, IItemClickListener):
-                super(Table, self).addListener(
-                        VScrollTable.ITEM_CLICK_EVENT_ID,
-                        ItemClickEvent, listener,
-                        ITEM_CLICK_METHOD)
-            else:
-                super(Table, self).addListener(listener)
+        if iface == IColumnReorderListener:
+            self.registerListener(
+                    VScrollTable.COLUMN_REORDER_EVENT_ID,
+                    ColumnReorderEvent, listener,
+                    COLUMN_REORDER_METHOD)
+        elif iface == IColumnResizeListener:
+            self.registerListener(
+                    VScrollTable.COLUMN_RESIZE_EVENT_ID,
+                    ColumnResizeEvent, listener,
+                    COLUMN_RESIZE_METHOD)
+        elif iface == IFooterClickListener:
+            self.registerListener(
+                    VScrollTable.FOOTER_CLICK_EVENT_ID,
+                    FooterClickEvent, listener,
+                    FOOTER_CLICK_METHOD)
+        elif iface == IHeaderClickListener:
+            self.registerListener(
+                    VScrollTable.HEADER_CLICK_EVENT_ID,
+                    HeaderClickEvent, listener,
+                    HEADER_CLICK_METHOD)
+        elif iface == IItemClickListener:
+            self.registerListener(
+                    VScrollTable.ITEM_CLICK_EVENT_ID,
+                    ItemClickEvent, listener,
+                    ITEM_CLICK_METHOD)
         else:
-            super(Table, self).addListener(*args)
+            super(Table, self).addListener(listener, iface)
 
 
     def addColumnReorderListener(self, listener):
@@ -3134,39 +3129,34 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                 ItemClickEvent, listener, ITEM_CLICK_METHOD)
 
 
-    def removeListener(self, *args):
+    def removeListener(self, listener, iface):
         """Removes a listener from the Table.
 
         @param listener
                    The listener to remove
         """
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, IColumnReorderListener):
-                super(Table, self).removeListener(
-                        VScrollTable.COLUMN_REORDER_EVENT_ID,
-                        ColumnReorderEvent, listener)
-            elif isinstance(listener, IColumnResizeListener):
-                super(Table, self).removeListener(
-                        VScrollTable.COLUMN_RESIZE_EVENT_ID,
-                        ColumnResizeEvent, listener)
-            elif isinstance(listener, IFooterClickListener):
-                super(Table, self).removeListener(
-                        VScrollTable.FOOTER_CLICK_EVENT_ID,
-                        FooterClickEvent, listener)
-            elif isinstance(listener, IHeaderClickListener):
-                super(Table, self).removeListener(
-                        VScrollTable.HEADER_CLICK_EVENT_ID,
-                        HeaderClickEvent, listener)
-            elif isinstance(listener, IItemClickListener):
-                super(Table, self).removeListener(
-                        VScrollTable.ITEM_CLICK_EVENT_ID,
-                        ItemClickEvent, listener)
-            else:
-                super(Table, self).removeListener(listener)
+        if iface == IColumnReorderListener:
+            self.withdrawListener(
+                    VScrollTable.COLUMN_REORDER_EVENT_ID,
+                    ColumnReorderEvent, listener)
+        elif iface == IColumnResizeListener:
+            self.withdrawListener(
+                    VScrollTable.COLUMN_RESIZE_EVENT_ID,
+                    ColumnResizeEvent, listener)
+        elif iface == IFooterClickListener:
+            self.withdrawListener(
+                    VScrollTable.FOOTER_CLICK_EVENT_ID,
+                    FooterClickEvent, listener)
+        elif iface == IHeaderClickListener:
+            self.withdrawListener(
+                    VScrollTable.HEADER_CLICK_EVENT_ID,
+                    HeaderClickEvent, listener)
+        elif iface == IItemClickListener:
+            self.withdrawListener(
+                    VScrollTable.ITEM_CLICK_EVENT_ID,
+                    ItemClickEvent, listener)
         else:
-            super(Table, self).removeListener(*args)
+            super(Table, self).removeListener(listener, iface)
 
 
     def removeColumnReorderListener(self, listener):

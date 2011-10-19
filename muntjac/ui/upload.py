@@ -254,40 +254,35 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
         target.addVariable(self, 'action', self.getStreamVariable())
 
 
-    def addListener(self, *args):
+    def addListener(self, listener, iface):
         """Adds an event listener.
 
         @param listener
                    the Listener to be added.
         """
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, IFailedListener):
-                super(Upload, self).addListener(FailedEvent,
-                        listener, _UPLOAD_FAILED_METHOD)
+        if iface == IFailedListener:
+            self.registerListener(FailedEvent,
+                    listener, _UPLOAD_FAILED_METHOD)
 
-            elif isinstance(listener, IFinishedListener):
-                super(Upload, self).addListener(FinishedEvent,
-                        listener, _UPLOAD_FINISHED_METHOD)
+        elif iface == IFinishedListener:
+            self.registerListener(FinishedEvent,
+                    listener, _UPLOAD_FINISHED_METHOD)
 
-            elif isinstance(listener, IProgressListener):
-                if self._progressListeners is None:
-                    self._progressListeners = set()
-                self._progressListeners.add(listener)
+        elif iface == IProgressListener:
+            if self._progressListeners is None:
+                self._progressListeners = set()
+            self._progressListeners.add(listener)
 
-            elif isinstance(listener, IStartedListener):
-                super(Upload, self).addListener(StartedEvent,
-                        listener, _UPLOAD_STARTED_METHOD)
+        elif isinstance(listener, IStartedListener):
+            self.registerListener(StartedEvent,
+                    listener, _UPLOAD_STARTED_METHOD)
 
-            elif isinstance(listener, ISucceededListener):
-                super(Upload, self).addListener(SucceededEvent,
-                        listener, _UPLOAD_SUCCEEDED_METHOD)
+        elif iface == ISucceededListener:
+            self.registerListener(SucceededEvent,
+                    listener, _UPLOAD_SUCCEEDED_METHOD)
 
-            else:
-                super(Upload, self).addListener(listener)
         else:
-            super(Upload, self).addListener(*args)
+            super(Upload, self).addListener(listener, iface)
 
 
     def addFailedListener(self, listener):
@@ -316,39 +311,34 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
                 listener, _UPLOAD_SUCCEEDED_METHOD)
 
 
-    def removeListener(self, *args):
+    def removeListener(self, listener, iface):
         """Removes an event listener.
 
         @param listener
                    the Listener to be removed.
         """
-        nargs = len(args)
-        if nargs == 1:
-            listener = args[0]
-            if isinstance(listener, IFailedListener):
-                super(Upload, self).removeListener(FailedEvent,
-                        listener, _UPLOAD_FAILED_METHOD)
+        if iface == IFailedListener:
+            self.withdrawListener(FailedEvent,
+                    listener, _UPLOAD_FAILED_METHOD)
 
-            elif isinstance(listener, IFinishedListener):
-                super(Upload, self).removeListener(FinishedEvent,
-                        listener, _UPLOAD_FINISHED_METHOD)
+        elif iface == IFinishedListener:
+            self.withdrawListener(FinishedEvent,
+                    listener, _UPLOAD_FINISHED_METHOD)
 
-            elif isinstance(listener, IProgressListener):
-                if self._progressListeners is not None:
-                    self._progressListeners.remove(listener)
+        elif iface == IProgressListener:
+            if self._progressListeners is not None:
+                self._progressListeners.remove(listener)
 
-            elif isinstance(listener, IStartedListener):
-                super(Upload, self).removeListener(StartedEvent,
-                        listener, _UPLOAD_STARTED_METHOD)
+        elif iface == IStartedListener:
+            self.withdrawListener(StartedEvent,
+                    listener, _UPLOAD_STARTED_METHOD)
 
-            elif isinstance(listener, ISucceededListener):
-                super(Upload, self).removeListener(SucceededEvent,
-                        listener, _UPLOAD_SUCCEEDED_METHOD)
+        elif iface == ISucceededListener:
+            self.withdrawListener(SucceededEvent,
+                    listener, _UPLOAD_SUCCEEDED_METHOD)
 
-            else:
-                super(Upload, self).removeListener(listener)
         else:
-            super(Upload, self).removeListener(*args)
+            super(Upload, self).removeListener(listener, iface)
 
 
     def removeFailedListener(self, listener):
@@ -543,7 +533,7 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
         """
         warn('use addListener() instead', DeprecationWarning)
 
-        self.addListener(progressListener)
+        self.addListener(progressListener, IProgressListener)
 
 
     def getProgressListener(self):
