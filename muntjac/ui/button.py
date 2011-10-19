@@ -297,18 +297,15 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
 
 
     def addBlurListener(self, listener):
-        super(Button, self).addListener(BlurEvent.EVENT_ID,
-                BlurEvent, listener, IBlurListener.blurMethod)
+        self.addListener(listener, IBlurListener)
 
 
     def addClickListener(self, listener):
-        super(Button, self).addListener(ClickEvent,
-                listener, _BUTTON_CLICK_METHOD)
+        self.addListener(listener, IClickListener)
 
 
     def addFocusListener(self, listener):
-        super(Button, self).addListener(FocusEvent.EVENT_ID,
-                FocusEvent, listener, IFocusListener.focusMethod)
+        self.addListener(listener, IFocusListener)
 
 
     def removeListener(self, listener, iface):
@@ -331,18 +328,15 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
 
 
     def removeBlurListener(self, listener):
-        super(Button, self).removeListener(BlurEvent.EVENT_ID,
-                BlurEvent, listener)
+        self.removeListener(listener, IBlurListener)
 
 
     def removeClickListener(self, listener):
-        super(Button, self).removeListener(ClickEvent,
-                listener, _BUTTON_CLICK_METHOD)
+        self.removeListener(listener, IClickListener)
 
 
     def removeFocusListener(self, listener):
-        super(Button, self).removeListener(FocusEvent.EVENT_ID,
-                FocusEvent, listener)
+        self.removeListener(listener, IFocusListener)
 
 
     def fireClick(self, details=None):

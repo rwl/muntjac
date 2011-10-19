@@ -94,11 +94,14 @@ class IItemClickNotifier(object):
         @param listener
                    ItemClickListener to be registered
         """
-        raise NotImplementedError
+        if iface == IItemClickListener:
+            raise NotImplementedError
+        else:
+            super(IItemClickNotifier, self).addListener(listener, iface)
 
 
     def addItemClickListener(self, listener):
-        raise NotImplementedError
+        self.addListener(listener, IItemClickListener)
 
 
     def removeListener(self, listener, iface):
@@ -107,11 +110,14 @@ class IItemClickNotifier(object):
         @param listener
                    ItemClickListener to be removed
         """
-        raise NotImplementedError
+        if iface == IItemClickListener:
+            raise NotImplementedError
+        else:
+            super(IItemClickNotifier, self).removeListener(listener, iface)
 
 
     def removeItemClickListener(self, listener):
-        raise NotImplementedError
+        self.removeListener(listener, IItemClickListener)
 
 
 class IItemClickSource(IItemClickNotifier):

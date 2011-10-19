@@ -399,8 +399,7 @@ class Embedded(AbstractComponent):
 
 
     def addClickListener(self, listener):
-        super(Embedded, self).addListener(self._CLICK_EVENT,
-                ClickEvent, listener, IClickListener.clickMethod)
+        self.addListener(listener, IClickListener)
 
 
     def removeListener(self, listener, iface):
@@ -417,8 +416,7 @@ class Embedded(AbstractComponent):
 
 
     def removeClickListener(self, listener):
-        super(Embedded, self).removeListener(self._CLICK_EVENT,
-                ClickEvent, listener)
+        self.removeListener(listener, IClickListener)
 
 
     def changeVariables(self, source, variables):

@@ -44,11 +44,14 @@ class IFocusNotifier(object):
         @see IFocusListener
         @since 6.2
         """
-        raise NotImplementedError
+        if iface == IFocusListener:
+            raise NotImplementedError
+        else:
+            super(IFocusNotifier, self).addListener(listener, iface)
 
 
     def addFocusListener(self, listener):
-        raise NotImplementedError
+        self.addListener(listener, IFocusListener)
 
 
     def removeListener(self, listener, iface):
@@ -58,11 +61,14 @@ class IFocusNotifier(object):
         @see IFocusListener
         @since 6.2
         """
-        raise NotImplementedError
+        if iface == IFocusListener:
+            raise NotImplementedError
+        else:
+            super(IFocusNotifier, self).removeListener(listener, iface)
 
 
     def removeFocusListener(self, listener):
-        raise NotImplementedError
+        self.removeListener(listener, IFocusListener)
 
 
 class IBlurNotifier(object):
@@ -90,11 +96,14 @@ class IBlurNotifier(object):
         @see IBlurListener
         @since 6.2
         """
-        raise NotImplementedError
+        if iface == IBlurListener:
+            raise NotImplementedError
+        else:
+            super(IBlurNotifier, self).addListener(listener, iface)
 
 
     def addBlurListener(self, listener):
-        raise NotImplementedError
+        self.addListener(listener, IBlurListener)
 
 
     def removeListener(self, listener, iface):
@@ -104,11 +113,14 @@ class IBlurNotifier(object):
         @see IBlurListener
         @since 6.2
         """
-        raise NotImplementedError
+        if iface == IBlurListener:
+            raise NotImplementedError
+        else:
+            super(IBlurNotifier, self).removeListener(listener, iface)
 
 
     def removeBlurListener(self, listener):
-        raise NotImplementedError
+        self.removeListener(listener, IBlurListener)
 
 
 class FocusEvent(ComponentEvent):
@@ -247,16 +259,22 @@ class ITextChangeNotifier(object):
     """
 
     def addListener(self, listener, iface):
-        raise NotImplementedError
+        if iface == ITextChangeListener:
+            raise NotImplementedError
+        else:
+            super(ITextChangeNotifier, self).addListener(listener, iface)
 
 
     def addTextChangeListener(self, listener):
-        raise NotImplementedError
+        self.addListener(listener, ITextChangeListener)
 
 
     def removeListener(self, listener, iface):
-        raise NotImplementedError
+        if iface == ITextChangeListener:
+            raise NotImplementedError
+        else:
+            super(ITextChangeNotifier, self).removeListener(listener, iface)
 
 
     def removeTextChangeListener(self, listener):
-        raise NotImplementedError
+        self.removeListener(listener, ITextChangeListener)

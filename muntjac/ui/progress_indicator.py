@@ -176,7 +176,8 @@ class ProgressIndicator(AbstractField, prop.IValueChangeListener,
         if (self._dataSource is not None
                 and issubclass(self._dataSource.__class__,
                         prop.IValueChangeNotifier)):
-            self._dataSource.removeListener(self)
+            self._dataSource.removeListener(self,
+                    prop.IValueChangeListener)
 
         # Sets the new data source
         self._dataSource = newDataSource
@@ -185,7 +186,7 @@ class ProgressIndicator(AbstractField, prop.IValueChangeListener,
         if (self._dataSource is not None
                 and issubclass(self._dataSource.__class__,
                         prop.IValueChangeNotifier)):
-            self._dataSource.addListener(self, prop.IValueChangeNotifier)
+            self._dataSource.addListener(self, prop.IValueChangeListener)
 
 
     def getContentMode(self):

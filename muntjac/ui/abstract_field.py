@@ -455,14 +455,15 @@ class AbstractField(AbstractComponent, field.IField,
                 and issubclass(self._dataSource,
                         prop.IValueChangeNotifier)):
 
-            self._dataSource.removeListener(self)
+            self._dataSource.removeListener(self, prop.IValueChangeListener)
 
 
         if (self._dataSource is not None \
                 and issubclass(self._dataSource,
                         prop.IReadOnlyStatusChangeNotifier)):
 
-            self._dataSource.removeListener(self)
+            self._dataSource.removeListener(self,
+                    prop.IReadOnlyStatusChangeListener)
 
 
         # Sets the new data source
@@ -700,13 +701,11 @@ class AbstractField(AbstractComponent, field.IField,
 
 
     def addReadOnlyStatusChangeListener(self, listener):
-        super(AbstractField, self).addListener(prop.IReadOnlyStatusChangeEvent,
-                listener, _READ_ONLY_STATUS_CHANGE_METHOD)
+        self.addListener(listener, prop.IReadOnlyStatusChangeListener)
 
 
     def addValueChangeListener(self, listener):
-        super(AbstractField, self).addListener(field.ValueChangeEvent,
-                listener, _VALUE_CHANGE_METHOD)
+        self.addListener(listener, prop.IValueChangeListener)
 
 
     def removeListener(self, listener, iface):
@@ -722,14 +721,11 @@ class AbstractField(AbstractComponent, field.IField,
 
 
     def removeReadOnlyStatusChangeListener(self, listener):
-        super(AbstractField, self).removeListener(
-                prop.IReadOnlyStatusChangeEvent, listener,
-                _READ_ONLY_STATUS_CHANGE_METHOD)
+        self.removeListener(listener, prop.IReadOnlyStatusChangeListener)
 
 
     def removeValueChangeListener(self, listener):
-        super(AbstractField, self).removeListener(field.ValueChangeEvent,
-                listener, _VALUE_CHANGE_METHOD)
+        self.removeListener(listener, prop.IValueChangeListener)
 
 
     def fireValueChange(self, repaintIsNotNeeded):

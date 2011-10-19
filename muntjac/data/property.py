@@ -289,7 +289,14 @@ class IValueChangeNotifier(object):
         @param listener
                    the new Listener to be registered
         """
-        raise NotImplementedError
+        if iface == IValueChangeListener:
+            raise NotImplementedError
+        else:
+            super(IValueChangeNotifier, self).addListener(listener, iface)
+
+
+    def addValueChangeListener(self, listener):
+        self.addListener(listener, IValueChangeListener)
 
 
     def removeListener(self, listener, iface):
@@ -298,7 +305,14 @@ class IValueChangeNotifier(object):
         @param listener
                    listener to be removed
         """
-        raise NotImplementedError
+        if iface == IValueChangeListener:
+            raise NotImplementedError
+        else:
+            super(IValueChangeNotifier, self).removelistener(listener, iface)
+
+
+    def removeValueChangeListener(self, listener):
+        self.removeListener(listener, IValueChangeListener)
 
 
 class IReadOnlyStatusChangeEvent(object):
@@ -364,7 +378,15 @@ class IReadOnlyStatusChangeNotifier(object):
         @param listener
                    the new Listener to be registered
         """
-        raise NotImplementedError
+        if iface == IReadOnlyStatusChangeListener:
+            raise NotImplementedError
+        else:
+            super(IReadOnlyStatusChangeNotifier, self).addListener(listener,
+                    iface)
+
+
+    def addReadOnlyStatusChangeListener(self, listener):
+        self.addListener(listener, IReadOnlyStatusChangeListener)
 
 
     def removeListener(self, listener, iface):
@@ -373,4 +395,12 @@ class IReadOnlyStatusChangeNotifier(object):
         @param listener
                    listener to be removed
         """
-        raise NotImplementedError
+        if iface == IReadOnlyStatusChangeListener:
+            raise NotImplementedError
+        else:
+            super(IReadOnlyStatusChangeNotifier, self).removeListener(listener,
+                    iface)
+
+
+    def removeReadOnlyStatusChangeListener(self, listener):
+        self.removeListener(listener, IReadOnlyStatusChangeListener)

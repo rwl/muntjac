@@ -844,7 +844,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
 
         @param p
         """
-        p.removeListener(self)
+        p.removeListener(self, IRepaintRequestListener)
 
 
     def handleVariables(self, request, response, callback,

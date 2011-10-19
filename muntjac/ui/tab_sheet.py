@@ -690,8 +690,7 @@ class TabSheet(AbstractComponentContainer):
 
 
     def addSelectedTabChangeListener(self, listener):
-        super(TabSheet, self).addListener(SelectedTabChangeEvent,
-                listener, _SELECTED_TAB_CHANGE_METHOD)
+        self.addListener(listener, ISelectedTabChangeListener)
 
 
     def removeListener(self, listener, iface):
@@ -714,16 +713,11 @@ class TabSheet(AbstractComponentContainer):
 
 
     def removeRepaintRequestListener(self, listener):
-        super(TabSheet, self).removeListener(listener)
-        if isinstance(listener, CommunicationManager):
-            # clean the paintedTabs here instead of detach to avoid subtree
-            # caching issues when detached-attached without render
-            self._paintedTabs.clear()
+        self.removeListener(listener, IRepaintRequestListener)
 
 
     def removeSelectedTabChangeListener(self, listener):
-        super(TabSheet, self).removeListener(SelectedTabChangeEvent,
-                listener, _SELECTED_TAB_CHANGE_METHOD)
+        self.removeListener(listener, ISelectedTabChangeListener)
 
 
     def fireSelectedTabChange(self):

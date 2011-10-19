@@ -330,8 +330,7 @@ class PopupView(AbstractComponentContainer):
 
 
     def addPopupVisibilityListener(self, listener):
-        super(PopupView, self).addListener(PopupVisibilityEvent,
-                listener, _POPUP_VISIBILITY_METHOD)
+        self.addListener(listener, IPopupVisibilityListener)
 
 
     def removeListener(self, listener, iface):
@@ -350,8 +349,7 @@ class PopupView(AbstractComponentContainer):
 
 
     def removePopupVisibilityListener(self, listener):
-        super(PopupView, self).removeListener(PopupVisibilityEvent,
-                listener, _POPUP_VISIBILITY_METHOD)
+        self.removeListener(listener, IPopupVisibilityListener)
 
 
 class PopupVisibilityEvent(ComponentEvent):

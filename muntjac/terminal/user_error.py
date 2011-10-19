@@ -15,6 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.terminal.error_message import IErrorMessage
+from muntjac.terminal.paintable import IRepaintRequestListener
 
 
 class UserError(IErrorMessage):
@@ -74,19 +75,25 @@ class UserError(IErrorMessage):
 
 
     def addListener(self, listener, iface):
-        pass
+        if iface == IRepaintRequestListener:
+            pass
+        else:
+            super(UserError, self).addListener(listener, iface)
 
 
     def addRepaintRequestListener(self, listener):
-        pass
+        self.addListener(listener, IRepaintRequestListener)
 
 
     def removeListener(self, listener, iface):
-        pass
+        if iface == IRepaintRequestListener:
+            pass
+        else:
+            super(UserError, self).removeListener(listener, iface)
 
 
     def removeRepaintRequestListener(self, listener):
-        pass
+        self.removeListener(listener, IRepaintRequestListener)
 
 
     def requestRepaint(self):

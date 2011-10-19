@@ -15,6 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.terminal.error_message import IErrorMessage
+from muntjac.terminal.paintable import IRepaintRequestListener
 
 
 class IValidator(object):
@@ -143,11 +144,25 @@ class InvalidValueException(RuntimeError, IErrorMessage):
 
 
     def addListener(self, listener, iface):
-        pass
+        if iface == IRepaintRequestListener:
+            pass
+        else:
+            super(InvalidValueException, self).addlistener(listener, iface)
+
+
+    def addRepaintRequestListener(self, listener):
+        self.addListener(listener, IRepaintRequestListener)
 
 
     def removeListener(self, listener, iface):
-        pass
+        if iface == IRepaintRequestListener:
+            pass
+        else:
+            super(InvalidValueException, self).removeListener(listener, iface)
+
+
+    def removeRepaintRequestListener(self, listener):
+        self.removeListener(listener, IRepaintRequestListener)
 
 
     def requestRepaint(self):

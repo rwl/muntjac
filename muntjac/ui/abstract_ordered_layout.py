@@ -279,8 +279,7 @@ class AbstractOrderedLayout(AbstractLayout, IAlignmentHandler,
 
 
     def addLayoutClickListener(self, listener):
-        super(AbstractOrderedLayout, self).addListener(self._CLICK_EVENT,
-                LayoutClickEvent, listener, ILayoutClickListener.clickMethod)
+        self.addListener(listener, ILayoutClickListener)
 
 
     def removeListener(self, listener, iface):
@@ -291,8 +290,7 @@ class AbstractOrderedLayout(AbstractLayout, IAlignmentHandler,
 
 
     def removeLayoutClickListener(self, listener):
-        super(AbstractOrderedLayout, self).removeListener(self._CLICK_EVENT,
-                LayoutClickEvent, listener)
+        self.removeListener(listener, ILayoutClickListener)
 
 
     def getComponentIndex(self, component):

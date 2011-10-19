@@ -687,11 +687,14 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
         @see IComponent.Event
         @see #removeListener(IListener)
         """
-        raise NotImplementedError
+        if iface == IListener:
+            raise NotImplementedError
+        else:
+            super(IComponent, self).addListener(listener, iface)
 
 
     def addComponentListener(self, listener):
-        raise NotImplementedError
+        self.addListener(listener, IListener)
 
 
     def removeListener(self, listener, iface):
@@ -702,11 +705,14 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
                    the listener to be removed.
         @see #addListener(IListener)
         """
-        raise NotImplementedError
+        if iface == IListener:
+            raise NotImplementedError
+        else:
+            super(IComponent, self).removeListener(listener, iface)
 
 
     def removeComponentListener(self, listener):
-        raise NotImplementedError
+        self.removeListener(listener, IListener)
 
 
 class Event(EventObject):

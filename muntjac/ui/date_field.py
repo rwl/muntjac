@@ -568,13 +568,11 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
 
 
     def addBlurListener(self, listener):
-        super(DateField, self).addListener(BlurEvent.EVENT_ID,
-                BlurEvent, listener, IBlurListener.blurMethod)
+        self.addListener(listener, IBlurListener)
 
 
     def addFocusListener(self, listener):
-        super(DateField, self).addListener(FocusEvent.EVENT_ID,
-                FocusEvent, listener, IFocusListener.focusMethod)
+        self.addListener(listener, IFocusListener)
 
 
     def removeListener(self, listener, iface):
@@ -587,13 +585,11 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
 
 
     def removeBlurListener(self, listener):
-        super(DateField, self).removeListener(BlurEvent.EVENT_ID,
-                BlurEvent, listener)
+        self.removeListener(listener, IBlurListener)
 
 
     def removeFocusListener(self, listener):
-        super(DateField, self).removeListener(FocusEvent.EVENT_ID,
-                FocusEvent, listener)
+        self.removeListener(listener, IFocusListener)
 
 
     def isShowISOWeekNumbers(self):

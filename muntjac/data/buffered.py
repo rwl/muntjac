@@ -19,6 +19,7 @@ import sys
 from muntjac.terminal.system_error import SystemErr
 from muntjac.terminal.error_message import IErrorMessage
 from muntjac.data.validatable import IValidatable
+from muntjac.terminal.paintable import IRepaintRequestListener
 
 
 class IBuffered(object):
@@ -272,19 +273,25 @@ class SourceException(RuntimeError, IErrorMessage):
 
 
     def addListener(self, listener, iface):
-        raise NotImplementedError
+        if iface == IRepaintRequestListener:
+            raise NotImplementedError
+        else:
+            super(SourceException, self).addListener(listener, iface)
 
 
     def addRepaintRequestListener(self, listener):
-        raise NotImplementedError
+        self.addListener(listener, IRepaintRequestListener)
 
 
     def removeListener(self, listener, iface):
-        raise NotImplementedError
+        if iface == IRepaintRequestListener:
+            raise NotImplementedError
+        else:
+            super(SourceException, self).removelistener(listener, iface)
 
 
     def removeRepaintRequestListener(self, listener):
-        raise NotImplementedError
+        self.removeListener(listener, IRepaintRequestListener)
 
 
     def requestRepaint(self):

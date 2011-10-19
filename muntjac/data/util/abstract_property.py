@@ -91,17 +91,11 @@ class AbstractProperty(prop.IProperty, prop.IValueChangeNotifier,
 
 
     def addReadOnlyStatusChangeListener(self, listener):
-        if self._readOnlyStatusChangeListeners is None:
-            self._readOnlyStatusChangeListeners = list()
-
-        self._readOnlyStatusChangeListeners.append(listener)
+        self.addListener(listener, prop.IReadOnlyStatusChangeListener)
 
 
     def addValueChangeListener(self, listener):
-        if self._valueChangeListeners is None:
-            self._valueChangeListeners = list()
-
-        self._valueChangeListeners.append(listener)
+        self.addListener(listener, prop.IValueChangeListener)
 
 
     def removeListener(self, listener, iface):
@@ -121,13 +115,11 @@ class AbstractProperty(prop.IProperty, prop.IValueChangeNotifier,
 
 
     def removeReadOnlyStatusChangeListener(self, listener):
-        if self._readOnlyStatusChangeListeners is not None:
-            self._readOnlyStatusChangeListeners.remove(listener)
+        self.removeListener(listener, prop.IReadOnlyStatusChangeListener)
 
 
     def removeValueChangeListener(self, listener):
-        if self._valueChangeListeners is not None:
-            self._valueChangeListeners.remove(listener)
+        self.removeListener(listener, prop.IValueChangeListener)
 
 
     def fireReadOnlyStatusChange(self):

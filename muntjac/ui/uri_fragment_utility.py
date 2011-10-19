@@ -48,8 +48,7 @@ class UriFragmentUtility(AbstractComponent):
 
 
     def addFragmentChangedListener(self, listener):
-        super(UriFragmentUtility, self).addListener(FragmentChangedEvent,
-                listener, _FRAGMENT_CHANGED_METHOD)
+        self.addListener(listener, IFragmentChangedListener)
 
 
     def removeListener(self, listener, iface):
@@ -61,8 +60,7 @@ class UriFragmentUtility(AbstractComponent):
 
 
     def removeFragmentChangedListener(self, listener):
-        super(UriFragmentUtility, self).removeListener(FragmentChangedEvent,
-                listener, _FRAGMENT_CHANGED_METHOD)
+        self.removeListener(listener, IFragmentChangedListener)
 
 
     def __init__(self):

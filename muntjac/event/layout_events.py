@@ -67,11 +67,14 @@ class ILayoutClickNotifier(object):
         @param listener
                    The listener to add
         """
-        raise NotImplementedError
+        if iface == ILayoutClickListener:
+            raise NotImplementedError
+        else:
+            super(ILayoutClickNotifier, self).addListener(listener, iface)
 
 
     def addLayoutClickListener(self, listener):
-        raise NotImplementedError
+        self.addListener(listener, ILayoutClickListener)
 
 
     def removeListener(self, listener, iface):
@@ -80,11 +83,14 @@ class ILayoutClickNotifier(object):
         @param listener
                    LayoutClickListener to be removed
         """
-        raise NotImplementedError
+        if iface == ILayoutClickListener:
+            raise NotImplementedError
+        else:
+            super(ILayoutClickNotifier, self).removeListener(listener, iface)
 
 
     def removeLayoutClickListener(self, listener):
-        raise NotImplementedError
+        self.removeListener(listener, ILayoutClickListener)
 
 
 class LayoutClickEvent(ClickEvent):

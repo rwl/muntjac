@@ -286,29 +286,23 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
 
 
     def addFailedListener(self, listener):
-        super(Upload, self).addListener(FailedEvent,
-                listener, _UPLOAD_FAILED_METHOD)
+        self.addListener(listener, IFailedListener)
 
 
     def addFinishedListener(self, listener):
-        super(Upload, self).addListener(FinishedEvent,
-                listener, _UPLOAD_FINISHED_METHOD)
+        self.addListener(listener, IFinishedListener)
 
 
     def addProgressListener(self, listener):
-        if self._progressListeners is None:
-            self._progressListeners = set()
-        self._progressListeners.add(listener)
+        self.addListener(listener, IProgressListener)
 
 
     def addStartedListener(self, listener):
-        super(Upload, self).addListener(StartedEvent,
-                listener, _UPLOAD_STARTED_METHOD)
+        self.addListener(listener, IStartedListener)
 
 
     def addSucceededListener(self, listener):
-        super(Upload, self).addListener(SucceededEvent,
-                listener, _UPLOAD_SUCCEEDED_METHOD)
+        self.addListener(listener, ISucceededListener)
 
 
     def removeListener(self, listener, iface):
@@ -342,28 +336,23 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
 
 
     def removeFailedListener(self, listener):
-        super(Upload, self).removeListener(FailedEvent,
-                listener, _UPLOAD_FAILED_METHOD)
+        self.removeListener(listener, IFailedListener)
 
 
     def removeFinishedListener(self, listener):
-        super(Upload, self).removeListener(FinishedEvent,
-                listener, _UPLOAD_FINISHED_METHOD)
+        self.removeListener(listener, IFinishedListener)
 
 
     def removeProgressListener(self, listener):
-        if self._progressListeners is not None:
-            self._progressListeners.remove(listener)
+        self.removeListener(listener, IProgressListener)
 
 
     def removeStartedListener(self, listener):
-        super(Upload, self).removeListener(StartedEvent,
-                listener, _UPLOAD_STARTED_METHOD)
+        self.removeListener(listener, IStartedListener)
 
 
     def removeSucceededListener(self, listener):
-        super(Upload, self).removeListener(SucceededEvent,
-                listener, _UPLOAD_SUCCEEDED_METHOD)
+        self.removeListener(listener, ISucceededListener)
 
 
     def fireStarted(self, filename, MIMEType):

@@ -109,13 +109,11 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
 
 
     def addComponentAttachListener(self, listener):
-        super(AbstractComponentContainer, self).addListener(
-                ComponentAttachEvent, listener, _COMPONENT_ATTACHED_METHOD)
+        self.addListener(listener, IComponentAttachListener)
 
 
     def addComponentDetachListener(self, listener):
-        super(AbstractComponentContainer, self).addListener(
-                ComponentDetachEvent, listener, _COMPONENT_DETACHED_METHOD)
+        self.addListener(listener, IComponentDetachListener)
 
 
     def removeListener(self, listener, iface):
@@ -131,13 +129,11 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
 
 
     def removeComponentAttachListener(self, listener):
-        super(AbstractComponentContainer, self).removeListener(
-                ComponentAttachEvent, listener, _COMPONENT_ATTACHED_METHOD)
+        self.removeListener(listener, IComponentAttachListener)
 
 
     def removeComponentDetachListener(self, listener):
-        super(AbstractComponentContainer, self).removeListener(
-                ComponentDetachEvent, listener, _COMPONENT_DETACHED_METHOD)
+        self.removeListener(listener, IComponentDetachListener)
 
 
     def fireComponentAttachEvent(self, component):

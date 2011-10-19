@@ -16,6 +16,7 @@
 
 import sys
 import traceback
+from muntjac.terminal.paintable import IRepaintRequestListener
 
 try:
     from cStringIO import StringIO
@@ -130,19 +131,25 @@ class SystemErr(RuntimeError, IErrorMessage):
 
 
     def addListener(self, listener, iface):
-        pass
+        if iface == IRepaintRequestListener:
+            pass
+        else:
+            super(SystemErr).addListener(listener, iface)
 
 
     def addRepaintRequestListener(self, listener):
-        pass
+        self.addListener(listener, IRepaintRequestListener)
 
 
     def removeListener(self, listener, iface):
-        pass
+        if iface == IRepaintRequestListener:
+            pass
+        else:
+            super(SystemErr, self).removeListener(listener, iface)
 
 
     def removeRepaintRequestListener(self, listener):
-        pass
+        self.removeListener(listener, IRepaintRequestListener)
 
 
     def requestRepaint(self):

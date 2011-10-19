@@ -110,11 +110,14 @@ class IComponentContainer(IComponent):
         ---
         Listens the component detach events.
         """
-        raise NotImplementedError
+        if iface == IComponentAttachListener:
+            raise NotImplementedError
+        else:
+            super(IComponentContainer, self).addListener(listener, iface)
 
 
     def addComponentAttachListener(self, listener):
-        raise NotImplementedError
+        self.addListener(listener, IComponentAttachListener)
 
 
     def removeListener(self, listener, iface):
@@ -125,11 +128,14 @@ class IComponentContainer(IComponent):
         ---
         Stops the listening component detach events.
         """
-        raise NotImplementedError
+        if iface == IComponentAttachListener:
+            raise NotImplementedError
+        else:
+            super(IComponentContainer, self).removeListener(listener, iface)
 
 
     def removeComponentAttachListener(self, listener):
-        raise NotImplementedError
+        self.removeListener(listener, IComponentAttachListener)
 
 
 class IComponentAttachListener(object):

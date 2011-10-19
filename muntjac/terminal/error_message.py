@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.terminal.paintable import IPaintable
+from muntjac.terminal.paintable import IPaintable, IRepaintRequestListener
 
 
 class IErrorMessage(IPaintable):
@@ -58,11 +58,14 @@ class IErrorMessage(IPaintable):
                    the listener to be added.
         @see com.vaadin.terminal.IPaintable#addListener(listener)
         """
-        raise NotImplementedError
+        if iface == IRepaintRequestListener:
+            raise NotImplementedError
+        else:
+            super(IErrorMessage, self).addListener(listener, iface)
 
 
     def addRepaintRequestListener(self, listener):
-        raise NotImplementedError
+        self.addListener(listener, IRepaintRequestListener)
 
 
     def removeListener(self, listener, iface):
@@ -73,11 +76,14 @@ class IErrorMessage(IPaintable):
                    the listener to be removed.
         @see com.vaadin.terminal.IPaintable#removeListener(listener)
         """
-        raise NotImplementedError
+        if iface == IRepaintRequestListener:
+            raise NotImplementedError
+        else:
+            super(IErrorMessage, self).removeListener(listener, iface)
 
 
     def removeRepaintRequestListener(self, listener):
-        raise NotImplementedError
+        self.removeListener(listener, IRepaintRequestListener)
 
 
     def requestRepaint(self):

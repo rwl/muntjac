@@ -464,8 +464,7 @@ class Panel(AbstractComponentContainer, IScrollable,
 
 
     def addClickListener(self, listener):
-        super(Panel, self).addListener(self._CLICK_EVENT, ClickEvent,
-                listener, IClickListener.clickMethod)
+        self.addListener(listener, IClickListener)
 
 
     def removeListener(self, listener, iface):
@@ -482,8 +481,7 @@ class Panel(AbstractComponentContainer, IScrollable,
 
 
     def removeClickListener(self, listener):
-        super(Panel, self).removeListener(self._CLICK_EVENT,
-                ClickEvent, listener)
+        self.removeListener(listener, IClickListener)
 
 
     def fireClick(self, parameters):

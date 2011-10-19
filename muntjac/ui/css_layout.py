@@ -232,9 +232,7 @@ class CssLayout(AbstractLayout, ILayoutClickNotifier):
 
 
     def addLayoutClickListener(self, listener):
-        super(CssLayout, self).addListener(self._CLICK_EVENT,
-                LayoutClickEvent, listener,
-                ILayoutClickListener.clickMethod)
+        self.addListener(listener, ILayoutClickListener)
 
 
     def removeListener(self, listener, iface):
@@ -246,5 +244,4 @@ class CssLayout(AbstractLayout, ILayoutClickNotifier):
 
 
     def removeLayoutClickListener(self, listener):
-        super(CssLayout, self).removeListener(self._CLICK_EVENT,
-                LayoutClickEvent, listener)
+        self.removeListener(listener, ILayoutClickListener)

@@ -686,16 +686,15 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
 
 
     def addCollapseListener(self, listener):
-        super(Tree, self).addListener(CollapseEvent, listener, COLLAPSE_METHOD)
+        self.addListener(listener, ICollapseListener)
 
 
     def addExpandListener(self, listener):
-        super(Tree, self).addListener(ExpandEvent, listener, EXPAND_METHOD)
+        self.addListener(listener, IExpandListener)
 
 
     def addItemClickListener(self, listener):
-        super(Tree, self).addListener(VTree.ITEM_CLICK_EVENT_ID,
-                ItemClickEvent, listener, ITEM_CLICK_METHOD)
+        self.addListener(listener, IItemClickListener)
 
 
     def removeListener(self, listener, iface):
@@ -723,18 +722,15 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
 
 
     def removeCollapseListener(self, listener):
-        super(Tree, self).removeListener(CollapseEvent,
-                listener, COLLAPSE_METHOD)
+        self.removeListener(listener, ICollapseListener)
 
 
     def removeExpandListener(self, listener):
-        super(Tree, self).removeListener(ExpandEvent,
-                listener, EXPAND_METHOD)
+        self.removeListener(listener, IExpandListener)
 
 
     def removeItemClickListener(self, listener):
-        super(Tree, self).removeListener(VTree.ITEM_CLICK_EVENT_ID,
-                ItemClickEvent, listener)
+        self.removeListener(listener, IItemClickListener)
 
 
     def fireExpandEvent(self, itemId):

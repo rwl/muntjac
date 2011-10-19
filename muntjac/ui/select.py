@@ -673,12 +673,11 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
 
 
     def addBlurListener(self, listener):
-        super(Select, self).addListener(BlurEvent.EVENT_ID,
-                BlurEvent, listener, IBlurListener.blurMethod)
+        self.addListener(listener, IBlurListener)
+
 
     def addFocusListener(self, listener):
-        super(Select, self).addListener(FocusEvent.EVENT_ID,
-                FocusEvent, listener, IFocusListener.focusMethod)
+        self.addListener(listener, IFocusListener)
 
 
     def removeListener(self, listener, iface):
@@ -691,13 +690,11 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
 
 
     def removeBlurListener(self, listener):
-        super(Select, self).removeListener(BlurEvent.EVENT_ID,
-                BlurEvent, listener)
+        self.removeListener(listener, IBlurListener)
 
 
     def removeFocusListener(self, listener):
-        super(Select, self).removeListener(FocusEvent.EVENT_ID,
-                FocusEvent, listener)
+        self.removeListener(listener, IFocusListener)
 
 
     def setMultiSelect(self, multiSelect):

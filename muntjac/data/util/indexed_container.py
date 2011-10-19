@@ -304,14 +304,11 @@ class IndexedContainer(AbstractInMemoryContainer,
 
 
     def addPropertySetChangeListener(self, listener):
-        super(IndexedContainer, self).addPropertySetChangeListener(listener)
+        self.addListener(listener, container.IPropertySetChangeListener)
 
 
     def addValueChangeListener(self, listener):
-        if self._propertyValueChangeListeners is None:
-            self._propertyValueChangeListeners = list()
-
-        self._propertyValueChangeListeners.append(listener)
+        self.addListener(listener, prop.IValueChangeListener)
 
 
     def removeListener(self, listener, iface):
@@ -325,12 +322,11 @@ class IndexedContainer(AbstractInMemoryContainer,
 
 
     def removePropertySetChangeListener(self, listener):
-        super(IndexedContainer, self).removePropertySetChangeListener(listener)
+        self.removeListener(listener, container.IPropertySetChangeListener)
 
 
     def removeValueChangeListener(self, listener):
-        if self._propertyValueChangeListeners is not None:
-            self._propertyValueChangeListeners.remove(listener)
+        self.removeListener(listener, prop.IValueChangeListener)
 
 
     def firePropertyValueChange(self, source):
@@ -795,12 +791,20 @@ class IndexedContainerProperty(prop.IProperty, prop.IValueChangeNotifier):
             super(IndexedContainerProperty, self).addListener(listener, iface)
 
 
+    def addValueChangeListener(self, listener):
+        self.addListener(listener, prop.IValueChangeListener)
+
+
     def removeListener(self, listener, iface):
         if iface == prop.IValueChangeListener:
             self._container.removeSinglePropertyChangeListener(self._propertyId,
                     self._itemId, listener)
         else:
             super(IndexedContainerProperty, self).addListener(listener, iface)
+
+
+    def removeValueChangeListener(self, listener):
+        self.removeListener(listener, prop.IValueChangeListener)
 
 
     def getHost(self):

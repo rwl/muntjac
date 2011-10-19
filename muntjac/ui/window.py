@@ -966,23 +966,19 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
 
 
     def addBlurListener(self, listener):
-        super(Window, self).addListener(BlurEvent.EVENT_ID,
-                BlurEvent, listener, IBlurListener.blurMethod)
+        self.addListener(listener, IBlurListener)
 
 
     def addCloseListener(self, listener):
-        super(Window, self).addListener(CloseEvent,
-                listener, _WINDOW_CLOSE_METHOD)
+        self.addListener(listener, ICloseListener)
 
 
     def addFocusListener(self, listener):
-        super(Window, self).addListener(FocusEvent.EVENT_ID,
-                FocusEvent, listener, IFocusListener.focusMethod)
+        self.addListener(listener, IFocusListener)
 
 
     def addResizeListener(self, listener):
-        super(Window, self).addListener(ResizeEvent,
-                listener, _WINDOW_RESIZE_METHOD)
+        self.addListener(listener, IResizeListener)
 
 
     def removeListener(self, listener, iface):
@@ -1014,22 +1010,19 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
 
 
     def removeBlurListener(self, listener):
-        super(Window, self).removeListener(BlurEvent.EVENT_ID,
-                BlurEvent, listener)
+        self.removeListener(listener, IBlurListener)
 
 
     def removeCloseListener(self, listener):
-        super(Window, self).removeListener(CloseEvent, listener,
-                _WINDOW_CLOSE_METHOD)
+        self.removeListener(listener, ICloseListener)
 
 
     def removeFocusListener(self, listener):
-        super(Window, self).removeListener(FocusEvent.EVENT_ID,
-                FocusEvent, listener)
+        self.removeListener(listener, IFocusListener)
 
 
     def removeResizeListener(self, listener):
-        super(Window, self).removeListener(ResizeEvent, listener)
+        self.removeListener(listener, IResizeListener)
 
 
     def fireClose(self):

@@ -160,11 +160,15 @@ class IPropertySetChangeNotifier(object):
         @param listener
                    The new Listener to be registered.
         """
-        raise NotImplementedError
+        if iface == IPropertySetChangeListener:
+            raise NotImplementedError
+        else:
+            super(IPropertySetChangeNotifier, self).addListener(listener,
+                    iface)
 
 
     def addPropertySetChangeListener(self, listener):
-        raise NotImplementedError
+        self.addListener(listener, IPropertySetChangeListener)
 
 
     def removeListener(self, listener, iface):
@@ -173,8 +177,12 @@ class IPropertySetChangeNotifier(object):
         @param listener
                    Listener to be removed.
         """
-        raise NotImplementedError
+        if iface == IPropertySetChangeListener:
+            raise NotImplementedError
+        else:
+            super(IPropertySetChangeNotifier, self).removeListener(listener,
+                    iface)
 
 
     def removePropertySetChangeListener(self, listener):
-        raise NotImplementedError
+        self.removeListener(listener, IPropertySetChangeListener)

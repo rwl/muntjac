@@ -923,11 +923,14 @@ class IItemSetChangeNotifier(object):
         @param listener
                    listener to be added
         """
-        raise NotImplementedError
+        if iface == IItemSetChangeListener:
+            raise NotImplementedError
+        else:
+            super(IItemSetChangeNotifier, self).addListener(listener, iface)
 
 
     def addItemSetChangeListener(self, listener):
-        raise NotImplementedError
+        self.addListener(listener, IItemSetChangeListener)
 
 
     def removeListener(self, listener, iface):
@@ -936,11 +939,14 @@ class IItemSetChangeNotifier(object):
         @param listener
                    listener to be removed
         """
-        raise NotImplementedError
+        if iface == IItemSetChangeListener:
+            raise NotImplementedError
+        else:
+            super(IItemSetChangeListener, self).removeListener(listener, iface)
 
 
     def removeItemSetChangeListener(self, listener):
-        raise NotImplementedError
+        self.removeListener(listener, IItemSetChangeListener)
 
 
 class IPropertySetChangeEvent(object):
@@ -1006,11 +1012,14 @@ class IPropertySetChangeNotifier(object):
         @param listener
                    The new Listener to be registered
         """
-        raise NotImplementedError
+        if iface == IPropertySetChangeListener:
+            raise NotImplementedError
+        else:
+            super(IPropertySetChangeNotifier, self).addListener(listener, iface)
 
 
     def addPropertySetChangeListener(self, listener):
-        raise NotImplementedError
+        self.addListener(listener, IPropertySetChangeListener)
 
 
     def removeListener(self, listener, iface):
@@ -1019,8 +1028,12 @@ class IPropertySetChangeNotifier(object):
         @param listener
                    Listener to be removed
         """
-        raise NotImplementedError
+        if iface == IPropertySetChangeListener:
+            raise NotImplementedError
+        else:
+            super(IPropertySetChangeNotifier, self).removeListener(listener,
+                    iface)
 
 
     def removePropertySetChangeListener(self, listener):
-        raise NotImplementedError
+        self.removeListener(listener, IPropertySetChangeListener)

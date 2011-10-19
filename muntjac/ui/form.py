@@ -513,7 +513,8 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
             del self._propertyIds[idd]
             del self._fields[idd]
             self.detachField(field)
-            field.removeListener(self.fieldValueChangeListener)
+            field.removeListener(self.fieldValueChangeListener,
+                    IValueChangeListener)
             return True
         return False
 

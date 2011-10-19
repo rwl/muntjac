@@ -654,11 +654,13 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
             if self.items is not None:
                 if isinstance(self.items,
                         container.IItemSetChangeNotifier):
-                    self.items.removeListener(self)
+                    self.items.removeListener(self,
+                            container.IItemSetChangeListener)
 
                 if isinstance(self.items,
                         container.IPropertySetChangeNotifier):
-                    self.items.removeListener(self)
+                    self.items.removeListener(self,
+                            container.IPropertySetChangeNotifier)
 
             # Assigns new data source
             self.items = newDataSource
@@ -1112,17 +1114,11 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
 
 
     def addItemSetChangeListener(self, listener):
-        if self._itemSetEventListeners is None:
-            self._itemSetEventListeners = set()
-
-        self._itemSetEventListeners.add(listener)
+        self.addListener(listener, container.IItemSetChangeListener)
 
 
     def addPropertySetChangeListener(self, listener):
-        if self._propertySetEventListeners is None:
-            self._propertySetEventListeners = set()
-
-        self._propertySetEventListeners.add(listener)
+        self.addListener(listener, container.IPropertySetChangeListener)
 
 
     def removeListener(self, listener, iface):
@@ -1149,17 +1145,11 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
 
 
     def removeItemSetChangeListener(self, listener):
-        if self._itemSetEventListeners is not None:
-            self._itemSetEventListeners.remove(listener)
-            if len(self._itemSetEventListeners) == 0:
-                self._itemSetEventListeners = None
+        self.removeListener(listener, container.IItemSetChangeListener)
 
 
     def removePropertySetChangeListener(self, listener):
-        if self._propertySetEventListeners is not None:
-            self._propertySetEventListeners.remove(listener)
-            if len(self._propertySetEventListeners) == 0:
-                self._propertySetEventListeners = None
+        self.removeListener(listener, container.IPropertySetChangeListener)
 
 
     def getListeners(self, eventType):
@@ -1522,9 +1512,11 @@ class CaptionChangeListener(item.IPropertySetChangeListener,
     def clear(self):
         for notifier in self._captionChangeNotifiers:
             if isinstance(notifier, item.IPropertySetChangeNotifier):
-                notifier.removeListener(self.getCaptionChangeListener())
+                notifier.removeListener(self.getCaptionChangeListener(),
+                        item.IPropertySetChangeListener)
             else:
-                notifier.removeListener(self.getCaptionChangeListener())
+                notifier.removeListener(self.getCaptionChangeListener(),
+                        prop.IValueChangeListener)
         self._captionChangeNotifiers.clear()
 
 

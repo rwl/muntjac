@@ -1354,7 +1354,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         if oldListenedProperties is not None:
             for o in oldListenedProperties:
                 if o not in self._listenedProperties:
-                    o.removeListener(self)
+                    o.removeListener(self, IValueChangeListener)
 
 
     def unregisterComponent(self, component):
@@ -3105,28 +3105,23 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
 
     def addColumnReorderListener(self, listener):
-        super(Table, self).addListener(VScrollTable.COLUMN_REORDER_EVENT_ID,
-                ColumnReorderEvent, listener, COLUMN_REORDER_METHOD)
+        self.addListener(listener, IColumnReorderListener)
 
 
     def addColumnResizeListener(self, listener):
-        super(Table, self).addListener(VScrollTable.COLUMN_RESIZE_EVENT_ID,
-                ColumnResizeEvent, listener, COLUMN_RESIZE_METHOD)
+        self.addListener(listener, IColumnResizeListener)
 
 
     def addFooterClickListener(self, listener):
-        super(Table, self).addListener(VScrollTable.FOOTER_CLICK_EVENT_ID,
-                FooterClickEvent, listener, FOOTER_CLICK_METHOD)
+        self.addListener(listener, IFooterClickListener)
 
 
     def addHeaderClickListener(self, listener):
-        super(Table, self).addListener(VScrollTable.HEADER_CLICK_EVENT_ID,
-                HeaderClickEvent, listener, HEADER_CLICK_METHOD)
+        self.addListener(listener, IHeaderClickListener)
 
 
     def addItemClickListener(self, listener):
-        super(Table, self).addListener(VScrollTable.ITEM_CLICK_EVENT_ID,
-                ItemClickEvent, listener, ITEM_CLICK_METHOD)
+        self.addListener(listener, IItemClickListener)
 
 
     def removeListener(self, listener, iface):
@@ -3160,28 +3155,23 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
 
     def removeColumnReorderListener(self, listener):
-        super(Table, self).removeListener(VScrollTable.COLUMN_REORDER_EVENT_ID,
-                ColumnReorderEvent, listener)
+        self.removeListener(listener, IColumnReorderListener)
 
 
     def removeColumnResizeListener(self, listener):
-        super(Table, self).removeListener(VScrollTable.COLUMN_RESIZE_EVENT_ID,
-                ColumnResizeEvent, listener)
+        self.removeListener(listener, IColumnResizeListener)
 
 
     def removeFooterClickListener(self, listener):
-        super(Table, self).removeListener(VScrollTable.FOOTER_CLICK_EVENT_ID,
-                FooterClickEvent, listener)
+        self.removeListener(listener, IFooterClickListener)
 
 
     def removeHeaderClickListener(self, listener):
-        super(Table, self).removeListener(VScrollTable.HEADER_CLICK_EVENT_ID,
-                HeaderClickEvent, listener)
+        self.removeListener(listener, IHeaderClickListener)
 
 
     def removeItemClickListener(self, listener):
-        super(Table, self).removeListener(VScrollTable.ITEM_CLICK_EVENT_ID,
-                ItemClickEvent, listener)
+        self.removeListener(listener, IItemClickListener)
 
 
     def setEnabled(self, enabled):
