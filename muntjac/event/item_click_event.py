@@ -97,12 +97,20 @@ class IItemClickNotifier(object):
         raise NotImplementedError
 
 
+    def addItemClickListener(self, listener):
+        raise NotImplementedError
+
+
     def removeListener(self, listener):
         """Removes an ItemClickListener.
 
         @param listener
                    ItemClickListener to be removed
         """
+        raise NotImplementedError
+
+
+    def removeItemClickListener(self, listener):
         raise NotImplementedError
 
 

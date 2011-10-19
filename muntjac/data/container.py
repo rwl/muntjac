@@ -926,12 +926,20 @@ class IItemSetChangeNotifier(object):
         raise NotImplementedError
 
 
+    def addItemSetChangeListener(self, listener):
+        raise NotImplementedError
+
+
     def removeListener(self, listener):
         """Removes the Item set change listener from the object.
 
         @param listener
                    listener to be removed
         """
+        raise NotImplementedError
+
+
+    def removeItemSetChangeListener(self, listener):
         raise NotImplementedError
 
 
@@ -1001,10 +1009,18 @@ class IPropertySetChangeNotifier(object):
         raise NotImplementedError
 
 
+    def addPropertySetChangeListener(self, listener):
+        raise NotImplementedError
+
+
     def removeListener(self, listener):
         """Removes a previously registered Property set change listener.
 
         @param listener
                    Listener to be removed
         """
+        raise NotImplementedError
+
+
+    def removePropertySetChangeListener(self, listener):
         raise NotImplementedError

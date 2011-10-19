@@ -290,6 +290,32 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
             super(Upload, self).addListener(*args)
 
 
+    def addFailedListener(self, listener):
+        super(Upload, self).addListener(FailedEvent,
+                listener, _UPLOAD_FAILED_METHOD)
+
+
+    def addFinishedListener(self, listener):
+        super(Upload, self).addListener(FinishedEvent,
+                listener, _UPLOAD_FINISHED_METHOD)
+
+
+    def addProgressListener(self, listener):
+        if self._progressListeners is None:
+            self._progressListeners = set()
+        self._progressListeners.add(listener)
+
+
+    def addStartedListener(self, listener):
+        super(Upload, self).addListener(StartedEvent,
+                listener, _UPLOAD_STARTED_METHOD)
+
+
+    def addSucceededListener(self, listener):
+        super(Upload, self).addListener(SucceededEvent,
+                listener, _UPLOAD_SUCCEEDED_METHOD)
+
+
     def removeListener(self, *args):
         """Removes an event listener.
 
@@ -323,6 +349,31 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
                 super(Upload, self).removeListener(listener)
         else:
             super(Upload, self).removeListener(*args)
+
+
+    def removeFailedListener(self, listener):
+        super(Upload, self).removeListener(FailedEvent,
+                listener, _UPLOAD_FAILED_METHOD)
+
+
+    def removeFinishedListener(self, listener):
+        super(Upload, self).removeListener(FinishedEvent,
+                listener, _UPLOAD_FINISHED_METHOD)
+
+
+    def removeProgressListener(self, listener):
+        if self._progressListeners is not None:
+            self._progressListeners.remove(listener)
+
+
+    def removeStartedListener(self, listener):
+        super(Upload, self).removeListener(StartedEvent,
+                listener, _UPLOAD_STARTED_METHOD)
+
+
+    def removeSucceededListener(self, listener):
+        super(Upload, self).removeListener(SucceededEvent,
+                listener, _UPLOAD_SUCCEEDED_METHOD)
 
 
     def fireStarted(self, filename, MIMEType):

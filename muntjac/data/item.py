@@ -163,10 +163,18 @@ class IPropertySetChangeNotifier(object):
         raise NotImplementedError
 
 
+    def addPropertySetChangeListener(self, listener):
+        raise NotImplementedError
+
+
     def removeListener(self, listener):
         """Removes a previously registered property set change listener.
 
         @param listener
                    Listener to be removed.
         """
+        raise NotImplementedError
+
+
+    def removePropertySetChangeListener(self, listener):
         raise NotImplementedError

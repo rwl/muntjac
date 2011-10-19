@@ -115,6 +115,16 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
             super(AbstractComponentContainer, self).addListener(*args)
 
 
+    def addComponentAttachListener(self, listener):
+        super(AbstractComponentContainer, self).addListener(
+                ComponentAttachEvent, listener, _COMPONENT_ATTACHED_METHOD)
+
+
+    def addComponentDetachListener(self, listener):
+        super(AbstractComponentContainer, self).addListener(
+                ComponentDetachEvent, listener, _COMPONENT_DETACHED_METHOD)
+
+
     def removeListener(self, *args):
         nargs = len(args)
         if nargs == 1:
@@ -131,6 +141,16 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
                 super(AbstractComponentContainer, self).removeListener(listener)
         else:
             super(AbstractComponentContainer, self).removeListener(*args)
+
+
+    def removeComponentAttachListener(self, listener):
+        super(AbstractComponentContainer, self).removeListener(
+                ComponentAttachEvent, listener, _COMPONENT_ATTACHED_METHOD)
+
+
+    def removeComponentDetachListener(self, listener):
+        super(AbstractComponentContainer, self).removeListener(
+                ComponentDetachEvent, listener, _COMPONENT_DETACHED_METHOD)
 
 
     def fireComponentAttachEvent(self, component):
@@ -203,35 +223,37 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
             self.requestRepaintAll()
 
 
-    def setWidth(self, width, unit):
+    def setWidth(self, width, unit=None):
+        if unit is not None:
+            from muntjac.terminal.gwt.server.component_size_validator import \
+                ComponentSizeValidator  # FIXME: circular import
 
-        from muntjac.terminal.gwt.server.component_size_validator import \
-            ComponentSizeValidator  # FIXME: circular import
+            # child tree repaints may be needed, due to our fall back support
+            # for invalid relative sizes
+            dirtyChildren = None
+            childrenMayBecomeUndefined = False
+            if (self.getWidth() == self.SIZE_UNDEFINED
+                    and width != self.SIZE_UNDEFINED):
+                # children currently in invalid state may need repaint
+                dirtyChildren = self.getInvalidSizedChildren(False)
 
-        # child tree repaints may be needed, due to our fall back support
-        # for invalid relative sizes
-        dirtyChildren = None
-        childrenMayBecomeUndefined = False
-        if (self.getWidth() == self.SIZE_UNDEFINED
-                and width != self.SIZE_UNDEFINED):
-            # children currently in invalid state may need repaint
-            dirtyChildren = self.getInvalidSizedChildren(False)
+            elif ((width == self.SIZE_UNDEFINED
+                    and self.getWidth() != self.SIZE_UNDEFINED)
+                  or (unit == self.UNITS_PERCENTAGE
+                    and self.getWidthUnits() != self.UNITS_PERCENTAGE
+                    and not ComponentSizeValidator.parentCanDefineWidth(self))):
 
-        elif ((width == self.SIZE_UNDEFINED
-                and self.getWidth() != self.SIZE_UNDEFINED)
-              or (unit == self.UNITS_PERCENTAGE
-                and self.getWidthUnits() != self.UNITS_PERCENTAGE
-                and not ComponentSizeValidator.parentCanDefineWidth(self))):
+                # relative width children may get to invalid state if width
+                # becomes invalid. Width may also become invalid if units become
+                # percentage due to the fallback support
+                childrenMayBecomeUndefined = True
+                dirtyChildren = self.getInvalidSizedChildren(False)
 
-            # relative width children may get to invalid state if width
-            # becomes invalid. Width may also become invalid if units become
-            # percentage due to the fallback support
-            childrenMayBecomeUndefined = True
-            dirtyChildren = self.getInvalidSizedChildren(False)
-
-        super(AbstractComponentContainer, self).setWidth(width, unit)
-        self.repaintChangedChildTrees(dirtyChildren,
-                childrenMayBecomeUndefined, False)
+            super(AbstractComponentContainer, self).setWidth(width, unit)
+            self.repaintChangedChildTrees(dirtyChildren,
+                    childrenMayBecomeUndefined, False)
+        else:
+            super(AbstractComponentContainer, self).setWidth(width)
 
 
     def repaintChangedChildTrees(self, invalidChildren,
@@ -299,36 +321,38 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
                 c.requestRepaint()
 
 
-    def setHeight(self, height, unit):
+    def setHeight(self, height, unit=None):
+        if unit is not None:
+            from muntjac.terminal.gwt.server.component_size_validator import \
+                ComponentSizeValidator  # FIXME: circular import
 
-        from muntjac.terminal.gwt.server.component_size_validator import \
-            ComponentSizeValidator  # FIXME: circular import
+            # child tree repaints may be needed, due to our fall back support
+            # for invalid relative sizes
+            dirtyChildren = None
+            childrenMayBecomeUndefined = False
+            if (self.getHeight() == self.SIZE_UNDEFINED
+                    and height != self.SIZE_UNDEFINED):
+                # children currently in invalid state may need repaint
+                dirtyChildren = self.getInvalidSizedChildren(True)
 
-        # child tree repaints may be needed, due to our fall back support
-        # for invalid relative sizes
-        dirtyChildren = None
-        childrenMayBecomeUndefined = False
-        if (self.getHeight() == self.SIZE_UNDEFINED
-                and height != self.SIZE_UNDEFINED):
-            # children currently in invalid state may need repaint
-            dirtyChildren = self.getInvalidSizedChildren(True)
+            elif ((height == self.SIZE_UNDEFINED
+                    and self.getHeight() != self.SIZE_UNDEFINED)
+                  or (unit == self.UNITS_PERCENTAGE
+                    and self.getHeightUnits() != self.UNITS_PERCENTAGE
+                    and not ComponentSizeValidator.parentCanDefineHeight(self))):
 
-        elif ((height == self.SIZE_UNDEFINED
-                and self.getHeight() != self.SIZE_UNDEFINED)
-              or (unit == self.UNITS_PERCENTAGE
-                and self.getHeightUnits() != self.UNITS_PERCENTAGE
-                and not ComponentSizeValidator.parentCanDefineHeight(self))):
+                # relative height children may get to invalid state if height
+                # becomes invalid. Height may also become invalid if units
+                # become percentage due to the fallback support.
+                childrenMayBecomeUndefined = True
+                dirtyChildren = self.getInvalidSizedChildren(True)
 
-            # relative height children may get to invalid state if height
-            # becomes invalid. Height may also become invalid if units
-            # become percentage due to the fallback support.
-            childrenMayBecomeUndefined = True
-            dirtyChildren = self.getInvalidSizedChildren(True)
+            super(AbstractComponentContainer, self).setHeight(height, unit)
 
-        super(AbstractComponentContainer, self).setHeight(height, unit)
-
-        self.repaintChangedChildTrees(dirtyChildren,
-                childrenMayBecomeUndefined, True)
+            self.repaintChangedChildTrees(dirtyChildren,
+                    childrenMayBecomeUndefined, True)
+        else:
+            super(AbstractComponentContainer, self).setHeight(height)
 
 
     def requestRepaintAll(self):

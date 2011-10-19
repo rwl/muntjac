@@ -113,6 +113,10 @@ class IComponentContainer(IComponent):
         raise NotImplementedError
 
 
+    def addComponentAttachListener(self, listener):
+        raise NotImplementedError
+
+
     def removeListener(self, listener):
         """Stops the listening component attach events.
 
@@ -121,6 +125,10 @@ class IComponentContainer(IComponent):
         ---
         Stops the listening component detach events.
         """
+        raise NotImplementedError
+
+
+    def removeComponentAttachListener(self, listener):
         raise NotImplementedError
 
 

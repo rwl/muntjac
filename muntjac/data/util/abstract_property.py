@@ -90,6 +90,20 @@ class AbstractProperty(prop.IProperty, prop.IValueChangeNotifier,
             super(AbstractProperty, self).addListener(listener)
 
 
+    def addReadOnlyStatusChangeListener(self, listener):
+        if self._readOnlyStatusChangeListeners is None:
+            self._readOnlyStatusChangeListeners = list()
+
+        self._readOnlyStatusChangeListeners.append(listener)
+
+
+    def addValueChangeListener(self, listener):
+        if self._valueChangeListeners is None:
+            self._valueChangeListeners = list()
+
+        self._valueChangeListeners.append(listener)
+
+
     def removeListener(self, listener):
         """Removes a previously registered read-only status change listener.
 
@@ -104,6 +118,16 @@ class AbstractProperty(prop.IProperty, prop.IValueChangeNotifier,
                 self._valueChangeListeners.remove(listener)
         else:
             super(AbstractProperty, self).removeListener(listener)
+
+
+    def removeReadOnlyStatusChangeListener(self, listener):
+        if self._readOnlyStatusChangeListeners is not None:
+            self._readOnlyStatusChangeListeners.remove(listener)
+
+
+    def removeValueChangeListener(self, listener):
+        if self._valueChangeListeners is not None:
+            self._valueChangeListeners.remove(listener)
 
 
     def fireReadOnlyStatusChange(self):

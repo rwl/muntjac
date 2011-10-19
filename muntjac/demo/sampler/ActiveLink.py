@@ -48,12 +48,28 @@ class ActiveLink(Link):
             self.requestRepaint()
 
 
+    def addLinkActivatedListener(self, listener):
+        self._listeners.add(listener)
+        super(ActiveLink, self).addListener(LinkActivatedEvent,
+                listener, _LINK_FOLLOWED_METHOD)
+        if len(self._listeners) == 1:
+            self.requestRepaint()
+
+
     def removeListener(self, listener):
         """Removes the link activated listener.
 
         @param listener
                    the Listener to be removed.
         """
+        self._listeners.remove(listener)
+        super(ActiveLink, self).removeListener(ClickEvent,
+                listener, _LINK_FOLLOWED_METHOD)
+        if len(self._listeners) == 0:
+            self.requestRepaint()
+
+
+    def removeLinkActivatedListener(self, listener):
         self._listeners.remove(listener)
         super(ActiveLink, self).removeListener(ClickEvent,
                 listener, _LINK_FOLLOWED_METHOD)

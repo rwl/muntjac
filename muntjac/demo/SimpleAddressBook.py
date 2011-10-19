@@ -10,9 +10,6 @@ from muntjac.api import \
     (Application, Form, TextField, Table, HorizontalLayout,
      HorizontalSplitPanel, Window, VerticalLayout, Button)
 
-from muntjac.ui.abstract_component import AbstractComponent
-from muntjac.ui.abstract_field import AbstractField
-
 
 class SimpleAddressBook(Application):
 
@@ -52,7 +49,7 @@ class SimpleAddressBook(Application):
         self._contactEditor.setSizeFull()
         self._contactEditor.getLayout().setMargin(True)
         self._contactEditor.setImmediate(True)
-        AbstractComponent.setWidth(self._bottomLeftCorner, '100%')
+        self._bottomLeftCorner.setWidth('100%')
         left.addComponent(self._bottomLeftCorner)
 
 
@@ -72,10 +69,7 @@ class SimpleAddressBook(Application):
         self._contactList.setVisibleColumns(self._visibleCols)
         self._contactList.setSelectable(True)
         self._contactList.setImmediate(True)
-
-        AbstractField.addListener(self._contactList,
-                ContactChangeListener(self))
-
+        self._contactList.addListener(ContactChangeListener(self))
         return self._visibleCols
 
 
@@ -87,8 +81,7 @@ class SimpleAddressBook(Application):
             sf.setValue(pn)
             sf.setImmediate(True)
             self._bottomLeftCorner.setExpandRatio(sf, 1)
-
-            AbstractField.addListener(sf, TextChangeListener(pn, sf, self))
+            sf.addListener(TextChangeListener(pn, sf, self))
 
     @classmethod
     def createDummyData(cls):

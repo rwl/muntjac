@@ -133,7 +133,15 @@ class SystemErr(RuntimeError, IErrorMessage):
         pass
 
 
+    def addRepaintRequestListener(self, listener):
+        pass
+
+
     def removeListener(self, listener):
+        pass
+
+
+    def removeRepaintRequestListener(self, listener):
         pass
 
 

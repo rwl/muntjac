@@ -70,12 +70,20 @@ class ILayoutClickNotifier(object):
         raise NotImplementedError
 
 
+    def addLayoutClickListener(self, listener):
+        raise NotImplementedError
+
+
     def removeListener(self, listener):
         """Removes an LayoutClickListener.
 
         @param listener
                    LayoutClickListener to be removed
         """
+        raise NotImplementedError
+
+
+    def removeLayoutClickListener(self, listener):
         raise NotImplementedError
 
 

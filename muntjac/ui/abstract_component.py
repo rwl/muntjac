@@ -808,6 +808,18 @@ class AbstractComponent(IComponent, IMethodEventSource):
             raise ValueError, 'invalid number of arguments'
 
 
+    def addComponentListener(self, listener):
+        self.addListener(ComponentEvent, listener, _COMPONENT_EVENT_METHOD)
+
+
+    def addRepaintRequestListener(self, listener):
+        if self._repaintRequestListeners is None:
+            self._repaintRequestListeners = list()
+
+        if listener not in self._repaintRequestListeners:
+            self._repaintRequestListeners.append(listener)
+
+
     def removeListener(self, *args):
         """Removes all registered listeners matching the given parameters.
         Since this method receives the event type and the listener object
@@ -929,6 +941,17 @@ class AbstractComponent(IComponent, IMethodEventSource):
             raise ValueError, 'invalid number of arguments'
 
 
+    def removeComponentListener(self, listener):
+        self.removeListener(ComponentEvent, listener, _COMPONENT_EVENT_METHOD)
+
+
+    def removeRepaintRequestListener(self, listener):
+        if self._repaintRequestListeners is not None:
+            self._repaintRequestListeners.remove(listener)
+            if len(self._repaintRequestListeners) == 0:
+                self._repaintRequestListeners = None
+
+
     def changeVariables(self, source, variables):
         # Invoked when the value of a variable has changed.
         pass
@@ -1028,24 +1051,18 @@ class AbstractComponent(IComponent, IMethodEventSource):
         return self._widthUnit
 
 
-    def setHeight(self, *args):
-        nargs = len(args)
-        if nargs == 1:
-            if isinstance(args[0], float):
-                height = args[0]
+    def setHeight(self, height, unit=None):
+        if unit is None:
+            if isinstance(height, float):
                 self.setHeight(height, self.getHeightUnits())
             else:
-                height = args[0]
                 p = self.parseStringSize(height)
                 self.setHeight(p[0], p[1])
-        elif nargs == 2:
-            height, unit = args
+        else:
             self._height = height
             self._heightUnit = unit
             self.requestRepaint()
             #ComponentSizeValidator.setHeightLocation(this);
-        else:
-            raise ValueError, 'too many arguments'
 
 
     def setHeightUnits(self, unit):
@@ -1062,24 +1079,18 @@ class AbstractComponent(IComponent, IMethodEventSource):
         self.setHeight(-1, self.UNITS_PIXELS)
 
 
-    def setWidth(self, *args):
-        nargs = len(args)
-        if nargs == 1:
-            if isinstance(args[0], float):
-                width, = args
+    def setWidth(self, width, unit=None):
+        if unit is None:
+            if isinstance(width, float):
                 self.setWidth(width, self.getWidthUnits())
             else:
-                width, = args
                 p = self.parseStringSize(width)
                 self.setWidth(p[0], p[1])
-        elif nargs == 2:
-            width, unit = args
+        else:
             self._width = width
             self._widthUnit = unit
             self.requestRepaint()
             #ComponentSizeValidator.setWidthLocation(this);
-        else:
-            raise ValueError, 'too many arguments'
 
 
     def setWidthUnits(self, unit):

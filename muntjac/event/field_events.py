@@ -47,6 +47,10 @@ class IFocusNotifier(object):
         raise NotImplementedError
 
 
+    def addFocusListener(self, listener):
+        raise NotImplementedError
+
+
     def removeListener(self, listener):
         """Removes a <code>IFocusListener</code> from the Component.
 
@@ -54,6 +58,10 @@ class IFocusNotifier(object):
         @see IFocusListener
         @since 6.2
         """
+        raise NotImplementedError
+
+
+    def removeFocusListener(self, listener):
         raise NotImplementedError
 
 
@@ -85,6 +93,10 @@ class IBlurNotifier(object):
         raise NotImplementedError
 
 
+    def addBlurListener(self, listener):
+        raise NotImplementedError
+
+
     def removeListener(self, listener):
         """Removes a <code>IBlurListener</code> from the Component.
 
@@ -92,6 +104,10 @@ class IBlurNotifier(object):
         @see IBlurListener
         @since 6.2
         """
+        raise NotImplementedError
+
+
+    def removeBlurListener(self, listener):
         raise NotImplementedError
 
 
@@ -234,5 +250,13 @@ class ITextChangeNotifier(object):
         raise NotImplementedError
 
 
+    def addTextChangeListener(self, listener):
+        raise NotImplementedError
+
+
     def removeListener(self, listener):
+        raise NotImplementedError
+
+
+    def removeTextChangeListener(self, listener):
         raise NotImplementedError

@@ -86,6 +86,16 @@ class OptionGroup(AbstractSelect, IBlurNotifier, IFocusNotifier):
             super(OptionGroup, self).addListener(*args)
 
 
+    def addBlurListener(self, listener):
+        super(OptionGroup, self).addListener(BlurEvent.EVENT_ID,
+                BlurEvent, listener, IBlurListener.blurMethod)
+
+
+    def addFocusListener(self, listener):
+        super(OptionGroup, self).addListener(FocusEvent.EVENT_ID,
+                FocusEvent, listener, IFocusListener.focusMethod)
+
+
     def removeListener(self, *args):
         nargs = len(args)
         if nargs == 1:
@@ -100,6 +110,16 @@ class OptionGroup(AbstractSelect, IBlurNotifier, IFocusNotifier):
                 super(OptionGroup, self).removeListener(listener)
         else:
             super(OptionGroup, self).removeListener(*args)
+
+
+    def removeBlurListener(self, listener):
+        super(OptionGroup, self).removeListener(BlurEvent.EVENT_ID,
+                BlurEvent, listener)
+
+
+    def removeFocusListener(self, listener):
+        super(OptionGroup, self).removeListener(FocusEvent.EVENT_ID,
+                FocusEvent, listener)
 
 
     def setValue(self, newValue, repaintIsNotNeeded):

@@ -61,6 +61,10 @@ class IErrorMessage(IPaintable):
         raise NotImplementedError
 
 
+    def addRepaintRequestListener(self, listener):
+        raise NotImplementedError
+
+
     def removeListener(self, listener):
         """Error messages are inmodifiable and thus listeners are not needed.
         This method should be implemented as empty.
@@ -69,6 +73,10 @@ class IErrorMessage(IPaintable):
                    the listener to be removed.
         @see com.vaadin.terminal.IPaintable#removeListener(listener)
         """
+        raise NotImplementedError
+
+
+    def removeRepaintRequestListener(self, listener):
         raise NotImplementedError
 
 

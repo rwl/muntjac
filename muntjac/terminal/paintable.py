@@ -87,12 +87,20 @@ class IPaintable(IEventListener):
         raise NotImplementedError
 
 
+    def addRepaintRequestListener(self, listener):
+        raise NotImplementedError
+
+
     def removeListener(self, listener):
         """Removes repaint request listener.
 
         @param listener
                    the listener to be removed.
         """
+        raise NotImplementedError
+
+
+    def removeRepaintRequestListener(self, listener):
         raise NotImplementedError
 
 

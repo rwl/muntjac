@@ -3109,6 +3109,31 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
             super(Table, self).addListener(*args)
 
 
+    def addColumnReorderListener(self, listener):
+        super(Table, self).addListener(VScrollTable.COLUMN_REORDER_EVENT_ID,
+                ColumnReorderEvent, listener, COLUMN_REORDER_METHOD)
+
+
+    def addColumnResizeListener(self, listener):
+        super(Table, self).addListener(VScrollTable.COLUMN_RESIZE_EVENT_ID,
+                ColumnResizeEvent, listener, COLUMN_RESIZE_METHOD)
+
+
+    def addFooterClickListener(self, listener):
+        super(Table, self).addListener(VScrollTable.FOOTER_CLICK_EVENT_ID,
+                FooterClickEvent, listener, FOOTER_CLICK_METHOD)
+
+
+    def addHeaderClickListener(self, listener):
+        super(Table, self).addListener(VScrollTable.HEADER_CLICK_EVENT_ID,
+                HeaderClickEvent, listener, HEADER_CLICK_METHOD)
+
+
+    def addItemClickListener(self, listener):
+        super(Table, self).addListener(VScrollTable.ITEM_CLICK_EVENT_ID,
+                ItemClickEvent, listener, ITEM_CLICK_METHOD)
+
+
     def removeListener(self, *args):
         """Removes a listener from the Table.
 
@@ -3142,6 +3167,31 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                 super(Table, self).removeListener(listener)
         else:
             super(Table, self).removeListener(*args)
+
+
+    def removeColumnReorderListener(self, listener):
+        super(Table, self).removeListener(VScrollTable.COLUMN_REORDER_EVENT_ID,
+                ColumnReorderEvent, listener)
+
+
+    def removeColumnResizeListener(self, listener):
+        super(Table, self).removeListener(VScrollTable.COLUMN_RESIZE_EVENT_ID,
+                ColumnResizeEvent, listener)
+
+
+    def removeFooterClickListener(self, listener):
+        super(Table, self).removeListener(VScrollTable.FOOTER_CLICK_EVENT_ID,
+                FooterClickEvent, listener)
+
+
+    def removeHeaderClickListener(self, listener):
+        super(Table, self).removeListener(VScrollTable.HEADER_CLICK_EVENT_ID,
+                HeaderClickEvent, listener)
+
+
+    def removeItemClickListener(self, listener):
+        super(Table, self).removeListener(VScrollTable.ITEM_CLICK_EVENT_ID,
+                ItemClickEvent, listener)
 
 
     def setEnabled(self, enabled):

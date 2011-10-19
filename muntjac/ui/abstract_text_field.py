@@ -453,6 +453,22 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
             super(AbstractTextField, self).addListener(*args)
 
 
+    def addBlurListener(self, listener):
+        super(AbstractTextField, self).addListener(BlurEvent.EVENT_ID,
+                BlurEvent, listener, IBlurListener.blurMethod)
+
+
+    def addFocusListener(self, listener):
+        super(AbstractTextField, self).addListener(FocusEvent.EVENT_ID,
+                FocusEvent, listener, IFocusListener.focusMethod)
+
+
+    def addTextChangeListener(self, listener):
+        super(AbstractTextField, self).addListener(
+                ITextChangeListener.EVENT_ID,
+                TextChangeEvent, listener, EVENT_METHOD)
+
+
     def removeListener(self, *args):
         nargs = len(args)
         if nargs == 1:
@@ -473,6 +489,21 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
                 super(AbstractTextField, self).addListener(listener)
         else:
             super(AbstractTextField, self).addListener(*args)
+
+
+    def removeBlurListener(self, listener):
+        super(AbstractTextField, self).removeListener(BlurEvent.EVENT_ID,
+                BlurEvent, listener)
+
+
+    def removeFocusListener(self, listener):
+        super(AbstractTextField, self).removeListener(FocusEvent.EVENT_ID,
+                FocusEvent, listener)
+
+
+    def removeTextChangeListener(self, listener):
+        super(AbstractTextField, self).removeListener(
+                ITextChangeListener.EVENT_ID, TextChangeEvent, listener)
 
 
     def setTextChangeTimeout(self, timeout):

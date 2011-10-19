@@ -704,6 +704,16 @@ class AbstractField(AbstractComponent, field.IField,
             super(AbstractField, self).addListener(*args)
 
 
+    def addReadOnlyStatusChangeListener(self, listener):
+        super(AbstractField, self).addListener(prop.IReadOnlyStatusChangeEvent,
+                listener, _READ_ONLY_STATUS_CHANGE_METHOD)
+
+
+    def addValueChangeListener(self, listener):
+        super(AbstractField, self).addListener(field.ValueChangeEvent,
+                listener, _VALUE_CHANGE_METHOD)
+
+
     def removeListener(self, *args):
         # Removes a value change listener from the field.
         nargs = len(args)
@@ -721,6 +731,17 @@ class AbstractField(AbstractComponent, field.IField,
                 super(AbstractField, self).removeListener(listener)
         else:
             super(AbstractField, self).removeListener(*args)
+
+
+    def removeReadOnlyStatusChangeListener(self, listener):
+        super(AbstractField, self).removeListener(
+                prop.IReadOnlyStatusChangeEvent, listener,
+                _READ_ONLY_STATUS_CHANGE_METHOD)
+
+
+    def removeValueChangeListener(self, listener):
+        super(AbstractField, self).removeListener(field.ValueChangeEvent,
+                listener, _VALUE_CHANGE_METHOD)
 
 
     def fireValueChange(self, repaintIsNotNeeded):

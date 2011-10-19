@@ -236,6 +236,12 @@ class CssLayout(AbstractLayout, ILayoutClickNotifier):
             super(CssLayout, self).addListener(*args)
 
 
+    def addLayoutClickListener(self, listener):
+        super(CssLayout, self).addListener(self._CLICK_EVENT,
+                LayoutClickEvent, listener,
+                ILayoutClickListener.clickMethod)
+
+
     def removeListener(self, *args):
         nargs = len(args)
         if nargs == 1:
@@ -247,3 +253,8 @@ class CssLayout(AbstractLayout, ILayoutClickNotifier):
                 super(CssLayout, self).removeListener(listener)
         else:
             super(CssLayout, self).removeListener(*args)
+
+
+    def removeLayoutClickListener(self, listener):
+        super(CssLayout, self).removeListener(self._CLICK_EVENT,
+                LayoutClickEvent, listener)

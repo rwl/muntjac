@@ -113,7 +113,7 @@ class JsonPaintTarget(IPaintTarget):
                 and (self._identifiersCreatedDueRefPaint is None
                 or paintable not in self._identifiersCreatedDueRefPaint))
             idd = self._manager.getPaintableId(paintable)
-            AbstractComponent.addListener(paintable, self._manager)
+            paintable.addListener(self._manager)
             self.addAttribute('id', idd)
             self._paintedComponents.add(paintable)
 

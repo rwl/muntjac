@@ -207,6 +207,11 @@ class LoginForm(CustomComponent):
             super(LoginForm, self).addListener(*args)
 
 
+    def addLoginListener(self, listener):
+        super(LoginForm, self).addListener(LoginEvent,
+                listener, _ON_LOGIN_METHOD)
+
+
     def removeListener(self, *args):
         """Removes ILoginListener
 
@@ -224,22 +229,33 @@ class LoginForm(CustomComponent):
             super(LoginForm, self).removeListener(*args)
 
 
-    def setWidth(self, width, unit):
-        super(LoginForm, self).setWidth(width, unit)
-        if self._iframe is not None:
-            if width < 0:
-                self._iframe.setWidth(self._UNDEFINED_WIDTH)
-            else:
-                self._iframe.setWidth('100%')
+    def removeLoginListener(self, listener):
+        super(LoginForm, self).removeListener(LoginEvent,
+                listener, _ON_LOGIN_METHOD)
 
 
-    def setHeight(self, height, unit):
-        super(LoginForm, self).setHeight(height, unit)
-        if self._iframe is not None:
-            if height < 0:
-                self._iframe.setHeight(self._UNDEFINED_HEIGHT)
-            else:
-                self._iframe.setHeight('100%')
+    def setWidth(self, width, unit=None):
+        if unit is not None:
+            super(LoginForm, self).setWidth(width, unit)
+            if self._iframe is not None:
+                if width < 0:
+                    self._iframe.setWidth(self._UNDEFINED_WIDTH)
+                else:
+                    self._iframe.setWidth('100%')
+        else:
+            super(LoginForm, self).setWidth(width)
+
+
+    def setHeight(self, height, unit=None):
+        if unit is not None:
+            super(LoginForm, self).setHeight(height, unit)
+            if self._iframe is not None:
+                if height < 0:
+                    self._iframe.setHeight(self._UNDEFINED_HEIGHT)
+                else:
+                    self._iframe.setHeight('100%')
+        else:
+            super(LoginForm, self).setHeight(height)
 
 
     def getUsernameCaption(self):

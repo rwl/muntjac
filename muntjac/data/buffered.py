@@ -275,7 +275,15 @@ class SourceException(RuntimeError, IErrorMessage):
         raise NotImplementedError
 
 
+    def addRepaintRequestListener(self, listener):
+        raise NotImplementedError
+
+
     def removeListener(self, listener):
+        raise NotImplementedError
+
+
+    def removeRepaintRequestListener(self, listener):
         raise NotImplementedError
 
 

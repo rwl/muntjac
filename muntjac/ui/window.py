@@ -971,6 +971,26 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
             super(Window, self).addListener(*args)
 
 
+    def addBlurListener(self, listener):
+        super(Window, self).addListener(BlurEvent.EVENT_ID,
+                BlurEvent, listener, IBlurListener.blurMethod)
+
+
+    def addCloseListener(self, listener):
+        super(Window, self).addListener(CloseEvent,
+                listener, _WINDOW_CLOSE_METHOD)
+
+
+    def addFocusListener(self, listener):
+        super(Window, self).addListener(FocusEvent.EVENT_ID,
+                FocusEvent, listener, IFocusListener.focusMethod)
+
+
+    def addResizeListener(self, listener):
+        super(Window, self).addListener(ResizeEvent,
+                listener, _WINDOW_RESIZE_METHOD)
+
+
     def removeListener(self, *args):
         """Removes the ICloseListener from the window.
 
@@ -1002,6 +1022,25 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
                 super(Window, self).removeListener(listener)
         else:
             super(Window, self).removeListener(*args)
+
+
+    def removeBlurListener(self, listener):
+        super(Window, self).removeListener(BlurEvent.EVENT_ID,
+                BlurEvent, listener)
+
+
+    def removeCloseListener(self, listener):
+        super(Window, self).removeListener(CloseEvent, listener,
+                _WINDOW_CLOSE_METHOD)
+
+
+    def removeFocusListener(self, listener):
+        super(Window, self).removeListener(FocusEvent.EVENT_ID,
+                FocusEvent, listener)
+
+
+    def removeResizeListener(self, listener):
+        super(Window, self).removeListener(ResizeEvent, listener)
 
 
     def fireClose(self):

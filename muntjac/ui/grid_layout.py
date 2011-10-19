@@ -940,6 +940,11 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
             super(GridLayout, self).addListener(*args)
 
 
+    def addLayoutClickListener(self, listener):
+        super(GridLayout, self).addListener(self._CLICK_EVENT,
+                LayoutClickEvent, listener, ILayoutClickListener.clickMethod)
+
+
     def removeListener(self, *args):
         nargs = len(args)
         if nargs == 1:
@@ -951,6 +956,11 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
                 super(GridLayout, self).removeListener(listener)
         else:
             super(GridLayout, self).removeListener(*args)
+
+
+    def removeLayoutClickListener(self, listener):
+        super(GridLayout, self).removeListener(self._CLICK_EVENT,
+                LayoutClickEvent, listener)
 
 
 class Area(object):

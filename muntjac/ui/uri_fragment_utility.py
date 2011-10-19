@@ -53,6 +53,11 @@ class UriFragmentUtility(AbstractComponent):
             super(UriFragmentUtility, self).addListener(*args)
 
 
+    def addFragmentChangedListener(self, listener):
+        super(UriFragmentUtility, self).addListener(FragmentChangedEvent,
+                listener, _FRAGMENT_CHANGED_METHOD)
+
+
     def removeListener(self, *args):
         nargs = len(args)
         if nargs == 1:
@@ -65,6 +70,11 @@ class UriFragmentUtility(AbstractComponent):
                 super(UriFragmentUtility, self).removeListener(listener)
         else:
             super(UriFragmentUtility, self).removeListener(*args)
+
+
+    def removeFragmentChangedListener(self, listener):
+        super(UriFragmentUtility, self).removeListener(FragmentChangedEvent,
+                listener, _FRAGMENT_CHANGED_METHOD)
 
 
     def __init__(self):

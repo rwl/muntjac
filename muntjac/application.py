@@ -1287,6 +1287,27 @@ class Application(IUriHandler, ITerminal, IErrorListener):
             super(Application, self).addListener(listener)
 
 
+    def addUserChangeListener(self, listener):
+        if self._userChangeListeners is None:
+            self._userChangeListeners = list()
+
+        self._userChangeListeners.append(listener)
+
+
+    def addWindowAttachListener(self, listener):
+        if self._windowAttachListeners is None:
+            self._windowAttachListeners = list()
+
+        self._windowAttachListeners.append(listener)
+
+
+    def addWindowDetachListener(self, listener):
+        if self._windowDetachListeners is None:
+            self._windowDetachListeners = list()
+
+        self._windowDetachListeners.append(listener)
+
+
     def removeListener(self, listener):
         """Removes the user change listener.
 
@@ -1323,6 +1344,28 @@ class Application(IUriHandler, ITerminal, IErrorListener):
                     self._windowDetachListeners = None
         else:
             super(Application, self).addListener(listener)
+
+
+    def removeUserChangeListener(self, listener):
+        if self._userChangeListeners is None:
+            return
+        self._userChangeListeners.remove(listener)
+        if len(self._userChangeListeners) == 0:
+            self._userChangeListeners = None
+
+
+    def removeWindowAttachListener(self, listener):
+        if self._windowAttachListeners is not None:
+            self._windowAttachListeners.remove(listener)
+            if len(self._windowAttachListeners) == 0:
+                self._windowAttachListeners = None
+
+
+    def removeWindowDetachListener(self, listener):
+        if self._windowDetachListeners is not None:
+            self._windowDetachListeners.remove(listener)
+            if len(self._windowDetachListeners) == 0:
+                self._windowDetachListeners = None
 
 
     def getLogoutURL(self):

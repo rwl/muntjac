@@ -690,6 +690,10 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
         raise NotImplementedError
 
 
+    def addComponentListener(self, listener):
+        raise NotImplementedError
+
+
     def removeListener(self, listener):
         """Removes a previously registered component event listener from this
         component.
@@ -698,6 +702,10 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
                    the listener to be removed.
         @see #addListener(IListener)
         """
+        raise NotImplementedError
+
+
+    def removeComponentListener(self, listener):
         raise NotImplementedError
 
 

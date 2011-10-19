@@ -15,7 +15,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.ui.abstract_ordered_layout import AbstractOrderedLayout
-from muntjac.ui.abstract_component import AbstractComponent
 
 
 class VerticalLayout(AbstractOrderedLayout):
@@ -36,4 +35,4 @@ class VerticalLayout(AbstractOrderedLayout):
     def __init__(self):
         super(VerticalLayout, self).__init__()
 
-        AbstractComponent.setWidth(self, '100%')
+        self.setWidth('100%')
