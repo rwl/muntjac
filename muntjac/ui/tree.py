@@ -412,8 +412,12 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
                     target.addAttribute('selectmode', 'single')
 
                 if self.isMultiSelect():
-                    target.addAttribute('multiselectmode',
-                        MultiSelectMode.values().index(self._multiSelectMode))
+                    try:
+                        idx = MultiSelectMode.values().index(
+                                self._multiSelectMode)
+                    except ValueError:
+                        idx = -1
+                    target.addAttribute('multiselectmode', idx)
             else:
                 target.addAttribute('selectmode', 'none')
 

@@ -117,6 +117,13 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
         # Visible item properties.
         self._visibleItemProperties = None
 
+        # Form needs to repaint itself if child fields value changes due
+        # possible change in form validity.
+        #
+        # TODO introduce ValidityChangeEvent (#6239) and start using it instead.
+        # See e.g. DateField#notifyFormOfValidityChange().
+        self._fieldValueChangeListener = FieldValueChangeListener(self)
+
         self._formFooter = None
 
         # If this is true, commit implicitly calls setValidationVisible(true).
@@ -141,17 +148,6 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
         self.setFormFieldFactory(fieldFactory)
         self.setValidationVisible(False)
         self.setWidth(100, self.UNITS_PERCENTAGE)
-
-
-    # Form needs to repaint itself if child fields value changes due possible
-    # change in form validity.
-    #
-    # TODO introduce ValidityChangeEvent (#6239) and start using it instead.
-    # See e.g. DateField#notifyFormOfValidityChange().
-    class fieldValueChangeListener(IValueChangeListener):
-
-        def valueChange(self, event):
-            self.requestRepaint()
 
 
     def paintContent(self, target):
@@ -376,7 +372,7 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
             return False
 
         self._propertyIds.add(idd)
-        self._ownProperties.put(idd, prop)
+        self._ownProperties[idd] = prop
 
         # Gets suitable field
         field = self._fieldFactory.createField(self, idd, self)
@@ -427,11 +423,11 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
             return
 
         self._fields[propertyId] = field
-        field.addListener(self.fieldValueChangeListener,
-                prop.IValueChangeListener)
+        field.addListener(self._fieldValueChangeListener,
+                IValueChangeListener)
         if propertyId not in self._propertyIds:
             # adding a field directly
-            self._propertyIds.addLast(propertyId)
+            self._propertyIds.append(propertyId)
 
         # Update the read and write through status and immediate to match the
         # form.
@@ -507,15 +503,19 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
 
         @see com.vaadin.data.IItem#removeItemProperty(Object)
         """
-        self._ownProperties.remove(idd)
+        if idd in self._ownProperties:
+            del self._ownProperties[idd]
+
         field = self._fields.get(idd)
+
         if field is not None:
-            del self._propertyIds[idd]
+            self._propertyIds.remove(idd)
             del self._fields[idd]
             self.detachField(field)
-            field.removeListener(self.fieldValueChangeListener,
+            field.removeListener(self._fieldValueChangeListener,
                     IValueChangeListener)
             return True
+
         return False
 
 
@@ -576,7 +576,7 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
                 self.setItemDataSource(newDataSource,
                         newDataSource.getItemPropertyIds())
             else:
-                self.setItemDataSource(None)
+                self.setItemDataSource(newDataSource, [])
         else:
             if isinstance(self._layout, GridLayout):
                 gl = self._layout
@@ -752,9 +752,9 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
         # Replaces the old field with new one
         self._layout.replaceComponent(oldField, newField)
         self._fields[propertyId] = newField
-        newField.addListener(self.fieldValueChangeListener,
+        newField.addListener(self._fieldValueChangeListener,
                 prop.IValueChangeListener)
-        oldField.removeListener(self.fieldValueChangeListener,
+        oldField.removeListener(self._fieldValueChangeListener,
                 prop.IValueChangeListener)
 
         return newField
@@ -1105,3 +1105,12 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
     def removeAction(self, action):
         if self._ownActionManager is not None:
             self._ownActionManager.removeAction(action)
+
+
+class FieldValueChangeListener(IValueChangeListener):
+
+    def __init__(self, form):
+        self._form = form
+
+    def valueChange(self, event):
+        self._form.requestRepaint()

@@ -71,7 +71,8 @@ class KeyMapper(object):
         key = self._objectKeyMap.get(removeobj)
         if key is not None:
             del self._objectKeyMap[removeobj]
-            del self._keyObjectMap[key]
+            if key in self._keyObjectMap:
+                del self._keyObjectMap[key]
 
 
     def removeAll(self):

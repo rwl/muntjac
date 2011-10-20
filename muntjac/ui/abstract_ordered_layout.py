@@ -98,8 +98,10 @@ class AbstractOrderedLayout(AbstractLayout, IAlignmentHandler,
         @param c the component to be removed.
         """
         self.components.remove(c)
-        del self._componentToAlignment[c]
-        del self._componentToExpandRatio[c]
+        if c in self._componentToAlignment:
+            del self._componentToAlignment[c]
+        if c in self._componentToExpandRatio:
+            del self._componentToExpandRatio[c]
         super(AbstractOrderedLayout, self).removeComponent(c)
         self.requestRepaint()
 
@@ -168,13 +170,15 @@ class AbstractOrderedLayout(AbstractLayout, IAlignmentHandler,
                 self.components.remove(oldComponent)
                 self.components.insert(newLocation, oldComponent)
                 self.components.remove(newComponent)
-                del self._componentToAlignment[newComponent]
+                if newComponent in self._componentToAlignment:
+                    del self._componentToAlignment[newComponent]
                 self.components.insert(oldLocation, newComponent)
             else:
                 self.components.remove(newComponent)
                 self.components.insert(oldLocation, newComponent)
                 self.components.remove(oldComponent)
-                del self._componentToAlignment[oldComponent]
+                if oldComponent in self._componentToAlignment:
+                    del self._componentToAlignment[oldComponent]
                 self.components.insert(newLocation, oldComponent)
 
             self.requestRepaint()
@@ -301,7 +305,10 @@ class AbstractOrderedLayout(AbstractLayout, IAlignmentHandler,
         @return The index of the component or -1 if the component
                 is not a child.
         """
-        return self.components.index(component)
+        try:
+            return self.components.index(component)
+        except ValueError:
+            return -1
 
 
     def getComponent(self, index):

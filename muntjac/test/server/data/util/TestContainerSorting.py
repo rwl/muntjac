@@ -139,8 +139,8 @@ class TestContainerSorting(TestCase):
         nargs = len(args)
         if nargs == 3:
             container, string, parent = args
-            cls._nameToId.put(string, cls._index)
-            cls._idToName.put(cls._index, string)
+            cls._nameToId[string] = cls._index
+            cls._idToName[cls._index] = string
             item = container.addItem(cls._index)
             item.getItemProperty('name').setValue(string)
             if parent is not None and isinstance(container, HierarchicalContainer):

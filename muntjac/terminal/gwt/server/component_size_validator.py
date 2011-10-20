@@ -497,7 +497,7 @@ class ComponentSizeValidator(object):
 #                    continue
 
                 cl = FileLocation(traceElement)
-                map.put(object, cl)
+                map[object] = cl
                 return
             except Exception:
                 # TODO Auto-generated catch block

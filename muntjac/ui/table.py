@@ -785,7 +785,8 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                    the icon Resource to set.
         """
         if icon is None:
-            del self._columnIcons[propertyId]
+            if propertyId in self._columnIcons:
+                del self._columnIcons[propertyId]
         else:
             self._columnIcons[propertyId] = icon
 
@@ -823,9 +824,10 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                    the header to set.
         """
         if header is None:
-            del self._columnHeaders[propertyId]
+            if propertyId in self._columnHeaders:
+                del self._columnHeaders[propertyId]
         else:
-            self._columnHeaders.put(propertyId, header)
+            self._columnHeaders[propertyId] = header
 
         # Assures the visual refresh
         # FIXME: Is this really needed? Header captions should not
@@ -865,7 +867,8 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                     + '\' is not supported.')
 
         if alignment is None or alignment == self.ALIGN_LEFT:
-            del self._columnAlignments[propertyId]
+            if propertyId in self._columnAlignments:
+                del self._columnAlignments[propertyId]
             return
 
         self._columnAlignments[propertyId] = alignment
@@ -1442,7 +1445,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
             return self.getItemCaptionMode()
 
 
-    def addItem(self, cells, itemId):
+    def addItem(self, *args):
         """Adds the new row to table and fill the visible cells (except
         generated columns) with given values.
 
@@ -1457,37 +1460,45 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         @return Returns item id for the new row. Returns null if operation
                 fails.
         """
-        # remove generated columns from the list of columns being assigned
-        availableCols = list()
-        for idd in self._visibleColumns:
-            if  idd not in self._columnGenerators:
-                availableCols.append(idd)
+        nargs = len(args)
+        if nargs < 2:
+            super(Table, self).addItem(*args)
+        elif nargs == 2:
+            cells, itemId = args
+            # remove generated columns from the list of columns being assigned
+            availableCols = list()
+            for idd in self._visibleColumns:
+                if  idd not in self._columnGenerators:
+                    availableCols.append(idd)
 
-        # Checks that a correct number of cells are given
-        if len(cells) != len(availableCols):
-            return None
-
-        # Creates new item
-        if itemId is None:
-            itemId = self.items.addItem()
-            if itemId is None:
+            # Checks that a correct number of cells are given
+            if len(cells) != len(availableCols):
                 return None
-            item = self.items.getItem(itemId)
+
+            # Creates new item
+            if itemId is None:
+                itemId = self.items.addItem()
+                if itemId is None:
+                    return None
+                item = self.items.getItem(itemId)
+            else:
+                item = self.items.addItem(itemId)
+
+            if item is None:
+                return None
+
+            # Fills the item properties
+            for i in range(len(availableCols)):
+                item.getItemProperty( availableCols[i] ).setValue(cells[i])
+
+            if not isinstance(self.items, container.IItemSetChangeNotifier):
+                self.resetPageBuffer()
+                self.refreshRenderedCells()
+
+            return itemId
         else:
-            item = self.items.addItem(itemId)
+            raise ValueError, 'too many arguments'
 
-        if item is None:
-            return None
-
-        # Fills the item properties
-        for i in range(len(availableCols)):
-            item.getItemProperty( availableCols[i] ).setValue(cells[i])
-
-        if not isinstance(self.items, container.IItemSetChangeNotifier):
-            self.resetPageBuffer()
-            self.refreshRenderedCells()
-
-        return itemId
 
     # Overriding select behavior
     def setValue(self, newValue, repaintIsNotNeeded=None):
@@ -1894,12 +1905,18 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
             target.addAttribute('tabindex', self.getTabIndex())
 
         if self._dragMode != TableDragMode.NONE:
-            target.addAttribute('dragmode',
-                    TableDragMode.values().index(self._dragMode))
+            try:
+                idx = TableDragMode.values().index(self._dragMode)
+            except ValueError:
+                idx = -1
+            target.addAttribute('dragmode', idx)
 
         if self._multiSelectMode != MultiSelectMode.DEFAULT:
-            target.addAttribute('multiselectmode',
-                    MultiSelectMode.values().index(self._multiSelectMode))
+            try:
+                idx = MultiSelectMode.values().index(self._multiSelectMode)
+            except ValueError:
+                idx = -1
+            target.addAttribute('multiselectmode', idx)
 
         # Initialize temps
         colids = self.getVisibleColumns()
@@ -2472,10 +2489,14 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         """
         # If a visible property is removed, remove the corresponding column
         self._visibleColumns.remove(propertyId)
-        del self._columnAlignments[propertyId]
-        del self._columnIcons[propertyId]
-        del self._columnHeaders[propertyId]
-        del self._columnFooters[propertyId]
+        if propertyId in self._columnAlignments:
+            del self._columnAlignments[propertyId]
+        if propertyId in self._columnIcons:
+            del self._columnIcons[propertyId]
+        if propertyId in self._columnHeaders:
+            del self._columnHeaders[propertyId]
+        if propertyId in self._columnFooters:
+            del self._columnFooters[propertyId]
         return super(Table, self).removeContainerProperty(propertyId)
 
 
@@ -3281,7 +3302,8 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                    The caption of the footer
         """
         if footer is None:
-            del self._columnFooters[propertyId]
+            if propertyId in self._columnFooters:
+                del self._columnFooters[propertyId]
         else:
             self._columnFooters[propertyId] = footer
 

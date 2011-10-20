@@ -125,7 +125,7 @@ class SamplerApplication(Application):
         res = self._sampleIconCache[resId]
         if res is None:
             res = ThemeResource('../sampler/icons/sampleicons/' + resId)
-            self._sampleIconCache.put(resId, res)
+            self._sampleIconCache[resId] = res
         return res
 
 
@@ -765,10 +765,14 @@ class FeatureGrid(Panel, IFeatureList):
                                 + ' samples</em>' + rootTitle.getValue()))
                         sampleCount = 0
                     desc = f.getDescription()
+                    try:
+                        idx = desc.index(".")
+                    except ValueError:
+                        idx = -1
                     rootTitle = Label("<h2>"
                             + f.getName()
                             + "</h2><span>"
-                            + desc[:desc.index(".") + 1]
+                            + desc[:idx + 1]
                             + "</span>", Label.CONTENT_XHTML)
                     rootTitle.setSizeUndefined()
                     if f.getRelatedFeatures() is not None:
@@ -829,7 +833,11 @@ class FeatureGrid(Panel, IFeatureList):
                     if (f.getDescription() is not None
                             and f.getDescription() != ''):
                         desc = f.getDescription()
-                        sample.setDescription(desc[:desc.index('.') + 1])
+                        try:
+                            idx = desc.index('.')
+                        except ValueError:
+                            idx = -1
+                        sample.setDescription(desc[:idx + 1])
                     if f.getSinceVersion().isNew():
                         sample.addStyleName('new')
                     sample.setIcon(res)

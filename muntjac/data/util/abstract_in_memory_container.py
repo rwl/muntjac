@@ -212,7 +212,10 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
 
 
     def indexOfId(self, itemId):
-        return self.getVisibleItemIds().index(itemId)
+        try:
+            return self.getVisibleItemIds().index(itemId)
+        except ValueError:
+            return -1
 
 
     def addItemAt(self, index, newItemId=None):
@@ -640,9 +643,11 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
         if previousItemId is None:
             newItem = self.internalAddAt(0, newItemId, item)
         elif self.containsId(previousItemId):
-            newItem = self.internalAddAt(
-                    self.getAllItemIds().index(previousItemId) + 1,
-                    newItemId, item)
+            try:
+                idx = self.getAllItemIds().index(previousItemId)
+            except ValueError:
+                idx = -1
+            newItem = self.internalAddAt(idx + 1, newItemId, item)
 
         if newItem is not None and fltr:
             # TODO filter only this item, use fireItemAdded()

@@ -231,9 +231,11 @@ class CommunicationManager(AbstractCommunicationManager):
     def cleanStreamVariable(self, owner, name):
         nameToStreamVar = self._pidToNameToStreamVariable.get(
                 self.getPaintableId(owner))
-        del nameToStreamVar['name']
+        if 'name' in nameToStreamVar:
+            del nameToStreamVar['name']
         if len(nameToStreamVar) == 0:
-            del self._pidToNameToStreamVariable[self.getPaintableId(owner)]
+            if self.getPaintableId(owner) in self._pidToNameToStreamVariable:
+                del self._pidToNameToStreamVariable[self.getPaintableId(owner)]
 
 
 class HttpServletRequestWrapper(IRequest):

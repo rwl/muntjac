@@ -153,7 +153,8 @@ class Embedded(AbstractComponent):
         @param name
                    the name of the parameter to remove.
         """
-        del self._parameters[name]
+        if name in self._parameters:
+            del self._parameters[name]
         self.requestRepaint()
 
 

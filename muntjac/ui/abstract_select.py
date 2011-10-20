@@ -839,7 +839,8 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
         """
         if itemId is not None:
             if icon is None:
-                del self._itemIcons[itemId]
+                if itemId in self._itemIcons:
+                    del self._itemIcons[itemId]
             else:
                 self._itemIcons[itemId] = icon
             self.requestRepaint()

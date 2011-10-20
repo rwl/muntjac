@@ -498,7 +498,8 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                 callback, repaintAll, outWriter, window, analyzeLayouts)
 
         if self._closingWindowName is not None:
-            del self._currentlyOpenWindowsInClient[self._closingWindowName]
+            if self._closingWindowName in self._currentlyOpenWindowsInClient:
+                del self._currentlyOpenWindowsInClient[self._closingWindowName]
             self._closingWindowName = None
 
         # Finds the window within the application
@@ -599,9 +600,12 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
             for p in self._paintableIdMap.keys():
                 if p.getApplication() is None:
                     self.unregisterPaintable(p)
-                    del self._idPaintableMap[self._paintableIdMap[p]]
-                    del self._paintableIdMap[p]
-                    del self._dirtyPaintables[p]
+                    if self._paintableIdMap[p] in self._idPaintableMap:
+                        del self._idPaintableMap[self._paintableIdMap[p]]
+                    if p in self._paintableIdMap:
+                        del self._paintableIdMap[p]
+                    if p in self._dirtyPaintables:
+                        del self._dirtyPaintables[p]
 
             paintables = self.getDirtyVisibleComponents(window)
 
@@ -827,8 +831,10 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         for key in self._idPaintableMap.keys():
             c = self._idPaintableMap[key]
             if self.isChildOf(window, c):
-                del self._idPaintableMap[key]
-                del self._paintableIdMap[c]
+                if key in self._idPaintableMap:
+                    del self._idPaintableMap[key]
+                if c in self._paintableIdMap:
+                    del self._paintableIdMap[c]
 
         # clean WindowCache
         openWindowCache = \

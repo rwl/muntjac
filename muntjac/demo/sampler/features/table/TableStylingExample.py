@@ -116,7 +116,7 @@ class TableStylingExample(VerticalLayout):
                     cells = self._c._markedCells[itemId]
                     if cells is None:
                         cells = set()
-                        self._c._markedCells.put(itemId, cells)
+                        self._c._markedCells[itemId] = cells
                     if propertyId in cells:
                         # toggle marking off
                         cells.remove(propertyId)

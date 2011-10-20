@@ -385,7 +385,10 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
             if (self.isScrollToSelectedItem() and not self._optionRequest
                     and not self.isMultiSelect() and selection is not None):
                 # ensure proper page
-                indexToEnsureInView = options.index(selection)
+                try:
+                    indexToEnsureInView = options.index(selection)
+                except ValueError:
+                    indexToEnsureInView = -1
 
             size = len(options)
             self._currentPage = self.adjustCurrentPage(self._currentPage,

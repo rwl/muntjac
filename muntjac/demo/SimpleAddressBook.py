@@ -159,7 +159,7 @@ class TextChangeListener(IValueChangeListener):
             self._book._addressBookData.addContainerFilter(self._name,
                     str(self._text), True, False)
 
-        self._book._getMainWindow().showNotification((""
+        self._book.getMainWindow().showNotification((""
                 + self._book._addressBookData.size()
                 + " matches found"))
 

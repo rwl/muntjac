@@ -848,7 +848,7 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
         @param columnIndex
         @param ratio
         """
-        self._columnExpandRatio.put(columnIndex, ratio)
+        self._columnExpandRatio[columnIndex] = ratio
         self.requestRepaint()
 
 

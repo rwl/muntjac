@@ -213,7 +213,10 @@ class MenuBar(AbstractComponent):
         newItem = MenuItem(caption, icon, command, self)
 
         if itemToAddBefore in self._menuItems:
-            index = self._menuItems.index(itemToAddBefore)
+            try:
+                index = self._menuItems.index(itemToAddBefore)
+            except ValueError:
+                index = -1
             self._menuItems.insert(index, newItem)
         else:
             self._menuItems.append(newItem)
@@ -503,7 +506,10 @@ class MenuItem(object):
         newItem = None
 
         if self.hasChildren() and itemToAddBefore in self._itsChildren:
-            index = self._itsChildren.index(itemToAddBefore)
+            try:
+                index = self._itsChildren.index(itemToAddBefore)
+            except ValueError:
+                index = -1
             newItem = MenuItem(caption, icon, command, self._menu)
             newItem.setParent(self)
             self._itsChildren.append(index, newItem)

@@ -209,8 +209,10 @@ class IndexedContainer(AbstractInMemoryContainer,
 
 
     def removeItem(self, itemId):
-        if itemId is None or self._items.remove(itemId) is None:
+        if itemId is None or itemId not in self._items:
             return False
+        else:
+            del self._items[itemId]
 
         origSize = self.size()
         position = self.indexOfId(itemId)
@@ -233,9 +235,11 @@ class IndexedContainer(AbstractInMemoryContainer,
 
         # Removes the IProperty to IProperty list and types
         self._propertyIds.remove(propertyId)
-        del self._types[propertyId]
+        if propertyId in self._types:
+            del self._types[propertyId]
         if self._defaultPropertyValues is not None:
-            del self._defaultPropertyValues[propertyId]
+            if propertyId in self._defaultPropertyValues:
+                del self._defaultPropertyValues[propertyId]
 
         # If remove the IProperty from all Items
         for item in self.getAllItemIds():
@@ -429,10 +433,12 @@ class IndexedContainer(AbstractInMemoryContainer,
                 if listenerList is not None:
                     listenerList.remove(listener)
                     if len(listenerList) == 0:
-                        del propertySetToListenerListMap[itemId]
+                        if itemId in propertySetToListenerListMap:
+                            del propertySetToListenerListMap[itemId]
 
                 if len(propertySetToListenerListMap) == 0:
-                    del self._singlePropertyValueChangeListeners[propertyId]
+                    if propertyId in self._singlePropertyValueChangeListeners:
+                        del self._singlePropertyValueChangeListeners[propertyId]
 
             if len(self._singlePropertyValueChangeListeners) == 0:
                 self._singlePropertyValueChangeListeners = None
@@ -478,9 +484,9 @@ class IndexedContainer(AbstractInMemoryContainer,
             nc.setItemSetChangeListeners(None)
 
         if self._propertyIds is not None:
-            nc.propertyIds = self._propertyIds.clone()
+            nc._propertyIds = self._propertyIds.clone()
         else:
-            nc.propertyIds = None
+            nc._propertyIds = None
 
         if self.getPropertySetChangeListeners() is not None:
             nc.setPropertySetChangeListeners(
@@ -574,11 +580,11 @@ class IndexedContainerItem(IItem):
 
 
     def getItemProperty(self, idd):
-        return IndexedContainerProperty(self._itemId, idd, self)
+        return IndexedContainerProperty(self._itemId, idd, self._container)
 
 
     def getItemPropertyIds(self):
-        return list(self.propertyIds)
+        return list(self._container._propertyIds)
 
 
     def __str__(self):
@@ -591,9 +597,9 @@ class IndexedContainerItem(IItem):
         """
         retValue = ''
 
-        for i, propertyId in enumerate(self.propertyIds):
+        for i, propertyId in enumerate(self._container._propertyIds):
             retValue += str(self.getItemProperty(propertyId))
-            if i < len(self.propertyIds) - 1:
+            if i < len(self._container._propertyIds) - 1:
                 retValue += ' '
 
         return retValue

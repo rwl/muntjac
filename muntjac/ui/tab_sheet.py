@@ -158,7 +158,8 @@ class TabSheet(AbstractComponentContainer):
             super(TabSheet, self).removeComponent(c)
             self._keyMapper.remove(c)
             self._components.remove(c)
-            del self._tabs[c]
+            if c in self._tabs:
+                del self._tabs[c]
             if c == self._selected:
                 if len(self._components) == 0:
                     self._selected = None
@@ -762,7 +763,10 @@ class TabSheet(AbstractComponentContainer):
                    The tab
         @return
         """
-        return self._components.index( tab.getComponent() )
+        try:
+            return self._components.index( tab.getComponent() )
+        except ValueError:
+            return -1
 
 
 class SelectedTabChangeEvent(ComponentEvent):

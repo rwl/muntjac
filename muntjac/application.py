@@ -1142,7 +1142,8 @@ class Application(IUriHandler, ITerminal, IErrorListener):
         key = self._resourceKeyMap.get(resource)
         if key is not None:
             del self._resourceKeyMap[resource]
-            del self._keyResourceMap[key]
+            if key in self._keyResourceMap:
+                del self._keyResourceMap[key]
 
 
     def getRelativeLocation(self, resource):
