@@ -69,7 +69,8 @@ class SimpleAddressBook(Application):
         self._contactList.setVisibleColumns(self._visibleCols)
         self._contactList.setSelectable(True)
         self._contactList.setImmediate(True)
-        self._contactList.addListener(ContactChangeListener(self))
+        self._contactList.addListener(ContactChangeListener(self),
+                IValueChangeListener)
         return self._visibleCols
 
 
@@ -81,7 +82,8 @@ class SimpleAddressBook(Application):
             sf.setValue(pn)
             sf.setImmediate(True)
             self._bottomLeftCorner.setExpandRatio(sf, 1)
-            sf.addListener(TextChangeListener(pn, sf, self))
+            sf.addListener(TextChangeListener(pn, sf, self),
+                    IValueChangeListener)
 
     @classmethod
     def createDummyData(cls):

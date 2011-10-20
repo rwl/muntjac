@@ -444,7 +444,7 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
             self.registerListener(ITextChangeListener.EVENT_ID,
                     TextChangeEvent, listener, EVENT_METHOD)
         else:
-            self.addListener(listener, iface)
+            super(AbstractTextField, self).addListener(listener, iface)
 
 
     def addBlurListener(self, listener):

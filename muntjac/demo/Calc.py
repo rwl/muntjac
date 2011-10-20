@@ -1,10 +1,10 @@
 
 from muntjac.api import Application, Button, GridLayout, Label, Window
 
-from muntjac.ui import button
+from muntjac.ui.button import IClickListener
 
 
-class Calc(Application, button.IClickListener):
+class Calc(Application, IClickListener):
     """A simple calculator using Vaadin."""
 
     def __init__(self):
@@ -41,7 +41,7 @@ class Calc(Application, button.IClickListener):
         for caption in operations:
             # Create a button and use this application for event handling
             button = Button(caption)
-            button.addListener(self)
+            button.addListener(self, IClickListener)
 
             # Add the button to our main layout
             layout.addComponent(button)

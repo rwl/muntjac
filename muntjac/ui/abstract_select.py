@@ -660,7 +660,7 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
                 if isinstance(self.items,
                         container.IPropertySetChangeNotifier):
                     self.items.removeListener(self,
-                            container.IPropertySetChangeNotifier)
+                            container.IPropertySetChangeListener)
 
             # Assigns new data source
             self.items = newDataSource

@@ -104,7 +104,7 @@ class IndexedContainer(AbstractInMemoryContainer,
 
     def getUnfilteredItem(self, itemId):
         if itemId is not None and itemId in self._items:
-            return IndexedContainerItem(itemId)
+            return IndexedContainerItem(itemId, self)
 
         return None
 
@@ -293,7 +293,7 @@ class IndexedContainer(AbstractInMemoryContainer,
 
     def addListener(self, listener, iface):
         if iface == container.IPropertySetChangeListener:
-            super(IndexedContainer, self).addListener(listener)
+            super(IndexedContainer, self).addListener(listener, iface)
         elif iface == prop.IValueChangeListener:
             if self._propertyValueChangeListeners is None:
                 self._propertyValueChangeListeners = list()
@@ -313,7 +313,7 @@ class IndexedContainer(AbstractInMemoryContainer,
 
     def removeListener(self, listener, iface):
         if iface == container.IPropertySetChangeListener:
-            super(IndexedContainer, self).removeListener(listener)
+            super(IndexedContainer, self).removeListener(listener, iface)
         elif iface == prop.IValueChangeListener:
             if self._propertyValueChangeListeners is not None:
                 self._propertyValueChangeListeners.remove(listener)

@@ -14,8 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import sys
+import traceback
 import logging
-import locale
 
 from warnings import warn
 
@@ -1437,6 +1438,10 @@ class Application(IUriHandler, ITerminal, IErrorListener):
                 owner.setComponentError( SystemErr(t) )
         # also print the error on console
         logger.critical('ITerminal error: ' + str(t))
+
+        exc_type, _, exc_traceback = sys.exc_info()
+        traceback.print_exception(exc_type, t,
+                exc_traceback, file=sys.stdout)
 
 
     def getContext(self):

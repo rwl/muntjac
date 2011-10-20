@@ -922,7 +922,8 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         for i in range(len(tmp)):
             variableRecords[i] = re.split(self._VAR_FIELD_SEPARATOR, tmp[i])
 
-        for i in range(len(variableRecords)):
+        i = 0
+        while i < len(variableRecords):
             variable = variableRecords[i]
             nextVariable = None
             if i + 1 < len(variableRecords):
@@ -998,6 +999,8 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
 
                 logger.warning(msg)
                 continue
+
+            i += 1
 
         return success
 

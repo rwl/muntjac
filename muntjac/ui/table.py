@@ -1180,7 +1180,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
             else:
                 rows = 0
 
-            cells = [[None] * rows] * (cols + self.CELL_FIRSTCOL)
+            cells = [([None] * rows) for _ in range(cols + self.CELL_FIRSTCOL)]
             if rows == 0:
                 self._pageBuffer = cells
                 self.unregisterPropertiesAndComponents(oldListenedProperties,
@@ -1490,12 +1490,14 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         return itemId
 
     # Overriding select behavior
-
-    def setValue(self, newValue):
-        # external selection change, need to truncate pageBuffer
-        self.resetPageBuffer()
-        self.refreshRenderedCells()
-        super(Table, self).setValue(newValue)
+    def setValue(self, newValue, repaintIsNotNeeded=None):
+        if repaintIsNotNeeded is None:
+            # external selection change, need to truncate pageBuffer
+            self.resetPageBuffer()
+            self.refreshRenderedCells()
+            super(Table, self).setValue(newValue)
+        else:
+            super(Table, self).setValue(newValue, repaintIsNotNeeded)
 
 
     def setContainerDataSource(self, newDataSource):
@@ -1672,9 +1674,9 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
             try:
                 self._firstToBeRenderedInClient = \
-                        int(variables.get('firstToBeRendered'))
+                        variables.get('firstToBeRendered')
                 self._lastToBeRenderedInClient = \
-                        int(variables.get('lastToBeRendered'))
+                        variables.get('lastToBeRendered')
             except Exception:
                 # FIXME: Handle exception
                 logger.info('Could not parse the first and/or last rows.')

@@ -371,13 +371,13 @@ class JsonPaintTarget(IPaintTarget):
                         or isinstance(mapValue, float) \
                         or isinstance(mapValue, bool) \
                         or isinstance(mapValue, Alignment):
-                    sb.write(mapValue)
+                    sb.write( str(mapValue) )
                 else:
                     sb.write('\"')
                     sb.write( self.escapeJSON(str(mapValue)) )
                     sb.write('\"')
                 if i < len(value) - 1:
-                    sb.append(',')
+                    sb.write(',')
                 i += 1
             sb.write('}')
             self._tag.addAttribute(sb.getvalue())
@@ -827,7 +827,7 @@ class ArrayVariable(Variable):
         sb.write('\":[')
         for i in range(len(self._value)):
             sb.write('\"')
-            sb.write(self.escapeJSON( str(self._value[i]) ))
+            sb.write(JsonPaintTarget.escapeJSON( str(self._value[i]) ))
             sb.write('\"')
             if i < len(self._value) - 1:
                 sb.write(',')

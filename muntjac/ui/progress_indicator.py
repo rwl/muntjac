@@ -127,17 +127,21 @@ class ProgressIndicator(AbstractField, prop.IValueChangeListener,
         return self._dataSource.getValue()
 
 
-    def setValue(self, newValue):
+    def setValue(self, newValue, repaintIsNotNeeded=None):
         """Sets the value of the ProgressIndicator. Value of the
         ProgressIndicator is the float between 0 and 1.
 
         @param newValue: the new value of the ProgressIndicator.
         @see com.vaadin.ui.AbstractField#setValue(java.lang.Object)
         """
-        if self._dataSource is None:
-            raise ValueError, 'datasource must be set'
+        if repaintIsNotNeeded is None:
+            if self._dataSource is None:
+                raise ValueError, 'datasource must be set'
 
-        self._dataSource.setValue(newValue)
+            self._dataSource.setValue(newValue)
+        else:
+            super(ProgressIndicator, self).setValue(newValue,
+                    repaintIsNotNeeded)
 
 
     def __str__(self):

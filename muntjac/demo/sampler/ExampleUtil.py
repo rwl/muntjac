@@ -287,7 +287,8 @@ class ExampleUtil(object):
         container.addContainerProperty(cls.iso3166_PROPERTY_NAME, str, None)
         container.addContainerProperty(cls.iso3166_PROPERTY_SHORT, str, None)
         container.addContainerProperty(cls.iso3166_PROPERTY_FLAG, IResource, None)
-        for i in range(len(cls.iso3166)):
+        i = 0
+        while i < len(cls.iso3166):
             name = cls.iso3166[i]
             i += 1
             idd = cls.iso3166[i]
@@ -296,6 +297,7 @@ class ExampleUtil(object):
             item.getItemProperty(cls.iso3166_PROPERTY_SHORT).setValue(idd)
             v = ThemeResource('../sampler/flags/' + id.lower() + '.gif')
             item.getItemProperty(cls.iso3166_PROPERTY_FLAG).setValue(v)
+            i += 1
         container.sort([cls.iso3166_PROPERTY_NAME], [True])
 
 
