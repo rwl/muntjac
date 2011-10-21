@@ -21,25 +21,25 @@ from muntjac.ui.tab_sheet import TabSheet
 
 class TestTabSheet(TestCase):
 
-    def addExistingComponent(self):
+    def testAddExistingComponent(self):
         c = Label('abc')
         tabSheet = TabSheet()
         tabSheet.addComponent(c)
         tabSheet.addComponent(c)
         itr = tabSheet.getComponentIterator()
         self.assertEquals(c, itr.next())
-        self.assertEquals(False, itr.hasNext())
+        self.assertRaises(StopIteration, itr.next)
         self.assertNotEquals(tabSheet.getTab(c), None)
 
 
-    def getComponentFromTab(self):
+    def testGetComponentFromTab(self):
         c = Label('abc')
         tabSheet = TabSheet()
         tab = tabSheet.addTab(c)
         self.assertEquals(c, tab.getComponent())
 
 
-    def addTabWithComponentOnly(self):
+    def testAddTabWithComponentOnly(self):
         tabSheet = TabSheet()
         tab1 = tabSheet.addTab(Label('aaa'))
         tab2 = tabSheet.addTab(Label('bbb'))
@@ -59,7 +59,7 @@ class TestTabSheet(TestCase):
         self.assertEquals(2, tabSheet.getTabPosition(tab3))
 
 
-    def addTabWithComponentAndIndex(self):
+    def testAddTabWithComponentAndIndex(self):
         tabSheet = TabSheet()
         tab1 = tabSheet.addTab(Label('aaa'))
         tab2 = tabSheet.addTab(Label('bbb'))
@@ -82,7 +82,7 @@ class TestTabSheet(TestCase):
         self.assertEquals(4, tabSheet.getTabPosition(tab3))
 
 
-    def addTabWithAllParameters(self):
+    def testAddTabWithAllParameters(self):
         tabSheet = TabSheet()
         tab1 = tabSheet.addTab(Label('aaa'))
         tab2 = tabSheet.addTab(Label('bbb'))
@@ -105,7 +105,7 @@ class TestTabSheet(TestCase):
         self.assertEquals(4, tabSheet.getTabPosition(tab3))
 
 
-    def getTabByPosition(self):
+    def testGetTabByPosition(self):
         tabSheet = TabSheet()
         tab1 = tabSheet.addTab(Label('aaa'))
         tab2 = tabSheet.addTab(Label('bbb'))

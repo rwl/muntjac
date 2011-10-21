@@ -28,6 +28,8 @@ from muntjac.event.field_events import \
     (BlurEvent, IBlurListener, IBlurNotifier, FocusEvent, IFocusListener,
      IFocusNotifier)
 
+from muntjac.util import totalseconds
+
 from muntjac.ui.abstract_component import AbstractComponent
 
 
@@ -666,7 +668,3 @@ class UnparsableDateString(InvalidValueException):
 
     def __init__(self, message):
         super(UnparsableDateString, self).__init__(message)
-
-
-def totalseconds(td):
-    return (td.microseconds + (td.seconds + td.days * 24 * 3600) * 1e6) / 1e6

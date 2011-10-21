@@ -32,7 +32,7 @@ class TestMultipleSelection(TestCase):
         self.assertTrue(table.isMultiSelect())
 
         # Test multiselect by setting several items at once
-        table.setValue(['1', ['3']])
+        table.setValue(['1', '3'])
         self.assertEquals(2, len(table.getValue()))
 
 
@@ -55,5 +55,5 @@ class TestMultipleSelection(TestCase):
 
         @return A new container with test items
         """
-        container = IndexedContainer(['1', ['2', '3', '4']])
+        container = IndexedContainer(['1', '2', '3', '4'])
         return container

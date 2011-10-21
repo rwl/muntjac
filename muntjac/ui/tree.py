@@ -71,8 +71,6 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
         @param caption
         @param dataSource
         """
-        super(Tree, self).__init__()
-
         # Set of expanded nodes.
         self._expanded = set()
 
@@ -97,6 +95,8 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
 
         self._dragMode = TreeDragMode.NONE
         self._multiSelectMode = MultiSelectMode.DEFAULT
+
+        super(Tree, self).__init__()
 
         if caption is not None:
             self.setCaption(caption)

@@ -53,8 +53,8 @@ class TableColumnAlignments(TestCase):
         except ValueError:
             pass  # Ok, expected
 
-        self.assertEquals('Invalid change affected alignments',
-                defaultAlignments, t.getColumnAlignments())
+        self.assertEquals(defaultAlignments, t.getColumnAlignments(),
+                'Invalid change affected alignments')
 
 
     def testInvalidColumnAlignmentString(self):
@@ -68,8 +68,8 @@ class TableColumnAlignments(TestCase):
         except ValueError:
             pass  # Ok, expected
 
-        self.assertEquals('Invalid change affected alignments',
-                defaultAlignments, t.getColumnAlignments())
+        self.assertEquals(defaultAlignments, t.getColumnAlignments(),
+                'Invalid change affected alignments')
 
 
     def testColumnAlignmentForPropertyNotInContainer(self):
@@ -84,8 +84,8 @@ class TableColumnAlignments(TestCase):
         except ValueError:
             pass  # Ok, expected
 
-        self.assertEquals('Invalid change affected alignments',
-                defaultAlignments, t.getColumnAlignments())
+        self.assertEquals(defaultAlignments, t.getColumnAlignments(),
+                'Invalid change affected alignments')
 
         # FIXME: Uncomment as null should be returned (#6474)
         # self.assertEquals(
@@ -105,8 +105,8 @@ class TableColumnAlignments(TestCase):
         except ValueError:
             pass  # Ok, expected
 
-        self.assertEquals('Invalid change affected alignments',
-                defaultAlignments, t.getColumnAlignments())
+        self.assertEquals(defaultAlignments, t.getColumnAlignments(),
+                'Invalid change affected alignments')
 
         try:
             t.setColumnAlignments([])
@@ -114,8 +114,8 @@ class TableColumnAlignments(TestCase):
         except ValueError:
             pass  # Ok, expected
 
-        self.assertEquals('Invalid change affected alignments',
-                defaultAlignments, t.getColumnAlignments())
+        self.assertEquals(defaultAlignments, t.getColumnAlignments(),
+                'Invalid change affected alignments')
 
         try:
             t.setColumnAlignments([Table.ALIGN_LEFT, Table.ALIGN_LEFT,
@@ -125,8 +125,8 @@ class TableColumnAlignments(TestCase):
         except ValueError:
             pass  # Ok, expected
 
-        self.assertEquals('Invalid change affected alignments',
-                defaultAlignments, t.getColumnAlignments())
+        self.assertEquals(defaultAlignments, t.getColumnAlignments(),
+                'Invalid change affected alignments')
 
 
     def testExplicitColumnAlignmentOneByOne(self):
@@ -139,8 +139,7 @@ class TableColumnAlignments(TestCase):
                 Table.ALIGN_LEFT, Table.ALIGN_LEFT, Table.ALIGN_LEFT]
 
         for i in range(properties):
-            t.setColumnAlignment('Property ' + i, explicitAlignments[i])
+            t.setColumnAlignment('Property %d' % i, explicitAlignments[i])
             currentAlignments[i] = explicitAlignments[i]
-            self.assertEquals(('Explicit visible columns, ' + i +
-                    ' alignments set'), currentAlignments,
-                    t.getColumnAlignments())
+            self.assertEquals(currentAlignments, t.getColumnAlignments(),
+                    'Explicit visible columns, %d alignments set' % i)

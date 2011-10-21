@@ -31,7 +31,7 @@ class TableVisibleColumns(TestCase):
             t = TableGenerator.createTableWithDefaultContainer(properties, 10)
             expected = [None] * properties
             for i in range(properties):
-                expected[i] = 'Property ' + i
+                expected[i] = 'Property %d' % i
             self.assertEquals(expected, t.getVisibleColumns(),
                     'getVisibleColumns')
 

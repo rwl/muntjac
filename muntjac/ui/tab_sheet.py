@@ -286,8 +286,8 @@ class TabSheet(AbstractComponentContainer):
                 tab.setIcon(icon)
                 return tab
             else:
-                self._components.append(position, c)
-                tab = TabSheetTabImpl(caption, icon)
+                self._components.insert(position, c)
+                tab = TabSheetTabImpl(caption, icon, self)
                 self._tabs[c] = tab
                 if self._selected is None:
                     self._selected = c
@@ -950,7 +950,9 @@ class ITab(object):
 class TabSheetTabImpl(ITab):
     """TabSheet's implementation of {@link ITab} - tab metadata."""
 
-    def __init__(self, caption, icon):
+    def __init__(self, caption, icon, sheet):
+        self._sheet = sheet
+
         self._enabled = True
         self._visible = True
         self._closable = False
@@ -970,7 +972,7 @@ class TabSheetTabImpl(ITab):
 
     def setCaption(self, caption):
         self._caption = caption
-        self.requestRepaint()
+        self._sheet.requestRepaint()
 
 
     def getIcon(self):
@@ -979,7 +981,7 @@ class TabSheetTabImpl(ITab):
 
     def setIcon(self, icon):
         self._icon = icon
-        self.requestRepaint()
+        self._sheet.requestRepaint()
 
 
     def isEnabled(self):
@@ -988,8 +990,8 @@ class TabSheetTabImpl(ITab):
 
     def setEnabled(self, enabled):
         self._enabled = enabled
-        if self.updateSelection():
-            self.fireSelectedTabChange()
+        if self._sheet.updateSelection():
+            self._sheet.fireSelectedTabChange()
         self.requestRepaint()
 
 
@@ -999,9 +1001,9 @@ class TabSheetTabImpl(ITab):
 
     def setVisible(self, visible):
         self._visible = visible
-        if self.updateSelection():
+        if self._sheet.updateSelection():
             self.fireSelectedTabChange()
-        self.requestRepaint()
+        self._sheet.requestRepaint()
 
 
     def isClosable(self):
@@ -1010,7 +1012,7 @@ class TabSheetTabImpl(ITab):
 
     def setClosable(self, closable):
         self._closable = closable
-        self.requestRepaint()
+        self._sheet.requestRepaint()
 
 
     def close(self):
@@ -1023,7 +1025,7 @@ class TabSheetTabImpl(ITab):
 
     def setDescription(self, description):
         self._description = description
-        self.requestRepaint()
+        self._sheet.requestRepaint()
 
 
     def getComponentError(self):
@@ -1036,7 +1038,7 @@ class TabSheetTabImpl(ITab):
 
 
     def getComponent(self):
-        for k, v in self.tabs.iteritems():
+        for k, v in self._sheet._tabs.iteritems():
             if v == self:
                 return k
         return None

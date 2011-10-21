@@ -25,13 +25,13 @@ class TableGenerator(TestCase):
         t = Table()
 
         for i in range(properties):
-            t.addContainerProperty('Property ' + i, str, None)
+            t.addContainerProperty('Property %d' % i, str, None)
 
         for j in range(items):
-            item = t.addItem('Item ' + j)
+            item = t.addItem('Item %d' % j)
             for i in range(properties):
-                v = 'Item ' + j + '/Property ' + i
-                item.getItemProperty('Property ' + i).setValue(v)
+                v = 'Item %d/Property %d' % (j, i)
+                item.getItemProperty('Property %d' % i).setValue(v)
 
         return t
 

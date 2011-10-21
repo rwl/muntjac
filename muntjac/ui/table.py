@@ -521,7 +521,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                     and not (a == self.ALIGN_LEFT)
                     and not (a == self.ALIGN_CENTER)
                     and not (a == self.ALIGN_RIGHT)):
-                raise ValueError, ('Column ' + i + ' aligment \''
+                raise ValueError, ('Column ' + str(i) + ' aligment \''
                         + a + '\' is invalid')
 
         # Resets the alignments
@@ -1462,7 +1462,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         """
         nargs = len(args)
         if nargs < 2:
-            super(Table, self).addItem(*args)
+            return super(Table, self).addItem(*args)
         elif nargs == 2:
             cells, itemId = args
             # remove generated columns from the list of columns being assigned
@@ -2538,8 +2538,8 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         if nargs == 3:
             propertyId, typ, defaultValue = args
             visibleColAdded = False
-            if not self._visibleColumns.contains(propertyId):
-                self._visibleColumns.add(propertyId)
+            if propertyId not in self._visibleColumns:
+                self._visibleColumns.append(propertyId)
                 visibleColAdded = True
             if not super(Table, self).addContainerProperty(propertyId,
                     typ, defaultValue):

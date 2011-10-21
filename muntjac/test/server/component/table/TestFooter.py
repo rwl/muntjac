@@ -42,9 +42,9 @@ class TestFooter(TestCase):
         table = Table('Test table', self.createContainer())
 
         # Table should not contain any footers at initialization
-        self.assertNull(table.getColumnFooter('col1'))
-        self.assertNull(table.getColumnFooter('col2'))
-        self.assertNull(table.getColumnFooter('col3'))
+        self.assertIsNone(table.getColumnFooter('col1'))
+        self.assertIsNone(table.getColumnFooter('col2'))
+        self.assertIsNone(table.getColumnFooter('col3'))
 
         # Adding column footer
         table.setColumnFooter('col1', 'Footer1')
@@ -91,9 +91,9 @@ class TestFooter(TestCase):
         container.addContainerProperty('col3', str, '')
 
         for i in range(100):
-            item = container.addItem('item ' + i)
-            item.getItemProperty('col1').setValue('first' + i)
-            item.getItemProperty('col2').setValue('middle' + i)
-            item.getItemProperty('col3').setValue('last' + i)
+            item = container.addItem('item %d' % i)
+            item.getItemProperty('col1').setValue('first%d' % i)
+            item.getItemProperty('col2').setValue('middle%d' % i)
+            item.getItemProperty('col3').setValue('last%d' % i)
 
         return container

@@ -960,7 +960,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
             self.registerListener(FocusEvent.EVENT_ID,
                     FocusEvent, listener, IFocusListener.focusMethod)
         elif iface == IResizeListener:
-            self.addListener(ResizeEvent, listener, _WINDOW_RESIZE_METHOD)
+            self.registerListener(ResizeEvent, listener, _WINDOW_RESIZE_METHOD)
         else:
             super(Window, self).addListener(listener, iface)
 
@@ -1069,7 +1069,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
             raise ValueError, ('You can only add windows inside '
                     'application-level windows.')
 
-        elif len(window.subwindows) > 0:
+        elif len(window._subwindows) > 0:
             raise ValueError, 'Only one level of subwindows are supported.'
 
         self.attachWindow(window)
@@ -1088,9 +1088,11 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
                    Window to be removed.
         @return true if the subwindow was removed, false otherwise
         """
-        if not self._subwindows.remove(window):
+        if window not in self._subwindows:
             # Window window is not a subwindow of this window.
             return False
+        else:
+            self._subwindows.remove(window)
 
         window.setParent(None)
         window.fireClose()

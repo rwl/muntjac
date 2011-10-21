@@ -459,7 +459,7 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
                 if newValue is None:
                     super(AbstractSelect, self).setValue(set(),
                             repaintIsNotNeeded)
-                elif issubclass(newValue, list):
+                elif issubclass(newValue.__class__, list):
                     super(AbstractSelect, self).setValue(set(newValue),
                             repaintIsNotNeeded)
 

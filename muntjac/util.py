@@ -63,6 +63,10 @@ def fullname(obj):
     return clsname(obj.__class__)
 
 
+def totalseconds(td):
+    return (td.microseconds + (td.seconds + td.days * 24 * 3600) * 1e6) / 1e6
+
+
 class Locale(object):
 
     def __init__(self, lang, country=None, variant=None):

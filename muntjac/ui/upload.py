@@ -22,7 +22,7 @@ from muntjac.ui.component import \
     IComponent, IFocusable, Event as ComponentEvent
 
 from muntjac.terminal.stream_variable import \
-    IStreamingProgressEvent, IStreamVariable
+    IStreamingProgressEvent, IStreamVariable, IStreamingEvent
 
 from muntjac.terminal.gwt.server.exceptions import \
     NoInputStreamException, NoOutputStreamException
@@ -116,8 +116,8 @@ class IProgressListener(object):
 
 _UPLOAD_FINISHED_METHOD = getattr(IFinishedListener, 'uploadFinished')
 _UPLOAD_FAILED_METHOD = getattr(IFailedListener, 'uploadFailed')
-_UPLOAD_SUCCEEDED_METHOD = getattr(IStartedListener, 'uploadStarted')
-_UPLOAD_STARTED_METHOD = getattr(ISucceededListener, 'uploadSucceeded')
+_UPLOAD_STARTED_METHOD = getattr(IStartedListener, 'uploadStarted')
+_UPLOAD_SUCCEEDED_METHOD = getattr(ISucceededListener, 'uploadSucceeded')
 
 
 class Upload(AbstractComponent, IFocusable): #IComponent,
@@ -665,7 +665,7 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
 
 
     def getListeners(self, eventType):
-        if issubclass(eventType, IStreamingProgressEvent):
+        if issubclass(eventType, IStreamingEvent):
             if self._progressListeners is None:
                 return list()
             else:

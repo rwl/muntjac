@@ -21,8 +21,8 @@ from muntjac.application import Application
 
 class AddRemoveSubWindow(TestCase):
 
-    def addSubWindow(self):
-        app = self.TestApp()
+    def testAddSubWindow(self):
+        app = TestApp()
         app.init()
         subWindow = Window('Sub window')
         mainWindow = app.getMainWindow()
@@ -35,8 +35,8 @@ class AddRemoveSubWindow(TestCase):
         # Try to add the same sub window to another window
         try:
             mainWindow.addWindow(subWindow)
-            self.assertTrue(('Window.addWindow did not throw the '
-                    'expected exception'), False)
+            self.assertTrue(False, 'Window.addWindow did not throw the '
+                    'expected exception')
         except ValueError:
             # Should throw an exception as it has already been added to the
             # main window
@@ -45,16 +45,16 @@ class AddRemoveSubWindow(TestCase):
         try:
             w = Window()
             w.addWindow(subWindow)
-            self.assertTrue(('Window.addWindow did not throw the '
-                    'expected exception'), False)
+            self.assertTrue(False, 'Window.addWindow did not throw the '
+                    'expected exception')
         except ValueError:
             # Should throw an exception as it has already been added to the
             # main window
             pass
 
 
-    def removeSubWindow(self):
-        app = self.TestApp()
+    def testRemoveSubWindow(self):
+        app = TestApp()
         app.init()
         subWindow = Window('Sub window')
         mainWindow = app.getMainWindow()
@@ -66,15 +66,15 @@ class AddRemoveSubWindow(TestCase):
 
         # Remove from the wrong window, should result in an exception
         removed = subWindow.removeWindow(subWindow)
-        self.assertFalse(('Window was removed even though it should '
-                'not have been'), removed)
+        self.assertFalse(removed, 'Window was removed even though it should '
+                'not have been')
 
         # Parent should still be set
         self.assertEquals(subWindow.getParent(), mainWindow)
 
         # Remove from the main window and assert it has been removed
         removed = mainWindow.removeWindow(subWindow)
-        self.assertTrue('Window was not removed correctly', removed)
+        self.assertTrue(removed, 'Window was not removed correctly')
         self.assertEquals(subWindow.getParent(), None)
 
 
