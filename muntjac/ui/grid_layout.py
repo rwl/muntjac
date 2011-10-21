@@ -325,7 +325,8 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
             if area is not None:
                 self._areas.remove(area)
 
-            self._componentToAlignment.remove(component)
+            if component in self._componentToAlignment:
+                del self._componentToAlignment[component]
 
             super(GridLayout, self).removeComponent(component)
 

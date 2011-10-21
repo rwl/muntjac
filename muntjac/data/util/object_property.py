@@ -75,7 +75,7 @@ class ObjectProperty(AbstractProperty):
         nargs = len(args)
         if nargs == 1:
             value, = args
-            ObjectProperty.__init__(self, value, value.getClass())
+            ObjectProperty.__init__(self, value, value.__class__)
         elif nargs == 2:
             value, typ = args
             self._type = typ

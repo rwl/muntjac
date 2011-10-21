@@ -14,8 +14,11 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import mox
+
 from unittest import TestCase
-from muntjac.data.property import IValueChangeListener
+
+from muntjac.data.property import IValueChangeListener, ValueChangeEvent
 from muntjac.data.util.object_property import ObjectProperty
 
 
@@ -35,7 +38,8 @@ class AbstractTestFieldValueChange(TestCase):
 
     def setUp(self, field):
         self._field = field
-        self._listener = EasyMock.createStrictMock(IValueChangeListener)
+        self.mox = mox.Mox()
+        self._listener = self.mox.CreateMock(IValueChangeListener)
 
 
     def getListener(self):
@@ -50,23 +54,23 @@ class AbstractTestFieldValueChange(TestCase):
         self.getField().setReadThrough(True)
 
         # Expectations and start test
-        self._listener.valueChange(EasyMock.isA(ValueChangeEvent))
-        EasyMock.replay(self._listener)
+        self._listener.valueChange(mox.IsA(ValueChangeEvent))
+        mox.Replay(self._listener)
 
         # Add listener and set the value -> should end up in listener once
-        self.getField().addListener(self._listener)
+        self.getField().addListener(self._listener, IValueChangeListener)
         self.setValue(self.getField())
 
         # Ensure listener was called once
-        EasyMock.verify(self._listener)
+        mox.Verify(self._listener)
 
         # Remove the listener and set the value -> should not end up in
         # listener
-        self.getField().removeListener(self._listener)
+        self.getField().removeListener(self._listener, IValueChangeListener)
         self.setValue(self.getField())
 
         # Ensure listener still has been called only once
-        EasyMock.verify(self._listener)
+        mox.Verify(self._listener)
 
 
     def testWriteThroughReadThrough(self):
@@ -135,21 +139,21 @@ class AbstractTestFieldValueChange(TestCase):
 
     def expectValueChangeFromSetValueNotCommit(self):
         # Expectations and start test
-        self._listener.valueChange(EasyMock.isA(ValueChangeEvent))
-        EasyMock.replay(self._listener)
+        self._listener.valueChange(mox.IsA(ValueChangeEvent))
+        mox.Replay(self._listener)
 
         # Add listener and set the value -> should end up in listener once
-        self.getField().addListener(self._listener)
+        self.getField().addListener(self._listener, IValueChangeListener)
         self.setValue(self.getField())
 
         # Ensure listener was called once
-        EasyMock.verify(self._listener)
+        mox.Verify(self._listener)
 
         # commit
         self.getField().commit()
 
         # Ensure listener was not called again
-        EasyMock.verify(self._listener)
+        mox.Verify(self._listener)
 
 
     def getField(self):
