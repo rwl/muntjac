@@ -26,5 +26,5 @@ from muntjac.ui.abstract_split_panel import \
 class TestAbstractSplitPanelListeners(AbstractListenerMethodsTest):
 
     def testSplitterClickListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(HorizontalSplitPanel,
+        self._testListenerAddGetRemove(HorizontalSplitPanel,
                 SplitterClickEvent, ISplitterClickListener)

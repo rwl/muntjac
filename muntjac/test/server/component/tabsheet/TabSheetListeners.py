@@ -24,5 +24,5 @@ from muntjac.ui.tab_sheet import \
 class TabSheetListeners(AbstractListenerMethodsTest):
 
     def testSelectedTabChangeListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(TabSheet, SelectedTabChangeEvent,
+        self._testListenerAddGetRemove(TabSheet, SelectedTabChangeEvent,
                 ISelectedTabChangeListener)

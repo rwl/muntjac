@@ -27,10 +27,10 @@ from muntjac.data.container import \
 class TestAbstractSelectListeners(AbstractListenerMethodsTest):
 
     def testItemSetChangeListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(ComboBox, IItemSetChangeEvent,
+        self._testListenerAddGetRemove(ComboBox, IItemSetChangeEvent,
                 IItemSetChangeListener)
 
 
     def testPropertySetChangeListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(ComboBox, IPropertySetChangeEvent,
+        self._testListenerAddGetRemove(ComboBox, IPropertySetChangeEvent,
                 IPropertySetChangeListener)

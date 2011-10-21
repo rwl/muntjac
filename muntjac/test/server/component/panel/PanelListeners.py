@@ -24,4 +24,4 @@ from muntjac.event.mouse_events import ClickEvent, IClickListener
 class PanelListeners(AbstractListenerMethodsTest):
 
     def testClickListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Panel, ClickEvent, IClickListener)
+        self._testListenerAddGetRemove(Panel, ClickEvent, IClickListener)

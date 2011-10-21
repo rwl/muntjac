@@ -106,8 +106,8 @@ class OptionGroup(AbstractSelect, IBlurNotifier, IFocusNotifier):
         self.removeListener(listener, IFocusListener)
 
 
-    def setValue(self, newValue, repaintIsNotNeeded):
-        if repaintIsNotNeeded:
+    def setValue(self, newValue, repaintIsNotNeeded=None):
+        if repaintIsNotNeeded is not None and repaintIsNotNeeded is True:
             # Check that value from changeVariables() doesn't contain unallowed
             # selections: In the multi select mode, the user has selected or
             # deselected a disabled item. In the single select mode, the user

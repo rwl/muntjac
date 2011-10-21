@@ -208,8 +208,10 @@ class ComponentIterator(object):
 
 
     def next(self):  #@PydevCodeAnalysisIgnore
+        if not self._first:
+            raise StopIteration
         self._first = False
-        return self._component.root
+        return self._component._root
 
 
     def remove(self):

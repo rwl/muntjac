@@ -28,22 +28,22 @@ from muntjac.terminal.stream_variable import IStreamingProgressEvent
 class UploadListeners(AbstractListenerMethodsTest):
 
     def testProgressListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Upload, IStreamingProgressEvent,
+        self._testListenerAddGetRemove(Upload, IStreamingProgressEvent,
                 IProgressListener)
 
     def testSucceededListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Upload, SucceededEvent,
+        self._testListenerAddGetRemove(Upload, SucceededEvent,
                 ISucceededListener)
 
     def testStartedListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Upload, StartedEvent,
+        self._testListenerAddGetRemove(Upload, StartedEvent,
                 IStartedListener)
 
 
     def testFailedListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Upload, FailedEvent,
+        self._testListenerAddGetRemove(Upload, FailedEvent,
                 IFailedListener)
 
     def testFinishedListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Upload, FinishedEvent,
+        self._testListenerAddGetRemove(Upload, FinishedEvent,
                 IFinishedListener)

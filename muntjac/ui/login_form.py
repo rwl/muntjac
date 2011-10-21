@@ -92,14 +92,14 @@ class LoginForm(CustomComponent):
     """
 
     def __init__(self):
-        super(LoginForm, self).__init__()
-
         self._usernameCaption = 'Username'
         self._passwordCaption = 'Password'
         self._loginButtonCaption = 'Login'
         self._iframe = Embedded()
 
         self._window = None
+
+        super(LoginForm, self).__init__()
 
         self._iframe.setType(Embedded.TYPE_BROWSER)
         self._iframe.setSizeFull()

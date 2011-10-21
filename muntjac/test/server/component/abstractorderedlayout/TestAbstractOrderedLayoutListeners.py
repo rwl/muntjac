@@ -24,5 +24,5 @@ from muntjac.event.layout_events import LayoutClickEvent, ILayoutClickListener
 class TestAbstractOrderedLayoutListeners(AbstractListenerMethodsTest):
 
     def testLayoutClickListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(VerticalLayout, LayoutClickEvent,
+        self._testListenerAddGetRemove(VerticalLayout, LayoutClickEvent,
                 ILayoutClickListener)

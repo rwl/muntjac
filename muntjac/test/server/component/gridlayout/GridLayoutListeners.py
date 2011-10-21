@@ -24,5 +24,5 @@ from muntjac.event.layout_events import LayoutClickEvent, ILayoutClickListener
 class GridLayoutListeners(AbstractListenerMethodsTest):
 
     def testLayoutClickListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(GridLayout, LayoutClickEvent,
+        self._testListenerAddGetRemove(GridLayout, LayoutClickEvent,
                 ILayoutClickListener)

@@ -182,10 +182,7 @@ class AbstractComponent(IComponent, IMethodEventSource):
         # Gets the component's style.
         s = ''
         if self._styles is not None:
-            for i, sty in enumerate(self._styles):
-                s += sty
-                if i < len(self._styles) - 1:
-                    s += ' '
+            s = ' '.join(self._styles)
         return s
 
 
@@ -199,8 +196,8 @@ class AbstractComponent(IComponent, IMethodEventSource):
         if self._styles is None:
             self._styles = list()
 
-        self._styles.clear()
-        self._styles.append(style)
+        del self._styles[:]
+        self._styles.extend(style.split())
         self.requestRepaint()
 
 
@@ -211,15 +208,18 @@ class AbstractComponent(IComponent, IMethodEventSource):
         if self._styles is None:
             self._styles = list()
 
-        if style not in self._styles:
-            self._styles.append(style)
-            self.requestRepaint()
+        for s in style.split():
+            if s not in self._styles:
+                self._styles.append(s)
+                self.requestRepaint()
 
 
     def removeStyleName(self, style):
         if self._styles is not None:
-            self._styles.remove(style)
-            self.requestRepaint()
+            for s in style.split():
+                if s in self._styles:
+                    self._styles.remove(s)
+                    self.requestRepaint()
 
 
     def getCaption(self):

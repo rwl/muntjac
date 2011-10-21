@@ -91,7 +91,7 @@ class AbsoluteLayout(AbstractLayout, ILayoutClickNotifier):
         # map. We need to do this before we call addComponent so the
         # attachListeners can access this position. #6368
         if cssPosition is not None:
-            position = ComponentPosition()
+            position = ComponentPosition(self)
             position.setCSSString(cssPosition)
             self._componentToCoordinates[c] = position
 
@@ -130,7 +130,7 @@ class AbsoluteLayout(AbstractLayout, ILayoutClickNotifier):
         elif component in self._componentToCoordinates:
             return self._componentToCoordinates.get(component)
         else:
-            coords = ComponentPosition()
+            coords = ComponentPosition(self)
             self._componentToCoordinates[component] = coords
             return coords
 
@@ -175,17 +175,19 @@ class ComponentPosition(object):
     and bottom and the units used to specify them.
     """
 
-    def __init__(self):
+    def __init__(self, layout):
         self._zIndex = -1
         self._topValue = None
         self._rightValue = None
         self._bottomValue = None
         self._leftValue = None
 
-        self._topUnits = None
-        self._rightUnits = None
-        self._bottomUnits = None
-        self._leftUnits = None
+        self._topUnits = 0
+        self._rightUnits = 0
+        self._bottomUnits = 0
+        self._leftUnits = 0
+
+        self._layout = layout
 
 
     def setCSSString(self, css):
@@ -245,7 +247,7 @@ class ComponentPosition(object):
                     self._leftValue = v
                     self._leftUnits = unitInt
 
-        self.requestRepaint()
+        self._layout.requestRepaint()
 
 
     def parseCssUnit(self, string):
@@ -257,7 +259,7 @@ class ComponentPosition(object):
         @return The found unit
         """
         for i in range(len(ISizeable.UNIT_SYMBOLS)):
-            if self.UNIT_SYMBOLS[i] == string:
+            if ISizeable.UNIT_SYMBOLS[i] == string:
                 return i
         return 0  # defaults to px (eg. top:0;)
 
@@ -270,22 +272,22 @@ class ComponentPosition(object):
         s = ''
         if self._topValue is not None:
             symbol = ISizeable.UNIT_SYMBOLS[self._topUnits]
-            s += 'top:' + self._topValue + symbol + ';'
+            s += 'top:' + str(self._topValue) + symbol + ';'
 
         if self._rightValue is not None:
             symbol = ISizeable.UNIT_SYMBOLS[self._rightUnits]
-            s += 'right:' + self._rightValue + symbol + ';'
+            s += 'right:' + str(self._rightValue) + symbol + ';'
 
         if self._bottomValue is not None:
             symbol = ISizeable.UNIT_SYMBOLS[self._bottomUnits]
-            s += 'bottom:' + self._bottomValue + symbol + ';'
+            s += 'bottom:' + str(self._bottomValue) + symbol + ';'
 
         if self._leftValue is not None:
             symbol = ISizeable.UNIT_SYMBOLS[self._leftUnits]
-            s += 'left:' + self._leftValue + symbol + ';'
+            s += 'left:' + str(self._leftValue) + symbol + ';'
 
         if self._zIndex >= 0:
-            s += 'z-index:' + self._zIndex + ';'
+            s += 'z-index:' + str(self._zIndex) + ';'
 
         return s
 
@@ -302,7 +304,7 @@ class ComponentPosition(object):
         """
         self._topValue = topValue
         self._topUnits = topUnits
-        self.requestRepaint()
+        self._layout.requestRepaint()
 
 
     def setRight(self, rightValue, rightUnits):
@@ -317,7 +319,7 @@ class ComponentPosition(object):
         """
         self._rightValue = rightValue
         self._rightUnits = rightUnits
-        self.requestRepaint()
+        self._layout.requestRepaint()
 
 
     def setBottom(self, bottomValue, bottomUnits):
@@ -332,7 +334,7 @@ class ComponentPosition(object):
         """
         self._bottomValue = bottomValue
         self._bottomUnits = bottomUnits
-        self.requestRepaint()
+        self._layout.requestRepaint()
 
 
     def setLeft(self, leftValue, leftUnits):
@@ -347,7 +349,7 @@ class ComponentPosition(object):
         """
         self._leftValue = leftValue
         self._leftUnits = leftUnits
-        self.requestRepaint()
+        self._layout.requestRepaint()
 
 
     def setZIndex(self, zIndex):
@@ -357,7 +359,7 @@ class ComponentPosition(object):
                    The z-index for the component.
         """
         self._zIndex = zIndex
-        self.requestRepaint()
+        self._layout.requestRepaint()
 
 
     def setTopValue(self, topValue):
@@ -368,7 +370,7 @@ class ComponentPosition(object):
                    The value of the 'left' attribute
         """
         self._topValue = topValue
-        self.requestRepaint()
+        self._layout.requestRepaint()
 
 
     def getTopValue(self):
@@ -399,7 +401,7 @@ class ComponentPosition(object):
         @see #setRightUnits(int)
         """
         self._rightValue = rightValue
-        self.requestRepaint()
+        self._layout.requestRepaint()
 
 
     def getBottomValue(self):
@@ -421,7 +423,7 @@ class ComponentPosition(object):
         @see #setBottomUnits(int)
         """
         self._bottomValue = bottomValue
-        self.requestRepaint()
+        self._layout.requestRepaint()
 
 
     def getLeftValue(self):
@@ -443,7 +445,7 @@ class ComponentPosition(object):
         @see #setLeftUnits(int)
         """
         self._leftValue = leftValue
-        self.requestRepaint()
+        self._layout.requestRepaint()
 
 
     def getTopUnits(self):
@@ -463,7 +465,7 @@ class ComponentPosition(object):
                    of the available units.
         """
         self._topUnits = topUnits
-        self.requestRepaint()
+        self._layout.requestRepaint()
 
 
     def getRightUnits(self):
@@ -483,7 +485,7 @@ class ComponentPosition(object):
                    of the available units.
         """
         self._rightUnits = rightUnits
-        self.requestRepaint()
+        self._layout.requestRepaint()
 
 
     def getBottomUnits(self):
@@ -503,7 +505,7 @@ class ComponentPosition(object):
                    of the available units.
         """
         self._bottomUnits = bottomUnits
-        self.requestRepaint()
+        self._layout.requestRepaint()
 
 
     def getLeftUnits(self):
@@ -523,7 +525,7 @@ class ComponentPosition(object):
                    of the available units.
         """
         self._leftUnits = leftUnits
-        self.requestRepaint()
+        self._layout.requestRepaint()
 
 
     def getZIndex(self):

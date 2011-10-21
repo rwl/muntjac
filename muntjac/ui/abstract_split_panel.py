@@ -358,7 +358,7 @@ class AbstractSplitPanel(AbstractLayout):
         if iface == ISplitterClickListener:
             self.registerListener(self._SPLITTER_CLICK_EVENT,
                     SplitterClickEvent, listener,
-                    SplitterClickListener.clickMethod)
+                    ISplitterClickListener.clickMethod)
         else:
             super(AbstractSplitPanel, self).addListener(listener, iface)
 

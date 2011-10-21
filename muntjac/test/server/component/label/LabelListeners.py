@@ -24,5 +24,5 @@ from muntjac.data.property import IValueChangeListener
 class LabelListeners(AbstractListenerMethodsTest):
 
     def testValueChangeListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Label, ValueChangeEvent,
+        self._testListenerAddGetRemove(Label, ValueChangeEvent,
                 IValueChangeListener)

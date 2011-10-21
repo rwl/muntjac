@@ -23,4 +23,4 @@ from muntjac.ui.login_form import LoginForm, LoginEvent, ILoginListener
 class LoginFormListeners(AbstractListenerMethodsTest):
 
     def testLoginListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(LoginForm, LoginEvent, ILoginListener)
+        self._testListenerAddGetRemove(LoginForm, LoginEvent, ILoginListener)

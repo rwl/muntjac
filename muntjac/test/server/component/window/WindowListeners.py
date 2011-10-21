@@ -27,16 +27,16 @@ from muntjac.event.field_events import \
 class WindowListeners(AbstractListenerMethodsTest):
 
     def testFocusListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Window, FocusEvent, IFocusListener)
+        self._testListenerAddGetRemove(Window, FocusEvent, IFocusListener)
 
 
     def testBlurListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Window, BlurEvent, IBlurListener)
+        self._testListenerAddGetRemove(Window, BlurEvent, IBlurListener)
 
 
     def testResizeListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Window, ResizeEvent, IResizeListener)
+        self._testListenerAddGetRemove(Window, ResizeEvent, IResizeListener)
 
 
     def testCloseListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Window, CloseEvent, ICloseListener)
+        self._testListenerAddGetRemove(Window, CloseEvent, ICloseListener)

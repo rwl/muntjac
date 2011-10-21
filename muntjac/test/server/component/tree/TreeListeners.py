@@ -26,12 +26,12 @@ from muntjac.event.item_click_event import ItemClickEvent, IItemClickListener
 class TreeListeners(AbstractListenerMethodsTest):
 
     def testExpandListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Tree, ExpandEvent, IExpandListener)
+        self._testListenerAddGetRemove(Tree, ExpandEvent, IExpandListener)
 
 
     def testItemClickListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Tree, ItemClickEvent, IItemClickListener)
+        self._testListenerAddGetRemove(Tree, ItemClickEvent, IItemClickListener)
 
 
     def testCollapseListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Tree, CollapseEvent, ICollapseListener)
+        self._testListenerAddGetRemove(Tree, CollapseEvent, ICollapseListener)

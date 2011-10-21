@@ -24,5 +24,5 @@ from muntjac.ui.uri_fragment_utility import \
 class UriFragmentUtilityListeners(AbstractListenerMethodsTest):
 
     def testFragmentChangedListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(UriFragmentUtility, FragmentChangedEvent,
+        self._testListenerAddGetRemove(UriFragmentUtility, FragmentChangedEvent,
                 IFragmentChangedListener)

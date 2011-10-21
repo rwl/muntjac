@@ -27,13 +27,13 @@ from muntjac.event.field_events import \
 class TestAbstractTextFieldListeners(AbstractListenerMethodsTest):
 
     def testTextChangeListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(TextField, TextChangeEvent,
+        self._testListenerAddGetRemove(TextField, TextChangeEvent,
                 ITextChangeListener)
 
 
     def testFocusListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(TextField, FocusEvent, IFocusListener)
+        self._testListenerAddGetRemove(TextField, FocusEvent, IFocusListener)
 
 
     def testBlurListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(TextField, BlurEvent, IBlurListener)
+        self._testListenerAddGetRemove(TextField, BlurEvent, IBlurListener)

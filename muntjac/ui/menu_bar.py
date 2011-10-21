@@ -417,7 +417,7 @@ class MenuItem(object):
 
         @return True if this item has children
         """
-        return not self._isSeparator() and self._itsChildren is not None
+        return not self.isSeparator() and self._itsChildren is not None
 
 
     def addSeparator(self):
@@ -466,7 +466,7 @@ class MenuItem(object):
             return self.addItem(caption, None, command)
         elif nargs == 3:
             caption, icon, command = args
-            if self._isSeparator():
+            if self.isSeparator():
                 raise NotImplementedError, 'Cannot add items to a separator'
             if self.isCheckable():
                 raise ValueError, 'A checkable item cannot have children'
@@ -478,7 +478,7 @@ class MenuItem(object):
             # The only place where the parent is set
             newItem.setParent(self)
             self._itsChildren.append(newItem)
-            self.requestRepaint()
+            self._menu.requestRepaint()
             return newItem
         else:
             raise ValueError, 'invalid number of arguments'
@@ -515,7 +515,7 @@ class MenuItem(object):
             self._itsChildren.append(index, newItem)
         else:
             newItem = self.addItem(caption, icon, command)
-        self.requestRepaint()
+        self._menu.requestRepaint()
         return newItem
 
 
@@ -596,7 +596,7 @@ class MenuItem(object):
                    The icon for this item
         """
         self._itsIcon = icon
-        self.requestRepaint()
+        self._menu.requestRepaint()
 
 
     def setText(self, text):
@@ -607,7 +607,7 @@ class MenuItem(object):
         """
         if text is not None:
             self._itsText = text
-        self.requestRepaint()
+        self._menu.requestRepaint()
 
 
     def removeChild(self, item):
@@ -620,7 +620,7 @@ class MenuItem(object):
             self._itsChildren.remove(item)
             if len(self._itsChildren) == 0:
                 self._itsChildren = None
-            self.requestRepaint()
+            self._menu.requestRepaint()
 
 
     def removeChildren(self):
@@ -628,7 +628,7 @@ class MenuItem(object):
         if self._itsChildren is not None:
             del self._itsChildren[:]
             self._itsChildren = None
-            self.requestRepaint()
+            self._menu.requestRepaint()
 
 
     def setParent(self, parent):
@@ -642,7 +642,7 @@ class MenuItem(object):
 
     def setEnabled(self, enabled):
         self._enabled = enabled
-        self.requestRepaint()
+        self._menu.requestRepaint()
 
 
     def isEnabled(self):
@@ -651,7 +651,7 @@ class MenuItem(object):
 
     def setVisible(self, visible):
         self._visible = visible
-        self.requestRepaint()
+        self._menu.requestRepaint()
 
 
     def isVisible(self):
@@ -660,7 +660,7 @@ class MenuItem(object):
 
     def setSeparator(self, isSeparator):
         self._isSeparator = isSeparator
-        self.requestRepaint()
+        self._menu.requestRepaint()
 
 
     def isSeparator(self):
@@ -669,7 +669,7 @@ class MenuItem(object):
 
     def setStyleName(self, styleName):
         self._styleName = styleName
-        self.requestRepaint()
+        self._menu.requestRepaint()
 
 
     def getStyleName(self):
@@ -686,7 +686,7 @@ class MenuItem(object):
                    the new description string for the component.
         """
         self._description = description
-        self.requestRepaint()
+        self._menu.requestRepaint()
 
 
     def getDescription(self):
@@ -773,7 +773,7 @@ class MenuItem(object):
         if self.hasChildren():
             raise ValueError, 'A menu item with children cannot be checkable'
         self._checkable = checkable
-        self.requestRepaint()
+        self._menu.requestRepaint()
 
 
     def isChecked(self):
@@ -805,4 +805,4 @@ class MenuItem(object):
         @since 6.6.2
         """
         self._checked = checked
-        self.requestRepaint()
+        self._menu.requestRepaint()

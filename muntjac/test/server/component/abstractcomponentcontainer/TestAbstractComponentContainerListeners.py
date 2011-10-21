@@ -28,10 +28,10 @@ from muntjac.ui.component_container import \
 class TestAbstractComponentContainerListeners(AbstractListenerMethodsTest):
 
     def testComponentDetachListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(HorizontalLayout,
+        self._testListenerAddGetRemove(HorizontalLayout,
                 ComponentDetachEvent, IComponentDetachListener)
 
 
     def testComponentAttachListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(VerticalLayout,
+        self._testListenerAddGetRemove(VerticalLayout,
                 ComponentAttachEvent, IComponentAttachListener)

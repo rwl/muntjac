@@ -26,5 +26,5 @@ from muntjac.ui.label import Label
 class PopupViewListeners(AbstractListenerMethodsTest):
 
     def testPopupVisibilityListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(PopupView, PopupVisibilityEvent,
+        self._testListenerAddGetRemove(PopupView, PopupVisibilityEvent,
                 IPopupVisibilityListener, PopupView('', Label()))

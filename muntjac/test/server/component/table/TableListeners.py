@@ -29,25 +29,25 @@ from muntjac.event.item_click_event import ItemClickEvent, IItemClickListener
 class TableListeners(AbstractListenerMethodsTest):
 
     def testColumnResizeListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Table, ColumnResizeEvent,
+        self._testListenerAddGetRemove(Table, ColumnResizeEvent,
                 IColumnResizeListener)
 
 
     def testItemClickListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Table, ItemClickEvent,
+        self._testListenerAddGetRemove(Table, ItemClickEvent,
                 IItemClickListener)
 
 
     def testFooterClickListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Table, FooterClickEvent,
+        self._testListenerAddGetRemove(Table, FooterClickEvent,
                 IFooterClickListener)
 
 
     def testHeaderClickListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Table, HeaderClickEvent,
+        self._testListenerAddGetRemove(Table, HeaderClickEvent,
                 IHeaderClickListener)
 
 
     def testColumnReorderListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Table, ColumnReorderEvent,
+        self._testListenerAddGetRemove(Table, ColumnReorderEvent,
                 IColumnReorderListener)

@@ -19,11 +19,6 @@ from muntjac.terminal.sizeable import ISizeable
 from muntjac.ui.absolute_layout import AbsoluteLayout
 from muntjac.ui.button import Button
 
-# from com.vaadin.terminal.Sizeable import (Sizeable,)
-# from com.vaadin.ui.AbsoluteLayout import (AbsoluteLayout,)
-# from com.vaadin.ui.Button import (Button,)
-# from junit.framework.TestCase import (TestCase,)
-
 
 class ComponentPosition(TestCase):
 
@@ -127,10 +122,10 @@ class ComponentPosition(TestCase):
 
         self.assertEquals(self._CSS_VALUE,
                 layout.getPosition(b).getTopValue())
-        self.assertNone(layout.getPosition(b).getBottomValue(), None)
+        self.assertIsNone(layout.getPosition(b).getBottomValue(), None)
         self.assertEquals(self._CSS_VALUE,
                 layout.getPosition(b).getLeftValue())
-        self.assertNone(layout.getPosition(b).getRightValue())
+        self.assertIsNone(layout.getPosition(b).getRightValue())
 
         self.assertEquals(ISizeable.UNITS_PIXELS,
                 layout.getPosition(b).getTopUnits())

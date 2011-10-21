@@ -106,8 +106,6 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
         @param options
                    the Collection containing the options.
         """
-        super(AbstractSelect, self).__init__()
-
         # Is the select in multiselect mode?
         self._multiSelect = False
 
@@ -156,6 +154,7 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
         # Caption (IItem / IProperty) change listeners
         self._captionChangeListener = None
 
+        super(AbstractSelect, self).__init__()
 
         nargs = len(args)
         if nargs == 0:

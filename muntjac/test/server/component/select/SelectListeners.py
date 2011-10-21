@@ -26,8 +26,8 @@ from muntjac.event.field_events import \
 class SelectListeners(AbstractListenerMethodsTest):
 
     def testFocusListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Select, FocusEvent, IFocusListener)
+        self._testListenerAddGetRemove(Select, FocusEvent, IFocusListener)
 
 
     def testBlurListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Select, BlurEvent, IBlurListener)
+        self._testListenerAddGetRemove(Select, BlurEvent, IBlurListener)

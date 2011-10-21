@@ -25,5 +25,5 @@ from muntjac.event.layout_events import LayoutClickEvent, ILayoutClickListener
 class CssLayoutListeners(AbstractListenerMethodsTest):
 
     def testLayoutClickListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(CssLayout, LayoutClickEvent,
+        self._testListenerAddGetRemove(CssLayout, LayoutClickEvent,
                 ILayoutClickListener)

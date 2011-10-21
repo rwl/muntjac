@@ -20,58 +20,60 @@ from unittest import TestCase
 from muntjac.util import clsname, getSuperClass
 from muntjac.ui.component import IComponent
 
-from muntjac.test.VaadinClasses import VaadinClasses
+#from muntjac.test.VaadinClasses import VaadinClasses
 
 
 class AbstractListenerMethodsTest(TestCase):
 
-    @classmethod
-    def main(cls, args):
-        cls.findAllListenerMethods()
+#    @classmethod
+#    def main(cls, args):
+#        cls.findAllListenerMethods()
+#
+#
+#    @classmethod
+#    def findAllListenerMethods(cls):
+#        classes = set()
+#        for c in VaadinClasses.getAllServerSideClasses():
+#            while c is not None and clsname(c).startswith('com.vaadin.'):
+#                classes.add(c)
+#                c = getSuperClass(c)
+#
+#        for c in classes:
+#            found = False
+#            for name, m in inspect.getmembers(c, inspect.ismethod):
+#                if name == 'addListener':
+#                    if len(inspect.getargspec(m).args) != 1:
+#                        continue
+#                    packageName = 'muntjac.test.server'
+#                    if issubclass(c, IComponent):
+#                        packageName += '.component.' + c.__name__.lower()
+#                        continue
+#                    if not found:
+#                        found = True
+#                        print 'package ' + packageName + ';'
+#                        print 'import ' + AbstractListenerMethodsTest.getName() + ';'
+#                        print 'import ' + c.getName() + ';'
+#                        print 'public class ' + c.__name__ + 'Listeners extends ' + AbstractListenerMethodsTest.getSimpleName() + ' {'
+#                    listenerClassName = m.getParameterTypes()[0].getSimpleName()
+#                    eventClassName = listenerClassName.replaceFirst('Listener$', 'Event')
+#                    print 'public void test' + listenerClassName + '() throws Exception {'
+#                    print '    testListener(' + c.__name__ + '.class, ' + eventClassName + '.class, ' + listenerClassName + '.class);'
+#                    print '}'
+#            if found:
+#                print '}'
+#                print
 
 
-    @classmethod
-    def findAllListenerMethods(cls):
-        classes = set()
-        for c in VaadinClasses.getAllServerSideClasses():
-            while c is not None and clsname(c).startswith('com.vaadin.'):
-                classes.add(c)
-                c = getSuperClass(c)
-
-        for c in classes:
-            found = False
-            for name, m in inspect.getmembers(c, inspect.ismethod):
-                if name == 'addListener':
-                    if len(inspect.getargspec(m).args) != 1:
-                        continue
-                    packageName = 'muntjac.test.server'
-                    if issubclass(c, IComponent):
-                        packageName += '.component.' + c.__name__.lower()
-                        continue
-                    if not found:
-                        found = True
-                        print 'package ' + packageName + ';'
-                        print 'import ' + AbstractListenerMethodsTest.getName() + ';'
-                        print 'import ' + c.getName() + ';'
-                        print 'public class ' + c.__name__ + 'Listeners extends ' + AbstractListenerMethodsTest.getSimpleName() + ' {'
-                    listenerClassName = m.getParameterTypes()[0].getSimpleName()
-                    eventClassName = listenerClassName.replaceFirst('Listener$', 'Event')
-                    print 'public void test' + listenerClassName + '() throws Exception {'
-                    print '    testListener(' + c.__name__ + '.class, ' + eventClassName + '.class, ' + listenerClassName + '.class);'
-                    print '}'
-            if found:
-                print '}'
-                print
-
-
-    def testListenerAddGetRemove(self, testClass, eventClass,
+    def _testListenerAddGetRemove(self, testClass, eventClass,
                 listenerClass, c=None):
         # Create a component for testing
         if c is None:
             c = testClass()
 
-        mockListener1 = EasyMock.createMock(listenerClass)
-        mockListener2 = EasyMock.createMock(listenerClass)
+#        mockListener1 = EasyMock.createMock(listenerClass)
+#        mockListener2 = EasyMock.createMock(listenerClass)
+        mockListener1 = listenerClass()
+        mockListener2 = listenerClass()
 
         # Verify we start from no listeners
         self.verifyListeners(c, eventClass)
@@ -85,7 +87,7 @@ class AbstractListenerMethodsTest(TestCase):
         self.verifyListeners(c, eventClass, mockListener1, mockListener2)
 
         # Ensure we can fetch using parent class also
-        if eventClass.getSuperclass() is not None:
+        if getSuperClass(eventClass) != object:
             self.verifyListeners(c, getSuperClass(eventClass),
                     mockListener1, mockListener2)
 
@@ -100,12 +102,12 @@ class AbstractListenerMethodsTest(TestCase):
 
     def removeListener(self, c, listener, listenerClass):
         method = self.getRemoveListenerMethod(c.__class__, listenerClass)
-        method(c, listener)
+        method(c, listener, listenerClass)
 
 
     def addListener(self, c, listener1, listenerClass):
         method = self.getAddListenerMethod(c.__class__, listenerClass)
-        method(c, listener1)
+        method(c, listener1, listenerClass)
 
 
     def getListeners(self, c, eventType):
@@ -127,9 +129,9 @@ class AbstractListenerMethodsTest(TestCase):
 
     def verifyListeners(self, c, eventClass, *expectedListeners):
         registeredListeners = self.getListeners(c, eventClass)
-        self.assertEquals('Number of listeners', len(expectedListeners),
-                len(registeredListeners))
-        self.assertEquals(expectedListeners, list(registeredListeners))
+        self.assertEquals(len(expectedListeners), len(registeredListeners))
+        self.assertEquals(sorted(expectedListeners),
+                sorted(registeredListeners))
 
 
 if __name__ == '__main__':

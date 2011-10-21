@@ -416,6 +416,7 @@ class ListenerMethod(IEventListener):
         # Only send events supported by the method
         if issubclass(event.__class__, self._eventType):
             try:
+
                 m_name = self._method#.im_func.func_name
                 m = getattr(self._target, m_name)
 
@@ -432,6 +433,7 @@ class ListenerMethod(IEventListener):
                         m(*arg)
                 else:
                     m()
+
 #            except Exception:  # IllegalAccessException
 #                raise RuntimeError, 'Internal error - please report'
             except AttributeError:  # FIXME: InvocationTargetException
@@ -475,7 +477,7 @@ class ListenerMethod(IEventListener):
             return self._target == target and eventType == self._eventType
         else:
             return (self._target == target and eventType == self._eventType
-                    and method == self._method)
+                    and method.im_func.func_name == self._method)
 
 
     def __hash__(self):

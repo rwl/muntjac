@@ -33,6 +33,7 @@ class ComboBox(Select):
 
         nargs = len(args)
         if nargs == 0:
+            super(ComboBox, self).__init__()
             self.setMultiSelect(False)
             self.setNewItemsAllowed(False)
         elif nargs == 1:

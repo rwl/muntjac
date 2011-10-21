@@ -27,9 +27,9 @@ from muntjac.data.property import \
 class TestAbstractFieldListeners(AbstractListenerMethodsTest):
 
     def testReadOnlyStatusChangeListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Button, IReadOnlyStatusChangeEvent,
+        self._testListenerAddGetRemove(Button, IReadOnlyStatusChangeEvent,
                 IReadOnlyStatusChangeListener)
 
     def testValueChangeListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(Button, ValueChangeEvent,
+        self._testListenerAddGetRemove(Button, ValueChangeEvent,
                 IValueChangeListener)

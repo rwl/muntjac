@@ -74,8 +74,8 @@ class MenuBarIds(TestCase, ICommand):
         elif nargs == 2:
             ids, item = args
             idd = item.getId()
-            print 'Item ' + item.getText() + ', id: ' + idd
-            cls.assertFalse(idd in ids)
+            print 'Item ' + item.getText() + ', id: ' + str(idd)
+            assert idd not in ids
             ids.add(idd)
             if item.getChildren() is not None:
                 for subItem in item.getChildren():

@@ -24,14 +24,14 @@ from muntjac.ui.label import Label
 class TestOrderedLayout(TestCase):
 
     def testVLIteration(self):
-        self.testIndexing(VerticalLayout(), 10)
+        self._testIndexing(VerticalLayout(), 10)
 
 
     def testHLIteration(self):
-        self.testIndexing(HorizontalLayout(), 12)
+        self._testIndexing(HorizontalLayout(), 12)
 
 
-    def testIndexing(self, aol, nrComponents):
+    def _testIndexing(self, aol, nrComponents):
         components = self.generateComponents(nrComponents)
         for c in components:
             aol.addComponent(c)
@@ -50,5 +50,5 @@ class TestOrderedLayout(TestCase):
     def generateComponents(self, nr):
         components = [None] * nr
         for i in range(nr):
-            components[i] = Label('' + i)
+            components[i] = Label('%d' % i)
         return components
