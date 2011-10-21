@@ -318,7 +318,7 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
             if self.passesFilters(idd):
                 # filtered list comes from the full list, can use ==
                 try:
-                    equal = equal and origIt.next() == idd  # FIXME: hasNext
+                    equal = equal and (origIt.next() == idd)
                 except StopIteration:
                     equal = False
 
@@ -326,11 +326,10 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
 
         try:
             origIt.next()
-            result = True
+            return True
         except StopIteration:
-            result = (wasUnfiltered and len(self.getAllItemIds() > 0)) or (not equal)  # FIXME: hasNext
-
-        return result
+            return (wasUnfiltered and (len(self.getAllItemIds()) > 0)
+                    or (not equal))
 
 
     def passesFilters(self, itemId):
@@ -435,10 +434,10 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
             return list()
 
         removedFilters = list()
-        for f in self.getFilters():
+        for f in set( self.getFilters() ):
             if f.appliesToProperty(propertyId):
                 removedFilters.append(f)
-                self.getFilters().remove()
+                self.getFilters().remove(f)
 
         if len(removedFilters) > 0:
             self.filterAll()
@@ -502,7 +501,7 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
         <code>Collections.sort(aCollection, getItemSorter())</code> on all arrays
         (containing item ids) that need to be sorted.
         """
-        sorted(self.getAllItemIds(), key=self.getItemSorter())  # FIXME: sort
+        sorted(self.getAllItemIds(), cmp=self.getItemSorter())
 
 
     def getSortablePropertyIds(self):
@@ -514,7 +513,7 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
         for propertyId in self.getContainerPropertyIds():
             propertyType = self.getType(propertyId)
             if (hasattr(propertyType, '__eq__')
-                    or isinstance(propertyType, (int, float, bool))):  # FIXME: Comparable isPrimitive
+                    or isinstance(propertyType, (int, long, float, bool))):  # FIXME: Comparable isPrimitive
                 sortables.append(propertyId)
 
         return sortables

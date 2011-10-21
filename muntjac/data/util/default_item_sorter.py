@@ -52,7 +52,11 @@ class DefaultItemSorter(IItemSorter):
             self._propertyValueComparator = propertyValueComparator
 
 
-    def compare(self, o1, o2):  # FIXME: Comparator
+    def __call__(self, o1, o2):
+        return self.compare(o1, o1)
+
+
+    def compare(self, o1, o2):
         item1 = self._container.getItem(o1)
         item2 = self._container.getItem(o2)
 
@@ -111,7 +115,7 @@ class DefaultItemSorter(IItemSorter):
         # Result of the comparison
         r = 0
         if sortDirection:
-            r = self._propertyValueComparator.compare(value1, value2)  # FIXME: Comparator
+            r = self._propertyValueComparator.compare(value1, value2)
         else:
             r = self._propertyValueComparator.compare(value2, value1)
 
@@ -129,9 +133,12 @@ class DefaultItemSorter(IItemSorter):
         for i in range(len(propertyId)):
             if propertyId[i] in sortable:
                 ids.append(propertyId[i])
-                orders.append( bool(ascending[i] if i < len(ascending) else True) )
+                order = bool(ascending[i]) if i < len(ascending) else True
+                orders.append(order)
+
         self._sortPropertyIds = list(ids)
         self._sortDirections = [None] * len(orders)
+
         for i in range(len(self._sortDirections)):
             self._sortDirections[i] = bool( orders[i] )
 
@@ -142,20 +149,23 @@ class DefaultPropertyValueComparator(object):
     compares can be cast to Comparable.
     """
 
-    def compare(self, o1, o2):  # FIXME: Comparator
+    def __call__(self, o1, o2):
+        return self.compare(o1, o1)
+
+
+    def compare(self, o1, o2):
         r = 0
         # Normal non-null comparison
         if o1 is not None and o2 is not None:
-            # Assume the objects can be cast to Comparable, throw
-            # ClassCastException otherwise.
-            r = o1.compareTo(o2)
+            # Assume the objects to be comparable
+            r = (o1 == o2)
         elif o1 == o2:
             # Objects are equal if both are null
             r = 0
         elif o1 is None:
-            r = -1
             # null is less than non-null
+            r = -1
         else:
-            r = 1
             # non-null is greater than null
+            r = 1
         return r

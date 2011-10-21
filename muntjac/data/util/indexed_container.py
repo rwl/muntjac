@@ -350,10 +350,10 @@ class IndexedContainer(AbstractInMemoryContainer,
         if self._singlePropertyValueChangeListeners is not None:
 
             propertySetToListenerListMap = \
-                self._singlePropertyValueChangeListeners.get(source.propertyId)
+                self._singlePropertyValueChangeListeners.get(source._propertyId)
 
             if propertySetToListenerListMap is not None:
-                listenerList = propertySetToListenerListMap.get(source.itemId)
+                listenerList = propertySetToListenerListMap.get(source._itemId)
                 if listenerList is not None:
                     event = PropertyValueChangeEvent(source)
                     listeners = list(listenerList)
