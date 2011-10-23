@@ -14,13 +14,13 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.test.server.components.AbstractTestFieldValueChange import \
-    AbstractTestFieldValueChange
+from muntjac.test.server.components import AbstractTestFieldValueChange
 
 from muntjac.ui.combo_box import ComboBox
 
 
-class TestComboBoxValueChange(AbstractTestFieldValueChange):
+class TestComboBoxValueChange(
+            AbstractTestFieldValueChange.AbstractTestFieldValueChange):
     """Check that the value change listener for a combo box is triggered
     exactly once when setting the value, at the correct time.
     """

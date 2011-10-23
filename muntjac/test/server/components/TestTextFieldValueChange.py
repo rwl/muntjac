@@ -14,14 +14,18 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.test.server.components.AbstractTestFieldValueChange import \
-    AbstractTestFieldValueChange
+import mox
+import unittest
+
+from muntjac.test.server.components import AbstractTestFieldValueChange
 
 from muntjac.ui.text_field import TextField
 from muntjac.data.util.object_property import ObjectProperty
+from muntjac.data.property import ValueChangeEvent, IValueChangeListener
 
 
-class TestTextFieldValueChange(AbstractTestFieldValueChange):
+class TestTextFieldValueChange(
+            AbstractTestFieldValueChange.AbstractTestFieldValueChange):
     """Check that the value change listener for a text field is triggered
     exactly once when setting the value, at the correct time.
     """
@@ -30,18 +34,18 @@ class TestTextFieldValueChange(AbstractTestFieldValueChange):
         super(TestTextFieldValueChange, self).setUp(TextField())
 
 
+    def setValue(self, field):
+        variables = dict()
+        variables['text'] = 'newValue'
+        field.changeVariables(field, variables)
+
+
     def testNoDataSource(self):
         """Case where the text field only uses its internal buffer, no
         external property data source.
         """
         self.getField().setPropertyDataSource(None)
         self.expectValueChangeFromSetValueNotCommit()
-
-
-    def setValue(self, field):
-        variables = dict()
-        variables['text'] = 'newValue'
-        field.changeVariables(field, variables)
 
 
     def testValueChangeEventPropagationWithReadThrough(self):
@@ -59,22 +63,22 @@ class TestTextFieldValueChange(AbstractTestFieldValueChange):
         self.getField().setReadThrough(True)
 
         # Expectations and start test
-        self.getListener().valueChange(EasyMock.isA(ValueChangeEvent))
-        EasyMock.replay(self.getListener())
+        self.getListener().valueChange(mox.IsA(ValueChangeEvent))
+        mox.Replay(self.getListener())
 
         # Add listener and set the value -> should end up in listener once
-        self.getField().addListener(self.getListener())
+        self.getField().addListener(self.getListener(), IValueChangeListener)
         prop.setValue('Foo')
 
         # Ensure listener was called once
-        EasyMock.verify(self.getListener())
+        mox.Verify(self.getListener())
 
         # get value should not fire value change again
         value = self.getField().getValue()
         self.assertEquals('Foo', value)
 
         # Ensure listener still has been called only once
-        EasyMock.verify(self.getListener())
+        mox.Verify(self.getListener())
 
 
     def testValueChangePropagationWithReadThroughWithModifiedValue(self):
@@ -93,7 +97,7 @@ class TestTextFieldValueChange(AbstractTestFieldValueChange):
         self.getField().setReadThrough(True)
 
         # Expect no value changes calls to listener
-        EasyMock.replay(self.getListener())
+        mox.Replay(self.getListener())
 
         # first set the value (note, write through false -> not forwarded to
         # property)
@@ -101,20 +105,20 @@ class TestTextFieldValueChange(AbstractTestFieldValueChange):
         self.assertTrue(self.getField().isModified())
 
         # Add listener and set the value -> should end up in listener once
-        self.getField().addListener(self.getListener())
+        self.getField().addListener(self.getListener(), IValueChangeListener)
 
         # modify property value, should not fire value change in field as the
         # field has uncommitted value (aka isModified() == true)
         prop.setValue('Foo')
 
         # Ensure listener was called once
-        EasyMock.verify(self.getListener())
+        mox.Verify(self.getListener())
 
         # get value should not fire value change again
         value = self.getField().getValue()
 
         # Ensure listener still has been called only once
-        EasyMock.verify(self.getListener())
+        mox.Verify(self.getListener())
 
         # field value should be different from the original value and current
         # proeprty value
@@ -124,7 +128,7 @@ class TestTextFieldValueChange(AbstractTestFieldValueChange):
         self.assertFalse(isValueEqualToPropertyValue)
 
         # Ensure listener has not been called
-        EasyMock.verify(self.getListener())
+        mox.Verify(self.getListener())
 
 
     def testValueChangePropagationWithReadThroughOff(self):
@@ -143,20 +147,20 @@ class TestTextFieldValueChange(AbstractTestFieldValueChange):
         # Value change should only happen once, when setting the property,
         # further changes via property should not cause value change listener
         # in field to be notified
-        self.getListener().valueChange(EasyMock.isA(ValueChangeEvent))
-        EasyMock.replay(self.getListener())
-        self.getField().addListener(self.getListener())
+        self.getListener().valueChange(mox.IsA(ValueChangeEvent))
+        mox.Replay(self.getListener())
+        self.getField().addListener(self.getListener(), IValueChangeListener)
         self.getField().setPropertyDataSource(prop)
 
         # Ensure listener was called once
-        EasyMock.verify(self.getListener())
+        mox.Verify(self.getListener())
 
         # modify property value, should not fire value change in field as the
         # read buffering is on (read through == false)
         prop.setValue('Foo')
 
         # Ensure listener still has been called only once
-        EasyMock.verify(self.getListener())
+        mox.Verify(self.getListener())
 
         # get value should not fire value change again
         value = self.getField().getValue()
@@ -167,4 +171,8 @@ class TestTextFieldValueChange(AbstractTestFieldValueChange):
         self.assertTrue(isValueEqualToInitial)
 
         # Ensure listener still has been called only once
-        EasyMock.verify(self.getListener())
+        mox.Verify(self.getListener())
+
+
+if __name__ == '__main__':
+    unittest.main()

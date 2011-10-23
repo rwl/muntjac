@@ -97,7 +97,8 @@ class AbstractOrderedLayout(AbstractLayout, IAlignmentHandler,
 
         @param c the component to be removed.
         """
-        self.components.remove(c)
+        if c in self.components:
+            self.components.remove(c)
         if c in self._componentToAlignment:
             del self._componentToAlignment[c]
         if c in self._componentToExpandRatio:

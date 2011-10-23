@@ -16,7 +16,7 @@
 
 from unittest import TestCase
 
-from muntjac.test.VaadinClasses import VaadinClasses
+from muntjac.test.MuntjacClasses import MuntjacClasses
 from muntjac.ui.custom_layout import CustomLayout
 from muntjac.ui.horizontal_layout import HorizontalLayout
 from muntjac.ui.label import Label
@@ -26,17 +26,20 @@ class AddRemoveComponentTest(TestCase):
 
     def testRemoveComponentFromWrongContainer(self, componentContainer=None):
         if componentContainer is None:
-            containerClasses = VaadinClasses.\
+            containerClasses = MuntjacClasses.\
                 getComponentContainersSupportingAddRemoveComponent()
+
             # No default constructor, special case
             containerClasses.remove(CustomLayout)
             self.testRemoveComponentFromWrongContainer(CustomLayout('dummy'))
+
             for c in containerClasses:
-                self.testRemoveComponentFromWrongContainer(c())
+                self.testRemoveComponentFromWrongContainer( c() )
         else:
             hl = HorizontalLayout()
             label = Label()
             hl.addComponent(label)
+
             componentContainer.removeComponent(label)
-            self.assertEquals(('Parent no longer correct for ' +
-                    componentContainer.getClass()), hl, label.getParent())
+            self.assertEquals(hl, label.getParent(), ('Parent no longer ' +
+                    'correct for ' + componentContainer.__class__.__name__))

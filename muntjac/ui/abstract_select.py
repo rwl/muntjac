@@ -452,7 +452,7 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
         if repaintIsNotNeeded is None:
             if newValue == self.getNullSelectionItemId():
                 newValue = None
-            AbstractSelect.setValue(self, newValue, False)
+            self.setValue(newValue, False)
         else:
             if self.isMultiSelect():
 

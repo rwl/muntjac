@@ -68,6 +68,12 @@ class CssLayout(AbstractLayout, ILayoutClickNotifier):
     _CLICK_EVENT = EventId.LAYOUT_CLICK
 
 
+    def __init__(self):
+        super(CssLayout, self).__init__()
+
+        self.components = list()
+
+
     def addComponent(self, c, index=None):
         """Add a component into this container. The component is added to
         the right or under the previous component.
@@ -125,7 +131,8 @@ class CssLayout(AbstractLayout, ILayoutClickNotifier):
 
         @param c: the component to be removed.
         """
-        self.components.remove(c)
+        if c in self.components:
+            self.components.remove(c)
         super(CssLayout, self).removeComponent(c)
         self.requestRepaint()
 

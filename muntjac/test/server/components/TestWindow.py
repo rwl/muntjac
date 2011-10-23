@@ -14,9 +14,11 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from unittest import TestCase
-from muntjac.ui.window import Window
+import mox
 
+from unittest import TestCase
+
+from muntjac.ui.window import Window
 from muntjac.ui import window
 
 
@@ -25,57 +27,59 @@ class TestWindow(TestCase):
     def setUp(self):
         super(TestWindow, self).setUp()
 
+        self.mox = mox.Mox()
         self._window = Window()
 
+
     def testCloseListener(self):
-        cl = EasyMock.createMock(window.ICloseListener)
+        cl = self.mox.CreateMock(window.ICloseListener)
 
         # Expectations
-        cl.windowClose(EasyMock.isA(window.CloseEvent))
+        cl.windowClose(mox.IsA(window.CloseEvent))
 
         # Start actual test
-        EasyMock.replay(cl)
+        mox.Replay(cl)
 
         # Add listener and send a close event -> should end up in listener once
-        self._window.addListener(cl)
+        self._window.addListener(cl, window.ICloseListener)
         self.sendClose(self._window)
 
         # Ensure listener was called once
-        EasyMock.verify(cl)
+        mox.Verify(cl)
 
         # Remove the listener and send close event -> should not end up in
         # listener
-        self._window.removeListener(cl)
+        self._window.removeListener(cl, window.ICloseListener)
         self.sendClose(self._window)
 
         # Ensure listener still has been called only once
-        EasyMock.verify(cl)
+        mox.Verify(cl)
 
 
     def testResizeListener(self):
-        rl = EasyMock.createMock(window.IResizeListener)
+        rl = self.mox.CreateMock(window.IResizeListener)
 
         # Expectations
-        rl.windowResized(EasyMock.isA(window.ResizeEvent))
+        rl.windowResized(mox.IsA(window.ResizeEvent))
 
         # Start actual test
-        EasyMock.replay(rl)
+        mox.Replay(rl)
 
         # Add listener and send a resize event -> should end up
         # in listener once
-        self._window.addListener(rl)
+        self._window.addListener(rl, window.IResizeListener)
         self.sendResize(self._window)
 
         # Ensure listener was called once
-        EasyMock.verify(rl)
+        mox.Verify(rl)
 
         # Remove the listener and send close event -> should not
         # end up in listener
-        self._window.removeListener(rl)
+        self._window.removeListener(rl, window.IResizeListener)
         self.sendResize(self._window)
 
         # Ensure listener still has been called only once
-        EasyMock.verify(rl)
+        mox.Verify(rl)
 
 
     def sendResize(self, window2):

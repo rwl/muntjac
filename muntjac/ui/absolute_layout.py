@@ -108,7 +108,8 @@ class AbsoluteLayout(AbstractLayout, ILayoutClickNotifier):
 
 
     def removeComponent(self, c):
-        self._components.remove(c)
+        if c in self._components:
+            self._components.remove(c)
         if c in self._componentToCoordinates:
             del self._componentToCoordinates[c]
         super(AbsoluteLayout, self).removeComponent(c)
