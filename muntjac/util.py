@@ -26,13 +26,13 @@ import paste.webkit
 
 
 def run_app(applicationClass, host='127.0.0.1', port=8880, nogui=False,
-            forever=True, debug=False):
+            forever=True, debug=False, *args, **kw_args):
 
     logging.basicConfig(stream=sys.stdout, level=logging.DEBUG,
             format="%(levelname)s: %(message)s")
 
     from muntjac.terminal.gwt.server.application_servlet import ApplicationServlet
-    wsgi_app = ApplicationServlet(applicationClass, debug=debug)
+    wsgi_app = ApplicationServlet(applicationClass, debug=debug, *args, **kw_args)
 
     from paste.session import SessionMiddleware
     wsgi_app = SessionMiddleware(wsgi_app)  # wrap in middleware

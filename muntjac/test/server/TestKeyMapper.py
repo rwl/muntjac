@@ -37,9 +37,9 @@ class TestKeyMapper(TestCase):
         self.assertEquals(mapper.get(key1), o1)
         self.assertEquals(mapper.get(key2), o2)
         self.assertEquals(mapper.get(key3), o3)
-        self.assertNotSame(key1, key2)
-        self.assertNotSame(key1, key3)
-        self.assertNotSame(key2, key3)
+        self.assertNotEquals(key1, key2)
+        self.assertNotEquals(key1, key3)
+        self.assertNotEquals(key2, key3)
 
         self.assertSize(mapper, 3)
 
@@ -94,8 +94,8 @@ class TestKeyMapper(TestCase):
 
     def assertSize(self, mapper, i):
         try:
-            h1 = getattr(mapper, 'objectKeyMap')
-            h2 = getattr(mapper, 'keyObjectMap')
+            h1 = getattr(mapper, '_objectKeyMap')
+            h2 = getattr(mapper, '_keyObjectMap')
             self.assertEquals(i, len(h1))
             self.assertEquals(i, len(h2))
         except Exception:

@@ -30,10 +30,10 @@ class TestMimeTypes(TestCase):
             def init(self):
                 pass
 
-        e = Embedded('A pdf', ClassResource('file.pddf', app))
-        self.assertEquals('Invalid mimetype', 'application/octet-stream',
-                e.getMimeType())
+        e = Embedded('A pdf', ClassResource('file.pddf', app()))
+        self.assertEquals('application/octet-stream', e.getMimeType(),
+                'Invalid mimetype')
 
-        e = Embedded('A pdf', ClassResource('file.pdf', app))
-        self.assertEquals('Invalid mimetype', 'application/pdf',
-                e.getMimeType())
+        e = Embedded('A pdf', ClassResource('file.pdf', app()))
+        self.assertEquals('application/pdf', e.getMimeType(),
+                'Invalid mimetype')

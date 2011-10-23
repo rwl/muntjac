@@ -24,5 +24,5 @@ from muntjac.data.container import IItemSetChangeEvent, IItemSetChangeListener
 class TestAbstractInMemoryContainerListeners(AbstractListenerMethodsTest):
 
     def testItemSetChangeListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(IndexedContainer,
+        self._testListenerAddGetRemove(IndexedContainer,
                 IItemSetChangeEvent, IItemSetChangeListener)

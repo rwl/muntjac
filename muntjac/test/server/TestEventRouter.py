@@ -32,8 +32,9 @@ class TestEventRouter(TestCase):
 
         class Outer(IValueChangeListener):
 
-            def __init__(self, test):
+            def __init__(self, test, tf):
                 self._test = test
+                self._tf = tf
 
             def valueChange(self, event):
 
@@ -46,9 +47,9 @@ class TestEventRouter(TestCase):
                         self._test._innerListenerCalls += 1
                         print 'The inner listener was called'
 
-                self.tf.addListener(Inner(self._test))
+                self._tf.addListener(Inner(self._test), IValueChangeListener)
 
-        tf.addListener(Outer(self))
+        tf.addListener(Outer(self, tf), IValueChangeListener)
         tf.setValue('abc')  # No inner listener calls, adds one inner
         tf.setValue('def')  # One inner listener call, adds one inner
         tf.setValue('ghi')  # Two inner listener calls, adds one inner

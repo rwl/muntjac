@@ -29,11 +29,11 @@ from muntjac.test.server.component.AbstractListenerMethodsTest import \
 class TestAbstractPropertyListeners(AbstractListenerMethodsTest):
 
     def testValueChangeListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(AbstractProperty,
+        self._testListenerAddGetRemove(AbstractProperty,
                 ValueChangeEvent, IValueChangeListener, ObjectProperty(''))
 
 
     def testReadOnlyStatusChangeListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(AbstractProperty,
+        self._testListenerAddGetRemove(AbstractProperty,
                 IReadOnlyStatusChangeEvent, IReadOnlyStatusChangeListener,
                 ObjectProperty(''))

@@ -26,6 +26,6 @@ from muntjac.data.container import IPropertySetChangeEvent,\
 class TestAbstractBeanContainerListeners(AbstractListenerMethodsTest):
 
     def testPropertySetChangeListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(BeanItemContainer,
+        self._testListenerAddGetRemove(BeanItemContainer,
                 IPropertySetChangeEvent, IPropertySetChangeListener,
                 BeanItemContainer(IPropertySetChangeListener))

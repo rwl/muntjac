@@ -1,12 +1,12 @@
 
-from muntjac import Application
+from muntjac.api import Application
 
 from muntjac.terminal.sizeable import ISizeable
 from muntjac.terminal.theme_resource import ThemeResource
 
 from muntjac.ui.window import Notification
 
-from muntjac.ui import \
+from muntjac.api import \
     (Alignment, ComboBox, Embedded, HorizontalLayout, HorizontalSplitPanel,
      Label, NativeButton, NativeSelect, Slider, Table, VerticalLayout, Window)
 
@@ -248,7 +248,7 @@ class VaadinTunesLayout(Application):
             s.addItem('3 stars')
             s.addItem('4 stars')
             s.addItem('5 stars')
-            s.select((i % 5) + ' stars')
+            s.select('%d stars' % (i % 5))
             index = i % 16
             listing.addItem([tracks[index], times[index],
                     artists[index], albums[index], genres[index], s], i)
@@ -272,14 +272,14 @@ class VaadinTunesLayout(Application):
         playback.setStyleName('playback')
         playback.setMargin(False, True, False, False)  # Add right-side margin
         play.setStyleName('play')
-        next.setStyleName('next')
+        nextt.setStyleName('next')
         prev.setStyleName('prev')
         playback.setComponentAlignment(prev, Alignment.MIDDLE_LEFT)
-        playback.setComponentAlignment(next, Alignment.MIDDLE_LEFT)
+        playback.setComponentAlignment(nextt, Alignment.MIDDLE_LEFT)
 
         volume.setStyleName('volume')
         mute.setStyleName('mute')
-        max.setStyleName('max')
+        maxx.setStyleName('max')
         vol.setWidth('78px')
 
         status.setStyleName('status')
@@ -300,3 +300,8 @@ class VaadinTunesLayout(Application):
         cover.setSource(ThemeResource('images/album-cover.jpg'))
         # Because this is an image, it will retain it's aspect ratio
         cover.setWidth('100%')
+
+
+if __name__ == '__main__':
+    from muntjac.util import run_app
+    run_app(VaadinTunesLayout, nogui=True, forever=True, debug=True)

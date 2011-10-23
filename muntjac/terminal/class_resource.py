@@ -66,7 +66,7 @@ class ClassResource(IApplicationResource):
 
         nargs = len(args)
         if nargs == 2:
-            resourceName, application = nargs
+            resourceName, application = args
             self._associatedClass = application.__class__
             self._resourceName = resourceName
             self._application = application
@@ -74,7 +74,7 @@ class ClassResource(IApplicationResource):
                 raise ValueError
             application.addResource(self)
         elif nargs == 3:
-            associatedClass, resourceName, application = nargs
+            associatedClass, resourceName, application = args
             self._associatedClass = associatedClass
             self._resourceName = resourceName
             self._application = application

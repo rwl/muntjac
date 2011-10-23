@@ -26,5 +26,5 @@ from muntjac.data.item import \
 class PropertysetItemListeners(AbstractListenerMethodsTest):
 
     def testPropertySetChangeListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(PropertysetItem,
+        self._testListenerAddGetRemove(PropertysetItem,
                 IPropertySetChangeEvent, IPropertySetChangeListener)

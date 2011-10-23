@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from os.path import isdir
+
 from muntjac.terminal.theme_resource import ThemeResource
 
 
@@ -225,7 +227,7 @@ class FileTypeResolver(object):
                 if queryStringStart > 0:
                     ext = ext[:queryStringStart]
                 # Return type from extension map, if found
-                typ = cls._extToMIMEMap[ext.lower()]
+                typ = cls._extToMIMEMap.get(ext.lower())
                 if typ is not None:
                     return typ
             return cls.DEFAULT_MIME_TYPE
@@ -236,7 +238,7 @@ class FileTypeResolver(object):
             if fd is None:
                 raise ValueError, 'File can not be null'
             # Directories
-            if fd.isDirectory():  # FIXME: isDirectory
+            if isdir(fd):
                 # Drives
                 if fd.getParentFile() is None:
                     return 'inode/drive'
@@ -332,7 +334,7 @@ for line in lines:
     exts = line.split()
     typ = exts[0]
     for ext in exts[1:]:
-        FileTypeResolver.addExtension(ext, type)
+        FileTypeResolver.addExtension(ext, typ)
 
 # Initialize Icons
 folder = ThemeResource('../runo/icons/16/folder.png')
