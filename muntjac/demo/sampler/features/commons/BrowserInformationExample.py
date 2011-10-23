@@ -1,5 +1,5 @@
 
-from muntjac.ui import VerticalLayout, Label
+from muntjac.api import VerticalLayout, Label
 
 
 class BrowserInformationExample(VerticalLayout):

@@ -1,5 +1,5 @@
 
-from muntjac.ui import VerticalLayout, Label, Embedded, Button, Alignment
+from muntjac.api import VerticalLayout, Label, Embedded, Button, Alignment
 from muntjac.terminal.theme_resource import ThemeResource
 from muntjac.ui.css_layout import CssLayout
 from muntjac.ui.button import IClickListener

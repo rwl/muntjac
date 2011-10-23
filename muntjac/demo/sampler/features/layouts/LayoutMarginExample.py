@@ -1,5 +1,5 @@
 
-from muntjac.ui import GridLayout, Label, CheckBox, Alignment, VerticalLayout
+from muntjac.api import GridLayout, Label, CheckBox, Alignment, VerticalLayout
 from muntjac.ui.button import IClickListener
 
 

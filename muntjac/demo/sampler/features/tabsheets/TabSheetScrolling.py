@@ -1,8 +1,6 @@
 
 from muntjac.ui.tab_sheet import TabSheet
 
-from muntjac.demo.sampler.features.tabsheets.TabSheetIcons import TabSheetIcons
-from muntjac.demo.sampler.features.tabsheets.TabSheetDisabled import TabSheetDisabled
 from muntjac.demo.sampler.APIResource import APIResource
 from muntjac.demo.sampler.Feature import Feature, Version
 
@@ -27,6 +25,10 @@ class TabSheetScrolling(Feature):
 
 
     def getRelatedFeatures(self):
+
+        from muntjac.demo.sampler.features.tabsheets.TabSheetIcons import TabSheetIcons
+        from muntjac.demo.sampler.features.tabsheets.TabSheetDisabled import TabSheetDisabled
+
         return [TabSheetIcons, TabSheetDisabled]
 
 

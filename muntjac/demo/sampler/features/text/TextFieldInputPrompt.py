@@ -1,9 +1,6 @@
 
 from muntjac.ui.text_field import TextField
 
-from muntjac.demo.sampler.features.dates.DatePopupInputPrompt import DatePopupInputPrompt
-from muntjac.demo.sampler.features.selects.ComboBoxInputPrompt import ComboBoxInputPrompt
-from muntjac.demo.sampler.FeatureSet import Texts
 from muntjac.demo.sampler.features.text.TextFieldSecret import TextFieldSecret
 from muntjac.demo.sampler.NamedExternalResource import NamedExternalResource
 from muntjac.demo.sampler.features.selects.ComboBoxNewItems import ComboBoxNewItems
@@ -37,6 +34,11 @@ class TextFieldInputPrompt(Feature):
 
 
     def getRelatedFeatures(self):
+
+        from muntjac.demo.sampler.features.dates.DatePopupInputPrompt import DatePopupInputPrompt
+        from muntjac.demo.sampler.features.selects.ComboBoxInputPrompt import ComboBoxInputPrompt
+        from muntjac.demo.sampler.FeatureSet import Texts
+
         # TODO update CB -ref to 'suggest' pattern, when available
         return [
             TextFieldSingle,

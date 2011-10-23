@@ -7,7 +7,7 @@ from muntjac.event.dd.acceptcriteria.server_side_criterion import \
 from muntjac.terminal.gwt.client.ui.dd.vertical_drop_location import \
     VerticalDropLocation
 
-from muntjac.ui import HorizontalLayout, Table
+from muntjac.api import HorizontalLayout, Table
 from muntjac.ui.table import TableDragMode
 from muntjac.event.dd.drop_handler import IDropHandler
 from muntjac.event.data_bound_transferable import DataBoundTransferable

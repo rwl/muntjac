@@ -1,5 +1,5 @@
 
-from muntjac.ui import VerticalLayout, GridLayout, CheckBox, button, Button
+from muntjac.api import VerticalLayout, GridLayout, CheckBox, button, Button
 
 
 class LayoutSpacingExample(VerticalLayout):

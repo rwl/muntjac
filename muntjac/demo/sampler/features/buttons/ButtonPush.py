@@ -1,5 +1,5 @@
 
-from muntjac.ui import Button
+from muntjac.api import Button
 
 from muntjac.demo.sampler.features.buttons.ButtonLink import ButtonLink
 

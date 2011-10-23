@@ -2,7 +2,6 @@
 from muntjac.demo.sampler.CodeLabel import CodeLabel
 from muntjac.demo.sampler.FeatureSet import FeatureSet
 from muntjac.demo.sampler.ActiveLink import ActiveLink
-from muntjac.demo.sampler.SamplerApplication import SamplerApplication
 
 from muntjac.terminal.theme_resource import ThemeResource
 from muntjac.terminal.external_resource import ExternalResource
@@ -11,7 +10,7 @@ from muntjac.ui.themes import Reindeer, BaseTheme
 from muntjac.ui.button import IClickListener
 from muntjac.demo.sampler.ActiveLink import ILinkActivatedListener
 
-from muntjac.ui import \
+from muntjac.api import \
     (HorizontalLayout, Label, VerticalLayout, Panel, NativeButton,
      Link, Window)
 
@@ -118,6 +117,9 @@ class FeatureView(HorizontalLayout):
 
 
     def setFeature(self, feature):
+
+        from muntjac.demo.sampler.SamplerApplication import SamplerApplication
+
         if feature != self._currentFeature:
             self._currentFeature = feature
             self._right.removeAllComponents()

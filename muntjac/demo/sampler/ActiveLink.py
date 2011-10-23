@@ -1,5 +1,5 @@
 
-from muntjac.ui import Link
+from muntjac.api import Link
 from muntjac.ui.button import ClickEvent
 from muntjac.ui.abstract_component import AbstractComponent
 from muntjac.ui.component import Event

@@ -1,7 +1,7 @@
 
 from muntjac.ui.themes import Reindeer
 
-from muntjac.ui import \
+from muntjac.api import \
     (VerticalLayout, Button, button, Label, Window,
      HorizontalLayout, Panel, Tree, Table)
 

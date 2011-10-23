@@ -1,10 +1,5 @@
 
-from muntjac.demo.sampler.features.menubar.BasicMenuBar import BasicMenuBar
-from muntjac.demo.sampler.features.menubar.MenuBarTooltips import MenuBarTooltips
-from muntjac.demo.sampler.features.menubar.MenuBarHiddenItems import MenuBarHiddenItems
 from muntjac.demo.sampler.APIResource import APIResource
-from muntjac.demo.sampler.features.menubar.MenuBarWithIcons import MenuBarWithIcons
-from muntjac.demo.sampler.features.menubar.MenuBarItemStyles import MenuBarItemStyles
 from muntjac.demo.sampler.Feature import Feature, Version
 from muntjac.ui.menu_bar import MenuBar
 
@@ -32,6 +27,13 @@ class MenuBarCollapsing(Feature):
 
 
     def getRelatedFeatures(self):
+
+        from muntjac.demo.sampler.features.menubar.BasicMenuBar import BasicMenuBar
+        from muntjac.demo.sampler.features.menubar.MenuBarTooltips import MenuBarTooltips
+        from muntjac.demo.sampler.features.menubar.MenuBarHiddenItems import MenuBarHiddenItems
+        from muntjac.demo.sampler.features.menubar.MenuBarWithIcons import MenuBarWithIcons
+        from muntjac.demo.sampler.features.menubar.MenuBarItemStyles import MenuBarItemStyles
+
         return [
             BasicMenuBar,
             MenuBarWithIcons,

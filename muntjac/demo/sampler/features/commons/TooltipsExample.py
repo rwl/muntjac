@@ -1,5 +1,5 @@
 
-from muntjac.ui import VerticalLayout, Button, RichTextArea, button
+from muntjac.api import VerticalLayout, Button, RichTextArea, button
 from muntjac.ui.themes import BaseTheme
 
 

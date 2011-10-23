@@ -1,5 +1,5 @@
 
-from muntjac.ui import HorizontalLayout, Button, Label
+from muntjac.api import HorizontalLayout, Button, Label
 from muntjac.data.property import IValueChangeListener
 
 

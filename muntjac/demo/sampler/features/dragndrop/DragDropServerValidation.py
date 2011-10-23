@@ -1,16 +1,4 @@
 
-from muntjac.demo.sampler.features.dragndrop.DragDropHtml5FromDesktop \
-    import DragDropHtml5FromDesktop
-
-from muntjac.demo.sampler.features.dragndrop.DragDropTreeSorting import \
-    DragDropTreeSorting
-
-from muntjac.demo.sampler.features.dragndrop.DragDropTableTree import \
-    DragDropTableTree
-
-from muntjac.demo.sampler.features.dragndrop.DragDropRearrangeComponents \
-    import DragDropRearrangeComponents
-
 from muntjac.demo.sampler.APIResource import APIResource
 from muntjac.demo.sampler.Feature import Feature, Version
 
@@ -48,6 +36,19 @@ class DragDropServerValidation(Feature):
 
 
     def getRelatedFeatures(self):
+
+        from muntjac.demo.sampler.features.dragndrop.DragDropHtml5FromDesktop \
+            import DragDropHtml5FromDesktop
+
+        from muntjac.demo.sampler.features.dragndrop.DragDropTreeSorting import \
+            DragDropTreeSorting
+
+        from muntjac.demo.sampler.features.dragndrop.DragDropTableTree import \
+            DragDropTableTree
+
+        from muntjac.demo.sampler.features.dragndrop.DragDropRearrangeComponents \
+            import DragDropRearrangeComponents
+
         return [
             DragDropTreeSorting,
             DragDropTableTree,

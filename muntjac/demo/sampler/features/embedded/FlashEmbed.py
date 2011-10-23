@@ -1,5 +1,4 @@
 
-from muntjac.demo.sampler.features.embedded.ImageEmbed import ImageEmbed
 from muntjac.demo.sampler.APIResource import APIResource
 from muntjac.demo.sampler.Feature import Feature, Version
 from muntjac.ui.embedded import Embedded
@@ -33,6 +32,7 @@ class FlashEmbed(Feature):
 
 
     def getRelatedFeatures(self):
+        from muntjac.demo.sampler.features.embedded.ImageEmbed import ImageEmbed
         return [ImageEmbed]
 
 

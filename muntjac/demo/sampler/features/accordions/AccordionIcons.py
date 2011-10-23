@@ -1,12 +1,9 @@
 
-from muntjac.ui import Accordion
+from muntjac.api import Accordion
 
-from muntjac.demo.sampler.FeatureSet import Tabsheets
 from muntjac.demo.sampler.APIResource import APIResource
 from muntjac.demo.sampler.Feature import Feature, Version
 
-from muntjac.demo.sampler.features.accordions.AccordionDisabled import \
-    AccordionDisabled
 
 
 class AccordionIcons(Feature):
@@ -28,6 +25,12 @@ class AccordionIcons(Feature):
 
 
     def getRelatedFeatures(self):
+
+        from muntjac.demo.sampler.FeatureSet import Tabsheets
+
+        from muntjac.demo.sampler.features.accordions.AccordionDisabled import \
+            AccordionDisabled
+
         return [AccordionDisabled, Tabsheets]
 
 

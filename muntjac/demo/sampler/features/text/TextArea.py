@@ -1,9 +1,6 @@
 
 from muntjac.ui.text_field import TextField
 
-from muntjac.demo.sampler.features.text.RichTextEditor import RichTextEditor
-from muntjac.demo.sampler.FeatureSet import Texts
-from muntjac.demo.sampler.features.text.TextFieldSingle import TextFieldSingle
 from muntjac.demo.sampler.APIResource import APIResource
 from muntjac.demo.sampler.Feature import Feature, Version
 
@@ -31,6 +28,11 @@ class TextArea(Feature):
 
 
     def getRelatedFeatures(self):
+
+        from muntjac.demo.sampler.features.text.RichTextEditor import RichTextEditor
+        from muntjac.demo.sampler.FeatureSet import Texts
+        from muntjac.demo.sampler.features.text.TextFieldSingle import TextFieldSingle
+
         return [RichTextEditor, TextFieldSingle, Texts]
 
 

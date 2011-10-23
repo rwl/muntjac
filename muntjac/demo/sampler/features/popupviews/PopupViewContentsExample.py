@@ -1,5 +1,5 @@
 
-from muntjac.ui import VerticalLayout, Label, PopupView, popup_view, TextField
+from muntjac.api import VerticalLayout, Label, PopupView, popup_view, TextField
 
 
 class PopupViewContentsExample(VerticalLayout):

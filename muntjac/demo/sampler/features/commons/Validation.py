@@ -1,12 +1,10 @@
 
-from muntjac.ui import Form
+from muntjac.api import Form
 
 from muntjac.data.validatable import IValidatable
 from muntjac.data.validator import IValidator
 
-from muntjac.demo.sampler.FeatureSet import Forms
 from muntjac.demo.sampler.APIResource import APIResource
-from muntjac.demo.sampler.features.commons.Errors import Errors
 from muntjac.demo.sampler.Feature import Feature, Version
 from muntjac.demo.sampler.features.form.FormPojoExample import FormPojoExample
 
@@ -44,6 +42,10 @@ class Validation(Feature):
 
 
     def getRelatedFeatures(self):
+
+        from muntjac.demo.sampler.FeatureSet import Forms
+        from muntjac.demo.sampler.features.commons.Errors import Errors
+
         return [Errors, Forms]
 
 

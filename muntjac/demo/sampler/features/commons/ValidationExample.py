@@ -1,5 +1,5 @@
 
-from muntjac.ui import VerticalLayout, TextField, Label
+from muntjac.api import VerticalLayout, TextField, Label
 from muntjac.data.validator import InvalidValueException
 
 from muntjac.data.validators.string_length_validator import \

@@ -1,5 +1,5 @@
 
-from muntjac.ui import VerticalLayout, GridLayout, Button, Alignment
+from muntjac.api import VerticalLayout, GridLayout, Button, Alignment
 from muntjac.terminal.gwt.client.ui.alignment_info import Bits
 
 

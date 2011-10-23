@@ -1,5 +1,5 @@
 
-from muntjac.ui import VerticalLayout, Window, Label, button, Button, Alignment
+from muntjac.api import VerticalLayout, Window, Label, button, Button, Alignment
 
 
 class SubwindowSizedExample(VerticalLayout):

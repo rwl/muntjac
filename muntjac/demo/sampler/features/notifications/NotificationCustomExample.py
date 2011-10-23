@@ -1,5 +1,5 @@
 
-from muntjac.ui import \
+from muntjac.api import \
     (VerticalLayout, TextField, RichTextArea, HorizontalLayout,
      NativeSelect, Slider, button, Button, Alignment)
 

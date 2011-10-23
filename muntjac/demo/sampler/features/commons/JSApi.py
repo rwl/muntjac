@@ -1,5 +1,5 @@
 
-from muntjac.ui import Window
+from muntjac.api import Window
 
 from muntjac.demo.sampler.APIResource import APIResource
 from muntjac.demo.sampler.Feature import Feature, Version

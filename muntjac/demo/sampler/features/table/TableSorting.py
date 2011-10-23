@@ -2,7 +2,6 @@
 from muntjac.ui.table import Table
 
 from muntjac.demo.sampler.features.table.TableMainFeaturesExample import TableMainFeaturesExample
-from muntjac.demo.sampler.FeatureSet import Tables
 from muntjac.demo.sampler.APIResource import APIResource
 from muntjac.demo.sampler.Feature import Feature, Version
 
@@ -32,6 +31,7 @@ class TableSorting(Feature):
 
 
     def getRelatedFeatures(self):
+        from muntjac.demo.sampler.FeatureSet import Tables
         return [Tables]
 
 

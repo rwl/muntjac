@@ -1,5 +1,5 @@
 
-from muntjac.ui import \
+from muntjac.api import \
     VerticalLayout, tab_sheet, button, Label, TabSheet, Button, HorizontalLayout
 
 from muntjac.terminal.theme_resource import ThemeResource

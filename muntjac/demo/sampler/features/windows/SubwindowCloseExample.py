@@ -1,5 +1,5 @@
 
-from muntjac.ui import VerticalLayout, CheckBox, Window, Label, Button
+from muntjac.api import VerticalLayout, CheckBox, Window, Label, Button
 from muntjac.data.property import IValueChangeListener
 from muntjac.ui.window import ICloseListener
 from muntjac.ui.button import IClickListener

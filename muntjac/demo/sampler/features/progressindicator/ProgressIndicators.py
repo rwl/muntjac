@@ -1,7 +1,7 @@
 
 from muntjac.demo.sampler.APIResource import APIResource
 from muntjac.demo.sampler.Feature import Feature, Version
-from muntjac.ui import ProgressIndicator
+from muntjac.api import ProgressIndicator
 
 
 class ProgressIndicators(Feature):

@@ -1,5 +1,5 @@
 
-from muntjac.ui import \
+from muntjac.api import \
     VerticalLayout, Label, GridLayout, TextField, Select, Link
 
 from muntjac.event.layout_events import ILayoutClickListener

@@ -1,6 +1,6 @@
 
 from muntjac.ui.vertical_layout import VerticalLayout
-from muntjac.ui import MenuBar, button, Button
+from muntjac.api import MenuBar, button, Button
 from muntjac.ui.menu_bar import ICommand
 from muntjac.terminal.external_resource import ExternalResource
 

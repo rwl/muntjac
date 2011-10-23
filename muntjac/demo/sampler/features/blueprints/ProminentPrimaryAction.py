@@ -1,9 +1,7 @@
 
-from muntjac.ui import Button, Link
+from muntjac.api import Button, Link
 
-from muntjac.demo.sampler.features.buttons.ButtonLink import ButtonLink
 from muntjac.demo.sampler.NamedExternalResource import NamedExternalResource
-from muntjac.demo.sampler.features.buttons.ButtonPush import ButtonPush
 from muntjac.demo.sampler.APIResource import APIResource
 from muntjac.demo.sampler.Feature import Feature, Version
 
@@ -34,6 +32,10 @@ class ProminentPrimaryAction(Feature):
 
 
     def getRelatedFeatures(self):
+
+        from muntjac.demo.sampler.features.buttons.ButtonLink import ButtonLink
+        from muntjac.demo.sampler.features.buttons.ButtonPush import ButtonPush
+
         return [ButtonPush, ButtonLink]
 
 

@@ -3,7 +3,7 @@ import time
 
 from StringIO import StringIO
 
-from muntjac.ui import \
+from muntjac.api import \
     (VerticalLayout, Label, ProgressIndicator, Upload, CheckBox,
      button, Button, Panel, FormLayout, HorizontalLayout, upload)
 

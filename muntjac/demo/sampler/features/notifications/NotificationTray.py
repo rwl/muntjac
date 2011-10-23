@@ -1,12 +1,8 @@
 
 from muntjac.ui.window import Window, Notification
 
-from muntjac.demo.sampler.features.notifications.NotificationHumanized import NotificationHumanized
-from muntjac.demo.sampler.features.notifications.NotificationWarning import NotificationWarning
-from muntjac.demo.sampler.features.notifications.NotificationError import NotificationError
 from muntjac.demo.sampler.NamedExternalResource import NamedExternalResource
 from muntjac.demo.sampler.APIResource import APIResource
-from muntjac.demo.sampler.features.notifications.NotificationCustom import NotificationCustom
 from muntjac.demo.sampler.Feature import Feature, Version
 
 
@@ -38,6 +34,12 @@ class NotificationTray(Feature):
 
 
     def getRelatedFeatures(self):
+
+        from muntjac.demo.sampler.features.notifications.NotificationHumanized import NotificationHumanized
+        from muntjac.demo.sampler.features.notifications.NotificationWarning import NotificationWarning
+        from muntjac.demo.sampler.features.notifications.NotificationError import NotificationError
+        from muntjac.demo.sampler.features.notifications.NotificationCustom import NotificationCustom
+
         return [
             NotificationHumanized,
             NotificationWarning,

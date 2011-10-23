@@ -1,5 +1,5 @@
 
-from muntjac.ui import HorizontalLayout, TextField, Label, Alignment
+from muntjac.api import HorizontalLayout, TextField, Label, Alignment
 
 
 class HorizontalLayoutBasicExample(HorizontalLayout):

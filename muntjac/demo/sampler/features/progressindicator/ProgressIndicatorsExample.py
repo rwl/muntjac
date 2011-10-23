@@ -2,7 +2,7 @@
 import time
 import threading
 
-from muntjac.ui import \
+from muntjac.api import \
     (VerticalLayout, Label, ProgressIndicator, HorizontalLayout,
      Alignment, Button, button)
 

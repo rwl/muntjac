@@ -1,9 +1,6 @@
 
 from muntjac.ui.tree import Tree
 
-from muntjac.demo.sampler.features.trees.TreeMouseEvents import TreeMouseEvents
-from muntjac.demo.sampler.features.trees.TreeSingleSelect import TreeSingleSelect
-from muntjac.demo.sampler.features.trees.TreeActions import TreeActions
 from muntjac.demo.sampler.APIResource import APIResource
 from muntjac.demo.sampler.Feature import Feature, Version
 
@@ -37,6 +34,11 @@ class TreeMultiSelect(Feature):
 
 
     def getRelatedFeatures(self):
+
+        from muntjac.demo.sampler.features.trees.TreeMouseEvents import TreeMouseEvents
+        from muntjac.demo.sampler.features.trees.TreeSingleSelect import TreeSingleSelect
+        from muntjac.demo.sampler.features.trees.TreeActions import TreeActions
+
         return [TreeSingleSelect, TreeActions, TreeMouseEvents]
 
 

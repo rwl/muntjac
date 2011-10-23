@@ -1,7 +1,7 @@
 
 from muntjac.demo.sampler.ExampleUtil import ExampleUtil
 
-from muntjac.ui import \
+from muntjac.api import \
     (VerticalLayout, Button, window, button, Label, HorizontalLayout,
      Tree, Window, Table)
 

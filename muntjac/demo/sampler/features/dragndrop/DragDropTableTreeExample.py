@@ -3,7 +3,7 @@ import re
 
 from muntjac.demo.sampler.ExampleUtil import ExampleUtil
 
-from muntjac.ui import HorizontalLayout, Table, Tree
+from muntjac.api import HorizontalLayout, Table, Tree
 from muntjac.event.dd.acceptcriteria.source_is import SourceIs
 from muntjac.ui.tree import TreeDragMode, TargetItemAllowsChildren
 from muntjac.event.dd.drop_handler import IDropHandler

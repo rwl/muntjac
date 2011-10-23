@@ -1,5 +1,5 @@
 
-from muntjac.ui import Label
+from muntjac.api import Label
 
 
 class CodeLabel(Label):

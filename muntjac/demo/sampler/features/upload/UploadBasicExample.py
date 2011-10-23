@@ -1,7 +1,7 @@
 
 from StringIO import StringIO
 
-from muntjac.ui import VerticalLayout, Label, upload
+from muntjac.api import VerticalLayout, Label, upload
 from muntjac.ui.upload import Upload, IReceiver
 
 

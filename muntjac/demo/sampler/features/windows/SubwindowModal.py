@@ -1,6 +1,4 @@
 
-from muntjac.demo.sampler.features.windows.Subwindow import Subwindow
-from muntjac.demo.sampler.FeatureSet import Windows
 from muntjac.demo.sampler.NamedExternalResource import NamedExternalResource
 from muntjac.demo.sampler.APIResource import APIResource
 from muntjac.demo.sampler.Feature import Feature, Version
@@ -29,6 +27,10 @@ class SubwindowModal(Feature):
 
 
     def getRelatedFeatures(self):
+
+        from muntjac.demo.sampler.features.windows.Subwindow import Subwindow
+        from muntjac.demo.sampler.FeatureSet import Windows
+
         return [Subwindow, Windows]
 
 

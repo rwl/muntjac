@@ -1,5 +1,5 @@
 
-from muntjac.ui import DateField, PopupDateField
+from muntjac.api import DateField, PopupDateField
 
 from muntjac.demo.sampler.features.dates.DateInline import DateInline
 from muntjac.demo.sampler.features.dates.DateLocale import DateLocale

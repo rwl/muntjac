@@ -1,14 +1,6 @@
 
 from muntjac.ui.vertical_layout import VerticalLayout
 
-from muntjac.demo.sampler.features.layouts.LayoutSpacing import LayoutSpacing
-
-from muntjac.demo.sampler.features.layouts.HorizontalLayoutBasic import \
-    HorizontalLayoutBasic
-
-from muntjac.demo.sampler.features.layouts.LayoutAlignment import \
-    LayoutAlignment
-
 from muntjac.demo.sampler.APIResource import APIResource
 from muntjac.demo.sampler.Feature import Feature, Version
 
@@ -36,6 +28,15 @@ class VerticalLayoutBasic(Feature):
 
 
     def getRelatedFeatures(self):
+
+        from muntjac.demo.sampler.features.layouts.LayoutSpacing import LayoutSpacing
+
+        from muntjac.demo.sampler.features.layouts.HorizontalLayoutBasic import \
+            HorizontalLayoutBasic
+
+        from muntjac.demo.sampler.features.layouts.LayoutAlignment import \
+            LayoutAlignment
+
         return [HorizontalLayoutBasic, LayoutSpacing, LayoutAlignment]
 
 

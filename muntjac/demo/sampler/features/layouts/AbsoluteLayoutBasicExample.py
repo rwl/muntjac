@@ -1,5 +1,5 @@
 
-from muntjac.ui import AbsoluteLayout, Button
+from muntjac.api import AbsoluteLayout, Button
 
 
 class AbsoluteLayoutBasicExample(AbsoluteLayout):

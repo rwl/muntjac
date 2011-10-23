@@ -1,5 +1,5 @@
 
-from muntjac.ui import VerticalLayout, HorizontalLayout, Button
+from muntjac.api import VerticalLayout, HorizontalLayout, Button
 
 
 class ExpandingComponentExample(VerticalLayout):

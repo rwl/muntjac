@@ -1,5 +1,5 @@
 
-from muntjac.ui import VerticalLayout, ComboBox
+from muntjac.api import VerticalLayout, ComboBox
 from muntjac.data.property import IValueChangeListener
 from muntjac.ui.abstract_select import IFiltering
 

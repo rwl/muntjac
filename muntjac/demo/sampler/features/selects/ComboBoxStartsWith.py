@@ -1,9 +1,6 @@
 
 from muntjac.ui.combo_box import ComboBox
 
-from muntjac.demo.sampler.features.selects.ComboBoxPlain import ComboBoxPlain
-from muntjac.demo.sampler.features.selects.ComboBoxContains import ComboBoxContains
-from muntjac.demo.sampler.features.selects.ComboBoxNewItems import ComboBoxNewItems
 from muntjac.demo.sampler.APIResource import APIResource
 from muntjac.demo.sampler.Feature import Feature, Version
 
@@ -34,6 +31,11 @@ class ComboBoxStartsWith(Feature):
 
 
     def getRelatedFeatures(self):
+
+        from muntjac.demo.sampler.features.selects.ComboBoxPlain import ComboBoxPlain
+        from muntjac.demo.sampler.features.selects.ComboBoxContains import ComboBoxContains
+        from muntjac.demo.sampler.features.selects.ComboBoxNewItems import ComboBoxNewItems
+
         return [ComboBoxPlain, ComboBoxContains, ComboBoxNewItems]
 
 

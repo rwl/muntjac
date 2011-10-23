@@ -1,11 +1,5 @@
 
-from muntjac.ui import DateField, InlineDateField
-
-from muntjac.demo.sampler.features.dates.DateInline import DateInline
-from muntjac.demo.sampler.features.dates.DateLocale import DateLocale
-
-from muntjac.demo.sampler.features.dates.DatePopupInputPrompt import \
-    DatePopupInputPrompt
+from muntjac.api import DateField, InlineDateField
 
 from muntjac.demo.sampler.features.dates.DatePopup import DatePopup
 from muntjac.demo.sampler.APIResource import APIResource
@@ -33,6 +27,13 @@ class DateResolution(Feature):
 
 
     def getRelatedFeatures(self):
+
+        from muntjac.demo.sampler.features.dates.DateInline import DateInline
+        from muntjac.demo.sampler.features.dates.DateLocale import DateLocale
+
+        from muntjac.demo.sampler.features.dates.DatePopupInputPrompt import \
+            DatePopupInputPrompt
+
         return [DateInline, DatePopup, DatePopupInputPrompt, DateLocale]
 
 

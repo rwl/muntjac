@@ -1,5 +1,5 @@
 
-from muntjac.ui import \
+from muntjac.api import \
     VerticalLayout, TabSheet, GridLayout, Embedded, Label, Alignment
 
 from muntjac.ui.themes import Reindeer

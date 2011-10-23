@@ -1,5 +1,5 @@
 
-from muntjac.ui import VerticalLayout, Label, PopupView
+from muntjac.api import VerticalLayout, Label, PopupView
 from muntjac.ui.popup_view import IPopupVisibilityListener
 
 

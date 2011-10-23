@@ -2,7 +2,7 @@
 from muntjac.demo.sampler.APIResource import APIResource
 from muntjac.demo.sampler.Feature import Feature, Version
 
-from muntjac.ui import HorizontalLayout
+from muntjac.api import HorizontalLayout
 
 
 class ExpandingComponent(Feature):

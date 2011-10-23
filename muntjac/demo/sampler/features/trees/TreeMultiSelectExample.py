@@ -1,6 +1,7 @@
 
 from muntjac.demo.sampler.ExampleUtil import ExampleUtil
-from muntjac.ui import VerticalLayout, Tree, button, Button
+from muntjac.api import VerticalLayout, Tree, Button
+from muntjac.ui import button
 from muntjac.event.action import Action
 from muntjac.event import action
 from muntjac.data.property import IValueChangeListener

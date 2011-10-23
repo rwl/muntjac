@@ -1,9 +1,10 @@
 
-from muntjac.ui import \
-    (VerticalLayout, Form, HorizontalLayout, button, Button, Alignment,
+from muntjac.api import \
+    (VerticalLayout, Form, HorizontalLayout, Button, Alignment,
      ComboBox, PasswordField)
 
 from muntjac.ui.themes import BaseTheme
+from muntjac.ui import button
 
 from muntjac.data.validator import IValidator, InvalidValueException
 from muntjac.demo.sampler.ExampleUtil import ExampleUtil

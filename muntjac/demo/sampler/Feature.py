@@ -1,7 +1,6 @@
 
 from muntjac.util import fullname
 from muntjac.util import loadClass
-from muntjac.demo.sampler.SamplerApplication import SamplerApplication
 
 from muntjac.terminal.gwt.server.abstract_application_servlet import \
     AbstractApplicationServlet
@@ -166,6 +165,7 @@ class Feature(object):
 
         @return
         """
+        from muntjac.demo.sampler.SamplerApplication import SamplerApplication
         return SamplerApplication.getThemeBase()
 
 
@@ -188,8 +188,8 @@ class Feature(object):
 class Version(object):
 
     OLD = [0]
-    BUILD = [int(AbstractApplicationServlet.VERSION_MAJOR + ''
-            + AbstractApplicationServlet.VERSION_MINOR)]
+    BUILD = [int('%d%d' % (AbstractApplicationServlet.VERSION_MAJOR,
+                           AbstractApplicationServlet.VERSION_MINOR))]
     V62 = [62]
     V63 = [63]
     V64 = [64]

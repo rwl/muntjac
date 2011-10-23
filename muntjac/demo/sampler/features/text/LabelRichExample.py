@@ -1,5 +1,5 @@
 
-from muntjac.ui import VerticalLayout, RichTextArea, Label, Button
+from muntjac.api import VerticalLayout, RichTextArea, Label, Button
 from muntjac.ui.button import IClickListener
 
 

@@ -1,5 +1,5 @@
 
-from muntjac.ui import VerticalLayout, Panel, Label, CssLayout
+from muntjac.api import VerticalLayout, Panel, Label, CssLayout
 
 
 class CssLayoutsExample(VerticalLayout):

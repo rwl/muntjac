@@ -1,7 +1,6 @@
 
 from muntjac.ui.slider import Slider
 
-from muntjac.demo.sampler.features.slider.SliderVertical import SliderVertical
 from muntjac.demo.sampler.APIResource import APIResource
 from muntjac.demo.sampler.Feature import Feature, Version
 
@@ -25,6 +24,9 @@ class SliderHorizontal(Feature):
 
 
     def getRelatedFeatures(self):
+
+        from muntjac.demo.sampler.features.slider.SliderVertical import SliderVertical
+
         return [SliderVertical]
 
 

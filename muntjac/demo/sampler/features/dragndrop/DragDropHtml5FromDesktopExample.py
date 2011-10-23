@@ -4,7 +4,7 @@ try:
 except ImportError, e:
     from StringIO import StringIO
 
-from muntjac.ui import \
+from muntjac.api import \
     VerticalLayout, Label, CssLayout, Panel, ProgressIndicator, Window
 
 from muntjac.terminal.gwt.server.abstract_web_application_context import \

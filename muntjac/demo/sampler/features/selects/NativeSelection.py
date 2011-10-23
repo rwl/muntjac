@@ -1,8 +1,5 @@
 
-from muntjac.demo.sampler.features.selects.ComboBoxPlain import ComboBoxPlain
-from muntjac.demo.sampler.FeatureSet import Selects
 from muntjac.demo.sampler.APIResource import APIResource
-from muntjac.demo.sampler.features.selects.ListSelectSingle import ListSelectSingle
 from muntjac.demo.sampler.Feature import Feature, Version
 from muntjac.ui.native_select import NativeSelect
 
@@ -33,6 +30,11 @@ class NativeSelection(Feature):
 
 
     def getRelatedFeatures(self):
+
+        from muntjac.demo.sampler.features.selects.ComboBoxPlain import ComboBoxPlain
+        from muntjac.demo.sampler.FeatureSet import Selects
+        from muntjac.demo.sampler.features.selects.ListSelectSingle import ListSelectSingle
+
         return [ComboBoxPlain, ListSelectSingle, Selects]
 
 

@@ -1,12 +1,7 @@
 
 from muntjac.ui.list_select import ListSelect
 
-from muntjac.demo.sampler.features.selects.OptionGroupDisabledItems import OptionGroupDisabledItems
-from muntjac.demo.sampler.features.selects.TwinColumnSelect import TwinColumnSelect
-from muntjac.demo.sampler.features.selects.OptionGroups import OptionGroups
-from muntjac.demo.sampler.features.selects.NativeSelection import NativeSelection
 from muntjac.demo.sampler.APIResource import APIResource
-from muntjac.demo.sampler.features.selects.ListSelectSingle import ListSelectSingle
 from muntjac.demo.sampler.Feature import Feature, Version
 
 
@@ -34,6 +29,13 @@ class ListSelectMultiple(Feature):
 
 
     def getRelatedFeatures(self):
+
+        from muntjac.demo.sampler.features.selects.OptionGroupDisabledItems import OptionGroupDisabledItems
+        from muntjac.demo.sampler.features.selects.TwinColumnSelect import TwinColumnSelect
+        from muntjac.demo.sampler.features.selects.OptionGroups import OptionGroups
+        from muntjac.demo.sampler.features.selects.NativeSelection import NativeSelection
+        from muntjac.demo.sampler.features.selects.ListSelectSingle import ListSelectSingle
+
         return [
             NativeSelection,
             ListSelectSingle,

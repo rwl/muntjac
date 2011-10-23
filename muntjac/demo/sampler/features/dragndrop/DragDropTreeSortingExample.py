@@ -1,6 +1,6 @@
 
 from muntjac.demo.sampler.ExampleUtil import ExampleUtil
-from muntjac.ui import VerticalLayout, Tree
+from muntjac.api import VerticalLayout, Tree
 from muntjac.ui.tree import TreeDragMode
 from muntjac.event.dd.drop_handler import IDropHandler
 from muntjac.event.dd.acceptcriteria.accept_all import AcceptAll

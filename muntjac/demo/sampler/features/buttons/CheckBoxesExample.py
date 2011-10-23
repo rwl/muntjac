@@ -1,5 +1,5 @@
 
-from muntjac.ui import VerticalLayout, button, CheckBox
+from muntjac.api import VerticalLayout, button, CheckBox
 from muntjac.terminal.theme_resource import ThemeResource
 
 

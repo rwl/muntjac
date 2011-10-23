@@ -1,9 +1,11 @@
 
 from muntjac.demo.sampler.ExampleUtil import ExampleUtil
 
-from muntjac.ui import \
-    (VerticalLayout, HorizontalLayout, button, Button, Alignment,
+from muntjac.api import \
+    (VerticalLayout, HorizontalLayout, Button, Alignment,
      Form, GridLayout, ComboBox, PasswordField)
+
+from muntjac.ui import button
 
 from muntjac.ui.themes import BaseTheme
 from muntjac.ui.window import Notification

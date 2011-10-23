@@ -7,7 +7,7 @@ from muntjac.demo.sampler.Feature import Feature, Version
 from muntjac.demo.sampler.features.layouts.ApplicationLayout import \
     ApplicationLayout
 
-from muntjac.ui import HorizontalLayout, VerticalLayout
+from muntjac.api import HorizontalLayout, VerticalLayout
 
 
 class CssLayouts(Feature):

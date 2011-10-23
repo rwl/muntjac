@@ -1,9 +1,5 @@
 
-from muntjac.demo.sampler.FeatureSet import Forms
-from muntjac.demo.sampler.features.form.FormBasic import FormBasic
-from muntjac.demo.sampler.features.commons.Validation import Validation
 from muntjac.demo.sampler.APIResource import APIResource
-from muntjac.demo.sampler.features.commons.Errors import Errors
 from muntjac.demo.sampler.Feature import Feature, Version
 
 from muntjac.demo.sampler.features.form.FormAdvancedLayoutExample import \
@@ -40,6 +36,12 @@ class FormAdvancedLayout(Feature):
 
 
     def getRelatedFeatures(self):
+
+        from muntjac.demo.sampler.FeatureSet import Forms
+        from muntjac.demo.sampler.features.form.FormBasic import FormBasic
+        from muntjac.demo.sampler.features.commons.Validation import Validation
+        from muntjac.demo.sampler.features.commons.Errors import Errors
+
         return [FormBasic, Validation, Errors, Forms]
 
 

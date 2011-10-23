@@ -1,8 +1,6 @@
 
 from muntjac.ui.window import Window
 
-from muntjac.demo.sampler.FeatureSet import Windows
-from muntjac.demo.sampler.features.windows.SubwindowSized import SubwindowSized
 from muntjac.demo.sampler.APIResource import APIResource
 from muntjac.demo.sampler.Feature import Feature, Version
 
@@ -29,6 +27,10 @@ class SubwindowAutoSized(Feature):
 
 
     def getRelatedFeatures(self):
+
+        from muntjac.demo.sampler.FeatureSet import Windows
+        from muntjac.demo.sampler.features.windows.SubwindowSized import SubwindowSized
+
         return [SubwindowSized, Windows]
 
 

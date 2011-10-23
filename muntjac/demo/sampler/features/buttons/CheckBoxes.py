@@ -1,8 +1,6 @@
 
-from muntjac.ui import Button
+from muntjac.api import Button
 
-from muntjac.demo.sampler.features.buttons.ButtonLink import ButtonLink
-from muntjac.demo.sampler.features.buttons.ButtonPush import ButtonPush
 from muntjac.demo.sampler.APIResource import APIResource
 from muntjac.demo.sampler.Feature import Feature, Version
 
@@ -29,6 +27,10 @@ class CheckBoxes(Feature):
 
 
     def getRelatedFeatures(self):
+
+        from muntjac.demo.sampler.features.buttons.ButtonLink import ButtonLink
+        from muntjac.demo.sampler.features.buttons.ButtonPush import ButtonPush
+
         return [ButtonPush, ButtonLink]
 
 

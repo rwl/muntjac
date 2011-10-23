@@ -1,7 +1,6 @@
 
-from muntjac.ui import Upload, ProgressIndicator
+from muntjac.api import Upload, ProgressIndicator
 
-from muntjac.demo.sampler.features.upload.UploadBasic import UploadBasic
 from muntjac.demo.sampler.APIResource import APIResource
 from muntjac.demo.sampler.Feature import Feature, Version
 
@@ -31,6 +30,9 @@ class UploadWithProgressMonitoring(Feature):
 
 
     def getRelatedFeatures(self):
+
+        from muntjac.demo.sampler.features.upload.UploadBasic import UploadBasic
+
         return [UploadBasic]
 
 

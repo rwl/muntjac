@@ -1,19 +1,7 @@
 
-from muntjac.demo.sampler.features.dragndrop.DragDropHtml5FromDesktop import \
-    DragDropHtml5FromDesktop
-
-from muntjac.demo.sampler.features.dragndrop.DragDropTreeSorting import \
-    DragDropTreeSorting
-
-from muntjac.demo.sampler.features.dragndrop.DragDropServerValidation import \
-    DragDropServerValidation
-
-from muntjac.demo.sampler.features.dragndrop.DragDropRearrangeComponents \
-    import DragDropRearrangeComponents
-
 from muntjac.demo.sampler.APIResource import APIResource
 from muntjac.demo.sampler.Feature import Feature, Version
-from muntjac.ui import Tree, Table
+from muntjac.api import Tree, Table
 from muntjac.event.dd.drop_handler import IDropHandler
 from muntjac.event.dd.acceptcriteria.source_is import SourceIs
 from muntjac.ui.tree import TargetItemAllowsChildren
@@ -55,6 +43,19 @@ class DragDropTableTree(Feature):
 
 
     def getRelatedFeatures(self):
+
+        from muntjac.demo.sampler.features.dragndrop.DragDropHtml5FromDesktop import \
+            DragDropHtml5FromDesktop
+
+        from muntjac.demo.sampler.features.dragndrop.DragDropTreeSorting import \
+            DragDropTreeSorting
+
+        from muntjac.demo.sampler.features.dragndrop.DragDropServerValidation import \
+            DragDropServerValidation
+
+        from muntjac.demo.sampler.features.dragndrop.DragDropRearrangeComponents \
+            import DragDropRearrangeComponents
+
         return [
             DragDropTreeSorting,
             DragDropServerValidation,

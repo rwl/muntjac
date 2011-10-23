@@ -2,9 +2,8 @@
 from muntjac.demo.sampler.APIResource import APIResource
 from muntjac.demo.sampler.Feature import Feature, Version
 from muntjac.demo.sampler.NamedExternalResource import NamedExternalResource
-from muntjac.demo.sampler.FeatureSet import Layouts
 
-from muntjac.ui import \
+from muntjac.api import \
     (CssLayout, AbsoluteLayout, VerticalLayout, HorizontalLayout,
      GridLayout, Panel)
 
@@ -36,6 +35,9 @@ class ClickableLayoutBasic(Feature):
 
 
     def getRelatedFeatures(self):
+
+        from muntjac.demo.sampler.FeatureSet import Layouts
+
         return [Layouts]
 
 

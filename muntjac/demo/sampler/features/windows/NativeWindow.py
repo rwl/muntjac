@@ -1,10 +1,8 @@
 
 from muntjac.ui.window import Window
 
-from muntjac.demo.sampler.features.windows.Subwindow import Subwindow
 from muntjac.demo.sampler.APIResource import APIResource
 from muntjac.demo.sampler.Feature import Feature, Version
-from muntjac.demo.sampler.FeatureSet import Links, Windows
 
 
 class NativeWindow(Feature):
@@ -34,6 +32,8 @@ class NativeWindow(Feature):
 
 
     def getRelatedFeatures(self):
+        from muntjac.demo.sampler.features.windows.Subwindow import Subwindow
+        from muntjac.demo.sampler.FeatureSet import Links, Windows
         return [Subwindow, Links, Windows]
 
 

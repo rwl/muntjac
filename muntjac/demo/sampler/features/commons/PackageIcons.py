@@ -1,5 +1,4 @@
 
-from muntjac.demo.sampler.features.commons.Icons import Icons
 from muntjac.demo.sampler.Feature import Feature, Version
 
 
@@ -29,6 +28,7 @@ class PackageIcons(Feature):
 
 
     def getRelatedFeatures(self):
+        from muntjac.demo.sampler.features.commons.Icons import Icons
         return [Icons]
 
 

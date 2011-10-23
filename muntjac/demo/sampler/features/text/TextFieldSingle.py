@@ -1,9 +1,6 @@
 
 from muntjac.ui.text_field import TextField
 
-from muntjac.demo.sampler.FeatureSet import Texts
-from muntjac.demo.sampler.features.text.TextFieldSecret import TextFieldSecret
-from muntjac.demo.sampler.features.selects.ComboBoxNewItems import ComboBoxNewItems
 from muntjac.demo.sampler.APIResource import APIResource
 from muntjac.demo.sampler.Feature import Feature, Version
 
@@ -31,6 +28,11 @@ class TextFieldSingle(Feature):
 
 
     def getRelatedFeatures(self):
+
+        from muntjac.demo.sampler.FeatureSet import Texts
+        from muntjac.demo.sampler.features.text.TextFieldSecret import TextFieldSecret
+        from muntjac.demo.sampler.features.selects.ComboBoxNewItems import ComboBoxNewItems
+
         # TODO update CB -ref to 'suggest' pattern, when available
         return [TextFieldSecret, ComboBoxNewItems, Texts]
 

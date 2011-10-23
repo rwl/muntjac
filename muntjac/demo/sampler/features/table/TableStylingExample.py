@@ -1,6 +1,7 @@
 
 from muntjac.demo.sampler.ExampleUtil import ExampleUtil
-from muntjac.ui import VerticalLayout, Table, Link, Button, button, Alignment
+from muntjac.api import VerticalLayout, Table, Link, Button, Alignment
+from muntjac.ui import button
 from muntjac.event.action import Action
 from muntjac.event import action
 from muntjac.ui.table import IColumnGenerator, ICellStyleGenerator

@@ -1,17 +1,8 @@
 
-from muntjac.ui import Button
+from muntjac.api import Button
 
-from muntjac.demo.sampler.FeatureSet import Links
-from muntjac.demo.sampler.features.buttons.ButtonPush import ButtonPush
 from muntjac.demo.sampler.APIResource import APIResource
-from muntjac.demo.sampler.features.buttons.CheckBoxes import CheckBoxes
 from muntjac.demo.sampler.Feature import Feature, Version
-
-from muntjac.demo.sampler.features.blueprints.ProminentPrimaryAction import \
-    ProminentPrimaryAction
-
-from muntjac.demo.sampler.features.link.LinkCurrentWindow import \
-    LinkCurrentWindow
 
 
 class ButtonLink(Feature):
@@ -35,6 +26,17 @@ class ButtonLink(Feature):
 
 
     def getRelatedFeatures(self):
+
+        from muntjac.demo.sampler.FeatureSet import Links
+        from muntjac.demo.sampler.features.buttons.ButtonPush import ButtonPush
+        from muntjac.demo.sampler.features.buttons.CheckBoxes import CheckBoxes
+
+        from muntjac.demo.sampler.features.blueprints.ProminentPrimaryAction import \
+            ProminentPrimaryAction
+
+        from muntjac.demo.sampler.features.link.LinkCurrentWindow import \
+            LinkCurrentWindow
+
         return [ButtonPush, CheckBoxes, LinkCurrentWindow,
                 ProminentPrimaryAction, Links]
 

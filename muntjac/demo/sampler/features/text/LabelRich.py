@@ -1,9 +1,6 @@
 
 from muntjac.ui.label import Label
 
-from muntjac.demo.sampler.features.text.RichTextEditor import RichTextEditor
-from muntjac.demo.sampler.features.text.LabelPreformatted import LabelPreformatted
-from muntjac.demo.sampler.features.text.LabelPlain import LabelPlain
 from muntjac.demo.sampler.APIResource import APIResource
 from muntjac.demo.sampler.Feature import Feature, Version
 
@@ -30,6 +27,11 @@ class LabelRich(Feature):
 
 
     def getRelatedFeatures(self):
+
+        from muntjac.demo.sampler.features.text.RichTextEditor import RichTextEditor
+        from muntjac.demo.sampler.features.text.LabelPreformatted import LabelPreformatted
+        from muntjac.demo.sampler.features.text.LabelPlain import LabelPlain
+
         return [LabelPlain, LabelPreformatted, RichTextEditor]
 
 

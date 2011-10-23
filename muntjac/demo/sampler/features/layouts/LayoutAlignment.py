@@ -1,5 +1,5 @@
 
-from muntjac.ui import VerticalLayout, HorizontalLayout, GridLayout
+from muntjac.api import VerticalLayout, HorizontalLayout, GridLayout
 
 from muntjac.demo.sampler.features.layouts.HorizontalLayoutBasic import \
     HorizontalLayoutBasic

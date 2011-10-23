@@ -1,5 +1,5 @@
 
-from muntjac.ui import HorizontalSplitPanel, VerticalSplitPanel
+from muntjac.api import HorizontalSplitPanel, VerticalSplitPanel
 
 from muntjac.demo.sampler.features.layouts.SplitPanelBasic import \
     SplitPanelBasic

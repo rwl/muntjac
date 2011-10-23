@@ -1,16 +1,7 @@
 
 from muntjac.ui.grid_layout import GridLayout
 
-from muntjac.demo.sampler.features.layouts.LayoutSpacing import LayoutSpacing
-
-from muntjac.demo.sampler.features.layouts.HorizontalLayoutBasic import \
-    HorizontalLayoutBasic
-
-from muntjac.demo.sampler.features.layouts.VerticalLayoutBasic import \
-    VerticalLayoutBasic
-
 from muntjac.demo.sampler.NamedExternalResource import NamedExternalResource
-from muntjac.demo.sampler.features.layouts.LayoutMargin import LayoutMargin
 from muntjac.demo.sampler.APIResource import APIResource
 from muntjac.demo.sampler.Feature import Feature, Version
 
@@ -38,6 +29,17 @@ class GridLayoutBasic(Feature):
 
 
     def getRelatedFeatures(self):
+
+        from muntjac.demo.sampler.features.layouts.LayoutSpacing import LayoutSpacing
+
+        from muntjac.demo.sampler.features.layouts.HorizontalLayoutBasic import \
+            HorizontalLayoutBasic
+
+        from muntjac.demo.sampler.features.layouts.VerticalLayoutBasic import \
+            VerticalLayoutBasic
+
+        from muntjac.demo.sampler.features.layouts.LayoutMargin import LayoutMargin
+
         return [
             HorizontalLayoutBasic,
             VerticalLayoutBasic,

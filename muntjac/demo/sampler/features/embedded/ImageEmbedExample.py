@@ -1,5 +1,5 @@
 
-from muntjac.ui import VerticalLayout
+from muntjac.api import VerticalLayout
 from muntjac.ui.embedded import Embedded
 from muntjac.terminal.theme_resource import ThemeResource
 

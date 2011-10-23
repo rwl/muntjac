@@ -1,5 +1,5 @@
 
-from muntjac.ui import VerticalLayout, OptionGroup, Label
+from muntjac.api import VerticalLayout, OptionGroup, Label
 from muntjac.data.property import IValueChangeListener
 
 

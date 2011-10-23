@@ -1,6 +1,6 @@
 
 from muntjac.demo.sampler.ExampleUtil import ExampleUtil
-from muntjac.ui import VerticalLayout, TextField, Table
+from muntjac.api import VerticalLayout, TextField, Table
 from muntjac.ui.abstract_text_field import TextChangeEventMode
 from muntjac.event.field_events import ITextChangeListener
 

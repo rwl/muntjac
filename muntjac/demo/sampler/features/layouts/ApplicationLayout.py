@@ -1,8 +1,6 @@
 
-from muntjac.ui import HorizontalLayout, VerticalLayout
+from muntjac.api import HorizontalLayout, VerticalLayout
 
-from muntjac.demo.sampler.features.layouts.CustomLayouts import CustomLayouts
-from muntjac.demo.sampler.features.layouts.WebLayout import WebLayout
 from muntjac.demo.sampler.APIResource import APIResource
 from muntjac.demo.sampler.Feature import Feature, Version
 
@@ -33,6 +31,10 @@ class ApplicationLayout(Feature):
 
 
     def getRelatedFeatures(self):
+
+        from muntjac.demo.sampler.features.layouts.CustomLayouts import CustomLayouts
+        from muntjac.demo.sampler.features.layouts.WebLayout import WebLayout
+
         return [WebLayout, CustomLayouts]
 
 

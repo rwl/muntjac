@@ -1,5 +1,5 @@
 
-from muntjac.ui import VerticalLayout, TwinColSelect
+from muntjac.api import VerticalLayout, TwinColSelect
 from muntjac.data.property import IValueChangeListener
 
 

@@ -1,6 +1,6 @@
 
 from muntjac.demo.sampler.ExampleUtil import ExampleUtil
-from muntjac.ui import VerticalLayout, Tree
+from muntjac.api import VerticalLayout, Tree
 from muntjac.event.item_click_event import IItemClickListener, ItemClickEvent
 from muntjac.ui.abstract_select import AbstractSelect
 

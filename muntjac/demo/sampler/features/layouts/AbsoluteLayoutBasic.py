@@ -4,7 +4,6 @@ from muntjac.ui.absolute_layout import AbsoluteLayout
 from muntjac.demo.sampler.NamedExternalResource import NamedExternalResource
 from muntjac.demo.sampler.APIResource import APIResource
 from muntjac.demo.sampler.Feature import Feature, Version
-from muntjac.demo.sampler.FeatureSet import Layouts
 
 
 class AbsoluteLayoutBasic(Feature):
@@ -29,6 +28,7 @@ class AbsoluteLayoutBasic(Feature):
 
 
     def getRelatedFeatures(self):
+        from muntjac.demo.sampler.FeatureSet import Layouts
         return [Layouts]
 
 

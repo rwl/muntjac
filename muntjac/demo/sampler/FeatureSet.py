@@ -1,132 +1,154 @@
 
 from muntjac.demo.sampler.features.table.TableFooter import TableFooter
-from muntjac.demo.sampler.features.slider.SliderVertical import SliderVertical
-from muntjac.demo.sampler.features.slider.SliderHorizontal import SliderHorizontal
-from muntjac.demo.sampler.features.selects.OptionGroupDisabledItems import OptionGroupDisabledItems
-from muntjac.demo.sampler.features.windows.SubwindowPositioned import SubwindowPositioned
 from muntjac.demo.sampler.features.table.TableColumnHeaders import TableColumnHeaders
-from muntjac.demo.sampler.features.layouts.CustomLayouts import CustomLayouts
-from muntjac.demo.sampler.features.layouts.SplitPanelBasic import SplitPanelBasic
-from muntjac.demo.sampler.features.text.RichTextEditor import RichTextEditor
-from muntjac.demo.sampler.features.commons.JSApi import JSApi
-from muntjac.demo.sampler.features.commons.Icons import Icons
-from muntjac.demo.sampler.features.tabsheets.TabSheetClosing import TabSheetClosing
-from muntjac.demo.sampler.features.panels.PanelBasic import PanelBasic
 from muntjac.demo.sampler.features.table.TableMultipleSelection import TableMultipleSelection
-from muntjac.demo.sampler.features.layouts.WebLayout import WebLayout
-from muntjac.demo.sampler.features.menubar.MenuBarTooltips import MenuBarTooltips
-from muntjac.demo.sampler.features.layouts.SplitPanelPositioning import SplitPanelPositioning
-from muntjac.demo.sampler.features.dates.DateLocale import DateLocale
-from muntjac.demo.sampler.features.notifications.NotificationError import NotificationError
-from muntjac.demo.sampler.features.tabsheets.TabSheetIcons import TabSheetIcons
-from muntjac.demo.sampler.features.layouts.CssLayouts import CssLayouts
-from muntjac.demo.sampler.features.trees.TreeKeyboardNavigation import TreeKeyboardNavigation
 from muntjac.demo.sampler.features.table.TableClickListeners import TableClickListeners
-from muntjac.demo.sampler.features.dragndrop.DragDropTreeSorting import DragDropTreeSorting
-from muntjac.demo.sampler.features.notifications.NotificationWarning import NotificationWarning
-from muntjac.demo.sampler.features.windows.SubwindowClose import SubwindowClose
-from muntjac.demo.sampler.features.upload.UploadBasic import UploadBasic
 from muntjac.demo.sampler.features.table.TableColumnAlignment import TableColumnAlignment
-from muntjac.demo.sampler.features.trees.TreeMouseEvents import TreeMouseEvents
-from muntjac.demo.sampler.features.dragndrop.DragDropHtml5FromDesktop import DragDropHtml5FromDesktop
-from muntjac.demo.sampler.features.commons.Tooltips import Tooltips
-from muntjac.demo.sampler.features.menubar.MenuBarHiddenItems import MenuBarHiddenItems
-from muntjac.demo.sampler.features.link.LinkCurrentWindow import LinkCurrentWindow
 from muntjac.demo.sampler.features.table.TableActions import TableActions
-from muntjac.demo.sampler.features.windows.SubwindowModal import SubwindowModal
-from muntjac.demo.sampler.features.layouts.LayoutSpacing import LayoutSpacing
 from muntjac.demo.sampler.features.table.TableRowHeaders import TableRowHeaders
-from muntjac.demo.sampler.features.tabsheets.TabSheetScrolling import TabSheetScrolling
-from muntjac.demo.sampler.features.selects.TwinColumnSelect import TwinColumnSelect
-from muntjac.demo.sampler.features.shortcuts.ShortcutScope import ShortcutScope
-from muntjac.demo.sampler.features.windows.SubwindowAutoSized import SubwindowAutoSized
-from muntjac.demo.sampler.features.form.LoginForm import LoginForm
-from muntjac.demo.sampler.features.accordions.AccordionDisabled import AccordionDisabled
-from muntjac.demo.sampler.features.popupviews.PopupViewClosing import PopupViewClosing
-from muntjac.demo.sampler.features.selects.ComboBoxPlain import ComboBoxPlain
-from muntjac.demo.sampler.features.notifications.NotificationHumanized import NotificationHumanized
 from muntjac.demo.sampler.features.table.TableColumnReordering import TableColumnReordering
-from muntjac.demo.sampler.features.windows.Subwindow import Subwindow
-from muntjac.demo.sampler.features.commons.BrowserInformation import BrowserInformation
 from muntjac.demo.sampler.features.table.TableRowStyling import TableRowStyling
+from muntjac.demo.sampler.features.table.TableMouseEvents import TableMouseEvents
+from muntjac.demo.sampler.features.table.TableHeaderIcons import TableHeaderIcons
+from muntjac.demo.sampler.features.table.TableSorting import TableSorting
+from muntjac.demo.sampler.features.table.TableLazyLoading import TableLazyLoading
+from muntjac.demo.sampler.features.table.TableCellStyling import TableCellStyling
+from muntjac.demo.sampler.features.table.TableKeyboardNavigation import TableKeyboardNavigation
+from muntjac.demo.sampler.features.table.TableColumnCollapsing import TableColumnCollapsing
+
+from muntjac.demo.sampler.features.selects.OptionGroupDisabledItems import OptionGroupDisabledItems
+from muntjac.demo.sampler.features.selects.TwinColumnSelect import TwinColumnSelect
+from muntjac.demo.sampler.features.selects.ComboBoxPlain import ComboBoxPlain
 from muntjac.demo.sampler.features.selects.OptionGroups import OptionGroups
-from muntjac.demo.sampler.features.dragndrop.DragDropTableTree import DragDropTableTree
-from muntjac.demo.sampler.features.menubar.BasicMenuBar import BasicMenuBar
-from muntjac.demo.sampler.features.embedded.ImageEmbed import ImageEmbed
-from muntjac.demo.sampler.features.dates.DatePopupInputPrompt import DatePopupInputPrompt
-from muntjac.demo.sampler.features.tabsheets.TabSheetDisabled import TabSheetDisabled
-from muntjac.demo.sampler.features.upload.ImmediateUpload import ImmediateUpload
-from muntjac.demo.sampler.features.dragndrop.DragDropServerValidation import DragDropServerValidation
-from muntjac.demo.sampler.features.commons.PackageIcons import PackageIcons
-from muntjac.demo.sampler.features.buttons.ButtonLink import ButtonLink
-from muntjac.demo.sampler.features.blueprints.ProminentPrimaryAction import ProminentPrimaryAction
 from muntjac.demo.sampler.features.selects.ComboBoxInputPrompt import ComboBoxInputPrompt
 from muntjac.demo.sampler.features.selects.ComboBoxContains import ComboBoxContains
-from muntjac.demo.sampler.features.layouts.VerticalLayoutBasic import VerticalLayoutBasic
-from muntjac.demo.sampler.features.dates.DateInline import DateInline
-from muntjac.demo.sampler.features.layouts.HorizontalLayoutBasic import HorizontalLayoutBasic
-from muntjac.demo.sampler.features.windows.SubwindowSized import SubwindowSized
 from muntjac.demo.sampler.features.selects.NativeSelection import NativeSelection
-from muntjac.demo.sampler.features.menubar.MenuBarKeyboardNavigation import MenuBarKeyboardNavigation
-from muntjac.demo.sampler.features.slider.SliderKeyboardNavigation import SliderKeyboardNavigation
-from muntjac.demo.sampler.Feature import Feature
-from muntjac.demo.sampler.features.text.LabelPlain import LabelPlain
-from muntjac.demo.sampler.features.table.TableMouseEvents import TableMouseEvents
+from muntjac.demo.sampler.features.selects.ComboBoxNewItems import ComboBoxNewItems
+from muntjac.demo.sampler.features.selects.ComboBoxStartsWith import ComboBoxStartsWith
+from muntjac.demo.sampler.features.selects.ListSelectMultiple import ListSelectMultiple
+from muntjac.demo.sampler.features.selects.ListSelectSingle import ListSelectSingle
+
+from muntjac.demo.sampler.features.windows.SubwindowPositioned import SubwindowPositioned
+from muntjac.demo.sampler.features.windows.SubwindowClose import SubwindowClose
+from muntjac.demo.sampler.features.windows.SubwindowModal import SubwindowModal
+from muntjac.demo.sampler.features.windows.SubwindowAutoSized import SubwindowAutoSized
+from muntjac.demo.sampler.features.windows.Subwindow import Subwindow
+from muntjac.demo.sampler.features.windows.SubwindowSized import SubwindowSized
 from muntjac.demo.sampler.features.windows.NativeWindow import NativeWindow
-from muntjac.demo.sampler.features.trees.TreeSingleSelect import TreeSingleSelect
-from muntjac.demo.sampler.features.progressindicator.ProgressIndicators import ProgressIndicators
+
+from muntjac.demo.sampler.features.layouts.CustomLayouts import CustomLayouts
+from muntjac.demo.sampler.features.layouts.SplitPanelBasic import SplitPanelBasic
+from muntjac.demo.sampler.features.layouts.SplitPanelPositioning import SplitPanelPositioning
+from muntjac.demo.sampler.features.layouts.WebLayout import WebLayout
+from muntjac.demo.sampler.features.layouts.CssLayouts import CssLayouts
+from muntjac.demo.sampler.features.layouts.LayoutSpacing import LayoutSpacing
+from muntjac.demo.sampler.features.layouts.VerticalLayoutBasic import VerticalLayoutBasic
+from muntjac.demo.sampler.features.layouts.HorizontalLayoutBasic import HorizontalLayoutBasic
+from muntjac.demo.sampler.features.layouts.ExpandingComponent import ExpandingComponent
+from muntjac.demo.sampler.features.layouts.LayoutAlignment import LayoutAlignment
+from muntjac.demo.sampler.features.layouts.ClickableLayoutBasic import ClickableLayoutBasic
+from muntjac.demo.sampler.features.layouts.LayoutMargin import LayoutMargin
+from muntjac.demo.sampler.features.layouts.GridLayoutBasic import GridLayoutBasic
+from muntjac.demo.sampler.features.layouts.ApplicationLayout import ApplicationLayout
+from muntjac.demo.sampler.features.layouts.AbsoluteLayoutBasic import AbsoluteLayoutBasic
+
+from muntjac.demo.sampler.features.commons.JSApi import JSApi
+from muntjac.demo.sampler.features.commons.Icons import Icons
+from muntjac.demo.sampler.features.commons.Tooltips import Tooltips
+from muntjac.demo.sampler.features.commons.BrowserInformation import BrowserInformation
+from muntjac.demo.sampler.features.commons.PackageIcons import PackageIcons
+from muntjac.demo.sampler.features.commons.Errors import Errors
+
+from muntjac.demo.sampler.features.text.LabelPlain import LabelPlain
 from muntjac.demo.sampler.features.text.LabelPreformatted import LabelPreformatted
 from muntjac.demo.sampler.features.text.TextFieldSingle import TextFieldSingle
-from muntjac.demo.sampler.features.table.TableHeaderIcons import TableHeaderIcons
-from muntjac.demo.sampler.features.accordions.AccordionIcons import AccordionIcons
-from muntjac.demo.sampler.features.table.TableSorting import TableSorting
-from muntjac.demo.sampler.features.menubar.MenuBarCheckableItems import MenuBarCheckableItems
-from muntjac.demo.sampler.features.table.TableLazyLoading import TableLazyLoading
-from muntjac.demo.sampler.features.layouts.ExpandingComponent import ExpandingComponent
-from muntjac.demo.sampler.features.popupviews.PopupViewContents import PopupViewContents
-from muntjac.demo.sampler.features.table.TableCellStyling import TableCellStyling
-from muntjac.demo.sampler.features.buttons.ButtonPush import ButtonPush
-from muntjac.demo.sampler.features.dates.DatePopup import DatePopup
-from muntjac.demo.sampler.features.selects.ComboBoxNewItems import ComboBoxNewItems
-from muntjac.demo.sampler.features.panels.PanelLight import PanelLight
-from muntjac.demo.sampler.features.menubar.MenuBarWithIcons import MenuBarWithIcons
-from muntjac.demo.sampler.features.layouts.LayoutAlignment import LayoutAlignment
-from muntjac.demo.sampler.features.form.FormBasic import FormBasic
-from muntjac.demo.sampler.features.table.TableKeyboardNavigation import TableKeyboardNavigation
 from muntjac.demo.sampler.features.text.LabelRich import LabelRich
 from muntjac.demo.sampler.features.text.TextFieldTextChangeEvent import TextFieldTextChangeEvent
 from muntjac.demo.sampler.features.text.TextArea import TextArea
-from muntjac.demo.sampler.features.selects.ListSelectMultiple import ListSelectMultiple
-from muntjac.demo.sampler.features.layouts.ClickableLayoutBasic import ClickableLayoutBasic
-from muntjac.demo.sampler.features.trees.TreeMultiSelect import TreeMultiSelect
-from muntjac.demo.sampler.features.shortcuts.ShortcutBasics import ShortcutBasics
-from muntjac.demo.sampler.features.selects.ComboBoxStartsWith import ComboBoxStartsWith
-from muntjac.demo.sampler.features.form.FormAdvancedLayout import FormAdvancedLayout
-from muntjac.demo.sampler.features.trees.TreeActions import TreeActions
-from muntjac.demo.sampler.features.notifications.NotificationCustom import NotificationCustom
-from muntjac.demo.sampler.features.menubar.MenuBarCollapsing import MenuBarCollapsing
-from muntjac.demo.sampler.features.layouts.LayoutMargin import LayoutMargin
-from muntjac.demo.sampler.features.link.LinkNoDecorations import LinkNoDecorations
-from muntjac.demo.sampler.features.buttons.CheckBoxes import CheckBoxes
-from muntjac.demo.sampler.features.dragndrop.DragDropRearrangeComponents import DragDropRearrangeComponents
+from muntjac.demo.sampler.features.text.RichTextEditor import RichTextEditor
+from muntjac.demo.sampler.features.text.TextFieldInputPrompt import TextFieldInputPrompt
 from muntjac.demo.sampler.features.text.TextFieldSecret import TextFieldSecret
-from muntjac.demo.sampler.features.embedded.WebEmbed import WebEmbed
-from muntjac.demo.sampler.features.layouts.GridLayoutBasic import GridLayoutBasic
+
+from muntjac.demo.sampler.features.tabsheets.TabSheetClosing import TabSheetClosing
+from muntjac.demo.sampler.features.tabsheets.TabSheetIcons import TabSheetIcons
+from muntjac.demo.sampler.features.tabsheets.TabSheetScrolling import TabSheetScrolling
+from muntjac.demo.sampler.features.tabsheets.TabSheetDisabled import TabSheetDisabled
+
+from muntjac.demo.sampler.features.panels.PanelBasic import PanelBasic
+from muntjac.demo.sampler.features.panels.PanelLight import PanelLight
+
+from muntjac.demo.sampler.features.menubar.MenuBarTooltips import MenuBarTooltips
+from muntjac.demo.sampler.features.menubar.MenuBarHiddenItems import MenuBarHiddenItems
+from muntjac.demo.sampler.features.menubar.BasicMenuBar import BasicMenuBar
+from muntjac.demo.sampler.features.menubar.MenuBarKeyboardNavigation import MenuBarKeyboardNavigation
+from muntjac.demo.sampler.features.menubar.MenuBarCheckableItems import MenuBarCheckableItems
+from muntjac.demo.sampler.features.menubar.MenuBarWithIcons import MenuBarWithIcons
+from muntjac.demo.sampler.features.menubar.MenuBarCollapsing import MenuBarCollapsing
 from muntjac.demo.sampler.features.menubar.MenuBarItemStyles import MenuBarItemStyles
-from muntjac.demo.sampler.features.selects.ListSelectSingle import ListSelectSingle
-from muntjac.demo.sampler.features.layouts.ApplicationLayout import ApplicationLayout
-from muntjac.demo.sampler.features.notifications.NotificationTray import NotificationTray
-from muntjac.demo.sampler.features.embedded.FlashEmbed import FlashEmbed
-from muntjac.demo.sampler.features.table.TableColumnCollapsing import TableColumnCollapsing
-from muntjac.demo.sampler.features.commons.Errors import Errors
+
+from muntjac.demo.sampler.features.dates.DateLocale import DateLocale
+from muntjac.demo.sampler.features.dates.DatePopupInputPrompt import DatePopupInputPrompt
+from muntjac.demo.sampler.features.dates.DateInline import DateInline
+from muntjac.demo.sampler.features.dates.DatePopup import DatePopup
 from muntjac.demo.sampler.features.dates.DateResolution import DateResolution
 from muntjac.demo.sampler.features.dates.DatePopupKeyboardNavigation import DatePopupKeyboardNavigation
-from muntjac.demo.sampler.features.layouts.AbsoluteLayoutBasic import AbsoluteLayoutBasic
-from muntjac.demo.sampler.features.text.TextFieldInputPrompt import TextFieldInputPrompt
+
+from muntjac.demo.sampler.features.notifications.NotificationError import NotificationError
+from muntjac.demo.sampler.features.notifications.NotificationWarning import NotificationWarning
+from muntjac.demo.sampler.features.notifications.NotificationHumanized import NotificationHumanized
+from muntjac.demo.sampler.features.notifications.NotificationCustom import NotificationCustom
+from muntjac.demo.sampler.features.notifications.NotificationTray import NotificationTray
+
+from muntjac.demo.sampler.features.trees.TreeKeyboardNavigation import TreeKeyboardNavigation
+from muntjac.demo.sampler.features.trees.TreeMouseEvents import TreeMouseEvents
+from muntjac.demo.sampler.features.trees.TreeSingleSelect import TreeSingleSelect
+from muntjac.demo.sampler.features.trees.TreeMultiSelect import TreeMultiSelect
+from muntjac.demo.sampler.features.trees.TreeActions import TreeActions
+
+from muntjac.demo.sampler.features.dragndrop.DragDropTreeSorting import DragDropTreeSorting
+from muntjac.demo.sampler.features.dragndrop.DragDropHtml5FromDesktop import DragDropHtml5FromDesktop
+from muntjac.demo.sampler.features.dragndrop.DragDropTableTree import DragDropTableTree
+from muntjac.demo.sampler.features.dragndrop.DragDropServerValidation import DragDropServerValidation
+from muntjac.demo.sampler.features.dragndrop.DragDropRearrangeComponents import DragDropRearrangeComponents
+
+from muntjac.demo.sampler.features.upload.UploadBasic import UploadBasic
+from muntjac.demo.sampler.features.upload.ImmediateUpload import ImmediateUpload
 from muntjac.demo.sampler.features.upload.UploadWithProgressMonitoring import UploadWithProgressMonitoring
+
+from muntjac.demo.sampler.features.link.LinkCurrentWindow import LinkCurrentWindow
+from muntjac.demo.sampler.features.link.LinkNoDecorations import LinkNoDecorations
 from muntjac.demo.sampler.features.link.LinkSizedWindow import LinkSizedWindow
 
-from muntjac.demo.sampler.Feature import Version
+from muntjac.demo.sampler.features.shortcuts.ShortcutScope import ShortcutScope
+from muntjac.demo.sampler.features.shortcuts.ShortcutBasics import ShortcutBasics
+
+from muntjac.demo.sampler.features.form.LoginForm import LoginForm
+from muntjac.demo.sampler.features.form.FormBasic import FormBasic
+from muntjac.demo.sampler.features.form.FormAdvancedLayout import FormAdvancedLayout
+
+from muntjac.demo.sampler.features.accordions.AccordionDisabled import AccordionDisabled
+from muntjac.demo.sampler.features.accordions.AccordionIcons import AccordionIcons
+
+from muntjac.demo.sampler.features.popupviews.PopupViewClosing import PopupViewClosing
+from muntjac.demo.sampler.features.popupviews.PopupViewContents import PopupViewContents
+
+from muntjac.demo.sampler.features.embedded.ImageEmbed import ImageEmbed
+from muntjac.demo.sampler.features.embedded.WebEmbed import WebEmbed
+from muntjac.demo.sampler.features.embedded.FlashEmbed import FlashEmbed
+
+from muntjac.demo.sampler.features.buttons.ButtonLink import ButtonLink
+from muntjac.demo.sampler.features.buttons.ButtonPush import ButtonPush
+from muntjac.demo.sampler.features.buttons.CheckBoxes import CheckBoxes
+
+from muntjac.demo.sampler.features.slider.SliderVertical import SliderVertical
+from muntjac.demo.sampler.features.slider.SliderHorizontal import SliderHorizontal
+from muntjac.demo.sampler.features.slider.SliderKeyboardNavigation import SliderKeyboardNavigation
+
+from muntjac.demo.sampler.features.progressindicator.ProgressIndicators import ProgressIndicators
+
+from muntjac.demo.sampler.features.blueprints.ProminentPrimaryAction import ProminentPrimaryAction
+
+from muntjac.demo.sampler.Feature import Version, Feature
 
 
 class FeatureSet(Feature):

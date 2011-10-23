@@ -2,7 +2,7 @@
 from muntjac.terminal.sizeable import ISizeable
 from muntjac.data.property import IValueChangeListener
 
-from muntjac.ui import \
+from muntjac.api import \
     (VerticalLayout, HorizontalLayout, VerticalSplitPanel,
      Label, HorizontalSplitPanel, OptionGroup, Alignment)
 

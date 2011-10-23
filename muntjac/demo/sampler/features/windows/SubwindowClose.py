@@ -1,7 +1,6 @@
 
 from muntjac.ui.window import Window
 
-from muntjac.demo.sampler.FeatureSet import Windows
 from muntjac.demo.sampler.APIResource import APIResource
 from muntjac.demo.sampler.Feature import Feature, Version
 
@@ -22,6 +21,7 @@ class SubwindowClose(Feature):
 
 
     def getRelatedFeatures(self):
+        from muntjac.demo.sampler.FeatureSet import Windows
         return [Windows]
 
 

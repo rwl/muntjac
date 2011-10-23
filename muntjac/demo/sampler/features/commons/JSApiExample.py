@@ -4,7 +4,7 @@ import threading
 
 from time import gmtime, strftime
 
-from muntjac.ui import Button, button, VerticalLayout, Label, TextArea
+from muntjac.api import Button, button, VerticalLayout, Label, TextArea
 from muntjac.terminal.theme_resource import ThemeResource
 
 

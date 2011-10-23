@@ -1,5 +1,5 @@
 
-from muntjac.ui import VerticalLayout, TextField, button, Button, Alignment
+from muntjac.api import VerticalLayout, TextField, button, Button, Alignment
 
 
 class NotificationHumanizedExample(VerticalLayout):

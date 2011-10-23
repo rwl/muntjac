@@ -161,7 +161,7 @@ class ExampleUtil(object):
             "PHILIPPINES", "PH", "PITCAIRN", "PN", "POLAND", "PL", "PORTUGAL",
             "PT", "PUERTO RICO", "PR", "QATAR", "QA", "REUNION", "RE",
             "ROMANIA", "RO", "RUSSIAN FEDERATION", "RU", "RWANDA", "RW",
-            "SAINT BARTHÉLEMY", "BL", "SAINT HELENA", "SH",
+            "SAINT BARTHELEMY", "BL", "SAINT HELENA", "SH",
             "SAINT KITTS AND NEVIS", "KN", "SAINT LUCIA", "LC", "SAINT MARTIN",
             "MF", "SAINT PIERRE AND MIQUELON", "PM",
             "SAINT VINCENT AND THE GRENADINES", "VC", "SAMOA", "WS",

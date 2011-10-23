@@ -1,6 +1,6 @@
 
 from muntjac.demo.sampler.features.form.LoginForm import LoginForm
-from muntjac.ui import VerticalLayout, login_form
+from muntjac.api import VerticalLayout, login_form
 
 
 class LoginFormExample(VerticalLayout):

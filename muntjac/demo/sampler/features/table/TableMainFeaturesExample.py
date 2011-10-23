@@ -1,7 +1,7 @@
 
 from muntjac.demo.sampler.ExampleUtil import ExampleUtil
 
-from muntjac.ui import VerticalLayout, Table, Label
+from muntjac.api import VerticalLayout, Table, Label
 from muntjac.event.action import Action
 from muntjac.event import action
 from muntjac.terminal.theme_resource import ThemeResource

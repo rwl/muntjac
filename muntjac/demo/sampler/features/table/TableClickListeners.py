@@ -1,7 +1,6 @@
 
 from muntjac.ui.table import Table
 
-from muntjac.demo.sampler.FeatureSet import Tables
 from muntjac.demo.sampler.features.table.TableClickListenersExample import TableClickListenersExample
 from muntjac.demo.sampler.APIResource import APIResource
 from muntjac.demo.sampler.Feature import Feature, Version
@@ -23,6 +22,7 @@ class TableClickListeners(Feature):
 
 
     def getRelatedFeatures(self):
+        from muntjac.demo.sampler.FeatureSet import Tables
         return [Tables]
 
 

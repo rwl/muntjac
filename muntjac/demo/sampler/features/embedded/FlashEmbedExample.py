@@ -1,5 +1,5 @@
 
-from muntjac.ui import VerticalLayout, Embedded
+from muntjac.api import VerticalLayout, Embedded
 from muntjac.terminal.external_resource import ExternalResource
 
 

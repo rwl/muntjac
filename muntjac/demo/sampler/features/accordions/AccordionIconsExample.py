@@ -1,5 +1,5 @@
 
-from muntjac.ui import HorizontalLayout, Accordion, tab_sheet, Label
+from muntjac.api import HorizontalLayout, Accordion, tab_sheet, Label
 from muntjac.terminal.theme_resource import ThemeResource
 
 

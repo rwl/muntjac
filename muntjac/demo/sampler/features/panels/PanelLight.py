@@ -1,9 +1,7 @@
 
-from muntjac.ui import Panel
+from muntjac.api import Panel
 from muntjac.ui.layout import ILayout
 
-from muntjac.demo.sampler.features.panels.PanelBasic import PanelBasic
-from muntjac.demo.sampler.FeatureSet import Layouts
 from muntjac.demo.sampler.APIResource import APIResource
 from muntjac.demo.sampler.Feature import Feature, Version
 
@@ -28,6 +26,10 @@ class PanelLight(Feature):
 
 
     def getRelatedFeatures(self):
+
+        from muntjac.demo.sampler.features.panels.PanelBasic import PanelBasic
+        from muntjac.demo.sampler.FeatureSet import Layouts
+
         return [PanelBasic, Layouts]
 
 

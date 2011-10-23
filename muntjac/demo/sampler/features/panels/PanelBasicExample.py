@@ -1,5 +1,5 @@
 
-from muntjac.ui import VerticalLayout, Panel, Label, Button
+from muntjac.api import VerticalLayout, Panel, Label, Button
 from muntjac.ui.button import IClickListener
 
 

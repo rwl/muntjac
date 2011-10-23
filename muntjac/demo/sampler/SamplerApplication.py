@@ -1,8 +1,7 @@
 
-from muntjac import Application
+from muntjac.api import Application
 
 from muntjac.demo.sampler.CodeLabel import CodeLabel
-from muntjac.demo.sampler.FeatureView import FeatureView
 from muntjac.demo.sampler.FeatureSet import FeatureSet
 from muntjac.demo.sampler.GoogleAnalytics import GoogleAnalytics
 from muntjac.demo.sampler.Feature import Feature
@@ -10,12 +9,12 @@ from muntjac.demo.sampler.ActiveLink import ActiveLink, ILinkActivatedListener
 from muntjac.terminal.theme_resource import ThemeResource
 from muntjac.data.util.object_property import ObjectProperty
 
-from muntjac.ui import \
+from muntjac.api import \
     (UriFragmentUtility, VerticalLayout, HorizontalLayout, Table, Panel,
      Window, Alignment, HorizontalSplitPanel, CssLayout, ComboBox, PopupView,
      NativeButton, Tree, CustomComponent, Label, Embedded)
 
-from muntjac.ui import window, button, table, tree as ui_tree
+from muntjac.api import window, button, table, tree as ui_tree
 from muntjac.ui.themes import BaseTheme, Reindeer
 from muntjac.data  import property as prop
 
@@ -153,6 +152,9 @@ class SamplerWindow(Window):
 
 
     def __init__(self, app):
+
+        from muntjac.demo.sampler.FeatureView import FeatureView
+
         self._app = app
 
         self._TITLE = 'Vaadin Sampler'
@@ -432,7 +434,7 @@ class SamplerWindow(Window):
                 self._window.setFeature(None)
 
         logo = NativeButton('', LogoClickListener(self))
-        logo.setDescription('↶ Home')
+        logo.setDescription('Home')
         logo.setStyleName(BaseTheme.BUTTON_LINK)
         logo.addStyleName('logo')
         return logo
@@ -677,7 +679,7 @@ class FeatureTable(Table, IFeatureList):
                 if isinstance(feature, FeatureSet):
                     return None
                 else:
-                    b = ActiveLink('View sample ‣',
+                    b = ActiveLink('View sample',
                             ExternalResource('#' + feature.getFragmentName()))
 
                     class LinkListener(ILinkActivatedListener):
@@ -878,3 +880,8 @@ class SourceWindow(Window):
                 self._app.removeWindow(self._window)
 
         self.addListener( WindowCloseListener(app) )
+
+
+if __name__ == '__main__':
+    from muntjac.util import run_app
+    run_app(SamplerApplication, nogui=True, forever=True, debug=True)

@@ -3,9 +3,10 @@ from datetime import datetime
 
 from muntjac.demo.sampler.features.windows.NativeWindow import NativeWindow
 
-from muntjac.ui import VerticalLayout
-from muntjac.ui import Window, Label, button, Button, Link
+from muntjac.api import VerticalLayout
+from muntjac.api import Window, Label, Button, Link
 from muntjac.ui.window import ICloseListener
+from muntjac.ui import button
 
 from muntjac.terminal.external_resource import ExternalResource
 

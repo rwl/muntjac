@@ -1,5 +1,5 @@
 
-from muntjac.ui import \
+from muntjac.api import \
     (VerticalLayout, VerticalSplitPanel, Label, HorizontalSplitPanel,
      button, CheckBox)
 

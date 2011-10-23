@@ -4,7 +4,7 @@ import locale
 
 from muntjac.demo.sampler.ExampleUtil import ExampleUtil
 
-from muntjac.ui import VerticalLayout, Table
+from muntjac.api import VerticalLayout, Table
 from muntjac.ui.window import Notification
 from muntjac.ui.table import IHeaderClickListener, IFooterClickListener
 
@@ -24,7 +24,7 @@ class TableClickListenersExample(VerticalLayout):
             value = item.getItemProperty(ExampleUtil.ORDER_ITEMPRICE_PROPERTY_ID).getValue()
 
             #amount = NumberFormat.getCurrencyInstance().parse(str(value))
-            amount = re.search(ur'([£$€])(\d+(?:\.\d{2})?)', str(value)).groups()[1]
+            amount = re.search(ur'([\u00A3\u0024\u20AC])(\d+(?:\.\d{2})?)', str(value)).groups()[1]
 
             totalSum += float(amount)
 

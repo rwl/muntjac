@@ -1,5 +1,5 @@
 
-from muntjac.ui import HorizontalLayout, Label, Slider, Alignment
+from muntjac.api import HorizontalLayout, Label, Slider, Alignment
 from muntjac.data.property import IValueChangeListener
 
 

@@ -1,14 +1,8 @@
 
-from muntjac.demo.sampler.features.buttons.ButtonLink import ButtonLink
-
-from muntjac.demo.sampler.features.link.LinkCurrentWindow import \
-    LinkCurrentWindow
-
-from muntjac.demo.sampler.features.link.LinkSizedWindow import LinkSizedWindow
 from muntjac.demo.sampler.APIResource import APIResource
 from muntjac.demo.sampler.Feature import Feature, Version
 
-from muntjac.ui import Link
+from muntjac.api import Link
 
 
 class LinkNoDecorations(Feature):
@@ -33,6 +27,14 @@ class LinkNoDecorations(Feature):
 
 
     def getRelatedFeatures(self):
+
+        from muntjac.demo.sampler.features.buttons.ButtonLink import ButtonLink
+
+        from muntjac.demo.sampler.features.link.LinkCurrentWindow import \
+            LinkCurrentWindow
+
+        from muntjac.demo.sampler.features.link.LinkSizedWindow import LinkSizedWindow
+
         return [LinkCurrentWindow, LinkSizedWindow, ButtonLink]
 
 

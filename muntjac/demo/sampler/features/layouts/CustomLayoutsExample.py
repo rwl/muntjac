@@ -1,6 +1,6 @@
 
 from muntjac.ui.custom_layout import CustomLayout
-from muntjac.ui import VerticalLayout, TextField, PasswordField, Button
+from muntjac.api import VerticalLayout, TextField, PasswordField, Button
 
 
 class CustomLayoutsExample(VerticalLayout):

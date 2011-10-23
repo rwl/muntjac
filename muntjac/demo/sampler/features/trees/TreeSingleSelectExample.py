@@ -1,8 +1,10 @@
 
 from muntjac.demo.sampler.ExampleUtil import ExampleUtil
 
-from muntjac.ui import \
-    HorizontalLayout, button, Button, Tree, TextField, Alignment
+from muntjac.api import \
+    HorizontalLayout, Button, Tree, TextField, Alignment
+
+from muntjac.ui import button
 
 from muntjac.data.property import IValueChangeListener
 from muntjac.event.action import Action
