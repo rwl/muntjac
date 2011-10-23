@@ -25,16 +25,14 @@ import muntjac
 class LicenseInPythonFiles(TestCase):
 
     # The tests are run in the build directory.
-    SRC_DIR = join(dirname(muntjac.__file__), '..')
+    SRC_DIR = dirname(muntjac.__file__)
 
     def testPythonFilesContainsLicense(self):
         srcDir = self.SRC_DIR
-        print __file__
         missing = set()
         self.checkForLicense(srcDir, missing)
-        if len(missing) > 0:
-            raise RuntimeError, ('The following files are missing license '
-                    'information:\n' + str(missing))
+        self.assertEquals(len(missing), 0, 'The following files are missing '
+                    'license information:\n' + '\n'.join(missing))
 
 
     def checkForLicense(self, srcDir, missing):
@@ -42,13 +40,18 @@ class LicenseInPythonFiles(TestCase):
                 exists(srcDir))
         for f in listdir(srcDir):
             if isdir(f):
-                self.checkForLicense(f, missing)
+                self.checkForLicense(join(srcDir, f), missing)
             elif f.endswith('.py'):
-                self.checkForLicenseInFile(f, missing)
+                self.checkForLicenseInFile(join(srcDir, f), missing)
 
 
     def checkForLicenseInFile(self, f, missing):
-        fd = open(f, 'rb')
-        contents = fd.read()
-        if ('@' + 'ITMillApache2LicenseForJavaFiles' + '@') not in contents:
-            missing.add(f)
+        fd = None
+        try:
+            fd = open(f, 'rb')
+            contents = fd.read()
+            if ('GNU Affero General Public License') not in contents:
+                missing.add(f)
+        finally:
+            if fd is not None:
+                fd.close()

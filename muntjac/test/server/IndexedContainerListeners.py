@@ -27,9 +27,9 @@ from muntjac.data.container import \
 class IndexedContainerListeners(AbstractListenerMethodsTest):
 
     def testValueChangeListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(IndexedContainer,
+        self._testListenerAddGetRemove(IndexedContainer,
                 ValueChangeEvent, IValueChangeListener)
 
     def testPropertySetChangeListenerAddGetRemove(self):
-        self.testListenerAddGetRemove(IndexedContainer,
+        self._testListenerAddGetRemove(IndexedContainer,
                 IPropertySetChangeEvent, IPropertySetChangeListener)
