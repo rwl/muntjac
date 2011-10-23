@@ -161,13 +161,15 @@ class FeatureSet(Feature):
 
     FEATURES = None
 
+    _pathnameToFeature = None
+
     def getSinceVersion(self):
         return Version.OLD
 
 
     def __init__(self, *args):
+        super(FeatureSet, self).__init__()
 
-        self._pathnameToFeature = None
         self._pathname = None
         self._name = None
         self._desc = None

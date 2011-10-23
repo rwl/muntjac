@@ -14,7 +14,7 @@ from muntjac.api import \
      Window, Alignment, HorizontalSplitPanel, CssLayout, ComboBox, PopupView,
      NativeButton, Tree, CustomComponent, Label, Embedded)
 
-from muntjac.api import window, button, table, tree as ui_tree
+from muntjac.ui import window, button, table, tree as ui_tree
 from muntjac.ui.themes import BaseTheme, Reindeer
 from muntjac.data  import property as prop
 
