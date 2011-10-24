@@ -127,7 +127,7 @@ class SamplerApplication(Application):
 
 
     def getSampleIcon(self, resId):
-        res = self._sampleIconCache[resId]
+        res = self._sampleIconCache.get(resId)
         if res is None:
             res = ThemeResource('../sampler/icons/sampleicons/' + resId)
             self._sampleIconCache[resId] = res
@@ -780,7 +780,7 @@ class FeatureGrid(Panel, IFeatureList):
             if isinstance(f, FeatureSet):
                 if c.isRoot(f):
                     if rootTitle is not None:
-                        rootTitle.setValue(('<em>' + sampleCount
+                        rootTitle.setValue(('<em>' + str(sampleCount)
                                 + ' samples</em>' + rootTitle.getValue()))
                         sampleCount = 0
                     desc = f.getDescription()
@@ -862,7 +862,7 @@ class FeatureGrid(Panel, IFeatureList):
                     sample.setIcon(res)
                     rootSet.addComponent(sample)
         if rootTitle is not None:
-            rootTitle.setValue('<em>' + sampleCount + ' samples</em>'
+            rootTitle.setValue('<em>' + str(sampleCount) + ' samples</em>'
                     + rootTitle.getValue())
 
 

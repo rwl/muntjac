@@ -187,17 +187,16 @@ class Feature(object):
 
 class Version(object):
 
-    OLD = [0]
-    BUILD = [int('%d%d' % (AbstractApplicationServlet.VERSION_MAJOR,
-                           AbstractApplicationServlet.VERSION_MINOR))]
-    V62 = [62]
-    V63 = [63]
-    V64 = [64]
-    V65 = [65]
-    V66 = [66]
+    OLD = None
+    BUILD = None
+    V62 = None
+    V63 = None
+    V64 = None
+    V65 = None
+    V66 = None
 
     def __init__(self, version):
-        self._version = version
+        self.version = version
 
 
     def isNew(self):
@@ -209,7 +208,7 @@ class Version(object):
 
         @return
         """
-        return self.BUILD.version <= self._version
+        return self.BUILD.version <= self.version
 
     _enum_values = [OLD, BUILD, V62, V63, V64, V65, V66]
 
@@ -217,4 +216,12 @@ class Version(object):
     def values(cls):
         return cls._enum_values[:]
 
-Version._enum_values = [Version(*v) for v in Version._enum_values]
+
+Version.OLD = Version(0)
+Version.BUILD = Version(int('%d%d' % (AbstractApplicationServlet.VERSION_MAJOR,
+        AbstractApplicationServlet.VERSION_MINOR)))
+Version.V62 = Version(62)
+Version.V63 = Version(63)
+Version.V64 = Version(64)
+Version.V65 = Version(65)
+Version.V66 = Version(66)

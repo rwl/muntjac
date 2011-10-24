@@ -22,8 +22,6 @@ from muntjac.terminal.gwt.client.mouse_event_details import MouseEventDetails
 
 from muntjac.data import container
 
-from muntjac.ui.abstract_component import AbstractComponent
-
 from muntjac.event import action
 from muntjac.event.data_bound_transferable import DataBoundTransferable
 from muntjac.event.dd.acceptcriteria.target_detail_is import TargetDetailIs
@@ -50,6 +48,11 @@ from muntjac.terminal.gwt.client.ui.v_tree import \
 
 from muntjac.terminal.gwt.client.ui.dd.vertical_drop_location import \
     VerticalDropLocation
+
+from muntjac.data.util.container_hierarchical_wrapper import \
+    ContainerHierarchicalWrapper
+
+from muntjac.data.util.indexed_container import IndexedContainer
 
 
 class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
@@ -589,12 +592,15 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
         return self.items.getChildren(itemId)
 
 
-    def getParent(self, itemId):
+    def getParent(self, itemId=None):
         """Gets the ID of the parent Item of the specified Item.
 
         @see container.IHierarchical.getParent(Object)
         """
-        return self.items.getParent(itemId)
+        if itemId is None:
+            return self.items.getParent(itemId)
+        else:
+            return super(Tree, self).getParent()
 
 
     def hasChildren(self, itemId):
@@ -636,12 +642,16 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
         return success
 
 
-    def setParent(self, itemId, newParentId):
-        success = self.items.setParent(itemId, newParentId)
-        if success:
-            self.requestRepaint()
+    def setParent(self, itemId, newParentId=None):
+        if newParentId is not None:
+            success = self.items.setParent(itemId, newParentId)
+            if success:
+                self.requestRepaint()
 
-        return success
+            return success
+        else:
+            parent = itemId
+            super(Tree, self).setParent(parent)
 
 
     def setContainerDataSource(self, newDataSource):
@@ -653,16 +663,15 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
             # Note: using wrapped IndexedContainer to match constructor
             # (super creates an IndexedContainer, which is then wrapped).
             raise NotImplementedError
-            #newDataSource = ContainerHierarchicalWrapper(IndexedContainer())
+            newDataSource = ContainerHierarchicalWrapper(IndexedContainer())
 
         # Assure that the data source is ordered by making unordered
         # containers ordered by wrapping them
         if issubclass(newDataSource.__class__, container.IHierarchical):
             super(Tree, self).setContainerDataSource(newDataSource)
         else:
-            raise NotImplementedError
-            #super(Tree, self).setContainerDataSource(
-            #    ContainerHierarchicalWrapper(newDataSource))
+            super(Tree, self).setContainerDataSource(
+                ContainerHierarchicalWrapper(newDataSource))
 
 
     def addListener(self, listener, iface):

@@ -29,7 +29,7 @@ class TestListeners(TestCase, IExpandListener, ICollapseListener):
 
     def testExpandListener(self):
         tree = self.createTree(10, 20, False)
-        tree.addListener(self)
+        tree.addListener(self, IExpandListener)
         rootIds = list(tree.rootItemIds())
 
         self.assertEquals(10, len(rootIds))
@@ -67,7 +67,7 @@ class TestListeners(TestCase, IExpandListener, ICollapseListener):
         tree = Tree()
 
         for i in range(rootItems):
-            rootId = 'root ' + i
+            rootId = 'root ' + str(i)
             tree.addItem(rootId)
             if expand:
                 tree.expandItemsRecursively(rootId)
@@ -75,7 +75,7 @@ class TestListeners(TestCase, IExpandListener, ICollapseListener):
                 tree.collapseItemsRecursively(rootId)
 
             for j in range(children):
-                childId = 'child ' + i + '/' + j
+                childId = 'child ' + str(i) + '/' + str(j)
                 tree.addItem(childId)
                 tree.setParent(childId, rootId)
                 tree.setChildrenAllowed(childId, False)
@@ -94,7 +94,7 @@ class TestListeners(TestCase, IExpandListener, ICollapseListener):
 
     def testCollapseListener(self):
         tree = self.createTree(7, 15, True)
-        tree.addListener(self)
+        tree.addListener(self, ICollapseListener)
 
         rootIds = list(tree.rootItemIds())
         self.assertEquals(7, len(rootIds))
