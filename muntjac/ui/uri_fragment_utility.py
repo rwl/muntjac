@@ -74,7 +74,8 @@ class UriFragmentUtility(AbstractComponent):
 
     def paintContent(self, target):
         super(UriFragmentUtility, self).paintContent(target)
-        target.addVariable(self, 'fragment', self._fragment)
+        value = self._fragment if self._fragment is not None else ''
+        target.addVariable(self, 'fragment', value)
 
 
     def changeVariables(self, source, variables):

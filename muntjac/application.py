@@ -631,7 +631,7 @@ class Application(IUriHandler, ITerminal, IErrorListener):
         self._applicationUrl = None
 
         # Name of the theme currently used by the application.
-        self._theme = None
+        self.theme = None
 
         # Application status.
         self._applicationIsRunning = False
@@ -1024,7 +1024,7 @@ class Application(IUriHandler, ITerminal, IErrorListener):
 
         @return the name of the application's theme.
         """
-        return self._theme
+        return self.theme
 
 
     def setTheme(self, theme):
@@ -1049,7 +1049,7 @@ class Application(IUriHandler, ITerminal, IErrorListener):
                 toBeUpdated.append(w)
 
         # Updates the theme
-        self._theme = theme
+        self.theme = theme
 
         # Ask windows to update themselves
         for w in toBeUpdated:

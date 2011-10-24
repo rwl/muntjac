@@ -59,14 +59,6 @@ class FeatureView(HorizontalLayout):
         self._controls.addComponent(self._title)
         self._controls.setExpandRatio(self._title, 1)
 
-        class ResetListener(IClickListener):
-
-            def __init__(self, view):
-                self._view = view
-
-            def buttonClick(self, event):
-                self._view.resetExample()
-
         resetExample = NativeButton('Reset', ResetListener(self))
         resetExample.setStyleName(BaseTheme.BUTTON_LINK)
         resetExample.addStyleName('reset')
@@ -74,16 +66,6 @@ class FeatureView(HorizontalLayout):
         self._controls.addComponent(resetExample)
         self._showSrc = ActiveLink()
         self._showSrc.setDescription('Right / middle / ctrl / shift -click for browser window/tab')
-
-        class ShowSrcListener(ILinkActivatedListener):
-
-            def __init__(self, view):
-                self._view = view
-
-            def linkActivated(self, event):
-                if not event.isLinkOpened():
-                    self._view.showSource(
-                            self._view._currentFeature.getSource())
 
         self._showSrc.addListener(ShowSrcListener(self), ILinkActivatedListener)
         self._showSrc.setCaption(self._MSG_SHOW_SRC)
@@ -222,21 +204,6 @@ class FeatureView(HorizontalLayout):
                             ic = ThemeResource('../sampler/icons/sample.png')
                         al.setIcon(ic)
 
-                        class LinkListener(ILinkActivatedListener):
-
-                            def __init__(self, view, feature):
-                                self._view = view
-                                self._feature = feature
-
-                            def linkActivated(self, event):
-                                if event.isLinkOpened():
-                                    self._view.getWindow().showNotification(
-                                            (self._feature.getName()
-                                             + ' opened if new window/tab'))
-                                else:
-                                    w = self._view.getWindow()
-                                    w.setFeature(self._feature)
-
                         al.addListener(LinkListener(self, f))
                         rel.addComponent(al)
                 self._right.addComponent(rel)
@@ -248,3 +215,39 @@ class FeatureView(HorizontalLayout):
             ex = f.getExample()
             self._exampleCache[f] = ex
         return ex
+
+
+class ResetListener(IClickListener):
+
+    def __init__(self, view):
+        self._view = view
+
+    def buttonClick(self, event):
+        self._view.resetExample()
+
+
+class ShowSrcListener(ILinkActivatedListener):
+
+    def __init__(self, view):
+        self._view = view
+
+    def linkActivated(self, event):
+        if not event.isLinkOpened():
+            self._view.showSource(
+                    self._view._currentFeature.getSource())
+
+
+class LinkListener(ILinkActivatedListener):
+
+    def __init__(self, view, feature):
+        self._view = view
+        self._feature = feature
+
+    def linkActivated(self, event):
+        if event.isLinkOpened():
+            self._view.getWindow().showNotification(
+                    (self._feature.getName()
+                     + ' opened if new window/tab'))
+        else:
+            w = self._view.getWindow()
+            w.setFeature(self._feature)

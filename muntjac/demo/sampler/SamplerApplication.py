@@ -183,7 +183,7 @@ class SamplerWindow(Window):
         self._previousSample = None
         self._nextSample = None
         self._search = None
-        self._theme = None
+#        self.theme = None
 
         # Main top/expanded-bottom layout
         mainExpand = VerticalLayout()
@@ -217,18 +217,6 @@ class SamplerWindow(Window):
 
         # "backbutton"
         nav.addComponent(self._uriFragmentUtility)
-
-        class UriListener(IFragmentChangedListener):
-
-            def __init__(self, window):
-                self._window = window
-
-            def fragmentChanged(self, source):
-                frag = source.getUriFragmentUtility().getFragment()
-                if frag is not None and frag.contains('/'):
-                    parts = frag.split('/')
-                    frag = parts[len(parts) - 1]
-                self._window.setFeature(frag)
 
         self._uriFragmentUtility.addListener(UriListener(self),
                 IFragmentChangedListener)
@@ -278,16 +266,6 @@ class SamplerWindow(Window):
         # Show / hide tree
         treeSwitch = self.createTreeSwitch()
         quicknav.addComponent(treeSwitch)
-
-        class WindowCloseListener(window.ICloseListener):
-
-            def __init__(self, window, app):
-                self._window = window
-                self._app = app
-
-            def windowClose(self, e):
-                if self.getMainWindow() != self._window:
-                    self._app.removeWindow(self._window)
 
         self.addListener(WindowCloseListener(self, self._app),
                 window.ICloseListener)
@@ -350,17 +328,6 @@ class SamplerWindow(Window):
                 self._search.setItemIcon(idd,
                         ClassResource('folder.gif', self._app))
 
-        class SearchListener(prop.IValueChangeListener):
-
-            def __init__(self, window):
-                self._window = window
-
-            def valueChange(self, event):
-                f = event.getProperty().getValue()
-                if f is not None:
-                    self._window.setFeature(f)
-                    event.getProperty().setValue(None)
-
         self._search.addListener(SearchListener(self),
                 prop.IValueChangeListener)
         # TODO add icons for section/sample
@@ -371,15 +338,6 @@ class SamplerWindow(Window):
 
         pv = PopupView('<span></span>', self._search)
 
-        class PopupListener(IPopupVisibilityListener):
-
-            def __init__(self, window):
-                self._window = window
-
-            def popupVisibilityChange(self, event):
-                if event.isPopupVisible():
-                    self._window._search.focus()
-
         pv.addListener(PopupListener(self),
                 IPopupVisibilityListener)
         pv.setStyleName('quickjump')
@@ -389,56 +347,30 @@ class SamplerWindow(Window):
 
 
     def createThemeSelect(self):
-        self._theme = ComboBox()
-        self._theme.setWidth('32px')
-        self._theme.setNewItemsAllowed(False)
-        self._theme.setFilteringMode(ComboBox.FILTERINGMODE_CONTAINS)
-        self._theme.setImmediate(True)
-        self._theme.setNullSelectionAllowed(False)
+        theme = ComboBox()
+        theme.setWidth('32px')
+        theme.setNewItemsAllowed(False)
+        theme.setFilteringMode(ComboBox.FILTERINGMODE_CONTAINS)
+        theme.setImmediate(True)
+        theme.setNullSelectionAllowed(False)
         for themeName in self._app._THEMES:
             idd = self._app._SAMPLER_THEME_NAME + '-' + themeName
-            self._theme.addItem(idd)
-            self._theme.setItemCaption(idd,
+            theme.addItem(idd)
+            theme.setItemCaption(idd,
                     themeName[:1].upper() + (themeName[1:]) + ' theme')
-            self._theme.setItemIcon(idd, self._EMPTY_THEME_ICON)
+            theme.setItemIcon(idd, self._EMPTY_THEME_ICON)
         currentWindowTheme = self.getTheme()
-        self._theme.setValue(currentWindowTheme)
-        self._theme.setItemIcon(currentWindowTheme, self._SELECTED_THEME_ICON)
+        theme.setValue(currentWindowTheme)
+        theme.setItemIcon(currentWindowTheme, self._SELECTED_THEME_ICON)
 
-        class ThemeChangeListener(prop.IValueChangeListener):
-
-            def __init__(self, window, app):
-                self._window = window
-                self._app = app
-
-            def valueChange(self, event):
-                newTheme = str(event.getProperty().getValue())
-                self.setTheme(newTheme)
-                for themeName in self._app._THEMES:
-                    idd = self._app._SAMPLER_THEME_NAME + '-' + themeName
-                    self._window._theme.setItemIcon(idd,
-                            self._window._EMPTY_THEME_ICON)
-                self._window._theme.setItemIcon(newTheme,
-                        self._window._SELECTED_THEME_ICON)
-                self._app._currentApplicationTheme = newTheme
-
-        self._theme.addListener(ThemeChangeListener(self, self._app),
+        theme.addListener(ThemeChangeListener(self, self._app),
                 prop.IValueChangeListener)
-        self._theme.setStyleName('theme-select')
-        self._theme.setDescription('Select Theme')
-        return self._theme
+        theme.setStyleName('theme-select')
+        theme.setDescription('Select Theme')
+        return theme
 
 
     def createLogo(self):
-
-        class LogoClickListener(button.IClickListener):
-
-            def __init__(self, window):
-                self._window = window
-
-            def buttonClick(self, event):
-                self._window.setFeature(None)
-
         logo = NativeButton('', LogoClickListener(self))
         logo.setDescription('Home')
         logo.setStyleName(BaseTheme.BUTTON_LINK)
@@ -447,29 +379,6 @@ class SamplerWindow(Window):
 
 
     def createNextButton(self):
-
-        class NextClickListener(button.IClickListener):
-
-            def __init__(self, window, app):
-                self._window = window
-                self._app = app
-
-            def buttonClick(self, event):
-                curr = self._window._currentFeature.getValue()
-                if curr is None:
-                    # Navigate from main view to first sample.
-                    nextt = self._app._allFeatures.firstItemId()
-                else:
-                    # Navigate to next sample
-                    nextt = self._app._allFeatures.nextItemId(curr)
-                while nextt is not None and isinstance(nextt, FeatureSet):
-                    nextt = self._app._allFeatures.nextItemId(nextt)
-                if nextt is not None:
-                    self._window._currentFeature.setValue(nextt)
-                else:
-                    # could potentially occur if there is an empty section
-                    self.showNotification('Last sample')
-
         b = NativeButton('', NextClickListener(self, self._app))
         b.setStyleName('next')
         b.setDescription('Jump to the next sample')
@@ -477,20 +386,6 @@ class SamplerWindow(Window):
 
 
     def createPrevButton(self):
-
-        class PrevClickListener(button.IClickListener):
-
-            def __init__(self, window, app):
-                self._window = window
-                self._app = app
-
-            def buttonClick(self, event):
-                curr = self._window._currentFeature.getValue()
-                prev = self._app._allFeatures.prevItemId(curr)
-                while prev is not None and isinstance(prev, FeatureSet):
-                    prev = self._app._allFeatures.prevItemId(prev)
-                self._window._currentFeature.setValue(prev)
-
         b = NativeButton('', PrevClickListener(self, self._app))
         b.setEnabled(False)
         b.setStyleName('previous')
@@ -504,24 +399,6 @@ class SamplerWindow(Window):
         b.addStyleName('down')
         b.setDescription('Toggle sample tree visibility')
 
-        class TreeClickListener(button.IClickListener):
-
-            def __init__(self, window):
-                self._window = window
-
-            def buttonClick(self, event):
-                if self.b.getStyleName().contains('down'):
-                    self.b.removeStyleName('down')
-                    self._window._mainSplit.setSplitPosition(0)
-                    self._window._navigationTree.setVisible(False)
-                    self._window._mainSplit.setLocked(True)
-                else:
-                    self.b.addStyleName('down')
-                    self._window._mainSplit.setSplitPosition(250,
-                            ISizeable.UNITS_PIXELS)
-                    self._window._mainSplit.setLocked(False)
-                    self._window._navigationTree.setVisible(True)
-
         b.addListener(TreeClickListener(self),
                 button.IClickListener)
         self._mainSplit.setSplitPosition(250, ISizeable.UNITS_PIXELS)
@@ -534,45 +411,14 @@ class SamplerWindow(Window):
         tree.setStyleName('menu')
         tree.setContainerDataSource(self._app._allFeatures)
 
-        class FeatureChangeListener(prop.IValueChangeListener):
-
-            def __init__(self, window, tree):
-                self._window = window
-                self._tree = tree
-
-            def valueChange(self, event):
-                f = event.getProperty().getValue()
-                v = self._tree.getValue()
-                if ((f is not None and not (f == v))
-                        or (f is None and v is not None)):
-                    self._tree.setValue(f)
-                self._window.removeSubwindows()
-
         self._currentFeature.addListener(FeatureChangeListener(self, tree),
                 prop.IValueChangeListener)
         for f in FeatureSet.FEATURES.getFeatures():
             tree.expandItemsRecursively(f)
         tree.expandItemsRecursively(FeatureSet.FEATURES)
 
-        class TreeChangeListener(prop.IValueChangeListener):
-
-            def __init__(self, window):
-                self._window = window
-
-            def valueChange(self, event):
-                f = event.getProperty().getValue()
-                self._window.setFeature(f)
-
         tree.addListener(TreeChangeListener(self),
                 prop.IValueChangeListener)
-
-        class TreeStyleGenerator(ui_tree.IItemStyleGenerator):
-
-            def getStyle(self, itemId):
-                f = itemId
-                if f.getSinceVersion().isNew():
-                    return 'new'
-                return None
 
         tree.setItemStyleGenerator(TreeStyleGenerator())
         return tree
@@ -661,86 +507,13 @@ class FeatureTable(Table, IFeatureList):
         self.setSizeFull()
         self.setColumnHeaderMode(Table.COLUMN_HEADER_MODE_HIDDEN)
 
-        class IconColumnGenerator(table.IColumnGenerator):
-
-            def __init__(self, app):
-                self._app = app
-
-            def generateCell(self, source, itemId, columnId):
-                f = itemId
-                if isinstance(f, FeatureSet):
-                    # no icon for sections
-                    return None
-                resId = '75-' + f.getIconName()
-                res = self._app.getSampleIcon(resId)
-                emb = Embedded('', res)
-                emb.setWidth('48px')
-                emb.setHeight('48px')
-                emb.setType(Embedded.TYPE_IMAGE)
-                return emb
-
         self.addGeneratedColumn(Feature.PROPERTY_ICON,
                 IconColumnGenerator(self._app))
 
-        class TableColumnGenerator(table.IColumnGenerator):
-
-            def __init__(self, app):
-                self._app = app
-
-            def generateCell(self, source, itemId, columnId):
-                feature = itemId
-                if isinstance(feature, FeatureSet):
-                    return None
-                else:
-                    b = ActiveLink('View sample',
-                            ExternalResource('#' + feature.getFragmentName()))
-
-                    class LinkListener(ILinkActivatedListener):
-
-                        def __init__(self, app):
-                            self._app = app
-
-                        def linkActivated(self, event):
-                            if not event.isLinkOpened():
-                                self._app.getWindow().setFeature(self.feature)
-
-                    b.addListener(LinkListener(self._app),
-                            ILinkActivatedListener)
-                    b.setStyleName(BaseTheme.BUTTON_LINK)
-                    return b
-
         self.addGeneratedColumn('', TableColumnGenerator(self._app))
-
-        class FeatureTableClickListener(IItemClickListener):
-
-            def __init__(self, app):
-                self._app = app
-
-            def itemClick(self, event):
-                f = event.getItemId()
-                if ((event.getButton() == ItemClickEvent.BUTTON_MIDDLE)
-                        or event.isCtrlKey() or event.isShiftKey()):
-                    er = ExternalResource(self.getURL()
-                            + '#' + f.getFragmentName())
-                    self._app.getWindow().open(er, '_blank')
-                else:
-                    self._app.getWindow().setFeature(f)
 
         self.addListener(FeatureTableClickListener(self._app),
                 IItemClickListener)
-
-        class FeatureCellStyleGenerator(table.ICellStyleGenerator):
-
-            def __init__(self, app):
-                self._app = app
-
-            def getStyle(self, itemId, propertyId):
-                if propertyId is None and isinstance(itemId, FeatureSet):
-                    if self._app._allFeatures.isRoot(itemId):
-                        return 'section'
-                    else:
-                        return 'subsection'
-                return None
 
         self.setCellStyleGenerator(FeatureCellStyleGenerator(self._app))
 
@@ -871,34 +644,275 @@ class SourceWindow(Window):
     def __init__(self, app):
         super(SourceWindow, self).__init__()
 
-        class SourceUriHandler(IUriHandler):
-
-            def __init__(self, window):
-                self._window = window
-
-            def handleURI(self, context, relativeUri):
-                f = FeatureSet.FEATURES.getFeature(relativeUri)
-                if f is not None:
-                    self._window.addComponent(CodeLabel(f.getSource()))
-                else:
-                    lbl = Label('Sorry, no source found for ' + relativeUri)
-                    self._window.addComponent(lbl)
-                return None
-
         self.addURIHandler( SourceUriHandler() )
 
-
-        class WindowCloseListener(window.ICloseListener):
-
-            def __init__(self, window, app):
-                self._app = app
-                self._window = window
-
-            def windowClose(self, e):
-                self._app.removeWindow(self._window)
-
-        self.addListener(WindowCloseListener(app),
+        self.addListener(SourceWindowCloseListener(app),
                 window.ICloseListener)
+
+
+class UriListener(IFragmentChangedListener):
+
+    def __init__(self, window):
+        self._window = window
+
+    def fragmentChanged(self, source):
+        frag = source.getUriFragmentUtility().getFragment()
+        if frag is not None and frag.contains('/'):
+            parts = frag.split('/')
+            frag = parts[len(parts) - 1]
+        self._window.setFeature(frag)
+
+
+class WindowCloseListener(window.ICloseListener):
+
+    def __init__(self, window, app):
+        self._window = window
+        self._app = app
+
+    def windowClose(self, e):
+        if self.getMainWindow() != self._window:
+            self._app.removeWindow(self._window)
+
+
+class SearchListener(prop.IValueChangeListener):
+
+    def __init__(self, window):
+        self._window = window
+
+    def valueChange(self, event):
+        f = event.getProperty().getValue()
+        if f is not None:
+            self._window.setFeature(f)
+            event.getProperty().setValue(None)
+
+
+class PopupListener(IPopupVisibilityListener):
+
+    def __init__(self, window):
+        self._window = window
+
+    def popupVisibilityChange(self, event):
+        if event.isPopupVisible():
+            self._window._search.focus()
+
+
+class ThemeChangeListener(prop.IValueChangeListener):
+
+    def __init__(self, window, app):
+        self._window = window
+        self._app = app
+
+    def valueChange(self, event):
+        newTheme = str(event.getProperty().getValue())
+        self._window.setTheme(newTheme)
+        for themeName in self._app._THEMES:
+            idd = self._app._SAMPLER_THEME_NAME + '-' + themeName
+            self._window.theme.setItemIcon(idd,
+                    self._window._EMPTY_THEME_ICON)
+        self._window.theme.setItemIcon(newTheme,
+                self._window._SELECTED_THEME_ICON)
+        self._app._currentApplicationTheme = newTheme
+
+
+class LogoClickListener(button.IClickListener):
+
+    def __init__(self, window):
+        self._window = window
+
+    def buttonClick(self, event):
+        self._window.setFeature(None)
+
+
+class NextClickListener(button.IClickListener):
+
+    def __init__(self, window, app):
+        self._window = window
+        self._app = app
+
+    def buttonClick(self, event):
+        curr = self._window._currentFeature.getValue()
+        if curr is None:
+            # Navigate from main view to first sample.
+            nextt = self._app._allFeatures.firstItemId()
+        else:
+            # Navigate to next sample
+            nextt = self._app._allFeatures.nextItemId(curr)
+        while nextt is not None and isinstance(nextt, FeatureSet):
+            nextt = self._app._allFeatures.nextItemId(nextt)
+        if nextt is not None:
+            self._window._currentFeature.setValue(nextt)
+        else:
+            # could potentially occur if there is an empty section
+            self.showNotification('Last sample')
+
+
+class PrevClickListener(button.IClickListener):
+
+    def __init__(self, window, app):
+        self._window = window
+        self._app = app
+
+    def buttonClick(self, event):
+        curr = self._window._currentFeature.getValue()
+        prev = self._app._allFeatures.prevItemId(curr)
+        while prev is not None and isinstance(prev, FeatureSet):
+            prev = self._app._allFeatures.prevItemId(prev)
+        self._window._currentFeature.setValue(prev)
+
+
+class TreeClickListener(button.IClickListener):
+
+    def __init__(self, window):
+        self._window = window
+
+    def buttonClick(self, event):
+        if self.b.getStyleName().contains('down'):
+            self.b.removeStyleName('down')
+            self._window._mainSplit.setSplitPosition(0)
+            self._window._navigationTree.setVisible(False)
+            self._window._mainSplit.setLocked(True)
+        else:
+            self.b.addStyleName('down')
+            self._window._mainSplit.setSplitPosition(250,
+                    ISizeable.UNITS_PIXELS)
+            self._window._mainSplit.setLocked(False)
+            self._window._navigationTree.setVisible(True)
+
+
+class FeatureChangeListener(prop.IValueChangeListener):
+
+    def __init__(self, window, tree):
+        self._window = window
+        self._tree = tree
+
+    def valueChange(self, event):
+        f = event.getProperty().getValue()
+        v = self._tree.getValue()
+        if ((f is not None and not (f == v))
+                or (f is None and v is not None)):
+            self._tree.setValue(f)
+        self._window.removeSubwindows()
+
+
+class TreeChangeListener(prop.IValueChangeListener):
+
+    def __init__(self, window):
+        self._window = window
+
+    def valueChange(self, event):
+        f = event.getProperty().getValue()
+        self._window.setFeature(f)
+
+
+class TreeStyleGenerator(ui_tree.IItemStyleGenerator):
+
+    def getStyle(self, itemId):
+        f = itemId
+        if f.getSinceVersion().isNew():
+            return 'new'
+        return None
+
+
+class IconColumnGenerator(table.IColumnGenerator):
+
+    def __init__(self, app):
+        self._app = app
+
+    def generateCell(self, source, itemId, columnId):
+        f = itemId
+        if isinstance(f, FeatureSet):
+            # no icon for sections
+            return None
+        resId = '75-' + f.getIconName()
+        res = self._app.getSampleIcon(resId)
+        emb = Embedded('', res)
+        emb.setWidth('48px')
+        emb.setHeight('48px')
+        emb.setType(Embedded.TYPE_IMAGE)
+        return emb
+
+
+class TableColumnGenerator(table.IColumnGenerator):
+
+    def __init__(self, app):
+        self._app = app
+
+    def generateCell(self, source, itemId, columnId):
+        feature = itemId
+        if isinstance(feature, FeatureSet):
+            return None
+        else:
+            b = ActiveLink('View sample',
+                    ExternalResource('#' + feature.getFragmentName()))
+
+            class LinkListener(ILinkActivatedListener):
+
+                def __init__(self, app):
+                    self._app = app
+
+                def linkActivated(self, event):
+                    if not event.isLinkOpened():
+                        self._app.getWindow().setFeature(self.feature)
+
+            b.addListener(LinkListener(self._app),
+                    ILinkActivatedListener)
+            b.setStyleName(BaseTheme.BUTTON_LINK)
+            return b
+
+
+class FeatureTableClickListener(IItemClickListener):
+
+    def __init__(self, app):
+        self._app = app
+
+    def itemClick(self, event):
+        f = event.getItemId()
+        if ((event.getButton() == ItemClickEvent.BUTTON_MIDDLE)
+                or event.isCtrlKey() or event.isShiftKey()):
+            er = ExternalResource(self.getURL()
+                    + '#' + f.getFragmentName())
+            self._app.getWindow().open(er, '_blank')
+        else:
+            self._app.getWindow().setFeature(f)
+
+
+class FeatureCellStyleGenerator(table.ICellStyleGenerator):
+
+    def __init__(self, app):
+        self._app = app
+
+    def getStyle(self, itemId, propertyId):
+        if propertyId is None and isinstance(itemId, FeatureSet):
+            if self._app._allFeatures.isRoot(itemId):
+                return 'section'
+            else:
+                return 'subsection'
+        return None
+
+
+class SourceUriHandler(IUriHandler):
+
+    def __init__(self, window):
+        self._window = window
+
+    def handleURI(self, context, relativeUri):
+        f = FeatureSet.FEATURES.getFeature(relativeUri)
+        if f is not None:
+            self._window.addComponent(CodeLabel(f.getSource()))
+        else:
+            lbl = Label('Sorry, no source found for ' + relativeUri)
+            self._window.addComponent(lbl)
+        return None
+
+
+class SourceWindowCloseListener(window.ICloseListener):
+
+    def __init__(self, window, app):
+        self._app = app
+        self._window = window
+
+    def windowClose(self, e):
+        self._app.removeWindow(self._window)
 
 
 if __name__ == '__main__':

@@ -421,8 +421,10 @@ class JsonPaintTarget(IPaintTarget):
         elif isinstance(value, str):
             var = StringVariable(owner, name, self.escapeJSON(value))
             self._tag.addVariable(var)
-        else:  # list
+        elif isinstance(value, list):
             self._tag.addVariable( ArrayVariable(owner, name, value) )
+        else:
+            raise ValueError, ('%s %s %s' % (str(owner), name, value))
 
 
     def addUploadStreamVariable(self, owner, name):

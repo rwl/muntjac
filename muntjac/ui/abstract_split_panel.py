@@ -47,20 +47,23 @@ class ComponentIterator(object):
     def next(self):  #@PydevCodeAnalysisIgnore
         if not self.hasNext():
             raise StopIteration
+
         self._i += 1
+
         if self._i == 1:
-            if self.sp.firstComponent is None:
-                return self.sp.secondComponent
+            if self.sp._firstComponent is None:
+                return self.sp._secondComponent
             else:
-                return self.sp.firstComponent
+                return self.sp._firstComponent
         elif self._i == 2:
-            return self.sp.secondComponent
+            return self.sp._secondComponent
+
         return None
 
 
     def remove(self):
         if self._i == 1:
-            if self.sp.firstComponent is not None:
+            if self.sp._firstComponent is not None:
                 self.sp.setFirstComponent(None)
                 self._i = 0
             else:

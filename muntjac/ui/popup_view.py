@@ -65,7 +65,7 @@ class SingleComponentIterator(object):
             self._first = True
             return self._component
         else:
-            return None
+            raise StopIteration
 
 
     def remove(self):
@@ -113,18 +113,6 @@ class PopupView(AbstractComponentContainer):
             self.setContent(content)
         elif nargs == 2:
             small, large = args
-
-            class InnerContent(IContent):
-
-                def __init__(self, small, large):
-                    self._small = small
-                    self._large = large
-
-                def getMinimizedValueAsHTML(self):
-                    return self._small
-
-                def getPopupComponent(self):
-                    return self._large
 
             c = InnerContent(small, large)
             PopupView.__init__(self, c)
@@ -399,3 +387,16 @@ class IContent(object):
         @return a Component for the value
         """
         raise NotImplementedError
+
+
+class InnerContent(IContent):
+
+    def __init__(self, small, large):
+        self._small = small
+        self._large = large
+
+    def getMinimizedValueAsHTML(self):
+        return self._small
+
+    def getPopupComponent(self):
+        return self._large

@@ -1296,7 +1296,7 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
 
     def getCaptionChangeListener(self):
         if self._captionChangeListener is None:
-            self._captionChangeListener = CaptionChangeListener()
+            self._captionChangeListener = CaptionChangeListener(self)
         return self._captionChangeListener
 
 
@@ -1472,16 +1472,18 @@ class CaptionChangeListener(item.IPropertySetChangeListener,
     NOTE: singleton, use getCaptionChangeListener().
     """
 
-    def __init__(self):
+    def __init__(self, select):
+        self._select = select
+
         # TODO clean this up - type is either item.IPropertySetChangeNotifier
         # or property.IValueChangeNotifier
         self._captionChangeNotifiers = set()
 
 
     def addNotifierForItem(self, itemId):
-        test = self.getItemCaptionMode()
-        if test == self.ITEM_CAPTION_MODE_ITEM:
-            i = self.getItem(itemId)
+        test = self._select.getItemCaptionMode()
+        if test == self._select.ITEM_CAPTION_MODE_ITEM:
+            i = self._select.getItem(itemId)
             if i is None:
                 return
 
@@ -1500,7 +1502,7 @@ class CaptionChangeListener(item.IPropertySetChangeListener,
                                 prop.IValueChangeListener)
                         self._captionChangeNotifiers.add(p)
 
-        elif test == self.ITEM_CAPTION_MODE_PROPERTY:
+        elif test == self._select.ITEM_CAPTION_MODE_PROPERTY:
             p = self.getContainerProperty(itemId,
                     self.getItemCaptionPropertyId())
             if p is not None and isinstance(p, prop.IValueChangeNotifier):
