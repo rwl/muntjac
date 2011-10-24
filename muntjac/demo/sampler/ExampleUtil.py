@@ -3,8 +3,12 @@ import locale
 from random import random
 
 from muntjac.data.util.indexed_container import IndexedContainer
+from muntjac.data.util.hierarchical_container import HierarchicalContainer
+
 from muntjac.terminal.resource import IResource
 from muntjac.terminal.theme_resource import ThemeResource
+
+from muntjac.util import Locale
 
 
 class ExampleUtil(object):

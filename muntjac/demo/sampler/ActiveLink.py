@@ -35,17 +35,20 @@ class ActiveLink(Link):
                     width, height, border)
 
 
-    def addListener(self, listener):
+    def addListener(self, listener, iface):
         """Adds the link activated listener.
 
         @param listener
                    the Listener to be added.
         """
-        self._listeners.add(listener)
-        super(ActiveLink, self).addListener(LinkActivatedEvent,
-                listener, _LINK_FOLLOWED_METHOD)
-        if len(self._listeners) == 1:
-            self.requestRepaint()
+        if issubclass(iface, ILinkActivatedListener):
+            self._listeners.add(listener)
+            super(ActiveLink, self).registerListener(LinkActivatedEvent,
+                    listener, _LINK_FOLLOWED_METHOD)
+            if len(self._listeners) == 1:
+                self.requestRepaint()
+        else:
+            super(ActiveLink, self).addListener(listener, iface)
 
 
     def addLinkActivatedListener(self, listener):

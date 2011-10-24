@@ -5,6 +5,8 @@ from muntjac.ui.abstract_component import AbstractComponent
 class GoogleAnalytics(AbstractComponent):
 
     def __init__(self, trackerId, domainName=None):
+        super(GoogleAnalytics, self).__init__()
+
         self._trackerId = trackerId
         self._pageId = None
         self._domainName = domainName

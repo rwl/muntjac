@@ -376,8 +376,12 @@ class IndexedContainer(AbstractInMemoryContainer,
                     ItemSetChangeEvent(self, position))
 
 
-    def fireItemSetChange(self):
-        AbstractContainer.fireItemSetChange(self, ItemSetChangeEvent(self, -1))
+    def fireItemSetChange(self, event=None):
+        if event is None:
+            event = ItemSetChangeEvent(self, -1)
+            super(AbstractContainer, self).fireItemSetChange(event)
+        else:
+            super(AbstractContainer, self).fireItemSetChange(event)
 
 
     def addSinglePropertyChangeListener(self, propertyId, itemId, listener):
@@ -720,7 +724,7 @@ class IndexedContainerProperty(prop.IProperty, prop.IValueChangeNotifier):
 
         # Support null values on all types
         if newValue is None:
-            propertySet.remove(self._propertyId)
+            del propertySet[self._propertyId]
         elif issubclass(newValue.__class__, self.getType()):
             propertySet[self._propertyId] = newValue
         else:

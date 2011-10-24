@@ -150,6 +150,8 @@ from muntjac.demo.sampler.features.blueprints.ProminentPrimaryAction import Prom
 
 from muntjac.demo.sampler.Feature import Version, Feature
 
+from muntjac.data.util.hierarchical_container import HierarchicalContainer
+
 
 class FeatureSet(Feature):
     """Contains the FeatureSet implementation and the structure for the feature
@@ -242,7 +244,7 @@ class FeatureSet(Feature):
             prop = item.getItemProperty(self.PROPERTY_NAME)
             prop.setValue(features[i].getName())
             prop = item.getItemProperty(self.PROPERTY_DESCRIPTION)
-            property.setValue(features[i].getDescription())
+            prop.setValue(features[i].getDescription())
             if recurse:
                 c.setParent(features[i], f)
                 if isinstance(features[i], FeatureSet):

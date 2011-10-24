@@ -20,6 +20,8 @@ class FeatureView(HorizontalLayout):
     _MSG_SHOW_SRC = 'View Source'
 
     def __init__(self):
+        super(FeatureView, self).__init__()
+
         self.__right = None
         self.__left = None
         self.__controls = None
@@ -53,9 +55,9 @@ class FeatureView(HorizontalLayout):
         self._controls.setWidth('100%')
         self._controls.setStyleName('feature-controls')
 
-        self.title.setStyleName('title')
-        self._controls.addComponent(self.title)
-        self._controls.setExpandRatio(self.title, 1)
+        self._title.setStyleName('title')
+        self._controls.addComponent(self._title)
+        self._controls.setExpandRatio(self._title, 1)
 
         class ResetListener(IClickListener):
 
@@ -83,7 +85,7 @@ class FeatureView(HorizontalLayout):
                     self._view.showSource(
                             self._view._currentFeature.getSource())
 
-        self._showSrc.addListener(ShowSrcListener(self))
+        self._showSrc.addListener(ShowSrcListener(self), ILinkActivatedListener)
         self._showSrc.setCaption(self._MSG_SHOW_SRC)
         self._showSrc.addStyleName('showcode')
         self._showSrc.setTargetBorder(Link.TARGET_BORDER_NONE)
@@ -126,11 +128,11 @@ class FeatureView(HorizontalLayout):
             self._left.removeAllComponents()
 
             self._left.addComponent(self._controls)
-            self.title.setValue('<span>' + feature.getName() + '</span>')
+            self._title.setValue('<span>' + feature.getName() + '</span>')
             if feature.getSinceVersion().isNew():
-                self.title.addStyleName('new')
+                self._title.addStyleName('new')
             else:
-                self.title.removeStyleName('new')
+                self._title.removeStyleName('new')
 
             self._left.addComponent(self.getExampleFor(feature))
 

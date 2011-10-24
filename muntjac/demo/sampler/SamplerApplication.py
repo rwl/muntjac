@@ -3,6 +3,7 @@ from muntjac.api import Application
 
 from muntjac.demo.sampler.CodeLabel import CodeLabel
 from muntjac.demo.sampler.FeatureSet import FeatureSet
+from muntjac.demo.sampler.FeatureView import FeatureView
 from muntjac.demo.sampler.GoogleAnalytics import GoogleAnalytics
 from muntjac.demo.sampler.Feature import Feature
 from muntjac.demo.sampler.ActiveLink import ActiveLink, ILinkActivatedListener
@@ -42,13 +43,18 @@ class SamplerApplication(Application):
     _APP_URL = None
 
 
+    def __init__(self):
+        super(SamplerApplication, self).__init__()
+
+        self._currentApplicationTheme = (self._SAMPLER_THEME_NAME +
+                '-' + self._THEMES[0])
+
+
     def init(self):
-        self.setMainWindow(self.SamplerWindow())
+        self.setMainWindow(SamplerWindow(self))
         url = self.getURL()
         self._APP_URL = str(self.getURL()) if url is not None else ''
 
-        self._currentApplicationTheme = (self._SAMPLER_THEME_NAME + '-'
-                + self._THEMES[0])
 
     @classmethod
     def getThemeBase(cls):
@@ -72,7 +78,7 @@ class SamplerApplication(Application):
             if name.startswith('src'):
                 w = SourceWindow()
             else:
-                w = SamplerWindow()
+                w = SamplerWindow(self)
                 w.setName(name)
             self.addWindow(w)
         return w
@@ -138,10 +144,6 @@ class SamplerApplication(Application):
         super(SamplerApplication, self).close()
 
 
-
-
-
-
 class SamplerWindow(Window):
     """The main window for Sampler, contains the full application UI."""
 
@@ -152,8 +154,7 @@ class SamplerWindow(Window):
 
 
     def __init__(self, app):
-
-        from muntjac.demo.sampler.FeatureView import FeatureView
+        super(SamplerWindow, self).__init__()
 
         self._app = app
 
@@ -166,7 +167,7 @@ class SamplerWindow(Window):
                 ThemeResource('../sampler/sampler/select-bullet.png')
 
         self._currentList = FeatureGrid(self._app)
-        self._featureView = FeatureView(self._app)
+        self._featureView = FeatureView()
         self._currentFeature = ObjectProperty(None, Feature)
 
         self._mainSplit = None
@@ -229,7 +230,8 @@ class SamplerWindow(Window):
                     frag = parts[len(parts) - 1]
                 self._window.setFeature(frag)
 
-        self._uriFragmentUtility.addListener( UriListener(self) )
+        self._uriFragmentUtility.addListener(UriListener(self),
+                IFragmentChangedListener)
 
         # Main left/right split; hidden menu tree
         self._mainSplit = HorizontalSplitPanel()
@@ -287,7 +289,8 @@ class SamplerWindow(Window):
                 if self.getMainWindow() != self._window:
                     self._app.removeWindow(self._window)
 
-        self.addListener( WindowCloseListener(self, self._app) )
+        self.addListener(WindowCloseListener(self, self._app),
+                window.ICloseListener)
         self.updateFeatureList(self._currentList)
 
 
@@ -358,7 +361,8 @@ class SamplerWindow(Window):
                     self._window.setFeature(f)
                     event.getProperty().setValue(None)
 
-        self._search.addListener( SearchListener(self) )
+        self._search.addListener(SearchListener(self),
+                prop.IValueChangeListener)
         # TODO add icons for section/sample
         # PopupView pv = new PopupView("", search) { public void
         # changeVariables(Object source, Map variables) {
@@ -376,7 +380,8 @@ class SamplerWindow(Window):
                 if event.isPopupVisible():
                     self._window._search.focus()
 
-        pv.addListener( PopupListener(self) )
+        pv.addListener(PopupListener(self),
+                IPopupVisibilityListener)
         pv.setStyleName('quickjump')
         pv.setDescription('Quick jump')
 
@@ -394,7 +399,7 @@ class SamplerWindow(Window):
             idd = self._app._SAMPLER_THEME_NAME + '-' + themeName
             self._theme.addItem(idd)
             self._theme.setItemCaption(idd,
-                    themeName[:1].toUpperCase() + (themeName[1:]) + ' theme')
+                    themeName[:1].upper() + (themeName[1:]) + ' theme')
             self._theme.setItemIcon(idd, self._EMPTY_THEME_ICON)
         currentWindowTheme = self.getTheme()
         self._theme.setValue(currentWindowTheme)
@@ -417,7 +422,8 @@ class SamplerWindow(Window):
                         self._window._SELECTED_THEME_ICON)
                 self._app._currentApplicationTheme = newTheme
 
-        self._theme.addListener( ThemeChangeListener(self, self._app) )
+        self._theme.addListener(ThemeChangeListener(self, self._app),
+                prop.IValueChangeListener)
         self._theme.setStyleName('theme-select')
         self._theme.setDescription('Select Theme')
         return self._theme
@@ -516,7 +522,8 @@ class SamplerWindow(Window):
                     self._window._mainSplit.setLocked(False)
                     self._window._navigationTree.setVisible(True)
 
-        b.addListener( TreeClickListener(self) )
+        b.addListener(TreeClickListener(self),
+                button.IClickListener)
         self._mainSplit.setSplitPosition(250, ISizeable.UNITS_PIXELS)
         return b
 
@@ -541,7 +548,8 @@ class SamplerWindow(Window):
                     self._tree.setValue(f)
                 self._window.removeSubwindows()
 
-        self._currentFeature.addListener(FeatureChangeListener(self, tree))
+        self._currentFeature.addListener(FeatureChangeListener(self, tree),
+                prop.IValueChangeListener)
         for f in FeatureSet.FEATURES.getFeatures():
             tree.expandItemsRecursively(f)
         tree.expandItemsRecursively(FeatureSet.FEATURES)
@@ -555,7 +563,8 @@ class SamplerWindow(Window):
                 f = event.getProperty().getValue()
                 self._window.setFeature(f)
 
-        tree.addListener( TreeChangeListener(self) )
+        tree.addListener(TreeChangeListener(self),
+                prop.IValueChangeListener)
 
         class TreeStyleGenerator(ui_tree.IItemStyleGenerator):
 
@@ -586,6 +595,8 @@ class SamplerWindow(Window):
 class BreadCrumbs(CustomComponent, ILinkActivatedListener):
 
     def __init__(self, app):
+        super(BreadCrumbs, self).__init__()
+
         self._app = app
 
         self._layout = HorizontalLayout()
@@ -600,7 +611,7 @@ class BreadCrumbs(CustomComponent, ILinkActivatedListener):
         # home
         self._layout.removeAllComponents()
         link = ActiveLink('Home', ExternalResource('#'))
-        link.addListener(self)
+        link.addListener(self, ILinkActivatedListener)
         self._layout.addComponent(link)
         if path is not None and not ('' == path):
             parts = path.split('/')
@@ -613,7 +624,7 @@ class BreadCrumbs(CustomComponent, ILinkActivatedListener):
                 link = ActiveLink(f.getName(),
                         ExternalResource('#' + f.getFragmentName()))
                 link.setData(f)
-                link.addListener(self)
+                link.addListener(self, ILinkActivatedListener)
                 self._layout.addComponent(link)
             if link is not None:
                 link.setStyleName('bold')
@@ -640,6 +651,8 @@ class FeatureTable(Table, IFeatureList):
     """Table -mode FeatureList. Displays the features in a Table."""
 
     def __init__(self, app):
+        super(FeatureTable, self).__init__()
+
         self._app = app
 
         self.setStyleName('featuretable')
@@ -691,7 +704,8 @@ class FeatureTable(Table, IFeatureList):
                             if not event.isLinkOpened():
                                 self._app.getWindow().setFeature(self.feature)
 
-                    b.addListener(LinkListener(self._app))
+                    b.addListener(LinkListener(self._app),
+                            ILinkActivatedListener)
                     b.setStyleName(BaseTheme.BUTTON_LINK)
                     return b
 
@@ -712,7 +726,8 @@ class FeatureTable(Table, IFeatureList):
                 else:
                     self._app.getWindow().setFeature(f)
 
-        self.addListener(FeatureTableClickListener(self._app))
+        self.addListener(FeatureTableClickListener(self._app),
+                IItemClickListener)
 
         class FeatureCellStyleGenerator(table.ICellStyleGenerator):
 
@@ -740,6 +755,8 @@ class FeatureTable(Table, IFeatureList):
 class FeatureGrid(Panel, IFeatureList):
 
     def __init__(self, app):
+        super(FeatureGrid, self).__init__()
+
         self._app = app
 
         self._grid = CssLayout()
@@ -852,6 +869,7 @@ class FeatureGrid(Panel, IFeatureList):
 class SourceWindow(Window):
 
     def __init__(self, app):
+        super(SourceWindow, self).__init__()
 
         class SourceUriHandler(IUriHandler):
 
@@ -879,7 +897,8 @@ class SourceWindow(Window):
             def windowClose(self, e):
                 self._app.removeWindow(self._window)
 
-        self.addListener( WindowCloseListener(app) )
+        self.addListener(WindowCloseListener(app),
+                window.ICloseListener)
 
 
 if __name__ == '__main__':

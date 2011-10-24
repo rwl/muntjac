@@ -294,8 +294,8 @@ class AbstractComponent(IComponent, IMethodEventSource):
 
     def isEnabled(self):
         # Tests if the component is enabled or not.
-        return (self._enabled and (self._parent is None)
-            or self._parent.isEnabled() and self.isVisible())
+        return (self._enabled and ((self._parent is None)
+            or (self._parent.isEnabled())) and self.isVisible())
 
 
     def setEnabled(self, enabled):

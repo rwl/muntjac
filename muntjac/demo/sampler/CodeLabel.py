@@ -8,6 +8,7 @@ class CodeLabel(Label):
 
         if content is None:
             self.setContentMode(self.CONTENT_PREFORMATTED)
+            super(CodeLabel, self).__init__()
         else:
             super(CodeLabel, self).__init__(content, self.CONTENT_PREFORMATTED)
 
