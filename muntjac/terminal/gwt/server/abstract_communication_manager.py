@@ -787,8 +787,10 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                 if canonicalName.startswith('muntjac.ui'):
                     # use Vaadin package names  FIXME: Python client side
                     canonicalName = 'com.vaadin.ui.' + class1.__name__
+                elif canonicalName.startswith('muntjac.demo.sampler'):
+                    canonicalName = 'com.vaadin.demo.sampler.' + class1.__name__
                 else:
-                    raise ValueError, 'use Vaadin package name'
+                    raise ValueError('type mapping name [%s]' % canonicalName)
 
                 outWriter.write('\"')
                 outWriter.write(canonicalName)

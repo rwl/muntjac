@@ -22,7 +22,7 @@ from muntjac.data.property import IProperty
 
 class CheckBox(Button):
 
-    #CLIENT_WIDGET = ClientWidget(VCheckBox)
+    CLIENT_WIDGET = None #ClientWidget(VCheckBox)
 
     def __init__(self, *args):
         """Creates a new switch button.

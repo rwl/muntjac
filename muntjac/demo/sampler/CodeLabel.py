@@ -4,6 +4,8 @@ from muntjac.api import Label
 
 class CodeLabel(Label):
 
+    CLIENT_WIDGET = None #ClientWidget(VCodeLabel)
+
     def __init__(self, content=None):
 
         if content is None:

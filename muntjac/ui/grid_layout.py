@@ -53,7 +53,7 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
     @since 3.0
     """
 
-    #CLIENT_WIDGET = ClientWidget(VGridLayout, LoadStyle.EAGER)
+    CLIENT_WIDGET = None #ClientWidget(VGridLayout, LoadStyle.EAGER)
 
     _CLICK_EVENT = EventId.LAYOUT_CLICK
     _ALIGNMENT_DEFAULT = Alignment.TOP_LEFT

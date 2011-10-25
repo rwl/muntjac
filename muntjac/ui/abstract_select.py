@@ -811,10 +811,10 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
                 caption = str(i)
 
         elif test == self.ITEM_CAPTION_MODE_EXPLICIT:
-            caption = self._itemCaptions[itemId]
+            caption = self._itemCaptions.get(itemId)
 
         elif test == self.ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID:
-            caption = self._itemCaptions[itemId]
+            caption = self._itemCaptions.get(itemId)
             if caption is None:
                 caption = str(itemId)
 

@@ -40,7 +40,7 @@ class HorizontalSplitPanel(AbstractSplitPanel):
     @since 6.5
     """
 
-    #CLIENT_WIDGET = ClientWidget(VSplitPanelHorizontal, LoadStyle.EAGER)
+    CLIENT_WIDGET = None #ClientWidget(VSplitPanelHorizontal, LoadStyle.EAGER)
 
     def __init__(self):
         super(HorizontalSplitPanel, self).__init__()

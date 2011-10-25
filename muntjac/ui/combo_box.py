@@ -26,7 +26,7 @@ class ComboBox(Select):
     off), but you can not turn on multi-select mode.
     """
 
-    #CLIENT_WIDGET = ClientWidget(VFilterSelect)
+    CLIENT_WIDGET = None #ClientWidget(VFilterSelect)
 
     def __init__(self, *args):
         self._inputPrompt = None

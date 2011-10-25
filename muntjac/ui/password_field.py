@@ -23,7 +23,7 @@ class PasswordField(AbstractTextField):
     The entered text is not displayed on the screen.
     """
 
-    #CLIENT_WIDGET = ClientWidget(VPasswordField, LoadStyle.EAGER)
+    CLIENT_WIDGET = None #ClientWidget(VPasswordField, LoadStyle.EAGER)
 
     def __init__(self, *args):
         """Constructs an empty PasswordField.

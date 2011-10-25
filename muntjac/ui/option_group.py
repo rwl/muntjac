@@ -26,7 +26,7 @@ from muntjac.ui.abstract_component import AbstractComponent
 class OptionGroup(AbstractSelect, IBlurNotifier, IFocusNotifier):
     """Configures select to be used as an option group."""
 
-    #CLIENT_WIDGET = ClientWidget(VOptionGroup, LoadStyle.EAGER)
+    CLIENT_WIDGET = None #ClientWidget(VOptionGroup, LoadStyle.EAGER)
 
     def __init__(self, *args):
         self._disabledItemIds = set()

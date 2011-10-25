@@ -30,7 +30,7 @@ class Embedded(AbstractComponent):
     @since 3.0
     """
 
-    #CLIENT_WIDGET = ClientWidget(VEmbedded, LoadStyle.EAGER)
+    CLIENT_WIDGET = None #ClientWidget(VEmbedded, LoadStyle.EAGER)
 
     _CLICK_EVENT = VEmbedded.CLICK_EVENT_IDENTIFIER
 

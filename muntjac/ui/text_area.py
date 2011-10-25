@@ -21,7 +21,7 @@ from muntjac.data.property import IProperty
 class TextArea(AbstractTextField):
     """A text field that supports multi line editing."""
 
-    #CLIENT_WIDGET = ClientWidget(VTextArea, LoadStyle.EAGER)
+    CLIENT_WIDGET = None #ClientWidget(VTextArea, LoadStyle.EAGER)
 
     _DEFAULT_ROWS = 5
 

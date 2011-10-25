@@ -30,7 +30,7 @@ class VerticalLayout(AbstractOrderedLayout):
     @since 5.3
     """
 
-    #CLIENT_WIDGET = ClientWidget(VVerticalLayout, LoadStyle.EAGER)
+    CLIENT_WIDGET = None #ClientWidget(VVerticalLayout, LoadStyle.EAGER)
 
     def __init__(self):
         super(VerticalLayout, self).__init__()

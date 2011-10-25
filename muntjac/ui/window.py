@@ -109,7 +109,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
     @since 3.0
     """
 
-    #CLIENT_WIDGET = ClientWidget(VWindow, LoadStyle.EAGER)
+    CLIENT_WIDGET = None #ClientWidget(VWindow, LoadStyle.EAGER)
 
     # <b>Application window only</b>. A border style used for opening
     # resources in a window without a border.

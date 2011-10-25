@@ -35,7 +35,7 @@ class OrderedLayout(AbstractOrderedLayout):
                 OrderedLayout extends).
     """
 
-    #CLIENT_WIDGET = ClientWidget(VOrderedLayout, LoadStyle.EAGER)
+    CLIENT_WIDGET = None #ClientWidget(VOrderedLayout, LoadStyle.EAGER)
 
     # Components are to be laid out vertically.
     ORIENTATION_VERTICAL = 0

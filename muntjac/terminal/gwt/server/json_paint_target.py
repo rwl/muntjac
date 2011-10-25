@@ -400,6 +400,9 @@ class JsonPaintTarget(IPaintTarget):
 
 
     def addVariable(self, owner, name, value):
+        if value is None:
+            value = ''
+
         if isinstance(value, IPaintable):
             var = StringVariable(owner, name, self.getPaintIdentifier(value))
             self._tag.addVariable(var)
@@ -612,8 +615,7 @@ class JsonPaintTarget(IPaintTarget):
 
 
     def hasClientWidgetMapping(self, class1):
-        return True  # ignore client widget warning
-        #return hasattr(class1, 'CLIENT_WIDGET')  # FIXME: client widgets
+        return 'CLIENT_WIDGET' in class1.__dict__
 
 
     def getUsedPaintableTypes(self):

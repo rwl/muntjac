@@ -36,7 +36,7 @@ class ProgressIndicator(AbstractField, prop.IValueChangeListener,
     @since 4
     """
 
-    #CLIENT_WIDGET = ClientWidget(VProgressIndicator, LoadStyle.EAGER)
+    CLIENT_WIDGET = None #ClientWidget(VProgressIndicator, LoadStyle.EAGER)
 
     # Content mode, where the label contains only plain text. The getValue()
     # result is coded to XML when painting.

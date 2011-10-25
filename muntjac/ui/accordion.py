@@ -31,4 +31,4 @@ class Accordion(TabSheet):
     @see TabSheet
     """
 
-    #CLIENT_WIDGET = ClientWidget(VAccordion)
+    CLIENT_WIDGET = None #ClientWidget(VAccordion)

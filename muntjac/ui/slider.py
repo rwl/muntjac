@@ -24,7 +24,7 @@ class Slider(AbstractField):
     @author Richard Lincoln
     """
 
-    #CLIENT_WIDGET = ClientWidget(VSlider, LoadStyle.LAZY)
+    CLIENT_WIDGET = None #ClientWidget(VSlider, LoadStyle.LAZY)
 
     ORIENTATION_HORIZONTAL = 0
 

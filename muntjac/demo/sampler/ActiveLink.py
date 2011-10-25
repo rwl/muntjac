@@ -22,6 +22,8 @@ _LINK_FOLLOWED_METHOD = getattr(ILinkActivatedListener, 'linkActivated')
 
 class ActiveLink(Link):
 
+    CLIENT_WIDGET = None #ClientWidget(VActiveLink)
+
     def __init__(self, caption=None, resource=None, targetName=None,
                 width=None, height=None, border=None):
         self._listeners = set()

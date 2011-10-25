@@ -24,7 +24,7 @@ class TwinColSelect(AbstractSelect):
     and right side for selected items.
     """
 
-    #CLIENT_WIDGET = ClientWidget(VTwinColSelect, LoadStyle.EAGER)
+    CLIENT_WIDGET = None #ClientWidget(VTwinColSelect, LoadStyle.EAGER)
 
     def __init__(self, *args):
         """

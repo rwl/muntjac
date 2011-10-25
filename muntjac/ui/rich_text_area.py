@@ -28,7 +28,7 @@ class RichTextArea(AbstractField):
     is counted into length of field.
     """
 
-    #CLIENT_WIDGET = ClientWidget(VRichTextArea, LoadStyle.LAZY)
+    CLIENT_WIDGET = None #ClientWidget(VRichTextArea, LoadStyle.LAZY)
 
     def __init__(self, *args):
         """Constructs an empty <code>RichTextArea</code> with no caption.

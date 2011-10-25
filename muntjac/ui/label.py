@@ -54,7 +54,7 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
     @since 3.0
     """
 
-    #CLIENT_WIDGET = ClientWidget(VLabel, LoadStyle.EAGER)
+    CLIENT_WIDGET = None #ClientWidget(VLabel, LoadStyle.EAGER)
 
     # Content mode, where the label contains only plain text. The getValue()
     # result is coded to XML when painting.

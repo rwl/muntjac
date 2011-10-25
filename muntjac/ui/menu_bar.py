@@ -29,7 +29,7 @@ class MenuBar(AbstractComponent):
     MenuBars are represented as vertical menu.
     """
 
-    #CLIENT_WIDGET = ClientWidget(VMenuBar, LoadStyle.LAZY)
+    CLIENT_WIDGET = None #ClientWidget(VMenuBar, LoadStyle.LAZY)
 
     def __init__(self):
         """Constructs an empty, horizontal menu"""

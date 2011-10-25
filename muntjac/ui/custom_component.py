@@ -35,7 +35,7 @@ class CustomComponent(AbstractComponentContainer):
     @since 3.0
     """
 
-    #CLIENT_WIDGET = ClientWidget(VCustomComponent, LoadStyle.EAGER)
+    CLIENT_WIDGET = None #ClientWidget(VCustomComponent, LoadStyle.EAGER)
 
     def __init__(self, compositionRoot=None):
         """Constructs a new custom component.

@@ -32,7 +32,7 @@ class FormLayout(OrderedLayout):
     margin bottom are by default on.
     """
 
-    #CLIENT_WIDGET = ClientWidget(VFormLayout, LoadStyle.EAGER)
+    CLIENT_WIDGET = None #ClientWidget(VFormLayout, LoadStyle.EAGER)
 
     def __init__(self):
         super(FormLayout, self).__init__()

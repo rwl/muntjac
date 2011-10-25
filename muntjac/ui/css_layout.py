@@ -63,7 +63,7 @@ class CssLayout(AbstractLayout, ILayoutClickNotifier):
     @since 6.1 brought in from "FastLayouts" incubator project
     """
 
-    #CLIENT_WIDGET = ClientWidget(VCssLayout)
+    CLIENT_WIDGET = None #ClientWidget(VCssLayout)
 
     _CLICK_EVENT = EventId.LAYOUT_CLICK
 

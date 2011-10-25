@@ -45,7 +45,7 @@ class Panel(AbstractComponentContainer, IScrollable,
     @since 3.0
     """
 
-    #CLIENT_WIDGET = ClientWidget(VPanel, LoadStyle.EAGER)
+    CLIENT_WIDGET = None #ClientWidget(VPanel, LoadStyle.EAGER)
 
     _CLICK_EVENT = VPanel.CLICK_EVENT_IDENTIFIER
 

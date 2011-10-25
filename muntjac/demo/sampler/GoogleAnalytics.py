@@ -4,6 +4,8 @@ from muntjac.ui.abstract_component import AbstractComponent
 
 class GoogleAnalytics(AbstractComponent):
 
+    CLIENT_WIDGET = None #ClientWidget(VGoogleAnalytics)
+
     def __init__(self, trackerId, domainName=None):
         super(GoogleAnalytics, self).__init__()
 

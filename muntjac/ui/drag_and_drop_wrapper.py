@@ -36,7 +36,7 @@ from muntjac.terminal.gwt.client.ui.dd.vertical_drop_location import \
 
 class DragAndDropWrapper(CustomComponent, IDropTarget, IDragSource):
 
-    #CLIENT_WIDGET = ClientWidget(VDragAndDropWrapper, LoadStyle.EAGER)
+    CLIENT_WIDGET = None #ClientWidget(VDragAndDropWrapper, LoadStyle.EAGER)
 
     def __init__(self, root):
         """Wraps given component in a {@link DragAndDropWrapper}.

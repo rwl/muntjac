@@ -42,7 +42,7 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
     @since 3.0
     """
 
-    #CLIENT_WIDGET = ClientWidget(VFilterSelect, LoadStyle.LAZY)
+    CLIENT_WIDGET = None #ClientWidget(VFilterSelect, LoadStyle.LAZY)
 
     def __init__(self, *args):
         # Holds value of property pageLength. 0 disables paging.

@@ -66,7 +66,7 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
     @since 3.0
     """
 
-    #CLIENT_WIDGET = ClientWidget(VTree, LoadStyle.EAGER)
+    CLIENT_WIDGET = None #ClientWidget(VTree, LoadStyle.EAGER)
 
     def __init__(self, caption=None, dataSource=None):
         """Creates a new tree with caption and connect it to a IContainer.
@@ -448,7 +448,7 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
             ids = self.rootItemIds()
 
         if ids is not None:
-            iteratorStack.append(ids)
+            iteratorStack.append( iter(ids) )
 
         # Body actions - Actions which has the target null and can be invoked
         # by right clicking on the Tree body
@@ -470,9 +470,8 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
         while len(iteratorStack) > 0:
 
             # Gets the iterator for current tree level
-            i = iteratorStack[-1]
+            i = iteratorStack[-1]  # peek
 
-            # If the level is finished, back to previous tree level
             try:
                 # Adds the item on current level
                 itemId = i.next()
@@ -528,12 +527,13 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
                 if (self.isExpanded(itemId)
                         and self.hasChildren(itemId)
                         and self.areChildrenAllowed(itemId)):
-                    iteratorStack.append(self.getChildren(itemId))
+                    iteratorStack.append( iter(self.getChildren(itemId)) )
                 elif isNode:
                     target.endTag('node')
                 else:
                     target.endTag('leaf')
 
+            # If the level is finished, back to previous tree level
             except StopIteration:
                 # Removes used iterator from the stack
                 iteratorStack.pop()
@@ -572,6 +572,7 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
 
             # New items
             target.addVariable(self, 'newitem', list())
+
             if self._dropHandler is not None:
                 self._dropHandler.getAcceptCriterion().paint(target)
 

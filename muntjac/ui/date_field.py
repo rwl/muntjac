@@ -50,7 +50,7 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
     @since 3.0
     """
 
-    #CLIENT_WIDGET = ClientWidget(VPopupCalendar, LoadStyle.EAGER)
+    CLIENT_WIDGET = None #ClientWidget(VPopupCalendar, LoadStyle.EAGER)
 
     # Resolution identifier: milliseconds.
     RESOLUTION_MSEC = 0

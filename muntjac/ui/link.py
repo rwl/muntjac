@@ -27,7 +27,7 @@ class Link(AbstractComponent):
     @since 3.0
     """
 
-    #CLIENT_WIDGET = ClientWidget(VLink, LoadStyle.EAGER)
+    CLIENT_WIDGET = None #ClientWidget(VLink, LoadStyle.EAGER)
 
     # Target window border type constant: No window border
     TARGET_BORDER_NONE = Window.BORDER_NONE

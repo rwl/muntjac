@@ -30,7 +30,7 @@ class AbsoluteLayout(AbstractLayout, ILayoutClickNotifier):
     absolute positioning.
     """
 
-    #CLIENT_WIDGET = ClientWidget(VAbsoluteLayout)
+    CLIENT_WIDGET = None #ClientWidget(VAbsoluteLayout)
 
     _CLICK_EVENT = EventId.LAYOUT_CLICK
 

@@ -31,7 +31,7 @@ class SplitPanel(AbstractSplitPanel):
                 {@link VerticalSplitPanel} instead.
     """
 
-    #CLIENT_WIDGET = ClientWidget(VSplitPanelHorizontal, LoadStyle.EAGER)
+    CLIENT_WIDGET = None #ClientWidget(VSplitPanelHorizontal, LoadStyle.EAGER)
 
     # Components are to be laid out vertically.
     ORIENTATION_VERTICAL = 0

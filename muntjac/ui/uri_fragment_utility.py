@@ -36,7 +36,7 @@ class UriFragmentUtility(AbstractComponent):
     bookmarking a program state and back button.
     """
 
-    #CLIENT_WIDGET = ClientWidget(VUriFragmentUtility, LoadStyle.EAGER)
+    CLIENT_WIDGET = None #ClientWidget(VUriFragmentUtility, LoadStyle.EAGER)
 
 
     def addListener(self, listener, iface):

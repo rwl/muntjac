@@ -78,7 +78,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     @since 3.0
     """
 
-    #CLIENT_WIDGET = ClientWidget(VScrollTable, LoadStyle.EAGER)
+    CLIENT_WIDGET = None #ClientWidget(VScrollTable, LoadStyle.EAGER)
 
     CELL_KEY = 0
     CELL_HEADER = 1

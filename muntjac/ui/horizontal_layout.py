@@ -29,7 +29,7 @@ class HorizontalLayout(AbstractOrderedLayout):
     @since 5.3
     """
 
-    #CLIENT_WIDGET = ClientWidget(VHorizontalLayout, LoadStyle.EAGER)
+    CLIENT_WIDGET = None #ClientWidget(VHorizontalLayout, LoadStyle.EAGER)
 
     def __init__(self):
         super(HorizontalLayout, self).__init__()

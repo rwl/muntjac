@@ -42,7 +42,7 @@ class CustomLayout(AbstractLayout):
     @since 3.0
     """
 
-    #CLIENT_WIDGET = ClientWidget(VCustomLayout, LoadStyle.EAGER)
+    CLIENT_WIDGET = None #ClientWidget(VCustomLayout, LoadStyle.EAGER)
 
     _BUFFER_SIZE = 10000
 

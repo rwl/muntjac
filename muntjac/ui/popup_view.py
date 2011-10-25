@@ -82,7 +82,7 @@ class PopupView(AbstractComponentContainer):
     @author Richard Lincoln
     """
 
-    #CLIENT_WIDGET = ClientWidget(VPopupView, LoadStyle.EAGER)
+    CLIENT_WIDGET = None #ClientWidget(VPopupView, LoadStyle.EAGER)
 
     def __init__(self, *args):
         """A simple way to create a PopupPanel. Note that the minimal

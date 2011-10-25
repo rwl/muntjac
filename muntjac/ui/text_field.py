@@ -37,7 +37,7 @@ class TextField(AbstractTextField):
     @since 3.0
     """
 
-    #CLIENT_WIDGET = ClientWidget(VTextField, LoadStyle.EAGER)
+    CLIENT_WIDGET = None #ClientWidget(VTextField, LoadStyle.EAGER)
 
     def __init__(self, *args):
         """Constructs an empty <code>TextField</code> with no caption.

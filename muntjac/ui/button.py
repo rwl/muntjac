@@ -62,7 +62,7 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
     @since 3.0
     """
 
-    #CLIENT_WIDGET = ClientWidget(VButton, LoadStyle.EAGER)
+    CLIENT_WIDGET = None #ClientWidget(VButton, LoadStyle.EAGER)
 
     def __init__(self, *args):
         """Creates a new push button. The value of the push button is false

@@ -82,7 +82,7 @@ class TabSheet(AbstractComponentContainer):
     @since 3.0
     """
 
-    #CLIENT_WIDGET = ClientWidget(VTabsheet, LoadStyle.EAGER)
+    CLIENT_WIDGET = None #ClientWidget(VTabsheet, LoadStyle.EAGER)
 
     def __init__(self):
         """Constructs a new Tabsheet. Tabsheet is immediate by default, and

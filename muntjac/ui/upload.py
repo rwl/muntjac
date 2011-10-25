@@ -155,7 +155,7 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
     @since 3.0
     """
 
-    #CLIENT_WIDGET = ClientWidget(VUpload, LoadStyle.LAZY)
+    CLIENT_WIDGET = None #ClientWidget(VUpload, LoadStyle.LAZY)
 
     def __init__(self, caption=None, uploadReceiver=None):
         """Creates a new instance of Upload.

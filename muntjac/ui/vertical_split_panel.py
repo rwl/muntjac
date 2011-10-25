@@ -34,7 +34,7 @@ class VerticalSplitPanel(AbstractSplitPanel):
     </pre>
     """
 
-    #CLIENT_WIDGET = ClientWidget(VSplitPanelVertical, LoadStyle.EAGER)
+    CLIENT_WIDGET = None #ClientWidget(VSplitPanelVertical, LoadStyle.EAGER)
 
     def __init__(self):
         super(VerticalSplitPanel, self).__init__()
