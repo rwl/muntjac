@@ -442,8 +442,8 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
             for curx in range(self._cols):
 
                 # Checks if current item is located at curx,cury
-                if (area is not None and area._row1 == cury
-                        and area._column1 == curx):
+                if (area is not None and (area._row1 == cury)
+                        and (area._column1 == curx)):
 
                     # First check if empty cell needs to be rendered
                     if emptyCells > 0:
@@ -487,7 +487,7 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
                     # Updates the cellUsed if rowspan needed
                     if rows > 1:
                         spannedx = curx
-                        for _ in range(1, self._cols):
+                        for _ in range(1, self._cols + 1):
                             cellUsed[int(spannedx)] = int((cury + rows) - 1)
                             spannedx += 1
 
@@ -500,7 +500,7 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
 
                         # Current column contains already an item,
                         # check if rowspan affects at current x,y position
-                        rowspanDepth = int( cellUsed[int(curx)] )
+                        rowspanDepth = int( cellUsed.get(int(curx)) )
 
                         if rowspanDepth >= cury:
 
@@ -533,7 +533,7 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
             # Checks if empty cell needs to be rendered
             if emptyCells > 0:
                 target.startTag('gc')
-                target.addAttribute('x', cols - emptyCells)
+                target.addAttribute('x', self._cols - emptyCells)
                 target.addAttribute('y', cury)
                 if emptyCells > 1:
                     target.addAttribute('w', emptyCells)
@@ -561,7 +561,7 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
 
 
     def getExpandRatioSum(self, ratioMap):
-        summ = 0
+        summ = 0.0
         for v in ratioMap.values():
             summ += v
         return summ

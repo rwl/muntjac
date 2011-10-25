@@ -116,7 +116,7 @@ class TabSheet(AbstractComponentContainer):
         self._closeHandler = None
 
         # expand horizontally by default
-        self.setWidth(100, self.UNITS_PERCENTAGE)
+        self.setWidth(100.0, self.UNITS_PERCENTAGE)
         self.setImmediate(True)
 
         self.setCloseHandler(InnerHandler())

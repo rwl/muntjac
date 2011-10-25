@@ -6,7 +6,7 @@ from muntjac.demo.sampler.SamplerApplication import SamplerApplication
 from muntjac.application import Application
 from muntjac.ui.window import Window
 
-from muntjac.demo.sampler.features.commons.TooltipsExample import TooltipsExample as Example
+from muntjac.demo.sampler.features.commons.PackageIconsExample import PackageIconsExample as Example
 
 
 class App(Application):
