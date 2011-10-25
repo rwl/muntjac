@@ -9,6 +9,7 @@ from muntjac.terminal.theme_resource import ThemeResource
 class PackageIconsExample(VerticalLayout):
 
     def __init__(self):
+        super(PackageIconsExample, self).__init__()
 
         self._icons = ['arrow-down.png', 'arrow-left.png', 'arrow-right.png',
             'arrow-up.png', 'attention.png', 'calendar.png', 'cancel.png',

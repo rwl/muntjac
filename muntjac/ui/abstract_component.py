@@ -623,7 +623,7 @@ class AbstractComponent(IComponent, IMethodEventSource):
         @return CSS height
         """
         if self.getHeightUnits() == self.UNITS_PIXELS:
-            return (str(self.getHeight())
+            return (str( int(self.getHeight()) )
                     + self.UNIT_SYMBOLS[self.getHeightUnits()])
         else:
             return (str(self.getHeight())
@@ -636,7 +636,7 @@ class AbstractComponent(IComponent, IMethodEventSource):
         @return CSS width
         """
         if self.getWidthUnits() == self.UNITS_PIXELS:
-            return (str(self.getWidth())
+            return (str( int(self.getWidth()) )
                     + self.UNIT_SYMBOLS[self.getWidthUnits()])
         else:
             return (str(self.getWidth())

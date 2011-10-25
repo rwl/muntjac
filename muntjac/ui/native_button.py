@@ -20,6 +20,8 @@ from muntjac.data.property import IProperty
 
 class NativeButton(Button):
 
+    CLIENT_WIDGET = None #ClientWidget(VNativeButton)
+
     def __init__(self, *args):
         """None
         ---

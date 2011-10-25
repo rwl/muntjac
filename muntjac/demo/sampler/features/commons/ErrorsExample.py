@@ -6,6 +6,8 @@ from muntjac.terminal.user_error import UserError
 class ErrorsExample(VerticalLayout):
 
     def __init__(self):
+        super(ErrorsExample, self).__init__()
+
         self.setSpacing(True)
 
         self.addComponent(Label('<h3>Errors in caption</h3>',

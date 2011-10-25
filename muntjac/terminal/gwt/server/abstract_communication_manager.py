@@ -605,7 +605,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                     if p in self._paintableIdMap:
                         del self._paintableIdMap[p]
                     if p in self._dirtyPaintables:
-                        del self._dirtyPaintables[p]
+                        self._dirtyPaintables.remove(p)
 
             paintables = self.getDirtyVisibleComponents(window)
 

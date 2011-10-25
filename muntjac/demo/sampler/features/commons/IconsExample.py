@@ -7,6 +7,8 @@ from muntjac.terminal.external_resource import ExternalResource
 class IconsExample(VerticalLayout):
 
     def __init__(self):
+        super(IconsExample, self).__init__()
+
         self.setSpacing(True)
 
         # Button w/ icon

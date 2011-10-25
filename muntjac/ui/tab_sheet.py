@@ -119,11 +119,6 @@ class TabSheet(AbstractComponentContainer):
         self.setWidth(100, self.UNITS_PERCENTAGE)
         self.setImmediate(True)
 
-        class InnerHandler(ICloseHandler):
-
-            def onTabClose(self, tabsheet, c):
-                tabsheet.removeComponent(c)
-
         self.setCloseHandler(InnerHandler())
 
 
@@ -343,8 +338,9 @@ class TabSheet(AbstractComponentContainer):
         while True:
             try:
                 component = i.next()
-                orphaned.remove(component)
-                tab = self._tabs[component]
+                if component in orphaned:
+                    orphaned.remove(component)
+                tab = self._tabs.get(component)
                 target.startTag('tab')
                 if not tab.isEnabled() and tab.isVisible():
                     target.addAttribute('disabled', True)
@@ -992,7 +988,7 @@ class TabSheetTabImpl(ITab):
         self._enabled = enabled
         if self._sheet.updateSelection():
             self._sheet.fireSelectedTabChange()
-        self.requestRepaint()
+        self._sheet.requestRepaint()
 
 
     def isVisible(self):
@@ -1002,7 +998,7 @@ class TabSheetTabImpl(ITab):
     def setVisible(self, visible):
         self._visible = visible
         if self._sheet.updateSelection():
-            self.fireSelectedTabChange()
+            self._sheet.fireSelectedTabChange()
         self._sheet.requestRepaint()
 
 
@@ -1034,7 +1030,7 @@ class TabSheetTabImpl(ITab):
 
     def setComponentError(self, componentError):
         self._componentError = componentError
-        self.requestRepaint()
+        self._sheet.requestRepaint()
 
 
     def getComponent(self):
@@ -1063,3 +1059,9 @@ class ICloseHandler(object):
                    button was clicked
         """
         raise NotImplementedError
+
+
+class InnerHandler(ICloseHandler):
+
+    def onTabClose(self, tabsheet, c):
+        tabsheet.removeComponent(c)

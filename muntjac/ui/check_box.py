@@ -73,6 +73,7 @@ class CheckBox(Button):
         """
         nargs = len(args)
         if nargs == 0:
+            super(CheckBox, self).__init__()
             self.setSwitchMode(True)
         elif nargs == 1:
             caption, = args
@@ -100,7 +101,7 @@ class CheckBox(Button):
     def setSwitchMode(self, switchMode):
         warn('CheckBox is always in switch mode', DeprecationWarning)
 
-        if self.switchMode and not switchMode:
+        if self._switchMode and not switchMode:
             raise NotImplementedError, ('CheckBox is always in switch '
                     'mode (consider using a Button)')
 

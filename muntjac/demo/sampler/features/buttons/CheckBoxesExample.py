@@ -1,22 +1,25 @@
 
-from muntjac.api import VerticalLayout, button, CheckBox
+from muntjac.api import VerticalLayout, CheckBox
 from muntjac.terminal.theme_resource import ThemeResource
+from muntjac.ui.button import IClickListener
 
 
-class CheckBoxesExample(VerticalLayout, button.IClickListener):
+class CheckBoxesExample(VerticalLayout, IClickListener):
 
     _CAPTION = 'Allow HTML'
     _TOOLTIP = 'Allow/disallow HTML in comments'
     _ICON = ThemeResource('../sampler/icons/page_code.gif')
 
     def __init__(self):
+        super(CheckBoxesExample, self).__init__()
+
         self.setSpacing(True)
 
         # Button w/ text and tooltip
         cb = CheckBox(self._CAPTION)
         cb.setDescription(self._TOOLTIP)
         cb.setImmediate(True)
-        cb.addListener(self)  # react to clicks
+        cb.addListener(self, IClickListener)  # react to clicks
         self.addComponent(cb)
 
         # Button w/ text, icon and tooltip
@@ -24,7 +27,7 @@ class CheckBoxesExample(VerticalLayout, button.IClickListener):
         cb.setDescription(self._TOOLTIP)
         cb.setIcon(self._ICON)
         cb.setImmediate(True)
-        cb.addListener(self)  # react to clicks
+        cb.addListener(self, IClickListener)  # react to clicks
         self.addComponent(cb)
 
         # Button w/ icon and tooltip
@@ -32,7 +35,7 @@ class CheckBoxesExample(VerticalLayout, button.IClickListener):
         cb.setDescription(self._TOOLTIP)
         cb.setIcon(self._ICON)
         cb.setImmediate(True)
-        cb.addListener(self)  # react to clicks
+        cb.addListener(self, IClickListener)  # react to clicks
         self.addComponent(cb)
 
     # Shows a notification when a checkbox is clicked.

@@ -2,8 +2,9 @@
 from muntjac.terminal.theme_resource import ThemeResource
 
 from muntjac.api import \
-    (VerticalLayout, HorizontalLayout, tab_sheet, button, Label,
-     Accordion, Button)
+    VerticalLayout, HorizontalLayout, Label, Accordion, Button
+
+from muntjac.ui import tab_sheet, button
 
 
 class AccordionDisabledExample(VerticalLayout,
@@ -14,6 +15,8 @@ class AccordionDisabledExample(VerticalLayout,
     _icon3 = ThemeResource('../sampler/icons/icon_info.gif')
 
     def __init__(self):
+        super(AccordionDisabledExample, self).__init__()
+
         self.setSpacing(True)
 
         self._l1 = Label('There are no previously saved actions.')
@@ -26,12 +29,12 @@ class AccordionDisabledExample(VerticalLayout,
         self._t1 = self._a.addTab(self._l1, 'Saved actions', self._icon1)
         self._t2 = self._a.addTab(self._l2, 'Notes', self._icon2)
         self._t3 = self._a.addTab(self._l3, 'Issues', self._icon3)
-        self._a.addListener(self)
+        self._a.addListener(self, tab_sheet.ISelectedTabChangeListener)
 
         self._b1 = Button('Disable \'Notes\' tab')
         self._b2 = Button('Hide \'Issues\' tab')
-        self._b1.addListener(self)
-        self._b2.addListener(self)
+        self._b1.addListener(self, button.IClickListener)
+        self._b2.addListener(self, button.IClickListener)
 
         hl = HorizontalLayout()
         hl.setSpacing(True)

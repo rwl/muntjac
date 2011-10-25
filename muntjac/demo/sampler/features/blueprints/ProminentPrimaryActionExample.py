@@ -1,13 +1,16 @@
 
 from muntjac.api import \
-    (VerticalLayout, HorizontalLayout, Button, button, Alignment)
+    VerticalLayout, HorizontalLayout, Button, Alignment
 
 from muntjac.ui.themes import BaseTheme
+from muntjac.ui.button import IClickListener
 
 
-class ProminentPrimaryActionExample(VerticalLayout, button.IClickListener):
+class ProminentPrimaryActionExample(VerticalLayout, IClickListener):
 
     def __init__(self):
+        super(ProminentPrimaryActionExample, self).__init__()
+
         self.setSpacing(True)
 
         # Cancel / Save

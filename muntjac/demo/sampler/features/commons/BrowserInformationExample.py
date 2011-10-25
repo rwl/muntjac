@@ -5,6 +5,8 @@ from muntjac.api import VerticalLayout, Label
 class BrowserInformationExample(VerticalLayout):
 
     def __init__(self):
+        super(BrowserInformationExample, self).__init__()
+
         # We use the attach method in this example because getApplication()
         # will return null until the example is attached to the application. In
         # an application you would typically have an application reference to
@@ -14,8 +16,7 @@ class BrowserInformationExample(VerticalLayout):
 
     def attach(self):
         if self._populated:
-            # Only populate the layout once
-            return
+            return  # Only populate the layout once
 
         # Find the context we are running in and get the browser information
         # from that.
@@ -32,10 +33,12 @@ class BrowserInformationExample(VerticalLayout):
         browser = Label("You are running <b>"
                 + browserText + "</b>.", Label.CONTENT_XHTML)
         screenSize = Label("Your screen resolution is <b>"
-                + webBrowser.getScreenWidth() + "x"
-                + webBrowser.getScreenHeight() + "</b>.", Label.CONTENT_XHTML)
+                + str(webBrowser.getScreenWidth()) + "x"
+                + str(webBrowser.getScreenHeight()) + "</b>.",
+                Label.CONTENT_XHTML)
         locale = Label("Your browser is set to primarily use the <b>"
-                + webBrowser.getLocale() + "</b> locale.", Label.CONTENT_XHTML)
+                + str(webBrowser.getLocale()) + "</b> locale.",
+                Label.CONTENT_XHTML)
 
         # FIXME: timezones
 #        timeZones = NativeSelect()
@@ -97,18 +100,19 @@ class BrowserInformationExample(VerticalLayout):
 
     def getBrowserAndVersion(self, webBrowser):
         if webBrowser.isChrome():
-            return ('Chrome ' + webBrowser.getBrowserMajorVersion()
-                    + '.' + webBrowser.getBrowserMinorVersion())
+            return ('Chrome ' + str(webBrowser.getBrowserMajorVersion())
+                    + '.' + str(webBrowser.getBrowserMinorVersion()))
         elif webBrowser.isOpera():
-            return ('Opera ' + webBrowser.getBrowserMajorVersion()
-                    + '.' + webBrowser.getBrowserMinorVersion())
+            return ('Opera ' + str(webBrowser.getBrowserMajorVersion())
+                    + '.' + str(webBrowser.getBrowserMinorVersion()))
         elif webBrowser.isFirefox():
-            return ('Firefox ' + webBrowser.getBrowserMajorVersion()
-                    + '.' + webBrowser.getBrowserMinorVersion())
+            return ('Firefox ' + str(webBrowser.getBrowserMajorVersion())
+                    + '.' + str(webBrowser.getBrowserMinorVersion()))
         elif webBrowser.isSafari():
-            return ('Safari ' + webBrowser.getBrowserMajorVersion()
-                    + '.' + webBrowser.getBrowserMinorVersion())
+            return ('Safari ' + str(webBrowser.getBrowserMajorVersion())
+                    + '.' + str(webBrowser.getBrowserMinorVersion()))
         elif webBrowser.isIE():
-            return 'Internet Explorer ' + webBrowser.getBrowserMajorVersion()
+            return ('Internet Explorer '
+                    + str(webBrowser.getBrowserMajorVersion()))
         else:
             return 'an unknown browser'

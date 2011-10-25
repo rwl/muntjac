@@ -1,6 +1,7 @@
 
-from muntjac.api import VerticalLayout, Button, RichTextArea, button
+from muntjac.api import VerticalLayout, Button, RichTextArea
 from muntjac.ui.themes import BaseTheme
+from muntjac.ui.button import IClickListener
 
 
 class TooltipsExample(VerticalLayout):
@@ -9,6 +10,8 @@ class TooltipsExample(VerticalLayout):
     _applyTxt = 'Apply'
 
     def __init__(self):
+        super(TooltipsExample, self).__init__()
+
         self.setSpacing(True)
 
         # Plain tooltip (description)
@@ -40,21 +43,22 @@ class TooltipsExample(VerticalLayout):
         rte.setWidth('100%')
         self.addComponent(rte)
 
-        class EditListener(button.IClickListener):
-
-            def __init__(self, component, rte):
-                self._component = component
-                self._rte = rte
-
-            def buttonClick(self, event):
-                if self._rte.isVisible():
-                    self._rte.setVisible(False)
-                    event.getButton().setDescription(self.rte.getValue())
-                    event.getButton().setCaption(self._component._editTxt)
-                else:
-                    self.rte.setVisible(True)
-                    event.getButton().setCaption(self._component._applyTxt)
-
         aply = Button(self._editTxt, EditListener(self, rte))
         aply.setDescription(rte.getValue())
         self.addComponent(aply)
+
+
+class EditListener(IClickListener):
+
+    def __init__(self, component, rte):
+        self._component = component
+        self._rte = rte
+
+    def buttonClick(self, event):
+        if self._rte.isVisible():
+            self._rte.setVisible(False)
+            event.getButton().setDescription(self._rte.getValue())
+            event.getButton().setCaption(self._component._editTxt)
+        else:
+            self._rte.setVisible(True)
+            event.getButton().setCaption(self._component._applyTxt)

@@ -109,6 +109,7 @@ class Panel(AbstractComponentContainer, IScrollable,
         elif nargs == 1:
             if isinstance(args[0], basestring):
                 caption, = args
+                Panel.__init__(self, caption, None)
                 self.setCaption(caption)
             else:
                 content, = args
