@@ -7,6 +7,7 @@ class LayoutMarginExample(GridLayout, IClickListener):
 
     def __init__(self):
         super(LayoutMarginExample, self).__init__(3, 3)
+
         self.setWidth('100%')
         self.setSpacing(True)
 
@@ -51,8 +52,8 @@ class LayoutMarginExample(GridLayout, IClickListener):
 
     def buttonClick(self, event):
         self._marginLayout.setMargin(
-            bool(self._topMargin),
-            bool(self._rightMargin),
-            bool(self._bottomMargin),
-            bool(self._leftMargin)
+            self._topMargin.booleanValue(),
+            self._rightMargin.booleanValue(),
+            self._bottomMargin.booleanValue(),
+            self._leftMargin.booleanValue()
         )

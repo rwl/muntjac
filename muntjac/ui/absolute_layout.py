@@ -36,7 +36,7 @@ class AbsoluteLayout(AbstractLayout, ILayoutClickNotifier):
 
     def __init__(self):
         """Creates an AbsoluteLayout with full size."""
-        super(AbstractLayout, self).__init__()
+        super(AbsoluteLayout, self).__init__()
 
         # The components in the layout
         self._components = set()

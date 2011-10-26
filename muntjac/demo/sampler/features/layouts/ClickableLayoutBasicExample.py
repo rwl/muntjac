@@ -9,6 +9,8 @@ from muntjac.util import fullname
 class ClickableLayoutBasicExample(VerticalLayout):
 
     def __init__(self):
+        super(ClickableLayoutBasicExample, self).__init__()
+
         self.setMargin(True)
         self.setSpacing(True)
 
@@ -56,35 +58,9 @@ class ClickableLayoutBasicExample(VerticalLayout):
         layout.addComponent(button)
 
         # Listen for layout click events
-        class LayoutListener(ILayoutClickListener):
-
-            def __init__(self, c, button, clickX, clickY,
-                        clickRelativeX, clickRelativeY):
-                self._button = button
-                self._c = c
-                self._clickX = clickX
-                self._clickY = clickY
-                self._clickRelativeX = clickRelativeX
-                self._clickRelativeY = clickRelativeY
-
-
-            def layoutClick(self, event):
-                # Update components values
-                self._clickX.setValue('X-coordinate: ' + event.getClientX())
-                self._clickY.setValue('Y-coordinate: ' + event.getClientY())
-
-                self._clickRelativeX.setValue('X-coordinate relative to '
-                        'the layout: ' + event.getRelativeX())
-
-                self._clickRelativeY.setValue('Y-coordinate relative to '
-                        'the layout: ' + event.getRelativeY())
-
-                self._button.setValue('Mouse button: ' + event.getButtonName())
-                # Show a notification
-                self._c.getWindow().showNotification('Layout clicked!')
-
-        layout.addListener( LayoutListener(self, button,
-                clickX, clickY, clickRelativeX, clickRelativeY) )
+        layout.addListener(LayoutListener(self, button,
+                clickX, clickY, clickRelativeX, clickRelativeY),
+                ILayoutClickListener)
         return layout
 
 
@@ -108,24 +84,7 @@ class ClickableLayoutBasicExample(VerticalLayout):
         layout.addComponent(select)
 
         # Listen for layout click event
-        class GridListener(ILayoutClickListener):
-
-            def __init__(self, c):
-                self._c = c
-
-            def layoutClick(self, event):
-                # Get the child component which was clicked
-                child = event.getChildComponent()
-                if child is None:
-                    # Not over any child component
-                    self._c.getWindow().showNotification('The click '
-                            'was not over any component.')
-                else:
-                    # Over a child component
-                    self._c.getWindow().showNotification(
-                            'The click was over a ' + fullname(child))
-
-        layout.addListener( GridListener(self) )
+        layout.addListener(GridListener(self), ILayoutClickListener)
         return layout
 
 
@@ -145,26 +104,73 @@ class ClickableLayoutBasicExample(VerticalLayout):
                 Label.CONTENT_RAW))
 
         # Listen for layout click events
-        class VerticalListener(ILayoutClickListener):
-
-            def __init__(self, c):
-                self._c = c
-
-            def layoutClick(self, event):
-                message = ""
-                if event.isCtrlKey():
-                    message += 'CTRL+'
-                if event.isAltKey():
-                    message += 'ALT+'
-                if event.isShiftKey():
-                    message += 'SHIFT+'
-                if event.isMetaKey():
-                    message += 'META+'
-                if event.isDoubleClick():
-                    message += 'DOUBLE CLICK'
-                else:
-                    message += 'CLICK'
-                self._c.getWindow().showNotification(message)
-
-        layout.addListener( VerticalListener(self) )
+        layout.addListener(VerticalListener(self), ILayoutClickListener)
         return layout
+
+
+class LayoutListener(ILayoutClickListener):
+
+    def __init__(self, c, button, clickX, clickY,
+                clickRelativeX, clickRelativeY):
+        self._button = button
+        self._c = c
+        self._clickX = clickX
+        self._clickY = clickY
+        self._clickRelativeX = clickRelativeX
+        self._clickRelativeY = clickRelativeY
+
+
+    def layoutClick(self, event):
+        # Update components values
+        self._clickX.setValue('X-coordinate: %d' % event.getClientX())
+        self._clickY.setValue('Y-coordinate: %d' % event.getClientY())
+
+        self._clickRelativeX.setValue('X-coordinate relative to '
+                'the layout: %d' % event.getRelativeX())
+
+        self._clickRelativeY.setValue('Y-coordinate relative to '
+                'the layout: %d' % event.getRelativeY())
+
+        self._button.setValue('Mouse button: ' + event.getButtonName())
+        # Show a notification
+        self._c.getWindow().showNotification('Layout clicked!')
+
+
+class GridListener(ILayoutClickListener):
+
+    def __init__(self, c):
+        self._c = c
+
+    def layoutClick(self, event):
+        # Get the child component which was clicked
+        child = event.getChildComponent()
+        if child is None:
+            # Not over any child component
+            self._c.getWindow().showNotification('The click '
+                    'was not over any component.')
+        else:
+            # Over a child component
+            self._c.getWindow().showNotification(
+                    'The click was over a ' + fullname(child))
+
+
+class VerticalListener(ILayoutClickListener):
+
+    def __init__(self, c):
+        self._c = c
+
+    def layoutClick(self, event):
+        message = ""
+        if event.isCtrlKey():
+            message += 'CTRL+'
+        if event.isAltKey():
+            message += 'ALT+'
+        if event.isShiftKey():
+            message += 'SHIFT+'
+        if event.isMetaKey():
+            message += 'META+'
+        if event.isDoubleClick():
+            message += 'DOUBLE CLICK'
+        else:
+            message += 'CLICK'
+        self._c.getWindow().showNotification(message)

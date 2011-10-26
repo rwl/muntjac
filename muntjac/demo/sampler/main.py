@@ -4,20 +4,15 @@ from muntjac.util import run_app
 from muntjac.application import Application
 from muntjac.ui.window import Window
 
-from muntjac.demo.sampler.features.form.LoginFormExample \
-    import LoginFormExample as Example
+from muntjac.demo.sampler.features.layouts.LayoutMarginExample \
+    import LayoutMarginExample as Example
 
 
 class App(Application):
 
-#    def __init__(self):
-#        super(App, self).__init__()
-#
-#        self._currentApplicationTheme = 'sampler-reindeer'
-
-
     def init(self):
         main = Window('Muntjac')
+#        main.setTheme('sampler-reindeer')
         self.setMainWindow(main)
 
         main.addComponent(Example())

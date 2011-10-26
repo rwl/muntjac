@@ -5,6 +5,8 @@ from muntjac.api import AbsoluteLayout, Button
 class AbsoluteLayoutBasicExample(AbsoluteLayout):
 
     def __init__(self):
+        super(AbsoluteLayoutBasicExample, self).__init__()
+
         self.setMargin(True)
 
         # Add a border to the layout with CSS to indicate its boundaries

@@ -5,6 +5,8 @@ from muntjac.api import VerticalLayout, Panel, Label, CssLayout
 class CssLayoutsExample(VerticalLayout):
 
     def __init__(self):
+        super(CssLayoutsExample, self).__init__()
+
         self.setMargin(True)
 
         # Note, that this code example may not be self explanatory without
@@ -27,22 +29,7 @@ class CssLayoutsExample(VerticalLayout):
         bottomCenter.setSizeUndefined()  # disable 100% default width
         bottomCenter.setStyleName('footer')
 
-
-        class cssLayout(CssLayout):
-
-            def __init__(self):
-                self._brickCounter = 0
-
-            def getCss(self, c):
-                # colorize every third rendered brick
-                if isinstance(c, Brick):
-                    self._brickCounter += 1
-                    if self._brickCounter % 3 == 0:
-                        # make every third brick colored and italic
-                        return 'color: #ff6611; font-style: italic;'
-                return None
-
-
+        cssLayout = MyCssLayout()
         cssLayout.setWidth('100%')
 
         cssLayout.addComponent(panel)
@@ -53,6 +40,22 @@ class CssLayoutsExample(VerticalLayout):
         cssLayout.addComponent(bottomCenter)
 
         self.addComponent(cssLayout)
+
+
+class MyCssLayout(CssLayout):
+
+    def __init__(self):
+        super(MyCssLayout, self).__init__()
+        self._brickCounter = 0
+
+    def getCss(self, c):
+        # colorize every third rendered brick
+        if isinstance(c, Brick):
+            self._brickCounter += 1
+            if self._brickCounter % 3 == 0:
+                # make every third brick colored and italic
+                return 'color: #ff6611; font-style: italic;'
+        return None
 
 
 class Brick(Label):

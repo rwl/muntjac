@@ -356,6 +356,6 @@ class AbstractApplicationServletWrapper(ICallback):
 
 
     def getThemeResourceAsStream(self, themeName, resource):
-        return self.getResourceAsStream(self._servlet,
+        return self._servlet.getResourceAsStream(
                 ('/' + AbstractApplicationServlet.THEME_DIRECTORY_PATH
                 + themeName + '/' + resource))

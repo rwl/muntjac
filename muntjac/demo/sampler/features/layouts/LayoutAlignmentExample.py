@@ -6,6 +6,8 @@ from muntjac.terminal.gwt.client.ui.alignment_info import Bits
 class LayoutAlignmentExample(VerticalLayout):
 
     def __init__(self):
+        super(LayoutAlignmentExample, self).__init__()
+
         # Create a grid layout
         grid = GridLayout(1, 9)
         grid.setSpacing(True)

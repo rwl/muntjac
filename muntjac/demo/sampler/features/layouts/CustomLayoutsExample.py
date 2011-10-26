@@ -6,6 +6,8 @@ from muntjac.api import VerticalLayout, TextField, PasswordField, Button
 class CustomLayoutsExample(VerticalLayout):
 
     def __init__(self):
+        super(CustomLayoutsExample, self).__init__()
+
         self.setMargin(True)
 
         # Create the custom layout and set it as a component in

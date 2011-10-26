@@ -6,6 +6,8 @@ from muntjac.terminal.sizeable import ISizeable
 class GridLayoutBasicExample(VerticalLayout):
 
     def __init__(self):
+        super(GridLayoutBasicExample, self).__init__()
+
         # Create a grid layout
         grid = GridLayout(3, 3)
         grid.setSpacing(True)

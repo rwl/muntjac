@@ -2,7 +2,7 @@
 import locale
 from urlparse import urlparse
 
-from os.path import join, dirname
+from os.path import join, dirname, normpath
 
 from muntjac.util import sys_path_install
 
@@ -130,7 +130,8 @@ class ContextualHttpServlet(HTTPServlet):
 
     def getResourceAsStream(self, path):
         # FIXME:
-        stream = open(join(self._contextRoot, path.lstrip('/')), 'rb')
+        path = join(self._contextRoot, path.lstrip('/'))
+        stream = open(normpath(path), 'rb')
         return stream
 
 

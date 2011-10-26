@@ -5,6 +5,8 @@ from muntjac.api import VerticalLayout, HorizontalLayout, Button
 class ExpandingComponentExample(VerticalLayout):
 
     def __init__(self):
+        super(ExpandingComponentExample, self).__init__()
+
         self.setSpacing(True)
 
         # Basic scenario: single expanded component

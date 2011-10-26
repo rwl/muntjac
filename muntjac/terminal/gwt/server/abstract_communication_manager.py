@@ -745,9 +745,10 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         for resource in paintTarget.getUsedResources():
             is_ = None
             try:
+
                 is_ = callback.getThemeResourceAsStream(self.getTheme(window),
-                                                        resource)
-            except Exception, e:
+                        resource)
+            except IOError, e:
                 # FIXME: Handle exception
                 logger.info('Failed to get theme resource stream.')
 
@@ -757,7 +758,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                 resourceIndex += 1  # post increment
                 layout = str()
                 try:
-                    layout = is_.getvalue()
+                    layout = is_.read()
                 except IOError, e:
                     # FIXME: Handle exception
                     logger.info('Resource transfer failed: ' + str(e))

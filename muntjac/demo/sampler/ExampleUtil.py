@@ -104,7 +104,7 @@ class ExampleUtil(object):
             "vestibulum feugiat, lorem nibh placerat urna, eget laoreet diam "
             "tortor at lorem. Suspendisse imperdiet consectetur dolor. ")
 
-    _iso3166 = ["AFGHANISTAN", "AF",
+    iso3166 = ["AFGHANISTAN", "AF",
             "ALAND ISLANDS", "AX", "ALBANIA", "AL", "ALGERIA", "DZ",
             "AMERICAN SAMOA", "AS", "ANDORRA", "AD", "ANGOLA", "AO",
             "ANGUILLA", "AI", "ANTARCTICA", "AQ", "ANTIGUA AND BARBUDA", "AG",
@@ -296,10 +296,10 @@ class ExampleUtil(object):
             name = cls.iso3166[i]
             i += 1
             idd = cls.iso3166[i]
-            item = container.addItem(id)
+            item = container.addItem(idd)
             item.getItemProperty(cls.iso3166_PROPERTY_NAME).setValue(name)
             item.getItemProperty(cls.iso3166_PROPERTY_SHORT).setValue(idd)
-            v = ThemeResource('../sampler/flags/' + id.lower() + '.gif')
+            v = ThemeResource('../sampler/flags/' + idd.lower() + '.gif')
             item.getItemProperty(cls.iso3166_PROPERTY_FLAG).setValue(v)
             i += 1
         container.sort([cls.iso3166_PROPERTY_NAME], [True])

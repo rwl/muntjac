@@ -89,6 +89,7 @@ class TextField(AbstractTextField):
             self.setValue('')
         elif nargs == 1:
             if isinstance(args[0], IProperty):
+                super(TextField, self).__init__()
                 dataSource, = args
                 self.setPropertyDataSource(dataSource)
             else:
@@ -101,6 +102,7 @@ class TextField(AbstractTextField):
                 TextField.__init__(self, dataSource)
                 self.setCaption(caption)
             else:
+                super(TextField, self).__init__()
                 caption, value = args
                 self.setValue(value)
                 self.setCaption(caption)

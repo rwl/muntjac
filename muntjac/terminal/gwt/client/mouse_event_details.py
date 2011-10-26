@@ -60,15 +60,18 @@ class MouseEventDetails(object):
                         relativeToElement)
 
 
-    def toString(self):
+    def __str__(self):
         return self.serialize()
 
 
     def serialize(self):
         return (self._button + self._DELIM + self._clientX + self._DELIM
-                + self._clientY + self._DELIM + self._altKey + self._DELIM
-                + self._ctrlKey + self._DELIM + self._metaKey + self._DELIM
-                + self._shiftKey + self._DELIM + self._type + self._DELIM
+                + self._clientY + self._DELIM
+                + str(self._altKey).lower() + self._DELIM
+                + str(self._ctrlKey).lower() + self._DELIM
+                + str(self._metaKey).lower() + self._DELIM
+                + str(self._shiftKey).lower() + self._DELIM
+                + self._type + self._DELIM
                 + self._relativeX + self._DELIM + self._relativeY)
 
 
@@ -79,10 +82,10 @@ class MouseEventDetails(object):
         instance._button = int(fields[0])
         instance._clientX = int(fields[1])
         instance._clientY = int(fields[2])
-        instance._altKey = bool(fields[3])
-        instance._ctrlKey = bool(fields[4])
-        instance._metaKey = bool(fields[5])
-        instance._shiftKey = bool(fields[6])
+        instance._altKey = (fields[3].lower() == 'true')
+        instance._ctrlKey = (fields[4].lower() == 'true')
+        instance._metaKey = (fields[5].lower() == 'true')
+        instance._shiftKey = (fields[6].lower() == 'true')
         instance._type = int(fields[7])
         instance._relativeX = int(fields[8])
         instance._relativeY = int(fields[9])
@@ -103,18 +106,18 @@ class MouseEventDetails(object):
         if clientX is None:
             return self._relativeX
         else:
-            return clientX - target.getAbsoluteLeft() \
-                    + target.getScrollLeft() \
-                    + target.getOwnerDocument().getScrollLeft()
+            return (clientX - target.getAbsoluteLeft()
+                    + target.getScrollLeft()
+                    + target.getOwnerDocument().getScrollLeft())
 
 
     def getRelativeY(self, clientY=None, target=None):
         if clientY is None:
             return self._relativeY
         else:
-            return clientY - target.getAbsoluteTop() \
-                    + target.getScrollTop() \
-                    + target.getOwnerDocument().getScrollTop()
+            return (clientY - target.getAbsoluteTop()
+                    + target.getScrollTop()
+                    + target.getOwnerDocument().getScrollTop())
 
 
     def getType(self):
@@ -122,7 +125,7 @@ class MouseEventDetails(object):
 
 
     def isDoubleClick(self):
-        return self._type == self.Event.ONDBLCLICK
+        return self._type == 2 #com.google.gwt.user.client.Event.ONDBLCLICK
 
 
     def getButton(self):

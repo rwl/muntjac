@@ -4,8 +4,10 @@ from muntjac.api import HorizontalLayout, TextField, Label, Alignment
 
 class HorizontalLayoutBasicExample(HorizontalLayout):
 
+    # this is a HorizontalLayout
+
     def __init__(self):
-        # this is a HorizontalLayout
+        super(HorizontalLayoutBasicExample, self).__init__()
 
         # First TextField
         tf = TextField()

@@ -2,10 +2,11 @@
 from muntjac.ui.themes import Reindeer
 
 from muntjac.api import \
-    (VerticalLayout, Button, button, Label, Window,
-     HorizontalLayout, Panel, Tree, Table)
+    (VerticalLayout, Button, Label, Window, HorizontalLayout,
+     Panel, Tree, Table)
 
 from muntjac.ui.window import ICloseListener
+from muntjac.ui.button import IClickListener
 
 from muntjac.demo.sampler.ExampleUtil import ExampleUtil
 
@@ -13,6 +14,8 @@ from muntjac.demo.sampler.ExampleUtil import ExampleUtil
 class ApplicationLayoutExample(VerticalLayout):
 
     def __init__(self):
+        super(ApplicationLayoutExample, self).__init__()
+
         self.setMargin(True)
 
         self._win = ApplicationLayoutWindow()
@@ -23,39 +26,40 @@ class ApplicationLayoutExample(VerticalLayout):
         self._win.setHeight('70%')
         self._win.center()
 
-        # Allow opening window again when closed
-        class WindowCloseListener(ICloseListener):
-
-            def __init__(self, c):
-                self._c = c
-
-            def windowClose(self, e):
-                self._c._open.setEnabled(True)
-
-
-        self._win.addListener( WindowCloseListener(self) )
+        self._win.addListener(WindowCloseListener(self), ICloseListener)
         # 'open sample' button
         self.addComponent(self._open)
 
-
-        class ClickListener(button.IClickListener):
-
-            def __init__(self, c):
-                self._c = c
-
-            def buttonClick(self, event):
-                self.getWindow().addWindow(self._c._win)
-                self._c._open.setEnabled(False)
-
-
-        self._open.addListener( ClickListener(self) )
+        self._open.addListener(ClickListener(self), IClickListener)
         self.addComponent(Label('Don\'t worry: the content of the window '
                 'is not supposed to make sense...'))
+
+
+class WindowCloseListener(ICloseListener):
+
+    def __init__(self, c):
+        self._c = c
+
+    def windowClose(self, e):
+        # Allow opening window again when closed
+        self._c._open.setEnabled(True)
+
+
+class ClickListener(IClickListener):
+
+    def __init__(self, c):
+        self._c = c
+
+    def buttonClick(self, event):
+        self._c.getWindow().addWindow(self._c._win)
+        self._c._open.setEnabled(False)
 
 
 class ApplicationLayoutWindow(Window):
 
     def __init__(self):
+        super(ApplicationLayoutWindow, self).__init__()
+
         # Our main layout is a horizontal layout
         main = HorizontalLayout()
         main.setSizeFull()

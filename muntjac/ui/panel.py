@@ -478,7 +478,7 @@ class Panel(AbstractComponentContainer, IScrollable,
         if iface == IClickListener:
             self.withdrawListener(self._CLICK_EVENT, ClickEvent, listener)
         else:
-            super(Panel, self).removeListener(listener)
+            super(Panel, self).removeListener(listener, iface)
 
 
     def removeClickListener(self, listener):
