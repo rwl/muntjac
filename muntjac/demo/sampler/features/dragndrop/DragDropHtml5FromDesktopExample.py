@@ -22,6 +22,8 @@ from muntjac.terminal.stream_variable import IStreamVariable
 class DragDropHtml5FromDesktopExample(VerticalLayout):
 
     def __init__(self):
+        super(DragDropHtml5FromDesktopExample, self).__init__()
+
         self.addComponent(Label('Drag text from desktop application or '
                 'image files from the ' + 'file system to the drop box '
                 'below (dragging files requires HTML5 capable browser '
@@ -97,46 +99,6 @@ class ImageDropBox(DragAndDropWrapper, IDropHandler):
                 else:
                     bas = StringIO()
 
-
-                    class FileStreamVariable(IStreamVariable):
-
-                        def __init__(self, component, fileName, html5file, bas):
-                            self._component = component
-                            self._html5file = html5file
-                            self._fileName = fileName
-                            self._bas
-
-
-                        def getOutputStream(self):
-                            return self._bas
-
-
-                        def listenProgress(self):
-                            return False
-
-
-                        def onProgress(self, event):
-                            pass
-
-
-                        def streamingStarted(self, event):
-                            pass
-
-
-                        def streamingFinished(self, event):
-                            self._component._progress.setVisible(False)
-                            self.showFile(self._fileName,
-                                    self._html5File.getType(), bas)
-
-
-                        def streamingFailed(self, event):
-                            self._component._progress.setVisible(False)
-
-
-                        def isInterrupted(self):
-                            return False
-
-
                 sv = FileStreamVariable(self, fileName, html5File, bas)
                 html5File.setStreamVariable(sv)
 
@@ -189,3 +151,35 @@ class ImageDropBox(DragAndDropWrapper, IDropHandler):
 
     def getAcceptCriterion(self):
         return AcceptAll.get()
+
+
+class FileStreamVariable(IStreamVariable):
+
+    def __init__(self, component, fileName, html5file, bas):
+        self._component = component
+        self._html5file = html5file
+        self._fileName = fileName
+        self._bas = bas
+
+    def getOutputStream(self):
+        return self._bas
+
+    def listenProgress(self):
+        return False
+
+    def onProgress(self, event):
+        pass
+
+    def streamingStarted(self, event):
+        pass
+
+    def streamingFinished(self, event):
+        self._component._progress.setVisible(False)
+        self.showFile(self._fileName,
+                self._html5File.getType(), self._bas)
+
+    def streamingFailed(self, event):
+        self._component._progress.setVisible(False)
+
+    def isInterrupted(self):
+        return False

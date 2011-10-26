@@ -40,4 +40,8 @@ class AcceptAll(ClientSideCriterion):
     def accept(self, dragEvent):
         return True
 
+
+    def getIdentifier(self):
+        return 'com.vaadin.event.dd.acceptcriteria.AcceptAll'
+
 AcceptAll._singleton = AcceptAll()

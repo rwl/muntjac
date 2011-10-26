@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.util import clsname
 from muntjac.event.dd.acceptcriteria.accept_criterion import IAcceptCriterion
 
 
@@ -57,4 +56,5 @@ class ServerSideCriterion(IAcceptCriterion):
 
 
     def getIdentifier(self):
-        return clsname(ServerSideCriterion)
+        #return clsname(ServerSideCriterion)  # FIXME: Python client side
+        return 'com.vaadin.event.dd.acceptcriteria.ServerSideCriterion'

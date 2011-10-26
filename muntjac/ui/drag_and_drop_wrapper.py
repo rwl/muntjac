@@ -54,7 +54,8 @@ class DragAndDropWrapper(CustomComponent, IDropTarget, IDragSource):
 
     def paintContent(self, target):
         super(DragAndDropWrapper, self).paintContent(target)
-        target.addAttribute('dragStartMode', self._dragStartMode)
+        target.addAttribute('dragStartMode',
+                DragStartMode.ordinal(self._dragStartMode))
 
         if self.getDropHandler() is not None:
             self.getDropHandler().getAcceptCriterion().paint(target)
@@ -110,13 +111,13 @@ class WrapperTransferable(TransferableImpl):
         if fc is not None:
             self._files = [None] * fc
             for i in range(fc):
-                fd = Html5File(rawVariables.get('fn' + i),  # name
-                        rawVariables.get('fs' + i),  # size
-                        rawVariables.get('ft' + i))  # mime
-                idd = rawVariables.get('fi' + i)
+                fd = Html5File(rawVariables.get('fn%d' % i),  # name
+                        rawVariables.get('fs%d' % i),  # size
+                        rawVariables.get('ft%d' % i))  # mime
+                idd = rawVariables.get('fi%d' % i)
                 self._files[i] = fd
-                self.receivers[idd] = fd
-                self.requestRepaint()  # paint receivers
+                self._sourceComponent._receivers[idd] = fd
+                self._sourceComponent.requestRepaint()  # paint receivers
 
 
     def getDraggedComponent(self):
@@ -223,6 +224,10 @@ class DragStartMode(object):
     @classmethod
     def values(cls):
         return cls._values[:]
+
+    @classmethod
+    def ordinal(cls, val):
+        return cls._values.index(val)
 
 
 class ProxyReceiver(IStreamVariable):

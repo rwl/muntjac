@@ -14,8 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.util import clsname
-
 from muntjac.event.dd.acceptcriteria.client_side_criterion import \
     ClientSideCriterion
 
@@ -62,4 +60,4 @@ class TargetDetailIs(ClientSideCriterion):
 
     def getIdentifier(self):
         # sub classes by default use VDropDetailEquals a client implementation
-        return clsname(TargetDetailIs)
+        return 'com.vaadin.event.dd.acceptcriteria.TargetDetailIs'

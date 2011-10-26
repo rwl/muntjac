@@ -9,6 +9,8 @@ from muntjac.data.property import IValueChangeListener
 class DateInlineExample(VerticalLayout, IValueChangeListener):
 
     def __init__(self):
+        super(DateInlineExample, self).__init__()
+
         self.setSpacing(True)
 
         self._datetime = InlineDateField('Please select the starting time:')
@@ -20,7 +22,7 @@ class DateInlineExample(VerticalLayout, IValueChangeListener):
         self._datetime.setResolution(InlineDateField.RESOLUTION_DAY)
 
         # Add valuechangelistener
-        self._datetime.addListener(self)
+        self._datetime.addListener(self, IValueChangeListener)
         self._datetime.setImmediate(True)
 
         self.addComponent(self._datetime)
@@ -28,7 +30,7 @@ class DateInlineExample(VerticalLayout, IValueChangeListener):
 
     def valueChange(self, event):
         # Get the new value and format it to the current locale
-        dateFormatter = locale.D_FMT
+        dateFormatter = locale.nl_langinfo(locale.D_FMT)
         dateOut = event.getProperty().getValue().strftime(dateFormatter)
         # Show notification
         self.getWindow().showNotification('Starting date: ' + dateOut)

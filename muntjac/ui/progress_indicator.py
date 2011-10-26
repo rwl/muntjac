@@ -58,6 +58,8 @@ class ProgressIndicator(AbstractField, prop.IValueChangeListener,
 
         @param contentSource
         """
+        super(ProgressIndicator, self).__init__()
+
         self._indeterminate = False
         self._dataSource = None
         self._pollingInterval = 1000

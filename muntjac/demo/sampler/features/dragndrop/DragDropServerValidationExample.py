@@ -16,6 +16,8 @@ from muntjac.event.data_bound_transferable import DataBoundTransferable
 class DragDropServerValidationExample(HorizontalLayout):
 
     def __init__(self):
+        super(DragDropServerValidationExample, self).__init__()
+
         self.setSpacing(True)
 
         # First create the components to be able to refer to them as allowed
@@ -29,32 +31,7 @@ class DragDropServerValidationExample(HorizontalLayout):
         # Drag and drop support
         self._table.setDragMode(TableDragMode.ROW)
 
-
-        class TableDropHandler(IDropHandler):
-
-            def drop(self, dropEvent):
-                # criteria verify that this is safe
-                t = dropEvent.getTransferable()
-
-                sourceItemId = t.getItemId()
-
-                dropData = dropEvent.getTargetDetails()
-                targetItemId = dropData.getItemIdOver()
-
-                # tell that the persons are related
-                self.getWindow().showNotification(
-                        self.getFullName(sourceItemId)
-                        + ' is related to '
-                        + self.getFullName(targetItemId))
-
-
-            def getAcceptCriterion(self):
-                # during the drag and on drop, check that two different
-                # persons with the same last name
-                return RelativeCriterion()
-
-
-        self._table.setDropHandler( TableDropHandler() )
+        self._table.setDropHandler( TableDropHandler(self) )
         self.addComponent(self._table)
 
 
@@ -81,15 +58,44 @@ class DragDropServerValidationExample(HorizontalLayout):
                 ExampleUtil.PERSON_PROPERTY_LASTNAME).getValue()
 
 
+class TableDropHandler(IDropHandler):
+
+    def __init__(self, example):
+        self._example = example
+
+    def drop(self, dropEvent):
+        # criteria verify that this is safe
+        t = dropEvent.getTransferable()
+
+        sourceItemId = t.getItemId()
+
+        dropData = dropEvent.getTargetDetails()
+        targetItemId = dropData.getItemIdOver()
+
+        # tell that the persons are related
+        self.getWindow().showNotification(
+                self.getFullName(sourceItemId)
+                + ' is related to '
+                + self.getFullName(targetItemId))
+
+    def getAcceptCriterion(self):
+        # during the drag and on drop, check that two different
+        # persons with the same last name
+        return RelativeCriterion(self._example)
+
+
 class RelativeCriterion(ServerSideCriterion):
 
-    def __init__(self, c):
-        self._c = c
+    def __init__(self, example):
+        super(RelativeCriterion, self).__init__()
+
+        self._example = example
 
 
     def accept(self, dragEvent):
         # only accept drags within the table
-        if (dragEvent.getTransferable().getSourceComponent() != self._c._table
+        if ((dragEvent.getTransferable().getSourceComponent() != \
+             self._example._table)
                 or (not isinstance(dragEvent.getTransferable(),
                         DataBoundTransferable))):
             return False
@@ -108,8 +114,8 @@ class RelativeCriterion(ServerSideCriterion):
         if sourceItemId == targetItemId:
             return False
 
-        sourceLastName = self._c.getLastName(sourceItemId)
-        targetLastName = self._c.getLastName(targetItemId)
+        sourceLastName = self._example.getLastName(sourceItemId)
+        targetLastName = self._example.getLastName(targetItemId)
 
         if sourceLastName is not None and sourceLastName == targetLastName:
             return True

@@ -1102,12 +1102,14 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
     def convertMap(self, strValue):
         parts = strValue.split(self.VAR_ARRAYITEM_SEPARATOR)
         mapp = dict()
-        for i in range(len(parts)):
+        i = 0
+        while i < len(parts):
             key = parts[i]
             if len(key) > 0:
                 variabletype = key[0]
-                value = self._convertVariableValue(variabletype, parts[i + 1])
+                value = self.convertVariableValue(variabletype, parts[i + 1])
                 mapp[ key[1:] ] = value
+            i += 2
         return mapp
 
 

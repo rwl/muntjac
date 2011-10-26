@@ -50,4 +50,4 @@ class ContainsDataFlavor(ClientSideCriterion):
 
     def getIdentifier(self):
         # extending classes use client side implementation from this class
-        return clsname(ContainsDataFlavor)
+        return 'com.vaadin.event.dd.acceptcriteria.ContainsDataFlavor'

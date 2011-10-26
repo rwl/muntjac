@@ -110,7 +110,7 @@ class InvalidValueException(RuntimeError, IErrorMessage):
 
         @return true if the error message should be hidden, false otherwise
         """
-        msg = self.getMessage()
+        msg = self.message
 
         if msg is not None and len(msg) > 0:
             return False
@@ -132,7 +132,7 @@ class InvalidValueException(RuntimeError, IErrorMessage):
         target.addAttribute('level', 'error')
 
         # Error message
-        message = self.getLocalizedMessage()
+        message = self.message #getLocalizedMessage()
         if message is not None:
             target.addText(message)
 

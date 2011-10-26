@@ -17,7 +17,9 @@ from muntjac.terminal.gwt.client.ui.dd.horizontal_drop_location import \
 class DragDropRearrangeComponentsExample(VerticalLayout):
 
     def __init__(self):
-        layout = self.SortableLayout(True)
+        super(DragDropRearrangeComponentsExample, self).__init__()
+
+        layout = SortableLayout(True)
         layout.setSizeUndefined()
         layout.setHeight('100px')
 
@@ -37,10 +39,10 @@ class DragDropRearrangeComponentsExample(VerticalLayout):
 
         label = Label('This is a long text block that will wrap.')
         label.setWidth('120px')
-        components.add(label)
+        components.append(label)
 
         image = Embedded('', ThemeResource('../runo/icons/64/document.png'))
-        components.add(image)
+        components.append(image)
 
         documentLayout = CssLayout()
         documentLayout.setWidth('19px')
@@ -49,34 +51,32 @@ class DragDropRearrangeComponentsExample(VerticalLayout):
             e.setHeight('16px')
             e.setWidth('16px')
             documentLayout.addComponent(e)
-        components.add(documentLayout)
+        components.append(documentLayout)
 
         buttonLayout = VerticalLayout()
         button = Button('Button')
 
-
-        class ButtonClickListener(IClickListener):
-
-            def __init__(self, c):
-                self._c = c
-
-
-            def buttonClick(self, event):
-                self._c.getWindow().showNotification('Button clicked')
-
-
-        button.addListener( ButtonClickListener(self) )
+        button.addListener(ButtonClickListener(self), IClickListener)
         buttonLayout.addComponent(button)
         buttonLayout.setComponentAlignment(button, Alignment.MIDDLE_CENTER)
-        components.add(buttonLayout)
+        components.append(buttonLayout)
 
         return components
 
 
+class ButtonClickListener(IClickListener):
+
+    def __init__(self, c):
+        self._c = c
+
+    def buttonClick(self, event):
+        self._c.getWindow().showNotification('Button clicked')
+
+
 class SortableLayout(CustomComponent):
 
-    def __init__(self, horizontal, c):
-        self._c = c
+    def __init__(self, horizontal):
+        super(SortableLayout, self).__init__()
 
         self._horizontal = horizontal
         if horizontal:
@@ -106,6 +106,7 @@ class WrappedComponent(DragAndDropWrapper):
 
     def __init__(self, content, dropHandler):
         super(WrappedComponent, self).__init__(content)
+
         self._dropHandler = dropHandler
         self.setDragStartMode(DragStartMode.WRAPPER)
 
@@ -116,9 +117,8 @@ class WrappedComponent(DragAndDropWrapper):
 
 class ReorderLayoutDropHandler(IDropHandler):
 
-    def __init__(self, layout, c):
+    def __init__(self, layout):
         self._layout = layout
-        self._c = c
 
 
     def getAcceptCriterion(self):

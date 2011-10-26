@@ -35,3 +35,7 @@ class Not(ClientSideCriterion):
 
     def accept(self, dragEvent):
         return not self._acceptCriterion.accept(dragEvent)
+
+
+    def getIdentifier(self):
+        return 'com.vaadin.event.dd.acceptcriteria.Not'

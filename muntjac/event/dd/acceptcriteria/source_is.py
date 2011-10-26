@@ -45,3 +45,7 @@ class SourceIs(ClientSideCriterion):
                 if c == sourceComponent:
                     return True
         return False
+
+
+    def getIdentifier(self):
+        return 'com.vaadin.event.dd.acceptcriteria.SourceIs'

@@ -3409,15 +3409,15 @@ class TableTransferable(DataBoundTransferable):
     @since 6.3
     """
 
-    def __init__(self, rawVariables, _Table_this):
-        super(TableTransferable, self).__init__(_Table_this, rawVariables)
+    def __init__(self, rawVariables, table):
+        super(TableTransferable, self).__init__(table, rawVariables)
         obj = rawVariables.get('itemId')
         if obj is not None:
-            self.setData('itemId', self.itemIdMapper.get(object))
+            self.setData('itemId', table.itemIdMapper.get(object))
 
         obj = rawVariables.get('propertyId')
         if obj is not None:
-            self.setData('propertyId', self.columnIdMap.get(object))
+            self.setData('propertyId', table._columnIdMap.get(object))
 
 
     def getItemId(self):
@@ -3445,6 +3445,8 @@ class TableDropCriterion(ServerSideCriterion):
     """
 
     def __init__(self):
+        super(TableDropCriterion, self).__init__()
+
         self._table = None
         self._allowedItemIds = None
 

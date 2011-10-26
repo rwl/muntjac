@@ -49,4 +49,8 @@ class SourceIsTarget(ClientSideCriterion):
         return cls._instance
 
 
+    def getIdentifier(self):
+        return 'com.vaadin.event.dd.acceptcriteria.SourceIsTarget'
+
+
 SourceIsTarget._instance = SourceIsTarget()

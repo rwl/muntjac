@@ -913,3 +913,8 @@ class SourceWindowCloseListener(window.ICloseListener):
 
     def windowClose(self, e):
         self._app.removeWindow(self._window)
+
+
+if __name__ == '__main__':
+    from muntjac.util import run_app
+    run_app(SamplerApplication, nogui=True, forever=True, debug=True)

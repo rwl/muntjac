@@ -15,6 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.event.dd.acceptcriteria.accept_criterion import IAcceptCriterion
+from muntjac.util import clsname
 
 
 class ClientSideCriterion(IAcceptCriterion):
@@ -46,7 +47,7 @@ class ClientSideCriterion(IAcceptCriterion):
 
 
     def getIdentifier(self):
-        return self.getClass().getCanonicalName()
+        return clsname(self.__class__)  # FIXME: Python client-side
 
 
     def paintResponse(self, target):

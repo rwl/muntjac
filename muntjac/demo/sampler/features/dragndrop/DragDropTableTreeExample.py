@@ -25,6 +25,8 @@ class DragDropTableTreeExample(HorizontalLayout):
     """
 
     def __init__(self):
+        super(DragDropTableTreeExample, self).__init__()
+
         self.setSpacing(True)
 
         # First create the components to be able to refer to them as allowed
@@ -54,59 +56,11 @@ class DragDropTableTreeExample(HorizontalLayout):
 
         self._tree.setDragMode(TreeDragMode.NODE)
 
-
-        class TreeDropHandler(IDropHandler):
-
-            def __init__(self, c):
-                self._c = c
-
-
-            def drop(self, dropEvent):
-                # criteria verify that this is safe
-                t = dropEvent.getTransferable()
-                sourceContainer = t.getSourceContainer()
-                sourceItemId = t.getItemId()
-                sourceItem = sourceContainer.getItem(sourceItemId)
-                name = str(sourceItem.getItemProperty('name'))
-                category = str(sourceItem.getItemProperty('category'))
-
-                dropData = dropEvent.getTargetDetails()
-                targetItemId = dropData.getItemIdOver()
-
-                # find category in target: the target node itself or its parent
-                if (targetItemId is not None and name is not None
-                        and category is not None):
-                    treeCategory = self._c.getTreeNodeName(self._c._tree,
-                            targetItemId)
-                    if category == treeCategory:
-                        # move item from table to category'
-                        newItemId = self._c._tree.addItem()
-                        self._c._tree.getItem(newItemId).getItemProperty(
-                                ExampleUtil.hw_PROPERTY_NAME).setValue(name)
-                        self._c._tree.setParent(newItemId, targetItemId)
-                        self._c._tree.setChildrenAllowed(newItemId, False)
-
-                        sourceContainer.removeItem(sourceItemId)
-                    else:
-                        message = (name + ' is not a '
-                                + re.sub('s$', '', treeCategory.lower()))
-                        self.getWindow().showNotification(message,
-                                Notification.TYPE_WARNING_MESSAGE)
-
-
-            def getAcceptCriterion(self):
-                # Only allow dropping of data bound transferables within
-                # folders.
-                # In this example, checking for the correct category in drop()
-                # rather than in the criteria.
-                return And(self.acceptCriterion,
-                        TargetItemAllowsChildren.get(), AcceptItem.ALL)
-
         self._tree.setDropHandler( TreeDropHandler(self) )
 
 
     def initializeTable(self, acceptCriterion):
-        tableContainer = BeanItemContainer(self.Hardware)
+        tableContainer = BeanItemContainer(Hardware)
         tableContainer.addItem(Hardware('Dell OptiPlex 380', 'Desktops'))
         tableContainer.addItem(Hardware('Benq T900HD', 'Monitors'))
         tableContainer.addItem(Hardware('Lenovo ThinkPad T500', 'Laptops'))
@@ -115,67 +69,6 @@ class DragDropTableTreeExample(HorizontalLayout):
 
         # Handle drop in table: move hardware item or subtree to the table
         self._table.setDragMode(TableDragMode.ROW)
-
-
-        class TableDropHandler(IDropHandler):
-
-            def __init__(self, c):
-                self._c = c
-
-
-            def drop(self, dropEvent):
-                # criteria verify that this is safe
-                t = dropEvent.getTransferable()
-                if not isinstance(t.getSourceContainer(),
-                        container.IHierarchical):
-                    return
-                source = t.getSourceContainer()
-
-                sourceItemId = t.getItemId()
-
-                # find and convert the item(s) to move
-
-                parentItemId = source.getParent(sourceItemId)
-                # map from moved source item Id to the corresponding Hardware
-                hardwareMap = dict()
-                if parentItemId is None:
-                    # move the whole subtree
-                    category = self._c.getTreeNodeName(source, sourceItemId)
-                    children = source.getChildren(sourceItemId)
-                    if children is not None:
-                        for childId in children:
-                            name = self._c.getTreeNodeName(source, childId)
-                            hardwareMap[childId] = \
-                                    self._c.Hardware(name, category)
-                else:
-                    # move a single hardware item
-                    category = self._c.getTreeNodeName(source, parentItemId)
-                    name = self._c.getTreeNodeName(source, sourceItemId)
-                    hardwareMap[sourceItemId] = Hardware(name, category)
-
-                # move item(s) to the correct location in the table
-
-                dropData = dropEvent.getTargetDetails()
-                targetItemId = dropData.getItemIdOver()
-
-                for sourceId, hardware in hardwareMap.iteritems():
-                    if targetItemId is not None:
-                        dl = dropData.getDropLocation()
-                        if dl == self.BOTTOM:
-                            self.tableContainer.addItemAfter(targetItemId,
-                                    hardware)
-                        if dl == self.MIDDLE or dl == self.TOP:
-                            prevItemId = self.tableContainer.prevItemId(
-                                    targetItemId)
-                            self.tableContainer.addItemAfter(prevItemId,
-                                    hardware)
-                    else:
-                        self.tableContainer.addItem(hardware)
-                    source.removeItem(sourceId)
-
-
-            def getAcceptCriterion(self):
-                return And(self.acceptCriterion, AcceptItem.ALL)
 
         self._table.setDropHandler( TableDropHandler(self) )
 
@@ -186,24 +79,122 @@ class DragDropTableTreeExample(HorizontalLayout):
                 ExampleUtil.hw_PROPERTY_NAME).getValue()
 
 
+class TreeDropHandler(IDropHandler):
+
+    def __init__(self, c):
+        self._c = c
+
+    def drop(self, dropEvent):
+        # criteria verify that this is safe
+        t = dropEvent.getTransferable()
+        sourceContainer = t.getSourceContainer()
+        sourceItemId = t.getItemId()
+        sourceItem = sourceContainer.getItem(sourceItemId)
+        name = str(sourceItem.getItemProperty('name'))
+        category = str(sourceItem.getItemProperty('category'))
+
+        dropData = dropEvent.getTargetDetails()
+        targetItemId = dropData.getItemIdOver()
+
+        # find category in target: the target node itself or its parent
+        if (targetItemId is not None and name is not None
+                and category is not None):
+            treeCategory = self._c.getTreeNodeName(self._c._tree,
+                    targetItemId)
+            if category == treeCategory:
+                # move item from table to category'
+                newItemId = self._c._tree.addItem()
+                self._c._tree.getItem(newItemId).getItemProperty(
+                        ExampleUtil.hw_PROPERTY_NAME).setValue(name)
+                self._c._tree.setParent(newItemId, targetItemId)
+                self._c._tree.setChildrenAllowed(newItemId, False)
+
+                sourceContainer.removeItem(sourceItemId)
+            else:
+                message = (name + ' is not a '
+                        + re.sub('s$', '', treeCategory.lower()))
+                self.getWindow().showNotification(message,
+                        Notification.TYPE_WARNING_MESSAGE)
+
+    def getAcceptCriterion(self):
+        # Only allow dropping of data bound transferables within
+        # folders.
+        # In this example, checking for the correct category in drop()
+        # rather than in the criteria.
+        return And(self.acceptCriterion,
+                TargetItemAllowsChildren.get(), AcceptItem.ALL)
+
+
+class TableDropHandler(IDropHandler):
+
+    def __init__(self, c):
+        self._c = c
+
+
+    def drop(self, dropEvent):
+        # criteria verify that this is safe
+        t = dropEvent.getTransferable()
+        if not isinstance(t.getSourceContainer(), container.IHierarchical):
+            return
+        source = t.getSourceContainer()
+
+        sourceItemId = t.getItemId()
+
+        # find and convert the item(s) to move
+
+        parentItemId = source.getParent(sourceItemId)
+        # map from moved source item Id to the corresponding Hardware
+        hardwareMap = dict()
+        if parentItemId is None:
+            # move the whole subtree
+            category = self._c.getTreeNodeName(source, sourceItemId)
+            children = source.getChildren(sourceItemId)
+            if children is not None:
+                for childId in children:
+                    name = self._c.getTreeNodeName(source, childId)
+                    hardwareMap[childId] = Hardware(name, category)
+        else:
+            # move a single hardware item
+            category = self._c.getTreeNodeName(source, parentItemId)
+            name = self._c.getTreeNodeName(source, sourceItemId)
+            hardwareMap[sourceItemId] = Hardware(name, category)
+
+        # move item(s) to the correct location in the table
+
+        dropData = dropEvent.getTargetDetails()
+        targetItemId = dropData.getItemIdOver()
+
+        for sourceId, hardware in hardwareMap.iteritems():
+            if targetItemId is not None:
+                dl = dropData.getDropLocation()
+                if dl == self.BOTTOM:
+                    self.tableContainer.addItemAfter(targetItemId, hardware)
+                if dl == self.MIDDLE or dl == self.TOP:
+                    prevItemId = self.tableContainer.prevItemId(targetItemId)
+                    self.tableContainer.addItemAfter(prevItemId, hardware)
+            else:
+                self.tableContainer.addItem(hardware)
+            source.removeItem(sourceId)
+
+
+    def getAcceptCriterion(self):
+        return And(self.acceptCriterion, AcceptItem.ALL)
+
+
 class Hardware(object):
 
     def __init__(self, name, category):
         self._name = name
         self._category = category
 
-
     def setName(self, name):
         self._name = name
-
 
     def getName(self):
         return self._name
 
-
     def setCategory(self, category):
         self._category = category
-
 
     def getCategory(self):
         return self._category

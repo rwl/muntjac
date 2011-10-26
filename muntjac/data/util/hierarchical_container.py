@@ -159,7 +159,8 @@ class HierarchicalContainer(IndexedContainer, IHierarchical, IContainer):
 
         # Updates status
         if childrenAllowed:
-            self._noChildrenAllowed.remove(itemId)
+            if itemId in self._noChildrenAllowed:
+                self._noChildrenAllowed.remove(itemId)
         else:
             self._noChildrenAllowed.add(itemId)
 
@@ -307,16 +308,16 @@ class HierarchicalContainer(IndexedContainer, IHierarchical, IContainer):
         else:
             oldIndex = childrenList.index(itemId)
             indexOfSibling = childrenList.index(siblingId)
-            if indexOfSibling != -1 and oldIndex != -1:
+            if (indexOfSibling != -1) and (oldIndex != -1):
                 if oldIndex > indexOfSibling:
                     newIndex = indexOfSibling + 1
                 else:
                     newIndex = indexOfSibling
 
-                childrenList.remove(oldIndex)
-                childrenList.append(newIndex, itemId)
+                del childrenList[oldIndex]
+                childrenList.insert(newIndex, itemId)
             else:
-                raise ValueError, 'Given identifiers no not have the same parent.'
+                raise ValueError, 'Given identifiers do not have the same parent.'
 
         self.fireItemSetChange()
 

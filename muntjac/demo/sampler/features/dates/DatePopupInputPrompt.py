@@ -1,15 +1,9 @@
 
 from muntjac.api import PopupDateField
 
-from muntjac.demo.sampler.features.dates.DateInline import DateInline
-from muntjac.demo.sampler.features.dates.DateLocale import DateLocale
 from muntjac.demo.sampler.NamedExternalResource import NamedExternalResource
 from muntjac.demo.sampler.APIResource import APIResource
-from muntjac.demo.sampler.features.dates.DateResolution import DateResolution
 from muntjac.demo.sampler.Feature import Feature, Version
-
-from muntjac.demo.sampler.features.text.TextFieldInputPrompt import \
-    TextFieldInputPrompt
 
 
 class DatePopupInputPrompt(Feature):
@@ -37,8 +31,11 @@ class DatePopupInputPrompt(Feature):
 
     def getRelatedFeatures(self):
 
-        from muntjac.demo.sampler.features.selects.ComboBoxInputPrompt import \
-            ComboBoxInputPrompt
+        from muntjac.demo.sampler.features.dates.DateInline import DateInline
+        from muntjac.demo.sampler.features.dates.DateLocale import DateLocale
+        from muntjac.demo.sampler.features.dates.DateResolution import DateResolution
+        from muntjac.demo.sampler.features.selects.ComboBoxInputPrompt import ComboBoxInputPrompt
+        from muntjac.demo.sampler.features.text.TextFieldInputPrompt import TextFieldInputPrompt
 
         return [
             DateInline,

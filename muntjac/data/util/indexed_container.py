@@ -187,6 +187,7 @@ class IndexedContainer(AbstractInMemoryContainer,
         else:
             item = self.internalAddItemAtEnd(itemId,
                     IndexedContainerItem(itemId, self), False)
+
             if not self.isFiltered():
                 # always the last item
                 self.fireItemAdded(self.size() - 1, itemId, item)
@@ -379,9 +380,9 @@ class IndexedContainer(AbstractInMemoryContainer,
     def fireItemSetChange(self, event=None):
         if event is None:
             event = ItemSetChangeEvent(self, -1)
-            super(AbstractContainer, self).fireItemSetChange(event)
+            super(IndexedContainer, self).fireItemSetChange(event)
         else:
-            super(AbstractContainer, self).fireItemSetChange(event)
+            super(IndexedContainer, self).fireItemSetChange(event)
 
 
     def addSinglePropertyChangeListener(self, propertyId, itemId, listener):
@@ -757,7 +758,7 @@ class IndexedContainerProperty(prop.IProperty, prop.IValueChangeNotifier):
         value = self.getValue()
 
         if value is None:
-            return None
+            return ''
 
         return str(value)
 

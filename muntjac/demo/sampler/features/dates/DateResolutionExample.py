@@ -26,6 +26,8 @@ class DateResolutionExample(VerticalLayout, IValueChangeListener):
     ]
 
     def __init__(self):
+        super(DateResolutionExample, self).__init__()
+
         self.setSpacing(True)
 
         self._datetime = InlineDateField('Please select the starting time:')
@@ -40,7 +42,7 @@ class DateResolutionExample(VerticalLayout, IValueChangeListener):
         # Create selection
         self._localeSelection = ComboBox('Select resolution:')
         self._localeSelection.setNullSelectionAllowed(False)
-        self._localeSelection.addListener(self)
+        self._localeSelection.addListener(self, IValueChangeListener)
         self._localeSelection.setImmediate(True)
 
         # Fill the selection with choices, set captions correctly
@@ -65,9 +67,10 @@ class DateResolutionExample(VerticalLayout, IValueChangeListener):
         resolutionContainer.addContainerProperty(
                 self.resolution_PROPERTY_NAME, str, None)
 
-        for res in self._resolutions:
+        for i, res in enumerate(self._resolutions):
             added = resolutionContainer.addItem(res)
             added.getItemProperty(
-                    self.resolution_PROPERTY_NAME).setValue(res)
+                    self.resolution_PROPERTY_NAME).setValue(
+                            self._resolutionNames[i])
 
         return resolutionContainer

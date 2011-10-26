@@ -45,3 +45,7 @@ class Or(ClientSideCriterion):
             if crit.accept(dragEvent):
                 return True
         return False
+
+
+    def getIdentifier(self):
+        return 'com.vaadin.event.dd.acceptcriteria.Or'

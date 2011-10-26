@@ -13,6 +13,8 @@ from muntjac.terminal.gwt.client.ui.dd.vertical_drop_location import \
 class DragDropTreeSortingExample(VerticalLayout):
 
     def __init__(self):
+        super(DragDropTreeSortingExample, self).__init__()
+
         self.setSpacing(True)
 
         tree = Tree('Tree sortable using drag\'n\'drop')

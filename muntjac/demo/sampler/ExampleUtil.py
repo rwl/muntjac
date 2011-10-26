@@ -199,12 +199,12 @@ class ExampleUtil(object):
 
     locale_PROPERTY_LOCALE = 'locale'
     locale_PROPERTY_NAME = 'name'
-    _locales = ['fi', 'FI', 'Finnish', 'de', 'DE', 'German', 'en', 'US',
-            'US - English', 'sv', 'SE', 'Swedish']
-    _hardware = ['Desktops', 'Dell OptiPlex GX240', 'Dell OptiPlex GX260',
-            'Dell OptiPlex GX280', 'Monitors', 'Benq T190HD', 'Benq T220HD',
-            'Benq T240HD', 'Laptops', 'IBM ThinkPad T40', 'IBM ThinkPad T43',
-            'IBM ThinkPad T60']
+    _locales = [['fi', 'FI', 'Finnish'], ['de', 'DE', 'German'], ['en', 'US',
+            'US - English'], ['sv', 'SE', 'Swedish']]
+    _hardware = [['Desktops', 'Dell OptiPlex GX240', 'Dell OptiPlex GX260',
+            'Dell OptiPlex GX280'], ['Monitors', 'Benq T190HD', 'Benq T220HD',
+            'Benq T240HD'], ['Laptops', 'IBM ThinkPad T40', 'IBM ThinkPad T43',
+            'IBM ThinkPad T60']]
 
     PERSON_PROPERTY_FIRSTNAME = 'First Name'
     PERSON_PROPERTY_LASTNAME = 'Last Name'
@@ -231,8 +231,8 @@ class ExampleUtil(object):
                 str, '')
         i = 0
         while i < 50:
-            fn = cls._firstnames[random() * len(cls._firstnames)]
-            ln = cls._lastnames[random() * len(cls._lastnames)]
+            fn = cls._firstnames[int(random() * len(cls._firstnames))]
+            ln = cls._lastnames[int(random() * len(cls._lastnames))]
             idd = fn + ln
             item = contactContainer.addItem(idd)
             if item is not None:
@@ -248,8 +248,8 @@ class ExampleUtil(object):
         contactContainer.addContainerProperty(cls.PERSON_PROPERTY_NAME, str, '')
         i = 0
         while i < 50:
-            fn = cls._firstnames[random() * len(cls._firstnames)]
-            ln = cls._lastnames[random() * len(cls._lastnames)]
+            fn = cls._firstnames[int(random() * len(cls._firstnames))]
+            ln = cls._lastnames[int(random() * len(cls._lastnames))]
             idd = fn + ln
             item = contactContainer.addItem(idd)
             if item is not None:
@@ -321,11 +321,14 @@ class ExampleUtil(object):
         for i in range(len(cls._hardware)):
             # Add new item
             item = hwContainer.addItem(itemId)
+
             # Add name property for item
             v = cls._hardware[i][0]
             item.getItemProperty(cls.hw_PROPERTY_NAME).setValue(v)
+
             # Allow children
             hwContainer.setChildrenAllowed(itemId, True)
+
             itemId += 1
             for j in range(1, len(cls._hardware[i])):
                 if j == 1:

@@ -31,6 +31,8 @@ class InlineDateField(DateField):
     @since 5.0
     """
 
+    CLIENT_WIDGET = None #ClientWidget(VDateFieldCalendar)
+
     def __init__(self, *args):
         nargs = len(args)
         if nargs == 0:

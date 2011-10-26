@@ -431,7 +431,8 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
                 target.addAttribute('nullselect', True)
 
             if self._dragMode != TreeDragMode.NONE:
-                target.addAttribute('dragMode', self._dragMode)
+                target.addAttribute('dragMode',
+                        TreeDragMode.ordinal(self._dragMode))
 
         # Initialize variables
         actionSet = set()
@@ -892,7 +893,7 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
 
 
     def translateDropTargetDetails(self, clientVariables):
-        return TreeTargetDetails(clientVariables)
+        return TreeTargetDetails(clientVariables, self)
 
 
     def key(self, itemId):
@@ -950,6 +951,10 @@ class TreeDragMode(object):
     @classmethod
     def values(cls):
         return cls._enum_values[:]
+
+    @classmethod
+    def ordinal(cls, val):
+        return cls._values.index(val)
 
 
 class ExpandEvent(ComponentEvent):
@@ -1075,8 +1080,8 @@ class TreeTargetDetails(AbstractSelectTargetDetails):
     @since 6.3
     """
 
-    def __init__(self, rawVariables):
-        super(TreeTargetDetails, self).__init__(rawVariables)
+    def __init__(self, rawVariables, tree):
+        super(TreeTargetDetails, self).__init__(rawVariables, tree)
 
 
     def getTarget(self):

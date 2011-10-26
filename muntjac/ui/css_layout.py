@@ -71,6 +71,7 @@ class CssLayout(AbstractLayout, ILayoutClickNotifier):
     def __init__(self):
         super(CssLayout, self).__init__()
 
+        # Custom layout slots containing the components.
         self.components = list()
 
 
@@ -89,9 +90,6 @@ class CssLayout(AbstractLayout, ILayoutClickNotifier):
                    the Index of the component position. The components
                    currently in and after the position are shifted forwards.
         """
-        # Custom layout slots containing the components.
-        self.components = list()
-
         if index is None:
             self.components.append(c)
             try:

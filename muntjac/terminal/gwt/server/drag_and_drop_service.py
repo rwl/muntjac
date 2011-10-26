@@ -79,7 +79,7 @@ class DragAndDropService(IVariableOwner):
         # Construct the Transferable and the DragDropDetails for the drop
         # operation based on the info passed from the client widgets (drag
         # source for Transferable, drop target for DragDropDetails).
-        transferable = self._constructTransferable(dropTarget, variables)
+        transferable = self.constructTransferable(dropTarget, variables)
         dropData = self.constructDragDropDetails(dropTarget, variables)
 
         dropEvent = DragAndDropEvent(transferable, dropData)
@@ -135,11 +135,11 @@ class DragAndDropService(IVariableOwner):
 
 
     def getRequestType(self, variables):
-        typ = variables.get('type')
-        return DragEventType.values().get(typ)
+        typ = int( variables.get('type') )
+        return DragEventType.values()[typ]
 
 
-    def _constructTransferable(self, dropHandlerOwner, variables):
+    def constructTransferable(self, dropHandlerOwner, variables):
         sourceComponent = variables.get('component')
 
         variables = variables.get('tra')
@@ -163,7 +163,7 @@ class DragAndDropService(IVariableOwner):
         return True
 
 
-    def _printJSONResponse(self, outWriter):
+    def printJSONResponse(self, outWriter):
         if self._isDirty():
             outWriter.write(', \"dd\":')
             jsonPaintTarget = JsonPaintTarget(self._manager, outWriter, False)

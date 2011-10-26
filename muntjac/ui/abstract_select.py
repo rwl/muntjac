@@ -1440,7 +1440,7 @@ class AbstractSelectTargetDetails(TargetDetailsImpl):
         # eagar fetch itemid, mapper may be emptied
         keyover = self.getData('itemIdOver')
         if keyover is not None:
-            self.idOver = self.itemIdMapper.get(keyover)
+            self.idOver = select.itemIdMapper.get(keyover)
 
 
     def getItemIdOver(self):
@@ -1488,7 +1488,7 @@ class CaptionChangeListener(item.IPropertySetChangeListener,
                 return
 
             if isinstance(i, item.IPropertySetChangeNotifier):
-                i.addListener(self.getCaptionChangeListener(),
+                i.addListener(self._select.getCaptionChangeListener(),
                         item.IPropertySetChangeListener)
                 self._captionChangeNotifiers.add(i)
 
@@ -1498,15 +1498,15 @@ class CaptionChangeListener(item.IPropertySetChangeListener,
                     p = i.getItemProperty(pid)
                     if (p is not None
                             and isinstance(p, prop.IValueChangeNotifier)):
-                        p.addListener(self.getCaptionChangeListener(),
+                        p.addListener(self._select.getCaptionChangeListener(),
                                 prop.IValueChangeListener)
                         self._captionChangeNotifiers.add(p)
 
         elif test == self._select.ITEM_CAPTION_MODE_PROPERTY:
-            p = self.getContainerProperty(itemId,
-                    self.getItemCaptionPropertyId())
+            p = self._select.getContainerProperty(itemId,
+                    self._select.getItemCaptionPropertyId())
             if p is not None and isinstance(p, prop.IValueChangeNotifier):
-                p.addListener(self.getCaptionChangeListener(),
+                p.addListener(self._select.getCaptionChangeListener(),
                         prop.IValueChangeListener)
                 self._captionChangeNotifiers.add(p)
 
@@ -1514,10 +1514,10 @@ class CaptionChangeListener(item.IPropertySetChangeListener,
     def clear(self):
         for notifier in self._captionChangeNotifiers:
             if isinstance(notifier, item.IPropertySetChangeNotifier):
-                notifier.removeListener(self.getCaptionChangeListener(),
+                notifier.removeListener(self._select.getCaptionChangeListener(),
                         item.IPropertySetChangeListener)
             else:
-                notifier.removeListener(self.getCaptionChangeListener(),
+                notifier.removeListener(self._select.getCaptionChangeListener(),
                         prop.IValueChangeListener)
         self._captionChangeNotifiers.clear()
 

@@ -30,8 +30,6 @@ from muntjac.event.field_events import \
 
 from muntjac.util import totalseconds
 
-from muntjac.ui.abstract_component import AbstractComponent
-
 
 class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
     """A date editor component that can be bound to any {@link IProperty}
@@ -280,10 +278,10 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
                 msec = cal.microsecond * 1e03 if msec < 0 else msec
 
                 # Sets the calendar fields
-                cal = datetime(year, month, day, hour, minn, sec, msec / 1e03)
+                cal = datetime(year, month, day, hour, minn, sec, int(msec / 1e03))
 
                 # Assigns the date
-                newDate = totalseconds(cal - datetime(1970, 1, 1))
+                newDate = cal #totalseconds(cal - datetime(1970, 1, 1))
                 #newDate = mktime(cal.timetuple())
 
             if (newDate is None and self._dateString is not None
@@ -372,7 +370,7 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
         return datetime
 
 
-    def setValue(self, newValue, repaintIsNotNeeded):
+    def setValue(self, newValue, repaintIsNotNeeded=False):
 
         # First handle special case when the client side component have a
         # date string but value is null (e.g. unparsable date string typed
@@ -401,9 +399,10 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
         if newValue is None or isinstance(newValue, datetime):
             super(DateField, self).setValue(newValue, repaintIsNotNeeded)
         else:
-            # Try to parse the given string value to Date
             try:
-                val = datetime.strptime(str(newValue), locale.D_T_FMT)
+                # Try to parse the given string value to Date
+                val = datetime.strptime(str(newValue),
+                        locale.nl_langinfo(locale.D_FMT))
                 super(DateField, self).setValue(val, repaintIsNotNeeded)
             except ValueError:
                 self._uiHasValidDateString = False
