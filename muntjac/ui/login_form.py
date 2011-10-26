@@ -170,13 +170,13 @@ class LoginForm(CustomComponent):
     def attach(self):
         super(LoginForm, self).attach()
         self.getApplication().addResource(self.loginPage)
-        self.getWindow().addParameterHandler(self.paramHandler)
+        self.getWindow().addParameterHandler(self.parameterHandler)
         self._iframe.setSource(self.loginPage)
 
 
     def detach(self):
         self.getApplication().removeResource(self.loginPage)
-        self.getWindow().removeParameterHandler(self.paramHandler)
+        self.getWindow().removeParameterHandler(self.parameterHandler)
         # store window temporary to properly remove uri handler once
         # response is handled. (May happen if login handler removes login
         # form
@@ -319,7 +319,7 @@ class LoginPage(IApplicationResource):
 
     def getStream(self):
         return DownloadStream(StringIO(self._form.getLoginHTML()),
-                self._form.getMIMEType(), self._form.getFilename())
+                self.getMIMEType(), self.getFilename())
 
 
     def getMIMEType(self):
@@ -334,14 +334,14 @@ class ParameterHandler(IParameterHandler):
 
     def handleParameters(self, parameters):
         if 'username' in parameters:
-            self._form.getWindow().addURIHandler(self.uriHandler)
+            self._form.getWindow().addURIHandler(self._form.uriHandler)
             params = dict()
             # expecting single params
             for key in parameters:
-                value = parameters[key][0]
+                value = parameters.get(key)
                 params[key] = value
             event = LoginEvent(params, self._form)
-            self.fireEvent(event)
+            self._form.fireEvent(event)
 
 
 class UriHandler(IUriHandler):
@@ -355,10 +355,10 @@ class UriHandler(IUriHandler):
 
     def handleURI(self, context, relativeUri):
         if relativeUri is not None and 'loginHandler' in relativeUri:
-            if self._form.window is not None:
-                self._form.window.removeURIHandler(self)
-            downloadStream = DownloadStream(StringIO(), 'text/html',
-                    'loginSuccesfull')
+            if self._form._window is not None:
+                self._form._window.removeURIHandler(self)
+            downloadStream = DownloadStream(StringIO(self._responce),
+                    'text/html', 'loginSuccesfull')
             downloadStream.setCacheTime(-1)
             return downloadStream
         else:

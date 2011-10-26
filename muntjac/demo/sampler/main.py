@@ -4,8 +4,8 @@ from muntjac.util import run_app
 from muntjac.application import Application
 from muntjac.ui.window import Window
 
-from muntjac.demo.sampler.features.dragndrop.DragDropTreeSortingExample \
-    import DragDropTreeSortingExample as Example
+from muntjac.demo.sampler.features.form.LoginFormExample \
+    import LoginFormExample as Example
 
 
 class App(Application):

@@ -20,6 +20,8 @@ class FormPojoExample(VerticalLayout):
     _COMMON_FIELD_WIDTH = '12em'
 
     def __init__(self):
+        super(FormPojoExample, self).__init__()
+
         self._person = Person()  # a person POJO
         personItem = BeanItem(self._person)  # item from POJO
 
@@ -44,51 +46,15 @@ class FormPojoExample(VerticalLayout):
         buttons = HorizontalLayout()
         buttons.setSpacing(True)
 
-
-        class DiscardListener(button.IClickListener):
-
-            def __init__(self, personForm):
-                self._personForm = personForm
-
-
-            def buttonClick(self, event):
-                self._personForm.discard()
-
-
         discardChanges = Button('Discard changes', DiscardListener(personForm))
         discardChanges.setStyleName(BaseTheme.BUTTON_LINK)
         buttons.addComponent(discardChanges)
         buttons.setComponentAlignment(discardChanges, Alignment.MIDDLE_LEFT)
 
-
-        class ApplyListener(button.IClickListener):
-
-            def __init__(self, personForm):
-                self._personForm = personForm
-
-
-            def buttonClick(self, event):
-                try:
-                    self.personForm.commit()
-                except Exception:
-                    pass  # Ignored, we'll let the Form handle the errors
-
-
         aply = Button('Apply', ApplyListener(personForm))
         buttons.addComponent(aply)
         personForm.getFooter().addComponent(buttons)
         personForm.getFooter().setMargin(False, False, True, True)
-
-
-        class InternalStateListener(button.IClickListener):
-
-            def __init__(self, c):
-                self._c = c
-
-
-            def buttonClick(self, event):
-                self._c.showPojoState()
-
 
         # button for showing the internal state of the POJO
         l = InternalStateListener(self)
@@ -109,10 +75,42 @@ class FormPojoExample(VerticalLayout):
         self.getWindow().showNotification(n)
 
 
+class DiscardListener(button.IClickListener):
+
+    def __init__(self, personForm):
+        self._personForm = personForm
+
+    def buttonClick(self, event):
+        self._personForm.discard()
+
+
+class ApplyListener(button.IClickListener):
+
+    def __init__(self, personForm):
+        self._personForm = personForm
+
+    def buttonClick(self, event):
+        try:
+            self.personForm.commit()
+        except Exception:
+            pass  # Ignored, we'll let the Form handle the errors
+
+
+class InternalStateListener(button.IClickListener):
+
+    def __init__(self, c):
+        self._c = c
+
+    def buttonClick(self, event):
+        self._c.showPojoState()
+
+
 class PersonFieldFactory(DefaultFieldFactory):
 
     def __init__(self, c):
         self._c = c
+
+        super(PersonFieldFactory, self).__init__()
 
         self.countries = ComboBox('Country')
         self.countries.setWidth(self._c._COMMON_FIELD_WIDTH)
@@ -190,54 +188,41 @@ class Person(object):
         self._password = ''
         self._countryCode = ''
 
-
     def getFirstName(self):
         return self._firstName
-
 
     def setFirstName(self, firstName):
         self._firstName = firstName
 
-
     def getLastName(self):
         return self._lastName
-
 
     def setLastName(self, lastName):
         self._lastName = lastName
 
-
     def getBirthdate(self):
         return self._birthdate
-
 
     def setBirthdate(self, birthdate):
         self._birthdate = birthdate
 
-
     def getShoesize(self):
         return self._shoesize
-
 
     def setShoesize(self, shoesize):
         self._shoesize = shoesize
 
-
     def getPassword(self):
         return self._password
-
 
     def setPassword(self, password):
         self._password = password
 
-
     def getUuid(self):
         return self._uuid
 
-
     def getCountryCode(self):
         return self._countryCode
-
 
     def setCountryCode(self, countryCode):
         self._countryCode = countryCode
@@ -248,7 +233,6 @@ class IntegerValidator(IValidator):
     def __init__(self, message):
         self._message = message
 
-
     def isValid(self, value):
         if (value is None) or (not isinstance(value, str)):
             return False
@@ -257,7 +241,6 @@ class IntegerValidator(IValidator):
         except Exception:
             return False
         return True
-
 
     def validate(self, value):
         if not self.isValid(value):

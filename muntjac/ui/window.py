@@ -363,7 +363,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
             if self._parameterHandlerList is None:
                 self._parameterHandlerList = list()
             if handler not in self._parameterHandlerList:
-                self._parameterHandlerList.addLast(handler)
+                self._parameterHandlerList.append(handler)
 
 
     def removeParameterHandler(self, handler):

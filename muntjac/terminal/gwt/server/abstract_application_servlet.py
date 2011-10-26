@@ -761,12 +761,12 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
             if cacheTime <= 0:
                 response.setHeader('Cache-Control', 'no-cache')
                 response.setHeader('Pragma', 'no-cache')
-                response.setHeader('Expires', 0)
+                response.setHeader('Expires', '0')
             else:
                 response.setHeader('Cache-Control',
-                                   'max-age=' + (cacheTime / 1000))
+                                   'max-age=' + str(cacheTime / 1000))
                 response.setHeader('Expires',
-                                   1000 * time.time() + cacheTime)
+                                   str(1000 * time.time() + cacheTime))
                 # Required to apply caching in some Tomcats
                 response.setHeader('Pragma', 'cache')
 
