@@ -20,7 +20,6 @@ from muntjac.event import field_events
 from muntjac.data.util.filter.simple_string_filter import SimpleStringFilter
 from muntjac.data.container import IContainer, IFilterable, IIndexed
 from muntjac.ui import abstract_select
-from muntjac.ui.abstract_component import AbstractComponent
 
 from muntjac.event.field_events import \
     FocusEvent, BlurEvent, IBlurListener, IFocusListener
@@ -163,9 +162,9 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
             self._currentPage = 0
             self._filterstring = ''
 
-        nullFilteredOut = (self._filterstring is not None
-                and self._filterstring != ''
-                and self._filteringMode != self.FILTERINGMODE_OFF)
+        nullFilteredOut = ((self._filterstring is not None)
+                and (self._filterstring != '')
+                and (self._filteringMode != self.FILTERINGMODE_OFF))
         # null option is needed and not filtered out, even if not on current
         # page
         nullOptionVisible = needNullSelectOption and not nullFilteredOut
@@ -179,8 +178,8 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
             self._filteredSize = len(options)
             options = self.sanitetizeList(options, nullOptionVisible)
 
-        paintNullSelection = (needNullSelectOption and self._currentPage == 0
-                and not nullFilteredOut)
+        paintNullSelection = (needNullSelectOption and (self._currentPage == 0)
+                and (not nullFilteredOut))
 
         if paintNullSelection:
             target.startTag('so')
@@ -194,9 +193,10 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
             try:
                 idd = i.next()
 
-                if (not self.isNullSelectionAllowed() and idd is not None
-                        and idd == self.getNullSelectionItemId()
-                        and not self.isSelected(idd)):
+                if ((not self.isNullSelectionAllowed())
+                        and (idd is not None)
+                        and (idd == self.getNullSelectionItemId())
+                        and (not self.isSelected(idd))):
                     continue
 
                 # Gets the option attribute values
@@ -246,8 +246,8 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
 
         # Hide the error indicator if needed
         if (self.isRequired() and self.isEmpty()
-                and self.getComponentError() is None
-                and self.getErrorMessage() is not None):
+                and (self.getComponentError() is None)
+                and (self.getErrorMessage() is not None)):
             target.addAttribute('hideErrors', True)
 
 
@@ -301,8 +301,8 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
         # to page with the selected item after filtering if accepted by
         # filter
         selection = self.getValue()
-        if (self.isScrollToSelectedItem() and not self._optionRequest
-                and not self.isMultiSelect() and selection is not None):
+        if (self.isScrollToSelectedItem() and (not self._optionRequest)
+                and (not self.isMultiSelect()) and (selection is not None)):
             # ensure proper page
             indexToEnsureInView = indexed.indexOfId(selection)
 
@@ -316,7 +316,7 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
 
         options = list()
         i = first
-        while i <= last and i < self._filteredSize:
+        while (i <= last) and (i < self._filteredSize):
             options.append( indexed.getIdByIndex(i) )
             i += 1
 
@@ -341,7 +341,7 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
         @return
         """
         fltr = None
-        if None is not filterString and not ('' == filterString):
+        if filterString is not None and filterString != '':
             test = filteringMode
             if test == self.FILTERINGMODE_OFF:
                 pass
@@ -374,7 +374,7 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
                    flag to indicate if nullselect option needs to be taken
                    into consideration
         """
-        if self.pageLength != 0 and len(options) > self.pageLength:
+        if (self.pageLength != 0) and (len(options) > self.pageLength):
 
             indexToEnsureInView = -1
 
@@ -382,8 +382,9 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
             # to page with the selected item after filtering if accepted by
             # filter
             selection = self.getValue()
-            if (self.isScrollToSelectedItem() and not self._optionRequest
-                    and not self.isMultiSelect() and selection is not None):
+            if (self.isScrollToSelectedItem() and (not self._optionRequest)
+                    and (not self.isMultiSelect())
+                    and (selection is not None)):
                 # ensure proper page
                 try:
                     indexToEnsureInView = options.index(selection)
@@ -420,7 +421,7 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
         # Not all options are visible, find out which ones are on the
         # current "page".
         first = self._currentPage * self.pageLength
-        if needNullSelectOption and self._currentPage > 0:
+        if needNullSelectOption and (self._currentPage > 0):
             first -= 1
         return first
 
@@ -443,7 +444,7 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
         @return index in the filtered view of the last item on the page
         """
         # page length usable for non-null items
-        if needNullSelectOption and self._currentPage == 0:
+        if needNullSelectOption and (self._currentPage == 0):
             effectivePageLength = self.pageLength - 1
         else:
             effectivePageLength = self.pageLength
@@ -481,7 +482,7 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
             page = newPage
 
         # adjust the current page if beyond the end of the list
-        if page * self.pageLength > size:
+        if (page * self.pageLength) > size:
             if needNullSelectOption:
                 page = (size + 1) / self.pageLength
             else:
@@ -499,8 +500,8 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
 
         @return
         """
-        if (self._filterstring is None or '' == self._filterstring
-                or self.FILTERINGMODE_OFF == self._filteringMode):
+        if ((self._filterstring is None) or (self._filterstring == '')
+                or (self.FILTERINGMODE_OFF == self._filteringMode)):
             self._prevfilterstring = None
             self._filteredOptions = list(self.getItemIds())
             return self._filteredOptions
@@ -508,7 +509,7 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
         if self._filterstring == self._prevfilterstring:
             return self._filteredOptions
 
-        if (self._prevfilterstring is not None
+        if ((self._prevfilterstring is not None)
                 and self._filterstring.startswith(self._prevfilterstring)):
             items = self._filteredOptions
         else:
@@ -518,7 +519,7 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
         self._filteredOptions = list()
         for itemId in items:
             caption = self.getItemCaption(itemId)
-            if caption is None or caption == '':
+            if (caption is None) or (caption == ''):
                 continue
             else:
                 caption = caption.lower()
@@ -570,7 +571,7 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
                     else:
                         newsel = set(newsel)
                     newsel = newsel.difference(visible)
-                    newsel.update(s)
+                    newsel = newsel.union(s)
                     self.setValue(newsel, True)
             else:
                 # Single select mode
@@ -579,11 +580,12 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
                     # Allows deselection only if the deselected item is visible
                     current = self.getValue()
                     visible = self.getVisibleItemIds()
-                    if visible is not None and current in visible:
+                    if (visible is not None) and (current in visible):
                         self.setValue(None, True)
                 else:
                     idd = self.itemIdMapper.get(ka[0])
-                    if idd is not None and idd == self.getNullSelectionItemId():
+                    if ((idd is not None)
+                            and (idd == self.getNullSelectionItemId())):
                         self.setValue(None, True)
                     else:
                         self.setValue(idd, True)
@@ -600,7 +602,7 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
         elif self.isNewItemsAllowed():
             # New option entered (and it is allowed)
             newitem = variables.get('newitem')
-            if newitem is not None and len(newitem) > 0:
+            if (newitem is not None) and (len(newitem) > 0):
                 self.getNewItemHandler().addNewItem(newitem)
                 # rebuild list
                 self._filterstring = None
@@ -650,6 +652,7 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
 
         if columns < 0:
             columns = 0
+
         if self._columns != columns:
             self._columns = columns
             self.setWidth(columns, Select.UNITS_EM)

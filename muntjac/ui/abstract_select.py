@@ -223,8 +223,8 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
         # Support for external null selection item id
         ids = self.getItemIds()
         if (self.isNullSelectionAllowed()
-                and self.getNullSelectionItemId() is not None
-                and self.getNullSelectionItemId() not in ids):
+                and (self.getNullSelectionItemId() is not None)
+                and (self.getNullSelectionItemId() not in ids)):
             idd = self.getNullSelectionItemId()
             # Paints option
             target.startTag('so')
@@ -238,8 +238,8 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
         # Paints the available selection options from data source
         for idd in i:
             if (not self.isNullSelectionAllowed()
-                    and idd is not None
-                    and idd == self.getNullSelectionItemId()):
+                    and (idd is not None)
+                    and (idd == self.getNullSelectionItemId())):
                 # Remove item if it's the null selection item but null
                 # selection is not allowed
                 continue
@@ -250,7 +250,7 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
             self.getCaptionChangeListener().addNotifierForItem(idd)
             target.startTag('so')
             self.paintItem(target, idd)
-            if self.isSelected(idd) and keyIndex < len(selectedKeys):
+            if self.isSelected(idd) and (keyIndex < len(selectedKeys)):
                 selectedKeys[keyIndex] = key
                 keyIndex += 1  # post increment
             target.endTag('so')
@@ -270,7 +270,7 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
             target.addAttribute('icon', icon)
 
         target.addAttribute('caption', caption)
-        if itemId is not None and itemId == self.getNullSelectionItemId():
+        if (itemId is not None) and (itemId == self.getNullSelectionItemId()):
             target.addAttribute('nullselection', True)
 
         target.addAttribute('key', key)
@@ -288,7 +288,7 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
         # New option entered (and it is allowed)
         if self.isNewItemsAllowed():
             newitem = variables.get('newitem')
-            if newitem is not None and len(newitem) > 0:
+            if (newitem is not None) and (len(newitem) > 0):
                 self.getNewItemHandler().addNewItem(newitem)
 
         # Selection change
@@ -310,10 +310,10 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
                         # skip empty selection if nullselection
                         # is not allowed
                         self.requestRepaint()
-                    elif idd is not None and self.containsId(idd):
+                    elif (idd is not None) and self.containsId(idd):
                         s.append(idd)
 
-                if not self.isNullSelectionAllowed() and len(s) < 1:
+                if not self.isNullSelectionAllowed() and (len(s) < 1):
                     # empty selection not allowed, keep old value
                     self.requestRepaint()
                     return
@@ -327,8 +327,8 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
                         newsel = set()
                     else:
                         newsel = set(newsel)
-                    newsel.difference(visible)
-                    newsel.union(s)
+                    newsel = newsel.difference(visible)
+                    newsel = newsel.union(s)
                     self.setValue(newsel, True)
             else:
                 # Single select mode
@@ -347,7 +347,7 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
                         self.setValue(None, True)
                 else:
                     idd = self.itemIdMapper.get(ka[0])
-                    if not self.isNullSelectionAllowed() and idd is None:
+                    if not self.isNullSelectionAllowed() and (idd is None):
                         self.requestRepaint()
                     elif (idd is not None
                             and idd == self.getNullSelectionItemId()):
@@ -463,7 +463,7 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
                     super(AbstractSelect, self).setValue(set(newValue),
                             repaintIsNotNeeded)
 
-            elif newValue is None or self.items.containsId(newValue):
+            elif (newValue is None) or (self.items.containsId(newValue)):
                 super(AbstractSelect, self).setValue(newValue,
                         repaintIsNotNeeded)
 
@@ -541,8 +541,8 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
         retval = self.items.addContainerProperty(propertyId, typ,
                 defaultValue)
 
-        if (retval and not isinstance(self.items,
-                container.IPropertySetChangeNotifier)):
+        if (retval and (not isinstance(self.items,
+                container.IPropertySetChangeNotifier))):
             self.firePropertySetChange()
 
         return retval
@@ -592,14 +592,14 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
         """
         if itemId is None:
             retval = self.items.addItem()
-            if retval is not None and not isinstance(self.items,
-                    container.IItemSetChangeNotifier):
+            if (retval is not None) and (not isinstance(self.items,
+                    container.IItemSetChangeNotifier)):
                 self.fireItemSetChange()
             return retval
         else:
             retval = self.items.addItem(itemId)
-            if retval is not None and not isinstance(self.items,
-                    container.IItemSetChangeNotifier):
+            if (retval is not None) and (not isinstance(self.items,
+                    container.IItemSetChangeNotifier)):
                 self.fireItemSetChange()
             return retval
 
@@ -608,8 +608,8 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
         self.unselect(itemId)
         retval = self.items.removeItem(itemId)
         self.itemIdMapper.remove(itemId)
-        if retval and not isinstance(self.items,
-                    container.IItemSetChangeNotifier):
+        if retval and (not isinstance(self.items,
+                    container.IItemSetChangeNotifier)):
             self.fireItemSetChange()
         return retval
 
@@ -625,8 +625,8 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
         @see com.vaadin.data.IContainer#removeContainerProperty()
         """
         retval = self.items.removeContainerProperty(propertyId)
-        if retval and not isinstance(self.items,
-                container.IPropertySetChangeNotifier):
+        if retval and (not isinstance(self.items,
+                container.IPropertySetChangeNotifier)):
             self.firePropertySetChange()
         return retval
 
@@ -711,7 +711,7 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
         @param multiSelect
                    the New value of property multiSelect.
         """
-        if multiSelect and self.getNullSelectionItemId() is not None:
+        if multiSelect and (self.getNullSelectionItemId() is not None):
             raise ValueError, ('Multiselect and NullSelectionItemId can '
                     'not be set at the same time.')
 
@@ -898,8 +898,8 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
         @param mode
                    the One of the modes listed above.
         """
-        if (self.ITEM_CAPTION_MODE_ID <= mode
-                and mode <= self.ITEM_CAPTION_MODE_PROPERTY):
+        if ((self.ITEM_CAPTION_MODE_ID <= mode)
+                and (mode <= self.ITEM_CAPTION_MODE_PROPERTY)):
             self._itemCaptionMode = mode
             self.requestRepaint()
 
@@ -1059,7 +1059,7 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
         """
         if not self.isMultiSelect():
             self.setValue(itemId)
-        elif (not self.isSelected(itemId) and itemId is not None
+        elif (not self.isSelected(itemId) and (itemId is not None)
                 and self.items.containsId(itemId)):
             s = set(self.getValue())
             s.add(itemId)
@@ -1182,8 +1182,8 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
 
     def firePropertySetChange(self):
         """Fires the property set change event."""
-        if (self._propertySetEventListeners is not None
-                and len(self._propertySetEventListeners) > 0):
+        if ((self._propertySetEventListeners is not None)
+                and (len(self._propertySetEventListeners) > 0)):
             event = IPropertySetChangeEvent(self)
             listeners = list(self._propertySetEventListeners)
             for l in listeners:
@@ -1193,8 +1193,8 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
 
     def fireItemSetChange(self):
         """Fires the item set change event."""
-        if (self._itemSetEventListeners is not None
-                and len(self._itemSetEventListeners) > 0):
+        if ((self._itemSetEventListeners is not None)
+                and (len(self._itemSetEventListeners) > 0)):
             event = IItemSetChangeEvent(self)
             listeners = list(self._itemSetEventListeners)
             for i in range(len(listeners)):
@@ -1271,7 +1271,7 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
         @see #isSelected(Object)
         @see #select(Object)
         """
-        if nullSelectionItemId is not None and self.isMultiSelect():
+        if (nullSelectionItemId is not None) and self.isMultiSelect():
             raise ValueError, ('Multiselect and NullSelectionItemId can '
                     'not be set at the same time.')
 
@@ -1346,7 +1346,7 @@ class MultiSelectMode(object):
 
     @classmethod
     def values(cls):
-        return cls._enum_values[:]
+        return cls._values[:]
 
 
 class INewItemHandler(object):
@@ -1550,11 +1550,9 @@ class AbstractItemSetCriterion(ClientSideCriterion):
         super(AbstractItemSetCriterion, self).paintContent(target)
         keys = [None] * len(self.itemIds)
 
-        i = 0
-        for itemId in self.itemIds:
+        for i, itemId in enumerate(self.itemIds):
             key = self.select.itemIdMapper.key(itemId)
             keys[i] = key
-            i += 1
 
         target.addAttribute('keys', keys)
         target.addAttribute('s', self.select)
@@ -1607,7 +1605,7 @@ class AcceptItem(AbstractItemSetCriterion):
         if transferable.getSourceComponent() != self.select:
             return False
 
-        return self.itemIds.contains(transferable.getItemId())
+        return transferable.getItemId() in self.itemIds
 
     # A simple accept criterion which ensures that {@link Transferable}
     # contains an {@link IItem} (or actually its identifier). In other words
