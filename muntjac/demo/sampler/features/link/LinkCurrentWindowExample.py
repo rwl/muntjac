@@ -11,6 +11,8 @@ class LinkCurrentWindowExample(VerticalLayout):
     _ICON = ThemeResource('../sampler/icons/icon_world.gif')
 
     def __init__(self):
+        super(LinkCurrentWindowExample, self).__init__()
+
         self.setSpacing(True)
 
         # Link w/ text and tooltip

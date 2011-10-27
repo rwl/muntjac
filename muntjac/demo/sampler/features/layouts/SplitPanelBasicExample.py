@@ -1,7 +1,9 @@
 
 from muntjac.api import \
     (VerticalLayout, VerticalSplitPanel, Label, HorizontalSplitPanel,
-     button, CheckBox)
+     CheckBox)
+
+from muntjac.ui.button import IClickListener
 
 from muntjac.terminal.sizeable import ISizeable
 
@@ -22,6 +24,8 @@ class SplitPanelBasicExample(VerticalLayout):
             'The quick brown fox jumps over the lazy dog. ')
 
     def __init__(self):
+        super(SplitPanelBasicExample, self).__init__()
+
         # First a vertical SplitPanel
         vert = VerticalSplitPanel()
         vert.setHeight('450px')
@@ -43,17 +47,18 @@ class SplitPanelBasicExample(VerticalLayout):
         # right component:
         horiz.addComponent(Label(self.brownFox))
 
-        class LockListener(button.IClickListener):
-
-            def __init__(self, vert, horiz):
-                self._vert = vert
-                self._horiz = horiz
-
-            def buttonClick(self, event):
-                self._vert.setLocked( bool(event.getButton()) )
-                self._horiz.setLocked( bool(event.getButton()) )
-
         # Lock toggle button
         toggleLocked = CheckBox('Splits locked', LockListener(vert, horiz))
         toggleLocked.setImmediate(True)
         self.addComponent(toggleLocked)
+
+
+class LockListener(IClickListener):
+
+    def __init__(self, vert, horiz):
+        self._vert = vert
+        self._horiz = horiz
+
+    def buttonClick(self, event):  # FIXME: only works once
+        self._vert.setLocked( event.getButton().booleanValue() )
+        self._horiz.setLocked( event.getButton().booleanValue() )

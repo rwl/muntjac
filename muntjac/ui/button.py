@@ -249,7 +249,7 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
         @return True iff the button is pressed down or checked.
         """
         value = self.getValue()
-        return False if None is value else bool(value)
+        return False if value is None else bool(value)
 
 
     def setImmediate(self, immediate):
@@ -361,7 +361,7 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
 
     def setInternalValue(self, newValue):
         # Make sure only booleans get through
-        if None is not newValue and not isinstance(newValue, bool):
+        if newValue is not None and not isinstance(newValue, bool):
             raise ValueError, (self.__class__.__name__ +
                     ' only accepts Boolean values')
 

@@ -44,7 +44,7 @@ class MenuBar(AbstractComponent):
         self._collapseItems = None
         self._submenuIcon = None
         self._moreItem = None
-        self._openRootOnHover = None
+        self._openRootOnHover = False
 
         self.setCollapse(True)
         self.setMoreMenuItem(None)
@@ -140,7 +140,7 @@ class MenuBar(AbstractComponent):
             # Go through all the items in the menu
             while not found and len(items) > 0:
                 tmpItem = items.pop()
-                found = clickedId.intValue() == tmpItem.getId()
+                found = clickedId == tmpItem.getId()
 
                 if tmpItem.hasChildren():
                     for c in tmpItem.getChildren():

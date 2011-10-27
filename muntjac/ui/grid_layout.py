@@ -15,7 +15,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from warnings import warn
-from muntjac.ui.abstract_component import AbstractComponent
 
 try:
     from cStringIO import StringIO

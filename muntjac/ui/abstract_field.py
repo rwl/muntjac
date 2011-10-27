@@ -370,8 +370,8 @@ class AbstractField(AbstractComponent, field.IField,
 
             # Repaint is needed even when the client thinks that it knows
             # the new state if validity of the component may change
-            if (repaintIsNotNeeded and self.isRequired()
-                    or (self.getValidators() is not None)):
+            if (repaintIsNotNeeded and (self.isRequired()
+                    or (self.getValidators() is not None))):
                 repaintIsNotNeeded = False
 
             # If invalid values are not allowed, the value must be checked

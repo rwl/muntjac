@@ -13,6 +13,8 @@ class LinkSizedWindowExample(VerticalLayout):
     _TARGET = ExternalResource('http://www.google.com/m')
 
     def __init__(self):
+        super(LinkSizedWindowExample, self).__init__()
+
         self.setSpacing(True)
 
         # Link w/ text and tooltip

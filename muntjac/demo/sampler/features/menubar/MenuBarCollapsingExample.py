@@ -7,6 +7,8 @@ from muntjac.terminal.external_resource import ExternalResource
 class MenuBarCollapsingExample(VerticalLayout):
 
     def __init__(self):
+        super(MenuBarCollapsingExample, self).__init__()
+
         self._menubar = MenuBar()
 
         menuCommand = MenuCommand(self)
@@ -32,7 +34,7 @@ class MenuBarCollapsingExample(VerticalLayout):
 
         # Generate bogus items so we can show the collapsing
         for i in range(5):
-            self._menubar.addItem('Item ' + i, menuCommand).setEnabled(False)
+            self._menubar.addItem('Item %d' % i, menuCommand).setEnabled(False)
 
         edit = self._menubar.addItem('Edit', None)
         edit.addItem('Undo', menuCommand)
@@ -46,15 +48,6 @@ class MenuBarCollapsingExample(VerticalLayout):
         find = edit.addItem('Find/Replace', menuCommand)
 
         # Actions can be added inline as well, of course
-        class SearchCommand(ICommand):
-
-            def __init__(self, c):
-                self._c = c
-
-            def menuSelected(self, selectedItem):
-                er = ExternalResource('http://www.google.com')
-                self._c.getWindow().open(er)
-
         find.addItem('Google Search', SearchCommand(self))
         find.addSeparator()
         find.addItem('Find/Replace...', menuCommand)
@@ -71,9 +64,19 @@ class MenuBarCollapsingExample(VerticalLayout):
 
         # Generate bogus items so we can show the collapsing
         for i in range(5):
-            self._menubar.addItem('Item ' + i, menuCommand).setEnabled(False)
+            self._menubar.addItem('Item %d' % i, menuCommand).setEnabled(False)
 
         self.addComponent(self._menubar)
+
+
+class SearchCommand(ICommand):
+
+    def __init__(self, c):
+        self._c = c
+
+    def menuSelected(self, selectedItem):
+        er = ExternalResource('http://www.google.com')
+        self._c.getWindow().open(er)
 
 
 class MenuCommand(ICommand):
@@ -82,4 +85,5 @@ class MenuCommand(ICommand):
         self._c = c
 
     def menuSelected(self, selectedItem):
-        self._c.getWindow().showNotification('Action ' + selectedItem.getText())
+        self._c.getWindow().showNotification('Action '
+                + selectedItem.getText())

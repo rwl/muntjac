@@ -10,6 +10,8 @@ from muntjac.api import \
 class SplitPanelPositioningExample(VerticalLayout):
 
     def __init__(self):
+        super(SplitPanelPositioningExample, self).__init__()
+
         self.setStyleName('split-panel-positioning-example')
         self.setSpacing(True)
 
@@ -57,33 +59,8 @@ class SplitPanelPositioningExample(VerticalLayout):
         self._measurePositionFromLeft.setValue('30% from left')
         self._measurePositionFromLeft.setImmediate(True)
 
-
-        class LeftListener(IValueChangeListener):
-
-            def __init__(self, c, leftArea, rightArea):
-                self._c = c
-                self._leftArea = leftArea
-                self._rightArea = rightArea
-
-            def valueChange(self, event):
-                if event.getProperty().getValue() == '30% from right':
-                    # Measure 30% from the left
-                    self._leftArea.removeStyleName('measured-from-left')
-                    self._rightArea.removeStyleName('measured-from-bottom')
-                    self._rightArea.addStyleName('measured-from-right')
-                    self._c._horizontalSplitPanel.setSplitPosition(30,
-                            ISizeable.UNITS_PERCENTAGE, True)
-                else:
-                    # Measure 30% from right
-                    self.rightArea.removeStyleName('measured-from-right')
-                    self.leftArea.removeStyleName('measured-from-bottom')
-                    self.leftArea.addStyleName('measured-from-left')
-                    self._c._horizontalSplitPanel.setSplitPosition(30,
-                            ISizeable.UNITS_PERCENTAGE, False)
-
-
-        l = LeftListener(self, leftArea, rightArea)
-        self._measurePositionFromLeft.addListener(l)
+        l = LeftRightListener(self, leftArea, rightArea)
+        self._measurePositionFromLeft.addListener(l, IValueChangeListener)
         controls.addComponent(self._measurePositionFromLeft)
         controls.setComponentAlignment(self._measurePositionFromLeft,
                 Alignment.MIDDLE_CENTER)
@@ -93,38 +70,61 @@ class SplitPanelPositioningExample(VerticalLayout):
         self._measurePositionFromTop.setValue('100px from top')
         self._measurePositionFromTop.setImmediate(True)
 
-
-        class TopListener(IValueChangeListener):
-
-            def __init__(self, c, leftArea, rightArea, topArea):
-                self._c = c
-                self._leftArea = leftArea
-                self._rightArea = rightArea
-                self._topArea = topArea
-
-            def valueChange(self, event):
-                if event.getProperty().getValue() == '100px from bottom':
-                    # Measure 100px from the bottom
-                    self.topArea.removeStyleName('measured-from-top')
-                    if self._c._measurePositionFromLeft.getValue() == '30% from left':
-                        self._rightArea.addStyleName('measured-from-bottom')
-                    else:
-                        self._leftArea.addStyleName('measured-from-bottom')
-                    self._c._verticalSplitPanel.setSplitPosition(100,
-                            ISizeable.UNITS_PIXELS, True)
-                else:
-                    # Measure 100px from the top
-                    if self._c._measurePositionFromLeft.getValue() == '30% from left':
-                        self._rightArea.removeStyleName('measured-from-bottom')
-                    else:
-                        self._leftArea.removeStyleName('measured-from-bottom')
-                    self.topArea.addStyleName('measured-from-top')
-                    self._c._verticalSplitPanel.setSplitPosition(100,
-                            ISizeable.UNITS_PIXELS, False)
-
-
-        l = TopListener(self, leftArea, rightArea, topArea)
-        self._measurePositionFromTop.addListener(l)
+        l = TopBottomListener(self, leftArea, rightArea, topArea)
+        self._measurePositionFromTop.addListener(l, IValueChangeListener)
         controls.addComponent(self._measurePositionFromTop)
         controls.setComponentAlignment(self._measurePositionFromTop,
                 Alignment.MIDDLE_CENTER)
+
+
+class LeftRightListener(IValueChangeListener):
+
+    def __init__(self, c, leftArea, rightArea):
+        self._c = c
+        self._leftArea = leftArea
+        self._rightArea = rightArea
+
+    def valueChange(self, event):
+        if event.getProperty().getValue() == '30% from right':
+            # Measure 30% from the left
+            self._leftArea.removeStyleName('measured-from-left')
+            self._rightArea.removeStyleName('measured-from-bottom')
+            self._rightArea.addStyleName('measured-from-right')
+            self._c._horizontalSplitPanel.setSplitPosition(30,
+                    ISizeable.UNITS_PERCENTAGE, True)
+        else:
+            # Measure 30% from right
+            self._rightArea.removeStyleName('measured-from-right')
+            self._leftArea.removeStyleName('measured-from-bottom')
+            self._leftArea.addStyleName('measured-from-left')
+            self._c._horizontalSplitPanel.setSplitPosition(30,
+                    ISizeable.UNITS_PERCENTAGE, False)
+
+
+class TopBottomListener(IValueChangeListener):
+
+    def __init__(self, c, leftArea, rightArea, topArea):
+        self._c = c
+        self._leftArea = leftArea
+        self._rightArea = rightArea
+        self._topArea = topArea
+
+    def valueChange(self, event):
+        if event.getProperty().getValue() == '100px from bottom':
+            # Measure 100px from the bottom
+            self._topArea.removeStyleName('measured-from-top')
+            if self._c._measurePositionFromLeft.getValue() == '30% from left':
+                self._rightArea.addStyleName('measured-from-bottom')
+            else:
+                self._leftArea.addStyleName('measured-from-bottom')
+            self._c._verticalSplitPanel.setSplitPosition(100,
+                    ISizeable.UNITS_PIXELS, True)
+        else:
+            # Measure 100px from the top
+            if self._c._measurePositionFromLeft.getValue() == '30% from left':
+                self._rightArea.removeStyleName('measured-from-bottom')
+            else:
+                self._leftArea.removeStyleName('measured-from-bottom')
+            self._topArea.addStyleName('measured-from-top')
+            self._c._verticalSplitPanel.setSplitPosition(100,
+                    ISizeable.UNITS_PIXELS, False)

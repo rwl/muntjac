@@ -500,7 +500,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
         if len(self._openList) > 0:
             for ol in self._openList:
                 ol.paintContent(target)
-            self._openList.clear()
+            del self._openList[:]
 
         # Contents of the window panel is painted
         super(Window, self).paintContent(target)

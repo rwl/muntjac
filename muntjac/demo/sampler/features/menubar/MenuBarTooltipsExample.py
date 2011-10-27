@@ -7,39 +7,42 @@ from muntjac.ui.menu_bar import ICommand
 class MenuBarTooltipsExample(VerticalLayout):
 
     def __init__(self):
+        super(MenuBarTooltipsExample, self).__init__()
+
         self._menubar = MenuBar()
 
         menuCommand = MenuCommand(self)
 
         # Add tooltip to the menubar itself
-        self._menubar.setDescription('Perform some actions by selecting them from the menus')
+        self._menubar.setDescription('Perform some actions by selecting '
+                'them from the menus')
 
-        # Save reference to individual items so we can add sub-menu items to
-        # them
+        # Save reference to individual items so we can add sub-menu
+        # items to them
         f = self._menubar.addItem('File', None)
         f.setDescription('File menu')
         newItem = f.addItem('New', None)
         newItem.setDescription('Add a new..')
-        opn = f.addItem('Open f...', menuCommand)
-        opn.setDescription('Retrieve a f from the filesystem')
+        opn = f.addItem('Open file...', menuCommand)
+        opn.setDescription('Retrieve a file from the filesystem')
         f.addSeparator()
 
         item = newItem.addItem('File', menuCommand)
-        item.setDescription('Open a f')
+        item.setDescription('Open a file')
         item = newItem.addItem('Folder', menuCommand)
         item.setDescription('Open a folder')
         item = newItem.addItem('Project...', menuCommand)
         item.setDescription('Open a project')
         item = f.addItem('Close', menuCommand)
-        item.setDescription('Closes the selected f')
+        item.setDescription('Closes the selected file')
         item = f.addItem('Close All', menuCommand)
         item.setDescription('Closes all files')
 
         f.addSeparator()
         item = f.addItem('Save', menuCommand)
-        item.setDescription('Saves the f')
+        item.setDescription('Saves the file')
         item = f.addItem('Save As...', menuCommand)
-        item.setDescription('Saves the f with a different name')
+        item.setDescription('Saves the file with a different name')
         item = f.addItem('Save All', menuCommand)
         item.setDescription('Saves all files')
 
@@ -64,15 +67,6 @@ class MenuBarTooltipsExample(VerticalLayout):
         find.setDescription('Find or Replace text')
 
         # Actions can be added inline as well, of course
-        class SearchCommand(ICommand):
-
-            def __init__(self, c):
-                self._c = c
-
-            def menuSelected(self, selectedItem):
-                er = ExternalResource('http://www.google.com')
-                self.getWindow().open(er)
-
         item = find.addItem('Google Search', SearchCommand(self))
         item.setDescription('Search with Google')
 
@@ -102,11 +96,21 @@ class MenuBarTooltipsExample(VerticalLayout):
         self.addComponent(self._menubar)
 
 
+class SearchCommand(ICommand):
+
+    def __init__(self, c):
+        self._c = c
+
+    def menuSelected(self, selectedItem):
+        er = ExternalResource('http://www.google.com')
+        self._c.getWindow().open(er)
+
+
 class MenuCommand(ICommand):
 
     def __init__(self, c):
         self._c = c
 
     def menuSelected(self, selectedItem):
-        self._c.getWindow().showNotification('Action ' + selectedItem.getText())
-
+        self._c.getWindow().showNotification('Action '
+                + selectedItem.getText())

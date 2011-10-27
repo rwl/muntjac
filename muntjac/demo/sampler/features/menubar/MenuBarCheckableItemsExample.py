@@ -6,6 +6,8 @@ from muntjac.ui.menu_bar import ICommand
 class MenuBarCheckableItemsExample(VerticalLayout):
 
     def __init__(self):
+        super(MenuBarCheckableItemsExample, self).__init__()
+
         self._menubar = MenuBar()
 
         menuCommand = MenuCommand(self)
@@ -55,7 +57,8 @@ class MenuCommand(ICommand):
     def menuSelected(self, selectedItem):
         if selectedItem.isCheckable():
             self._c.getWindow().showNotification('\'' + selectedItem.getText()
-                    + '\' was set to ' + selectedItem.isChecked())
+                    + '\' was set to '
+                    + ('true' if selectedItem.isChecked() else 'false'))
         else:
             self._c.getWindow().showNotification('Non-selectable item \''
                     + selectedItem.getText() + '\' was clicked')

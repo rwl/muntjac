@@ -1,13 +1,16 @@
 
 from muntjac.ui.vertical_layout import VerticalLayout
-from muntjac.api import MenuBar, button, Button
+from muntjac.api import MenuBar, Button
 from muntjac.ui.menu_bar import ICommand
 from muntjac.terminal.external_resource import ExternalResource
+from muntjac.ui.button import IClickListener
 
 
 class MenuBarHiddenItemsExample(VerticalLayout):
 
     def __init__(self):
+        super(MenuBarHiddenItemsExample, self).__init__()
+
         self._menubar = MenuBar()
 
         menuCommand = MenuCommand(self)
@@ -43,15 +46,6 @@ class MenuBarHiddenItemsExample(VerticalLayout):
         find = edit.addItem('Find/Replace', menuCommand)
 
         # Actions can be added inline as well, of course
-        class SearchCommand(ICommand):
-
-            def __init__(self, c):
-                self._c = c
-
-            def menuSelected(self, selectedItem):
-                er = ExternalResource('http://www.google.com')
-                self._c.getWindow().open(er)
-
         find.addItem('Google Search', SearchCommand(self))
         find.addSeparator()
         find.addItem('Find/Replace...', menuCommand)
@@ -67,31 +61,43 @@ class MenuBarHiddenItemsExample(VerticalLayout):
         view.addItem('Zoom Out', menuCommand)
 
         self.addComponent(self._menubar)
-
-        class HideListener(button.IClickListener):
-
-            def __init__(self, f):
-                self._f = f
-
-            def buttonClick(self, event):
-                self._f.setVisible(not self._f.isVisible())
-                event.getButton().setCaption('Hide File menu' if self._f.isVisible() else 'Show File menu')
-
         self.addComponent( Button('Hide File menu', HideListener(f)) )
-
-
-        class RedoListener(button.IClickListener):
-
-            def __init__(self, redo):
-                self._redo = redo
-
-            def buttonClick(self, event):
-                self._redo.setEnabled(not self._redo.isEnabled())
-                event.getButton().setCaption('Disable Edit -> Redo action' if self._redo.isEnabled() else 'Enable Edit -> Redo action')
 
         l = RedoListener(redo)
         self.addComponent( Button('Enable Edit -> Redo action', l) )
         self.setSpacing(True)
+
+
+class SearchCommand(ICommand):
+
+    def __init__(self, c):
+        self._c = c
+
+    def menuSelected(self, selectedItem):
+        er = ExternalResource('http://www.google.com')
+        self._c.getWindow().open(er)
+
+
+class HideListener(IClickListener):
+
+    def __init__(self, f):
+        self._f = f
+
+    def buttonClick(self, event):
+        self._f.setVisible(not self._f.isVisible())
+        event.getButton().setCaption('Hide File menu' \
+                if self._f.isVisible() else 'Show File menu')
+
+
+class RedoListener(IClickListener):
+
+    def __init__(self, redo):
+        self._redo = redo
+
+    def buttonClick(self, event):
+        self._redo.setEnabled(not self._redo.isEnabled())
+        event.getButton().setCaption('Disable Edit -> Redo action' \
+                if self._redo.isEnabled() else 'Enable Edit -> Redo action')
 
 
 class MenuCommand(ICommand):
@@ -100,4 +106,5 @@ class MenuCommand(ICommand):
         self._c = c
 
     def menuSelected(self, selectedItem):
-        self._c.getWindow().showNotification('Action ' + selectedItem.getText())
+        self._c.getWindow().showNotification('Action '
+                + selectedItem.getText())

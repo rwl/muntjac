@@ -51,7 +51,7 @@ class LayoutMarginExample(GridLayout, IClickListener):
 
 
     def buttonClick(self, event):
-        self._marginLayout.setMargin(
+        self._marginLayout.setMargin(  # FIXME:
             self._topMargin.booleanValue(),
             self._rightMargin.booleanValue(),
             self._bottomMargin.booleanValue(),

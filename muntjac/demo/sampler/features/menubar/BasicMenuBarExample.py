@@ -7,6 +7,8 @@ from muntjac.terminal.external_resource import ExternalResource
 class BasicMenuBarExample(VerticalLayout):
 
     def __init__(self):
+        super(BasicMenuBarExample, self).__init__()
+
         self._menubar = MenuBar()
 
         menuCommand = MenuCommand(self)
@@ -39,15 +41,6 @@ class BasicMenuBarExample(VerticalLayout):
         find = edit.addItem('Find/Replace', menuCommand)
 
         # Actions can be added inline as well, of course
-        class SearchCommand(ICommand):
-
-            def __init__(self, c):
-                self._c = c
-
-            def menuSelected(self, selectedItem):
-                er = ExternalResource('http://www.google.com')
-                self._c.getWindow().open(er)
-
         find.addItem('Google Search', SearchCommand(self))
         find.addSeparator()
         find.addItem('Find/Replace...', menuCommand)
@@ -63,6 +56,16 @@ class BasicMenuBarExample(VerticalLayout):
         view.addItem('Zoom Out', menuCommand)
 
         self.addComponent(self._menubar)
+
+
+class SearchCommand(ICommand):
+
+    def __init__(self, c):
+        self._c = c
+
+    def menuSelected(self, selectedItem):
+        er = ExternalResource('http://www.google.com')
+        self._c.getWindow().open(er)
 
 
 class MenuCommand(ICommand):

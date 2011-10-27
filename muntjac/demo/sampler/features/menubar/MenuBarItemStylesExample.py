@@ -7,6 +7,8 @@ from muntjac.terminal.external_resource import ExternalResource
 class MenuBarItemStylesExample(VerticalLayout):
 
     def __init__(self):
+        super(MenuBarItemStylesExample, self).__init__()
+
         self._menubar = MenuBar()
 
         menuCommand = MenuCommand(self)
@@ -18,7 +20,7 @@ class MenuBarItemStylesExample(VerticalLayout):
         f.addItem('Open f...', menuCommand)
         f.addSeparator()
         # Add a style name for a menu item, then use CSS to alter the visuals
-        f.setStyleName('f')
+        f.setStyleName('file')
         newItem.addItem('File', menuCommand)
         newItem.addItem('Folder', menuCommand)
         newItem.addItem('Project...', menuCommand)
@@ -41,15 +43,6 @@ class MenuBarItemStylesExample(VerticalLayout):
         find = edit.addItem('Find/Replace', menuCommand)
 
         # Actions can be added inline as well, of course
-        class SearchCommand(ICommand):
-
-            def __init__(self, c):
-                self._c = c
-
-            def menuSelected(self, selectedItem):
-                er = ExternalResource('http://www.google.com')
-                self.getWindow().open(er)
-
         find.addItem('Google Search', SearchCommand(self))
         find.addSeparator()
         find.addItem('Find/Replace...', menuCommand)
@@ -67,10 +60,21 @@ class MenuBarItemStylesExample(VerticalLayout):
         self.addComponent(self._menubar)
 
 
+class SearchCommand(ICommand):
+
+    def __init__(self, c):
+        self._c = c
+
+    def menuSelected(self, selectedItem):
+        er = ExternalResource('http://www.google.com')
+        self._c.getWindow().open(er)
+
+
 class MenuCommand(ICommand):
 
     def __init__(self, c):
         self._c = c
 
     def menuSelected(self, selectedItem):
-        self._c.getWindow().showNotification('Action ' + selectedItem.getText())
+        self._c.getWindow().showNotification('Action '
+                + selectedItem.getText())

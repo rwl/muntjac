@@ -11,6 +11,8 @@ class LinkNoDecorationsExample(VerticalLayout):
     _ICON = ThemeResource('../sampler/icons/icon_world.gif')
 
     def __init__(self):
+        super(LinkNoDecorationsExample, self).__init__()
+
         self.setSpacing(True)
 
         # Link w/ text and tooltip
