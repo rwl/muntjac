@@ -9,6 +9,8 @@ class ComboBoxInputPromptExample(VerticalLayout, IValueChangeListener):
             'Paris', 'Stockholm']
 
     def __init__(self):
+        super(ComboBoxInputPromptExample, self).__init__()
+
         self.setMargin(True, False, False, False)  # for looks: more 'air'
 
         # Create & set input prompt
@@ -17,7 +19,7 @@ class ComboBoxInputPromptExample(VerticalLayout, IValueChangeListener):
 
         # configure & load content
         l.setImmediate(True)
-        l.addListener(self)
+        l.addListener(self, IValueChangeListener)
         for c in self._cities:
             l.addItem(c)
 
@@ -27,4 +29,4 @@ class ComboBoxInputPromptExample(VerticalLayout, IValueChangeListener):
     # Shows a notification when a selection is made.
     def valueChange(self, event):
         self.getWindow().showNotification('Selected city: '
-                + event.getProperty())
+                + str(event.getProperty()))

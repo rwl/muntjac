@@ -1034,6 +1034,7 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
         """
         if itemId is None:
             return False
+
         if self.isMultiSelect():
             return itemId in self.getValue()
         else:
@@ -1041,7 +1042,7 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
             if value is None:
                 return itemId == self.getNullSelectionItemId()
             else:
-                return value
+                return itemId == value
 
 
     def select(self, itemId):

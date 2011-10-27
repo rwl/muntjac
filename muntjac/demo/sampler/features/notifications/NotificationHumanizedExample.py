@@ -1,10 +1,13 @@
 
-from muntjac.api import VerticalLayout, TextField, button, Button, Alignment
+from muntjac.api import VerticalLayout, TextField, Button, Alignment
+from muntjac.ui.button import IClickListener
 
 
 class NotificationHumanizedExample(VerticalLayout):
 
     def __init__(self):
+        super(NotificationHumanizedExample, self).__init__()
+
         self.setSpacing(True)
         self.setWidth(None)
         # layout will grow with content
@@ -15,15 +18,19 @@ class NotificationHumanizedExample(VerticalLayout):
         description.setWidth('300px')
         self.addComponent(description)
 
-        class ShowListener(button.IClickListener):
-
-            def __init__(self, c):
-                self._c = c
-
-            def buttonClick(self, event):
-                self._c.getWindow().showNotification(self.caption.getValue(),
-                        self.description.getValue())
-
-        show = Button('Show notification', ShowListener(self))
+        l = ShowListener(self, caption, description)
+        show = Button('Show notification', l)
         self.addComponent(show)
         self.setComponentAlignment(show, Alignment.MIDDLE_RIGHT)
+
+
+class ShowListener(IClickListener):
+
+    def __init__(self, c, caption, description):
+        self._c = c
+        self._caption = caption
+        self._description = description
+
+    def buttonClick(self, event):
+        self._c.getWindow().showNotification(self._caption.getValue(),
+                self._description.getValue())

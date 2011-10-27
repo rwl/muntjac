@@ -1,7 +1,9 @@
 
 from muntjac.api import \
     (VerticalLayout, TextField, RichTextArea, HorizontalLayout,
-     NativeSelect, Slider, button, Button, Alignment)
+     NativeSelect, Slider, Button, Alignment)
+
+from muntjac.ui.button import IClickListener
 
 from muntjac.ui.window import Notification
 
@@ -11,6 +13,8 @@ class NotificationCustomExample(VerticalLayout):
     _CAPTION_PROPERTY = 'CAPTION'
 
     def __init__(self):
+        super(NotificationCustomExample, self).__init__()
+
         self.setSpacing(True)
 
         caption = TextField('Caption', 'Message sent')
@@ -50,22 +54,8 @@ class NotificationCustomExample(VerticalLayout):
 
         # TODO icon select
 
-        class ShowListener(button.IClickListener):
-
-            def __init__(self, c):
-                self._c = c
-
-            def buttonClick(self, event):
-                # create Notification instance and customize
-                n = Notification(self.caption.getValue(),
-                        self.description.getValue(), self.style.getValue())
-                n.setPosition(self.position.getValue())
-                d = self.delay.getValue()
-                n.setDelayMsec(d.intValue())
-                # sec->msec
-                self._c.getWindow().showNotification(n)
-
-        show = Button('Show notification', ShowListener(self))
+        l = ShowListener(self, caption, description, style, position, delay)
+        show = Button('Show notification', l)
         self.addComponent(show)
         self.setComponentAlignment(show, Alignment.MIDDLE_RIGHT)
 
@@ -115,3 +105,23 @@ class NotificationCustomExample(VerticalLayout):
         c = i.getItemProperty(self._CAPTION_PROPERTY)
         c.setValue('Tray')
         typ.setValue(Notification.TYPE_HUMANIZED_MESSAGE)
+
+
+class ShowListener(IClickListener):
+
+    def __init__(self, c, caption, description, style, position, delay):
+        self._c = c
+        self._caption = caption
+        self._description = description
+        self._style = style
+        self._position = position
+        self._delay = delay
+
+    def buttonClick(self, event):
+        # create Notification instance and customize
+        n = Notification(self._caption.getValue(),
+                self._description.getValue(), self._style.getValue())
+        n.setPosition(self._position.getValue())
+        d = self._delay.getValue()
+        n.setDelayMsec( int(d) )  # sec->msec
+        self._c.getWindow().showNotification(n)

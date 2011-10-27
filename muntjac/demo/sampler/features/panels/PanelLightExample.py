@@ -8,6 +8,8 @@ from muntjac.ui.themes import Reindeer
 class PanelLightExample(VerticalLayout, IClickListener):
 
     def __init__(self):
+        super(PanelLightExample, self).__init__()
+
         self.setSpacing(True)
         self.setSpacing(True)
 
@@ -29,7 +31,7 @@ class PanelLightExample(VerticalLayout, IClickListener):
 
         # Caption toggle:
         b = Button('Toggle caption')
-        b.addListener(self)
+        b.addListener(self, IClickListener)
         self.addComponent(b)
 
 

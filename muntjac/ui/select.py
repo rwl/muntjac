@@ -228,7 +228,7 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
         target.addAttribute('totalitems', (len(self)
                 + (1 if needNullSelectOption else 0)))
 
-        if self._filteredSize > 0 or nullOptionVisible:
+        if (self._filteredSize > 0) or nullOptionVisible:
             target.addAttribute('totalMatches', (self._filteredSize
                     + (1 if nullOptionVisible else 0)))
 

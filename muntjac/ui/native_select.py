@@ -25,6 +25,8 @@ class NativeSelect(AbstractSelect):
     ComboBox is a better choice.
     """
 
+    CLIENT_WIDGET = None #ClientWidget(VNativeWidget)
+
     def __init__(self, *args):
         # width in characters, mimics TextField
         self._columns = 0

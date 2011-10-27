@@ -4,12 +4,17 @@ import threading
 
 from muntjac.api import \
     (VerticalLayout, Label, ProgressIndicator, HorizontalLayout,
-     Alignment, Button, button)
+     Alignment, Button)
 
+from muntjac.ui import button
+
+# FIXME: can't pickle lock object - in-memory session storage
 
 class ProgressIndicatorsExample(VerticalLayout):
 
     def __init__(self):
+        super(ProgressIndicatorsExample, self).__init__()
+
         self.setSpacing(True)
 
         self.addComponent(Label('<strong>Normal mode</strong> '
@@ -24,18 +29,6 @@ class ProgressIndicatorsExample(VerticalLayout):
         self._pi1.setEnabled(False)
         hl.addComponent(self._pi1)
         hl.setComponentAlignment(self._pi1, Alignment.MIDDLE_LEFT)
-
-        class NormalListener(button.IClickListener):
-
-            def __init__(self, c):
-                self._c = c
-
-            def buttonClick(self, event):
-                self._c._worker1 = Worker1(self)
-                self._c._worker1.start()
-                self._c._pi1.setEnabled(True)
-                self._c._pi1.setValue(0.0)
-                self._c._startButton1.setEnabled(False)
 
         self._startButton1 = Button('Start normal', NormalListener(self))
         self._startButton1.setStyleName('small')
@@ -52,18 +45,6 @@ class ProgressIndicatorsExample(VerticalLayout):
         self._pi2.setPollingInterval(5000)
         self._pi2.setEnabled(False)
         hl.addComponent(self._pi2)
-
-        class IndeterminateListener(button.IClickListener):
-
-            def __init__(self, c):
-                self._c = c
-
-            def buttonClick(self, event):
-                self._c._worker2 = Worker2(self)
-                self._c._worker2.start()
-                self._c._pi2.setEnabled(True)
-                self._c._pi2.setVisible(True)
-                self._c._startButton2.setEnabled(False)
 
         l = IndeterminateListener(self)
         self._startButton2 = Button('Start indeterminate', l)
@@ -86,15 +67,40 @@ class ProgressIndicatorsExample(VerticalLayout):
         self._startButton2.setEnabled(True)
 
 
+class NormalListener(button.IClickListener):
+
+    def __init__(self, c):
+        self._c = c
+
+    def buttonClick(self, event):
+        self._c._worker1 = Worker1(self)
+        self._c._worker1.start()
+        self._c._pi1.setEnabled(True)
+        self._c._pi1.setValue(0.0)
+        self._c._startButton1.setEnabled(False)
+
+
+class IndeterminateListener(button.IClickListener):
+
+    def __init__(self, c):
+        self._c = c
+
+    def buttonClick(self, event):
+        self._c._worker2 = Worker2(self)
+        self._c._worker2.start()
+        self._c._pi2.setEnabled(True)
+        self._c._pi2.setVisible(True)
+        self._c._startButton2.setEnabled(False)
+
 
 class Worker1(threading.Thread):
 
     MAX = 20
 
     def __init__(self, c):
+        super(Worker1, self).__init__()
         self._c = c
         self._current = 1
-
 
     def run(self):
         while self._current <= self.MAX:
@@ -111,7 +117,6 @@ class Worker1(threading.Thread):
 
             self._current += 1
 
-
     def getCurrent(self):
         return self._current
 
@@ -119,8 +124,8 @@ class Worker1(threading.Thread):
 class Worker2(threading.Thread):
 
     def __init__(self, c):
+        super(Worker2, self).__init__()
         self._c = c
-
 
     def run(self):
         try:

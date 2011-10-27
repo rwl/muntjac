@@ -4,15 +4,15 @@ from muntjac.util import run_app
 from muntjac.application import Application
 from muntjac.ui.window import Window
 
-from muntjac.demo.sampler.features.layouts.LayoutMarginExample \
-    import LayoutMarginExample as Example
+from muntjac.demo.sampler.features.selects.ComboBoxInputPromptExample \
+    import ComboBoxInputPromptExample as Example
 
 
 class App(Application):
 
     def init(self):
         main = Window('Muntjac')
-#        main.setTheme('sampler-reindeer')
+        main.setTheme('sampler-reindeer')
         self.setMainWindow(main)
 
         main.addComponent(Example())

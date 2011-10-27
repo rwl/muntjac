@@ -1,10 +1,13 @@
 
-from muntjac.api import VerticalLayout, Label, PopupView, popup_view, TextField
+from muntjac.api import VerticalLayout, Label, PopupView, TextField
+from muntjac.ui import popup_view
 
 
-class PopupViewContentsExample(VerticalLayout):
+class PopupViewContentsExample(VerticalLayout):  # FIXME: only works once
 
     def __init__(self):
+        super(PopupViewContentsExample, self).__init__()
+
         self.setSpacing(True)
 
         # ------
@@ -12,8 +15,9 @@ class PopupViewContentsExample(VerticalLayout):
         # ------
 
         # Create the content for the popup
-        content = Label(('This is a simple Label component inside the popup. '
-                'You can place any Vaadin components here.'))
+        content = Label('This is a simple Label component inside the popup. '
+                'You can place any Vaadin components here.')
+
         # The PopupView popup will be as large as needed by the content
         content.setWidth('300px')
 
@@ -39,6 +43,8 @@ class PopupTextField(popup_view.IContent):
 
     def __init__(self):
         self._root = VerticalLayout()
+        self._tf = TextField('Edit me')
+
         self._root.setSizeUndefined()
         self._root.setSpacing(True)
         self._root.setMargin(True)
@@ -48,7 +54,6 @@ class PopupTextField(popup_view.IContent):
                 'buttons for the user, like \"Save\" or \"Close\".')))
         self._root.addComponent(self._tf)
 
-        self._tf = TextField('Edit me')
         self._tf.setValue('Initial dynamic content')
         self._tf.setWidth('300px')
 

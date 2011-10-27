@@ -6,6 +6,8 @@ from muntjac.ui.button import IClickListener
 class PanelBasicExample(VerticalLayout, IClickListener):
 
     def __init__(self):
+        super(PanelBasicExample, self).__init__()
+
         self.setSpacing(True)
 
         # Panel 1 - with caption
@@ -24,7 +26,7 @@ class PanelBasicExample(VerticalLayout, IClickListener):
 
         # Caption toggle:
         b = Button('Toggle caption')
-        b.addListener(self)
+        b.addListener(self, IClickListener)
         self.addComponent(b)
 
 
