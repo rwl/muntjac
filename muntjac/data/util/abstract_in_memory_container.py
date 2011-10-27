@@ -383,9 +383,9 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
         {@link Filterable#removeContainerFilter(com.vaadin.data.IContainer.Filter)}
         .
         """
-        for f in self.getFilters():
+        for f in self.getFilters().copy():
             if f == fltr:
-                self.getFilters().remove()
+                self.getFilters().remove(f)
                 self.filterAll()
                 return
 

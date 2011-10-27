@@ -9,6 +9,8 @@ class NativeSelectionExample(VerticalLayout, IValueChangeListener):
             'Paris', 'Stockholm']
 
     def __init__(self):
+        super(NativeSelectionExample, self).__init__()
+
         self.setSpacing(True)
 
         l = NativeSelect('Please select a city')
@@ -19,10 +21,10 @@ class NativeSelectionExample(VerticalLayout, IValueChangeListener):
         l.setNullSelectionAllowed(False)
         l.setValue('Berlin')
         l.setImmediate(True)
-        l.addListener(self)
+        l.addListener(self, IValueChangeListener)
         self.addComponent(l)
 
     # Shows a notification when a selection is made.
     def valueChange(self, event):
         self.getWindow().showNotification('Selected city: '
-                + event.getProperty())
+                + str(event.getProperty()))

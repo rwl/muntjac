@@ -9,6 +9,7 @@ class ListSelectSingleExample(VerticalLayout, IValueChangeListener):
             'Paris', 'Stockholm']
 
     def __init__(self):
+        super(ListSelectSingleExample, self).__init__()
 
         self.setSpacing(True)
         # 'Shorthand' constructor - also supports data binding using Containers
@@ -17,7 +18,8 @@ class ListSelectSingleExample(VerticalLayout, IValueChangeListener):
         citySelect.setNullSelectionAllowed(False)  # user can not 'unselect'
         citySelect.select('Berlin')  # select this by default
         citySelect.setImmediate(True)  # send the change to the server at once
-        citySelect.addListener(self)  # react when the user selects something
+        # react when the user selects something
+        citySelect.addListener(self, IValueChangeListener)
         self.addComponent(citySelect)
 
     # Shows a notification when a selection is made. The listener will be
@@ -25,4 +27,4 @@ class ListSelectSingleExample(VerticalLayout, IValueChangeListener):
     # makes a new selection.
     def valueChange(self, event):
         self.getWindow().showNotification('Selected city: '
-                + event.getProperty())
+                + str(event.getProperty()))

@@ -109,9 +109,9 @@ class ContainerHierarchicalWrapper(IHierarchical, IContainer,
 
                 # Calculate the set of all items in the hierarchy
                 s = set()
-                s.union(self._parent.keys())
-                s.union(self._children.keys())
-                s.union(self._roots)
+                s = s.union(self._parent.keys())
+                s = s.union(self._children.keys())
+                s = s.union(self._roots)
 
                 # Remove unnecessary items
                 for idd in s:

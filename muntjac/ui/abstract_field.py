@@ -312,7 +312,7 @@ class AbstractField(AbstractComponent, field.IField,
         """
         value = self.getValue()
         if value is None:
-            return None
+            return ''
         return str( self.getValue() )
 
 

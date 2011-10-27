@@ -10,7 +10,8 @@ class ComboBoxPlainExample(VerticalLayout, IValueChangeListener):
             'Paris', 'Stockholm']
 
     def __init__(self):
-        # Shows a notification when a selection is made.
+        super(ComboBoxPlainExample, self).__init__()
+
         self.setSpacing(True)
         l = ComboBox('Please select a city')
 
@@ -19,10 +20,10 @@ class ComboBoxPlainExample(VerticalLayout, IValueChangeListener):
 
         l.setFilteringMode(IFiltering.FILTERINGMODE_OFF)
         l.setImmediate(True)
-        l.addListener(self)
+        l.addListener(self, IValueChangeListener)
         self.addComponent(l)
 
-
+    # Shows a notification when a selection is made.
     def valueChange(self, event):
         self.getWindow().showNotification('Selected city: '
-                + event.getProperty())
+                + str(event.getProperty()))

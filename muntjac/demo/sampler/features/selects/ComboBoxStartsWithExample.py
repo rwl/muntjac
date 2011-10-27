@@ -8,6 +8,8 @@ from muntjac.ui.abstract_select import AbstractSelect, IFiltering
 class ComboBoxStartsWithExample(VerticalLayout, IValueChangeListener):
 
     def __init__(self):
+        super(ComboBoxStartsWithExample, self).__init__()
+
         self.setSpacing(True)
 
         # Creates a new combobox using an existing container
@@ -27,7 +29,7 @@ class ComboBoxStartsWithExample(VerticalLayout, IValueChangeListener):
         # Set the appropriate filtering mode for this example
         l.setFilteringMode(IFiltering.FILTERINGMODE_STARTSWITH)
         l.setImmediate(True)
-        l.addListener(self)
+        l.addListener(self, IValueChangeListener)
 
         # Disallow null selections
         l.setNullSelectionAllowed(False)
@@ -37,4 +39,4 @@ class ComboBoxStartsWithExample(VerticalLayout, IValueChangeListener):
     def valueChange(self, event):
         selected = ExampleUtil.getISO3166Container().getContainerProperty(
                 str(event.getProperty()), 'name')
-        self.getWindow().showNotification('Selected country: ' + selected)
+        self.getWindow().showNotification('Selected country: ' + str(selected))

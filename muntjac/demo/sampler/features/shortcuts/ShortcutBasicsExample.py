@@ -1,12 +1,15 @@
 
-from muntjac.api import VerticalLayout, TextField, button, Button
+from muntjac.api import VerticalLayout, TextField, Button
 from muntjac.ui.abstract_field import FocusShortcut
 from muntjac.event.shortcut_action import KeyCode, ModifierKey
+from muntjac.ui.button import IClickListener
 
 
 class ShortcutBasicsExample(VerticalLayout):
 
     def __init__(self):
+        super(ShortcutBasicsExample, self).__init__()
+
         self.setSpacing(True)
 
         # Firstname input with an input prompt for demo clarity
@@ -28,14 +31,6 @@ class ShortcutBasicsExample(VerticalLayout):
                 ModifierKey.ALT, ModifierKey.SHIFT))
 
         # Button with a simple click-listener
-        class EnterListener(button.IClickListener):
-
-            def __init__(self, c):
-                self._c = c
-
-            def buttonClick(self, event):
-                self._c.getWindow().showNotification('Enter button clicked')
-
         enter = Button('Enter', EnterListener(self))
         self.addComponent(enter)
         enter.setStyleName('primary')  # make it look like it's default
@@ -44,3 +39,12 @@ class ShortcutBasicsExample(VerticalLayout):
         enter.setClickShortcut(KeyCode.ENTER)
         # which is easier to find, but otherwise equal to:
         # enter.addShortcutListener(new ClickShortcut(search,KeyCode.ENTER))
+
+
+class EnterListener(IClickListener):
+
+    def __init__(self, c):
+        self._c = c
+
+    def buttonClick(self, event):  # FIXME: not fired
+        self._c.getWindow().showNotification('Enter button clicked')

@@ -22,11 +22,13 @@ class ListSelect(AbstractSelect):
     new items, lazyloading, and other advanced features.
     """
 
+    CLIENT_WIDGET = None #ClientWidget(VListSelect)
+
     def __init__(self, *args):
         self._columns = 0
         self._rows = 0
 
-        super(ListSelect, self).__init__(args)
+        super(ListSelect, self).__init__(*args)
 
 
     def setColumns(self, columns):

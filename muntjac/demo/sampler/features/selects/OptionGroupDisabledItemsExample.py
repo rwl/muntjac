@@ -9,6 +9,8 @@ class OptionGroupDisabledItemsExample(VerticalLayout, IValueChangeListener):
             'Paris', 'Stockholm']
 
     def __init__(self):
+        super(OptionGroupDisabledItemsExample, self).__init__()
+
         self.setSpacing(True)
 
         # 'Shorthand' constructor - also supports data binding using Containers
@@ -17,10 +19,14 @@ class OptionGroupDisabledItemsExample(VerticalLayout, IValueChangeListener):
         # Set disabled items
         citySelect.setItemEnabled('Helsinki', False)
         citySelect.setItemEnabled('Oslo', False)
-        citySelect.setNullSelectionAllowed(False)  # user can not 'unselect'
-        citySelect.select('Berlin')  # select this by default
-        citySelect.setImmediate(True)  # send the change to the server at once
-        citySelect.addListener(self)  # react when the user selects something
+        # user can not 'unselect'
+        citySelect.setNullSelectionAllowed(False)
+        # select this by default
+        citySelect.select('Berlin')
+        # send the change to the server at once
+        citySelect.setImmediate(True)
+        # react when the user selects something
+        citySelect.addListener(self, IValueChangeListener)
         self.addComponent(citySelect)
 
         self.addComponent(Label('<h3>Multi-selection</h3>',
@@ -33,11 +39,15 @@ class OptionGroupDisabledItemsExample(VerticalLayout, IValueChangeListener):
         # Set disabled items
         citySelect.setItemEnabled('Helsinki', False)
         citySelect.setItemEnabled('Oslo', False)
-        citySelect.setMultiSelect(True)
-        citySelect.setNullSelectionAllowed(False)  # user can not 'unselect'
-        citySelect.select('Berlin')  # select this by default
-        citySelect.setImmediate(True)  # send the change to the server at once
-        citySelect.addListener(self)  # react when the user selects something
+        citySelect.setMultiSelect(True)  # FIXME: multi-select
+        # user can not 'unselect'
+        citySelect.setNullSelectionAllowed(False)
+        # select this by default
+        citySelect.select('Berlin')
+        # send the change to the server at once
+        citySelect.setImmediate(True)
+        # react when the user selects something
+        citySelect.addListener(self, IValueChangeListener)
         self.addComponent(citySelect)
 
     # Shows a notification when a selection is made. The listener will be
@@ -45,4 +55,4 @@ class OptionGroupDisabledItemsExample(VerticalLayout, IValueChangeListener):
     # makes a new selection.
     def valueChange(self, event):
         self.getWindow().showNotification('Selected city: '
-                + event.getProperty())
+                + str(event.getProperty()))

@@ -2,6 +2,7 @@
 from muntjac.api import VerticalLayout, ComboBox
 from muntjac.data.property import IValueChangeListener
 
+# FIXME: totalMatches == 0
 
 class ComboBoxInputPromptExample(VerticalLayout, IValueChangeListener):
 

@@ -46,7 +46,7 @@ class ListSet(list):
                 c, = args
                 super(ListSet, self).__init__(c)
                 self._itemSet = set(len(c))
-                self._itemSet.union(c)
+                self._itemSet = self._itemSet.union(c)
         else:
             raise ValueError, 'too many arguments'
 

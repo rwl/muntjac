@@ -9,14 +9,20 @@ class OptionGroupsExample(VerticalLayout, IValueChangeListener):
             'Paris', 'Stockholm']
 
     def __init__(self):
+        super(OptionGroupsExample, self).__init__()
+
         self.setSpacing(True)
 
         # 'Shorthand' constructor - also supports data binding using Containers
         citySelect = OptionGroup('Please select a city', self._cities)
-        citySelect.setNullSelectionAllowed(False)  # user can not 'unselect'
-        citySelect.select('Berlin')  # select this by default
-        citySelect.setImmediate(True)  # send the change to the server at once
-        citySelect.addListener(self)  # react when the user selects something
+        # user can not 'unselect'
+        citySelect.setNullSelectionAllowed(False)
+        # select this by default
+        citySelect.select('Berlin')
+        # send the change to the server at once
+        citySelect.setImmediate(True)
+        # react when the user selects something
+        citySelect.addListener(self, IValueChangeListener)
         self.addComponent(citySelect)
 
         self.addComponent(Label('<h3>Multi-selection</h3>',
@@ -25,11 +31,15 @@ class OptionGroupsExample(VerticalLayout, IValueChangeListener):
         # Create the multiselect option group
         # 'Shorthand' constructor - also supports data binding using Containers
         citySelect = OptionGroup('Please select cities', self._cities)
-        citySelect.setMultiSelect(True)
-        citySelect.setNullSelectionAllowed(False)  # user can not 'unselect'
-        citySelect.select('Berlin')  # select this by default
-        citySelect.setImmediate(True)  # send the change to the server at once
-        citySelect.addListener(self)  # react when the user selects something
+        citySelect.setMultiSelect(True)  # FIXME: multi-select
+        # user can not 'unselect'
+        citySelect.setNullSelectionAllowed(False)
+        # select this by default
+        citySelect.select('Berlin')
+        # send the change to the server at once
+        citySelect.setImmediate(True)
+        # react when the user selects something
+        citySelect.addListener(self, IValueChangeListener)
         self.addComponent(citySelect)
 
     # Shows a notification when a selection is made. The listener will be
@@ -37,4 +47,4 @@ class OptionGroupsExample(VerticalLayout, IValueChangeListener):
     # makes a new selection.
     def valueChange(self, event):
         self.getWindow().showNotification('Selected city: '
-                + event.getProperty())
+                + str(event.getProperty()))

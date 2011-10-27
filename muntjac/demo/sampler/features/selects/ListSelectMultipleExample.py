@@ -9,6 +9,8 @@ class ListSelectMultipleExample(VerticalLayout, IValueChangeListener):
             'Paris', 'Stockholm']
 
     def __init__(self):
+        super(ListSelectMultipleExample, self).__init__()
+
         self.setSpacing(True)
 
         l = ListSelect('Please select some cities')
@@ -20,10 +22,10 @@ class ListSelectMultipleExample(VerticalLayout, IValueChangeListener):
         l.setNullSelectionAllowed(True)
         l.setMultiSelect(True)
         l.setImmediate(True)
-        l.addListener(self)
+        l.addListener(self, IValueChangeListener)
         self.addComponent(l)
 
     # Shows a notification when a selection is made.
-    def valueChange(self, event):
+    def valueChange(self, event):  # FIXME: not fired
         self.getWindow().showNotification('Selected cities: '
-                + event.getProperty())
+                + str(event.getProperty()))

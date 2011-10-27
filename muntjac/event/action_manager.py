@@ -121,7 +121,7 @@ class ActionManager(action.IHandler, action.INotifier):  #action.IContainer
                         actions.add(action)
 
         if self.ownActions is not None:
-            actions.union(self.ownActions)
+            actions = actions.union(self.ownActions)
 
 
         # Must repaint whenever there are actions OR if all actions have
@@ -185,7 +185,7 @@ class ActionManager(action.IHandler, action.INotifier):  #action.IContainer
                     for a in as_:
                         actions.add(a)
 
-        return [None] * len(actions)
+        return list(actions)
 
 
     def handleAction(self, action, sender, target):
