@@ -22,14 +22,14 @@ class FeatureView(HorizontalLayout):
     def __init__(self):
         super(FeatureView, self).__init__()
 
-        self.__right = None
-        self.__left = None
-        self.__controls = None
+        self._right = None
+        self._left = None
+        self._controls = None
         self._title = Label("", Label.CONTENT_XHTML)
-        self.__showSrc = None
-        self.__exampleCache = dict()
-        self.__currentFeature = None
-        self.__srcWindow = None
+        self._showSrc = None
+        self._exampleCache = dict()
+        self._currentFeature = None
+        self._srcWindow = None
 
         self.setWidth('100%')
         self.setMargin(True)

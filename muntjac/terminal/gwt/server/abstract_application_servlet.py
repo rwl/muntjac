@@ -197,6 +197,9 @@ class AbstractApplicationServlet(ContextualHttpServlet, Constants):
         self._applicationProperties[self.SERVLET_PARAMETER_DEBUG] = \
                 'true' if debug else 'false'
 
+        self._applicationProperties[self.PARAMETER_WIDGETSET] = \
+                self.DEFAULT_WIDGETSET if widgetset is None else widgetset
+
         self._applicationProperties[
                 self.SERVLET_PARAMETER_RESOURCE_CACHE_TIME] = \
                         str(resourceCacheTime)

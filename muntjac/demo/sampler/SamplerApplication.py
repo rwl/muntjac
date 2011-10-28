@@ -291,25 +291,29 @@ class SamplerWindow(Window):
         @param path
                    the path of the Feature(Set) to show
         """
-        if isinstance(arg, Feature):
+        if isinstance(arg, basestring):
+            path = arg
+            f = FeatureSet.FEATURES.getFeature(path)
+            self.setFeature(f)
+        else:
             f = arg
             if f == FeatureSet.FEATURES:
                 # "All" is no longer in the tree, use null instead
                 f = None
             self._currentFeature.setValue(f)
             fragment = f.getFragmentName() if f is not None else ''
+
             self._webAnalytics.trackPageview(fragment)
             self._uriFragmentUtility.setFragment(fragment, False)
             self._breadcrumbs.setPath( self._app.getFullPathFor(f) )
+
             self._previousSample.setEnabled(f is not None)
             self._nextSample.setEnabled(not self._app._allFeatures.isLastId(f))
+
             self.updateFeatureList(self._currentList)
+
             self.setCaption((f.getName() + ' }> ' if f is not None else '')
                     + self._TITLE)
-        else:
-            path = arg
-            f = FeatureSet.FEATURES.getFeature(path)
-            self.setFeature(f)
 
     # SamplerWindow helpers
 
@@ -453,8 +457,7 @@ class BreadCrumbs(CustomComponent, ILinkActivatedListener):
 
 
     def setPath(self, path):
-        # could be optimized: always builds path from scratch
-        # home
+        # could be optimized: always builds path from scratch home
         self._layout.removeAllComponents()
         link = ActiveLink('Home', ExternalResource('#'))
         link.addListener(self, ILinkActivatedListener)
@@ -657,7 +660,7 @@ class UriListener(IFragmentChangedListener):
 
     def fragmentChanged(self, source):
         frag = source.getUriFragmentUtility().getFragment()
-        if frag is not None and frag.contains('/'):
+        if (frag is not None) and ('/' in frag):
             parts = frag.split('/')
             frag = parts[len(parts) - 1]
         self._window.setFeature(frag)
@@ -917,4 +920,5 @@ class SourceWindowCloseListener(window.ICloseListener):
 
 if __name__ == '__main__':
     from muntjac.util import run_app
-    run_app(SamplerApplication, nogui=True, forever=True, debug=True)
+    run_app(SamplerApplication, nogui=True, forever=True, debug=True,
+            widgetset='com.vaadin.demo.sampler.gwt.SamplerWidgetSet')

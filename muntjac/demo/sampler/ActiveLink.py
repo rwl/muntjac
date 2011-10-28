@@ -54,32 +54,27 @@ class ActiveLink(Link):
 
 
     def addLinkActivatedListener(self, listener):
-        self._listeners.add(listener)
-        super(ActiveLink, self).addListener(LinkActivatedEvent,
-                listener, _LINK_FOLLOWED_METHOD)
-        if len(self._listeners) == 1:
-            self.requestRepaint()
+        self.addListener(listener, ILinkActivatedListener)
 
 
-    def removeListener(self, listener):
+    def removeListener(self, listener, iface):
         """Removes the link activated listener.
 
         @param listener
                    the Listener to be removed.
         """
-        self._listeners.remove(listener)
-        super(ActiveLink, self).removeListener(ClickEvent,
-                listener, _LINK_FOLLOWED_METHOD)
-        if len(self._listeners) == 0:
-            self.requestRepaint()
+        if issubclass(iface, ILinkActivatedListener):
+            self._listeners.remove(listener)
+            super(ActiveLink, self).removeListener(ClickEvent, listener,
+                    _LINK_FOLLOWED_METHOD)
+            if len(self._listeners) == 0:
+                self.requestRepaint()
+        else:
+            super(ActiveLink, self).removeListener(listener, iface)
 
 
     def removeLinkActivatedListener(self, listener):
-        self._listeners.remove(listener)
-        super(ActiveLink, self).removeListener(ClickEvent,
-                listener, _LINK_FOLLOWED_METHOD)
-        if len(self._listeners) == 0:
-            self.requestRepaint()
+        self.removeListener(listener, ILinkActivatedListener)
 
 
     def fireClick(self, linkOpened):

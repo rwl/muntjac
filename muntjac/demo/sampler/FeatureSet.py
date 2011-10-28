@@ -131,12 +131,12 @@ class FeatureSet(Feature):
             self._name = name
             self._desc = desc
             self._content = content
-            self.addFeature(self)
+            FeatureSet.addFeature(self)
             if content is not None:
                 for f in content:
                     if isinstance(f, FeatureSet):
                         continue
-                    self.addFeature(f)
+                    FeatureSet.addFeature(f)
         else:
             raise ValueError
 

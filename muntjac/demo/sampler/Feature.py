@@ -105,9 +105,10 @@ class Feature(object):
 
         @return
         """
-        className = fullname(self) + 'Example'
+        pkgName, className = fullname(self).rsplit('.', 1)
+        canonicalName = pkgName + 'Example' + '.' + className + 'Example'
         try:
-            classObject = loadClass(className)
+            classObject = loadClass(canonicalName)
             return classObject()
         except Exception:
             return None
