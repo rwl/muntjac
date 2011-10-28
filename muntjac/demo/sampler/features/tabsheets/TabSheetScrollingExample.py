@@ -1,17 +1,18 @@
 
-from muntjac.api import VerticalLayout, tab_sheet, Label, TabSheet
+from muntjac.api import VerticalLayout, Label, TabSheet
 from muntjac.terminal.theme_resource import ThemeResource
+from muntjac.ui.tab_sheet import ISelectedTabChangeListener
 
 
-
-class TabSheetScrollingExample(VerticalLayout,
-            tab_sheet.ISelectedTabChangeListener):
+class TabSheetScrollingExample(VerticalLayout, ISelectedTabChangeListener):
 
     _icon1 = ThemeResource('../sampler/icons/action_save.gif')
     _icon2 = ThemeResource('../sampler/icons/comment_yellow.gif')
     _icon3 = ThemeResource('../sampler/icons/icon_info.gif')
 
     def __init__(self):
+        super(TabSheetScrollingExample, self).__init__()
+
         # Tab 1 content
         l1 = VerticalLayout()
         l1.setMargin(True)
@@ -45,7 +46,7 @@ class TabSheetScrollingExample(VerticalLayout,
         self._t.addTab(l3, 'Issues', self._icon3)
         self._t.addTab(l4, 'Comments', self._icon2)
         self._t.addTab(l5, 'Feedback', self._icon2)
-        self._t.addListener(self)
+        self._t.addListener(self, ISelectedTabChangeListener)
 
         self.addComponent(self._t)
 

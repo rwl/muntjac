@@ -6,9 +6,11 @@ from muntjac.demo.sampler.ExampleUtil import ExampleUtil
 from muntjac.api import VerticalLayout, Table
 
 
-class TableFooterExample(VerticalLayout):
+class TableFooterExample(VerticalLayout):  # FIXME: column sorting
 
     def __init__(self):
+        super(TableFooterExample, self).__init__()
+
         # Create our data source
         dataSource = ExampleUtil.getOrderContainer()
 
@@ -16,9 +18,11 @@ class TableFooterExample(VerticalLayout):
         totalSum = 0.0
         for i in range(len(dataSource)):
             item = dataSource.getItem(dataSource.getIdByIndex(i))
-            value = item.getItemProperty(ExampleUtil.ORDER_ITEMPRICE_PROPERTY_ID).getValue()
+            value = item.getItemProperty(
+                    ExampleUtil.ORDER_ITEMPRICE_PROPERTY_ID).getValue()
 
-            amount = re.search(u'([\u00A3\u0024\u20AC])(\d+(?:\.\d{2})?)', str(value)).groups()[1]
+            amount = re.search(u'([\u00A3\u0024\u20AC])(\d+(?:\.\d{2})?)',
+                    str(value)).groups()[1]
             totalSum += float(amount)
 
         # Create a table to show the data in

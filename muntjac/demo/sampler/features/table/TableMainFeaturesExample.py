@@ -9,15 +9,20 @@ from muntjac.ui.table import ICellStyleGenerator
 from muntjac.data.property import IValueChangeListener
 
 
+ACTION_MARK = Action('Mark')
+ACTION_UNMARK = Action('Unmark')
+ACTION_LOG = Action('Save')
+ACTIONS_UNMARKED = [ACTION_MARK, ACTION_LOG]
+ACTIONS_MARKED = [ACTION_UNMARK, ACTION_LOG]
+
+
+# FIXME: "Could not determine column collapsing state"
+
 class TableMainFeaturesExample(VerticalLayout):
 
-    ACTION_MARK = Action('Mark')
-    ACTION_UNMARK = Action('Unmark')
-    ACTION_LOG = Action('Save')
-    ACTIONS_UNMARKED = [ACTION_MARK, ACTION_LOG]
-    ACTIONS_MARKED = [ACTION_UNMARK, ACTION_LOG]
-
     def __init__(self):
+        super(TableMainFeaturesExample, self).__init__()
+
         self._markedRows = set()
 
         self._table = Table('ISO-3166 Country Codes and flags')
@@ -26,7 +31,6 @@ class TableMainFeaturesExample(VerticalLayout):
         # Label to indicate current selection
         selected = Label('No selection')
         self.addComponent(selected)
-
 
         # set a style name, so we can style rows and cells
         self._table.setStyleName('iso3166')
@@ -38,7 +42,8 @@ class TableMainFeaturesExample(VerticalLayout):
         # selectable
         self._table.setSelectable(True)
         self._table.setMultiSelect(True)
-        self._table.setImmediate(True)  # react at once when something is selected
+        # react at once when something is selected
+        self._table.setImmediate(True)
 
         # connect data source
         self._table.setContainerDataSource(ExampleUtil.getISO3166Container())
@@ -74,64 +79,67 @@ class TableMainFeaturesExample(VerticalLayout):
         self._table.setItemIconPropertyId(ExampleUtil.iso3166_PROPERTY_FLAG)
 
         # Actions (a.k.a context menu)
-        class TableActionHandler(action.IHandler):
-
-            def __init__(self, c):
-                self._c = c
-
-            def getActions(self, target, sender):
-                if target in self._c._markedRows:
-                    return self._c.ACTIONS_MARKED
-                else:
-                    return self._c.ACTIONS_UNMARKED
-
-            def handleAction(self, action, sender, target):
-                if self._c.ACTION_MARK == action:
-                    self._c._markedRows.add(target)
-                    self._c._table.requestRepaint()
-                elif self._c.ACTION_UNMARK == action:
-                    self._c._markedRows.remove(target)
-                    self._c._table.requestRepaint()
-                elif self._c.ACTION_LOG == action:
-                    item = self._c._table.getItem(target)
-                    self.addComponent(Label('Saved: ' + target + ', '
-                            + item.getItemProperty(
-                                ExampleUtil.iso3166_PROPERTY_NAME).getValue()))
-
         self._table.addActionHandler( TableActionHandler(self) )
 
         # style generator
-        class TableStyleGenerator(ICellStyleGenerator):
-
-            def __init__(self, c):
-                self._c = c
-
-            def getStyle(self, itemId, propertyId):
-                if propertyId is None:
-                    # no propertyId, styling row
-                    return 'marked' if itemId in self._c._markedRows else None
-                elif ExampleUtil.iso3166_PROPERTY_NAME == propertyId:
-                    return 'bold'
-                else:
-                    # no style
-                    return None
-
         self._table.setCellStyleGenerator( TableStyleGenerator(self) )
 
         # listen for valueChange, a.k.a 'select' and update the label
-        class TableChangeListener(IValueChangeListener):
+        self._table.addListener(TableChangeListener(self, selected),
+                IValueChangeListener)
 
-            def __init__(self, c):
-                self._c = c
 
-            def valueChange(self, event):
-                value = event.getProperty().getValue()
-                if (None is value) or (len(value) == 0):
-                    # in multiselect mode, a Set of itemIds is returned,
-                    self.selected.setValue('No selection')
-                else:
-                    # in singleselect mode the itemId is returned directly
-                    self.selected.setValue('Selected: '
-                            + self._c._table.getValue())
+class TableActionHandler(action.IHandler):
 
-        self._table.addListener( TableChangeListener(self) )
+    def __init__(self, c):
+        self._c = c
+
+    def getActions(self, target, sender):
+        if target in self._c._markedRows:
+            return ACTIONS_MARKED
+        else:
+            return ACTIONS_UNMARKED
+
+    def handleAction(self, action, sender, target):
+        if ACTION_MARK == action:
+            self._c._markedRows.add(target)
+            self._c._table.requestRepaint()
+        elif ACTION_UNMARK == action:
+            self._c._markedRows.remove(target)
+            self._c._table.requestRepaint()
+        elif ACTION_LOG == action:
+            item = self._c._table.getItem(target)
+            self.addComponent(Label('Saved: ' + target + ', '
+                    + item.getItemProperty(
+                        ExampleUtil.iso3166_PROPERTY_NAME).getValue()))
+
+
+class TableStyleGenerator(ICellStyleGenerator):
+
+    def __init__(self, c):
+        self._c = c
+
+    def getStyle(self, itemId, propertyId):
+        if propertyId is None:
+            # no propertyId, styling row
+            return 'marked' if itemId in self._c._markedRows else None
+        elif ExampleUtil.iso3166_PROPERTY_NAME == propertyId:
+            return 'bold'
+        else:
+            return None  # no style
+
+
+class TableChangeListener(IValueChangeListener):
+
+    def __init__(self, c, selected):
+        self._c = c
+        self._selected = selected
+
+    def valueChange(self, event):
+        value = event.getProperty().getValue()
+        if (None is value) or (len(value) == 0):
+            # in multiselect mode, a Set of itemIds is returned,
+            self._selected.setValue('No selection')
+        else:
+            # in singleselect mode the itemId is returned directly
+            self._selected.setValue('Selected: ' + self._c._table.getValue())

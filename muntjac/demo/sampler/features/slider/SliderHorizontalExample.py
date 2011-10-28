@@ -6,6 +6,8 @@ from muntjac.data.property import IValueChangeListener
 class SliderHorizontalExample(HorizontalLayout):
 
     def __init__(self):
+        super(SliderHorizontalExample, self).__init__()
+
         self.setSpacing(True)
 
         self.setWidth('100%')
@@ -19,18 +21,19 @@ class SliderHorizontalExample(HorizontalLayout):
         slider.setMax(100)
         slider.setImmediate(True)
 
-        class SliderListener(IValueChangeListener):
-
-            def __init__(self, value):
-                self._value = value
-
-            def valueChange(self, event):
-                self._value.setValue(event.getProperty().getValue())
-
-        slider.addListener( SliderListener(value) )
+        slider.addListener(SliderListener(value), IValueChangeListener)
 
         self.addComponent(slider)
         self.setExpandRatio(slider, 1)
         self.addComponent(value)
 
         self.setComponentAlignment(value, Alignment.BOTTOM_LEFT)
+
+
+class SliderListener(IValueChangeListener):
+
+    def __init__(self, value):
+        self._value = value
+
+    def valueChange(self, event):
+        self._value.setValue(event.getProperty().getValue())

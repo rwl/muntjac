@@ -21,10 +21,12 @@ class TableClickListenersExample(VerticalLayout):
         totalSum = 0.0
         for i in range(len(dataSource)):
             item = dataSource.getItem(dataSource.getIdByIndex(i))
-            value = item.getItemProperty(ExampleUtil.ORDER_ITEMPRICE_PROPERTY_ID).getValue()
+            value = item.getItemProperty(
+                    ExampleUtil.ORDER_ITEMPRICE_PROPERTY_ID).getValue()
 
             #amount = NumberFormat.getCurrencyInstance().parse(str(value))
-            amount = re.search(ur'([\u00A3\u0024\u20AC])(\d+(?:\.\d{2})?)', str(value)).groups()[1]
+            amount = re.search(u'([\u00A3\u0024\u20AC])(\d+(?:\.\d{2})?)',
+                    str(value)).groups()[1]
 
             totalSum += float(amount)
 
@@ -44,30 +46,10 @@ class TableClickListenersExample(VerticalLayout):
                 locale.currency(totalSum, grouping=True))
 
         # Add a header click handler
-        class HeaderListener(IHeaderClickListener):
-
-            def __init__(self, c):
-                self._c = c
-
-            def headerClick(self, event):
-                # Show a notification help text when the user clicks on a
-                # column header
-                self._c.showHeaderHelpText(event.getPropertyId())
-
-        table.addListener( HeaderListener(self) )
+        table.addListener(HeaderListener(self), IHeaderClickListener)
 
         # Add a footer click handler
-        class FooterListener(IFooterClickListener):
-
-            def __init__(self, c):
-                self._c = c
-
-            def footerClick(self, event):
-                # Show a notification help text when the user clicks on a
-                # column footer
-                self._c.showFooterHelpText(event.getPropertyId())
-
-        table.addListener( FooterListener(self) )
+        table.addListener(FooterListener(self), IFooterClickListener)
         self.addComponent(table)
 
 
@@ -112,3 +94,25 @@ class TableClickListenersExample(VerticalLayout):
                 'item price together.')
 
         self.getWindow().showNotification(notification)
+
+
+class HeaderListener(IHeaderClickListener):
+
+    def __init__(self, c):
+        self._c = c
+
+    def headerClick(self, event):
+        # Show a notification help text when the user clicks on a
+        # column header
+        self._c.showHeaderHelpText(event.getPropertyId())
+
+
+class FooterListener(IFooterClickListener):
+
+    def __init__(self, c):
+        self._c = c
+
+    def footerClick(self, event):
+        # Show a notification help text when the user clicks on a
+        # column footer
+        self._c.showFooterHelpText(event.getPropertyId())

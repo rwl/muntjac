@@ -374,6 +374,7 @@ class ExampleUtil(object):
         cls.addOrderToContainer(container, 'Email Box', 20, 0.15)
         cls.addOrderToContainer(container, 'E-Commerce Setup', 1, 25.0)
         cls.addOrderToContainer(container, 'Technical Support', 1, 50.0)
+
         return container
 
 
@@ -384,7 +385,8 @@ class ExampleUtil(object):
         v = description
         item.getItemProperty(cls.ORDER_DESCRIPTION_PROPERTY_ID).setValue(v)
         v = quantity
-        item.getItemProperty(cls.ORDER_QUANTITY_PROPERTY_ID).setValue()
+        item.getItemProperty(cls.ORDER_QUANTITY_PROPERTY_ID).setValue(v)
+        locale.setlocale(locale.LC_ALL, '')
         v = locale.currency(price)
         item.getItemProperty(cls.ORDER_UNITPRICE_PROPERTY_ID).setValue(v)
         v = locale.currency(price * quantity)

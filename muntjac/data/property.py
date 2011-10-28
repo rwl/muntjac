@@ -179,7 +179,7 @@ class ConversionException(RuntimeError):
         @param cause
                    The cause of the the conversion failure
         """
-        super(ConversionException, self).__init__(args)
+        super(ConversionException, self).__init__(*args)
 
 
 class IViewer(object):

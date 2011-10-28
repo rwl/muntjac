@@ -1,11 +1,10 @@
 
-from muntjac.api import VerticalLayout, tab_sheet, Label, TabSheet
+from muntjac.api import VerticalLayout, Label, TabSheet
 from muntjac.terminal.theme_resource import ThemeResource
+from muntjac.ui.tab_sheet import ISelectedTabChangeListener
 
 
-
-class TabSheetIconsExample(VerticalLayout,
-        tab_sheet.ISelectedTabChangeListener):
+class TabSheetIconsExample(VerticalLayout, ISelectedTabChangeListener):
 
     # Icons for the table
     _icon1 = ThemeResource('../sampler/icons/action_save.gif')
@@ -13,6 +12,8 @@ class TabSheetIconsExample(VerticalLayout,
     _icon3 = ThemeResource('../sampler/icons/icon_info.gif')
 
     def __init__(self):
+        super(TabSheetIconsExample, self).__init__()
+
         # Tab 1 content
         l1 = VerticalLayout()
         l1.setMargin(True)
@@ -34,7 +35,7 @@ class TabSheetIconsExample(VerticalLayout,
         self._t.addTab(l1, 'Saved actions', self._icon1)
         self._t.addTab(l2, 'Notes', self._icon2)
         self._t.addTab(l3, 'Issues', self._icon3)
-        self._t.addListener(self)
+        self._t.addListener(self, ISelectedTabChangeListener)
 
         self.addComponent(self._t)
 

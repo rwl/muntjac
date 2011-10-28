@@ -451,15 +451,15 @@ class AbstractField(AbstractComponent, field.IField,
         oldValue = self._value
 
         # Stops listening the old data source changes
-        if (self._dataSource is not None \
-                and issubclass(self._dataSource,
+        if (self._dataSource is not None
+                and issubclass(self._dataSource.__class__,
                         prop.IValueChangeNotifier)):
 
             self._dataSource.removeListener(self, prop.IValueChangeListener)
 
 
-        if (self._dataSource is not None \
-                and issubclass(self._dataSource,
+        if (self._dataSource is not None
+                and issubclass(self._dataSource.__class__,
                         prop.IReadOnlyStatusChangeNotifier)):
 
             self._dataSource.removeListener(self,

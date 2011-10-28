@@ -1,11 +1,14 @@
 
-from muntjac.api import VerticalLayout, tab_sheet, Label, TabSheet
+from muntjac.api import VerticalLayout, Label, TabSheet
+from muntjac.ui import tab_sheet
 
 
 class TabSheetClosingExample(VerticalLayout,
             tab_sheet.ISelectedTabChangeListener, tab_sheet.ICloseHandler):
 
     def __init__(self):
+        super(TabSheetClosingExample, self).__init__()
+
         # Tab 1 content
         l1 = VerticalLayout()
         l1.setMargin(True)
@@ -50,7 +53,7 @@ class TabSheetClosingExample(VerticalLayout,
         feedback = self._t.addTab(l5, 'Feedback', None)
         feedback.setClosable(True)
 
-        self._t.addListener(self)
+        self._t.addListener(self, tab_sheet.ISelectedTabChangeListener)
         self._t.setCloseHandler(self)
 
         self.addComponent(self._t)

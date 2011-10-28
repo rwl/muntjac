@@ -24,7 +24,6 @@ from muntjac.ui.form import Form
 from muntjac.ui.default_field_factory import DefaultFieldFactory
 from muntjac.ui.component_container import IComponentContainer
 from muntjac.ui.component import IComponent, Event as ComponentEvent
-from muntjac.ui.abstract_component import AbstractComponent
 
 from muntjac.data.property import IValueChangeNotifier, IValueChangeListener
 from muntjac.event.mouse_events import ClickEvent
@@ -157,7 +156,6 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         @param caption
         @param dataSource
         """
-
         # True if column collapsing is allowed.
         self._columnCollapsingAllowed = False
 
@@ -283,6 +281,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
         self._associatedProperties = dict()
 
+
         super(Table, self).__init__()
 
         self.setRowHeaderMode(self.ROW_HEADER_MODE_HIDDEN)
@@ -325,20 +324,18 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         # Checks that the new visible columns contains no nulls and
         # properties exist
         properties = self.getContainerPropertyIds()
-        for i in range(len(visibleColumns)):
-            if visibleColumns[i] is None:
+        for vc in visibleColumns:
+            if vc is None:
                 raise ValueError, 'Ids must be non-nulls'
-            elif (visibleColumns[i] not in properties
-                    and (visibleColumns[i] not in self._columnGenerators)):
-                raise ValueError, ('Ids must exist in the IContainer '
-                        'or as a generated column , missing id: '
-                        + visibleColumns[i])
+            elif (vc not in properties) and (vc not in self._columnGenerators):
+                raise ValueError('Ids must exist in the IContainer '
+                        'or as a generated column , missing id: ' + str(vc))
 
         # If this is called before the constructor is finished, it might be
         # uninitialized
         newVC = list()
-        for i in range(len(visibleColumns)):
-            newVC.append( visibleColumns[i] )
+        for vc in visibleColumns:
+            newVC.append(vc)
 
         # Removes alignments, icons and headers from hidden columns
         if self._visibleColumns is not None:
@@ -375,10 +372,10 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         if self._columnHeaders is None:
             return None
 
-        headers = [None] * len(self._visibleColumns)
+        headers = list()
 
-        for i, col in enumerate(self._visibleColumns):
-            headers[i] = self.getColumnHeader(col)
+        for col in self._visibleColumns:
+            headers.append( self.getColumnHeader(col) )
 
         return headers
 
@@ -398,10 +395,10 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                    {@link #getVisibleColumns()} method.
         """
         if len(columnHeaders) != len(self._visibleColumns):
-            raise ValueError, ('The length of the headers array must '
+            raise ValueError,('The length of the headers array must '
                     'match the number of visible columns')
 
-        del self._columnHeaders[:]
+        self._columnHeaders.clear()
 
         i = 0
         it = iter(self._visibleColumns)
@@ -433,9 +430,9 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         if self._columnIcons is None:
             return None
 
-        icons = [None] * len(self._visibleColumns)
-        for i, col in enumerate(self._visibleColumns):
-            icons[i] = self._columnIcons[col]
+        icons = list()
+        for col in self._visibleColumns:
+            icons.append( self._columnIcons[col] )
 
         return icons
 
@@ -453,7 +450,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                             {@link getVisibleColumns()}.
         """
         if len(columnIcons) != len(self._visibleColumns):
-            raise ValueError, ('The length of the icons array must '
+            raise ValueError('The length of the icons array must '
                     'match the number of visible columns')
 
         del self._columnIcons[:]
@@ -487,10 +484,10 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         if self._columnAlignments is None:
             return None
 
-        alignments = [None] * len(self._visibleColumns)
+        alignments = list()
 
-        for i, col in enumerate(self._visibleColumns):
-            alignments[i] = self.getColumnAlignment(col)
+        for col in self._visibleColumns:
+            alignments.append( self.getColumnAlignment(col) )
 
         return alignments
 
@@ -512,25 +509,26 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                    the Column alignments array.
         """
         if len(columnAlignments) != len(self._visibleColumns):
-            raise ValueError, ('The length of the alignments array '
+            raise ValueError('The length of the alignments array '
                     'must match the number of visible columns')
 
         # Checks all alignments
         for i, a in enumerate(columnAlignments):
-            if (a is not None
-                    and not (a == self.ALIGN_LEFT)
-                    and not (a == self.ALIGN_CENTER)
-                    and not (a == self.ALIGN_RIGHT)):
-                raise ValueError, ('Column ' + str(i) + ' aligment \''
+            if ((a is not None)
+                    and (a is not self.ALIGN_LEFT)
+                    and (a is not self.ALIGN_CENTER)
+                    and (a is not self.ALIGN_RIGHT)):
+                raise ValueError('Column ' + str(i) + ' aligment \''
                         + a + '\' is invalid')
 
         # Resets the alignments
         newCA = dict()
+
         i = 0
         it = iter(self._visibleColumns)
         while i < len(columnAlignments):
             try:
-                newCA[it.next()] = columnAlignments[i]
+                newCA[ it.next() ] = columnAlignments[i]
                 i += 1
             except StopIteration:
                 break
@@ -562,7 +560,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
             propertyId = self._ROW_HEADER_FAKE_PROPERTY_ID
 
         if width < 0:
-            self._columnWidths.remove(propertyId)
+            del self._columnWidths[propertyId]
         else:
             self._columnWidths[propertyId] = int(width)
 
@@ -598,14 +596,14 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                    the expandRatio used to divide excess space for this column
         """
         if expandRatio < 0:
-            self._columnWidths.remove(propertyId)
+            del self._columnWidths[propertyId]
         else:
             self._columnWidths[propertyId] = float(expandRatio)
 
 
     def getColumnExpandRatio(self, propertyId):
         width = self._columnWidths.get(propertyId)
-        if width is None or (not isinstance(width, float)):
+        if (width is None) or (not isinstance(width, float)):
             return -1
 
         return float(width)
@@ -623,7 +621,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
             propertyId = self._ROW_HEADER_FAKE_PROPERTY_ID
 
         width = self._columnWidths.get(propertyId)
-        if width is None or (not isinstance(width, int)):
+        if (width is None) or (not isinstance(width, int)):
             return -1
 
         return int(width)
@@ -650,7 +648,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         @param pageLength
                    the length of one page.
         """
-        if pageLength >= 0 and self._pageLength != pageLength:
+        if (pageLength >= 0) and (self._pageLength != pageLength):
             self._pageLength = pageLength
             # Assures the visual refresh
             self.resetPageBuffer()
@@ -700,10 +698,10 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         if isinstance(self.items, container.IIndexed):
             index = self.getCurrentPageFirstItemIndex()
             idd = None
-            if index >= 0 and index < len(self):
+            if (index >= 0) and (index < len(self)):
                 idd = self.getIdByIndex(index)
 
-            if idd is not None and idd != self._currentPageFirstItemId:
+            if (idd is not None) and (idd != self._currentPageFirstItemId):
                 self._currentPageFirstItemId = idd
 
         # If there is no item id at all, use the first one
@@ -731,7 +729,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
             # If the table item container does not have index, we have to
             # calculates the index by hand
             idd = self.firstItemId()
-            while idd is not None and idd != currentPageFirstItemId:
+            while (idd is not None) and (idd != currentPageFirstItemId):
                 index += 1
                 idd = self.nextItemId(idd)
             if idd is None:
@@ -807,7 +805,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
         header = self._columnHeaders.get(propertyId)
         if ((header is None
-                and self.getColumnHeaderMode() == \
+                and self.getColumnHeaderMode() ==
                         self.COLUMN_HEADER_MODE_EXPLICIT_DEFAULTS_ID)
                 or (self.getColumnHeaderMode() == self.COLUMN_HEADER_MODE_ID)):
             header = str(propertyId)
@@ -860,13 +858,13 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         """
         # Checks for valid alignments
         if (alignment is not None
-                and not (alignment == self.ALIGN_LEFT)
-                and not (alignment == self.ALIGN_CENTER)
-                and not (alignment == self.ALIGN_RIGHT)):
-            raise ValueError, ('Column alignment \'' + alignment
+                and (alignment is not self.ALIGN_LEFT)
+                and (alignment is not self.ALIGN_CENTER)
+                and (alignment is not self.ALIGN_RIGHT)):
+            raise ValueError('Column alignment \'' + alignment
                     + '\' is not supported.')
 
-        if alignment is None or alignment == self.ALIGN_LEFT:
+        if (alignment is None) or (alignment == self.ALIGN_LEFT):
             if propertyId in self._columnAlignments:
                 del self._columnAlignments[propertyId]
             return
@@ -884,8 +882,8 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                    the propertyID identifying the column.
         @return true if the column is collapsed; false otherwise;
         """
-        return (self._collapsedColumns is not None
-                and propertyId in self._collapsedColumns)
+        return ((self._collapsedColumns is not None)
+                and (propertyId in self._collapsedColumns))
 
 
     def setColumnCollapsed(self, propertyId, collapsed):
@@ -960,12 +958,12 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         # internal order of visible columns left out of the ordering
         # (trailing). Silently does nothing if columnReordering is not
         # allowed.
-        if columnOrder is None or (not self.isColumnReorderingAllowed()):
+        if (columnOrder is None) or (not self.isColumnReorderingAllowed()):
             return
 
         newOrder = list()
         for order in columnOrder:
-            if order is not None and order in self._visibleColumns:
+            if (order is not None) and (order in self._visibleColumns):
                 self._visibleColumns.remove(order)
                 newOrder.append(order)
 
@@ -1029,8 +1027,8 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
             self._currentPageFirstItemId = self.firstItemId()
 
             # Go forwards in the middle of the list (respect borders)
-            while (self._currentPageFirstItemIndex < newIndex
-                    and not self.isLastId(self._currentPageFirstItemId)):
+            while ((self._currentPageFirstItemIndex < newIndex)
+                    and (not self.isLastId(self._currentPageFirstItemId))):
                 self._currentPageFirstItemIndex += 1
                 self._currentPageFirstItemId = \
                         self.nextItemId(self._currentPageFirstItemId)
@@ -1040,8 +1038,8 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                 self._currentPageFirstItemIndex = size - 1
 
             # Go backwards in the middle of the list (respect borders)
-            while (self._currentPageFirstItemIndex > newIndex
-                    and not self.isFirstId(self._currentPageFirstItemId)):
+            while ((self._currentPageFirstItemIndex > newIndex)
+                    and (not self.isFirstId(self._currentPageFirstItemId))):
                 self._currentPageFirstItemIndex -= 1
                 self._currentPageFirstItemId = \
                         self.prevItemId(self._currentPageFirstItemId)
@@ -1051,8 +1049,8 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                 self._currentPageFirstItemIndex = 0
 
             # Go forwards once more
-            while (self._currentPageFirstItemIndex < newIndex
-                    and not self.isLastId(self._currentPageFirstItemId)):
+            while ((self._currentPageFirstItemIndex < newIndex)
+                    and (not self.isLastId(self._currentPageFirstItemId))):
                 self._currentPageFirstItemIndex += 1
                 self._currentPageFirstItemId = \
                         self.nextItemId(self._currentPageFirstItemId)
@@ -1127,9 +1125,9 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         @param columnHeaderMode
                    the New value of property columnHeaderMode.
         """
-        if (columnHeaderMode >= self.COLUMN_HEADER_MODE_HIDDEN \
-                and columnHeaderMode <=
-                        self.COLUMN_HEADER_MODE_EXPLICIT_DEFAULTS_ID):
+        if ((columnHeaderMode >= self.COLUMN_HEADER_MODE_HIDDEN)
+                and (columnHeaderMode <=
+                        self.COLUMN_HEADER_MODE_EXPLICIT_DEFAULTS_ID)):
             self._columnHeaderMode = columnHeaderMode
 
         # Assures the visual refresh
@@ -1156,10 +1154,10 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
             pagelen = self.getPageLength()
             firstIndex = self.getCurrentPageFirstItemIndex()
             rows = totalRows = self.size()
-            if rows > 0 and firstIndex >= 0:
+            if (rows > 0) and (firstIndex >= 0):
                 rows -= firstIndex
 
-            if pagelen > 0 and pagelen < rows:
+            if (pagelen > 0) and (pagelen < rows):
                 rows = pagelen
 
             # If "to be painted next" variables are set, use them
@@ -1178,7 +1176,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                 self._firstToBeRenderedInClient = firstIndex
 
             if totalRows > 0:
-                if rows + firstIndex > totalRows:
+                if (rows + firstIndex) > totalRows:
                     rows = totalRows - firstIndex
             else:
                 rows = 0
@@ -1208,10 +1206,10 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                 iscomponent[i] = ((colids[i] in self._columnGenerators)
                         or issubclass(self.getType(colids[i]), IComponent))
 
-            if (self._pageBuffer is not None \
+            if (self._pageBuffer is not None
                     and len(self._pageBuffer[self.CELL_ITEMID]) > 0):
-                firstIndexNotInCache = self._pageBufferFirstIndex \
-                        + len(self._pageBuffer[self.CELL_ITEMID])
+                firstIndexNotInCache = (self._pageBufferFirstIndex
+                        + len(self._pageBuffer[self.CELL_ITEMID]))
             else:
                 firstIndexNotInCache = -1
 
@@ -1613,10 +1611,12 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         # Add range items aka shift clicked multiselection areas
         if ranges is not None:
             for rnge in ranges:
-                split = rnge.split('-')
-                startItemId = self.itemIdMapper.get(split[0])
-                length = int( split[1] )
-                newValue.update( self.getItemIdsInRange(startItemId, length) )
+                if len(rnge) > 0:
+                    split = rnge.split('-')
+                    startItemId = self.itemIdMapper.get(split[0])
+                    length = int(split[1])
+                    ids = self.getItemIdsInRange(startItemId, length)
+                    newValue.update(ids)
 
         if not self.isNullSelectionAllowed() and len(newValue) == 0:
             # empty selection not allowed, keep old value
@@ -1662,7 +1662,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         elif (self.isSelectable()
                 and self.isMultiSelect()
                 and 'selected' in variables
-                and self._multiSelectMode == self.MultiSelectMode.DEFAULT):
+                and self._multiSelectMode == MultiSelectMode.DEFAULT):
             self.handleSelectedItems(variables)
             variables = dict(variables)
             del variables['selected']
@@ -1941,8 +1941,8 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                 # table scroll/cache requests (i.e when reqRowsToPaint<0)
                 target.addAttribute('recalcWidths', True)
 
-        if (not self.isNullSelectionAllowed()
-                and self.getNullSelectionItemId() is not None
+        if ((not self.isNullSelectionAllowed())
+                and (self.getNullSelectionItemId() is not None)
                 and self.containsId(self.getNullSelectionItemId())):
             total -= 1
             rows -= 1
@@ -2036,7 +2036,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                     iscomponent[iscomponentIndex] = True
                 else:
                     colType = self.getType(columnId)
-                    iscomponent[iscomponentIndex] = (colType is not None
+                    iscomponent[iscomponentIndex] = ((colType is not None)
                             and issubclass(colType, IComponent))
                 iscomponentIndex += 1
             except StopIteration:
@@ -2046,8 +2046,8 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         # cells array contains all that are supposed to be visible on client,
         # but we'll start from the one requested by client
         start = 0
-        if (self._reqFirstRowToPaint != -1
-                and self._firstToBeRenderedInClient != -1):
+        if ((self._reqFirstRowToPaint != -1)
+                and (self._firstToBeRenderedInClient != -1)):
             start = self._reqFirstRowToPaint - self._firstToBeRenderedInClient
 
         end = len(cells[0])
@@ -2055,18 +2055,18 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
             end = start + self._reqRowsToPaint
 
         # sanity check
-        if (self._lastToBeRenderedInClient != -1
-                and self._lastToBeRenderedInClient < end):
+        if ((self._lastToBeRenderedInClient != -1)
+                and (self._lastToBeRenderedInClient < end)):
             end = self._lastToBeRenderedInClient + 1
 
-        if start > len(cells[self.CELL_ITEMID]) or start < 0:
+        if (start > len(cells[self.CELL_ITEMID])) or (start < 0):
             start = 0
 
         for indexInRowbuffer in range(start, end):
             itemId = cells[self.CELL_ITEMID][indexInRowbuffer]
             if (not self.isNullSelectionAllowed()
-                    and self.getNullSelectionItemId() is not None
-                    and itemId == self.getNullSelectionItemId()):
+                    and (self.getNullSelectionItemId() is not None)
+                    and (itemId == self.getNullSelectionItemId())):
                 # Remove null selection item if null selection is not allowed
                 continue
 
@@ -2212,7 +2212,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         # cells
         currentColumn = 0
         for columnId in self._visibleColumns:
-            if columnId is None or self.isColumnCollapsed(columnId):
+            if (columnId is None) or self.isColumnCollapsed(columnId):
                 continue
 
             # For each cell, if a cellStyleGenerator is specified, get the
@@ -2220,15 +2220,13 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
             # target.
             if self._cellStyleGenerator is not None:
                 cellStyle = self._cellStyleGenerator.getStyle(itemId, columnId)
-                if cellStyle is not None and cellStyle != '':
+                if (cellStyle is not None) and (cellStyle != ''):
                     target.addAttribute(('style-'
                             + self._columnIdMap.key(columnId)), cellStyle)
 
-            if (iscomponent[currentColumn]
-                    or iseditable
-                    and isinstance(IComponent,
-                            cells[(self.CELL_FIRSTCOL
-                                    + currentColumn)][indexInRowbuffer])):
+            if ((iscomponent[currentColumn] or iseditable)
+                    and isinstance(cells[(self.CELL_FIRSTCOL
+                            + currentColumn)][indexInRowbuffer], IComponent)):
                 c = cells[self.CELL_FIRSTCOL + currentColumn][indexInRowbuffer]
                 if c is None:
                     target.addText('')
@@ -2237,6 +2235,8 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
             else:
                 target.addText(cells[(self.CELL_FIRSTCOL
                         + currentColumn)][indexInRowbuffer])
+
+            currentColumn += 1
 
         target.endTag('tr')
 
@@ -2252,6 +2252,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         nargs = len(args)
         if nargs == 2:
             target, itemId = args
+            pass
         elif nargs == 5:
             target, cells, actionSet, indexInRowbuffer, itemId = args
 
@@ -2269,11 +2270,13 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                 keys = list()
                 for ah in self._actionHandlers:
                     aa = ah.getActions(itemId, self)
+
                     if aa is not None:
                         for ai in range(len(aa)):
                             key = self._actionMapper.key(aa[ai])
                             actionSet.add(aa[ai])
                             keys.append(key)
+
                 target.addAttribute('al', keys)
 
             # For each row, if a cellStyleGenerator is specified, get the
@@ -2281,7 +2284,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
             # is any, add it to the target.
             if self._cellStyleGenerator is not None:
                 rowStyle = self._cellStyleGenerator.getStyle(itemId, None)
-                if rowStyle is not None and rowStyle != '':
+                if (rowStyle is not None) and (rowStyle != ''):
                     target.addAttribute('rowstyle', rowStyle)
 
             self.paintRowAttributes(target, itemId)
@@ -2329,7 +2332,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         @return Object Either formatted value or IComponent for field.
         @see #setTableFieldFactory(TableFieldFactory)
         """
-        if self.isEditable() and self._fieldFactory is not None:
+        if self.isEditable() and (self._fieldFactory is not None):
             f = self._fieldFactory.createField(self.getContainerDataSource(),
                     rowId, colId, self)
             if f is not None:
