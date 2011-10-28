@@ -86,6 +86,12 @@ class VMarginInfo(object):
             return False
         return obj.bitMask == self._bitMask
 
+    def __eq__(self, obj):
+        return self.equals(obj)
+
 
     def hashCode(self):
         return self._bitMask
+
+    def __hash__(self):
+        return self.hashCode()

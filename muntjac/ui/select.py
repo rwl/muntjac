@@ -398,7 +398,7 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
                     size)
             last = self.getLastItemIndexOnCurrentPage(needNullSelectOption,
                     size, first)
-            return options.subList(first, last + 1)
+            return options[first:last + 1]
         else:
             return options
 

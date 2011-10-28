@@ -96,7 +96,8 @@ class FeatureView(HorizontalLayout):
             w.removeSubwindows()
             f = self._currentFeature
             self._currentFeature = None
-            self._exampleCache.remove(f)
+            if f in self._exampleCache:
+                del self._exampleCache[f]
             self.setFeature(f)
 
 
@@ -204,7 +205,8 @@ class FeatureView(HorizontalLayout):
                             ic = ThemeResource('../sampler/icons/sample.png')
                         al.setIcon(ic)
 
-                        al.addListener(LinkListener(self, f))
+                        al.addListener(LinkListener(self, f),
+                                ILinkActivatedListener)
                         rel.addComponent(al)
                 self._right.addComponent(rel)
 

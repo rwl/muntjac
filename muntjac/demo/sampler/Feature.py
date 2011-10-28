@@ -1,4 +1,6 @@
 
+import inspect
+
 from muntjac.util import fullname
 from muntjac.util import loadClass
 
@@ -117,17 +119,13 @@ class Feature(object):
     def getSource(self):
         if self._pythonSource is None:
             try:
-                # Use package name + class name so the class loader won't
-                # have to guess the package name.
-                resourceName = '/' + fullname(self.getExample())
-                resourceName = resourceName.replace('.', '/') + '.py'
-                fd = open(resourceName, 'rb')
-                self._pythonSource = fd.read()
-                fd.close()
-            except Exception:
+                ex = self.getExample()
+                self._pythonSource = inspect.getsource(inspect.getmodule(ex))
+            except IOError:
                 print (self._MSG_SOURCE_NOT_AVAILABLE
                        + ' (' + self.getFragmentName() + ')')
                 self._pythonSource = self._MSG_SOURCE_NOT_AVAILABLE
+
         return self._pythonSource
 
 
@@ -184,6 +182,9 @@ class Feature(object):
     def hashCode(self):
         # A feature is uniquely identified by its class name
         return hash(self.__class__)
+
+    def __hash__(self):
+        return self.hashCode()
 
 
 class Version(object):

@@ -14,13 +14,13 @@ class APIResource(NamedExternalResource):
     _PORTLET_BASE = 'http://developers.sun.com/docs/jscreator/apis/portlet'
 
     def __init__(self, *args):
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            clazz, = _0
+
+        nargs = len(args)
+        if nargs == 1:
+            clazz, = args
             APIResource.__init__(self, self.resolveBaseUrl(clazz), clazz)
-        elif _1 == 2:
-            baseUrl, clazz = _0
+        elif nargs == 2:
+            baseUrl, clazz = args
             super(APIResource, self).__init__(self.resolveName(clazz),
                     self.getJavadocUrl(baseUrl, clazz))
         else:
@@ -30,19 +30,19 @@ class APIResource(NamedExternalResource):
     def getJavadocUrl(cls, baseUrl, clazz):
         if not baseUrl.endswith('/'):
             baseUrl += '/'
-        path = clazz.getName().replaceAll('\\.', '/')
-        path = path.replaceAll('\\$', '.')
+        path = clazz.__name__.replace('\\.', '/')
+        path = path.replace('\\$', '.')
         return baseUrl + path + '.html'
 
     @classmethod
     def resolveBaseUrl(cls, clazz):
-        """Tries to resolve the javadoc baseurl for the given class by looking at
-        the packagename.
+        """Tries to resolve the javadoc baseurl for the given class by looking
+        at the packagename.
 
         @param clazz
         @return
         """
-        name = clazz.getName()
+        name = clazz.__name__
         if name.startswith('javax.servlet.'):
             return cls._SERVLET_BASE
         elif name.startswith('javax.portlet.'):
@@ -53,5 +53,5 @@ class APIResource(NamedExternalResource):
 
     @classmethod
     def resolveName(cls, clazz):
-        ec = clazz.getEnclosingClass()
+        ec = None #clazz.getEnclosingClass()  # no inner classes
         return (ec.__name__ + '.' if ec is not None else '') + clazz.__name__

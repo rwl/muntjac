@@ -92,11 +92,11 @@ class ActiveLink(Link):
     def changeVariables(self, source, variables):
         super(ActiveLink, self).changeVariables(source, variables)
         if not self.isReadOnly() and 'activated' in variables:
-            activated = variables['activated']
-            opened = variables['opened']
+            activated = variables.get('activated')
+            opened = variables.get('opened')
             if (activated is not None and bool(activated)
                     and not self.isReadOnly()):
-                if opened is not None and bool(opened):
+                if (opened is not None) and bool(opened):
                     self.fireClick(True)
                 else:
                     self.fireClick(False)

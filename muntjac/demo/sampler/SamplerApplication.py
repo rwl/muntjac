@@ -35,6 +35,8 @@ class SamplerApplication(Application):
     # All features in one container
     _allFeatures = FeatureSet.FEATURES.getContainer(True)
 
+    _sampleIconCache = dict()
+
     # init() inits
     _THEMES = ['reindeer', 'runo']
     _SAMPLER_THEME_NAME = 'sampler'
@@ -110,20 +112,10 @@ class SamplerApplication(Application):
         @param clazz
         @return
         """
-        _0 = True
-        it = cls._allFeatures.getItemIds()
-        while True:
-            if _0 is True:
-                _0 = False
-            if not it.hasNext():
-                break
-            f = it.next()
-            if f.getClass() == clazz:
+        for f in cls._allFeatures.getItemIds():
+            if f.__class__ == clazz:
                 return f
         return None
-
-
-    _sampleIconCache = dict()
 
 
     def getSampleIcon(self, resId):
@@ -183,7 +175,7 @@ class SamplerWindow(Window):
         self._previousSample = None
         self._nextSample = None
         self._search = None
-#        self.theme = None
+        self.theme = None
 
         # Main top/expanded-bottom layout
         mainExpand = VerticalLayout()
@@ -326,7 +318,7 @@ class SamplerWindow(Window):
         self._search.setImmediate(True)
         self._search.setInputPrompt('Search samples...')
         self._search.setContainerDataSource( self._app._allFeatures )
-        _0 = True
+
         for idd in self._app._allFeatures.getItemIds():
             if isinstance(idd, FeatureSet):
                 self._search.setItemIcon(idd,
@@ -334,6 +326,7 @@ class SamplerWindow(Window):
 
         self._search.addListener(SearchListener(self),
                 prop.IValueChangeListener)
+
         # TODO add icons for section/sample
         # PopupView pv = new PopupView("", search) { public void
         # changeVariables(Object source, Map variables) {
@@ -351,27 +344,27 @@ class SamplerWindow(Window):
 
 
     def createThemeSelect(self):
-        theme = ComboBox()
-        theme.setWidth('32px')
-        theme.setNewItemsAllowed(False)
-        theme.setFilteringMode(ComboBox.FILTERINGMODE_CONTAINS)
-        theme.setImmediate(True)
-        theme.setNullSelectionAllowed(False)
+        self.theme = ComboBox()
+        self.theme.setWidth('32px')
+        self.theme.setNewItemsAllowed(False)
+        self.theme.setFilteringMode(ComboBox.FILTERINGMODE_CONTAINS)
+        self.theme.setImmediate(True)
+        self.theme.setNullSelectionAllowed(False)
         for themeName in self._app._THEMES:
             idd = self._app._SAMPLER_THEME_NAME + '-' + themeName
-            theme.addItem(idd)
-            theme.setItemCaption(idd,
+            self.theme.addItem(idd)
+            self.theme.setItemCaption(idd,
                     themeName[:1].upper() + (themeName[1:]) + ' theme')
-            theme.setItemIcon(idd, self._EMPTY_THEME_ICON)
+            self.theme.setItemIcon(idd, self._EMPTY_THEME_ICON)
         currentWindowTheme = self.getTheme()
-        theme.setValue(currentWindowTheme)
-        theme.setItemIcon(currentWindowTheme, self._SELECTED_THEME_ICON)
+        self.theme.setValue(currentWindowTheme)
+        self.theme.setItemIcon(currentWindowTheme, self._SELECTED_THEME_ICON)
 
-        theme.addListener(ThemeChangeListener(self, self._app),
+        self.theme.addListener(ThemeChangeListener(self, self._app),
                 prop.IValueChangeListener)
-        theme.setStyleName('theme-select')
-        theme.setDescription('Select Theme')
-        return theme
+        self.theme.setStyleName('theme-select')
+        self.theme.setDescription('Select Theme')
+        return self.theme
 
 
     def createLogo(self):
@@ -616,7 +609,7 @@ class FeatureGrid(Panel, IFeatureList):
                     if (f.getDescription() is not None
                             and f.getDescription() != ''):
                         d = f.getDescription()
-                        desc = Label(d[d.index(".") + 1], Label.CONTENT_XHTML)
+                        desc = Label(d[:d.index(".") + 1], Label.CONTENT_XHTML)
                         desc.setSizeUndefined()
                         l.addComponent(desc)
                     highlightRow.addComponent(l)
@@ -673,7 +666,7 @@ class WindowCloseListener(window.ICloseListener):
         self._app = app
 
     def windowClose(self, e):
-        if self.getMainWindow() != self._window:
+        if self._app.getMainWindow() != self._window:
             self._app.removeWindow(self._window)
 
 
@@ -740,8 +733,10 @@ class NextClickListener(button.IClickListener):
         else:
             # Navigate to next sample
             nextt = self._app._allFeatures.nextItemId(curr)
+
         while nextt is not None and isinstance(nextt, FeatureSet):
             nextt = self._app._allFeatures.nextItemId(nextt)
+
         if nextt is not None:
             self._window._currentFeature.setValue(nextt)
         else:
@@ -791,7 +786,7 @@ class FeatureChangeListener(prop.IValueChangeListener):
     def valueChange(self, event):
         f = event.getProperty().getValue()
         v = self._tree.getValue()
-        if ((f is not None and not (f == v))
+        if ((f is not None and f != v)
                 or (f is None and v is not None)):
             self._tree.setValue(f)
         self._window.removeSubwindows()
@@ -848,19 +843,20 @@ class TableColumnGenerator(table.IColumnGenerator):
             b = ActiveLink('View sample',
                     ExternalResource('#' + feature.getFragmentName()))
 
-            class LinkListener(ILinkActivatedListener):
-
-                def __init__(self, app):
-                    self._app = app
-
-                def linkActivated(self, event):
-                    if not event.isLinkOpened():
-                        self._app.getWindow().setFeature(self.feature)
-
             b.addListener(LinkListener(self._app),
                     ILinkActivatedListener)
+
             b.setStyleName(BaseTheme.BUTTON_LINK)
             return b
+
+class LinkListener(ILinkActivatedListener):
+
+    def __init__(self, app):
+        self._app = app
+
+    def linkActivated(self, event):
+        if not event.isLinkOpened():
+            self._app.getWindow().setFeature(self.feature)
 
 
 class FeatureTableClickListener(IItemClickListener):
