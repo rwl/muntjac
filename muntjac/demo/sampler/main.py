@@ -4,8 +4,8 @@ from muntjac.util import run_app
 from muntjac.application import Application
 from muntjac.ui.window import Window
 
-from muntjac.demo.sampler.features.tabsheets.TabSheetScrollingExample \
-    import TabSheetScrollingExample as Example
+from muntjac.demo.sampler.features.windows.SubwindowSizedExample \
+    import SubwindowSizedExample as Example
 
 
 class App(Application):

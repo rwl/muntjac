@@ -205,7 +205,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         # Read the stream until the actual file starts (empty line). Read
         # filename and content type from multipart headers.
         while not atStart:
-            readLine = self.readLine(inputStream)
+            readLine = inputStream.readline()
             contentLength -= len(readLine) + 2
             if (readLine.startswith('Content-Disposition:')
                     and readLine.find('filename=') > 0):

@@ -15,6 +15,8 @@ class TreeMultiSelectExample(VerticalLayout, action.IHandler):
     _ACTIONS = [_ACTION_ADD, _ACTION_DELETE]
 
     def __init__(self):
+        super(TreeMultiSelectExample, self).__init__()
+
         self.setSpacing(True)
 
         # Create new Tree object using a hierarchical container from
@@ -26,18 +28,7 @@ class TreeMultiSelectExample(VerticalLayout, action.IHandler):
         self._tree.setMultiSelect(True)
         self._tree.setImmediate(True)
 
-        class TreeListener(IValueChangeListener):
-
-            def __init__(self, c):
-                self._c = c
-
-            def valueChange(self, event):
-                t = event.getProperty()
-                # enable if something is selected, returns a set
-                self._c._deleteButton.setEnabled(t.getValue() is not None and len(t.getValue()) > 0)
-
-
-        self._tree.addListener( TreeListener(self) )
+        self._tree.addListener(TreeListener(self), IValueChangeListener)
 
         # Add Actionhandler
         self._tree.addActionHandler(self)
@@ -51,18 +42,6 @@ class TreeMultiSelectExample(VerticalLayout, action.IHandler):
             self._tree.expandItemsRecursively(idd)
 
         # Create the 'delete button', inline click-listener
-        class DeleteListener(button.IClickListener):
-
-            def __init__(self, c):
-                self._c = c
-
-            def buttonClick(self, event):
-                # Delete all the selected objects
-                toDelete = list(self._c._tree.getValue())
-                for i in range(len(toDelete)):
-                    self._c.handleAction(self._c._ACTION_DELETE,
-                            self._c._tree, toDelete[i])
-
         self._deleteButton = Button('Delete', DeleteListener(self))
         self._deleteButton.setEnabled(False)
         self.addComponent(self._deleteButton)
@@ -89,8 +68,35 @@ class TreeMultiSelectExample(VerticalLayout, action.IHandler):
             self._tree.expandItem(target)
         elif action == self._ACTION_DELETE:
             parent = self._tree.getParent(target)
-            self._tree.removeItem(target)
+            self._tree.removeItem(target)  # FIXME: refresh
             # If the deleted object's parent has no more children, set it's
             # childrenallowed property to false
-            if parent is not None and len(self._tree.getChildren(parent)) == 0:
+            if (parent is not None) and \
+                    (self._tree.getChildren(parent) is None  # FIXME: null children
+                     or len(self._tree.getChildren(parent)) == 0):
                 self._tree.setChildrenAllowed(parent, False)
+
+
+class TreeListener(IValueChangeListener):
+
+    def __init__(self, c):
+        self._c = c
+
+    def valueChange(self, event):
+        t = event.getProperty()
+        # enable if something is selected, returns a set
+        enabled = t.getValue() is not None and len(t.getValue()) > 0
+        self._c._deleteButton.setEnabled(enabled)
+
+
+class DeleteListener(button.IClickListener):
+
+    def __init__(self, c):
+        self._c = c
+
+    def buttonClick(self, event):
+        # Delete all the selected objects
+        toDelete = list(self._c._tree.getValue())
+        for i in range(len(toDelete)):
+            self._c.handleAction(self._c._ACTION_DELETE,
+                    self._c._tree, toDelete[i])

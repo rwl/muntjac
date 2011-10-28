@@ -6,6 +6,8 @@ from muntjac.ui.button import IClickListener
 class LabelRichExample(VerticalLayout, IClickListener):
 
     def __init__(self):
+        super(LabelRichExample, self).__init__()
+
         self.setSpacing(True)
 
         self._editor = RichTextArea()
@@ -17,7 +19,7 @@ class LabelRichExample(VerticalLayout, IClickListener):
         self.addComponent(self._richText)
 
         self._b = Button('Edit')
-        self._b.addListener(self)
+        self._b.addListener(self, IClickListener)
         self.addComponent(self._b)
 
         self._editor.setWidth('100%')

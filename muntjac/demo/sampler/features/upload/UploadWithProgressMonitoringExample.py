@@ -5,12 +5,16 @@ from StringIO import StringIO
 
 from muntjac.api import \
     (VerticalLayout, Label, ProgressIndicator, Upload, CheckBox,
-     button, Button, Panel, FormLayout, HorizontalLayout, upload)
+     Button, Panel, FormLayout, HorizontalLayout)
+
+from muntjac.ui import button, upload
 
 
 class UploadWithProgressMonitoringExample(VerticalLayout):
 
     def __init__(self):
+        super(UploadWithProgressMonitoringExample, self).__init__()
+
         self.setSpacing(True)
 
         self._state = Label()
@@ -35,27 +39,11 @@ class UploadWithProgressMonitoringExample(VerticalLayout):
         handBrake.setDescription('Sleep for 100ms after each kilobyte to '
                 'simulate slower processing/bandwidth. This is to show '
                 'progress indicator even with rather small files.')
+        handBrake.addListener(HandBrakeListener(self), button.IClickListener)
 
-        class HandBrakeListener(button.IClickListener):
-
-            def __init__(self, c):
-                self._c = c
-
-            def buttonClick(self, event):
-                self._c._counter.setSlow(bool(event.getButton()))
-
-        handBrake.addListener(HandBrakeListener(self))
         cancelProcessing = Button('Cancel')
-
-        class CancelListener(button.IClickListener):
-
-            def __init__(self, c):
-                self._c = c
-
-            def buttonClick(self, event):
-                self._c._upload.interruptUpload()
-
-        cancelProcessing.addListener(CancelListener(self))
+        cancelProcessing.addListener(CancelListener(self),
+                button.IClickListener)
         cancelProcessing.setVisible(False)
         cancelProcessing.setStyleName('small')
 
@@ -91,76 +79,104 @@ class UploadWithProgressMonitoringExample(VerticalLayout):
 
         self.addComponent(p)
 
-        class StartedListener(upload.IStartedListener):
+        self._upload.addListener(StartedListener(self),
+                upload.IStartedListener)
 
-            def __init__(self, c):
-                self._c = c
+        self._upload.addListener(ProgressListener(self),
+                upload.IProgressListener)
 
-            def uploadStarted(self, event):
-                # this method gets called immediatedly after upload is
-                # started
-                self._c._pi.setValue(0.0)
-                self._c._pi.setVisible(True)
-                self._c._pi.setPollingInterval(500)
-                # hit server frequantly to get
-                self._c._textualProgress.setVisible(True)
-                # updates to client
-                self._c._state.setValue('Uploading')
-                self._c._fileName.setValue(event.getFilename())
-                self.cancelProcessing.setVisible(True)
+        self._upload.addListener(SucceededListener(self),
+                upload.ISucceededListener)
 
-        self._upload.addListener(StartedListener(self))
+        self._upload.addListener(FailedListener(self),
+                upload.IFailedListener)
 
-        class ProgressListener(upload.IProgressListener):
+        self._upload.addListener(FinishedListener(self),
+                upload.IFinishedListener)
 
-            def __init__(self, c):
-                self._c = c
 
-            def updateProgress(self, readBytes, contentLength):
-                # this method gets called several times during the update
-                self._c._pi.setValue(float(readBytes / contentLength))
-                self._c._textualProgress.setValue('Processed ' + readBytes
-                        + ' bytes of ' + contentLength)
-                self._c._result.setValue(self._c._counter.getLineBreakCount()
-                        + ' (counting...)')
+class HandBrakeListener(button.IClickListener):
 
-        self._upload.addListener(ProgressListener(self))
+    def __init__(self, c):
+        self._c = c
 
-        class SucceededListener(upload.ISucceededListener):
+    def buttonClick(self, event):
+        self._c._counter.setSlow(bool(event.getButton()))
 
-            def __init__(self, c):
-                self._c = c
 
-            def uploadSucceeded(self, event):
-                self._c._result.setValue(self._c._counter.getLineBreakCount()
-                        + ' (total)')
+class CancelListener(button.IClickListener):
 
-        self._upload.addListener(SucceededListener(self))
+    def __init__(self, c):
+        self._c = c
 
-        class FailedListener(upload.IFailedListener):
+    def buttonClick(self, event):
+        self._c._upload.interruptUpload()
 
-            def __init__(self, c):
-                self._c = c
 
-            def uploadFailed(self, event):
-                self._c._result.setValue(self._c._counter.getLineBreakCount()
-                        + ' (counting interrupted at '
-                        + round(100 * self._c._pi.getValue()) + '%)')
+class StartedListener(upload.IStartedListener):
 
-        self._upload.addListener(FailedListener(self))
+    def __init__(self, c):
+        self._c = c
 
-        class FinishedListener(upload.IFinishedListener):
+    def uploadStarted(self, event):
+        # this method gets called immediatedly after upload is
+        # started
+        self._c._pi.setValue(0.0)
+        self._c._pi.setVisible(True)
+        self._c._pi.setPollingInterval(500)
+        # hit server frequantly to get
+        self._c._textualProgress.setVisible(True)
+        # updates to client
+        self._c._state.setValue('Uploading')
+        self._c._fileName.setValue(event.getFilename())
+        self.cancelProcessing.setVisible(True)
 
-            def __init__(self, c):
-                self._c = c
 
-            def uploadFinished(self, event):
-                self._c._state.setValue('Idle')
-                self._c._pi.setVisible(False)
-                self._c._textualProgress.setVisible(False)
-                self.cancelProcessing.setVisible(False)
+class ProgressListener(upload.IProgressListener):
 
-        self._upload.addListener(FinishedListener(self))
+    def __init__(self, c):
+        self._c = c
+
+    def updateProgress(self, readBytes, contentLength):
+        # this method gets called several times during the update
+        self._c._pi.setValue(float(readBytes / contentLength))
+        self._c._textualProgress.setValue('Processed ' + readBytes
+                + ' bytes of ' + contentLength)
+        self._c._result.setValue(self._c._counter.getLineBreakCount()
+                + ' (counting...)')
+
+
+class SucceededListener(upload.ISucceededListener):
+
+    def __init__(self, c):
+        self._c = c
+
+    def uploadSucceeded(self, event):
+        self._c._result.setValue(self._c._counter.getLineBreakCount()
+                + ' (total)')
+
+
+class FailedListener(upload.IFailedListener):
+
+    def __init__(self, c):
+        self._c = c
+
+    def uploadFailed(self, event):
+        self._c._result.setValue(self._c._counter.getLineBreakCount()
+                + ' (counting interrupted at '
+                + round(100 * self._c._pi.getValue()) + '%)')
+
+
+class FinishedListener(upload.IFinishedListener):
+
+    def __init__(self, c):
+        self._c = c
+
+    def uploadFinished(self, event):
+        self._c._state.setValue('Idle')
+        self._c._pi.setVisible(False)
+        self._c._textualProgress.setVisible(False)
+        self.cancelProcessing.setVisible(False)
 
 
 class LineBreakCounter(upload.IReceiver):
@@ -180,18 +196,6 @@ class LineBreakCounter(upload.IReceiver):
         self._fileName = filename
         self._mtype = MIMEType
 
-        class OutputStream(StringIO):
-
-            def __init__(self, c):
-                self._c = c
-
-            def write(self, b):
-                self._c._total += 1
-                if b == '\n':
-                    self._c._counter += 1
-                if self._c._sleep and self._c._total % 1000 == 0:
-                    time.sleep(100)
-
         return OutputStream()
 
 
@@ -209,3 +213,16 @@ class LineBreakCounter(upload.IReceiver):
 
     def setSlow(self, value):
         self._sleep = value
+
+
+class OutputStream(StringIO):
+
+    def __init__(self, c):
+        self._c = c
+
+    def write(self, b):
+        self._c._total += 1
+        if b == '\n':
+            self._c._counter += 1
+        if self._c._sleep and self._c._total % 1000 == 0:
+            time.sleep(100)

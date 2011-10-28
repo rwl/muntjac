@@ -1,30 +1,34 @@
 
 from StringIO import StringIO
 
-from muntjac.api import VerticalLayout, Label, upload
-from muntjac.ui.upload import Upload, IReceiver
+from muntjac.api import VerticalLayout, Label
+from muntjac.ui.upload import Upload, IReceiver, IFinishedListener
 
 
 class UploadBasicExample(VerticalLayout):
 
     def __init__(self):
+        super(UploadBasicExample, self).__init__()
+
         self._result = Label()
         self._counter = LineBreakCounter()
+
         self._upload = Upload('Upload a file', self._counter)
 
         self.addComponent(self._upload)
         self.addComponent(self._result)
 
-        class FinishedListener(upload.IFinishedListener):
+        self._upload.addListener(FinishedListener(self), IFinishedListener)
 
-            def __init__(self, c):
-                self._c = c
 
-            def uploadFinished(self, event):
-                self._c._result.setValue('Uploaded file contained '
-                    + self._c._counter.getLineBreakCount() + ' linebreaks')
+class FinishedListener(IFinishedListener):
 
-        self._upload.addListener(FinishedListener(self))
+    def __init__(self, c):
+        self._c = c
+
+    def uploadFinished(self, event):
+        self._c._result.setValue('Uploaded file contained '
+            + self._c._counter.getLineBreakCount() + ' linebreaks')
 
 
 class LineBreakCounter(IReceiver):
@@ -36,20 +40,10 @@ class LineBreakCounter(IReceiver):
 
 
     def receiveUpload(self, filename, MIMEType):
-        """return an OutputStream that simply counts lineends"""
+        """return an OutputStream that simply counts line ends"""
         self._counter = 0
         self._fileName = filename
         self._mtype = MIMEType
-
-        class OutputStream(StringIO):
-
-            def __init__(self, lbc):
-                super(OutputStream, self).__init__()
-                self._lbc = lbc
-
-            def write(self, b):
-                if b == '\n':
-                    self._lbc._counter += 1
 
         return OutputStream(self)
 
@@ -64,3 +58,14 @@ class LineBreakCounter(IReceiver):
 
     def getLineBreakCount(self):
         return self._counter
+
+
+class OutputStream(StringIO):
+
+    def __init__(self, lbc):
+        super(OutputStream, self).__init__()
+        self._lbc = lbc
+
+    def write(self, b):
+        if b == '\n':
+            self._lbc._counter += 1

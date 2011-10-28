@@ -5,6 +5,7 @@ from muntjac.api import VerticalLayout, Label
 class LabelPreformattedExample(VerticalLayout):
 
     def __init__(self):
+        super(LabelPreformattedExample, self).__init__()
         self.setSpacing(True)
         preformattedText = Label('This is an example of a Label component.\n'
                 '\nThe content mode of this label is set'

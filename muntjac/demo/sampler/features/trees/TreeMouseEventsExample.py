@@ -8,6 +8,8 @@ from muntjac.ui.abstract_select import AbstractSelect
 class TreeMouseEventsExample(VerticalLayout, IItemClickListener):
 
     def __init__(self):
+        super(TreeMouseEventsExample, self).__init__()
+
         self.setSpacing(True)
 
         # Create new Tree object using a hierarchical container from
@@ -15,7 +17,7 @@ class TreeMouseEventsExample(VerticalLayout, IItemClickListener):
         self._t = Tree('Hardware Inventory', ExampleUtil.getHardwareContainer())
 
         # Add ItemClickListener to the tree
-        self._t.addListener(self)
+        self._t.addListener(self, IItemClickListener)
         self._t.setImmediate(True)
 
         # Set tree to show the 'name' property as caption for items
@@ -54,21 +56,23 @@ class TreeMouseEventsExample(VerticalLayout, IItemClickListener):
         b = event.getButton()
         if b == ItemClickEvent.BUTTON_LEFT:
             self.getWindow().showNotification('Selected item: '
-                    + event.getItem(), modifiers)
+                    + str(event.getItem()), modifiers)
         elif b == ItemClickEvent.BUTTON_MIDDLE:
             parent = self._t.getParent(event.getItemId())
             self.getWindow().showNotification('Removed item: '
-                    + event.getItem(), modifiers)
-            self._t.removeItem(event.getItemId())
-            if parent is not None and len(self._t.getChildren(parent)) == 0:
+                    + str(event.getItem()), modifiers)
+            self._t.removeItem(event.getItemId())  # FIXME: refresh
+            if (parent is not None) and \
+                    (self._t.getChildren(parent) == None  # FIXME: null children
+                     or len(self._t.getChildren(parent)) == 0):
                 self._t.setChildrenAllowed(parent, False)
         elif b == ItemClickEvent.BUTTON_RIGHT:
             self.getWindow().showNotification('Added item: New Item # '
-                    + self._itemId, modifiers)
+                    + str(self._itemId), modifiers)
             self._t.setChildrenAllowed(event.getItemId(), True)
             i = self._t.addItem(self._itemId)
             self._t.setChildrenAllowed(self._itemId, False)
-            newItemName = 'New Item # ' + self._itemId
+            newItemName = 'New Item # ' + str(self._itemId)
             i.getItemProperty(ExampleUtil.hw_PROPERTY_NAME).setValue(newItemName)
             self._t.setParent(self._itemId, event.getItemId())
             self._t.expandItem(event.getItemId())

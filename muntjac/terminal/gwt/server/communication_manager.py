@@ -19,7 +19,7 @@ import uuid
 from warnings import warn
 
 from paste.webkit.wkcommon import NoDefault
-from paste.httpheaders import CONTENT_TYPE, CONTENT_LENGTH
+from paste.httpheaders import CONTENT_TYPE, CONTENT_LENGTH, PATH_INFO
 
 from muntjac.terminal.gwt.server.abstract_communication_manager import \
     AbstractCommunicationManager, ICallback, IRequest, IResponse, \
@@ -73,7 +73,7 @@ class CommunicationManager(AbstractCommunicationManager):
         """
         # URI pattern: APP/UPLOAD/[PID]/[NAME]/[SECKEY] See #createReceiverUrl
 
-        pathInfo = self.getPathInfo(request)
+        pathInfo = PATH_INFO(request.environ())
         # strip away part until the data we are interested starts
         startOfData = \
                 pathInfo.find(AbstractApplicationServlet.UPLOAD_URL_PREFIX) \

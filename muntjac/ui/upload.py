@@ -173,7 +173,7 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
         # The output of the upload is redirected to this receiver.
         self._receiver = None
 
-        self._isUploading = None
+        self._isUploading = False
 
         self._contentLength = -1
 
@@ -189,7 +189,7 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
 
         self._notStarted = None
 
-        self._nextid = None
+        self._nextid = 0
 
         # Flag to indicate that submitting file has been requested.
         self._forceSubmit = None
@@ -599,66 +599,6 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
         # Handle to terminal via Upload monitors and controls the upload
         # during it is being streamed.
         if self._streamVariable is None:
-
-            class InnerStreamVariable(IStreamVariable):
-
-                def __init__(self, upload):
-                    self._upload = upload
-                    self._lastStartedEvent = None
-
-
-                def listenProgress(self):
-                    return (self._upload.progressListeners is not None
-                            and len(self._upload.progressListeners) > 0)
-
-
-                def onProgress(self, event):
-                    self._upload.fireUpdateProgress(event.getBytesReceived(),
-                            event.getContentLength())
-
-
-                def isInterrupted(self):
-                    return self._upload.interrupted
-
-
-                def getOutputStream(self):
-                    receiveUpload = self._upload.receiver.receiveUpload(
-                            self._lastStartedEvent.getFileName(),
-                            self._lastStartedEvent.getMimeType())
-                    self._lastStartedEvent = None
-                    return receiveUpload
-
-
-                def streamingStarted(self, event):
-                    self.startUpload()
-                    self._upload.contentLength = event.getContentLength()
-                    self._upload.fireStarted(event.getFileName(),
-                            event.getMimeType())
-                    self._lastStartedEvent = event
-
-
-                def streamingFinished(self, event):
-                    self._upload.fireUploadSuccess(event.getFileName(),
-                            event.getMimeType(), event.getContentLength())
-                    self._upload.endUpload()
-                    self._upload.requestRepaint()
-
-
-                def streamingFailed(self, event):
-                    exception = event.getException()
-                    if isinstance(exception, NoInputStreamException):
-                        self._upload.fireNoInputStream(event.getFileName(),
-                                event.getMimeType(), 0)
-
-                    elif isinstance(exception, NoOutputStreamException):
-                        self._upload.fireNoOutputStream(event.getFileName(),
-                                event.getMimeType(), 0)
-                    else:
-                        self._upload.fireUploadInterrupted(event.getFileName(),
-                                event.getMimeType(), 0, exception)
-
-                    self._upload.endUpload()
-
             self._streamVariable = InnerStreamVariable(self)
 
         return self._streamVariable
@@ -672,6 +612,66 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
                 return list(self._progressListeners)
 
         return super(Upload, self).getListeners(eventType)
+
+
+class InnerStreamVariable(IStreamVariable):
+
+    def __init__(self, upload):
+        self._upload = upload
+        self._lastStartedEvent = None
+
+
+    def listenProgress(self):
+        return (self._upload.progressListeners is not None
+                and len(self._upload.progressListeners) > 0)
+
+
+    def onProgress(self, event):
+        self._upload.fireUpdateProgress(event.getBytesReceived(),
+                event.getContentLength())
+
+
+    def isInterrupted(self):
+        return self._upload.interrupted
+
+
+    def getOutputStream(self):
+        receiveUpload = self._upload.receiver.receiveUpload(
+                self._lastStartedEvent.getFileName(),
+                self._lastStartedEvent.getMimeType())
+        self._lastStartedEvent = None
+        return receiveUpload
+
+
+    def streamingStarted(self, event):
+        self.startUpload()
+        self._upload.contentLength = event.getContentLength()
+        self._upload.fireStarted(event.getFileName(),
+                event.getMimeType())
+        self._lastStartedEvent = event
+
+
+    def streamingFinished(self, event):
+        self._upload.fireUploadSuccess(event.getFileName(),
+                event.getMimeType(), event.getContentLength())
+        self._upload.endUpload()
+        self._upload.requestRepaint()
+
+
+    def streamingFailed(self, event):
+        exception = event.getException()
+        if isinstance(exception, NoInputStreamException):
+            self._upload.fireNoInputStream(event.getFileName(),
+                    event.getMimeType(), 0)
+
+        elif isinstance(exception, NoOutputStreamException):
+            self._upload.fireNoOutputStream(event.getFileName(),
+                    event.getMimeType(), 0)
+        else:
+            self._upload.fireUploadInterrupted(event.getFileName(),
+                    event.getMimeType(), 0, exception)
+
+        self._upload.endUpload()
 
 
 class IReceiver(object):

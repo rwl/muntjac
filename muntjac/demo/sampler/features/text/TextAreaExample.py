@@ -1,5 +1,5 @@
 
-from muntjac.api import HorizontalLayout, Button, Label
+from muntjac.api import HorizontalLayout, Button, Label, TextArea
 from muntjac.data.property import IValueChangeListener
 
 
@@ -8,14 +8,16 @@ class TextAreaExample(HorizontalLayout, IValueChangeListener):
     _initialText = 'The quick brown fox jumps over the lazy dog.'
 
     def __init__(self):
+        super(TextAreaExample, self).__init__()
+
         self.setSpacing(True)
 
         self.setWidth('100%')
 
-        self._editor = self.com.vaadin.ui.TextArea(None, self._initialText)
+        self._editor = TextArea(None, self._initialText)
         self._editor.setRows(20)
         self._editor.setColumns(20)
-        self._editor.addListener(self)
+        self._editor.addListener(self, IValueChangeListener)
         self._editor.setImmediate(True)
         self.addComponent(self._editor)
 
@@ -33,5 +35,5 @@ class TextAreaExample(HorizontalLayout, IValueChangeListener):
         text = self._editor.getValue()
         if text is not None:
             # replace newline with BR, because we're using Label.CONTENT_XHTML
-            text = text.replaceAll('\n', '<br/>')
+            text = text.replace('\n', '<br/>')
         self._plainText.setValue(text)

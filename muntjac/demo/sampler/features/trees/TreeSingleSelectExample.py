@@ -21,6 +21,8 @@ class TreeSingleSelectExample(HorizontalLayout, IValueChangeListener,
     _ACTIONS = [_ACTION_ADD, _ACTION_DELETE]
 
     def __init__(self):
+        super(TreeSingleSelectExample, self).__init__()
+
         self.setSpacing(True)
 
         # Create the Tree,a dd to layout
@@ -31,7 +33,7 @@ class TreeSingleSelectExample(HorizontalLayout, IValueChangeListener,
         self._tree.setContainerDataSource(ExampleUtil.getHardwareContainer())
 
         # Add Valuechangelistener and Actionhandler
-        self._tree.addListener(self)
+        self._tree.addListener(self, IValueChangeListener)
 
         # Add actions (context menu)
         self._tree.addActionHandler(self)
@@ -59,7 +61,7 @@ class TreeSingleSelectExample(HorizontalLayout, IValueChangeListener,
         self._editBar.addComponent(self._editor)
 
         # apply-button
-        self._change = Button('Apply', self, 'buttonClick')
+        self._change = Button('Apply', self)#, 'buttonClick') FIXME: listener
         self._editBar.addComponent(self._change)
         self._editBar.setComponentAlignment(self._change, Alignment.BOTTOM_LEFT)
 
@@ -68,7 +70,10 @@ class TreeSingleSelectExample(HorizontalLayout, IValueChangeListener,
         if event.getProperty().getValue() is not None:
             # If something is selected from the tree, get it's 'name' and
             # insert it into the textfield
-            self._editor.setValue(self._tree.getItem(event.getProperty().getValue()).getItemProperty(ExampleUtil.hw_PROPERTY_NAME))
+            val = self._tree.getItem(
+                    event.getProperty().getValue()).getItemProperty(
+                            ExampleUtil.hw_PROPERTY_NAME)
+            self._editor.setValue(val)
             self._editor.requestRepaint()
             self._editBar.setEnabled(True)
         else:

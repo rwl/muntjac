@@ -1524,11 +1524,11 @@ class CaptionChangeListener(item.IPropertySetChangeListener,
 
 
     def valueChange(self, event):
-        self.requestRepaint()
+        self._select.requestRepaint()
 
 
     def itemPropertySetChange(self, event):
-        self.requestRepaint()
+        self._select.requestRepaint()
 
 
 class AbstractItemSetCriterion(ClientSideCriterion):
