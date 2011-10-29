@@ -9,7 +9,7 @@ class FlashEmbedExample(VerticalLayout):
         super(FlashEmbedExample, self).__init__()
 
         e = Embedded(None, ExternalResource('http://www.youtube.com/'
-                'v/meXvxkn1Y_8&hl=en_US&fs=1&'))
+                'v/Qy67XU6xEi8&hl=en_US&fs=1&'))
         e.setMimeType('application/x-shockwave-flash')
         e.setParameter('allowFullScreen', 'true')
         e.setWidth('320px')

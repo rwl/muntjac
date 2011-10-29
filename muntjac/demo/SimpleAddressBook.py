@@ -164,5 +164,5 @@ class TextChangeListener(IValueChangeListener):
 
 
 if __name__ == '__main__':
-    from muntjac.util import run_app
-    run_app(SimpleAddressBook, nogui=True, forever=True, debug=True)
+    from muntjac.main import muntjac
+    muntjac(SimpleAddressBook, nogui=True, forever=True, debug=True)

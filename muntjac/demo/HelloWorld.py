@@ -19,5 +19,5 @@ class HelloWorld(Application):
 
 
 if __name__ == '__main__':
-    from muntjac.util import run_app
-    run_app(HelloWorld, nogui=True, forever=True, debug=True)
+    from muntjac.main import muntjac
+    muntjac(HelloWorld, nogui=True, forever=True, debug=True)

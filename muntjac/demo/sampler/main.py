@@ -1,5 +1,5 @@
 
-from muntjac.util import run_app
+from muntjac.main import muntjac
 
 from muntjac.application import Application
 from muntjac.ui.window import Window
@@ -19,4 +19,4 @@ class App(Application):
 
 
 if __name__ == '__main__':
-    run_app(App, nogui=True, forever=True, debug=True)
+    muntjac(App, nogui=True, forever=True, debug=True)

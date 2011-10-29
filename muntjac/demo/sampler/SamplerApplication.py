@@ -915,6 +915,6 @@ class SourceWindowCloseListener(window.ICloseListener):
 
 
 if __name__ == '__main__':
-    from muntjac.util import run_app
-    run_app(SamplerApplication, nogui=True, forever=True, debug=True,
+    from muntjac.main import muntjac
+    muntjac(SamplerApplication, nogui=True, forever=True, debug=True,
             widgetset='com.vaadin.demo.sampler.gwt.SamplerWidgetSet')

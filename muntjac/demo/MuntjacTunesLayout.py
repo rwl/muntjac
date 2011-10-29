@@ -11,7 +11,7 @@ from muntjac.api import \
      Label, NativeButton, NativeSelect, Slider, Table, VerticalLayout, Window)
 
 
-class VaadinTunesLayout(Application):
+class MuntjacTunesLayout(Application):
     """Sample application layout, similar (almost identical) to Apple iTunes.
 
     @author IT Mill Ltd.
@@ -303,5 +303,5 @@ class VaadinTunesLayout(Application):
 
 
 if __name__ == '__main__':
-    from muntjac.util import run_app
-    run_app(VaadinTunesLayout, nogui=True, forever=True, debug=True)
+    from muntjac.main import muntjac
+    muntjac(MuntjacTunesLayout, nogui=True, forever=True, debug=True)

@@ -95,5 +95,5 @@ class Calc(Application, IClickListener):
 
 
 if __name__ == '__main__':
-    from muntjac.util import run_app
-    run_app(Calc, nogui=True, forever=True, debug=True)
+    from muntjac.main import muntjac
+    muntjac(Calc, nogui=True, forever=True, debug=True)
