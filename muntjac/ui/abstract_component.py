@@ -45,6 +45,8 @@ class AbstractComponent(IComponent, IMethodEventSource):
     @since 3.0
     """
 
+    SIZE_PATTERN = '^(-?\\d+(\\.\\d+)?)(%|px|em|ex|in|cm|mm|pt|pc)?$'
+
     def __init__(self):
         """Constructs a new IComponent."""
         super(AbstractComponent, self).__init__()
@@ -111,12 +113,21 @@ class AbstractComponent(IComponent, IMethodEventSource):
         self._widthUnit = self.UNITS_PIXELS
         self._heightUnit = self.UNITS_PIXELS
 
-        self._sizePattern = \
-                re.compile('^(-?\\d+(\\.\\d+)?)(%|px|em|ex|in|cm|mm|pt|pc)?$')
+        self._sizePattern = re.compile(self.SIZE_PATTERN)
 
         self.errorHandler = None
 
         #ComponentSizeValidator.setCreationLocation(this);
+
+
+    def __getstate__(self):
+        result = self.__dict__.copy()
+        del result['_sizePattern']
+        return result
+
+    def __setstate__(self, d):
+        self.__dict__ = d
+        self._sizePattern = re.compile(self.SIZE_PATTERN)
 
 
     def getTag(self):
