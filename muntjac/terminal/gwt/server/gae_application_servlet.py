@@ -24,44 +24,5 @@ class GaeApplicationServlet(ApplicationServlet):
 
 
     def getSessionId(self, request):
-        return request.value(self.SID, None)
-
-
-    def getApplicationContext(self, session):
-        return GaeWebApplicationContext.getApplicationContext(session)
-
-
-#    def createCommunicationManager(self, application):
-#        warn("deprecated", DeprecationWarning)
-#
-#        return GaeCommunicationManager(application)
-
-
-class GaeWebApplicationContext(WebApplicationContext):
-
-    def getApplicationManager(self, application, servlet):
-        mgr = self.applicationToAjaxAppMgrMap.get(application)
-
-        if mgr is None:
-            mgr = GaeCommunicationManager(application)
-            self.applicationToAjaxAppMgrMap[application] = mgr
-
-        return mgr
-
-
-class GaeCommunicationManager(CommunicationManager):
-
-    def _getMonths(self, l=None):
-        return super(GaeCommunicationManager, self)._getMonths()
-
-
-    def _getWeekdays(self, l=None):
-        return super(GaeCommunicationManager, self)._getWeekdays()
-
-
-    def _getDateFormat(self, l=None):
-        return super(GaeCommunicationManager, self)._getDateFormat()
-
-
-    def _getAmPmStrings(self, l=None):
-        return super(GaeCommunicationManager, self)._getAmPmStrings()
+#        return request.value(self.SID, None
+        return request.environ().get('HTTP_COOKIE')

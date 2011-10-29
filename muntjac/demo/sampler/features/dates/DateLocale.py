@@ -3,7 +3,7 @@ from muntjac.api import DateField, InlineDateField
 
 from muntjac.demo.sampler.APIResource import APIResource
 from muntjac.demo.sampler.Feature import Feature, Version
-from muntjac.util import Locale
+from babel import Locale
 
 
 class DateLocale(Feature):

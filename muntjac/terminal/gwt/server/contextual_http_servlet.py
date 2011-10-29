@@ -1,19 +1,18 @@
 
-import locale
 from urlparse import urlparse
 
 from os.path import join, dirname, normpath
 
-from muntjac.util import sys_path_install
+from muntjac.util import sys_path_install, defaultLocale
+# Add 'FakeWebware' to sys path
+sys_path_install()
 
 from paste.httpheaders import \
     ACCEPT_LANGUAGE, SCRIPT_NAME, PATH_INFO, IF_MODIFIED_SINCE
 
-import muntjac
-from muntjac.util import Locale
+from babel import Locale
 
-# Add 'FakeWebware' to sys path
-sys_path_install()
+import muntjac
 
 #from paste.webkit.wkservlet import HTTPServlet
 from WebKit.HTTPServlet import HTTPServlet
@@ -62,10 +61,9 @@ class ContextualHttpServlet(HTTPServlet):
         ## FIXME: implement request.locale()
         tags = ACCEPT_LANGUAGE.parse(request.environ())
         if tags:
-            args = Locale.splitCode(tags[0], sep='-')
-            return Locale(*args)
+            return Locale.parse(tags[0], sep='-')
         else:
-            return Locale.getDefault()  # server default
+            return defaultLocale()  # server default
 
 
     def getSession(self, request, allowSessionCreation=True):

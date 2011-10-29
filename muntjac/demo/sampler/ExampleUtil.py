@@ -8,7 +8,7 @@ from muntjac.data.util.hierarchical_container import HierarchicalContainer
 from muntjac.terminal.resource import IResource
 from muntjac.terminal.theme_resource import ThemeResource
 
-from muntjac.util import Locale
+from babel import Locale
 
 
 class ExampleUtil(object):
@@ -264,8 +264,10 @@ class ExampleUtil(object):
     @classmethod
     def getLocaleContainer(cls):
         localeContainer = IndexedContainer()
-        localeContainer.addContainerProperty(cls.locale_PROPERTY_LOCALE, str, None)  # FIXME: Locale
-        localeContainer.addContainerProperty(cls.locale_PROPERTY_NAME, str, None)
+        localeContainer.addContainerProperty(cls.locale_PROPERTY_LOCALE,
+                Locale, None)
+        localeContainer.addContainerProperty(cls.locale_PROPERTY_NAME,
+                str, None)
         for i in range(len(cls._locales)):
             idd = cls._locales[i][2]
             item = localeContainer.addItem(idd)

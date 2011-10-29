@@ -20,6 +20,8 @@ import locale
 
 import paste.webkit
 
+from babel import Locale
+
 
 # Copied from paste.webkit.wsgiapp to avoid paste.deploy dependency.
 def sys_path_install():
@@ -53,63 +55,13 @@ def totalseconds(td):
     return (td.microseconds + (td.seconds + td.days * 24 * 3600) * 1e6) / 1e6
 
 
-class Locale(object):
+def defaultLocale():
+    lang, _ = locale.getdefaultlocale()
 
-    def __init__(self, lang, country=None, variant=None):
-        """
-        @param lang: lower-case, two-letter code as defined by ISO-639
-        @param country: upper-case, two-letter code as defined by ISO-3166
-        @param variant: vendor or browser-specific code (ignored)
-        """
-        self._language = lang.lower()
-
-        if country is not None:
-            country = country.upper()
-        self._country = country
-
-        self._variant = variant
-
-
-    def getLanguage(self):
-        return self._language
-
-
-    def getCountry(self):
-        return self._country
-
-
-    def getVariant(self):
-        return self._variant
-
-
-    @classmethod
-    def getDefault(cls):
-        lang, _ = locale.getdefaultlocale()
-
-        if lang is not None:
-            args = cls.splitCode(lang)
-        else:
-            args = ['en', 'GB']  # FIXME: why GB?
-
-        return Locale(*args)
-
-
-    @classmethod
-    def splitCode(cls, code, sep='_'):
-        if sep in code:
-            parts = code.split(sep)
-            return parts[0], parts[1]
-        else:
-            return code
-
-
-    def __str__(self):
-        s = self._language
-        if self._country is not None:
-            s += '_%s' % self._country
-        #if self._variant is not None:
-        #    s += '_%s' % self._variant
-        return s
+    if lang is not None:
+        return Locale.parse(lang)
+    else:
+        return Locale('en', 'GB')  # FIXME: define environment variable
 
 
 class EventObject(object):

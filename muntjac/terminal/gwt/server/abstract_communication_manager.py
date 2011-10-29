@@ -31,7 +31,9 @@ except ImportError, e:
     from StringIO import StringIO as cStringIO
     from StringIO import StringIO
 
-from muntjac.util import clsname, Locale
+from babel import Locale
+
+from muntjac.util import clsname
 
 from muntjac.terminal.gwt.server.json_paint_target import JsonPaintTarget
 from muntjac.terminal.gwt.server.exceptions import UploadException
@@ -1148,106 +1150,6 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         return values
 
 
-    def _getMonths(self, l=None):
-        if l is not None:
-            locSave = locale.getlocale(locale.LC_TIME)
-            locale.setlocale(locale.LC_TIME, (str(l), 'utf-8'))  # FIXME: encoding
-
-        months = [
-            locale.nl_langinfo(locale.MON_1),
-            locale.nl_langinfo(locale.MON_2),
-            locale.nl_langinfo(locale.MON_3),
-            locale.nl_langinfo(locale.MON_4),
-            locale.nl_langinfo(locale.MON_5),
-            locale.nl_langinfo(locale.MON_6),
-            locale.nl_langinfo(locale.MON_7),
-            locale.nl_langinfo(locale.MON_8),
-            locale.nl_langinfo(locale.MON_9),
-            locale.nl_langinfo(locale.MON_10),
-            locale.nl_langinfo(locale.MON_11),
-            locale.nl_langinfo(locale.MON_12)
-        ]
-        short_months = [
-            locale.nl_langinfo(locale.ABMON_1),
-            locale.nl_langinfo(locale.ABMON_2),
-            locale.nl_langinfo(locale.ABMON_3),
-            locale.nl_langinfo(locale.ABMON_4),
-            locale.nl_langinfo(locale.ABMON_5),
-            locale.nl_langinfo(locale.ABMON_6),
-            locale.nl_langinfo(locale.ABMON_7),
-            locale.nl_langinfo(locale.ABMON_8),
-            locale.nl_langinfo(locale.ABMON_9),
-            locale.nl_langinfo(locale.ABMON_10),
-            locale.nl_langinfo(locale.ABMON_11),
-            locale.nl_langinfo(locale.ABMON_12)
-        ]
-
-        if l is not None:
-            locale.setlocale(locale.LC_TIME, locSave)
-
-        return short_months, months
-
-
-    def _getWeekdays(self, l=None):
-
-        if l is not None:
-            locSave = locale.getlocale(locale.LC_TIME)
-            locale.setlocale(locale.LC_TIME, (str(l), 'utf-8'))  # FIXME: encoding
-
-        short_days = [
-            locale.nl_langinfo(locale.ABDAY_1),
-            locale.nl_langinfo(locale.ABDAY_2),
-            locale.nl_langinfo(locale.ABDAY_3),
-            locale.nl_langinfo(locale.ABDAY_4),
-            locale.nl_langinfo(locale.ABDAY_5),
-            locale.nl_langinfo(locale.ABDAY_6),
-            locale.nl_langinfo(locale.ABDAY_7)
-        ]
-        days = [
-            locale.nl_langinfo(locale.DAY_1),
-            locale.nl_langinfo(locale.DAY_2),
-            locale.nl_langinfo(locale.DAY_3),
-            locale.nl_langinfo(locale.DAY_4),
-            locale.nl_langinfo(locale.DAY_5),
-            locale.nl_langinfo(locale.DAY_6),
-            locale.nl_langinfo(locale.DAY_7)
-        ]
-
-        if l is not None:
-            locale.setlocale(locale.LC_TIME, locSave)
-
-        return short_days, days
-
-
-    def _getDateFormat(self, l=None):
-        if l is not None:
-            locSave = locale.getlocale(locale.LC_TIME)
-            locale.setlocale(locale.LC_TIME, (str(l), 'utf-8'))  # FIXME: encoding
-
-        fmt = locale.nl_langinfo(locale.D_T_FMT)
-
-        if l is not None:
-            locale.setlocale(locale.LC_TIME, locSave)
-
-        return fmt
-
-
-    def _getAmPmStrings(self, l=None):
-        if l is not None:
-            locSave = locale.getlocale(locale.LC_TIME)
-            locale.setlocale(locale.LC_TIME, str(l))
-
-        ampm = [
-            locale.nl_langinfo(locale.AM_STR),
-            locale.nl_langinfo(locale.PM_STR)
-        ]
-
-        if l is not None:
-            locale.setlocale(locale.LC_TIME, locSave)
-
-        return ampm
-
-
     def printLocaleDeclarations(self, outWriter):
         """Prints the queued (pending) locale definitions to a PrintWriter
         in a (UIDL) format that can be sent to the client and used there in
@@ -1265,52 +1167,63 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
             outWriter.write('{\"name\":\"' + str(l) + '\",')
 
             # Month names (both short and full)
-            short_months, months = self._getMonths(l)
-            outWriter.write('\"smn\":[\"'
+            months = l.months['format']['wide'].values()
+            short_months = l.months['format']['abbreviated'].values()
+
+            outWriter.write(str('\"smn\":[\"'
                     + short_months[0] + '\",\"' + short_months[1] + '\",\"'
                     + short_months[2] + '\",\"' + short_months[3] + '\",\"'
                     + short_months[4] + '\",\"' + short_months[5] + '\",\"'
                     + short_months[6] + '\",\"' + short_months[7] + '\",\"'
                     + short_months[8] + '\",\"' + short_months[9] + '\",\"'
                     + short_months[10] + '\",\"' + short_months[11] + '\"'
-                    + '],')
-            outWriter.write('\"mn\":[\"'
+                    + '],'))
+            outWriter.write(str('\"mn\":[\"'
                     + months[0] + '\",\"' + months[1] + '\",\"'
                     + months[2] + '\",\"' + months[3] + '\",\"'
                     + months[4] + '\",\"' + months[5] + '\",\"'
                     + months[6] + '\",\"' + months[7] + '\",\"'
                     + months[8] + '\",\"' + months[9] + '\",\"'
                     + months[10] + '\",\"' + months[11] + '\"'
-                    + '],')
+                    + '],'))
 
             # Weekday names (both short and full)
-            short_days, days = self._getWeekdays(l)
-            outWriter.write('\"sdn\":[\"'
+            days = l.days['format']['wide'].values()
+            short_days = l.days['format']['abbreviated'].values()
+
+            outWriter.write(str('\"sdn\":[\"'
                     + short_days[0] + '\",\"' + short_days[1] + '\",\"'
                     + short_days[2] + '\",\"' + short_days[3] + '\",\"'
                     + short_days[4] + '\",\"' + short_days[5] + '\",\"'
                     + short_days[6] + '\"'
-                    + '],')
-            outWriter.write('\"dn\":[\"'
+                    + '],'))
+            outWriter.write(str('\"dn\":[\"'
                     + days[0] + '\",\"' + days[1] + '\",\"'
                     + days[2] + '\",\"' + days[3] + '\",\"'
                     + days[4] + '\",\"' + days[5] + '\",\"'
                     + days[6] + '\"'
-                    + '],')
+                    + '],'))
 
-            # First day of week (0 = sunday, 1 = monday)
-            outWriter.write('\"fdow\":' + ('1') + ',')  # FIXME: FDOW
+            # First day of week
+            # (Babel: 6 = sunday, 0 = monday, Vaadin: 0 = sunday, 1 = monday)
+            fdow = l.first_week_day
+            if fdow == 6:
+                fdow = 0
+            else:
+                fdow += 1
+            outWriter.write('\"fdow\":' + str(fdow) + ',')
 
             # Date formatting (MM/DD/YYYY etc.)
-
-            dateFormat = self._getDateFormat(l)
-            if dateFormat == "":
+            try:
+                df = l.date_formats['short'].pattern
+                df += ' '
+                df += l.time_formats['short'].pattern
+                df = str(df)  # convert unicode to string
+            except KeyError:
                 logger.warning('Unable to get default date '
                                'pattern for locale ' + str(l))
-                dateFormat = locale.nl_langinfo(locale.D_T_FMT)
-            df = dateFormat
-
-            df = 'dd/MM/yy HH:mm'  # FIXME:
+                #df = locale.nl_langinfo(locale.D_T_FMT)
+                df = 'dd/MM/yy HH:mm'
 
             timeStart = df.find('H')
             if timeStart < 0:
@@ -1349,7 +1262,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
             outWriter.write('\"thc\":' + str(twelve_hour_clock).lower() + ',')
             outWriter.write('\"hmd\":\"' + hour_min_delimiter + '\"')
             if twelve_hour_clock:
-                ampm = self._getAmPmStrings(l)
+                ampm = [str( l.periods['am'] ), str( l.periods['pm'] )]
                 outWriter.write(',\"ampm\":[\"' + ampm[0] + '\",\"'
                                 + ampm[1] + '\"]')
             outWriter.write('}')
@@ -1629,11 +1542,11 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         """
         temp = value.split('_')
         if len(temp) == 1:
-            return Locale(temp[0])
+            return Locale(temp[0], '')
         elif len(temp) == 2:
             return Locale(temp[0], temp[1])
         else:
-            return Locale(temp[0], temp[1], temp[2])
+            return Locale(temp[0], temp[1])#, temp[2])
         return value
 
 

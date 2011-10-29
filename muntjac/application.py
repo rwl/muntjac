@@ -20,7 +20,7 @@ import logging
 
 from warnings import warn
 
-from muntjac.util import EventObject, IEventListener
+from muntjac.util import EventObject, IEventListener, defaultLocale
 from muntjac.terminal.uri_handler import IUriHandler
 from muntjac.terminal.system_error import SystemErr
 from muntjac.terminal.terminal import IErrorListener, ITerminal
@@ -31,7 +31,8 @@ from muntjac.terminal.uri_handler import IErrorEvent as URIHandlerErrorEvent
 from muntjac.terminal.parameter_handler import IErrorEvent as ParameterHandlerErrorEvent
 from muntjac.terminal.gwt.server.change_variables_error_event import ChangeVariablesErrorEvent
 from muntjac.ui.abstract_component import AbstractComponent
-from muntjac.util import Locale
+
+from babel import Locale
 
 
 logger = logging.getLogger(__name__)
@@ -1230,7 +1231,7 @@ class Application(IUriHandler, ITerminal, IErrorListener):
         if self._locale is not None:
             return self._locale
 
-        return Locale.getDefault()
+        return defaultLocale()
 
 
     def setLocale(self, locale):
