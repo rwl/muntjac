@@ -1955,7 +1955,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
         # removed and logic moved here. Now overriding context type is
         # possible, but the whole creation logic should be here. MT 1101
 
-        return WebApplicationContext.getApplicationContext(session)
+        return WebApplicationContext.getApplicationContext(session, self)
 
 
     def createCommunicationManager(self, application):

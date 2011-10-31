@@ -3,6 +3,10 @@ import sys
 import logging
 import webbrowser
 
+from os.path import join, dirname
+import static
+from paste.urlmap import URLMap
+
 from optparse import OptionParser
 
 from wsgiref.simple_server import make_server
@@ -30,10 +34,16 @@ def muntjac(applicationClass, host='127.0.0.1', port=8880, nogui=False,
 
     wsgi_app = SessionMiddleware(wsgi_app)  # wrap in middleware
 
+    root = join(dirname(__file__), '..', 'VAADIN')
+
+    urlmap = URLMap({})
+    urlmap['/'] = wsgi_app
+    urlmap['/VAADIN'] = static.Cling(root)
+
     if nogui == False:
         webbrowser.open('http://%s:%d/' % (host, port), new=0)
 
-    httpd = make_server(host, port, wsgi_app)
+    httpd = make_server(host, port, urlmap)
 
     if forever:
         # Respond to requests until process is killed

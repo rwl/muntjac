@@ -114,19 +114,24 @@ class WebApplicationContext(AbstractWebApplicationContext):
 
 
     @classmethod
-    def getApplicationContext(cls, session):
+    def getApplicationContext(cls, session, servlet):
         """Gets the application context for an HttpSession.
 
         @param session
                    the HTTP session.
         @return the application context for HttpSession.
         """
-        cx = session.value( clsname(WebApplicationContext), None )
+        cx = servlet.getSessionAttribute(session,
+                clsname(WebApplicationContext), None)
+
         if cx is None:
             cx = WebApplicationContext()
-            session.setValue(clsname(WebApplicationContext), cx)
+            servlet.setSessionAttribute(session,
+                clsname(WebApplicationContext), cx)
+
         if cx.session is None:
             cx.session = session
+
         return cx
 
 
