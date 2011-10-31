@@ -145,13 +145,9 @@ class PasteWsgiServlet(HTTPServlet):
         return int(portStr) if portStr is not None else None
 
 
-    def getRequestUriPath(self, request):
+    def getRequestUri(self, request):
         """The request's URL from the protocol name up to the query string"""
         return urlparse(request.uri())[2]
-
-
-    def getRequestUri(self, request):
-        return request.uri()
 
 
     def getPathInfo(self, request):

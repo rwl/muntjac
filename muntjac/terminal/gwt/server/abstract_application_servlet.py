@@ -988,14 +988,14 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
         if (contextPath is not None
                 and self.getRequestUri(request).startswith('/VAADIN/')):
 
-            self.serveStaticResourcesInVAADIN(self.getRequestUriPath(request),
+            self.serveStaticResourcesInVAADIN(self.getRequestUri(request),
                     request, response)
             return True
 
-        elif self.getRequestUriPath(request).startswith(contextPath + '/VAADIN/'):
+        elif self.getRequestUri(request).startswith(contextPath + '/VAADIN/'):
 
             self.serveStaticResourcesInVAADIN(
-                    self.getRequestUriPath(request)[len(contextPath):],
+                    self.getRequestUri(request)[len(contextPath):],
                     request, response)
             return True
 
