@@ -3,12 +3,6 @@ from warnings import warn
 
 from muntjac.terminal.gwt.server.application_servlet import ApplicationServlet
 
-from muntjac.terminal.gwt.server.communication_manager import \
-    CommunicationManager
-
-from muntjac.terminal.gwt.server.web_application_context import \
-    WebApplicationContext
-
 
 class GaeApplicationServlet(ApplicationServlet):
 

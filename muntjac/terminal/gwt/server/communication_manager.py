@@ -18,9 +18,6 @@ import uuid
 
 from warnings import warn
 
-from paste.webkit.wkcommon import NoDefault
-from paste.httpheaders import CONTENT_TYPE, CONTENT_LENGTH, PATH_INFO
-
 from muntjac.terminal.gwt.server.abstract_communication_manager import \
     AbstractCommunicationManager, ICallback, IRequest, IResponse, \
     InvalidUIDLSecurityKeyException, ISession
@@ -61,7 +58,7 @@ class CommunicationManager(AbstractCommunicationManager):
         self._streamVariableToSeckey = None
 
 
-    def handleFileUpload(self, request, response):
+    def handleFileUpload(self, request, response, applicationServlet):
         """Handles file upload request submitted via Upload component.
 
         @see #getStreamVariableTargetUrl()
@@ -73,7 +70,7 @@ class CommunicationManager(AbstractCommunicationManager):
         """
         # URI pattern: APP/UPLOAD/[PID]/[NAME]/[SECKEY] See #createReceiverUrl
 
-        pathInfo = PATH_INFO(request.environ())
+        pathInfo = applicationServlet.getPathInfo(request)
         # strip away part until the data we are interested starts
         startOfData = \
                 pathInfo.find(AbstractApplicationServlet.UPLOAD_URL_PREFIX) \
@@ -89,12 +86,14 @@ class CommunicationManager(AbstractCommunicationManager):
         if secKey == parts[2]:
 
             source = self.getVariableOwner(paintableId)
-            contentType = CONTENT_TYPE(request.environ())
-            if 'boundary' in CONTENT_TYPE(request.environ()):
+            contentType = applicationServlet.getContentType(request)
+            if 'boundary' in applicationServlet.getContentType(request):
                 # Multipart requests contain boundary string
                 self.doHandleSimpleMultipartFileUpload(
-                        HttpServletRequestWrapper(request),
-                        HttpServletResponseWrapper(response),
+                        HttpServletRequestWrapper(request,
+                                applicationServlet),
+                        HttpServletResponseWrapper(response,
+                                applicationServlet),
                         streamVariable,
                         variableName,
                         source,
@@ -103,12 +102,14 @@ class CommunicationManager(AbstractCommunicationManager):
                 # if boundary string does not exist, the posted file is from
                 # XHR2.post(File)
                 self.doHandleXhrFilePost(
-                        HttpServletRequestWrapper(request),
-                        HttpServletResponseWrapper(response),
+                        HttpServletRequestWrapper(request,
+                                applicationServlet),
+                        HttpServletResponseWrapper(response,
+                                applicationServlet),
                         streamVariable,
                         variableName,
                         source,
-                        CONTENT_LENGTH(request.environ()))
+                        applicationServlet.getContentType(request))
         else:
             raise InvalidUIDLSecurityKeyException, \
                     'Security key in upload post did not match!'
@@ -129,8 +130,8 @@ class CommunicationManager(AbstractCommunicationManager):
         @throws ServletException
         """
         self.doHandleUidlRequest(
-                HttpServletRequestWrapper(request),
-                HttpServletResponseWrapper(response),
+                HttpServletRequestWrapper(request, applicationServlet),
+                HttpServletResponseWrapper(response, applicationServlet),
                 AbstractApplicationServletWrapper(applicationServlet),
                 window)
 
@@ -153,7 +154,7 @@ class CommunicationManager(AbstractCommunicationManager):
                     servlet's normal operation.
         """
         return self.doGetApplicationWindow(
-                HttpServletRequestWrapper(request),
+                HttpServletRequestWrapper(request, applicationServlet),
                 AbstractApplicationServletWrapper(applicationServlet),
                 application,
                 assumedWindow)
@@ -177,8 +178,8 @@ class CommunicationManager(AbstractCommunicationManager):
         @return
         """
         return AbstractCommunicationManager.handleURI(self, window,
-                HttpServletRequestWrapper(request),
-                HttpServletResponseWrapper(response),
+                HttpServletRequestWrapper(request, applicationServlet),
+                HttpServletResponseWrapper(response, applicationServlet),
                 AbstractApplicationServletWrapper(applicationServlet))
 
 
@@ -244,36 +245,42 @@ class HttpServletRequestWrapper(IRequest):
     @see Request
     """
 
-    def __init__(self, request):
+    def __init__(self, request, applicationServlet):
         self._request = request
+        self._servlet = applicationServlet
 
 
-    def getAttribute(self, name, default=NoDefault):
-        return self._request.field(name, default)
+    def getAttribute(self, name, default=''):
+        return self._servlet.getParameter(self._request, name, default)
 
 
     def getContentLength(self):
-        return CONTENT_LENGTH(self._request.environ())
+        return self._servlet.getContentLength(self._request)
 
 
     def getInputStream(self):
-        return self._request.rawInput()
+        return self._servlet.getInputStream(self._request)
 
 
     def getParameter(self, name):
-        return self._request.field(name, None)
+        return self._servlet.getParameter(self._request, name, None)
 
 
     def getRequestID(self):
-        return 'RequestURL:' + self._request.uri()
+        return 'RequestURL:' + self._servlet.getRequestUri(self._request)
 
 
     def getSession(self):
-        return HttpSessionWrapper(self._request.session())
+        session = self._servlet.getSession(self._request)
+        return HttpSessionWrapper(session, self._servlet)
 
 
     def getWrappedRequest(self):
         return self._request
+
+
+    def getWrappedServlet(self):
+        return self._servlet
 
 
     def isRunningInPortlet(self):
@@ -281,7 +288,7 @@ class HttpServletRequestWrapper(IRequest):
 
 
     def setAttribute(self, name, o):
-        self._request.setField(name, o)
+        self._servlet.setParameter(self._request, name, o)
 
 
 class HttpServletResponseWrapper(IResponse):
@@ -290,20 +297,25 @@ class HttpServletResponseWrapper(IResponse):
     @see Response
     """
 
-    def __init__(self, response):
+    def __init__(self, response, applicationServlet):
         self._response = response
+        self._servlet = applicationServlet
 
 
     def getOutputStream(self):
-        return self._response
+        return self._servlet.getOutputStream(self._response)
 
 
     def getWrappedResponse(self):
         return self._response
 
 
+    def getWrappedServlet(self):
+        return self._servlet
+
+
     def setContentType(self, typ):
-        self._response.setHeader('Content-Type', typ)
+        self._servlet.setHeader(self._response, 'Content-Type', typ)
 
 
 class HttpSessionWrapper(ISession):
@@ -312,30 +324,34 @@ class HttpSessionWrapper(ISession):
     @see Session
     """
 
-    def __init__(self, session):
+    def __init__(self, session, applicationServlet):
         self._session = session
+        self._servlet = applicationServlet
 
 
-    def getAttribute(self, name, default=NoDefault):
-        return self._session.value(name, default)
+    def getAttribute(self, name, default=None):
+        return self._servlet.getSessionAttribute(self._session, name, default)
 
 
     def getMaxInactiveInterval(self):
         """maximum time interval, in seconds, between client accesses"""
-        default = 1800  # 30 minutes  FIXME: configurable parameter
-        return self._session.value('timeout', default)
+        return self._servlet.getMaxInactiveInterval(self._session)
 
 
     def getWrappedSession(self):
         return self._session
 
 
+    def getWrappedServlet(self):
+        return self._servlet
+
+
     def isNew(self):
-        return self._session.isNew()
+        return self._servlet.isSessionNew(self._session)
 
 
-    def setAttribute(self, name, o):
-        self._session.setValue(name, o)
+    def setAttribute(self, name, value):
+        self._servlet.setSessionAttribute(self._session, name, value)
 
 
 class AbstractApplicationServletWrapper(ICallback):

@@ -261,8 +261,8 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         self.sendUploadResponse(request, response)
 
 
-    def doHandleXhrFilePost(self, request, response,
-                streamVariable, variableName, owner, contentLength):
+    def doHandleXhrFilePost(self, request, response, streamVariable,
+                variableName, owner, contentLength):
         """Used to stream plain file post (aka XHR2.post(File))
 
         @param request
@@ -283,22 +283,22 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
             # to be components.
             component = owner
             if component.isReadOnly():
-                raise UploadException('Warning: file upload ignored '
-                                      'because the component was read-only')
+                raise UploadException('Warning: file upload ignored'
+                        ' because the component was read-only')
 
-            forgetVariable = self.streamToReceiver(stream,
-                    streamVariable, filename, mimeType, contentLength)
+            forgetVariable = self.streamToReceiver(stream, streamVariable,
+                    filename, mimeType, contentLength)
             if forgetVariable:
                 self.cleanStreamVariable(owner, variableName)
         except Exception, e:
-            self.handleChangeVariablesError(
-                    self._application, owner, e, dict())
+            self.handleChangeVariablesError(self._application, owner, e,
+                    dict())
 
         self.sendUploadResponse(request, response)
 
 
-    def streamToReceiver(self, in_, streamVariable,
-                filename, typ, contentLength):
+    def streamToReceiver(self, inputStream, streamVariable, filename, typ,
+                contentLength):
         """@param in
         @param streamVariable
         @param filename
@@ -324,17 +324,17 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
             if out is None:
                 raise NoOutputStreamException()
 
-            if in_ is None:
+            if inputStream is None:
                 # No file, for instance non-existent filename in html upload
                 raise NoInputStreamException()
 
             bufferSize = self._MAX_UPLOAD_BUFFER_SIZE
             bytesReadToBuffer = 0
-            while totalBytes < len(in_):
-                buff = in_.read(bufferSize)
-                bytesReadToBuffer = in_.pos - bytesReadToBuffer
+            while totalBytes < len(inputStream):
+                buff = inputStream.read(bufferSize)
+                bytesReadToBuffer = inputStream.pos - bytesReadToBuffer
 
-                out.write( buff )
+                out.write(buff)
                 totalBytes += bytesReadToBuffer
 
                 if listenProgress:
@@ -354,15 +354,15 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         except UploadInterruptedException, e:
             # Download interrupted by application code
             self.tryToCloseStream(out)
-            event = StreamingErrorEventImpl(filename,
-                    typ, contentLength, totalBytes, e)
+            event = StreamingErrorEventImpl(filename, typ, contentLength,
+                    totalBytes, e)
             streamVariable.streamingFailed(event)
             # Note, we are not throwing interrupted exception forward as
             # it is not a terminal level error like all other exception.
         except Exception, e:
             self.tryToCloseStream(out)
-            event = StreamingErrorEventImpl(filename,
-                    typ, contentLength, totalBytes, e)
+            event = StreamingErrorEventImpl(filename, typ, contentLength,
+                    totalBytes, e)
             streamVariable.streamingFailed(event)
             # throw exception for terminal to be handled (to be passed
             # to terminalErrorHandler)
@@ -437,8 +437,8 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                 request.getSession().getMaxInactiveInterval()
 
         # repaint requested or session has timed out and new one is created
-        repaintAll = \
-                request.getParameter(self._GET_PARAM_REPAINT_ALL) is not None
+        repaintAll = request.getParameter(
+                self._GET_PARAM_REPAINT_ALL) is not None
         # || (request.getSession().isNew()); FIXME: What the h*ll is this??
 
         out = response.getOutputStream()
@@ -446,9 +446,8 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         analyzeLayouts = False
         if repaintAll:
             # analyzing can be done only with repaintAll
-            analyzeLayouts = \
-                    (request.getParameter(self._GET_PARAM_ANALYZE_LAYOUTS)
-                     is not None)
+            analyzeLayouts = request.getParameter(
+                    self._GET_PARAM_ANALYZE_LAYOUTS) is not None
 
 
         outWriter = out
@@ -470,14 +469,13 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
             return
 
         # Change all variables based on request parameters
-        if not self.handleVariables(request, response,
-                callback, self._application, window):
+        if not self.handleVariables(request, response, callback,
+                self._application, window):
 
             # var inconsistency; the client is probably out-of-sync
             ci = None
             try:
-                m = getattr(self._application.__class__, 'getSystemMessages')
-                ci = m()
+                ci = self._application.__class__.getSystemMessages()
             except Exception:
                 # FIXME: Handle exception
                 # Not critical, but something is still wrong;
@@ -487,21 +485,22 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
             if ci is not None:
                 msg = ci.getOutOfSyncMessage()
                 cap = ci.getOutOfSyncCaption()
-                if msg is not None or cap is not None:
-                    callback.criticalNotification(request, response,
-                           cap, msg, None, ci.getOutOfSyncURL())
+                if (msg is not None) or (cap is not None):
+                    callback.criticalNotification(request, response, cap,
+                            msg, None, ci.getOutOfSyncURL())
                     # will reload page after this
                     return
 
             # No message to show, let's just repaint all.
             repaintAll = True
 
-        self.paintAfterVariableChanges(request, response,
-                callback, repaintAll, outWriter, window, analyzeLayouts)
+        self.paintAfterVariableChanges(request, response, callback, repaintAll,
+                outWriter, window, analyzeLayouts)
 
         if self._closingWindowName is not None:
             if self._closingWindowName in self._currentlyOpenWindowsInClient:
                 del self._currentlyOpenWindowsInClient[self._closingWindowName]
+
             self._closingWindowName = None
 
         # Finds the window within the application
@@ -541,7 +540,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
             seckey = request.getSession().getAttribute(
                     ApplicationConnection.UIDL_SECURITY_TOKEN_ID, None)
             if seckey is None:
-                seckey = str(uuid.uuid4())
+                seckey = str( uuid.uuid4() )
                 request.getSession().setAttribute(
                         ApplicationConnection.UIDL_SECURITY_TOKEN_ID, seckey)
 
@@ -556,22 +555,22 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
             outWriter.write('\"changes\":[]')
         else:
             # re-get window - may have been changed
-            newWindow = self.doGetApplicationWindow(request,
-                    callback, self._application, window)
+            newWindow = self.doGetApplicationWindow(request, callback,
+                    self._application, window)
             if newWindow != window:
                 window = newWindow
                 repaintAll = True
 
-            self.writeUidlResponce(callback, repaintAll,
-                    outWriter, window, analyzeLayouts)
+            self.writeUidlResponce(callback, repaintAll, outWriter, window,
+                    analyzeLayouts)
 
         self.closeJsonMessage(outWriter)
 
         #outWriter.close()
 
 
-    def writeUidlResponce(self, callback, repaintAll, outWriter,
-                          window, analyzeLayouts):
+    def writeUidlResponce(self, callback, repaintAll, outWriter, window,
+                analyzeLayouts):
 
         outWriter.write('\"changes\":[')
 
@@ -668,12 +667,9 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                         import ComponentSizeValidator
 
                     w = p
-                    invalidComponentRelativeSizes = \
-                            ComponentSizeValidator.\
-                            validateComponentRelativeSizes(
-                                    w.getContent(),
-                                    None,
-                                    None)
+                    invalidComponentRelativeSizes = ComponentSizeValidator.\
+                            validateComponentRelativeSizes(w.getContent(),
+                                    None, None)
 
                     # Also check any existing subwindows
                     if w.getChildWindows() is not None:
@@ -709,15 +705,14 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
 
         ci = None
         try:
-            m = getattr(self._application, 'getSystemMessages')
-            ci = m()
+            ci = self._application.getSystemMessages()
         except AttributeError, e:
             logger.warning('getSystemMessages() failed - continuing')
 
         # meta instruction for client to enable auto-forward to
         # sessionExpiredURL after timer expires.
-        if (ci is not None and ci.getSessionExpiredMessage() is None
-                and ci.getSessionExpiredCaption() is None
+        if ((ci is not None) and (ci.getSessionExpiredMessage() is None)
+                and (ci.getSessionExpiredCaption() is None)
                 and ci.isSessionExpiredNotificationEnabled()):
             newTimeoutInterval = self.getTimeoutInterval()
             if repaintAll or (self._timeoutInterval != newTimeoutInterval):
@@ -729,9 +724,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                     outWriter.write(',')
 
                 outWriter.write('\"timedRedirect\":{\"interval\":'
-                        + newTimeoutInterval
-                        + 15
-                        + ',\"url\":\"'
+                        + newTimeoutInterval + 15 + ',\"url\":\"'
                         + escapedURL + '\"}')
                 metaOpen = True
 
@@ -747,7 +740,6 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         for resource in paintTarget.getUsedResources():
             is_ = None
             try:
-
                 is_ = callback.getThemeResourceAsStream(self.getTheme(window),
                         resource)
             except IOError, e:
@@ -765,9 +757,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                     # FIXME: Handle exception
                     logger.info('Resource transfer failed: ' + str(e))
 
-                outWriter.write('\"'
-                        + JsonPaintTarget.escapeJSON(layout)
-                        + '\"')
+                outWriter.write('\"%s\"' % JsonPaintTarget.escapeJSON(layout))
             else:
                 # FIXME: Handle exception
                 logger.critical('CustomLayout not found: ' + resource)
@@ -835,9 +825,11 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         # If repaint is requested, clean all ids in this root window
         for key in self._idPaintableMap.keys():
             c = self._idPaintableMap[key]
+
             if self.isChildOf(window, c):
                 if key in self._idPaintableMap:
                     del self._idPaintableMap[key]
+
                 if c in self._paintableIdMap:
                     del self._paintableIdMap[c]
 
@@ -858,8 +850,8 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         p.removeListener(self, IRepaintRequestListener)
 
 
-    def handleVariables(self, request, response, callback,
-                         application2, window):
+    def handleVariables(self, request, response, callback, application2,
+                window):
         """TODO document
 
         If this method returns false, something was submitted that we did
@@ -881,9 +873,8 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
 
             # Security: double cookie submission pattern unless disabled by
             # property
-            if not ('true' == application2.getProperty(
-                    AbstractApplicationServlet.\
-                        SERVLET_PARAMETER_DISABLE_XSRF_PROTECTION)):
+            if application2.getProperty(AbstractApplicationServlet.\
+                        SERVLET_PARAMETER_DISABLE_XSRF_PROTECTION) != 'true':
                 if len(bursts) == 1 and 'init' == bursts[0]:
                     # init request; don't handle any variables, key sent in
                     # response.
@@ -896,14 +887,14 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                     sessId = request.getSession().getAttribute(
                             ApplicationConnection.UIDL_SECURITY_TOKEN_ID, '')
 
-                    if (sessId is None) or (not (sessId == bursts[0])):
+                    if (sessId is None) or (sessId != bursts[0]):
                         msg = 'Security key mismatch'
                         raise InvalidUIDLSecurityKeyException(msg)
 
             for bi in range(1, len(bursts)):
                 burst = bursts[bi]
-                success = self.handleVariableBurst(request,
-                        application2, success, burst)
+                success = self.handleVariableBurst(request, application2,
+                        success, burst)
 
                 # In case that there were multiple bursts, we know that this
                 # is a special synchronous case for closing window. Thus we
@@ -937,14 +928,14 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         while i < len(variableRecords):
             variable = variableRecords[i]
             nextVariable = None
-            if i + 1 < len(variableRecords):
+            if (i + 1) < len(variableRecords):
                 nextVariable = variableRecords[i + 1]
 
             owner = self.getVariableOwner( variable[self._VAR_PID] )
-            if owner is not None and owner.isEnabled():
+            if (owner is not None) and owner.isEnabled():
                 m = dict()
-                if (nextVariable is not None and variable[self._VAR_PID] \
-                            == nextVariable[self._VAR_PID]):
+                if ((nextVariable is not None) and (variable[self._VAR_PID]
+                            == nextVariable[self._VAR_PID])):
                     # we have more than one value changes in row for
                     # one variable owner, collect em in HashMap
                     m[variable[self._VAR_NAME]] = \
@@ -961,7 +952,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                         == nextVariable[self._VAR_PID]):
                     i += 1
                     variable = nextVariable
-                    if i + 1 < len(variableRecords):
+                    if (i + 1) < len(variableRecords):
                         nextVariable = variableRecords[i + 1]
                     else:
                         nextVariable = None
@@ -971,19 +962,18 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                                                   variable[self._VAR_VALUE])
 
                 try:
-
                     owner.changeVariables(source, m)
 
                     # Special-case of closing browser-level windows:
                     # track browser-windows currently open in client
                     if isinstance(owner, Window) and owner.getParent() is None:
                         close = m.get('close')
-                        if close is not None and bool(close):
+                        if (close is not None) and bool(close):
                             self._closingWindowName = owner.getName()
 
                 except Exception, e:
                     if isinstance(owner, IComponent):
-                        self._handleChangeVariablesError(app, owner, e, m)
+                        self.handleChangeVariablesError(app, owner, e, m)
                     else:
                         # TODO DragDropService error handling
                         raise RuntimeError(e)
@@ -991,8 +981,8 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                 # Handle special case where window-close is called
                 # after the window has been removed from the
                 # application or the application has closed
-                if ('close' == variable[self._VAR_NAME]
-                        and 'true' == variable[self._VAR_VALUE]):
+                if (variable[self._VAR_NAME] == 'close'
+                        and variable[self._VAR_VALUE] == 'true'):
                     # Silently ignore this
                     continue
 
@@ -1018,7 +1008,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
 
     def getVariableOwner(self, string):
         owner = self._idPaintableMap.get(string)
-        if owner is None and string.startswith('DD'):
+        if (owner is None) and string.startswith('DD'):
             return self.getDragAndDropService()
         return owner
 
@@ -1045,7 +1035,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         return inputStream.read()
 
 
-    def _handleChangeVariablesError(self, application, owner, e, m):
+    def handleChangeVariablesError(self, application, owner, e, m):
         """Handles an error (exception) that occurred when processing variable
         changes from the client or a failure of a file upload.
 
@@ -1073,8 +1063,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                 # the that error to the application error handler and continue
                 # processing the actual error
                 application.getErrorHandler().terminalError(
-                        ErrorHandlerErrorEvent(handlerException)
-                )
+                        ErrorHandlerErrorEvent(handlerException))
                 handled = False
 
         if not handled:
@@ -1082,7 +1071,6 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
 
 
     def convertVariableValue(self, variableType, strValue):
-
         m = {
             self._VTYPE_ARRAY: lambda s: self.convertArray(s),
             self._VTYPE_MAP: lambda s: self.convertMap(s),
@@ -1125,7 +1113,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         tokens = list()
         prevToken = self.VAR_ARRAYITEM_SEPARATOR
         for token in splitter.split(strValue):
-            if not (self.VAR_ARRAYITEM_SEPARATOR == token):
+            if self.VAR_ARRAYITEM_SEPARATOR != token:
                 tokens.append(token)
             elif self.VAR_ARRAYITEM_SEPARATOR == prevToken:
                 tokens.append('')
@@ -1275,7 +1263,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
 
 
     def doGetApplicationWindow(self, request, callback, application,
-                               assumedWindow):
+                assumedWindow):
         """TODO New method - document me!
 
         @param request
@@ -1289,8 +1277,8 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         # If the client knows which window to use, use it if possible
         windowClientRequestedName = request.getParameter('windowName')
 
-        if (assumedWindow is not None
-                and assumedWindow in application.getWindows()):
+        if ((assumedWindow is not None)
+                and (assumedWindow in application.getWindows())):
             windowClientRequestedName = assumedWindow.getName()
 
         if windowClientRequestedName is not None:
@@ -1299,7 +1287,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                 return window
 
         # If client does not know what window it wants
-        if window is None and not request.isRunningInPortlet():
+        if (window is None) and not request.isRunningInPortlet():
             # This is only supported if the application is running inside a
             # servlet
 
@@ -1344,8 +1332,8 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
             newWindowName = window.getName()
 
             while newWindowName in self._currentlyOpenWindowsInClient:
-                newWindowName = (window.getName()
-                        + '_' + str(self._nextUnusedWindowSuffix))
+                newWindowName = (window.getName() + '_' +
+                        str(self._nextUnusedWindowSuffix))
                 self._nextUnusedWindowSuffix += 1
 
             window = application.getWindow(newWindowName)
@@ -1423,14 +1411,14 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                 idd = 'PID_S' + idd
 
             old = self._idPaintableMap[idd] = paintable
-            if old is not None and old != paintable:
+            if (old is not None) and (old != paintable):
                 # Two paintables have the same id. We still make sure the
                 # old one is a component which is still attached to the
                 # application. This is just a precaution and should not be
                 # absolutely necessary.
 
                 if (isinstance(old, IComponent)
-                        and old.getApplication() is not None):
+                        and (old.getApplication() is not None)):
                     raise ValueError(('Two paintables ('
                             + paintable.__class__.__name__
                             + ',' + old.__class__.__name__
@@ -1482,7 +1470,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
 
                     if componentsRoot != w:
                         resultset.remove(p)
-                    elif (component.getParent() is not None
+                    elif ((component.getParent() is not None)
                             and not component.getParent().isVisible()):
                         # Do not return components in an invisible subtree.
                         #
@@ -1817,8 +1805,8 @@ class ICallback(object):
     @author peholmst
     """
 
-    def criticalNotification(self, request, response, cap, msg,
-                             details, outOfSyncURL):
+    def criticalNotification(self, request, response, cap, msg, details,
+                outOfSyncURL):
         raise NotImplementedError
 
 

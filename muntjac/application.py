@@ -735,7 +735,7 @@ class Application(IUriHandler, ITerminal, IErrorListener):
             return None
 
         # Gets the window by name
-        return self._windows[name]
+        return self._windows.get(name)
 
 
     def addWindow(self, window):

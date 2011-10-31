@@ -17,8 +17,6 @@
 import re
 import logging
 
-from paste.deploy import CONFIG
-
 from muntjac.terminal.gwt.server.exceptions import ServletException
 
 from muntjac.terminal.gwt.server.abstract_application_servlet import \
@@ -41,7 +39,8 @@ class ApplicationRunnerServlet(AbstractApplicationServlet):
 
         self._request = None  # ThreadLocal()
 
-        initParameter = CONFIG.get('defaultPackages')
+        initParameter = self.getApplicationOrSystemProperty('defaultPackages',
+                None)
         if initParameter is not None:
             self._defaultPackages = re.split(',', initParameter)
 

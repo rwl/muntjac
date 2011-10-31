@@ -21,7 +21,6 @@ from warnings import warn
 from collections import deque
 from muntjac.util import getSuperClass
 from muntjac.util import clsname
-from muntjac.ui.abstract_component import AbstractComponent
 
 try:
     from cStringIO import StringIO
