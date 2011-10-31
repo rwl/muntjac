@@ -28,7 +28,7 @@ from muntjac.data.util.bean_item_container import BeanItemContainer
 class BeanItemContainerTest(AbstractBeanContainerTest):
     """Test basic functionality of BeanItemContainer.
 
-    Most sorting related tests are in {@link BeanItemContainerSortTest}.
+    Most sorting related tests are in L{BeanItemContainerSortTest}.
     """
 
     def getContainer(self):

@@ -39,7 +39,7 @@ class DragAndDropWrapper(CustomComponent, IDropTarget, IDragSource):
     CLIENT_WIDGET = None #ClientWidget(VDragAndDropWrapper, LoadStyle.EAGER)
 
     def __init__(self, root):
-        """Wraps given component in a {@link DragAndDropWrapper}.
+        """Wraps given component in a L{DragAndDropWrapper}.
 
         @param root: the component to be wrapped
         """
@@ -130,7 +130,7 @@ class WrapperTransferable(TransferableImpl):
 
 
     def getMouseDownEvent(self):
-        """@return the mouse down event that started the drag and drop
+        """@return: the mouse down event that started the drag and drop
         operation
         """
         return MouseEventDetails.deSerialize(self.getData('mouseDown'))
@@ -167,24 +167,24 @@ class WrapperTargetDetails(TargetDetailsImpl):
 
 
     def getAbsoluteLeft(self):
-        """@return the absolute position of wrapper on the page"""
+        """@return: the absolute position of wrapper on the page"""
         return self.getData('absoluteLeft')
 
 
     def getAbsoluteTop(self):
-        """@return the absolute position of wrapper on the page"""
+        """@return: the absolute position of wrapper on the page"""
         return self.getData('absoluteTop')
 
 
     def getMouseEvent(self):
-        """@return details about the actual event that caused the event
+        """@return: details about the actual event that caused the event
                    details. Practically mouse move or mouse up.
         """
         return MouseEventDetails.deSerialize(self.getData('mouseEvent'))
 
 
     def getVerticalDropLocation(self):
-        """@return a detail about the drags vertical position over the
+        """@return: a detail about the drags vertical position over the
                    wrapper.
         """
         data = self.getData('verticalLocation')
@@ -192,7 +192,7 @@ class WrapperTargetDetails(TargetDetailsImpl):
 
 
     def getHorizontalDropLocation(self):
-        """@return a detail about the drags horizontal position over the
+        """@return: a detail about the drags horizontal position over the
                    wrapper.
         """
         data = self.getData('horizontalLocation')
@@ -200,17 +200,17 @@ class WrapperTargetDetails(TargetDetailsImpl):
 
 
     def verticalDropLocation(self):
-        """@deprecated use {@link #getVerticalDropLocation()} instead"""
+        """@deprecated use L{#getVerticalDropLocation()} instead"""
         return self.getVerticalDropLocation()
 
 
     def horizontalDropLocation(self):
-        """@deprecated use {@link #getHorizontalDropLocation()} instead"""
+        """@deprecated use L{#getHorizontalDropLocation()} instead"""
         return self.getHorizontalDropLocation()
 
 
 class DragStartMode(object):
-    # {@link DragAndDropWrapper} does not start drag events at all
+    # L{DragAndDropWrapper} does not start drag events at all
     NONE = 'NONE'
 
     # The component on which the drag started will be shown as drag image.

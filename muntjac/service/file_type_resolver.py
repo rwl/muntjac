@@ -26,8 +26,8 @@ class FileTypeResolver(object):
     a custom icon accessible with this class.
     </p>
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -203,14 +203,14 @@ class FileTypeResolver(object):
 
         @param fileName
                    the name of the file whose mime-type is requested.
-        @return mime-type <code>String</code> for the given filename
+        @return: mime-type C{String} for the given filename
         ---
         Gets the mime-type for a file. Currently the returned file type is
         resolved by the filename extension only.
 
         @param file
                    the file whose mime-type is requested.
-        @return the files mime-type <code>String</code>
+        @return: the files mime-type C{String}
         """
         # Checks for nulls
         if isinstance(file_or_filename, basestring):
@@ -257,7 +257,7 @@ class FileTypeResolver(object):
 
         @param fileName
                    the name of the file whose icon is requested.
-        @return the icon corresponding to the given file
+        @return: the icon corresponding to the given file
         ---
         Gets the descriptive icon representing a file. First the mime-type for
         the given file name is resolved, and then the corresponding icon is
@@ -266,7 +266,7 @@ class FileTypeResolver(object):
 
         @param file
                    the file whose icon is requested.
-        @return the icon corresponding to the given file
+        @return: the icon corresponding to the given file
         """
         return cls.getIconByMineType(cls.getMIMEType(file_or_filename))
 
@@ -289,9 +289,9 @@ class FileTypeResolver(object):
 
         @param extension
                    the filename extension to be associated with
-                   <code>MIMEType</code>.
+                   C{MIMEType}.
         @param MIMEType
-                   the new mime-type for <code>extension</code>.
+                   the new mime-type for C{extension}.
         """
         cls._extToMIMEMap[extension.lower()] = MIMEType
 
@@ -304,7 +304,7 @@ class FileTypeResolver(object):
         @param MIMEType
                    the mime-type whose icon is to be changed.
         @param icon
-                   the new icon to be associated with <code>MIMEType</code>.
+                   the new icon to be associated with C{MIMEType}.
         """
         cls._MIMEToIconMap[MIMEType] = icon
 
@@ -313,7 +313,7 @@ class FileTypeResolver(object):
     def getExtensionToMIMETypeMapping(cls):
         """Gets the internal file extension to mime-type mapping.
 
-        @return unmodifiable map containing the current file extension to
+        @return: unmodifiable map containing the current file extension to
                 mime-type mapping
         """
         return dict(cls._extToMIMEMap)
@@ -323,7 +323,7 @@ class FileTypeResolver(object):
     def getMIMETypeToIconMapping(cls):
         """Gets the internal mime-type to icon mapping.
 
-        @return unmodifiable map containing the current mime-type to icon mapping
+        @return: unmodifiable map containing the current mime-type to icon mapping
         """
         return dict(cls._MIMEToIconMap)
 

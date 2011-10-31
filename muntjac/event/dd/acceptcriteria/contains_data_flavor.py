@@ -21,7 +21,7 @@ from muntjac.event.dd.acceptcriteria.client_side_criterion import \
 
 
 class ContainsDataFlavor(ClientSideCriterion):
-    """A Criterion that checks whether {@link Transferable} contains given data
+    """A Criterion that checks whether L{Transferable} contains given data
     flavor. The developer might for example accept the incoming data only if it
     contains "Url" or "Text".
 
@@ -29,11 +29,11 @@ class ContainsDataFlavor(ClientSideCriterion):
     """
 
     def __init__(self, dataFlavor):
-        """Constructs a new instance of {@link ContainsDataFlavor}.
+        """Constructs a new instance of L{ContainsDataFlavor}.
 
         @param dataFlavor
                    the type of data that will be checked from
-                   {@link Transferable}
+                   L{Transferable}
         """
         self._dataFlavorId = dataFlavor
 

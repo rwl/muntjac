@@ -24,8 +24,8 @@ class IVariableOwner(object):
     variables to the application, and the components owning those variables
     may then process those changes.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -48,8 +48,8 @@ class IVariableOwner(object):
         """Tests if the variable owner is enabled or not. The terminal
         should not send any variable changes to disabled variable owners.
 
-        @return <code>true</code> if the variable owner is enabled,
-                <code>false</code> if not
+        @return: C{True} if the variable owner is enabled,
+                C{False} if not
         """
         raise NotImplementedError
 
@@ -59,14 +59,14 @@ class IVariableOwner(object):
         in immediate mode means that all variable changes are required to
         be sent back from the terminal immediately when they occur.
 
-        <strong>Note:</strong> <code>IVariableOwner</code> does not include
+        <strong>Note:</strong> C{IVariableOwner} does not include
         a set-method for the immediateness property. This is because not all
         VariableOwners wish to offer the functionality. Such VariableOwners
         are never in the immediate mode, thus they always return
-        <code>false</code> in {@link #isImmediate()}.
+        C{False} in L{#isImmediate()}.
 
-        @return <code>true</code> if the component is in immediate mode,
-                <code>false</code> if not.
+        @return: C{True} if the component is in immediate mode,
+                C{False} if not.
         """
         raise NotImplementedError
 
@@ -77,6 +77,6 @@ class IErrorEvent(ITerminalErrorEvent):
     def getVariableOwner(self):
         """Gets the source IVariableOwner.
 
-        @return the variable owner.
+        @return: the variable owner.
         """
         raise NotImplementedError

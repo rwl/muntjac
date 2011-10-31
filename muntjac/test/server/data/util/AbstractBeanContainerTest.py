@@ -22,11 +22,11 @@ from muntjac.test.server.data.util.AbstractInMemoryContainerTest import \
 
 
 class AbstractBeanContainerTest(AbstractInMemoryContainerTest):
-    """Automated test for {@link AbstractBeanContainer}.
+    """Automated test for L{AbstractBeanContainer}.
 
     Only a limited subset of the functionality is tested here, the
-    rest in tests of subclasses including {@link BeanItemContainer}
-    and {@link BeanContainer}.
+    rest in tests of subclasses including L{BeanItemContainer}
+    and L{BeanContainer}.
     """
     pass
 

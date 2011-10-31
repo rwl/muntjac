@@ -20,8 +20,8 @@ class ITerminal(object):
     Implementors typically provide additional information using methods
     not in this interface.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -29,7 +29,7 @@ class ITerminal(object):
     def getDefaultTheme(self):
         """Gets the name of the default theme for this terminal.
 
-        @return the name of the theme that is used by default by this
+        @return: the name of the theme that is used by default by this
                 terminal.
         """
         raise NotImplementedError
@@ -40,11 +40,11 @@ class ITerminal(object):
         width of the screen and not the width available for the application.
 
         Note that the screen width is typically not available in the
-        {@link com.vaadin.Application#init()} method as this is called
+        L{com.vaadin.Application#init()} method as this is called
         before the browser has a chance to report the screen size to the
         server.
 
-        @return the width of the terminal screen.
+        @return: the width of the terminal screen.
         """
         raise NotImplementedError
 
@@ -54,10 +54,10 @@ class ITerminal(object):
         height of the screen and not the height available for the application.
 
         Note that the screen height is typically not available in the
-        {@link com.vaadin.Application#init()} method as this is called before
+        L{com.vaadin.Application#init()} method as this is called before
         the browser has a chance to report the screen size to the server.
 
-        @return the height of the terminal screen.
+        @return: the height of the terminal screen.
         """
         raise NotImplementedError
 

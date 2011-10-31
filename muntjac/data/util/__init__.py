@@ -1,7 +1,8 @@
-"""<p>Provides implementations of Property, Item and Container
-interfaces, and utilities for the data layer.</p>
+"""Provides implementations of Property, Item and Container interfaces,
+and utilities for the data layer.
 
-<p>Various Property, Item and Container implementations are provided
+Various Property, Item and Container implementations are provided
 in this package. Each implementation can have its own sets of
 constraints on the data it encapsulates and on how the implementation
-can be used. See the class javadocs for more information.</p>"""
+can be used.
+"""

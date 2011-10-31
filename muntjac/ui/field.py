@@ -24,8 +24,8 @@ from muntjac.ui.component import \
 
 class IField(IBufferedValidatable, prop.IValueChangeNotifier, # IComponent,
             prop.IValueChangeListener, prop.IEditor, IFocusable):
-    """@author IT Mill Ltd.
-    @author Richard Lincoln
+    """@author: IT Mill Ltd.
+    @author: Richard Lincoln
     """
 
     def setCaption(self, caption):
@@ -53,8 +53,8 @@ class IField(IBufferedValidatable, prop.IValueChangeNotifier, # IComponent,
 
         Required fields must filled by the user.
 
-        @return <code>true</code> if the field is required,otherwise
-                <code>false</code>.
+        @return: C{True} if the field is required,otherwise
+                C{False}.
         @since 3.1
         """
         raise NotImplementedError
@@ -85,18 +85,18 @@ class IField(IBufferedValidatable, prop.IValueChangeNotifier, # IComponent,
         """Gets the error message that is to be displayed if a required
         field is empty.
 
-        @return Error message.
+        @return: Error message.
         @since 5.2.6
         """
         raise NotImplementedError
 
 
 class ValueChangeEvent(ComponentEvent, prop.ValueChangeEvent):
-    """An <code>Event</code> object specifying the IField whose value has
+    """An C{Event} object specifying the IField whose value has
     been changed.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -114,6 +114,6 @@ class ValueChangeEvent(ComponentEvent, prop.ValueChangeEvent):
     def getProperty(self):
         """Gets the IProperty which triggered the event.
 
-        @return the Source IProperty of the event.
+        @return: the Source IProperty of the event.
         """
         return self.getSource()

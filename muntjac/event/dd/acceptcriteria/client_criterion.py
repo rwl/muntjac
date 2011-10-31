@@ -16,12 +16,12 @@
 
 
 """An annotation type used to point the client side counterpart for server side
-a {@link AcceptCriterion} class. Usage is pretty similar to
-{@link ClientWidget} which is used with Vaadin components that have a
+a L{AcceptCriterion} class. Usage is pretty similar to
+L{ClientWidget} which is used with Vaadin components that have a
 specialized client side counterpart.
 
 Annotations are used at GWT compilation phase, so remember to rebuild your
-widgetset if you do changes for {@link ClientCriterion} mappings.
+widgetset if you do changes for L{ClientCriterion} mappings.
 
 @since 6.3
 """

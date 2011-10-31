@@ -25,7 +25,7 @@ class ClientSideCriterion(IAcceptCriterion):
 
     It is recommended that subclasses of ClientSideCriterion re-validate the
     condition on the server side in
-    {@link IAcceptCriterion#accept(com.vaadin.event.dd.DragAndDropEvent)} after
+    L{IAcceptCriterion#accept(com.vaadin.event.dd.DragAndDropEvent)} after
     the client side validation has accepted a transfer.
 
     @since 6.3

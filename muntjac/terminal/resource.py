@@ -16,11 +16,11 @@
 
 
 class IResource(object):
-    """<code>IResource</code> provided to the client terminal. Support for
+    """C{IResource} provided to the client terminal. Support for
     actually displaying the resource type is left to the terminal.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -28,6 +28,6 @@ class IResource(object):
     def getMIMEType(self):
         """Gets the MIME type of the resource.
 
-        @return the MIME type of the resource.
+        @return: the MIME type of the resource.
         """
         raise NotImplementedError

@@ -21,8 +21,8 @@ from muntjac.ui.window import Window
 class Link(AbstractComponent):
     """Link is used to create external or internal URL links.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -96,7 +96,7 @@ class Link(AbstractComponent):
 
         @param target
                    the Paint Event.
-        @throws PaintException
+        @raise PaintException
                     if the paint operation failed.
         """
         if self._resource is not None:
@@ -127,7 +127,7 @@ class Link(AbstractComponent):
     def getTargetBorder(self):
         """Returns the target window border.
 
-        @return the target window border.
+        @return: the target window border.
         """
         return self._targetBorder
 
@@ -135,7 +135,7 @@ class Link(AbstractComponent):
     def getTargetHeight(self):
         """Returns the target window height or -1 if not set.
 
-        @return the target window height.
+        @return: the target window height.
         """
         return -1 if self._targetHeight < 0 else self._targetHeight
 
@@ -144,7 +144,7 @@ class Link(AbstractComponent):
         """Returns the target window name. Empty name of null implies
         that the target is opened to the window containing the link.
 
-        @return the target window name.
+        @return: the target window name.
         """
         return self._targetName
 
@@ -152,7 +152,7 @@ class Link(AbstractComponent):
     def getTargetWidth(self):
         """Returns the target window width or -1 if not set.
 
-        @return the target window width.
+        @return: the target window width.
         """
         return -1 if self._targetWidth < 0 else self._targetWidth
 
@@ -203,7 +203,7 @@ class Link(AbstractComponent):
     def getResource(self):
         """Returns the resource this link opens.
 
-        @return the Resource.
+        @return: the Resource.
         """
         return self._resource
 

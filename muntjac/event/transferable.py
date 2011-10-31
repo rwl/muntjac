@@ -27,12 +27,12 @@ class ITransferable(object):
         Data types can be any string keys, but MIME types like "text/plain" are
         commonly used.
         <p>
-        Note, implementations of {@link ITransferable} often provide a better
+        Note, implementations of L{ITransferable} often provide a better
         typed API for accessing data.
 
         @param dataFlavor
                    the data flavor to be returned from ITransferable
-        @return the data stored in the ITransferable or null if ITransferable
+        @return: the data stored in the ITransferable or null if ITransferable
                 contains no data for given data flavour
         """
         raise NotImplementedError
@@ -51,14 +51,14 @@ class ITransferable(object):
 
 
     def getDataFlavors(self):
-        """@return a collection of data flavors ( data types ) available in this
+        """@return: a collection of data flavors ( data types ) available in this
                 ITransferable
         """
         raise NotImplementedError
 
 
     def getSourceComponent(self):
-        """@return the component that created the ITransferable or null if the source
+        """@return: the component that created the ITransferable or null if the source
                 component is unknown
         """
         raise NotImplementedError

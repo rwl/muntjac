@@ -29,14 +29,14 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
              field_events.IBlurNotifier, field_events.IFocusNotifier):
     """A class representing a selection of items the user has selected in a
     UI. The set of choices is presented as a set of
-    {@link com.vaadin.data.Item}s in a {@link com.vaadin.data.IContainer}.
+    L{com.vaadin.data.Item}s in a L{com.vaadin.data.IContainer}.
 
-    A <code>Select</code> component may be in single- or multiselect mode.
+    A C{Select} component may be in single- or multiselect mode.
     Multiselect mode means that more than one item can be selected
     simultaneously.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -103,7 +103,7 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
 
         @param target
                    the Paint Event.
-        @throws PaintException
+        @raise PaintException
                     if the paint operation failed.
         """
         if self.isMultiSelect():
@@ -255,18 +255,18 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
         """Returns the filtered options for the current page using a container
         filter.
 
-        As a size effect, {@link #filteredSize} is set to the total number of
+        As a size effect, L{#filteredSize} is set to the total number of
         items passing the filter.
 
-        The current container must be {@link IFilterable} and {@link IIndexed},
+        The current container must be L{IFilterable} and L{IIndexed},
         and the filtering mode must be suitable for container filtering
-        (tested with {@link #canUseContainerFilter()}).
+        (tested with L{#canUseContainerFilter()}).
 
-        Use {@link #getFilteredOptions()} and
-        {@link #sanitetizeList(List, boolean)} if this is not the case.
+        Use L{#getFilteredOptions()} and
+        L{#sanitetizeList(List, boolean)} if this is not the case.
 
         @param needNullSelectOption
-        @return filtered list of options (may be empty) or null if cannot use
+        @return: filtered list of options (may be empty) or null if cannot use
                 container filters
         """
         container = self.getContainerDataSource()
@@ -330,7 +330,7 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
 
     def buildFilter(self, filterString, filteringMode):
         """Constructs a filter instance to use when using a IFilterable
-        container in the <code>ITEM_CAPTION_MODE_PROPERTY</code> mode.
+        container in the C{ITEM_CAPTION_MODE_PROPERTY} mode.
 
         Note that the client side implementation expects the filter string to
         apply to the item caption string it sees, so changing the behavior of
@@ -415,7 +415,7 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
         @param size
                    number of items after filtering (not including the null
                    item, if any)
-        @return first item to show on the UI (index to the filtered list of
+        @return: first item to show on the UI (index to the filtered list of
                 options, not taking the null item into consideration if any)
         """
         # Not all options are visible, find out which ones are on the
@@ -441,7 +441,7 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
                    item, if any)
         @param first
                    index in the filtered view of the first item of the page
-        @return index in the filtered view of the last item on the page
+        @return: index in the filtered view of the last item on the page
         """
         # page length usable for non-null items
         if needNullSelectOption and (self._currentPage == 0):
@@ -495,7 +495,7 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
         """Filters the options in memory and returns the full filtered list.
 
         This can be less efficient than using container filters, so use
-        {@link #getOptionsWithFilter(boolean)} if possible (filterable
+        L{#getOptionsWithFilter(boolean)} if possible (filterable
         container and suitable item caption mode etc.).
 
         @return
@@ -540,7 +540,7 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
     def changeVariables(self, source, variables):
         """Invoked when the value of a variable has changed.
 
-        @see AbstractComponent#changeVariables()
+        @see: AbstractComponent#changeVariables()
         """
         # Not calling super.changeVariables due the history of select
         # component hierarchy
@@ -704,18 +704,18 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
 
 
     def setMultiSelect(self, multiSelect):
-        """@deprecated use {@link ListSelect}, {@link OptionGroup} or
-                    {@link TwinColSelect} instead
-        @see com.vaadin.ui.AbstractSelect#setMultiSelect(boolean)
+        """@deprecated use L{ListSelect}, L{OptionGroup} or
+                    L{TwinColSelect} instead
+        @see: com.vaadin.ui.AbstractSelect#setMultiSelect(boolean)
         """
         super(Select, self).setMultiSelect(multiSelect)
 
 
     def isMultiSelect(self):
-        """@deprecated use {@link ListSelect}, {@link OptionGroup} or
-                    {@link TwinColSelect} instead
+        """@deprecated use L{ListSelect}, L{OptionGroup} or
+                    L{TwinColSelect} instead
 
-        @see com.vaadin.ui.AbstractSelect#isMultiSelect()
+        @see: com.vaadin.ui.AbstractSelect#isMultiSelect()
         """
         return super(Select, self).isMultiSelect()
 
@@ -739,9 +739,9 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
         """Returns true if the select should find the page with the selected
         item when opening the popup (single select combo box only).
 
-        @see #setScrollToSelectedItem(boolean)
+        @see: #setScrollToSelectedItem(boolean)
 
-        @return true if the page with the selected item will be shown when
+        @return: true if the page with the selected item will be shown when
                 opening the popup
         """
         return self._scrollToSelectedItem

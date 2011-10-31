@@ -85,8 +85,8 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
     It is possible to extend this class to provide own functionality but in
     most cases this is unnecessary.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 6.0
     """
@@ -128,49 +128,49 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
     # If the attribute is present in the request, a html fragment will be
     # written instead of a whole page.
     #
-    # It is set to "true" by the {@link ApplicationPortlet} (Portlet 1.0) and
-    # read by {@link AbstractApplicationServlet}.
+    # It is set to "true" by the L{ApplicationPortlet} (Portlet 1.0) and
+    # read by L{AbstractApplicationServlet}.
     REQUEST_FRAGMENT = ''#clsname(ApplicationServlet) + '.fragment'
 
     # This request attribute forces widgetsets to be loaded from under the
     # specified base path; e.g shared widgetset for all portlets in a portal.
     #
-    # It is set by the {@link ApplicationPortlet} (Portlet 1.0) based on
-    # {@link Constants.PORTAL_PARAMETER_VAADIN_RESOURCE_PATH} and read by
-    # {@link AbstractApplicationServlet}.
+    # It is set by the L{ApplicationPortlet} (Portlet 1.0) based on
+    # L{Constants.PORTAL_PARAMETER_VAADIN_RESOURCE_PATH} and read by
+    # L{AbstractApplicationServlet}.
     REQUEST_VAADIN_STATIC_FILE_PATH = ''#clsname(ApplicationServlet) + '.widgetsetPath'
 
     # This request attribute forces widgetset used; e.g for portlets that can
     # not have different widgetsets.
     #
-    # It is set by the {@link ApplicationPortlet} (Portlet 1.0) based on
-    # {@link ApplicationPortlet.PORTLET_PARAMETER_WIDGETSET} and read by
-    # {@link AbstractApplicationServlet}.
+    # It is set by the L{ApplicationPortlet} (Portlet 1.0) based on
+    # L{ApplicationPortlet.PORTLET_PARAMETER_WIDGETSET} and read by
+    # L{AbstractApplicationServlet}.
     REQUEST_WIDGETSET = ''#clsname(ApplicationServlet) + '.widgetset'
 
     # This request attribute indicates the shared widgetset (e.g. portal-wide
     # default widgetset).
     #
-    # It is set by the {@link ApplicationPortlet} (Portlet 1.0) based on
-    # {@link Constants.PORTAL_PARAMETER_VAADIN_WIDGETSET} and read by
-    # {@link AbstractApplicationServlet}.
+    # It is set by the L{ApplicationPortlet} (Portlet 1.0) based on
+    # L{Constants.PORTAL_PARAMETER_VAADIN_WIDGETSET} and read by
+    # L{AbstractApplicationServlet}.
     REQUEST_SHARED_WIDGETSET = ''#clsname(ApplicationServlet) + '.sharedWidgetset'
 
     # If set, do not load the default theme but assume that loading it is
     # handled e.g. by ApplicationPortlet.
     #
-    # It is set by the {@link ApplicationPortlet} (Portlet 1.0) based on
-    # {@link Constants.PORTAL_PARAMETER_VAADIN_THEME} and read by
-    # {@link AbstractApplicationServlet}.
+    # It is set by the L{ApplicationPortlet} (Portlet 1.0) based on
+    # L{Constants.PORTAL_PARAMETER_VAADIN_THEME} and read by
+    # L{AbstractApplicationServlet}.
     REQUEST_DEFAULT_THEME = ''#clsname(ApplicationServlet) + '.defaultThemeUri'
 
     # This request attribute is used to add styles to the main element. E.g
     # "height:500px" generates a style="height:500px" to the main element,
     # useful from some embedding situations (e.g portlet include.)
     #
-    # It is typically set by the {@link ApplicationPortlet} (Portlet 1.0) based
-    # on {@link ApplicationPortlet.PORTLET_PARAMETER_STYLE} and read by
-    # {@link AbstractApplicationServlet}.
+    # It is typically set by the L{ApplicationPortlet} (Portlet 1.0) based
+    # on L{ApplicationPortlet.PORTLET_PARAMETER_STYLE} and read by
+    # L{AbstractApplicationServlet}.
     REQUEST_APPSTYLE = ''#clsname(ApplicationServlet) + '.style'
 
     UPLOAD_URL_PREFIX = 'APP/UPLOAD/'
@@ -284,7 +284,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
 
         @param parameterName
                    the Name or the parameter.
-        @return String value or null if not found
+        @return: String value or null if not found
         """
         val = self._applicationProperties.get(parameterName)
         if val is not None:
@@ -300,7 +300,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
 
         @param parameterName
                    the Name or the parameter.
-        @return String value or null if not found
+        @return: String value or null if not found
         """
         raise NotImplementedError
 
@@ -312,7 +312,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
                    the Name or the parameter.
         @param defaultValue
                    the Default to be used.
-        @return String value or default if not found
+        @return: String value or default if not found
         """
         # Try application properties
         val = self.getApplicationProperty(parameterName)
@@ -331,7 +331,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
         """Returns true if the servlet is running in production mode.
         Production mode disables all debug facilities.
 
-        @return true if in production mode, false if in debug mode
+        @return: true if in production mode, false if in debug mode
         """
         return self._productionMode
 
@@ -340,7 +340,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
         """Returns the amount of milliseconds the browser should cache a file.
         Default is 1 hour (3600 ms).
 
-        @return The amount of milliseconds files are cached in the browser
+        @return: The amount of milliseconds files are cached in the browser
         """
         return self._resourceCacheTime
 
@@ -481,13 +481,13 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
 
         @param requestType
                    Type of the request as returned by
-                   {@link #getRequestType(HttpServletRequest)}
+                   L{#getRequestType(HttpServletRequest)}
         @param request
                    The request from the browser
         @param response
                    The response to which an error can be written
-        @return false if cookies are disabled, true otherwise
-        @throws IOException
+        @return: false if cookies are disabled, true otherwise
+        @raise IOException
         """
         if requestType == RequestType.UIDL and not self.isRepaintAll(request):
             # In all other but the first UIDL request a cookie should be
@@ -547,7 +547,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
         @param url
                    url to load when the message is dismissed. Null will
                    reload the current page.
-        @throws IOException
+        @raise IOException
                     if the writing failed due to input/output error.
         """
         if self.isUIDLRequest(request):
@@ -603,14 +603,14 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
 
 
     def writeResponse(self, response, contentType, output):
-        """Writes the response in {@code output} using the contentType given
-        in {@code contentType} to the provided {@link HttpServletResponse}
+        """Writes the response in C{output} using the contentType given
+        in C{contentType} to the provided L{HttpServletResponse}
 
         @param response
         @param contentType
         @param output
                    Output to write (UTF-8 encoded)
-        @throws IOException
+        @raise IOException
         """
         self.setHeader(response, 'Content-Type', contentType)
         self.write(response, output)
@@ -624,8 +624,8 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
         @param request
         @param requestType
         @return
-        @throws ServletException
-        @throws SessionExpiredException
+        @raise ServletException
+        @raise SessionExpiredException
         """
         requestCanCreateApplication = \
                 self.requestCanCreateApplication(request, requestType)
@@ -674,7 +674,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
 
         @param request
         @param requestType
-        @return true if an application should be created, false otherwise
+        @return: true if an application should be created, false otherwise
         """
         if (requestType == RequestType.UIDL) and self.isRepaintAll(request):
             # UIDL request contains valid repaintAll=1 event, the user
@@ -703,9 +703,9 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
                    the HTTP request instance.
         @param response
                    the HTTP response to write to.
-        @throws IOException
+        @raise IOException
 
-        @see com.vaadin.terminal.URIHandler
+        @see: com.vaadin.terminal.URIHandler
         """
         if stream.getParameter('Location') is not None:
             self.setStatus(response, 302, 'Found')
@@ -762,8 +762,8 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
 
         @param request
         @return
-        @throws ServletException
-        @throws MalformedURLException
+        @raise ServletException
+        @raise MalformedURLException
         """
         newApplication = self.getNewApplication(request)
 
@@ -862,8 +862,8 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
         @param window
         @param request
         @param response
-        @return true if an DownloadStream was sent to the client
-        @throws IOException
+        @return: true if an DownloadStream was sent to the client
+        @raise IOException
         """
         # Handles the URI
         download = applicationManager.handleURI(window, request, response,
@@ -942,8 +942,8 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
 
         @param request
                    the HTTP request.
-        @return A new Application instance.
-        @throws ServletException
+        @return: A new Application instance.
+        @raise ServletException
         """
         raise NotImplementedError
 
@@ -954,8 +954,8 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
         @param request
         @param application
         @param webApplicationContext
-        @throws ServletException
-        @throws MalformedURLException
+        @raise ServletException
+        @raise MalformedURLException
         """
         if not application.isRunning():
             # Create application
@@ -974,10 +974,10 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
 
         @param request
         @param response
-        @return true if a file was served and the request has been handled,
+        @return: true if a file was served and the request has been handled,
                 false otherwise.
-        @throws IOException
-        @throws ServletException
+        @raise IOException
+        @raise ServletException
         """
         pathInfo = self.getPathInfo(request)
         # FIXME: What does 10 refer to?
@@ -1009,8 +1009,8 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
                    The filename to serve. Should always start with /VAADIN/.
         @param request
         @param response
-        @throws IOException
-        @throws ServletException
+        @raise IOException
+        @raise ServletException
         """
         #sc = self.getServletContext()  # FIXME: ServletContext
         resourceUrl = self.getResource(filename)
@@ -1074,7 +1074,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
         @param resourceLastModifiedTimestamp
                    The timestamp when the resource was last modified. 0 if
                    the last modification time is unknown.
-        @return true if the If-Modified-Since header tells the cached version
+        @return: true if the If-Modified-Since header tells the cached version
                     in the browser is up to date, false otherwise
         """
         if resourceLastModifiedTimestamp < 1:
@@ -1202,7 +1202,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
         independent of the application.
 
         @param request
-        @return The location of static resources (should contain the VAADIN
+        @return: The location of static resources (should contain the VAADIN
                 directory). Never ends with a slash (/).
         """
         # request may have an attribute explicitly telling location (portal
@@ -1277,7 +1277,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
 
         @param request
         @param response
-        @throws IOException
+        @raise IOException
                     if sending the redirect fails due to an input/output
                     error or a bad application URL
         """
@@ -1293,18 +1293,18 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
         that one overrides on of several submethods which are called by
         this method:
         <ul>
-        <li> {@link #setAjaxPageHeaders()}
+        <li> L{#setAjaxPageHeaders()}
         <li>
-        {@link #writeAjaxPageHtmlHeadStart()}
+        L{#writeAjaxPageHtmlHeadStart()}
         <li>
-        {@link #writeAjaxPageHtmlHeader()}
+        L{#writeAjaxPageHtmlHeader()}
         <li>
-        {@link #writeAjaxPageHtmlBodyStart()}
+        L{#writeAjaxPageHtmlBodyStart()}
         <li>
-        {@link #writeAjaxPageHtmlVaadinScripts()}
+        L{#writeAjaxPageHtmlVaadinScripts()}
         <li>
-        {@link #writeAjaxPageHtmlMainDiv()}
-        <li> {@link #writeAjaxPageHtmlBodyEnd(BufferedWriter)}
+        L{#writeAjaxPageHtmlMainDiv()}
+        <li> L{#writeAjaxPageHtmlBodyEnd(BufferedWriter)}
         </ul>
 
         @param request
@@ -1316,9 +1316,9 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
         @param window
         @param terminalType
         @param theme
-        @throws IOException
+        @raise IOException
                     if the writing failed due to input/output error.
-        @throws MalformedURLException
+        @raise MalformedURLException
                     if the application is denied access the persistent data
                     store represented by the given URL.
         """
@@ -1411,7 +1411,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
 
         This method should normally not be overridden.
 
-        @return The CSS class name to use in combination with "v-app-".
+        @return: The CSS class name to use in combination with "v-app-".
         """
         try:
             return self.getApplicationClass().__name__
@@ -1460,7 +1460,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
         @param classNames
         @param divStyle
         @param request
-        @throws IOException
+        @raise IOException
         """
         page.write('<div id=\"' + appId + '\" class=\"' + classNames + '\" ' \
                 + (divStyle if divStyle is not None else '') + '>')
@@ -1636,7 +1636,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
 
 
     def isStandalone(self):
-        """@return true if the served application is considered to be the
+        """@return: true if the served application is considered to be the
                 only or main content of the host page. E.g. various embedding
                 solutions should override this to false.
         """
@@ -1653,7 +1653,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
 
         @param page
         @param request
-        @throws IOException
+        @raise IOException
         """
         page.write('\n</head>\n<body scroll=\"auto\" class=\"'
                 + ApplicationConnection.GENERATED_BODY_CLASSNAME
@@ -1670,7 +1670,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
         @param title
         @param themeUri
         @param request
-        @throws IOException
+        @raise IOException
         """
         page.write('<meta http-equiv=\"Content-Type\" '
                 + 'content=\"text/html; charset=utf-8\"/>\n')
@@ -1709,7 +1709,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
 
         @param page
         @param request
-        @throws IOException
+        @raise IOException
         """
         # write html header
         page.write('<!DOCTYPE html PUBLIC \"-//W3C//DTD '
@@ -1747,7 +1747,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
 
         @param request
                    the HTTP request.
-        @throws MalformedURLException
+        @raise MalformedURLException
                     if the application is denied access to the persistent
                     data store represented by the given URL.
         """
@@ -1790,12 +1790,12 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
         @param allowSessionCreation
                    true if a session should be created if no session
                    exists, false if no session should be created
-        @return Application instance, or null if the URL does not map to
+        @return: Application instance, or null if the URL does not map to
                     valid application.
-        @throws MalformedURLException
+        @raise MalformedURLException
                     if the application is denied access to the persistent
                     data store represented by the given URL.
-        @throws SessionExpiredException
+        @raise SessionExpiredException
         """
         # Ensures that the session is still valid
         session = self.getSession(request, allowSessionCreation)
@@ -1839,7 +1839,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
                    the HTTP response to write to.
         @param application
                    the application to end.
-        @throws IOException
+        @raise IOException
                     if the writing failed due to input/output error.
         """
         logoutUrl = application.getLogoutURL()
@@ -1862,8 +1862,8 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
                    the HTTP Request.
         @param application
                    the Application to query for window.
-        @return Window matching the given URI or null if not found.
-        @throws ServletException
+        @return: Window matching the given URI or null if not found.
+        @raise ServletException
                     if an exception has occurred that interferes with the
                     servlet's normal operation.
         """
@@ -1918,7 +1918,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
                    the Theme name.
         @param resource
                    the Theme resource.
-        @return External URI specifying the resource
+        @return: External URI specifying the resource
         """
         if self._resourcePath is None:
             return resource.getResourceId()
@@ -1949,7 +1949,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
 
         @param session
                    the HTTP session.
-        @return the application context for HttpSession.
+        @return: the application context for HttpSession.
         """
         # TODO the ApplicationContext.getApplicationContext() should be
         # removed and logic moved here. Now overriding context type is
@@ -1963,11 +1963,11 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
         communication mananger implementation.
 
         @deprecated Instead of overriding this method, override
-                    {@link WebApplicationContext} implementation via
-                    {@link AbstractApplicationServlet#getApplicationContext()}
+                    L{WebApplicationContext} implementation via
+                    L{AbstractApplicationServlet#getApplicationContext()}
                     method and in that customized implementation return your
                     CommunicationManager in
-                    {@link WebApplicationContext#getApplicationManager()}
+                    L{WebApplicationContext#getApplicationManager()}
                     method.
 
         @param application
@@ -1987,7 +1987,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
         "safe characters" to keep the text somewhat readable.
 
         @param unsafe
-        @return a safe string to be added inside an html tag
+        @return: a safe string to be added inside an html tag
         """
         safe = StringIO()
         for c in unsafe:
@@ -2024,7 +2024,7 @@ class ParameterHandlerErrorImpl(ParameterHandlerErrorEvent):
     def getThrowable(self):
         """Gets the contained throwable.
 
-        @see com.vaadin.terminal.Terminal.IErrorEvent#getThrowable()
+        @see: com.vaadin.terminal.Terminal.IErrorEvent#getThrowable()
         """
         return self._throwable
 
@@ -2032,7 +2032,7 @@ class ParameterHandlerErrorImpl(ParameterHandlerErrorEvent):
     def getParameterHandler(self):
         """Gets the source ParameterHandler.
 
-        @see IErrorEvent.getParameterHandler()
+        @see: IErrorEvent.getParameterHandler()
         """
         return self._owner
 
@@ -2050,7 +2050,7 @@ class URIHandlerErrorImpl(URIHandlerErrorEvent):
     def getThrowable(self):
         """Gets the contained throwable.
 
-        @see com.vaadin.terminal.Terminal.IErrorEvent#getThrowable()
+        @see: com.vaadin.terminal.Terminal.IErrorEvent#getThrowable()
         """
         return self._throwable
 
@@ -2058,7 +2058,7 @@ class URIHandlerErrorImpl(URIHandlerErrorEvent):
     def getURIHandler(self):
         """Gets the source URIHandler.
 
-        @see com.vaadin.terminal.URIHandler.IErrorEvent#getURIHandler()
+        @see: com.vaadin.terminal.URIHandler.IErrorEvent#getURIHandler()
         """
         return self._owner
 

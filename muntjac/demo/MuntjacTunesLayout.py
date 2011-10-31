@@ -14,7 +14,7 @@ from muntjac.api import \
 class MuntjacTunesLayout(Application):
     """Sample application layout, similar (almost identical) to Apple iTunes.
 
-    @author IT Mill Ltd.
+    @author: IT Mill Ltd.
     """
 
     def init(self):

@@ -23,36 +23,36 @@ from muntjac.data.property import IProperty
 class RichTextArea(AbstractField):
     """A simple RichTextArea to edit HTML format text.
 
-    Note, that using {@link TextField#setMaxLength(int)} method in
-    {@link RichTextArea} may produce unexpected results as formatting
+    Note, that using L{TextField#setMaxLength(int)} method in
+    L{RichTextArea} may produce unexpected results as formatting
     is counted into length of field.
     """
 
     CLIENT_WIDGET = None #ClientWidget(VRichTextArea, LoadStyle.LAZY)
 
     def __init__(self, *args):
-        """Constructs an empty <code>RichTextArea</code> with no caption.
+        """Constructs an empty C{RichTextArea} with no caption.
         ---
-        Constructs an empty <code>RichTextArea</code> with the given caption.
+        Constructs an empty C{RichTextArea} with the given caption.
 
         @param caption
                    the caption for the editor.
         ---
-        Constructs a new <code>RichTextArea</code> that's bound to the
-        specified <code>IProperty</code> and has no caption.
+        Constructs a new C{RichTextArea} that's bound to the
+        specified C{IProperty} and has no caption.
 
         @param dataSource
                    the data source for the editor value
         ---
-        Constructs a new <code>RichTextArea</code> that's bound to the
-        specified <code>IProperty</code> and has the given caption.
+        Constructs a new C{RichTextArea} that's bound to the
+        specified C{IProperty} and has the given caption.
 
         @param caption
                    the caption for the editor.
         @param dataSource
                    the data source for the editor value
         ---
-        Constructs a new <code>RichTextArea</code> with the given caption
+        Constructs a new C{RichTextArea} with the given caption
         and initial text contents.
 
         @param caption
@@ -149,9 +149,9 @@ class RichTextArea(AbstractField):
         """Gets the formatted string value. Sets the field value by using
         the assigned Format.
 
-        @return the Formatted value.
-        @see #setFormat(Format)
-        @see Format
+        @return: the Formatted value.
+        @see: #setFormat(Format)
+        @see: Format
         @deprecated
         """
         v = self.getValue()
@@ -213,8 +213,8 @@ class RichTextArea(AbstractField):
 
         The default value is string 'null'.
 
-        @return the String Textual representation for null strings.
-        @see TextField#isNullSettingAllowed()
+        @return: the String Textual representation for null strings.
+        @see: TextField#isNullSettingAllowed()
         """
         return self._nullRepresentation
 
@@ -231,9 +231,9 @@ class RichTextArea(AbstractField):
 
         By default this setting is false
 
-        @return boolean Should the null-string represenation be always
+        @return: boolean Should the null-string represenation be always
                 converted to null-values.
-        @see TextField#getNullRepresentation()
+        @see: TextField#getNullRepresentation()
         """
         return self._nullSettingAllowed
 
@@ -249,7 +249,7 @@ class RichTextArea(AbstractField):
 
         @param nullRepresentation
                    Textual representation for null strings.
-        @see TextField#setNullSettingAllowed(boolean)
+        @see: TextField#setNullSettingAllowed(boolean)
         """
         self._nullRepresentation = nullRepresentation
 
@@ -269,7 +269,7 @@ class RichTextArea(AbstractField):
         @param nullSettingAllowed
                    Should the null-string representation be always converted
                    to null-values.
-        @see TextField#getNullRepresentation()
+        @see: TextField#getNullRepresentation()
         """
         self._nullSettingAllowed = nullSettingAllowed
 
@@ -277,8 +277,8 @@ class RichTextArea(AbstractField):
     def getFormat(self):
         """Gets the value formatter of TextField.
 
-        @return the Format used to format the value.
-        @deprecated replaced by {@link com.vaadin.data.util.PropertyFormatter}
+        @return: the Format used to format the value.
+        @deprecated replaced by L{com.vaadin.data.util.PropertyFormatter}
         """
         warn('replaced by PropertyFormatter', DeprecationWarning)
         return self._format
@@ -290,7 +290,7 @@ class RichTextArea(AbstractField):
         @param format
                    the Format used to format the value. Null disables the
                    formatting.
-        @deprecated replaced by {@link com.vaadin.data.util.PropertyFormatter}
+        @deprecated replaced by L{com.vaadin.data.util.PropertyFormatter}
         """
         warn('replaced by PropertyFormatter', DeprecationWarning)
         self._format = frmt

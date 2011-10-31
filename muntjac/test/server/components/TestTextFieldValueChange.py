@@ -84,7 +84,7 @@ class TestTextFieldValueChange(
     def testValueChangePropagationWithReadThroughWithModifiedValue(self):
         """If read through is on and value has been modified, but not
         committed, the value should not propagate similar to
-        {@link #testValueChangeEventPropagationWithReadThrough()}
+        L{#testValueChangeEventPropagationWithReadThrough()}
 
         TODO make test field type agnostic (eg. combobox)
         """

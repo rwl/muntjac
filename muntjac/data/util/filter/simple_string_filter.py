@@ -22,16 +22,12 @@ class SimpleStringFilter(IFilter):
     specified string. The matching can be case-sensitive or case-insensitive.
 
     This filter also directly supports in-memory filtering. When performing
-    in-memory filtering, values of other types are converted using toString(),
+    in-memory filtering, values of other types are converted using __str__,
     but other (lazy container) implementations do not need to perform such
     conversions and might not support values of different types.
 
-    Note that this filter is modeled after the pre-6.6 filtering mechanisms, and
-    might not be very efficient e.g. for database filtering.
-
-    TODO this might still change
-
-    @since 6.6
+    Note that this filter might not be very efficient e.g. for database
+    filtering.
     """
 
     def __init__(self, propertyId, filterString, ignoreCase, onlyMatchPrefix):
@@ -101,7 +97,7 @@ class SimpleStringFilter(IFilter):
     def getPropertyId(self):
         """Returns the property identifier to which this filter applies.
 
-        @return property id
+        @return: property id
         """
         return self.propertyId
 
@@ -112,7 +108,7 @@ class SimpleStringFilter(IFilter):
         Note: this method is intended only for implementations of lazy
         string filters and may change in the future.
 
-        @return filter string given to the constructor
+        @return: filter string given to the constructor
         """
         return self.filterString
 
@@ -123,7 +119,7 @@ class SimpleStringFilter(IFilter):
         Note: this method is intended only for implementations of lazy string
         filters and may change in the future.
 
-        @return true if performing case-insensitive filtering, false for
+        @return: true if performing case-insensitive filtering, false for
                 case-sensitive
         """
         return self.ignoreCase
@@ -136,7 +132,7 @@ class SimpleStringFilter(IFilter):
         Note: this method is intended only for implementations of lazy string
         filters and may change in the future.
 
-        @return true if checking for matches at the beginning of the value only,
+        @return: true if checking for matches at the beginning of the value only,
                 false if matching any part of value
         """
         return self.onlyMatchPrefix

@@ -20,13 +20,13 @@ from muntjac.terminal.download_stream import DownloadStream
 
 
 class StreamResource(IApplicationResource):
-    """<code>StreamResource</code> is a resource provided to the client
+    """C{StreamResource} is a resource provided to the client
     directly by the application. The strean resource is fetched from URI
     that is most often in the context of the application or window. The
     resource is automatically registered to window in creation.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -66,7 +66,7 @@ class StreamResource(IApplicationResource):
 
 
     def getMIMEType(self):
-        """@see com.vaadin.terminal.Resource#getMIMEType()"""
+        """@see: com.vaadin.terminal.Resource#getMIMEType()"""
         if self._MIMEType is not None:
             return self._MIMEType
         return FileTypeResolver.getMIMEType(self._filename)
@@ -82,18 +82,18 @@ class StreamResource(IApplicationResource):
 
 
     def getStreamSource(self):
-        """Returns the source for this <code>StreamResource</code>.
+        """Returns the source for this C{StreamResource}.
         StreamSource is queried when the resource is about to be streamed
         to the client.
 
-        @return Source of the StreamResource.
+        @return: Source of the StreamResource.
         """
         return self._streamSource
 
 
     def setStreamSource(self, streamSource):
-        """Sets the source for this <code>StreamResource</code>.
-        <code>StreamSource</code> is queried when the resource is
+        """Sets the source for this C{StreamResource}.
+        C{StreamSource} is queried when the resource is
         about to be streamed to the client.
 
         @param streamSource
@@ -105,7 +105,7 @@ class StreamResource(IApplicationResource):
     def getFilename(self):
         """Gets the filename.
 
-        @return the filename.
+        @return: the filename.
         """
         return self._filename
 
@@ -120,12 +120,12 @@ class StreamResource(IApplicationResource):
 
 
     def getApplication(self):
-        """@see com.vaadin.terminal.IApplicationResource#getApplication()"""
+        """@see: com.vaadin.terminal.IApplicationResource#getApplication()"""
         return self._application
 
 
     def getStream(self):
-        """@see com.vaadin.terminal.IApplicationResource#getStream()"""
+        """@see: com.vaadin.terminal.IApplicationResource#getStream()"""
         ss = self.getStreamSource()
         if ss is None:
             return None
@@ -170,8 +170,8 @@ class StreamResource(IApplicationResource):
 class StreamSource(object):
     """Interface implemented by the source of a StreamResource.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """

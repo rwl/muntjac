@@ -30,7 +30,7 @@ class TargetDetailIs(ClientSideCriterion):
 
     def __init__(self, dataFlavor, value):
         """Constructs a criterion which ensures that the value there is a
-        value in {@link TargetDetails} that equals the reference value.
+        value in L{TargetDetails} that equals the reference value.
 
         @param dataFlavor
                    the type of data to be checked

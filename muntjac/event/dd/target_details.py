@@ -17,11 +17,11 @@
 
 class ITargetDetails(object):
     """ITargetDetails wraps drop target related information about
-    {@link DragAndDropEvent}.
+    L{DragAndDropEvent}.
     <p>
-    When a ITargetDetails object is used in {@link DropHandler} it is often
+    When a ITargetDetails object is used in L{DropHandler} it is often
     preferable to cast the ITargetDetails to an implementation provided by
-    DropTarget like {@link TreeTargetDetails}. They often provide a better typed,
+    DropTarget like L{TreeTargetDetails}. They often provide a better typed,
     drop target specific API.
 
     @since 6.3
@@ -31,11 +31,11 @@ class ITargetDetails(object):
         """Gets target data associated with the given string key
 
         @param key
-        @return The data associated with the key
+        @return: The data associated with the key
         """
         raise NotImplementedError
 
 
     def getTarget(self):
-        """@return the drop target on which the {@link DragAndDropEvent} happened."""
+        """@return: the drop target on which the L{DragAndDropEvent} happened."""
         raise NotImplementedError

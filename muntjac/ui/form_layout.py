@@ -18,10 +18,10 @@ from muntjac.ui.ordered_layout import OrderedLayout
 
 
 class FormLayout(OrderedLayout):
-    """FormLayout is used by {@link Form} to layout fields. It may also be
-    used separately without {@link Form}.
+    """FormLayout is used by L{Form} to layout fields. It may also be
+    used separately without L{Form}.
 
-    FormLayout is a close relative to vertical {@link OrderedLayout}, but
+    FormLayout is a close relative to vertical L{OrderedLayout}, but
     in FormLayout caption is rendered on left side of component. Required
     and validation indicators are between captions and fields.
 

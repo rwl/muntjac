@@ -37,7 +37,7 @@ class AlignmentUtils(object):
 
     r,right for right alignment
 
-    @deprecated replaced by {@link Alignment}.
+    @deprecated replaced by L{Alignment}.
     """
     warn('AlignmentUtils replaced by Alignment', DeprecationWarning)
 
@@ -71,7 +71,7 @@ class AlignmentUtils(object):
                    "right","right top","top right","top". It is valid to mix
                    short and long notation but they must be separated by a
                    space e.g. "r top".
-        @throws ValueError
+        @raise ValueError
         """
         if alignment is None or len(alignment) == 0:
             raise ValueError, ('alignment for setComponentAlignment() '
@@ -119,7 +119,7 @@ class AlignmentUtils(object):
         @param alignmentString
         @param alignment
         @return
-        @throws IllegalArgumentException
+        @raise IllegalArgumentException
         """
         parsed = cls._alignmentStrings.get( alignmentString.lower() )
 

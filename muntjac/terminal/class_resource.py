@@ -20,15 +20,15 @@ from muntjac.terminal.download_stream import DownloadStream
 
 
 class ClassResource(IApplicationResource):
-    """<code>ClassResource</code> is a named resource accessed with the
+    """C{ClassResource} is a named resource accessed with the
     class loader.
 
     This can be used to access resources such as icons, files, etc.
 
-    @see java.lang.Class#getResource(java.lang.String)
+    @see: java.lang.Class#getResource(java.lang.String)
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -88,7 +88,7 @@ class ClassResource(IApplicationResource):
     def getMIMEType(self):
         """Gets the MIME type of this resource.
 
-        @see muntjac.terminal.Resource#getMIMEType()
+        @see: muntjac.terminal.Resource#getMIMEType()
         """
         return FileTypeResolver.getMIMEType(self._resourceName)
 
@@ -96,7 +96,7 @@ class ClassResource(IApplicationResource):
     def getApplication(self):
         """Gets the application of this resource.
 
-        @see muntjac.terminal.IApplicationResource#getApplication()
+        @see: muntjac.terminal.IApplicationResource#getApplication()
         """
         return self._application
 
@@ -104,8 +104,8 @@ class ClassResource(IApplicationResource):
     def getFilename(self):
         """Gets the virtual filename for this resource.
 
-        @return the file name associated to this resource.
-        @see muntjac.terminal.IApplicationResource#getFilename()
+        @return: the file name associated to this resource.
+        @see: muntjac.terminal.IApplicationResource#getFilename()
         """
         index = 0
         idx = self._resourceName.find('/', index)
@@ -118,7 +118,7 @@ class ClassResource(IApplicationResource):
     def getStream(self):
         """Gets resource as stream.
 
-        @see muntjac.terminal.IApplicationResource#getStream()
+        @see: muntjac.terminal.IApplicationResource#getStream()
         """
         ds = DownloadStream(
                 self._associatedClass.getResourceAsStream(self._resourceName),

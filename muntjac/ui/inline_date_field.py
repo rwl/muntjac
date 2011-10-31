@@ -23,10 +23,10 @@ from muntjac.data.property import IProperty
 class InlineDateField(DateField):
     """A date entry component, which displays the actual date selector inline.
 
-    @see DateField
-    @see PopupDateField
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @see: DateField
+    @see: PopupDateField
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 5.0
     """

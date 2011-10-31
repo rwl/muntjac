@@ -22,7 +22,7 @@ class And(ClientSideCriterion):
     """A compound criterion that accepts the drag if all of its criteria accepts the
     drag.
 
-    @see Or
+    @see: Or
 
     @since 6.3
     """

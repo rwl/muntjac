@@ -23,11 +23,11 @@ from muntjac.util import clsname
 class WebApplicationContext(AbstractWebApplicationContext):
     """Web application context for Vaadin applications.
 
-    This is automatically added as a {@link HttpSessionBindingListener}
-    when added to a {@link HttpSession}.
+    This is automatically added as a L{HttpSessionBindingListener}
+    when added to a L{HttpSession}.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.1
     """
@@ -97,7 +97,7 @@ class WebApplicationContext(AbstractWebApplicationContext):
     def getBaseDirectory(self):
         """Gets the application context base directory.
 
-        @see com.vaadin.service.ApplicationContext#getBaseDirectory()
+        @see: com.vaadin.service.ApplicationContext#getBaseDirectory()
         """
         realPath = self.getResourcePath(self.session, '/')
         if realPath is None:
@@ -108,7 +108,7 @@ class WebApplicationContext(AbstractWebApplicationContext):
     def getHttpSession(self):
         """Gets the http-session application is running in.
 
-        @return HttpSession this application context resides in.
+        @return: HttpSession this application context resides in.
         """
         return self.session
 
@@ -119,7 +119,7 @@ class WebApplicationContext(AbstractWebApplicationContext):
 
         @param session
                    the HTTP session.
-        @return the application context for HttpSession.
+        @return: the application context for HttpSession.
         """
         cx = servlet.getSessionAttribute(session,
                 clsname(WebApplicationContext), None)
@@ -146,7 +146,7 @@ class WebApplicationContext(AbstractWebApplicationContext):
         created.
 
         @param application
-        @return CommunicationManager
+        @return: CommunicationManager
         """
         mgr = self.applicationToAjaxAppMgrMap.get(application)
 

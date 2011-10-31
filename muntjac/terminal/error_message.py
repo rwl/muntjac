@@ -21,8 +21,8 @@ class IErrorMessage(IPaintable):
     """Interface for rendering error messages to terminal. All the
     visible errors shown to user must implement this interface.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -45,7 +45,7 @@ class IErrorMessage(IPaintable):
     def getErrorLevel(self):
         """Gets the errors level.
 
-        @return the level of error as an integer.
+        @return: the level of error as an integer.
         """
         raise NotImplementedError
 
@@ -54,9 +54,9 @@ class IErrorMessage(IPaintable):
         """Error messages are inmodifiable and thus listeners are not needed.
         This method should be implemented as empty.
 
-        @param listener
+        @param listener:
                    the listener to be added.
-        @see com.vaadin.terminal.IPaintable#addListener(listener)
+        @see: com.vaadin.terminal.IPaintable#addListener(listener)
         """
         if iface == IRepaintRequestListener:
             raise NotImplementedError
@@ -72,9 +72,9 @@ class IErrorMessage(IPaintable):
         """Error messages are inmodifiable and thus listeners are not needed.
         This method should be implemented as empty.
 
-        @param listener
+        @param listener:
                    the listener to be removed.
-        @see com.vaadin.terminal.IPaintable#removeListener(listener)
+        @see: com.vaadin.terminal.IPaintable#removeListener(listener)
         """
         if iface == IRepaintRequestListener:
             raise NotImplementedError
@@ -90,6 +90,6 @@ class IErrorMessage(IPaintable):
         """Error messages are inmodifiable and thus listeners are not needed.
         This method should be implemented as empty.
 
-        @see com.vaadin.terminal.IPaintable#requestRepaint()
+        @see: com.vaadin.terminal.IPaintable#requestRepaint()
         """
         raise NotImplementedError

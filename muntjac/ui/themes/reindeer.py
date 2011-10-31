@@ -34,7 +34,7 @@ class Reindeer(BaseTheme):
     # Small and a little lighter font
     LABEL_SMALL = 'light'
 
-    # @deprecated Use {@link #LABEL_SMALL} instead.
+    # @deprecated Use L{#LABEL_SMALL} instead.
     LABEL_LIGHT = 'small'
 
     # Button styles
@@ -46,7 +46,7 @@ class Reindeer(BaseTheme):
     # button per view should be visible.
     BUTTON_DEFAULT = 'primary'
 
-    # @deprecated Use {@link #BUTTON_DEFAULT} instead
+    # @deprecated Use L{#BUTTON_DEFAULT} instead
     BUTTON_PRIMARY = BUTTON_DEFAULT
 
     # Small sized button, use for context specific actions for example
@@ -84,7 +84,7 @@ class Reindeer(BaseTheme):
     # tabs as a small bar.
     TABSHEET_SMALL = 'bar'
 
-    # @deprecated Use {@link #TABSHEET_SMALL} instead.
+    # @deprecated Use L{#TABSHEET_SMALL} instead.
     TABSHEET_BAR = TABSHEET_SMALL
 
     # Removes borders and background color from the tab sheet. The tabs are
@@ -113,21 +113,21 @@ class Reindeer(BaseTheme):
     #      ********************************************************************
 
     # Changes the background of a layout to white. Applies to
-    # {@link VerticalLayout}, {@link HorizontalLayout}, {@link GridLayout},
-    # {@link FormLayout}, {@link CssLayout}, {@link VerticalSplitPanel} and
-    # {@link HorizontalSplitPanel}.
+    # L{VerticalLayout}, L{HorizontalLayout}, L{GridLayout},
+    # L{FormLayout}, L{CssLayout}, L{VerticalSplitPanel} and
+    # L{HorizontalSplitPanel}.
     # <p>
     # <em>Does not revert any contained components back to normal if some
-    # parent layout has style {@link #LAYOUT_BLACK} applied.</em>
+    # parent layout has style L{#LAYOUT_BLACK} applied.</em>
     LAYOUT_WHITE = 'white'
 
     # Changes the background of a layout to a shade of blue. Applies to
-    # {@link VerticalLayout}, {@link HorizontalLayout}, {@link GridLayout},
-    # {@link FormLayout}, {@link CssLayout}, {@link VerticalSplitPanel} and
-    # {@link HorizontalSplitPanel}.
+    # L{VerticalLayout}, L{HorizontalLayout}, L{GridLayout},
+    # L{FormLayout}, L{CssLayout}, L{VerticalSplitPanel} and
+    # L{HorizontalSplitPanel}.
     # <p>
     # <em>Does not revert any contained components back to normal if some
-    # parent layout has style {@link #LAYOUT_BLACK} applied.</em>
+    # parent layout has style L{#LAYOUT_BLACK} applied.</em>
     LAYOUT_BLUE = 'blue'
 
     # <p>
@@ -137,8 +137,8 @@ class Reindeer(BaseTheme):
     # tables and a few other component styles should change.
     # </p>
     # <p>
-    # Applies to {@link VerticalLayout}, {@link HorizontalLayout},
-    # {@link GridLayout}, {@link FormLayout} and {@link CssLayout}.
+    # Applies to L{VerticalLayout}, L{HorizontalLayout},
+    # L{GridLayout}, L{FormLayout} and L{CssLayout}.
     # </p>
     LAYOUT_BLACK = 'black'
 
@@ -150,5 +150,5 @@ class Reindeer(BaseTheme):
     WINDOW_LIGHT = 'light'
 
     # Makes the whole window black, and changes contained components in the
-    # same way as {@link #LAYOUT_BLACK} does.
+    # same way as L{#LAYOUT_BLACK} does.
     WINDOW_BLACK = 'black'

@@ -84,12 +84,12 @@ class AbstractWebApplicationContext(IApplicationContext):
 
 
     def valueBound(self, arg0):
-        """@see HttpSessionBindingListener.valueBound()"""
+        """@see: HttpSessionBindingListener.valueBound()"""
         pass  # We are not interested in bindings
 
 
     def valueUnbound(self, event):
-        """@see HttpSessionBindingListener.valueUnbound()"""
+        """@see: HttpSessionBindingListener.valueUnbound()"""
         # If we are going to be unbound from the session, the session
         # must be closing.
         try:

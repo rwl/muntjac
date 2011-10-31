@@ -99,7 +99,7 @@ class Runo(BaseTheme):
 
     # Adds necessary styles to the layout to make it look selectable (i.e.
     # clickable). Add a click listener for the layout, and toggle the
-    # {@link #CSSLAYOUT_SELECTABLE_SELECTED} style for the same layout to make
+    # L{#CSSLAYOUT_SELECTABLE_SELECTED} style for the same layout to make
     # it look selected or not.
     CSSLAYOUT_SELECTABLE = 'selectable'
     CSSLAYOUT_SELECTABLE_SELECTED = 'selectable-selected'

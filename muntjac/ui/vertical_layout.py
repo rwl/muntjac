@@ -20,12 +20,12 @@ from muntjac.ui.abstract_ordered_layout import AbstractOrderedLayout
 class VerticalLayout(AbstractOrderedLayout):
     """Vertical layout
 
-    <code>VerticalLayout</code> is a component container, which shows the
+    C{VerticalLayout} is a component container, which shows the
     subcomponents in the order of their addition (vertically). A vertical
     layout is by default 100% wide.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 5.3
     """

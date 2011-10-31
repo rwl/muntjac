@@ -29,8 +29,8 @@ class CustomComponent(AbstractComponentContainer):
     composite root inside the Custom component. The composite root itself can
     contain more components, but their interfaces are hidden from the users.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -71,7 +71,7 @@ class CustomComponent(AbstractComponentContainer):
     def getCompositionRoot(self):
         """Returns the composition root.
 
-        @return the Component Composition root.
+        @return: the Component Composition root.
         """
         return self._root
 
@@ -118,7 +118,7 @@ class CustomComponent(AbstractComponentContainer):
 
         @deprecated not more useful as the whole tag system has been removed
 
-        @return the component type.
+        @return: the component type.
         """
         warn('tag system has been removed', DeprecationWarning)
         return self._componentType
@@ -145,9 +145,9 @@ class CustomComponent(AbstractComponentContainer):
 
     def getComponentCount(self):
         """Gets the number of contained components. Consistent with the
-        iterator returned by {@link #getComponentIterator()}.
+        iterator returned by L{#getComponentIterator()}.
 
-        @return the number of contained components (zero or one)
+        @return: the number of contained components (zero or one)
         """
         return 1 if self._root is not None else 0
 
@@ -155,17 +155,17 @@ class CustomComponent(AbstractComponentContainer):
     def replaceComponent(self, oldComponent, newComponent):
         """This method is not supported by CustomComponent.
 
-        @see ComponentContainer.replaceComponent()
+        @see: ComponentContainer.replaceComponent()
         """
         raise NotImplementedError
 
 
     def addComponent(self, c):
         """This method is not supported by CustomComponent. Use
-        {@link CustomComponent#setCompositionRoot(Component)} to set
+        L{CustomComponent#setCompositionRoot(Component)} to set
         CustomComponents "child".
 
-        @see AbstractComponentContainer.addComponent()
+        @see: AbstractComponentContainer.addComponent()
         """
         raise NotImplementedError
 
@@ -173,7 +173,7 @@ class CustomComponent(AbstractComponentContainer):
     def moveComponentsFrom(self, source):
         """This method is not supported by CustomComponent.
 
-        @see AbstractComponentContainer.moveComponentsFrom()
+        @see: AbstractComponentContainer.moveComponentsFrom()
         """
         raise NotImplementedError
 
@@ -181,7 +181,7 @@ class CustomComponent(AbstractComponentContainer):
     def removeAllComponents(self):
         """This method is not supported by CustomComponent.
 
-        @see AbstractComponentContainer.removeAllComponents()
+        @see: AbstractComponentContainer.removeAllComponents()
         """
         raise NotImplementedError
 
@@ -189,7 +189,7 @@ class CustomComponent(AbstractComponentContainer):
     def removeComponent(self, c):
         """This method is not supported by CustomComponent.
 
-        @see AbstractComponentContainer.removeComponent()
+        @see: AbstractComponentContainer.removeComponent()
         """
         raise NotImplementedError
 

@@ -23,10 +23,10 @@ from muntjac.event.layout_events import ILayoutClickNotifier, LayoutClickEvent
 
 class AbstractLayout(AbstractComponentContainer, ILayout, IMarginHandler):
     """An abstract class that defines default implementation for the
-    {@link ILayout} interface.
+    L{ILayout} interface.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 5.0
     """
@@ -80,7 +80,7 @@ class AbstractLayout(AbstractComponentContainer, ILayout, IMarginHandler):
         """Fire a layout click event.
 
         Note that this method is only used by the subclasses that
-        implement {@link LayoutClickNotifier}, and can be overridden
+        implement L{LayoutClickNotifier}, and can be overridden
         for custom click event firing.
 
         @param parameters

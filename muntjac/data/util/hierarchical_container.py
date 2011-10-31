@@ -23,37 +23,36 @@ class HierarchicalContainer(IndexedContainer, IHierarchical, IContainer):
     """A specialized Container whose contents can be accessed like it was a
     tree-like structure.
 
-    @author IT Mill Ltd.
-    @version @VERSION@
-    @since 3.0
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     """
 
     def __init__(self):
         super(HierarchicalContainer, self).__init__()
 
-        # Set of IDs of those contained Items that can't have children.
+        #: Set of IDs of those contained Items that can't have children.
         self._noChildrenAllowed = set()
 
-        # Mapping from Item ID to parent Item ID.
+        #: Mapping from Item ID to parent Item ID.
         self._parent = dict()
 
-        # Mapping from Item ID to parent Item ID for items included in
-        # the filtered container.
+        #: Mapping from Item ID to parent Item ID for items included in
+        #  the filtered container.
         self._filteredParent = None
 
-        # Mapping from Item ID to a list of child IDs.
+        #: Mapping from Item ID to a list of child IDs.
         self._children = dict()
 
-        # Mapping from Item ID to a list of child IDs when filtered
+        #: Mapping from Item ID to a list of child IDs when filtered
         self._filteredChildren = None
 
-        # List that contains all root elements of the container.
+        #: List that contains all root elements of the container.
         self._roots = list()
 
-        # List that contains all filtered root elements of the container.
+        #: List that contains all filtered root elements of the container.
         self._filteredRoots = None
 
-        # Determines how filtering of the container is done.
+        #: Determines how filtering of the container is done.
         self._includeParentsWhenFiltering = True
 
         self._contentChangedEventsDisabled = False
@@ -126,19 +125,17 @@ class HierarchicalContainer(IndexedContainer, IHierarchical, IContainer):
     def setChildrenAllowed(self, itemId, childrenAllowed):
         """Sets the given Item's capability to have children. If the Item
         identified with the itemId already has children and the
-        areChildrenAllowed is false this method fails and <code>false</code>
+        areChildrenAllowed is false this method fails and C{False}
         is returned; the children must be first explicitly removed with
-        {@link #setParent(Object itemId, Object newParentId)} or
-        {@link com.vaadin.data.Container#removeItem(Object itemId)}.
+        L{setParent} or L{IContainer.removeItem}.
 
-        @param itemId
-                   the ID of the Item in the container whose child capability is
-                   to be set.
-        @param childrenAllowed
-                   the boolean value specifying if the Item can have children or
-                   not.
-        @return <code>true</code> if the operation succeeded, <code>false</code>
-                if not
+        @param itemId:
+                   the ID of the Item in the container whose child capability
+                   is to be set.
+        @param childrenAllowed:
+                   the boolean value specifying if the Item can have children
+                   or not.
+        @return: C{True} if the operation succeeded, C{False} if not
         """
         # Checks that the item is in the container
         if not self.containsId(itemId):
@@ -156,18 +153,17 @@ class HierarchicalContainer(IndexedContainer, IHierarchical, IContainer):
 
     def setParent(self, itemId, newParentId):
         """Sets the parent of an Item. The new parent item must exist and be
-        able to have children. (<code>canHaveChildren(newParentId) ==
-        true</code>). It is also possible to detach a node from the hierarchy
-        (and thus make it root) by setting the parent <code>null</code>.
+        able to have children. (C{canHaveChildren(newParentId) == True}). It
+        is also possible to detach a node from the hierarchy (and thus make
+        it root) by setting the parent C{None}.
 
-        @param itemId
+        @param itemId:
                    the ID of the item to be set as the child of the Item
                    identified with newParentId.
-        @param newParentId
+        @param newParentId:
                    the ID of the Item that's to be the new parent of the Item
                    identified with itemId.
-        @return <code>true</code> if the operation succeeded, <code>false</code>
-                if not
+        @return: C{True} if the operation succeeded, C{False} if not
         """
         # Checks that the item is in the container
         if not self.containsId(itemId):
@@ -274,9 +270,9 @@ class HierarchicalContainer(IndexedContainer, IHierarchical, IContainer):
         """Moves a node (an Item) in the container immediately after a sibling
         node. The two nodes must have the same parent in the container.
 
-        @param itemId
+        @param itemId:
                    the identifier of the moved node (Item)
-        @param siblingId
+        @param siblingId:
                    the identifier of the reference node (Item), after which the
                    other node will be located
         """
@@ -438,21 +434,17 @@ class HierarchicalContainer(IndexedContainer, IHierarchical, IContainer):
 
 
     def removeItemRecursively(self, *args):
-        """Removes the Item identified by given itemId and all its children.
-
-        @see #removeItem(Object)
-        @param itemId
-                   the identifier of the Item to be removed
-        @return true if the operation succeeded
-        ---
-        Removes the Item identified by given itemId and all its children
+        """Removes the Item identified by given itemId and all its children
         from the given Container.
 
-        @param container
-                   the container where the item is to be removed
-        @param itemId
-                   the identifier of the Item to be removed
-        @return true if the operation succeeded
+        @see: L{removeItem}
+        @param args: tuple of the form
+                - (itemId)
+                  - the identifier of the Item to be removed
+                - (container, itemId)
+                  - the container where the item is to be removed
+                  - the identifier of the Item to be removed
+        @return: true if the operation succeeded
         """
         nargs = len(args)
         if nargs == 1:
@@ -489,11 +481,11 @@ class HierarchicalContainer(IndexedContainer, IHierarchical, IContainer):
 
     def isIncludeParentsWhenFiltering(self):
         """Used to control how filtering works. @see
-        {@link #setIncludeParentsWhenFiltering(boolean)} for more information.
+        L{setIncludeParentsWhenFiltering} for more information.
 
-        @return true if all parents for items that match the filter are
-                included when filtering, false if only the matching items are
-                included
+        @return: true if all parents for items that match the filter are
+                included when filtering, false if only the matching items
+                are included
         """
         return self._includeParentsWhenFiltering
 
@@ -505,7 +497,7 @@ class HierarchicalContainer(IndexedContainer, IHierarchical, IContainer):
         only include the matching items and make items with excluded parents
         into root items.
 
-        @param includeParentsWhenFiltering
+        @param includeParentsWhenFiltering:
                    true to include all parents for items that match the filter,
                    false to only include the matching items
         """
@@ -572,9 +564,6 @@ class HierarchicalContainer(IndexedContainer, IHierarchical, IContainer):
     def addFilteredChild(self, parentItemId, childItemId):
         """Adds the given childItemId as a filteredChildren for the
         parentItemId and sets it filteredParent.
-
-        @param parentItemId
-        @param childItemId
         """
         parentToChildrenList = self._filteredChildren[parentItemId]
         if parentToChildrenList is None:
@@ -590,10 +579,10 @@ class HierarchicalContainer(IndexedContainer, IHierarchical, IContainer):
         Starts from parentItemId and recurses down as long as child items that
         should be included are found.
 
-        @param parentItemId
+        @param parentItemId:
                    The item id to start recurse from. Not added to a
                    filteredChildren list
-        @param includedItems
+        @param includedItems:
                    Set containing the item ids for the items that should be
                    included in the filteredChildren map
         """
@@ -613,9 +602,7 @@ class HierarchicalContainer(IndexedContainer, IHierarchical, IContainer):
         included. Additionally all items that have a child node that should be
         included are also themselves included.
 
-        @param itemId
-        @param includedItems
-        @return true if the itemId should be included in the filtered
+        @return: true if the itemId should be included in the filtered
                 container.
         """
         toBeIncluded = self.passesFilters(itemId)

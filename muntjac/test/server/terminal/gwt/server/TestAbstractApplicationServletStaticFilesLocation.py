@@ -139,8 +139,8 @@ class TestAbstractApplicationServletStaticFilesLocation(TestCase):
         @param pathInfo
                    Any text following the servlet path in the request, not
                    including query parameters, e.g. /UIDL/
-        @return A mock HttpServletRequest object useful for testing
-        @throws MalformedURLException
+        @return: A mock HttpServletRequest object useful for testing
+        @raise MalformedURLException
         """
         url = URL(base + contextPath + pathInfo)
         request = createMock(HttpServletRequest)

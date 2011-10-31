@@ -30,14 +30,14 @@ class NativeButton(Button):
         @param state
                    the Initial state of the switch-button.
         @param initialState
-        @deprecated use the {@link CheckBox} component instead
+        @deprecated use the L{CheckBox} component instead
         ---
         Creates a new switch button that is connected to a boolean property.
 
         @param state
                    the Initial state of the switch-button.
         @param dataSource
-        @deprecated use the {@link CheckBox} component instead
+        @deprecated use the L{CheckBox} component instead
         """
         nargs = len(args)
         if nargs == 0:

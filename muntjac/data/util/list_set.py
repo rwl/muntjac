@@ -16,21 +16,21 @@
 
 
 class ListSet(list):
-    """ListSet is an internal Vaadin class which implements a combination of a List
-    and a Set. The main purpose of this class is to provide a list with a fast
-    {@link #contains(Object)} method. Each inserted object must by unique (as
-    specified by {@link #equals(Object)}). The {@link #set(int, Object)} method
-    allows duplicates because of the way {@link Collections#sort(java.util.List)}
-    works.
+    """ListSet is an internal Muntjac class which implements a combination of
+    a List and a Set. The main purpose of this class is to provide a list with
+    a fast L{contains} method. Each inserted object must by unique (as
+    specified by L{equals}). The L{set} method allows duplicates because of
+    the way L{sort} works.
 
-    This class is subject to change and should not be used outside Vaadin core.
+    This class is subject to change and should not be used outside Muntjac
+    core.
     """
 
     def __init__(self, *args):
         self._itemSet = None
 
-        # Contains a map from an element to the number of duplicates it has. Used
-        # to temporarily allow duplicates in the list.
+        # Contains a map from an element to the number of duplicates it has.
+        # Used to temporarily allow duplicates in the list.
         self._duplicates = dict()
 
         nargs = len(args)
@@ -65,9 +65,7 @@ class ListSet(list):
 
     # Methods for updating the set when the list is updated.
     def add(self, *args):
-        """None
-        ---
-        Works as java.util.ArrayList#add(int, java.lang.Object) but returns
+        """Works as list.append or list.insert but returns
         immediately if the element is already in the ListSet.
         """
         nargs = len(args)
@@ -185,8 +183,6 @@ class ListSet(list):
 
     def removeFromSet(self, e):
         """Removes "e" from the set if it no longer exists in the list.
-
-        @param e
         """
         dupl = self._duplicates.get(e)
         if dupl is not None:
@@ -205,9 +201,7 @@ class ListSet(list):
 
     def addDuplicate(self, element):
         """Marks the "element" can be found more than once from the list.
-        Allowed in {@link #set(int, Object)} to make sorting work.
-
-        @param element
+        Allowed in L{set} to make sorting work.
         """
         nr = self._duplicates.get(element)
         if nr is None:

@@ -23,8 +23,8 @@ from muntjac.terminal.gwt.server.abstract_application_servlet import \
 class ApplicationServlet(AbstractApplicationServlet):
     """This servlet connects a Muntjac Application to Web.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 5.0
     """
@@ -42,7 +42,7 @@ class ApplicationServlet(AbstractApplicationServlet):
 #        @param servletConfig
 #                   the object containing the servlet's configuration and
 #                   initialization parameters
-#        @throws javax.servlet.ServletException
+#        @raise javax.servlet.ServletException
 #                    if an exception has occurred that interferes with the
 #                    servlet's normal operation.
 #        """

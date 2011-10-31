@@ -18,16 +18,16 @@ from muntjac.ui.component import IComponent
 
 
 class IDragSource(IComponent):
-    """IDragSource is a {@link IComponent} that builds a {@link Transferable} for a
+    """IDragSource is a L{IComponent} that builds a L{Transferable} for a
     drag and drop operation.
     <p>
     In Vaadin the drag and drop operation practically starts from client side
     component. The client side component initially defines the data that will be
-    present in {@link Transferable} object on server side. If the server side
+    present in L{Transferable} object on server side. If the server side
     counterpart of the component implements this interface, terminal
-    implementation lets it create the {@link Transferable} instance from the raw
+    implementation lets it create the L{Transferable} instance from the raw
     client side "seed data". This way server side implementation may translate or
-    extend the data that will be available for {@link DropHandler}.
+    extend the data that will be available for L{DropHandler}.
 
     @since 6.3
     """
@@ -40,16 +40,16 @@ class IDragSource(IComponent):
         For example Tree converts item identifiers to generated string keys for
         the client side. Vaadin developer don't and can't know anything about
         these generated keys, only about item identifiers. When tree node is
-        dragged client puts that key to {@link Transferable}s client side
-        counterpart. In {@link Tree#getTransferable(Map)} the key is converted
+        dragged client puts that key to L{Transferable}s client side
+        counterpart. In L{Tree#getTransferable(Map)} the key is converted
         back to item identifier that the server side developer can use.
         <p>
 
         @since 6.3
         @param rawVariables
                    the data that client side initially included in
-                   {@link Transferable}s client side counterpart.
-        @return the {@link Transferable} instance that will be passed to
-                {@link DropHandler} (and/or {@link AcceptCriterion})
+                   L{Transferable}s client side counterpart.
+        @return: the L{Transferable} instance that will be passed to
+                L{DropHandler} (and/or L{AcceptCriterion})
         """
         raise NotImplementedError

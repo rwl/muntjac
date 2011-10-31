@@ -21,7 +21,7 @@ from muntjac.event.dd.acceptcriteria.client_side_criterion import \
 class AcceptAll(ClientSideCriterion):
     """Criterion that accepts all drops anywhere on the component.
     <p>
-    Note! Class is singleton, use {@link #get()} method to get the instance.
+    Note! Class is singleton, use L{#get()} method to get the instance.
 
 
     @since 6.3

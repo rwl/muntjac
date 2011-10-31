@@ -21,13 +21,13 @@ class IApplicationResource(IResource):
     """This interface must be implemented by classes wishing to provide
     Application resources.
 
-    <code>IApplicationResource</code> are a set of named resources (pictures,
+    C{IApplicationResource} are a set of named resources (pictures,
     sounds, etc) associated with some specific application. Having named
     application resources provides a convenient method for having inter-theme
     common resources for an application.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -47,7 +47,7 @@ class IApplicationResource(IResource):
     def getFilename(self):
         """Gets the virtual filename for this resource.
 
-        @return the file name associated to this resource.
+        @return: the file name associated to this resource.
         """
         raise NotImplementedError
 
@@ -57,9 +57,9 @@ class IApplicationResource(IResource):
 
         This gives the adapter the possibility cache streams sent to the
         client. The caching may be made in adapter or at the client if the
-        client supports caching. Default is <code>DEFAULT_CACHETIME</code>.
+        client supports caching. Default is C{DEFAULT_CACHETIME}.
 
-        @return Cache time in milliseconds
+        @return: Cache time in milliseconds
         """
         raise NotImplementedError
 
@@ -70,6 +70,6 @@ class IApplicationResource(IResource):
         If the buffer size is 0, the buffer size is decided by the terminal
         adapter. The default value is 0.
 
-        @return int the size of the buffer in bytes.
+        @return: int the size of the buffer in bytes.
         """
         raise NotImplementedError

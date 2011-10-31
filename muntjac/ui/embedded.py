@@ -24,8 +24,8 @@ from muntjac.terminal.gwt.client.ui.v_embedded import VEmbedded
 class Embedded(AbstractComponent):
     """Component for embedding external objects.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -142,7 +142,7 @@ class Embedded(AbstractComponent):
         information, and they are passed to the instantiated object.
         Parameters are are stored as name value pairs.
 
-        @return the Value of parameter or null if not found.
+        @return: the Value of parameter or null if not found.
         """
         return self._parameters.get(name)
 
@@ -161,7 +161,7 @@ class Embedded(AbstractComponent):
     def getParameterNames(self):
         """Gets the embedded object parameter names.
 
-        @return the Iterator of parameters names.
+        @return: the Iterator of parameters names.
         """
         return self._parameters.keys()
 
@@ -171,7 +171,7 @@ class Embedded(AbstractComponent):
         URIs specified by the classid, data, and archive attributes. When
         absent, its default value is the base URI of the current document.
 
-        @return the code base.
+        @return: the code base.
         """
         return self._codebase
 
@@ -179,7 +179,7 @@ class Embedded(AbstractComponent):
     def getCodetype(self):
         """Gets the MIME-Type of the code.
 
-        @return the MIME-Type of the code.
+        @return: the MIME-Type of the code.
         """
         return self._codetype
 
@@ -187,7 +187,7 @@ class Embedded(AbstractComponent):
     def getMimeType(self):
         """Gets the MIME-Type of the object.
 
-        @return the MIME-Type of the object.
+        @return: the MIME-Type of the object.
         """
         return self._mimeType
 
@@ -196,7 +196,7 @@ class Embedded(AbstractComponent):
         """This attribute specifies a message that a user agent may render
         while loading the object's implementation and data.
 
-        @return The text displayed when loading
+        @return: The text displayed when loading
         """
         return self._standby
 
@@ -266,7 +266,7 @@ class Embedded(AbstractComponent):
         """This attribute may be used to specify the location of an object's
         implementation via a URI.
 
-        @return the classid.
+        @return: the classid.
         """
         return self._classId
 
@@ -287,7 +287,7 @@ class Embedded(AbstractComponent):
     def getSource(self):
         """Gets the resource contained in the embedded object.
 
-        @return the Resource
+        @return: the Resource
         """
         return self._source
 
@@ -301,7 +301,7 @@ class Embedded(AbstractComponent):
         <li>TYPE_IMAGE
         </ul>
 
-        @return the type.
+        @return: the type.
         """
         return self._type
 
@@ -358,7 +358,7 @@ class Embedded(AbstractComponent):
         times for objects. Archives specified as relative URIs should be
         interpreted relative to the codebase attribute.
 
-        @return Space-separated list of URIs with resources relevant to the
+        @return: Space-separated list of URIs with resources relevant to the
                 object
         """
         return self._archive
@@ -387,9 +387,9 @@ class Embedded(AbstractComponent):
         whenever the user clicks inside the component. Depending on the
         content the event may be blocked and in that case no event is fired.
 
-        Use {@link #removeListener(ClickListener)} to remove the listener.
+        Use L{#removeListener(ClickListener)} to remove the listener.
 
-        @param listener
+        @param listener:
                    The listener to add
         """
         if iface == IClickListener:
@@ -405,9 +405,9 @@ class Embedded(AbstractComponent):
 
     def removeListener(self, listener, iface):
         """Remove a click listener from the component. The listener should
-        earlier have been added using {@link #addListener(ClickListener)}.
+        earlier have been added using L{#addListener(ClickListener)}.
 
-        @param listener
+        @param listener:
                    The listener to remove
         """
         if iface == IClickListener:

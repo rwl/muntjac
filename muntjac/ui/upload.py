@@ -31,8 +31,8 @@ from muntjac.terminal.gwt.server.exceptions import \
 class IStartedListener(object):
     """Receives the events when the upload starts.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 5.0
     """
@@ -49,8 +49,8 @@ class IStartedListener(object):
 class IFinishedListener(object):
     """Receives the events when the uploads are ready.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -67,8 +67,8 @@ class IFinishedListener(object):
 class IFailedListener(object):
     """Receives events when the uploads are finished, but unsuccessful.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -85,8 +85,8 @@ class IFailedListener(object):
 class ISucceededListener(object):
     """Receives events when the uploads are successfully finished.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -149,8 +149,8 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
     element, setting size for Upload component is not supported. For some
     browsers setting size may work to some extend.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -206,7 +206,7 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
     def changeVariables(self, source, variables):
         """Invoked when the value of a variable has changed.
 
-        @see AbstractComponent.changeVariables()
+        @see: AbstractComponent.changeVariables()
         """
         if 'pollForStart' in variables:
             idd = variables.get('pollForStart')
@@ -222,7 +222,7 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
 
         @param target
                    Target to paint the content on.
-        @throws PaintException
+        @raise PaintException
                     if the paint operation failed.
         """
         if self._notStarted:
@@ -257,7 +257,7 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
     def addListener(self, listener, iface):
         """Adds an event listener.
 
-        @param listener
+        @param listener:
                    the Listener to be added.
         """
         if iface == IFailedListener:
@@ -308,7 +308,7 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
     def removeListener(self, listener, iface):
         """Removes an event listener.
 
-        @param listener
+        @param listener:
                    the Listener to be removed.
         """
         if iface == IFailedListener:
@@ -420,7 +420,7 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
     def getReceiver(self):
         """Returns the current receiver.
 
-        @return the IStreamVariable.
+        @return: the IStreamVariable.
         """
         return self._receiver
 
@@ -442,7 +442,7 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
     def getTabIndex(self):
         """Gets the Tabulator index of this IFocusable component.
 
-        @see com.vaadin.ui.IComponent.IFocusable#getTabIndex()
+        @see: com.vaadin.ui.IComponent.IFocusable#getTabIndex()
         """
         return self._tabIndex
 
@@ -450,7 +450,7 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
     def setTabIndex(self, tabIndex):
         """Sets the Tabulator index of this IFocusable component.
 
-        @see com.vaadin.ui.IComponent.IFocusable#setTabIndex(int)
+        @see: com.vaadin.ui.IComponent.IFocusable#setTabIndex(int)
         """
         self._tabIndex = tabIndex
 
@@ -499,7 +499,7 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
     def getBytesRead(self):
         """Gets read bytes of the file currently being uploaded.
 
-        @return bytes
+        @return: bytes
         """
         return self._totalBytes
 
@@ -508,7 +508,7 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
         """Returns size of file currently being uploaded. Value sane only
         during upload.
 
-        @return size in bytes
+        @return: size in bytes
         """
         return self._contentLength
 
@@ -529,7 +529,7 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
         """This method is deprecated.
 
         @deprecated Replaced with addListener/removeListener
-        @return listener
+        @return: listener
         """
         warn('replaced with addListener/removeListener', DeprecationWarning)
 
@@ -541,7 +541,7 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
 
 
     def getButtonCaption(self):
-        """@return String to be rendered into button that fires uploading"""
+        """@return: String to be rendered into button that fires uploading"""
         return self._buttonCaption
 
 
@@ -552,10 +552,10 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
 
         In case the button text is set to null, the button is hidden. In this
         case developer must explicitly initiate the upload process with
-        {@link #submitUpload()}.
+        L{#submitUpload()}.
 
         In case the Upload is used in immediate mode using
-        {@link #setImmediate(boolean)}, the file choose (html input with type
+        L{#setImmediate(boolean)}, the file choose (html input with type
         "file") is hidden and only the button with this text is shown.
 
         <strong>Note</strong> the string given is set as is to the button.
@@ -574,7 +574,7 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
 
         In case developer wants to use this feature, he/she will most probably
         want to hide the uploads internal submit button by setting its caption
-        to null with {@link #setButtonCaption(String)} method.
+        to null with L{#setButtonCaption(String)} method.
 
         Note, that the upload runs asynchronous. Developer should use normal
         upload listeners to trac the process of upload. If the field is empty
@@ -678,8 +678,8 @@ class IReceiver(object):
     """Interface that must be implemented by the upload receivers to provide
     the Upload component an output stream to write the uploaded data.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -692,7 +692,7 @@ class IReceiver(object):
                    by the client.
         @param mimeType
                    the MIME type of the uploaded file.
-        @return Stream to which the uploaded file should be written.
+        @return: Stream to which the uploaded file should be written.
         """
         raise NotImplementedError
 
@@ -703,8 +703,8 @@ class FinishedEvent(ComponentEvent):
     you wish to distinguish between the two cases, use either SucceededEvent
     or FailedEvent, which are both subclasses of the FinishedEvent.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -734,7 +734,7 @@ class FinishedEvent(ComponentEvent):
     def getUpload(self):
         """Uploads where the event occurred.
 
-        @return the Source of the event.
+        @return: the Source of the event.
         """
         return self.getSource()
 
@@ -742,7 +742,7 @@ class FinishedEvent(ComponentEvent):
     def getFilename(self):
         """Gets the file name.
 
-        @return the filename.
+        @return: the filename.
         """
         return self._filename
 
@@ -750,7 +750,7 @@ class FinishedEvent(ComponentEvent):
     def getMIMEType(self):
         """Gets the MIME Type of the file.
 
-        @return the MIME type.
+        @return: the MIME type.
         """
         return self._type
 
@@ -758,7 +758,7 @@ class FinishedEvent(ComponentEvent):
     def getLength(self):
         """Gets the length of the file.
 
-        @return the length.
+        @return: the length.
         """
         return self._length
 
@@ -767,8 +767,8 @@ class FailedEvent(FinishedEvent):
     """Upload.FailedEvent event is sent when the upload is received,
     but the reception is interrupted for some reason.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -788,7 +788,7 @@ class FailedEvent(FinishedEvent):
     def getReason(self):
         """Gets the exception that caused the failure.
 
-        @return the exception that caused the failure, null if n/a
+        @return: the exception that caused the failure, null if n/a
         """
         return self._reason
 
@@ -823,8 +823,8 @@ class SucceededEvent(FinishedEvent):
     """Upload.SucceededEvent event is sent when the upload is received
     successfully.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -842,8 +842,8 @@ class StartedEvent(ComponentEvent):
     """Upload.StartedEvent event is sent when the upload is started to
     received.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 5.0
     """
@@ -867,7 +867,7 @@ class StartedEvent(ComponentEvent):
     def getUpload(self):
         """Uploads where the event occurred.
 
-        @return the Source of the event.
+        @return: the Source of the event.
         """
         return self.getSource()
 
@@ -875,7 +875,7 @@ class StartedEvent(ComponentEvent):
     def getFilename(self):
         """Gets the file name.
 
-        @return the filename.
+        @return: the filename.
         """
         return self._filename
 
@@ -883,11 +883,11 @@ class StartedEvent(ComponentEvent):
     def getMIMEType(self):
         """Gets the MIME Type of the file.
 
-        @return the MIME type.
+        @return: the MIME type.
         """
         return self._type
 
 
     def getContentLength(self):
-        """@return the length of the file that is being uploaded"""
+        """@return: the length of the file that is being uploaded"""
         return self._length

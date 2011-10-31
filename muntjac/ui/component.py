@@ -21,29 +21,29 @@ from muntjac.util import EventObject, IEventListener
 
 
 class IComponent(IPaintable, IVariableOwner, ISizeable):
-    """{@code IComponent} is the top-level interface that is and must be
-    implemented by all Vaadin components. {@code IComponent} is paired with
-    {@link AbstractComponent}, which provides a default implementation for
+    """C{IComponent} is the top-level interface that is and must be
+    implemented by all Vaadin components. C{IComponent} is paired with
+    L{AbstractComponent}, which provides a default implementation for
     all the methods defined in this interface.
 
     Components are laid out in the user interface hierarchically. The layout
     is managed by layout components, or more generally by components that
-    implement the {@link ComponentContainer} interface. Such a container is
+    implement the L{ComponentContainer} interface. Such a container is
     the <i>parent</i> of the contained components.
 
-    The {@link #getParent()} method allows retrieving the parent component
-    of a component. While there is a {@link #setParent()}, you rarely need
+    The L{#getParent()} method allows retrieving the parent component
+    of a component. While there is a L{#setParent()}, you rarely need
     it as you normally add components with the
-    {@link ComponentContainer#addComponent(IComponent) addComponent()} method
-    of the layout or other {@code ComponentContainer}, which automatically
+    L{ComponentContainer#addComponent(IComponent) addComponent()} method
+    of the layout or other C{ComponentContainer}, which automatically
     sets the parent.
 
     A component becomes <i>attached</i> to an application (and the
-    {@link #attach()} is called) when it or one of its parents is attached to
+    L{#attach()} is called) when it or one of its parents is attached to
     the main window of the application through its containment hierarchy.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -59,11 +59,11 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
         names in the rendered HTML: one as it was given and one prefixed with
         the component-specific style name. Only the former is returned.
 
-        @return the style name or a space-separated list of user-defined
+        @return: the style name or a space-separated list of user-defined
                 style names of the component
-        @see #setStyleName(String)
-        @see #addStyleName(String)
-        @see #removeStyleName(String)
+        @see: #setStyleName(String)
+        @see: #addStyleName(String)
+        @see: #removeStyleName(String)
         """
         raise NotImplementedError
 
@@ -82,9 +82,9 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
 
         Each style name will occur in two versions: one as specified and one
         that is prefixed with the style name of the component. For example,
-        if you have a {@code Button} component and give it "{@code mystyle}"
-        style, the component will have both "{@code mystyle}" and
-        "{@code v-button-mystyle}" styles. You could then style the component
+        if you have a C{Button} component and give it "C{mystyle}"
+        style, the component will have both "C{mystyle}" and
+        "C{v-button-mystyle}" styles. You could then style the component
         either with:
 
         <pre>
@@ -97,21 +97,21 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
         .v-button-myonestyle {background: blue;}
         </pre>
 
-        It is normally a good practice to use {@link #addStyleName(String)
+        It is normally a good practice to use L{#addStyleName(String)
         addStyleName()} rather than this setter, as different software
         abstraction layers can then add their own styles without accidentally
         removing those defined in other layers.
 
         This method will trigger a
-        {@link com.vaadin.terminal.IPaintable.RepaintRequestEvent
+        L{com.vaadin.terminal.IPaintable.RepaintRequestEvent
         RepaintRequestEvent}.
 
         @param style
                    the new style or styles of the component as a
                    space-separated list
-        @see #getStyleName()
-        @see #addStyleName(String)
-        @see #removeStyleName(String)
+        @see: #getStyleName()
+        @see: #addStyleName(String)
+        @see: #removeStyleName(String)
         """
         raise NotImplementedError
 
@@ -127,9 +127,9 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
 
         Each style name will occur in two versions: one as specified and one
         that is prefixed wil the style name of the component. For example, if
-        you have a {@code Button} component and give it "{@code mystyle}"
-        style, the component will have both "{@code mystyle}" and
-        "{@code v-button-mystyle}" styles. You could then style the component
+        you have a C{Button} component and give it "C{mystyle}"
+        style, the component will have both "C{mystyle}" and
+        "C{v-button-mystyle}" styles. You could then style the component
         either with:
 
         <pre>
@@ -143,14 +143,14 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
         </pre>
 
         This method will trigger a
-        {@link com.vaadin.terminal.IPaintable.RepaintRequestEvent
+        L{com.vaadin.terminal.IPaintable.RepaintRequestEvent
         RepaintRequestEvent}.
 
         @param style
                    the new style to be added to the component
-        @see #getStyleName()
-        @see #setStyleName(String)
-        @see #removeStyleName(String)
+        @see: #getStyleName()
+        @see: #setStyleName(String)
+        @see: #removeStyleName(String)
         """
         raise NotImplementedError
 
@@ -159,15 +159,15 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
         """Removes the given style name from component.
 
         The parameter must be a valid CSS style name. Only user-defined style
-        names added with {@link #addStyleName(String) addStyleName()} or
-        {@link #setStyleName(String) setStyleName()} can be removed; built-in
+        names added with L{#addStyleName(String) addStyleName()} or
+        L{#setStyleName(String) setStyleName()} can be removed; built-in
         style names defined in Vaadin or GWT can not be removed.
 
         @param style
                    the style name to be removed
-        @see #getStyleName()
-        @see #setStyleName(String)
-        @see #addStyleName(String)
+        @see: #getStyleName()
+        @see: #setStyleName(String)
+        @see: #addStyleName(String)
         """
         raise NotImplementedError
 
@@ -182,9 +182,9 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
         As a security feature, all variable change events for disabled
         components are blocked on the server-side.
 
-        @return <code>true</code> if the component and its parent are enabled,
-                <code>false</code> otherwise.
-        @see IVariableOwner#isEnabled()
+        @return: C{True} if the component and its parent are enabled,
+                C{False} otherwise.
+        @see: IVariableOwner#isEnabled()
         """
         raise NotImplementedError
 
@@ -208,9 +208,9 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
         </pre>
 
         This method will trigger a
-        {@link com.vaadin.terminal.IPaintable.RepaintRequestEvent
+        L{com.vaadin.terminal.IPaintable.RepaintRequestEvent
         RepaintRequestEvent} for the component and, if it is a
-        {@link ComponentContainer}, for all its children recursively.
+        L{ComponentContainer}, for all its children recursively.
 
         @param enabled
                    a boolean value specifying if the component should be
@@ -233,15 +233,15 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
         status.
 
         This method does not check whether the component is attached (see
-        {@link #attach()}). The component and all its parents may be
+        L{#attach()}). The component and all its parents may be
         considered "visible", but not necessarily attached to application.
         To test if component will actually be drawn, check both its visibility
-        and that {@link #getApplication()} does not return {@code null}.
+        and that L{#getApplication()} does not return C{null}.
 
-        @return <code>true</code> if the component is visible in the user
-                interface, <code>false</code> if not
-        @see #setVisible(boolean)
-        @see #attach()
+        @return: C{True} if the component is visible in the user
+                interface, C{False} if not
+        @see: #setVisible(boolean)
+        @see: #attach()
         """
         raise NotImplementedError
 
@@ -268,7 +268,7 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
         @param visible
                    the boolean value specifying if the component should be
                    visible after the call or not.
-        @see #isVisible()
+        @see: #isVisible()
         """
         raise NotImplementedError
 
@@ -278,10 +278,10 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
 
         Components can be nested but a component can have only one parent. A
         component that contains other components, that is, can be a parent,
-        should usually inherit the {@link ComponentContainer} interface.
+        should usually inherit the L{ComponentContainer} interface.
 
-        @return the parent component
-        @see #setParent(IComponent)
+        @return: the parent component
+        @see: #setParent(IComponent)
         """
         raise NotImplementedError
 
@@ -289,23 +289,23 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
     def setParent(self, parent):
         """Sets the parent component of the component.
 
-        This method automatically calls {@link #attach()} if the parent
+        This method automatically calls L{#attach()} if the parent
         becomes attached to the application, regardless of whether it was
-        attached previously. Conversely, if the parent is {@code null} and
-        the component is attached to the application, {@link #detach()} is
+        attached previously. Conversely, if the parent is C{null} and
+        the component is attached to the application, L{#detach()} is
         called for the component.
 
         This method is rarely called directly. The
-        {@link ComponentContainer#addComponent(IComponent)} method is normally
+        L{ComponentContainer#addComponent(IComponent)} method is normally
         used for adding components to a container and it will call this method
         implicitly.
 
         It is not possible to change the parent without first setting the
-        parent to {@code null}.
+        parent to C{null}.
 
         @param parent
                    the parent component
-        @throws IllegalStateException
+        @raise IllegalStateException
                     if a parent is given even though the component already has
                     a parent
         """
@@ -314,7 +314,7 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
 
     def isReadOnly(self):
         """Tests whether the component is in the read-only mode. The user can
-        not change the value of a read-only component. As only {@link Field}
+        not change the value of a read-only component. As only L{Field}
         components normally have a value that can be input or changed by the
         user, this is mostly relevant only to field components, though not
         restricted to them.
@@ -325,14 +325,14 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
 
         The read-only status affects only the user; the value can still be
         changed programmatically, for example, with
-        {@link Property#setValue(Object)}.
+        L{Property#setValue(Object)}.
 
-        The method will return {@code true} if the component or any of its
+        The method will return C{true} if the component or any of its
         parents is in the read-only mode.
 
-        @return <code>true</code> if the component or any of its parents is in
-                read-only mode, <code>false</code> if not.
-        @see #setReadOnly(boolean)
+        @return: C{True} if the component or any of its parents is in
+                read-only mode, C{False} if not.
+        @see: #setReadOnly(boolean)
         """
         raise NotImplementedError
 
@@ -341,7 +341,7 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
         """Sets the read-only mode of the component to the specified mode.
         The user can not change the value of a read-only component.
 
-        As only {@link Field} components normally have a value that can be
+        As only L{Field} components normally have a value that can be
         input or changed by the user, this is mostly relevant only to field
         components, though not restricted to them.
 
@@ -351,10 +351,10 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
 
         The read-only status affects only the user; the value can still be
         changed programmatically, for example, with
-        {@link Property#setValue(Object)}.
+        L{Property#setValue(Object)}.
 
         This method will trigger a
-        {@link com.vaadin.terminal.IPaintable.RepaintRequestEvent
+        L{com.vaadin.terminal.IPaintable.RepaintRequestEvent
         RepaintRequestEvent}.
 
         @param readOnly
@@ -367,12 +367,12 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
     def getCaption(self):
         """Gets the caption of the component.
 
-        See {@link #setCaption(String)} for a detailed description of the
+        See L{#setCaption(String)} for a detailed description of the
         caption.
 
-        @return the caption of the component or {@code null} if the caption
+        @return: the caption of the component or C{null} if the caption
                 is not set.
-        @see #setCaption(String)
+        @see: #setCaption(String)
         """
         raise NotImplementedError
 
@@ -382,7 +382,7 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
 
         A <i>caption</i> is an explanatory textual label accompanying a user
         interface component, usually shown above, left of, or inside the
-        component. <i>Icon</i> (see {@link #setIcon(Resource) setIcon()} is
+        component. <i>Icon</i> (see L{#setIcon(Resource) setIcon()} is
         closely related to caption and is usually displayed horizontally before
         or after it, depending on the component and the containing layout.
 
@@ -402,24 +402,24 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
 
         The caption of a component is, by default, managed and displayed by the
         layout component or component container in which the component is placed.
-        For example, the {@link VerticalLayout} component shows the captions
-        left-aligned above the contained components, while the {@link FormLayout}
+        For example, the L{VerticalLayout} component shows the captions
+        left-aligned above the contained components, while the L{FormLayout}
         component shows the captions on the left side of the vertically laid
         components, with the captions and their associated components
-        left-aligned in their own columns. The {@link CustomComponent} does not
+        left-aligned in their own columns. The L{CustomComponent} does not
         manage the caption of its composition root, so if the root component has
         a caption, it will not be rendered. Some components, such as
-        {@link Button} and {@link Panel}, manage the caption themselves and
+        L{Button} and L{Panel}, manage the caption themselves and
         display it inside the component.
 
         This method will trigger a
-        {@link com.vaadin.terminal.IPaintable.RepaintRequestEvent
+        L{com.vaadin.terminal.IPaintable.RepaintRequestEvent
         RepaintRequestEvent}. A reimplementation should call the superclass
         implementation.
 
         @param caption
                    the new caption for the component. If the caption is
-                   {@code null}, no caption is shown and it does not normally
+                   C{null}, no caption is shown and it does not normally
                    take any space
         """
         raise NotImplementedError
@@ -428,11 +428,11 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
     def getIcon(self):
         """Gets the icon resource of the component.
 
-        See {@link #setIcon(Resource)} for a detailed description of the icon.
+        See L{#setIcon(Resource)} for a detailed description of the icon.
 
-        @return the icon resource of the component or {@code null} if the
+        @return: the icon resource of the component or C{null} if the
                 component has no icon
-        @see #setIcon(Resource)
+        @see: #setIcon(Resource)
         """
         raise NotImplementedError
 
@@ -442,12 +442,12 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
 
         An icon is an explanatory graphical label accompanying a user interface
         component, usually shown above, left of, or inside the component. Icon is
-        closely related to caption (see {@link #setCaption(String) setCaption()})
+        closely related to caption (see L{#setCaption(String) setCaption()})
         and is usually displayed horizontally before or after it, depending on
         the component and the containing layout.
 
         The image is loaded by the browser from a resource, typically a
-        {@link com.vaadin.terminal.ThemeResource}.
+        L{com.vaadin.terminal.ThemeResource}.
 
         <pre>
         // IComponent with an icon from a custom theme
@@ -463,28 +463,28 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
 
         The icon of a component is, by default, managed and displayed by the
         layout component or component container in which the component is placed.
-        For example, the {@link VerticalLayout} component shows the icons
-        left-aligned above the contained components, while the {@link FormLayout}
+        For example, the L{VerticalLayout} component shows the icons
+        left-aligned above the contained components, while the L{FormLayout}
         component shows the icons on the left side of the vertically laid
         components, with the icons and their associated components left-aligned
-        in their own columns. The {@link CustomComponent} does not manage the
+        in their own columns. The L{CustomComponent} does not manage the
         icon of its composition root, so if the root component has an icon, it
         will not be rendered.
 
         An icon will be rendered inside an HTML element that has the
-        {@code v-icon} CSS style class. The containing layout may enclose an icon
+        C{v-icon} CSS style class. The containing layout may enclose an icon
         and a caption inside elements related to the caption, such as
-        {@code v-caption} .
+        C{v-caption} .
 
         This method will trigger a
-        {@link com.vaadin.terminal.IPaintable.RepaintRequestEvent
+        L{com.vaadin.terminal.IPaintable.RepaintRequestEvent
         RepaintRequestEvent}.
 
         @param icon
                    the icon of the component. If null, no icon is shown and it
                    does not normally take any space.
-        @see #getIcon()
-        @see #setCaption(String)
+        @see: #getIcon()
+        @see: #setCaption(String)
         """
         raise NotImplementedError
 
@@ -493,13 +493,13 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
         """Gets the parent window of the component.
 
         If the component is not attached to a window through a component
-        containment hierarchy, <code>null</code> is returned.
+        containment hierarchy, C{None} is returned.
 
         The window can be either an application-level window or a sub-window. If
         the component is itself a window, it returns a reference to itself, not
         to its containing window (of a sub-window).
 
-        @return the parent window of the component or <code>null</code> if it is
+        @return: the parent window of the component or C{None} if it is
                 not attached to a window or is itself a window
         """
         raise NotImplementedError
@@ -508,15 +508,15 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
     def getApplication(self):
         """Gets the application object to which the component is attached.
 
-        The method will return {@code null} if the component is not currently
+        The method will return C{null} if the component is not currently
         attached to an application. This is often a problem in constructors of
         regular components and in the initializers of custom composite
         components. A standard workaround is to move the problematic
-        initialization to {@link #attach()}, as described in the documentation of
+        initialization to L{#attach()}, as described in the documentation of
         the method.
 
-        @return the parent application of the component or <code>null</code>.
-        @see #attach()
+        @return: the parent application of the component or C{None}.
+        @see: #attach()
         """
         raise NotImplementedError
 
@@ -524,17 +524,17 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
     def attach(self):
         """Notifies the component that it is connected to an application.
 
-        The caller of this method is {@link #setParent(IComponent)} if the parent
+        The caller of this method is L{#setParent(IComponent)} if the parent
         is itself already attached to the application. If not, the parent will
-        call the {@link #attach()} for all its children when it is attached to
+        call the L{#attach()} for all its children when it is attached to
         the application. This method is always called before the component is
         painted for the first time.
 
-        Reimplementing the {@code attach()} method is useful for tasks that need
+        Reimplementing the C{attach()} method is useful for tasks that need
         to get a reference to the parent, window, or application object with the
-        {@link #getParent()}, {@link #getWindow()}, and {@link #getApplication()}
+        L{#getParent()}, L{#getWindow()}, and L{#getApplication()}
         methods. A component does not yet know these objects in the constructor,
-        so in such case, the methods will return {@code null}. For example, the
+        so in such case, the methods will return C{null}. For example, the
         following is invalid:
 
         <pre>
@@ -549,11 +549,11 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
         </pre>
 
         Adding a component to an application triggers calling the
-        {@link #attach()} method for the component. Correspondingly, removing a
-        component from a container triggers calling the {@link #detach()} method.
+        L{#attach()} method for the component. Correspondingly, removing a
+        component from a container triggers calling the L{#detach()} method.
         If the parent of an added component is already connected to the
-        application, the {@code attach()} is called immediately from
-        {@link #setParent(IComponent)}.
+        application, the C{attach()} is called immediately from
+        L{#setParent(IComponent)}.
 
         <pre>
         public class AttachExample extends CustomComponent {
@@ -572,9 +572,9 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
         }
         </pre>
 
-        The attachment logic is implemented in {@link AbstractComponent}.
+        The attachment logic is implemented in L{AbstractComponent}.
 
-        @see #getApplication()
+        @see: #getApplication()
         """
         raise NotImplementedError
 
@@ -582,12 +582,12 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
     def detach(self):
         """Notifies the component that it is detached from the application.
 
-        The {@link #getApplication()} and {@link #getWindow()} methods might
-        return <code>null</code> after this method is called.
+        The L{#getApplication()} and L{#getWindow()} methods might
+        return C{None} after this method is called.
 
-        The caller of this method is {@link #setParent(IComponent)} if the parent
+        The caller of this method is L{#setParent(IComponent)} if the parent
         is in the application. When the parent is detached from the application
-        it is its response to call {@link #detach()} for all the children and to
+        it is its response to call L{#detach()} for all the children and to
         detach itself from the terminal.
                 """
         raise NotImplementedError
@@ -599,14 +599,14 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
         If a component does not have a locale set, the locale of its parent is
         returned, and so on. Eventually, if no parent has locale set, the locale
         of the application is returned. If the application does not have a locale
-        set, it is determined by <code>Locale.getDefault()</code>.
+        set, it is determined by C{Locale.getDefault()}.
 
         As the component must be attached before its locale can be acquired,
         using this method in the internationalization of component captions, etc.
         is generally not feasible. For such use case, we recommend using an
         otherwise acquired reference to the application locale.
 
-        @return Locale of this component or {@code null} if the component and
+        @return: Locale of this component or C{null} if the component and
                 none of its parents has a locale set and the component is not yet
                 attached to an application.
         """
@@ -620,7 +620,7 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
 
         A repaint request is ignored if the component is invisible.
 
-        This method is called automatically by {@link AbstractComponent}, which
+        This method is called automatically by L{AbstractComponent}, which
         also provides a default implementation of it. As this is a somewhat
         internal feature, it is rarely necessary to reimplement this or call it
         explicitly.
@@ -630,7 +630,7 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
                    already notified by the child. This component should not
                    re-notify the listed listeners again. The container given as
                    parameter must be modifiable as the component might modify it
-                   and pass it forward. A {@code null} parameter is interpreted
+                   and pass it forward. A C{null} parameter is interpreted
                    as an empty collection.
         """
         raise NotImplementedError
@@ -682,10 +682,10 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
         layout.addComponent(listening);
         </pre>
 
-        @param listener
+        @param listener:
                    the new IListener to be registered.
-        @see IComponent.Event
-        @see #removeListener(IListener)
+        @see: IComponent.Event
+        @see: #removeListener(IListener)
         """
         if iface == IListener:
             raise NotImplementedError
@@ -701,9 +701,9 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
         """Removes a previously registered component event listener from this
         component.
 
-        @param listener
+        @param listener:
                    the listener to be removed.
-        @see #addListener(IListener)
+        @see: #addListener(IListener)
         """
         if iface == IListener:
             raise NotImplementedError
@@ -736,9 +736,9 @@ class Event(EventObject):
     <p>
     Notice that while each of the event types have their corresponding
     listener types; the listener interfaces are not required to inherit the
-    {@code IComponent.IListener} interface.
+    C{IComponent.IListener} interface.
 
-    @see IComponent.IListener
+    @see: IComponent.IListener
     """
 
     def __init__(self, source):
@@ -753,27 +753,27 @@ class Event(EventObject):
     def getComponent(self):
         """Gets the component where the event occurred.
 
-        @return the source component of the event
+        @return: the source component of the event
         """
         return self.getSource()
 
 
 class IListener(IEventListener):
-    """IListener interface for receiving <code>IComponent.Event</code>s.
+    """IListener interface for receiving C{IComponent.Event}s.
 
     <p>
     IListener interfaces are the basis of all user interaction handling in
     Vaadin. You have or create a listener object that receives the events.
     All event types have their corresponding listener types; they are not,
-    however, required to inherit the {@code IComponent.IListener} interface,
+    however, required to inherit the C{IComponent.IListener} interface,
     and they rarely do so.
 
     <p>
     This generic listener interface is useful typically when you wish to
     handle events from different component types in a single listener method
-    ({@code componentEvent()}. If you handle component events in an anonymous
+    (C{componentEvent()}. If you handle component events in an anonymous
     listener class, you normally use the component specific listener class,
-    such as {@link com.vaadin.ui.Button.ClickEvent}.
+    such as L{com.vaadin.ui.Button.ClickEvent}.
 
     <pre>
     class Listening extends CustomComponent implements IListener {
@@ -819,7 +819,7 @@ class IListener(IEventListener):
     layout.addComponent(listening);
     </pre>
 
-    @see IComponent#addListener(IListener)
+    @see: IComponent#addListener(IListener)
     """
 
     def componentEvent(self, event):
@@ -852,7 +852,7 @@ class ErrorEvent(Event):
 
     <p>
     The component error event is normally fired by
-    {@link AbstractComponent#setComponentError(ErrorMessage)}. The component
+    L{AbstractComponent#setComponentError(ErrorMessage)}. The component
     errors are set by the framework in some situations and can be set by user
     code. They are indicated in a component with an error indicator.
         """
@@ -872,13 +872,13 @@ class ErrorEvent(Event):
     def getErrorMessage(self):
         """Gets the error message.
 
-        @return the error message.
+        @return: the error message.
         """
         return self._message
 
 
 class IErrorListener(IEventListener):
-    """IListener interface for receiving <code>IComponent.Errors</code>s."""
+    """IListener interface for receiving C{IComponent.Errors}s."""
 
     def componentError(self, event):
         """Notifies the listener of a component error.
@@ -891,17 +891,17 @@ class IErrorListener(IEventListener):
 
 class IFocusable(IComponent):
     """A sub-interface implemented by components that can obtain input focus.
-    This includes all {@link Field} components as well as some other
-    components, such as {@link Upload}.
+    This includes all L{Field} components as well as some other
+    components, such as L{Upload}.
 
     <p>
-    Focus can be set with {@link #focus()}. This interface does not provide
+    Focus can be set with L{#focus()}. This interface does not provide
     an accessor that would allow finding out the currently focused component;
-    focus information can be acquired for some (but not all) {@link Field}
-    components through the {@link com.vaadin.event.FieldEvents.FocusListener}
-    and {@link com.vaadin.event.FieldEvents.BlurListener} interfaces.
+    focus information can be acquired for some (but not all) L{Field}
+    components through the L{com.vaadin.event.FieldEvents.FocusListener}
+    and L{com.vaadin.event.FieldEvents.BlurListener} interfaces.
 
-    @see FieldEvents
+    @see: FieldEvents
     """
 
     def focus(self):
@@ -928,30 +928,30 @@ class IFocusable(IComponent):
 
         Notice that this interface does not provide an accessor that would
         allow finding out the currently focused component. Focus information
-        can be acquired for some (but not all) {@link Field} components
-        through the {@link com.vaadin.event.FieldEvents.FocusListener} and
-        {@link com.vaadin.event.FieldEvents.BlurListener} interfaces.
+        can be acquired for some (but not all) L{Field} components
+        through the L{com.vaadin.event.FieldEvents.FocusListener} and
+        L{com.vaadin.event.FieldEvents.BlurListener} interfaces.
 
-        @see com.vaadin.event.FieldEvents
-        @see com.vaadin.event.FieldEvents.FocusEvent
-        @see com.vaadin.event.FieldEvents.FocusListener
-        @see com.vaadin.event.FieldEvents.BlurEvent
-        @see com.vaadin.event.FieldEvents.BlurListener
+        @see: com.vaadin.event.FieldEvents
+        @see: com.vaadin.event.FieldEvents.FocusEvent
+        @see: com.vaadin.event.FieldEvents.FocusListener
+        @see: com.vaadin.event.FieldEvents.BlurEvent
+        @see: com.vaadin.event.FieldEvents.BlurListener
         """
         raise NotImplementedError
 
 
     def getTabIndex(self):
-        """Gets the <i>tabulator index</i> of the {@code IFocusable} component.
+        """Gets the <i>tabulator index</i> of the C{IFocusable} component.
 
-        @return tab index set for the {@code IFocusable} component
-        @see #setTabIndex(int)
+        @return: tab index set for the C{IFocusable} component
+        @see: #setTabIndex(int)
         """
         raise NotImplementedError
 
 
     def setTabIndex(self, tabIndex):
-        """Sets the <i>tabulator index</i> of the {@code IFocusable} component.
+        """Sets the <i>tabulator index</i> of the C{IFocusable} component.
         The tab index property is used to specify the order in which the
         fields are focused when the user presses the Tab key. Components with
         a defined tab index are focused sequentially first, and then the
@@ -1003,6 +1003,6 @@ class IFocusable(IComponent):
                    from 1. Zero means that default tab order should be used.
                    A negative value means that the field should not be
                    included in the tabbing sequence.
-        @see #getTabIndex()
+        @see: #getTabIndex()
         """
         raise NotImplementedError

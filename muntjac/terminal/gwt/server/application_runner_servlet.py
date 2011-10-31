@@ -89,7 +89,7 @@ class ApplicationRunnerServlet(AbstractApplicationServlet):
         </ul>
 
         @param request
-        @return string array containing widgetset URI, application URI and
+        @return: string array containing widgetset URI, application URI and
                 context, runner, application classname
         """
         urlParts = re.split('\\/', request.uri())

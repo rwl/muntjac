@@ -16,23 +16,24 @@
 
 
 class IItem(object):
-    """Provides a mechanism for handling a set of Properties, each associated to a
-    locally unique non-null identifier. The interface is split into subinterfaces
-    to enable a class to implement only the functionalities it needs.
+    """Provides a mechanism for handling a set of Properties, each associated
+    to a locally unique non-null identifier. The interface is split into
+    subinterfaces to enable a class to implement only the functionalities it
+    needs.
 
-    @author IT Mill Ltd
+    @author: IT Mill Ltd
+    @author: Richard Lincoln
     @version @VERSION@
-    @since 3.0
     """
 
     def getItemProperty(self, idd):
-        """Gets the Property corresponding to the given Property ID stored in the
-        IItem. If the IItem does not contain the Property, <code>null</code> is
+        """Gets the Property corresponding to the given Property ID stored in
+        the IItem. If the IItem does not contain the Property, C{None} is
         returned.
 
-        @param id
+        @param id:
                    identifier of the Property to get
-        @return the Property with the given ID or <code>null</code>
+        @return: the Property with the given ID or C{None}
         """
         raise NotImplementedError
 
@@ -40,7 +41,7 @@ class IItem(object):
     def getItemPropertyIds(self):
         """Gets the collection of IDs of all Properties stored in the IItem.
 
-        @return unmodifiable collection containing IDs of the Properties stored
+        @return: iterable containing IDs of the Properties stored
                 the IItem
         """
         raise NotImplementedError
@@ -51,13 +52,13 @@ class IItem(object):
 
         This functionality is optional.
 
-        @param id
+        @param id:
                    ID of the new Property
         @param property
                    the Property to be added and associated with the id
-        @return <code>true</code> if the operation succeeded, <code>false</code>
+        @return: C{True} if the operation succeeded, C{False}
                 if not
-        @throws UnsupportedOperationException
+        @raise NotImplementedError:
                     if the operation is not supported.
         """
         raise NotImplementedError
@@ -68,11 +69,11 @@ class IItem(object):
 
         This functionality is optional.
 
-        @param id
+        @param id:
                    ID of the Property to be removed
-        @return <code>true</code> if the operation succeeded
-        @throws UnsupportedOperationException
-                    if the operation is not supported. <code>false</code> if not
+        @return: C{True} if the operation succeeded C{False} if not
+        @raise NotImplementedError:
+                    if the operation is not supported.
         """
         raise NotImplementedError
 
@@ -85,7 +86,7 @@ class IViewer(object):
     def setItemDataSource(self, newDataSource):
         """Sets the IItem that serves as the data source of the viewer.
 
-        @param newDataSource
+        @param newDataSource:
                    The new data source IItem
         """
         raise NotImplementedError
@@ -94,25 +95,25 @@ class IViewer(object):
     def getItemDataSource(self):
         """Gets the IItem serving as the data source of the viewer.
 
-        @return data source IItem
+        @return: data source IItem
         """
         raise NotImplementedError
 
 
 class IEditor(IViewer):
-    """Interface implemented by the <code>IEditor</code> classes capable of
-    editing the IItem. Implementing this interface means that the IItem serving
-    as the data source of the editor can be modified through it.
+    """Interface implemented by the C{IEditor} classes capable of editing the
+    IItem. Implementing this interface means that the IItem serving as the
+    data source of the editor can be modified through it.
 
-    Note : Not implementing the <code>IItem.IEditor</code> interface does not
-    restrict the class from editing the contents of an internally.
+    Note: Not implementing the C{IEditor} interface does not restrict the class
+    from editing the contents of an internally.
     """
     pass
 
 
 class IPropertySetChangeEvent(object):
-    """An <code>Event</code> object specifying the IItem whose contents has been
-    changed through the <code>Property</code> interface.
+    """An C{Event} object specifying the IItem whose contents has been
+    changed through the C{Property} interface.
 
     Note: The values stored in the Properties may change without triggering
     this event.
@@ -121,43 +122,36 @@ class IPropertySetChangeEvent(object):
     def getItem(self):
         """Retrieves the IItem whose contents has been modified.
 
-        @return source IItem of the event
+        @return: source IItem of the event
         """
         raise NotImplementedError
 
 
 class IPropertySetChangeListener(object):
-    """The listener interface for receiving <code>IPropertySetChangeEvent</code>
+    """The listener interface for receiving C{IPropertySetChangeEvent}
     objects.
     """
 
     def itemPropertySetChange(self, event):
         """Notifies this listener that the IItem's property set has changed.
 
-        @param event
+        @param event:
                    Property set change event object
         """
         raise NotImplementedError
 
 
 class IPropertySetChangeNotifier(object):
-    """The interface for adding and removing <code>IPropertySetChangeEvent</code>
+    """The interface for adding and removing C{IPropertySetChangeEvent}
     listeners. By implementing this interface a class explicitly announces
-    that it will generate a <code>IPropertySetChangeEvent</code> when its
+    that it will generate a C{IPropertySetChangeEvent} when its
     Property set is modified.
-
-    Note : The general Java convention is not to explicitly declare that a
-    class generates events, but to directly define the
-    <code>addListener</code> and <code>removeListener</code> methods. That
-    way the caller of these methods has no real way of finding out if the
-    class really will send the events, or if it just defines the methods to
-    be able to implement an interface.
     """
 
     def addListener(self, listener, iface):
         """Registers a new property set change listener for this IItem.
 
-        @param listener
+        @param listener:
                    The new Listener to be registered.
         """
         if iface == IPropertySetChangeListener:
@@ -174,7 +168,7 @@ class IPropertySetChangeNotifier(object):
     def removeListener(self, listener, iface):
         """Removes a previously registered property set change listener.
 
-        @param listener
+        @param listener:
                    Listener to be removed.
         """
         if iface == IPropertySetChangeListener:

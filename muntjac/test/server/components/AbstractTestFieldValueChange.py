@@ -28,12 +28,12 @@ class AbstractTestFieldValueChange(TestCase):
     other times.
 
     Does not check all cases (e.g. properties that do not implement
-    {@link ValueChangeNotifier}).
+    L{ValueChangeNotifier}).
      *
-    Subclasses should implement {@link #setValue()} and call
-    <code>super.setValue(AbstractField)</code>. Also, subclasses should
-    typically override {@link #setValue(AbstractField)} to set the field
-    value via <code>changeVariables()</code>.
+    Subclasses should implement L{#setValue()} and call
+    C{super.setValue(AbstractField)}. Also, subclasses should
+    typically override L{#setValue(AbstractField)} to set the field
+    value via C{changeVariables()}.
     """
 
     def setUp(self, field):

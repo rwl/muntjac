@@ -35,12 +35,12 @@ class ListenerMethod(IEventListener):
     to reflect it using merely the name of the method.
 
     It should be pointed out that the method
-    {@link #receiveEvent(EventObject event)} is the one that filters out the
+    L{#receiveEvent(EventObject event)} is the one that filters out the
     events that do not match with the given event type and thus do not result in
     calling of the trigger method.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -129,15 +129,15 @@ class ListenerMethod(IEventListener):
                    eventArgumentIndex is negative, the triggering event object
                    will not be passed to the trigger method, though it is still
                    called.
-        @throws java.lang.IllegalArgumentException
-                    if <code>method</code> is not a member of <code>target</code>
+        @raise java.lang.IllegalArgumentException
+                    if C{method} is not a member of C{target}
                     .
         ---
         <p>
         Constructs a new event listener from a trigger method name, it's
         arguments and the argument index specifying which one is replaced with
         the event object. The actual trigger method is reflected from
-        <code>object</code>, and <code>java.lang.IllegalArgumentException</code>
+        C{object}, and C{java.lang.IllegalArgumentException}
         is thrown unless exactly one match is found.
         </p>
 
@@ -149,7 +149,7 @@ class ListenerMethod(IEventListener):
         @param methodName
                    the name of the trigger method. If the object does not contain
                    the method or it contains more than one matching methods
-                   <code>java.lang.IllegalArgumentException</code> is thrown.
+                   C{java.lang.IllegalArgumentException} is thrown.
         @param arguments
                    the arguments to be passed to the trigger method.
         @param eventArgumentIndex
@@ -159,9 +159,9 @@ class ListenerMethod(IEventListener):
                    eventArgumentIndex is negative, the triggering event object
                    will not be passed to the trigger method, though it is still
                    called.
-        @throws java.lang.IllegalArgumentException
-                    unless exactly one match <code>methodName</code> is found in
-                    <code>target</code>.
+        @raise java.lang.IllegalArgumentException
+                    unless exactly one match C{methodName} is found in
+                    C{target}.
         ---
         <p>
         Constructs a new event listener from the trigger method and it's
@@ -184,8 +184,8 @@ class ListenerMethod(IEventListener):
                    the trigger method.
         @param arguments
                    the arguments to be passed to the trigger method.
-        @throws java.lang.IllegalArgumentException
-                    if <code>method</code> is not a member of <code>target</code>
+        @raise java.lang.IllegalArgumentException
+                    if C{method} is not a member of C{target}
                     .
         ---
         <p>
@@ -196,8 +196,8 @@ class ListenerMethod(IEventListener):
         </p>
 
         <p>
-        The actual trigger method is reflected from <code>target</code>, and
-        <code>java.lang.IllegalArgumentException</code> is thrown unless exactly
+        The actual trigger method is reflected from C{target}, and
+        C{java.lang.IllegalArgumentException} is thrown unless exactly
         one match is found.
         </p>
 
@@ -209,12 +209,12 @@ class ListenerMethod(IEventListener):
         @param methodName
                    the name of the trigger method. If the object does not contain
                    the method or it contains more than one matching methods
-                   <code>java.lang.IllegalArgumentException</code> is thrown.
+                   C{java.lang.IllegalArgumentException} is thrown.
         @param arguments
                    the arguments to be passed to the trigger method.
-        @throws java.lang.IllegalArgumentException
-                    unless exactly one match <code>methodName</code> is found in
-                    <code>object</code>.
+        @raise java.lang.IllegalArgumentException
+                    unless exactly one match C{methodName} is found in
+                    C{object}.
         ---
         <p>
         Constructs a new event listener from a trigger method. Since the argument
@@ -234,8 +234,8 @@ class ListenerMethod(IEventListener):
                    the object instance that contains the trigger method.
         @param method
                    the trigger method.
-        @throws java.lang.IllegalArgumentException
-                    if <code>method</code> is not a member of <code>object</code>
+        @raise java.lang.IllegalArgumentException
+                    if C{method} is not a member of C{object}
                     .
         ---
         <p>
@@ -245,8 +245,8 @@ class ListenerMethod(IEventListener):
         </p>
 
         <p>
-        The actual trigger method is reflected from <code>object</code>, and
-        <code>java.lang.IllegalArgumentException</code> is thrown unless exactly
+        The actual trigger method is reflected from C{object}, and
+        C{java.lang.IllegalArgumentException} is thrown unless exactly
         one match is found.
         </p>
 
@@ -258,10 +258,10 @@ class ListenerMethod(IEventListener):
         @param methodName
                    the name of the trigger method. If the object does not contain
                    the method or it contains more than one matching methods
-                   <code>java.lang.IllegalArgumentException</code> is thrown.
-        @throws java.lang.IllegalArgumentException
-                    unless exactly one match <code>methodName</code> is found in
-                    <code>target</code>.
+                   C{java.lang.IllegalArgumentException} is thrown.
+        @raise java.lang.IllegalArgumentException
+                    unless exactly one match C{methodName} is found in
+                    C{target}.
         """
         # Type of the event that should trigger this listener. Also the subclasses
         # of this class are accepted to trigger the listener.
@@ -277,7 +277,7 @@ class ListenerMethod(IEventListener):
         # Optional argument set to pass to the trigger method.
         self._arguments = None
 
-        # Optional index to <code>arguments</code> that point out which one
+        # Optional index to C{arguments} that point out which one
         # should be replaced with the triggering event object and thus be
         # passed to the trigger method.
         self._eventArgumentIndex = None
@@ -403,7 +403,7 @@ class ListenerMethod(IEventListener):
 
 
     def receiveEvent(self, event):
-        """Receives one event from the <code>EventRouter</code> and calls
+        """Receives one event from the C{EventRouter} and calls
         the trigger method if it matches with the criteria defined for the
         listener. Only the events of the same or subclass of the specified
         event class result in the trigger method to be called.
@@ -451,8 +451,8 @@ class ListenerMethod(IEventListener):
         @param eventType
                    the type to be tested for equality against the type stored
                    by this listener.
-        @return <code>true</code> if <code>target</code> is the same object as
-                the one stored in this object and <code>eventType</code> equals
+        @return: C{True} if C{target} is the same object as
+                the one stored in this object and C{eventType} equals
                 the event type stored in this object. *
         ---
         Checks if the given object, event and method match with the ones stored
@@ -467,10 +467,10 @@ class ListenerMethod(IEventListener):
         @param method
                    the method to be tested for equality against the method
                    stored by this listener.
-        @return <code>true</code> if <code>target</code> is the same object as
-                the one stored in this object, <code>eventType</code> equals
+        @return: C{True} if C{target} is the same object as
+                the one stored in this object, C{eventType} equals
                 with the event type stored in this object and
-                <code>method</code> equals with the method stored in this
+                C{method} equals with the method stored in this
                 object
         """
         if method is None:
@@ -517,7 +517,7 @@ class ListenerMethod(IEventListener):
 
         @param eventType
                    The type to compare with
-        @return true if this type of this ListenerMethod matches the given
+        @return: true if this type of this ListenerMethod matches the given
                 type, false otherwise
         """
         return self._eventType == eventType
@@ -528,7 +528,7 @@ class ListenerMethod(IEventListener):
 
         @param eventType
                    The type to compare with
-        @return true if this event type can be assigned to the given type,
+        @return: true if this event type can be assigned to the given type,
                 false otherwise
         """
         return issubclass(self._eventType, eventType)
@@ -537,19 +537,19 @@ class ListenerMethod(IEventListener):
     def getTarget(self):
         """Returns the target object which contains the trigger method.
 
-        @return The target object
+        @return: The target object
         """
         return self._target
 
 
 class MethodException(RuntimeError):
     """Exception that wraps an exception thrown by an invoked method. When
-    <code>ListenerMethod</code> invokes the target method, it may throw
+    C{ListenerMethod} invokes the target method, it may throw
     arbitrary exception. The original exception is wrapped into
-    MethodException instance and rethrown by the <code>ListenerMethod</code>.
+    MethodException instance and rethrown by the C{ListenerMethod}.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -560,12 +560,12 @@ class MethodException(RuntimeError):
 
 
     def getCause(self):
-        """Retrieves the cause of this throwable or <code>null</code> if the
+        """Retrieves the cause of this throwable or C{None} if the
         cause does not exist or not known.
 
-        @return the cause of this throwable or <code>null</code> if the cause
+        @return: the cause of this throwable or C{None} if the cause
                 is nonexistent or unknown.
-        @see java.lang.Throwable#getCause()
+        @see: java.lang.Throwable#getCause()
         """
         return self._cause
 
@@ -573,14 +573,14 @@ class MethodException(RuntimeError):
     def getMessage(self):
         """Returns the error message string of this throwable object.
 
-        @return the error message.
-        @see java.lang.Throwable#getMessage()
+        @return: the error message.
+        @see: java.lang.Throwable#getMessage()
         """
         return self._message
 
 
     def __str__(self):
-        """@see java.lang.Throwable#toString()"""
+        """@see: java.lang.Throwable#toString()"""
         msg = str(super(MethodException, self))
 
         if self._cause is not None:

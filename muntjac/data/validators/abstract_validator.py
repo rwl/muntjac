@@ -18,29 +18,28 @@ from muntjac.data.validator import InvalidValueException, IValidator
 
 
 class AbstractValidator(IValidator):
-    """Abstract {@link com.vaadin.data.IValidator IValidator} implementation that
-    provides a basic IValidator implementation except the {@link #isValid(Object)}
-    method. Sub-classes need to implement the {@link #isValid(Object)} method.
+    """Abstract L{IValidator} implementation that provides a basic IValidator
+    implementation except the L{isValid} method. Sub-classes need to implement
+    the L{isValid} method.
 
-    To include the value that failed validation in the exception message you can
-    use "{0}" in the error message. This will be replaced with the failed value
-    (converted to string using {@link #toString()}) or "null" if the value is
-    null.
+    To include the value that failed validation in the exception message you
+    can use "{0}" in the error message. This will be replaced with the failed
+    value (converted to string using L{#toString()}) or "null" if the value is
+    None.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
-    @since 5.4
     """
 
     def __init__(self, errorMessage):
         """Constructs a validator with the given error message.
 
-        @param errorMessage
-                   the message to be included in an {@link InvalidValueException}
+        @param errorMessage:
+                   the message to be included in an L{InvalidValueException}
                    (with "{0}" replaced by the value that failed validation).
         """
-        # Error message that is included in an {@link InvalidValueException} if
+        # Error message that is included in an L{InvalidValueException} if
         # such is thrown.
         self._errorMessage = errorMessage
 
@@ -52,20 +51,21 @@ class AbstractValidator(IValidator):
 
 
     def getErrorMessage(self):
-        """Returns the message to be included in the exception in case the value
-        does not validate.
+        """Returns the message to be included in the exception in case the
+        value does not validate.
 
-        @return the error message provided in the constructor or using
-                {@link #setErrorMessage(String)}.
+        @return: the error message provided in the constructor or using
+                L{setErrorMessage}.
         """
         return self._errorMessage
 
 
     def setErrorMessage(self, errorMessage):
-        """Sets the message to be included in the exception in case the value does
-        not validate. The exception message is typically shown to the end user.
+        """Sets the message to be included in the exception in case the value
+        does not validate. The exception message is typically shown to the end
+        user.
 
-        @param errorMessage
+        @param errorMessage:
                    the error message. "{0}" is automatically replaced by the
                    value that did not validate.
         """

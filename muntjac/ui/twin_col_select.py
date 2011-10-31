@@ -51,7 +51,7 @@ class TwinColSelect(AbstractSelect):
 
         The number of columns overrides the value set by setWidth. Only if
         columns are set to 0 (default) the width set using
-        {@link #setWidth(float, int)} or {@link #setWidth(String)} is used.
+        L{#setWidth(float, int)} or L{#setWidth(String)} is used.
 
         @param columns: the number of columns to set.
         """
@@ -75,10 +75,10 @@ class TwinColSelect(AbstractSelect):
         to 0, the actual number of displayed rows is determined implicitly by
         the adapter.
 
-        If a height if set (using {@link #setHeight(String)} or
-        {@link #setHeight(float, int)}) it overrides the number of rows. Leave
+        If a height if set (using L{#setHeight(String)} or
+        L{#setHeight(float, int)}) it overrides the number of rows. Leave
         the height undefined to use this method. This is the opposite of how
-        {@link #setColumns(int)} work.
+        L{#setColumns(int)} work.
 
         @param rows: the number of rows to set.
         """
@@ -124,7 +124,7 @@ class TwinColSelect(AbstractSelect):
     def getRightColumnCaption(self):
         """Returns the text shown above the right column.
 
-        @return The text shown or null if not set.
+        @return: The text shown or null if not set.
         """
         return self._rightColumnCaption
 
@@ -141,6 +141,6 @@ class TwinColSelect(AbstractSelect):
     def getLeftColumnCaption(self):
         """Returns the text shown above the left column.
 
-        @return The text shown or null if not set.
+        @return: The text shown or null if not set.
         """
         return self._leftColumnCaption

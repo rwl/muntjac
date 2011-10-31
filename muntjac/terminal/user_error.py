@@ -19,12 +19,12 @@ from muntjac.terminal.paintable import IRepaintRequestListener
 
 
 class UserError(IErrorMessage):
-    """<code>UserError</code> is a controlled error occurred in
+    """C{UserError} is a controlled error occurred in
     application. User errors are occur in normal usage of the
     application and guide the user.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """

@@ -60,8 +60,8 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
     """Tree component. A Tree can be used to select an item (or multiple
     items) from a hierarchical set of items.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -117,7 +117,7 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
 
         @param itemId
                    the item id.
-        @return true iff the item is expanded.
+        @return: true iff the item is expanded.
         """
         return itemId in self._expanded
 
@@ -127,7 +127,7 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
 
         @param itemId
                    the item id.
-        @return True iff the expand operation succeeded
+        @return: True iff the expand operation succeeded
         ---
         Expands an item.
 
@@ -136,7 +136,7 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
         @param sendChildTree
                    flag to indicate if client needs subtree or not (may
                    be cached)
-        @return True iff the expand operation succeeded
+        @return: True iff the expand operation succeeded
         """
         if sendChildTree is None:
             success = self.expandItem(itemId, True)
@@ -182,7 +182,7 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
         Operation succeeds only if all expandable items are expanded.
 
         @param startItemId
-        @return True iff the expand operation succeeded
+        @return: True iff the expand operation succeeded
         """
         result = True
 
@@ -208,7 +208,7 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
 
         @param itemId
                    the item id.
-        @return True iff the collapse operation succeeded
+        @return: True iff the collapse operation succeeded
         """
         # Succeeds if the node is already collapsed
         if not self.isExpanded(itemId):
@@ -228,7 +228,7 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
         Operation succeeds only if all expandable items are collapsed.
 
         @param startItemId
-        @return True iff the collapse operation succeeded
+        @return: True iff the collapse operation succeeded
         """
         result = True
 
@@ -251,11 +251,11 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
     def isSelectable(self):
         """Returns the current selectable state. Selectable determines if the
         a node can be selected on the client side. Selectable does not affect
-        {@link #setValue(Object)} or {@link #select(Object)}.
+        L{#setValue(Object)} or L{#select(Object)}.
 
         The tree is selectable by default.
 
-        @return the current selectable state.
+        @return: the current selectable state.
         """
         return self._selectable
 
@@ -263,7 +263,7 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
     def setSelectable(self, selectable):
         """Sets the selectable state. Selectable determines if the a node can
         be selected on the client side. Selectable does not affect
-        {@link #setValue(Object)} or {@link #select(Object)}.
+        L{#setValue(Object)} or L{#select(Object)}.
 
         The tree is selectable by default.
 
@@ -290,7 +290,7 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
         """Returns the mode the multiselect is in. The mode controls
         how multiselection can be done.
 
-        @return The mode
+        @return: The mode
         """
         return self._multiSelectMode
 
@@ -392,7 +392,7 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
         """Paints any needed component-specific things to the given UIDL
         stream.
 
-        @see com.vaadin.ui.AbstractComponent#paintContent(PaintTarget)
+        @see: com.vaadin.ui.AbstractComponent#paintContent(PaintTarget)
         """
         self._initialPaint = False
 
@@ -581,7 +581,7 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
     def areChildrenAllowed(self, itemId):
         """Tests if the Item with given ID can have any children.
 
-        @see container.IHierarchical.areChildrenAllowed(Object)
+        @see: container.IHierarchical.areChildrenAllowed(Object)
         """
         return self.items.areChildrenAllowed(itemId)
 
@@ -589,7 +589,7 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
     def getChildren(self, itemId):
         """Gets the IDs of all Items that are children of the specified Item.
 
-        @see container.IHierarchical.getChildren(Object)
+        @see: container.IHierarchical.getChildren(Object)
         """
         return self.items.getChildren(itemId)
 
@@ -597,7 +597,7 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
     def getParent(self, itemId=None):
         """Gets the ID of the parent Item of the specified Item.
 
-        @see container.IHierarchical.getParent(Object)
+        @see: container.IHierarchical.getParent(Object)
         """
         if itemId is None:
             return self.items.getParent(itemId)
@@ -606,19 +606,19 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
 
 
     def hasChildren(self, itemId):
-        """Tests if the Item specified with <code>itemId</code> has child
+        """Tests if the Item specified with C{itemId} has child
         Items.
 
-        @see container.IHierarchical.hasChildren(Object)
+        @see: container.IHierarchical.hasChildren(Object)
         """
         return self.items.hasChildren(itemId)
 
 
     def isRoot(self, itemId):
-        """Tests if the Item specified with <code>itemId</code> is a root
+        """Tests if the Item specified with C{itemId} is a root
         Item.
 
-        @see com.vaadin.data.container.IHierarchical#isRoot(Object)
+        @see: com.vaadin.data.container.IHierarchical#isRoot(Object)
         """
         return self.items.isRoot(itemId)
 
@@ -627,7 +627,7 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
         """Gets the IDs of all Items in the container that don't have a
         parent.
 
-        @see com.vaadin.data.container.IHierarchical#rootItemIds()
+        @see: com.vaadin.data.container.IHierarchical#rootItemIds()
         """
         return self.items.rootItemIds()
 
@@ -635,7 +635,7 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
     def setChildrenAllowed(self, itemId, areChildrenAllowed):
         """Sets the given Item's capability to have children.
 
-        @see com.vaadin.data.container.IHierarchical#setChildrenAllowed()
+        @see: com.vaadin.data.container.IHierarchical#setChildrenAllowed()
         """
         success = self.items.setChildrenAllowed(itemId, areChildrenAllowed)
         if success:
@@ -659,7 +659,7 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
     def setContainerDataSource(self, newDataSource):
         """Sets the IContainer that serves as the data source of the viewer.
 
-        @see container.Viewer#setContainerDataSource(IContainer)
+        @see: container.Viewer#setContainerDataSource(IContainer)
         """
         if newDataSource is None:
             # Note: using wrapped IndexedContainer to match constructor
@@ -679,12 +679,12 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
     def addListener(self, listener, iface):
         """Adds the expand listener.
 
-        @param listener
+        @param listener:
                    the Listener to be added.
         ---
         Adds the collapse listener.
 
-        @param listener
+        @param listener:
                    the Listener to be added.
         """
         if iface == ICollapseListener:
@@ -715,12 +715,12 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
     def removeListener(self, listener, iface):
         """Removes the expand listener.
 
-        @param listener
+        @param listener:
                    the Listener to be removed.
         ---
         Removes the collapse listener.
 
-        @param listener
+        @param listener:
                    the Listener to be removed.
         """
         if iface == ICollapseListener:
@@ -769,7 +769,7 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
     def addActionHandler(self, actionHandler):
         """Adds an action handler.
 
-        @see action.IContainer#addActionHandler(action.Handler)
+        @see: action.IContainer#addActionHandler(action.Handler)
         """
         if actionHandler is not None:
             if self._actionHandlers is None:
@@ -783,7 +783,7 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
     def removeActionHandler(self, actionHandler):
         """Removes an action handler.
 
-        @see action.IContainer#removeActionHandler(action.Handler)
+        @see: action.IContainer#removeActionHandler(action.Handler)
         """
         if (self._actionHandlers is not None
                 and actionHandler in self._actionHandlers):
@@ -804,7 +804,7 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
     def getVisibleItemIds(self):
         """Gets the visible item ids.
 
-        @see com.vaadin.ui.Select#getVisibleItemIds()
+        @see: com.vaadin.ui.Select#getVisibleItemIds()
         """
         visible = list()
         # Iterates trough hierarchical tree using a stack of iterators
@@ -832,9 +832,9 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
 
 
     def setNullSelectionItemId(self, nullSelectionItemId):
-        """Tree does not support <code>setNullSelectionItemId</code>.
+        """Tree does not support C{setNullSelectionItemId}.
 
-        @see AbstractSelect#setNullSelectionItemId(java.lang.Object)
+        @see: AbstractSelect#setNullSelectionItemId(java.lang.Object)
         """
         if nullSelectionItemId is not None:
             raise NotImplementedError
@@ -843,9 +843,9 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
     def setNewItemsAllowed(self, allowNewOptions):
         """Adding new items is not supported.
 
-        @throws UnsupportedOperationException
+        @raise NotImplementedError:
                     if set to true.
-        @see com.vaadin.ui.Select#setNewItemsAllowed(boolean)
+        @see: com.vaadin.ui.Select#setNewItemsAllowed(boolean)
         """
         if allowNewOptions:
             raise NotImplementedError
@@ -853,9 +853,9 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
 
     def setLazyLoading(self, useLazyLoading):
         """Tree does not support lazy options loading mode. Setting this
-        true will throw UnsupportedOperationException.
+        true will throw NotImplementedError.
 
-        @see com.vaadin.ui.Select#setLazyLoading(boolean)
+        @see: com.vaadin.ui.Select#setLazyLoading(boolean)
         """
         if useLazyLoading:
             raise NotImplementedError, \
@@ -863,7 +863,7 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
 
 
     def setItemStyleGenerator(self, itemStyleGenerator):
-        """Sets the {@link IItemStyleGenerator} to be used with this tree.
+        """Sets the L{IItemStyleGenerator} to be used with this tree.
 
         @param itemStyleGenerator
                    item style generator or null to remove generator
@@ -874,8 +874,8 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
 
 
     def getItemStyleGenerator(self):
-        """@return the current {@link IItemStyleGenerator} for this tree.
-                   Null if {@link IItemStyleGenerator} is not set.
+        """@return: the current L{IItemStyleGenerator} for this tree.
+                   Null if L{IItemStyleGenerator} is not set.
         """
         return self._itemStyleGenerator
 
@@ -897,7 +897,7 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
 
 
     def key(self, itemId):
-        """Helper API for {@link TreeDropCriterion}
+        """Helper API for L{TreeDropCriterion}
 
         @param itemId
         @return
@@ -907,7 +907,7 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
 
     def setDragMode(self, dragMode):
         """Sets the drag mode that controls how Tree behaves as a
-        {@link IDragSource}.
+        L{IDragSource}.
 
         @param dragMode
         """
@@ -916,10 +916,10 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
 
 
     def getDragMode(self):
-        """@return the drag mode that controls how Tree behaves as a
-                   {@link IDragSource}.
+        """@return: the drag mode that controls how Tree behaves as a
+                   L{IDragSource}.
 
-        @see TreeDragMode
+        @see: TreeDragMode
         """
         return self._dragMode
 
@@ -943,7 +943,7 @@ class TreeDragMode(object):
     NONE = 'NONE'
 
     # When drag mode is NODE, users can initiate drag from Tree nodes that
-    # represent {@link Item}s in from the backed {@link IContainer}.
+    # represent L{Item}s in from the backed L{IContainer}.
     NODE = 'NODE'
 
     _values = [NONE, NODE]
@@ -962,8 +962,8 @@ class ExpandEvent(ComponentEvent):
     node is to be expanded. it can me used to dynamically fill the sub-nodes
     of the node.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -982,7 +982,7 @@ class ExpandEvent(ComponentEvent):
     def getItemId(self):
         """Node where the event occurred.
 
-        @return the Source of the event.
+        @return: the Source of the event.
         """
         return self._expandedItemId
 
@@ -990,8 +990,8 @@ class ExpandEvent(ComponentEvent):
 class IExpandListener(object):
     """Expand event listener.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -1011,8 +1011,8 @@ EXPAND_METHOD = IExpandListener.nodeExpand
 class CollapseEvent(ComponentEvent):
     """Collapse event
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -1031,7 +1031,7 @@ class CollapseEvent(ComponentEvent):
     def getItemId(self):
         """Gets tge Collapsed Item id.
 
-        @return the collapsed item id.
+        @return: the collapsed item id.
         """
         return self._collapsedItemId
 
@@ -1039,8 +1039,8 @@ class CollapseEvent(ComponentEvent):
 class ICollapseListener(object):
     """Collapse event listener.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -1068,14 +1068,14 @@ class IItemStyleGenerator(object):
 
         @param itemId
                    The itemId of the item to be painted
-        @return The style name to add to this item. (the CSS class name
+        @return: The style name to add to this item. (the CSS class name
                 will be v-tree-node-[style name]
         """
         raise NotImplementedError
 
 
 class TreeTargetDetails(AbstractSelectTargetDetails):
-    """A {@link TargetDetails} implementation with Tree specific api.
+    """A L{TargetDetails} implementation with Tree specific api.
 
     @since 6.3
     """
@@ -1090,11 +1090,11 @@ class TreeTargetDetails(AbstractSelectTargetDetails):
 
     def getItemIdInto(self):
         """If the event is on a node that can not have children (see
-        {@link Tree#areChildrenAllowed(Object)}), this method returns the
-        parent item id of the target item (see {@link #getItemIdOver()} ).
+        L{Tree#areChildrenAllowed(Object)}), this method returns the
+        parent item id of the target item (see L{#getItemIdOver()} ).
         The identifier of the parent node is also returned if the cursor is
         on the top part of node. Else this method returns the same as
-        {@link #getItemIdOver()}.
+        L{#getItemIdOver()}.
 
         In other words this method returns the identifier of the "folder"
         into the drag operation is targeted.
@@ -1121,7 +1121,7 @@ class TreeTargetDetails(AbstractSelectTargetDetails):
         the drag was targeted. This method is useful when implementing drop
         into specific location (between specific nodes) in tree.
 
-        @return the id of the item after the user targets the drop or null if
+        @return: the id of the item after the user targets the drop or null if
                 "target" is a first item in node list (or the first in root
                 node list)
         """
@@ -1151,10 +1151,10 @@ class TreeTargetDetails(AbstractSelectTargetDetails):
 
 
 class TreeTransferable(DataBoundTransferable):
-    """Concrete implementation of {@link DataBoundTransferable} for data
+    """Concrete implementation of L{DataBoundTransferable} for data
     transferred from a tree.
 
-    @see {@link DataBoundTransferable}.
+    @see: L{DataBoundTransferable}.
 
     @since 6.3
     """
@@ -1214,13 +1214,13 @@ class TreeDropCriterion(ServerSideCriterion):
 
 
 class TargetItemAllowsChildren(TargetDetailIs):
-    """A criterion that accepts {@link Transferable} only directly on a tree
+    """A criterion that accepts L{Transferable} only directly on a tree
     node that can have children.
 
-    Class is singleton, use {@link TargetItemAllowsChildren#get()} to get the
+    Class is singleton, use L{TargetItemAllowsChildren#get()} to get the
     instance.
 
-    @see Tree#setChildrenAllowed(Object, boolean)
+    @see: Tree#setChildrenAllowed(Object, boolean)
 
     @since 6.3
     """

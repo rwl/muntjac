@@ -20,8 +20,8 @@ from muntjac.ui.abstract_field import AbstractField
 class Slider(AbstractField):
     """A component for selecting a numerical value within a range.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     """
 
     CLIENT_WIDGET = None #ClientWidget(VSlider, LoadStyle.LAZY)
@@ -31,7 +31,7 @@ class Slider(AbstractField):
     ORIENTATION_VERTICAL = 1
 
     # Style constant representing a scrollbar styled slider. Use this with
-    # {@link #addStyleName(String)}. Default styling usually represents a
+    # L{#addStyleName(String)}. Default styling usually represents a
     # common slider found e.g. in Adobe Photoshop. The client side
     # implementation dictates how different styles will look.
     STYLE_SCROLLBAR = 'scrollbar'
@@ -130,7 +130,7 @@ class Slider(AbstractField):
     def getMax(self):
         """Gets the biggest possible value in Sliders range.
 
-        @return the biggest value slider can have
+        @return: the biggest value slider can have
         """
         return self._max
 
@@ -158,7 +158,7 @@ class Slider(AbstractField):
     def getMin(self):
         """Gets the minimum value in Sliders range.
 
-        @return the smallest value slider can have
+        @return: the smallest value slider can have
         """
         return self._min
 
@@ -187,7 +187,7 @@ class Slider(AbstractField):
     def getOrientation(self):
         """Get the current orientation of the Slider (horizontal or vertical).
 
-        @return orientation
+        @return: orientation
         """
         return self._orientation
 
@@ -204,7 +204,7 @@ class Slider(AbstractField):
     def getResolution(self):
         """Get the current resolution of the Slider.
 
-        @return resolution
+        @return: resolution
         """
         return self._resolution
 
@@ -228,21 +228,21 @@ class Slider(AbstractField):
                    (min - max), otherwise throws an exception.
         @param repaintIsNotNeeded
                    If true, client-side is not requested to repaint itself.
-        @throws ValueOutOfBoundsException
+        @raise ValueOutOfBoundsException
         ---
         Set the value of this Slider.
 
         @param value
                    New value of Slider. Must be within Sliders range
                    (min - max), otherwise throws an exception.
-        @throws ValueOutOfBoundsException
+        @raise ValueOutOfBoundsException
         ---
         Set the value of this Slider.
 
         @param value
                    New value of Slider. Must be within Sliders range
                    (min - max), otherwise throws an exception.
-        @throws ValueOutOfBoundsException
+        @raise ValueOutOfBoundsException
         """
         v = value
 
@@ -263,7 +263,7 @@ class Slider(AbstractField):
     def getSize(self):
         """Get the current Slider size.
 
-        @return size in pixels or -1 for auto sizing.
+        @return: size in pixels or -1 for auto sizing.
         @deprecated use standard getWidth/getHeight instead
         """
         return self._size
@@ -289,7 +289,7 @@ class Slider(AbstractField):
     def getHandleSize(self):
         """Get the handle size of this Slider.
 
-        @return handle size in percentages.
+        @return: handle size in percentages.
         @deprecated The size is dictated by the current theme.
         """
         return self._handleSize
@@ -378,12 +378,12 @@ class Slider(AbstractField):
 class ValueOutOfBoundsException(Exception):
     """ValueOutOfBoundsException
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     """
 
     def __init__(self, valueOutOfBounds):
-        """Constructs an <code>ValueOutOfBoundsException</code> with
+        """Constructs an C{ValueOutOfBoundsException} with
         the specified detail message.
 
         @param valueOutOfBounds

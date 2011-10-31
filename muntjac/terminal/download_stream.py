@@ -19,8 +19,8 @@ import sys
 class DownloadStream(object):
     """Downloadable stream.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -46,7 +46,7 @@ class DownloadStream(object):
     def getStream(self):
         """Gets downloadable stream.
 
-        @return output stream.
+        @return: output stream.
         """
         return self._stream
 
@@ -63,7 +63,7 @@ class DownloadStream(object):
     def getContentType(self):
         """Gets stream content type.
 
-        @return type of the stream content.
+        @return: type of the stream content.
         """
         return self._contentType
 
@@ -80,7 +80,7 @@ class DownloadStream(object):
     def getFileName(self):
         """Returns the file name.
 
-        @return the name of the file.
+        @return: the name of the file.
         """
         return self._fileName
 
@@ -120,7 +120,7 @@ class DownloadStream(object):
 
         @param name
                    the Name of the parameter to set.
-        @return Value of the parameter or null if the parameter does not exist.
+        @return: Value of the parameter or null if the parameter does not exist.
         """
         if self._params is not None:
             return self._params.get(name)
@@ -130,7 +130,7 @@ class DownloadStream(object):
     def getParameterNames(self):
         """Gets the names of the parameters.
 
-        @return Iterator of names or null if no parameters are set.
+        @return: Iterator of names or null if no parameters are set.
         """
         if self._params is not None:
             return self._params.keys()
@@ -141,9 +141,9 @@ class DownloadStream(object):
         """Gets length of cache expiration time. This gives the adapter the
         possibility cache streams sent to the client. The caching may be made
         in adapter or at the client if the client supports caching. Default
-        is <code>DEFAULT_CACHETIME</code>.
+        is C{DEFAULT_CACHETIME}.
 
-        @return Cache time in milliseconds
+        @return: Cache time in milliseconds
         """
         return self._cacheTime
 
@@ -163,7 +163,7 @@ class DownloadStream(object):
     def getBufferSize(self):
         """Gets the size of the download buffer.
 
-        @return int The size of the buffer in bytes.
+        @return: int The size of the buffer in bytes.
         """
         return self._bufferSize
 

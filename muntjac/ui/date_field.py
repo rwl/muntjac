@@ -32,18 +32,18 @@ from muntjac.util import totalseconds
 
 
 class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
-    """A date editor component that can be bound to any {@link IProperty}
-    that is compatible with <code>java.util.Date</code>.
+    """A date editor component that can be bound to any L{IProperty}
+    that is compatible with C{java.util.Date}.
 
-    Since <code>DateField</code> extends <code>AbstractField</code> it
-    implements the {@link com.vaadin.data.Buffered}interface.
+    Since C{DateField} extends C{AbstractField} it
+    implements the L{com.vaadin.data.Buffered}interface.
 
-    A <code>DateField</code> is in write-through mode by default, so
-    {@link com.vaadin.ui.AbstractField#setWriteThrough(boolean)} must be
+    A C{DateField} is in write-through mode by default, so
+    L{com.vaadin.ui.AbstractField#setWriteThrough(boolean)} must be
     called to enable buffering.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -75,34 +75,34 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
     _largestModifiable = RESOLUTION_YEAR
 
     def __init__(self, *args):
-        """Constructs an empty <code>DateField</code> with no caption.
+        """Constructs an empty C{DateField} with no caption.
         ---
-        Constructs an empty <code>DateField</code> with caption.
+        Constructs an empty C{DateField} with caption.
 
         @param caption
                    the caption of the datefield.
         ---
-        Constructs a new <code>DateField</code> that's bound to the specified
-        <code>IProperty</code> and has the given caption <code>String</code>.
+        Constructs a new C{DateField} that's bound to the specified
+        C{IProperty} and has the given caption C{String}.
 
         @param caption
-                   the caption <code>String</code> for the editor.
+                   the caption C{String} for the editor.
         @param dataSource
                    the IProperty to be edited with this editor.
         ---
-        Constructs a new <code>DateField</code> that's bound to the specified
-        <code>IProperty</code> and has no caption.
+        Constructs a new C{DateField} that's bound to the specified
+        C{IProperty} and has no caption.
 
         @param dataSource
                    the IProperty to be edited with this editor.
         ---
-        Constructs a new <code>DateField</code> with the given caption and
+        Constructs a new C{DateField} with the given caption and
         initial text contents. The editor constructed this way will not be
         bound to a IProperty unless
-        {@link IProperty.Viewer.setPropertyDataSource()} is called to bind it.
+        L{IProperty.Viewer.setPropertyDataSource()} is called to bind it.
 
         @param caption
-                   the caption <code>String</code> for the editor.
+                   the caption C{String} for the editor.
         @param value
                    the Date value.
         """
@@ -357,7 +357,7 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
         an event.
 
         @param dateString
-        @return parsed Date
+        @return: parsed Date
         @raise IProperty.ConversionException:
                     to keep the old value and indicate an error
         """
@@ -438,7 +438,7 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
         """Sets the DateField datasource. Datasource type must assignable
         to Date.
 
-        @see IProperty.Viewer.setPropertyDataSource()
+        @see: IProperty.Viewer.setPropertyDataSource()
         """
         if (newDataSource is None
                 or issubclass(newDataSource.getType(), datetime)):
@@ -466,7 +466,7 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
     def getResolution(self):
         """Gets the resolution.
 
-        @return int
+        @return: int
         """
         return self._resolution
 
@@ -487,11 +487,11 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
         Returns new clone of the calendar object initialized using the the
         current date (if available)
 
-        If this is no calendar is assigned the <code>calendar</code>
+        If this is no calendar is assigned the C{calendar}
         is used.
 
-        @return the Calendar.
-        @see #setCalendar(Calendar)
+        @return: the Calendar.
+        @see: #setCalendar(Calendar)
         """
         # Makes sure we have an calendar instance
         if self._calendar is None:
@@ -508,14 +508,14 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
 
     def setDateFormat(self, dateFormat):
         """Sets formatting used by some component implementations. See
-        {@link SimpleDateFormat} for format details.
+        L{SimpleDateFormat} for format details.
 
         By default it is encouraged to used default formatting defined
         by Locale.
 
         @param dateFormat: the dateFormat to set
 
-        @see com.vaadin.ui.AbstractComponent#setLocale(Locale))
+        @see: com.vaadin.ui.AbstractComponent#setLocale(Locale))
         """
         self._dateFormat = dateFormat
         self.requestRepaint()
@@ -523,10 +523,10 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
 
     def getDateFormat(self):
         """Returns a format string used to format date value on client side
-        or null if default formatting from {@link Component#getLocale()} is
+        or null if default formatting from L{Component#getLocale()} is
         used.
 
-        @return the dateFormat
+        @return: the dateFormat
         """
         return self._dateFormat
 
@@ -535,8 +535,8 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
         """Specifies whether or not date/time interpretation in component is
         to be lenient.
 
-        @see Calendar#setLenient(boolean)
-        @see #isLenient()
+        @see: Calendar#setLenient(boolean)
+        @see: #isLenient()
 
         @param lenient
                    true if the lenient mode is to be turned on; false if it
@@ -549,9 +549,9 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
     def isLenient(self):
         """Returns whether date/time interpretation is to be lenient.
 
-        @see #setLenient(boolean)
+        @see: #setLenient(boolean)
 
-        @return true if the interpretation mode of this calendar is lenient;
+        @return: true if the interpretation mode of this calendar is lenient;
                 false otherwise.
         """
         return self._lenient
@@ -597,7 +597,7 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
         """Checks whether ISO 8601 week numbers are shown in the date
         selector.
 
-        @return true if week numbers are shown, false otherwise.
+        @return: true if week numbers are shown, false otherwise.
         """
         return self._showISOWeekNumbers
 
@@ -620,7 +620,7 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
         and invalid if it contains text typed in by the user that couldn't be
         parsed into a Date value.
 
-        @see com.vaadin.ui.AbstractField#isValid()
+        @see: com.vaadin.ui.AbstractField#isValid()
         """
         return self._uiHasValidDateString and super(DateField, self).isValid()
 
@@ -637,14 +637,14 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
     def getParseErrorMessage(self):
         """Return the error message that is shown if the user inputted value
         can't be parsed into a Date object. If
-        {@link #handleUnparsableDateString(String)} is overridden and it
+        L{#handleUnparsableDateString(String)} is overridden and it
         throws a custom exception, the message returned by
-        {@link Exception#getLocalizedMessage()} will be used instead of the
+        L{Exception#getLocalizedMessage()} will be used instead of the
         value returned by this method.
 
-        @see #setParseErrorMessage(String)
+        @see: #setParseErrorMessage(String)
 
-        @return the error message that the DateField uses when it can't parse
+        @return: the error message that the DateField uses when it can't parse
                 the textual input from user to a Date object
         """
         return self._defaultParseErrorMessage
@@ -653,11 +653,11 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
     def setParseErrorMessage(self, parsingErrorMessage):
         """Sets the default error message used if the DateField cannot parse
         the text input by user to a Date field. Note that if the
-        {@link #handleUnparsableDateString(String)} method is overridden, the
+        L{#handleUnparsableDateString(String)} method is overridden, the
         localized message from its exception is used.
 
-        @see #getParseErrorMessage()
-        @see #handleUnparsableDateString(String)
+        @see: #getParseErrorMessage()
+        @see: #handleUnparsableDateString(String)
         @param parsingErrorMessage
         """
         self._defaultParseErrorMessage = parsingErrorMessage

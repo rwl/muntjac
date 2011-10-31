@@ -19,42 +19,38 @@ from muntjac.data.validator import InvalidValueException
 
 
 class CompositeValidator(AbstractValidator):
-    """The <code>CompositeValidator</code> allows you to chain (compose) many
-    validators to validate one field. The contained validators may be required to
-    all validate the value to validate or it may be enough that one contained
-    validator validates the value. This behaviour is controlled by the modes
-    <code>AND</code> and <code>OR</code>.
+    """The C{CompositeValidator} allows you to chain (compose) many
+    validators to validate one field. The contained validators may be required
+    to all validate the value to validate or it may be enough that one
+    contained validator validates the value. This behaviour is controlled by
+    the modes C{AND} and C{OR}.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
-    @since 3.0
     """
 
-    # The validators are combined with <code>AND</code> clause: validity of the
-    # composite implies validity of the all validators it is composed of must
-    # be valid.
+    #: The validators are combined with C{AND} clause: validity of
+    #  the composite implies validity of the all validators it is composed of
+    #  must be valid.
     MODE_AND = 0
 
-    # The validators are combined with <code>OR</code> clause: validity of the
-    # composite implies that some of validators it is composed of must be
-    # valid.
+    #: The validators are combined with C{OR} clause: validity of the
+    #  composite implies that some of validators it is composed of must be
+    #  valid.
     MODE_OR = 1
 
-    # The validators are combined with and clause: validity of the composite
-    # implies validity of the all validators it is composed of
+    #: The validators are combined with and clause: validity of the composite
+    #  implies validity of the all validators it is composed of
     MODE_DEFAULT = MODE_AND
 
     def __init__(self, mode=None, errorMessage=None):
-        """Construct a composite validator in <code>AND</code> mode without error
-        message.
-        ---
-        Constructs a composite validator in given mode.
+        """Constructs a composite validator in given mode.
         """
-        # Operation mode.
+        #: Operation mode.
         self._mode = self.MODE_DEFAULT
 
-        # List of contained validators.
+        #: List of contained validators.
         self._validators = list()
 
         if mode is None:
@@ -68,18 +64,16 @@ class CompositeValidator(AbstractValidator):
         """Validates the given value.
 
         The value is valid, if:
-        <ul>
-        <li><code>MODE_AND</code>: All of the sub-validators are valid
-        <li><code>MODE_OR</code>: Any of the sub-validators are valid
-        </ul>
+          - C{MODE_AND}: All of the sub-validators are valid
+          - C{MODE_OR}: Any of the sub-validators are valid
 
-        If the value is invalid, validation error is thrown. If the error message
-        is set (non-null), it is used. If the error message has not been set, the
-        first error occurred is thrown.
+        If the value is invalid, validation error is thrown. If the error
+        message is set (non-null), it is used. If the error message has not
+        been set, the first error occurred is thrown.
 
-        @param value
+        @param value:
                    the value to check.
-        @throws Validator.InvalidValueException
+        @raise InvalidValueException:
                     if the value is not valid.
         """
         if self._mode == self.MODE_AND:
@@ -108,12 +102,10 @@ class CompositeValidator(AbstractValidator):
 
     def isValid(self, value):
         """Checks the validity of the the given value. The value is valid, if:
-        <ul>
-        <li><code>MODE_AND</code>: All of the sub-validators are valid
-        <li><code>MODE_OR</code>: Any of the sub-validators are valid
-        </ul>
+          - C{MODE_AND}: All of the sub-validators are valid
+          - C{MODE_OR}: Any of the sub-validators are valid
 
-        @param value
+        @param value:
                    the value to check.
         """
         if self._mode == self.MODE_AND:
@@ -134,20 +126,17 @@ class CompositeValidator(AbstractValidator):
     def getMode(self):
         """Gets the mode of the validator.
 
-        @return Operation mode of the validator: <code>MODE_AND</code> or
-                <code>MODE_OR</code>.
+        @return: Operation mode of the validator: C{MODE_AND} or C{MODE_OR}.
         """
         return self._mode
 
 
     def setMode(self, mode):
         """Sets the mode of the validator. The valid modes are:
-        <ul>
-        <li><code>MODE_AND</code> (default)
-        <li><code>MODE_OR</code>
-        </ul>
+          - C{MODE_AND} (default)
+          - C{MODE_OR}
 
-        @param mode
+        @param mode:
                    the mode to set.
         """
         if mode != self.MODE_AND and mode != self.MODE_OR:
@@ -157,13 +146,14 @@ class CompositeValidator(AbstractValidator):
 
 
     def getErrorMessage(self):
-        """Gets the error message for the composite validator. If the error message
-        is null, original error messages of the sub-validators are used instead.
+        """Gets the error message for the composite validator. If the error
+        message is C{None}, original error messages of the sub-validators are
+        used instead.
         """
         if super(CompositeValidator, self).getErrorMessage() is not None:
             return super(CompositeValidator, self).getErrorMessage()
 
-        # TODO Return composite error message
+        # TODO: return composite error message
 
         return None
 
@@ -171,9 +161,9 @@ class CompositeValidator(AbstractValidator):
     def addValidator(self, validator):
         """Adds validator to the interface.
 
-        @param validator
-                   the Validator object which performs validation checks on this
-                   set of data field values.
+        @param validator:
+                   the Validator object which performs validation checks on
+                   this set of data field values.
         """
         if validator is None:
             return
@@ -184,9 +174,9 @@ class CompositeValidator(AbstractValidator):
     def removeValidator(self, validator):
         """Removes a validator from the composite.
 
-        @param validator
-                   the Validator object which performs validation checks on this
-                   set of data field values.
+        @param validator:
+                   the Validator object which performs validation checks on
+                   this set of data field values.
         """
         self._validators.remove(validator)
 
@@ -195,15 +185,15 @@ class CompositeValidator(AbstractValidator):
         """Gets sub-validators by class.
 
         If the component contains directly or recursively (it contains another
-        composite containing the validator) validators compatible with given type
-        they are returned. This only applies to <code>AND</code> mode composite
+        composite containing the validator) validators compatible with given
+        type they are returned. This only applies to C{AND} mode composite
         validators.
 
-        If the validator is in <code>OR</code> mode or does not contain any
-        validators of given type null is returned.
+        If the validator is in C{OR} mode or does not contain any validators
+        of given type null is returned.
 
-        @return Collection<Validator> of validators compatible with given type
-                that must apply or null if none fould.
+        @return: iterable of validators compatible with given type
+                that must apply or null if none found.
         """
         if self._mode != self.MODE_AND:
             return None

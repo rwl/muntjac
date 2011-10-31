@@ -27,7 +27,7 @@ class CssLayout(AbstractLayout, ILayoutClickNotifier):
     only. It simply renders components and their captions into a same div
     element. Component layout can then be adjusted with css.
 
-    In comparison to {@link HorizontalLayout} and {@link VerticalLayout}
+    In comparison to L{HorizontalLayout} and L{VerticalLayout}
     <ul>
     <li>rather similar server side api
     <li>no spacing, alignment or expand ratios
@@ -40,12 +40,12 @@ class CssLayout(AbstractLayout, ILayoutClickNotifier):
     on the browser's rendering engine.
     </ul>
 
-    With {@link CustomLayout} one can often achieve similar results (good
+    With L{CustomLayout} one can often achieve similar results (good
     looking layouts with web technologies), but with CustomLayout developer
     needs to work with fixed templates.
 
     By extending CssLayout one can also inject some css rules straight to
-    child components using {@link #getCss(Component)}.
+    child components using L{#getCss(Component)}.
 
     (*) Relative sizes (set from server side) are treated bit differently than
     in other layouts in Vaadin. In cssLayout the size is calculated relatively
@@ -139,16 +139,16 @@ class CssLayout(AbstractLayout, ILayoutClickNotifier):
         """Gets the component container iterator for going trough all the
         components in the container.
 
-        @return the Iterator of the components inside the container.
+        @return: the Iterator of the components inside the container.
         """
         return iter(self.components)
 
 
     def getComponentCount(self):
         """Gets the number of contained components. Consistent with the
-        iterator returned by {@link #getComponentIterator()}.
+        iterator returned by L{#getComponentIterator()}.
 
-        @return the number of contained components
+        @return: the number of contained components
         """
         return len(self.components)
 
@@ -158,7 +158,7 @@ class CssLayout(AbstractLayout, ILayoutClickNotifier):
 
         @param target
                    the Paint Event.
-        @throws PaintException
+        @raise PaintException
                     if the paint operation failed.
         """
         super(CssLayout, self).paintContent(target)
@@ -184,12 +184,12 @@ class CssLayout(AbstractLayout, ILayoutClickNotifier):
         child rendering. Previous styles are not cleared, but overridden.
 
         Note that one most often achieves better code style, by separating
-        styling to theme (with custom theme and {@link #addStyleName(String)}.
+        styling to theme (with custom theme and L{#addStyleName(String)}.
         With own custom styles it is also very easy to break browser
         compatibility.
 
         @param c: the component
-        @return css rules to be applied to component
+        @return: css rules to be applied to component
         """
         return None
 

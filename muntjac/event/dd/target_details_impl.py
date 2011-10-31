@@ -18,7 +18,7 @@ from muntjac.event.dd.target_details import ITargetDetails
 
 
 class TargetDetailsImpl(ITargetDetails):
-    """A HashMap backed implementation of {@link ITargetDetails} for terminal
+    """A HashMap backed implementation of L{ITargetDetails} for terminal
     implementation and for extension.
 
     @since 6.3

@@ -31,18 +31,18 @@ from muntjac.ui.abstract_component import AbstractComponent
 
 
 class IClickListener(object):
-    """Interface for listening for a {@link ClickEvent} fired by a
-    {@link Component}.
+    """Interface for listening for a L{ClickEvent} fired by a
+    L{Component}.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
 
     def buttonClick(self, event):
-        """Called when a {@link Button} has been clicked. A reference to
-        the button is given by {@link ClickEvent#getButton()}.
+        """Called when a L{Button} has been clicked. A reference to
+        the button is given by L{ClickEvent#getButton()}.
 
         @param event
                    An event containing information about the click.
@@ -56,8 +56,8 @@ _BUTTON_CLICK_METHOD = getattr(IClickListener, "buttonClick")
 class Button(AbstractField, IBlurNotifier, IFocusNotifier):
     """A generic button component.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -79,13 +79,13 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
 
         @param caption
                    the Button caption.
-        @param listener
+        @param listener:
                    the Button click listener.
         ---
         Creates a new push button with a method listening button clicks. Using
         this method is discouraged because it cannot be checked during
         compilation. Use
-        {@link #Button(String, com.vaadin.ui.Button.ClickListener)} instead.
+        L{#Button(String, com.vaadin.ui.Button.ClickListener)} instead.
         The method must have either no parameters, or only one parameter of
         Button.ClickEvent type.
 
@@ -102,14 +102,14 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
         @param state
                    the Initial state of the switch-button.
         @param initialState
-        @deprecated use {@link CheckBox} instead of Button in "switchmode"
+        @deprecated use L{CheckBox} instead of Button in "switchmode"
         ---
         Creates a new switch button that is connected to a boolean property.
 
         @param state
                    the Initial state of the switch-button.
         @param dataSource
-        @deprecated use {@link CheckBox} instead of Button in "switchmode"
+        @deprecated use L{CheckBox} instead of Button in "switchmode"
         """
         super(Button, self).__init__()
 
@@ -151,9 +151,9 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
 
         @param event
                    the PaintEvent.
-        @throws IOException
+        @raise IOException
                     if the writing failed due to input/output error.
-        @throws PaintException
+        @raise PaintException
                     if the paint operation failed.
         """
         super(Button, self).paintContent(target)
@@ -219,9 +219,9 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
     def isSwitchMode(self):
         """Checks if it is switchMode.
 
-        @return <code>true</code> if it is in Switch Mode, otherwise
-                <code>false</code>.
-        @deprecated the {@link CheckBox} component should be used instead
+        @return: C{True} if it is in Switch Mode, otherwise
+                C{False}.
+        @deprecated the L{CheckBox} component should be used instead
                     of Button in switch mode
         """
         warn('use CheckBox instead', DeprecationWarning)
@@ -233,7 +233,7 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
 
         @param switchMode
                    The switchMode to set.
-        @deprecated the {@link CheckBox} component should be used instead
+        @deprecated the L{CheckBox} component should be used instead
                     of Button in switch mode
         """
         self._switchMode = switchMode
@@ -246,7 +246,7 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
     def booleanValue(self):
         """Get the boolean value of the button state.
 
-        @return True iff the button is pressed down or checked.
+        @return: True iff the button is pressed down or checked.
         """
         value = self.getValue()
         return False if value is None else bool(value)
@@ -256,7 +256,7 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
         """Sets immediate mode. Push buttons can not be set in
         non-immediate mode.
 
-        @see AbstractComponent.setImmediate
+        @see: AbstractComponent.setImmediate
         """
         # Push buttons are always immediate
         super(Button, self).setImmediate(
@@ -266,19 +266,19 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
     def getType(self):
         """The type of the button as a property.
 
-        @see com.vaadin.data.IProperty#getType()
+        @see: com.vaadin.data.IProperty#getType()
         """
         return bool
 
     # Button style with no decorations. Looks like a link, acts like a button
-    # @deprecated use {@link BaseTheme#BUTTON_LINK} instead.
+    # @deprecated use L{BaseTheme#BUTTON_LINK} instead.
     STYLE_LINK = 'link'
 
 
     def addListener(self, listener, iface):
         """Adds the button click listener.
 
-        @param listener
+        @param listener:
                    the Listener to be added.
         """
         if iface == IBlurListener:
@@ -311,7 +311,7 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
     def removeListener(self, listener, iface):
         """Removes the button click listener.
 
-        @param listener
+        @param listener:
                    the Listener to be removed.
         """
         if iface == IBlurListener:
@@ -342,7 +342,7 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
     def fireClick(self, details=None):
         """Fires a click event to all listeners without any event details.
 
-        In subclasses, override {@link #fireClick(MouseEventDetails)} instead
+        In subclasses, override L{#fireClick(MouseEventDetails)} instead
         of this method.
         ---
         Fires a click event to all listeners.
@@ -370,7 +370,7 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
 
     def setClickShortcut(self, keyCode, *modifiers):
         """Makes it possible to invoke a click on this button by pressing
-        the given {@link KeyCode} and (optional) {@link ModifierKey}s.
+        the given L{KeyCode} and (optional) L{ModifierKey}s.
 
         The shortcut is global (bound to the containing Window).
 
@@ -389,7 +389,7 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
 
     def removeClickShortcut(self):
         """Removes the keyboard shortcut previously set with
-        {@link #setClickShortcut(int, int...)}.
+        L{#setClickShortcut(int, int...)}.
         """
         if self.clickShortcut is not None:
             self.removeShortcutListener(self.clickShortcut)
@@ -397,13 +397,13 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
 
 
 class ClickShortcut(ShortcutListener):
-    """A {@link ShortcutListener} specifically made to define a keyboard
+    """A L{ShortcutListener} specifically made to define a keyboard
     shortcut that invokes a click on the given button.
     """
 
     def __init__(self, *args):
         """Creates a keyboard shortcut for clicking the given button using
-        the shorthand notation defined in {@link ShortcutAction}.
+        the shorthand notation defined in L{ShortcutAction}.
 
         @param button
                    to be clicked when the shortcut is invoked
@@ -411,7 +411,7 @@ class ClickShortcut(ShortcutListener):
                    the caption with shortcut keycode and modifiers indicated
         ---
         Creates a keyboard shortcut for clicking the given button using the
-        given {@link KeyCode} and {@link ModifierKey}s.
+        given L{KeyCode} and L{ModifierKey}s.
 
         @param button
                    to be clicked when the shortcut is invoked
@@ -421,7 +421,7 @@ class ClickShortcut(ShortcutListener):
                    optional modifiers for shortcut
         ---
         Creates a keyboard shortcut for clicking the given button using the
-        given {@link KeyCode}.
+        given L{KeyCode}.
 
         @param button
                    to be clicked when the shortcut is invoked
@@ -455,8 +455,8 @@ class ClickShortcut(ShortcutListener):
 class ClickEvent(ComponentEvent):
     """Click event. This event is thrown, when the button is clicked.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -482,7 +482,7 @@ class ClickEvent(ComponentEvent):
     def getButton(self):
         """Gets the Button where the event occurred.
 
-        @return the Source of the event.
+        @return: the Source of the event.
         """
         return self.getSource()
 
@@ -491,7 +491,7 @@ class ClickEvent(ComponentEvent):
         """Returns the mouse position (x coordinate) when the click took
         place. The position is relative to the browser client area.
 
-        @return The mouse cursor x position or -1 if unknown
+        @return: The mouse cursor x position or -1 if unknown
         """
         if None is not self._details:
             return self._details.getClientX()
@@ -503,7 +503,7 @@ class ClickEvent(ComponentEvent):
         """Returns the mouse position (y coordinate) when the click took
         place. The position is relative to the browser client area.
 
-        @return The mouse cursor y position or -1 if unknown
+        @return: The mouse cursor y position or -1 if unknown
         """
         if None is not self._details:
             return self._details.getClientY()
@@ -515,7 +515,7 @@ class ClickEvent(ComponentEvent):
         """Returns the relative mouse position (x coordinate) when the click
         took place. The position is relative to the clicked component.
 
-        @return The mouse cursor x position relative to the clicked layout
+        @return: The mouse cursor x position relative to the clicked layout
                 component or -1 if no x coordinate available
         """
         if None is not self._details:
@@ -528,7 +528,7 @@ class ClickEvent(ComponentEvent):
         """Returns the relative mouse position (y coordinate) when the click
         took place. The position is relative to the clicked component.
 
-        @return The mouse cursor y position relative to the clicked layout
+        @return: The mouse cursor y position relative to the clicked layout
                 component or -1 if no y coordinate available
         """
         if None is not self._details:
@@ -540,7 +540,7 @@ class ClickEvent(ComponentEvent):
     def isAltKey(self):
         """Checks if the Alt key was down when the mouse event took place.
 
-        @return true if Alt was down when the event occured, false
+        @return: true if Alt was down when the event occured, false
                 otherwise or if unknown
         """
         if None is not self._details:
@@ -552,7 +552,7 @@ class ClickEvent(ComponentEvent):
     def isCtrlKey(self):
         """Checks if the Ctrl key was down when the mouse event took place.
 
-        @return true if Ctrl was pressed when the event occured, false
+        @return: true if Ctrl was pressed when the event occured, false
                 otherwise or if unknown
         """
         if None is not self._details:
@@ -564,7 +564,7 @@ class ClickEvent(ComponentEvent):
     def isMetaKey(self):
         """Checks if the Meta key was down when the mouse event took place.
 
-        @return true if Meta was pressed when the event occurred, false
+        @return: true if Meta was pressed when the event occurred, false
                 otherwise or if unknown
         """
         if None is not self._details:
@@ -576,7 +576,7 @@ class ClickEvent(ComponentEvent):
     def isShiftKey(self):
         """Checks if the Shift key was down when the mouse event took place.
 
-        @return true if Shift was pressed when the event occurred, false
+        @return: true if Shift was pressed when the event occurred, false
                 otherwise or if unknown
         """
         if None is not self._details:

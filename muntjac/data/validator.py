@@ -19,77 +19,65 @@ from muntjac.terminal.paintable import IRepaintRequestListener
 
 
 class IValidator(object):
-    """Interface that implements a method for validating if an {@link Object} is
+    """Interface that implements a method for validating if an L{object} is
     valid or not.
 
-    Implementors of this class can be added to any
-    {@link com.vaadin.data.Validatable Validatable} implementor to verify its
-    value.
+    Implementors of this class can be added to any L{IValidatable} implementor
+    to verify its value.
 
-    {@link #isValid(Object)} and {@link #validate(Object)} can be used to check
-    if a value is valid. {@link #isValid(Object)} and {@link #validate(Object)}
-    must use the same validation logic so that iff {@link #isValid(Object)}
-    returns false, {@link #validate(Object)} throws an
-    {@link InvalidValueException}.
+    L{isValid} and L{validate} can be used to check if a value is valid.
+    L{isValid} and L{validate} must use the same validation logic so that iff
+    L{isValid} returns false, L{validate} throws an L{InvalidValueException}.
 
     Validators must not have any side effects.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
-    @since 3.0
     """
 
     def validate(self, value):
-        """Checks the given value against this validator. If the value is valid the
-        method does nothing. If the value is invalid, an
-        {@link InvalidValueException} is thrown.
+        """Checks the given value against this validator. If the value is valid
+        the method does nothing. If the value is invalid, an
+        L{InvalidValueException} is thrown.
 
-        @param value
+        @param value:
                    the value to check
-        @throws IValidator.InvalidValueException
+        @raise InvalidValueException:
                     if the value is invalid
         """
         raise NotImplementedError
 
 
     def isValid(self, value):
-        """Tests if the given value is valid. This method must be symmetric with
-        {@link #validate(Object)} so that {@link #validate(Object)} throws an
-        error iff this method returns false.
+        """Tests if the given value is valid. This method must be symmetric
+        with L{validate} so that L{validate} throws an error iff this method
+        returns false.
 
-        @param value
+        @param value:
                    the value to check
-        @return <code>true</code> if the value is valid, <code>false</code>
-                otherwise.
+        @return: C{True} if the value is valid, C{False} otherwise.
         """
         raise NotImplementedError
 
 
 class InvalidValueException(RuntimeError, IErrorMessage):
-    """Exception that is thrown by a {@link IValidator} when a value is invalid.
+    """Exception that is thrown by a L{IValidator} when a value is invalid.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
-    @since 3.0
     """
 
     def __init__(self, message, causes=None):
-        """Constructs a new {@code InvalidValueException} with the specified
-        message.
-
-        @param message
-                   The detail message of the problem.
-        ---
-        Constructs a new {@code InvalidValueException} with a set of causing
+        """Constructs a new C{InvalidValueException} with a set of causing
         validation exceptions. The causing validation exceptions are included
         when the exception is painted to the client.
 
-        @param message
+        @param message:
                    The detail message of the problem.
-        @param causes
-                   One or more {@code InvalidValueException}s that caused
+        @param causes:
+                   One or more C{InvalidValueException}s that caused
                    this exception.
         """
         super(InvalidValueException, self).__init__(message)
@@ -108,7 +96,7 @@ class InvalidValueException(RuntimeError, IErrorMessage):
         An empty (null or "") message is invisible unless it contains nested
         exceptions that are visible.
 
-        @return true if the error message should be hidden, false otherwise
+        @return: true if the error message should be hidden, false otherwise
         """
         msg = self.message
 
@@ -178,14 +166,15 @@ class InvalidValueException(RuntimeError, IErrorMessage):
 
 
     def setDebugId(self, idd):
-        raise NotImplementedError, 'InvalidValueException cannot have a debug id'
+        raise NotImplementedError('InvalidValueException cannot have '
+                'a debug id')
 
 
     def getCauses(self):
-        """Returns the {@code InvalidValueExceptions} that caused this
+        """Returns the C{InvalidValueExceptions} that caused this
         exception.
 
-        @return An array containing the {@code InvalidValueExceptions} that
+        @return: An array containing the C{InvalidValueExceptions} that
                 caused this exception. Returns an empty array if this
                 exception was not caused by other exceptions.
         """
@@ -193,14 +182,13 @@ class InvalidValueException(RuntimeError, IErrorMessage):
 
 
 class EmptyValueException(InvalidValueException):
-    """A specific type of {@link InvalidValueException} that indicates that
+    """A specific type of L{InvalidValueException} that indicates that
     validation failed because the value was empty. What empty means is up to
     the thrower.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
-    @since 5.3.0
     """
 
     def __init__(self, message):

@@ -18,14 +18,14 @@ from muntjac.terminal.resource import IResource
 
 
 class ThemeResource(IResource):
-    """<code>ThemeResource</code> is a named theme dependant resource
+    """C{ThemeResource} is a named theme dependant resource
     provided and managed by a theme. The actual resource contents are
     dynamically resolved to comply with the used theme by the terminal
     adapter. This is commonly used to provide static images, flash,
     java-applets, etc for the terminals.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -57,8 +57,8 @@ class ThemeResource(IResource):
 
         @param obj
                    the object to be tested for equality.
-        @return <code>true</code> if the given object equals this Icon,
-                <code>false</code> if not.
+        @return: C{True} if the given object equals this Icon,
+                C{False} if not.
         """
         return (isinstance(obj, ThemeResource)
                 and self._resourceID == obj.resourceID)
@@ -80,13 +80,13 @@ class ThemeResource(IResource):
     def getResourceId(self):
         """Gets the resource id.
 
-        @return the resource id.
+        @return: the resource id.
         """
         return self._resourceID
 
 
     def getMIMEType(self):
-        """@see com.vaadin.terminal.IResource#getMIMEType()"""
+        """@see: com.vaadin.terminal.IResource#getMIMEType()"""
 
         # FIXME: circular import
         from muntjac.service.file_type_resolver import FileTypeResolver

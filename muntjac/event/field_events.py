@@ -20,28 +20,28 @@ from muntjac.ui.component import Event as ComponentEvent
 
 
 class IFocusNotifier(object):
-    """The interface for adding and removing <code>FocusEvent</code> listeners.
+    """The interface for adding and removing C{FocusEvent} listeners.
     By implementing this interface a class explicitly announces that it will
-    generate a <code>FocusEvent</code> when it receives keyboard focus.
+    generate a C{FocusEvent} when it receives keyboard focus.
 
     Note: The general Java convention is not to explicitly declare that a
     class generates events, but to directly define the
-    <code>addListener</code> and <code>removeListener</code> methods. That
+    C{addListener} and C{removeListener} methods. That
     way the caller of these methods has no real way of finding out if the
     class really will send the events, or if it just defines the methods to
     be able to implement an interface.
 
     @since 6.2
-    @see IFocusListener
-    @see FocusEvent
+    @see: IFocusListener
+    @see: FocusEvent
     """
 
     def addListener(self, listener, iface):
-        """Adds a <code>IFocusListener</code> to the Component which gets fired
-        when a <code>Field</code> receives keyboard focus.
+        """Adds a C{IFocusListener} to the Component which gets fired
+        when a C{Field} receives keyboard focus.
 
-        @param listener
-        @see IFocusListener
+        @param listener:
+        @see: IFocusListener
         @since 6.2
         """
         if iface == IFocusListener:
@@ -55,10 +55,10 @@ class IFocusNotifier(object):
 
 
     def removeListener(self, listener, iface):
-        """Removes a <code>IFocusListener</code> from the Component.
+        """Removes a C{IFocusListener} from the Component.
 
-        @param listener
-        @see IFocusListener
+        @param listener:
+        @see: IFocusListener
         @since 6.2
         """
         if iface == IFocusListener:
@@ -72,28 +72,28 @@ class IFocusNotifier(object):
 
 
 class IBlurNotifier(object):
-    """The interface for adding and removing <code>BlurEvent</code> listeners.
+    """The interface for adding and removing C{BlurEvent} listeners.
     By implementing this interface a class explicitly announces that it will
-    generate a <code>BlurEvent</code> when it loses keyboard focus.
+    generate a C{BlurEvent} when it loses keyboard focus.
 
     Note: The general Java convention is not to explicitly declare that a
     class generates events, but to directly define the
-    <code>addListener</code> and <code>removeListener</code> methods. That
+    C{addListener} and C{removeListener} methods. That
     way the caller of these methods has no real way of finding out if the
     class really will send the events, or if it just defines the methods to
     be able to implement an interface.
 
     @since 6.2
-    @see IBlurListener
-    @see BlurEvent
+    @see: IBlurListener
+    @see: BlurEvent
     """
 
     def addListener(self, listener, iface):
-        """Adds a <code>IBlurListener</code> to the Component which gets fired
-        when a <code>Field</code> loses keyboard focus.
+        """Adds a C{IBlurListener} to the Component which gets fired
+        when a C{Field} loses keyboard focus.
 
-        @param listener
-        @see IBlurListener
+        @param listener:
+        @see: IBlurListener
         @since 6.2
         """
         if iface == IBlurListener:
@@ -107,10 +107,10 @@ class IBlurNotifier(object):
 
 
     def removeListener(self, listener, iface):
-        """Removes a <code>IBlurListener</code> from the Component.
+        """Removes a C{IBlurListener} from the Component.
 
-        @param listener
-        @see IBlurListener
+        @param listener:
+        @see: IBlurListener
         @since 6.2
         """
         if iface == IBlurListener:
@@ -124,12 +124,12 @@ class IBlurNotifier(object):
 
 
 class FocusEvent(ComponentEvent):
-    """<code>FocusEvent</code> class for holding additional event information.
-    Fired when a <code>Field</code> receives keyboard focus.
+    """C{FocusEvent} class for holding additional event information.
+    Fired when a C{Field} receives keyboard focus.
 
     @since 6.2
     """
-    # Identifier for event that can be used in {@link EventRouter}
+    # Identifier for event that can be used in L{EventRouter}
     EVENT_ID = EventId.FOCUS
 
     def __init__(self, source):
@@ -137,10 +137,10 @@ class FocusEvent(ComponentEvent):
 
 
 class IFocusListener(IComponentEventListener):
-    """<code>IFocusListener</code> interface for listening for
-    <code>FocusEvent</code> fired by a <code>Field</code>.
+    """C{IFocusListener} interface for listening for
+    C{FocusEvent} fired by a C{Field}.
 
-    @see FocusEvent
+    @see: FocusEvent
     @since 6.2
     """
 
@@ -156,13 +156,13 @@ class IFocusListener(IComponentEventListener):
 
 
 class BlurEvent(ComponentEvent):
-    """<code>BlurEvent</code> class for holding additional event information.
-    Fired when a <code>Field</code> loses keyboard focus.
+    """C{BlurEvent} class for holding additional event information.
+    Fired when a C{Field} loses keyboard focus.
 
     @since 6.2
     """
 
-    # Identifier for event that can be used in {@link EventRouter}
+    # Identifier for event that can be used in L{EventRouter}
     EVENT_ID = EventId.BLUR
 
     def __init__(self, source):
@@ -170,10 +170,10 @@ class BlurEvent(ComponentEvent):
 
 
 class IBlurListener(IComponentEventListener):
-    """<code>IBlurListener</code> interface for listening for
-    <code>BlurEvent</code> fired by a <code>Field</code>.
+    """C{IBlurListener} interface for listening for
+    C{BlurEvent} fired by a C{Field}.
 
-    @see BlurEvent
+    @see: BlurEvent
     @since 6.2
     """
 
@@ -194,7 +194,7 @@ class TextChangeEvent(ComponentEvent):
     keyboard, but e.g. pasting content from clip board to a text field also
     triggers an event.
 
-    TextChangeEvents differ from {@link ValueChangeEvent}s so that they are
+    TextChangeEvents differ from L{ValueChangeEvent}s so that they are
     triggered repeatedly while the end user is filling the field.
     ValueChangeEvents are not fired until the user for example hits enter or
     focuses another field. Also note the difference that TextChangeEvents are
@@ -202,15 +202,15 @@ class TextChangeEvent(ComponentEvent):
     ValueChangeEvents are also fired if the field value is set by the
     application code.
 
-    The {@link ITextChangeNotifier}s implementation may decide when exactly
+    The L{ITextChangeNotifier}s implementation may decide when exactly
     TextChangeEvents are fired. TextChangeEvents are not necessary fire for
     example on each key press, but buffered with a small delay. The
-    {@link TextField} component supports different modes for triggering
+    L{TextField} component supports different modes for triggering
     TextChangeEvents.
 
-    @see ITextChangeListener
-    @see ITextChangeNotifier
-    @see TextField#setTextChangeEventMode(TextField.TextChangeEventMode)
+    @see: ITextChangeListener
+    @see: ITextChangeNotifier
+    @see: TextField#setTextChangeEventMode(TextField.TextChangeEventMode)
     @since 6.5
     """
 
@@ -219,20 +219,20 @@ class TextChangeEvent(ComponentEvent):
 
 
     def getText(self):
-        """@return the text content of the field after the
-                {@link TextChangeEvent}
+        """@return: the text content of the field after the
+                L{TextChangeEvent}
         """
         pass
 
 
     def getCursorPosition(self):
-        """@return the cursor position during after the
-        {@link TextChangeEvent}"""
+        """@return: the cursor position during after the
+        L{TextChangeEvent}"""
         pass
 
 
 class ITextChangeListener(IComponentEventListener):
-    """A listener for {@link TextChangeEvent}s.
+    """A listener for L{TextChangeEvent}s.
 
     @since 6.5
     """
@@ -253,9 +253,9 @@ EVENT_METHOD = ITextChangeListener.textChange
 
 
 class ITextChangeNotifier(object):
-    """An interface implemented by a {@link Field} supporting
-    {@link TextChangeEvent}s. An example a {@link TextField} supports
-    {@link ITextChangeListener}s.
+    """An interface implemented by a L{Field} supporting
+    L{TextChangeEvent}s. An example a L{TextField} supports
+    L{ITextChangeListener}s.
     """
 
     def addListener(self, listener, iface):

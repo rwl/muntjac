@@ -20,8 +20,8 @@ class Action(object):
     action handling and listing, and for action handler registrations and
     unregistration.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -49,7 +49,7 @@ class Action(object):
     def getCaption(self):
         """Returns the action's caption.
 
-        @return the action's caption as a <code>String</code>.
+        @return: the action's caption as a C{String}.
         """
         return self._caption
 
@@ -57,7 +57,7 @@ class Action(object):
     def getIcon(self):
         """Returns the action's icon.
 
-        @return the action's Icon.
+        @return: the action's Icon.
         """
         return self._icon
 
@@ -87,8 +87,8 @@ class IContainer(object):
     should loop all action handlers registered to it and let them handle the
     action.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -114,7 +114,7 @@ class IContainer(object):
 
 class IListener(object):
     """An Action that implements this interface can be added to an
-    Action.Notifier (or NotifierProxy) via the <code>addAction()</code>
+    Action.Notifier (or NotifierProxy) via the C{addAction()}
     -method, which in many cases is easier than implementing the
     Action.Handler interface.<br/>
     """
@@ -150,8 +150,8 @@ class IShortcutNotifier(object):
 class IHandler(object):
     """Interface implemented by classes who wish to handle actions.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -165,7 +165,7 @@ class IHandler(object):
         @param sender
                    the party that would be sending the actions. Most of this
                    is the action container.
-        @return the list of Action
+        @return: the list of Action
         """
         raise NotImplementedError
 

@@ -10,7 +10,7 @@ class TestSimpleMultiPartInputStream(TestCase):
     # @param input
     # @param boundary
     # @param expected
-    # @throws Exception
+    # @raise Exception
 
     # protected void checkBoundaryDetection(byte[] input, String boundary,
     # byte[] expected) throws Exception {

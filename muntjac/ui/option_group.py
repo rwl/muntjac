@@ -165,8 +165,8 @@ class OptionGroup(AbstractSelect, IBlurNotifier, IFocusNotifier):
 
         @param itemId
                    the id of the item to be checked
-        @return true if the item is enabled, false otherwise
-        @see #setItemEnabled(Object, boolean)
+        @return: true if the item is enabled, false otherwise
+        @see: #setItemEnabled(Object, boolean)
         """
         if itemId is not None:
             return not (itemId in self._disabledItemIds)

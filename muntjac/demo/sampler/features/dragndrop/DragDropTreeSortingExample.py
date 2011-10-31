@@ -42,7 +42,7 @@ class DragDropTreeSortingExample(VerticalLayout):
 class TreeSortDropHandler(IDropHandler):
 
     def __init__(self, tree, container):
-        """Tree must use {@link HierarchicalContainer}.
+        """Tree must use L{HierarchicalContainer}.
 
         @param tree
         """

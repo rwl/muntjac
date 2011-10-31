@@ -22,10 +22,10 @@ from muntjac.event.dd.acceptcriteria.client_side_criterion import \
 
 class SourceIsTarget(ClientSideCriterion):
     """A criterion that ensures the drag source is the same as drop target.
-    Eg. {@link Tree} or {@link Table} could support only re-ordering of items,
-    but no {@link Transferable}s coming outside.
+    Eg. L{Tree} or L{Table} could support only re-ordering of items,
+    but no L{Transferable}s coming outside.
 
-    Note! Class is singleton, use {@link #get()} method to get the instance.
+    Note! Class is singleton, use L{#get()} method to get the instance.
 
     @since 6.3
     """

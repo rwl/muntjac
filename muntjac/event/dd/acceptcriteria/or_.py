@@ -22,7 +22,7 @@ class Or(ClientSideCriterion):
     """A compound criterion that accepts the drag if any of its criterion
     accepts it.
 
-    @see And
+    @see: And
 
     @since 6.3
     """

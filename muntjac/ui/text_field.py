@@ -25,14 +25,14 @@ class TextField(AbstractTextField):
     The text editor supports both multiline and single line modes, default
     is one-line mode.
 
-    Since <code>TextField</code> extends <code>AbstractField</code> it
-    implements the {@link com.vaadin.data.Buffered} interface. A
-    <code>TextField</code> is in write-through mode by default, so
-    {@link com.vaadin.ui.AbstractField#setWriteThrough(boolean)} must be
+    Since C{TextField} extends C{AbstractField} it
+    implements the L{com.vaadin.data.Buffered} interface. A
+    C{TextField} is in write-through mode by default, so
+    L{com.vaadin.ui.AbstractField#setWriteThrough(boolean)} must be
     called to enable buffering.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -40,35 +40,35 @@ class TextField(AbstractTextField):
     CLIENT_WIDGET = None #ClientWidget(VTextField, LoadStyle.EAGER)
 
     def __init__(self, *args):
-        """Constructs an empty <code>TextField</code> with no caption.
+        """Constructs an empty C{TextField} with no caption.
         ---
-        Constructs an empty <code>TextField</code> with given caption.
+        Constructs an empty C{TextField} with given caption.
 
         @param caption
-                   the caption <code>String</code> for the editor.
+                   the caption C{String} for the editor.
         ---
-        Constructs a new <code>TextField</code> that's bound to the specified
-        <code>IProperty</code> and has no caption.
+        Constructs a new C{TextField} that's bound to the specified
+        C{IProperty} and has no caption.
 
         @param dataSource
                    the IProperty to be edited with this editor.
         ---
-        Constructs a new <code>TextField</code> that's bound to the specified
-        <code>IProperty</code> and has the given caption <code>String</code>.
+        Constructs a new C{TextField} that's bound to the specified
+        C{IProperty} and has the given caption C{String}.
 
         @param caption
-                   the caption <code>String</code> for the editor.
+                   the caption C{String} for the editor.
         @param dataSource
                    the IProperty to be edited with this editor.
         ---
-        Constructs a new <code>TextField</code> with the given caption and
+        Constructs a new C{TextField} with the given caption and
         initial text contents. The editor constructed this way will not be
         bound to a IProperty unless
-        {@link IProperty.Viewer#setPropertyDataSource(IProperty)} is called to
+        L{IProperty.Viewer#setPropertyDataSource(IProperty)} is called to
         bind it.
 
         @param caption
-                   the caption <code>String</code> for the editor.
+                   the caption C{String} for the editor.
         @param text
                    the initial text content of the editor.
         """
@@ -114,10 +114,10 @@ class TextField(AbstractTextField):
         """Gets the secret property. If a field is used to enter secret
         information the information is not echoed to display.
 
-        @return <code>true</code> if the field is used to enter secret
-                information, <code>false</code> otherwise.
+        @return: C{True} if the field is used to enter secret
+                information, C{False} otherwise.
 
-        @deprecated Starting from 6.5 use {@link PasswordField} instead for
+        @deprecated Starting from 6.5 use L{PasswordField} instead for
                     secret text input.
         """
         warn('use PasswordField instead', DeprecationWarning)
@@ -132,7 +132,7 @@ class TextField(AbstractTextField):
         @param secret
                    the value specifying if the field is used to enter secret
                    information.
-        @deprecated Starting from 6.5 use {@link PasswordField} instead for
+        @deprecated Starting from 6.5 use L{PasswordField} instead for
                     secret text input.
         """
         warn('use PasswordField instead', DeprecationWarning)
@@ -164,8 +164,8 @@ class TextField(AbstractTextField):
         to 0, the actual number of displayed rows is determined implicitly by
         the adapter.
 
-        @return number of explicitly set rows.
-        @deprecated Starting from 6.5 use {@link TextArea} for a multi-line
+        @return: number of explicitly set rows.
+        @deprecated Starting from 6.5 use L{TextArea} for a multi-line
                     text input.
         """
         warn('use TextArea for a multi-line text input', DeprecationWarning)
@@ -179,7 +179,7 @@ class TextField(AbstractTextField):
         @param rows
                    the number of rows for this editor.
 
-        @deprecated Starting from 6.5 use {@link TextArea} for a multi-line
+        @deprecated Starting from 6.5 use L{TextArea} for a multi-line
                     text input.
         """
         warn('use TextArea for a multi-line text input', DeprecationWarning)
@@ -195,9 +195,9 @@ class TextField(AbstractTextField):
     def isWordwrap(self):
         """Tests if the editor is in word-wrap mode.
 
-        @return <code>true</code> if the component is in the word-wrap mode,
-                <code>false</code> if not.
-        @deprecated Starting from 6.5 use {@link TextArea} for a multi-line
+        @return: C{True} if the component is in the word-wrap mode,
+                C{False} if not.
+        @deprecated Starting from 6.5 use L{TextArea} for a multi-line
                     text input.
         """
         warn('use TextArea for a multi-line text input', DeprecationWarning)
@@ -211,7 +211,7 @@ class TextField(AbstractTextField):
                    the boolean value specifying if the editor should be in
                    word-wrap mode after the call or not.
 
-        @deprecated Starting from 6.5 use {@link TextArea} for a multi-line
+        @deprecated Starting from 6.5 use L{TextArea} for a multi-line
                     text input.
         """
         warn('use TextArea for a multi-line text input', DeprecationWarning)
@@ -221,35 +221,35 @@ class TextField(AbstractTextField):
 
 
     def setHeight(self, height, unit=None):
-        """Sets the height of the {@link TextField} instance.
+        """Sets the height of the L{TextField} instance.
 
-        Setting height for {@link TextField} also has a side-effect that puts
-        {@link TextField} into multiline mode (aka "textarea"). Multiline mode
-        can also be achieved by calling {@link #setRows(int)}. The height
-        value overrides the number of rows set by {@link #setRows(int)}.
+        Setting height for L{TextField} also has a side-effect that puts
+        L{TextField} into multiline mode (aka "textarea"). Multiline mode
+        can also be achieved by calling L{#setRows(int)}. The height
+        value overrides the number of rows set by L{#setRows(int)}.
 
-        If you want to set height of single line {@link TextField}, call
-        {@link #setRows(int)} with value 0 after setting the height. Setting
+        If you want to set height of single line L{TextField}, call
+        L{#setRows(int)} with value 0 after setting the height. Setting
         rows to 0 resets the side-effect.
 
-        Starting from 6.5 you should use {@link TextArea} instead of
-        {@link TextField} for multiline text input.
+        Starting from 6.5 you should use L{TextArea} instead of
+        L{TextField} for multiline text input.
 
-        @see com.vaadin.ui.AbstractComponent#setHeight(float, int)
+        @see: com.vaadin.ui.AbstractComponent#setHeight(float, int)
         ---
-        Sets the height of the {@link TextField} instance.
+        Sets the height of the L{TextField} instance.
 
         <p>
-        Setting height for {@link TextField} also has a side-effect that puts
-        {@link TextField} into multiline mode (aka "textarea"). Multiline mode
-        can also be achieved by calling {@link #setRows(int)}. The height
-        value overrides the number of rows set by {@link #setRows(int)}.
+        Setting height for L{TextField} also has a side-effect that puts
+        L{TextField} into multiline mode (aka "textarea"). Multiline mode
+        can also be achieved by calling L{#setRows(int)}. The height
+        value overrides the number of rows set by L{#setRows(int)}.
         <p>
-        If you want to set height of single line {@link TextField}, call
-        {@link #setRows(int)} with value 0 after setting the height. Setting
+        If you want to set height of single line L{TextField}, call
+        L{#setRows(int)} with value 0 after setting the height. Setting
         rows to 0 resets the side-effect.
 
-        @see com.vaadin.ui.AbstractComponent#setHeight(java.lang.String)
+        @see: com.vaadin.ui.AbstractComponent#setHeight(java.lang.String)
         """
         if unit is None:
             # will call setHeight(float, int) the actually does the magic.

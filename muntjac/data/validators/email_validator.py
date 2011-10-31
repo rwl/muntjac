@@ -22,20 +22,18 @@ class EmailValidator(RegexpValidator):
     complete according to RFC 822 but handles the vast majority of valid e-mail
     addresses correctly.
 
-    See {@link com.vaadin.data.validator.AbstractStringValidator} for more
-    information.
+    See L{AbstractStringValidator} for more information.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
-    @since 5.4
     """
 
     def __init__(self, errorMessage):
-        """Creates a validator for checking that a string is a syntactically valid
-        e-mail address.
+        """Creates a validator for checking that a string is a syntactically
+        valid e-mail address.
 
-        @param errorMessage
+        @param errorMessage:
                    the message to display in case the value does not validate.
         """
         super(EmailValidator, self).__init__(('^([a-zA-Z0-9_\\.\\-+])+'

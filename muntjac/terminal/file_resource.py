@@ -23,14 +23,14 @@ from muntjac.terminal.terminal import IErrorEvent
 
 
 class FileResource(IApplicationResource):
-    """<code>FileResources</code> are files or directories on local
+    """C{FileResources} are files or directories on local
     filesystem. The files and directories are served through URI:s to
     the client terminal and thus must be registered to an URI context
     before they can be used. The resource is automatically registered
     to the application when it is created.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -59,7 +59,7 @@ class FileResource(IApplicationResource):
     def getStream(self):
         """Gets the resource as stream.
 
-        @see muntjac.terminal.IApplicationResource#getStream()
+        @see: muntjac.terminal.IApplicationResource#getStream()
         """
         try:
             ds = DownloadStream(file(self._sourceFile, 'rb'),
@@ -83,7 +83,7 @@ class FileResource(IApplicationResource):
     def getSourceFile(self):
         """Gets the source file.
 
-        @return the source File.
+        @return: the source File.
         """
         return self._sourceFile
 
@@ -98,17 +98,17 @@ class FileResource(IApplicationResource):
 
 
     def getApplication(self):
-        """@see com.vaadin.terminal.IApplicationResource#getApplication()"""
+        """@see: com.vaadin.terminal.IApplicationResource#getApplication()"""
         return self._application
 
 
     def getFilename(self):
-        """@see com.vaadin.terminal.IApplicationResource#getFilename()"""
+        """@see: com.vaadin.terminal.IApplicationResource#getFilename()"""
         return basename(self._sourceFile)
 
 
     def getMIMEType(self):
-        """@see com.vaadin.terminal.Resource#getMIMEType()"""
+        """@see: com.vaadin.terminal.Resource#getMIMEType()"""
         return FileTypeResolver.getMIMEType(self._sourceFile)
 
 
@@ -116,9 +116,9 @@ class FileResource(IApplicationResource):
         """Gets the length of cache expiration time. This gives the adapter
         the possibility cache streams sent to the client. The caching may be
         made in adapter or at the client if the client supports caching.
-        Default is <code>DownloadStream.DEFAULT_CACHETIME</code>.
+        Default is C{DownloadStream.DEFAULT_CACHETIME}.
 
-        @return Cache time in milliseconds.
+        @return: Cache time in milliseconds.
         """
         return self._cacheTime
 

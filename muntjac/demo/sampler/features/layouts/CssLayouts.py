@@ -27,7 +27,7 @@ class CssLayouts(Feature):
             'can build almost anything with plain Java. But sometimes '
             'experienced web developers miss the flexibility that pure CSS '
             'and HTML can offer.<br /><br />CssLayout is a simple layout that '
-            'places its contained components into a <code>DIV</code> element. '
+            'places its contained components into a C{DIV} element. '
             'It has a simple DOM structure and it leaves all the power to the '
             'CSS designer\'s hands. While having a very narrow feature set, '
             'CssLayout is the fastest layout to render in Vaadin.')

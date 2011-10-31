@@ -100,7 +100,7 @@ class TextArea(AbstractTextField):
     def getRows(self):
         """Gets the number of rows in the text area.
 
-        @return number of explicitly set rows.
+        @return: number of explicitly set rows.
         """
         return self._rows
 
@@ -120,8 +120,8 @@ class TextArea(AbstractTextField):
     def isWordwrap(self):
         """Tests if the text area is in word-wrap mode.
 
-        @return <code>true</code> if the component is in word-wrap mode,
-                <code>false</code> if not.
+        @return: C{True} if the component is in word-wrap mode,
+                C{False} if not.
         """
         return self._wordwrap
 

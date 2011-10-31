@@ -48,8 +48,8 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
     The <b>b</b>,<b>i</b>,<b>u</b> and <b>li</b> tags can contain all the tags
     in the list recursively.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -136,7 +136,7 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
         """Is the component read-only ? Readonly is not used in label - this
         returns always false.
 
-        @return <code>true</code> if the component is in read only mode.
+        @return: C{True} if the component is in read only mode.
         """
         if self._dataSource is None:
             raise ValueError, self._DATASOURCE_MUST_BE_SET
@@ -148,7 +148,7 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
 
         @param target
                    the Paint Event.
-        @throws PaintException
+        @raise PaintException
                     if the Paint Operation fails.
         """
         if self._contentMode != self.CONTENT_TEXT:
@@ -186,7 +186,7 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
         """Gets the value of the label. Value of the label is the XML
         contents of the label.
 
-        @return the Value of the label.
+        @return: the Value of the label.
         """
         if self._dataSource is None:
             raise ValueError, self._DATASOURCE_MUST_BE_SET
@@ -206,7 +206,7 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
 
 
     def __str__(self):
-        """@see java.lang.Object#toString()"""
+        """@see: java.lang.Object#toString()"""
         if self._dataSource is None:
             raise ValueError, self._DATASOURCE_MUST_BE_SET
         return str(self._dataSource)
@@ -215,7 +215,7 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
     def getType(self):
         """Gets the type of the IProperty.
 
-        @see com.vaadin.data.IProperty#getType()
+        @see: com.vaadin.data.IProperty#getType()
         """
         if self._dataSource is None:
             raise ValueError, self._DATASOURCE_MUST_BE_SET
@@ -225,8 +225,8 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
     def getPropertyDataSource(self):
         """Gets the viewing data-source property.
 
-        @return the data source property.
-        @see com.vaadin.data.property.IViewer#getPropertyDataSource()
+        @return: the data source property.
+        @see: com.vaadin.data.property.IViewer#getPropertyDataSource()
         """
         return self._dataSource
 
@@ -236,7 +236,7 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
 
         @param newDataSource
                    the new data source IProperty
-        @see property.IViewer#setPropertyDataSource()
+        @see: property.IViewer#setPropertyDataSource()
         """
         # Stops listening the old data source changes
         if (self._dataSource is not None
@@ -280,7 +280,7 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
         shown, but in most cases XHTML mode should be preferred.</li>
         </ul>
 
-        @return the Content mode of the label.
+        @return: the Content mode of the label.
         """
         return self._contentMode
 
@@ -371,9 +371,9 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
 
         @param other
                    the Other object to compare to.
-        @return a negative integer, zero, or a positive integer as this object
+        @return: a negative integer, zero, or a positive integer as this object
                 is less than, equal to, or greater than the specified object.
-        @see java.lang.Comparable#compareTo(java.lang.Object)
+        @see: java.lang.Comparable#compareTo(java.lang.Object)
         """
         if (self._contentMode == self.CONTENT_XML
                 or self._contentMode == self.CONTENT_UIDL
@@ -397,7 +397,7 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
 
         @param xml
                    the String containing a XML snippet.
-        @return the original XML without tags.
+        @return: the original XML without tags.
         """
         res = StringIO()
         processed = 0

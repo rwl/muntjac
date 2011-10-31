@@ -20,19 +20,17 @@ from muntjac.data.property import ReadOnlyException, ConversionException
 
 class ObjectProperty(AbstractProperty):
     """A simple data object containing one typed value. This class is a
-    straightforward implementation of the the {@link com.vaadin.data.Property}
-    interface.
+    straightforward implementation of the the L{IProperty} interface.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
-    @since 3.0
     """
 
-    def __init__(self, *args):
-        """Creates a new instance of ObjectProperty with the given value. The type
-        of the property is automatically initialized to be the type of the given
-        value.
+    def __init__(self, value, typ=None, readOnly=None):
+        """Creates a new instance of ObjectProperty with the given value. The
+        type of the property is automatically initialized to be the type of the
+        given value.
 
         @param value
                    the Initial value of the Property.
@@ -41,7 +39,7 @@ class ObjectProperty(AbstractProperty):
 
         Any value of type Object is accepted because, if the type class contains
         a string constructor, the toString of the value is used to create the new
-        value. See {@link #setValue(Object)}.
+        value. See L{#setValue(Object)}.
 
         @param value
                    the Initial value of the Property.
@@ -53,49 +51,42 @@ class ObjectProperty(AbstractProperty):
         read-only mode status.
 
         Any value of type Object is accepted, see
-        {@link #ObjectProperty(Object, Class)}.
+        L{#ObjectProperty(Object, Class)}.
 
         @param value
                    the Initial value of the property.
         @param type
-                   the type of the value. <code>value</code> must be assignable
+                   the type of the value. C{value} must be assignable
                    to this type.
         @param readOnly
                    Sets the read-only mode.
         """
         super(ObjectProperty, self).__init__()
 
-        # The value contained by the Property.
+        #: The value contained by the Property.
         self._value = None
 
-        # Data type of the Property's value.
+        #: Data type of the Property's value.
         self._type = None
 
-        # the cast is safe, because an object of type T has class Class<T>
-        nargs = len(args)
-        if nargs == 1:
-            value, = args
+        if typ is None and readOnly is None:
             ObjectProperty.__init__(self, value, value.__class__)
-        elif nargs == 2:
-            value, typ = args
+        elif readOnly is None:
             self._type = typ
             self.setValue(value)
-        elif nargs == 3:
-            value, typ, readOnly = args
+        else:
             ObjectProperty.__init__(self, value, typ)
             self.setReadOnly(readOnly)
-        else:
-            raise ValueError
 
 
     def getType(self):
-        """Returns the type of the ObjectProperty. The methods <code>getValue</code>
-        and <code>setValue</code> must be compatible with this type: one must be
-        able to safely cast the value returned from <code>getValue</code> to the
-        given type and pass any variable assignable to this type as an argument
-        to <code>setValue</code>.
+        """Returns the type of the ObjectProperty. The methods C{getValue}
+        and C{setValue} must be compatible with this type: one must be
+        able to safely cast the value returned from C{getValue} to the
+        given type and pass any variable assignable to this type as an
+        argument to C{setValue}.
 
-        @return type of the Property
+        @return: type of the Property
         """
         return self._type
 
@@ -103,23 +94,23 @@ class ObjectProperty(AbstractProperty):
     def getValue(self):
         """Gets the value stored in the Property.
 
-        @return the value stored in the Property
+        @return: the value stored in the Property
         """
         return self._value
 
 
     def setValue(self, newValue):
         """Sets the value of the property. This method supports setting from
-        <code>String</code> if either <code>String</code> is directly assignable
-        to property type, or the type class contains a string constructor.
+        C{str} if either C{str} is directly assignable to property type, or
+        the type class contains a string constructor.
 
-        @param newValue
+        @param newValue:
                    the New value of the property.
-        @throws <code>Property.ReadOnlyException</code> if the object is in
-                read-only mode
-        @throws <code>Property.ConversionException</code> if the newValue can't
-                be converted into the Property's native type directly or through
-                <code>String</code>
+        @raise ReadOnlyException:
+                   if the object is in read-only mode
+        @raise ConversionException:
+                   if the newValue can't be converted into the Property's
+                   native type directly or through C{str}
         """
         # Checks the mode
         if self.isReadOnly():

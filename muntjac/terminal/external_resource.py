@@ -19,12 +19,12 @@ from muntjac.terminal.resource import IResource
 
 
 class ExternalResource(IResource):
-    """<code>ExternalResource</code> implements source for resources fetched
+    """C{ExternalResource} implements source for resources fetched
     from location specified by URL:s. The resources are fetched directly by
     the client terminal and are not fetched trough the terminal adapter.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -55,7 +55,7 @@ class ExternalResource(IResource):
     def getURL(self):
         """Gets the URL of the external resource.
 
-        @return the URL of the external resource.
+        @return: the URL of the external resource.
         """
         return self._sourceURL
 
@@ -63,7 +63,7 @@ class ExternalResource(IResource):
     def getMIMEType(self):
         """Gets the MIME type of the resource.
 
-        @see com.vaadin.terminal.IResource#getMIMEType()
+        @see: com.vaadin.terminal.IResource#getMIMEType()
         """
         if self._mimeType is None:
             self._mimeType = FileTypeResolver.getMIMEType(self.getURL())

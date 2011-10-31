@@ -19,27 +19,23 @@ from muntjac.data.util.item_sorter import IItemSorter
 
 class DefaultItemSorter(IItemSorter):
     """Provides a default implementation of an IItemSorter. The
-    <code>DefaultItemSorter</code> adheres to the
-    {@link Sortable#sort(Object[], boolean[])} rules and sorts the container
-    according to the properties given using
-    {@link #setSortProperties(Sortable, Object[], boolean[])}.
+    C{DefaultItemSorter} adheres to the L{ISortable.sort} rules and sorts
+    the container according to the properties given using L{setSortProperties}.
 
-    A Comparator is used for comparing the individual <code>Property</code>
-    values. The comparator can be set using the constructor. If no comparator is
-    provided a default comparator is used.
+    A Comparator is used for comparing the individual C{Property}
+    values. The comparator can be set using the constructor. If no comparator
+    is provided a default comparator is used.
     """
 
     def __init__(self, propertyValueComparator=None):
-        """Constructs a DefaultItemSorter using the default <code>Comparator</code>
-        for comparing <code>Property</code>values.
-        ---
-        Constructs a DefaultItemSorter which uses the <code>Comparator</code>
-        indicated by the <code>propertyValueComparator</code> parameter for
-        comparing <code>Property</code>values.
+        """Constructs a DefaultItemSorter which uses the C{Comparator}
+        indicated by the C{propertyValueComparator} parameter for
+        comparing C{Property} values. Uses the default C{Comparator}
+        for comparing C{Property} values if propertyValueComparator is None.
 
         @param propertyValueComparator
                    The comparator to use when comparing individual
-                   <code>Property</code> values
+                   C{Property} values
         """
         self._sortPropertyIds = None
         self._sortDirections = None
@@ -82,28 +78,28 @@ class DefaultItemSorter(IItemSorter):
 
 
     def compareProperty(self, propertyId, sortDirection, item1, item2):
-        """Compares the property indicated by <code>propertyId</code> in the items
-        indicated by <code>item1</code> and <code>item2</code> for order. Returns
-        a negative integer, zero, or a positive integer as the property value in
-        the first item is less than, equal to, or greater than the property value
-        in the second item. If the <code>sortDirection</code> is false the
+        """Compares the property indicated by C{propertyId} in the items
+        indicated by C{item1} and C{item2} for order. Returns a negative
+        integer, zero, or a positive integer as the property value in
+        the first item is less than, equal to, or greater than the property
+        value in the second item. If the C{sortDirection} is false the
         returned value is negated.
-        <p>
-        The comparator set for this <code>DefaultItemSorter</code> is used for
+
+        The comparator set for this C{DefaultItemSorter} is used for
         comparing the two property values.
 
-        @param propertyId
+        @param propertyId:
                    The property id for the property that is used for comparison.
-        @param sortDirection
+        @param sortDirection:
                    The direction of the sort. A false value negates the result.
-        @param item1
+        @param item1:
                    The first item to compare.
-        @param item2
+        @param item2:
                    The second item to compare.
-        @return a negative, zero, or positive integer if the property value in
+        @return: a negative, zero, or positive integer if the property value in
                 the first item is less than, equal to, or greater than the
                 property value in the second item. Negated if
-                {@code sortDirection} is false.
+                C{sortDirection} is false.
         """
         property1 = item1.getItemProperty(propertyId)
         property2 = item2.getItemProperty(propertyId)
@@ -144,9 +140,9 @@ class DefaultItemSorter(IItemSorter):
 
 
 class DefaultPropertyValueComparator(object):
-    """Provides a default comparator used for comparing {@link Property} values.
-    The <code>DefaultPropertyValueComparator</code> assumes all objects it
-    compares can be cast to Comparable.
+    """Provides a default comparator used for comparing L{Property} values.
+    The C{DefaultPropertyValueComparator} assumes all objects it compares
+    can be cast to Comparable.
     """
 
     def __call__(self, o1, o2):

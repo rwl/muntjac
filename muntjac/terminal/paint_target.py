@@ -19,8 +19,8 @@ class IPaintTarget(object):
     """This interface defines the methods for painting XML to the UIDL
     stream.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -35,7 +35,7 @@ class IPaintTarget(object):
                    the name of the tag.
         @param sectionData
                    the scetion data.
-        @throws PaintException
+        @raise PaintException
                     if the paint operation failed.
         """
         raise NotImplementedError
@@ -55,9 +55,9 @@ class IPaintTarget(object):
                    the paintable to start.
         @param tag
                    the name of the start tag.
-        @return <code>true</code> if paintable found in cache,
-                <code>false</code> otherwise.
-        @throws PaintException
+        @return: C{True} if paintable found in cache,
+                C{False} otherwise.
+        @raise PaintException
                     if the paint operation failed.
         @since 3.1
         """
@@ -71,17 +71,17 @@ class IPaintTarget(object):
         component.
 
         Note! This was experimental api and got replaced by
-        {@link #addAttribute(String, Paintable)} and
-        {@link #addVariable(VariableOwner, String, Paintable)}.
+        L{#addAttribute(String, Paintable)} and
+        L{#addVariable(VariableOwner, String, Paintable)}.
 
         @param paintable
                    the Paintable to reference
         @param referenceName
-        @throws PaintException
+        @raise PaintException
 
         @since 5.2
-        @deprecated use {@link #addAttribute(String, Paintable)} or
-                    {@link #addVariable(VariableOwner, String, Paintable)}
+        @deprecated use L{#addAttribute(String, Paintable)} or
+                    L{#addVariable(VariableOwner, String, Paintable)}
                     instead
         """
         raise NotImplementedError
@@ -95,7 +95,7 @@ class IPaintTarget(object):
 
         @param tagName
                    the name of the end tag.
-        @throws PaintException
+        @raise PaintException
                     if the paint operation failed.
         """
         raise NotImplementedError
@@ -110,21 +110,21 @@ class IPaintTarget(object):
         @param value
                    the Attribute value.
 
-        @throws PaintException
+        @raise PaintException
                     if the paint operation failed.
         """
         raise NotImplementedError
 
 
     def addVariable(self, *args):
-        """Adds details about {@link StreamVariable} to the UIDL stream.
+        """Adds details about L{StreamVariable} to the UIDL stream.
         Eg. in web terminals Receivers are typically rendered for the client
         side as URLs, where the client side implementation can do an http
         post request.
 
         The urls in UIDL message may use Vaadin specific protocol. Before
         actually using the urls on the client side, they should be passed via
-        {@link ApplicationConnection#translateVaadinUri(String)}.
+        L{ApplicationConnection#translateVaadinUri(String)}.
 
         Note that in current terminal implementation StreamVariables are
         cleaned from the terminal only when:
@@ -132,7 +132,7 @@ class IPaintTarget(object):
         <li>a StreamVariable with same name replaces an old one
         <li>the variable owner is no more attached
         <li>the developer signals this by calling
-        {@link StreamingStartEvent#disposeStreamVariable()}
+        L{StreamingStartEvent#disposeStreamVariable()}
         </ul>
         Most commonly a component developer can just ignore this issue, but
         with strict memory requirements and lots of StreamVariables
@@ -147,7 +147,7 @@ class IPaintTarget(object):
         @param value
                    the StreamVariable to paint
 
-        @throws PaintException
+        @raise PaintException
                     if the paint operation failed.
         """
         raise NotImplementedError
@@ -161,7 +161,7 @@ class IPaintTarget(object):
         @param name
                    the Variable name.
 
-        @throws PaintException
+        @raise PaintException
                     if the paint operation failed.
         """
         raise NotImplementedError
@@ -179,7 +179,7 @@ class IPaintTarget(object):
                    the section data to be printed.
         @param namespace
                    the namespace.
-        @throws PaintException
+        @raise PaintException
                     if the paint operation failed.
         """
         raise NotImplementedError
@@ -191,7 +191,7 @@ class IPaintTarget(object):
 
         @param uidl
                    the UIDL to be added.
-        @throws PaintException
+        @raise PaintException
                     if the paint operation failed.
         """
         raise NotImplementedError
@@ -202,7 +202,7 @@ class IPaintTarget(object):
 
         @param text
                    the Text to add
-        @throws PaintException
+        @raise PaintException
                     if the paint operation failed.
         """
         raise NotImplementedError
@@ -213,7 +213,7 @@ class IPaintTarget(object):
 
         @param text
                    the Character data to add
-        @throws PaintException
+        @raise PaintException
                     if the paint operation failed.
         @since 3.1
         """
@@ -221,8 +221,8 @@ class IPaintTarget(object):
 
 
     def getTag(self, paintable):
-        """@return the "tag" string used in communication to present given
-                {@link Paintable} type. Terminal may define how to present
+        """@return: the "tag" string used in communication to present given
+                L{Paintable} type. Terminal may define how to present
                 paintable.
         """
         raise NotImplementedError

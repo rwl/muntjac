@@ -23,8 +23,8 @@ class IPaintable(IEventListener):
     stream and that way describing to the terminal how it should be displayed
     in the UI.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -40,7 +40,7 @@ class IPaintable(IEventListener):
         @param target
                    the target UIDL stream where the component should paint
                    itself to.
-        @throws PaintException
+        @raise PaintException
                     if the paint operation failed.
         """
         raise NotImplementedError
@@ -71,7 +71,7 @@ class IPaintable(IEventListener):
     def getDebugId(self):
         """Get's currently set debug identifier
 
-        @return current debug id, null if not set
+        @return: current debug id, null if not set
         """
         raise NotImplementedError
 
@@ -81,7 +81,7 @@ class IPaintable(IEventListener):
         requests are missed, the new repaint listener should paint the
         paintable right after adding itself as listener.
 
-        @param listener
+        @param listener:
                    the listener to be added.
         """
         if iface == IRepaintRequestListener:
@@ -97,7 +97,7 @@ class IPaintable(IEventListener):
     def removeListener(self, listener, iface):
         """Removes repaint request listener.
 
-        @param listener
+        @param listener:
                    the listener to be removed.
         """
         if iface == IRepaintRequestListener:
@@ -127,7 +127,7 @@ class IPaintable(IEventListener):
 
 class RepaintRequestEvent(EventObject):
     """Repaint request event is thrown when the paintable needs to be
-    repainted. This is typically done when the <code>paint</code> method
+    repainted. This is typically done when the C{paint} method
     would return dissimilar UIDL from the previous call of the method.
     """
 
@@ -143,16 +143,16 @@ class RepaintRequestEvent(EventObject):
     def getPaintable(self):
         """Gets the paintable needing repainting.
 
-        @return IPaintable for which the <code>paint</code> method will return
+        @return: IPaintable for which the C{paint} method will return
                 dissimilar UIDL from the previous call of the method.
         """
         return self.getSource()
 
 
 class IRepaintRequestListener(object):
-    """Listens repaint requests. The <code>repaintRequested</code> method is
+    """Listens repaint requests. The C{repaintRequested} method is
     called when the paintable needs to be repainted. This is typically done
-    when the <code>paint</code> method would return dissimilar UIDL from the
+    when the C{paint} method would return dissimilar UIDL from the
     previous call of the method.
     """
 

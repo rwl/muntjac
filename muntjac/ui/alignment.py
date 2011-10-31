@@ -40,7 +40,7 @@ class Alignment(object):
         """Returns a bitmask representation of the alignment value. Used
         internally by terminal.
 
-        @return the bitmask representation of the alignment value
+        @return: the bitmask representation of the alignment value
         """
         return self._bitMask
 
@@ -48,7 +48,7 @@ class Alignment(object):
     def isTop(self):
         """Checks if component is aligned to the top of the available space.
 
-        @return true if aligned top
+        @return: true if aligned top
         """
         return (self._bitMask & Bits.ALIGNMENT_TOP) == Bits.ALIGNMENT_TOP
 
@@ -57,7 +57,7 @@ class Alignment(object):
         """Checks if component is aligned to the bottom of the available
         space.
 
-        @return true if aligned bottom
+        @return: true if aligned bottom
         """
         return (self._bitMask & Bits.ALIGNMENT_BOTTOM) == \
                 Bits.ALIGNMENT_BOTTOM
@@ -67,7 +67,7 @@ class Alignment(object):
         """Checks if component is aligned to the left of the available
         space.
 
-        @return true if aligned left
+        @return: true if aligned left
         """
         return (self._bitMask & Bits.ALIGNMENT_LEFT) == Bits.ALIGNMENT_LEFT
 
@@ -75,7 +75,7 @@ class Alignment(object):
     def isRight(self):
         """Checks if component is aligned to the right of the available space.
 
-        @return true if aligned right
+        @return: true if aligned right
         """
         return (self._bitMask & Bits.ALIGNMENT_RIGHT) == Bits.ALIGNMENT_RIGHT
 
@@ -84,7 +84,7 @@ class Alignment(object):
         """Checks if component is aligned middle (vertically center) of the
         available space.
 
-        @return true if aligned bottom
+        @return: true if aligned bottom
         """
         return (self._bitMask & Bits.ALIGNMENT_VERTICAL_CENTER) == \
                 Bits.ALIGNMENT_VERTICAL_CENTER
@@ -94,7 +94,7 @@ class Alignment(object):
         """Checks if component is aligned center (horizontally) of the
         available space.
 
-        @return true if aligned center
+        @return: true if aligned center
         """
         return (self._bitMask & Bits.ALIGNMENT_HORIZONTAL_CENTER) == \
                 Bits.ALIGNMENT_HORIZONTAL_CENTER
@@ -103,7 +103,7 @@ class Alignment(object):
     def getVerticalAlignment(self):
         """Returns string representation of vertical alignment.
 
-        @return vertical alignment as CSS value
+        @return: vertical alignment as CSS value
         """
         if self.isBottom():
             return 'bottom'
@@ -115,7 +115,7 @@ class Alignment(object):
     def getHorizontalAlignment(self):
         """Returns string representation of horizontal alignment.
 
-        @return horizontal alignment as CSS value
+        @return: horizontal alignment as CSS value
         """
         if self.isRight():
             return 'right'

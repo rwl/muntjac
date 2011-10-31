@@ -23,7 +23,7 @@ from muntjac.terminal.paintable import IRepaintRequestListener
 class CompositeErrorMessage(IErrorMessage):
     """Class for combining multiple error messages together.
 
-    @author IT Mill Ltd
+    @author: IT Mill Ltd
     @version @VERSION@
     @since 3.0
     """
@@ -54,7 +54,7 @@ class CompositeErrorMessage(IErrorMessage):
     def getErrorLevel(self):
         """The error level is the largest error level in
 
-        @see com.vaadin.terminal.IErrorMessage#getErrorLevel()
+        @see: com.vaadin.terminal.IErrorMessage#getErrorLevel()
         """
         return self._level
 
@@ -76,13 +76,13 @@ class CompositeErrorMessage(IErrorMessage):
     def iterator(self):
         """Gets Error Iterator.
 
-        @return the error iterator.
+        @return: the error iterator.
         """
         return iter(self._errors)
 
 
     def paint(self, target):
-        """@see muntjac.terminal.Paintable#paint(target)"""
+        """@see: muntjac.terminal.Paintable#paint(target)"""
         if len(self._errors) == 1:
             self._errors[0].paint(target)
         else:
@@ -143,7 +143,7 @@ class CompositeErrorMessage(IErrorMessage):
     def __str__(self):
         """Returns a comma separated list of the error messages.
 
-        @return String, comma separated list of error messages.
+        @return: String, comma separated list of error messages.
         """
         retval = '['
         pos = 0

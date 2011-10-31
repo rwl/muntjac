@@ -40,7 +40,7 @@ class ActiveLink(Link):
     def addListener(self, listener, iface):
         """Adds the link activated listener.
 
-        @param listener
+        @param listener:
                    the Listener to be added.
         """
         if issubclass(iface, ILinkActivatedListener):
@@ -60,7 +60,7 @@ class ActiveLink(Link):
     def removeListener(self, listener, iface):
         """Removes the link activated listener.
 
-        @param listener
+        @param listener:
                    the Listener to be removed.
         """
         if issubclass(iface, ILinkActivatedListener):
@@ -117,7 +117,7 @@ class LinkActivatedEvent(Event):
     def getActiveLink(self):
         """Gets the ActiveLink where the event occurred.
 
-        @return the Source of the event.
+        @return: the Source of the event.
         """
         return self.getSource()
 
@@ -127,6 +127,6 @@ class LinkActivatedEvent(Event):
         new window/tab. If the link was not opened, the listener should react
         to the event and "do something", otherwise the link does nothing.
 
-        @return true if the link was opened on the client
+        @return: true if the link was opened on the client
         """
         return self._linkOpened

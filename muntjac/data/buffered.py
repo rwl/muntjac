@@ -26,38 +26,37 @@ class IBuffered(object):
     """Defines the interface to commit and discard changes to an object,
     supporting read-through and write-through modes.
 
-    <i>Read-through mode</i> means that the value read from the buffered object
-    is constantly up to date with the data source. <i>Write-through</i> mode
+    I{Read-through mode} means that the value read from the buffered object
+    is constantly up to date with the data source. I{Write-through} mode
     means that all changes to the object are immediately updated to the data
     source.
 
     Since these modes are independent, their combinations may result in some
     behaviour that may sound surprising.
 
-    For example, if a <code>IBuffered</code> object is in read-through mode but
+    For example, if a C{IBuffered} object is in read-through mode but
     not in write-through mode, the result is an object whose value is updated
-    directly from the data source only if it's not locally modified. If the value
-    is locally modified, retrieving the value from the object would result in a
-    value that is different than the one stored in the data source, even though
-    the object is in read-through mode.
+    directly from the data source only if it's not locally modified. If the
+    value is locally modified, retrieving the value from the object would
+    result in a value that is different than the one stored in the data source,
+    even though the object is in read-through mode.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
-    @since 3.0
     """
 
     def commit(self):
-        """Updates all changes since the previous commit to the data source. The
-        value stored in the object will always be updated into the data source
-        when <code>commit</code> is called.
+        """Updates all changes since the previous commit to the data source.
+        The value stored in the object will always be updated into the data
+        source when C{commit} is called.
 
-        @throws SourceException
+        @raise SourceException:
                     if the operation fails because of an exception is thrown by
                     the data source. The cause is included in the exception.
-        @throws InvalidValueException
-                    if the operation fails because validation is enabled and the
-                    values do not validate
+        @raise InvalidValueException:
+                    if the operation fails because validation is enabled and
+                    the values do not validate
         """
         raise NotImplementedError
 
@@ -66,7 +65,7 @@ class IBuffered(object):
         """Discards all changes since last commit. The object updates its value
         from the data source.
 
-        @throws SourceException
+        @raise SourceException:
                     if the operation fails because of an exception is thrown by
                     the data source. The cause is included in the exception.
         """
@@ -75,27 +74,27 @@ class IBuffered(object):
 
     def isWriteThrough(self):
         """Tests if the object is in write-through mode. If the object is in
-        write-through mode, all modifications to it will result in
-        <code>commit</code> being called after the modification.
+        write-through mode, all modifications to it will result in C{commit}
+        being called after the modification.
 
-        @return <code>true</code> if the object is in write-through mode,
-                <code>false</code> if it's not.
+        @return: C{True} if the object is in write-through mode, C{False} if
+                it's not.
         """
         raise NotImplementedError
 
 
     def setWriteThrough(self, writeThrough):
         """Sets the object's write-through mode to the specified status. When
-        switching the write-through mode on, the <code>commit</code> operation
+        switching the write-through mode on, the C{commit} operation
         will be performed.
 
-        @param writeThrough
+        @param writeThrough:
                    Boolean value to indicate if the object should be in
                    write-through mode after the call.
-        @throws SourceException
+        @raise SourceException:
                     If the operation fails because of an exception is thrown by
                     the data source.
-        @throws InvalidValueException
+        @raise InvalidValueException:
                     If the implicit commit operation fails because of a
                     validation error.
         """
@@ -106,15 +105,14 @@ class IBuffered(object):
         """Tests if the object is in read-through mode. If the object is in
         read-through mode, retrieving its value will result in the value being
         first updated from the data source to the object.
-        <p>
+
         The only exception to this rule is that when the object is not in
         write-through mode and it's buffer contains a modified value, the value
         retrieved from the object will be the locally modified value in the
         buffer which may differ from the value in the data source.
-        </p>
 
-        @return <code>true</code> if the object is in read-through mode,
-                <code>false</code> if it's not.
+        @return: C{True} if the object is in read-through mode,
+                C{False} if it's not.
         """
         raise NotImplementedError
 
@@ -124,11 +122,11 @@ class IBuffered(object):
         switching read-through mode on, the object's value is updated from the
         data source.
 
-        @param readThrough
+        @param readThrough:
                    Boolean value to indicate if the object should be in
                    read-through mode after the call.
 
-        @throws SourceException
+        @raise SourceException:
                     If the operation fails because of an exception is thrown by
                     the data source. The cause is included in the exception.
         """
@@ -136,11 +134,11 @@ class IBuffered(object):
 
 
     def isModified(self):
-        """Tests if the value stored in the object has been modified since it was
-        last updated from the data source.
+        """Tests if the value stored in the object has been modified since it
+        was last updated from the data source.
 
-        @return <code>true</code> if the value in the object has been modified
-                since the last data source update, <code>false</code> if not.
+        @return: C{True} if the value in the object has been modified
+                since the last data source update, C{False} if not.
         """
         raise NotImplementedError
 
@@ -150,30 +148,17 @@ class SourceException(RuntimeError, IErrorMessage):
     buffered object tried to access its data source or if there is a problem
     in processing a data source.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
-    @since 3.0
     """
 
     def __init__(self, source, cause=None):
-        """Creates a source exception that does not include a cause.
+        """Creates a source exception from one or multiple causes.
 
-        @param source
+        @param source:
                    the source object implementing the IBuffered interface.
-        ---
-        Creates a source exception from a cause exception.
-
-        @param source
-                   the source object implementing the IBuffered interface.
-        @param cause
-                   the original cause for this exception.
-        ---
-        Creates a source exception from multiple causes.
-
-        @param source
-                   the source object implementing the IBuffered interface.
-        @param causes
+        @param causes:
                    the original causes for this exception.
         """
         # Source class implementing the buffered interface
@@ -191,8 +176,8 @@ class SourceException(RuntimeError, IErrorMessage):
     def getCause(self):
         """Gets the cause of the exception.
 
-        @return The cause for the exception.
-        @throws MoreThanOneCauseException
+        @return: The cause for the exception.
+        @raise MoreThanOneCauseException:
                     if there is more than one cause for the exception. This
                     is possible if the commit operation triggers more than
                     one error at the same time.
@@ -205,7 +190,7 @@ class SourceException(RuntimeError, IErrorMessage):
     def getCauses(self):
         """Gets all the causes for this exception.
 
-        @return throwables that caused this exception
+        @return: throwables that caused this exception
         """
         return self._causes
 
@@ -213,7 +198,7 @@ class SourceException(RuntimeError, IErrorMessage):
     def getSource(self):
         """Gets a source of the exception.
 
-        @return the IBuffered object which generated this exception.
+        @return: the IBuffered object which generated this exception.
         """
         return self._source
 
@@ -221,13 +206,11 @@ class SourceException(RuntimeError, IErrorMessage):
     def getErrorLevel(self):
         """Gets the error level of this buffered source exception. The level of
         the exception is maximum error level of all the contained causes.
-        <p>
-        The causes that do not specify error level default to
-        <code>ERROR</code> level. Also source exception without any causes
-        are of level <code>ERROR</code>.
-        </p>
 
-        @see com.vaadin.terminal.IErrorMessage#getErrorLevel()
+        The causes that do not specify error level default to C{ERROR} level.
+        Also source exception without any causes are of level C{ERROR}.
+
+        @see: com.vaadin.terminal.IErrorMessage#getErrorLevel()
         """
         level = -sys.maxint - 1
 
@@ -312,25 +295,24 @@ class SourceException(RuntimeError, IErrorMessage):
 
 
 class IBufferedValidatable(IBuffered, IValidatable):
-    """This interface defines the combination of <code>IValidatable</code> and
-    <code>IBuffered</code> interfaces. The combination of the interfaces defines
+    """This interface defines the combination of C{IValidatable} and
+    C{IBuffered} interfaces. The combination of the interfaces defines
     if the invalid data is committed to datasource.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
-    @since 3.0
     """
 
     def isInvalidCommitted(self):
         """Tests if the invalid data is committed to datasource. The default is
-        <code>false</code>.
+        C{False}.
         """
         raise NotImplementedError
 
 
     def setInvalidCommitted(self, isCommitted):
         """Sets if the invalid data should be committed to datasource. The
-        default is <code>false</code>.
+        default is C{False}.
         """
         raise NotImplementedError

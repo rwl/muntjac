@@ -74,15 +74,15 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
     """This is a common base class for the server-side implementations of
     the communication system between the client code (compiled with GWT
     into JavaScript) and the server side components. Its client side
-    counterpart is {@link ApplicationConnection}.
+    counterpart is L{ApplicationConnection}.
 
     A server side component sends its state to the client in a paint request
-    (see {@link IPaintable} and {@link PaintTarget} on the server side). The
+    (see L{IPaintable} and L{PaintTarget} on the server side). The
     client widget receives these paint requests as calls to
-    {@link com.vaadin.terminal.gwt.client.IPaintable#updateFromUIDL()}. The
+    L{com.vaadin.terminal.gwt.client.IPaintable#updateFromUIDL()}. The
     client component communicates back to the server by sending a list of
-    variable changes (see {@link ApplicationConnection#updateVariable()} and
-    {@link VariableOwner#changeVariables(Object, Map)}).
+    variable changes (see L{ApplicationConnection#updateVariable()} and
+    L{VariableOwner#changeVariables(Object, Map)}).
 
     TODO Document better!
     """
@@ -189,7 +189,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         @param streamVariable
         @param owner
         @param boundary
-        @throws IOException
+        @raise IOException
         """
         # multipart parsing, supports only one file for request, but that is
         # fine for our current terminal
@@ -270,7 +270,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         @param streamVariable
         @param owner
         @param contentLength
-        @throws IOException
+        @raise IOException
         """
         # These are unknown in filexhr ATM, maybe add to Accept header that
         # is accessible in portlets
@@ -304,9 +304,9 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         @param filename
         @param type
         @param contentLength
-        @return true if the streamvariable has informed that the terminal
+        @return: true if the streamvariable has informed that the terminal
                 can forget this variable
-        @throws UploadException
+        @raise UploadException
         """
         if streamVariable is None:
             raise ValueError, 'StreamVariable for the post not found'
@@ -399,7 +399,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
 
         @param request
         @param response
-        @throws IOException
+        @raise IOException
         """
         response.setContentType('text/html')
         out = response.getOutputStream()
@@ -411,9 +411,9 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
     def doHandleUidlRequest(self, request, response, callback, window):
         """Internally process a UIDL request from the client.
 
-        This method calls {@link #handleVariables()}
+        This method calls L{#handleVariables()}
         to process any changes to variables by the client and then repaints
-        affected components using {@link #paintAfterVariableChanges()}.
+        affected components using L{#paintAfterVariableChanges()}.
 
         Also, some cleanup is done when a request arrives for an application
         that has already been closed.
@@ -428,8 +428,8 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         @param window
                    target window for the UIDL request, can be null if target
                    not found
-        @throws IOException
-        @throws InvalidUIDLSecurityKeyException
+        @raise IOException
+        @raise InvalidUIDLSecurityKeyException
         """
         self._requestThemeName = request.getParameter('theme')
 
@@ -519,8 +519,8 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         @param outWriter
         @param window
         @param analyzeLayouts
-        @throws PaintException
-        @throws IOException
+        @raise PaintException
+        @raise IOException
         """
         if repaintAll:
             self.makeAllPaintablesDirty(window)
@@ -858,7 +858,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         not expect; this is probably due to the client being out-of-sync
         and sending variable changes for non-existing pids
 
-        @return true if successful, false if there was an inconsistency
+        @return: true if successful, false if there was an inconsistency
         """
         success = True
 
@@ -1025,7 +1025,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
 
         @param request
         @return
-        @throws IOException
+        @raise IOException
         """
         requestLength = request.getContentLength()
         if requestLength == 0:
@@ -1039,9 +1039,9 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         """Handles an error (exception) that occurred when processing variable
         changes from the client or a failure of a file upload.
 
-        For {@link AbstractField} components, AbstractField.handleError()
+        For L{AbstractField} components, AbstractField.handleError()
         is called. In all other cases (or if the field does not handle the
-        error), {@link ErrorListener#terminalError(IErrorEvent)} for the
+        error), L{ErrorListener#terminalError(IErrorEvent)} for the
         application error handler is called.
 
         @param application
@@ -1350,7 +1350,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         """Ends the Application.
 
         The browser is redirected to the Application logout URL set with
-        {@link Application#setLogoutURL(String)}, or to the application URL
+        L{Application#setLogoutURL(String)}, or to the application URL
         if no logout URL is given.
 
         @param request
@@ -1359,7 +1359,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                    the response to write to.
         @param application
                    the Application to end.
-        @throws IOException
+        @raise IOException
                     if the writing failed due to input/output error.
         """
         logoutUrl = application.getLogoutURL()
@@ -1398,7 +1398,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         used prefixed with "PID_S". Otherwise a sequenced ID is created.
 
         @param paintable
-        @return the paintable Id.
+        @return: the paintable Id.
         """
         idd = self._paintableIdMap.get(paintable)
         if idd is None:
@@ -1483,14 +1483,14 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
 
 
     def repaintRequested(self, event):
-        """@see IRepaintRequestListener.repaintRequested()"""
+        """@see: IRepaintRequestListener.repaintRequested()"""
         p = event.getPaintable()
         if p not in self._dirtyPaintables:
             self._dirtyPaintables.append(p)
 
 
     def paintablePainted(self, paintable):
-        """Internally mark a {@link IPaintable} as painted and start
+        """Internally mark a L{IPaintable} as painted and start
         collecting new repaint requests for it.
 
         @param paintable
@@ -1503,8 +1503,8 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
     def requireLocale(self, value):
         """Queues a locale to be sent to the client (browser) for date and
         time entry etc. All locale specific information is derived from
-        server-side {@link Locale} instances and sent to the client when
-        needed, eliminating the need to use the {@link Locale} class and all
+        server-side L{Locale} instances and sent to the client when
+        needed, eliminating the need to use the L{Locale} class and all
         the framework behind it on the client.
 
         @param value
@@ -1520,10 +1520,10 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
 
 
     def generateLocale(self, value):
-        """Constructs a {@link Locale} instance to be sent to the client
+        """Constructs a L{Locale} instance to be sent to the client
         based on a short locale description string.
 
-        @see #requireLocale(String)
+        @see: #requireLocale(String)
 
         @param value
         @return
@@ -1555,11 +1555,11 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
 
     def handleURI(self, window, request, response, callback):
         """Calls the Window URI handler for a request and returns the
-        {@link DownloadStream} returned by the handler.
+        L{DownloadStream} returned by the handler.
 
         If the window is the main window of an application, the (deprecated)
-        {@link Application#handleURI(java.net.URL, String)} is called first
-        to handle {@link ApplicationResource}s, and the window handler is
+        L{Application#handleURI(java.net.URL, String)} is called first
+        to handle L{ApplicationResource}s, and the window handler is
         only called if it returns null.
 
         @param window
@@ -1568,9 +1568,9 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                    the request instance
         @param response
                    the response to write to
-        @return DownloadStream if the request was handled and further
+        @return: DownloadStream if the request was handled and further
                     processing should be suppressed, null otherwise.
-        @see com.vaadin.terminal.URIHandler
+        @see: com.vaadin.terminal.URIHandler
         """
         warn("deprecated", DeprecationWarning)
 
@@ -1635,21 +1635,21 @@ class IRequest(object):
     """Generic interface of a (HTTP or Portlet) request to the application.
 
     This is a wrapper interface that allows
-    {@link AbstractCommunicationManager} to use a unified API.
+    L{AbstractCommunicationManager} to use a unified API.
 
-    @see javax.servlet.ServletRequest
-    @see javax.portlet.PortletRequest
+    @see: javax.servlet.ServletRequest
+    @see: javax.portlet.PortletRequest
 
-    @author peholmst
+    @author: peholmst
     """
 
     def getSession(self):
-        """Gets a {@link Session} wrapper implementation representing the
+        """Gets a L{Session} wrapper implementation representing the
         session for which this request was sent.
 
         Multiple Vaadin applications can be associated with a single session.
 
-        @return Session
+        @return: Session
         """
         raise NotImplementedError
 
@@ -1658,7 +1658,7 @@ class IRequest(object):
         """Are the applications in this session running in a portlet or
         directly as servlets.
 
-        @return true if in a portlet
+        @return: true if in a portlet
         """
         raise NotImplementedError
 
@@ -1666,8 +1666,8 @@ class IRequest(object):
     def getParameter(self, name):
         """Get the named HTTP or portlet request parameter.
 
-        @see javax.servlet.ServletRequest#getParameter(String)
-        @see javax.portlet.PortletRequest#getParameter(String)
+        @see: javax.servlet.ServletRequest#getParameter(String)
+        @see: javax.portlet.PortletRequest#getParameter(String)
 
         @param name
         @return
@@ -1677,9 +1677,9 @@ class IRequest(object):
 
     def getContentLength(self):
         """Returns the length of the request content that can be read from the
-        input stream returned by {@link #getInputStream()}.
+        input stream returned by L{#getInputStream()}.
 
-        @return content length in bytes
+        @return: content length in bytes
         """
         raise NotImplementedError
 
@@ -1687,10 +1687,10 @@ class IRequest(object):
     def getInputStream(self):
         """Returns an input stream from which the request content can be read.
         The request content length can be obtained with
-        {@link #getContentLength()} without reading the full stream contents.
+        L{#getContentLength()} without reading the full stream contents.
 
         @return
-        @throws IOException
+        @raise IOException
         """
         raise NotImplementedError
 
@@ -1699,30 +1699,30 @@ class IRequest(object):
         """Returns the request identifier that identifies the target Vaadin
         window for the request.
 
-        @return String identifier for the request target window
+        @return: String identifier for the request target window
         """
         raise NotImplementedError
 
 
     def getAttribute(self, name):
-        """@see javax.servlet.ServletRequest#getAttribute(String)
-        @see javax.portlet.PortletRequest#getAttribute(String)
+        """@see: javax.servlet.ServletRequest#getAttribute(String)
+        @see: javax.portlet.PortletRequest#getAttribute(String)
         """
         raise NotImplementedError
 
 
     def setAttribute(self, name, value):
-        """@see javax.servlet.ServletRequest#setAttribute(String, Object)
-        @see javax.portlet.PortletRequest#setAttribute(String, Object)
+        """@see: javax.servlet.ServletRequest#setAttribute(String, Object)
+        @see: javax.portlet.PortletRequest#setAttribute(String, Object)
         """
         raise NotImplementedError
 
 
     def getWrappedRequest(self):
         """Gets the underlying request object. The request is typically either
-        a {@link ServletRequest} or a {@link PortletRequest}.
+        a L{ServletRequest} or a L{PortletRequest}.
 
-        @return wrapped request object
+        @return: wrapped request object
         """
         raise NotImplementedError
 
@@ -1731,19 +1731,19 @@ class IResponse(object):
     """Generic interface of a (HTTP or Portlet) response from the application.
 
     This is a wrapper interface that allows
-    {@link AbstractCommunicationManager} to use a unified API.
+    L{AbstractCommunicationManager} to use a unified API.
 
-    @see javax.servlet.ServletResponse
-    @see javax.portlet.PortletResponse
+    @see: javax.servlet.ServletResponse
+    @see: javax.portlet.PortletResponse
 
-    @author peholmst
+    @author: peholmst
     """
 
     def getOutputStream(self):
         """Gets the output stream to which the response can be written.
 
         @return
-        @throws IOException
+        @raise IOException
         """
         raise NotImplementedError
 
@@ -1759,9 +1759,9 @@ class IResponse(object):
 
     def getWrappedResponse(self):
         """Gets the wrapped response object, usually a class implementing
-        either {@link ServletResponse} or {@link PortletResponse}.
+        either L{ServletResponse} or L{PortletResponse}.
 
-        @return wrapped request object
+        @return: wrapped request object
         """
         raise NotImplementedError
 
@@ -1773,10 +1773,10 @@ class ISession(object):
 
     TODO Document me!
 
-    @see javax.servlet.http.HttpSession
-    @see javax.portlet.PortletSession
+    @see: javax.servlet.http.HttpSession
+    @see: javax.portlet.PortletSession
 
-    @author peholmst
+    @author: peholmst
     """
 
     def isNew(self):
@@ -1802,7 +1802,7 @@ class ISession(object):
 class ICallback(object):
     """TODO Document me!
 
-    @author peholmst
+    @author: peholmst
     """
 
     def criticalNotification(self, request, response, cap, msg, details,
@@ -1836,7 +1836,7 @@ class ErrorHandlerErrorEvent(TerminalErrorEvent):
 
 
 class URIHandlerErrorImpl(URIHandlerErrorEvent):
-    """Implementation of {@link URIHandler.IErrorEvent} interface."""
+    """Implementation of L{URIHandler.IErrorEvent} interface."""
 
     def __init__(self, owner, throwable):
         """@param owner
@@ -1847,12 +1847,12 @@ class URIHandlerErrorImpl(URIHandlerErrorEvent):
 
 
     def getThrowable(self):
-        """@see com.vaadin.terminal.Terminal.IErrorEvent#getThrowable()"""
+        """@see: com.vaadin.terminal.Terminal.IErrorEvent#getThrowable()"""
         return self._throwable
 
 
     def getURIHandler(self):
-        """@see com.vaadin.terminal.URIHandler.IErrorEvent#getURIHandler()"""
+        """@see: com.vaadin.terminal.URIHandler.IErrorEvent#getURIHandler()"""
         return self._owner
 
 
@@ -1875,7 +1875,7 @@ class OpenWindowCache(object):
 
     def cache(self, obj):
         """@param paintable
-        @return true if the given class was added to cache
+        @return: true if the given class was added to cache
         """
         if obj in self._res:
             return False
@@ -1951,9 +1951,9 @@ class SimpleMultiPartInputStream(StringIO):  # FIXME InputStream
         """Reads the input to expect a boundary string. Expects that the first
         character has already been matched.
 
-        @return -1 if the boundary was matched, else returns the first byte
+        @return: -1 if the boundary was matched, else returns the first byte
                 from boundary
-        @throws IOException
+        @raise IOException
         """
         self._matchedCount = 0
 
@@ -1981,7 +1981,7 @@ class SimpleMultiPartInputStream(StringIO):  # FIXME InputStream
         that.
 
         @return
-        @throws IOException
+        @raise IOException
         """
         if self._matchedCount == 0:
             # The boundary has been returned, return the buffered byte.

@@ -91,7 +91,7 @@ class SamplerApplication(Application):
 
         @param f
                    the Feature whose path to get, of null if not found
-        @return the path of the Feature
+        @return: the path of the Feature
         """
         if f is None:
             return ''

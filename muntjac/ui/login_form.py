@@ -44,7 +44,7 @@ class LoginEvent(Event):
         """Access method to form values by field names.
 
         @param name
-        @return value in given field
+        @return: value in given field
         """
         if name in self._params:
             return self._params.get(name)
@@ -78,7 +78,7 @@ class LoginForm(CustomComponent):
     LoginForm creates an iframe with static html that browsers detect.
 
     Login form is by default 100% width and height, so consider using it
-    inside a sized {@link Panel} or {@link Window}.
+    inside a sized L{Panel} or L{Window}.
 
     Login page html can be overridden by replacing protected getLoginHTML
     method. As the login page is actually an iframe, styles must be handled
@@ -117,7 +117,7 @@ class LoginForm(CustomComponent):
         the login html, use the default html as basis. Login page sets its target
         with javascript.
 
-        @return byte array containing login page html
+        @return: byte array containing login page html
         """
         appUri = str(self.getApplication().getURL()) \
                 + self.getWindow().getName() + '/'
@@ -193,7 +193,7 @@ class LoginForm(CustomComponent):
     def addListener(self, listener, iface):
         """Adds ILoginListener to handle login logic
 
-        @param listener
+        @param listener:
         """
         if iface == ILoginListener:
             self.registerListener(LoginEvent, listener, _ON_LOGIN_METHOD)
@@ -208,7 +208,7 @@ class LoginForm(CustomComponent):
     def removeListener(self, listener, iface):
         """Removes ILoginListener
 
-        @param listener
+        @param listener:
         """
         if iface == ILoginListener:
             self.withdrawListener(LoginEvent, listener, _ON_LOGIN_METHOD)
@@ -247,7 +247,7 @@ class LoginForm(CustomComponent):
     def getUsernameCaption(self):
         """Returns the caption for the user name field.
 
-        @return String
+        @return: String
         """
         return self._usernameCaption
 
@@ -264,7 +264,7 @@ class LoginForm(CustomComponent):
     def getPasswordCaption(self):
         """Returns the caption for the password field.
 
-        @return String
+        @return: String
         """
         return self._passwordCaption
 
@@ -281,7 +281,7 @@ class LoginForm(CustomComponent):
     def getLoginButtonCaption(self):
         """Returns the caption for the login button.
 
-        @return String
+        @return: String
         """
         return self._loginButtonCaption
 

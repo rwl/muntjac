@@ -22,11 +22,11 @@ from muntjac.ui.abstract_ordered_layout import AbstractOrderedLayout
 class OrderedLayout(AbstractOrderedLayout):
     """Ordered layout.
 
-    <code>OrderedLayout</code> is a component container, which shows the
+    C{OrderedLayout} is a component container, which shows the
     subcomponents in the order of their addition in specified orientation.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     @deprecated Replaced by VerticalLayout/HorizontalLayout. For type checking
@@ -46,7 +46,7 @@ class OrderedLayout(AbstractOrderedLayout):
 
     def __init__(self, orientation=None):
         """Creates a new ordered layout. The order of the layout is
-        <code>ORIENTATION_VERTICAL</code>.
+        C{ORIENTATION_VERTICAL}.
 
         @deprecated Use VerticalLayout instead.
         ---
@@ -75,7 +75,7 @@ class OrderedLayout(AbstractOrderedLayout):
     def getOrientation(self):
         """Gets the orientation of the container.
 
-        @return the Value of property orientation.
+        @return: the Value of property orientation.
         """
         return self._orientation
 

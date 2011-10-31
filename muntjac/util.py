@@ -47,7 +47,7 @@ def clsname(cls):
 
 
 def fullname(obj):
-    """@return fully qualified name of given object's class"""
+    """@return: fully qualified name of given object's class"""
     return clsname(obj.__class__)
 
 

@@ -16,11 +16,11 @@
 
 
 class KeyMapper(object):
-    """<code>KeyMapper</code> is the simple two-way map for generating
+    """C{KeyMapper} is the simple two-way map for generating
     textual keys for objects and retrieving the objects later with the key.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -57,7 +57,7 @@ class KeyMapper(object):
 
         @param key
                    the name with the desired value.
-        @return the object with the key.
+        @return: the object with the key.
         """
         return self._keyObjectMap.get(key)
 

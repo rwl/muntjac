@@ -18,32 +18,25 @@ from muntjac.data.validators.abstract_validator import AbstractValidator
 
 
 class StringLengthValidator(AbstractValidator):
-    """This <code>StringLengthValidator</code> is used to validate the length
-    of strings.
+    """This StringLengthValidator is used to validate the length of strings.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
-    @since 3.0
     """
 
     def __init__(self, errorMessage, minLength=None, maxLength=None,
                 allowNull=None):
-        """Creates a new StringLengthValidator with a given error message.
-
-        @param errorMessage
-                   the message to display in case the value does not validate.
-        ---
-        Creates a new StringLengthValidator with a given error message,
+        """Creates a new StringLengthValidator with a given error message,
         permissable lengths and null-string allowance.
 
-        @param errorMessage
+        @param errorMessage:
                    the message to display in case the value does not validate.
-        @param minLength
+        @param minLength:
                    the minimum permissible length of the string.
-        @param maxLength
+        @param maxLength:
                    the maximum permissible length of the string.
-        @param allowNull
+        @param allowNull:
                    Are null strings permissible? This can be handled better by
                    setting a field as required or not.
         """
@@ -63,9 +56,9 @@ class StringLengthValidator(AbstractValidator):
     def isValid(self, value):
         """Checks if the given value is valid.
 
-        @param value
+        @param value:
                    the value to validate.
-        @return <code>true</code> for valid value, otherwise <code>false</code>.
+        @return: C{True} for valid value, otherwise C{False}.
         """
         if value is None:
             return self._allowNull
@@ -83,10 +76,9 @@ class StringLengthValidator(AbstractValidator):
 
 
     def isNullAllowed(self):
-        """Returns <code>true</code> if null strings are allowed.
+        """Returns C{True} if null strings are allowed.
 
-        @return <code>true</code> if allows null string, otherwise
-                <code>false</code>.
+        @return: C{True} if allows null string, otherwise C{False}.
         """
         return self._allowNull
 
@@ -94,7 +86,7 @@ class StringLengthValidator(AbstractValidator):
     def getMaxLength(self):
         """Gets the maximum permissible length of the string.
 
-        @return the maximum length of the string.
+        @return: the maximum length of the string.
         """
         return self._maxLength
 
@@ -102,7 +94,7 @@ class StringLengthValidator(AbstractValidator):
     def getMinLength(self):
         """Gets the minimum permissible length of the string.
 
-        @return the minimum length of the string.
+        @return: the minimum length of the string.
         """
         return self._minLength
 
@@ -117,7 +109,7 @@ class StringLengthValidator(AbstractValidator):
     def setMaxLength(self, maxLength):
         """Sets the maximum permissible length of the string.
 
-        @param maxLength
+        @param maxLength:
                    the length to set.
         """
         if maxLength < -1:
@@ -129,7 +121,7 @@ class StringLengthValidator(AbstractValidator):
     def setMinLength(self, minLength):
         """Sets the minimum permissible length.
 
-        @param minLength
+        @param minLength:
                    the length to set.
         """
         if minLength < -1:

@@ -29,12 +29,12 @@ _COMPONENT_DETACHED_METHOD = getattr(IComponentDetachListener,
 
 
 class AbstractComponentContainer(AbstractComponent, IComponentContainer):
-    """Extension to {@link AbstractComponent} that defines the default
-    implementation for the methods in {@link IComponentContainer}. Basic
+    """Extension to L{AbstractComponent} that defines the default
+    implementation for the methods in L{IComponentContainer}. Basic
     UI components that need to contain other components inherit this class
     to easily qualify as a component container.
 
-    @author IT Mill Ltd
+    @author: IT Mill Ltd
     @version @VERSION@
     @since 3.0
     """
@@ -76,7 +76,7 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
         """Notifies all contained components that the container is attached
         to a window.
 
-        @see com.vaadin.ui.Component#attach()
+        @see: com.vaadin.ui.Component#attach()
         """
         super(AbstractComponentContainer, self).attach()
 
@@ -88,7 +88,7 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
         """Notifies all contained components that the container is detached
         from a window.
 
-        @see com.vaadin.ui.Component#detach()
+        @see: com.vaadin.ui.Component#detach()
         """
         # Events
         super(AbstractComponentContainer, self).detach()
@@ -163,7 +163,7 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
         extending classes must implement component list maintenance and call
         this method after component list maintenance.
 
-        @see com.vaadin.ui.IComponentContainer#addComponent(Component)
+        @see: com.vaadin.ui.IComponentContainer#addComponent(Component)
         """
         if isinstance(c, IComponentContainer):
             # Make sure we're not adding the component
@@ -189,7 +189,7 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
         extending classes must implement component list maintenance and call
         this method before component list maintenance.
 
-        @see com.vaadin.ui.IComponentContainer#removeComponent(Component)
+        @see: com.vaadin.ui.IComponentContainer#removeComponent(Component)
         """
         if c.getParent() == self:
             c.setParent(None)

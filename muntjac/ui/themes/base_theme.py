@@ -27,7 +27,7 @@ class BaseTheme(object):
     that has a class file specified (e.g. Reindeer or Runo).
 
     All theme class files should follow the convention of specifying the
-    theme name as a string constant <code>THEME_NAME</code>.
+    theme name as a string constant C{THEME_NAME}.
 
     @since 6.3.0
     """
@@ -44,5 +44,5 @@ class BaseTheme(object):
     #             here since it has been a part of the framework before
     #             multiple themes were available. Use the constant provided
     #             by the theme you're using instead, e.g.
-    #             {@link Reindeer#PANEL_LIGHT} or {@link Runo#PANEL_LIGHT}.
+    #             L{Reindeer#PANEL_LIGHT} or L{Runo#PANEL_LIGHT}.
     PANEL_LIGHT = 'light'

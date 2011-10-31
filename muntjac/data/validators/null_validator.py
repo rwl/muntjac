@@ -21,10 +21,9 @@ class NullValidator(IValidator):
     """This validator is used for validating properties that do or do not
     allow null values. By default, nulls are not allowed.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
-    @since 3.0
     """
 
     def __init__(self, errorMessage, onlyNullAllowed):
@@ -45,9 +44,9 @@ class NullValidator(IValidator):
     def validate(self, value):
         """Validates the data given in value.
 
-        @param value
+        @param value:
                    the value to validate.
-        @throws IValidator.InvalidValueException
+        @raise InvalidValueException:
                     if the value was invalid.
         """
         if (self._onlyNullAllowed and value is not None) \
@@ -58,16 +57,15 @@ class NullValidator(IValidator):
     def isValid(self, value):
         """Tests if the given value is valid.
 
-        @param value
+        @param value:
                    the value to validate.
-        @returns <code>true</code> for valid value, otherwise <code>false</code>.
+        @returns C{True} for valid value, otherwise C{False}.
         """
         return value is None if self._onlyNullAllowed else value is not None
 
 
     def isNullAllowed(self):
-        """Returns <code>true</code> if nulls are allowed otherwise
-        <code>false</code>.
+        """Returns C{True} if nulls are allowed otherwise C{False}.
         """
         return self._onlyNullAllowed
 
@@ -75,7 +73,7 @@ class NullValidator(IValidator):
     def setNullAllowed(self, onlyNullAllowed):
         """Sets if nulls (and only nulls) are to be allowed.
 
-        @param onlyNullAllowed
+        @param onlyNullAllowed:
                    If true, only nulls are allowed. If false only non-nulls are
                    allowed. Do we allow nulls?
         """
@@ -83,9 +81,10 @@ class NullValidator(IValidator):
 
 
     def getErrorMessage(self):
-        """Gets the error message that is displayed in case the value is invalid.
+        """Gets the error message that is displayed in case the value is
+        invalid.
 
-        @return the Error Message.
+        @return: the Error Message.
         """
         return self._errorMessage
 
@@ -93,7 +92,7 @@ class NullValidator(IValidator):
     def setErrorMessage(self, errorMessage):
         """Sets the error message to be displayed on invalid value.
 
-        @param errorMessage
+        @param errorMessage:
                    the Error Message to set.
         """
         self._errorMessage = errorMessage

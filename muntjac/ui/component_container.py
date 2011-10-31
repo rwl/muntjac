@@ -18,12 +18,12 @@ from muntjac.ui.component import IComponent, Event
 
 
 class IComponentContainer(IComponent):
-    """Extension to the {@link IComponent} interface which adds to it the
+    """Extension to the L{IComponent} interface which adds to it the
     capacity to contain other components. All UI elements that can have child
     elements implement this interface.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -77,7 +77,7 @@ class IComponentContainer(IComponent):
         iterator it is possible to step through all components contained in this
         container.
 
-        @return the component iterator.
+        @return: the component iterator.
         """
         raise NotImplementedError
 
@@ -93,7 +93,7 @@ class IComponentContainer(IComponent):
 
     def moveComponentsFrom(self, source):
         """Moves all components from an another container into this container. The
-        components are removed from <code>source</code>.
+        components are removed from C{source}.
 
         @param source
                    the container which contains the components that are to be
@@ -105,7 +105,7 @@ class IComponentContainer(IComponent):
     def addListener(self, listener, iface):
         """Listens the component attach events.
 
-        @param listener
+        @param listener:
                    the listener to add.
         ---
         Listens the component detach events.
@@ -123,7 +123,7 @@ class IComponentContainer(IComponent):
     def removeListener(self, listener, iface):
         """Stops the listening component attach events.
 
-        @param listener
+        @param listener:
                    the listener to removed.
         ---
         Stops the listening component detach events.
@@ -224,6 +224,6 @@ class ComponentDetachEvent(Event):
     def getDetachedComponent(self):
         """Gets the detached component.
 
-        @return the detached component.
+        @return: the detached component.
         """
         return self._component

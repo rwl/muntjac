@@ -18,8 +18,8 @@
 class IDropHandler(object):
     """DropHandlers contain the actual business logic for drag and drop operations.
     <p>
-    The {@link #drop(DragAndDropEvent)} method is used to receive the transferred
-    data and the {@link #getAcceptCriterion()} method contains the (possibly
+    The L{#drop(DragAndDropEvent)} method is used to receive the transferred
+    data and the L{#getAcceptCriterion()} method contains the (possibly
     client side verifiable) criterion whether the dragged data will be handled at
     all.
 
@@ -28,8 +28,8 @@ class IDropHandler(object):
 
     def drop(self, event):
         """Drop method is called when the end user has finished the drag operation
-        on a {@link DropTarget} and {@link DragAndDropEvent} has passed
-        {@link AcceptCriterion} defined by {@link #getAcceptCriterion()} method.
+        on a L{DropTarget} and L{DragAndDropEvent} has passed
+        L{AcceptCriterion} defined by L{#getAcceptCriterion()} method.
         The actual business logic of drag and drop operation is implemented into
         this method.
 
@@ -40,24 +40,24 @@ class IDropHandler(object):
 
 
     def getAcceptCriterion(self):
-        """Returns the {@link AcceptCriterion} used to evaluate whether the
-        {@link Transferable} will be handed over to
-        {@link IDropHandler#drop(DragAndDropEvent)} method. If client side can't
-        verify the {@link AcceptCriterion}, the same criteria may be tested also
+        """Returns the L{AcceptCriterion} used to evaluate whether the
+        L{Transferable} will be handed over to
+        L{IDropHandler#drop(DragAndDropEvent)} method. If client side can't
+        verify the L{AcceptCriterion}, the same criteria may be tested also
         prior to actual drop - during the drag operation.
         <p>
-        Based on information from {@link AcceptCriterion} components may display
+        Based on information from L{AcceptCriterion} components may display
         some hints for the end user whether the drop will be accepted or not.
         <p>
         Vaadin contains a variety of criteria built in that can be composed to
         more complex criterion. If the build in criteria are not enough,
-        developer can use a {@link ServerSideCriterion} or build own custom
+        developer can use a L{ServerSideCriterion} or build own custom
         criterion with client side counterpart.
         <p>
         If developer wants to handle everything in the
-        {@link #drop(DragAndDropEvent)} method, {@link AcceptAll} instance can be
+        L{#drop(DragAndDropEvent)} method, L{AcceptAll} instance can be
         returned.
 
-        @return the {@link AcceptCriterion}
+        @return: the L{AcceptCriterion}
         """
         raise NotImplementedError

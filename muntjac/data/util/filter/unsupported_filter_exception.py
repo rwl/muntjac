@@ -21,10 +21,7 @@ class UnsupportedFilterException(RuntimeError):
 
     If possible, this should be thrown already when adding a filter to a
     container. If a problem is not detected at that point, an
-    {@link UnsupportedOperationException} can be throws when attempting to
-    perform filtering.
-
-    @since 6.6
+    L{NotImplementedError} can be thrown when attempting to perform filtering.
     """
 
     def __init__(self, *args):

@@ -16,35 +16,34 @@
 
 
 class IValidatable(object):
-    """Interface for validatable objects. Defines methods to verify if the object's
-    value is valid or not, and to add, remove and list registered validators of
-    the object.
+    """Interface for validatable objects. Defines methods to verify if the
+    object's value is valid or not, and to add, remove and list registered
+    validators of the object.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
-    @since 3.0
-    @see com.vaadin.data.Validator
+    @see: L{IValidator}
     """
 
     def addValidator(self, validator):
         """Adds a new validator for this object. The validator's
-        {@link Validator#validate(Object)} method is activated every time the
-        object's value needs to be verified, that is, when the {@link #isValid()}
+        L{Validator.validate} method is activated every time the
+        object's value needs to be verified, that is, when the L{isValid}
         method is called. This usually happens when the object's value changes.
 
-        @param validator
+        @param validator:
                    the new validator
         """
         raise NotImplementedError
 
 
     def removeValidator(self, validator):
-        """Removes a previously registered validator from the object. The specified
-        validator is removed from the object and its <code>validate</code> method
-        is no longer called in {@link #isValid()}.
+        """Removes a previously registered validator from the object. The
+        specified validator is removed from the object and its C{validate}
+        method is no longer called in L{isValid}.
 
-        @param validator
+        @param validator:
                    the validator to remove
         """
         raise NotImplementedError
@@ -52,52 +51,50 @@ class IValidatable(object):
 
     def getValidators(self):
         """Lists all validators currently registered for the object. If no
-        validators are registered, returns <code>null</code>.
+        validators are registered, returns C{None}.
 
-        @return collection of validators or <code>null</code>
+        @return: collection of validators or C{None}
         """
         raise NotImplementedError
 
 
     def isValid(self):
-        """Tests the current value of the object against all registered validators.
-        The registered validators are iterated and for each the
-        {@link Validator#validate(Object)} method is called. If any validator
-        throws the {@link Validator.InvalidValueException} this method returns
-        <code>false</code>.
+        """Tests the current value of the object against all registered
+        validators. The registered validators are iterated and for each the
+        L{Validator.validate} method is called. If any validator
+        throws the L{InvalidValueException} this method returns
+        C{False}.
 
-        @return <code>true</code> if the registered validators concur that the
-                value is valid, <code>false</code> otherwise
+        @return: C{True} if the registered validators concur that the
+                value is valid, C{False} otherwise
         """
         raise NotImplementedError
 
 
     def validate(self):
-        """Checks the validity of the validatable. If the validatable is valid this
-        method should do nothing, and if it's not valid, it should throw
-        <code>Validator.InvalidValueException</code>
+        """Checks the validity of the validatable. If the validatable is valid
+        this method should do nothing, and if it's not valid, it should throw
+        C{InvalidValueException}
 
-        @throws Validator.InvalidValueException
+        @raise InvalidValueException:
                     if the value is not valid
         """
         raise NotImplementedError
 
 
     def isInvalidAllowed(self):
-        """Checks the validabtable object accept invalid values.The default value is
-        <code>true</code>.
+        """Checks the validabtable object accept invalid values.The default
+        value is C{True}.
         """
         raise NotImplementedError
 
 
     def setInvalidAllowed(self, invalidValueAllowed):
-        """Should the validabtable object accept invalid values. Supporting this
-        configuration possibility is optional. By default invalid values are
-        allowed.
+        """Should the validabtable object accept invalid values. Supporting
+        this configuration possibility is optional. By default invalid values
+        are allowed.
 
-        @param invalidValueAllowed
-
-        @throws UnsupportedOperationException
+        @raise NotImplementedError:
                     if the setInvalidAllowed is not supported.
         """
         raise NotImplementedError

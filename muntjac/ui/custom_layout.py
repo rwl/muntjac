@@ -35,9 +35,9 @@ class CustomLayout(AbstractLayout):
     The default theme handles the styles that are not defined by drawing the
     subcomponents just as in OrderedLayout.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
-    @author Duy B. Vo
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
+    @author: Duy B. Vo
     @version @VERSION@
     @since 3.0
     """
@@ -49,8 +49,8 @@ class CustomLayout(AbstractLayout):
     def __init__(self, template=None):
         """Default constructor only used by subclasses. Subclasses are
         responsible for setting the appropriate fields. Either
-        {@link #setTemplateName(String)}, that makes layout fetch the
-        template from theme, or {@link #setTemplateContents(String)}.
+        L{#setTemplateName(String)}, that makes layout fetch the
+        template from theme, or L{#setTemplateContents(String)}.
         ---
         Constructs a custom layout with the template given in the stream.
 
@@ -60,7 +60,7 @@ class CustomLayout(AbstractLayout):
                    new ByteArrayInputStream("<template>".getBytes()).
         @param streamLength
                    Length of the templateStream
-        @throws IOException
+        @raise IOException
         ---
         Constructor for custom layout with given template name. Template
         file is fetched from "<theme>/layout/<templateName>".
@@ -137,16 +137,16 @@ class CustomLayout(AbstractLayout):
         """Gets the component container iterator for going trough all
         the components in the container.
 
-        @return the Iterator of the components inside the container.
+        @return: the Iterator of the components inside the container.
         """
         return iter( self._slots.values() )
 
 
     def getComponentCount(self):
         """Gets the number of contained components. Consistent with the
-        iterator returned by {@link #getComponentIterator()}.
+        iterator returned by L{#getComponentIterator()}.
 
-        @return the number of contained components
+        @return: the number of contained components
         """
         return len( self._slots.values() )
 
@@ -156,7 +156,7 @@ class CustomLayout(AbstractLayout):
 
         @param location the name of the location where the requested
                component resides.
-        @return the IComponent in the given location or null if not found.
+        @return: the IComponent in the given location or null if not found.
         """
         return self._slots.get(location)
 
@@ -213,7 +213,7 @@ class CustomLayout(AbstractLayout):
         with setStyle. Overriding to improve backwards compatibility.
 
         @param name: template name
-        @deprecated Use {@link #setTemplateName(String)} instead
+        @deprecated Use L{#setTemplateName(String)} instead
         """
         self.setTemplateName(name)
 

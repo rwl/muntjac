@@ -19,8 +19,8 @@ class IScrollable(object):
     """This interface is implemented by all visual objects that can be
     scrolled. The unit of scrolling is pixel.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -31,7 +31,7 @@ class IScrollable(object):
         Scrolling offset is the number of pixels this scrollable has been
         scrolled right.
 
-        @return Horizontal scrolling position in pixels.
+        @return: Horizontal scrolling position in pixels.
         """
         raise NotImplementedError
 
@@ -54,7 +54,7 @@ class IScrollable(object):
         Scrolling offset is the number of pixels this scrollable has been
         scrolled down.
 
-        @return Vertical scrolling position in pixels.
+        @return: Vertical scrolling position in pixels.
         """
         raise NotImplementedError
 
@@ -77,8 +77,8 @@ class IScrollable(object):
         Enabling scrolling allows the user to scroll the scrollable view
         interactively
 
-        @return <code>true</code> if the scrolling is allowed, otherwise
-                <code>false</code>.
+        @return: C{True} if the scrolling is allowed, otherwise
+                C{False}.
         """
         raise NotImplementedError
 

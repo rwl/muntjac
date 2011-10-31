@@ -38,14 +38,14 @@ class CheckBox(Button):
 
         @param caption
                    the caption of the switch button
-        @param listener
+        @param listener:
                    the click listener
         ---
         Convenience method for creating a new switch button with a method
         listening button clicks. Using this method is discouraged because it
         cannot be checked during compilation. Use
-        {@link #addListener(Class, Object, Method)} or
-        {@link #addListener(com.vaadin.ui.Component.Listener)} instead. The
+        L{#addListener(Class, Object, Method)} or
+        L{#addListener(com.vaadin.ui.Component.Listener)} instead. The
         method must have either no parameters, or only one parameter of
         Button.ClickEvent type.
 

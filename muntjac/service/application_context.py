@@ -16,13 +16,13 @@
 
 
 class IApplicationContext(object):
-    """<code>IApplicationContext</code> provides information about the running
+    """C{IApplicationContext} provides information about the running
     context of the application. Each context is shared by all applications that
     are open for one user. In a web-environment this corresponds to a
     HttpSession.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.1
     """
@@ -36,7 +36,7 @@ class IApplicationContext(object):
         have an application directory (for example web applications running
         inside a war).
 
-        @return The application base directory or null if the application has no
+        @return: The application base directory or null if the application has no
                 base directory.
         """
         raise NotImplementedError
@@ -47,7 +47,7 @@ class IApplicationContext(object):
 
         Each application context contains all active applications for one user.
 
-        @return A collection containing all the applications in this context.
+        @return: A collection containing all the applications in this context.
         """
         raise NotImplementedError
 
@@ -59,7 +59,7 @@ class IApplicationContext(object):
 
         The transaction listener must not be null.
 
-        @see com.vaadin.service.IApplicationContext#addTransactionListener(com.vaadin.service.IApplicationContext.ITransactionListener)
+        @see: com.vaadin.service.IApplicationContext#addTransactionListener(com.vaadin.service.IApplicationContext.ITransactionListener)
         """
         raise NotImplementedError
 
@@ -67,16 +67,16 @@ class IApplicationContext(object):
     def removeTransactionListener(self, listener):
         """Removes a transaction listener from this context.
 
-        @param listener
+        @param listener:
                    the listener to be removed.
-        @see ITransactionListener
+        @see: ITransactionListener
         """
         raise NotImplementedError
 
 
     def generateApplicationResourceURL(self, resource, urlKey):
         """Generate a URL that can be used as the relative location of e.g. an
-        {@link ApplicationResource}.
+        L{ApplicationResource}.
 
         This method should only be called from the processing of a UIDL request,
         not from a background thread. The return value is null if used outside a
@@ -84,12 +84,12 @@ class IApplicationContext(object):
 
         @deprecated this method is intended for terminal implementation only and
                     is subject to change/removal from the interface (to
-                    {@link AbstractCommunicationManager})
+                    L{AbstractCommunicationManager})
 
         @param resource
         @param urlKey
                    a key for the resource that can later be extracted from a URL
-                   with {@link #getURLKey(URL, String)}
+                   with L{#getURLKey(URL, String)}
         """
         raise NotImplementedError
 
@@ -99,7 +99,7 @@ class IApplicationContext(object):
 
         @deprecated this method is intended for terminal implementation only and
                     is subject to change/removal from the interface (to
-                    {@link AbstractCommunicationManager})
+                    L{AbstractCommunicationManager})
 
         @param context
         @param relativeUri
@@ -111,12 +111,12 @@ class IApplicationContext(object):
     def getURLKey(self, context, relativeUri):
         """Gets the identifier (key) from an application resource URL. This key is
         the one that was given to
-        {@link #generateApplicationResourceURL(ApplicationResource, String)} when
+        L{#generateApplicationResourceURL(ApplicationResource, String)} when
         creating the URL.
 
         @deprecated this method is intended for terminal implementation only and
                     is subject to change/removal from the interface (to
-                    {@link AbstractCommunicationManager})
+                    L{AbstractCommunicationManager})
 
 
         @param context

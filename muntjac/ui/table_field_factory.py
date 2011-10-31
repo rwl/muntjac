@@ -18,21 +18,21 @@
 class ITableFieldFactory(object):
     """Factory interface for creating new Field-instances based on Container
     (datasource), item id, property id and uiContext (the component responsible
-    for displaying fields). Currently this interface is used by {@link Table},
-    but might later be used by some other components for {@link Field}
+    for displaying fields). Currently this interface is used by L{Table},
+    but might later be used by some other components for L{Field}
     generation.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 6.0
-    @see FormFieldFactory
+    @see: FormFieldFactory
     """
 
     def createField(self, container, itemId, propertyId, uiContext):
         """Creates a field based on the Container, item id, property id and the
         component responsible for displaying the field (most commonly
-        {@link Table}).
+        L{Table}).
 
         @param container
                    the Container where the property belongs to.
@@ -42,7 +42,7 @@ class ITableFieldFactory(object):
                    the Id of the property.
         @param uiContext
                    the component where the field is presented.
-        @return A field suitable for editing the specified data or null if the
+        @return: A field suitable for editing the specified data or null if the
                 property should not be editable.
         """
         raise NotImplementedError

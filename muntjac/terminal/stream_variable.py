@@ -17,54 +17,54 @@
 
 class IStreamVariable(object):
     """IStreamVariable is a special kind of variable whose value is streamed
-    to an {@link OutputStream} provided by the {@link #getOutputStream()}
-    method. E.g. in web terminals {@link IStreamVariable} can be used to send
+    to an L{OutputStream} provided by the L{#getOutputStream()}
+    method. E.g. in web terminals L{IStreamVariable} can be used to send
     large files from browsers to the server without consuming large amounts
     of memory.
 
-    Note, writing to the {@link OutputStream} is not synchronized by the
+    Note, writing to the L{OutputStream} is not synchronized by the
     terminal (to avoid stalls in other operations when eg. streaming to a
     slow network service or file system). If UI is changed as a side effect
     of writing to the output stream, developer must handle synchronization
     manually.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 6.5
-    @see PaintTarget#addVariable(VariableOwner, String, IStreamVariable)
+    @see: PaintTarget#addVariable(VariableOwner, String, IStreamVariable)
     """
 
     def getOutputStream(self):
         """Invoked by the terminal when a new upload arrives, after
-        {@link #streamingStarted(IStreamingStartEvent)} method has been called.
+        L{#streamingStarted(IStreamingStartEvent)} method has been called.
         The terminal implementation will write the streamed variable to the
         returned output stream.
 
-        @return Stream to which the uploaded file should be written.
+        @return: Stream to which the uploaded file should be written.
         """
         raise NotImplementedError
 
 
     def listenProgress(self):
-        """Whether the {@link #onProgress(long, long)} method should be
+        """Whether the L{#onProgress(long, long)} method should be
         called during the upload.
 
-        {@link #onProgress(long, long)} is called in a synchronized block
+        L{#onProgress(long, long)} is called in a synchronized block
         when the content is being received. This is potentially bit slow,
         so we are calling that method only if requested. The value is
-        requested after the {@link #uploadStarted(IStreamingStartEvent)}
+        requested after the L{#uploadStarted(IStreamingStartEvent)}
         event, but not after reading each buffer.
 
-        @return true if this {@link IStreamVariable} wants to by notified
+        @return: true if this L{IStreamVariable} wants to by notified
                 during the upload of the progress of streaming.
-        @see #onProgress(IStreamingProgressEvent)
+        @see: #onProgress(IStreamingProgressEvent)
         """
         raise NotImplementedError
 
 
     def onProgress(self, event):
-        """This method is called by the terminal if {@link #listenProgress()}
+        """This method is called by the terminal if L{#listenProgress()}
         returns true when the streaming starts.
         """
         raise NotImplementedError
@@ -91,7 +91,7 @@ class IStreamVariable(object):
         implementation should only return a boolean field and especially
         not modify UI or implement a synchronization by itself.
 
-        @return true if the streaming should be interrupted as soon as
+        @return: true if the streaming should be interrupted as soon as
                 possible.
         """
         raise NotImplementedError
@@ -100,28 +100,28 @@ class IStreamVariable(object):
 class IStreamingEvent(object):
 
     def getFileName(self):
-        """@return the file name of the streamed file if known"""
+        """@return: the file name of the streamed file if known"""
         raise NotImplementedError
 
 
     def getMimeType(self):
-        """@return the mime type of the streamed file if known"""
+        """@return: the mime type of the streamed file if known"""
         raise NotImplementedError
 
 
     def getContentLength(self):
-        """@return the length of the stream (in bytes) if known, else -1"""
+        """@return: the length of the stream (in bytes) if known, else -1"""
         raise NotImplementedError
 
 
     def getBytesReceived(self):
-        """@return then number of bytes streamed to IStreamVariable"""
+        """@return: then number of bytes streamed to IStreamVariable"""
         raise NotImplementedError
 
 
 class IStreamingStartEvent(IStreamingEvent):
-    """Event passed to {@link #uploadStarted(IStreamingStartEvent)} method
-    before the streaming of the content to {@link IStreamVariable} starts.
+    """Event passed to L{#uploadStarted(IStreamingStartEvent)} method
+    before the streaming of the content to L{IStreamVariable} starts.
     """
 
     def disposeStreamVariable(self):
@@ -133,28 +133,28 @@ class IStreamingStartEvent(IStreamingEvent):
 
 
 class IStreamingProgressEvent(IStreamingEvent):
-    """Event passed to {@link #onProgress(IStreamingProgressEvent)} method
+    """Event passed to L{#onProgress(IStreamingProgressEvent)} method
     during the streaming progresses.
     """
     pass
 
 
 class IStreamingEndEvent(IStreamingEvent):
-    """Event passed to {@link #uploadFinished(IStreamingEndEvent)} method
+    """Event passed to L{#uploadFinished(IStreamingEndEvent)} method
     the contents have been streamed to IStreamVariable successfully.
     """
     pass
 
 
 class IStreamingErrorEvent(IStreamingEvent):
-    """Event passed to {@link #uploadFailed(IStreamingErrorEvent)} method
+    """Event passed to L{#uploadFailed(IStreamingErrorEvent)} method
     when the streaming ended before the end of the input. The streaming may
-    fail due an interruption by {@link } or due an other unknown exception
+    fail due an interruption by L{} or due an other unknown exception
     in communication. In the latter case the exception is also passed to
-    {@link Application#terminalError(event)}.
+    L{Application#terminalError(event)}.
     """
 
     def getException(self):
-        """@return the exception that caused the receiving not to finish
+        """@return: the exception that caused the receiving not to finish
         cleanly"""
         raise NotImplementedError

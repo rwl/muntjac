@@ -18,27 +18,27 @@ from muntjac.terminal.terminal import IErrorEvent as ITerminalErrorEvent
 
 
 class IParameterHandler(object):
-    """{@code IParameterHandler} is implemented by classes capable of handling
+    """C{IParameterHandler} is implemented by classes capable of handling
     external parameters.
 
-    What parameters are provided depend on what the {@link Terminal} provides
+    What parameters are provided depend on what the L{Terminal} provides
     and if the application is deployed as a servlet or portlet. URL GET
-    parameters are typically provided to the {@link #handleParameters(Map)}
+    parameters are typically provided to the L{#handleParameters(Map)}
     method.
 
-    A {@code IParameterHandler} must be registered to a {@code Window} using
-    {@link Window#addParameterHandler(IParameterHandler)} to be called when
+    A C{IParameterHandler} must be registered to a C{Window} using
+    L{Window#addParameterHandler(IParameterHandler)} to be called when
     parameters are available.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
 
     def handleParameters(self, parameters):
         """Handles the given parameters. All parameters names are of type
-        {@link String} and the values are {@link String} arrays.
+        L{String} and the values are L{String} arrays.
 
         @param parameters
                    an unmodifiable map which contains the parameter names
@@ -53,6 +53,6 @@ class IErrorEvent(ITerminalErrorEvent):
     def getParameterHandler(self):
         """Gets the IParameterHandler that caused the error.
 
-        @return the IParameterHandler that caused the error
+        @return: the IParameterHandler that caused the error
         """
         raise NotImplementedError

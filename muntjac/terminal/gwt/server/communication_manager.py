@@ -32,16 +32,16 @@ class CommunicationManager(AbstractCommunicationManager):
 
     This class handles applications running as servlets.
 
-    @see AbstractCommunicationManager
+    @see: AbstractCommunicationManager
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 5.0
     """
 
     def __init__(self, application, applicationServlet=None):
-        """@deprecated use {@link #CommunicationManager(Application)} instead
+        """@deprecated use L{#CommunicationManager(Application)} instead
         @param application
         @param applicationServlet
         ---
@@ -61,12 +61,12 @@ class CommunicationManager(AbstractCommunicationManager):
     def handleFileUpload(self, request, response, applicationServlet):
         """Handles file upload request submitted via Upload component.
 
-        @see #getStreamVariableTargetUrl()
+        @see: #getStreamVariableTargetUrl()
 
         @param request
         @param response
-        @throws IOException
-        @throws InvalidUIDLSecurityKeyException
+        @raise IOException
+        @raise InvalidUIDLSecurityKeyException
         """
         # URI pattern: APP/UPLOAD/[PID]/[NAME]/[SECKEY] See #createReceiverUrl
 
@@ -126,8 +126,8 @@ class CommunicationManager(AbstractCommunicationManager):
         @param window
                    target window of the UIDL request, can be null if window
                    not found
-        @throws IOException
-        @throws ServletException
+        @raise IOException
+        @raise ServletException
         """
         self.doHandleUidlRequest(
                 HttpServletRequestWrapper(request, applicationServlet),
@@ -148,8 +148,8 @@ class CommunicationManager(AbstractCommunicationManager):
         @param assumedWindow
                    if the window has been already resolved once, this
                    parameter must contain the window.
-        @return Window matching the given URI or null if not found.
-        @throws ServletException
+        @return: Window matching the given URI or null if not found.
+        @raise ServletException
                     if an exception has occurred that interferes with the
                     servlet's normal operation.
         """
@@ -162,14 +162,14 @@ class CommunicationManager(AbstractCommunicationManager):
 
     def handleURI(self, window, request, response, applicationServlet):
         """Calls the Window URI handler for a request and returns the
-        {@link DownloadStream} returned by the handler.
+        L{DownloadStream} returned by the handler.
 
         If the window is the main window of an application, the deprecated
-        {@link Application#handleURI(java.net.URL, String)} is called first
-        to handle {@link ApplicationResource}s and the window handler is only
+        L{Application#handleURI(java.net.URL, String)} is called first
+        to handle L{ApplicationResource}s and the window handler is only
         called if it returns null.
 
-        @see AbstractCommunicationManager#handleURI()
+        @see: AbstractCommunicationManager#handleURI()
 
         @param window
         @param request
@@ -240,9 +240,9 @@ class CommunicationManager(AbstractCommunicationManager):
 
 
 class HttpServletRequestWrapper(IRequest):
-    """Concrete wrapper class for {@link HttpServletRequest}.
+    """Concrete wrapper class for L{HttpServletRequest}.
 
-    @see Request
+    @see: Request
     """
 
     def __init__(self, request, applicationServlet):
@@ -292,9 +292,9 @@ class HttpServletRequestWrapper(IRequest):
 
 
 class HttpServletResponseWrapper(IResponse):
-    """Concrete wrapper class for {@link HttpServletResponse}.
+    """Concrete wrapper class for L{HttpServletResponse}.
 
-    @see Response
+    @see: Response
     """
 
     def __init__(self, response, applicationServlet):
@@ -319,9 +319,9 @@ class HttpServletResponseWrapper(IResponse):
 
 
 class HttpSessionWrapper(ISession):
-    """Concrete wrapper class for {@link HttpSession}.
+    """Concrete wrapper class for L{HttpSession}.
 
-    @see Session
+    @see: Session
     """
 
     def __init__(self, session, applicationServlet):

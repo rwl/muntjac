@@ -19,11 +19,11 @@ import re
 
 class VBrowserDetails(object):
     """Class that parses the user agent string from the browser and provides
-    information about the browser. Used internally by {@link BrowserInfo} and
-    {@link WebBrowser}. Should not be used directly.
+    information about the browser. Used internally by L{BrowserInfo} and
+    L{WebBrowser}. Should not be used directly.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 6.3
     """
@@ -158,7 +158,7 @@ class VBrowserDetails(object):
     def isFirefox(self):
         """Tests if the browser is Firefox.
 
-        @return true if it is Firefox, false otherwise
+        @return: true if it is Firefox, false otherwise
         """
         return self._isFirefox
 
@@ -166,7 +166,7 @@ class VBrowserDetails(object):
     def isGecko(self):
         """Tests if the browser is using the Gecko engine
 
-        @return true if it is Gecko, false otherwise
+        @return: true if it is Gecko, false otherwise
         """
         return self._isGecko
 
@@ -174,7 +174,7 @@ class VBrowserDetails(object):
     def isWebKit(self):
         """Tests if the browser is using the WebKit engine
 
-        @return true if it is WebKit, false otherwise
+        @return: true if it is WebKit, false otherwise
         """
         return self._isWebKit
 
@@ -182,7 +182,7 @@ class VBrowserDetails(object):
     def isPresto(self):
         """Tests if the browser is using the Presto engine
 
-        @return true if it is Presto, false otherwise
+        @return: true if it is Presto, false otherwise
         """
         return self._isPresto
 
@@ -190,7 +190,7 @@ class VBrowserDetails(object):
     def isSafari(self):
         """Tests if the browser is Safari.
 
-        @return true if it is Safari, false otherwise
+        @return: true if it is Safari, false otherwise
         """
         return self._isSafari
 
@@ -198,7 +198,7 @@ class VBrowserDetails(object):
     def isChrome(self):
         """Tests if the browser is Chrome.
 
-        @return true if it is Chrome, false otherwise
+        @return: true if it is Chrome, false otherwise
         """
         return self._isChrome
 
@@ -206,7 +206,7 @@ class VBrowserDetails(object):
     def isOpera(self):
         """Tests if the browser is Opera.
 
-        @return true if it is Opera, false otherwise
+        @return: true if it is Opera, false otherwise
         """
         return self._isOpera
 
@@ -214,7 +214,7 @@ class VBrowserDetails(object):
     def isIE(self):
         """Tests if the browser is Internet Explorer.
 
-        @return true if it is Internet Explorer, false otherwise
+        @return: true if it is Internet Explorer, false otherwise
         """
         return self._isIE
 
@@ -223,7 +223,7 @@ class VBrowserDetails(object):
         """Returns the version of the browser engine. For WebKit this is
         an integer e.g., 532.0. For gecko it is a float e.g., 1.8 or 1.9.
 
-        @return The version of the browser engine
+        @return: The version of the browser engine
         """
         return self._browserEngineVersion
 
@@ -235,7 +235,7 @@ class VBrowserDetails(object):
         Note that Internet Explorer 8 and newer will return the document
         mode so IE8 rendering as IE7 will return 7.
 
-        @return The major version of the browser.
+        @return: The major version of the browser.
         """
         return self._browserMajorVersion
 
@@ -243,9 +243,9 @@ class VBrowserDetails(object):
     def getBrowserMinorVersion(self):
         """Returns the browser minor version e.g., 5 for Firefox 3.5.
 
-        @see #getBrowserMajorVersion()
+        @see: #getBrowserMajorVersion()
 
-        @return The minor version of the browser, or -1 if not known/parsed.
+        @return: The minor version of the browser, or -1 if not known/parsed.
         """
         return self._browserMinorVersion
 
@@ -266,7 +266,7 @@ class VBrowserDetails(object):
     def isWindows(self):
         """Tests if the browser is run on Windows.
 
-        @return true if run on Windows, false otherwise
+        @return: true if run on Windows, false otherwise
         """
         return self._isWindows
 
@@ -274,7 +274,7 @@ class VBrowserDetails(object):
     def isMacOSX(self):
         """Tests if the browser is run on Mac OSX.
 
-        @return true if run on Mac OSX, false otherwise
+        @return: true if run on Mac OSX, false otherwise
         """
         return self._isMacOSX
 
@@ -282,6 +282,6 @@ class VBrowserDetails(object):
     def isLinux(self):
         """Tests if the browser is run on Linux.
 
-        @return true if run on Linux, false otherwise
+        @return: true if run on Linux, false otherwise
         """
         return self._isLinux

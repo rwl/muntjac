@@ -26,7 +26,7 @@ from muntjac.ui.abstract_component import AbstractComponent
 
 class ComponentIterator(object):
     """Modifiable and serializable iterator for the components, used by
-    {@link AbstractSplitPanel#getComponentIterator()}.
+    L{AbstractSplitPanel#getComponentIterator()}.
     """
 
     def __init__(self, sp):
@@ -73,11 +73,11 @@ class ComponentIterator(object):
 
 
 class AbstractSplitPanel(AbstractLayout):
-    """<code>AbstractSplitPanel</code> is base class for a component
+    """C{AbstractSplitPanel} is base class for a component
     container that can contain two components. The comopnents are split
     by a divider element.
 
-    @author Vaadin Ltd.
+    @author: Vaadin Ltd.
     @version @VERSION@
     @since 6.5
     """
@@ -139,12 +139,12 @@ class AbstractSplitPanel(AbstractLayout):
 
 
     def getFirstComponent(self):
-        """@return the first component of this SplitPanel."""
+        """@return: the first component of this SplitPanel."""
         return self._firstComponent
 
 
     def getSecondComponent(self):
-        """@return the second component of this SplitPanel."""
+        """@return: the second component of this SplitPanel."""
         return self._secondComponent
 
 
@@ -169,9 +169,9 @@ class AbstractSplitPanel(AbstractLayout):
 
     def getComponentCount(self):
         """Gets the number of contained components. Consistent with the
-        iterator returned by {@link #getComponentIterator()}.
+        iterator returned by L{#getComponentIterator()}.
 
-        @return the number of contained components (zero, one or two)
+        @return: the number of contained components (zero, one or two)
         """
         count = 0
         if self._firstComponent is not None:
@@ -188,7 +188,7 @@ class AbstractSplitPanel(AbstractLayout):
 
         @param target
                    the Paint Event.
-        @throws PaintException
+        @raise PaintException
                     if the paint operation failed.
         """
         super(AbstractSplitPanel, self).paintContent(target)
@@ -247,7 +247,7 @@ class AbstractSplitPanel(AbstractLayout):
         @param pos
                    size of the first region
         @param unit
-                   the unit (from {@link Sizeable}) in which the size is
+                   the unit (from L{Sizeable}) in which the size is
                    given.
         ---
         Moves the position of the splitter with given position and unit.
@@ -255,7 +255,7 @@ class AbstractSplitPanel(AbstractLayout):
         @param pos
                    size of the first region
         @param unit
-                   the unit (from {@link Sizeable}) in which the size is
+                   the unit (from L{Sizeable}) in which the size is
                    given.
         @param reverse
                    if set to true the split splitter position is measured by
@@ -266,7 +266,7 @@ class AbstractSplitPanel(AbstractLayout):
         @param pos
                    the new size of the first region
         @param unit
-                   the unit (from {@link Sizeable}) in which the size is
+                   the unit (from L{Sizeable}) in which the size is
                    given.
         @param repaintNotNeeded
                    true if client side needs to be updated. Use false if
@@ -303,9 +303,9 @@ class AbstractSplitPanel(AbstractLayout):
 
     def getSplitPosition(self):
         """Returns the current position of the splitter, in
-        {@link #getSplitPositionUnit()} units.
+        L{#getSplitPositionUnit()} units.
 
-        @return position of the splitter
+        @return: position of the splitter
         """
         return self._pos
 
@@ -313,7 +313,7 @@ class AbstractSplitPanel(AbstractLayout):
     def getSplitPositionUnit(self):
         """Returns the unit of position of the splitter
 
-        @return unit of position of the splitter
+        @return: unit of position of the splitter
         """
         return self._posUnit
 
@@ -323,7 +323,7 @@ class AbstractSplitPanel(AbstractLayout):
         the split handle.
 
         @param locked
-                   Set <code>true</code> if locked, <code>false</code>
+                   Set C{True} if locked, C{False}
                    otherwise.
         """
         self._locked = locked
@@ -334,7 +334,7 @@ class AbstractSplitPanel(AbstractLayout):
         """Is the SplitPanel handle locked (user not allowed to change
         split position by dragging).
 
-        @return <code>true</code> if locked, <code>false</code> otherwise.
+        @return: C{True} if locked, C{False} otherwise.
         """
         return self._locked
 
@@ -383,10 +383,10 @@ class AbstractSplitPanel(AbstractLayout):
 
 
 class ISplitterClickListener(IComponentEventListener):
-    """<code>ISplitterClickListener</code> interface for listening for
-    <code>SplitterClickEvent</code> fired by a <code>SplitPanel</code>.
+    """C{ISplitterClickListener} interface for listening for
+    C{SplitterClickEvent} fired by a C{SplitPanel}.
 
-    @see SplitterClickEvent
+    @see: SplitterClickEvent
     @since 6.2
     """
 

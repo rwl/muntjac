@@ -19,21 +19,19 @@ from muntjac.data.validators.abstract_string_validator import \
 
 
 class IntegerValidator(AbstractStringValidator):
-    """String validator for integers. See
-    {@link com.vaadin.data.validator.AbstractStringValidator} for more
+    """String validator for integers. See L{AbstractStringValidator} for more
     information.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
-    @since 5.4
     """
 
     def __init__(self, errorMessage):
         """Creates a validator for checking that a string can be parsed as an
         integer.
 
-        @param errorMessage
+        @param errorMessage:
                    the message to display in case the value does not validate.
         """
         super(IntegerValidator, self).__init__(errorMessage)

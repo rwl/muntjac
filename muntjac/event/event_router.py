@@ -19,12 +19,12 @@ from muntjac.event.listener_method import ListenerMethod
 
 
 class EventRouter(IMethodEventSource):
-    """<code>EventRouter</code> class implementing the inheritable event
+    """C{EventRouter} class implementing the inheritable event
     listening model. For more information on the event model see the
-    {@link com.vaadin.event package documentation}.
+    L{com.vaadin.event package documentation}.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -114,7 +114,7 @@ class EventRouter(IMethodEventSource):
 
         @param eventType
                    the event type to be checked
-        @return true if a listener is registered for the given event type
+        @return: true if a listener is registered for the given event type
         """
         if self._listenerList is not None:
             for lm in self._listenerList:
@@ -128,7 +128,7 @@ class EventRouter(IMethodEventSource):
 
         @param eventType
                    The type of event to return listeners for.
-        @return A collection with all registered listeners. Empty if no
+        @return: A collection with all registered listeners. Empty if no
                 listeners are found.
         """
         listeners = list()

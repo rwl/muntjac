@@ -22,8 +22,8 @@ class IFieldFactory(IFormFieldFactory, ITableFieldFactory):
     """Factory for creating new Field-instances based on type, datasource
     and/or context.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.1
     @deprecated IFieldFactory was split into two lighter interfaces in 6.0
@@ -37,7 +37,7 @@ class IFieldFactory(IFormFieldFactory, ITableFieldFactory):
                    the type of data presented in field.
         @param uiContext
                    the component where the field is presented.
-        @return Field the field suitable for editing the specified data.
+        @return: Field the field suitable for editing the specified data.
         ---
         Creates a field based on the property datasource.
 
@@ -45,6 +45,6 @@ class IFieldFactory(IFormFieldFactory, ITableFieldFactory):
                    the property datasource.
         @param uiContext
                    the component where the field is presented.
-        @return Field the field suitable for editing the specified data.
+        @return: Field the field suitable for editing the specified data.
         """
         raise NotImplementedError

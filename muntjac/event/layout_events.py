@@ -32,23 +32,23 @@ class ILayoutClickListener(IComponentEventListener):
 
 
 class ILayoutClickNotifier(object):
-    """The interface for adding and removing <code>LayoutClickEvent</code>
+    """The interface for adding and removing C{LayoutClickEvent}
     listeners. By implementing this interface a class explicitly announces
-    that it will generate a <code>LayoutClickEvent</code> when a component
-    inside it is clicked and a <code>LayoutClickListener</code> is
+    that it will generate a C{LayoutClickEvent} when a component
+    inside it is clicked and a C{LayoutClickListener} is
     registered.
     <p>
     Note: The general Java convention is not to explicitly declare that a
     class generates events, but to directly define the
-    <code>addListener</code> and <code>removeListener</code> methods. That
+    C{addListener} and C{removeListener} methods. That
     way the caller of these methods has no real way of finding out if the
     class really will send the events, or if it just defines the methods to
     be able to implement an interface.
     </p>
 
     @since 6.5.2
-    @see LayoutClickListener
-    @see LayoutClickEvent
+    @see: LayoutClickListener
+    @see: LayoutClickEvent
     """
 
     def addListener(self, listener, iface):
@@ -59,12 +59,12 @@ class ILayoutClickNotifier(object):
         propagating. A caption is not considered part of a component.
 
         The child component that was clicked is included in the
-        {@link LayoutClickEvent}.
+        L{LayoutClickEvent}.
 
-        Use {@link #removeListener(LayoutClickListener)} to remove the
+        Use L{#removeListener(LayoutClickListener)} to remove the
         listener.
 
-        @param listener
+        @param listener:
                    The listener to add
         """
         if iface == ILayoutClickListener:
@@ -80,7 +80,7 @@ class ILayoutClickNotifier(object):
     def removeListener(self, listener, iface):
         """Removes an LayoutClickListener.
 
-        @param listener
+        @param listener:
                    LayoutClickListener to be removed
         """
         if iface == ILayoutClickListener:
@@ -111,9 +111,9 @@ class LayoutClickEvent(ClickEvent):
         parent layout on which the listener was registered.
 
         For the direct child component of the layout, see
-        {@link #getChildComponent()}.
+        L{#getChildComponent()}.
 
-        @return clicked {@link Component}, null if none found
+        @return: clicked L{Component}, null if none found
         """
         return self._clickedComponent
 
@@ -123,9 +123,9 @@ class LayoutClickEvent(ClickEvent):
         clicked component.
 
         For the clicked component inside that child component of the layout,
-        see {@link #getClickedComponent()}.
+        see L{#getClickedComponent()}.
 
-        @return direct child {@link Component} of the layout which contains
+        @return: direct child L{Component} of the layout which contains
                 the clicked Component, null if none found
         """
         return self._childComponent

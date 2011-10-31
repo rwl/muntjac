@@ -41,7 +41,7 @@ class Feature(object):
         example intends to showcase. May contain HTML. 100 words should be
         enough, and about 7 rows...
 
-        @return the description
+        @return: the description
         """
         raise NotImplementedError
 
@@ -57,10 +57,10 @@ class Feature(object):
         May return null, if the example has no related resources.
 
         The name of the NamedExternalResource will be shown in the UI. <br/>
-        Note that Javadoc should be referenced via {@link #getRelatedAPI()}.
+        Note that Javadoc should be referenced via L{#getRelatedAPI()}.
 
-        @see #getThemeBase()
-        @return related external stuff
+        @see: #getThemeBase()
+        @return: related external stuff
         """
         raise NotImplementedError
 
@@ -153,7 +153,7 @@ class Feature(object):
 
         Override in each feature. Returns Version.OLD otherwise.
 
-        @return Version Vaadin version when this feature was added to Sampler
+        @return: Version Vaadin version when this feature was added to Sampler
         """
         raise NotImplementedError
 

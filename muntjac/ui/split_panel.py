@@ -20,15 +20,15 @@ from muntjac.ui.abstract_split_panel import AbstractSplitPanel
 class SplitPanel(AbstractSplitPanel):
     """SplitPanel.
 
-    <code>SplitPanel</code> is a component container, that can contain two
+    C{SplitPanel} is a component container, that can contain two
     components (possibly containers) which are split by divider element.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 5.0
-    @deprecated in 6.5. Use {@link HorizontalSplitPanel} or
-                {@link VerticalSplitPanel} instead.
+    @deprecated in 6.5. Use L{HorizontalSplitPanel} or
+                L{VerticalSplitPanel} instead.
     """
 
     CLIENT_WIDGET = None #ClientWidget(VSplitPanelHorizontal, LoadStyle.EAGER)
@@ -42,7 +42,7 @@ class SplitPanel(AbstractSplitPanel):
 
     def __init__(self, orientation=None):
         """Creates a new split panel. The orientation of the panels is
-        <code>ORIENTATION_VERTICAL</code>.
+        C{ORIENTATION_VERTICAL}.
         ---
         Create a new split panels. The orientation of the panel is given as
         parameters.
@@ -66,7 +66,7 @@ class SplitPanel(AbstractSplitPanel):
 
         @param target
                    the Paint Event.
-        @throws PaintException
+        @raise PaintException
                     if the paint operation failed.
         """
         super(SplitPanel, self).paintContent(target)
@@ -77,7 +77,7 @@ class SplitPanel(AbstractSplitPanel):
     def getOrientation(self):
         """Gets the orientation of the split panel.
 
-        @return the Value of property orientation.
+        @return: the Value of property orientation.
         """
         return self._orientation
 

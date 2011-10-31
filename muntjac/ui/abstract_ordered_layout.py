@@ -111,16 +111,16 @@ class AbstractOrderedLayout(AbstractLayout, IAlignmentHandler,
         """Gets the component container iterator for going through
         all the components in the container.
 
-        @return the Iterator of the components inside the container.
+        @return: the Iterator of the components inside the container.
         """
         return iter(self.components)
 
 
     def getComponentCount(self):
         """Gets the number of contained components. Consistent with
-        the iterator returned by {@link #getComponentIterator()}.
+        the iterator returned by L{#getComponentIterator()}.
 
-        @return the number of contained components
+        @return: the number of contained components
         """
         return len(self.components)
 
@@ -130,7 +130,7 @@ class AbstractOrderedLayout(AbstractLayout, IAlignmentHandler,
 
         @param target
                    the Paint Event.
-        @throws PaintException
+        @raise PaintException
                     if the paint operation failed.
         """
         super(AbstractOrderedLayout, self).paintContent(target)
@@ -190,12 +190,12 @@ class AbstractOrderedLayout(AbstractLayout, IAlignmentHandler,
         """Sets the component alignment using a short hand string notation.
 
         @deprecated Replaced by
-                    {@link #setComponentAlignment(Component, Alignment)}
+                    L{#setComponentAlignment(Component, Alignment)}
 
         @param component
                    A child component in this layout
         @param alignment
-                   A short hand notation described in {@link AlignmentUtils}
+                   A short hand notation described in L{AlignmentUtils}
         """
         if verticalAlignment is not None:
             alignment = Alignment(alignment + verticalAlignment)
@@ -238,10 +238,10 @@ class AbstractOrderedLayout(AbstractLayout, IAlignmentHandler,
         Example how to distribute 1:3 (33%) for component1 and
         2:3 (67%) for component2 :
 
-        <code>
+        C{
         layout.setExpandRatio(component1, 1);<br>
         layout.setExpandRatio(component2, 2);
-        </code>
+        }
 
         If no ratios have been set, the excess space is distributed
         evenly among all components.
@@ -249,7 +249,7 @@ class AbstractOrderedLayout(AbstractLayout, IAlignmentHandler,
         Note, that width or height (depending on orientation) needs
         to be defined for this method to have any effect.
 
-        @see Sizeable
+        @see: Sizeable
 
         @param component
                    the component in this layout which expand ratio
@@ -269,7 +269,7 @@ class AbstractOrderedLayout(AbstractLayout, IAlignmentHandler,
 
         @param component
                    which expand ratios is requested
-        @return expand ratio of given component, 0.0f by default
+        @return: expand ratio of given component, 0.0f by default
         """
         ratio = self._componentToExpandRatio.get(component)
         return 0 if ratio is None else float(ratio)
@@ -303,7 +303,7 @@ class AbstractOrderedLayout(AbstractLayout, IAlignmentHandler,
 
         @param component
                    The component to look up.
-        @return The index of the component or -1 if the component
+        @return: The index of the component or -1 if the component
                 is not a child.
         """
         try:
@@ -317,7 +317,7 @@ class AbstractOrderedLayout(AbstractLayout, IAlignmentHandler,
 
         @param index
                    The position of the component.
-        @return The component at the given index.
+        @return: The component at the given index.
         @raise IndexError:
                     If the index is out of range.
         """

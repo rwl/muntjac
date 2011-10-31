@@ -18,9 +18,9 @@
 starting point of any application that uses Vaadin.</p>
 
 <p>Contains all Vaadin core classes. A Vaadin application is based
-on the {@link com.vaadin.Application} class and deployed as a servlet
-using {@link com.vaadin.terminal.gwt.server.ApplicationServlet} or
-{@link com.vaadin.terminal.gwt.server.GAEApplicationServlet} (for Google
+on the L{com.vaadin.Application} class and deployed as a servlet
+using L{com.vaadin.terminal.gwt.server.ApplicationServlet} or
+L{com.vaadin.terminal.gwt.server.GAEApplicationServlet} (for Google
 App Engine).</p>
 
 <p>Vaadin applications can also be deployed as portlets using {@link

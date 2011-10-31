@@ -22,40 +22,33 @@ from muntjac.data.container import \
 
 
 class AbstractContainer(IContainer):
-    """Abstract container class that manages event listeners and sending events to
-    them ({@link PropertySetChangeNotifier}, {@link ItemSetChangeNotifier}).
+    """Abstract container class that manages event listeners and sending events
+    to them (L{PropertySetChangeNotifier}, L{ItemSetChangeNotifier}).
 
-    Note that this class provides the internal implementations for both types of
-    events and notifiers as protected methods, but does not implement the
-    {@link PropertySetChangeNotifier} and {@link ItemSetChangeNotifier}
-    interfaces directly. This way, subclasses can choose not to implement them.
+    Note that this class provides the internal implementations for both types
+    of events and notifiers as protected methods, but does not implement the
+    L{IPropertySetChangeNotifier} and L{ItemSetChangeNotifier} interfaces
+    directly. This way, subclasses can choose not to implement them.
     Subclasses implementing those interfaces should also override the
-    corresponding {@link #addListener()} and {@link #removeListener()} methods to
-    make them public.
-
-    @since 6.6
+    corresponding L{addListener} and L{removeListener} methods to make them
+    public.
     """
 
     def __init__(self):
-        # List of all Property set change event listeners.
+        #: List of all Property set change event listeners.
         self._propertySetChangeListeners = None
 
-        # List of all container Item set change event listeners.
+        #: List of all container Item set change event listeners.
         self._itemSetChangeListeners = None
 
 
     def addListener(self, listener, iface):
         """Implementation of the corresponding method in
-        {@link PropertySetChangeNotifier}, override with the corresponding public
-        method and implement the interface to use this.
+        L{IPropertySetChangeNotifier} and L{ItemSetChangeNotifier}, override
+        and implement the interface to use this.
 
-        @see PropertySetChangeNotifier#addListener(com.vaadin.data.IContainer.PropertySetChangeListener)
-        ---
-        Implementation of the corresponding method in
-        {@link ItemSetChangeNotifier}, override with the corresponding public
-        method and implement the interface to use this.
-
-        @see ItemSetChangeNotifier#addListener(com.vaadin.data.IContainer.IItemSetChangeListener)
+        @see: L{IPropertySetChangeNotifier.addListener}
+        @see: L{IItemSetChangeNotifier.addListener}
         """
         if iface == IItemSetChangeListener:
             if self.getItemSetChangeListeners() is None:
@@ -81,17 +74,11 @@ class AbstractContainer(IContainer):
 
     def removeListener(self, listener, iface):
         """Implementation of the corresponding method in
-        {@link PropertySetChangeNotifier}, override with the corresponding public
-        method and implement the interface to use this.
+        L{IPropertySetChangeNotifier} and L{ItemSetChangeNotifier}, override
+        and implement the interface to use this.
 
-        @see PropertySetChangeNotifier#removeListener(com.vaadin.data.IContainer.
-             PropertySetChangeListener)
-        ---
-        Implementation of the corresponding method in
-        {@link ItemSetChangeNotifier}, override with the corresponding public
-        method and implement the interface to use this.
-
-        @see ItemSetChangeNotifier#removeListener(com.vaadin.data.IContainer.IItemSetChangeListener)
+        @see: L{IPropertySetChangeNotifier.removeListener}
+        @see: L{ItemSetChangeNotifier.removeListener}
         """
         if iface == IItemSetChangeListener:
             if self.getItemSetChangeListeners() is not None:
@@ -112,17 +99,16 @@ class AbstractContainer(IContainer):
 
 
     def fireContainerPropertySetChange(self, event=None):
-        """Sends a simple Property set change event to all interested listeners.
-        ---
-        Sends a Property set change event to all interested listeners.
+        """Sends a simple Property set change event to all interested
+        listeners.
 
-        Use {@link #fireContainerPropertySetChange()} instead of this method
+        Use L{fireContainerPropertySetChange} instead of this method
         unless additional information about the exact changes is available and
         should be included in the event.
 
-        @param event
-                   the property change event to send, optionally with additional
-                   information
+        @param event:
+                   the property change event to send, optionally with
+                   additional information
         """
         if event is None:
             event = BasePropertySetChangeEvent(self)
@@ -137,12 +123,10 @@ class AbstractContainer(IContainer):
         """Sends a simple Item set change event to all interested listeners,
         indicating that anything in the contents may have changed (items added,
         removed etc.).
-        ---
-        Sends an Item set change event to all registered interested listeners.
 
-        @param event
-                   the item set change event to send, optionally with additional
-                   information
+        @param event:
+                   the item set change event to send, optionally with
+                   additional information
         """
         if event is None:
             event = BaseItemSetChangeEvent(self)
@@ -154,30 +138,28 @@ class AbstractContainer(IContainer):
 
 
     def setPropertySetChangeListeners(self, propertySetChangeListeners):
-        """Sets the property set change listener collection. For internal use only.
-
-        @param propertySetChangeListeners
+        """Sets the property set change listener collection. For internal
+        use only.
         """
         self._propertySetChangeListeners = propertySetChangeListeners
 
 
     def getPropertySetChangeListeners(self):
-        """Returns the property set change listener collection. For internal use
-        only.
+        """Returns the property set change listener collection. For internal
+        use only.
         """
         return self._propertySetChangeListeners
 
 
     def setItemSetChangeListeners(self, itemSetChangeListeners):
         """Sets the item set change listener collection. For internal use only.
-
-        @param itemSetChangeListeners
         """
         self._itemSetChangeListeners = itemSetChangeListeners
 
 
     def getItemSetChangeListeners(self):
-        """Returns the item set change listener collection. For internal use only."""
+        """Returns the item set change listener collection. For internal use
+        only."""
         return self._itemSetChangeListeners
 
 
@@ -199,7 +181,7 @@ class AbstractContainer(IContainer):
 
 class BasePropertySetChangeEvent(EventObject, IContainer,
             IPropertySetChangeEvent):
-    """An <code>event</code> object specifying the container whose Property
+    """An C{event} object specifying the container whose Property
     set has changed.
 
     This class does not provide information about which properties were
@@ -216,7 +198,7 @@ class BasePropertySetChangeEvent(EventObject, IContainer,
 
 
 class BaseItemSetChangeEvent(EventObject, IContainer, IItemSetChangeEvent):
-    """An <code>event</code> object specifying the container whose Item set
+    """An C{event} object specifying the container whose Item set
     has changed.
 
     This class does not provide information about the exact changes

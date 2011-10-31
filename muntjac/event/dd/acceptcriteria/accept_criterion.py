@@ -17,23 +17,23 @@
 
 class IAcceptCriterion(object):
     """Criterion that can be used create policy to accept/discard dragged content
-    (presented by {@link Transferable}).
+    (presented by L{Transferable}).
 
     The drag and drop mechanism will verify the criteria returned by
-    {@link DropHandler#getAcceptCriterion()} before calling
-    {@link DropHandler#drop(DragAndDropEvent)}.
+    L{DropHandler#getAcceptCriterion()} before calling
+    L{DropHandler#drop(DragAndDropEvent)}.
 
     The criteria can be evaluated either on the client (browser - see
-    {@link ClientSideCriterion}) or on the server (see
-    {@link ServerSideCriterion}). If no constraints are needed, an
-    {@link AcceptAll} can be used.
+    L{ClientSideCriterion}) or on the server (see
+    L{ServerSideCriterion}). If no constraints are needed, an
+    L{AcceptAll} can be used.
 
     In addition to accepting or rejecting a possible drop, criteria can provide
     additional hints for client side painting.
 
-    @see DropHandler
-    @see ClientSideCriterion
-    @see ServerSideCriterion
+    @see: DropHandler
+    @see: ClientSideCriterion
+    @see: ServerSideCriterion
 
     @since 6.3
     """
@@ -57,17 +57,17 @@ class IAcceptCriterion(object):
         """This needs to be implemented iff criterion does some lazy server side
         initialization. The UIDL painted in this method will be passed to client
         side drop handler implementation. Implementation can assume that
-        {@link #accept(DragAndDropEvent)} is called before this method.
+        L{#accept(DragAndDropEvent)} is called before this method.
 
         @param target
-        @throws PaintException
+        @raise PaintException
         """
         raise NotImplementedError
 
 
     def accept(self, dragEvent):
         """Validates the data in event to be appropriate for the
-        {@link DropHandler#drop(DragAndDropEvent)} method.
+        L{DropHandler#drop(DragAndDropEvent)} method.
         <p>
         Note that even if your criterion is validated on client side, you should
         always validate the data on server side too.

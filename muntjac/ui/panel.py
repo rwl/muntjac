@@ -39,8 +39,8 @@ class Panel(AbstractComponentContainer, IScrollable,
             action.INotifier, IFocusable):
     """Panel - a simple single component container.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -55,7 +55,7 @@ class Panel(AbstractComponentContainer, IScrollable,
     #             component, even though most built-in themes implement this
     #             style. Use the constant specified in the theme class file
     #             that you're using, if it provides one, e.g.
-    #             {@link Reindeer#PANEL_LIGHT} or {@link Runo#PANEL_LIGHT} .
+    #             L{Reindeer#PANEL_LIGHT} or L{Runo#PANEL_LIGHT} .
     STYLE_LIGHT = 'light'
 
 
@@ -126,9 +126,9 @@ class Panel(AbstractComponentContainer, IScrollable,
     def getLayout(self):
         """Gets the current layout of the panel.
 
-        @return the Current layout of the panel.
+        @return: the Current layout of the panel.
         @deprecated A Panel can now contain a IComponentContainer which is not
-                    necessarily a ILayout. Use {@link #getContent()} instead.
+                    necessarily a ILayout. Use L{#getContent()} instead.
         """
         warn('Use getContent() instead', DeprecationWarning)
 
@@ -153,7 +153,7 @@ class Panel(AbstractComponentContainer, IScrollable,
                    the New layout of the panel.
         @deprecated A Panel can now contain a IComponentContainer which is not
                     necessarily a ILayout. Use
-                    {@link #setContent(IComponentContainer)} instead.
+                    L{#setContent(IComponentContainer)} instead.
         """
         self.setContent(newLayout)
 
@@ -241,7 +241,7 @@ class Panel(AbstractComponentContainer, IScrollable,
         """Adds the component into this container.
 
         @param c: the component to be added.
-        @see AbstractComponentContainer#addComponent()
+        @see: AbstractComponentContainer#addComponent()
         """
         self._content.addComponent(c)
         # No repaint request is made as we except the underlying
@@ -252,7 +252,7 @@ class Panel(AbstractComponentContainer, IScrollable,
         """Removes the component from this container.
 
         @param c: The component to be removed.
-        @see AbstractComponentContainer.removeComponent()
+        @see: AbstractComponentContainer.removeComponent()
         """
         self._content.removeComponent(c)
         # No repaint request is made as we except the underlying
@@ -263,8 +263,8 @@ class Panel(AbstractComponentContainer, IScrollable,
         """Gets the component container iterator for going through
         all the components in the container.
 
-        @return the Iterator of the components inside the container.
-        @see com.vaadin.ui.IComponentContainer#getComponentIterator()
+        @return: the Iterator of the components inside the container.
+        @see: com.vaadin.ui.IComponentContainer#getComponentIterator()
         """
         return self._content.getComponentIterator()
 
@@ -273,7 +273,7 @@ class Panel(AbstractComponentContainer, IScrollable,
         """Called when one or more variables handled by the implementing
         class are changed.
 
-        @see com.vaadin.terminal.VariableOwner#changeVariables(Object, Map)
+        @see: com.vaadin.terminal.VariableOwner#changeVariables(Object, Map)
         """
         super(Panel, self).changeVariables(source, variables)
 
@@ -311,7 +311,7 @@ class Panel(AbstractComponentContainer, IScrollable,
 
 
     def getScrollOffsetX(self):
-        """@deprecated use {@link #getScrollLeft()} instead"""
+        """@deprecated use L{#getScrollLeft()} instead"""
         warn('use getScrollLeft() instead', DeprecationWarning)
         return self.getScrollLeft()
 
@@ -321,7 +321,7 @@ class Panel(AbstractComponentContainer, IScrollable,
 
 
     def getScrollOffsetY(self):
-        """@deprecated use {@link #getScrollTop()} instead"""
+        """@deprecated use L{#getScrollTop()} instead"""
         warn('use getScrollTop() instead', DeprecationWarning)
         return self.getScrollTop()
 
@@ -372,7 +372,7 @@ class Panel(AbstractComponentContainer, IScrollable,
     def componentAttachedToContainer(self, event):
         """A new component is attached to container.
 
-        @see IComponentAttachListener.componentAttachedToContainer()
+        @see: IComponentAttachListener.componentAttachedToContainer()
         """
         if event.getContainer() == self._content:
             self.fireComponentAttachEvent(event.getAttachedComponent())
@@ -381,7 +381,7 @@ class Panel(AbstractComponentContainer, IScrollable,
     def componentDetachedFromContainer(self, event):
         """A component has been detached from container.
 
-        @see IComponentDetachListener.componentDetachedFromContainer()
+        @see: IComponentDetachListener.componentDetachedFromContainer()
         """
         if event.getContainer() == self._content:
             self.fireComponentDetachEvent(event.getDetachedComponent())
@@ -390,7 +390,7 @@ class Panel(AbstractComponentContainer, IScrollable,
     def attach(self):
         """Notifies the component that it is connected to an application.
 
-        @see com.vaadin.ui.Component#attach()
+        @see: com.vaadin.ui.Component#attach()
         """
         # can't call parent here as this is Panels hierarchy is a hack
         self.requestRepaint()
@@ -401,7 +401,7 @@ class Panel(AbstractComponentContainer, IScrollable,
     def detach(self):
         """Notifies the component that it is detached from the application.
 
-        @see com.vaadin.ui.Component#detach()
+        @see: com.vaadin.ui.Component#detach()
         """
         # can't call parent here as this is Panels hierarchy is a hack
         if self._content is not None:
@@ -411,7 +411,7 @@ class Panel(AbstractComponentContainer, IScrollable,
     def removeAllComponents(self):
         """Removes all components from this container.
 
-        @see com.vaadin.ui.IComponentContainer#removeAllComponents()
+        @see: com.vaadin.ui.IComponentContainer#removeAllComponents()
         """
         self._content.removeAllComponents()
 
@@ -452,9 +452,9 @@ class Panel(AbstractComponentContainer, IScrollable,
         component inside the Panel, provided the targeted component does not
         prevent the click event from propagating.
 
-        Use {@link #removeListener(ClickListener)} to remove the listener.
+        Use L{#removeListener(ClickListener)} to remove the listener.
 
-        @param listener
+        @param listener:
                    The listener to add
         """
         if iface == IClickListener:
@@ -470,9 +470,9 @@ class Panel(AbstractComponentContainer, IScrollable,
 
     def removeListener(self, listener, iface):
         """Remove a click listener from the Panel. The listener should earlier
-        have been added using {@link #addListener(ClickListener)}.
+        have been added using L{#addListener(ClickListener)}.
 
-        @param listener
+        @param listener:
                    The listener to remove
         """
         if iface == IClickListener:
@@ -508,5 +508,5 @@ class Panel(AbstractComponentContainer, IScrollable,
 
 
     def focus(self):
-        """Moves keyboard focus to the component. {@see IFocusable#focus()}"""
+        """Moves keyboard focus to the component. {@see: IFocusable#focus()}"""
         super(Panel, self).focus()

@@ -39,15 +39,15 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
     position) on a grid. It also maintains cursor for adding component in
     left to right, top to bottom order.
 
-    Each component in a <code>GridLayout</code> uses a certain
-    {@link GridLayout.Area area} (column1,row1,column2,row2) from the grid.
+    Each component in a C{GridLayout} uses a certain
+    L{GridLayout.Area area} (column1,row1,column2,row2) from the grid.
     One should not add components that would overlap with the existing
-    components because in such case an {@link OverlapsException} is thrown.
+    components because in such case an L{OverlapsException} is thrown.
     Adding component with cursor automatically extends the grid by increasing
     the grid height.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -118,26 +118,26 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
 
         If the new component overlaps with any of the existing components
         already present in the grid the operation will fail and an
-        {@link OverlapsException} is thrown.
+        L{OverlapsException} is thrown.
 
         @param c
                    the component to be added.
         @param column1
                    the column of the upper left corner of the area
-                   <code>c</code> is supposed to occupy.
+                   C{c} is supposed to occupy.
         @param row1
                    the row of the upper left corner of the area
-                   <code>c</code> is supposed to occupy.
+                   C{c} is supposed to occupy.
         @param column2
                    the column of the lower right corner of the area
-                   <code>c</code> is supposed to occupy.
+                   C{c} is supposed to occupy.
         @param row2
                    the row of the lower right corner of the area
-                   <code>c</code> is supposed to occupy.
-        @throws OverlapsException
+                   C{c} is supposed to occupy.
+        @raise OverlapsException
                     if the new component overlaps with any of the
                     components already in the grid.
-        @throws OutOfBoundsException
+        @raise OutOfBoundsException
                     if the cells are outside the grid area.
         ---
         Adds the component into this container to cells column1,row1
@@ -148,10 +148,10 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
         @param c: the component to be added.
         @param column: the column index.
         @param row: the row index.
-        @throws OverlapsException
+        @raise OverlapsException
                     if the new component overlaps with any of the components
                     already in the grid.
-        @throws OutOfBoundsException
+        @raise OutOfBoundsException
                     if the cell is outside the grid area.
         ---
         Adds the component into this container to the cursor position. If the
@@ -267,8 +267,8 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
 
         @param area
                    the Area to be checked for overlapping.
-        @throws OverlapsException
-                    if <code>area</code> overlaps with any existing area.
+        @raise OverlapsException
+                    if C{area} overlaps with any existing area.
         """
         for existingArea in self._areas:
             if existingArea.overlaps(area):
@@ -281,7 +281,7 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
         line. By calling this function user can ensure that no more components
         are added to the right of the previous component.
 
-        @see #space()
+        @see: #space()
         """
         self._cursorX = 0
         self._cursorY += 1
@@ -291,7 +291,7 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
         """Moves the cursor forwards by one. If the cursor goes out of the
         right grid border, move it to next line.
 
-        @see #newLine()
+        @see: #newLine()
         """
         self._cursorX += 1
         if self._cursorX >= self._cols:
@@ -345,16 +345,16 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
         """Gets an Iterator to the component container contents. Using the
         Iterator it's possible to step through the contents of the container.
 
-        @return the Iterator of the components inside the container.
+        @return: the Iterator of the components inside the container.
         """
         return iter(self._components)
 
 
     def getComponentCount(self):
         """Gets the number of contained components. Consistent with the
-        iterator returned by {@link #getComponentIterator()}.
+        iterator returned by L{#getComponentIterator()}.
 
-        @return the number of contained components
+        @return: the number of contained components
         """
         return len(self._components)
 
@@ -605,7 +605,7 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
     def getColumns(self):
         """Get the number of columns in the grid.
 
-        @return the number of columns in the grid.
+        @return: the number of columns in the grid.
         """
         return self._cols
 
@@ -640,7 +640,7 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
     def getRows(self):
         """Get the number of rows in the grid.
 
-        @return the number of rows in the grid.
+        @return: the number of rows in the grid.
         """
         return self._rows
 
@@ -652,7 +652,7 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
         the next component will be added to first free position after the
         cursor.
 
-        @return the grid column the Cursor is on.
+        @return: the grid column the Cursor is on.
         """
         return self._cursorX
 
@@ -673,7 +673,7 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
         the next component will be added to first free position after the
         cursor.
 
-        @return the grid row the Cursor is on.
+        @return: the grid row the Cursor is on.
         """
         return self._cursorY
 
@@ -725,12 +725,12 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
         """Sets the component alignment using a short hand string notation.
 
         @deprecated Replaced by
-                    {@link #setComponentAlignment(Component, Alignment)}
+                    L{#setComponentAlignment(Component, Alignment)}
 
         @param component
                    A child component in this layout
         @param alignment
-                   A short hand notation described in {@link AlignmentUtils}
+                   A short hand notation described in L{AlignmentUtils}
         """
         warn('replaced by setComponentAlignment', DeprecationWarning)
 
@@ -843,7 +843,7 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
         Note, that width needs to be defined for this method to have any
         effect.
 
-        @see #setWidth(float, int)
+        @see: #setWidth(float, int)
 
         @param columnIndex
         @param ratio
@@ -855,10 +855,10 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
     def getColumnExpandRatio(self, columnIndex):
         """Returns the expand ratio of given column
 
-        @see #setColumnExpandRatio(int, float)
+        @see: #setColumnExpandRatio(int, float)
 
         @param columnIndex
-        @return the expand ratio, 0.0f by default
+        @return: the expand ratio, 0.0f by default
         """
         r = self._columnExpandRatio.get(columnIndex)
         return 0 if r is None else float(r)
@@ -874,7 +874,7 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
         Note, that height needs to be defined for this method to have
         any effect.
 
-        @see #setHeight(float, int)
+        @see: #setHeight(float, int)
 
         @param rowIndex
         @param ratio
@@ -886,10 +886,10 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
     def getRowExpandRatio(self, rowIndex):
         """Returns the expand ratio of given row.
 
-        @see #setRowExpandRatio(int, float)
+        @see: #setRowExpandRatio(int, float)
 
         @param rowIndex
-        @return the expand ratio, 0.0f by default
+        @return: the expand ratio, 0.0f by default
         """
         r = self._rowExpandRatio.get(rowIndex)
         return 0 if r is None else float(r)
@@ -902,7 +902,7 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
                    x-index
         @param y
                    y-index
-        @return Component in given cell or null if empty
+        @return: Component in given cell or null if empty
         """
         for area in self._areas:
             if (area.getColumn1() <= x and x <= area.getColumn2()
@@ -918,7 +918,7 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
 
         @param component
                    the component whose area information is requested.
-        @return an Area object that contains information how component is
+        @return: an Area object that contains information how component is
                 layed in the grid
         """
         for area in self._areas:
@@ -956,8 +956,8 @@ class Area(object):
     of its upper left corner (column1,row1) and lower right corner
     (column2,row2).
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -969,17 +969,17 @@ class Area(object):
                    the component connected to the area.
         @param column1
                    The column of the upper left corner cell of the area
-                   <code>c</code> is supposed to occupy.
+                   C{c} is supposed to occupy.
         @param row1
                    The row of the upper left corner cell of the area
-                   <code>c</code> is supposed to occupy.
+                   C{c} is supposed to occupy.
         @param column2
                    The column of the lower right corner cell of the area
-                   <code>c</code> is supposed to occupy.
+                   C{c} is supposed to occupy.
         @param row2
                    The row of the lower right corner cell of the area
-                   <code>c</code> is supposed to occupy.
-        @throws OverlapsException
+                   C{c} is supposed to occupy.
+        @raise OverlapsException
                     if the new component overlaps with any of the components
                     already in the grid
         """
@@ -1005,8 +1005,8 @@ class Area(object):
         @param other
                    the Another Area that's to be tested for overlap with this
                    area.
-        @return <code>true</code> if <code>other</code> overlaps with this
-                area, <code>false</code> if it doesn't.
+        @return: C{True} if C{other} overlaps with this
+                area, C{False} if it doesn't.
         """
         return (self._column1 <= other.getColumn2()
                 and self._row1 <= other.getRow2()
@@ -1017,7 +1017,7 @@ class Area(object):
     def getComponent(self):
         """Gets the component connected to the area.
 
-        @return the Component.
+        @return: the Component.
         """
         return self._component
 
@@ -1037,7 +1037,7 @@ class Area(object):
     def getX1(self):
         """@deprecated Use getColumn1() instead.
 
-        @see com.vaadin.ui.GridLayout#getColumn1()
+        @see: com.vaadin.ui.GridLayout#getColumn1()
         """
         warn('Use getColumn1() instead.', DeprecationWarning)
         return self.getColumn1()
@@ -1046,7 +1046,7 @@ class Area(object):
     def getColumn1(self):
         """Gets the column of the top-left corner cell.
 
-        @return the column of the top-left corner cell.
+        @return: the column of the top-left corner cell.
         """
         return self._column1
 
@@ -1054,7 +1054,7 @@ class Area(object):
     def getX2(self):
         """@deprecated Use getColumn2() instead.
 
-        @see com.vaadin.ui.GridLayout#getColumn2()
+        @see: com.vaadin.ui.GridLayout#getColumn2()
         """
         warn('Use getColumn2() instead.', DeprecationWarning)
         return self.getColumn2()
@@ -1063,7 +1063,7 @@ class Area(object):
     def getColumn2(self):
         """Gets the column of the bottom-right corner cell.
 
-        @return the column of the bottom-right corner cell.
+        @return: the column of the bottom-right corner cell.
         """
         return self._column2
 
@@ -1071,7 +1071,7 @@ class Area(object):
     def getY1(self):
         """@deprecated Use getRow1() instead.
 
-        @see com.vaadin.ui.GridLayout#getRow1()
+        @see: com.vaadin.ui.GridLayout#getRow1()
         """
         warn('Use getRow1() instead.', DeprecationWarning)
         return self.getRow1()
@@ -1080,7 +1080,7 @@ class Area(object):
     def getRow1(self):
         """Gets the row of the top-left corner cell.
 
-        @return the row of the top-left corner cell.
+        @return: the row of the top-left corner cell.
         """
         return self._row1
 
@@ -1088,7 +1088,7 @@ class Area(object):
     def getY2(self):
         """@deprecated Use getRow2() instead.
 
-        @see com.vaadin.ui.GridLayout#getRow2()
+        @see: com.vaadin.ui.GridLayout#getRow2()
         """
         warn('Use getRow2() instead.', DeprecationWarning)
         return self.getRow2()
@@ -1097,24 +1097,24 @@ class Area(object):
     def getRow2(self):
         """Gets the row of the bottom-right corner cell.
 
-        @return the row of the bottom-right corner cell.
+        @return: the row of the bottom-right corner cell.
         """
         return self._row2
 
 
 class OverlapsException(RuntimeError):
     """Gridlayout does not support laying components on top of each other.
-    An <code>OverlapsException</code> is thrown when a component already
+    An C{OverlapsException} is thrown when a component already
     exists (even partly) at the same space on a grid with the new component.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
 
     def __init__(self, existingArea):
-        """Constructs an <code>OverlapsException</code>.
+        """Constructs an C{OverlapsException}.
 
         @param existingArea
         """
@@ -1149,23 +1149,23 @@ class OverlapsException(RuntimeError):
     def getArea(self):
         """Gets the area .
 
-        @return the existing area.
+        @return: the existing area.
         """
         return self._existingArea
 
 
 class OutOfBoundsException(RuntimeError):
-    """An <code>Exception</code> object which is thrown when an area
+    """An C{Exception} object which is thrown when an area
     exceeds the bounds of the grid.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
 
     def __init__(self, areaOutOfBounds):
-        """Constructs an <code>OoutOfBoundsException</code> with the
+        """Constructs an C{OoutOfBoundsException} with the
         specified detail message.
 
         @param areaOutOfBounds
@@ -1176,6 +1176,6 @@ class OutOfBoundsException(RuntimeError):
     def getArea(self):
         """Gets the area that is out of bounds.
 
-        @return the area out of Bound.
+        @return: the area out of Bound.
         """
         return self._areaOutOfBounds

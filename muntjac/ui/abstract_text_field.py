@@ -59,7 +59,7 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
         self._lastKnownCursorPosition = None
 
         # Flag indicating that a text change event is pending to be
-        # triggered. Cleared by {@link #setInternalValue(Object)} and
+        # triggered. Cleared by L{#setInternalValue(Object)} and
         # when the event is fired.
         self._textChangeEventPending = None
 
@@ -121,9 +121,9 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
         """Gets the formatted string value. Sets the field value by using
         the assigned format.
 
-        @return the Formatted value.
-        @see #setFormat(Format)
-        @see Format
+        @return: the Formatted value.
+        @see: #setFormat(Format)
+        @see: Format
         @deprecated
         """
         warn('deprecated', DeprecationWarning)
@@ -217,8 +217,8 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
 
         The default value is string 'null'.
 
-        @return the String Textual representation for null strings.
-        @see TextField#isNullSettingAllowed()
+        @return: the String Textual representation for null strings.
+        @see: TextField#isNullSettingAllowed()
         """
         return self._nullRepresentation
 
@@ -235,9 +235,9 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
 
         By default this setting is false
 
-        @return boolean Should the null-string represenation be always
+        @return: boolean Should the null-string represenation be always
                 converted to null-values.
-        @see TextField#getNullRepresentation()
+        @see: TextField#getNullRepresentation()
         """
         return self._nullSettingAllowed
 
@@ -253,7 +253,7 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
 
         @param nullRepresentation
                    Textual representation for null strings.
-        @see TextField#setNullSettingAllowed(boolean)
+        @see: TextField#setNullSettingAllowed(boolean)
         """
         self._nullRepresentation = nullRepresentation
         self.requestRepaint()
@@ -274,7 +274,7 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
         @param nullSettingAllowed
                    Should the null-string representation always be converted
                    to null-values.
-        @see TextField#getNullRepresentation()
+        @see: TextField#getNullRepresentation()
         """
         self._nullSettingAllowed = nullSettingAllowed
         self.requestRepaint()
@@ -283,8 +283,8 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
     def getFormat(self):
         """Gets the value formatter of TextField.
 
-        @return the Format used to format the value.
-        @deprecated replaced by {@link com.vaadin.data.util.PropertyFormatter}
+        @return: the Format used to format the value.
+        @deprecated replaced by L{com.vaadin.data.util.PropertyFormatter}
         """
         warn('replaced by PropertyFormatter', DeprecationWarning)
         return self._format
@@ -296,7 +296,7 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
         @param format
                    the Format used to format the value. Null disables the
                    formatting.
-        @deprecated replaced by {@link com.vaadin.data.util.PropertyFormatter}
+        @deprecated replaced by L{com.vaadin.data.util.PropertyFormatter}
         """
         warn('replaced by PropertyFormatter', DeprecationWarning)
         self._format = fmt
@@ -312,7 +312,7 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
         """Returns the maximum number of characters in the field. Value -1 is
         considered unlimited. Terminal may however have some technical limits.
 
-        @return the maxLength
+        @return: the maxLength
         """
         return self._maxLength
 
@@ -333,7 +333,7 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
         is set 0, the actual number of displayed columns is determined
         implicitly by the adapter.
 
-        @return the number of columns in the editor.
+        @return: the number of columns in the editor.
         """
         return self._columns
 
@@ -355,8 +355,8 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
     def getInputPrompt(self):
         """Gets the current input prompt.
 
-        @see #setInputPrompt(String)
-        @return the current input prompt, or null if not enabled
+        @see: #setInputPrompt(String)
+        @return: the current input prompt, or null if not enabled
         """
         return self._inputPrompt
 
@@ -416,18 +416,18 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
 
 
     def setTextChangeEventMode(self, inputEventMode):
-        """Sets the mode how the TextField triggers {@link TextChangeEvent}s.
+        """Sets the mode how the TextField triggers L{TextChangeEvent}s.
 
         @param inputEventMode: the new mode
 
-        @see TextChangeEventMode
+        @see: TextChangeEventMode
         """
         self._textChangeEventMode = inputEventMode
         self.requestRepaint()
 
 
     def getTextChangeEventMode(self):
-        """@return the mode used to trigger {@link TextChangeEvent}s."""
+        """@return: the mode used to trigger L{TextChangeEvent}s."""
         return self._textChangeEventMode
 
 
@@ -488,10 +488,10 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
     def setTextChangeTimeout(self, timeout):
         """The text change timeout modifies how often text change events
         are communicated to the application when
-        {@link #getTextChangeEventMode()} is {@link TextChangeEventMode#LAZY}
-        or {@link TextChangeEventMode#TIMEOUT}.
+        L{#getTextChangeEventMode()} is L{TextChangeEventMode#LAZY}
+        or L{TextChangeEventMode#TIMEOUT}.
 
-        @see #getTextChangeEventMode()
+        @see: #getTextChangeEventMode()
 
         @param timeout: the timeout in milliseconds
         """
@@ -500,11 +500,11 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
 
 
     def getTextChangeTimeout(self):
-        """Gets the timeout used to fire {@link TextChangeEvent}s when the
-        {@link #getTextChangeEventMode()} is {@link TextChangeEventMode#LAZY}
-        or {@link TextChangeEventMode#TIMEOUT}.
+        """Gets the timeout used to fire L{TextChangeEvent}s when the
+        L{#getTextChangeEventMode()} is L{TextChangeEventMode#LAZY}
+        or L{TextChangeEventMode#TIMEOUT}.
 
-        @return the timeout value in milliseconds
+        @return: the timeout value in milliseconds
         """
         return self._textChangeEventTimeout
 
@@ -513,14 +513,14 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
         """Gets the current (or the last known) text content in the field.
 
         Note the text returned by this method is not necessary the same that
-        is returned by the {@link #getValue()} method. The value is updated
+        is returned by the L{#getValue()} method. The value is updated
         when the terminal fires a value change event via e.g. blurring the
         field or by pressing enter. The value returned by this method is
-        updated also on {@link TextChangeEvent}s. Due to this high dependency
+        updated also on L{TextChangeEvent}s. Due to this high dependency
         to the terminal implementation this method is (at least at this
         point) not published.
 
-        @return the text which is currently displayed in the field.
+        @return: the text which is currently displayed in the field.
         """
         if self._lastKnownTextContent is not None:
             return self._lastKnownTextContent
@@ -577,17 +577,17 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
         Note that due to the client server nature or the GWT terminal, Vaadin
         cannot provide the exact value of the cursor position in most
         situations. The value is updated only when the client side terminal
-        communicates to TextField, like on {@link ValueChangeEvent}s and
-        {@link TextChangeEvent}s. This may change later if a deep push
+        communicates to TextField, like on L{ValueChangeEvent}s and
+        L{TextChangeEvent}s. This may change later if a deep push
         integration is built to Vaadin.
 
-        @return the cursor position
+        @return: the cursor position
         """
         return self._lastKnownCursorPosition
 
 
 class TextChangeEventMode(object):
-    """Different modes how the TextField can trigger {@link TextChangeEvent}s.
+    """Different modes how the TextField can trigger L{TextChangeEvent}s.
     """
 
     # An event is triggered on each text content change, most commonly key
@@ -596,21 +596,21 @@ class TextChangeEventMode(object):
 
     # Each text change event in the UI causes the event to be communicated
     # to the application after a timeout. The length of the timeout can be
-    # controlled with {@link TextField#setInputEventTimeout(int)}. Only the
+    # controlled with L{TextField#setInputEventTimeout(int)}. Only the
     # last input event is reported to the server side if several text
     # change events happen during the timeout.
     #
-    # In case of a {@link ValueChangeEvent} the schedule is not kept
-    # strictly. Before a {@link ValueChangeEvent} a {@link TextChangeEvent}
+    # In case of a L{ValueChangeEvent} the schedule is not kept
+    # strictly. Before a L{ValueChangeEvent} a L{TextChangeEvent}
     # is triggered if the text content has changed since the previous
     # TextChangeEvent regardless of the schedule.
     TIMEOUT = 'TIMEOUT'
 
     # An event is triggered when there is a pause of text modifications.
     # The length of the pause can be modified with
-    # {@link TextField#setInputEventTimeout(int)}. Like with the
-    # {@link #TIMEOUT} mode, an event is forced before
-    # {@link ValueChangeEvent}s, even if the user did not keep a pause
+    # L{TextField#setInputEventTimeout(int)}. Like with the
+    # L{#TIMEOUT} mode, an event is forced before
+    # L{ValueChangeEvent}s, even if the user did not keep a pause
     # while entering the text.
     #
     # This is the default mode.

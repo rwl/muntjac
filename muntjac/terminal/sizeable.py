@@ -19,8 +19,8 @@ class ISizeable(object):
     """Interface to be implemented by components wishing to display some
     object that may be dynamically resized during runtime.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -57,17 +57,17 @@ class ISizeable(object):
     # Textual representations of units symbols. Supported units and
     # their symbols are:
     # <ul>
-    # <li>{@link #UNITS_PIXELS}: "px"</li>
-    # <li>{@link #UNITS_POINTS}: "pt"</li>
-    # <li>{@link #UNITS_PICAS}: "pc"</li>
-    # <li>{@link #UNITS_EM}: "em"</li>
-    # <li>{@link #UNITS_EX}: "ex"</li>
-    # <li>{@link #UNITS_MM}: "mm"</li>
-    # <li>{@link #UNITS_CM}. "cm"</li>
-    # <li>{@link #UNITS_INCH}: "in"</li>
-    # <li>{@link #UNITS_PERCENTAGE}: "%"</li>
+    # <li>L{#UNITS_PIXELS}: "px"</li>
+    # <li>L{#UNITS_POINTS}: "pt"</li>
+    # <li>L{#UNITS_PICAS}: "pc"</li>
+    # <li>L{#UNITS_EM}: "em"</li>
+    # <li>L{#UNITS_EX}: "ex"</li>
+    # <li>L{#UNITS_MM}: "mm"</li>
+    # <li>L{#UNITS_CM}. "cm"</li>
+    # <li>L{#UNITS_INCH}: "in"</li>
+    # <li>L{#UNITS_PERCENTAGE}: "%"</li>
     # </ul>
-    # These can be used like <code>ISizeable.UNIT_SYMBOLS[UNITS_PIXELS]</code>.
+    # These can be used like C{ISizeable.UNIT_SYMBOLS[UNITS_PIXELS]}.
     UNIT_SYMBOLS = ['px', 'pt', 'pc', 'em', 'ex', 'mm', 'cm', 'in', '%']
 
 
@@ -75,7 +75,7 @@ class ISizeable(object):
         """Gets the width of the object. Negative number implies unspecified
         size (terminal is free to set the size).
 
-        @return width of the object in units specified by widthUnits property.
+        @return: width of the object in units specified by widthUnits property.
         """
         raise NotImplementedError
 
@@ -87,7 +87,7 @@ class ISizeable(object):
         @param width
                    the width of the object in units specified by widthUnits
                    property.
-        @deprecated Consider using {@link #setWidth(String)} instead. This
+        @deprecated Consider using L{#setWidth(String)} instead. This
                     method works, but is error-prone since the unit must be
                     set separately (and components might have different
                     default unit).
@@ -99,10 +99,10 @@ class ISizeable(object):
                    the width of the object.
         @param unit
                    the unit used for the width. Possible values include
-                   {@link #UNITS_PIXELS}, {@link #UNITS_POINTS},
-                   {@link #UNITS_PICAS}, {@link #UNITS_EM}, {@link #UNITS_EX},
-                   {@link #UNITS_MM}, {@link #UNITS_CM}, {@link #UNITS_INCH},
-                   {@link #UNITS_PERCENTAGE}.
+                   L{#UNITS_PIXELS}, L{#UNITS_POINTS},
+                   L{#UNITS_PICAS}, L{#UNITS_EM}, L{#UNITS_EX},
+                   L{#UNITS_MM}, L{#UNITS_CM}, L{#UNITS_INCH},
+                   L{#UNITS_PERCENTAGE}.
         ---
         Sets the width of the component using String presentation.
 
@@ -127,7 +127,7 @@ class ISizeable(object):
         """Gets the height of the object. Negative number implies unspecified
         size (terminal is free to set the size).
 
-        @return height of the object in units specified by heightUnits
+        @return: height of the object in units specified by heightUnits
                 property.
         """
         raise NotImplementedError
@@ -140,8 +140,8 @@ class ISizeable(object):
         @param height
                    the height of the object in units specified by heightUnits
                    property.
-        @deprecated Consider using {@link #setHeight(String)} or
-                    {@link #setHeight(float, int)} instead. This method works,
+        @deprecated Consider using L{#setHeight(String)} or
+                    L{#setHeight(float, int)} instead. This method works,
                     but is error-prone since the unit must be set separately
                     (and components might have different default unit).
         ---
@@ -167,10 +167,10 @@ class ISizeable(object):
                    the height of the object.
         @param unit
                    the unit used for the width. Possible values include
-                   {@link #UNITS_PIXELS}, {@link #UNITS_POINTS},
-                   {@link #UNITS_PICAS}, {@link #UNITS_EM}, {@link #UNITS_EX},
-                   {@link #UNITS_MM}, {@link #UNITS_CM}, {@link #UNITS_INCH},
-                   {@link #UNITS_PERCENTAGE}.
+                   L{#UNITS_PIXELS}, L{#UNITS_POINTS},
+                   L{#UNITS_PICAS}, L{#UNITS_EM}, L{#UNITS_EX},
+                   L{#UNITS_MM}, L{#UNITS_CM}, L{#UNITS_INCH},
+                   L{#UNITS_PERCENTAGE}.
         """
         raise NotImplementedError
 
@@ -178,7 +178,7 @@ class ISizeable(object):
     def getWidthUnits(self):
         """Gets the width property units.
 
-        @return units used in width property.
+        @return: units used in width property.
         """
         raise NotImplementedError
 
@@ -189,8 +189,8 @@ class ISizeable(object):
         @param units
                    the units used in width property.
         @deprecated Consider setting width and unit simultaneously using
-                    {@link #setWidth(width)} or
-                    {@link #setWidth(width, unit)}, which is less error-prone.
+                    L{#setWidth(width)} or
+                    L{#setWidth(width, unit)}, which is less error-prone.
         """
         raise NotImplementedError
 
@@ -198,7 +198,7 @@ class ISizeable(object):
     def getHeightUnits(self):
         """Gets the height property units.
 
-        @return units used in height property.
+        @return: units used in height property.
         """
         raise NotImplementedError
 
@@ -209,8 +209,8 @@ class ISizeable(object):
         @param units
                    the units used in height property.
         @deprecated Consider setting height and unit simultaneously using
-                    {@link #setHeight(width)} or
-                    {@link #setHeight(width, unit)}, which is less error-prone.
+                    L{#setHeight(width)} or
+                    L{#setHeight(width, unit)}, which is less error-prone.
         """
         raise NotImplementedError
 

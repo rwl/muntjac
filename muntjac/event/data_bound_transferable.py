@@ -19,13 +19,13 @@ from muntjac.data.container import IViewer
 
 
 class DataBoundTransferable(TransferableImpl):
-    """Parent class for {@link Transferable} implementations that have a Vaadin
+    """Parent class for L{Transferable} implementations that have a Vaadin
     container as a data source. The transfer is associated with an item
     (identified by its Id) and optionally also a property identifier (e.g. a
     table column identifier when transferring a single table cell).
 
     The component must implement the interface
-    {@link com.vaadin.data.Container.IViewer}.
+    L{com.vaadin.data.Container.IViewer}.
 
     In most cases, receivers of data transfers should depend on this class
     instead of its concrete subclasses.
@@ -41,7 +41,7 @@ class DataBoundTransferable(TransferableImpl):
     def getItemId(self):
         """Returns the identifier of the item being transferred.
 
-        @return item identifier
+        @return: item identifier
         """
         pass
 
@@ -52,7 +52,7 @@ class DataBoundTransferable(TransferableImpl):
         This can be e.g. the table column from which a drag operation
         originated.
 
-        @return property identifier
+        @return: property identifier
         """
         pass
 
@@ -60,10 +60,10 @@ class DataBoundTransferable(TransferableImpl):
     def getSourceContainer(self):
         """Returns the container data source from which the transfer occurs.
 
-        {@link com.vaadin.data.Container.IViewer#getContainerDataSource()} is
+        L{com.vaadin.data.Container.IViewer#getContainerDataSource()} is
         used to obtain the underlying container of the source component.
 
-        @return Container
+        @return: Container
         """
         sourceComponent = self.getSourceComponent()
         if isinstance(sourceComponent, IViewer):

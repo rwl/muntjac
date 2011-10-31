@@ -83,7 +83,7 @@ class TestFooter(TestCase):
         """Creates a container with three properties "col1,col2,col3"
         with 100 items
 
-        @return Returns the created table
+        @return: Returns the created table
         """
         container = IndexedContainer()
         container.addContainerProperty('col1', str, '')

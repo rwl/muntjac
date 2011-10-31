@@ -27,13 +27,13 @@ from muntjac.terminal.error_message import IErrorMessage
 
 
 class SystemErr(RuntimeError, IErrorMessage):
-    """<code>SystemError</code> is a runtime exception caused by error in
+    """C{SystemError} is a runtime exception caused by error in
     system. The system error can be shown to the user as it implements
-    <code>IErrorMessage</code> interface, but contains technical information
+    C{IErrorMessage} interface, but contains technical information
     such as stack trace and exception.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -77,12 +77,12 @@ class SystemErr(RuntimeError, IErrorMessage):
 
 
     def getErrorLevel(self):
-        """@see com.vaadin.terminal.IErrorMessage#getErrorLevel()"""
+        """@see: com.vaadin.terminal.IErrorMessage#getErrorLevel()"""
         return IErrorMessage.SYSTEMERROR
 
 
     def paint(self, target):
-        """@see com.vaadin.terminal.Paintable#paint(target)"""
+        """@see: com.vaadin.terminal.Paintable#paint(target)"""
 
         target.startTag('error')
         target.addAttribute('level', 'system')
@@ -124,8 +124,8 @@ class SystemErr(RuntimeError, IErrorMessage):
     def getCause(self):
         """Gets cause for the error.
 
-        @return the cause.
-        @see java.lang.Throwable#getCause()
+        @return: the cause.
+        @see: java.lang.Throwable#getCause()
         """
         return self._cause
 

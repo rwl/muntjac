@@ -53,7 +53,7 @@ class TestMultipleSelection(TestCase):
     def createTestContainer(self):
         """Creates a testing container for the tests
 
-        @return A new container with test items
+        @return: A new container with test items
         """
         container = IndexedContainer(['1', '2', '3', '4'])
         return container

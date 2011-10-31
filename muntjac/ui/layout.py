@@ -21,13 +21,13 @@ from muntjac.terminal.gwt.client.ui.alignment_info import Bits
 
 
 class ILayout(IComponentContainer):
-    """Extension to the {@link IComponentContainer} interface which adds the
+    """Extension to the L{IComponentContainer} interface which adds the
     layouting control to the elements in the container. This is required by
     the various layout components to enable them to place other components in
     specific locations in the UI.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -55,38 +55,38 @@ class ILayout(IComponentContainer):
 
 
 class IAlignmentHandler(object):
-    """IAlignmentHandler is most commonly an advanced {@link ILayout} that
+    """IAlignmentHandler is most commonly an advanced L{ILayout} that
     can align its components.
     """
 
     # Contained component should be aligned horizontally to the left.
     #
-    # @deprecated Use of {@link Alignment} class and its constants
+    # @deprecated Use of L{Alignment} class and its constants
     ALIGNMENT_LEFT = Bits.ALIGNMENT_LEFT
 
     # Contained component should be aligned horizontally to the right.
     #
-    # @deprecated Use of {@link Alignment} class and its constants
+    # @deprecated Use of L{Alignment} class and its constants
     ALIGNMENT_RIGHT = Bits.ALIGNMENT_RIGHT
 
     # Contained component should be aligned vertically to the top.
     #
-    # @deprecated Use of {@link Alignment} class and its constants
+    # @deprecated Use of L{Alignment} class and its constants
     ALIGNMENT_TOP = Bits.ALIGNMENT_TOP
 
     # Contained component should be aligned vertically to the bottom.
     #
-    # @deprecated Use of {@link Alignment} class and its constants
+    # @deprecated Use of L{Alignment} class and its constants
     ALIGNMENT_BOTTOM = Bits.ALIGNMENT_BOTTOM
 
     # Contained component should be horizontally aligned to center.
     #
-    # @deprecated Use of {@link Alignment} class and its constants
+    # @deprecated Use of L{Alignment} class and its constants
     ALIGNMENT_HORIZONTAL_CENTER = Bits.ALIGNMENT_HORIZONTAL_CENTER
 
     # Contained component should be vertically aligned to center.
     #
-    # @deprecated Use of {@link Alignment} class and its constants
+    # @deprecated Use of L{Alignment} class and its constants
     ALIGNMENT_VERTICAL_CENTER = Bits.ALIGNMENT_VERTICAL_CENTER
 
 
@@ -94,7 +94,7 @@ class IAlignmentHandler(object):
         """Set alignment for one contained component in this layout. Alignment
         is calculated as a bit mask of the two passed values.
 
-        @deprecated Use {@link #setComponentAlignment(Component, Alignment)}
+        @deprecated Use L{#setComponentAlignment(Component, Alignment)}
                     instead
 
         @param childComponent
@@ -109,9 +109,9 @@ class IAlignmentHandler(object):
         Set alignment for one contained component in this layout. Use
         predefined alignments from Alignment class.
 
-        Example: <code>
+        Example: C{
              layout.setComponentAlignment(myComponent, Alignment.TOP_RIGHT);
-        </code>
+        }
 
         @param childComponent
                    the component to align within it's layout cell.
@@ -125,7 +125,7 @@ class IAlignmentHandler(object):
         """Returns the current Alignment of given component.
 
         @param childComponent
-        @return the {@link Alignment}
+        @return: the L{Alignment}
         """
         raise NotImplementedError
 
@@ -141,7 +141,7 @@ class ISpacingHandler(object):
         <strong>NOTE:</strong> This will only affect the space between
         components, not the space around all the components in the layout
         (i.e. do not confuse this with the cellspacing attribute of a HTML
-        Table). Use {@link #setMargin(boolean)} to add space around the
+        Table). Use L{#setMargin(boolean)} to add space around the
         layout.
 
         See the reference manual for more information about CSS rules for
@@ -155,15 +155,15 @@ class ISpacingHandler(object):
 
 
     def isSpacingEnabled(self):
-        """@return true if spacing between child components within this layout
+        """@return: true if spacing between child components within this layout
                 is enabled, false otherwise
-        @deprecated Use {@link #isSpacing()} instead.
+        @deprecated Use L{#isSpacing()} instead.
         """
         raise NotImplementedError
 
 
     def isSpacing(self):
-        """@return true if spacing between child components within this layout
+        """@return: true if spacing between child components within this layout
                 is enabled, false otherwise
         """
         raise NotImplementedError
@@ -179,7 +179,7 @@ class IMarginHandler(object):
 
         <strong>NOTE:</strong> This will only affect the space around the
         components in the layout, not space between the components in the
-        layout. Use {@link #setSpacing(boolean)} to add space between the
+        layout. Use L{#setSpacing(boolean)} to add space between the
         components in the layout.
 
         See the reference manual for more information about CSS rules for
@@ -192,7 +192,7 @@ class IMarginHandler(object):
 
 
     def getMargin(self):
-        """@return MarginInfo containing the currently enabled margins."""
+        """@return: MarginInfo containing the currently enabled margins."""
         raise NotImplementedError
 
 

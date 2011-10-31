@@ -21,40 +21,29 @@ from muntjac.data.validators.abstract_string_validator import \
 
 
 class RegexpValidator(AbstractStringValidator):
-    """String validator comparing the string against a Java regular expression. Both
+    """String validator comparing the string against a regular expression. Both
     complete matches and substring matches are supported.
 
-    For the Java regular expression syntax, see
-    {@link java.util.regex.Pattern#sum}
+    See L{AbstractStringValidator} for more information.
 
-    See {@link com.vaadin.data.validator.AbstractStringValidator} for more
-    information.
-
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
-    @since 5.4
     """
 
     def __init__(self, *args):
-        """Creates a validator for checking that the regular expression matches the
-        complete string to validate.
+        """Creates a validator for checking that the regular expression matches
+        the string to validate.
 
-        @param regexp
-                   a regular expression
-        @param errorMessage
-                   the message to display in case the value does not validate.
-        ---
-        Creates a validator for checking that the regular expression matches the
-        string to validate.
-
-        @param regexp
-                   a regular expression
-        @param complete
-                   true to use check for a complete match, false to look for a
-                   matching substring
-        @param errorMessage
-                   the message to display in case the value does not validate.
+        @param args: tuple of the form
+          - (regexp, errorMessage)
+            1. a regular expression
+            2. the message to display in case the value does not validate.
+          - (regexp, complete, errorMessage)
+            1. a regular expression
+            2. true to use check for a complete match, false to look for a
+               matching substring
+            3. the message to display in case the value does not validate.
         """
         self._pattern = None
         self._complete = None

@@ -22,11 +22,11 @@ class IMethodEventSource(object):
 
     <p>
     For more information on the inheritable event mechanism see the
-    {@link com.vaadin.event com.vaadin.event package documentation}.
+    L{com.vaadin.event com.vaadin.event package documentation}.
     </p>
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -41,7 +41,7 @@ class IMethodEventSource(object):
 
         <p>
         For more information on the inheritable event mechanism see the
-        {@link com.vaadin.event com.vaadin.event package documentation}.
+        L{com.vaadin.event com.vaadin.event package documentation}.
         </p>
 
         @param eventType
@@ -51,9 +51,9 @@ class IMethodEventSource(object):
                    the object instance who owns the activation method.
         @param method
                    the activation method.
-        @throws java.lang.IllegalArgumentException
-                    unless <code>method</code> has exactly one match in
-                    <code>object</code>
+        @raise java.lang.IllegalArgumentException
+                    unless C{method} has exactly one match in
+                    C{object}
         ---
         <p>
         Registers a new listener with the specified activation method to listen
@@ -63,15 +63,15 @@ class IMethodEventSource(object):
         </p>
 
         <p>
-        This version of <code>addListener</code> gets the name of the activation
+        This version of C{addListener} gets the name of the activation
         method as a parameter. The actual method is reflected from
-        <code>object</code>, and unless exactly one match is found,
-        <code>java.lang.IllegalArgumentException</code> is thrown.
+        C{object}, and unless exactly one match is found,
+        C{java.lang.IllegalArgumentException} is thrown.
         </p>
 
         <p>
         For more information on the inheritable event mechanism see the
-        {@link com.vaadin.event com.vaadin.event package documentation}.
+        L{com.vaadin.event com.vaadin.event package documentation}.
         </p>
 
         @param eventType
@@ -81,9 +81,9 @@ class IMethodEventSource(object):
                    the object instance who owns the activation method.
         @param methodName
                    the name of the activation method.
-        @throws java.lang.IllegalArgumentException
-                    unless <code>method</code> has exactly one match in
-                    <code>object</code>
+        @raise java.lang.IllegalArgumentException
+                    unless C{method} has exactly one match in
+                    C{object}
         """
         raise NotImplementedError
 
@@ -91,20 +91,20 @@ class IMethodEventSource(object):
     def removeListener(self, eventType, obj, method):
         """Removes all registered listeners matching the given parameters. Since
         this method receives the event type and the listener object as
-        parameters, it will unregister all <code>object</code>'s methods that are
-        registered to listen to events of type <code>eventType</code> generated
+        parameters, it will unregister all C{object}'s methods that are
+        registered to listen to events of type C{eventType} generated
         by this component.
 
         <p>
         For more information on the inheritable event mechanism see the
-        {@link com.vaadin.event com.vaadin.event package documentation}.
+        L{com.vaadin.event com.vaadin.event package documentation}.
         </p>
 
         @param eventType
-                   the exact event type the <code>object</code> listens to.
+                   the exact event type the C{object} listens to.
         @param target
                    the target object that has registered to listen to events of
-                   type <code>eventType</code> with one or more methods.
+                   type C{eventType} with one or more methods.
         ---
         Removes one registered listener method. The given method owned by the
         given object will no longer be called when the specified events are
@@ -112,11 +112,11 @@ class IMethodEventSource(object):
 
         <p>
         For more information on the inheritable event mechanism see the
-        {@link com.vaadin.event com.vaadin.event package documentation}.
+        L{com.vaadin.event com.vaadin.event package documentation}.
         </p>
 
         @param eventType
-                   the exact event type the <code>object</code> listens to.
+                   the exact event type the C{object} listens to.
         @param target
                    the target object that has registered to listen to events of
                    type eventType with one or more methods.
@@ -131,24 +131,24 @@ class IMethodEventSource(object):
         </p>
 
         <p>
-        This version of <code>removeListener</code> gets the name of the
+        This version of C{removeListener} gets the name of the
         activation method as a parameter. The actual method is reflected from the
         target, and unless exactly one match is found,
-        <code>java.lang.IllegalArgumentException</code> is thrown.
+        C{java.lang.IllegalArgumentException} is thrown.
         </p>
 
         <p>
         For more information on the inheritable event mechanism see the
-        {@link com.vaadin.event com.vaadin.event package documentation}.
+        L{com.vaadin.event com.vaadin.event package documentation}.
         </p>
 
         @param eventType
-                   the exact event type the <code>object</code> listens to.
+                   the exact event type the C{object} listens to.
         @param target
                    the target object that has registered to listen to events of
-                   type <code>eventType</code> with one or more methods.
+                   type C{eventType} with one or more methods.
         @param methodName
-                   the name of the method owned by <code>target</code> that's
-                   registered to listen to events of type <code>eventType</code>.
+                   the name of the method owned by C{target} that's
+                   registered to listen to events of type C{eventType}.
         """
         raise NotImplementedError

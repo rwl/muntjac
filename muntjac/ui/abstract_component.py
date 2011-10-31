@@ -35,12 +35,12 @@ _COMPONENT_EVENT_METHOD = getattr(IListener, 'componentEvent')
 
 class AbstractComponent(IComponent, IMethodEventSource):
     """An abstract class that defines default implementation for the
-    {@link IComponent} interface. Basic UI components that are not derived
+    L{IComponent} interface. Basic UI components that are not derived
     from an external component can inherit this class to easily qualify as
     Vaadin components. Most components in Vaadin do just that.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.0
     """
@@ -95,7 +95,7 @@ class AbstractComponent(IComponent, IMethodEventSource):
         # Locale of this component.
         self._locale = None
 
-        # The component should receive focus (if {@link IFocusable})
+        # The component should receive focus (if L{IFocusable})
         # when attached.
         self._delayedFocus = None
 
@@ -140,16 +140,16 @@ class AbstractComponent(IComponent, IMethodEventSource):
         you need to:
         <ul>
         <li>remove the implementation of getTag
-        <li>add {@link ClientWidget} annotation to your component
+        <li>add L{ClientWidget} annotation to your component
         </ul>
 
-        @return the component's UIDL tag as <code>String</code>
+        @return: the component's UIDL tag as C{String}
         @deprecated tags are no more required for components. Instead of tags
-                    we are now using {@link ClientWidget} annotations to map
+                    we are now using L{ClientWidget} annotations to map
                     server side components to client side counterparts.
                     Generating identifier for component type is delegated to
                     terminal.
-        @see ClientWidget
+        @see: ClientWidget
         """
         warn('tags are no more required for components', DeprecationWarning)
         return ''
@@ -166,7 +166,7 @@ class AbstractComponent(IComponent, IMethodEventSource):
     def getStyle(self):
         """Gets style for component. Multiple styles are joined with spaces.
 
-        @return the component's styleValue of property style.
+        @return: the component's styleValue of property style.
         @deprecated Use getStyleName() instead; renamed for consistency and
                     to indicate that "style" should not be used to switch
                     client side implementation, only to style the component.
@@ -177,7 +177,7 @@ class AbstractComponent(IComponent, IMethodEventSource):
 
     def setStyle(self, style):
         """Sets and replaces all previous style names of the component. This
-        method will trigger a {@link RepaintRequestEvent}.
+        method will trigger a L{RepaintRequestEvent}.
 
         @param style
                    the new style of the component.
@@ -239,12 +239,12 @@ class AbstractComponent(IComponent, IMethodEventSource):
 
 
     def setCaption(self, caption):
-        """Sets the component's caption <code>String</code>. Caption is the
+        """Sets the component's caption C{String}. Caption is the
         visible name of the component. This method will trigger a
-        {@link RepaintRequestEvent}.
+        L{RepaintRequestEvent}.
 
         @param caption
-                   the new caption <code>String</code> for the component.
+                   the new caption C{String} for the component.
         """
         self._caption = caption
         self.requestRepaint()
@@ -293,7 +293,7 @@ class AbstractComponent(IComponent, IMethodEventSource):
 
     def setIcon(self, icon):
         """Sets the component's icon. This method will trigger a
-        {@link com.vaadin.terminal.Paintable.RepaintRequestEvent
+        L{com.vaadin.terminal.Paintable.RepaintRequestEvent
         RepaintRequestEvent}.
 
         @param icon
@@ -344,12 +344,12 @@ class AbstractComponent(IComponent, IMethodEventSource):
 
     def setImmediate(self, immediate):
         """Sets the component's immediate mode to the specified status.
-        This method will trigger a {@link RepaintRequestEvent}.
+        This method will trigger a L{RepaintRequestEvent}.
 
         @param immediate
                    the boolean value specifying if the component should
                    be in the immediate mode after the call.
-        @see IComponent#isImmediate()
+        @see: IComponent#isImmediate()
         """
         self._immediate = immediate
         self.requestRepaint()
@@ -421,15 +421,15 @@ class AbstractComponent(IComponent, IMethodEventSource):
 
         These tags may be nested.
 
-        @return component's description <code>String</code>
+        @return: component's description C{String}
         """
         return self._description
 
 
     def setDescription(self, description):
-        """Sets the component's description. See {@link #getDescription()}
+        """Sets the component's description. See L{#getDescription()}
         for more information on what the description is. This method will
-        trigger a {@link RepaintRequestEvent}.
+        trigger a L{RepaintRequestEvent}.
 
         @param description
                    the new description string for the component.
@@ -468,7 +468,7 @@ class AbstractComponent(IComponent, IMethodEventSource):
     def getErrorMessage(self):
         """Gets the error message for this component.
 
-        @return ErrorMessage containing the description of the error state
+        @return: ErrorMessage containing the description of the error state
                 of the component or null, if the component contains no errors.
                 Extending classes should override this method if they support
                 other error message types such as validation errors or
@@ -481,7 +481,7 @@ class AbstractComponent(IComponent, IMethodEventSource):
     def getComponentError(self):
         """Gets the component's error message.
 
-        @return the component's error message.
+        @return: the component's error message.
         """
         return self._componentError
 
@@ -493,7 +493,7 @@ class AbstractComponent(IComponent, IMethodEventSource):
         @link IComponent.ErrorMessage#ErrorMessage(String, int)
 
         @param componentError
-                   the new <code>ErrorMessage</code> of the component.
+                   the new C{ErrorMessage} of the component.
         """
         self._componentError = componentError
         self.fireComponentErrorEvent()
@@ -539,7 +539,7 @@ class AbstractComponent(IComponent, IMethodEventSource):
 
     def focus(self):
         """Sets the focus for this component if the component is
-        {@link IFocusable}.
+        L{IFocusable}.
         """
         if isinstance(self, IFocusable):
             app = self.getApplication()
@@ -631,7 +631,7 @@ class AbstractComponent(IComponent, IMethodEventSource):
     def getCSSHeight(self):
         """Build CSS compatible string representation of height.
 
-        @return CSS height
+        @return: CSS height
         """
         if self.getHeightUnits() == self.UNITS_PIXELS:
             return (str( int(self.getHeight()) )
@@ -644,7 +644,7 @@ class AbstractComponent(IComponent, IMethodEventSource):
     def getCSSWidth(self):
         """Build CSS compatible string representation of width.
 
-        @return CSS width
+        @return: CSS width
         """
         if self.getWidthUnits() == self.UNITS_PIXELS:
             return (str( int(self.getWidth()) )
@@ -656,14 +656,14 @@ class AbstractComponent(IComponent, IMethodEventSource):
 
     def paintContent(self, target):
         """Paints any needed component-specific things to the given UIDL
-        stream. The more general {@link #paint(PaintTarget)} method handles
+        stream. The more general L{#paint(PaintTarget)} method handles
         all general attributes common to all components, and it calls this
         method to paint any component-specific attributes to the UIDL stream.
 
         @param target
                    the target UIDL stream where the component should paint
                    itself to
-        @throws PaintException
+        @raise PaintException
                     if the paint operation failed.
         """
         pass
@@ -745,7 +745,7 @@ class AbstractComponent(IComponent, IMethodEventSource):
         call.
 
         For more information on the inheritable event mechanism see the
-        {@link com.vaadin.event com.vaadin.event package documentation}.
+        L{com.vaadin.event com.vaadin.event package documentation}.
 
         @param eventIdentifier
                    the identifier of the event to listen for
@@ -765,7 +765,7 @@ class AbstractComponent(IComponent, IMethodEventSource):
         it when it's called.
 
         For more information on the inheritable event mechanism see the
-        {@link com.vaadin.event com.vaadin.event package documentation}.
+        L{com.vaadin.event com.vaadin.event package documentation}.
 
         @param eventType
                    the type of the listened event. Events of this type or
@@ -780,17 +780,17 @@ class AbstractComponent(IComponent, IMethodEventSource):
         the activation method does not have any arguments the event object
         will not be passed to it when it's called.
 
-        This version of <code>addListener</code> gets the name of the
+        This version of C{addListener} gets the name of the
         activation method as a parameter. The actual method is reflected
-        from <code>object</code>, and unless exactly one match is found,
-        <code>java.lang.IllegalArgumentException</code> is thrown.
+        from C{object}, and unless exactly one match is found,
+        C{java.lang.IllegalArgumentException} is thrown.
 
         For more information on the inheritable event mechanism see the
-        {@link com.vaadin.event com.vaadin.event package documentation}.
+        L{com.vaadin.event com.vaadin.event package documentation}.
 
         Note: Using this method is discouraged because it cannot be checked
-        during compilation. Use {@link #addListener(Class, Object, Method)}
-        or {@link #addListener(com.vaadin.ui.IComponent.IListener)} instead.
+        during compilation. Use L{#addListener(Class, Object, Method)}
+        or L{#addListener(com.vaadin.ui.IComponent.IListener)} instead.
 
         @param eventType
                    the type of the listened event. Events of this type or
@@ -852,79 +852,79 @@ class AbstractComponent(IComponent, IMethodEventSource):
     def withdrawListener(self, *args):
         """Removes all registered listeners matching the given parameters.
         Since this method receives the event type and the listener object
-        as parameters, it will unregister all <code>object</code>'s methods
+        as parameters, it will unregister all C{object}'s methods
         that are registered to listen to events of type
-        <code>eventType</code> generated by this component.
+        C{eventType} generated by this component.
 
         This method additionally informs the event-api to stop routing
         events with the given eventIdentifier to the components handleEvent
         function call.
 
         For more information on the inheritable event mechanism see the
-        {@link com.vaadin.event com.vaadin.event package documentation}.
+        L{com.vaadin.event com.vaadin.event package documentation}.
 
         @param eventIdentifier
                    the identifier of the event to stop listening for
         @param eventType
-                   the exact event type the <code>object</code> listens to.
+                   the exact event type the C{object} listens to.
         @param target
                    the target object that has registered to listen to events
-                   of type <code>eventType</code> with one or more methods.
+                   of type C{eventType} with one or more methods.
 
         @since 6.2
         ---
         Removes all registered listeners matching the given parameters. Since
         this method receives the event type and the listener object as
-        parameters, it will unregister all <code>object</code>'s methods that
-        are registered to listen to events of type <code>eventType</code>
+        parameters, it will unregister all C{object}'s methods that
+        are registered to listen to events of type C{eventType}
         generated by this component.
 
         For more information on the inheritable event mechanism see the
-        {@link com.vaadin.event com.vaadin.event package documentation}.
+        L{com.vaadin.event com.vaadin.event package documentation}.
 
         @param eventType
-                   the exact event type the <code>object</code> listens to.
+                   the exact event type the C{object} listens to.
         @param target
                    the target object that has registered to listen to events
-                   of type <code>eventType</code> with one or more methods.
+                   of type C{eventType} with one or more methods.
         ---
         Removes one registered listener method. The given method owned by the
         given object will no longer be called when the specified events are
         generated by this component.
 
         For more information on the inheritable event mechanism see the
-        {@link com.vaadin.event com.vaadin.event package documentation}.
+        L{com.vaadin.event com.vaadin.event package documentation}.
 
         @param eventType
-                   the exact event type the <code>object</code> listens to.
+                   the exact event type the C{object} listens to.
         @param target
                    target object that has registered to listen to events of
-                   type <code>eventType</code> with one or more methods.
+                   type C{eventType} with one or more methods.
         @param method
-                   the method owned by <code>target</code> that's registered
-                   to listen to events of type <code>eventType</code>.
+                   the method owned by C{target} that's registered
+                   to listen to events of type C{eventType}.
         ---
         Removes one registered listener method. The given method owned by the
         given object will no longer be called when the specified events are
         generated by this component.
 
-        This version of <code>removeListener</code> gets the name of the
+        This version of C{removeListener} gets the name of the
         activation method as a parameter. The actual method is reflected from
-        <code>target</code>, and unless exactly one match is found,
-        <code>java.lang.IllegalArgumentException</code> is thrown.
+        C{target}, and unless exactly one match is found,
+        C{java.lang.IllegalArgumentException} is thrown.
 
         For more information on the inheritable event mechanism see the
-        {@link com.vaadin.event com.vaadin.event package documentation}.
+        L{com.vaadin.event com.vaadin.event package documentation}.
 
         @param eventType
-                   the exact event type the <code>object</code> listens to.
+                   the exact event type the C{object} listens to.
         @param target
                    the target object that has registered to listen to events
-                   of type <code>eventType</code> with one or more methods.
+                   of type C{eventType} with one or more methods.
         @param methodName
-                   the name of the method owned by <code>target</code>
+                   the name of the method owned by C{target}
                    that's registered to listen to events of type
-                   <code>eventType</code>.
+                   C{eventType}.
         """
         nargs = len(args)
         if nargs == 2:
@@ -964,12 +964,12 @@ class AbstractComponent(IComponent, IMethodEventSource):
 
 
     def hasListeners(self, eventType):
-        """Checks if the given {@link Event} type is listened for this
+        """Checks if the given L{Event} type is listened for this
         component.
 
         @param eventType
                    the event type to be checked
-        @return true if a listener is registered for the given event type
+        @return: true if a listener is registered for the given event type
         """
         return (self._eventRouter is not None
                 and self._eventRouter.hasListeners(eventType))
@@ -981,7 +981,7 @@ class AbstractComponent(IComponent, IMethodEventSource):
 
         @param eventType
                    The type of event to return listeners for.
-        @return A collection with all registered listeners. Empty if no
+        @return: A collection with all registered listeners. Empty if no
                 listeners are found.
         """
         if issubclass(eventType, RepaintRequestEvent):
@@ -1033,9 +1033,9 @@ class AbstractComponent(IComponent, IMethodEventSource):
 
 
     def getData(self):
-        """Gets the application specific data. See {@link #setData(Object)}.
+        """Gets the application specific data. See L{#setData(Object)}.
 
-        @return the Application specific data set with setData function.
+        @return: the Application specific data set with setData function.
         @since 3.1
         """
         return self._applicationData
@@ -1177,7 +1177,7 @@ class AbstractComponent(IComponent, IMethodEventSource):
 
         @param error
                   Error event to handle
-        @return True if the error has been handled False, otherwise. If
+        @return: True if the error has been handled False, otherwise. If
                 the error haven't been handled by this component, it will
                 be handled in the application error handler.
         """
@@ -1191,7 +1191,7 @@ class IComponentErrorHandler(object):
     """Handle the component error
 
     @param event
-    @return True if the error has been handled False, otherwise
+    @return: True if the error has been handled False, otherwise
     """
 
     def handleComponentError(self, event):

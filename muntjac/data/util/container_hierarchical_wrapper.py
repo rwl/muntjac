@@ -24,45 +24,44 @@ from muntjac.data.util.hierarchical_container import HierarchicalContainer
 class ContainerHierarchicalWrapper(IHierarchical, IContainer,
             IItemSetChangeNotifier, IPropertySetChangeNotifier):
     """A wrapper class for adding external hierarchy to containers not
-    implementing the {@link com.vaadin.data.Container.Hierarchical} interface.
+    implementing the L{IHierarchical} interface.
 
     If the wrapped container is changed directly (that is, not through the
-    wrapper), and does not implement Container.ItemSetChangeNotifier and/or
-    Container.PropertySetChangeNotifier the hierarchy information must be
-    updated with the {@link #updateHierarchicalWrapper()} method.
+    wrapper), and does not implement IItemSetChangeNotifier and/or
+    IPropertySetChangeNotifier the hierarchy information must be updated
+    with the L{updateHierarchicalWrapper} method.
 
-    @author IT Mill Ltd.
-    @version @VERSION@
-    @since 3.0
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     """
 
     def __init__(self, toBeWrapped):
         """Constructs a new hierarchical wrapper for an existing Container.
         Works even if the to-be-wrapped container already implements the
-        <code>Container.Hierarchical</code> interface.
+        C{IHierarchical} interface.
 
-        @param toBeWrapped
+        @param toBeWrapped:
                    the container that needs to be accessed hierarchically
-        @see #updateHierarchicalWrapper()
+        @see: L{updateHierarchicalWrapper}
         """
         super(ContainerHierarchicalWrapper, self).__init__()
 
-        # The wrapped container
+        #: The wrapped container
         self._container = None
 
-        # Set of IDs of those contained Items that can't have children.
+        #: Set of IDs of those contained Items that can't have children.
         self._noChildrenAllowed = None
 
-        # Mapping from Item ID to parent Item ID
+        #: Mapping from Item ID to parent Item ID
         self._parent = None
 
-        # Mapping from Item ID to a list of child IDs
+        #: Mapping from Item ID to a list of child IDs
         self._children = None
 
-        # List that contains all root elements of the container.
+        #: List that contains all root elements of the container.
         self._roots = None
 
-        # Is the wrapped container hierarchical by itself ?
+        #: Is the wrapped container hierarchical by itself ?
         self._hierarchical = None
 
         self._container = toBeWrapped
@@ -139,11 +138,10 @@ class ContainerHierarchicalWrapper(IHierarchical, IContainer,
     def removeFromHierarchyWrapper(self, itemId):
         """Removes the specified Item from the wrapper's internal hierarchy
         structure.
-        <p>
-        Note : The Item is not removed from the underlying Container.
-        </p>
 
-        @param itemId
+        Note : The Item is not removed from the underlying Container.
+
+        @param itemId:
                    the ID of the item to remove from the hierarchy.
         """
         oprhanedChildren = self._children.pop( self._children.index(itemId) )
@@ -169,7 +167,7 @@ class ContainerHierarchicalWrapper(IHierarchical, IContainer,
         structure. The new item is added as a root Item. The underlying
         container is not modified.
 
-        @param itemId
+        @param itemId:
                    the ID of the item to add to the hierarchy.
         """
         self._roots.add(itemId)
@@ -248,19 +246,17 @@ class ContainerHierarchicalWrapper(IHierarchical, IContainer,
     def setChildrenAllowed(self, itemId, childrenAllowed):
         """Sets the given Item's capability to have children. If the Item
         identified with the itemId already has children and the
-        areChildrenAllowed is false this method fails and <code>false</code>
+        areChildrenAllowed is false this method fails and C{False}
         is returned; the children must be first explicitly removed with
-        {@link #setParent(Object itemId, Object newParentId)} or
-        {@link com.vaadin.data.Container#removeItem(Object itemId)}.
+        L{setParent} or L{IContainer.removeItem}.
 
-        @param itemId
-                   the ID of the Item in the container whose child capability is
-                   to be set.
+        @param itemId:
+                   the ID of the Item in the container whose child capability
+                   is to be set.
         @param childrenAllowed
-                   the boolean value specifying if the Item can have children or
-                   not.
-        @return <code>true</code> if the operation succeeded, <code>false</code>
-                if not
+                   the boolean value specifying if the Item can have children
+                   or not.
+        @return: C{True} if the operation succeeded, C{False} if not
         """
         # If the wrapped container implements the method directly, use it
         if self._hierarchical:
@@ -282,18 +278,17 @@ class ContainerHierarchicalWrapper(IHierarchical, IContainer,
     def setParent(self, itemId, newParentId):
         """Sets the parent of an Item. The new parent item must exist and be
         able to have children.
-        (<code>canHaveChildren(newParentId) == true</code>). It is also
+        (C{canHaveChildren(newParentId) == True}). It is also
         possible to detach a node from the hierarchy (and thus make it root)
-        by setting the parent <code>null</code>.
+        by setting the parent C{None}.
 
-        @param itemId
+        @param itemId:
                    the ID of the item to be set as the child of the Item
                    identified with newParentId.
-        @param newParentId
+        @param newParentId:
                    the ID of the Item that's to be the new parent of the Item
                    identified with itemId.
-        @return <code>true</code> if the operation succeeded, <code>false</code>
-                if not
+        @return: C{True} if the operation succeeded, C{False} if not
         """
         # If the wrapped container implements the method directly, use it
         if self._hierarchical:
@@ -365,21 +360,14 @@ class ContainerHierarchicalWrapper(IHierarchical, IContainer,
 
 
     def addItem(self, itemId=None):
-        """Creates a new Item into the Container, assigns it an automatic ID,
-        and adds it to the hierarchy.
+        """Adds a new Item by its ID to the underlying container and to the
+        hierarchy. Creates a new Item into the Container, assigns it an
+        automatic ID, and adds it to the hierarchy if C{itemId} is C{None}.
 
-        @return the autogenerated ID of the new Item or <code>null</code> if
-                the operation failed
-        @throws UnsupportedOperationException
-                    if the addItem is not supported.
-        ---
-        Adds a new Item by its ID to the underlying container and to the
-        hierarchy.
-
-        @param itemId
+        @param itemId:
                    the ID of the Item to be created.
-        @return the added Item or <code>null</code> if the operation failed.
-        @throws UnsupportedOperationException
+        @return: the added Item or C{None} if the operation failed.
+        @raise NotImplementedError:
                     if the addItem is not supported.
         """
         if itemId is None:
@@ -396,11 +384,10 @@ class ContainerHierarchicalWrapper(IHierarchical, IContainer,
 
     def removeAllItems(self):
         """Removes all items from the underlying container and from the
-        hierarcy.
+        hierarchy.
 
-        @return <code>true</code> if the operation succeeded,
-                <code>false</code> if not
-        @throws UnsupportedOperationException
+        @return: C{True} if the operation succeeded, C{False} if not
+        @raise NotImplementedError:
                     if the removeAllItems is not supported.
         """
         success = self._container.removeAllItems()
@@ -418,11 +405,10 @@ class ContainerHierarchicalWrapper(IHierarchical, IContainer,
         """Removes an Item specified by the itemId from the underlying
         container and from the hierarchy.
 
-        @param itemId
+        @param itemId:
                    the ID of the Item to be removed.
-        @return <code>true</code> if the operation succeeded,
-                <code>false</code> if not
-        @throws UnsupportedOperationException
+        @return: C{True} if the operation succeeded, C{False} if not
+        @raise NotImplementedError:
                     if the removeItem is not supported.
         """
         success = self._container.removeItem(itemId)
@@ -436,10 +422,10 @@ class ContainerHierarchicalWrapper(IHierarchical, IContainer,
     def removeItemRecursively(self, itemId):
         """Removes the Item identified by given itemId and all its children.
 
-        @see #removeItem(Object)
-        @param itemId
+        @see: L{removeItem}
+        @param itemId:
                    the identifier of the Item to be removed
-        @return true if the operation succeeded
+        @return: true if the operation succeeded
         """
         return HierarchicalContainer.removeItemRecursively(self, itemId)
 
@@ -447,15 +433,14 @@ class ContainerHierarchicalWrapper(IHierarchical, IContainer,
     def addContainerProperty(self, propertyId, typ, defaultValue):
         """Adds a new Property to all Items in the Container.
 
-        @param propertyId
+        @param propertyId:
                    the ID of the new Property.
-        @param type
+        @param type:
                    the Data type of the new Property.
-        @param defaultValue
+        @param defaultValue:
                    the value all created Properties are initialized to.
-        @return <code>true</code> if the operation succeeded, <code>false</code>
-                if not
-        @throws UnsupportedOperationException
+        @return: C{True} if the operation succeeded, C{False} if not
+        @raise NotImplementedError:
                     if the addContainerProperty is not supported.
         """
         return self._container.addContainerProperty(propertyId, typ,
@@ -466,13 +451,12 @@ class ContainerHierarchicalWrapper(IHierarchical, IContainer,
         """Removes the specified Property from the underlying container and
         from the hierarchy.
 
-        Note : The Property will be removed from all Items in the Container.
+        Note: The Property will be removed from all Items in the Container.
 
-        @param propertyId
+        @param propertyId:
                    the ID of the Property to remove.
-        @return <code>true</code> if the operation succeeded,
-                <code>false</code> if not
-        @throws UnsupportedOperationException
+        @return: C{True} if the operation succeeded, C{False} if not
+        @raise NotImplementedError:
                     if the removeContainerProperty is not supported.
         """
         return self._container.removeContainerProperty(propertyId)
@@ -494,8 +478,8 @@ class ContainerHierarchicalWrapper(IHierarchical, IContainer,
 
 
     def getContainerProperty(self, itemId, propertyId):
-        # Gets the Property identified by the given itemId and propertyId from the
-        # Container
+        # Gets the Property identified by the given itemId and propertyId
+        # from the Container
         return self._container.getContainerProperty(itemId, propertyId)
 
 
@@ -582,8 +566,8 @@ class PiggybackListener(IContainer, IPropertySetChangeListener,
 
 
 class ListedItemsFirstComparator(object):
-    """A comparator that sorts the listed items before other items. Otherwise,
-    the order is undefined.
+    """A comparator that sorts the listed items before other items.
+    Otherwise, the order is undefined.
     """
 
     def __init__(self, itemIds):

@@ -20,30 +20,30 @@ from muntjac.ui.component import IComponent
 class IDropTarget(IComponent):
     """IDropTarget is an interface for components supporting drop operations. A
     component that wants to receive drop events should implement this interface
-    and provide a {@link DropHandler} which will handle the actual drop event.
+    and provide a L{DropHandler} which will handle the actual drop event.
 
     @since 6.3
     """
 
     def getDropHandler(self):
-        """@return the drop hanler that will receive the dragged data or null if
+        """@return: the drop hanler that will receive the dragged data or null if
                 drops are not currently accepted
         """
         raise NotImplementedError
 
 
     def translateDropTargetDetails(self, clientVariables):
-        """Called before the {@link DragAndDropEvent} is passed to
-        {@link DropHandler}. Implementation may for example translate the drop
+        """Called before the L{DragAndDropEvent} is passed to
+        L{DropHandler}. Implementation may for example translate the drop
         target details provided by the client side (drop target) to meaningful
         server side values. If null is returned the terminal implementation will
-        automatically create a {@link TargetDetails} with raw client side data.
+        automatically create a L{TargetDetails} with raw client side data.
 
-        @see DragSource#getTransferable(Map)
+        @see: DragSource#getTransferable(Map)
 
         @param clientVariables
                    data passed from the DropTargets client side counterpart.
-        @return A DropTargetDetails object with the translated data or null to
+        @return: A DropTargetDetails object with the translated data or null to
                 use a default implementation.
         """
         raise NotImplementedError

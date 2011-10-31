@@ -31,12 +31,12 @@ class BaseFieldFactory(IFieldFactory):
     <b>Item</b>: Form. <br/>
     <b>default field type</b>: TextField.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 3.1
-    @deprecated use {@link DefaultFieldFactory} or own implementations
-                on {@link FormFieldFactory} or {@link TableFieldFactory}
+    @deprecated use L{DefaultFieldFactory} or own implementations
+                on L{FormFieldFactory} or L{TableFieldFactory}
                 instead.
     """
 
@@ -51,7 +51,7 @@ class BaseFieldFactory(IFieldFactory):
                    the type of data presented in field.
         @param uiContext
                    the context where the Field is presented.
-        @see IFieldFactory.createField
+        @see: IFieldFactory.createField
         """
         nargs = len(args)
         if nargs == 2:

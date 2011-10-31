@@ -27,7 +27,7 @@ class BeanItemTest(TestCase):
 
     Only public API is tested, not the methods with package visibility.
 
-    See also {@link PropertySetItemTest}, which tests the base class.
+    See also L{PropertySetItemTest}, which tests the base class.
     """
 
     def testGetProperties(self):

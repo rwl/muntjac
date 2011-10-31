@@ -48,8 +48,8 @@ class JsonPaintTarget(IPaintTarget):
     TODO document better: role of this class, UIDL format,
     attributes, variables, etc.
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 5.0
     """
@@ -63,7 +63,7 @@ class JsonPaintTarget(IPaintTarget):
         @param manager
         @param outWriter
                    A character-output stream.
-        @throws PaintException
+        @raise PaintException
                     if the paint operation failed.
         """
         self._manager = manager
@@ -102,7 +102,7 @@ class JsonPaintTarget(IPaintTarget):
 
         @param tagName
                    the name of the start tag.
-        @throws PaintException
+        @raise PaintException
                     if the paint operation failed.
         """
         if isinstance(arg, IPaintable):
@@ -152,7 +152,7 @@ class JsonPaintTarget(IPaintTarget):
 
         @param tag
                    the name of the end tag.
-        @throws Paintexception
+        @raise Paintexception
                     if the paint operation failed.
         """
         # In case of null data output nothing:
@@ -201,7 +201,7 @@ class JsonPaintTarget(IPaintTarget):
 
         @param xml
                 the String to be substituted.
-        @return A new string instance where all occurrences of XML
+        @return: A new string instance where all occurrences of XML
                 sensitive characters are substituted with entities.
         """
         if xml is None or len(xml) <= 0:
@@ -218,7 +218,7 @@ class JsonPaintTarget(IPaintTarget):
 
         @param xml
                 the String to be substituted.
-        @return A new StringBuilder instance where all occurrences of XML
+        @return: A new StringBuilder instance where all occurrences of XML
                 sensitive characters are substituted with entities.
         """
         if xml is None or len(xml) <= 0:
@@ -243,7 +243,7 @@ class JsonPaintTarget(IPaintTarget):
         """Escapes the given string so it can safely be used as a JSON string.
 
         @param s The string to escape
-        @return Escaped version of the string
+        @return: Escaped version of the string
         """
         # FIXME: Move this method to another class as other classes use it
         # also.
@@ -287,7 +287,7 @@ class JsonPaintTarget(IPaintTarget):
 
         @param c
                 the Character to be replaced with an entity.
-        @return String of the entity or null if character is not to be
+        @return: String of the entity or null if character is not to be
                 replaced with an entity.
         """
         return {
@@ -303,7 +303,7 @@ class JsonPaintTarget(IPaintTarget):
         """Prints XML-escaped text.
 
         @param s
-        @throws PaintException
+        @raise PaintException
                     if the paint operation failed.
         """
         self._tag.addData('\"' + self.escapeJSON(s) + '\"')
@@ -439,7 +439,7 @@ class JsonPaintTarget(IPaintTarget):
         @param name
                    the Variable name.
 
-        @throws PaintException
+        @raise PaintException
                     if the paint operation failed.
         """
         self.startTag('uploadstream')
@@ -456,7 +456,7 @@ class JsonPaintTarget(IPaintTarget):
                    the name of the tag.
         @param sectionData
                    the section data to be printed.
-        @throws PaintException
+        @raise PaintException
                     if the paint operation failed.
         """
         self._tag.addData(('{\"' + sectionTagName + '\":\"'
@@ -468,7 +468,7 @@ class JsonPaintTarget(IPaintTarget):
 
         @param xml
                    the Xml to be added.
-        @throws PaintException
+        @raise PaintException
                     if the paint operation failed.
         """
         # Ensure that the target is open
@@ -492,10 +492,10 @@ class JsonPaintTarget(IPaintTarget):
                    the section data.
         @param namespace
                    the namespace to be added.
-        @throws PaintException
+        @raise PaintException
                     if the paint operation failed.
 
-        @see com.vaadin.terminal.IPaintTarget#addXMLSection(String, String,
+        @see: com.vaadin.terminal.IPaintTarget#addXMLSection(String, String,
              String)
         """
         # Ensure that the target is open
@@ -515,9 +515,9 @@ class JsonPaintTarget(IPaintTarget):
 
     def getUIDL(self):
         """Gets the UIDL already printed to stream. Paint target must be
-        closed before the <code>getUIDL</code> can be called.
+        closed before the C{getUIDL} can be called.
 
-        @return the UIDL.
+        @return: the UIDL.
         """
         if self._closed:
             return self._uidlBuffer.getvalue()
@@ -527,11 +527,11 @@ class JsonPaintTarget(IPaintTarget):
 
     def close(self):
         """Closes the paint target. Paint target must be closed before the
-        <code>getUIDL</code> can be called. Subsequent attempts to write to
+        C{getUIDL} can be called. Subsequent attempts to write to
         paint target. If the target was already closed, call to this function
         is ignored. will generate an exception.
 
-        @throws PaintException
+        @raise PaintException
                     if the paint operation failed.
         """
         if self._tag is not None:
@@ -572,7 +572,7 @@ class JsonPaintTarget(IPaintTarget):
         """Method to check if paintable is already painted into this target.
 
         @param p
-        @return true if is not yet painted into this target and is connected
+        @return: true if is not yet painted into this target and is connected
                 to app
         """
         if p in self._paintedComponents:
@@ -625,7 +625,7 @@ class JsonTag(object):
     """This is basically a container for UI components variables, that
     will be added at the end of JSON object.
 
-    @author mattitahvonen
+    @author: mattitahvonen
     """
 
     def __init__(self, tagName, target):

@@ -20,11 +20,11 @@ from muntjac.ui.abstract_ordered_layout import AbstractOrderedLayout
 class HorizontalLayout(AbstractOrderedLayout):
     """Horizontal layout
 
-    <code>HorizontalLayout</code> is a component container, which shows
+    C{HorizontalLayout} is a component container, which shows
     the subcomponents in the order of their addition (horizontally).
 
-    @author IT Mill Ltd.
-    @author Richard Lincoln
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
     @version @VERSION@
     @since 5.3
     """

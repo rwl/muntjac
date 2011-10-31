@@ -18,7 +18,7 @@
 class SystemMessageException(RuntimeError):
 
     def __init__(self, *args):
-        """Constructs a new <code>SystemMessageException</code> with
+        """Constructs a new C{SystemMessageException} with
         the specified detail message and/or cause.
         """
         nargs = len(args)

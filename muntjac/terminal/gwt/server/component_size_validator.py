@@ -56,7 +56,7 @@ class ComponentSizeValidator(object):
 
         @param component
                    component to check
-        @return set of first level errors found
+        @return: set of first level errors found
         """
 
         invalidHeight = not cls.checkHeights(component)
