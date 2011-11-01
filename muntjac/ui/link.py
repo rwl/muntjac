@@ -23,8 +23,7 @@ class Link(AbstractComponent):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
-    @since 3.0
+    @version: @VERSION@
     """
 
     CLIENT_WIDGET = None #ClientWidget(VLink, LoadStyle.EAGER)
@@ -41,27 +40,20 @@ class Link(AbstractComponent):
 
     def __init__(self, caption=None, resource=None, targetName=None,
                  width=None, height=None, border=None):
-        """Creates a new link.
-        ---
-        Creates a new instance of Link.
+        """Creates a new instance of Link.
 
-        @param caption
-        @param resource
-        ---
-        Creates a new instance of Link that opens a new window.
-
-
-        @param caption
+        @param caption:
                    the Link text.
-        @param targetName
+        @param resource:
+        @param targetName:
                    the name of the target window where the link opens to. Empty
                    name of null implies that the target is opened to the window
                    containing the link.
-        @param width
+        @param width:
                    the Width of the target window.
-        @param height
+        @param height:
                    the Height of the target window.
-        @param border
+        @param border:
                    the Border style of the target window.
         """
         super(Link, self).__init__()
@@ -94,9 +86,9 @@ class Link(AbstractComponent):
     def paintContent(self, target):
         """Paints the content of this component.
 
-        @param target
+        @param target:
                    the Paint Event.
-        @raise PaintException
+        @raise PaintException:
                     if the paint operation failed.
         """
         if self._resource is not None:
@@ -160,7 +152,7 @@ class Link(AbstractComponent):
     def setTargetBorder(self, targetBorder):
         """Sets the border of the target window.
 
-        @param targetBorder
+        @param targetBorder:
                    the targetBorder to set.
         """
         if (targetBorder == self.TARGET_BORDER_DEFAULT
@@ -173,7 +165,7 @@ class Link(AbstractComponent):
     def setTargetHeight(self, targetHeight):
         """Sets the target window height.
 
-        @param targetHeight
+        @param targetHeight:
                    the targetHeight to set.
         """
         self._targetHeight = targetHeight
@@ -183,7 +175,7 @@ class Link(AbstractComponent):
     def setTargetName(self, targetName):
         """Sets the target window name.
 
-        @param targetName
+        @param targetName:
                    the targetName to set.
         """
         self._targetName = targetName
@@ -193,7 +185,7 @@ class Link(AbstractComponent):
     def setTargetWidth(self, targetWidth):
         """Sets the target window width.
 
-        @param targetWidth
+        @param targetWidth:
                    the targetWidth to set.
         """
         self._targetWidth = targetWidth
@@ -211,7 +203,7 @@ class Link(AbstractComponent):
     def setResource(self, resource):
         """Sets the resource this link opens.
 
-        @param resource
+        @param resource:
                    the resource to set.
         """
         self._resource = resource

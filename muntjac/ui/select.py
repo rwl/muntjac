@@ -28,8 +28,8 @@ from muntjac.event.field_events import \
 class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
              field_events.IBlurNotifier, field_events.IFocusNotifier):
     """A class representing a selection of items the user has selected in a
-    UI. The set of choices is presented as a set of
-    L{com.vaadin.data.Item}s in a L{com.vaadin.data.IContainer}.
+    UI. The set of choices is presented as a set of L{IItem}s in a
+    L{IContainer}.
 
     A C{Select} component may be in single- or multiselect mode.
     Multiselect mode means that more than one item can be selected
@@ -37,19 +37,18 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
-    @since 3.0
+    @version: @VERSION@
     """
 
     CLIENT_WIDGET = None #ClientWidget(VFilterSelect, LoadStyle.LAZY)
 
     def __init__(self, *args):
-        # Holds value of property pageLength. 0 disables paging.
+        #: Holds value of property pageLength. 0 disables paging.
         self.pageLength = 10
 
         self._columns = 0
 
-        # Current page when the user is 'paging' trough options
+        #: Current page when the user is 'paging' trough options
         self._currentPage = -1
 
         self._filteringMode = self.FILTERINGMODE_STARTSWITH
@@ -57,28 +56,28 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
         self._filterstring = None
         self._prevfilterstring = None
 
-        # Number of options that pass the filter, excluding the null
-        # item if any.
+        #: Number of options that pass the filter, excluding the null
+        #  item if any.
         self._filteredSize = None
 
-        # Cache of filtered options, used only by the in-memory
-        # filtering system.
+        #: Cache of filtered options, used only by the in-memory
+        #  filtering system.
         self._filteredOptions = None
 
-        # Flag to indicate that request repaint is called by filter
-        # request only
+        #: Flag to indicate that request repaint is called by filter
+        #  request only
         self._optionRequest = None
 
-        # True if the container is being filtered temporarily and item
-        # set change notifications should be suppressed.
+        #: True if the container is being filtered temporarily and item
+        #  set change notifications should be suppressed.
         self._filteringContainer = None
 
-        # Flag to indicate whether to scroll the selected item visible
-        # (select the page on which it is) when opening the popup or not.
-        # Only applies to single select mode.
+        #: Flag to indicate whether to scroll the selected item visible
+        #  (select the page on which it is) when opening the popup or not.
+        #  Only applies to single select mode.
         #
-        # This requires finding the index of the item, which can be expensive
-        # in many large lazy loading containers.
+        #  This requires finding the index of the item, which can be expensive
+        #  in many large lazy loading containers.
         self._scrollToSelectedItem = True
 
         nargs = len(args)
@@ -101,9 +100,9 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
     def paintContent(self, target):
         """Paints the content of this component.
 
-        @param target
+        @param target:
                    the Paint Event.
-        @raise PaintException
+        @raise PaintException:
                     if the paint operation failed.
         """
         if self.isMultiSelect():
@@ -255,19 +254,19 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
         """Returns the filtered options for the current page using a container
         filter.
 
-        As a size effect, L{#filteredSize} is set to the total number of
+        As a size effect, L{filteredSize} is set to the total number of
         items passing the filter.
 
         The current container must be L{IFilterable} and L{IIndexed},
         and the filtering mode must be suitable for container filtering
-        (tested with L{#canUseContainerFilter()}).
+        (tested with L{canUseContainerFilter}).
 
-        Use L{#getFilteredOptions()} and
-        L{#sanitetizeList(List, boolean)} if this is not the case.
+        Use L{getFilteredOptions} and L{sanitetizeList} if this is not the
+        case.
 
-        @param needNullSelectOption
+        @param needNullSelectOption:
         @return: filtered list of options (may be empty) or null if cannot use
-                container filters
+                 container filters
         """
         container = self.getContainerDataSource()
 
@@ -335,10 +334,6 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
         Note that the client side implementation expects the filter string to
         apply to the item caption string it sees, so changing the behavior of
         this method can cause problems.
-
-        @param filterString
-        @param filteringMode
-        @return
         """
         fltr = None
         if filterString is not None and filterString != '':
@@ -369,8 +364,8 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
         options. Also, if the current page is beyond the end of the list, it
         will be adjusted.
 
-        @param options
-        @param needNullSelectOption
+        @param options:
+        @param needNullSelectOption:
                    flag to indicate if nullselect option needs to be taken
                    into consideration
         """
@@ -408,15 +403,15 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
         is to the underlying (possibly filtered) contents. The null item, if
         any, does not have an index but takes up a slot on the first page.
 
-        @param needNullSelectOption
+        @param needNullSelectOption:
                    true if a null option should be shown before any other
                    options (takes up the first slot on the first page, not
                    counted in index)
-        @param size
+        @param size:
                    number of items after filtering (not including the null
                    item, if any)
         @return: first item to show on the UI (index to the filtered list of
-                options, not taking the null item into consideration if any)
+                 options, not taking the null item into consideration if any)
         """
         # Not all options are visible, find out which ones are on the
         # current "page".
@@ -432,14 +427,14 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
         needNullSelectOption is true, the null item takes up the first slot
         on the first page, effectively reducing the first page size by one.
 
-        @param needNullSelectOption
+        @param needNullSelectOption:
                    true if a null option should be shown before any other
                    options (takes up the first slot on the first page, not
                    counted in index)
-        @param size
+        @param size:
                    number of items after filtering (not including the null
                    item, if any)
-        @param first
+        @param first:
                    index in the filtered view of the first item of the page
         @return: index in the filtered view of the last item on the page
         """
@@ -456,20 +451,20 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
                 indexToEnsureInView, size):
         """Adjusts the index of the current page if necessary: make sure the
         current page is not after the end of the contents, and optionally go
-        to the page containg a specific item. There are no side effects but
+        to the page containing a specific item. There are no side effects but
         the adjusted page index is returned.
 
-        @param page
+        @param page:
                    page number to use as the starting point
-        @param needNullSelectOption
+        @param needNullSelectOption:
                    true if a null option should be shown before any other
                    options (takes up the first slot on the first page, not
                    counted in index)
-        @param indexToEnsureInView
+        @param indexToEnsureInView:
                    index of an item that should be included on the page (in
                    the data set, not counting the null item if any), -1 for
                    none
-        @param size
+        @param size:
                    number of items after filtering (not including the null
                    item, if any)
         """
@@ -495,10 +490,8 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
         """Filters the options in memory and returns the full filtered list.
 
         This can be less efficient than using container filters, so use
-        L{#getOptionsWithFilter(boolean)} if possible (filterable
-        container and suitable item caption mode etc.).
-
-        @return
+        L{getOptionsWithFilter} if possible (filterable container and suitable
+        item caption mode etc.).
         """
         if ((self._filterstring is None) or (self._filterstring == '')
                 or (self.FILTERINGMODE_OFF == self._filteringMode)):
@@ -540,7 +533,7 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
     def changeVariables(self, source, variables):
         """Invoked when the value of a variable has changed.
 
-        @see: AbstractComponent#changeVariables()
+        @see: L{AbstractComponent.changeVariables}
         """
         # Not calling super.changeVariables due the history of select
         # component hierarchy
@@ -643,9 +636,9 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
         set 0, the actual number of displayed columns is determined implicitly
         by the adapter.
 
-        @deprecated
+        @deprecated:
 
-        @param columns
+        @param columns:
                    the number of columns to set.
         """
         warn('deprecated', DeprecationWarning)
@@ -660,8 +653,7 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
 
 
     def getColumns(self):
-        """@deprecated see setter function
-        @return
+        """@deprecated: see setter function
         """
         warn('see setter function', DeprecationWarning)
         return self._columns
@@ -704,18 +696,18 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
 
 
     def setMultiSelect(self, multiSelect):
-        """@deprecated use L{ListSelect}, L{OptionGroup} or
+        """@deprecated: use L{ListSelect}, L{OptionGroup} or
                     L{TwinColSelect} instead
-        @see: com.vaadin.ui.AbstractSelect#setMultiSelect(boolean)
+        @see: L{AbstractSelect.setMultiSelect}
         """
         super(Select, self).setMultiSelect(multiSelect)
 
 
     def isMultiSelect(self):
-        """@deprecated use L{ListSelect}, L{OptionGroup} or
+        """@deprecated: use L{ListSelect}, L{OptionGroup} or
                     L{TwinColSelect} instead
 
-        @see: com.vaadin.ui.AbstractSelect#isMultiSelect()
+        @see: L{AbstractSelect.isMultiSelect}
         """
         return super(Select, self).isMultiSelect()
 
@@ -728,7 +720,7 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
         This requires finding the index of the item, which can be expensive
         in many large lazy loading containers.
 
-        @param scrollToSelectedItem
+        @param scrollToSelectedItem:
                    true to find the page with the selected item when opening
                    the selection popup
         """
@@ -739,9 +731,9 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
         """Returns true if the select should find the page with the selected
         item when opening the popup (single select combo box only).
 
-        @see: #setScrollToSelectedItem(boolean)
+        @see: L{setScrollToSelectedItem}
 
         @return: true if the page with the selected item will be shown when
-                opening the popup
+                 opening the popup
         """
         return self._scrollToSelectedItem

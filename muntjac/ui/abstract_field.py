@@ -58,7 +58,7 @@ class AbstractField(AbstractComponent, field.IField,
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     def __init__(self):
@@ -785,7 +785,7 @@ class AbstractField(AbstractComponent, field.IField,
 
         @param propertyType:
                    the Type of the property, that needs to be edited.
-        @deprecated use e.g.
+        @deprecated: use e.g.
                 L{DefaultFieldFactory.createFieldByPropertyType} instead
         """
         warn('use createFieldByPropertyType() instead', DeprecationWarning)
@@ -1013,7 +1013,7 @@ class IReadOnlyStatusChangeEvent(ComponentEvent, prop.IProperty,
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     def __init__(self, source):

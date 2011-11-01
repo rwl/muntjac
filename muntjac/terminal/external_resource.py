@@ -25,7 +25,7 @@ class ExternalResource(IResource):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     def __init__(self, sourceURL, mimeType=None):

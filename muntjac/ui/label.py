@@ -37,70 +37,64 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
     CONTENT_*
 
     The contents of the label may contain simple formatting:
-    <ul>
-    <li><b>&lt;b></b> Bold
-    <li><b>&lt;i></b> Italic
-    <li><b>&lt;u></b> Underlined
-    <li><b>&lt;br/></b> Linebreak
-    <li><b>&lt;ul>&lt;li>item 1&lt;/li>&lt;li>item 2&lt;/li>&lt;/ul></b> List
-    of items
-    </ul>
-    The <b>b</b>,<b>i</b>,<b>u</b> and <b>li</b> tags can contain all the tags
+
+      - B{<b>} Bold
+      - B{<i>} Italic
+      - B{<u>} Underlined
+      - B{<br/>} Linebreak
+      - B{<ul><li>item 1</li><li>item 2</li></ul>} List of items
+
+    The B{b},B{i},B{u} and B{li} tags can contain all the tags
     in the list recursively.
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
-    @since 3.0
+    @version: @VERSION@
     """
 
     CLIENT_WIDGET = None #ClientWidget(VLabel, LoadStyle.EAGER)
 
-    # Content mode, where the label contains only plain text. The getValue()
-    # result is coded to XML when painting.
+    #: Content mode, where the label contains only plain text. The getValue()
+    #  result is coded to XML when painting.
     CONTENT_TEXT = 0
 
-    # Content mode, where the label contains preformatted text.
+    #: Content mode, where the label contains preformatted text.
     CONTENT_PREFORMATTED = 1
 
-    # Formatted content mode, where the contents is XML restricted to the UIDL
-    # 1.0 formatting markups.
+    #: Formatted content mode, where the contents is XML restricted to the UIDL
+    #  1.0 formatting markups.
     #
-    # @deprecated Use CONTENT_XML instead.
+    # @deprecated: Use CONTENT_XML instead.
     CONTENT_UIDL = 2
 
-    # Content mode, where the label contains XHTML. Contents is then enclosed
-    # in DIV elements having namespace of
-    # "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd".
+    #: Content mode, where the label contains XHTML. Contents is then enclosed
+    #  in DIV elements having namespace of
+    #  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd".
     CONTENT_XHTML = 3
 
-    # Content mode, where the label contains well-formed or well-balanced XML.
-    # Each of the root elements must have their default namespace specified.
+    #: Content mode, where the label contains well-formed or well-balanced XML.
+    #  Each of the root elements must have their default namespace specified.
     CONTENT_XML = 4
 
-    # Content mode, where the label contains RAW output. Output is not required
-    # to comply to with XML. In Web Adapter output is inserted inside the
-    # resulting HTML document as-is. This is useful for some specific purposes
-    # where possibly broken HTML content needs to be shown, but in most cases
-    # XHTML mode should be preferred.
+    #: Content mode, where the label contains RAW output. Output is not
+    #  required to comply to with XML. In Web Adapter output is inserted inside
+    #  the resulting HTML document as-is. This is useful for some specific
+    #  purposes where possibly broken HTML content needs to be shown, but in
+    #  most cases XHTML mode should be preferred.
     CONTENT_RAW = 5
 
-    # The default content mode is plain text.
+    #: The default content mode is plain text.
     CONTENT_DEFAULT = CONTENT_TEXT
 
-    # Array of content mode names that are rendered in UIDL as mode attribute.
+    #: Array of content mode names that are rendered in UIDL as mode attribute.
     _CONTENT_MODE_NAME = ['text', 'pre', 'uidl', 'xhtml', 'xml', 'raw']
 
     _DATASOURCE_MUST_BE_SET = 'Datasource must be set'
 
 
     def __init__(self, contentSource="", contentMode=None):
-
         """Creates a new instance of Label with text-contents read from given
         datasource.
-
-        @param contentSource
-        @param contentMode
         """
         super(Label, self).__init__()
 
@@ -124,7 +118,7 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
     def setReadOnly(self, readOnly):
         """Set the component to read-only. Readonly is not used in label.
 
-        @param readOnly
+        @param readOnly:
                    True to enable read-only mode, False to disable it.
         """
         if self._dataSource is None:
@@ -146,9 +140,9 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
     def paintContent(self, target):
         """Paints the content of this component.
 
-        @param target
+        @param target:
                    the Paint Event.
-        @raise PaintException
+        @raise PaintException:
                     if the Paint Operation fails.
         """
         if self._contentMode != self.CONTENT_TEXT:
@@ -197,7 +191,7 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
         """Set the value of the label. Value of the label is the XML
         contents of the label.
 
-        @param newValue
+        @param newValue:
                    the New value of the label.
         """
         if self._dataSource is None:
@@ -206,7 +200,6 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
 
 
     def __str__(self):
-        """@see: java.lang.Object#toString()"""
         if self._dataSource is None:
             raise ValueError, self._DATASOURCE_MUST_BE_SET
         return str(self._dataSource)
@@ -215,7 +208,7 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
     def getType(self):
         """Gets the type of the IProperty.
 
-        @see: com.vaadin.data.IProperty#getType()
+        @see: L{IProperty.getType}
         """
         if self._dataSource is None:
             raise ValueError, self._DATASOURCE_MUST_BE_SET
@@ -226,7 +219,7 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
         """Gets the viewing data-source property.
 
         @return: the data source property.
-        @see: com.vaadin.data.property.IViewer#getPropertyDataSource()
+        @see: L{IViewer.getPropertyDataSource}
         """
         return self._dataSource
 
@@ -234,9 +227,9 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
     def setPropertyDataSource(self, newDataSource):
         """Sets the property as data-source for viewing.
 
-        @param newDataSource
+        @param newDataSource:
                    the new data source IProperty
-        @see: property.IViewer#setPropertyDataSource()
+        @see: L{IViewer.setPropertyDataSource}
         """
         # Stops listening the old data source changes
         if (self._dataSource is not None
@@ -260,25 +253,25 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
         """Gets the content mode of the Label.
 
         Possible content modes include:
-        <ul>
-        <li><b>CONTENT_TEXT</b> Content mode, where the label contains only plain
-        text. The getValue() result is coded to XML when painting.</li>
-        <li><b>CONTENT_PREFORMATTED</b> Content mode, where the label contains
-        preformatted text.</li>
-        <li><b>CONTENT_UIDL</b> Formatted content mode, where the contents is XML
-        restricted to the UIDL 1.0 formatting markups.</li>
-        <li><b>CONTENT_XHTML</b> Content mode, where the label contains XHTML.
-        Contents is then enclosed in DIV elements having namespace of
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd".</li>
-        <li><b>CONTENT_XML</b> Content mode, where the label contains well-formed
-        or well-balanced XML. Each of the root elements must have their default
-        namespace specified.</li>
-        <li><b>CONTENT_RAW</b> Content mode, where the label contains RAW output.
-        Output is not required to comply to with XML. In Web Adapter output is
-        inserted inside the resulting HTML document as-is. This is useful for
-        some specific purposes where possibly broken HTML content needs to be
-        shown, but in most cases XHTML mode should be preferred.</li>
-        </ul>
+
+          - B{CONTENT_TEXT} Content mode, where the label contains only plain
+            text. The getValue() result is coded to XML when painting.
+          - B{CONTENT_PREFORMATTED} Content mode, where the label contains
+            preformatted text.
+          - B{CONTENT_UIDL} Formatted content mode, where the contents is XML
+            restricted to the UIDL 1.0 formatting markups.
+          - B{CONTENT_XHTML} Content mode, where the label contains XHTML.
+            Contents is then enclosed in DIV elements having namespace of
+            "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd".
+          - B{CONTENT_XML} Content mode, where the label contains well-formed
+            or well-balanced XML. Each of the root elements must have their
+            default namespace specified.
+          - B{CONTENT_RAW} Content mode, where the label contains RAW output.
+            Output is not required to comply to with XML. In Web Adapter output
+            is inserted inside the resulting HTML document as-is. This is
+            useful for some specific purposes where possibly broken HTML
+            content needs to be shown, but in most cases XHTML mode should be
+            preferred.
 
         @return: the Content mode of the label.
         """
@@ -289,27 +282,27 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
         """Sets the content mode of the Label.
 
         Possible content modes include:
-        <ul>
-        <li><b>CONTENT_TEXT</b> Content mode, where the label contains only plain
-        text. The getValue() result is coded to XML when painting.</li>
-        <li><b>CONTENT_PREFORMATTED</b> Content mode, where the label contains
-        preformatted text.</li>
-        <li><b>CONTENT_UIDL</b> Formatted content mode, where the contents is XML
-        restricted to the UIDL 1.0 formatting markups.</li>
-        <li><b>CONTENT_XHTML</b> Content mode, where the label contains XHTML.
-        Contents is then enclosed in DIV elements having namespace of
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd".</li>
-        <li><b>CONTENT_XML</b> Content mode, where the label contains well-formed
-        or well-balanced XML. Each of the root elements must have their default
-        namespace specified.</li>
-        <li><b>CONTENT_RAW</b> Content mode, where the label contains RAW output.
-        Output is not required to comply to with XML. In Web Adapter output is
-        inserted inside the resulting HTML document as-is. This is useful for
-        some specific purposes where possibly broken HTML content needs to be
-        shown, but in most cases XHTML mode should be preferred.</li>
-        </ul>
 
-        @param contentMode
+          - B{CONTENT_TEXT} Content mode, where the label contains only plain
+            text. The getValue() result is coded to XML when painting.
+          - B{CONTENT_PREFORMATTED} Content mode, where the label contains
+            preformatted text.
+          - B{CONTENT_UIDL} Formatted content mode, where the contents is XML
+            restricted to the UIDL 1.0 formatting markups.
+          - B{CONTENT_XHTML} Content mode, where the label contains XHTML.
+            Contents is then enclosed in DIV elements having namespace of
+            "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd".
+          - B{CONTENT_XML} Content mode, where the label contains well-formed
+            or well-balanced XML. Each of the root elements must have their
+            default namespace specified.
+          - B{CONTENT_RAW} Content mode, where the label contains RAW output.
+            Output is not required to comply to with XML. In Web Adapter output
+            is inserted inside the resulting HTML document as-is. This is
+            useful for some specific purposes where possibly broken HTML
+            content needs to be shown, but in most cases XHTML mode should be
+            preferred.
+
+        @param contentMode:
                    the New content mode of the label.
         """
         # Value change events
@@ -369,11 +362,10 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
         ignored. If the other object is not a Label, its toString() return
         value is used in comparison.
 
-        @param other
+        @param other:
                    the Other object to compare to.
         @return: a negative integer, zero, or a positive integer as this object
                 is less than, equal to, or greater than the specified object.
-        @see: java.lang.Comparable#compareTo(java.lang.Object)
         """
         if (self._contentMode == self.CONTENT_XML
                 or self._contentMode == self.CONTENT_UIDL
@@ -395,7 +387,7 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
     def stripTags(self, xml):
         """Strips the tags from the XML.
 
-        @param xml
+        @param xml:
                    the String containing a XML snippet.
         @return: the original XML without tags.
         """

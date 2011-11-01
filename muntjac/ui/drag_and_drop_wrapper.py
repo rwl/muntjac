@@ -123,8 +123,6 @@ class WrapperTransferable(TransferableImpl):
     def getDraggedComponent(self):
         """The component in wrapper that is being dragged or null if the
         transferrable is not a component (most likely an html5 drag).
-
-        @return
         """
         return self.getData('component')
 
@@ -178,14 +176,14 @@ class WrapperTargetDetails(TargetDetailsImpl):
 
     def getMouseEvent(self):
         """@return: details about the actual event that caused the event
-                   details. Practically mouse move or mouse up.
+                    details. Practically mouse move or mouse up.
         """
         return MouseEventDetails.deSerialize(self.getData('mouseEvent'))
 
 
     def getVerticalDropLocation(self):
         """@return: a detail about the drags vertical position over the
-                   wrapper.
+                    wrapper.
         """
         data = self.getData('verticalLocation')
         return VerticalDropLocation.valueOf[data]
@@ -193,30 +191,30 @@ class WrapperTargetDetails(TargetDetailsImpl):
 
     def getHorizontalDropLocation(self):
         """@return: a detail about the drags horizontal position over the
-                   wrapper.
+                    wrapper.
         """
         data = self.getData('horizontalLocation')
         return HorizontalDropLocation.valueOf[data]
 
 
     def verticalDropLocation(self):
-        """@deprecated use L{#getVerticalDropLocation()} instead"""
+        """@deprecated: use L{#getVerticalDropLocation()} instead"""
         return self.getVerticalDropLocation()
 
 
     def horizontalDropLocation(self):
-        """@deprecated use L{#getHorizontalDropLocation()} instead"""
+        """@deprecated: use L{#getHorizontalDropLocation()} instead"""
         return self.getHorizontalDropLocation()
 
 
 class DragStartMode(object):
-    # L{DragAndDropWrapper} does not start drag events at all
+    #: L{DragAndDropWrapper} does not start drag events at all
     NONE = 'NONE'
 
-    # The component on which the drag started will be shown as drag image.
+    #: The component on which the drag started will be shown as drag image.
     COMPONENT = 'COMPONENT'
 
-    # The whole wrapper is used as a drag image when dragging.
+    #: The whole wrapper is used as a drag image when dragging.
     WRAPPER = 'WRAPPER'
 
     _values = [NONE, COMPONENT, WRAPPER]

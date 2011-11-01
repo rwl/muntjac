@@ -29,7 +29,7 @@ class IStreamVariable(object):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     @see: L{PaintTarget.addVariable}
     """
 

@@ -156,25 +156,18 @@ class MenuBar(AbstractComponent):
 
 
     def addItem(self, *args):
-        """Add a new item to the menu bar. Command can be null, but a caption
-        must be given.
-
-        @param caption
-                   the text for the menu item
-        @param command
-                   the command for the menu item
-        @raise IllegalArgumentException
-        ---
-        Add a new item to the menu bar. Icon and command can be null, but a
+        """Add a new item to the menu bar. Icon and command can be null, but a
         caption must be given.
 
-        @param caption
-                   the text for the menu item
-        @param icon
-                   the icon for the menu item
-        @param command
-                   the command for the menu item
-        @raise IllegalArgumentException
+        @param args: tuple of the form
+            - (caption, command)
+              1. the text for the menu item
+              2. the command for the menu item
+            - (caption, icon, command)
+              1. the text for the menu item
+              2. the icon for the menu item
+              3. the command for the menu item
+        @raise ValueError:
         """
         nargs = len(args)
         if nargs == 2:
@@ -197,13 +190,13 @@ class MenuBar(AbstractComponent):
         item is added at the end of the menu. Icon and command can be null,
         but a caption must be given.
 
-        @param caption
+        @param caption:
                    the text for the menu item
-        @param icon
+        @param icon:
                    the icon for the menu item
-        @param command
+        @param command:
                    the command for the menu item
-        @param itemToAddBefore
+        @param itemToAddBefore:
                    the item that will be after the new item
         @raise IllegalArgumentException
         """
@@ -237,7 +230,7 @@ class MenuBar(AbstractComponent):
     def removeItem(self, item):
         """Remove first occurrence the specified item from the main menu
 
-        @param item
+        @param item:
                    The item to be removed
         """
         if item is not None:
@@ -263,9 +256,8 @@ class MenuBar(AbstractComponent):
         """Set the icon to be used if a sub-menu has children. Defaults to
         null;
 
-        @param icon
-        @deprecated (since 6.2, will be removed in 7.0) Icon is set in theme,
-                    no need to worry about the visual representation here.
+        @deprecated: Icon is set in theme, no need to worry about the visual
+                     representation here.
         """
         warn('icon is set in theme', DeprecationWarning)
         self._submenuIcon = icon
@@ -273,8 +265,7 @@ class MenuBar(AbstractComponent):
 
 
     def getSubmenuIcon(self):
-        """@deprecated
-        @see: #setSubmenuIcon(Resource)
+        """@see: L{setSubmenuIcon}
         """
         warn('icon is set in theme', DeprecationWarning)
         return self._submenuIcon
@@ -287,9 +278,8 @@ class MenuBar(AbstractComponent):
 
         Collapsing is enabled by default.
 
-        @param collapse
-        @deprecated (since 6.2, will be removed in 7.0) Collapsing is always
-                    enabled if the MenuBar has a specified width.
+        @deprecated: Collapsing is always enabled if the MenuBar has a
+                     specified width.
         """
         self._collapseItems = collapse
         self.requestRepaint()
@@ -310,8 +300,6 @@ class MenuBar(AbstractComponent):
         is used.
 
         The item command (if specified) is ignored.
-
-        @param item
         """
         if item is not None:
             self._moreItem = item
@@ -322,8 +310,6 @@ class MenuBar(AbstractComponent):
 
     def getMoreMenuItem(self):
         """Get the MenuItem used as the collapse menu item.
-
-        @return
         """
         return self._moreItem
 
@@ -336,7 +322,7 @@ class MenuBar(AbstractComponent):
 
         Note, that on touch devices the menu still opens on a click event.
 
-        @param autoOpenTopLevelMenu
+        @param autoOpenTopLevelMenu:
                    true if menus should be opened without click, the default
                    is false
         """
@@ -352,7 +338,7 @@ class MenuBar(AbstractComponent):
         open automatically.
 
         @return: true if the root menus open without click, the default
-                is false
+                 is false
         """
         return self._openRootOnHover
 
@@ -370,9 +356,9 @@ class ICommand(object):
 
 class MenuItem(object):
     """A composite class for menu items and sub-menus. You can set commands
-    to be fired on user click by implementing the
-    L{com.vaadin.ui.MenuBar.Command} interface. You can also add
-    multiple MenuItems to a MenuItem and create a sub-menu.
+    to be fired on user click by implementing the L{menu_bar.ICommand}
+    interface. You can also add multiple MenuItems to a MenuItem and create
+    a sub-menu.
     """
 
     def __init__(self, caption, icon, command, menu):
@@ -380,11 +366,11 @@ class MenuItem(object):
         command associated with it. Icon and command can be null, but a
         caption must be given.
 
-        @param text
+        @param text:
                    The text associated with the command
-        @param command
+        @param command:
                    The command to be fired
-        @raise IllegalArgumentException
+        @raise ValueError:
         """
         self._menu = menu
 
@@ -426,7 +412,6 @@ class MenuItem(object):
         are looking for in the menu.
 
         @author: Jouni Koivuviita / IT Mill Ltd.
-        @since 6.2.0
         """
         item = self.addItem('', None, None)
         item.setSeparator(True)
@@ -440,24 +425,18 @@ class MenuItem(object):
 
 
     def addItem(self, *args):
-        """Add a new item inside this item, thus creating a sub-menu. Command
-        can be null, but a caption must be given.
-
-        @param caption
-                   the text for the menu item
-        @param command
-                   the command for the menu item
-        ---
-        Add a new item inside this item, thus creating a sub-menu. Icon and
+        """Add a new item inside this item, thus creating a sub-menu. Icon and
         command can be null, but a caption must be given.
 
-        @param caption
-                   the text for the menu item
-        @param icon
-                   the icon for the menu item
-        @param command
-                   the command for the menu item
-        @raise IllegalStateException
+        @param args: tuple of the form
+            - (caption, command)
+              1. the text for the menu item
+              2. the command for the menu item
+            - (caption, icon, command)
+              1. the text for the menu item
+              2. the icon for the menu item
+              3. the command for the menu item
+        @raise ValueError:
                     If the item is checkable and thus cannot have children.
         """
         nargs = len(args)
@@ -489,15 +468,15 @@ class MenuItem(object):
         item is added at the end of the menu. Icon and command can be null,
         but a caption must be given.
 
-        @param caption
+        @param caption:
                    the text for the menu item
-        @param icon
+        @param icon:
                    the icon for the menu item
-        @param command
+        @param command:
                    the command for the menu item
-        @param itemToAddBefore
+        @param itemToAddBefore:
                    the item that will be after the new item
-        @raise IllegalStateException
+        @raise ValueError:
                     If the item is checkable and thus cannot have children.
         """
         if self.isCheckable():
@@ -539,8 +518,8 @@ class MenuItem(object):
         """For the containing item. This will return null if the item is in
         the top-level menu bar.
 
-        @return: The containing L{com.vaadin.ui.MenuBar.MenuItem} , or
-                null if there is none
+        @return: The containing L{menu_bar.MenuItem} , or
+                 null if there is none
         """
         return self._itsParent
 
@@ -583,7 +562,7 @@ class MenuItem(object):
     def setCommand(self, command):
         """Set the command for this item. Set null to remove.
 
-        @param command
+        @param command:
                    The MenuCommand of this item
         """
         self._itsCommand = command
@@ -592,7 +571,7 @@ class MenuItem(object):
     def setIcon(self, icon):
         """Sets the icon. Set null to remove.
 
-        @param icon
+        @param icon:
                    The icon for this item
         """
         self._itsIcon = icon
@@ -602,7 +581,7 @@ class MenuItem(object):
     def setText(self, text):
         """Set the text of this object.
 
-        @param text
+        @param text:
                    Text for this object
         """
         if text is not None:
@@ -613,7 +592,7 @@ class MenuItem(object):
     def removeChild(self, item):
         """Remove the first occurrence of the item.
 
-        @param item
+        @param item:
                    The item to be removed
         """
         if item is not None and self._itsChildren is not None:
@@ -634,7 +613,7 @@ class MenuItem(object):
     def setParent(self, parent):
         """Set the parent of this item. This is called by the addItem method.
 
-        @param parent
+        @param parent:
                    The parent item
         """
         self._itsParent = parent
@@ -677,12 +656,11 @@ class MenuItem(object):
 
 
     def setDescription(self, description):
-        """Sets the items's description. See L{#getDescription()} for
-        more information on what the description is. This method will trigger
-        a L{com.vaadin.terminal.Paintable.RepaintRequestEvent
-        RepaintRequestEvent}.
+        """Sets the items's description. See L{getDescription} for
+        more information on what the description is. This method will trigger a
+        L{RepaintRequestEvent<muntjac.terminal.paintable.RepaintRequestEvent>}.
 
-        @param description
+        @param description:
                    the new description string for the component.
         """
         self._description = description
@@ -737,7 +715,7 @@ class MenuItem(object):
 
         These tags may be nested.
 
-        @return: item's description C{String}
+        @return: item's description string
         """
         return self._description
 
@@ -745,30 +723,27 @@ class MenuItem(object):
     def isCheckable(self):
         """Gets the checkable state of the item - whether the item has checked
         and unchecked states. If an item is checkable its checked state (as
-        returned by L{#isChecked()}) is indicated in the UI.
+        returned by L{isChecked}) is indicated in the UI.
 
         An item is not checkable by default.
 
         @return: true if the item is checkable, false otherwise
-        @since 6.6.2
         """
         return self._checkable
 
 
     def setCheckable(self, checkable):
         """Sets the checkable state of the item. If an item is checkable its
-        checked state (as returned by L{#isChecked()}) is indicated in
-        the UI.
+        checked state (as returned by L{isChecked}) is indicated in the UI.
 
         An item is not checkable by default.
 
         Items with sub items cannot be checkable.
 
-        @param checkable
+        @param checkable:
                    true if the item should be checkable, false otherwise
-        @raise ValueError
+        @raise ValueError:
                     If the item has children
-        @since 6.6.2
         """
         if self.hasChildren():
             raise ValueError, 'A menu item with children cannot be checkable'
@@ -778,7 +753,7 @@ class MenuItem(object):
 
     def isChecked(self):
         """Gets the checked state of the item (checked or unchecked). Only used
-        if the item is checkable (as indicated by L{#isCheckable()}).
+        if the item is checkable (as indicated by L{isCheckable}).
         The checked state is indicated in the UI with the item, if the item
         is checkable.
 
@@ -787,7 +762,6 @@ class MenuItem(object):
         The CSS style corresponding to the checked state is "-checked".
 
         @return: true if the item is checked, false otherwise
-        @since 6.6.2
         """
         return self._checked
 
@@ -802,7 +776,6 @@ class MenuItem(object):
         The CSS style corresponding to the checked state is "-checked".
 
         @return: true if the item is checked, false otherwise
-        @since 6.6.2
         """
         self._checked = checked
         self._menu.requestRepaint()

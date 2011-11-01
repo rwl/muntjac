@@ -22,7 +22,7 @@ class ITerminal(object):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     @since 3.0
     """
 

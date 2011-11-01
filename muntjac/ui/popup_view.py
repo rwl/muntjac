@@ -33,7 +33,7 @@ class IPopupVisibilityListener(object):
         @param event: the event
 
         @see: L{PopupVisibilityEvent}
-        @see: L{PopupView#addListener(IPopupVisibilityListener)}
+        @see: L{PopupView.addListener}
         """
         raise NotImplementedError
 
@@ -44,7 +44,7 @@ _POPUP_VISIBILITY_METHOD = getattr(IPopupVisibilityListener,
 
 class SingleComponentIterator(object):
     """Iterator for the visible components (zero or one components), used by
-    L{PopupView#getComponentIterator()}.
+    L{PopupView.getComponentIterator}.
     """
 
     def __init__(self, component):
@@ -75,7 +75,7 @@ class SingleComponentIterator(object):
 class PopupView(AbstractComponentContainer):
     """A component for displaying a two different views to data. The minimized
     view is normally used to render the component, and when it is clicked the
-    full view is displayed on a popup. The class L{PopupView.IContent} is
+    full view is displayed on a popup. The class L{popup_view.IContent} is
     used to deliver contents to this component.
 
     @author: IT Mill Ltd.
@@ -86,20 +86,18 @@ class PopupView(AbstractComponentContainer):
 
     def __init__(self, *args):
         """A simple way to create a PopupPanel. Note that the minimal
-        representation may not be dynamically updated, in order to achieve
-        this create your own IContent object and use
-        L{PopupView#PopupView(IContent)}.
+        representation may not be dynamically updated.
 
-        @param small: the minimal textual representation as HTML
-        @param large: the full, Component-type representation
-        ---
-        Creates a PopupView through the PopupView.IContent interface.
-        This allows the creator to dynamically change the contents of
-        the PopupView.
+        Alternatively, creates a PopupView through the IContent interface.
+        This allows the creator to dynamically change the contents of the
+        PopupView.
 
-        @param content
-                   the PopupView.IContent that contains the information
-                   for this
+        @param args: tuple of the form
+            - (small, large)
+              1. the minimal textual representation as HTML
+              2. the full, Component-type representation
+            - (content)
+              1. the IContent that contains the information for this
         """
         self._content = None
         self._hideOnMouseOut = None
@@ -124,10 +122,10 @@ class PopupView(AbstractComponentContainer):
         """This method will replace the current content of the panel with
         a new one.
 
-        @param newContent
-                   PopupView.IContent object containing new information
+        @param newContent:
+                   IContent object containing new information
                    for the PopupView
-        @raise IllegalArgumentException
+        @raise ValueError:
                     if the method is passed a null value, or if one of
                     the content methods returns null
         """
@@ -140,18 +138,18 @@ class PopupView(AbstractComponentContainer):
     def getContent(self):
         """Returns the content-package for this PopupView.
 
-        @return: the PopupView.IContent for this object or null
+        @return: the IContent for this object or null
         """
         return self._content
 
 
     def setPopupVisibility(self, visible):
-        """@deprecated Use L{#setPopupVisible()} instead."""
+        """@deprecated: Use L{setPopupVisible} instead."""
         warn('use setPopupVisible() instead', DeprecationWarning)
         self.setPopupVisible(visible)
 
     def getPopupVisibility(self):
-        """@deprecated Use L{#isPopupVisible()} instead."""
+        """@deprecated: Use L{isPopupVisible} instead."""
         warn('use isPopupVisible() instead', DeprecationWarning)
         return self.isPopupVisible()
 
@@ -159,8 +157,6 @@ class PopupView(AbstractComponentContainer):
     def setPopupVisible(self, visible):
         """Set the visibility of the popup. Does not hide the minimal
         representation.
-
-        @param visible
         """
         if self.isPopupVisible() != visible:
             if visible:
@@ -199,8 +195,6 @@ class PopupView(AbstractComponentContainer):
         """Should the popup automatically hide when the user takes the mouse
         cursor out of the popup area? If this is false, the user must click
         outside the popup to close it. The default is true.
-
-        @param hideOnMouseOut
         """
         self._hideOnMouseOut = hideOnMouseOut
 
@@ -209,14 +203,14 @@ class PopupView(AbstractComponentContainer):
         """This class only contains other components when the popup is
         showing.
 
-        @see: com.vaadin.ui.ComponentContainer#getComponentIterator()
+        @see: L{ComponentContainer.getComponentIterator}
         """
         return SingleComponentIterator(self._visibleComponent)
 
 
     def getComponentCount(self):
         """Gets the number of contained components. Consistent with the
-        iterator returned by L{#getComponentIterator()}.
+        iterator returned by L{getComponentIterator}.
 
         @return: the number of contained components (zero or one)
         """
@@ -226,7 +220,7 @@ class PopupView(AbstractComponentContainer):
     def removeAllComponents(self):
         """Not supported in this implementation.
 
-        @see: com.vaadin.ui.AbstractComponentContainer#removeAllComponents()
+        @see: L{AbstractComponentContainer.removeAllComponents}
         @raise NotImplementedError:
         """
         raise NotImplementedError
@@ -235,7 +229,7 @@ class PopupView(AbstractComponentContainer):
     def moveComponentsFrom(self, source):
         """Not supported in this implementation.
 
-        @see: AbstractComponentContainer.moveComponentsFrom()
+        @see: L{AbstractComponentContainer.moveComponentsFrom}
         @raise NotImplementedError:
         """
         raise NotImplementedError
@@ -244,7 +238,7 @@ class PopupView(AbstractComponentContainer):
     def addComponent(self, c):
         """Not supported in this implementation.
 
-        @see: AbstractComponentContainer.addComponent()
+        @see: L{AbstractComponentContainer.addComponent}
         @raise NotImplementedError:
         """
         raise NotImplementedError
@@ -253,7 +247,7 @@ class PopupView(AbstractComponentContainer):
     def replaceComponent(self, oldComponent, newComponent):
         """Not supported in this implementation.
 
-        @see: ComponentContainer.replaceComponent()
+        @see: L{ComponentContainer.replaceComponent}
         @raise NotImplementedError:
         """
         raise NotImplementedError
@@ -262,7 +256,7 @@ class PopupView(AbstractComponentContainer):
     def removeComponent(self, c):
         """Not supported in this implementation
 
-        @see: AbstractComponentContainer.removeComponent()
+        @see: L{AbstractComponentContainer.removeComponent}
         """
         raise NotImplementedError
 
@@ -271,7 +265,7 @@ class PopupView(AbstractComponentContainer):
     def paintContent(self, target):
         """Paint (serialize) the component for the client.
 
-        @see: AbstractComponent.paintContent()
+        @see: L{AbstractComponent.paintContent}
         """
         # Superclass writes any common attributes in the paint target.
         super(PopupView, self).paintContent(target)
@@ -295,20 +289,20 @@ class PopupView(AbstractComponentContainer):
     def changeVariables(self, source, variables):
         """Deserialize changes received from client.
 
-        @see: AbstractComponent.changeVariables()
+        @see: L{AbstractComponent.changeVariables}
         """
         if 'popupVisibility' in variables:
             self.setPopupVisible( bool(variables.get('popupVisibility')) )
 
 
     def addListener(self, listener, iface):
-        """Add a listener that is called whenever the visibility of the popup
-        is changed.
+        """Add a listener that is called whenever the visibility of the
+        popup is changed.
 
         @param listener: the listener to add
-        @see: IPopupVisibilityListener
-        @see: PopupVisibilityEvent
-        @see: #removeListener(IPopupVisibilityListener)
+        @see: L{IPopupVisibilityListener}
+        @see: L{PopupVisibilityEvent}
+        @see: L{removeListener}
         """
         if iface == IPopupVisibilityListener:
             self.registerListener(PopupVisibilityEvent,
@@ -326,8 +320,8 @@ class PopupView(AbstractComponentContainer):
         events when the visibility of the popup changes.
 
         @param listener: the listener to remove
-        @see: IPopupVisibilityListener
-        @see: #addListener(IPopupVisibilityListener)
+        @see: L{IPopupVisibilityListener}
+        @see: L{addListener}
         """
         if iface == IPopupVisibilityListener:
             self.withdrawListener(PopupVisibilityEvent, listener,
@@ -343,8 +337,8 @@ class PopupView(AbstractComponentContainer):
 class PopupVisibilityEvent(ComponentEvent):
     """This event is received by the PopupVisibilityListeners when the
     visibility of the popup changes. You can get the new visibility directly
-    with L{#isPopupVisible()}, or get the PopupView that produced the
-    event with L{#getPopupView()}.
+    with L{isPopupVisible}, or get the PopupView that produced the event with
+    L{getPopupView}.
     """
 
     def __init__(self, source):
@@ -395,8 +389,10 @@ class InnerContent(IContent):
         self._small = small
         self._large = large
 
+
     def getMinimizedValueAsHTML(self):
         return self._small
+
 
     def getPopupComponent(self):
         return self._large

@@ -27,12 +27,11 @@ class OrderedLayout(AbstractOrderedLayout):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
-    @since 3.0
-    @deprecated Replaced by VerticalLayout/HorizontalLayout. For type checking
-                please not that VerticalLayout/HorizontalLayout do not extend
-                OrderedLayout but AbstractOrderedLayout (which also
-                OrderedLayout extends).
+    @version: @VERSION@
+    @deprecated: Replaced by VerticalLayout/HorizontalLayout. For type checking
+                 please not that VerticalLayout/HorizontalLayout do not extend
+                 OrderedLayout but AbstractOrderedLayout (which also
+                 OrderedLayout extends).
     """
 
     CLIENT_WIDGET = None #ClientWidget(VOrderedLayout, LoadStyle.EAGER)
@@ -45,17 +44,11 @@ class OrderedLayout(AbstractOrderedLayout):
 
 
     def __init__(self, orientation=None):
-        """Creates a new ordered layout. The order of the layout is
+        """Creates a new ordered layout. The order of the layout defaults to
         C{ORIENTATION_VERTICAL}.
 
-        @deprecated Use VerticalLayout instead.
-        ---
-        Create a new ordered layout. The orientation of the layout is
-        given as parameters.
-
         @param orientation: the Orientation of the layout.
-
-        @deprecated Use VerticalLayout/HorizontalLayout instead.
+        @deprecated: Use VerticalLayout/HorizontalLayout instead.
         """
         warn('use VerticalLayout/HorizontalLayout instead', DeprecationWarning)
 
@@ -84,15 +77,10 @@ class OrderedLayout(AbstractOrderedLayout):
         """Sets the orientation of this OrderedLayout. This method should only
         be used before initial paint.
 
-        @param orientation
+        @param orientation:
                    the New value of property orientation.
-        @deprecated Use VerticalLayout/HorizontalLayout or define orientation
-                    in constructor instead
-        ---
-        Internal method to change orientation of layout. This method should
-        only be used before initial paint.
-
-        @param orientation
+        @deprecated: Use VerticalLayout/HorizontalLayout or define orientation
+                     in constructor instead
         """
         # Checks the validity of the argument
         if (orientation < self.ORIENTATION_VERTICAL

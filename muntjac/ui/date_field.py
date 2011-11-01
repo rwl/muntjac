@@ -33,103 +33,85 @@ from muntjac.util import totalseconds
 
 class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
     """A date editor component that can be bound to any L{IProperty}
-    that is compatible with C{java.util.Date}.
+    that is compatible with C{datetime}.
 
-    Since C{DateField} extends C{AbstractField} it
-    implements the L{com.vaadin.data.Buffered}interface.
+    Since C{DateField} extends C{AbstractField} it implements the L{IBuffered}
+    interface.
 
     A C{DateField} is in write-through mode by default, so
-    L{com.vaadin.ui.AbstractField#setWriteThrough(boolean)} must be
-    called to enable buffering.
+    L{AbstractField.setWriteThrough} must be called to enable buffering.
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
-    @since 3.0
+    @version: @VERSION@
     """
 
     CLIENT_WIDGET = None #ClientWidget(VPopupCalendar, LoadStyle.EAGER)
 
-    # Resolution identifier: milliseconds.
+    #: Resolution identifier: milliseconds.
     RESOLUTION_MSEC = 0
 
-    # Resolution identifier: seconds.
+    #: Resolution identifier: seconds.
     RESOLUTION_SEC = 1
 
-    # Resolution identifier: minutes.
+    #: Resolution identifier: minutes.
     RESOLUTION_MIN = 2
 
-    # Resolution identifier: hours.
+    #: Resolution identifier: hours.
     RESOLUTION_HOUR = 3
 
-    # Resolution identifier: days.
+    #: Resolution identifier: days.
     RESOLUTION_DAY = 4
 
-    # Resolution identifier: months.
+    #: Resolution identifier: months.
     RESOLUTION_MONTH = 5
 
-    # Resolution identifier: years.
+    #: Resolution identifier: years.
     RESOLUTION_YEAR = 6
 
-    # Specified largest modifiable unit.
+    #: Specified largest modifiable unit.
     _largestModifiable = RESOLUTION_YEAR
 
     def __init__(self, *args):
-        """Constructs an empty C{DateField} with no caption.
-        ---
-        Constructs an empty C{DateField} with caption.
+        """Constructs an new C{DateField}.
 
-        @param caption
-                   the caption of the datefield.
-        ---
-        Constructs a new C{DateField} that's bound to the specified
-        C{IProperty} and has the given caption C{String}.
-
-        @param caption
-                   the caption C{String} for the editor.
-        @param dataSource
-                   the IProperty to be edited with this editor.
-        ---
-        Constructs a new C{DateField} that's bound to the specified
-        C{IProperty} and has no caption.
-
-        @param dataSource
-                   the IProperty to be edited with this editor.
-        ---
-        Constructs a new C{DateField} with the given caption and
-        initial text contents. The editor constructed this way will not be
-        bound to a IProperty unless
-        L{IProperty.Viewer.setPropertyDataSource()} is called to bind it.
-
-        @param caption
-                   the caption C{String} for the editor.
-        @param value
-                   the Date value.
+        @param args: tuple of the form
+            - ()
+            - (caption)
+              1. the caption of the datefield.
+            - (caption, dataSource)
+              1. the caption string for the editor.
+              2. the IProperty to be edited with this editor.
+            - (dataSource)
+              1. the IProperty to be edited with this editor.
+            - (caption, value)
+              1. the caption string for the editor.
+              2. the date value.
         """
         super(DateField, self).__init__()
 
-        # The internal calendar to be used in java.utl.Date conversions.
+        #: The internal calendar to be used in java.utl.Date conversions.
         self._calendar = None
 
-        # Overridden format string
+        #: Overridden format string
         self._dateFormat = None
 
         self._lenient = False
 
         self._dateString = None
 
-        # Was the last entered string parsable? If this flag is false,
-        # datefields internal validator does not pass.
+        #: Was the last entered string parsable? If this flag is false,
+        #  datefields internal validator does not pass.
         self._uiHasValidDateString = True
 
-        # Determines if week numbers are shown in the date selector.
+        #: Determines if week numbers are shown in the date selector.
         self._showISOWeekNumbers = False
 
         self._currentParseErrorMessage = None
 
         self._defaultParseErrorMessage = 'Date format not recognized'
 
-        # Specified smallest modifiable unit.
+        #: Specified smallest modifiable unit.
         self._resolution = self.RESOLUTION_MSEC
 
         nargs = len(args)
@@ -347,18 +329,16 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
 
     def handleUnparsableDateString(self, dateString):
         """This method is called to handle a non-empty date string from
-        the client if the client could not parse it as a Date.
+        the client if the client could not parse it as a C{datetime}.
 
-        By default, a IProperty.ConversionException is thrown, and the
+        By default, a C{ConversionException} is thrown, and the
         current value is not modified.
 
         This can be overridden to handle conversions, to return null
         (equivalent to empty input), to throw an exception or to fire
         an event.
 
-        @param dateString
-        @return: parsed Date
-        @raise IProperty.ConversionException:
+        @raise ConversionException:
                     to keep the old value and indicate an error
         """
         self._currentParseErrorMessage = None
@@ -438,13 +418,13 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
         """Sets the DateField datasource. Datasource type must assignable
         to Date.
 
-        @see: IProperty.Viewer.setPropertyDataSource()
+        @see: L{Viewer.setPropertyDataSource}
         """
         if (newDataSource is None
                 or issubclass(newDataSource.getType(), datetime)):
             super(DateField, self).setPropertyDataSource(newDataSource)
         else:
-            raise ValueError, 'DateField only supports Date properties'
+            raise ValueError, 'DateField only supports datetime properties'
 
 
     def setInternalValue(self, newValue):
@@ -465,16 +445,14 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
 
     def getResolution(self):
         """Gets the resolution.
-
-        @return: int
         """
         return self._resolution
 
 
     def setResolution(self, resolution):
-        """Sets the resolution of the DateField.
+        """Sets the resolution of the C{DateField}.
 
-        @param resolution
+        @param resolution:
                    the resolution to set.
         """
         self._resolution = resolution
@@ -487,11 +465,10 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
         Returns new clone of the calendar object initialized using the the
         current date (if available)
 
-        If this is no calendar is assigned the C{calendar}
-        is used.
+        If this is no calendar is assigned the C{calendar} is used.
 
-        @return: the Calendar.
-        @see: #setCalendar(Calendar)
+        @return: the calendar
+        @see: L{setCalendar}
         """
         # Makes sure we have an calendar instance
         if self._calendar is None:
@@ -507,15 +484,13 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
 
 
     def setDateFormat(self, dateFormat):
-        """Sets formatting used by some component implementations. See
-        L{SimpleDateFormat} for format details.
+        """Sets formatting used by some component implementations.
 
         By default it is encouraged to used default formatting defined
         by Locale.
 
         @param dateFormat: the dateFormat to set
-
-        @see: com.vaadin.ui.AbstractComponent#setLocale(Locale))
+        @see: L{AbstractComponent.setLocale}
         """
         self._dateFormat = dateFormat
         self.requestRepaint()
@@ -523,7 +498,7 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
 
     def getDateFormat(self):
         """Returns a format string used to format date value on client side
-        or null if default formatting from L{Component#getLocale()} is
+        or null if default formatting from L{IComponent,getLocale} is
         used.
 
         @return: the dateFormat
@@ -535,10 +510,8 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
         """Specifies whether or not date/time interpretation in component is
         to be lenient.
 
-        @see: Calendar#setLenient(boolean)
-        @see: #isLenient()
-
-        @param lenient
+        @see: L{isLenient}
+        @param lenient:
                    true if the lenient mode is to be turned on; false if it
                    is to be turned off.
         """
@@ -549,8 +522,7 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
     def isLenient(self):
         """Returns whether date/time interpretation is to be lenient.
 
-        @see: #setLenient(boolean)
-
+        @see: L{setLenient}
         @return: true if the interpretation mode of this calendar is lenient;
                 false otherwise.
         """
@@ -607,7 +579,7 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
         ISO 8601 defines that a week always starts with a Monday so the week
         numbers are only shown if this is the case.
 
-        @param showWeekNumbers
+        @param showWeekNumbers:
                    true if week numbers should be shown, false otherwise.
         """
         self._showISOWeekNumbers = showWeekNumbers
@@ -620,7 +592,7 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
         and invalid if it contains text typed in by the user that couldn't be
         parsed into a Date value.
 
-        @see: com.vaadin.ui.AbstractField#isValid()
+        @see: L{AbstractField.isValid}
         """
         return self._uiHasValidDateString and super(DateField, self).isValid()
 
@@ -636,29 +608,28 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
 
     def getParseErrorMessage(self):
         """Return the error message that is shown if the user inputted value
-        can't be parsed into a Date object. If
-        L{#handleUnparsableDateString(String)} is overridden and it
+        can't be parsed into a datetime object. If
+        L{handleUnparsableDateString} is overridden and it
         throws a custom exception, the message returned by
-        L{Exception#getLocalizedMessage()} will be used instead of the
+        L{Exception.message} will be used instead of the
         value returned by this method.
 
-        @see: #setParseErrorMessage(String)
+        @see: L{setParseErrorMessage}
 
         @return: the error message that the DateField uses when it can't parse
-                the textual input from user to a Date object
+                 the textual input from user to a Date object
         """
         return self._defaultParseErrorMessage
 
 
     def setParseErrorMessage(self, parsingErrorMessage):
         """Sets the default error message used if the DateField cannot parse
-        the text input by user to a Date field. Note that if the
-        L{#handleUnparsableDateString(String)} method is overridden, the
-        localized message from its exception is used.
+        the text input by user to a datetime field. Note that if the
+        L{handleUnparsableDateString} method is overridden, the localized
+        message from its exception is used.
 
-        @see: #getParseErrorMessage()
-        @see: #handleUnparsableDateString(String)
-        @param parsingErrorMessage
+        @see: L{getParseErrorMessage}
+        @see: L{handleUnparsableDateString}
         """
         self._defaultParseErrorMessage = parsingErrorMessage
 

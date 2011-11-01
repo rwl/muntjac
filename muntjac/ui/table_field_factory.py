@@ -24,23 +24,22 @@ class ITableFieldFactory(object):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
-    @since 6.0
+    @version: @VERSION@
     @see: FormFieldFactory
     """
 
     def createField(self, container, itemId, propertyId, uiContext):
-        """Creates a field based on the Container, item id, property id and the
-        component responsible for displaying the field (most commonly
+        """Creates a field based on the Container, item id, property id and
+        the component responsible for displaying the field (most commonly
         L{Table}).
 
-        @param container
+        @param container:
                    the Container where the property belongs to.
-        @param itemId
+        @param itemId:
                    the item Id.
-        @param propertyId
+        @param propertyId:
                    the Id of the property.
-        @param uiContext
+        @param uiContext:
                    the component where the field is presented.
         @return: A field suitable for editing the specified data or null if the
                 property should not be editable.

@@ -28,13 +28,11 @@ class TwinColSelect(AbstractSelect):
 
     def __init__(self, *args):
         """
-        @param caption
-        ---
-        @param caption
-        @param dataSource
-        ---
-        @param caption
-        @param options
+        @param args: tuple of the form
+            - ()
+            - (caption)
+            - (caption, dataSource)
+            - (caption, options)
         """
         self._columns = 0
         self._rows = 0
@@ -51,7 +49,7 @@ class TwinColSelect(AbstractSelect):
 
         The number of columns overrides the value set by setWidth. Only if
         columns are set to 0 (default) the width set using
-        L{#setWidth(float, int)} or L{#setWidth(String)} is used.
+        L{setWidth} or L{setWidth} is used.
 
         @param columns: the number of columns to set.
         """
@@ -75,10 +73,9 @@ class TwinColSelect(AbstractSelect):
         to 0, the actual number of displayed rows is determined implicitly by
         the adapter.
 
-        If a height if set (using L{#setHeight(String)} or
-        L{#setHeight(float, int)}) it overrides the number of rows. Leave
-        the height undefined to use this method. This is the opposite of how
-        L{#setColumns(int)} work.
+        If a height if set (using L{setHeight} or L{setHeight}) it overrides
+        the number of rows. Leave the height undefined to use this method. This
+        is the opposite of how L{setColumns} work.
 
         @param rows: the number of rows to set.
         """

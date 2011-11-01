@@ -40,7 +40,7 @@ class ListenerMethod(IEventListener):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     def writeObject(self, out):
@@ -403,7 +403,7 @@ class MethodException(RuntimeError):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     def __init__(self, message, cause):

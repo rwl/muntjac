@@ -28,8 +28,7 @@ class ILayout(IComponentContainer):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
-    @since 3.0
+    @version: @VERSION@
     """
 
     def setMargin(self, *args):
@@ -38,18 +37,15 @@ class ILayout(IComponentContainer):
         the layout. The client-side implementation decides the actual amount,
         and it can vary between themes.
 
-        @param enabled
-        ---
-        Enable specific layout margins. This will tell the client-side
-        implementation to leave extra space around the layout in specified
-        edges, clockwise from top (top, right, bottom, left). The client-side
-        implementation decides the actual amount, and it can vary between
-        themes.
+        Alternatively, enable specific layout margins. This will tell the
+        client-side implementation to leave extra space around the layout in
+        specified edges, clockwise from top (top, right, bottom, left). The
+        client-side implementation decides the actual amount, and it can vary
+        between themes.
 
-        @param top
-        @param right
-        @param bottom
-        @param left
+        @param args: tuple of the form
+            - (enabled)
+            - (top, right, bottom, left)
         """
         raise NotImplementedError
 
@@ -59,64 +55,57 @@ class IAlignmentHandler(object):
     can align its components.
     """
 
-    # Contained component should be aligned horizontally to the left.
+    #: Contained component should be aligned horizontally to the left.
     #
-    # @deprecated Use of L{Alignment} class and its constants
+    # @deprecated: Use of L{Alignment} class and its constants
     ALIGNMENT_LEFT = Bits.ALIGNMENT_LEFT
 
-    # Contained component should be aligned horizontally to the right.
+    #: Contained component should be aligned horizontally to the right.
     #
-    # @deprecated Use of L{Alignment} class and its constants
+    # @deprecated: Use of L{Alignment} class and its constants
     ALIGNMENT_RIGHT = Bits.ALIGNMENT_RIGHT
 
-    # Contained component should be aligned vertically to the top.
+    #: Contained component should be aligned vertically to the top.
     #
-    # @deprecated Use of L{Alignment} class and its constants
+    # @deprecated: Use of L{Alignment} class and its constants
     ALIGNMENT_TOP = Bits.ALIGNMENT_TOP
 
-    # Contained component should be aligned vertically to the bottom.
+    #: Contained component should be aligned vertically to the bottom.
     #
-    # @deprecated Use of L{Alignment} class and its constants
+    # @deprecated: Use of L{Alignment} class and its constants
     ALIGNMENT_BOTTOM = Bits.ALIGNMENT_BOTTOM
 
-    # Contained component should be horizontally aligned to center.
+    #: Contained component should be horizontally aligned to center.
     #
-    # @deprecated Use of L{Alignment} class and its constants
+    # @deprecated: Use of L{Alignment} class and its constants
     ALIGNMENT_HORIZONTAL_CENTER = Bits.ALIGNMENT_HORIZONTAL_CENTER
 
-    # Contained component should be vertically aligned to center.
+    #: Contained component should be vertically aligned to center.
     #
-    # @deprecated Use of L{Alignment} class and its constants
+    # @deprecated: Use of L{Alignment} class and its constants
     ALIGNMENT_VERTICAL_CENTER = Bits.ALIGNMENT_VERTICAL_CENTER
 
 
     def setComponentAlignment(self, *args):
         """Set alignment for one contained component in this layout. Alignment
-        is calculated as a bit mask of the two passed values.
+        is calculated as a bit mask of the two passed values or predefined
+        alignments from Alignment class.
 
-        @deprecated Use L{#setComponentAlignment(Component, Alignment)}
-                    instead
+        Example::
+             layout.setComponentAlignment(myComponent, Alignment.TOP_RIGHT)
 
-        @param childComponent
-                   the component to align within it's layout cell.
-        @param horizontalAlignment
-                   the horizontal alignment for the child component (left,
-                   center, right). Use ALIGNMENT constants.
-        @param verticalAlignment
-                   the vertical alignment for the child component (top,
-                   center, bottom). Use ALIGNMENT constants.
-        ---
-        Set alignment for one contained component in this layout. Use
-        predefined alignments from Alignment class.
+        @deprecated: Use L{setComponentAlignment} instead
 
-        Example: C{
-             layout.setComponentAlignment(myComponent, Alignment.TOP_RIGHT);
-        }
-
-        @param childComponent
-                   the component to align within it's layout cell.
-        @param alignment
-                   the Alignment value to be set
+        @param args: tuple of the form
+            - (childComponent, horizontalAlignment, verticalAlignment)
+              1. the component to align within it's layout cell.
+              2. the horizontal alignment for the child component (left,
+                 center, right). Use ALIGNMENT constants.
+              3. the vertical alignment for the child component (top,
+                 center, bottom). Use ALIGNMENT constants.
+            - (childComponent, alignment)
+              1. the component to align within it's layout cell.
+              2. the Alignment value to be set
         """
         raise NotImplementedError
 
@@ -124,7 +113,6 @@ class IAlignmentHandler(object):
     def getComponentAlignment(self, childComponent):
         """Returns the current Alignment of given component.
 
-        @param childComponent
         @return: the L{Alignment}
         """
         raise NotImplementedError
@@ -138,16 +126,15 @@ class ISpacingHandler(object):
     def setSpacing(self, enabled):
         """Enable spacing between child components within this layout.
 
-        <strong>NOTE:</strong> This will only affect the space between
+        B{NOTE:} This will only affect the space between
         components, not the space around all the components in the layout
         (i.e. do not confuse this with the cellspacing attribute of a HTML
-        Table). Use L{#setMargin(boolean)} to add space around the
-        layout.
+        Table). Use L{setMargin} to add space around the layout.
 
         See the reference manual for more information about CSS rules for
         defining the amount of spacing to use.
 
-        @param enabled
+        @param enabled:
                    true if spacing should be turned on, false if it should be
                    turned off
         """
@@ -156,15 +143,15 @@ class ISpacingHandler(object):
 
     def isSpacingEnabled(self):
         """@return: true if spacing between child components within this layout
-                is enabled, false otherwise
-        @deprecated Use L{#isSpacing()} instead.
+                    is enabled, false otherwise
+        @deprecated: Use L{isSpacing} instead.
         """
         raise NotImplementedError
 
 
     def isSpacing(self):
         """@return: true if spacing between child components within this layout
-                is enabled, false otherwise
+                    is enabled, false otherwise
         """
         raise NotImplementedError
 
@@ -177,15 +164,15 @@ class IMarginHandler(object):
     def setMargin(self, marginInfo):
         """Enable margins for this layout.
 
-        <strong>NOTE:</strong> This will only affect the space around the
+        B{NOTE:} This will only affect the space around the
         components in the layout, not space between the components in the
-        layout. Use L{#setSpacing(boolean)} to add space between the
-        components in the layout.
+        layout. Use L{setSpacing} to add space between the components in
+        the layout.
 
         See the reference manual for more information about CSS rules for
         defining the size of the margin.
 
-        @param marginInfo
+        @param marginInfo:
                    MarginInfo object containing the new margins.
         """
         raise NotImplementedError

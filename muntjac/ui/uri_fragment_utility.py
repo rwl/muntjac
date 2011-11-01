@@ -101,19 +101,12 @@ class UriFragmentUtility(AbstractComponent):
     def setFragment(self, newFragment, fireEvent=True):
         """Sets URI fragment. Optionally fires a L{FragmentChangedEvent}
 
-        @param newFragment
+        @param newFragment:
                    id of the new fragment
-        @param fireEvent
+        @param fireEvent:
                    true to fire event
-        @see: FragmentChangedEvent
-        @see: IFragmentChangedListener
-        ---
-        Sets URI fragment. This method fires a L{FragmentChangedEvent}
-
-        @param newFragment
-                   id of the new fragment
-        @see: FragmentChangedEvent
-        @see: IFragmentChangedListener
+        @see: L{FragmentChangedEvent}
+        @see: L{IFragmentChangedListener}
         """
         if ((newFragment is None and self._fragment is not None)
                 or (newFragment is not None
@@ -131,7 +124,7 @@ class FragmentChangedEvent(ComponentEvent):
     def __init__(self, source):
         """Creates a new instance of UriFragmentReader change event.
 
-        @param source
+        @param source:
                    the Source of the event.
         """
         super(FragmentChangedEvent, self).__init__(source)

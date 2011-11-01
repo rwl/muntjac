@@ -21,7 +21,7 @@ from muntjac.ui.component import IComponent
 class CustomLayout(AbstractLayout):
     """A container component with freely designed layout and style. The
     layout consists of items with textually represented locations. Each item
-    contains one sub-component, which can be any Vaadin component, such as a
+    contains one sub-component, which can be any Muntjac component, such as a
     layout. The adapter and theme are responsible for rendering the layout
     with a given style by placing the items in the defined locations.
 
@@ -38,8 +38,7 @@ class CustomLayout(AbstractLayout):
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @author: Duy B. Vo
-    @version @VERSION@
-    @since 3.0
+    @version: @VERSION@
     """
 
     CLIENT_WIDGET = None #ClientWidget(VCustomLayout, LoadStyle.EAGER)
@@ -49,21 +48,12 @@ class CustomLayout(AbstractLayout):
     def __init__(self, template=None):
         """Default constructor only used by subclasses. Subclasses are
         responsible for setting the appropriate fields. Either
-        L{#setTemplateName(String)}, that makes layout fetch the
-        template from theme, or L{#setTemplateContents(String)}.
-        ---
-        Constructs a custom layout with the template given in the stream.
+        L{setTemplateName}, that makes layout fetch the template from theme,
+        or L{setTemplateContents}.
 
-        @param templateStream
-                   Stream containing template data. Must be using UTF-8
-                   encoding. To use a String as a template use for instance
-                   new ByteArrayInputStream("<template>".getBytes()).
-        @param streamLength
-                   Length of the templateStream
-        @raise IOException
-        ---
-        Constructor for custom layout with given template name. Template
-        file is fetched from "<theme>/layout/<templateName>".
+        Template file is fetched from "<theme>/layout/<templateName>".
+
+        @raise IOException:
         """
         super(CustomLayout, self).__init__()
 
@@ -88,17 +78,13 @@ class CustomLayout(AbstractLayout):
     def addComponent(self, c, location=''):
         """Adds the component into this container to given location. If
         the location is already populated, the old component is removed.
+        If the component is added without specifying the location (empty
+        string is then used as location). Only one component can be added
+        to the default "" location and adding more components into that
+        location overwrites the old components.
 
         @param c: the component to be added.
         @param location: the location of the component.
-        ---
-        Adds the component into this container. The component is added
-        without specifying the location (empty string is then used as
-        location). Only one component can be added to the default ""
-        location and adding more components into that location overwrites
-        the old components.
-
-        @param c: the component to be added.
         """
         old = self._slots.get(location)
         if old is not None:
@@ -110,13 +96,10 @@ class CustomLayout(AbstractLayout):
 
 
     def removeComponent(self, arg):
-        """Removes the component from this container.
+        """Removes the component from this container or the given location.
 
-        @param c: the component to be removed.
-        ---
-        Removes the component from this container from given location.
-
-        @param location: the Location identifier of the component.
+        @param arg: the component to be removed or the location identifier
+                    of the component.
         """
         if isinstance(arg, IComponent):
             c = arg
@@ -137,14 +120,14 @@ class CustomLayout(AbstractLayout):
         """Gets the component container iterator for going trough all
         the components in the container.
 
-        @return: the Iterator of the components inside the container.
+        @return: the iterator of the components inside the container.
         """
         return iter( self._slots.values() )
 
 
     def getComponentCount(self):
         """Gets the number of contained components. Consistent with the
-        iterator returned by L{#getComponentIterator()}.
+        iterator returned by L{getComponentIterator}.
 
         @return: the number of contained components
         """
@@ -164,7 +147,6 @@ class CustomLayout(AbstractLayout):
     def paintContent(self, target):
         """Paints the content of this component.
 
-        @param target
         @raise PaintException: if the paint operation failed.
         """
         super(CustomLayout, self).paintContent(target)
@@ -213,7 +195,7 @@ class CustomLayout(AbstractLayout):
         with setStyle. Overriding to improve backwards compatibility.
 
         @param name: template name
-        @deprecated Use L{#setTemplateName(String)} instead
+        @deprecated: Use L{setTemplateName} instead
         """
         self.setTemplateName(name)
 
@@ -235,8 +217,6 @@ class CustomLayout(AbstractLayout):
         from VAADIN/themes/themename/layouts/templatename.html. If the theme
         has not been set (with Application.setTheme()), themename is
         'default'.
-
-        @param templateName
         """
         self._templateName = templateName
         self._templateContents = None
@@ -245,8 +225,6 @@ class CustomLayout(AbstractLayout):
 
     def setTemplateContents(self, templateContents):
         """Set the contents of the template used to draw the custom layout.
-
-        @param templateContents
         """
         self._templateContents = templateContents
         self._templateName = None

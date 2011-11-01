@@ -25,7 +25,7 @@ class ApplicationServlet(AbstractApplicationServlet):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     def __init__(self, applicationClass, *args, **kw_args):

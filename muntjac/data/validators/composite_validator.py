@@ -27,7 +27,7 @@ class CompositeValidator(AbstractValidator):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     #: The validators are combined with C{AND} clause: validity of

@@ -19,7 +19,6 @@ from muntjac.terminal.gwt.client.event_id import EventId
 
 from muntjac.event.layout_events import \
     ILayoutClickNotifier, LayoutClickEvent, ILayoutClickListener
-from muntjac.ui.abstract_component import AbstractComponent
 
 
 class CssLayout(AbstractLayout, ILayoutClickNotifier):
@@ -28,27 +27,26 @@ class CssLayout(AbstractLayout, ILayoutClickNotifier):
     element. Component layout can then be adjusted with css.
 
     In comparison to L{HorizontalLayout} and L{VerticalLayout}
-    <ul>
-    <li>rather similar server side api
-    <li>no spacing, alignment or expand ratios
-    <li>much simpler DOM that can be styled by skilled web developer
-    <li>no abstraction of browser differences (developer must ensure that
-    the result works properly on each browser)
-    <li>different kind of handling for relative sizes (that are set from
-    server side) (*)
-    <li>noticeably faster rendering time in some situations as we rely more
-    on the browser's rendering engine.
-    </ul>
+
+      - rather similar server side api
+      - no spacing, alignment or expand ratios
+      - much simpler DOM that can be styled by skilled web developer
+      - no abstraction of browser differences (developer must ensure that
+        the result works properly on each browser)
+      - different kind of handling for relative sizes (that are set from
+        server side) (*)
+      - noticeably faster rendering time in some situations as we rely more
+        on the browser's rendering engine.
 
     With L{CustomLayout} one can often achieve similar results (good
     looking layouts with web technologies), but with CustomLayout developer
     needs to work with fixed templates.
 
     By extending CssLayout one can also inject some css rules straight to
-    child components using L{#getCss(Component)}.
+    child components using L{getCss}.
 
     (*) Relative sizes (set from server side) are treated bit differently than
-    in other layouts in Vaadin. In cssLayout the size is calculated relatively
+    in other layouts in Muntjac. In cssLayout the size is calculated relatively
     to CSS layouts content area which is pretty much as in html and css. In
     other layouts the size of component is calculated relatively to the "slot"
     given by layout.
@@ -59,8 +57,6 @@ class CssLayout(AbstractLayout, ILayoutClickNotifier):
     size on server side (which is not the default for all components) and the
     size must be defined with class styles - not by directly injecting width
     and height.
-
-    @since 6.1 brought in from "FastLayouts" incubator project
     """
 
     CLIENT_WIDGET = None #ClientWidget(VCssLayout)
@@ -77,16 +73,12 @@ class CssLayout(AbstractLayout, ILayoutClickNotifier):
 
     def addComponent(self, c, index=None):
         """Add a component into this container. The component is added to
-        the right or under the previous component.
+        the right/under the previous component or into indexed position in
+        this container.
 
-        @param c
+        @param c:
                    the component to be added.
-        ---
-        Adds a component into indexed position in this container.
-
-        @param c
-                   the component to be added.
-        @param index
+        @param index:
                    the Index of the component position. The components
                    currently in and after the position are shifted forwards.
         """
@@ -112,7 +104,7 @@ class CssLayout(AbstractLayout, ILayoutClickNotifier):
         """Adds a component into this container. The component is added to
         the left or on top of the other components.
 
-        @param c
+        @param c:
                    the component to be added.
         """
         self.components.insert(0, c)
@@ -139,14 +131,14 @@ class CssLayout(AbstractLayout, ILayoutClickNotifier):
         """Gets the component container iterator for going trough all the
         components in the container.
 
-        @return: the Iterator of the components inside the container.
+        @return: the iterator of the components inside the container.
         """
         return iter(self.components)
 
 
     def getComponentCount(self):
         """Gets the number of contained components. Consistent with the
-        iterator returned by L{#getComponentIterator()}.
+        iterator returned by L{getComponentIterator}.
 
         @return: the number of contained components
         """
@@ -156,9 +148,9 @@ class CssLayout(AbstractLayout, ILayoutClickNotifier):
     def paintContent(self, target):
         """Paints the content of this component.
 
-        @param target
+        @param target:
                    the Paint Event.
-        @raise PaintException
+        @raise PaintException:
                     if the paint operation failed.
         """
         super(CssLayout, self).paintContent(target)

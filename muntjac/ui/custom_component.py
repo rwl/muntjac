@@ -31,8 +31,7 @@ class CustomComponent(AbstractComponentContainer):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
-    @since 3.0
+    @version: @VERSION@
     """
 
     CLIENT_WIDGET = None #ClientWidget(VCustomComponent, LoadStyle.EAGER)
@@ -42,15 +41,9 @@ class CustomComponent(AbstractComponentContainer):
 
         The component is implemented by wrapping the methods of the
         composition root component given as parameter. The composition root
-        must be set before the component can be used.
-        ---
-        Constructs a new custom component.
-
-        The component is implemented by wrapping the methods of the
-        composition root component given as parameter. The composition root
         must not be null and can not be changed after the composition.
 
-        @param compositionRoot
+        @param compositionRoot:
                    the root of the composition component tree.
         """
         super(CustomComponent, self).__init__()
@@ -82,7 +75,7 @@ class CustomComponent(AbstractComponentContainer):
         The composition root must be set to non-null value before the
         component can be used. The composition root can only be set once.
 
-        @param compositionRoot
+        @param compositionRoot:
                    the root of the composition component tree.
         """
         if compositionRoot != self._root:
@@ -116,7 +109,7 @@ class CustomComponent(AbstractComponentContainer):
         The component type is textual type of the component. This is included
         in the UIDL as component tag attribute.
 
-        @deprecated not more useful as the whole tag system has been removed
+        @deprecated: not more useful as the whole tag system has been removed
 
         @return: the component type.
         """
@@ -130,9 +123,9 @@ class CustomComponent(AbstractComponentContainer):
         The component type is textual type of the component. This is included
         in the UIDL as component tag attribute.
 
-        @deprecated not more useful as the whole tag system has been removed
+        @deprecated: not more useful as the whole tag system has been removed
 
-        @param componentType
+        @param componentType:
                    the componentType to set.
         """
         warn('tag system has been removed', DeprecationWarning)
@@ -145,7 +138,7 @@ class CustomComponent(AbstractComponentContainer):
 
     def getComponentCount(self):
         """Gets the number of contained components. Consistent with the
-        iterator returned by L{#getComponentIterator()}.
+        iterator returned by L{getComponentIterator}.
 
         @return: the number of contained components (zero or one)
         """
@@ -155,17 +148,16 @@ class CustomComponent(AbstractComponentContainer):
     def replaceComponent(self, oldComponent, newComponent):
         """This method is not supported by CustomComponent.
 
-        @see: ComponentContainer.replaceComponent()
+        @see: L{ComponentContainer.replaceComponent()}
         """
         raise NotImplementedError
 
 
     def addComponent(self, c):
         """This method is not supported by CustomComponent. Use
-        L{CustomComponent#setCompositionRoot(Component)} to set
-        CustomComponents "child".
+        L{CustomComponent.setCompositionRoot} to set CustomComponents "child".
 
-        @see: AbstractComponentContainer.addComponent()
+        @see: L{AbstractComponentContainer.addComponent}
         """
         raise NotImplementedError
 
@@ -173,7 +165,7 @@ class CustomComponent(AbstractComponentContainer):
     def moveComponentsFrom(self, source):
         """This method is not supported by CustomComponent.
 
-        @see: AbstractComponentContainer.moveComponentsFrom()
+        @see: L{AbstractComponentContainer.moveComponentsFrom}
         """
         raise NotImplementedError
 
@@ -181,7 +173,7 @@ class CustomComponent(AbstractComponentContainer):
     def removeAllComponents(self):
         """This method is not supported by CustomComponent.
 
-        @see: AbstractComponentContainer.removeAllComponents()
+        @see: L{AbstractComponentContainer.removeAllComponents}
         """
         raise NotImplementedError
 
@@ -189,7 +181,7 @@ class CustomComponent(AbstractComponentContainer):
     def removeComponent(self, c):
         """This method is not supported by CustomComponent.
 
-        @see: AbstractComponentContainer.removeComponent()
+        @see: L{AbstractComponentContainer.removeComponent}
         """
         raise NotImplementedError
 

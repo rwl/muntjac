@@ -14,20 +14,16 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-"""<p>The Vaadin base package. Contains the Application class, the
-starting point of any application that uses Vaadin.</p>
+"""The Muntjac base package. Contains the Application class, the
+starting point of any application that uses Muntjac.
 
-<p>Contains all Vaadin core classes. A Vaadin application is based
-on the L{com.vaadin.Application} class and deployed as a servlet
-using L{com.vaadin.terminal.gwt.server.ApplicationServlet} or
-L{com.vaadin.terminal.gwt.server.GAEApplicationServlet} (for Google
-App Engine).</p>
+Contains all Muntjac core classes. A Muntjac application is based
+on the L{Application} class and deployed as a servlet
+using L{muntjac.terminal.gwt.server.application_servlet.ApplicationServlet} or
+L{muntjac.terminal.gwt.server.gae_application_servlet.GAEApplicationServlet}
+(for Google App Engine).
 
-<p>Vaadin applications can also be deployed as portlets using {@link
-com.vaadin.terminal.gwt.server.ApplicationPortlet} (JSR-168) or {@link
-com.vaadin.terminal.gwt.server.ApplicationPortlet2} (JSR-286).</p>
-
-<p>All classes in Vaadin are serializable unless otherwise noted.
-This allows Vaadin applications to run in cluster and cloud
-environments.</p>
+All classes in Muntjac are pickleable unless otherwise noted.
+This allows Muntjac applications to run in cluster and cloud
+environments.
 """

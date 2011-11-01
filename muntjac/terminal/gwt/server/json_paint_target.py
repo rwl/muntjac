@@ -50,7 +50,7 @@ class JsonPaintTarget(IPaintTarget):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     _UIDL_ARG_NAME = 'name'

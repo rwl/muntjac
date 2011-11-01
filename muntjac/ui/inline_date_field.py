@@ -23,12 +23,11 @@ from muntjac.data.property import IProperty
 class InlineDateField(DateField):
     """A date entry component, which displays the actual date selector inline.
 
-    @see: DateField
-    @see: PopupDateField
+    @see: L{DateField}
+    @see: L{PopupDateField}
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
-    @since 5.0
+    @version: @VERSION@
     """
 
     CLIENT_WIDGET = None #ClientWidget(VDateFieldCalendar)

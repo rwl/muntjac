@@ -23,7 +23,7 @@ from muntjac.data.property import IProperty
 class RichTextArea(AbstractField):
     """A simple RichTextArea to edit HTML format text.
 
-    Note, that using L{TextField#setMaxLength(int)} method in
+    Note, that using L{TextField.setMaxLength} method in
     L{RichTextArea} may produce unexpected results as formatting
     is counted into length of field.
     """
@@ -31,34 +31,21 @@ class RichTextArea(AbstractField):
     CLIENT_WIDGET = None #ClientWidget(VRichTextArea, LoadStyle.LAZY)
 
     def __init__(self, *args):
-        """Constructs an empty C{RichTextArea} with no caption.
-        ---
-        Constructs an empty C{RichTextArea} with the given caption.
+        """Constructs an empty C{RichTextArea} with optional caption, value
+        and/or data source.
 
-        @param caption
-                   the caption for the editor.
-        ---
-        Constructs a new C{RichTextArea} that's bound to the
-        specified C{IProperty} and has no caption.
-
-        @param dataSource
-                   the data source for the editor value
-        ---
-        Constructs a new C{RichTextArea} that's bound to the
-        specified C{IProperty} and has the given caption.
-
-        @param caption
-                   the caption for the editor.
-        @param dataSource
-                   the data source for the editor value
-        ---
-        Constructs a new C{RichTextArea} with the given caption
-        and initial text contents.
-
-        @param caption
-                   the caption for the editor.
-        @param value
-                   the initial text content of the editor.
+        @param args: tuple of the form
+            - ()
+            - (caption)
+              1. the caption for the editor.
+            - (dataSource)
+              1. the data source for the editor value
+            - (caption, dataSource)
+              1. the caption for the editor.
+              2. the data source for the editor value
+            - (caption, value)
+              1. the caption for the editor.
+              2. the initial text content of the editor.
         """
         super(RichTextArea, self).__init__()
 
@@ -131,8 +118,6 @@ class RichTextArea(AbstractField):
     def selectAll(self):
         """Selects all text in the rich text area. As a side effect,
         focuses the rich text area.
-
-        @since 6.5
         """
         # Set selection range functionality is currently being
         # planned/developed for GWT RTA. Only selecting all is currently
@@ -150,9 +135,8 @@ class RichTextArea(AbstractField):
         the assigned Format.
 
         @return: the Formatted value.
-        @see: #setFormat(Format)
-        @see: Format
-        @deprecated
+        @see: L{setFormat}
+        @deprecated:
         """
         v = self.getValue()
         if v is None:
@@ -213,8 +197,8 @@ class RichTextArea(AbstractField):
 
         The default value is string 'null'.
 
-        @return: the String Textual representation for null strings.
-        @see: TextField#isNullSettingAllowed()
+        @return: the string textual representation for null strings.
+        @see: L{TextField.isNullSettingAllowed}
         """
         return self._nullRepresentation
 
@@ -231,9 +215,9 @@ class RichTextArea(AbstractField):
 
         By default this setting is false
 
-        @return: boolean Should the null-string represenation be always
-                converted to null-values.
-        @see: TextField#getNullRepresentation()
+        @return: Should the null-string represenation be always
+                 converted to null-values.
+        @see: L{TextField.getNullRepresentation}
         """
         return self._nullSettingAllowed
 
@@ -247,9 +231,9 @@ class RichTextArea(AbstractField):
 
         The default value is string 'null'
 
-        @param nullRepresentation
+        @param nullRepresentation:
                    Textual representation for null strings.
-        @see: TextField#setNullSettingAllowed(boolean)
+        @see: L{TextField.setNullSettingAllowed}
         """
         self._nullRepresentation = nullRepresentation
 
@@ -266,10 +250,10 @@ class RichTextArea(AbstractField):
 
         By default this setting is false.
 
-        @param nullSettingAllowed
+        @param nullSettingAllowed:
                    Should the null-string representation be always converted
                    to null-values.
-        @see: TextField#getNullRepresentation()
+        @see: L{TextField.getNullRepresentation]
         """
         self._nullSettingAllowed = nullSettingAllowed
 
@@ -277,8 +261,8 @@ class RichTextArea(AbstractField):
     def getFormat(self):
         """Gets the value formatter of TextField.
 
-        @return: the Format used to format the value.
-        @deprecated replaced by L{com.vaadin.data.util.PropertyFormatter}
+        @return: the format used to format the value.
+        @deprecated: replaced by L{PropertyFormatter}
         """
         warn('replaced by PropertyFormatter', DeprecationWarning)
         return self._format
@@ -287,10 +271,10 @@ class RichTextArea(AbstractField):
     def setFormat(self, frmt):
         """Gets the value formatter of TextField.
 
-        @param format
-                   the Format used to format the value. Null disables the
+        @param format:
+                   the format used to format the value. Null disables the
                    formatting.
-        @deprecated replaced by L{com.vaadin.data.util.PropertyFormatter}
+        @deprecated: replaced by L{PropertyFormatter}
         """
         warn('replaced by PropertyFormatter', DeprecationWarning)
         self._format = frmt

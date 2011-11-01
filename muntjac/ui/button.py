@@ -33,7 +33,7 @@ class IClickListener(object):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     def buttonClick(self, event):
@@ -54,7 +54,7 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     CLIENT_WIDGET = None #ClientWidget(VButton, LoadStyle.EAGER)
@@ -236,7 +236,7 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
         return bool
 
     # Button style with no decorations. Looks like a link, acts like a button
-    # @deprecated use L{BaseTheme#BUTTON_LINK} instead.
+    # @deprecated: use L{BaseTheme#BUTTON_LINK} instead.
     STYLE_LINK = 'link'
 
 
@@ -407,7 +407,7 @@ class ClickEvent(ComponentEvent):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
     _details = None
 

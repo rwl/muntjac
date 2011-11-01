@@ -87,7 +87,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     #: The version number of this release. For example "6.2.0". Always in the
@@ -1889,7 +1889,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
         """Override this method if you need to use a specialized
         communication mananger implementation.
 
-        @deprecated Instead of overriding this method, override
+        @deprecated: Instead of overriding this method, override
                     L{WebApplicationContext} implementation via
                     L{getApplicationContext} method and in that customized
                     implementation return your CommunicationManager in

@@ -22,7 +22,7 @@ class IValidatable(object):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     @see: L{IValidator}
     """
 

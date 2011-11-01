@@ -27,7 +27,7 @@ class AbstractLayout(AbstractComponentContainer, ILayout, IMarginHandler):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     _CLICK_EVENT = EventId.LAYOUT_CLICK

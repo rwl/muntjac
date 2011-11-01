@@ -25,38 +25,33 @@ class ProgressIndicator(AbstractField, prop.IValueChangeListener,
     """C{ProgressIndicator} is component that shows user state of
     a process (like long computing or file upload)
 
-    C{ProgressIndicator} has two mainmodes. One for indeterminate
-    processes and other (default) for processes which progress can be measured
+    C{ProgressIndicator} has two mainmodes. One for indeterminate processes
+    and other (default) for processes which progress can be measured.
 
     May view an other property that indicates progress 0...1
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
-    @since 4
+    @version: @VERSION@
     """
 
     CLIENT_WIDGET = None #ClientWidget(VProgressIndicator, LoadStyle.EAGER)
 
-    # Content mode, where the label contains only plain text. The getValue()
-    # result is coded to XML when painting.
+    #: Content mode, where the label contains only plain text. The getValue()
+    #  result is coded to XML when painting.
     CONTENT_TEXT = 0
 
-    # Content mode, where the label contains preformatted text.
+    #: Content mode, where the label contains preformatted text.
     CONTENT_PREFORMATTED = 1
 
 
     def __init__(self, *args):
         """Creates an a new ProgressIndicator.
-        ---
-        Creates a new instance of ProgressIndicator with given state.
 
-        @param value
-        ---
-        Creates a new instance of ProgressIndicator with state read from
-        given datasource.
-
-        @param contentSource
+        @param args: tuple of the form
+            - ()
+            - (value)
+            - (contentSource)
         """
         super(ProgressIndicator, self).__init__()
 
@@ -82,7 +77,7 @@ class ProgressIndicator(AbstractField, prop.IValueChangeListener,
         """Sets the component to read-only. Readonly is not used in
         ProgressIndicator.
 
-        @param readOnly
+        @param readOnly:
                    True to enable read-only mode, False to disable it.
         """
         if self._dataSource is None:
@@ -106,9 +101,9 @@ class ProgressIndicator(AbstractField, prop.IValueChangeListener,
     def paintContent(self, target):
         """Paints the content of this component.
 
-        @param target
+        @param target:
                    the Paint Event.
-        @raise PaintException
+        @raise PaintException:
                     if the Paint Operation fails.
         """
         target.addAttribute('indeterminate', self._indeterminate)
@@ -121,7 +116,7 @@ class ProgressIndicator(AbstractField, prop.IValueChangeListener,
         ProgressIndicator is a float between 0 and 1.
 
         @return: the Value of the ProgressIndicator.
-        @see: com.vaadin.ui.AbstractField#getValue()
+        @see: LAbstractField.getValue}
         """
         if self._dataSource is None:
             raise ValueError, 'datasource must be set'
@@ -134,7 +129,7 @@ class ProgressIndicator(AbstractField, prop.IValueChangeListener,
         ProgressIndicator is the float between 0 and 1.
 
         @param newValue: the new value of the ProgressIndicator.
-        @see: com.vaadin.ui.AbstractField#setValue(java.lang.Object)
+        @see: L{AbstractField.setValue}
         """
         if repaintIsNotNeeded is None:
             if self._dataSource is None:
@@ -147,7 +142,7 @@ class ProgressIndicator(AbstractField, prop.IValueChangeListener,
 
 
     def __str__(self):
-        """@see: com.vaadin.ui.AbstractField#toString()"""
+        """@see: L{AbstractField.__str__}"""
         if self._dataSource is None:
             raise ValueError, 'datasource must be set'
 
@@ -155,7 +150,7 @@ class ProgressIndicator(AbstractField, prop.IValueChangeListener,
 
 
     def getType(self):
-        """@see: com.vaadin.ui.AbstractField#getType()"""
+        """@see: L{AbstractField.getType}"""
         if self._dataSource is None:
             raise ValueError, 'datasource must be set'
 
@@ -166,7 +161,7 @@ class ProgressIndicator(AbstractField, prop.IValueChangeListener,
         """Gets the viewing data-source property.
 
         @return: the datasource.
-        @see: AbstractField.getPropertyDataSource()
+        @see: L{AbstractField.getPropertyDataSource}
         """
         return self._dataSource
 
@@ -174,9 +169,9 @@ class ProgressIndicator(AbstractField, prop.IValueChangeListener,
     def setPropertyDataSource(self, newDataSource):
         """Sets the property as data-source for viewing.
 
-        @param newDataSource
+        @param newDataSource:
                    the new data source.
-        @see: AbstractField#setPropertyDataSource()
+        @see: L{AbstractField.setPropertyDataSource}
         """
         # Stops listening the old data source changes
         if (self._dataSource is not None
@@ -206,7 +201,7 @@ class ProgressIndicator(AbstractField, prop.IValueChangeListener,
     def setIndeterminate(self, newValue):
         """Sets wheter or not the ProgressIndicator is indeterminate.
 
-        @param newValue
+        @param newValue:
                    true to set to indeterminate mode.
         """
         self._indeterminate = newValue
@@ -224,7 +219,7 @@ class ProgressIndicator(AbstractField, prop.IValueChangeListener,
     def setPollingInterval(self, newValue):
         """Sets the interval that component checks for progress.
 
-        @param newValue
+        @param newValue:
                    the interval in milliseconds.
         """
         self._pollingInterval = newValue

@@ -22,12 +22,11 @@ class PopupDateField(DateField):
     """A date entry component, which displays the actual date selector
     as a popup.
 
-    @see: DateField
-    @see: InlineDateField
+    @see: L{DateField}
+    @see: L{InlineDateField}
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
-    @since 5.0
+    @version: @VERSION@
     """
 
     def __init__(self, *args):
@@ -63,7 +62,7 @@ class PopupDateField(DateField):
     def getInputPrompt(self):
         """Gets the current input prompt.
 
-        @see: #setInputPrompt(String)
+        @see: L{setInputPrompt}
         @return: the current input prompt, or null if not enabled
         """
         return self._inputPrompt
@@ -72,8 +71,6 @@ class PopupDateField(DateField):
     def setInputPrompt(self, inputPrompt):
         """Sets the input prompt - a textual prompt that is displayed when
         the field would otherwise be empty, to prompt the user for input.
-
-        @param inputPrompt
         """
         self._inputPrompt = inputPrompt
         self.requestRepaint()

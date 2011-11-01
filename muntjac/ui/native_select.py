@@ -54,7 +54,7 @@ class NativeSelect(AbstractSelect):
         is set 0, the actual number of displayed columns is determined
         implicitly by the adapter.
 
-        @param columns
+        @param columns:
                    the number of columns to set.
         """
         if columns < 0:

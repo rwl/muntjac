@@ -26,7 +26,7 @@ class ThemeResource(IResource):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     def __init__(self, resourceId):

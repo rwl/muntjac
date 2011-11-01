@@ -73,8 +73,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
-    @since 3.0
+    @version: @VERSION@
     """
 
     CLIENT_WIDGET = None #ClientWidget(VScrollTable, LoadStyle.EAGER)
@@ -85,64 +84,64 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     CELL_ITEMID = 3
     CELL_FIRSTCOL = 4
 
-    # Left column alignment. <b>This is the default behaviour.</b>
+    #: Left column alignment. <b>This is the default behaviour.</b>
     ALIGN_LEFT = 'b'
 
-    # Center column alignment.
+    #: Center column alignment.
     ALIGN_CENTER = 'c'
 
-    # Right column alignment.
+    #: Right column alignment.
     ALIGN_RIGHT = 'e'
 
-    # Column header mode: Column headers are hidden.
+    #: Column header mode: Column headers are hidden.
     COLUMN_HEADER_MODE_HIDDEN = -1
 
-    # Column header mode: Property ID:s are used as column headers.
+    #: Column header mode: Property ID:s are used as column headers.
     COLUMN_HEADER_MODE_ID = 0
 
-    # Column header mode: Column headers are explicitly specified with
-    # L{#setColumnHeaders(String[])}.
+    #: Column header mode: Column headers are explicitly specified with
+    #  L{setColumnHeaders}.
     COLUMN_HEADER_MODE_EXPLICIT = 1
 
-    # Column header mode: Column headers are explicitly specified with
-    # L{#setColumnHeaders(String[])}. If a header is not specified
-    # for a given property, its property id is used instead.
+    #: Column header mode: Column headers are explicitly specified with
+    #  L{setColumnHeaders}. If a header is not specified
+    #  for a given property, its property id is used instead.
     #
-    # <b>This is the default behavior. </b>
+    #  B{This is the default behavior.}
     COLUMN_HEADER_MODE_EXPLICIT_DEFAULTS_ID = 2
 
-    # Row caption mode: The row headers are hidden. <b>This is the
-    # default mode. </b>
+    #: Row caption mode: The row headers are hidden. B{This is the
+    #  default mode.}
     ROW_HEADER_MODE_HIDDEN = -1
 
-    # Row caption mode: Items Id-objects toString is used as row caption.
+    #: Row caption mode: Items Id-objects toString is used as row caption.
     ROW_HEADER_MODE_ID = AbstractSelect.ITEM_CAPTION_MODE_ID
 
-    # Row caption mode: Item-objects toString is used as row caption.
+    #: Row caption mode: Item-objects toString is used as row caption.
     ROW_HEADER_MODE_ITEM = AbstractSelect.ITEM_CAPTION_MODE_ITEM
 
-    # Row caption mode: Index of the item is used as item caption. The
-    # index mode can only be used with the containers implementing
-    # container.IIndexed interface.
+    #: Row caption mode: Index of the item is used as item caption. The
+    #  index mode can only be used with the containers implementing
+    #  container.IIndexed interface.
     ROW_HEADER_MODE_INDEX = AbstractSelect.ITEM_CAPTION_MODE_INDEX
 
-    # Row caption mode: Item captions are explicitly specified.
+    #: Row caption mode: Item captions are explicitly specified.
     ROW_HEADER_MODE_EXPLICIT = AbstractSelect.ITEM_CAPTION_MODE_EXPLICIT
 
-    # Row caption mode: Item captions are read from property specified
-    # with L{#setItemCaptionPropertyId(Object)}.
+    #: Row caption mode: Item captions are read from property specified
+    #  with L{#setItemCaptionPropertyId(Object)}.
     ROW_HEADER_MODE_PROPERTY = AbstractSelect.ITEM_CAPTION_MODE_PROPERTY
 
-    # Row caption mode: Only icons are shown, the captions are hidden.
+    #: Row caption mode: Only icons are shown, the captions are hidden.
     ROW_HEADER_MODE_ICON_ONLY = AbstractSelect.ITEM_CAPTION_MODE_ICON_ONLY
 
-    # Row caption mode: Item captions are explicitly specified, but if
-    # the caption is missing, the item id objects C{toString()}
-    # is used instead.
+    #: Row caption mode: Item captions are explicitly specified, but if
+    #  the caption is missing, the item id objects C{toString()}
+    #  is used instead.
     ROW_HEADER_MODE_EXPLICIT_DEFAULTS_ID = \
             AbstractSelect.ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID
 
-    # The default rate that table caches rows for smooth scrolling.
+    #: The default rate that table caches rows for smooth scrolling.
     _CACHE_RATE_DEFAULT = 2
 
     _ROW_HEADER_COLUMN_KEY = '0'
@@ -152,106 +151,103 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
     def __init__(self, caption=None, dataSource=None):
         """Creates a new table with caption and connect it to a IContainer.
-
-        @param caption
-        @param dataSource
         """
-        # True if column collapsing is allowed.
+        #: True if column collapsing is allowed.
         self._columnCollapsingAllowed = False
 
-        # True if reordering of columns is allowed on the client side.
+        #: True if reordering of columns is allowed on the client side.
         self._columnReorderingAllowed = False
 
-        # Keymapper for column ids.
+        #: Keymapper for column ids.
         self._columnIdMap = KeyMapper()
 
-        # Holds visible column propertyIds - in order.
+        #: Holds visible column propertyIds - in order.
         self._visibleColumns = list()
 
-        # Holds propertyIds of currently collapsed columns.
+        #: Holds propertyIds of currently collapsed columns.
         self._collapsedColumns = set()
 
-        # Holds headers for visible columns (by propertyId).
+        #: Holds headers for visible columns (by propertyId).
         self._columnHeaders = dict()
 
-        # Holds footers for visible columns (by propertyId).
+        #: Holds footers for visible columns (by propertyId).
         self._columnFooters = dict()
 
-        # Holds icons for visible columns (by propertyId).
+        #: Holds icons for visible columns (by propertyId).
         self._columnIcons = dict()
 
-        # Holds alignments for visible columns (by propertyId).
+        #: Holds alignments for visible columns (by propertyId).
         self._columnAlignments = dict()
 
-        # Holds column widths in pixels (Integer) or expand ratios
-        # (Float) for visible columns (by propertyId).
+        #: Holds column widths in pixels (Integer) or expand ratios
+        #  (Float) for visible columns (by propertyId).
         self._columnWidths = dict()
 
-        # Holds column generators
+        #: Holds column generators
         self._columnGenerators = dict()
 
-        # Holds value of property pageLength. 0 disables paging.
+        #: Holds value of property pageLength. 0 disables paging.
         self._pageLength = 15
 
-        # Id the first item on the current page.
+        #: Id the first item on the current page.
         self._currentPageFirstItemId = None
 
-        # Index of the first item on the current page.
+        #: Index of the first item on the current page.
         self._currentPageFirstItemIndex = 0
 
-        # Holds value of property selectable.
+        #: Holds value of property selectable.
         self._selectable = False
 
-        # Holds value of property columnHeaderMode.
+        #: Holds value of property columnHeaderMode.
         self._columnHeaderMode = self.COLUMN_HEADER_MODE_EXPLICIT_DEFAULTS_ID
 
-        # Should the Table footer be visible?
+        #: Should the Table footer be visible?
         self._columnFootersVisible = False
 
-        # True iff the row captions are hidden.
+        #: True iff the row captions are hidden.
         self._rowCaptionsAreHidden = True
 
-        # Page contents buffer used in buffered mode.
+        #: Page contents buffer used in buffered mode.
         self._pageBuffer = None
 
-        # Set of properties listened - the list is kept to release
-        # the listeners later.
+        #: Set of properties listened - the list is kept to release
+        #  the listeners later.
         self._listenedProperties = None
 
-        # Set of visible components - the is used for needsRepaint
-        # calculation.
+        #: Set of visible components - the is used for needsRepaint
+        #  calculation.
         self._visibleComponents = None
 
-        # List of action handlers.
+        #: List of action handlers.
         self._actionHandlers = None
 
-        # Action mapper.
+        #: Action mapper.
         self._actionMapper = None
 
-        # Table cell editor factory.
+        #: Table cell editor factory.
         self._fieldFactory = DefaultFieldFactory.get()
 
-        # Is table editable.
+        #: Is table editable.
         self._editable = False
 
-        # Current sorting direction.
+        #: Current sorting direction.
         self._sortAscending = True
 
-        # Currently table is sorted on this propertyId.
+        #: Currently table is sorted on this propertyId.
         self._sortContainerPropertyId = None
 
-        # Is table sorting disabled alltogether; even if some of
-        # the properties would be sortable.
+        #: Is table sorting disabled alltogether; even if some of
+        #  the properties would be sortable.
         self._sortDisabled = False
 
-        # Number of rows explicitly requested by the client to be painted
-        # on next paint. This is -1 if no request by the client is made.
-        # Painting the component will automatically reset this to -1.
+        #: Number of rows explicitly requested by the client to be painted
+        #  on next paint. This is -1 if no request by the client is made.
+        #  Painting the component will automatically reset this to -1.
         self._reqRowsToPaint = -1
 
-        # Index of the first rows explicitly requested by the client to be
-        # painted. This is -1 if no request by the client is made. Painting
-        # the component will automatically reset this to -1.
+        #: Index of the first rows explicitly requested by the client to be
+        #  painted. This is -1 if no request by the client is made. Painting
+        #  the component will automatically reset this to -1.
         self._reqFirstRowToPaint = -1
 
         self._firstToBeRenderedInClient = -1
@@ -264,11 +260,11 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
         self._containerChangeToBeRendered = False
 
-        # Table cell specific style generator
+        #: Table cell specific style generator
         self._cellStyleGenerator = None
 
-        # EXPERIMENTAL feature: will tell the client to re-calculate column
-        # widths if set to true. Currently no setter: extend to enable.
+        #: EXPERIMENTAL feature: will tell the client to re-calculate column
+        #  widths if set to true. Currently no setter: extend to enable.
         self.alwaysRecalculateColumnWidths = False
 
         self._cacheRate = self._CACHE_RATE_DEFAULT
@@ -299,7 +295,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         The columns are show in the order of their appearance in this array.
 
         @return: an array of currently visible propertyIds and generated column
-                ids.
+                 ids.
         """
         if self._visibleColumns is None:
             return None
@@ -308,12 +304,12 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
 
     def setVisibleColumns(self, visibleColumns):
-        """Sets the array of visible column property id:s.
+        """Sets the array of visible column property ids.
 
         The columns are show in the order of their appearance in this array.
 
-        @param visibleColumns
-                   the Array of shown property id:s.
+        @param visibleColumns:
+                   the array of shown property ids.
         """
         # Visible columns must exist
         if visibleColumns is None:
@@ -361,13 +357,12 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         """Gets the headers of the columns.
 
         The headers match the property id:s given my the set visible column
-        headers. The table must be set in either
-        L{#COLUMN_HEADER_MODE_EXPLICIT} or
-        L{#COLUMN_HEADER_MODE_EXPLICIT_DEFAULTS_ID} mode to show the
+        headers. The table must be set in either L{COLUMN_HEADER_MODE_EXPLICIT}
+        or L{COLUMN_HEADER_MODE_EXPLICIT_DEFAULTS_ID} mode to show the
         headers. In the defaults mode any nulls in the headers array are
-        replaced with id.toString().
+        replaced with id.__str__.
 
-        @return: the Array of column headers.
+        @return: the array of column headers.
         """
         if self._columnHeaders is None:
             return None
@@ -384,15 +379,14 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         """Sets the headers of the columns.
 
         The headers match the property id:s given my the set visible column
-        headers. The table must be set in either
-        L{#COLUMN_HEADER_MODE_EXPLICIT} or
-        L{#COLUMN_HEADER_MODE_EXPLICIT_DEFAULTS_ID} mode to show the
+        headers. The table must be set in either L{COLUMN_HEADER_MODE_EXPLICIT}
+        or L{#COLUMN_HEADER_MODE_EXPLICIT_DEFAULTS_ID} mode to show the
         headers. In the defaults mode any nulls in the headers array are
         replaced with id.toString() outputs when rendering.
 
-        @param columnHeaders
+        @param columnHeaders:
                    the Array of column headers that match the
-                   L{#getVisibleColumns()} method.
+                   L{getVisibleColumns} method.
         """
         if len(columnHeaders) != len(self._visibleColumns):
             raise ValueError,('The length of the headers array must '
@@ -419,13 +413,13 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     def getColumnIcons(self):
         """Gets the icons of the columns.
 
-        The icons in headers match the property id:s given my the set visible
+        The icons in headers match the property ids given my the set visible
         column headers. The table must be set in either
-        L{#COLUMN_HEADER_MODE_EXPLICIT} or
-        L{#COLUMN_HEADER_MODE_EXPLICIT_DEFAULTS_ID} mode to show the
+        L{COLUMN_HEADER_MODE_EXPLICIT} or
+        L{COLUMN_HEADER_MODE_EXPLICIT_DEFAULTS_ID} mode to show the
         headers with icons.
 
-        @return: the Array of icons that match the L{getVisibleColumns()}.
+        @return: the array of icons that match the L{getVisibleColumns}.
         """
         if self._columnIcons is None:
             return None
@@ -442,12 +436,12 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
         The icons in headers match the property id:s given my the set visible
         column headers. The table must be set in either
-        L{#COLUMN_HEADER_MODE_EXPLICIT} or
-        L{#COLUMN_HEADER_MODE_EXPLICIT_DEFAULTS_ID} mode to show the
+        L{COLUMN_HEADER_MODE_EXPLICIT} or
+        L{COLUMN_HEADER_MODE_EXPLICIT_DEFAULTS_ID} mode to show the
         headers with icons.
 
-        @param columnIcons: the Array of icons that match the
-                            L{getVisibleColumns()}.
+        @param columnIcons: the array of icons that match the
+                            L{getVisibleColumns}.
         """
         if len(columnIcons) != len(self._visibleColumns):
             raise ValueError('The length of the icons array must '
@@ -471,15 +465,15 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         The items in the array must match the properties identified by
         L{#getVisibleColumns()}. The possible values for the alignments
         include:
-        <ul>
-        <li>L{#ALIGN_LEFT}: Left alignment</li>
-        <li>L{#ALIGN_CENTER}: Centered</li>
-        <li>L{#ALIGN_RIGHT}: Right alignment</li>
-        </ul>
-        The alignments default to L{#ALIGN_LEFT}: any null values are
+
+          - L{ALIGN_LEFT}: Left alignment
+          - L{ALIGN_CENTER}: Centered
+          - L{ALIGN_RIGHT}: Right alignment
+
+        The alignments default to L{ALIGN_LEFT}: any null values are
         rendered as align lefts.
 
-        @return: the Column alignments array.
+        @return: the column alignments array.
         """
         if self._columnAlignments is None:
             return None
@@ -496,17 +490,17 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         """Sets the column alignments.
 
         The items in the array must match the properties identified by
-        L{#getVisibleColumns()}. The possible values for the alignments
+        L{getVisibleColumns}. The possible values for the alignments
         include:
-        <ul>
-        <li>L{#ALIGN_LEFT}: Left alignment</li>
-        <li>L{#ALIGN_CENTER}: Centered</li>
-        <li>L{#ALIGN_RIGHT}: Right alignment</li>
-        </ul>
-        The alignments default to L{#ALIGN_LEFT}
 
-        @param columnAlignments
-                   the Column alignments array.
+          - L{ALIGN_LEFT}: Left alignmen
+          - L{ALIGN_CENTER}: Centered
+          - L{ALIGN_RIGHT}: Right alignment
+
+        The alignments default to L{ALIGN_LEFT}
+
+        @param columnAlignments:
+                   the column alignments array.
         """
         if len(columnAlignments) != len(self._visibleColumns):
             raise ValueError('The length of the alignments array '
@@ -546,13 +540,12 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         that theme will make decision of width.
 
         Column can either have a fixed width or expand ratio. The latter one
-        set is used. See @link L{#setColumnExpandRatio(Object, float)}.
+        set is used. See @link L{setColumnExpandRatio}.
 
-        @param propertyId
+        @param propertyId:
                    colunmns property id
-        @param width
+        @param width:
                    width to be reserved for colunmns content
-        @since 4.0.3
         """
         if propertyId is None:
             # Since propertyId is null, this is the row header. Use the
@@ -572,7 +565,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         divided among columns. Table can have excess space if it has its width
         defined and there is horizontally more space than columns consume
         naturally. Excess space is the space that is not used by columns with
-        explicit width (see L{#setColumnWidth(Object, int)}) or with
+        explicit width (see L{setColumnWidth}) or with
         natural width (no width nor expand ratio).
 
         By default (without expand ratios) the excess space is divided
@@ -590,9 +583,9 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         If terminal implementation supports re-sizable columns the column
         becomes fixed width column if users resizes the column.
 
-        @param propertyId
+        @param propertyId:
                    columns property id
-        @param expandRatio
+        @param expandRatio:
                    the expandRatio used to divide excess space for this column
         """
         if expandRatio < 0:
@@ -612,7 +605,6 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     def getColumnWidth(self, propertyId):
         """Gets the pixel width of column
 
-        @param propertyId
         @return: width of column or -1 when value not set
         """
         if propertyId is None:
@@ -632,7 +624,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
         Setting page length 0 disables paging.
 
-        @return: the Length of one page.
+        @return: the length of one page.
         """
         return self._pageLength
 
@@ -642,10 +634,10 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
         Setting page length 0 disables paging. The page length defaults to 15.
 
-        If Table has width set (L{#setWidth(float, int)} ) the client
+        If Table has width set (L{setWidth} ) the client
         side may update the page length automatically the correct value.
 
-        @param pageLength
+        @param pageLength:
                    the length of one page.
         """
         if (pageLength >= 0) and (self._pageLength != pageLength):
@@ -666,9 +658,9 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         will hit server less frequently.
 
         The amount of cached rows will be cacheRate multiplied with pageLength
-        L{#setPageLength(int)} both below and above visible area.
+        L{setPageLength} both below and above visible area.
 
-        @param cacheRate
+        @param cacheRate:
                    a value over 0 (fastest rendering time). Higher value will
                    cache more rows on server (smoother scrolling). Default
                    value is 2.
@@ -682,7 +674,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
 
     def getCacheRate(self):
-        """@see: #setCacheRate(double)
+        """@see: L{setCacheRate}
 
         @return: the current cache rate value
         """
@@ -718,8 +710,8 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     def setCurrentPageFirstItemId(self, currentPageFirstItemId):
         """Setter for property currentPageFirstItemId.
 
-        @param currentPageFirstItemId
-                   the New value of property currentPageFirstItemId.
+        @param currentPageFirstItemId:
+                   the new value of property currentPageFirstItemId.
         """
         # Gets the corresponding index
         index = -1
@@ -763,8 +755,8 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     def getColumnIcon(self, propertyId):
         """Gets the icon Resource for the specified column.
 
-        @param propertyId
-                   the propertyId indentifying the column.
+        @param propertyId:
+                   the propertyId identifying the column.
         @return: the icon for the specified column; null if the column has
                 no icon set, or if the column is not visible.
         """
@@ -774,12 +766,12 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     def setColumnIcon(self, propertyId, icon):
         """Sets the icon Resource for the specified column.
 
-        Throws IllegalArgumentException if the specified column is not
+        Throws ValueError if the specified column is not
         visible.
 
-        @param propertyId
+        @param propertyId:
                    the propertyId identifying the column.
-        @param icon
+        @param icon:
                    the icon Resource to set.
         """
         if icon is None:
@@ -796,7 +788,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     def getColumnHeader(self, propertyId):
         """Gets the header for the specified column.
 
-        @param propertyId
+        @param propertyId:
                    the propertyId identifying the column.
         @return: the header for the specified column if it has one.
         """
@@ -816,9 +808,9 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     def setColumnHeader(self, propertyId, header):
         """Sets the column header for the specified column;
 
-        @param propertyId
+        @param propertyId:
                    the propertyId identifying the column.
-        @param header
+        @param header:
                    the header to set.
         """
         if header is None:
@@ -836,7 +828,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     def getColumnAlignment(self, propertyId):
         """Gets the specified column's alignment.
 
-        @param propertyId
+        @param propertyId:
                    the propertyID identifying the column.
         @return: the specified column's alignment if it as one; null otherwise.
         """
@@ -848,12 +840,11 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         """Sets the specified column's alignment.
 
         Throws IllegalArgumentException if the alignment is not one of
-        the following: L{#ALIGN_LEFT}, L{#ALIGN_CENTER} or
-        L{#ALIGN_RIGHT}
+        the following: L{ALIGN_LEFT}, L{ALIGN_CENTER} or L{ALIGN_RIGHT}
 
-        @param propertyId
+        @param propertyId:
                    the propertyID identifying the column.
-        @param alignment
+        @param alignment:
                    the desired alignment.
         """
         # Checks for valid alignments
@@ -878,7 +869,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     def isColumnCollapsed(self, propertyId):
         """Checks if the specified column is collapsed.
 
-        @param propertyId
+        @param propertyId:
                    the propertyID identifying the column.
         @return: true if the column is collapsed; false otherwise;
         """
@@ -889,11 +880,11 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     def setColumnCollapsed(self, propertyId, collapsed):
         """Sets whether the specified column is collapsed or not.
 
-        @param propertyId
+        @param propertyId:
                    the propertyID identifying the column.
-        @param collapsed
+        @param collapsed:
                    the desired collapsedness.
-        @raise IllegalStateException
+        @raise ValueError:
                     if column collapsing is not allowed
         """
         if not self.isColumnCollapsingAllowed():
@@ -920,7 +911,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     def setColumnCollapsingAllowed(self, collapsingAllowed):
         """Sets whether column collapsing is allowed or not.
 
-        @param collapsingAllowed
+        @param collapsingAllowed:
                    specifies whether column collapsing is allowed.
         """
         self._columnCollapsingAllowed = collapsingAllowed
@@ -943,7 +934,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     def setColumnReorderingAllowed(self, reorderingAllowed):
         """Sets whether column reordering is allowed or not.
 
-        @param reorderingAllowed
+        @param reorderingAllowed:
                    specifies whether column reordering is allowed.
         """
         self._columnReorderingAllowed = reorderingAllowed
@@ -990,7 +981,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                 needsPageBufferReset=True):
         """Setter for property currentPageFirstItem.
 
-        @param newIndex
+        @param newIndex:
                    the New value of property currentPageFirstItem.
         """
         if newIndex < 0:
@@ -1069,9 +1060,9 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     def isPageBufferingEnabled(self):
         """Getter for property pageBuffering.
 
-        @deprecated functionality is not needed in ajax rendering model
+        @deprecated: functionality is not needed in ajax rendering model
 
-        @return: the Value of property pageBuffering.
+        @return: the value of property pageBuffering.
         """
         return True
 
@@ -1079,10 +1070,10 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     def setPageBufferingEnabled(self, pageBuffering):
         """Setter for property pageBuffering.
 
-        @deprecated functionality is not needed in ajax rendering model
+        @deprecated: functionality is not needed in ajax rendering model
 
-        @param pageBuffering
-                   the New value of property pageBuffering.
+        @param pageBuffering:
+                   the new value of property pageBuffering.
         """
         warn('functionality is not needed in ajax rendering model',
              DeprecationWarning)
@@ -1103,8 +1094,8 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
         The table is not selectable by default.
 
-        @param selectable
-                   the New value of property selectable.
+        @param selectable:
+                   the new value of property selectable.
         """
         if self._selectable != selectable:
             self._selectable = selectable
@@ -1114,7 +1105,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     def getColumnHeaderMode(self):
         """Getter for property columnHeaderMode.
 
-        @return: the Value of property columnHeaderMode.
+        @return: the value of property columnHeaderMode.
         """
         return self._columnHeaderMode
 
@@ -1122,8 +1113,8 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     def setColumnHeaderMode(self, columnHeaderMode):
         """Setter for property columnHeaderMode.
 
-        @param columnHeaderMode
-                   the New value of property columnHeaderMode.
+        @param columnHeaderMode:
+                   the new value of property columnHeaderMode.
         """
         if ((columnHeaderMode >= self.COLUMN_HEADER_MODE_HIDDEN)
                 and (columnHeaderMode <=
@@ -1342,9 +1333,9 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         hierarchy. Detaches properties and components if those are no more
         rendered in client.
 
-        @param oldListenedProperties
+        @param oldListenedProperties:
                    set of properties that where listened in last render
-        @param oldVisibleComponents
+        @param oldVisibleComponents:
                    set of components that where attached in last render
         """
         if oldVisibleComponents is not None:
@@ -1365,12 +1356,12 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         property data source in order to allow garbage collection to take
         care of removing the unused component from memory.
 
-        Override this method and getPropertyValue(Object, Object, Property)
+        Override this method and C{getPropertyValue}
         with custom logic if you need to deal with buffered fields.
 
-        @see: #getPropertyValue(Object, Object, Property)
+        @see: L{getPropertyValue}
 
-        @param oldVisibleComponents
+        @param oldVisibleComponents:
                    a set of components that should be unregistered.
         """
         component.setParent(None)
@@ -1390,7 +1381,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     def refreshCurrentPage(self):
         """Refreshes the current page contents.
 
-        @deprecated should not need to be used
+        @deprecated: should not need to be used
         """
         warn('should not need to be used', DeprecationWarning)
 
@@ -1399,27 +1390,27 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         """Sets the row header mode.
 
         The mode can be one of the following ones:
-        <ul>
-        <li>L{#ROW_HEADER_MODE_HIDDEN}: The row captions are hidden.</li>
-        <li>L{#ROW_HEADER_MODE_ID}: Items Id-objects C{toString()}
-        is used as row caption.
-        <li>L{#ROW_HEADER_MODE_ITEM}: Item-objects C{toString()}
-        is used as row caption.
-        <li>L{#ROW_HEADER_MODE_PROPERTY}: Property set with
-        L{#setItemCaptionPropertyId(Object)} is used as row header.
-        <li>L{#ROW_HEADER_MODE_EXPLICIT_DEFAULTS_ID}: Items Id-objects
-        C{toString()} is used as row header. If caption is explicitly
-        specified, it overrides the id-caption.
-        <li>L{#ROW_HEADER_MODE_EXPLICIT}: The row headers must be explicitly
-        specified.</li>
-        <li>L{#ROW_HEADER_MODE_INDEX}: The index of the item is used as row
-        caption. The index mode can only be used with the containers implementing
-        C{container.IIndexed} interface.</li>
-        </ul>
-        The default value is L{#ROW_HEADER_MODE_HIDDEN}
 
-        @param mode
-                   the One of the modes listed above.
+          - L{ROW_HEADER_MODE_HIDDEN}: The row captions are hidden.
+          - L{ROW_HEADER_MODE_ID}: Items Id-objects C{__str__}
+            is used as row caption.
+          - L{ROW_HEADER_MODE_ITEM}: Item-objects C{__str__}
+            is used as row caption.
+          - L{ROW_HEADER_MODE_PROPERTY}: Property set with
+            L{setItemCaptionPropertyId} is used as row header.
+          - L{ROW_HEADER_MODE_EXPLICIT_DEFAULTS_ID}: Items Id-objects
+            C{__str__} is used as row header. If caption is explicitly
+            specified, it overrides the id-caption.
+          - L{ROW_HEADER_MODE_EXPLICIT}: The row headers must be explicitly
+            specified.
+          - L{ROW_HEADER_MODE_INDEX}: The index of the item is used as row
+            caption. The index mode can only be used with the containers
+            implementing C{container.IIndexed} interface.
+
+        The default value is L{ROW_HEADER_MODE_HIDDEN}
+
+        @param mode:
+                   the one of the modes listed above.
         """
         if self.ROW_HEADER_MODE_HIDDEN == mode:
             self._rowCaptionsAreHidden = True
@@ -1434,8 +1425,8 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     def getRowHeaderMode(self):
         """Gets the row header mode.
 
-        @return: the Row header mode.
-        @see: #setRowHeaderMode(int)
+        @return: the row header mode.
+        @see: L{setRowHeaderMode}
         """
         if self._rowCaptionsAreHidden:
             return self.ROW_HEADER_MODE_HIDDEN
@@ -1447,16 +1438,16 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         """Adds the new row to table and fill the visible cells (except
         generated columns) with given values.
 
-        @param cells
+        @param cells:
                    the Object array that is used for filling the visible
                    cells new row. The types must be settable to visible
                    column property types.
-        @param itemId
+        @param itemId:
                    the Id the new row. If null, a new id is automatically
                    assigned. If given, the table cant already have a item
                    with given id.
         @return: Returns item id for the new row. Returns null if operation
-                fails.
+                 fails.
         """
         nargs = len(args)
         if nargs < 2:
@@ -1557,11 +1548,10 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     def getItemIdsInRange(self, itemId, length):
         """Gets items ids from a range of key values
 
-        @param startRowKey
+        @param startRowKey:
                    The start key
-        @param endRowKey
+        @param endRowKey:
                    The end key
-        @return
         """
         ids = set()
         for _ in range(length):
@@ -1576,7 +1566,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     def handleSelectedItems(self, variables):
         """Handles selection if selection is a multiselection
 
-        @param variables
+        @param variables:
                    The variables
         """
         ka = variables.get('selected')
@@ -1638,8 +1628,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     def changeVariables(self, source, variables):
         """Invoked when the value of a variable has changed.
 
-        @see: com.vaadin.ui.Select#changeVariables(java.lang.Object,
-             java.util.Map)
+        @see: L{Select.changeVariables}
         """
         clientNeedsContentRefresh = False
 
@@ -1784,9 +1773,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
 
     def handleClickEvent(self, variables):
-        """Handles click event
-
-        @param variables
+        """Handles click event.
         """
         # Item click event
         if 'clickEvent' in variables:
@@ -1827,8 +1814,6 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
     def handleColumnResizeEvent(self, variables):
         """Handles the column resize event sent by the client.
-
-        @param variables
         """
         if 'columnResizeEventColumn' in variables:
             cid = variables.get('columnResizeEventColumn')
@@ -1888,7 +1873,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     def enableContentRefreshing(self, refreshContent):
         """Go to mode where content content refreshing has effect.
 
-        @param refreshContent
+        @param refreshContent:
                    true if content refresh needs to be done
         """
         self._isContentRefreshesEnabled = True
@@ -2244,9 +2229,6 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     def paintRowAttributes(self, *args):
         """A method where extended Table implementations may add their
         custom attributes for rows.
-
-        @param target
-        @param itemId
         """
         # tr attributes
         nargs = len(args)
@@ -2323,14 +2305,14 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         create editors for table cells. Otherwise formatPropertyValue is
         used to format the value representation.
 
-        @param rowId
+        @param rowId:
                    the Id of the row (same as item Id).
-        @param colId
+        @param colId:
                    the Id of the column.
-        @param property
+        @param property:
                    the Property to be presented.
-        @return: Object Either formatted value or IComponent for field.
-        @see: #setTableFieldFactory(TableFieldFactory)
+        @return: Object either formatted value or IComponent for field.
+        @see: L{setTableFieldFactory}
         """
         if self.isEditable() and (self._fieldFactory is not None):
             f = self._fieldFactory.createField(self.getContainerDataSource(),
@@ -2347,16 +2329,15 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
     def formatPropertyValue(self, rowId, colId, prop):
         """Formats table cell property values. By default the
-        property.toString() and return a empty string for null properties.
+        property.__str__ and return a empty string for null properties.
 
-        @param rowId
+        @param rowId:
                    the Id of the row (same as item Id).
-        @param colId
+        @param colId:
                    the Id of the column.
-        @param property
+        @param prop:
                    the Property to be formatted.
-        @return: the String representation of property and its value.
-        @since 3.1
+        @return: the string representation of property and its value.
         """
         if prop is None:
             return ''
@@ -2367,7 +2348,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     def addActionHandler(self, actionHandler):
         """Registers a new action handler for this container
 
-        @see: action.container.addActionHandler(action.Handler)
+        @see: L{action.container.addActionHandler}
         """
         if actionHandler is not None:
 
@@ -2384,7 +2365,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         """Removes a previously registered action handler for the contents
         of this container.
 
-        @see: container.removeActionHandler(action.Handler)
+        @see: L{container.removeActionHandler}
         """
         if (self._actionHandlers is not None
                 and actionHandler in self._actionHandlers):
@@ -2408,7 +2389,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
         Also listens changes in rendered items to refresh content area.
 
-        @see: Property.ValueChangeListener.valueChange()
+        @see: L{property.IValueChangeListener.valueChange}
         """
         if event.getProperty() == self:
             super(Table, self).valueChange(event)
@@ -2432,7 +2413,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     def attach(self):
         """Notifies the component that it is connected to an application.
 
-        @see: com.vaadin.ui.IComponent#attach()
+        @see: L{IComponent.attach}
         """
         super(Table, self).attach()
 
@@ -2446,7 +2427,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     def detach(self):
         """Notifies the component that it is detached from the application
 
-        @see: com.vaadin.ui.IComponent#detach()
+        @see: L{IComponent.detach}
         """
         super(Table, self).detach()
 
@@ -2458,7 +2439,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     def removeAllItems(self):
         """Removes all Items from the IContainer.
 
-        @see: com.vaadin.data.IContainer#removeAllItems()
+        @see: L{IContainer.removeAllItems}
         """
         self._currentPageFirstItemId = None
         self._currentPageFirstItemIndex = 0
@@ -2469,7 +2450,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         """Removes the Item identified by C{ItemId} from the
         IContainer.
 
-        @see: com.vaadin.data.IContainer#removeItem(Object)
+        @see: L{IContainer.removeItem}
         """
         nextItemId = self.nextItemId(itemId)
         ret = super(Table, self).removeItem(itemId)
@@ -2488,7 +2469,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         """Removes a Property specified by the given Property ID from the
         IContainer.
 
-        @see: com.vaadin.data.IContainer#removeContainerProperty(Object)
+        @see: L{IContainer.removeContainerProperty}
         """
         # If a visible property is removed, remove the corresponding column
         self._visibleColumns.remove(propertyId)
@@ -2506,35 +2487,25 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     def addContainerProperty(self, *args):
         """Adds a new property to the table and show it as a visible column.
 
-        @param propertyId
-                   the Id of the proprty.
-        @param type
-                   the class of the property.
-        @param defaultValue
-                   the default value given for all existing items.
-        @see: com.vaadin.data.IContainer#addContainerProperty(Object, Class,
-             Object)
-        ---
-        Adds a new property to the table and show it as a visible column.
+        @param args: tuple of the form
+            - (propertyId, type, defaultValue)
+              1. the Id of the proprty.
+              2. the class of the property.
+              3. the default value given for all existing items.
+            - (propertyId, type, defaultValue, columnHeader, columnIcon,
+              columnAlignment)
+              1. the Id of the proprty
+              2. the class of the property
+              3. the default value given for all existing items
+              4. the Explicit header of the column. If explicit header is
+                 not needed, this should be set null.
+              5. the Icon of the column. If icon is not needed, this should
+                 be set null.
+              6. the Alignment of the column. Null implies align left.
 
-        @param propertyId
-                   the Id of the proprty
-        @param type
-                   the class of the property
-        @param defaultValue
-                   the default value given for all existing items
-        @param columnHeader
-                   the Explicit header of the column. If explicit header is
-                   not needed, this should be set null.
-        @param columnIcon
-                   the Icon of the column. If icon is not needed, this should
-                   be set null.
-        @param columnAlignment
-                   the Alignment of the column. Null implies align left.
         @raise NotImplementedError:
                     if the operation is not supported.
-        @see: com.vaadin.data.IContainer#addContainerProperty(Object, Class,
-             Object)
+        @see: L{IContainer.addContainerProperty}
         """
         args = args
         nargs = len(args)
@@ -2587,9 +2558,9 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         Also note that getVisibleColumns() will return the generated columns,
         while getContainerPropertyIds() will not.
 
-        @param id
+        @param id:
                    the id of the column to be added
-        @param generatedColumn
+        @param generatedColumn:
                    the L{IColumnGenerator} to use for this column
         """
         if generatedColumn is None:
@@ -2611,7 +2582,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     def getColumnGenerator(self, columnId):
         """Returns the IColumnGenerator used to generate the given column.
 
-        @param columnId
+        @param columnId:
                    The id of the generated column
         @return: The IColumnGenerator used for the given columnId or null.
         """
@@ -2621,7 +2592,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     def removeGeneratedColumn(self, columnId):
         """Removes a generated column previously added with addGeneratedColumn.
 
-        @param columnId
+        @param columnId:
                    id of the generated column to remove
         @return: true if the column could be removed (existed in the Table)
         """
@@ -2646,11 +2617,11 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         misleading. Some items may be partly or totally out of the viewport of
         the table's scrollable area. Actully detecting rows which can be
         actually seen by the end user may be problematic due to the client
-        server architecture. Using L{#getCurrentPageFirstItemId()}
-        combined with L{#getPageLength()} may produce good enough
+        server architecture. Using L{getCurrentPageFirstItemId}
+        combined with L{getPageLength} may produce good enough
         estimates in some situations.
 
-        @see: com.vaadin.ui.Select#getVisibleItemIds()
+        @see: L{Select.getVisibleItemIds}
         """
         visible = list()
         cells = self.getVisibleCells()
@@ -2665,7 +2636,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         """IContainer datasource item set change. Table must flush its buffers
         on change.
 
-        @see: container.ItemSetChangeListener.containerItemSetChange()
+        @see: L{container.ItemSetChangeListener.containerItemSetChange}
         """
         super(Table, self).containerItemSetChange(event)
 
@@ -2695,7 +2666,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         """IContainer datasource property set change. Table must flush its
         buffers on change.
 
-        @see: container.PropertySetChangeListener.containerPropertySetChange()
+        @see: L{container.PropertySetChangeListener.containerPropertySetChange}
         """
         self.disableContentRefreshing()
         super(Table, self).containerPropertySetChange(event)
@@ -2727,7 +2698,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
         @raise NotImplementedError:
                     if set to true.
-        @see: com.vaadin.ui.Select#setNewItemsAllowed(boolean)
+        @see: L{Select.setNewItemsAllowed}
         """
         if allowNewOptions:
             raise NotImplementedError
@@ -2737,7 +2708,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         """Gets the ID of the Item following the Item that corresponds to
         itemId.
 
-        @see: com.vaadin.data.container.IOrdered#nextItemId(java.lang.Object)
+        @see: L{IOrdered.nextItemId}
         """
         return self.items.nextItemId(itemId)
 
@@ -2746,7 +2717,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         """Gets the ID of the Item preceding the Item that corresponds to
         the itemId.
 
-        @see: com.vaadin.data.container.IOrdered#prevItemId(java.lang.Object)
+        @see: L{IOrdered.prevItemId}
         """
         return self.items.prevItemId(itemId)
 
@@ -2754,7 +2725,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     def firstItemId(self):
         """Gets the ID of the first Item in the IContainer.
 
-        @see: com.vaadin.data.container.IOrdered#firstItemId()
+        @see: L{IOrdered.firstItemId}
         """
         return self.items.firstItemId()
 
@@ -2762,7 +2733,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     def lastItemId(self):
         """Gets the ID of the last Item in the IContainer.
 
-        @see: com.vaadin.data.container.IOrdered#lastItemId()
+        @see: L{IOrdered.lastItemId}
         """
         return self.items.lastItemId()
 
@@ -2771,7 +2742,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         """Tests if the Item corresponding to the given Item ID is the first
         Item in the IContainer.
 
-        @see: com.vaadin.data.container.IOrdered#isFirstId(java.lang.Object)
+        @see: L{IOrdered.isFirstId}
         """
         return self.items.isFirstId(itemId)
 
@@ -2780,7 +2751,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         """Tests if the Item corresponding to the given Item ID is the last
         Item in the IContainer.
 
-        @see: com.vaadin.data.container.IOrdered#isLastId(java.lang.Object)
+        @see: L{IOrdered.isLastId}
         """
         return self.items.isLastId(itemId)
 
@@ -2788,12 +2759,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     def addItemAfter(self, previousItemId, newItemId=None):
         """Adds new item after the given item.
 
-        @see: com.vaadin.data.container.IOrdered#addItemAfter(java.lang.Object)
-        ---
-        Adds new item after the given item.
-
-        @see: com.vaadin.data.container.IOrdered#addItemAfter(java.lang.Object,
-             java.lang.Object)
+        @see: L{IOrdered.addItemAfter}
         """
         if newItemId is None:
             item = self.items.addItemAfter(previousItemId)
@@ -2814,10 +2780,10 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         The TableFieldFactory is only used if the Table is editable. By
         default the DefaultFieldFactory is used.
 
-        @param fieldFactory
+        @param fieldFactory:
                    the field factory to set.
-        @see: #isEditable
-        @see: DefaultFieldFactory
+        @see: L{isEditable}
+        @see: L{DefaultFieldFactory}
         """
         self._fieldFactory = fieldFactory
 
@@ -2829,7 +2795,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         The IFieldFactory is only used if the Table is editable.
 
         @return: TableFieldFactory used to create the IField instances.
-        @see: #isEditable
+        @see: L{isEditable}
         """
         return self._fieldFactory
 
@@ -2841,8 +2807,8 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         The IFieldFactory is only used if the Table is editable.
 
         @return: IFieldFactory used to create the IField instances.
-        @see: #isEditable
-        @deprecated use L{#getTableFieldFactory()} instead
+        @see: L{isEditable}
+        @deprecated: use L{getTableFieldFactory} instead
         """
         if isinstance(self._fieldFactory, IFieldFactory):
             return self._fieldFactory
@@ -2857,11 +2823,11 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         The IFieldFactory is only used if the Table is editable. By default
         the BaseFieldFactory is used.
 
-        @param fieldFactory
+        @param fieldFactory:
                    the field factory to set.
-        @see: #isEditable
-        @see: BaseFieldFactory
-        @deprecated use L{setTableFieldFactory()} instead
+        @see: L{isEditable}
+        @see: L{BaseFieldFactory}
+        @deprecated: use L{setTableFieldFactory()} instead
         """
         warn('use setTableFieldFactory() instead', DeprecationWarning)
 
@@ -2881,9 +2847,9 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         the IFieldFactory interface, and assign it to table, and set the
         editable property to true.
 
-        @return: true if table is editable, false oterwise.
-        @see: IField
-        @see: IFieldFactory
+        @return: true if table is editable, false otherwise.
+        @see: L{IField}
+        @see: L{IFieldFactory}
         """
         return self._editable
 
@@ -2898,10 +2864,10 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         the IFieldFactory interface, and assign it to table, and set the
         editable property to true.
 
-        @param editable
+        @param editable:
                    true if table should be editable by user.
-        @see: IField
-        @see: IFieldFactory
+        @see: L{IField}
+        @see: L{IFieldFactory}
         """
         self._editable = editable
         # Assure visual refresh
@@ -2915,14 +2881,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         @raise NotImplementedError:
                     if the container data source does not implement
                     container.ISortable
-        @see: com.vaadin.data.container.ISortable#sort(java.lang.Object[],
-             boolean[])
-        ---
-        Sorts the table by currently selected sorting column.
-
-        @raise NotImplementedError:
-                    if the container data source does not implement
-                    container.ISortable
+        @see: L{ISortable.sort}
         """
         nargs = len(args)
         if nargs == 0:
@@ -2948,7 +2907,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     def getSortableContainerPropertyIds(self):
         """Gets the container property IDs, which can be used to sort the item.
 
-        @see: com.vaadin.data.container.ISortable#getSortableContainerPropertyIds()
+        @see: L{ISortable.getSortableContainerPropertyIds}
         """
         c = self.getContainerDataSource()
         if isinstance(c, container.ISortable) and not self.isSortDisabled():
@@ -2966,16 +2925,12 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
 
     def setSortContainerPropertyId(self, propertyId, doSort=True):
-        """Sets the currently sorted column property id.
-
-        @param propertyId
-                   the IContainer property id of the currently sorted column.
-        ---
-        Internal method to set currently sorted column property id. With
+        """Sets the currently sorted column property id. With
         doSort flag actual sorting may be bypassed.
 
-        @param propertyId
-        @param doSort
+        @param propertyId:
+                   the IContainer property id of the currently sorted column.
+        @param doSort:
         """
         if ((self._sortContainerPropertyId is not None
             and not (self._sortContainerPropertyId == propertyId))
@@ -2991,24 +2946,18 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     def isSortAscending(self):
         """Is the table currently sorted in ascending order.
 
-        @return: C{True} if ascending, C{False}
-                if descending.
+        @return: C{True} if ascending, C{False} if descending.
         """
         return self._sortAscending
 
 
     def setSortAscending(self, ascending, doSort=True):
-        """Sets the table in ascending order.
-
-        @param ascending
-                   C{True} if ascending, C{False}
-                   if descending.
-        ---
-        Internal method to set sort ascending. With doSort flag actual
+        """Sets the table in ascending order. With doSort flag actual
         sort can be bypassed.
 
-        @param ascending
-        @param doSort
+        @param ascending:
+                   C{True} if ascending, C{False} if descending.
+        @param doSort:
         """
         if self._sortAscending != ascending:
             self._sortAscending = ascending
@@ -3036,7 +2985,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         sortable columns are given even in the case where datasource
         would support this.
 
-        @param sortDisabled
+        @param sortDisabled:
                    True iff sorting is disabled.
         """
         if self._sortDisabled != sortDisabled:
@@ -3048,7 +2997,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         """Table does not support lazy options loading mode. Setting this
         true will throw NotImplementedError.
 
-        @see: com.vaadin.ui.Select#setLazyLoading(boolean)
+        @see: L{Select.setLazyLoading}
         """
         if useLazyLoading:
             raise NotImplementedError, \
@@ -3058,7 +3007,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     def setCellStyleGenerator(self, cellStyleGenerator):
         """Set cell style generator for Table.
 
-        @param cellStyleGenerator
+        @param cellStyleGenerator:
                    New cell style generator or null to remove generator.
         """
         self._cellStyleGenerator = cellStyleGenerator
@@ -3071,35 +3020,15 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
 
     def addListener(self, listener, iface):
-        """Adds a header click listener which handles the click events when
-        the user clicks on a column header cell in the Table.
+        """Adds a header click/footer click/column resize/column reorder
+        listener which handles the click events when the user clicks on a
+        column header cell in the Table.
 
         The listener will receive events which contain information about which
         column was clicked and some details about the mouse event.
 
         @param listener:
-                   The handler which should handle the header click events.
-        ---
-        Adds a footer click listener which handles the click events when the
-        user clicks on a column footer cell in the Table.
-
-        The listener will receive events which contain information about which
-        column was clicked and some details about the mouse event.
-
-        @param listener:
-                   The handler which should handle the footer click events.
-        ---
-        Adds a column resize listener to the Table. A column resize listener
-        is called when a user resizes a columns width.
-
-        @param listener:
-                   The listener to attach to the Table
-        ---
-        Adds a column reorder listener to the Table. A column reorder listener
-        is called when a user reorders columns.
-
-        @param listener:
-                   The listener to attach to the Table
+                   The handler which should handle the events.
         """
         if iface == IColumnReorderListener:
             self.registerListener(
@@ -3230,8 +3159,6 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     def setDragMode(self, newDragMode):
         """Sets the drag start mode of the Table. Drag start mode controls
         how Table behaves as a drag source.
-
-        @param newDragMode
         """
         self._dragMode = newDragMode
         self.requestRepaint()
@@ -3239,7 +3166,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
     def getDragMode(self):
         """@return: the current start mode of the Table. Drag start mode
-                controls how Table behaves as a drag source.
+                    controls how Table behaves as a drag source.
         """
         return self._dragMode
 
@@ -3267,9 +3194,9 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
         Note, that on some clients the mode may not be respected. E.g. on
         touch based devices CTRL/SHIFT base selection method is invalid, so
-        touch based browsers always use the L{MultiSelectMode#SIMPLE}.
+        touch based browsers always use the L{MultiSelectMode.SIMPLE}.
 
-        @param mode
+        @param mode:
                    The select mode of the table
         """
         self._multiSelectMode = mode
@@ -3287,7 +3214,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     def getColumnFooter(self, propertyId):
         """Gets the footer caption beneath the rows
 
-        @param propertyId
+        @param propertyId:
                    The propertyId of the column *
         @return: The caption of the footer or NULL if not set
         """
@@ -3298,10 +3225,9 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         """Sets the column footer caption. The column footer caption is the
         text displayed beneath the column if footers have been set visible.
 
-        @param propertyId
+        @param propertyId:
                    The properyId of the column
-
-        @param footer
+        @param footer:
                    The caption of the footer
         """
         if footer is None:
@@ -3316,10 +3242,9 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         """Sets the footer visible in the bottom of the table.
 
         The footer can be used to add column related data like sums to the
-        bottom of the Table using setColumnFooter(Object propertyId, String
-        footer).
+        bottom of the Table using setColumnFooter.
 
-        @param visible
+        @param visible:
                    Should the footer be visible
         """
         self._columnFootersVisible = visible
@@ -3338,17 +3263,17 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 class TableDragMode(object):
     """Modes that Table support as drag sourse."""
 
-    # Table does not start drag and drop events. HTM5 style events started
-    # by browser may still happen.
+    #: Table does not start drag and drop events. HTM5 style events started
+    #  by browser may still happen.
     NONE = 'NONE'
 
-    # Table starts drag with a one row only.
+    #: Table starts drag with a one row only.
     ROW = 'ROW'
 
-    # Table drags selected rows, if drag starts on a selected rows. Else it
-    # starts like in ROW mode. Note, that in Transferable there will still
-    # be only the row on which the drag started, other dragged rows need to
-    # be checked from the source Table.
+    #: Table drags selected rows, if drag starts on a selected rows. Else it
+    #  starts like in ROW mode. Note, that in Transferable there will still
+    #  be only the row on which the drag started, other dragged rows need to
+    #  be checked from the source Table.
     MULTIROW = 'MULTIROW'
 
     _values = [NONE, ROW, MULTIROW]
@@ -3369,14 +3294,13 @@ class IColumnGenerator(object):
         """Called by Table when a cell in a generated column needs to be
         generated.
 
-        @param source
+        @param source:
                    the source Table
-        @param itemId
+        @param itemId:
                    the itemId (aka rowId) for the of the cell to be generated
-        @param columnId
+        @param columnId:
                    the id for the generated column (as specified in
                    addGeneratedColumn)
-        @return
         """
         raise NotImplementedError
 
@@ -3385,20 +3309,20 @@ class ICellStyleGenerator(object):
     """Allow to define specific style on cells (and rows) contents. Implements
     this interface and pass it to Table.setCellStyleGenerator. Row styles are
     generated when porpertyId is null. The CSS class name that will be added
-    to the cell content is <tt>v-table-cell-content-[style name]</tt>, and
-    the row style will be <tt>v-table-row-[style name]</tt>.
+    to the cell content is C{v-table-cell-content-[style name]}, and
+    the row style will be C{v-table-row-[style name]}.
     """
 
     def getStyle(self, itemId, propertyId):
         """Called by Table when a cell (and row) is painted.
 
-        @param itemId
+        @param itemId:
                    The itemId of the painted cell
-        @param propertyId
+        @param propertyId:
                    The propertyId of the cell, null when getting row style
         @return: The style name to add to this cell or row. (the CSS class
-                name will be v-table-cell-content-[style name], or
-                v-table-row-[style name] for rows)
+                 name will be v-table-cell-content-[style name], or
+                 v-table-row-[style name] for rows)
         """
         raise NotImplementedError
 
@@ -3408,8 +3332,6 @@ class TableTransferable(DataBoundTransferable):
     transferred from a table.
 
     @see: L{DataBoundTransferable}.
-
-    @since 6.3
     """
 
     def __init__(self, rawVariables, table):
@@ -3486,15 +3408,15 @@ class TableDropCriterion(ServerSideCriterion):
 
 
     def getAllowedItemIds(self, dragEvent, table, visibleItemIds):
-        """@param dragEvent
-        @param table
+        """@param dragEvent:
+        @param table:
                    the table for which the allowed item identifiers are
                    defined
-        @param visibleItemIds
+        @param visibleItemIds:
                    the list of currently rendered item identifiers, accepted
                    item id's need to be detected only for these visible items
         @return: the set of identifiers for items on which the dragEvent will
-                be accepted
+                 be accepted
         """
         pass
 
@@ -3507,7 +3429,7 @@ class IHeaderClickListener(object):
     def headerClick(self, event):
         """Called when a user clicks a header column cell
 
-        @param event
+        @param event:
                    The event which contains information about the column and
                    the mouse click event
         """
@@ -3545,7 +3467,7 @@ class IFooterClickListener(object):
     def footerClick(self, event):
         """Called when a user clicks a footer column cell
 
-        @param event
+        @param event:
                    The event which contains information about the column and
                    the mouse click event
         """
@@ -3563,13 +3485,13 @@ class FooterClickEvent(ClickEvent):
     """
 
     def __init__(self, source, propertyId, details):
-        """Constructor
+        """Constructor.
 
-        @param source
+        @param source:
                    The source of the component
-        @param propertyId
+        @param propertyId:
                    The propertyId of the column
-        @param details
+        @param details:
                    The mouse details of the click
         """
         super(FooterClickEvent, self).__init__(source, details)
@@ -3590,7 +3512,7 @@ class IColumnResizeListener(object):
     def columnResize(self, event):
         """This method is triggered when the column has been resized
 
-        @param event
+        @param event:
                    The event which contains the column property id, the
                    previous width of the column and the current width of
                    the column
@@ -3610,13 +3532,13 @@ class ColumnResizeEvent(ComponentEvent):
     def __init__(self, source, propertyId, previous, current):
         """Constructor
 
-        @param source
+        @param source:
                    The source of the event
-        @param propertyId
+        @param propertyId:
                    The columns property id
-        @param previous
+        @param previous:
                    The width in pixels of the column before the resize event
-        @param current
+        @param current:
                    The width in pixels of the column after the resize event
         """
         super(ColumnResizeEvent, self).__init__(source)
@@ -3654,8 +3576,6 @@ class IColumnReorderListener(object):
 
     def columnReorder(self, event):
         """This method is triggered when the column has been reordered
-
-        @param event
         """
         raise NotImplementedError
 
@@ -3670,7 +3590,7 @@ class ColumnReorderEvent(ComponentEvent):
     def __init__(self, source):
         """Constructor
 
-        @param source
+        @param source:
                    The source of the event
         """
         super(ColumnReorderEvent, self).__init__(source)

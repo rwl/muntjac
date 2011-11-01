@@ -25,30 +25,25 @@ class SplitPanel(AbstractSplitPanel):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
-    @since 5.0
-    @deprecated in 6.5. Use L{HorizontalSplitPanel} or
-                L{VerticalSplitPanel} instead.
+    @version: @VERSION@
+    @deprecated: Use L{HorizontalSplitPanel} or L{VerticalSplitPanel} instead.
     """
 
     CLIENT_WIDGET = None #ClientWidget(VSplitPanelHorizontal, LoadStyle.EAGER)
 
-    # Components are to be laid out vertically.
+    #: Components are to be laid out vertically.
     ORIENTATION_VERTICAL = 0
 
-    # Components are to be laid out horizontally.
+    #: Components are to be laid out horizontally.
     ORIENTATION_HORIZONTAL = 1
 
 
     def __init__(self, orientation=None):
         """Creates a new split panel. The orientation of the panels is
-        C{ORIENTATION_VERTICAL}.
-        ---
-        Create a new split panels. The orientation of the panel is given as
-        parameters.
+        C{ORIENTATION_VERTICAL} by default.
 
-        @param orientation
-                   the Orientation of the layout.
+        @param orientation:
+                   the orientation of the layout.
         """
         super(SplitPanel, self).__init__()
 
@@ -64,9 +59,9 @@ class SplitPanel(AbstractSplitPanel):
     def paintContent(self, target):
         """Paints the content of this component.
 
-        @param target
+        @param target:
                    the Paint Event.
-        @raise PaintException
+        @raise PaintException:
                     if the paint operation failed.
         """
         super(SplitPanel, self).paintContent(target)
@@ -85,7 +80,7 @@ class SplitPanel(AbstractSplitPanel):
     def setOrientation(self, orientation):
         """Sets the orientation of the split panel.
 
-        @param orientation
+        @param orientation:
                    the New value of property orientation.
         """
         # Checks the validity of the argument

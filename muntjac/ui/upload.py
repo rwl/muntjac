@@ -19,10 +19,10 @@ from warnings import warn
 from muntjac.ui.abstract_component import AbstractComponent
 
 from muntjac.ui.component import \
-    IComponent, IFocusable, Event as ComponentEvent
+    IFocusable, Event as ComponentEvent
 
 from muntjac.terminal.stream_variable import \
-    IStreamingProgressEvent, IStreamVariable, IStreamingEvent
+    IStreamVariable, IStreamingEvent
 
 from muntjac.terminal.gwt.server.exceptions import \
     NoInputStreamException, NoOutputStreamException
@@ -33,14 +33,13 @@ class IStartedListener(object):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
-    @since 5.0
+    @version: @VERSION@
     """
 
     def uploadStarted(self, event):
         """Upload has started.
 
-        @param event
+        @param event:
                    the Upload started event.
         """
         raise NotImplementedError
@@ -51,14 +50,13 @@ class IFinishedListener(object):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
-    @since 3.0
+    @version: @VERSION@
     """
 
     def uploadFinished(self, event):
         """Upload has finished.
 
-        @param event
+        @param event:
                    the Upload finished event.
         """
         raise NotImplementedError
@@ -69,14 +67,13 @@ class IFailedListener(object):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
-    @since 3.0
+    @version: @VERSION@
     """
 
     def uploadFailed(self, event):
         """Upload has finished unsuccessfully.
 
-        @param event
+        @param event:
                    the Upload failed event.
         """
         raise NotImplementedError
@@ -87,15 +84,14 @@ class ISucceededListener(object):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
-    @since 3.0
+    @version: @VERSION@
     """
 
     def uploadSucceeded(self, event):
         """Upload successfull..
 
-        @param event
-                   the Upload successfull event.
+        @param event:
+                   the Upload successful event.
         """
         raise NotImplementedError
 
@@ -104,11 +100,11 @@ class IProgressListener(object):
     """IProgressListener receives events to track progress of upload."""
 
     def updateProgress(self, readBytes, contentLength):
-        """Updates progress to listener
+        """Updates progress to listener.
 
-        @param readBytes
+        @param readBytes:
                    bytes transferred
-        @param contentLength
+        @param contentLength:
                    total size of file currently being uploaded, -1 if unknown
         """
         raise NotImplementedError
@@ -126,8 +122,8 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
     The visible component consists of a file name input box and a browse
     button and an upload submit button to start uploading.
 
-    The Upload component needs a java.io.OutputStream to write the uploaded
-    data. You need to implement the Upload.IReceiver interface and return the
+    The Upload component needs a StringIO to write the uploaded
+    data. You need to implement the upload.IReceiver interface and return the
     output stream in the receiveUpload() method.
 
     You can get an event regarding starting (StartedEvent), progress
@@ -147,12 +143,11 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
 
     Note! Because of browser dependent implementations of <input type="file">
     element, setting size for Upload component is not supported. For some
-    browsers setting size may work to some extend.
+    browsers setting size may work to some extent.
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
-    @since 3.0
+    @version: @VERSION@
     """
 
     CLIENT_WIDGET = None #ClientWidget(VUpload, LoadStyle.LAZY)
@@ -164,13 +159,13 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
         """
         super(Upload, self).__init__()
 
-        # Should the field be focused on next repaint?
+        #: Should the field be focused on next repaint?
         self._focus = False
 
-        # The tab order number of this field.
+        #: The tab order number of this field.
         self._tabIndex = 0
 
-        # The output of the upload is redirected to this receiver.
+        #: The output of the upload is redirected to this receiver.
         self._receiver = None
 
         self._isUploading = False
@@ -181,8 +176,8 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
 
         self._buttonCaption = 'Upload'
 
-        # ProgressListeners to which information about progress
-        # is sent during upload
+        #: ProgressListeners to which information about progress
+        #  is sent during upload
         self._progressListeners = None
 
         self._interrupted = False
@@ -191,7 +186,7 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
 
         self._nextid = 0
 
-        # Flag to indicate that submitting file has been requested.
+        #: Flag to indicate that submitting file has been requested.
         self._forceSubmit = None
 
         if caption:
@@ -206,7 +201,7 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
     def changeVariables(self, source, variables):
         """Invoked when the value of a variable has changed.
 
-        @see: AbstractComponent.changeVariables()
+        @see: L{AbstractComponent.changeVariables}
         """
         if 'pollForStart' in variables:
             idd = variables.get('pollForStart')
@@ -220,9 +215,9 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
     def paintContent(self, target):
         """Paints the content of this component.
 
-        @param target
+        @param target:
                    Target to paint the content on.
-        @raise PaintException
+        @raise PaintException:
                     if the paint operation failed.
         """
         if self._notStarted:
@@ -357,10 +352,6 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
 
     def fireStarted(self, filename, MIMEType):
         """Emit upload received event.
-
-        @param filename
-        @param MIMEType
-        @param length
         """
         evt = StartedEvent(self, filename, MIMEType, self._contentLength)
         self.fireEvent(evt)
@@ -368,10 +359,6 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
 
     def fireUploadInterrupted(self, filename, MIMEType, length, e=None):
         """Emits the upload failed event.
-
-        @param filename
-        @param MIMEType
-        @param length
         """
         if e is None:
             evt = FailedEvent(self, filename, MIMEType, length)
@@ -393,10 +380,6 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
 
     def fireUploadSuccess(self, filename, MIMEType, length):
         """Emits the upload success event.
-
-        @param filename
-        @param MIMEType
-        @param length
         """
         evt = SucceededEvent(self, filename, MIMEType, length)
         self.fireEvent(evt)
@@ -405,9 +388,9 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
     def fireUpdateProgress(self, totalBytes, contentLength):
         """Emits the progress event.
 
-        @param totalBytes
+        @param totalBytes:
                    bytes received so far
-        @param contentLength
+        @param contentLength:
                    actual size of the file being uploaded, if known
         """
         # this is implemented differently than other listeners to
@@ -428,21 +411,20 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
     def setReceiver(self, receiver):
         """Sets the receiver.
 
-        @param receiver
+        @param receiver:
                    the receiver to set.
         """
         self._receiver = receiver
 
 
     def focus(self):
-        """{@inheritDoc}"""
         super(Upload, self).focus()
 
 
     def getTabIndex(self):
         """Gets the Tabulator index of this IFocusable component.
 
-        @see: com.vaadin.ui.IComponent.IFocusable#getTabIndex()
+        @see: L{IFocusable.getTabIndex}
         """
         return self._tabIndex
 
@@ -450,7 +432,7 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
     def setTabIndex(self, tabIndex):
         """Sets the Tabulator index of this IFocusable component.
 
-        @see: com.vaadin.ui.IComponent.IFocusable#setTabIndex(int)
+        @see: L{IFocusable.setTabIndex}
         """
         self._tabIndex = tabIndex
 
@@ -517,8 +499,7 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
         """This method is deprecated, use addListener(IProgressListener)
         instead.
 
-        @deprecated Use addListener(IProgressListener) instead.
-        @param progressListener
+        @deprecated: Use addListener(IProgressListener) instead.
         """
         warn('use addListener() instead', DeprecationWarning)
 
@@ -528,7 +509,7 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
     def getProgressListener(self):
         """This method is deprecated.
 
-        @deprecated Replaced with addListener/removeListener
+        @deprecated: Replaced with addListener/removeListener
         @return: listener
         """
         warn('replaced with addListener/removeListener', DeprecationWarning)
@@ -552,17 +533,17 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
 
         In case the button text is set to null, the button is hidden. In this
         case developer must explicitly initiate the upload process with
-        L{#submitUpload()}.
+        L{submitUpload}.
 
         In case the Upload is used in immediate mode using
-        L{#setImmediate(boolean)}, the file choose (html input with type
+        L{setImmediate}, the file choose (html input with type
         "file") is hidden and only the button with this text is shown.
 
-        <strong>Note</strong> the string given is set as is to the button.
+        B{Note} the string given is set as is to the button.
         HTML formatting is not stripped. Be sure to properly validate your
         value according to your needs.
 
-        @param buttonCaption
+        @param buttonCaption:
                    text for upload components button.
         """
         self._buttonCaption = buttonCaption
@@ -574,7 +555,7 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
 
         In case developer wants to use this feature, he/she will most probably
         want to hide the uploads internal submit button by setting its caption
-        to null with L{#setButtonCaption(String)} method.
+        to null with L{setButtonCaption} method.
 
         Note, that the upload runs asynchronous. Developer should use normal
         upload listeners to trac the process of upload. If the field is empty
@@ -680,17 +661,16 @@ class IReceiver(object):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
-    @since 3.0
+    @version: @VERSION@
     """
 
     def receiveUpload(self, filename, mimeType):
         """Invoked when a new upload arrives.
 
-        @param filename
+        @param filename:
                    the desired filename of the upload, usually as specified
                    by the client.
-        @param mimeType
+        @param mimeType:
                    the MIME type of the uploaded file.
         @return: Stream to which the uploaded file should be written.
         """
@@ -705,36 +685,35 @@ class FinishedEvent(ComponentEvent):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
-    @since 3.0
+    @version: @VERSION@
     """
 
     def __init__(self, source, filename, MIMEType, length):
-        """@param source
+        """@param source:
                    the source of the file.
-        @param filename
+        @param filename:
                    the received file name.
-        @param MIMEType
+        @param MIMEType:
                    the MIME type of the received file.
-        @param length
+        @param length:
                    the length of the received file.
         """
         super(FinishedEvent, self).__init__(source)
 
-        # MIME type of the received file.
+        #: MIME type of the received file.
         self._type = MIMEType
 
-        # Received file name.
+        #: Received file name.
         self._filename = filename
 
-        # Length of the received file.
+        #: Length of the received file.
         self._length = length
 
 
     def getUpload(self):
         """Uploads where the event occurred.
 
-        @return: the Source of the event.
+        @return: the source of the event.
         """
         return self.getSource()
 
@@ -769,17 +748,10 @@ class FailedEvent(FinishedEvent):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
-    @since 3.0
+    @version: @VERSION@
     """
 
     def __init__(self, source, filename, MIMEType, length, reason=None):
-        """@param source
-        @param filename
-        @param MIMEType
-        @param length
-        @param exception
-        """
         super(FailedEvent, self).__init__(source, filename, MIMEType, length)
 
         self._reason = reason
@@ -798,12 +770,8 @@ class NoOutputStreamEvent(FailedEvent):
     """
 
     def __init__(self, source, filename, MIMEType, length):
-        """@param source
-        @param filename
-        @param MIMEType
-        @param length
-        """
-        super(NoOutputStreamEvent, self).__init__(source, filename, MIMEType, length)
+        super(NoOutputStreamEvent, self).__init__(source, filename, MIMEType,
+                length)
 
 
 class NoInputStreamEvent(FailedEvent):
@@ -811,12 +779,8 @@ class NoInputStreamEvent(FailedEvent):
     """
 
     def __init__(self, source, filename, MIMEType, length):
-        """@param source
-        @param filename
-        @param MIMEType
-        @param length
-        """
-        super(NoInputStreamEvent, self).__init__(source, filename, MIMEType, length)
+        super(NoInputStreamEvent, self).__init__(source, filename, MIMEType,
+                length)
 
 
 class SucceededEvent(FinishedEvent):
@@ -825,16 +789,10 @@ class SucceededEvent(FinishedEvent):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
-    @since 3.0
+    @version: @VERSION@
     """
 
     def __init__(self, source, filename, MIMEType, length):
-        """@param source
-        @param filename
-        @param MIMEType
-        @param length
-        """
         super(SucceededEvent, self).__init__(source, filename, MIMEType, length)
 
 
@@ -844,30 +802,24 @@ class StartedEvent(ComponentEvent):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
-    @since 5.0
+    @version: @VERSION@
     """
 
     def __init__(self, source, filename, MIMEType, contentLength):
-        """@param source
-        @param filename
-        @param MIMEType
-        @param length
-        """
         super(StartedEvent, self).__init__(source)
 
         self._filename = filename
 
         self._type = MIMEType
 
-        # Length of the received file.
+        #: Length of the received file.
         self._length = contentLength
 
 
     def getUpload(self):
         """Uploads where the event occurred.
 
-        @return: the Source of the event.
+        @return: the source of the event.
         """
         return self.getSource()
 

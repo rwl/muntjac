@@ -21,7 +21,7 @@ class ISizeable(object):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     #: Unit code representing pixels.

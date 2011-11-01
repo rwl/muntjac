@@ -22,7 +22,7 @@ class IApplicationContext(object):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     def getBaseDirectory(self):
@@ -77,7 +77,7 @@ class IApplicationContext(object):
         request, not from a background thread. The return value is null if used
         outside a suitable request.
 
-        @deprecated this method is intended for terminal implementation only
+        @deprecated: this method is intended for terminal implementation only
                     and is subject to change/removal from the interface (to
                     L{AbstractCommunicationManager})
 
@@ -92,7 +92,7 @@ class IApplicationContext(object):
     def isApplicationResourceURL(self, context, relativeUri):
         """Tests if a URL is for an application resource (APP/...).
 
-        @deprecated this method is intended for terminal implementation only
+        @deprecated: this method is intended for terminal implementation only
                     and is subject to change/removal from the interface (to
                     L{AbstractCommunicationManager})
         """
@@ -104,7 +104,7 @@ class IApplicationContext(object):
         is the one that was given to L{generateApplicationResourceURL} when
         creating the URL.
 
-        @deprecated this method is intended for terminal implementation only
+        @deprecated: this method is intended for terminal implementation only
                     and is subject to change/removal from the interface (to
                     L{AbstractCommunicationManager})
         """

@@ -24,7 +24,7 @@ class IUriHandler(object):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     def handleURI(self, context, relativeUri):

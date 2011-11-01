@@ -27,7 +27,7 @@ class FileTypeResolver(object):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     #: Default icon given if no icon is specified for a mime-type.

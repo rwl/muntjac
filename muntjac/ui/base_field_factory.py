@@ -33,7 +33,7 @@ class BaseFieldFactory(IFieldFactory):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     @deprecated: use L{DefaultFieldFactory} or own implementations
                  on L{FormFieldFactory} or L{TableFieldFactory}
                  instead.

@@ -21,7 +21,7 @@ class IPaintTarget(object):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     def addSection(self, sectionTagName, sectionData):
@@ -74,7 +74,7 @@ class IPaintTarget(object):
         @param referenceName:
         @raise PaintException
 
-        @deprecated use L{addAttribute} or L{addVariable} instead
+        @deprecated: use L{addAttribute} or L{addVariable} instead
         """
         raise NotImplementedError
 

@@ -23,7 +23,7 @@ class IErrorMessage(IPaintable):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     #: Error code for system errors and bugs.

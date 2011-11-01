@@ -23,21 +23,19 @@ class NativeButton(Button):
     CLIENT_WIDGET = None #ClientWidget(VNativeButton)
 
     def __init__(self, *args):
-        """None
-        ---
-        Creates a new switch button with initial value.
+        """Creates a new switch button.
 
-        @param state
-                   the Initial state of the switch-button.
-        @param initialState
-        @deprecated use the L{CheckBox} component instead
-        ---
-        Creates a new switch button that is connected to a boolean property.
+        @param args: tuple of the form
+            - ()
+            - (caption)
+            - (state, initialState)
+              1. the Initial state of the switch-button.
+              2.
+            - (state, dataSource)
+              1. the initial state of the switch-button.
+              2. boolean property
 
-        @param state
-                   the Initial state of the switch-button.
-        @param dataSource
-        @deprecated use the L{CheckBox} component instead
+        @deprecated: use the L{CheckBox} component instead
         """
         nargs = len(args)
         if nargs == 0:

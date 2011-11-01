@@ -23,20 +23,19 @@ class IFormFieldFactory(object):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
-    @since 6.0
-    @see: TableFieldFactory
+    @version: @VERSION@
+    @see: L{TableFieldFactory}
     """
 
     def createField(self, item, propertyId, uiContext):
         """Creates a field based on the item, property id and the component
         (most commonly L{Form}) where the Field will be presented.
 
-        @param item
+        @param item:
                    the item where the property belongs to.
-        @param propertyId
+        @param propertyId:
                    the Id of the property.
-        @param uiContext
+        @param uiContext:
                    the component where the field is presented, most commonly
                    this is L{Form}. uiContext will not necessary be the
                    parent component of the field, but the one that is

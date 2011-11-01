@@ -29,7 +29,7 @@ class ClickEvent(ComponentEvent):
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @see: L{ClickListener}
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     BUTTON_LEFT = MouseEventDetails.BUTTON_LEFT
@@ -148,7 +148,7 @@ class IClickListener(IComponentEventListener):
     @see: L{ClickEvent}
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     def click(self, event):
@@ -170,7 +170,7 @@ class DoubleClickEvent(ComponentEvent):
     @see: L{ClickEvent}
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     def __init__(self, source):
@@ -184,7 +184,7 @@ class IDoubleClickListener(IComponentEventListener):
     @see: L{DoubleClickEvent}
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     def doubleClick(self, event):

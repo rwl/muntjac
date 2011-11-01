@@ -26,32 +26,20 @@ class PasswordField(AbstractTextField):
     CLIENT_WIDGET = None #ClientWidget(VPasswordField, LoadStyle.EAGER)
 
     def __init__(self, *args):
-        """Constructs an empty PasswordField.
-        ---
-        Constructs a PasswordField with given property data source.
+        """Constructs a PasswordField with caption and/or value/data source.
 
-        @param dataSource
-                   the property data source for the field
-        ---
-        Constructs a PasswordField with given caption and property data
-        source.
-
-        @param caption
-                   the caption for the field
-        @param dataSource
-                   the property data source for the field
-        ---
-        Constructs a PasswordField with given value and caption.
-
-        @param caption
-                   the caption for the field
-        @param value
-                   the value for the field
-        ---
-        Constructs a PasswordField with given caption.
-
-        @param caption
-                   the caption for the field
+        @param args: tuple of the form
+            - ()
+            - (caption)
+              1. the caption for the field
+            - (dataSource)
+              1. the property data source for the field
+            - (caption, dataSource)
+              1. the caption for the field
+              2. the property data source for the field
+            - (caption, value)
+              1. the caption for the field
+              2. the value for the field
         """
         super(PasswordField, self).__init__()
 

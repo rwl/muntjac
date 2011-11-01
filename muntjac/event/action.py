@@ -22,7 +22,7 @@ class Action(object):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     def __init__(self, caption, icon=None):
@@ -83,7 +83,7 @@ class IContainer(object):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     def addActionHandler(self, actionHandler):
@@ -144,7 +144,7 @@ class IHandler(object):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     def getActions(self, target, sender):

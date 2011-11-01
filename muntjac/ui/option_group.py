@@ -20,7 +20,6 @@ from muntjac.data.container import IContainer
 from muntjac.event.field_events import \
     BlurEvent, IBlurListener, IBlurNotifier, FocusEvent, \
     IFocusListener, IFocusNotifier
-from muntjac.ui.abstract_component import AbstractComponent
 
 
 class OptionGroup(AbstractSelect, IBlurNotifier, IFocusNotifier):
@@ -145,9 +144,9 @@ class OptionGroup(AbstractSelect, IBlurNotifier, IFocusNotifier):
         However, programmatical selection or deselection of an disable item is
         possible. By default, items are enabled.
 
-        @param itemId
+        @param itemId:
                    the id of the item to be disabled or enabled
-        @param enabled
+        @param enabled:
                    if true the item is enabled, otherwise the item is disabled
         """
         if itemId is not None:
@@ -163,10 +162,10 @@ class OptionGroup(AbstractSelect, IBlurNotifier, IFocusNotifier):
     def isItemEnabled(self, itemId):
         """Returns true if the item is enabled.
 
-        @param itemId
+        @param itemId:
                    the id of the item to be checked
         @return: true if the item is enabled, false otherwise
-        @see: #setItemEnabled(Object, boolean)
+        @see: L{setItemEnabled}
         """
         if itemId is not None:
             return not (itemId in self._disabledItemIds)

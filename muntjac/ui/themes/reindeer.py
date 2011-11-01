@@ -34,7 +34,7 @@ class Reindeer(BaseTheme):
     # Small and a little lighter font
     LABEL_SMALL = 'light'
 
-    # @deprecated Use L{#LABEL_SMALL} instead.
+    # @deprecated: Use L{#LABEL_SMALL} instead.
     LABEL_LIGHT = 'small'
 
     # Button styles
@@ -46,7 +46,7 @@ class Reindeer(BaseTheme):
     # button per view should be visible.
     BUTTON_DEFAULT = 'primary'
 
-    # @deprecated Use L{#BUTTON_DEFAULT} instead
+    # @deprecated: Use L{#BUTTON_DEFAULT} instead
     BUTTON_PRIMARY = BUTTON_DEFAULT
 
     # Small sized button, use for context specific actions for example
@@ -84,7 +84,7 @@ class Reindeer(BaseTheme):
     # tabs as a small bar.
     TABSHEET_SMALL = 'bar'
 
-    # @deprecated Use L{#TABSHEET_SMALL} instead.
+    # @deprecated: Use L{#TABSHEET_SMALL} instead.
     TABSHEET_BAR = TABSHEET_SMALL
 
     # Removes borders and background color from the tab sheet. The tabs are

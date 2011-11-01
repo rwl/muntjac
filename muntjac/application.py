@@ -32,8 +32,6 @@ from muntjac.terminal.parameter_handler import IErrorEvent as ParameterHandlerEr
 from muntjac.terminal.gwt.server.change_variables_error_event import ChangeVariablesErrorEvent
 from muntjac.ui.abstract_component import AbstractComponent
 
-from babel import Locale
-
 
 logger = logging.getLogger(__name__)
 
@@ -41,44 +39,33 @@ logger = logging.getLogger(__name__)
 class SystemMessages(object):
     """Contains the system messages used to notify the user about various
     critical situations that can occur.
-    <p>
-    Customize by overriding the static
-    L{Application#getSystemMessages()} and returning
-    L{CustomizedSystemMessages}.
-    </p>
-    <p>
+
+    Customize by overriding the static L{Application.getSystemMessages()} and
+    returning L{CustomizedSystemMessages}.
+
     The defaults defined in this class are:
-    <ul>
-    <li><b>sessionExpiredURL</b> = null</li>
-    <li><b>sessionExpiredNotificationEnabled</b> = true</li>
-    <li><b>sessionExpiredCaption</b> = ""</li>
-    <li><b>sessionExpiredMessage</b> =
-    "Take note of any unsaved data, and <u>click here</u> to continue."</li>
-    <li><b>communicationErrorURL</b> = null</li>
-    <li><b>communicationErrorNotificationEnabled</b> = true</li>
-    <li><b>communicationErrorCaption</b> = "Communication problem"</li>
-    <li><b>communicationErrorMessage</b> =
-    "Take note of any unsaved data, and <u>click here</u> to continue."</li>
-    <li><b>internalErrorURL</b> = null</li>
-    <li><b>internalErrorNotificationEnabled</b> = true</li>
-    <li><b>internalErrorCaption</b> = "Internal error"</li>
-    <li><b>internalErrorMessage</b> = "Please notify the administrator.<br/>
-    Take note of any unsaved data, and <u>click here</u> to continue."</li>
-    <li><b>outOfSyncURL</b> = null</li>
-    <li><b>outOfSyncNotificationEnabled</b> = true</li>
-    <li><b>outOfSyncCaption</b> = "Out of sync"</li>
-    <li><b>outOfSyncMessage</b> = "Something has caused us to be out of sync
-    with the server.<br/>
-    Take note of any unsaved data, and <u>click here</u> to re-sync."</li>
-    <li><b>cookiesDisabledURL</b> = null</li>
-    <li><b>cookiesDisabledNotificationEnabled</b> = true</li>
-    <li><b>cookiesDisabledCaption</b> = "Cookies disabled"</li>
-    <li><b>cookiesDisabledMessage</b> = "This application requires cookies to
-    function.<br/>
-    Please enable cookies in your browser and <u>click here</u> to try again.
-    </li>
-    </ul>
-    </p>
+
+      - B{sessionExpiredURL} = None
+      - B{sessionExpiredNotificationEnabled} = True
+      - B{sessionExpiredCaption} = ""
+      - B{sessionExpiredMessage} = "Take note of any unsaved data, and <u>click here</u> to continue."
+      - B{communicationErrorURL} = None
+      - B{communicationErrorNotificationEnabled} = True
+      - B{communicationErrorCaption} = "Communication problem"
+      - B{communicationErrorMessage} = "Take note of any unsaved data, and <u>click here</u> to continue."
+      - B{internalErrorURL} = None
+      - B{internalErrorNotificationEnabled} = True
+      - B{internalErrorCaption} = "Internal error"
+      - B{internalErrorMessage} = "Please notify the administrator.<br/>Take note of any unsaved data, and <u>click here</u> to continue."
+      - B{outOfSyncURL} = None
+      - B{outOfSyncNotificationEnabled} = True
+      - B{outOfSyncCaption} = "Out of sync"
+      - B{outOfSyncMessage} = "Something has caused us to be out of sync with the server.<br/>Take note of any unsaved data, and <u>click here</u> to re-sync."
+      - B{cookiesDisabledURL} = None
+      - B{cookiesDisabledNotificationEnabled} = True
+      - B{cookiesDisabledCaption} = "Cookies disabled"
+      - B{cookiesDisabledMessage} = "This application requires cookies to function.<br/>Please enable cookies in your browser and <u>click here</u> to try again."
+
     """
 
     def __init__(self):
@@ -112,7 +99,7 @@ class SystemMessages(object):
 
     def getSessionExpiredURL(self):
         """@return: null to indicate that the application will be restarted after
-                session expired message has been shown.
+                    session expired message has been shown.
         """
         return self.sessionExpiredURL
 
@@ -128,15 +115,14 @@ class SystemMessages(object):
 
 
     def getSessionExpiredMessage(self):
-        """@return
-                "Take note of any unsaved data, and <u>click here</u> to continue."
+        """@return: "Take note of any unsaved data, and <u>click here</u> to continue."
         """
         return self.sessionExpiredMessage if self.sessionExpiredNotificationEnabled else None
 
 
     def getCommunicationErrorURL(self):
         """@return: null to reload the application after communication error
-                message.
+                    message.
         """
         return self.communicationErrorURL
 
@@ -152,15 +138,14 @@ class SystemMessages(object):
 
 
     def getCommunicationErrorMessage(self):
-        """@return
-                "Take note of any unsaved data, and <u>click here</u> to continue."
+        """@return: "Take note of any unsaved data, and <u>click here</u> to continue."
         """
         return self.communicationErrorMessage if self.communicationErrorNotificationEnabled else None
 
 
     def getAuthenticationErrorURL(self):
         """@return: null to reload the application after authentication error
-                message.
+                    message.
         """
         return self.authenticationErrorURL
 
@@ -176,7 +161,7 @@ class SystemMessages(object):
 
 
     def getAuthenticationErrorMessage(self):
-        """@return
+        """@return:
                 "Take note of any unsaved data, and <u>click here</u> to continue."
         """
         return self.authenticationErrorMessage if self.authenticationErrorNotificationEnabled else None
@@ -184,7 +169,7 @@ class SystemMessages(object):
 
     def getInternalErrorURL(self):
         """@return: null to reload the current URL after internal error message
-                has been shown.
+                    has been shown.
         """
         return self.internalErrorURL
 
@@ -235,7 +220,7 @@ class SystemMessages(object):
         "you have to enable your cookies" message. Typically null.
 
         @return: A URL the user should be redirected to after dismissing the
-                message or null to reload the current URL.
+                 message or null to reload the current URL.
         """
         return self.cookiesDisabledURL
 
@@ -243,11 +228,10 @@ class SystemMessages(object):
     def isCookiesDisabledNotificationEnabled(self):
         """Determines if "cookies disabled" messages should be shown to the end
         user or not. If the notification is disabled the user will be
-        immediately redirected to the URL returned by
-        L{#getCookiesDisabledURL()}.
+        immediately redirected to the URL returned by L{getCookiesDisabledURL}.
 
         @return: true to show "cookies disabled" messages to the end user,
-                false to redirect to the given URL directly
+                 false to redirect to the given URL directly
         """
         return self.cookiesDisabledNotificationEnabled
 
@@ -273,45 +257,44 @@ class SystemMessages(object):
 class CustomizedSystemMessages(SystemMessages):
     """Contains the system messages used to notify the user about various
     critical situations that can occur.
-    <p>
-    Vaadin gets the SystemMessages from your application by calling a static
+
+    Muntjac gets the SystemMessages from your application by calling a static
     getSystemMessages() method. By default the
     Application.getSystemMessages() is used. You can customize this by
     defining a static MyApplication.getSystemMessages() and returning
     CustomizedSystemMessages. Note that getSystemMessages() is static -
     changing the system messages will by default change the message for all
     users of the application.
-    </p>
-    <p>
+
     The default behavior is to show a notification, and restart the
-    application the the user clicks the message. <br/>
+    application the the user clicks the message.
+
     Instead of restarting the application, you can set a specific URL that
-    the user is taken to.<br/>
+    the user is taken to.
+
     Setting both caption and message to null will restart the application (or
     go to the specified URL) without displaying a notification.
     set*NotificationEnabled(false) will achieve the same thing.
-    </p>
-    <p>
+
     The situations are:
-    <li>Session expired: the user session has expired, usually due to
-    inactivity.</li>
-    <li>Communication error: the client failed to contact the server, or the
-    server returned and invalid response.</li>
-    <li>Internal error: unhandled critical server error (e.g out of memory,
-    database crash)
-    <li>Out of sync: the client is not in sync with the server. E.g the user
-    opens two windows showing the same application, but the application does
-    not support this and uses the same Window instance. When the user makes
-    changes in one of the windows - the other window is no longer in sync,
-    and (for instance) pressing a button that is no longer present in the UI
-    will cause a out-of-sync -situation.
-    </p>
+      - Session expired: the user session has expired, usually due to
+        inactivity.
+      - Communication error: the client failed to contact the server, or the
+        server returned and invalid response.
+      - Internal error: unhandled critical server error (e.g out of memory,
+        database crash)
+      - Out of sync: the client is not in sync with the server. E.g the user
+        opens two windows showing the same application, but the application does
+        not support this and uses the same Window instance. When the user makes
+        changes in one of the windows - the other window is no longer in sync,
+        and (for instance) pressing a button that is no longer present in the UI
+        will cause a out-of-sync -situation.
     """
 
     def setSessionExpiredURL(self, sessionExpiredURL):
         """Sets the URL to go to when the session has expired.
 
-        @param sessionExpiredURL
+        @param sessionExpiredURL:
                    the URL to go to, or null to reload current
         """
         self.sessionExpiredURL = sessionExpiredURL
@@ -322,7 +305,7 @@ class CustomizedSystemMessages(SystemMessages):
         current) is loaded directly when next transaction between server and
         client happens.
 
-        @param sessionExpiredNotificationEnabled
+        @param sessionExpiredNotificationEnabled:
                    true = enabled, false = disabled
         """
         self.sessionExpiredNotificationEnabled = sessionExpiredNotificationEnabled
@@ -334,8 +317,7 @@ class CustomizedSystemMessages(SystemMessages):
         sessionExpiredUrl after timeout timer expires. Timer uses value read
         from HTTPSession.getMaxInactiveInterval()
 
-        @param sessionExpiredCaption
-                   the caption
+        @param sessionExpiredCaption: the caption
         """
         self.sessionExpiredCaption = sessionExpiredCaption
 
@@ -346,8 +328,7 @@ class CustomizedSystemMessages(SystemMessages):
         sessionExpiredUrl after timeout timer expires. Timer uses value read
         from HTTPSession.getMaxInactiveInterval()
 
-        @param sessionExpiredMessage
-                   the message
+        @param sessionExpiredMessage: the message
         """
         self.sessionExpiredMessage = sessionExpiredMessage
 
@@ -355,7 +336,7 @@ class CustomizedSystemMessages(SystemMessages):
     def setAuthenticationErrorURL(self, authenticationErrorURL):
         """Sets the URL to go to when there is a authentication error.
 
-        @param authenticationErrorURL
+        @param authenticationErrorURL:
                    the URL to go to, or null to reload current
         """
         self.authenticationErrorURL = authenticationErrorURL
@@ -365,7 +346,7 @@ class CustomizedSystemMessages(SystemMessages):
         """Enables or disables the notification. If disabled, the set URL (or
         current) is loaded directly.
 
-        @param authenticationErrorNotificationEnabled
+        @param authenticationErrorNotificationEnabled:
                    true = enabled, false = disabled
         """
         self.authenticationErrorNotificationEnabled = authenticationErrorNotificationEnabled
@@ -375,7 +356,7 @@ class CustomizedSystemMessages(SystemMessages):
         """Sets the caption of the notification. Set to null for no caption. If
         both caption and message is null, the notification is disabled;
 
-        @param authenticationErrorCaption
+        @param authenticationErrorCaption:
                    the caption
         """
         self.authenticationErrorCaption = authenticationErrorCaption
@@ -385,7 +366,7 @@ class CustomizedSystemMessages(SystemMessages):
         """Sets the message of the notification. Set to null for no message. If
         both caption and message is null, the notification is disabled;
 
-        @param authenticationErrorMessage
+        @param authenticationErrorMessage:
                    the message
         """
         self.authenticationErrorMessage = authenticationErrorMessage
@@ -394,7 +375,7 @@ class CustomizedSystemMessages(SystemMessages):
     def setCommunicationErrorURL(self, communicationErrorURL):
         """Sets the URL to go to when there is a communication error.
 
-        @param communicationErrorURL
+        @param communicationErrorURL:
                    the URL to go to, or null to reload current
         """
         self.communicationErrorURL = communicationErrorURL
@@ -404,7 +385,7 @@ class CustomizedSystemMessages(SystemMessages):
         """Enables or disables the notification. If disabled, the set URL (or
         current) is loaded directly.
 
-        @param communicationErrorNotificationEnabled
+        @param communicationErrorNotificationEnabled:
                    true = enabled, false = disabled
         """
         self.communicationErrorNotificationEnabled = communicationErrorNotificationEnabled
@@ -414,7 +395,7 @@ class CustomizedSystemMessages(SystemMessages):
         """Sets the caption of the notification. Set to null for no caption. If
         both caption and message is null, the notification is disabled;
 
-        @param communicationErrorCaption
+        @param communicationErrorCaption:
                    the caption
         """
         self.communicationErrorCaption = communicationErrorCaption
@@ -424,7 +405,7 @@ class CustomizedSystemMessages(SystemMessages):
         """Sets the message of the notification. Set to null for no message. If
         both caption and message is null, the notification is disabled;
 
-        @param communicationErrorMessage
+        @param communicationErrorMessage:
                    the message
         """
         self.communicationErrorMessage = communicationErrorMessage
@@ -433,7 +414,7 @@ class CustomizedSystemMessages(SystemMessages):
     def setInternalErrorURL(self, internalErrorURL):
         """Sets the URL to go to when an internal error occurs.
 
-        @param internalErrorURL
+        @param internalErrorURL:
                    the URL to go to, or null to reload current
         """
         self.internalErrorURL = internalErrorURL
@@ -443,7 +424,7 @@ class CustomizedSystemMessages(SystemMessages):
         """Enables or disables the notification. If disabled, the set URL (or
         current) is loaded directly.
 
-        @param internalErrorNotificationEnabled
+        @param internalErrorNotificationEnabled:
                    true = enabled, false = disabled
         """
         self.internalErrorNotificationEnabled = internalErrorNotificationEnabled
@@ -453,7 +434,7 @@ class CustomizedSystemMessages(SystemMessages):
         """Sets the caption of the notification. Set to null for no caption. If
         both caption and message is null, the notification is disabled;
 
-        @param internalErrorCaption
+        @param internalErrorCaption:
                    the caption
         """
         self.internalErrorCaption = internalErrorCaption
@@ -463,7 +444,7 @@ class CustomizedSystemMessages(SystemMessages):
         """Sets the message of the notification. Set to null for no message. If
         both caption and message is null, the notification is disabled;
 
-        @param internalErrorMessage
+        @param internalErrorMessage:
                    the message
         """
         self.internalErrorMessage = internalErrorMessage
@@ -472,7 +453,7 @@ class CustomizedSystemMessages(SystemMessages):
     def setOutOfSyncURL(self, outOfSyncURL):
         """Sets the URL to go to when the client is out-of-sync.
 
-        @param outOfSyncURL
+        @param outOfSyncURL:
                    the URL to go to, or null to reload current
         """
         self.outOfSyncURL = outOfSyncURL
@@ -482,7 +463,7 @@ class CustomizedSystemMessages(SystemMessages):
         """Enables or disables the notification. If disabled, the set URL (or
         current) is loaded directly.
 
-        @param outOfSyncNotificationEnabled
+        @param outOfSyncNotificationEnabled:
                    true = enabled, false = disabled
         """
         self.outOfSyncNotificationEnabled = outOfSyncNotificationEnabled
@@ -492,7 +473,7 @@ class CustomizedSystemMessages(SystemMessages):
         """Sets the caption of the notification. Set to null for no caption. If
         both caption and message is null, the notification is disabled;
 
-        @param outOfSyncCaption
+        @param outOfSyncCaption:
                    the caption
         """
         self.outOfSyncCaption = outOfSyncCaption
@@ -502,7 +483,7 @@ class CustomizedSystemMessages(SystemMessages):
         """Sets the message of the notification. Set to null for no message. If
         both caption and message is null, the notification is disabled;
 
-        @param outOfSyncMessage
+        @param outOfSyncMessage:
                    the message
         """
         self.outOfSyncMessage = outOfSyncMessage
@@ -511,7 +492,7 @@ class CustomizedSystemMessages(SystemMessages):
     def setCookiesDisabledURL(self, cookiesDisabledURL):
         """Sets the URL to redirect to when the browser has cookies disabled.
 
-        @param cookiesDisabledURL
+        @param cookiesDisabledURL:
                    the URL to redirect to, or null to reload the current URL
         """
         self.cookiesDisabledURL = cookiesDisabledURL
@@ -519,10 +500,10 @@ class CustomizedSystemMessages(SystemMessages):
 
     def setCookiesDisabledNotificationEnabled(self, cookiesDisabledNotificationEnabled):
         """Enables or disables the notification for "cookies disabled" messages.
-        If disabled, the URL returned by L{#getCookiesDisabledURL()} is
+        If disabled, the URL returned by L{getCookiesDisabledURL} is
         loaded directly.
 
-        @param cookiesDisabledNotificationEnabled
+        @param cookiesDisabledNotificationEnabled:
                    true to enable "cookies disabled" messages, false
                    otherwise
         """
@@ -534,7 +515,7 @@ class CustomizedSystemMessages(SystemMessages):
         for no caption. If both caption and message is null, the notification
         is disabled.
 
-        @param cookiesDisabledCaption
+        @param cookiesDisabledCaption:
                    the caption for the "cookies disabled" notification
         """
         self.cookiesDisabledCaption = cookiesDisabledCaption
@@ -545,23 +526,20 @@ class CustomizedSystemMessages(SystemMessages):
         for no message. If both caption and message is null, the notification
         is disabled.
 
-        @param cookiesDisabledMessage
+        @param cookiesDisabledMessage:
                    the message for the "cookies disabled" notification
         """
         self.cookiesDisabledMessage = cookiesDisabledMessage
 
 
 class Application(IUriHandler, ITerminal, IErrorListener):
-    """<p>
-    Base class required for all Vaadin applications. This class provides all the
-    basic services required by Vaadin. These services allow external discovery
-    and manipulation of the user, L{com.vaadin.ui.Window windows} and
+    """Base class required for all Muntjac applications. This class provides
+    all the basic services required by Vaadin. These services allow external
+    discovery and manipulation of the user, L{com.vaadin.ui.Window windows} and
     themes, and starting and stopping the application.
-    </p>
 
-    <p>
-    As mentioned, all Vaadin applications must inherit this class. However, this
-    is almost all of what one needs to do to create a fully functional
+    As mentioned, all Vaadin applications must inherit this class. However,
+    this is almost all of what one needs to do to create a fully functional
     application. The only thing a class inheriting the C{Application}
     needs to do is implement the C{init} method where it creates the
     windows it needs to perform its function. Note that all applications must
@@ -571,162 +549,140 @@ class Application(IUriHandler, ITerminal, IErrorListener):
     using URLs the main window corresponds to the application URL whereas other
     windows correspond to a URL gotten by catenating the window's name to the
     application URL.
-    </p>
 
-    <p>
-    See the class C{com.vaadin.demo.HelloWorld} for a simple example of
+    See the class C{muntjac.demo.HelloWorld} for a simple example of
     a fully working application.
-    </p>
 
-    <p>
-    <strong>Window access.</strong> C{Application} provides methods to
+    B{Window access.} C{Application} provides methods to
     list, add and remove the windows it contains.
-    </p>
 
-    <p>
-    <strong>Execution control.</strong> This class includes method to start and
-    finish the execution of the application. Being finished means basically that
-    no windows will be available from the application anymore.
-    </p>
+    B{Execution control.} This class includes method to start and finish the
+    execution of the application. Being finished means basically that no
+    windows will be available from the application anymore.
 
-    <p>
-    <strong>Theme selection.</strong> The theme selection process allows a theme
-    to be specified at three different levels. When a window's theme needs to be
-    found out, the window itself is queried for a preferred theme. If the window
-    does not prefer a specific theme, the application containing the window is
-    queried. If neither the application prefers a theme, the default theme for
-    the L{com.vaadin.terminal.ITerminal terminal} is used. The terminal
-    always defines a default theme.
-    </p>
+    B{Theme selection.} The theme selection process allows a theme to be
+    specified at three different levels. When a window's theme needs to be
+    found out, the window itself is queried for a preferred theme. If the
+    window does not prefer a specific theme, the application containing the
+    window is queried. If neither the application prefers a theme, the default
+    theme for the L{terminal<muntjac.terminal.terminal.ITerminal>} is used. The
+    terminal always defines a default theme.
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
-    @since 3.0
+    @version: @VERSION@
     """
 
-    # The default SystemMessages (read-only). Change by overriding
-    # getSystemMessages() and returning CustomizedSystemMessages
+    #: The default SystemMessages (read-only). Change by overriding
+    #  getSystemMessages() and returning CustomizedSystemMessages
     _DEFAULT_SYSTEM_MESSAGES = SystemMessages()
 
 
     def __init__(self):
 
-        # Id use for the next window that is opened. Access to this must be
-        # synchronized.
+        #: Id use for the next window that is opened. Access to this must be
+        #  synchronized.
         self._nextWindowId = 1
 
-        # Application context the application is running in.
+        #: Application context the application is running in.
         self._context = None
 
-        # The current user or C{None} if no user has logged in.
+        #: The current user or C{None} if no user has logged in.
         self._user = None
 
-        # Mapping from window name to window instance.
+        #: Mapping from window name to window instance.
         self._windows = dict()
 
-        # Main window of the application.
+        #: Main window of the application.
         self._mainWindow = None
 
-        # The application's URL.
+        #: The application's URL.
         self._applicationUrl = None
 
-        # Name of the theme currently used by the application.
+        #: Name of the theme currently used by the application.
         self.theme = None
 
-        # Application status.
+        #: Application status.
         self._applicationIsRunning = False
 
-        # Application properties.
+        #: Application properties.
         self._properties = dict
 
-        # Default locale of the application.
+        #: Default locale of the application.
         self._locale = None
 
-        # List of listeners listening user changes.
+        #: List of listeners listening user changes.
         self._userChangeListeners = None
 
-        # Window attach listeners.
+        #: Window attach listeners.
         self._windowAttachListeners = None
 
-        # Window detach listeners.
+        #: Window detach listeners.
         self._windowDetachListeners = None
 
-        # Application resource mapping: key <-> resource.
+        #: Application resource mapping: key <-> resource.
         self._resourceKeyMap = dict()
         self._keyResourceMap = dict()
         self._lastResourceKeyNumber = 0
 
-        # URL where the user is redirected to on application close, or null if
-        # application is just closed without redirection.
+        #: URL where the user is redirected to on application close, or null if
+        #  application is just closed without redirection.
         self._logoutURL = None
 
-        # Application wide error handler which is used by default if an error is
-        # left unhandled.
+        #: Application wide error handler which is used by default if an error
+        #  is left unhandled.
         self._errorHandler = self
 
 
     def getWindow(self, name):
-        """<p>
-        Gets a window by name. Returns C{None} if the application is
+        """Gets a window by name. Returns C{None} if the application is
         not running or it does not contain a window corresponding to the name.
-        </p>
 
-        <p>
         All windows can be referenced by their names in url
         C{http://host:port/foo/bar/} where
         C{http://host:port/foo/} is the application url as returned by
         getURL() and C{bar} is the name of the window.
-        </p>
 
-        <p>
-        One should note that this method can, as a side effect create new windows
-        if needed by the application. This can be achieved by overriding the
-        default implementation.
-        </p>
+        One should note that this method can, as a side effect create new
+        windows if needed by the application. This can be achieved by
+        overriding the default implementation.
 
-        <p>
         If for some reason user opens another window with same url that is
-        already open, name is modified by adding "_12345678" postfix to the name,
-        where 12345678 is a random number. One can decide to create another
-        window-object for those windows (recommended) or to discard the postfix.
-        If the user has two browser windows pointing to the same window-object on
-        server, synchronization errors are likely to occur.
-        </p>
+        already open, name is modified by adding "_12345678" postfix to the
+        name, where 12345678 is a random number. One can decide to create
+        another window-object for those windows (recommended) or to discard
+        the postfix. If the user has two browser windows pointing to the same
+        window-object on server, synchronization errors are likely to occur.
 
-        <p>
         If no browser-level windowing is used, all defaults are fine and this
-        method can be left as is. In case browser-level windows are needed, it is
-        recommended to create new window-objects on this method from their names
-        if the super.getWindow() does not find existing windows. See below for
-        implementation example: C{<pre>
-                // If we already have the requested window, use it
-                Window w = super.getWindow(name);
-                if (w == null) {
-                    // If no window found, create it
-                    w = new Window(name);
-                    // set windows name to the one requested
-                    w.setName(name);
-                    // add it to this application
-                    addWindow(w);
-                    // ensure use of window specific url
-                    w.open(new ExternalResource(w.getURL().toString()));
-                    // add some content
-                    w.addComponent(new Label("Test window"));
-                }
-                return w;</pre>}
-        </p>
+        method can be left as is. In case browser-level windows are needed, it
+        is recommended to create new window-objects on this method from their
+        names if the super.getWindow() does not find existing windows. See
+        below for implementation example::
 
-        <p>
-        <strong>Note</strong> that all returned Window objects must be added to
+                # If we already have the requested window, use it
+                w = super(Application, self).getWindow(name)
+                if w == None:
+                    # If no window found, create it
+                    w = Window(name)
+                    # set windows name to the one requested
+                    w.setName(name)
+                    # add it to this application
+                    addWindow(w)
+                    # ensure use of window specific url
+                    w.open( ExternalResource(w.getURL()) )
+                    # add some content
+                    w.addComponent( Label("Test window") )
+
+                return w
+
+        B{Note} that all returned Window objects must be added to
         this application instance.
 
-        <p>
         The method should return null if the window does not exists (and is not
         created as a side-effect) or if the application is not running anymore.
-        </p>
 
-        @param name
+        @param name:
                    the name of the window.
         @return: the window associated with the given URI or C{None}
         """
@@ -741,29 +697,23 @@ class Application(IUriHandler, ITerminal, IErrorListener):
     def addWindow(self, window):
         """Adds a new window to the application.
 
-        <p>
-        This implicitly invokes the
-        L{com.vaadin.ui.Window#setApplication(Application)} method.
-        </p>
+        This implicitly invokes the L{Window.setApplication} method.
 
-        <p>
-        Note that all application-level windows can be accessed by their names in
-        url C{http://host:port/foo/bar/} where
-        C{http://host:port/foo/} is the application url as returned by
-        getURL() and C{bar} is the name of the window. Also note that
-        not all windows should be added to application - one can also add windows
-        inside other windows - these windows show as smaller windows inside those
-        windows.
-        </p>
+        Note that all application-level windows can be accessed by their names
+        in url C{http://host:port/foo/bar/} where C{http://host:port/foo/} is
+        the application url as returned by getURL() and C{bar} is the name of
+        the window. Also note that not all windows should be added to
+        application - one can also add windows inside other windows - these
+        windows show as smaller windows inside those windows.
 
-        @param window
+        @param window:
                    the new C{Window} to add. If the name of the window
                    is C{None}, an unique name is automatically given
                    for the window.
-        @raise ValueError
+        @raise ValueError:
                     if a window with the same name as the new window already
                     exists in the application.
-        @raise ValueError
+        @raise ValueError:
                     if the given C{Window} is C{None}.
         """
         # Nulls can not be added to application
@@ -772,7 +722,8 @@ class Application(IUriHandler, ITerminal, IErrorListener):
 
         # Check that one is not adding a sub-window to application
         if window.getParent() is not None:
-            raise ValueError('Window was already added inside another window' + ' - it can not be added to application also.')
+            raise ValueError('Window was already added inside another window'
+                    + ' - it can not be added to application also.')
 
         # Gets the naming proposal from window
         name = window.getName()
@@ -786,7 +737,8 @@ class Application(IUriHandler, ITerminal, IErrorListener):
                 return
 
             # Otherwise complain
-            raise ValueError('Window with name \'' + window.getName() + '\' is already present in the application')
+            raise ValueError('Window with name \'' + window.getName()
+                    + '\' is already present in the application')
 
         # If the name of the window is null, the window is automatically named
         if name is None:
@@ -814,10 +766,8 @@ class Application(IUriHandler, ITerminal, IErrorListener):
 
 
     def _fireWindowAttachEvent(self, window):
-        """Send information to all listeners about new Windows associated with this
-        application.
-
-        @param window
+        """Send information to all listeners about new Windows associated with
+        this application.
         """
         # Fires the window attach event
         if self._windowAttachListeners is not None:
@@ -830,18 +780,14 @@ class Application(IUriHandler, ITerminal, IErrorListener):
     def removeWindow(self, window):
         """Removes the specified window from the application.
 
-        <p>
-        Removing the main window of the Application also sets the main window to
-        null. One must another window to be the main window after this with
-        L{#setMainWindow(Window)}.
-        </p>
+        Removing the main window of the Application also sets the main window
+        to null. One must another window to be the main window after this with
+        L{setMainWindow}.
 
-        <p>
-        Note that removing window from the application does not close the browser
-        window - the window is only removed from the server-side.
-        </p>
+        Note that removing window from the application does not close the
+        browser window - the window is only removed from the server-side.
 
-        @param window
+        @param window:
                    the window to be removed.
         """
         if window is not None and window in self._windows.values():
@@ -872,35 +818,29 @@ class Application(IUriHandler, ITerminal, IErrorListener):
     def getUser(self):
         """Gets the user of the application.
 
-        <p>
-        Vaadin doesn't define of use user object in any way - it only provides
+        Muntjac doesn't define of use user object in any way - it only provides
         this getter and setter methods for convenience. The user is any object
-        that has been stored to the application with L{#setUser(Object)}.
-        </p>
+        that has been stored to the application with L{setUser}.
 
-        @return: the User of the application.
+        @return: the user of the application.
         """
         return self._user
 
 
     def setUser(self, user):
-        """<p>
-        Sets the user of the application instance. An application instance may
-        have a user associated to it. This can be set in login procedure or
+        """Sets the user of the application instance. An application instance
+        may have a user associated to it. This can be set in login procedure or
         application initialization.
-        </p>
-        <p>
+
         A component performing the user login procedure can assign the user
         property of the application and make the user object available to other
         components of the application.
-        </p>
-        <p>
-        Vaadin doesn't define of use user object in any way - it only provides
-        getter and setter methods for convenience. The user reference stored to
-        the application can be read with L{#getUser()}.
-        </p>
 
-        @param user
+        Muntjac doesn't define of use user object in any way - it only provides
+        getter and setter methods for convenience. The user reference stored to
+        the application can be read with L{getUser}.
+
+        @param user:
                    the new user.
         """
         prevUser = self._user
@@ -918,13 +858,10 @@ class Application(IUriHandler, ITerminal, IErrorListener):
     def getURL(self):
         """Gets the URL of the application.
 
-        <p>
         This is the URL what can be entered to a browser window to start the
         application. Navigating to the application URL shows the main window (
         L{#getMainWindow()}) of the application. Note that the main window
-        can also be shown by navigating to the window url (
-        L{com.vaadin.ui.Window#getURL()}).
-        </p>
+        can also be shown by navigating to the window url (L{Window.getURL}).
 
         @return: the application's URL.
         """
@@ -934,15 +871,12 @@ class Application(IUriHandler, ITerminal, IErrorListener):
     def close(self):
         """Ends the Application.
 
-        <p>
-        In effect this will cause the application stop returning any windows when
-        asked. When the application is closed, its state is removed from the
-        session and the browser window is redirected to the application logout
-        url set with L{#setLogoutURL(String)}. If the logout url has not
+        In effect this will cause the application stop returning any windows
+        when asked. When the application is closed, its state is removed from
+        the session and the browser window is redirected to the application
+        logout url set with L{#setLogoutURL(String)}. If the logout url has not
         been set, the browser window is reloaded and the application is
         restarted.
-        </p>
-        .
         """
         self._applicationIsRunning = False
 
@@ -950,26 +884,19 @@ class Application(IUriHandler, ITerminal, IErrorListener):
     def start(self, applicationUrl, applicationProperties, context):
         """Starts the application on the given URL.
 
-        <p>
         This method is called by Vaadin framework when a user navigates to the
-        application. After this call the application corresponds to the given URL
-        and it will return windows when asked for them. There is no need to call
-        this method directly.
-        </p>
+        application. After this call the application corresponds to the given
+        URL and it will return windows when asked for them. There is no need to
+        call this method directly.
 
-        <p>
-        Application properties are defined by servlet configuration object
-        L{javax.servlet.ServletConfig} and they are overridden by
-        context-wide initialization parameters
-        L{javax.servlet.ServletContext}.
-        </p>
+        Application properties are defined by servlet configuration.
 
-        @param applicationUrl
+        @param applicationUrl:
                    the URL the application should respond to.
-        @param applicationProperties
+        @param applicationProperties:
                    the Application properties as specified by the servlet
                    configuration.
-        @param context
+        @param context:
                    the context application will be running in.
         """
         self._applicationUrl = applicationUrl
@@ -982,14 +909,10 @@ class Application(IUriHandler, ITerminal, IErrorListener):
     def isRunning(self):
         """Tests if the application is running or if it has been finished.
 
-        <p>
-        Application starts running when its
-        L{#start(URL, Properties, ApplicationContext)} method has been
+        Application starts running when its L{start} method has been
         called and stops when the L{#close()} is called.
-        </p>
 
-        @return: C{True} if the application is running,
-                C{False} if not.
+        @return: C{True} if the application is running, C{False} if not.
         """
         return self._applicationIsRunning
 
@@ -997,9 +920,7 @@ class Application(IUriHandler, ITerminal, IErrorListener):
     def getWindows(self):
         """Gets the set of windows contained by the application.
 
-        <p>
         Note that the returned set of windows can not be modified.
-        </p>
 
         @return: the Unmodifiable collection of windows.
         """
@@ -1007,12 +928,10 @@ class Application(IUriHandler, ITerminal, IErrorListener):
 
 
     def init(self):
-        """<p>
-        Main initializer of the application. The C{init} method is
+        """Main initializer of the application. The C{init} method is
         called by the framework when the application is started, and it should
-        perform whatever initialization operations the application needs, such as
-        creating windows and adding components to them.
-        </p>
+        perform whatever initialization operations the application needs, such
+        as creating windows and adding components to them.
         """
         raise NotImplementedError
 
@@ -1020,8 +939,8 @@ class Application(IUriHandler, ITerminal, IErrorListener):
     def getTheme(self):
         """Gets the application's theme. The application's theme is the default
         theme used by all the windows in it that do not explicitly specify a
-        theme. If the application theme is not explicitly set, the
-        C{None} is returned.
+        theme. If the application theme is not explicitly set, the C{None} is
+        returned.
 
         @return: the name of the application's theme.
         """
@@ -1030,14 +949,13 @@ class Application(IUriHandler, ITerminal, IErrorListener):
 
     def setTheme(self, theme):
         """Sets the application's theme.
-        <p>
+
         Note that this theme can be overridden in the the application level
-        windows with L{com.vaadin.ui.Window#setTheme(String)}. Setting theme
+        windows with L{Window.setTheme}. Setting theme
         to be C{None} selects the default theme. For the available
         theme names, see the contents of the VAADIN/themes directory.
-        </p>
 
-        @param theme
+        @param theme:
                    the new theme for this application.
         """
         # Collect list of windows not having the current or future theme
@@ -1060,13 +978,10 @@ class Application(IUriHandler, ITerminal, IErrorListener):
     def getMainWindow(self):
         """Gets the mainWindow of the application.
 
-        <p>
-        The main window is the window attached to the application URL (
-        L{#getURL()}) and thus which is show by default to the user.
-        </p>
-        <p>
+        The main window is the window attached to the application URL
+        (L{getURL}) and thus which is show by default to the user.
+
         Note that each application must have at least one main window.
-        </p>
 
         @return: the main window.
         """
@@ -1074,13 +989,11 @@ class Application(IUriHandler, ITerminal, IErrorListener):
 
 
     def setMainWindow(self, mainWindow):
-        """<p>
-        Sets the mainWindow. If the main window is not explicitly set, the main
-        window defaults to first created window. Setting window as a main window
-        of this application also adds the window to this application.
-        </p>
+        """Sets the mainWindow. If the main window is not explicitly set, the
+        main window defaults to first created window. Setting window as a main
+        window of this application also adds the window to this application.
 
-        @param mainWindow
+        @param mainWindow:
                    the mainWindow to set.
         """
         self.addWindow(mainWindow)
@@ -1090,25 +1003,21 @@ class Application(IUriHandler, ITerminal, IErrorListener):
     def getPropertyNames(self):
         """Returns an enumeration of all the names in this application.
 
-        <p>
-        See L{#start(URL, Properties, ApplicationContext)} how properties
-        are defined.
-        </p>
+        See L{start} how properties are defined.
 
-        @return: an enumeration of all the keys in this property list, including
-                the keys in the default property list.
+        @return: an enumeration of all the keys in this property list,
+                 including the keys in the default property list.
         """
         return self._properties.keys()
 
 
     def getProperty(self, name):
-        """Searches for the property with the specified name in this application.
-        This method returns C{None} if the property is not found.
+        """Searches for the property with the specified name in this
+        application. This method returns C{None} if the property is not found.
 
-        See L{#start(URL, Properties, ApplicationContext)} how properties
-        are defined.
+        See L{start} how properties are defined.
 
-        @param name
+        @param name:
                    the name of the property.
         @return: the value in this property list with the specified key value.
         """
@@ -1116,10 +1025,10 @@ class Application(IUriHandler, ITerminal, IErrorListener):
 
 
     def addResource(self, resource):
-        """Adds new resource to the application. The resource can be accessed by the
-        user of the application.
+        """Adds new resource to the application. The resource can be accessed
+        by the user of the application.
 
-        @param resource
+        @param resource:
                    the resource to add.
         """
         # Check if the resource is already mapped
@@ -1137,7 +1046,7 @@ class Application(IUriHandler, ITerminal, IErrorListener):
     def removeResource(self, resource):
         """Removes the resource from the application.
 
-        @param resource
+        @param resource:
                    the resource to remove.
         """
         key = self._resourceKeyMap.get(resource)
@@ -1154,13 +1063,13 @@ class Application(IUriHandler, ITerminal, IErrorListener):
         This method can only be called from within the processing of a UIDL
         request, not from a background thread.
 
-        @param resource
+        @param resource:
                    the resource to get relative location.
         @return: the relative uri of the resource or null if called in a
-                background thread
+                 background thread
 
-        @deprecated: this method is intended to be used by the terminal only. It
-                    may be removed or moved in the future.
+        @deprecated: this method is intended to be used by the terminal only.
+                     It may be removed or moved in the future.
         """
         warn(("this method is intended to be used by the "
             "terminal only. It may be removed or moved in the future."),
@@ -1179,21 +1088,17 @@ class Application(IUriHandler, ITerminal, IErrorListener):
     def handleURI(self, context, relativeUri):
         """Application URI handling hub.
 
-        <p>
         This method gets called by terminal. It has lots of duties like to pass
         uri handler to proper uri handlers registered to windows etc.
-        </p>
 
-        <p>
         In most situations developers should NOT OVERRIDE this method. Instead
         developers should implement and register uri handlers to windows.
-        </p>
 
-        @deprecated this method is called be the terminal implementation only and
-                    might be removed or moved in the future. Instead of
-                    overriding this method, add your L{IUriHandler} to a top
-                    level L{Window} (eg.
-                    getMainWindow().addUriHanler(handler) instead.
+        @deprecated: this method is called be the terminal implementation only
+                     and might be removed or moved in the future. Instead of
+                     overriding this method, add your L{IUriHandler} to a top
+                     level L{Window} (eg.
+                     getMainWindow().addUriHanler(handler) instead.
         """
         warn(("this method is called be the terminal "
             "implementation only and might be removed or moved in the future. "
@@ -1240,36 +1145,21 @@ class Application(IUriHandler, ITerminal, IErrorListener):
         By default this is the preferred locale of the user using the
         application. In most cases it is read from the browser defaults.
 
-        @param locale
+        @param locale:
                    the Locale object.
         """
         self._locale = locale
 
 
     def addListener(self, listener, iface):
-        """Adds the user change listener.
+        """Adds the user change/window attach/window detach listener.
 
-        This allows one to get notification each time L{#setUser(Object)} is
-        called.
-
-        @param listener:
-                   the user change listener to add.
-        ---
-        Adds the window attach listener.
-
-        Use this to get notifications each time a window is attached to the
-        application with L{#addWindow(Window)}.
-
-        @param listener:
-                   the window attach listener to add.
-        ---
-        Adds the window detach listener.
-
-        Use this to get notifications each time a window is remove from the
-        application with L{#removeWindow(Window)}.
-
-        @param listener:
-                   the window detach listener to add.
+        The user change listener allows one to get notification each time
+        L{setUser} is called.  The window attach listener is used to get
+        notifications each time a window is attached to the application
+        with L{addWindow}.  The window detach listener is used to get
+        notifications each time a window is remove from the application
+        with L{removeWindow}.
         """
         if iface == IUserChangeListener:
             if self._userChangeListeners is None:
@@ -1303,20 +1193,10 @@ class Application(IUriHandler, ITerminal, IErrorListener):
 
 
     def removeListener(self, listener, iface):
-        """Removes the user change listener.
+        """Removes the user change/window attach/window detach listener.
 
         @param listener:
-                   the user change listener to remove.
-        ---
-        Removes the window attach listener.
-
-        @param listener:
-                   the window attach listener to remove.
-        ---
-        Removes the window detach listener.
-
-        @param listener:
-                   the window detach listener to remove.
+                   the  listener to remove
         """
         if iface == IUserChangeListener:
             if self._userChangeListeners is None:
@@ -1353,13 +1233,12 @@ class Application(IUriHandler, ITerminal, IErrorListener):
 
 
     def getLogoutURL(self):
-        """Returns the URL user is redirected to on application close. If the URL is
-        C{None}, the application is closed normally as defined by the
+        """Returns the URL user is redirected to on application close. If the
+        URL is C{None}, the application is closed normally as defined by the
         application running environment.
-        <p>
+
         Desktop application just closes the application window and
         web-application redirects the browser to application main URL.
-        </p>
 
         @return: the URL.
         """
@@ -1367,13 +1246,13 @@ class Application(IUriHandler, ITerminal, IErrorListener):
 
 
     def setLogoutURL(self, logoutURL):
-        """Sets the URL user is redirected to on application close. If the URL is
-        C{None}, the application is closed normally as defined by the
+        """Sets the URL user is redirected to on application close. If the URL
+        is C{None}, the application is closed normally as defined by the
         application running environment: Desktop application just closes the
         application window and web-application redirects the browser to
         application main URL.
 
-        @param logoutURL
+        @param logoutURL:
                    the logoutURL to set.
         """
         self._logoutURL = logoutURL
@@ -1381,15 +1260,16 @@ class Application(IUriHandler, ITerminal, IErrorListener):
 
     @classmethod
     def getSystemMessages(cls):
-        """Gets the SystemMessages for this application. SystemMessages are used to
-        notify the user of various critical situations that can occur, such as
-        session expiration, client/server out of sync, and internal server error.
+        """Gets the SystemMessages for this application. SystemMessages are
+        used to notify the user of various critical situations that can occur,
+        such as session expiration, client/server out of sync, and internal
+        server error.
 
-        You can customize the messages by "overriding" this method and returning
-        L{CustomizedSystemMessages}. To "override" this method, re-implement
-        this method in your application (the class that extends
-        L{Application}). Even though overriding static methods is not
-        possible in Java, Vaadin selects to call the static method from the
+        You can customize the messages by "overriding" this method and
+        returning L{CustomizedSystemMessages}. To "override" this method,
+        re-implement this method in your application (the class that extends
+        L{Application}). Even though overriding class methods is not
+        possible in Python, Vaadin selects to call the static method from the
         subclass instead of the original L{#getSystemMessages()} if such a
         method exists.
 
@@ -1399,21 +1279,18 @@ class Application(IUriHandler, ITerminal, IErrorListener):
 
 
     def terminalError(self, event):
-        """<p>
-        Invoked by the terminal on any exception that occurs in application and
-        is thrown by the C{setVariable} to the terminal. The default
+        """Invoked by the terminal on any exception that occurs in application
+        and is thrown by the C{setVariable} to the terminal. The default
         implementation sets the exceptions as C{ComponentErrors} to the
         component that initiated the exception and prints stack trace to standard
         error stream.
-        </p>
-        <p>
+
         You can safely override this method in your application in order to
         direct the errors to some other destination (for example log).
-        </p>
 
-        @param event
+        @param event:
                    the change event.
-        @see: com.vaadin.terminal.ITerminal.IErrorListener#terminalError(com.vaadin.terminal.ITerminal.IErrorEvent)
+        @see: L{IErrorListener.terminalError}
         """
         t = event.getThrowable()
         if isinstance(t, IOError):  #SocketException
@@ -1448,19 +1325,15 @@ class Application(IUriHandler, ITerminal, IErrorListener):
 
     def getContext(self):
         """Gets the application context.
-        <p>
+
         The application context is the environment where the application is
         running in. The actual implementation class of may contains quite a lot
         more functionality than defined in the L{ApplicationContext}
         interface.
-        </p>
-        <p>
+
         By default, when you are deploying your application to a servlet
         container, the implementation class is L{WebApplicationContext} -
-        you can safely cast to this class and use the methods from there. When
-        you are deploying your application as a portlet, context implementation
-        is L{PortletApplicationContext}.
-        </p>
+        you can safely cast to this class and use the methods from there.
 
         @return: the application context.
         """
@@ -1490,49 +1363,45 @@ class Application(IUriHandler, ITerminal, IErrorListener):
     def setErrorHandler(self, errorHandler):
         """Sets the application error handler.
 
-        The default error handler is the application itself. By overriding this,
-        you can redirect the error messages to your selected target (log for
-        example).
-
-        @param errorHandler
+        The default error handler is the application itself. By overriding
+        this, you can redirect the error messages to your selected target
+        (log for example).
         """
         self._errorHandler = errorHandler
 
 
 class UserChangeEvent(EventObject):
-    """<p>
-    An event that characterizes a change in the current selection.
-    </p>
+    """An event that characterizes a change in the current selection.
+
     Application user change event sent when the setUser is called to change
     the current user of the application.
 
-    @version @VERSION@
-    @since 3.0
+    @version: @VERSION@
     """
 
     def __init__(self, source, newUser, prevUser):
         """Constructor for user change event.
 
-        @param source
+        @param source:
                    the application source.
-        @param newUser
-                   the new User.
-        @param prevUser
-                   the previous User.
+        @param newUser:
+                   the new user.
+        @param prevUser:
+                   the previous user.
         """
         super(UserChangeEvent, self).__init__(source)
 
-        # New user of the application.
+        #: New user of the application.
         self._newUser = newUser
 
-        # Previous user of the application.
+        #: Previous user of the application.
         self._prevUser = prevUser
 
 
     def getNewUser(self):
         """Gets the new user of the application.
 
-        @return: the new User.
+        @return: the new user.
         """
         return self._newUser
 
@@ -1540,8 +1409,8 @@ class UserChangeEvent(EventObject):
     def getPreviousUser(self):
         """Gets the previous user of the application.
 
-        @return: the previous Vaadin user, if user has not changed ever on
-                application it returns C{None}
+        @return: the previous Muntjac user, if user has not changed ever on
+                 application it returns C{None}
         """
         return self._prevUser
 
@@ -1558,15 +1427,14 @@ class IUserChangeListener(IEventListener):
     """The C{UserChangeListener} interface for listening application
     user changes.
 
-    @version @VERSION@
-    @since 3.0
+    @version: @VERSION@
     """
 
     def applicationUserChanged(self, event):
         """The C{applicationUserChanged} method Invoked when the
         application user has changed.
 
-        @param event
+        @param event:
                    the change event.
         """
         pass
@@ -1576,14 +1444,14 @@ class WindowDetachEvent(EventObject):
     """Window detach event.
 
     This event is sent each time a window is removed from the application
-    with L{com.vaadin.Application#removeWindow(Window)}.
+    with L{Application.removeWindow}.
     """
 
     def __init__(self, window):
         """Creates a event.
 
-        @param window
-                   the Detached window.
+        @param window:
+                   the detached window.
         """
         super(WindowDetachEvent, self).__init__(self)
         self._window = window
@@ -1600,7 +1468,7 @@ class WindowDetachEvent(EventObject):
     def getApplication(self):
         """Gets the application from which the window was detached.
 
-        @return: the Application.
+        @return: the application.
         """
         return self.getSource()
 
@@ -1608,15 +1476,15 @@ class WindowDetachEvent(EventObject):
 class WindowAttachEvent(EventObject):
     """Window attach event.
 
-    This event is sent each time a window is attached tothe application with
-    L{com.vaadin.Application#addWindow(Window)}.
+    This event is sent each time a window is attached to the application with
+    L{Application.addWindow}.
     """
 
     def __init__(self, window):
         """Creates a event.
 
-        @param window
-                   the Attached window.
+        @param window:
+                   the attached window.
         """
         super(WindowAttachEvent, self).__init__(self)
         self._window = window
@@ -1633,7 +1501,7 @@ class WindowAttachEvent(EventObject):
     def getApplication(self):
         """Gets the application to which the window was attached.
 
-        @return: the Application.
+        @return: the application.
         """
         return self.getSource()
 
@@ -1645,7 +1513,7 @@ class IWindowAttachListener(object):
     def windowAttached(self, event):
         """Window attached
 
-        @param event
+        @param event:
                    the window attach event.
         """
         pass
@@ -1658,7 +1526,7 @@ class IWindowDetachListener(object):
     def windowDetached(self, event):
         """Window detached.
 
-        @param event
+        @param event:
                    the window detach event.
         """
         pass

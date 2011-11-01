@@ -30,71 +30,55 @@ class Slider(AbstractField):
 
     ORIENTATION_VERTICAL = 1
 
-    # Style constant representing a scrollbar styled slider. Use this with
-    # L{#addStyleName(String)}. Default styling usually represents a
-    # common slider found e.g. in Adobe Photoshop. The client side
-    # implementation dictates how different styles will look.
+    #: Style constant representing a scrollbar styled slider. Use this with
+    #  L{#addStyleName(String)}. Default styling usually represents a
+    #  common slider found e.g. in Adobe Photoshop. The client side
+    #  implementation dictates how different styles will look.
     STYLE_SCROLLBAR = 'scrollbar'
 
 
     def __init__(self, *args):
-        """Default Slider constructor. Sets all values to defaults and the
-        slide handle at minimum value.
-        ---
-        Create a new slider with the caption given as parameter. All slider
-        values set to defaults.
+        """Slider constructor.
 
-        @param caption
-                   The caption for this Slider (e.g. "Volume").
-        ---
-        Create a new slider with given range and resolution
-
-        @param min
-        @param max
-        @param resolution
-        ---
-        Create a new slider with given range
-
-        @param min
-        @param max
-        ---
-        Create a new slider with given caption and range
-
-        @param caption
-        @param min
-        @param max
+        @param args: tuple of the form
+            - ()
+            - (caption)
+              1. The caption for this Slider (e.g. "Volume").
+            - (min, max, resolution)
+            - (min, max)
+            - (caption, min, max)
         """
-        # Minimum value of slider
+        #: Minimum value of slider
         self._min = 0
 
-        # Maximum value of slider
+        #: Maximum value of slider
         self._max = 100
 
-        # Resolution, how many digits are considered relevant after the
-        # decimal point. Must be a non-negative value
+        #: Resolution, how many digits are considered relevant after the
+        #  decimal point. Must be a non-negative value
         self._resolution = 0
 
-        # Slider orientation (horizontal/vertical), defaults .
+        #: Slider orientation (horizontal/vertical), defaults .
         self._orientation = self.ORIENTATION_HORIZONTAL
 
-        # Slider size in pixels. In horizontal mode, if set to -1, allow
-        # 100% width of container. In vertical mode, if set to -1, default
-        # height is determined by the client-side implementation.
+        #: Slider size in pixels. In horizontal mode, if set to -1, allow
+        #  100% width of container. In vertical mode, if set to -1, default
+        #  height is determined by the client-side implementation.
         #
         # @deprecated
         self._size = -1
 
-        # Handle (draggable control element) size in percents relative to
-        # base size. Must be a value between 1-99. Other values are converted
-        # to nearest bound. A negative value sets the width to auto
-        # (client-side implementation calculates).
+        #: Handle (draggable control element) size in percents relative to
+        #  base size. Must be a value between 1-99. Other values are converted
+        #  to nearest bound. A negative value sets the width to auto
+        #  (client-side implementation calculates).
         #
-        # @deprecated The size is dictated by the current theme.
+        # @deprecated: The size is dictated by the current theme.
         self._handleSize = -1
 
-        # Show arrows that can be pressed to slide the handle in some
-        # increments (client-side implementation decides the increment,
-        # usually somewhere between 5-10% of slide range).
+        #: Show arrows that can be pressed to slide the handle in some
+        #  increments (client-side implementation decides the increment,
+        #  usually somewhere between 5-10% of slide range).
         self._arrows = False
 
         args = args
@@ -167,7 +151,7 @@ class Slider(AbstractField):
         """Set the minimum value of the Slider. If the current value of
         the Slider is out of new bounds, the value is set to new minimum.
 
-        @param min
+        @param min:
                    New minimum value of the Slider.
         """
         self._min = minn
@@ -195,7 +179,7 @@ class Slider(AbstractField):
     def setOrientation(self, orientation):
         """Set the orientation of the Slider.
 
-        @param int new orientation
+        @param new orientation
         """
         self._orientation = orientation
         self.requestRepaint()
@@ -223,25 +207,11 @@ class Slider(AbstractField):
     def setValue(self, value, repaintIsNotNeeded=False):
         """Set the value of this Slider.
 
-        @param value
+        @param value:
                    New value of Slider. Must be within Sliders range
                    (min - max), otherwise throws an exception.
-        @param repaintIsNotNeeded
+        @param repaintIsNotNeeded:
                    If true, client-side is not requested to repaint itself.
-        @raise ValueOutOfBoundsException
-        ---
-        Set the value of this Slider.
-
-        @param value
-                   New value of Slider. Must be within Sliders range
-                   (min - max), otherwise throws an exception.
-        @raise ValueOutOfBoundsException
-        ---
-        Set the value of this Slider.
-
-        @param value
-                   New value of Slider. Must be within Sliders range
-                   (min - max), otherwise throws an exception.
         @raise ValueOutOfBoundsException
         """
         v = value
@@ -264,7 +234,7 @@ class Slider(AbstractField):
         """Get the current Slider size.
 
         @return: size in pixels or -1 for auto sizing.
-        @deprecated use standard getWidth/getHeight instead
+        @deprecated: use standard getWidth/getHeight instead
         """
         return self._size
 
@@ -272,9 +242,9 @@ class Slider(AbstractField):
     def setSize(self, size):
         """Set the size for this Slider.
 
-        @param size
+        @param size:
                    in pixels, or -1 auto sizing.
-        @deprecated use standard setWidth/setHeight instead
+        @deprecated: use standard setWidth/setHeight instead
         """
         self._size = size
 
@@ -290,7 +260,7 @@ class Slider(AbstractField):
         """Get the handle size of this Slider.
 
         @return: handle size in percentages.
-        @deprecated The size is dictated by the current theme.
+        @deprecated: The size is dictated by the current theme.
         """
         return self._handleSize
 
@@ -298,9 +268,9 @@ class Slider(AbstractField):
     def setHandleSize(self, handleSize):
         """Set the handle size of this Slider.
 
-        @param handleSize
+        @param handleSize:
                    in percentages relative to slider base size.
-        @deprecated The size is dictated by the current theme.
+        @deprecated: The size is dictated by the current theme.
         """
         if handleSize < 0:
             self._handleSize = -1
@@ -348,9 +318,6 @@ class Slider(AbstractField):
     def changeVariables(self, source, variables):
         """Invoked when the value of a variable has changed. Slider listeners
         are notified if the slider value has changed.
-
-        @param source
-        @param variables
         """
         super(Slider, self).changeVariables(source, variables)
 
@@ -385,8 +352,6 @@ class ValueOutOfBoundsException(Exception):
     def __init__(self, valueOutOfBounds):
         """Constructs an C{ValueOutOfBoundsException} with
         the specified detail message.
-
-        @param valueOutOfBounds
         """
         self._value = valueOutOfBounds
 

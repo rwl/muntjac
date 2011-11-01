@@ -26,31 +26,21 @@ class TextArea(AbstractTextField):
     _DEFAULT_ROWS = 5
 
     def __init__(self, *args):
-        """Constructs an empty TextArea.
-        ---
-        Constructs an empty TextArea with given caption.
+        """Constructs a TextArea with an optional caption, data source,
+        and/or value.
 
-        @param caption
-                   the caption for the field.
-        ---
-        Constructs a TextArea with given property data source.
-
-        @param dataSource
-                   the data source for the field
-        ---
-        Constructs a TextArea with given caption and property data source.
-
-        @param caption
-                   the caption for the field
-        @param dataSource
-                   the data source for the field
-        ---
-        Constructs a TextArea with given caption and value.
-
-        @param caption
-                   the caption for the field
-        @param value
-                   the value for the field
+        @param args: tuple of the form
+            - ()
+            - (caption)
+              1. the caption for the field
+            - (dataSource)
+              1. the data source for the field
+            - (caption, dataSource)
+              1. the caption for the field
+              2. the data source for the field
+            - (caption, value)
+              1. the caption for the field
+              2. the value for the field
         """
         # Number of visible rows in the text area.
         self._rows = self._DEFAULT_ROWS
@@ -108,7 +98,7 @@ class TextArea(AbstractTextField):
     def setWordwrap(self, wordwrap):
         """Sets the text area's word-wrap mode on or off.
 
-        @param wordwrap
+        @param wordwrap:
                    the boolean value specifying if the text area should be
                    in word-wrap mode.
         """
@@ -121,7 +111,7 @@ class TextArea(AbstractTextField):
         """Tests if the text area is in word-wrap mode.
 
         @return: C{True} if the component is in word-wrap mode,
-                C{False} if not.
+                 C{False} if not.
         """
         return self._wordwrap
 

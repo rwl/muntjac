@@ -19,9 +19,7 @@ from muntjac.ui.abstract_split_panel import AbstractSplitPanel
 
 class HorizontalSplitPanel(AbstractSplitPanel):
     """A horizontal split panel contains two components and lays them
-    horizontally. The first component is on the left side.
-
-    <pre>
+    horizontally. The first component is on the left side::
 
          +---------------------++----------------------+
          |                     ||                      |
@@ -33,11 +31,9 @@ class HorizontalSplitPanel(AbstractSplitPanel):
                                |
                          the splitter
 
-    </pre>
-
     @author: Vaadin Ltd.
-    @version @VERSION@
-    @since 6.5
+    @author: Richard Lincoln
+    @version: @VERSION@
     """
 
     CLIENT_WIDGET = None #ClientWidget(VSplitPanelHorizontal, LoadStyle.EAGER)

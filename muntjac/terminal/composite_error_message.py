@@ -24,7 +24,7 @@ class CompositeErrorMessage(IErrorMessage):
     """Class for combining multiple error messages together.
 
     @author: IT Mill Ltd
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     def __init__(self, errorMessages):

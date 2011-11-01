@@ -24,7 +24,7 @@ class UserError(IErrorMessage):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     #: Content mode, where the error contains only plain text.

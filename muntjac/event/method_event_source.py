@@ -24,7 +24,7 @@ class IMethodEventSource(object):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     def addListener(self, eventType, obj, method):

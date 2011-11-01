@@ -24,27 +24,21 @@ class IFieldFactory(IFormFieldFactory, ITableFieldFactory):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
-    @since 3.1
-    @deprecated IFieldFactory was split into two lighter interfaces in 6.0
-                Use IFormFieldFactory or ITableFieldFactory or both instead.
+    @version: @VERSION@
+    @deprecated: IFieldFactory was split into two lighter interfaces.
+                 Use IFormFieldFactory or ITableFieldFactory or both instead.
     """
 
     def createField(self, *args):
         """Creates a field based on type of data.
 
-        @param type
-                   the type of data presented in field.
-        @param uiContext
-                   the component where the field is presented.
-        @return: Field the field suitable for editing the specified data.
-        ---
-        Creates a field based on the property datasource.
-
-        @param property
-                   the property datasource.
-        @param uiContext
-                   the component where the field is presented.
+        @param args: tuple of the form
+            - (type, uiContext)
+              1. the type of data presented in field.
+              2. the component where the field is presented.
+            - (property, uiContext)
+              1. the property datasource.
+              2. the component where the field is presented.
         @return: Field the field suitable for editing the specified data.
         """
         raise NotImplementedError

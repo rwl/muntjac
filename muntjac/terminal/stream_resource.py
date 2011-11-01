@@ -27,7 +27,7 @@ class StreamResource(IApplicationResource):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     def __init__(self, streamSource, filename, application):
@@ -171,7 +171,7 @@ class StreamSource(object):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     def getStream(self):

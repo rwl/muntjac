@@ -32,7 +32,7 @@ class IParameterHandler(object):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     def handleParameters(self, parameters):

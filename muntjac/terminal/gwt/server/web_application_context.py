@@ -28,7 +28,7 @@ class WebApplicationContext(AbstractWebApplicationContext):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     def __init__(self):

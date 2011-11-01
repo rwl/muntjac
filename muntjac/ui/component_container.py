@@ -24,7 +24,7 @@ class IComponentContainer(IComponent):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     def addComponent(self, c):

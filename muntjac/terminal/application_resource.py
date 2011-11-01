@@ -28,7 +28,7 @@ class IApplicationResource(IResource):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     DEFAULT_CACHETIME = 1000 * 60 * 60 * 24

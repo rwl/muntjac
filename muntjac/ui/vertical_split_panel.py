@@ -19,9 +19,8 @@ from muntjac.ui.abstract_split_panel import AbstractSplitPanel
 
 class VerticalSplitPanel(AbstractSplitPanel):
     """A vertical split panel contains two components and lays them
-    vertically. The first component is above the second component.
+    vertically. The first component is above the second component::
 
-    <pre>
          +--------------------------+
          |                          |
          |  The first component     |
@@ -31,7 +30,6 @@ class VerticalSplitPanel(AbstractSplitPanel):
          |  The second component    |
          |                          |
          +--------------------------+
-    </pre>
     """
 
     CLIENT_WIDGET = None #ClientWidget(VSplitPanelVertical, LoadStyle.EAGER)

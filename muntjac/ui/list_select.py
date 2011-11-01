@@ -36,7 +36,7 @@ class ListSelect(AbstractSelect):
         is set 0, the actual number of displayed columns is determined
         implicitly by the adapter.
 
-        @param columns
+        @param columns:
                    the number of columns to set.
         """
         if columns < 0:
@@ -60,7 +60,7 @@ class ListSelect(AbstractSelect):
         set 0, the actual number of displayed rows is determined implicitly
         by the adapter.
 
-        @param rows
+        @param rows:
                    the number of rows to set.
         """
         if rows < 0:

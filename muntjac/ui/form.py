@@ -53,72 +53,64 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
     L{com.vaadin.data.IItem} interface. Also the form itself implements
     this interface for easier connectivity to other items. To use the form as
     editor for an item, just connect the item to form with
-    L{Form#setItemDataSource(IItem)}. If only a part of the item needs to
-    be edited, L{Form#setItemDataSource(IItem,Collection)} can be used
+    L{Form.setItemDataSource}. If only a part of the item needs to
+    be edited, L{Form.setItemDataSource} can be used
     instead. After the item has been connected to the form, the automatically
     created fields can be customized and new fields can be added. If you need
-    to connect a class that does not implement L{com.vaadin.data.IItem}
+    to connect a class that does not implement L{IItem}
     interface, most properties of any class following bean pattern, can be
-    accessed trough L{com.vaadin.data.util.BeanItem}.
+    accessed trough C{muntjac.data.util.BeanItem}.
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
-    @since 3.0
+    @version: @VERSION@
     """
 
     def __init__(self, formLayout=None, fieldFactory=None):
-        """Constructs a new form with default layout.
-
-        By default the form uses L{FormLayout}.
-        ---
-        Constructs a new form with given L{Layout}.
-
-        @param formLayout
-                   the layout of the form.
-        ---
-        Constructs a new form with given L{Layout} and
+        """Constructs a new form with given L{Layout} and
         L{FormFieldFactory}.
 
-        @param formLayout
+        By default the form uses L{FormLayout}.
+
+        @param formLayout:
                    the layout of the form.
-        @param fieldFactory
+        @param fieldFactory:
                    the IFieldFactory of the form.
         """
         self._propertyValue = None
 
-        # Layout of the form.
+        #: Layout of the form.
         self._layout = None
 
-        # IItem connected to this form as datasource.
+        #: IItem connected to this form as datasource.
         self._itemDatasource = None
 
-        # Ordered list of property ids in this editor.
+        #: Ordered list of property ids in this editor.
         self._propertyIds = list()
 
-        # Current buffered source exception.
+        #: Current buffered source exception.
         self._currentBufferedSourceException = None
 
-        # Is the form in write trough mode.
+        #: Is the form in write trough mode.
         self._writeThrough = True
 
-        # Is the form in read trough mode.
+        #: Is the form in read trough mode.
         self._readThrough = True
 
-        # Mapping from propertyName to corresponding field.
+        #: Mapping from propertyName to corresponding field.
         self._fields = dict()
 
-        # Form may act as an IItem, its own properties are stored here.
+        #: Form may act as an IItem, its own properties are stored here.
         self._ownProperties = dict()
 
-        # IField factory for this form.
+        #: IField factory for this form.
         self._fieldFactory = None
 
-        # Visible item properties.
+        #: Visible item properties.
         self._visibleItemProperties = None
 
-        # Form needs to repaint itself if child fields value changes due
-        # possible change in form validity.
+        #: Form needs to repaint itself if child fields value changes due
+        #  possible change in form validity.
         #
         # TODO introduce ValidityChangeEvent (#6239) and start using it instead.
         # See e.g. DateField#notifyFormOfValidityChange().
@@ -126,17 +118,17 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
 
         self._formFooter = None
 
-        # If this is true, commit implicitly calls setValidationVisible(true).
+        #: If this is true, commit implicitly calls setValidationVisible(true).
         self._validationVisibleOnCommit = True
 
         # special handling for gridlayout; remember initial cursor pos
         self._gridlayoutCursorX = -1
         self._gridlayoutCursorY = -1
 
-        # Keeps track of the Actions added to this component, and manages the
-        # painting and handling as well. Note that the extended AbstractField
-        # is a L{ShortcutNotifier} and has a actionManager that delegates
-        # actions to the containing window. This one does not delegate.
+        #: Keeps track of the Actions added to this component, and manages the
+        #  painting and handling as well. Note that the extended AbstractField
+        #  is a L{ShortcutNotifier} and has a actionManager that delegates
+        #  actions to the containing window. This one does not delegate.
         self._ownActionManager = ActionManager(self)
 
         if fieldFactory is None:
@@ -215,7 +207,7 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
     def setValidationVisibleOnCommit(self, makeVisible):
         """Controls the making validation visible implicitly on commit.
 
-        Having commit() call setValidationVisible(true) implicitly is the
+        Having commit() call setValidationVisible(True) implicitly is the
         default behaviour. You can disable the implicit setting by setting
         this property as false.
 
@@ -223,7 +215,7 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
         of errors and only display them after the user clicks Ok. You can
         disable the implicit setting by setting this property as false.
 
-        @param makeVisible
+        @param makeVisible:
                    If true (default), validation is made visible when
                    commit() is called. If false, the visibility is left
                    as it is.
@@ -361,7 +353,7 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
     def addItemProperty(self, idd, prop):
         """Adds a new property to form and create corresponding field.
 
-        @see: com.vaadin.data.IItem#addItemProperty(Object, Property)
+        @see: L{IItem.addItemProperty}
         """
         # Checks inputs
         if (idd is None) or (prop is None):
@@ -394,12 +386,11 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
 
         The property id must not be already used in the form.
 
-        This field is added to the layout using the
-        L{#attachField(Object, IField)} method.
+        This field is added to the layout using the L{attachField} method.
 
-        @param propertyId
+        @param propertyId:
                    the Property id the the field.
-        @param field
+        @param field:
                    the field which should be added to the form.
         """
         self.registerField(propertyId, field)
@@ -414,9 +405,9 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
 
         The property id must not be already used in the form.
 
-        @param propertyId
+        @param propertyId:
                    the Property id of the field.
-        @param field
+        @param field:
                    the IField that should be registered
         """
         if propertyId is None or field is None:
@@ -442,16 +433,13 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
         """Adds the field to the form layout.
 
         The field is added to the form layout in the default position (the
-        position used by L{Layout#addComponent(Component)}. If the
+        position used by L{Layout.addComponent}. If the
         underlying layout is a L{CustomLayout} the field is added to
         the CustomLayout location given by the string representation of the
-        property id using L{CustomLayout.addComponent()}.
+        property id using L{CustomLayout.addComponent}.
 
         Override this method to control how the fields are added to the
         layout.
-
-        @param propertyId
-        @param field
         """
         if propertyId is None or field is None:
             return
@@ -469,7 +457,7 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
         returned. If there is a (with specified property id) having no data
         source, the field is returned instead of the data source.
 
-        @see: com.vaadin.data.IItem#getItemProperty(Object)
+        @see: L{IItem.getItemProperty}
         """
         field = self._fields.get(idd)
         if field is None:
@@ -488,7 +476,7 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
     def getField(self, propertyId):
         """Gets the field identified by the propertyid.
 
-        @param propertyId
+        @param propertyId:
                    the id of the property.
         """
         return self._fields.get(propertyId)
@@ -501,7 +489,7 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
     def removeItemProperty(self, idd):
         """Removes the property and corresponding field from the form.
 
-        @see: com.vaadin.data.IItem#removeItemProperty(Object)
+        @see: L{IItem.removeItemProperty}
         """
         if idd in self._ownProperties:
             del self._ownProperties[idd]
@@ -521,12 +509,12 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
 
     def detachField(self, field):
         """Called when a form field is detached from a Form. Typically when
-        a new IItem is assigned to Form via L{#setItemDataSource(IItem)}.
+        a new IItem is assigned to Form via L{setItemDataSource}.
 
         Override this method to control how the fields are removed from the
         layout.
 
-        @param field
+        @param field:
                    the field to be detached from the forms layout.
         """
         p = field.getParent()
@@ -555,21 +543,14 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
 
 
     def setItemDataSource(self, newDataSource, propertyIds=None):
-        """Sets the item datasource for the form.
-
-        Setting item datasource clears any fields, the form might contain and
-        adds all the properties as fields to the form.
-
-        @see: com.vaadin.data.IItem.Viewer#setItemDataSource(IItem)
-        ---
-        Set the item datasource for the form, but limit the form contents to
+        """Set the item datasource for the form, but limit the form contents to
         specified properties of the item.
 
         Setting item datasource clears any fields, the form might contain and
         adds the specified the properties as fields to the form, in the
         specified order.
 
-        @see: com.vaadin.data.IItem.Viewer#setItemDataSource(IItem)
+        @see: L{Viewer.setItemDataSource}
         """
         if propertyIds is None:
             if newDataSource is not None:
@@ -613,8 +594,7 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
     def getLayout(self):
         """Gets the layout of the form.
 
-        By default form uses C{OrderedLayout} with
-        C{form}-style.
+        By default form uses C{OrderedLayout} with C{form}-style.
 
         @return: the Layout of the form.
         """
@@ -624,10 +604,9 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
     def setLayout(self, newLayout):
         """Sets the layout of the form.
 
-        By default form uses C{OrderedLayout} with
-        C{form}-style.
+        By default form uses C{OrderedLayout} with C{form}-style.
 
-        @param newLayout
+        @param newLayout:
                    the Layout of the form.
         """
         # Use orderedlayout by default
@@ -663,10 +642,10 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
         must contain the current value of the field and the lengths of the
         arrays must match. Null values are not supported.
 
-        @param propertyId
+        @param propertyId:
                    the id of the property.
-        @param values
-        @param descriptions
+        @param values:
+        @param descriptions:
         @return: the select property generated
         """
         # Checks the parameters
@@ -763,7 +742,7 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
     def attach(self):
         """Notifies the component that it is connected to an application
 
-        @see: com.vaadin.ui.Component#attach()
+        @see: IComponent.attach}
         """
         super(Form, self).attach()
         self._layout.attach()
@@ -774,7 +753,7 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
     def detach(self):
         """Notifies the component that it is detached from the application.
 
-        @see: com.vaadin.ui.Component#detach()
+        @see: IComponent.detach}
         """
         super(Form, self).detach()
         self._layout.detach()
@@ -786,7 +765,7 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
         """Tests the current value of the object against all registered
         validators
 
-        @see: com.vaadin.data.IValidatable#isValid()
+        @see: L{IValidatable.isValid}
         """
         valid = True
 
@@ -799,7 +778,7 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
     def validate(self):
         """Checks the validity of the validatable.
 
-        @see: com.vaadin.data.IValidatable#validate()
+        @see: L{IValidatable.validate}
         """
         super(Form, self).validate()
         for i in self._propertyIds:
@@ -809,7 +788,7 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
     def isInvalidAllowed(self):
         """Checks the validabtable object accept invalid values.
 
-        @see: com.vaadin.data.IValidatable#isInvalidAllowed()
+        @see: L{IValidatable.isInvalidAllowed}
         """
         return True
 
@@ -817,7 +796,7 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
     def setInvalidAllowed(self, invalidValueAllowed):
         """Should the validabtable object accept invalid values.
 
-        @see: com.vaadin.data.IValidatable#setInvalidAllowed(boolean)
+        @see: L{IValidatable.setInvalidAllowed}
         """
         raise NotImplementedError
 
@@ -825,7 +804,7 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
     def setReadOnly(self, readOnly):
         """Sets the component's to read-only mode to the specified state.
 
-        @see: com.vaadin.ui.Component#setReadOnly(boolean)
+        @see: L{IComponent.setReadOnly}
         """
         super(Form, self).setReadOnly(readOnly)
         for i in self._propertyIds:
@@ -835,15 +814,14 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
     def setFieldFactory(self, fieldFactory):
         """Sets the field factory of Form.
 
-        C{IFieldFactory} is used to create fields for form
-        properties. By default the form uses BaseFieldFactory to create
-        IField instances.
+        C{IFieldFactory} is used to create fields for form properties. By
+        default the form uses BaseFieldFactory to create IField instances.
 
-        @param fieldFactory
+        @param fieldFactory:
                    the New factory used to create the fields.
-        @see: IField
-        @see: FormFieldFactory
-        @deprecated use L{#setFormFieldFactory()} instead
+        @see: L{IField}
+        @see: L{FormFieldFactory}
+        @deprecated: use L{setFormFieldFactory} instead
         """
         warn('use setFormFieldFactory() instead', DeprecationWarning)
         self._fieldFactory = fieldFactory
@@ -856,10 +834,10 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
         L{FormFieldFactory} is used to create fields for form properties.
         L{DefaultFieldFactory} is used by default.
 
-        @param fieldFactory
+        @param fieldFactory:
                    the new factory used to create the fields.
-        @see: IField
-        @see: FormFieldFactory
+        @see: L{IField}
+        @see: L{FormFieldFactory}
         """
         self._fieldFactory = fieldFactory
 
@@ -876,9 +854,8 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
         """Get the field factory of the form.
 
         @return: the IFieldFactory Factory used to create the fields.
-        @deprecated Use L{#getFormFieldFactory()} instead. Set the
-                    FormFieldFactory using
-                    L{#setFormFieldFactory(FormFieldFactory)}.
+        @deprecated: Use L{getFormFieldFactory} instead. Set the
+                    FormFieldFactory using L{setFormFieldFactory}.
         """
         warn('Use getFormFieldFactory() instead', DeprecationWarning)
 
@@ -891,7 +868,7 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
     def getType(self):
         """Gets the field type.
 
-        @see: com.vaadin.ui.AbstractField#getType()
+        @see: L{AbstractField.getType}
         """
         if self.getPropertyDataSource() is not None:
             return self.getPropertyDataSource().getType()
@@ -903,7 +880,7 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
 
         This is relevant when the Form is used as IField.
 
-        @see: com.vaadin.ui.AbstractField#setInternalValue(java.lang.Object)
+        @see: L{AbstractField.setInternalValue}
         """
         # Stores the old value
         oldValue = self._propertyValue
@@ -944,9 +921,6 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
         """Updates the internal form datasource.
 
         Method setFormDataSource.
-
-        @param data
-        @param properties
         """
         # If data is an item use it.
         item = None
@@ -968,7 +942,7 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
     def getVisibleItemProperties(self):
         """Returns the visibleProperties.
 
-        @return: the Collection of visible IItem properites.
+        @return: the collection of visible IItem properites.
         """
         return self._visibleItemProperties
 
@@ -976,7 +950,7 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
     def setVisibleItemProperties(self, visibleProperties):
         """Sets the visibleProperties.
 
-        @param visibleProperties
+        @param visibleProperties:
                    the visibleProperties to set.
         """
         self._visibleItemProperties = visibleProperties
@@ -989,7 +963,7 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
     def focus(self):
         """Focuses the first field in the form.
 
-        @see: com.vaadin.ui.Component.Focusable#focus()
+        @see: L{IFocusable.focus}
         """
         f = self.getFirstFocusableField()
         if f is not None:
@@ -999,7 +973,7 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
     def setTabIndex(self, tabIndex):
         """Sets the Tabulator index of this Focusable component.
 
-        @see: com.vaadin.ui.Component.Focusable#setTabIndex(int)
+        @see: IFocusable.setTabIndex}
         """
         super(Form, self).setTabIndex(tabIndex)
         for i in self.getItemPropertyIds():
@@ -1075,8 +1049,6 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
         attached to this Form specifically, while the ActionManager
         in AbstractField delegates to the containing Window (i.e global
         Actions).
-
-        @return
         """
         if self._ownActionManager is None:
             self._ownActionManager = ActionManager(self)

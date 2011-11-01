@@ -43,7 +43,7 @@ class IBuffered(object):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     def commit(self):
@@ -150,7 +150,7 @@ class SourceException(RuntimeError, IErrorMessage):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     def __init__(self, source, cause=None):
@@ -301,7 +301,7 @@ class IBufferedValidatable(IBuffered, IValidatable):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     def isInvalidCommitted(self):

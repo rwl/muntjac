@@ -40,7 +40,7 @@ class BaseTheme(object):
 
     # Removes extra decorations from the panel.
     #
-    # @deprecated Base theme does not implement this style, but it is defined
+    # @deprecated: Base theme does not implement this style, but it is defined
     #             here since it has been a part of the framework before
     #             multiple themes were available. Use the constant provided
     #             by the theme you're using instead, e.g.

@@ -22,7 +22,6 @@ except ImportError, e:
 from muntjac.ui.component import Event
 from muntjac.ui.embedded import Embedded
 from muntjac.ui.custom_component import CustomComponent
-from muntjac.ui.abstract_component import AbstractComponent
 from muntjac.terminal.application_resource import IApplicationResource
 from muntjac.terminal.uri_handler import IUriHandler
 from muntjac.terminal.download_stream import DownloadStream
@@ -43,7 +42,6 @@ class LoginEvent(Event):
     def getLoginParameter(self, name):
         """Access method to form values by field names.
 
-        @param name
         @return: value in given field
         """
         if name in self._params:
@@ -59,8 +57,6 @@ class ILoginListener(object):
 
     def onLogin(self, event):
         """This method is fired on each login form post.
-
-        @param event
         """
         raise NotImplementedError
 
@@ -71,7 +67,7 @@ _ON_LOGIN_METHOD = getattr(ILoginListener, 'onLogin')
 class LoginForm(CustomComponent):
     """LoginForm is a Vaadin component to handle common problem among Ajax
     applications: browsers password managers don't fill dynamically created
-    forms like all those UI elements created by Vaadin.
+    forms like all those UI elements created by Muntjac.
 
     For developer it is easy to use: add component to a desired place in you
     UI and add ILoginListener to validate form input. Behind the curtain
@@ -87,8 +83,6 @@ class LoginForm(CustomComponent):
 
     Note, this is a new Ajax terminal specific component and is likely to
     change.
-
-    @since 5.3
     """
 
     def __init__(self):
@@ -113,9 +107,9 @@ class LoginForm(CustomComponent):
 
 
     def getLoginHTML(self):
-        """Returns byte array containing login page html. If you need to override
-        the login html, use the default html as basis. Login page sets its target
-        with javascript.
+        """Returns byte array containing login page html. If you need to
+        override the login html, use the default html as basis. Login page
+        sets its target with javascript.
 
         @return: byte array containing login page html
         """
@@ -191,9 +185,7 @@ class LoginForm(CustomComponent):
 
 
     def addListener(self, listener, iface):
-        """Adds ILoginListener to handle login logic
-
-        @param listener:
+        """Adds ILoginListener to handle login logic.
         """
         if iface == ILoginListener:
             self.registerListener(LoginEvent, listener, _ON_LOGIN_METHOD)
@@ -206,9 +198,7 @@ class LoginForm(CustomComponent):
 
 
     def removeListener(self, listener, iface):
-        """Removes ILoginListener
-
-        @param listener:
+        """Removes ILoginListener.
         """
         if iface == ILoginListener:
             self.withdrawListener(LoginEvent, listener, _ON_LOGIN_METHOD)
@@ -246,8 +236,6 @@ class LoginForm(CustomComponent):
 
     def getUsernameCaption(self):
         """Returns the caption for the user name field.
-
-        @return: String
         """
         return self._usernameCaption
 
@@ -255,16 +243,12 @@ class LoginForm(CustomComponent):
     def setUsernameCaption(self, usernameCaption):
         """Sets the caption to show for the user name field. The caption
         cannot be changed after the form has been shown to the user.
-
-        @param usernameCaption
         """
         self._usernameCaption = usernameCaption
 
 
     def getPasswordCaption(self):
         """Returns the caption for the password field.
-
-        @return: String
         """
         return self._passwordCaption
 
@@ -272,16 +256,12 @@ class LoginForm(CustomComponent):
     def setPasswordCaption(self, passwordCaption):
         """Sets the caption to show for the password field. The caption
         cannot be changed after the form has been shown to the user.
-
-        @param passwordCaption
         """
         self._passwordCaption = passwordCaption
 
 
     def getLoginButtonCaption(self):
         """Returns the caption for the login button.
-
-        @return: String
         """
         return self._loginButtonCaption
 
@@ -289,8 +269,6 @@ class LoginForm(CustomComponent):
     def setLoginButtonCaption(self, loginButtonCaption):
         """Sets the caption (button text) to show for the login button. The
         caption cannot be changed after the form has been shown to the user.
-
-        @param loginButtonCaption
         """
         self._loginButtonCaption = loginButtonCaption
 

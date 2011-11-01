@@ -22,7 +22,7 @@ class StringLengthValidator(AbstractValidator):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     def __init__(self, errorMessage, minLength=None, maxLength=None,

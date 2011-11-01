@@ -26,54 +26,47 @@ class Embedded(AbstractComponent):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
-    @since 3.0
+    @version: @VERSION@
     """
 
     CLIENT_WIDGET = None #ClientWidget(VEmbedded, LoadStyle.EAGER)
 
     _CLICK_EVENT = VEmbedded.CLICK_EVENT_IDENTIFIER
 
-    # General object type.
+    #: General object type.
     TYPE_OBJECT = 0
 
-    # Image types.
+    #: Image types.
     TYPE_IMAGE = 1
 
-    # Browser ("iframe") type.
+    #: Browser ("iframe") type.
     TYPE_BROWSER = 2
 
     def __init__(self, caption=None, source=None):
-        """Creates a new empty Embedded object.
-        ---
-        Creates a new empty Embedded object with caption.
-
-        @param caption
-        ---
-        Creates a new Embedded object whose contents is loaded from
+        """Creates a new Embedded object whose contents is loaded from
         given resource. The dimensions are assumed if possible. The
         type is guessed from resource.
 
-        @param caption
-        @param source
+        @param caption:
+        @param source:
                    the Source of the embedded object.
         """
         super(Embedded, self).__init__()
 
-        # Type of the object.
+        #: Type of the object.
         self._type = self.TYPE_OBJECT
 
-        # Source of the embedded object.
+        #: Source of the embedded object.
         self._source = None
 
-        # Generic object attributes.
+        #: Generic object attributes.
         self._mimeType = None
         self._standby = None
 
-        # Hash of object parameters.
+        #: Hash of object parameters.
         self._parameters = dict()
 
-        # Applet or other client side runnable properties.
+        #: Applet or other client side runnable properties.
         self._codebase = None
         self._codetype = None
         self._classId = None
@@ -150,7 +143,7 @@ class Embedded(AbstractComponent):
     def removeParameter(self, name):
         """Removes an object parameter from the list.
 
-        @param name
+        @param name:
                    the name of the parameter to remove.
         """
         if name in self._parameters:
@@ -206,7 +199,7 @@ class Embedded(AbstractComponent):
         URIs specified by the classid, data, and archive attributes. When
         absent, its default value is the base URI of the current document.
 
-        @param codebase
+        @param codebase:
                    The base path
         """
         if (codebase != self._codebase
@@ -222,7 +215,7 @@ class Embedded(AbstractComponent):
         the user agent to avoid loading information for unsupported content
         types. When absent, it defaults to the value of the type attribute.
 
-        @param codetype
+        @param codetype:
                    the codetype to set.
         """
         if (codetype != self._codetype
@@ -275,7 +268,7 @@ class Embedded(AbstractComponent):
         """This attribute may be used to specify the location of an object's
         implementation via a URI.
 
-        @param classId
+        @param classId:
                    the classId to set.
         """
         if (classId != self._classId
@@ -296,10 +289,9 @@ class Embedded(AbstractComponent):
         """Gets the type of the embedded object.
 
         This can be one of the following:
-        <ul>
-        <li>TYPE_OBJECT <i>(This is the default)</i>
-        <li>TYPE_IMAGE
-        </ul>
+
+          - TYPE_OBJECT I{(This is the default)}
+          - TYPE_IMAGE
 
         @return: the type.
         """
@@ -333,11 +325,10 @@ class Embedded(AbstractComponent):
         """Sets the object type.
 
         This can be one of the following:
-        <ul>
-        <li>TYPE_OBJECT <i>(This is the default)</i>
-        <li>TYPE_IMAGE
-        <li>TYPE_BROWSER
-        </ul>
+
+          - TYPE_OBJECT I{(This is the default)}
+          - TYPE_IMAGE
+          - TYPE_BROWSER
 
         @param type: the type to set.
         """
@@ -359,7 +350,7 @@ class Embedded(AbstractComponent):
         interpreted relative to the codebase attribute.
 
         @return: Space-separated list of URIs with resources relevant to the
-                object
+                 object
         """
         return self._archive
 
@@ -372,7 +363,7 @@ class Embedded(AbstractComponent):
         times for objects. Archives specified as relative URIs should be
         interpreted relative to the codebase attribute.
 
-        @param archive
+        @param archive:
                    Space-separated list of URIs with resources relevant to
                    the object
         """
@@ -387,7 +378,7 @@ class Embedded(AbstractComponent):
         whenever the user clicks inside the component. Depending on the
         content the event may be blocked and in that case no event is fired.
 
-        Use L{#removeListener(ClickListener)} to remove the listener.
+        Use L{removeListener} to remove the listener.
 
         @param listener:
                    The listener to add
@@ -405,7 +396,7 @@ class Embedded(AbstractComponent):
 
     def removeListener(self, listener, iface):
         """Remove a click listener from the component. The listener should
-        earlier have been added using L{#addListener(ClickListener)}.
+        earlier have been added using L{addListener}.
 
         @param listener:
                    The listener to remove
@@ -428,8 +419,6 @@ class Embedded(AbstractComponent):
 
     def fireClick(self, parameters):
         """Notifies click-listeners that a mouse click event has occurred.
-
-        @param parameters
         """
         mouseDetails = \
                 MouseEventDetails.deSerialize(parameters['mouseDetails'])

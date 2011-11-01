@@ -35,16 +35,15 @@ from muntjac.event.field_events import \
 class ICloseListener(object):
     """An interface used for listening to Window close events. Add the
     ICloseListener to a browser level window or a sub window and
-    L{ICloseListener#windowClose(CloseEvent)} will be called whenever
+    L{ICloseListener.windowClose} will be called whenever
     the user closes the window.
 
-    Since Vaadin 6.5, removing windows using L{#removeWindow(Window)}
-    does fire the ICloseListener.
+    Removing windows using L{removeWindow} does now fire the ICloseListener.
     """
 
     def windowClose(self, e):
         """Called when the user closes a window. Use
-        L{CloseEvent#getWindow()} to get a reference to the
+        L{CloseEvent.getWindow} to get a reference to the
         L{Window} that was closed.
 
         @param e: Event containing
@@ -58,7 +57,7 @@ _WINDOW_CLOSE_METHOD = getattr(ICloseListener, 'windowClose')
 class IResizeListener(object):
     """Listener for window resize events.
 
-    @see: com.vaadin.ui.Window.ResizeEvent
+    @see: L{ResizeEvent}
     """
 
     def windowResized(self, e):
@@ -75,21 +74,21 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
 
     If the window is a application window or a sub window depends on how it
     is added to the application. Adding a C{Window} to a C{Window}
-    using L{Window#addWindow(Window)} makes it a sub window and adding a
+    using L{Window.addWindow} makes it a sub window and adding a
     C{Window} to the C{Application} using
-    L{Application#addWindow(Window)} makes it an application window.
+    L{Application.addWindow} makes it an application window.
 
-    An application window is the base of any view in a Vaadin application. All
+    An application window is the base of any view in a Muntjac application. All
     applications contain a main application window (set using
-    L{Application#setMainWindow(Window)} which is what is initially shown
+    L{ApplicationsetMainWindow} which is what is initially shown
     to the user. The contents of a window is set using
-    L{#setContent(ComponentContainer)}. The contents can in turn contain
+    L{setContent}. The contents can in turn contain
     other components. For multi-tab applications there is one window instance
     per opened tab.
 
     A sub window is floating popup style window that can be added to an
     application window. Like the application window its content is set using
-    L{#setContent(ComponentContainer)}. A sub window can be positioned on
+    L{setContent}. A sub window can be positioned on
     the screen using absolute coordinates (pixels). The default content of the
     Window is set to be suitable for application windows. For sub windows it
     might be necessary to set the size of the content to work as expected.
@@ -98,118 +97,115 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
     windows and in the window header for sub windows.
 
     Certain methods in this class are only meaningful for sub windows and other
-    parts only for application windows. These are marked using <b>Sub window
-    only</b> and <b>Application window only</b> respectively in the javadoc.
-
-    Sub window is to be split into a separate component in Vaadin 7.
+    parts only for application windows. These are marked using B{Sub window
+    only} and B{Application window only} respectively in the API doc.
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
-    @since 3.0
+    @version: @VERSION@
     """
 
     CLIENT_WIDGET = None #ClientWidget(VWindow, LoadStyle.EAGER)
 
-    # <b>Application window only</b>. A border style used for opening
-    # resources in a window without a border.
+    #: B{Application window only}. A border style used for opening
+    #  resources in a window without a border.
     BORDER_NONE = 0
 
-    # <b>Application window only</b>. A border style used for opening
-    # resources in a window with a minimal border.
+    #: B{Application window only}. A border style used for opening
+    #  resources in a window with a minimal border.
     BORDER_MINIMAL = 1
 
-    # <b>Application window only</b>. A border style that indicates that
-    # the default border style should be used when opening resources.
+    #: B{Application window only}. A border style that indicates that
+    #  the default border style should be used when opening resources.
     BORDER_DEFAULT = 2
 
 
     def __init__(self, caption='', content=None):
         """Creates a new unnamed window with the given content and title.
 
-        @param caption
+        @param caption:
                    the title of the window.
-        @param content
+        @param content:
                    the contents of the window
         """
 
-        # <b>Application window only</b>. The user terminal for this window.
+        #: B{Application window only}. The user terminal for this window.
         self._terminal = None
 
-        # <b>Application window only</b>. The application this window is
-        # attached to or null.
+        #: B{Application window only}. The application this window is
+        #  attached to or null.
         self._application = None
 
-        # <b>Application window only</b>. List of URI handlers for this
-        # window.
+        #: B{Application window only}. List of URI handlers for this
+        #  window.
         self._uriHandlerList = None
 
-        # <b>Application window only</b>. List of parameter handlers for
-        # this window.
+        #: B{Application window only}. List of parameter handlers for
+        #  this window.
         self._parameterHandlerList = None
 
-        # <b>Application window only</b>. List of sub windows in this window.
-        # A sub window cannot have other sub windows.
+        #: B{Application window only}. List of sub windows in this window.
+        #  A sub window cannot have other sub windows.
         self._subwindows = set()
 
-        # <b>Application window only</b>. Explicitly specified theme of this
-        # window or null if the application theme should be used.
+        #: B{Application window only}. Explicitly specified theme of this
+        #  window or null if the application theme should be used.
         self._theme = None
 
-        # <b>Application window only</b>. Resources to be opened automatically
-        # on next repaint. The list is automatically cleared when it has been
-        # sent to the client.
+        #: B{Application window only}. Resources to be opened automatically
+        #  on next repaint. The list is automatically cleared when it has been
+        #  sent to the client.
         self._openList = list()
 
-        # <b>Application window only</b>. Unique name of the window used to
-        # identify it.
+        #: B{Application window only}. Unique name of the window used to
+        #  identify it.
         self._name = None
 
-        # <b>Application window only.</b> Border mode of the Window.
+        #: B{Application window only.} Border mode of the Window.
         self._border = self.BORDER_DEFAULT
 
-        # <b>Sub window only</b>. Top offset in pixels for the sub window
-        # (relative to the parent application window) or -1 if unspecified.
+        #: B[Sub window only}. Top offset in pixels for the sub window
+        #  (relative to the parent application window) or -1 if unspecified.
         self._positionY = -1
 
-        # <b>Sub window only</b>. Left offset in pixels for the sub window
-        # (relative to the parent application window) or -1 if unspecified.
+        #: B{Sub window only}. Left offset in pixels for the sub window
+        #  (relative to the parent application window) or -1 if unspecified.
         self._positionX = -1
 
-        # <b>Application window only</b>. A list of notifications that are
-        # waiting to be sent to the client. Cleared (set to null) when the
-        # notifications have been sent.
+        #: B{Application window only}. A list of notifications that are
+        #  waiting to be sent to the client. Cleared (set to null) when the
+        #  notifications have been sent.
         self._notifications = None
 
-        # <b>Sub window only</b>. Modality flag for sub window.
+        #: B{Sub window only}. Modality flag for sub window.
         self._modal = False
 
-        # <b>Sub window only</b>. Controls if the end user can resize the
-        # window.
+        #: B{Sub window only}. Controls if the end user can resize the
+        #  window.
         self._resizable = True
 
-        # <b>Sub window only</b>. Controls if the end user can move the
-        # window by dragging.
+        #: B{Sub window only}. Controls if the end user can move the
+        #  window by dragging.
         self._draggable = True
 
-        # <b>Sub window only</b>. Flag which is true if the window is
-        # centered on the screen.
+        #: B{Sub window only}. Flag which is true if the window is
+        #  centered on the screen.
         self._centerRequested = False
 
-        # Should resize recalculate layouts lazily (as opposed to immediately)
+        #: Should resize recalculate layouts lazily (as opposed to immediately)
         self._resizeLazy = False
 
-        # Component that should be focused after the next repaint. Null if no
-        # focus change should take place.
+        #: Component that should be focused after the next repaint. Null if no
+        #  focus change should take place.
         self._pendingFocus = None
 
-        # <b>Application window only</b>. A list of javascript commands that
-        # are waiting to be sent to the client. Cleared (set to null) when the
-        # commands have been sent.
+        #: B{Application window only}. A list of javascript commands that
+        #  are waiting to be sent to the client. Cleared (set to null) when the
+        #  commands have been sent.
         self._jsExecQueue = None
 
-        # The component that should be scrolled into view after the next
-        # repaint. Null if nothing should be scrolled into view.
+        #: The component that should be scrolled into view after the next
+        #  repaint. Null if nothing should be scrolled into view.
         self._scrollIntoView = None
 
         super(Window, self).__init__(caption, content)
@@ -238,7 +234,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
 
 
     def getTerminal(self):
-        """<b>Application window only</b>. Gets the user terminal.
+        """B{Application window only}. Gets the user terminal.
 
         @return: the user terminal
         """
@@ -250,7 +246,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
 
         This is always the window itself.
 
-        @see: Component#getWindow()
+        @see: L{IComponent.getWindow}
         @return: the window itself
         """
         return self
@@ -270,17 +266,17 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
         sub window is the application window the sub window is attached to.
 
         @return: the parent window
-        @see: Component#getParent()
+        @see: L{IComponent.getParent}
         """
         return super(Window, self).getParent()
 
 
     def addURIHandler(self, handler):
-        """<b>Application window only</b>. Adds a new URI handler to this
+        """B{Application window only}. Adds a new URI handler to this
         window. If this is a sub window the URI handler is attached to the
         parent application window.
 
-        @param handler
+        @param handler:
                    the URI handler to add.
         """
         if self.getParent() is not None:
@@ -296,11 +292,11 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
 
 
     def removeURIHandler(self, handler):
-        """<b>Application window only</b>. Removes the URI handler from this
+        """B{Application window only}. Removes the URI handler from this
         window. If this is a sub window the URI handler is removed from the
         parent application window.
 
-        @param handler
+        @param handler:
                    the URI handler to remove.
         """
         if self.getParent() is not None:
@@ -316,15 +312,15 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
 
 
     def handleURI(self, context, relativeUri):
-        """<b>Application window only</b>. Handles an URI by passing the URI
-        to all URI handlers defined using L{#addURIHandler(IUriHandler)}.
+        """B{Application window only}. Handles an URI by passing the URI
+        to all URI handlers defined using L{addURIHandler}.
         All URI handlers are called for each URI but no more than one handler
         may return a L{DownloadStream}. If more than one stream is
         returned a C{RuntimeException} is thrown.
 
-        @param context
+        @param context:
                    The URL of the application
-        @param relativeUri
+        @param relativeUri:
                    The URI relative to C{context}
         @return: A C{DownloadStream} that one of the URI handlers
                 returned, null if no C{DownloadStream} was returned.
@@ -347,11 +343,11 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
 
 
     def addParameterHandler(self, handler):
-        """<b>Application window only</b>. Adds a new parameter handler to
+        """B{Application window only}. Adds a new parameter handler to
         this window. If this is a sub window the parameter handler is attached
         to the parent application window.
 
-        @param handler
+        @param handler:
                    the parameter handler to add.
         """
         if self.getParent() is not None:
@@ -367,11 +363,11 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
 
 
     def removeParameterHandler(self, handler):
-        """<b>Application window only</b>. Removes the parameter handler from
+        """B{Application window only}. Removes the parameter handler from
         this window. If this is a sub window the parameter handler is removed
         from the parent application window.
 
-        @param handler
+        @param handler:
                    the parameter handler to remove.
         """
         if self.getParent() is not None:
@@ -387,14 +383,14 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
 
 
     def handleParameters(self, parameters):
-        """<b>Application window only</b>. Handles parameters by passing the
+        """B{Application window only}. Handles parameters by passing the
         parameters to all C{IParameterHandler}s defined using
-        L{#addParameterHandler(IParameterHandler)}. All
-        C{IParameterHandler}s are called for each set of parameters.
+        L{addParameterHandler}. All C{IParameterHandler}s are called for
+        each set of parameters.
 
-        @param parameters
+        @param parameters:
                    a map containing the parameter names and values
-        @see: IParameterHandler#handleParameters(Map)
+        @see: L{IParameterHandler.handleParameters}
         """
         if self._parameterHandlerList is not None:
             handlers = list(self._parameterHandlerList)
@@ -403,7 +399,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
 
 
     def getTheme(self):
-        """<b>Application window only</b>. Gets the theme for this window.
+        """B{Application window only}. Gets the theme for this window.
 
         If the theme for this window is not explicitly set, the application
         theme name is returned. If the window is not attached to an
@@ -432,11 +428,11 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
 
 
     def setTheme(self, theme):
-        """<b>Application window only</b>. Sets the name of the theme to
+        """B{Application window only}. Sets the name of the theme to
         use for this window. Changing the theme will cause the page to be
         reloaded.
 
-        @param theme
+        @param theme:
                    the name of the new theme for this window or null to
                    use the application theme.
         """
@@ -568,9 +564,9 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
         suitable position so the component is visible to the user. The given
         component must be inside this window.
 
-        @param component
+        @param component:
                    the component to be scrolled into view
-        @raise IllegalArgumentException
+        @raise ValueError:
                     if C{component} is not inside this window
         """
         if component.getWindow() != self:
@@ -582,14 +578,9 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
 
     def open(self, resource, windowName=None, width=-1, height=-1,
             border=None):  #@PydevCodeAnalysisIgnore
-        """Opens the given resource in this window. The contents of this
-        Window is replaced by the C{Resource}.
+        """Opens the given resource in a window with the given size, border and
+        name.
 
-        @param resource
-                   the resource to show in this window
-        ---
-        Opens the given resource in a window with the given name.
-        <p>
         The supplied C{windowName} is used as the target name in a
         window.open call in the client. This means that special values such as
         "_blank", "_self", "_top", "_parent" have special meaning. An empty or
@@ -615,26 +606,17 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
         that name, either by opening a new window/tab in the browser or by
         replacing the contents of an existing window with that name.
 
-        @param resource
+        @param resource:
                    the resource.
-        @param windowName
+        @param windowName:
                    the name of the window.
-        ---
-        Opens the given resource in a window with the given size, border and
-        name. For more information on the meaning of C{windowName}, see
-        L{#open(Resource, String)}.
-
-        @param resource
-                   the resource.
-        @param windowName
-                   the name of the window.
-        @param width
+        @param width:
                    the width of the window in pixels
-        @param height
+        @param height:
                    the height of the window in pixels
-        @param border
-                   the border style of the window. See L{#BORDER_NONE
-                   Window.BORDER_* constants}
+        @param border:
+                   the border style of the window. See
+                   L{Window.BORDER_* constants<BORDER_NONE>}
         """
         if border is None:
             border = self.BORDER_DEFAULT
@@ -667,18 +649,16 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
 
 
     def getName(self):
-        """<b>Application window only</b>. Gets the unique name of the window.
+        """B{Application window only}. Gets the unique name of the window.
         The name of the window is used to uniquely identify it.
 
         The name also determines the URL that can be used for direct access to
         a window. All windows can be accessed through
         C{http://host:port/app/win} where C{http://host:port/app} is
-        the application URL (as returned by L{Application#getURL()} and
+        the application URL (as returned by L{Application.getURL} and
         C{win} is the window name.
 
-        Note! Portlets do not support direct window access through URLs.
-
-        @return: the Name of the Window.
+        @return: the name of the Window.
         """
         return self._name
 
@@ -686,7 +666,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
     def getBorder(self):
         """Returns the border style of the window.
 
-        @see: #setBorder(int)
+        @see: L{setBorder}
         @return: the border style for the window
         """
         return self._border
@@ -694,13 +674,13 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
 
     def setBorder(self, border):
         """Sets the border style for this window. Valid values are
-        L{Window#BORDER_NONE}, L{Window#BORDER_MINIMAL},
-        L{Window#BORDER_DEFAULT}.
+        L{Window.BORDER_NONE}, L{Window.BORDER_MINIMAL},
+        L{Window.BORDER_DEFAULT}.
 
-        <b>Note!</b> Setting this seems to currently have no effect
+        B{Note!} Setting this seems to currently have no effect
         whatsoever on the window.
 
-        @param border
+        @param border:
                    the border style to set
         """
         self._border = border
@@ -710,15 +690,14 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
         """Sets the application this window is attached to.
 
         This method is called by the framework and should not be called
-        directly from application code. L{Application#addWindow(Window)}
+        directly from application code. L{Application.addWindow}
         should be used to add the window to an application and
-        L{com.vaadin.Application#removeWindow(Window)} to remove the
-        window from the application.
+        L{Application.removeWindow} to remove the window from the application.
 
-        This method invokes L{Component#attach()} and
-        L{Component#detach()} methods when necessary.
+        This method invokes L{IComponent.attach} and
+        L{IComponent.detach} methods when necessary.
 
-        @param application
+        @param application:
                    the application the window is attached to
         """
         # If the application is not changed, dont do nothing
@@ -738,7 +717,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
 
 
     def setName(self, name):
-        """<b>Application window only</b>. Sets the unique name of the window.
+        """B{Application window only}. Sets the unique name of the window.
         The name of the window is used to uniquely identify it inside the
         application.
 
@@ -751,12 +730,10 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
         This method can only be called before the window is added to an
         application.
 
-        Note! Portlets do not support direct window access through URLs.
-
-        @param name
+        @param name:
                    the new name for the window or null if the application
                    should automatically assign a name to it
-        @raise IllegalStateException
+        @raise ValueError:
                     if the window is attached to an application
         """
         # The name can not be changed in application
@@ -770,7 +747,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
         """Sets the user terminal. Used by the terminal adapter, should never
         be called from application code.
 
-        @param type
+        @param type:
                    the terminal to set.
         """
         self._terminal = typ
@@ -853,8 +830,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
         of the containing (main window).
 
         @return: the Distance of Window left border in pixels from left border
-                of the containing (main window). or -1 if unspecified.
-        @since 4.0.0
+                 of the containing (main window). or -1 if unspecified.
         """
         return self._positionX
 
@@ -863,13 +839,12 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
         """Sets the distance of Window left border in pixels from left border
         of the containing (main window).
 
-        @param positionX
-                   the Distance of Window left border in pixels from
+        @param positionX:
+                   the distance of window left border in pixels from
                    left border of the containing (main window). or -1
                    if unspecified.
-        @param repaintRequired
+        @param repaintRequired:
                    true if the window needs to be repainted, false otherwise
-        @since 6.3.4
         """
         self._positionX = positionX
         self._centerRequested = False
@@ -882,9 +857,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
         of the containing (main window).
 
         @return: Distance of Window top border in pixels from top border of
-                the containing (main window). or -1 if unspecified.
-
-        @since 4.0.0
+                 the containing (main window). or -1 if unspecified.
         """
         return self._positionY
 
@@ -893,22 +866,11 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
         """Sets the distance of Window top border in pixels from top border
         of the containing (main window).
 
-        @param positionY
-                   the Distance of Window top border in pixels from top border
+        @param positionY:
+                   the distance of window top border in pixels from top border
                    of the containing (main window). or -1 if unspecified
-
-        @since 4.0.0
-        ---
-        Sets the distance of Window top border in pixels from top border of
-        the containing (main window).
-
-        @param positionY
-                   the Distance of Window top border in pixels from top border
-                   of the containing (main window). or -1 if unspecified
-        @param repaintRequired
+        @param repaintRequired:
                    true if the window needs to be repainted, false otherwise
-
-        @since 6.3.4
         """
         self._positionY = positionY
         self._centerRequested = False
@@ -917,7 +879,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
 
 
     def addListener(self, listener, iface):
-        """Adds a ICloseListener to the window.
+        """Adds a close/resize/focus/blur listener to the window.
 
         For a sub window the ICloseListener is fired when the user closes it
         (clicks on the close button).
@@ -926,29 +888,14 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
         browser level window is closed. Note that closing a browser level
         window does not mean it will be destroyed.
 
-        <p>
-        Since Vaadin 6.5, removing windows using L{#removeWindow(Window)}
-        does fire the ICloseListener.
-        </p>
-
-        @param listener:
-                   the ICloseListener to add.
-        ---
-        Add a resize listener.
-
-        @param listener:
-        ---
         Note, that focus/blur listeners in Window class are only supported by
         sub windows. Also note that Window is not considered focused if its
         contained component currently has focus.
 
-        @see: FieldEvents.IFocusNotifier.addListener()
-        ---
-        Note, that focus/blur listeners in Window class are only supported by sub
-        windows. Also note that Window is not considered focused if its contained
-        component currently has focus.
-
-        @see: FieldEvents.IBlurNotifier.addListener()
+        @param listener:
+                   the listener to add.
+        @see: L{IFocusNotifier.addListener}
+        @see: L{IBlurNotifier.addListener}
         """
         if iface == IBlurListener:
             self.registerListener(BlurEvent.EVENT_ID,
@@ -982,16 +929,12 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
 
 
     def removeListener(self, listener, iface):
-        """Removes the ICloseListener from the window.
+        """Removes the close/resize from the window.
 
         For more information on CloseListeners see L{ICloseListener}.
 
         @param listener:
-                   the ICloseListener to remove.
-        ---
-        Remove a resize listener.
-
-        @param listener:
+                   the listener to remove.
         """
         if iface == IBlurListener:
             self.withdrawListener(BlurEvent.EVENT_ID,
@@ -1052,11 +995,8 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
         Only one level of subwindows are supported. Thus you can add windows
         inside such windows whose parent is C{None}.
 
-        @param window
-        @raise IllegalArgumentException
+        @raise ValueError:
                     if a window is added inside non-application level window.
-        @raise NullPointerException
-                    if the given C{Window} is C{None}.
         """
         if window is None:
             raise ValueError, 'Argument must not be null'
@@ -1078,13 +1018,12 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
     def removeWindow(self, window):
         """Remove the given subwindow from this window.
 
-        Since Vaadin 6.5, L{ICloseListener}s are called also when
-        explicitly removing a window by calling this method.
+        L{ICloseListener}s are called also when explicitly removing a window
+        by calling this method.
 
-        Since Vaadin 6.5, returns a boolean indicating if the window was
-        removed or not.
+        Returns a boolean indicating if the window was removed or not.
 
-        @param window
+        @param window:
                    Window to be removed.
         @return: true if the subwindow was removed, false otherwise
         """
@@ -1110,8 +1049,8 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
         thrown. Also if there are modal windows and this window is not modal,
         and illegal state exception is thrown.
 
-        <strong> Note, this API works on sub windows only. Browsers can't
-        reorder OS windows.</strong>
+        B{Note, this API works on sub windows only. Browsers can't
+        reorder OS windows.}
         """
         parent = self.getParent()
         if parent is None:
@@ -1142,9 +1081,9 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
     def setModal(self, modality):
         """Sets sub-window modal, so that widgets behind it cannot be
         accessed.
-        <b>Note:</b> affects sub-windows only.
+        B{Note:} affects sub-windows only.
 
-        @param modality
+        @param modality:
                    true if modality is to be turned on
         """
         self._modal = modality
@@ -1158,9 +1097,9 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
 
 
     def setResizable(self, resizeability):
-        """Sets sub-window resizable. <b>Note:</b> affects sub-windows only.
+        """Sets sub-window resizable. B{Note:} affects sub-windows only.
 
-        @param resizable
+        @param resizable:
                    true if resizability is to be turned on
         """
         self._resizable = resizeability
@@ -1175,7 +1114,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
 
     def isResizeLazy(self):
         """@return: true if a delay is used before recalculating sizes,
-                   false if sizes are recalculated immediately.
+                    false if sizes are recalculated immediately.
         """
         return self._resizeLazy
 
@@ -1188,7 +1127,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
         Note, some browser send false resize events for the browser window
         and are therefore always lazy.
 
-        @param resizeLazy
+        @param resizeLazy:
                    true to use a delay before recalculating sizes, false to
                    calculate immediately.
         """
@@ -1197,7 +1136,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
 
 
     def center(self):
-        """Request to center this window on the screen. <b>Note:</b> affects
+        """Request to center this window on the screen. B{Note:} affects
         sub-windows only.
         """
         self._centerRequested = True
@@ -1205,65 +1144,26 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
 
 
     def showNotification(self, *args):
-        """Shows a notification message on the middle of the window. The
-        message automatically disappears ("humanized message").
-
-        @see: #showNotification(com.vaadin.ui.Window.Notification)
-        @see: Notification
-
-        @param caption
-                   The message
-        ---
-        Shows a notification message the window. The position and behavior
+        """Shows a notification message the window. The position and behavior
         of the message depends on the type, which is one of the basic types
         defined in L{Notification}, for instance
-        Notification.TYPE_WARNING_MESSAGE.
+        Notification.TYPE_WARNING_MESSAGE, defaults to "humanized".
 
-        @see: #showNotification(com.vaadin.ui.Window.Notification)
-        @see: Notification
-
-        @param caption
-                   The message
-        @param type
-                   The message type
-        ---
-        Shows a notification consisting of a bigger caption and a smaller
-        description on the middle of the window. The message automatically
-        disappears ("humanized message").
-
-        @see: #showNotification(com.vaadin.ui.Window.Notification)
-        @see: Notification
-
-        @param caption
-                   The caption of the message
-        @param description
-                   The message description
-        ---
-        Shows a notification consisting of a bigger caption and a smaller
-        description. The position and behavior of the message depends on the
-        type, which is one of the basic types defined in L{Notification},
-        for instance Notification.TYPE_WARNING_MESSAGE.
-
-        @see: #showNotification(com.vaadin.ui.Window.Notification)
-        @see: Notification
-
-        @param caption
-                   The caption of the message
-        @param description
-                   The message description
-        @param type
-                   The message type
-        ---
-        Shows a notification message.
-
-        @see: Notification
-        @see: #showNotification(String)
-        @see: #showNotification(String, int)
-        @see: #showNotification(String, String)
-        @see: #showNotification(String, String, int)
-
-        @param notification
-                   The notification message to show
+        @param args: tuple of the form
+             - (caption)
+               1. The message
+            - (caption, type)
+              1. The message
+              2. The message type
+            - (caption, description)
+              1. The message
+              2. The message description
+            - (caption, description, type)
+              1. The message
+              2. The message description
+              3. The message type
+            - (notification)
+              1. The notification message to show
         """
         args = args
         nargs = len(args)
@@ -1299,14 +1199,14 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
     def setFocusedComponent(self, focusable):
         """This method is used by Component.Focusable objects to request focus
         to themselves. Focus renders must be handled at window level (instead
-        of Component.Focusable) due we want the last focused component to be
+        of IFocusable) due we want the last focused component to be
         focused in client too. Not the one that is rendered last (the case
         we'd get if implemented in Focusable only).
 
-        To focus component from Vaadin application, use Focusable.focus().
-        See L{Focusable}.
+        To focus component from Muntjac application, use IFocusable.focus().
+        See L{IFocusable}.
 
-        @param focusable
+        @param focusable:
                    to be focused on next paint
         """
         if self.getParent() is not None:
@@ -1327,11 +1227,9 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
         Executing javascript this way often leads to cross-browser
         compatibility issues and regressions that are hard to resolve. Use of
         this method should be avoided and instead it is recommended to create
-        new widgets with GWT. For more info on creating own, reusable
-        client-side widgets in Java, read the corresponding chapter in Book of
-        Vaadin.
+        new widgets with GWT.
 
-        @param script
+        @param script:
                    JavaScript snippet that will be executed.
         """
         if self.getParent() is not None:
@@ -1377,7 +1275,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
 
         Closable only applies to sub windows, not to browser level windows.
 
-        @param closable
+        @param closable:
                    determines if the sub window can be closed by the user.
         """
         self.setReadOnly(not closable)
@@ -1389,7 +1287,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
 
         Draggable only applies to sub windows, not to browser level windows.
 
-        @param draggable
+        @param draggable:
                    true if the sub window can be dragged by the user
         """
         return self._draggable
@@ -1401,7 +1299,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
 
         Draggable only applies to sub windows, not to browser level windows.
 
-        @param draggable
+        @param draggable:
                    true if the sub window can be dragged by the user
         """
         self._draggable = draggable
@@ -1410,15 +1308,15 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
 
     def setCloseShortcut(self, keyCode, *modifiers):
         """Makes is possible to close the window by pressing the given
-        L{KeyCode} and (optional) L{ModifierKey}s.<br/>
+        L{KeyCode} and (optional) L{ModifierKey}s.
+
         Note that this shortcut only reacts while the window has focus,
         closing itself - if you want to close a subwindow from a parent
-        window, use L{#addAction(com.vaadin.event.Action)} of the
-        parent window instead.
+        window, use L{addAction} of the parent window instead.
 
-        @param keyCode
+        @param keyCode:
                    the keycode for invoking the shortcut
-        @param modifiers
+        @param modifiers:
                    the (optional) modifiers for invoking the shortcut,
                    null for none
         """
@@ -1440,9 +1338,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
 
 
     def focus(self):
-        """{@inheritDoc}
-
-        If the window is a sub-window focusing will cause the sub-window
+        """If the window is a sub-window focusing will cause the sub-window
         to be brought on top of other sub-windows on gain keyboard focus.
         """
         if self.getParent() is not None:
@@ -1460,38 +1356,38 @@ class OpenResource(object):
     def __init__(self, resource, name, width, height, border):
         """Creates a new open resource.
 
-        @param resource
+        @param resource:
                    The resource to open
-        @param name
+        @param name:
                    The name of the target window
-        @param width
+        @param width:
                    The width of the target window
-        @param height
+        @param height:
                    The height of the target window
-        @param border
+        @param border:
                    The border style of the target window
         """
         self._resource = resource
 
-        # The name of the target window
+        #: The name of the target window
         self._name = name
 
-        # The width of the target window
+        #: The width of the target window
         self._width = width
 
-        # The height of the target window
+        #: The height of the target window
         self._height = height
 
-        # The border style of the target window
+        #: The border style of the target window
         self._border = border
 
 
     def paintContent(self, target):
         """Paints the open request. Should be painted inside the window.
 
-        @param target
+        @param target:
                    the paint target
-        @raise PaintException
+        @raise PaintException:
                     if the paint operation fails
         """
         target.startTag('open')
@@ -1535,7 +1431,6 @@ class ResizeEvent(ComponentEvent):
     """
 
     def __init__(self, source):
-        """@param source"""
         super(ResizeEvent, self).__init__(source)
 
 
@@ -1558,32 +1453,33 @@ class Notification(object):
     The notification message tries to be as unobtrusive as possible, while
     still drawing needed attention. There are several basic types of messages
     that can be used in different situations:
-    <ul>
-    <li>TYPE_HUMANIZED_MESSAGE fades away quickly as soon as the user uses
-    the mouse or types something. It can be used to show fairly unimportant
-    messages, such as feedback that an operation succeeded ("Document Saved")
-    - the kind of messages the user ignores once the application is familiar.
-    </li>
-    <li>TYPE_WARNING_MESSAGE is shown for a short while after the user uses
-    the mouse or types something. It's default style is also more noticeable
-    than the humanized message. It can be used for messages that do not
-    contain a lot of important information, but should be noticed by the
-    user. Despite the name, it does not have to be a warning, but can be used
-    instead of the humanized message whenever you want to make the message a
-    little more noticeable.</li>
-    <li>TYPE_ERROR_MESSAGE requires to user to click it before disappearing,
-    and can be used for critical messages.</li>
-    <li>TYPE_TRAY_NOTIFICATION is shown for a while in the lower left corner
-    of the window, and can be used for "convenience notifications" that do
-    not have to be noticed immediately, and should not interfere with the
-    current task - for instance to show "You have a new message in your
-    inbox" while the user is working in some other area of the application.</li>
-    </ul>
+
+      - TYPE_HUMANIZED_MESSAGE fades away quickly as soon as the user uses
+        the mouse or types something. It can be used to show fairly unimportant
+        messages, such as feedback that an operation succeeded ("Document
+        Saved") - the kind of messages the user ignores once the application
+        is familiar.
+
+      - TYPE_WARNING_MESSAGE is shown for a short while after the user uses
+        the mouse or types something. It's default style is also more
+        noticeable than the humanized message. It can be used for messages that
+        do not contain a lot of important information, but should be noticed by
+        the user. Despite the name, it does not have to be a warning, but can
+        be used instead of the humanized message whenever you want to make the
+        message a little more noticeable.
+
+      - TYPE_ERROR_MESSAGE requires to user to click it before disappearing,
+        and can be used for critical messages.
+
+      - TYPE_TRAY_NOTIFICATION is shown for a while in the lower left corner
+        of the window, and can be used for "convenience notifications" that do
+        not have to be noticed immediately, and should not interfere with the
+        current task - for instance to show "You have a new message in your
+        inbox" while the user is working in some other area of the application.
 
     In addition to the basic pre-configured types, a Notification can also be
     configured to show up in a custom position, for a specified time (or
     until clicked), and with a custom stylename. An icon can also be added.
-    </p>
     """
 
     TYPE_HUMANIZED_MESSAGE = 1
@@ -1603,35 +1499,21 @@ class Notification(object):
     DELAY_NONE = 0
 
     def __init__(self, *args):
-        """Creates a "humanized" notification message.
+        """Creates a notification message.
 
-        @param caption
-                   The message to show
-        ---
-        Creates a notification message of the specified type.
-
-        @param caption
-                   The message to show
-        @param type
-                   The type of message
-        ---
-        Creates a "humanized" notification message with a bigger caption and
-        smaller description.
-
-        @param caption
-                   The message caption
-        @param description
-                   The message description
-        ---
-        Creates a notification message of the specified type, with a bigger
-        caption and smaller description.
-
-        @param caption
-                   The message caption
-        @param description
-                   The message description
-        @param type
-                   The type of message
+        @param args: tuple of the form
+            - (caption)
+              1. The message to show
+            - (caption, type)
+              1. The message to show
+              2. The type of message
+            - (caption, description)
+              1. The message caption
+              2. The message description
+            - (caption, description, type)
+              1. The message caption
+              2. The message description
+              3. The type of message
         """
         self._caption = None
         self._description = None
@@ -1690,22 +1572,20 @@ class Notification(object):
     def setCaption(self, caption):
         """Sets the caption part of the notification message
 
-        @param caption
+        @param caption:
                    The message caption
         """
         self._caption = caption
 
 
     def getMessage(self):
-        """@deprecated Use L{#getDescription()} instead.
-        @return
+        """@deprecated: Use L{getDescription} instead.
         """
         return self._description
 
 
     def setMessage(self, description):
-        """@deprecated Use L{#setDescription(String)} instead.
-        @param description
+        """@deprecated: Use L{setDescription} instead.
         """
         self._description = description
 
@@ -1720,8 +1600,6 @@ class Notification(object):
 
     def setDescription(self, description):
         """Sets the description part of the notification message.
-
-        @param description
         """
         self._description = description
 
@@ -1754,7 +1632,7 @@ class Notification(object):
     def setIcon(self, icon):
         """Sets the icon part of the notification message.
 
-        @param icon
+        @param icon:
                    The desired message icon
         """
         self._icon = icon
@@ -1764,7 +1642,7 @@ class Notification(object):
         """Gets the delay before the notification disappears.
 
         @return: the delay in msec, -1 indicates the message has to be
-                clicked.
+                 clicked.
         """
         return self._delayMsec
 
@@ -1772,7 +1650,7 @@ class Notification(object):
     def setDelayMsec(self, delayMsec):
         """Sets the delay before the notification disappears.
 
-        @param delayMsec
+        @param delayMsec:
                    the desired delay in msec, -1 to require the user to click
                    the message
         """
@@ -1782,7 +1660,7 @@ class Notification(object):
     def setStyleName(self, styleName):
         """Sets the style name for the notification message.
 
-        @param styleName
+        @param styleName:
                    The desired style name.
         """
         self._styleName = styleName
@@ -1790,53 +1668,37 @@ class Notification(object):
 
     def getStyleName(self):
         """Gets the style name for the notification message.
-
-        @return
         """
         return self._styleName
 
 
 class CloseShortcut(ShortcutListener):
     """A L{ShortcutListener} specifically made to define a keyboard
-    shortcut that closes the window.
+    shortcut that closes the window::
 
-    <pre>
-    C{
-     // within the window using helper
-     subWindow.setCloseShortcut(KeyCode.ESCAPE, null);
+         # within the window using helper
+         subWindow.setCloseShortcut(KeyCode.ESCAPE, NOne)
 
-     // or globally
-     getWindow().addAction(new Window.CloseShortcut(subWindow, KeyCode.ESCAPE));
-    }
-    </pre>
+         # or globally
+         getWindow().addAction(CloseShortcut(subWindow, KeyCode.ESCAPE))
     """
 
     def __init__(self, *args):
         """Creates a keyboard shortcut for closing the given window using
-        the shorthand notation defined in L{ShortcutAction}.
-
-        @param window
-                   to be closed when the shortcut is invoked
-        @param shorthandCaption
-                   the caption with shortcut keycode and modifiers indicated
-        ---
-        Creates a keyboard shortcut for closing the given window using the
+        the shorthand notation defined in L{ShortcutAction} or the
         given L{KeyCode} and L{ModifierKey}s.
 
-        @param window
-                   to be closed when the shortcut is invoked
-        @param keyCode
-                   KeyCode to react to
-        @param modifiers
-                   optional modifiers for shortcut
-        ---
-        Creates a keyboard shortcut for closing the given window using the
-        given L{KeyCode}.
-
-        @param window
-                   to be closed when the shortcut is invoked
-        @param keyCode
-                   KeyCode to react to
+        @param args: tuple of the form
+            - (window, shorthandCaption)
+                1. to be closed when the shortcut is invoked
+                2. the caption with shortcut keycode and modifiers indicated
+            - (window, keyCode, modifiers)
+              1. to be closed when the shortcut is invoked
+              2. KeyCode to react to
+              3. optional modifiers for shortcut
+            - (window, keyCode)
+              1. to be closed when the shortcut is invoked
+              2. KeyCode to react to
         """
         self.window = None
 

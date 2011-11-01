@@ -48,12 +48,12 @@ class Html5File(object):
         If the L{StreamVariable} is not set in the L{DropHandler}
         the file contents will not be sent to server.
 
-        <em>Note!</em> receiving file contents is experimental feature
+        I{Note!} receiving file contents is experimental feature
         depending on HTML 5 API's. It is supported only by modern web browsers
         like Firefox 3.6 and above and recent webkit based browsers (Safari 5,
         Chrome 6) at this time.
 
-        @param streamVariable
+        @param streamVariable:
                    the callback that returns stream where the implementation
                    writes the file contents as it arrives.
         """

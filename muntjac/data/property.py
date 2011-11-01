@@ -33,7 +33,7 @@ class IProperty(object):
 
     @author: IT Mill Ltd
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     def getValue(self):
@@ -126,7 +126,7 @@ class ReadOnlyException(RuntimeError):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     def __init__(self, msg=None):
@@ -146,7 +146,7 @@ class ConversionException(RuntimeError):
     the IProperty.
 
     @author: IT Mill Ltd
-    @version @VERSION@
+    @version: @VERSION@
     @since 3.0
     """
 
@@ -173,7 +173,7 @@ class IViewer(object):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     def setPropertyDataSource(self, newDataSource):
@@ -205,7 +205,7 @@ class IEditor(IViewer):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
     pass
 
@@ -216,7 +216,7 @@ class ValueChangeEvent(object):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     def getProperty(self):
@@ -233,7 +233,7 @@ class IValueChangeListener(object):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     def valueChange(self, event):
@@ -253,7 +253,7 @@ class IValueChangeNotifier(object):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     def addListener(self, listener, iface):
@@ -294,7 +294,7 @@ class IReadOnlyStatusChangeEvent(object):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     def getProperty(self):
@@ -311,7 +311,7 @@ class IReadOnlyStatusChangeListener(object):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     def readOnlyStatusChange(self, event):
@@ -332,7 +332,7 @@ class IReadOnlyStatusChangeNotifier(object):
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version @VERSION@
+    @version: @VERSION@
     """
 
     def addListener(self, listener, iface):
