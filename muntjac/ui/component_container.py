@@ -25,14 +25,12 @@ class IComponentContainer(IComponent):
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @version @VERSION@
-    @since 3.0
     """
 
     def addComponent(self, c):
         """Adds the component into this container.
 
-        @param c
-                   the component to be added.
+        @param c: the component to be added.
         """
         raise NotImplementedError
 
@@ -40,8 +38,7 @@ class IComponentContainer(IComponent):
     def removeComponent(self, c):
         """Removes the component from this container.
 
-        @param c
-                   the component to be removed.
+        @param c: the component to be removed.
         """
         raise NotImplementedError
 
@@ -52,30 +49,28 @@ class IComponentContainer(IComponent):
 
 
     def replaceComponent(self, oldComponent, newComponent):
-        """Replaces the component in the container with another one without changing
-        position.
+        """Replaces the component in the container with another one without
+        changing position.
 
-        <p>
-        This method replaces component with another one is such way that the new
-        component overtakes the position of the old component. If the old
+        This method replaces component with another one is such way that the
+        new component overtakes the position of the old component. If the old
         component is not in the container, the new component is added to the
         container. If the both component are already in the container, their
-        positions are swapped. IComponent attach and detach events should be taken
-        care as with add and remove.
-        </p>
+        positions are swapped. IComponent attach and detach events should be
+        taken care as with add and remove.
 
-        @param oldComponent
+        @param oldComponent:
                    the old component that will be replaced.
-        @param newComponent
+        @param newComponent:
                    the new component to be replaced.
         """
         raise NotImplementedError
 
 
     def getComponentIterator(self):
-        """Gets an iterator to the collection of contained components. Using this
-        iterator it is possible to step through all components contained in this
-        container.
+        """Gets an iterator to the collection of contained components. Using
+        this iterator it is possible to step through all components contained
+        in this container.
 
         @return: the component iterator.
         """
@@ -92,10 +87,10 @@ class IComponentContainer(IComponent):
 
 
     def moveComponentsFrom(self, source):
-        """Moves all components from an another container into this container. The
-        components are removed from C{source}.
+        """Moves all components from an another container into this container.
+        The components are removed from C{source}.
 
-        @param source
+        @param source:
                    the container which contains the components that are to be
                    moved to this container.
         """
@@ -103,12 +98,10 @@ class IComponentContainer(IComponent):
 
 
     def addListener(self, listener, iface):
-        """Listens the component attach events.
+        """Listens the component attach/detach events.
 
         @param listener:
                    the listener to add.
-        ---
-        Listens the component detach events.
         """
         if iface == IComponentAttachListener:
             raise NotImplementedError
@@ -121,12 +114,10 @@ class IComponentContainer(IComponent):
 
 
     def removeListener(self, listener, iface):
-        """Stops the listening component attach events.
+        """Stops the listening component attach/detach events.
 
         @param listener:
                    the listener to removed.
-        ---
-        Stops the listening component detach events.
         """
         if iface == IComponentAttachListener:
             raise NotImplementedError
@@ -144,7 +135,7 @@ class IComponentAttachListener(object):
     def componentAttachedToContainer(self, event):
         """A new component is attached to container.
 
-        @param event
+        @param event:
                    the component attach event.
         """
         raise NotImplementedError
@@ -156,22 +147,23 @@ class IComponentDetachListener(object):
     def componentDetachedFromContainer(self, event):
         """A component has been detached from container.
 
-        @param event
+        @param event:
                    the component detach event.
         """
         raise NotImplementedError
 
 
 class ComponentAttachEvent(Event):
-    """IComponent attach event sent when a component is attached to container."""
+    """IComponent attach event sent when a component is attached to container.
+    """
 
     def __init__(self, container, attachedComponent):
         """Creates a new attach event.
 
-        @param container
-                   the component container the component has been detached
-                   to.
-        @param attachedComponent
+        @param container:
+                   the component container the component has been
+                   detached to.
+        @param attachedComponent:
                    the component that has been attached.
         """
         super(ComponentAttachEvent, self).__init__(container)
@@ -181,8 +173,7 @@ class ComponentAttachEvent(Event):
     def getContainer(self):
         """Gets the component container.
 
-        @param the
-                   component container.
+        @return: the component container.
         """
         return self.getSource()
 
@@ -190,22 +181,22 @@ class ComponentAttachEvent(Event):
     def getAttachedComponent(self):
         """Gets the attached component.
 
-        @param the
-                   attach component.
+        @return: the attach component.
         """
         return self._component
 
 
 class ComponentDetachEvent(Event):
-    """IComponent detach event sent when a component is detached from container."""
+    """IComponent detach event sent when a component is detached from
+    container."""
 
     def __init__(self, container, detachedComponent):
         """Creates a new detach event.
 
-        @param container
-                   the component container the component has been detached
-                   from.
-        @param detachedComponent
+        @param container:
+                   the component container the component has been
+                   detached from.
+        @param detachedComponent:
                    the component that has been detached.
         """
         super(ComponentDetachEvent, self).__init__(container)
@@ -215,8 +206,7 @@ class ComponentDetachEvent(Event):
     def getContainer(self):
         """Gets the component container.
 
-        @param the
-                   component container.
+        @return: the component container.
         """
         return self.getSource()
 

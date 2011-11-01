@@ -26,50 +26,24 @@ class CheckBox(Button):
 
     def __init__(self, *args):
         """Creates a new switch button.
-        ---
-        Creates a new switch button with a caption and a set initial state.
 
-        @param caption
-                   the caption of the switch button
-        @param initialState
-                   the initial state of the switch button
-        ---
-        Creates a new switch button with a caption and a click listener.
-
-        @param caption
-                   the caption of the switch button
-        @param listener:
-                   the click listener
-        ---
-        Convenience method for creating a new switch button with a method
-        listening button clicks. Using this method is discouraged because it
-        cannot be checked during compilation. Use
-        L{#addListener(Class, Object, Method)} or
-        L{#addListener(com.vaadin.ui.Component.Listener)} instead. The
-        method must have either no parameters, or only one parameter of
-        Button.ClickEvent type.
-
-        @param caption
-                   the Button caption.
-        @param target
-                   the Object having the method for listening button clicks.
-        @param methodName
-                   the name of the method in target object, that receives
-                   button click events.
-        ---
-        Creates a new switch button that is connected to a boolean property.
-
-        @param state
-                   the Initial state of the switch-button.
-        @param dataSource
-        ---
-        Creates a new push button with a set caption.
-
-        The value of the push button is always false and they are immediate
-        by default.
-
-        @param caption
-                   the Button caption.
+        @param args: tuple of the form
+            - (caption, initialState)
+              1. the caption of the switch button
+              2. the initial state of the switch button
+            - (caption, listener)
+              1. the caption of the switch button
+              2. the click listener
+            - (caption, target, methodName)
+              1. the Button caption.
+              2. the Object having the method for listening button clicks.
+              3. the name of the method in target object, that receives
+                 button click events.
+            - (state, dataSource)
+              1. the Initial state of the switch-button.
+              2. boolean property
+            - (caption)
+              1. the switch button caption
         """
         nargs = len(args)
         if nargs == 0:

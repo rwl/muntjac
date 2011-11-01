@@ -25,19 +25,14 @@ class AlignmentUtils(object):
 
     Supported notation is:
 
-    t,top for top alignment
+      - t, top for top alignment
+      - m, middle for vertical center alignment
+      - b, bottom for bottom alignment
+      - l, left for left alignment
+      - c, center for horizontal center alignment
+      - r, right for right alignment
 
-    m,middle for vertical center alignment
-
-    b,bottom for bottom alignment
-
-    l,left for left alignment
-
-    c,center for horizontal center alignment
-
-    r,right for right alignment
-
-    @deprecated replaced by L{Alignment}.
+    @deprecated: replaced by L{Alignment}.
     """
     warn('AlignmentUtils replaced by Alignment', DeprecationWarning)
 
@@ -59,19 +54,19 @@ class AlignmentUtils(object):
 
     @classmethod
     def setComponentAlignment(cls, parent, component, alignment):
-        """Set the alignment for the component using short notation
+        """Set the alignment for the component using short notation.
 
         @param parent
         @param component
         @param alignment
                    String containing one or two alignment strings. If short
-                   notation "r","t",etc is used valid strings include
-                   "r","rt","tr","t". If the longer notation is used the
+                   notation "r", "t", etc is used valid strings include
+                   "r", "rt", "tr", "t". If the longer notation is used the
                    alignments should be separated by a space e.g.
-                   "right","right top","top right","top". It is valid to mix
-                   short and long notation but they must be separated by a
+                   "right", "right top", "top right", "top". It is valid to
+                   mix short and long notation but they must be separated by a
                    space e.g. "r top".
-        @raise ValueError
+        @raise ValueError:
         """
         if alignment is None or len(alignment) == 0:
             raise ValueError, ('alignment for setComponentAlignment() '
@@ -116,10 +111,7 @@ class AlignmentUtils(object):
         where the alignment in one direction has been changed. If the passed
         alignmentString is unknown an exception is thrown
 
-        @param alignmentString
-        @param alignment
-        @return
-        @raise IllegalArgumentException
+        @raise ValueError:
         """
         parsed = cls._alignmentStrings.get( alignmentString.lower() )
 

@@ -19,7 +19,7 @@ class ClientWidget(object):
     """Annotation defining the default client side counterpart in GWT
     terminal for L{Component}.
 
-    With this annotation server side Vaadin component is marked to have
+    With this annotation server side Muntjac component is marked to have
     a client side counterpart. The value of the annotation is the class
     of client side implementation.
 
@@ -30,7 +30,7 @@ class ClientWidget(object):
 
     def __init__(self, widget, loadStyle=None):
 
-        # the client side counterpart for the annotated component
+        #: the client side counterpart for the annotated component
         self.widget = widget
 
         # Depending on the used WidgetMap generator, these optional hints
@@ -68,8 +68,8 @@ class ClientWidget(object):
         # includes L{LazyWidgetMapGenerator} that makes as many
         # widgets lazily loaded as possible.
 
-        # the hint for the widget set generator how the client side
-        # implementation should be loaded to the browser
+        #: the hint for the widget set generator how the client side
+        #  implementation should be loaded to the browser
         if loadStyle is None:
             self.loadStyle = LoadStyle.DEFERRED
         else:
@@ -77,13 +77,13 @@ class ClientWidget(object):
 
 
 class LoadStyle(object):
-    # The widget is included in the initial JS sent to the client.
+    #: The widget is included in the initial JS sent to the client.
     EAGER = 'EAGER'
 
-    # Not included in the initial set of widgets, but added to queue from
-    # which it will be loaded when network is not busy or the
-    # implementation is required.
+    #: Not included in the initial set of widgets, but added to queue from
+    #  which it will be loaded when network is not busy or the
+    #  implementation is required.
     DEFERRED = 'DEFERRED'
 
-    # Loaded to the client only if needed.
+    #: Loaded to the client only if needed.
     LAZY = 'LAZY'

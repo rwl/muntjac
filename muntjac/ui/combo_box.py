@@ -65,7 +65,7 @@ class ComboBox(Select):
     def getInputPrompt(self):
         """Gets the current input prompt.
 
-        @see: #setInputPrompt(String)
+        @see: L{setInputPrompt}
         @return: the current input prompt, or null if not enabled
         """
         return self._inputPrompt
@@ -75,7 +75,7 @@ class ComboBox(Select):
         """Sets the input prompt - a textual prompt that is displayed when
         the select would otherwise be empty, to prompt the user for input.
 
-        @param inputPrompt
+        @param inputPrompt:
                    the desired input prompt, or null to disable
         """
         self._inputPrompt = inputPrompt

@@ -26,18 +26,17 @@ class BaseFieldFactory(IFieldFactory):
     """Default implementation of the the following Field types are used
     by default:
 
-    <b>Boolean</b>: Button(switchMode:true).<br/>
-    <b>Date</b>: DateField(resolution: day).<br/>
-    <b>Item</b>: Form. <br/>
-    <b>default field type</b>: TextField.
+      - B{Boolean}: Button(switchMode:true).
+      - B{Date}: DateField(resolution: day).
+      - B{Item}: Form.
+      - B{default field type}: TextField.
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @version @VERSION@
-    @since 3.1
-    @deprecated use L{DefaultFieldFactory} or own implementations
-                on L{FormFieldFactory} or L{TableFieldFactory}
-                instead.
+    @deprecated: use L{DefaultFieldFactory} or own implementations
+                 on L{FormFieldFactory} or L{TableFieldFactory}
+                 instead.
     """
 
     def __init__(self):
@@ -47,11 +46,11 @@ class BaseFieldFactory(IFieldFactory):
     def createField(self, *args):
         """Creates the field based on type of data.
 
-        @param type
+        @param type:
                    the type of data presented in field.
-        @param uiContext
+        @param uiContext:
                    the context where the Field is presented.
-        @see: IFieldFactory.createField
+        @see: L{IFieldFactory.createField}
         """
         nargs = len(args)
         if nargs == 2:
