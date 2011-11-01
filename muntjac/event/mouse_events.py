@@ -21,17 +21,15 @@ from muntjac.ui.component import Event as ComponentEvent
 
 class ClickEvent(ComponentEvent):
     """Class for holding information about a mouse click event. A
-    L{ClickEvent} is fired when the user clicks on a
-    C{Component}.
+    L{ClickEvent} is fired when the user clicks on a C{Component}.
 
     The information available for click events are terminal dependent.
     Correct values for all event details cannot be guaranteed.
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @see: ClickListener
+    @see: L{ClickListener}
     @version @VERSION@
-    @since 6.2
     """
 
     BUTTON_LEFT = MouseEventDetails.BUTTON_LEFT
@@ -45,11 +43,10 @@ class ClickEvent(ComponentEvent):
 
     def getButton(self):
         """Returns an identifier describing which mouse button the user pushed.
-        Compare with L{#BUTTON_LEFT},L{#BUTTON_MIDDLE},
-        L{#BUTTON_RIGHT} to find out which butten it is.
+        Compare with L{#BUTTON_LEFT}, L{#BUTTON_MIDDLE}, L{#BUTTON_RIGHT} to
+        find out which button it is.
 
-        @return: one of L{#BUTTON_LEFT}, L{#BUTTON_MIDDLE},
-                L{#BUTTON_RIGHT}.
+        @return: one of L{#BUTTON_LEFT}, L{#BUTTON_MIDDLE}, L{#BUTTON_RIGHT}.
         """
         return self._details.getButton()
 
@@ -138,31 +135,27 @@ class ClickEvent(ComponentEvent):
     def getButtonName(self):
         """Returns a human readable string representing which button has been
         pushed. This is meant for debug purposes only and the string returned
-        could change. Use L{#getButton()} to check which button was
-        pressed.
+        could change. Use L{#getButton()} to check which button was pressed.
 
-        @since 6.3
         @return: A string representation of which button was pushed.
         """
         return self._details.getButtonName()
 
 
 class IClickListener(IComponentEventListener):
-    """Interface for listening for a L{ClickEvent} fired by a
-    L{Component}.
+    """Interface for listening for a L{ClickEvent} fired by a L{Component}.
 
-    @see: ClickEvent
+    @see: L{ClickEvent}
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @version @VERSION@
-    @since 6.2
     """
 
     def click(self, event):
         """Called when a L{Component} has been clicked. A reference to the
-        component is given by L{ClickEvent#getComponent()}.
+        component is given by L{ClickEvent.getComponent}.
 
-        @param event
+        @param event:
                    An event containing information about the click.
         """
         raise NotImplementedError
@@ -174,11 +167,10 @@ class DoubleClickEvent(ComponentEvent):
     """Class for holding additional event information for DoubleClick events.
     Fired when the user double-clicks on a C{Component}.
 
-    @see: ClickEvent
+    @see: L{ClickEvent}
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @version @VERSION@
-    @since 6.2
     """
 
     def __init__(self, source):
@@ -189,18 +181,17 @@ class IDoubleClickListener(IComponentEventListener):
     """Interface for listening for a L{DoubleClickEvent} fired by a
     L{Component}.
 
-    @see: DoubleClickEvent
+    @see: L{DoubleClickEvent}
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @version @VERSION@
-    @since 6.2
     """
 
     def doubleClick(self, event):
         """Called when a L{Component} has been double clicked. A reference
-        to the component is given by L{DoubleClickEvent#getComponent()}.
+        to the component is given by L{DoubleClickEvent.getComponent}.
 
-        @param event
+        @param event:
                    An event containing information about the double click.
         """
         raise NotImplementedError

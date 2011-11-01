@@ -20,8 +20,6 @@ from muntjac.event.dd.target_details import ITargetDetails
 class TargetDetailsImpl(ITargetDetails):
     """A HashMap backed implementation of L{ITargetDetails} for terminal
     implementation and for extension.
-
-    @since 6.3
     """
 
     def __init__(self, rawDropData, dropTarget=None):

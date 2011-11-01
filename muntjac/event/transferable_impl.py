@@ -18,10 +18,6 @@ from muntjac.event.transferable import ITransferable
 
 
 class TransferableImpl(ITransferable):
-    """TODO docs
-
-    @since 6.3
-    """
 
     def __init__(self, sourceComponent, rawVariables):
         self._sourceComponent = sourceComponent

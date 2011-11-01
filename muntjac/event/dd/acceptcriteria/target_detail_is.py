@@ -23,18 +23,16 @@ class TargetDetailIs(ClientSideCriterion):
     property with the specific value. Currently only String values are
     supported.
 
-    @since 6.3
-
-           TODO add support for other basic data types that we support in UIDL.
+    TODO: add support for other basic data types that we support in UIDL.
     """
 
     def __init__(self, dataFlavor, value):
         """Constructs a criterion which ensures that the value there is a
         value in L{TargetDetails} that equals the reference value.
 
-        @param dataFlavor
+        @param dataFlavor:
                    the type of data to be checked
-        @param value
+        @param value:
                    the reference value to which the drop target detail will
                    be compared
         """

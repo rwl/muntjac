@@ -23,33 +23,27 @@ class Action(object):
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @version @VERSION@
-    @since 3.0
     """
 
     def __init__(self, caption, icon=None):
-        """Constructs a new action with the given caption.
+        """Constructs a new action with the given caption string and icon.
 
-        @param caption
+        @param caption:
                    the caption for the new action.
-        ---
-        Constructs a new action with the given caption string and icon.
-
-        @param caption
-                   the caption for the new action.
-        @param icon
+        @param icon:
                    the icon for the new action.
         """
-        # Action title.
+        #: Action title.
         self._caption = caption
 
-        # Action icon.
+        #: Action icon.
         self._icon = icon
 
 
     def getCaption(self):
         """Returns the action's caption.
 
-        @return: the action's caption as a C{String}.
+        @return: the action's caption as a string.
         """
         return self._caption
 
@@ -65,7 +59,7 @@ class Action(object):
     def setCaption(self, caption):
         """Sets the caption.
 
-        @param caption
+        @param caption:
                    the caption to set.
         """
         self._caption = caption
@@ -74,7 +68,7 @@ class Action(object):
     def setIcon(self, icon):
         """Sets the icon.
 
-        @param icon
+        @param icon:
                    the icon to set.
         """
         self._icon = icon
@@ -90,13 +84,12 @@ class IContainer(object):
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @version @VERSION@
-    @since 3.0
     """
 
     def addActionHandler(self, actionHandler):
         """Registers a new action handler for this container
 
-        @param actionHandler
+        @param actionHandler:
                    the new handler to be added.
         """
         raise NotImplementedError
@@ -106,17 +99,16 @@ class IContainer(object):
         """Removes a previously registered action handler for the contents of
         this container.
 
-        @param actionHandler
+        @param actionHandler:
                    the handler to be removed.
         """
         raise NotImplementedError
 
 
 class IListener(object):
-    """An Action that implements this interface can be added to an
-    Action.Notifier (or NotifierProxy) via the C{addAction()}
-    -method, which in many cases is easier than implementing the
-    Action.Handler interface.<br/>
+    """An Action that implements this interface can be added to an Notifier
+    (or NotifierProxy) via the C{addAction()}-method, which in many cases is
+    easier than implementing the IHandler interface.
     """
 
     def handleAction(self, sender, target):
@@ -124,9 +116,9 @@ class IListener(object):
 
 
 class INotifier(IContainer):
-    """Action.Containers implementing this support an easier way of adding
-    single Actions than the more involved Action.Handler. The added actions
-    must be Action.Listeners, thus handling the action themselves.
+    """Containers implementing this support an easier way of adding single
+    Actions than the more involved IHandler. The added actions must be
+    Listeners, thus handling the action themselves.
     """
 
     def addAction(self, action):
@@ -153,16 +145,15 @@ class IHandler(object):
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @version @VERSION@
-    @since 3.0
     """
 
     def getActions(self, target, sender):
         """Gets the list of actions applicable to this handler.
 
-        @param target
+        @param target:
                    the target handler to list actions for. For item
                    containers this is the item id.
-        @param sender
+        @param sender:
                    the party that would be sending the actions. Most of this
                    is the action container.
         @return: the list of Action
@@ -174,12 +165,12 @@ class IHandler(object):
         """Handles an action for the given target. The handler method may just
         discard the action if it's not suitable.
 
-        @param action
+        @param action:
                    the action to be handled.
-        @param sender
+        @param sender:
                    the sender of the action. This is most often the action
                    container.
-        @param target
+        @param target:
                    the target of the action. For item containers this is the
                    item id.
         """

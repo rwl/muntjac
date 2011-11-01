@@ -61,8 +61,6 @@ class SamplerApplication(Application):
     @classmethod
     def getThemeBase(cls):
         """Tries to guess theme location.
-
-        @return
         """
         # Supports multiple browser windows
         try:
@@ -89,7 +87,7 @@ class SamplerApplication(Application):
     def getFullPathFor(cls, f):
         """Gets absolute path for given Feature
 
-        @param f
+        @param f:
                    the Feature whose path to get, of null if not found
         @return: the path of the Feature
         """
@@ -108,9 +106,6 @@ class SamplerApplication(Application):
     def getFeatureFor(cls, clazz):
         """Gets the instance for the given Feature class,
         e.g DummyFeature.__class__.
-
-        @param clazz
-        @return
         """
         for f in cls._allFeatures.getItemIds():
             if f.__class__ == clazz:
@@ -272,16 +267,12 @@ class SamplerWindow(Window):
 
 
     def setFeature(self, arg):
-        """Displays a Feature(Set)
+        """Displays a Feature(Set) or displays a Feature(Set) matching the
+        given path, or the main view if no matching Feature(Set) is found.
 
-        @param f
-                   the Feature(Set) to show
-        ---
-        Displays a Feature(Set) matching the given path, or the main view if
-        no matching Feature(Set) is found.
-
-        @param path
-                   the path of the Feature(Set) to show
+        @param arg:
+                   Either the Feature(Set) to show or the path of the
+                   Feature(Set) to show
         """
         if isinstance(arg, basestring):
             path = arg

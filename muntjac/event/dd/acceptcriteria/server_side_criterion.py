@@ -18,13 +18,11 @@ from muntjac.event.dd.acceptcriteria.accept_criterion import IAcceptCriterion
 
 
 class ServerSideCriterion(IAcceptCriterion):
-    """Parent class for criteria which are verified on the server side during
-    a drag operation to accept/discard dragged content (presented by
-    L{Transferable}).
+    """Parent class for criteria which are verified on the server side
+    during a drag operation to accept/discard dragged content (presented
+    by L{Transferable}).
 
-    Subclasses should implement the
-    L{IAcceptCriterion#accept(com.vaadin.event.dd.DragAndDropEvent)}
-    method.
+    Subclasses should implement the L{IAcceptCriterion.accept} method.
 
     As all server side state can be used to make a decision, this is more
     flexible than L{ClientSideCriterion}. However, this does require
@@ -32,8 +30,6 @@ class ServerSideCriterion(IAcceptCriterion):
 
     @see: IAcceptCriterion
     @see: ClientSideCriterion
-
-    @since 6.3
     """
 
     def isClientSideVerifiable(self):

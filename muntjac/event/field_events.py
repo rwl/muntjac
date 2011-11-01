@@ -24,25 +24,15 @@ class IFocusNotifier(object):
     By implementing this interface a class explicitly announces that it will
     generate a C{FocusEvent} when it receives keyboard focus.
 
-    Note: The general Java convention is not to explicitly declare that a
-    class generates events, but to directly define the
-    C{addListener} and C{removeListener} methods. That
-    way the caller of these methods has no real way of finding out if the
-    class really will send the events, or if it just defines the methods to
-    be able to implement an interface.
-
-    @since 6.2
-    @see: IFocusListener
-    @see: FocusEvent
+    @see: L{IFocusListener}
+    @see: L{FocusEvent}
     """
 
     def addListener(self, listener, iface):
         """Adds a C{IFocusListener} to the Component which gets fired
         when a C{Field} receives keyboard focus.
 
-        @param listener:
-        @see: IFocusListener
-        @since 6.2
+        @see: L{IFocusListener}
         """
         if iface == IFocusListener:
             raise NotImplementedError
@@ -57,9 +47,7 @@ class IFocusNotifier(object):
     def removeListener(self, listener, iface):
         """Removes a C{IFocusListener} from the Component.
 
-        @param listener:
-        @see: IFocusListener
-        @since 6.2
+        @see: L{IFocusListener}
         """
         if iface == IFocusListener:
             raise NotImplementedError
@@ -76,25 +64,15 @@ class IBlurNotifier(object):
     By implementing this interface a class explicitly announces that it will
     generate a C{BlurEvent} when it loses keyboard focus.
 
-    Note: The general Java convention is not to explicitly declare that a
-    class generates events, but to directly define the
-    C{addListener} and C{removeListener} methods. That
-    way the caller of these methods has no real way of finding out if the
-    class really will send the events, or if it just defines the methods to
-    be able to implement an interface.
-
-    @since 6.2
-    @see: IBlurListener
-    @see: BlurEvent
+    @see: L{IBlurListener}
+    @see: L{BlurEvent}
     """
 
     def addListener(self, listener, iface):
         """Adds a C{IBlurListener} to the Component which gets fired
         when a C{Field} loses keyboard focus.
 
-        @param listener:
-        @see: IBlurListener
-        @since 6.2
+        @see: L{IBlurListener}
         """
         if iface == IBlurListener:
             raise NotImplementedError
@@ -109,9 +87,7 @@ class IBlurNotifier(object):
     def removeListener(self, listener, iface):
         """Removes a C{IBlurListener} from the Component.
 
-        @param listener:
-        @see: IBlurListener
-        @since 6.2
+        @see: L{IBlurListener}
         """
         if iface == IBlurListener:
             raise NotImplementedError
@@ -126,8 +102,6 @@ class IBlurNotifier(object):
 class FocusEvent(ComponentEvent):
     """C{FocusEvent} class for holding additional event information.
     Fired when a C{Field} receives keyboard focus.
-
-    @since 6.2
     """
     # Identifier for event that can be used in L{EventRouter}
     EVENT_ID = EventId.FOCUS
@@ -137,17 +111,16 @@ class FocusEvent(ComponentEvent):
 
 
 class IFocusListener(IComponentEventListener):
-    """C{IFocusListener} interface for listening for
-    C{FocusEvent} fired by a C{Field}.
+    """C{IFocusListener} interface for listening for C{FocusEvent} fired by
+    a C{Field}.
 
     @see: FocusEvent
-    @since 6.2
     """
 
     def focus(self, event):
         """Component has been focused
 
-        @param event
+        @param event:
                    Component focus event.
         """
         raise NotImplementedError
@@ -158,8 +131,6 @@ class IFocusListener(IComponentEventListener):
 class BlurEvent(ComponentEvent):
     """C{BlurEvent} class for holding additional event information.
     Fired when a C{Field} loses keyboard focus.
-
-    @since 6.2
     """
 
     # Identifier for event that can be used in L{EventRouter}
@@ -170,17 +141,16 @@ class BlurEvent(ComponentEvent):
 
 
 class IBlurListener(IComponentEventListener):
-    """C{IBlurListener} interface for listening for
-    C{BlurEvent} fired by a C{Field}.
+    """C{IBlurListener} interface for listening for C{BlurEvent} fired by
+    a C{Field}.
 
     @see: BlurEvent
-    @since 6.2
     """
 
     def blur(self, event):
         """Component has been blurred
 
-        @param event
+        @param event:
                    Component blur event.
         """
         raise NotImplementedError
@@ -189,8 +159,8 @@ class IBlurListener(IComponentEventListener):
 
 
 class TextChangeEvent(ComponentEvent):
-    """TextChangeEvents are fired when the user is editing the text content of a
-    field. Most commonly text change events are triggered by typing text with
+    """TextChangeEvents are fired when the user is editing the text content of
+    a field. Most commonly text change events are triggered by typing text with
     keyboard, but e.g. pasting content from clip board to a text field also
     triggers an event.
 
@@ -208,10 +178,9 @@ class TextChangeEvent(ComponentEvent):
     L{TextField} component supports different modes for triggering
     TextChangeEvents.
 
-    @see: ITextChangeListener
-    @see: ITextChangeNotifier
-    @see: TextField#setTextChangeEventMode(TextField.TextChangeEventMode)
-    @since 6.5
+    @see: L{ITextChangeListener}
+    @see: L{ITextChangeNotifier}
+    @see: TextField.setTextChangeEventMode
     """
 
     def __init__(self, source):
@@ -233,8 +202,6 @@ class TextChangeEvent(ComponentEvent):
 
 class ITextChangeListener(IComponentEventListener):
     """A listener for L{TextChangeEvent}s.
-
-    @since 6.5
     """
 
     EVENT_ID = 'ie'
@@ -243,7 +210,7 @@ class ITextChangeListener(IComponentEventListener):
         """This method is called repeatedly while the text is edited by a
         user.
 
-        @param event
+        @param event:
                    the event providing details of the text change
         """
         raise NotImplementedError

@@ -30,8 +30,6 @@ class Feature(object):
     def getName(self):
         """Gets the name of this feature. Try not to exceed 25 characters
         too much.
-
-        @return
         """
         raise NotImplementedError
 
@@ -56,24 +54,22 @@ class Feature(object):
 
         May return null, if the example has no related resources.
 
-        The name of the NamedExternalResource will be shown in the UI. <br/>
-        Note that Javadoc should be referenced via L{#getRelatedAPI()}.
+        The name of the NamedExternalResource will be shown in the UI.
+        Note that API doc should be referenced via L{getRelatedAPI}.
 
-        @see: #getThemeBase()
+        @see: L{getThemeBase}
         @return: related external stuff
         """
         raise NotImplementedError
 
 
     def getRelatedAPI(self):
-        """Gets related API resources, i.e links to javadoc of used classes.
+        """Gets related API resources, i.e links to API doc of used classes.
 
-        Good candidates are Vaadin classes being demoed in the example, or
+        Good candidates are Muntjac classes being demoed in the example, or
         other classes playing an important role in the example.
 
         May return null, if the example uses no interesting classes.
-
-        @return
         """
         raise NotImplementedError
 
@@ -85,8 +81,6 @@ class Feature(object):
         functionality demoed in this one, and Features being used in this one.
 
         May return null, if no other Features are related to this one.
-
-        @return
         """
         raise NotImplementedError
 
@@ -94,8 +88,6 @@ class Feature(object):
     def getIconName(self):
         """Gets the name of the icon for this feature, usually simpleName +
         extension.
-
-        @return
         """
         icon = self.__class__.__name__ + '.gif'
         return icon
@@ -104,8 +96,6 @@ class Feature(object):
     def getExample(self):
         """Get the example instance. Override if instantiation needs
         parameters.
-
-        @return
         """
         pkgName, className = fullname(self).rsplit('.', 1)
         canonicalName = pkgName + 'Example' + '.' + className + 'Example'
@@ -137,8 +127,6 @@ class Feature(object):
         """Gets the name used when resolving the path for this feature.
         Usually no need to override, but NOTE that this must be unique
         within Sampler.
-
-        @return
         """
         return self.__class__.__name__
 
@@ -153,7 +141,7 @@ class Feature(object):
 
         Override in each feature. Returns Version.OLD otherwise.
 
-        @return: Version Vaadin version when this feature was added to Sampler
+        @return: Muntjac version when this feature was added to Sampler
         """
         raise NotImplementedError
 
@@ -161,8 +149,6 @@ class Feature(object):
     @classmethod
     def getThemeBase(cls):
         """Gets the base url used to reference theme resources.
-
-        @return
         """
         from muntjac.demo.sampler.SamplerApplication import SamplerApplication
         return SamplerApplication.getThemeBase()
@@ -207,8 +193,6 @@ class Version(object):
 
         You can use Version.BUILD if you wish for a Feature to always appear
         as new.
-
-        @return
         """
         return self.BUILD.version <= self.version
 

@@ -14,24 +14,20 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.util import clsname
-
 from muntjac.event.dd.acceptcriteria.client_side_criterion import \
     ClientSideCriterion
 
 
 class ContainsDataFlavor(ClientSideCriterion):
     """A Criterion that checks whether L{Transferable} contains given data
-    flavor. The developer might for example accept the incoming data only if it
-    contains "Url" or "Text".
-
-    @since 6.3
+    flavor. The developer might for example accept the incoming data only
+    if it contains "Url" or "Text".
     """
 
     def __init__(self, dataFlavor):
         """Constructs a new instance of L{ContainsDataFlavor}.
 
-        @param dataFlavor
+        @param dataFlavor:
                    the type of data that will be checked from
                    L{Transferable}
         """

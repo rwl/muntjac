@@ -23,19 +23,19 @@ from muntjac.event.shortcut_action import ShortcutAction
 class ActionManager(action.IHandler, action.INotifier):  #action.IContainer
     """Notes:
 
-    Empties the keymapper for each repaint to avoid leaks; can cause problems in
-    the future if the client assumes key don't change. (if lazyloading, one must
-    not cache results)
+    Empties the keymapper for each repaint to avoid leaks; can cause problems
+    in the future if the client assumes key don't change. (if lazyloading, one
+    must not cache results)
     """
 
     def __init__(self, viewer=None):
-        # List of action handlers
+        #: List of action handlers
         self.ownActions = None
 
-        # List of action handlers
+        #: List of action handlers
         self.actionHandlers = None
 
-        # Action mapper
+        #: Action mapper
         self.actionMapper = None
 
         self._clientHasActions = False

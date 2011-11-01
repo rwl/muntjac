@@ -20,33 +20,29 @@ from muntjac.ui.component import IComponent
 class IDragSource(IComponent):
     """IDragSource is a L{IComponent} that builds a L{Transferable} for a
     drag and drop operation.
-    <p>
-    In Vaadin the drag and drop operation practically starts from client side
-    component. The client side component initially defines the data that will be
-    present in L{Transferable} object on server side. If the server side
+
+    In Muntjac the drag and drop operation practically starts from client side
+    component. The client side component initially defines the data that will
+    be present in L{Transferable} object on server side. If the server side
     counterpart of the component implements this interface, terminal
     implementation lets it create the L{Transferable} instance from the raw
-    client side "seed data". This way server side implementation may translate or
-    extend the data that will be available for L{DropHandler}.
-
-    @since 6.3
+    client side "seed data". This way server side implementation may translate
+    or extend the data that will be available for L{DropHandler}.
     """
 
     def getTransferable(self, rawVariables):
-        """IDragSource may convert data added by client side component to meaningful
-        values for server side developer or add other data based on it.
+        """IDragSource may convert data added by client side component to
+        meaningful values for server side developer or add other data based
+        on it.
 
-        <p>
         For example Tree converts item identifiers to generated string keys for
         the client side. Vaadin developer don't and can't know anything about
         these generated keys, only about item identifiers. When tree node is
         dragged client puts that key to L{Transferable}s client side
-        counterpart. In L{Tree#getTransferable(Map)} the key is converted
+        counterpart. In L{Tree.getTransferable} the key is converted
         back to item identifier that the server side developer can use.
-        <p>
 
-        @since 6.3
-        @param rawVariables
+        @param rawVariables:
                    the data that client side initially included in
                    L{Transferable}s client side counterpart.
         @return: the L{Transferable} instance that will be passed to

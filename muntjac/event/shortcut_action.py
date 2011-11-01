@@ -26,23 +26,20 @@ class ShortcutAction(Action):
     The ShortcutAction is triggered when the user presses a given key in
     combination with the (optional) given modifier keys.
 
-    ShortcutActions can be global (by attaching to the L{Window}), or
-    attached to different parts of the UI so that a specific shortcut is only
-    valid in part of the UI. For instance, one can attach shortcuts to a specific
-    L{Panel} - look for L{ComponentContainer}s implementing
-    L{Handler Action.Handler} or L{Notifier Action.Notifier}.
+    ShortcutActions can be global (by attaching to the L{Window}), or attached
+    to different parts of the UI so that a specific shortcut is only valid in
+    part of the UI. For instance, one can attach shortcuts to a specific
+    L{Panel} - look for L{ComponentContainer}s implementing L{IHandler} or
+    L{INotifier}.
 
     ShortcutActions have a caption that may be used to display the shortcut
     visually. This allows the ShortcutAction to be used as a plain Action while
     still reacting to a keyboard shortcut. Note that this functionality is not
     very well supported yet, but it might still be a good idea to give a caption
     to the shortcut.
-    </p>
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
-    @version
-    @since 4.0.1
     """
 
     # Used in the caption shorthand notation to indicate the ALT modifier.
@@ -78,66 +75,40 @@ class ShortcutAction(Action):
 
 
     def __init__(self, *args):
-        """Creates a shortcut that reacts to the given L{KeyCode} and
-        (optionally) L{ModifierKey}s. <br/>
+        """Creates a shortcut either using a shorthand notation to encode the
+        keycode a in the caption or one that reacts to the given L{KeyCode} and
+        (optionally) L{ModifierKey}s.
+
         The shortcut might be shown in the UI (e.g context menu), in which case
         the caption will be used.
 
-        @param caption
-                   used when displaying the shortcut visually
-        @param kc
-                   KeyCode that the shortcut reacts to
-        @param m
-                   optional modifier keys
-        ---
-        Creates a shortcut that reacts to the given L{KeyCode} and
-        (optionally) L{ModifierKey}s. <br/>
-        The shortcut might be shown in the UI (e.g context menu), in which case
-        the caption and icon will be used.
-
-        @param caption
-                   used when displaying the shortcut visually
-        @param icon
-                   used when displaying the shortcut visually
-        @param kc
-                   KeyCode that the shortcut reacts to
-        @param m
-                   optional modifier keys
-        ---
-        Constructs a ShortcutAction using a shorthand notation to encode the
-        keycode and modifiers in the caption.
-        <p>
         Insert one or more modifier characters before the character to use as
         keycode. E.g C{"&Save"} will make a shortcut responding to
         ALT-S, C{"E^xit"} will respond to CTRL-X.<br/>
         Multiple modifiers can be used, e.g C{"&^Delete"} will respond
         to CTRL-ALT-D (the order of the modifier characters is not important).
-        </p>
-        <p>
+
         The modifier characters will be removed from the caption. The modifier
         character is be escaped by itself: two consecutive characters are turned
         into the original character w/o the special meaning. E.g
         C{"Save&&&close"} will respond to ALT-C, and the caption will
         say "Save&close".
-        </p>
 
-        @param shorthandCaption
-                   the caption in modifier shorthand
-        ---
-        Constructs a ShortcutAction using a shorthand notation to encode the
-        keycode a in the caption.
-        <p>
-        This works the same way as L{#ShortcutAction(String)}, with the
-        exception that the modifiers given override those indicated in the
-        caption. I.e use any of the modifier characters in the caption to
-        indicate the keycode, but the modifier will be the given set.<br/>
-        E.g
-        C{new ShortcutAction("Do &stuff", new int[]{ShortcutAction.ModifierKey.CTRL}));}
-        will respond to CTRL-S.
-        </p>
-
-        @param shorthandCaption
-        @param modifierKeys
+        @param args: tuple of the form
+            - (caption, kc, m)
+              1. used when displaying the shortcut visually
+              2. KeyCode that the shortcut reacts to
+              3. optional modifier keys
+            - (caption, icon, kc, m)
+              1. used when displaying the shortcut visually
+              2. used when displaying the shortcut visually
+              3. KeyCode that the shortcut reacts to
+              4. optional modifier keys
+            - (shorthandCaption)
+              1. the caption in modifier shorthand
+            - (shorthandCaption, modifierKeys)
+              1. the caption in modifier shorthand
+              2. modifier keys
         """
         self._keyCode = None
         self._modifiers = None

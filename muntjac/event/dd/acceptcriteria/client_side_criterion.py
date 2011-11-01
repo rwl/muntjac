@@ -19,16 +19,13 @@ from muntjac.util import clsname
 
 
 class ClientSideCriterion(IAcceptCriterion):
-    """Parent class for criteria that can be completely validated on client side.
-    All classes that provide criteria that can be completely validated on client
-    side should extend this class.
+    """Parent class for criteria that can be completely validated on client
+    side. All classes that provide criteria that can be completely validated
+    on client side should extend this class.
 
     It is recommended that subclasses of ClientSideCriterion re-validate the
-    condition on the server side in
-    L{IAcceptCriterion#accept(com.vaadin.event.dd.DragAndDropEvent)} after
+    condition on the server side in L{IAcceptCriterion.accept} after
     the client side validation has accepted a transfer.
-
-    @since 6.3
     """
 
     def isClientSideVerifiable(self):

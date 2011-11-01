@@ -20,8 +20,6 @@ from muntjac.event.dd.acceptcriteria.client_side_criterion import \
 
 class Not(ClientSideCriterion):
     """Criterion that wraps another criterion and inverts its return value.
-
-    @since 6.3
     """
 
     def __init__(self, acceptCriterion):

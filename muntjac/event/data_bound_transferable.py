@@ -19,18 +19,15 @@ from muntjac.data.container import IViewer
 
 
 class DataBoundTransferable(TransferableImpl):
-    """Parent class for L{Transferable} implementations that have a Vaadin
+    """Parent class for L{Transferable} implementations that have a Muntjac
     container as a data source. The transfer is associated with an item
     (identified by its Id) and optionally also a property identifier (e.g. a
     table column identifier when transferring a single table cell).
 
-    The component must implement the interface
-    L{com.vaadin.data.Container.IViewer}.
+    The component must implement the interface L{IViewer}.
 
     In most cases, receivers of data transfers should depend on this class
     instead of its concrete subclasses.
-
-    @since 6.3
     """
 
     def __init__(self, sourceComponent, rawVariables):
@@ -60,8 +57,8 @@ class DataBoundTransferable(TransferableImpl):
     def getSourceContainer(self):
         """Returns the container data source from which the transfer occurs.
 
-        L{com.vaadin.data.Container.IViewer#getContainerDataSource()} is
-        used to obtain the underlying container of the source component.
+        L{IViewer.getContainerDataSource} is used to obtain the underlying
+        container of the source component.
 
         @return: Container
         """

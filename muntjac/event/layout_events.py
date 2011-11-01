@@ -23,7 +23,7 @@ class ILayoutClickListener(IComponentEventListener):
     def layoutClick(self, event):
         """Layout has been clicked
 
-        @param event
+        @param event:
                    Component click event.
         """
         raise NotImplementedError
@@ -32,23 +32,13 @@ class ILayoutClickListener(IComponentEventListener):
 
 
 class ILayoutClickNotifier(object):
-    """The interface for adding and removing C{LayoutClickEvent}
-    listeners. By implementing this interface a class explicitly announces
-    that it will generate a C{LayoutClickEvent} when a component
-    inside it is clicked and a C{LayoutClickListener} is
-    registered.
-    <p>
-    Note: The general Java convention is not to explicitly declare that a
-    class generates events, but to directly define the
-    C{addListener} and C{removeListener} methods. That
-    way the caller of these methods has no real way of finding out if the
-    class really will send the events, or if it just defines the methods to
-    be able to implement an interface.
-    </p>
+    """The interface for adding and removing C{LayoutClickEvent} listeners.
+    By implementing this interface a class explicitly announces that it will
+    generate a C{LayoutClickEvent} when a component inside it is clicked and
+    a C{LayoutClickListener} is registered.
 
-    @since 6.5.2
-    @see: LayoutClickListener
-    @see: LayoutClickEvent
+    @see: L{LayoutClickListener}
+    @see: L{LayoutClickEvent}
     """
 
     def addListener(self, listener, iface):
@@ -61,8 +51,7 @@ class ILayoutClickNotifier(object):
         The child component that was clicked is included in the
         L{LayoutClickEvent}.
 
-        Use L{#removeListener(LayoutClickListener)} to remove the
-        listener.
+        Use L{removeListener} to remove the listener.
 
         @param listener:
                    The listener to add
@@ -107,13 +96,12 @@ class LayoutClickEvent(ClickEvent):
 
 
     def getClickedComponent(self):
-        """Returns the component that was clicked, which is somewhere inside the
-        parent layout on which the listener was registered.
+        """Returns the component that was clicked, which is somewhere inside
+        the parent layout on which the listener was registered.
 
-        For the direct child component of the layout, see
-        L{#getChildComponent()}.
+        For the direct child component of the layout, see L{getChildComponent}.
 
-        @return: clicked L{Component}, null if none found
+        @return: clicked L{Component}, C{None} if none found
         """
         return self._clickedComponent
 
@@ -123,7 +111,7 @@ class LayoutClickEvent(ClickEvent):
         clicked component.
 
         For the clicked component inside that child component of the layout,
-        see L{#getClickedComponent()}.
+        see L{getClickedComponent}.
 
         @return: direct child L{Component} of the layout which contains
                 the clicked Component, null if none found

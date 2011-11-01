@@ -23,12 +23,10 @@ class Or(ClientSideCriterion):
     accepts it.
 
     @see: And
-
-    @since 6.3
     """
 
     def __init__(self, *criteria):
-        """@param criteria
+        """@param criteria:
                    the criteria of which the Or criteria will be composed
         """
         self._criteria = criteria

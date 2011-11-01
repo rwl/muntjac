@@ -15,6 +15,7 @@ class MuntjacTunesLayout(Application):
     """Sample application layout, similar (almost identical) to Apple iTunes.
 
     @author: IT Mill Ltd.
+    @author: Richard Lincoln
     """
 
     def init(self):

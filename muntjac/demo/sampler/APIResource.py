@@ -3,9 +3,9 @@ from muntjac.demo.sampler.NamedExternalResource import NamedExternalResource
 
 
 class APIResource(NamedExternalResource):
-    """A NamedExternalResource pointing to the javadoc for the given class.
-    Knows where the javadocs are located for some common APIs, but one can also
-    specify a javadoc baseurl. The name will be set to the class simpleName.
+    """A NamedExternalResource pointing to the API doc for the given class.
+    Knows where the API docs are located for some common APIs, but one can also
+    specify an API doc baseurl. The name will be set to the class simpleName.
     """
 
     _VAADIN_BASE = 'http://www.vaadin.com/api'
@@ -36,11 +36,8 @@ class APIResource(NamedExternalResource):
 
     @classmethod
     def resolveBaseUrl(cls, clazz):
-        """Tries to resolve the javadoc baseurl for the given class by looking
+        """Tries to resolve the API doc baseurl for the given class by looking
         at the packagename.
-
-        @param clazz
-        @return
         """
         name = clazz.__name__
         if name.startswith('javax.servlet.'):

@@ -19,12 +19,10 @@ from muntjac.event.dd.acceptcriteria.client_side_criterion import \
 
 
 class And(ClientSideCriterion):
-    """A compound criterion that accepts the drag if all of its criteria accepts the
-    drag.
+    """A compound criterion that accepts the drag if all of its criteria
+    accepts the drag.
 
-    @see: Or
-
-    @since 6.3
+    @see: L{Or}
     """
 
     def __init__(self, *criteria):

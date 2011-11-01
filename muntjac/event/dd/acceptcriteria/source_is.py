@@ -23,8 +23,6 @@ from muntjac.event.dd.acceptcriteria.client_side_criterion import \
 class SourceIs(ClientSideCriterion):
     """Client side criteria that checks if the drag source is one of the given
     components.
-
-    @since 6.3
     """
 
     def __init__(self, *component):

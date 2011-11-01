@@ -1,7 +1,6 @@
 
 from muntjac.api import Link
 from muntjac.ui.button import ClickEvent
-from muntjac.ui.abstract_component import AbstractComponent
 from muntjac.ui.component import Event
 
 
@@ -11,7 +10,7 @@ class ILinkActivatedListener(object):
     def linkActivated(self, event):
         """ActiveLink has been activated.
 
-        @param event
+        @param event:
                    ActiveLink click event.
         """
         raise NotImplementedError
@@ -107,7 +106,7 @@ class LinkActivatedEvent(Event):
     def __init__(self, source, linkOpened):
         """New instance of text change event.
 
-        @param source
+        @param source:
                    the Source of the event.
         """
         super(LinkActivatedEvent, self).__init__(source)

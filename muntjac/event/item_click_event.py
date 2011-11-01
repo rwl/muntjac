@@ -27,12 +27,10 @@ ITEM_CLICK_METHOD = getattr(IItemClickListener, 'itemClick')
 
 
 class ItemClickEvent(ClickEvent):
-    """Click event fired by a L{Component} implementing
-    L{com.vaadin.data.Container} interface. ItemClickEvents happens on an
-    L{Item} rendered somehow on terminal. Event may also contain a specific
-    L{Property} on which the click event happened.
-
-    @since 5.3
+    """Click event fired by a L{Component} implementing L{IContainer}
+    interface. ItemClickEvents happens on an L{IItem} rendered somehow
+    on terminal. Event may also contain a specific L{Property} on which
+    the click event happened.
     """
 
     def __init__(self, source, item, itemId, propertyId, details):
@@ -51,41 +49,29 @@ class ItemClickEvent(ClickEvent):
 
 
     def getItemId(self):
-        """Gets a possible identifier in source for clicked Item
-
-        @return
+        """Gets a possible identifier in source for clicked Item.
         """
         return self._itemId
 
 
     def getPropertyId(self):
-        """Returns property on which click event occurred. Returns null if source
-        cannot be resolved at property leve. For example if clicked a cell in
-        table, the "column id" is returned.
+        """Returns property on which click event occurred. Returns C{None} if
+        source cannot be resolved at property leve. For example if clicked a
+        cell in table, the "column id" is returned.
 
-        @return: a property id of clicked property or null if click didn't occur
-                on any distinct property.
+        @return: a property id of clicked property or null if click didn't
+                occur on any distinct property.
         """
         return self._propertyId
 
 
 class IItemClickNotifier(object):
-    """The interface for adding and removing C{ItemClickEvent}
-    listeners. By implementing this interface a class explicitly announces
-    that it will generate an C{ItemClickEvent} when one of its
-    items is clicked.
-    <p>
-    Note: The general Java convention is not to explicitly declare that a
-    class generates events, but to directly define the
-    C{addListener} and C{removeListener} methods. That
-    way the caller of these methods has no real way of finding out if the
-    class really will send the events, or if it just defines the methods to
-    be able to implement an interface.
-    </p>
+    """The interface for adding and removing C{ItemClickEvent} listeners. By
+    implementing this interface a class explicitly announces that it will
+    generate an C{ItemClickEvent} when one of its items is clicked.
 
-    @since 6.5
-    @see: ItemClickListener
-    @see: ItemClickEvent
+    @see: L{ItemClickListener}
+    @see: L{ItemClickEvent}
     """
 
     def addListener(self, listener, iface):
@@ -121,12 +107,9 @@ class IItemClickNotifier(object):
 
 
 class IItemClickSource(IItemClickNotifier):
-    """Components implementing
+    """Components implementing L{Container} interface may support emitting
+    L{ItemClickEvent}s.
 
-    @link L{Container} interface may support emitting
-          L{ItemClickEvent}s.
-
-    @deprecated Use L{ItemClickNotifier} instead. ItemClickSource was
-                deprecated in version 6.5.
+    @deprecated: Use L{ItemClickNotifier} instead.
     """
     pass

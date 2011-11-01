@@ -25,9 +25,7 @@ class SourceIsTarget(ClientSideCriterion):
     Eg. L{Tree} or L{Table} could support only re-ordering of items,
     but no L{Transferable}s coming outside.
 
-    Note! Class is singleton, use L{#get()} method to get the instance.
-
-    @since 6.3
+    Note! Class is singleton, use L{get} method to get the instance.
     """
 
     _instance = None
