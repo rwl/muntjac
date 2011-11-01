@@ -26,7 +26,6 @@ class ExternalResource(IResource):
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @version @VERSION@
-    @since 3.0
     """
 
     def __init__(self, sourceURL, mimeType=None):
@@ -63,7 +62,7 @@ class ExternalResource(IResource):
     def getMIMEType(self):
         """Gets the MIME type of the resource.
 
-        @see: com.vaadin.terminal.IResource#getMIMEType()
+        @see: L{muntjac.terminal.resource.IResource.getMIMEType}
         """
         if self._mimeType is None:
             self._mimeType = FileTypeResolver.getMIMEType(self.getURL())

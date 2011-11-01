@@ -16,15 +16,13 @@
 
 
 class IApplicationContext(object):
-    """C{IApplicationContext} provides information about the running
-    context of the application. Each context is shared by all applications that
-    are open for one user. In a web-environment this corresponds to a
-    HttpSession.
+    """C{IApplicationContext} provides information about the running context
+    of the application. Each context is shared by all applications that are
+    open for one user. In a web-environment this corresponds to a HttpSession.
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @version @VERSION@
-    @since 3.1
     """
 
     def getBaseDirectory(self):
@@ -33,11 +31,10 @@ class IApplicationContext(object):
         Typically an application is deployed in a such way that is has an
         application directory. For web applications this directory is the root
         directory of the web applications. In some cases applications might not
-        have an application directory (for example web applications running
-        inside a war).
+        have an application directory.
 
-        @return: The application base directory or null if the application has no
-                base directory.
+        @return: The application base directory or C{None} if the application
+                has no base directory.
         """
         raise NotImplementedError
 
@@ -53,13 +50,11 @@ class IApplicationContext(object):
 
 
     def addTransactionListener(self, listener):
-        """Adds a transaction listener to this context. The transaction listener is
-        called before and after each each request related to this session except
-        when serving static resources.
+        """Adds a transaction listener to this context. The transaction
+        listener is called before and after each each request related to this
+        session except when serving static resources.
 
-        The transaction listener must not be null.
-
-        @see: com.vaadin.service.IApplicationContext#addTransactionListener(com.vaadin.service.IApplicationContext.ITransactionListener)
+        The transaction listener must not be C{None}.
         """
         raise NotImplementedError
 
@@ -78,18 +73,18 @@ class IApplicationContext(object):
         """Generate a URL that can be used as the relative location of e.g. an
         L{ApplicationResource}.
 
-        This method should only be called from the processing of a UIDL request,
-        not from a background thread. The return value is null if used outside a
-        suitable request.
+        This method should only be called from the processing of a UIDL
+        request, not from a background thread. The return value is null if used
+        outside a suitable request.
 
-        @deprecated this method is intended for terminal implementation only and
-                    is subject to change/removal from the interface (to
+        @deprecated this method is intended for terminal implementation only
+                    and is subject to change/removal from the interface (to
                     L{AbstractCommunicationManager})
 
-        @param resource
-        @param urlKey
+        @param resource:
+        @param urlKey:
                    a key for the resource that can later be extracted from a URL
-                   with L{#getURLKey(URL, String)}
+                   with L{getURLKey}
         """
         raise NotImplementedError
 
@@ -97,31 +92,21 @@ class IApplicationContext(object):
     def isApplicationResourceURL(self, context, relativeUri):
         """Tests if a URL is for an application resource (APP/...).
 
-        @deprecated this method is intended for terminal implementation only and
-                    is subject to change/removal from the interface (to
+        @deprecated this method is intended for terminal implementation only
+                    and is subject to change/removal from the interface (to
                     L{AbstractCommunicationManager})
-
-        @param context
-        @param relativeUri
-        @return
         """
         raise NotImplementedError
 
 
     def getURLKey(self, context, relativeUri):
-        """Gets the identifier (key) from an application resource URL. This key is
-        the one that was given to
-        L{#generateApplicationResourceURL(ApplicationResource, String)} when
+        """Gets the identifier (key) from an application resource URL. This key
+        is the one that was given to L{generateApplicationResourceURL} when
         creating the URL.
 
-        @deprecated this method is intended for terminal implementation only and
-                    is subject to change/removal from the interface (to
+        @deprecated this method is intended for terminal implementation only
+                    and is subject to change/removal from the interface (to
                     L{AbstractCommunicationManager})
-
-
-        @param context
-        @param relativeUri
-        @return
         """
         raise NotImplementedError
 
@@ -139,9 +124,9 @@ class ITransactionListener(object):
         to check that the request is associated with the application you are
         interested in. This can be done looking at the application parameter.
 
-        @param application
+        @param application:
                    the Application object.
-        @param transactionData
+        @param transactionData:
                    the Data identifying the transaction.
         """
         raise NotImplementedError
@@ -155,9 +140,9 @@ class ITransactionListener(object):
         to check that the request is associated with the application you are
         interested in. This can be done looking at the application parameter.
 
-        @param applcation
+        @param applcation:
                    the Application object.
-        @param transactionData
+        @param transactionData:
                    the Data identifying the transaction.
         """
         raise NotImplementedError

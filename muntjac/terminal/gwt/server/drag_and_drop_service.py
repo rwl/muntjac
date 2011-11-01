@@ -65,9 +65,6 @@ class DragAndDropService(IVariableOwner):
 
     def handleDropRequest(self, dropTarget, variables):
         """Handles a drop request from the VDragAndDropManager.
-
-        @param dropTarget
-        @param variables
         """
         dropHandler = dropTarget.getDropHandler()
         if dropHandler is None:
@@ -90,9 +87,6 @@ class DragAndDropService(IVariableOwner):
 
     def handleDragRequest(self, dropTarget, variables):
         """Handles a drag/move request from the VDragAndDropManager.
-
-        @param dropTarget
-        @param variables
         """
         self._lastVisitId = variables.get('visitId')
 
@@ -114,10 +108,6 @@ class DragAndDropService(IVariableOwner):
         """Construct DragDropDetails based on variables from client drop
         target. Uses DragDropDetailsTranslator if available, otherwise a
         default DragDropDetails implementation is used.
-
-        @param dropTarget
-        @param variables
-        @return
         """
         rawDragDropDetails = variables.get('evt')
 

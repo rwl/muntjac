@@ -1,2 +1,2 @@
-"""<p>Provides some general service classes used throughout Vaadin
-based applications.</p>"""
+"""Provides some general service classes used throughout Muntjac
+based applications."""

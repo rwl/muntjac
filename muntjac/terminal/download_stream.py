@@ -22,7 +22,6 @@ class DownloadStream(object):
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @version @VERSION@
-    @since 3.0
     """
 
     MAX_CACHETIME = sys.maxint
@@ -54,7 +53,7 @@ class DownloadStream(object):
     def setStream(self, stream):
         """Sets the stream.
 
-        @param stream
+        @param stream:
                    The stream to set
         """
         self._stream = stream
@@ -71,7 +70,7 @@ class DownloadStream(object):
     def setContentType(self, contentType):
         """Sets stream content type.
 
-        @param contentType
+        @param contentType:
                    the contentType to set
         """
         self._contentType = contentType
@@ -88,7 +87,7 @@ class DownloadStream(object):
     def setFileName(self, fileName):
         """Sets the file name.
 
-        @param fileName
+        @param fileName:
                    the file name to set.
         """
         self._fileName = fileName
@@ -102,9 +101,9 @@ class DownloadStream(object):
 
         If the parameters by this name exists, the old value is replaced.
 
-        @param name
+        @param name:
                    the Name of the parameter to set.
-        @param value
+        @param value:
                    the Value of the parameter to set.
         """
         if self._params is None:
@@ -118,7 +117,7 @@ class DownloadStream(object):
         on the used adapter. For example in WebAdapter they are interpreted
         as HTTP response headers.
 
-        @param name
+        @param name:
                    the Name of the parameter to set.
         @return: Value of the parameter or null if the parameter does not exist.
         """
@@ -154,7 +153,7 @@ class DownloadStream(object):
         in adapter or at the client if the client supports caching. Zero or
         negavive value disbales the caching of this stream.
 
-        @param cacheTime
+        @param cacheTime:
                    the cache time in milliseconds.
         """
         self._cacheTime = cacheTime
@@ -171,7 +170,7 @@ class DownloadStream(object):
     def setBufferSize(self, bufferSize):
         """Sets the size of the download buffer.
 
-        @param bufferSize
+        @param bufferSize:
                    the size of the buffer in bytes.
         """
         self._bufferSize = bufferSize

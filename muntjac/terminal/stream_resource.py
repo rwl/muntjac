@@ -28,17 +28,16 @@ class StreamResource(IApplicationResource):
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @version @VERSION@
-    @since 3.0
     """
 
     def __init__(self, streamSource, filename, application):
         """Creates a new stream resource for downloading from stream.
 
-        @param streamSource
+        @param streamSource:
                    the source Stream.
-        @param filename
+        @param filename:
                    the name of the file.
-        @param application
+        @param application:
                    the Application object.
         """
         # Source stream the downloaded content is fetched from.
@@ -66,7 +65,7 @@ class StreamResource(IApplicationResource):
 
 
     def getMIMEType(self):
-        """@see: com.vaadin.terminal.Resource#getMIMEType()"""
+        """@see: IResource.getMIMEType"""
         if self._MIMEType is not None:
             return self._MIMEType
         return FileTypeResolver.getMIMEType(self._filename)
@@ -75,7 +74,7 @@ class StreamResource(IApplicationResource):
     def setMIMEType(self, MIMEType):
         """Sets the mime type of the resource.
 
-        @param MIMEType
+        @param MIMEType:
                    the MIME type to be set.
         """
         self._MIMEType = MIMEType
@@ -96,7 +95,7 @@ class StreamResource(IApplicationResource):
         C{StreamSource} is queried when the resource is
         about to be streamed to the client.
 
-        @param streamSource
+        @param streamSource:
                    the source to set.
         """
         self._streamSource = streamSource
@@ -113,19 +112,19 @@ class StreamResource(IApplicationResource):
     def setFilename(self, filename):
         """Sets the filename.
 
-        @param filename
+        @param filename:
                    the filename to set.
         """
         self._filename = filename
 
 
     def getApplication(self):
-        """@see: com.vaadin.terminal.IApplicationResource#getApplication()"""
+        """@see: L{IApplicationResource.getApplication}"""
         return self._application
 
 
     def getStream(self):
-        """@see: com.vaadin.terminal.IApplicationResource#getStream()"""
+        """@see: L{IApplicationResource.getStream}"""
         ss = self.getStreamSource()
         if ss is None:
             return None
@@ -143,7 +142,7 @@ class StreamResource(IApplicationResource):
     def setBufferSize(self, bufferSize):
         """Sets the size of the download buffer used for this resource.
 
-        @param bufferSize
+        @param bufferSize:
                    the size of the buffer in bytes.
         """
         self._bufferSize = bufferSize
@@ -158,10 +157,10 @@ class StreamResource(IApplicationResource):
 
         This gives the adapter the possibility cache streams sent to
         the client. The caching may be made in adapter or at the client
-        if the client supports caching. Zero or negavive value disbales
+        if the client supports caching. Zero or negative value disables
         the caching of this stream.
 
-        @param cacheTime
+        @param cacheTime:
                    the cache time in milliseconds.
         """
         self._cacheTime = cacheTime
@@ -173,7 +172,6 @@ class StreamSource(object):
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @version @VERSION@
-    @since 3.0
     """
 
     def getStream(self):

@@ -45,13 +45,12 @@ logger = logging.getLogger(__name__)
 class JsonPaintTarget(IPaintTarget):
     """User Interface Description Language Target.
 
-    TODO document better: role of this class, UIDL format,
+    TODO: document better: role of this class, UIDL format,
     attributes, variables, etc.
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @version @VERSION@
-    @since 5.0
     """
 
     _UIDL_ARG_NAME = 'name'
@@ -59,11 +58,11 @@ class JsonPaintTarget(IPaintTarget):
     def __init__(self, manager, outWriter, cachingRequired):
         """Creates a new XMLPrintWriter, without automatic line flushing.
 
-        @param variableMap
-        @param manager
-        @param outWriter
+        @param variableMap:
+        @param manager:
+        @param outWriter:
                    A character-output stream.
-        @raise PaintException
+        @raise L{PaintException}:
                     if the paint operation failed.
         """
         self._manager = manager
@@ -90,19 +89,13 @@ class JsonPaintTarget(IPaintTarget):
 
 
     def startTag(self, arg, arg2=False):
-        """None
-        ---
-        Prints the element start tag.
+        """Prints the element start tag.
 
-        <pre>
-          Todo:
-           Checking of input values
-
-        </pre>
-
-        @param tagName
-                   the name of the start tag.
-        @raise PaintException
+        @param arg:
+                   paintable or the name of the start tag
+        @param arg2:
+                   the name of the start tag for the given paintable
+        @raise PaintException:
                     if the paint operation failed.
         """
         if isinstance(arg, IPaintable):
@@ -150,9 +143,9 @@ class JsonPaintTarget(IPaintTarget):
         If the parent tag is closed before every child tag is closed an
         PaintException is raised.
 
-        @param tag
+        @param tagName:
                    the name of the end tag.
-        @raise Paintexception
+        @raise Paintexception:
                     if the paint operation failed.
         """
         # In case of null data output nothing:
@@ -199,8 +192,8 @@ class JsonPaintTarget(IPaintTarget):
         """Substitutes the XML sensitive characters with predefined XML
         entities.
 
-        @param xml
-                the String to be substituted.
+        @param xml:
+                the string to be substituted.
         @return: A new string instance where all occurrences of XML
                 sensitive characters are substituted with entities.
         """
@@ -212,12 +205,11 @@ class JsonPaintTarget(IPaintTarget):
 
     @classmethod
     def _escapeXML(cls, xml):
-        """
-        ---
-        Substitutes the XML sensitive characters with predefined XML entities.
+        """Substitutes the XML sensitive characters with predefined XML
+        entities.
 
-        @param xml
-                the String to be substituted.
+        @param xml:
+                the string to be substituted.
         @return: A new StringBuilder instance where all occurrences of XML
                 sensitive characters are substituted with entities.
         """
@@ -242,7 +234,7 @@ class JsonPaintTarget(IPaintTarget):
     def escapeJSON(cls, s):
         """Escapes the given string so it can safely be used as a JSON string.
 
-        @param s The string to escape
+        @param s: The string to escape
         @return: Escaped version of the string
         """
         # FIXME: Move this method to another class as other classes use it
@@ -285,8 +277,8 @@ class JsonPaintTarget(IPaintTarget):
     def toXmlChar(cls, c):
         """Substitutes a XML sensitive character with predefined XML entity.
 
-        @param c
-                the Character to be replaced with an entity.
+        @param c:
+                the character to be replaced with an entity.
         @return: String of the entity or null if character is not to be
                 replaced with an entity.
         """
@@ -302,8 +294,7 @@ class JsonPaintTarget(IPaintTarget):
     def addText(self, s):
         """Prints XML-escaped text.
 
-        @param s
-        @raise PaintException
+        @raise L{PaintException}:
                     if the paint operation failed.
         """
         self._tag.addData('\"' + self.escapeJSON(s) + '\"')
@@ -432,14 +423,11 @@ class JsonPaintTarget(IPaintTarget):
     def addUploadStreamVariable(self, owner, name):
         """Adds a upload stream type variable.
 
-        TODO not converted for JSON
-
-        @param owner
+        @param owner:
                    the Listener for variable changes.
-        @param name
+        @param name:
                    the Variable name.
-
-        @raise PaintException
+        @raise L{PaintException}:
                     if the paint operation failed.
         """
         self.startTag('uploadstream')
@@ -452,11 +440,11 @@ class JsonPaintTarget(IPaintTarget):
 
         Prints full text section. The section data is escaped
 
-        @param sectionTagName
+        @param sectionTagName:
                    the name of the tag.
-        @param sectionData
+        @param sectionData:
                    the section data to be printed.
-        @raise PaintException
+        @raise L{PaintException}:
                     if the paint operation failed.
         """
         self._tag.addData(('{\"' + sectionTagName + '\":\"'
@@ -466,9 +454,9 @@ class JsonPaintTarget(IPaintTarget):
     def addUIDL(self, xml):
         """Adds XML directly to UIDL.
 
-        @param xml
+        @param xml:
                    the Xml to be added.
-        @raise PaintException
+        @raise L{PaintException}:
                     if the paint operation failed.
         """
         # Ensure that the target is open
@@ -486,17 +474,16 @@ class JsonPaintTarget(IPaintTarget):
     def addXMLSection(self, sectionTagName, sectionData, namespace):
         """Adds XML section with namespace.
 
-        @param sectionTagName
+        @param sectionTagName:
                    the name of the tag.
-        @param sectionData
+        @param sectionData:
                    the section data.
-        @param namespace
+        @param namespace:
                    the namespace to be added.
-        @raise PaintException
+        @raise L{PaintException}:
                     if the paint operation failed.
 
-        @see: com.vaadin.terminal.IPaintTarget#addXMLSection(String, String,
-             String)
+        @see: L{IPaintTarget.addXMLSection}
         """
         # Ensure that the target is open
         if self._closed:
@@ -527,11 +514,11 @@ class JsonPaintTarget(IPaintTarget):
 
     def close(self):
         """Closes the paint target. Paint target must be closed before the
-        C{getUIDL} can be called. Subsequent attempts to write to
-        paint target. If the target was already closed, call to this function
+        C{getUIDL} can be called. Subsequent attempts to write to paint
+        target. If the target was already closed, call to this function
         is ignored. will generate an exception.
 
-        @raise PaintException
+        @raise PaintException:
                     if the paint operation failed.
         """
         if self._tag is not None:
@@ -571,7 +558,6 @@ class JsonPaintTarget(IPaintTarget):
     def needsToBePainted(self, p):
         """Method to check if paintable is already painted into this target.
 
-        @param p
         @return: true if is not yet painted into this target and is connected
                 to app
         """

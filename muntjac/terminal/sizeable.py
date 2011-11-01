@@ -22,51 +22,51 @@ class ISizeable(object):
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @version @VERSION@
-    @since 3.0
     """
-    # Unit code representing pixels.
+
+    #: Unit code representing pixels.
     UNITS_PIXELS = 0
 
-    # Unit code representing points (1/72nd of an inch).
+    #: Unit code representing points (1/72nd of an inch).
     UNITS_POINTS = 1
 
-    # Unit code representing picas (12 points).
+    #: Unit code representing picas (12 points).
     UNITS_PICAS = 2
 
-    # Unit code representing the font-size of the relevant font.
+    #: Unit code representing the font-size of the relevant font.
     UNITS_EM = 3
 
-    # Unit code representing the x-height of the relevant font.
+    #: Unit code representing the x-height of the relevant font.
     UNITS_EX = 4
 
-    # Unit code representing millimeters.
+    #: Unit code representing millimeters.
     UNITS_MM = 5
 
-    # Unit code representing centimeters.
+    #: Unit code representing centimeters.
     UNITS_CM = 6
 
-    # Unit code representing inches.
+    #: Unit code representing inches.
     UNITS_INCH = 7
 
-    # Unit code representing in percentage of the containing element
-    # defined by terminal.
+    #: Unit code representing in percentage of the containing element
+    #  defined by terminal.
     UNITS_PERCENTAGE = 8
 
     SIZE_UNDEFINED = -1
 
     # Textual representations of units symbols. Supported units and
     # their symbols are:
-    # <ul>
-    # <li>L{#UNITS_PIXELS}: "px"</li>
-    # <li>L{#UNITS_POINTS}: "pt"</li>
-    # <li>L{#UNITS_PICAS}: "pc"</li>
-    # <li>L{#UNITS_EM}: "em"</li>
-    # <li>L{#UNITS_EX}: "ex"</li>
-    # <li>L{#UNITS_MM}: "mm"</li>
-    # <li>L{#UNITS_CM}. "cm"</li>
-    # <li>L{#UNITS_INCH}: "in"</li>
-    # <li>L{#UNITS_PERCENTAGE}: "%"</li>
-    # </ul>
+    #
+    #   - L{#UNITS_PIXELS}: "px"
+    #   - L{#UNITS_POINTS}: "pt"
+    #   - L{#UNITS_PICAS}: "pc"
+    #   - L{#UNITS_EM}: "em"
+    #   - L{#UNITS_EX}: "ex"
+    #   - L{#UNITS_MM}: "mm"
+    #   - L{#UNITS_CM}. "cm"
+    #   - L{#UNITS_INCH}: "in"
+    #   - L{#UNITS_PERCENTAGE}: "%"
+    #
     # These can be used like C{ISizeable.UNIT_SYMBOLS[UNITS_PIXELS]}.
     UNIT_SYMBOLS = ['px', 'pt', 'pc', 'em', 'ex', 'mm', 'cm', 'in', '%']
 
@@ -84,41 +84,22 @@ class ISizeable(object):
         """Sets the width of the object. Negative number implies unspecified
         size (terminal is free to set the size).
 
-        @param width
-                   the width of the object in units specified by widthUnits
-                   property.
-        @deprecated Consider using L{#setWidth(String)} instead. This
-                    method works, but is error-prone since the unit must be
-                    set separately (and components might have different
-                    default unit).
-        ---
-        Sets the width of the object. Negative number implies unspecified
-        size (terminal is free to set the size).
+        @param args: tuple of the form
+                - (width)
+                  1. the width of the object in units specified by widthUnits
+                     propertyor in CSS style string representation, null or
+                     empty string to reset
+                - (width, unit)
+                  1. the width of the object.
+                  2. the unit used for the width. Possible values include
+                     L{#UNITS_PIXELS}, L{#UNITS_POINTS},
+                     L{#UNITS_PICAS}, L{#UNITS_EM}, L{#UNITS_EX},
+                     L{#UNITS_MM}, L{#UNITS_CM}, L{#UNITS_INCH},
+                     L{#UNITS_PERCENTAGE}.
 
-        @param width
-                   the width of the object.
-        @param unit
-                   the unit used for the width. Possible values include
-                   L{#UNITS_PIXELS}, L{#UNITS_POINTS},
-                   L{#UNITS_PICAS}, L{#UNITS_EM}, L{#UNITS_EX},
-                   L{#UNITS_MM}, L{#UNITS_CM}, L{#UNITS_INCH},
-                   L{#UNITS_PERCENTAGE}.
-        ---
-        Sets the width of the component using String presentation.
-
-        String presentation is similar to what is used in Cascading Style
-        Sheets. Size can be length or percentage of available size.
-
-        The empty string ("") or null will unset the width and set the units
-        to pixels.
-
-        See <a
-        href="http://www.w3.org/TR/REC-CSS2/syndata.html#value-def-length">CSS
-        specification</a> for more details.
-
-        @param width
-                   in CSS style string representation, null or empty string
-                   to reset
+        See U{CSS specification
+        <http://www.w3.org/TR/REC-CSS2/syndata.html#value-def-length>} for
+        more details.
         """
         raise NotImplementedError
 
@@ -137,40 +118,20 @@ class ISizeable(object):
         """Sets the height of the object. Negative number implies unspecified
         size (terminal is free to set the size).
 
-        @param height
-                   the height of the object in units specified by heightUnits
-                   property.
-        @deprecated Consider using L{#setHeight(String)} or
-                    L{#setHeight(float, int)} instead. This method works,
-                    but is error-prone since the unit must be set separately
-                    (and components might have different default unit).
-        ---
-        Sets the height of the component using String presentation.
-
-        String presentation is similar to what is used in Cascading Style
-        Sheets. Size can be length or percentage of available size.
-
-        The empty string ("") or null will unset the height and set the units
-        to pixels.
-
-        See <a
-        href="http://www.w3.org/TR/REC-CSS2/syndata.html#value-def-length">CSS
-        specification</a> for more details.
-
-        @param height
-                   in CSS style string representation
-        ---
-        Sets the height of the object. Negative number implies unspecified
-        size (terminal is free to set the size).
-
-        @param height
-                   the height of the object.
-        @param unit
-                   the unit used for the width. Possible values include
-                   L{#UNITS_PIXELS}, L{#UNITS_POINTS},
-                   L{#UNITS_PICAS}, L{#UNITS_EM}, L{#UNITS_EX},
-                   L{#UNITS_MM}, L{#UNITS_CM}, L{#UNITS_INCH},
-                   L{#UNITS_PERCENTAGE}.
+        @param args: tuple of the form
+                - (height)
+                   1. the height of the object in units specified by
+                      heightUnits property or the height of the component using
+                      string presentation. String presentation is similar to
+                      what is used in Cascading Style Sheets. Size can be
+                      length or percentage of available size.
+                - (height, unit)
+                  1. the height of the object.
+                  2. the unit used for the width. Possible values include
+                     L{#UNITS_PIXELS}, L{#UNITS_POINTS},
+                     L{#UNITS_PICAS}, L{#UNITS_EM}, L{#UNITS_EX},
+                     L{#UNITS_MM}, L{#UNITS_CM}, L{#UNITS_INCH},
+                     L{#UNITS_PERCENTAGE}.
         """
         raise NotImplementedError
 
@@ -186,11 +147,10 @@ class ISizeable(object):
     def setWidthUnits(self, units):
         """Sets the width property units.
 
-        @param units
+        @param units:
                    the units used in width property.
-        @deprecated Consider setting width and unit simultaneously using
-                    L{#setWidth(width)} or
-                    L{#setWidth(width, unit)}, which is less error-prone.
+        @deprecated: Consider setting width and unit simultaneously using
+                    L{setWidth}, which is less error-prone.
         """
         raise NotImplementedError
 
@@ -206,11 +166,10 @@ class ISizeable(object):
     def setHeightUnits(self, units):
         """Sets the height property units.
 
-        @param units
+        @param units:
                    the units used in height property.
-        @deprecated Consider setting height and unit simultaneously using
-                    L{#setHeight(width)} or
-                    L{#setHeight(width, unit)}, which is less error-prone.
+        @deprecated: Consider setting height and unit simultaneously using
+                    L{setHeight} or which is less error-prone.
         """
         raise NotImplementedError
 

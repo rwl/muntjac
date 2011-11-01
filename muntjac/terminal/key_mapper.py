@@ -16,13 +16,12 @@
 
 
 class KeyMapper(object):
-    """C{KeyMapper} is the simple two-way map for generating
-    textual keys for objects and retrieving the objects later with the key.
+    """C{KeyMapper} is the simple two-way map for generating textual keys
+    for objects and retrieving the objects later with the key.
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @version @VERSION@
-    @since 3.0
     """
 
     def __init__(self):
@@ -55,7 +54,7 @@ class KeyMapper(object):
     def get(self, key):
         """Retrieves object with the key.
 
-        @param key
+        @param key:
                    the name with the desired value.
         @return: the object with the key.
         """
@@ -65,7 +64,7 @@ class KeyMapper(object):
     def remove(self, removeobj):
         """Removes object from the mapper.
 
-        @param removeobj
+        @param removeobj:
                    the object to be removed.
         """
         key = self._objectKeyMap.get(removeobj)

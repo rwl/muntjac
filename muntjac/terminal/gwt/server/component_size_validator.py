@@ -54,7 +54,7 @@ class ComponentSizeValidator(object):
         """Recursively checks given component and its subtree for invalid
         layout setups. Prints errors to std err stream.
 
-        @param component
+        @param component:
                    component to check
         @return: set of first level errors found
         """

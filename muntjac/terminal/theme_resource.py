@@ -27,13 +27,12 @@ class ThemeResource(IResource):
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @version @VERSION@
-    @since 3.0
     """
 
     def __init__(self, resourceId):
         """Creates a resource.
 
-        @param resourceId
+        @param resourceId:
                    the Id of the resource.
         """
         # Id of the terminal managed resource.
@@ -55,7 +54,7 @@ class ThemeResource(IResource):
     def __eq__(self, obj):
         """Tests if the given object equals this IResource.
 
-        @param obj
+        @param obj:
                    the object to be tested for equality.
         @return: C{True} if the given object equals this Icon,
                 C{False} if not.
@@ -86,7 +85,7 @@ class ThemeResource(IResource):
 
 
     def getMIMEType(self):
-        """@see: com.vaadin.terminal.IResource#getMIMEType()"""
+        """@see: L{IResource.getMIMEType}"""
 
         # FIXME: circular import
         from muntjac.service.file_type_resolver import FileTypeResolver

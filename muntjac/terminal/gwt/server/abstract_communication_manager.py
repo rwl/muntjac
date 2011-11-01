@@ -16,7 +16,6 @@
 
 import re
 import uuid
-import locale
 import logging
 
 from warnings import warn
@@ -79,12 +78,10 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
     A server side component sends its state to the client in a paint request
     (see L{IPaintable} and L{PaintTarget} on the server side). The
     client widget receives these paint requests as calls to
-    L{com.vaadin.terminal.gwt.client.IPaintable#updateFromUIDL()}. The
+    L{muntjac.terminal.gwt.client.IPaintable.updateFromUIDL}. The
     client component communicates back to the server by sending a list of
-    variable changes (see L{ApplicationConnection#updateVariable()} and
-    L{VariableOwner#changeVariables(Object, Map)}).
-
-    TODO Document better!
+    variable changes (see L{ApplicationConnection.updateVariable} and
+    L{VariableOwner.changeVariables}).
     """
 
     _DASHDASH = '--'
@@ -184,12 +181,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         """Method used to stream content from a multipart request (either
         from servlet or portlet request) to given StreamVariable
 
-        @param request
-        @param response
-        @param streamVariable
-        @param owner
-        @param boundary
-        @raise IOException
+        @raise L{IOException}
         """
         # multipart parsing, supports only one file for request, but that is
         # fine for our current terminal
@@ -265,12 +257,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                 variableName, owner, contentLength):
         """Used to stream plain file post (aka XHR2.post(File))
 
-        @param request
-        @param response
-        @param streamVariable
-        @param owner
-        @param contentLength
-        @raise IOException
+        @raise L{IOException}
         """
         # These are unknown in filexhr ATM, maybe add to Accept header that
         # is accessible in portlets
@@ -299,14 +286,9 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
 
     def streamToReceiver(self, inputStream, streamVariable, filename, typ,
                 contentLength):
-        """@param in
-        @param streamVariable
-        @param filename
-        @param type
-        @param contentLength
-        @return: true if the streamvariable has informed that the terminal
+        """@return: true if the streamvariable has informed that the terminal
                 can forget this variable
-        @raise UploadException
+        @raise L{UploadException}:
         """
         if streamVariable is None:
             raise ValueError, 'StreamVariable for the post not found'
@@ -384,9 +366,6 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
     def removePath(cls, filename):
         """Removes any possible path information from the filename and
         returns the filename. Separators / and \\ are used.
-
-        @param name
-        @return
         """
         if filename is not None:
             filename = re.sub('^.*[/\\\\]', '', filename)
@@ -395,11 +374,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
 
 
     def sendUploadResponse(self, request, response):
-        """TODO document
-
-        @param request
-        @param response
-        @raise IOException
+        """@raise L{IOException}:
         """
         response.setContentType('text/html')
         out = response.getOutputStream()
@@ -411,25 +386,23 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
     def doHandleUidlRequest(self, request, response, callback, window):
         """Internally process a UIDL request from the client.
 
-        This method calls L{#handleVariables()}
-        to process any changes to variables by the client and then repaints
-        affected components using L{#paintAfterVariableChanges()}.
+        This method calls L{handleVariables} to process any changes to
+        variables by the client and then repaints affected components
+        using L{paintAfterVariableChanges}.
 
         Also, some cleanup is done when a request arrives for an application
         that has already been closed.
 
         The method handleUidlRequest() in subclasses should call this method.
 
-        TODO better documentation
-
-        @param request
-        @param response
-        @param callback
-        @param window
+        @param request:
+        @param response:
+        @param callback:
+        @param window:
                    target window for the UIDL request, can be null if target
                    not found
-        @raise IOException
-        @raise InvalidUIDLSecurityKeyException
+        @raise L{IOException}:
+        @raise L{InvalidUIDLSecurityKeyException}:
         """
         self._requestThemeName = request.getParameter('theme')
 
@@ -510,17 +483,8 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
 
     def paintAfterVariableChanges(self, request, response, callback,
                 repaintAll, outWriter, window, analyzeLayouts):
-        """TODO document
-
-        @param request
-        @param response
-        @param callback
-        @param repaintAll
-        @param outWriter
-        @param window
-        @param analyzeLayouts
-        @raise PaintException
-        @raise IOException
+        """@raise L{PaintException}
+        @raise L{IOException}
         """
         if repaintAll:
             self.makeAllPaintablesDirty(window)
@@ -844,17 +808,13 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
     def unregisterPaintable(self, p):
         """Called when communication manager stops listening for repaints
         for given component.
-
-        @param p
         """
         p.removeListener(self, IRepaintRequestListener)
 
 
     def handleVariables(self, request, response, callback, application2,
                 window):
-        """TODO document
-
-        If this method returns false, something was submitted that we did
+        """If this method returns false, something was submitted that we did
         not expect; this is probably due to the client being out-of-sync
         and sending variable changes for non-existing pids
 
@@ -1023,9 +983,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         """Reads the request data from the Request and returns it converted
         to an UTF-8 string.
 
-        @param request
-        @return
-        @raise IOException
+        @raise L{IOException}:
         """
         requestLength = request.getContentLength()
         if requestLength == 0:
@@ -1039,17 +997,17 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         """Handles an error (exception) that occurred when processing variable
         changes from the client or a failure of a file upload.
 
-        For L{AbstractField} components, AbstractField.handleError()
+        For L{AbstractField} components, C{AbstractField.handleError()}
         is called. In all other cases (or if the field does not handle the
-        error), L{ErrorListener#terminalError(IErrorEvent)} for the
-        application error handler is called.
+        error), L{ErrorListener.terminalError} for the application error
+        handler is called.
 
-        @param application
-        @param owner
+        @param application:
+        @param owner:
                    component that the error concerns
-        @param e
+        @param e:
                    exception that occurred
-        @param m
+        @param m:
                    map from variable names to values
         """
         handled = False
@@ -1142,8 +1100,6 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         """Prints the queued (pending) locale definitions to a PrintWriter
         in a (UIDL) format that can be sent to the client and used there in
         formatting dates, times etc.
-
-        @param outWriter
         """
         # Send locale informations to client
         outWriter.write(', \"locales\":[')
@@ -1264,14 +1220,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
 
     def doGetApplicationWindow(self, request, callback, application,
                 assumedWindow):
-        """TODO New method - document me!
 
-        @param request
-        @param callback
-        @param application
-        @param assumedWindow
-        @return
-        """
         window = None
 
         # If the client knows which window to use, use it if possible
@@ -1350,16 +1299,16 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         """Ends the Application.
 
         The browser is redirected to the Application logout URL set with
-        L{Application#setLogoutURL(String)}, or to the application URL
-        if no logout URL is given.
+        L{Application.setLogoutURL}, or to the application URL if no logout
+        URL is given.
 
-        @param request
+        @param request:
                    the request instance.
-        @param response
+        @param response:
                    the response to write to.
-        @param application
+        @param application:
                    the Application to end.
-        @raise IOException
+        @raise L{IOException}:
                     if the writing failed due to input/output error.
         """
         logoutUrl = application.getLogoutURL()
@@ -1383,9 +1332,6 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
 
     def openJsonMessage(self, outWriter, response):
         """Writes the opening of JSON message to be sent to client.
-
-        @param outWriter
-        @param response
         """
         # Sets the response type
         response.setContentType('application/json; charset=UTF-8')
@@ -1397,7 +1343,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         """Gets the IPaintable Id. If IPaintable has debug id set it will be
         used prefixed with "PID_S". Otherwise a sequenced ID is created.
 
-        @param paintable
+        @param paintable:
         @return: the paintable Id.
         """
         idd = self._paintableIdMap.get(paintable)
@@ -1438,9 +1384,8 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         """Returns dirty components which are in given window. Components
         in an invisible subtrees are omitted.
 
-        @param w
+        @param w:
                    root window for which dirty components is to be fetched
-        @return
         """
         resultset = list(self._dirtyPaintables)
 
@@ -1483,7 +1428,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
 
 
     def repaintRequested(self, event):
-        """@see: IRepaintRequestListener.repaintRequested()"""
+        """@see: L{IRepaintRequestListener.repaintRequested}"""
         p = event.getPaintable()
         if p not in self._dirtyPaintables:
             self._dirtyPaintables.append(p)
@@ -1492,8 +1437,6 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
     def paintablePainted(self, paintable):
         """Internally mark a L{IPaintable} as painted and start
         collecting new repaint requests for it.
-
-        @param paintable
         """
         if paintable in self._dirtyPaintables:
             self._dirtyPaintables.remove(paintable)
@@ -1506,8 +1449,6 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         server-side L{Locale} instances and sent to the client when
         needed, eliminating the need to use the L{Locale} class and all
         the framework behind it on the client.
-
-        @param value
         """
         if self._locales is None:
             self._locales = list()
@@ -1520,13 +1461,10 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
 
 
     def generateLocale(self, value):
-        """Constructs a L{Locale} instance to be sent to the client
-        based on a short locale description string.
+        """Constructs a L{Locale} instance to be sent to the client based on
+        a short locale description string.
 
-        @see: #requireLocale(String)
-
-        @param value
-        @return
+        @see: L{requireLocale}
         """
         temp = value.split('_')
         if len(temp) == 1:
@@ -1540,10 +1478,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
 
     @classmethod
     def isChildOf(cls, parent, child):
-        """Helper method to test if a component contains another
-
-        @param parent
-        @param child
+        """Helper method to test if a component contains another.
         """
         p = child.getParent()
         while p is not None:
@@ -1562,15 +1497,15 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         to handle L{ApplicationResource}s, and the window handler is
         only called if it returns null.
 
-        @param window
+        @param window:
                    the target window of the request
-        @param request
+        @param request:
                    the request instance
-        @param response
+        @param response:
                    the response to write to
         @return: DownloadStream if the request was handled and further
                     processing should be suppressed, null otherwise.
-        @see: com.vaadin.terminal.URIHandler
+        @see: L{URIHandler}
         """
         warn("deprecated", DeprecationWarning)
 
@@ -1637,9 +1572,6 @@ class IRequest(object):
     This is a wrapper interface that allows
     L{AbstractCommunicationManager} to use a unified API.
 
-    @see: javax.servlet.ServletRequest
-    @see: javax.portlet.PortletRequest
-
     @author: peholmst
     """
 
@@ -1665,19 +1597,13 @@ class IRequest(object):
 
     def getParameter(self, name):
         """Get the named HTTP or portlet request parameter.
-
-        @see: javax.servlet.ServletRequest#getParameter(String)
-        @see: javax.portlet.PortletRequest#getParameter(String)
-
-        @param name
-        @return
         """
         raise NotImplementedError
 
 
     def getContentLength(self):
         """Returns the length of the request content that can be read from the
-        input stream returned by L{#getInputStream()}.
+        input stream returned by L{getInputStream}.
 
         @return: content length in bytes
         """
@@ -1687,16 +1613,15 @@ class IRequest(object):
     def getInputStream(self):
         """Returns an input stream from which the request content can be read.
         The request content length can be obtained with
-        L{#getContentLength()} without reading the full stream contents.
+        L{getContentLength} without reading the full stream contents.
 
-        @return
-        @raise IOException
+        @raise L{IOException}
         """
         raise NotImplementedError
 
 
     def getRequestID(self):
-        """Returns the request identifier that identifies the target Vaadin
+        """Returns the request identifier that identifies the target Muntjac
         window for the request.
 
         @return: String identifier for the request target window
@@ -1705,16 +1630,10 @@ class IRequest(object):
 
 
     def getAttribute(self, name):
-        """@see: javax.servlet.ServletRequest#getAttribute(String)
-        @see: javax.portlet.PortletRequest#getAttribute(String)
-        """
         raise NotImplementedError
 
 
     def setAttribute(self, name, value):
-        """@see: javax.servlet.ServletRequest#setAttribute(String, Object)
-        @see: javax.portlet.PortletRequest#setAttribute(String, Object)
-        """
         raise NotImplementedError
 
 
@@ -1730,11 +1649,8 @@ class IRequest(object):
 class IResponse(object):
     """Generic interface of a (HTTP or Portlet) response from the application.
 
-    This is a wrapper interface that allows
-    L{AbstractCommunicationManager} to use a unified API.
-
-    @see: javax.servlet.ServletResponse
-    @see: javax.portlet.PortletResponse
+    This is a wrapper interface that allows L{AbstractCommunicationManager} to
+    use a unified API.
 
     @author: peholmst
     """
@@ -1742,8 +1658,7 @@ class IResponse(object):
     def getOutputStream(self):
         """Gets the output stream to which the response can be written.
 
-        @return
-        @raise IOException
+        @raise L{IOException}:
         """
         raise NotImplementedError
 
@@ -1751,15 +1666,13 @@ class IResponse(object):
     def setContentType(self, typ):
         """Sets the MIME content type for the response to be communicated
         to the browser.
-
-        @param typ
         """
         raise NotImplementedError
 
 
     def getWrappedResponse(self):
         """Gets the wrapped response object, usually a class implementing
-        either L{ServletResponse} or L{PortletResponse}.
+        either L{ServletResponse}.
 
         @return: wrapped request object
         """
@@ -1770,11 +1683,6 @@ class ISession(object):
     """Generic wrapper interface for a (HTTP or Portlet) session.
 
     Several applications can be associated with a single session.
-
-    TODO Document me!
-
-    @see: javax.servlet.http.HttpSession
-    @see: javax.portlet.PortletSession
 
     @author: peholmst
     """
@@ -1800,9 +1708,7 @@ class ISession(object):
 
 
 class ICallback(object):
-    """TODO Document me!
-
-    @author: peholmst
+    """@author: peholmst
     """
 
     def criticalNotification(self, request, response, cap, msg, details,
@@ -1836,23 +1742,20 @@ class ErrorHandlerErrorEvent(TerminalErrorEvent):
 
 
 class URIHandlerErrorImpl(URIHandlerErrorEvent):
-    """Implementation of L{URIHandler.IErrorEvent} interface."""
+    """Implementation of L{IErrorEvent} interface."""
 
     def __init__(self, owner, throwable):
-        """@param owner
-        @param throwable
-        """
         self._owner = owner
         self._throwable = throwable
 
 
     def getThrowable(self):
-        """@see: com.vaadin.terminal.Terminal.IErrorEvent#getThrowable()"""
+        """@see: L{IErrorEvent.getThrowable}"""
         return self._throwable
 
 
     def getURIHandler(self):
-        """@see: com.vaadin.terminal.URIHandler.IErrorEvent#getURIHandler()"""
+        """@see: L{IErrorEvent.getURIHandler}"""
         return self._owner
 
 
@@ -1866,7 +1769,7 @@ class OpenWindowCache(object):
     """Helper class for terminal to keep track of data that client is
     expected to know.
 
-    TODO make customlayout templates (from theme) to be cached here.
+    TODO: make customlayout templates (from theme) to be cached here.
     """
 
     def __init__(self):
@@ -1874,8 +1777,7 @@ class OpenWindowCache(object):
 
 
     def cache(self, obj):
-        """@param paintable
-        @return: true if the given class was added to cache
+        """@return: true if the given class was added to cache
         """
         if obj in self._res:
             return False
@@ -1953,7 +1855,7 @@ class SimpleMultiPartInputStream(StringIO):  # FIXME InputStream
 
         @return: -1 if the boundary was matched, else returns the first byte
                 from boundary
-        @raise IOException
+        @raise L{IOException}:
         """
         self._matchedCount = 0
 
@@ -1980,8 +1882,7 @@ class SimpleMultiPartInputStream(StringIO):  # FIXME InputStream
         """Returns the partly matched boundary string and the byte following
         that.
 
-        @return
-        @raise IOException
+        @raise L{IOException}:
         """
         if self._matchedCount == 0:
             # The boundary has been returned, return the buffered byte.

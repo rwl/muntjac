@@ -81,14 +81,12 @@ class ApplicationRunnerServlet(AbstractApplicationServlet):
         """Parses application runner URIs.
 
         If request URL is e.g.
-        http://localhost:8080/vaadin/run/com.vaadin.demo.Calc then
-        <ul>
-        <li>context=vaadin</li>
-        <li>Runner servlet=run</li>
-        <li>Vaadin application=com.vaadin.demo.Calc</li>
-        </ul>
+        http://localhost:8080/vaadin/run/muntjac.demo.calc.Calc then
 
-        @param request
+          - context=vaadin
+          - Runner servlet=run
+          - Muntjac application=muntjac.demo.calc.Calc
+
         @return: string array containing widgetset URI, application URI and
                 context, runner, application classname
         """

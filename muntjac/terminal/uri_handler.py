@@ -20,22 +20,20 @@ from muntjac.terminal.terminal import IErrorEvent as ITerminalErrorEvent
 class IUriHandler(object):
     """A IUriHandler is used for handling URI:s requested by the user and can
     optionally provide a L{DownloadStream}. If a L{DownloadStream}
-    is returned by L{#handleURI(URL, String)}, the stream is sent to the
-    client.
+    is returned by L{handleURI}, the stream is sent to the client.
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @version @VERSION@
-    @since 3.0
     """
 
     def handleURI(self, context, relativeUri):
         """Handles a given URI. If the URI handler to emit a downloadable
         stream it should return a C{DownloadStream} object.
 
-        @param context
+        @param context:
                    the base URL
-        @param relativeUri
+        @param relativeUri:
                    a URI relative to C{context}
         @return: A downloadable stream or null if no stream is provided
         """

@@ -74,7 +74,7 @@ class WebBrowser(ITerminal):
 
     def getAddress(self):
         """Gets the IP-address of the web browser. If the application is
-        running inside a portlet, this method will return null.
+        running inside a portlet, this method will return C{None}.
 
         @return: IP-address in 1.12.123.123 -format
         """
@@ -210,9 +210,9 @@ class WebBrowser(ITerminal):
         """Returns the browser-reported TimeZone offset in milliseconds from
         GMT. This includes possible daylight saving adjustments, to figure
         out which TimeZone the user actually might be in, see
-        L{#getRawTimezoneOffset()}.
+        L{getRawTimezoneOffset}.
 
-        @see: WebBrowser#getRawTimezoneOffset()
+        @see: L{getRawTimezoneOffset}
         @return: timezone offset in milliseconds, 0 if not available
         """
         return self._timezoneOffset
@@ -224,12 +224,11 @@ class WebBrowser(ITerminal):
         be in effect in the browser.
 
         You can use this to figure out which TimeZones the user could actually
-        be in by calling L{TimeZone#getAvailableIDs(int)}.
+        be in by calling L{TimeZone.getAvailableIDs}.
 
-        If L{#getRawTimezoneOffset()} and L{#getTimezoneOffset()}
-        returns the same value, the browser is either in a zone that does not
-        currently have daylight saving time, or in a zone that never has
-        daylight saving time.
+        If L{getRawTimezoneOffset} and L{getTimezoneOffset} returns the same
+        value, the browser is either in a zone that does not currently have
+        daylight saving time, or in a zone that never has daylight saving time.
 
         @return: timezone offset in milliseconds excluding DST, 0 if not
                 available
@@ -264,9 +263,9 @@ class WebBrowser(ITerminal):
         object uses servers default time zone, not the clients.
 
         @return: the current date and time of the browser.
-        @see: #isDSTInEffect()
-        @see: #getDSTSavings()
-        @see: #getTimezoneOffset()
+        @see: L{isDSTInEffect}
+        @see: L{getDSTSavings}
+        @see: L{getTimezoneOffset}
         """
         return date.fromtimestamp(time() + self._clientServerTimeDelta)
 
@@ -281,21 +280,21 @@ class WebBrowser(ITerminal):
         """For internal use by AbstractApplicationServlet only. Updates all
         properties in the class according to the given information.
 
-        @param sw
+        @param sw:
                    Screen width
-        @param sh
+        @param sh:
                    Screen height
-        @param tzo
+        @param tzo:
                    TimeZone offset in minutes from GMT
-        @param rtzo
+        @param rtzo:
                    raw TimeZone offset in minutes from GMT (w/o DST adjustment)
-        @param dstSavings
+        @param dstSavings:
                    the difference between the raw TimeZone and DST in minutes
-        @param dstInEffect
+        @param dstInEffect:
                    is DST currently active in the region or not?
-        @param curDate
+        @param curDate:
                    the current date in milliseconds since the epoch
-        @param touchDevice
+        @param touchDevice:
         """
         if sw is not None:
             try:
@@ -339,13 +338,13 @@ class WebBrowser(ITerminal):
         """For internal use by AbstractApplicationServlet only. Updates all
         properties in the class according to the given information.
 
-        @param locale
+        @param locale:
                    The browser primary locale
-        @param address
+        @param address:
                    The browser ip address
-        @param secureConnection
+        @param secureConnection:
                    true if using an https connection
-        @param agent
+        @param agent:
                    Raw userAgent string from the browser
         """
         self._locale = locale

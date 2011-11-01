@@ -25,13 +25,12 @@ class VBrowserDetails(object):
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @version @VERSION@
-    @since 6.3
     """
 
     def __init__(self, userAgent):
         """Create an instance based on the given user agent.
 
-        @param userAgent
+        @param userAgent:
                    User agent as provided by the browser.
         """
         self._isGecko = False
@@ -256,7 +255,7 @@ class VBrowserDetails(object):
         the user agent string and the value of the documentMode property do
         not match.
 
-        @param documentMode
+        @param documentMode:
                    The current document mode
         """
         self._browserMajorVersion = documentMode

@@ -19,7 +19,7 @@ from muntjac.terminal.terminal import IErrorEvent as ITerminalErrorEvent
 
 class IVariableOwner(object):
     """Listener interface for UI variable changes. The user communicates
-    with the application using the so-called <i>variables</i>. When the
+    with the application using the so-called I{variables}. When the
     user makes a change using the UI the terminal trasmits the changed
     variables to the application, and the components owning those variables
     may then process those changes.
@@ -27,7 +27,6 @@ class IVariableOwner(object):
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @version @VERSION@
-    @since 3.0
     """
 
     def changeVariables(self, source, variables):
@@ -48,8 +47,7 @@ class IVariableOwner(object):
         """Tests if the variable owner is enabled or not. The terminal
         should not send any variable changes to disabled variable owners.
 
-        @return: C{True} if the variable owner is enabled,
-                C{False} if not
+        @return: C{True} if the variable owner is enabled, C{False} if not
         """
         raise NotImplementedError
 
@@ -59,14 +57,13 @@ class IVariableOwner(object):
         in immediate mode means that all variable changes are required to
         be sent back from the terminal immediately when they occur.
 
-        <strong>Note:</strong> C{IVariableOwner} does not include
+        B{Note:} C{IVariableOwner} does not include
         a set-method for the immediateness property. This is because not all
         VariableOwners wish to offer the functionality. Such VariableOwners
         are never in the immediate mode, thus they always return
-        C{False} in L{#isImmediate()}.
+        C{False} in L{isImmediate}.
 
-        @return: C{True} if the component is in immediate mode,
-                C{False} if not.
+        @return: C{True} if the component is in immediate mode, C{False} if not
         """
         raise NotImplementedError
 

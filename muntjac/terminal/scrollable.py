@@ -22,7 +22,6 @@ class IScrollable(object):
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @version @VERSION@
-    @since 3.0
     """
 
     def getScrollLeft(self):
@@ -42,7 +41,7 @@ class IScrollable(object):
         Scrolling offset is the number of pixels this scrollable has been
         scrolled right.
 
-        @param pixelsScrolled
+        @param pixelsScrolled:
                    the xOffset.
         """
         raise NotImplementedError
@@ -65,7 +64,7 @@ class IScrollable(object):
         Scrolling offset is the number of pixels this scrollable has been
         scrolled down.
 
-        @param pixelsScrolled
+        @param pixelsScrolled:
                    the yOffset.
         """
         raise NotImplementedError
@@ -77,8 +76,7 @@ class IScrollable(object):
         Enabling scrolling allows the user to scroll the scrollable view
         interactively
 
-        @return: C{True} if the scrolling is allowed, otherwise
-                C{False}.
+        @return: C{True} if the scrolling is allowed, otherwise C{False}.
         """
         raise NotImplementedError
 
@@ -89,7 +87,7 @@ class IScrollable(object):
         Enabling scrolling allows the user to scroll the scrollable view
         interactively
 
-        @param isScrollingEnabled
+        @param isScrollingEnabled:
                    true if the scrolling is allowed.
         """
         raise NotImplementedError

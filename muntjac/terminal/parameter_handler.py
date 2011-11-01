@@ -22,7 +22,7 @@ class IParameterHandler(object):
     external parameters.
 
     What parameters are provided depend on what the L{Terminal} provides
-    and if the application is deployed as a servlet or portlet. URL GET
+    and if the application is deployed as a servlet. URL GET
     parameters are typically provided to the L{#handleParameters(Map)}
     method.
 
@@ -33,14 +33,13 @@ class IParameterHandler(object):
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @version @VERSION@
-    @since 3.0
     """
 
     def handleParameters(self, parameters):
         """Handles the given parameters. All parameters names are of type
-        L{String} and the values are L{String} arrays.
+        string and the values are string arrays.
 
-        @param parameters
+        @param parameters:
                    an unmodifiable map which contains the parameter names
                    and values
         """

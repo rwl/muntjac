@@ -22,20 +22,13 @@ class PaintException(IOError):
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @version @VERSION@
-    @since 3.0
     """
 
     def __init__(self, arg):
-        """Constructs an instance of C{PaintExeception}
-        with the specified detail message.
+        """Constructs an instance of C{PaintExeception} with the specified
+        detail message or an instance of C{PaintExeception} from IOException.
 
-        @param msg
-                   the detail message.
-        ---
-        Constructs an instance of C{PaintExeception}
-        from IOException.
-
-        @param exception
-                   the original exception.
+        @param arg:
+                   the detail message or the original exception
         """
         super(PaintException, self).__init__( str(arg) )

@@ -21,15 +21,14 @@ class IApplicationResource(IResource):
     """This interface must be implemented by classes wishing to provide
     Application resources.
 
-    C{IApplicationResource} are a set of named resources (pictures,
-    sounds, etc) associated with some specific application. Having named
-    application resources provides a convenient method for having inter-theme
-    common resources for an application.
+    C{IApplicationResource} are a set of named resources (pictures, sounds,
+    etc) associated with some specific application. Having named application
+    resources provides a convenient method for having inter-theme common
+    resources for an application.
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @version @VERSION@
-    @since 3.0
     """
 
     DEFAULT_CACHETIME = 1000 * 60 * 60 * 24
@@ -70,6 +69,6 @@ class IApplicationResource(IResource):
         If the buffer size is 0, the buffer size is decided by the terminal
         adapter. The default value is 0.
 
-        @return: int the size of the buffer in bytes.
+        @return: the size of the buffer in bytes.
         """
         raise NotImplementedError

@@ -26,7 +26,6 @@ class IPaintable(IEventListener):
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @version @VERSION@
-    @since 3.0
     """
 
     def paint(self, target):
@@ -37,10 +36,10 @@ class IPaintable(IEventListener):
         response to the component first being shown or having been altered so
         that its visual representation is changed.
 
-        @param target
+        @param target:
                    the target UIDL stream where the component should paint
                    itself to.
-        @raise PaintException
+        @raise PaintException:
                     if the paint operation failed.
         """
         raise NotImplementedError
@@ -62,7 +61,7 @@ class IPaintable(IEventListener):
         identifier should be set before the component is painted for the first
         time and kept the same while visible in the client.
 
-        @param id
+        @param id:
                    A short (< 20 chars) alphanumeric id
         """
         raise NotImplementedError
@@ -134,7 +133,7 @@ class RepaintRequestEvent(EventObject):
     def __init__(self, source):
         """Constructs a new event.
 
-        @param source
+        @param source:
                    the paintable needing repaint.
         """
         super(RepaintRequestEvent, self).__init__(source)
@@ -159,7 +158,7 @@ class IRepaintRequestListener(object):
     def repaintRequested(self, event):
         """Receives repaint request events.
 
-        @param event
+        @param event:
                    the repaint request event specifying the paintable source.
         """
         raise NotImplementedError

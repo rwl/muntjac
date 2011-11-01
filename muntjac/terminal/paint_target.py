@@ -22,7 +22,6 @@ class IPaintTarget(object):
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @version @VERSION@
-    @since 3.0
     """
 
     def addSection(self, sectionTagName, sectionData):
@@ -31,11 +30,11 @@ class IPaintTarget(object):
         Prints full XML section. The section data is escaped from XML
         tags and surrounded by XML start and end-tags.
 
-        @param sectionTagName
+        @param sectionTagName:
                    the name of the tag.
-        @param sectionData
+        @param sectionData:
                    the scetion data.
-        @raise PaintException
+        @raise PaintException:
                     if the paint operation failed.
         """
         raise NotImplementedError
@@ -51,15 +50,13 @@ class IPaintTarget(object):
         may omit the content and close the tag, in which case cached content
         should be used.
 
-        @param paintable
+        @param paintable:
                    the paintable to start.
-        @param tag
+        @param tag:
                    the name of the start tag.
-        @return: C{True} if paintable found in cache,
-                C{False} otherwise.
-        @raise PaintException
+        @return: C{True} if paintable found in cache, C{False} otherwise.
+        @raise PaintException:
                     if the paint operation failed.
-        @since 3.1
         """
         raise NotImplementedError
 
@@ -70,19 +67,14 @@ class IPaintTarget(object):
         reference the client side component can communicate directly to other
         component.
 
-        Note! This was experimental api and got replaced by
-        L{#addAttribute(String, Paintable)} and
-        L{#addVariable(VariableOwner, String, Paintable)}.
+        Note! This was experimental api and got replaced by L{addAttribute}.
 
-        @param paintable
+        @param paintable:
                    the Paintable to reference
-        @param referenceName
+        @param referenceName:
         @raise PaintException
 
-        @since 5.2
-        @deprecated use L{#addAttribute(String, Paintable)} or
-                    L{#addVariable(VariableOwner, String, Paintable)}
-                    instead
+        @deprecated use L{addAttribute} or L{addVariable} instead
         """
         raise NotImplementedError
 
@@ -93,9 +85,9 @@ class IPaintTarget(object):
         If the parent tag is closed before every child tag is closed an
         PaintException is raised.
 
-        @param tagName
+        @param tagName:
                    the name of the end tag.
-        @raise PaintException
+        @raise PaintException:
                     if the paint operation failed.
         """
         raise NotImplementedError
@@ -105,12 +97,7 @@ class IPaintTarget(object):
         """Adds a boolean attribute to component. Attributes must be added
         before any content is written.
 
-        @param name
-                   the Attribute name.
-        @param value
-                   the Attribute value.
-
-        @raise PaintException
+        @raise PaintException:
                     if the paint operation failed.
         """
         raise NotImplementedError
@@ -124,30 +111,30 @@ class IPaintTarget(object):
 
         The urls in UIDL message may use Vaadin specific protocol. Before
         actually using the urls on the client side, they should be passed via
-        L{ApplicationConnection#translateVaadinUri(String)}.
+        L{ApplicationConnection.translateVaadinUri}.
 
         Note that in current terminal implementation StreamVariables are
         cleaned from the terminal only when:
-        <ul>
-        <li>a StreamVariable with same name replaces an old one
-        <li>the variable owner is no more attached
-        <li>the developer signals this by calling
-        L{StreamingStartEvent#disposeStreamVariable()}
-        </ul>
+
+          - a StreamVariable with same name replaces an old one
+          - the variable owner is no more attached
+          - the developer signals this by calling
+            L{StreamingStartEvent.disposeStreamVariable}
+
         Most commonly a component developer can just ignore this issue, but
         with strict memory requirements and lots of StreamVariables
         implementations that reserve a lot of memory this may be a critical
         issue.
 
-        @param owner
+        @param owner:
                    the ReceiverOwner that can track the progress of streaming
                    to the given StreamVariable
-        @param name
+        @param name:
                    an identifying name for the StreamVariable
-        @param value
+        @param value:
                    the StreamVariable to paint
 
-        @raise PaintException
+        @raise PaintException:
                     if the paint operation failed.
         """
         raise NotImplementedError
@@ -156,12 +143,12 @@ class IPaintTarget(object):
     def addUploadStreamVariable(self, owner, name):
         """Adds a upload stream type variable.
 
-        @param owner
+        @param owner:
                    the Listener for variable changes.
-        @param name
+        @param name:
                    the Variable name.
 
-        @raise PaintException
+        @raise PaintException:
                     if the paint operation failed.
         """
         raise NotImplementedError
@@ -173,13 +160,13 @@ class IPaintTarget(object):
         Prints full XML section. The section data must be XML and it is
         surrounded by XML start and end-tags.
 
-        @param sectionTagName
+        @param sectionTagName:
                    the tag name.
-        @param sectionData
+        @param sectionData:
                    the section data to be printed.
-        @param namespace
+        @param namespace:
                    the namespace.
-        @raise PaintException
+        @raise PaintException:
                     if the paint operation failed.
         """
         raise NotImplementedError
@@ -189,9 +176,9 @@ class IPaintTarget(object):
         """Adds UIDL directly. The UIDL must be valid in accordance with
         the UIDL.dtd
 
-        @param uidl
+        @param uidl:
                    the UIDL to be added.
-        @raise PaintException
+        @raise PaintException:
                     if the paint operation failed.
         """
         raise NotImplementedError
@@ -200,9 +187,9 @@ class IPaintTarget(object):
     def addText(self, text):
         """Adds text node. All the contents of the text are XML-escaped.
 
-        @param text
+        @param text:
                    the Text to add
-        @raise PaintException
+        @raise PaintException:
                     if the paint operation failed.
         """
         raise NotImplementedError
@@ -211,18 +198,17 @@ class IPaintTarget(object):
     def addCharacterData(self, text):
         """Adds CDATA node to target UIDL-tree.
 
-        @param text
+        @param text:
                    the Character data to add
-        @raise PaintException
+        @raise PaintException:
                     if the paint operation failed.
-        @since 3.1
         """
         raise NotImplementedError
 
 
     def getTag(self, paintable):
         """@return: the "tag" string used in communication to present given
-                L{Paintable} type. Terminal may define how to present
+                L{IPaintable} type. Terminal may define how to present
                 paintable.
         """
         raise NotImplementedError

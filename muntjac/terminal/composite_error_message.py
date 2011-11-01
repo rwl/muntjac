@@ -25,13 +25,12 @@ class CompositeErrorMessage(IErrorMessage):
 
     @author: IT Mill Ltd
     @version @VERSION@
-    @since 3.0
     """
 
     def __init__(self, errorMessages):
         """Constructor for CompositeErrorMessage.
 
-        @param errorMessages
+        @param errorMessages:
                    the Collection of error messages that are listed
                    together. At least one message is required.
         """
@@ -52,9 +51,9 @@ class CompositeErrorMessage(IErrorMessage):
 
 
     def getErrorLevel(self):
-        """The error level is the largest error level in
+        """The error level is the largest error level in.
 
-        @see: com.vaadin.terminal.IErrorMessage#getErrorLevel()
+        @see: L{muntjac.terminal.IErrorMessage.getErrorLevel}
         """
         return self._level
 
@@ -63,7 +62,7 @@ class CompositeErrorMessage(IErrorMessage):
         """Adds a error message into this composite message. Updates the level
         field.
 
-        @param error
+        @param error:
                    the error message to be added. Duplicate errors are ignored.
         """
         if error is not None and error not in self._errors:
@@ -82,7 +81,7 @@ class CompositeErrorMessage(IErrorMessage):
 
 
     def paint(self, target):
-        """@see: muntjac.terminal.Paintable#paint(target)"""
+        """@see: L{IPaintable.paint}"""
         if len(self._errors) == 1:
             self._errors[0].paint(target)
         else:
@@ -143,7 +142,7 @@ class CompositeErrorMessage(IErrorMessage):
     def __str__(self):
         """Returns a comma separated list of the error messages.
 
-        @return: String, comma separated list of error messages.
+        @return: comma separated list of error messages.
         """
         retval = '['
         pos = 0

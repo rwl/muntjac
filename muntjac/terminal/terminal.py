@@ -40,9 +40,8 @@ class ITerminal(object):
         width of the screen and not the width available for the application.
 
         Note that the screen width is typically not available in the
-        L{com.vaadin.Application#init()} method as this is called
-        before the browser has a chance to report the screen size to the
-        server.
+        L{Application.init} method as this is called before the browser has
+        a chance to report the screen size to the server.
 
         @return: the width of the terminal screen.
         """
@@ -54,8 +53,8 @@ class ITerminal(object):
         height of the screen and not the height available for the application.
 
         Note that the screen height is typically not available in the
-        L{com.vaadin.Application#init()} method as this is called before
-        the browser has a chance to report the screen size to the server.
+        L{Application.init} method as this is called before the browser has
+        a chance to report the screen size to the server.
 
         @return: the height of the terminal screen.
         """
@@ -76,7 +75,7 @@ class IErrorListener(object):
     def terminalError(self, event):
         """Invoked when a terminal error occurs.
 
-        @param event
+        @param event:
                    the fired event.
         """
         pass

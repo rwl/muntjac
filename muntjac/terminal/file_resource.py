@@ -23,16 +23,15 @@ from muntjac.terminal.terminal import IErrorEvent
 
 
 class FileResource(IApplicationResource):
-    """C{FileResources} are files or directories on local
-    filesystem. The files and directories are served through URI:s to
-    the client terminal and thus must be registered to an URI context
-    before they can be used. The resource is automatically registered
-    to the application when it is created.
+    """C{FileResources} are files or directories on local filesystem. The
+    files and directories are served through URI:s to the client terminal
+    and thus must be registered to an URI context before they can be used.
+    The resource is automatically registered to the application when it is
+    created.
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @version @VERSION@
-    @since 3.0
     """
 
     def __init__(self, sourceFile, application):
@@ -59,7 +58,7 @@ class FileResource(IApplicationResource):
     def getStream(self):
         """Gets the resource as stream.
 
-        @see: muntjac.terminal.IApplicationResource#getStream()
+        @see: L{IApplicationResource.getStream}
         """
         try:
             ds = DownloadStream(file(self._sourceFile, 'rb'),
@@ -91,24 +90,24 @@ class FileResource(IApplicationResource):
     def setSourceFile(self, sourceFile):
         """Sets the source file.
 
-        @param sourceFile
+        @param sourceFile:
                    the source file to set.
         """
         self._sourceFile = sourceFile
 
 
     def getApplication(self):
-        """@see: com.vaadin.terminal.IApplicationResource#getApplication()"""
+        """@see: L{IApplicationResource.getApplication}"""
         return self._application
 
 
     def getFilename(self):
-        """@see: com.vaadin.terminal.IApplicationResource#getFilename()"""
+        """@see: L{IApplicationResource.getFilename}"""
         return basename(self._sourceFile)
 
 
     def getMIMEType(self):
-        """@see: com.vaadin.terminal.Resource#getMIMEType()"""
+        """@see: L{IResource.getMIMEType}"""
         return FileTypeResolver.getMIMEType(self._sourceFile)
 
 
@@ -129,7 +128,7 @@ class FileResource(IApplicationResource):
         made in adapter or at the client if the client supports caching. Zero
         or negavive value disbales the caching of this stream.
 
-        @param cacheTime
+        @param cacheTime:
                    the cache time in milliseconds.
         """
         self._cacheTime = cacheTime
@@ -142,7 +141,7 @@ class FileResource(IApplicationResource):
     def setBufferSize(self, bufferSize):
         """Sets the size of the download buffer used for this resource.
 
-        @param bufferSize
+        @param bufferSize:
                    the size of the buffer in bytes.
         """
         self._bufferSize = bufferSize

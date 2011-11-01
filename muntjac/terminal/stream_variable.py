@@ -17,10 +17,9 @@
 
 class IStreamVariable(object):
     """IStreamVariable is a special kind of variable whose value is streamed
-    to an L{OutputStream} provided by the L{#getOutputStream()}
-    method. E.g. in web terminals L{IStreamVariable} can be used to send
-    large files from browsers to the server without consuming large amounts
-    of memory.
+    to an L{StringIO} provided by the L{getOutputStream} method. E.g. in web
+    terminals L{IStreamVariable} can be used to send large files from browsers
+    to the server without consuming large amounts of memory.
 
     Note, writing to the L{OutputStream} is not synchronized by the
     terminal (to avoid stalls in other operations when eg. streaming to a
@@ -31,13 +30,12 @@ class IStreamVariable(object):
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @version @VERSION@
-    @since 6.5
-    @see: PaintTarget#addVariable(VariableOwner, String, IStreamVariable)
+    @see: L{PaintTarget.addVariable}
     """
 
     def getOutputStream(self):
         """Invoked by the terminal when a new upload arrives, after
-        L{#streamingStarted(IStreamingStartEvent)} method has been called.
+        L{streamingStarted} method has been called.
         The terminal implementation will write the streamed variable to the
         returned output stream.
 
@@ -47,24 +45,23 @@ class IStreamVariable(object):
 
 
     def listenProgress(self):
-        """Whether the L{#onProgress(long, long)} method should be
-        called during the upload.
+        """Whether the L{onProgress} method should be called during the upload.
 
-        L{#onProgress(long, long)} is called in a synchronized block
+        L{onProgress} is called in a synchronized block
         when the content is being received. This is potentially bit slow,
         so we are calling that method only if requested. The value is
-        requested after the L{#uploadStarted(IStreamingStartEvent)}
-        event, but not after reading each buffer.
+        requested after the L{uploadStarted} event, but not after reading each
+        buffer.
 
         @return: true if this L{IStreamVariable} wants to by notified
                 during the upload of the progress of streaming.
-        @see: #onProgress(IStreamingProgressEvent)
+        @see: L{onProgress}
         """
         raise NotImplementedError
 
 
     def onProgress(self, event):
-        """This method is called by the terminal if L{#listenProgress()}
+        """This method is called by the terminal if L{listenProgress}
         returns true when the streaming starts.
         """
         raise NotImplementedError
@@ -133,15 +130,14 @@ class IStreamingStartEvent(IStreamingEvent):
 
 
 class IStreamingProgressEvent(IStreamingEvent):
-    """Event passed to L{#onProgress(IStreamingProgressEvent)} method
-    during the streaming progresses.
+    """Event passed to L{onProgress} method during the streaming progresses.
     """
     pass
 
 
 class IStreamingEndEvent(IStreamingEvent):
-    """Event passed to L{#uploadFinished(IStreamingEndEvent)} method
-    the contents have been streamed to IStreamVariable successfully.
+    """Event passed to L{uploadFinished} method the contents have been
+    streamed to IStreamVariable successfully.
     """
     pass
 
@@ -149,9 +145,9 @@ class IStreamingEndEvent(IStreamingEvent):
 class IStreamingErrorEvent(IStreamingEvent):
     """Event passed to L{#uploadFailed(IStreamingErrorEvent)} method
     when the streaming ended before the end of the input. The streaming may
-    fail due an interruption by L{} or due an other unknown exception
+    fail due an interruption by [] or due an other unknown exception
     in communication. In the latter case the exception is also passed to
-    L{Application#terminalError(event)}.
+    L{Application.terminalError}.
     """
 
     def getException(self):

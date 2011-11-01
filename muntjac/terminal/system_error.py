@@ -35,26 +35,21 @@ class SystemErr(RuntimeError, IErrorMessage):
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @version @VERSION@
-    @since 3.0
     """
 
     def __init__(self, *args):
-        """Constructor for SystemError with error message specified.
+        """Constructor for SystemError with error message and/or causing
+        exception specified.
 
-        @param message
-                   the Textual error description.
-        ---
-        Constructor for SystemError with causing exception and error message.
-
-        @param message
-                   the Textual error description.
-        @param cause
-                   the throwable causing the system error.
-        ---
-        Constructor for SystemError with cause.
-
-        @param cause
-                   the throwable causing the system error.
+        @param args: tuple of the form
+            - ()
+            - (message)
+              1. the textual error description.
+            - (message, cause)
+              1. the textual error description.
+              2. the throwable causing the system error.
+            - (cause)
+              1. the throwable causing the system error.
         """
         # The cause of the system error.
         self._cause = None
@@ -77,12 +72,12 @@ class SystemErr(RuntimeError, IErrorMessage):
 
 
     def getErrorLevel(self):
-        """@see: com.vaadin.terminal.IErrorMessage#getErrorLevel()"""
+        """@see: L{IErrorMessage.getErrorLevel}"""
         return IErrorMessage.SYSTEMERROR
 
 
     def paint(self, target):
-        """@see: com.vaadin.terminal.Paintable#paint(target)"""
+        """@see: L{IPaintable.paint}"""
 
         target.startTag('error')
         target.addAttribute('level', 'system')
@@ -107,7 +102,7 @@ class SystemErr(RuntimeError, IErrorMessage):
         if self._cause is not None:
             sb.write('<h3>Exception</h3>')
             buff = StringIO()
-            exc_type, exc_value, exc_traceback = sys.exc_info()
+            exc_type, _, exc_traceback = sys.exc_info()
             traceback.print_exception(exc_type, self._cause,
                     exc_traceback, file=buff)
 
@@ -125,7 +120,6 @@ class SystemErr(RuntimeError, IErrorMessage):
         """Gets cause for the error.
 
         @return: the cause.
-        @see: java.lang.Throwable#getCause()
         """
         return self._cause
 

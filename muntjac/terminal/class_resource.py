@@ -25,29 +25,23 @@ class ClassResource(IApplicationResource):
 
     This can be used to access resources such as icons, files, etc.
 
-    @see: java.lang.Class#getResource(java.lang.String)
-
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @version @VERSION@
-    @since 3.0
     """
 
     def __init__(self, *args):
         """Creates a new application resource instance. The resource id is
         relative to the location of the application class.
 
-        @param resourceName
-                   the Unique identifier of the resource within the application.
-        @param application
-                   the application this resource will be added to.
-        ---
-        @param associatedClass
-                   the class of the which the resource is associated.
-        @param resourceName
-                   the Unique identifier of the resource within the application.
-        @param application
-                   the application this resource will be added to.
+        @param args: tuple of the form
+            - (resourceName, application)
+              1. the Unique identifier of the resource within the application
+              2. the application this resource will be added to
+            - (associatedClass, resourceName, application)
+              1. the class of the which the resource is associated.
+              2. the Unique identifier of the resource within the application
+              3. the application this resource will be added to
         """
         # Default buffer size for this stream resource.
         self._bufferSize = 0
@@ -88,7 +82,7 @@ class ClassResource(IApplicationResource):
     def getMIMEType(self):
         """Gets the MIME type of this resource.
 
-        @see: muntjac.terminal.Resource#getMIMEType()
+        @see: L{muntjac.terminal.resource.IResource.getMIMEType}
         """
         return FileTypeResolver.getMIMEType(self._resourceName)
 
@@ -96,7 +90,7 @@ class ClassResource(IApplicationResource):
     def getApplication(self):
         """Gets the application of this resource.
 
-        @see: muntjac.terminal.IApplicationResource#getApplication()
+        @see: L{IApplicationResource.getApplication}
         """
         return self._application
 
@@ -105,7 +99,7 @@ class ClassResource(IApplicationResource):
         """Gets the virtual filename for this resource.
 
         @return: the file name associated to this resource.
-        @see: muntjac.terminal.IApplicationResource#getFilename()
+        @see: L{IApplicationResource.getFilename}
         """
         index = 0
         idx = self._resourceName.find('/', index)
@@ -118,7 +112,7 @@ class ClassResource(IApplicationResource):
     def getStream(self):
         """Gets resource as stream.
 
-        @see: muntjac.terminal.IApplicationResource#getStream()
+        @see: L{IApplicationResource.getStream}
         """
         ds = DownloadStream(
                 self._associatedClass.getResourceAsStream(self._resourceName),
@@ -135,7 +129,7 @@ class ClassResource(IApplicationResource):
     def setBufferSize(self, bufferSize):
         """Sets the size of the download buffer used for this resource.
 
-        @param bufferSize
+        @param bufferSize:
                    the size of the buffer in bytes.
         """
         self._bufferSize = bufferSize
@@ -150,10 +144,10 @@ class ClassResource(IApplicationResource):
 
         This gives the adapter the possibility cache streams sent to the
         client. The caching may be made in adapter or at the client if the
-        client supports caching. Zero or negavive value disbales the caching
+        client supports caching. Zero or negative value disables the caching
         of this stream.
 
-        @param cacheTime
+        @param cacheTime:
                    the cache time in milliseconds.
         """
         self._cacheTime = cacheTime

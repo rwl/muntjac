@@ -21,23 +21,22 @@ from muntjac.terminal.theme_resource import ThemeResource
 
 class FileTypeResolver(object):
     """Utility class that can figure out mime-types and icons related to files.
-    <p>
-    Note : The icons are associated purely to mime-types, so a file may not have
-    a custom icon accessible with this class.
-    </p>
+
+    Note : The icons are associated purely to mime-types, so a file may not
+    have a custom icon accessible with this class.
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @version @VERSION@
-    @since 3.0
     """
-    # Default icon given if no icon is specified for a mime-type.
+
+    #: Default icon given if no icon is specified for a mime-type.
     DEFAULT_ICON = ThemeResource('../runo/icons/16/document.png')
 
-    # Default mime-type.
+    #: Default mime-type.
     DEFAULT_MIME_TYPE = 'application/octet-stream'
 
-    # Initial file extension to mime-type mapping.
+    #: Initial file extension to mime-type mapping.
     _initialExtToMIMEMap = \
             ('application/cu-seeme                            csm cu,'
              'application/dsptype                             tsp,'
@@ -189,10 +188,10 @@ class FileTypeResolver(object):
              'x-world/x-vrml                                  vrm vrml wrl')
 
 
-    # File extension to MIME type mapping. All extensions are in lower case.
+    #: File extension to MIME type mapping. All extensions are in lower case.
     _extToMIMEMap = dict()
 
-    # MIME type to Icon mapping.
+    #: MIME type to Icon mapping.
     _MIMEToIconMap = dict()
 
 
@@ -201,16 +200,9 @@ class FileTypeResolver(object):
         """Gets the mime-type of a file. Currently the mime-type is resolved
         based only on the file name extension.
 
-        @param fileName
-                   the name of the file whose mime-type is requested.
-        @return: mime-type C{String} for the given filename
-        ---
-        Gets the mime-type for a file. Currently the returned file type is
-        resolved by the filename extension only.
-
-        @param file
-                   the file whose mime-type is requested.
-        @return: the files mime-type C{String}
+        @param file_or_filename:
+                   the file or name of the file whose mime-type is requested.
+        @return: mime-type string
         """
         # Checks for nulls
         if isinstance(file_or_filename, basestring):
@@ -255,17 +247,8 @@ class FileTypeResolver(object):
         corresponding icon is fetched from the internal icon storage. If it is
         not found the default icon is returned.
 
-        @param fileName
-                   the name of the file whose icon is requested.
-        @return: the icon corresponding to the given file
-        ---
-        Gets the descriptive icon representing a file. First the mime-type for
-        the given file name is resolved, and then the corresponding icon is
-        fetched from the internal icon storage. If it is not found the default
-        icon is returned.
-
-        @param file
-                   the file whose icon is requested.
+        @param file_or_filename:
+                   the file or name of the file whose icon is requested.
         @return: the icon corresponding to the given file
         """
         return cls.getIconByMineType(cls.getMIMEType(file_or_filename))
@@ -287,10 +270,10 @@ class FileTypeResolver(object):
         """Adds a mime-type mapping for the given filename extension. If the
         extension is already in the internal mapping it is overwritten.
 
-        @param extension
+        @param extension:
                    the filename extension to be associated with
                    C{MIMEType}.
-        @param MIMEType
+        @param MIMEType:
                    the new mime-type for C{extension}.
         """
         cls._extToMIMEMap[extension.lower()] = MIMEType
@@ -301,9 +284,9 @@ class FileTypeResolver(object):
         """Adds a icon for the given mime-type. If the mime-type also has a
         corresponding icon, it is replaced with the new icon.
 
-        @param MIMEType
+        @param MIMEType:
                    the mime-type whose icon is to be changed.
-        @param icon
+        @param icon:
                    the new icon to be associated with C{MIMEType}.
         """
         cls._MIMEToIconMap[MIMEType] = icon
@@ -323,7 +306,7 @@ class FileTypeResolver(object):
     def getMIMETypeToIconMapping(cls):
         """Gets the internal mime-type to icon mapping.
 
-        @return: unmodifiable map containing the current mime-type to icon mapping
+        @return: map containing the current mime-type to icon mapping
         """
         return dict(cls._MIMEToIconMap)
 

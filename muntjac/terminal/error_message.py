@@ -24,22 +24,21 @@ class IErrorMessage(IPaintable):
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @version @VERSION@
-    @since 3.0
     """
 
-    # Error code for system errors and bugs.
+    #: Error code for system errors and bugs.
     SYSTEMERROR = 5000
 
-    # Error code for critical error messages.
+    #: Error code for critical error messages.
     CRITICAL = 4000
 
-    # Error code for regular error messages.
+    #: Error code for regular error messages.
     ERROR = 3000
 
-    # Error code for warning messages.
+    #: Error code for warning messages.
     WARNING = 2000
 
-    # Error code for informational messages.
+    #: Error code for informational messages.
     INFORMATION = 1000
 
     def getErrorLevel(self):
@@ -51,12 +50,12 @@ class IErrorMessage(IPaintable):
 
 
     def addListener(self, listener, iface):
-        """Error messages are inmodifiable and thus listeners are not needed.
+        """Error messages are unmodifiable and thus listeners are not needed.
         This method should be implemented as empty.
 
         @param listener:
                    the listener to be added.
-        @see: com.vaadin.terminal.IPaintable#addListener(listener)
+        @see: L{IPaintable.addListener}
         """
         if iface == IRepaintRequestListener:
             raise NotImplementedError
@@ -74,7 +73,7 @@ class IErrorMessage(IPaintable):
 
         @param listener:
                    the listener to be removed.
-        @see: com.vaadin.terminal.IPaintable#removeListener(listener)
+        @see: L{IPaintable.removeListener}
         """
         if iface == IRepaintRequestListener:
             raise NotImplementedError
@@ -90,6 +89,6 @@ class IErrorMessage(IPaintable):
         """Error messages are inmodifiable and thus listeners are not needed.
         This method should be implemented as empty.
 
-        @see: com.vaadin.terminal.IPaintable#requestRepaint()
+        @see: L{IPaintable.requestRepaint}
         """
         raise NotImplementedError

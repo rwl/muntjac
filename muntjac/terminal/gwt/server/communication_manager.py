@@ -32,22 +32,14 @@ class CommunicationManager(AbstractCommunicationManager):
 
     This class handles applications running as servlets.
 
-    @see: AbstractCommunicationManager
-
+    @see: L{AbstractCommunicationManager}
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @version @VERSION@
-    @since 5.0
     """
 
     def __init__(self, application, applicationServlet=None):
-        """@deprecated use L{#CommunicationManager(Application)} instead
-        @param application
-        @param applicationServlet
-        ---
-        TODO New constructor - document me!
-
-        @param application
+        """@deprecated: use L{CommunicationManager} instead
         """
         if applicationServlet is not None:
             warn("deprecated", DeprecationWarning)
@@ -61,12 +53,9 @@ class CommunicationManager(AbstractCommunicationManager):
     def handleFileUpload(self, request, response, applicationServlet):
         """Handles file upload request submitted via Upload component.
 
-        @see: #getStreamVariableTargetUrl()
-
-        @param request
-        @param response
-        @raise IOException
-        @raise InvalidUIDLSecurityKeyException
+        @see: L{getStreamVariableTargetUrl}
+        @raise L{IOException}:
+        @raise L{InvalidUIDLSecurityKeyException}:
         """
         # URI pattern: APP/UPLOAD/[PID]/[NAME]/[SECKEY] See #createReceiverUrl
 
@@ -116,18 +105,16 @@ class CommunicationManager(AbstractCommunicationManager):
 
 
     def handleUidlRequest(self, request, response, applicationServlet, window):
-        """Handles UIDL request
+        """Handles UIDL request.
 
-        TODO document
-
-        @param request
-        @param response
-        @param applicationServlet
-        @param window
+        @param request:
+        @param response:
+        @param applicationServlet:
+        @param window:
                    target window of the UIDL request, can be null if window
                    not found
-        @raise IOException
-        @raise ServletException
+        @raise L{IOException}:
+        @raise ServletException:
         """
         self.doHandleUidlRequest(
                 HttpServletRequestWrapper(request, applicationServlet),
@@ -141,15 +128,15 @@ class CommunicationManager(AbstractCommunicationManager):
         """Gets the existing application or creates a new one. Get a window
         within an application based on the requested URI.
 
-        @param request
+        @param request:
                    the HTTP Request.
-        @param application
+        @param application:
                    the Application to query for window.
-        @param assumedWindow
+        @param assumedWindow:
                    if the window has been already resolved once, this
                    parameter must contain the window.
         @return: Window matching the given URI or null if not found.
-        @raise ServletException
+        @raise ServletException:
                     if an exception has occurred that interferes with the
                     servlet's normal operation.
         """
@@ -165,17 +152,11 @@ class CommunicationManager(AbstractCommunicationManager):
         L{DownloadStream} returned by the handler.
 
         If the window is the main window of an application, the deprecated
-        L{Application#handleURI(java.net.URL, String)} is called first
-        to handle L{ApplicationResource}s and the window handler is only
-        called if it returns null.
+        L{Application.handleURI} is called first to handle
+        L{ApplicationResource}s and the window handler is only called if
+        it returns C{None}.
 
-        @see: AbstractCommunicationManager#handleURI()
-
-        @param window
-        @param request
-        @param response
-        @param applicationServlet
-        @return
+        @see: L{AbstractCommunicationManager.handleURI}
         """
         return AbstractCommunicationManager.handleURI(self, window,
                 HttpServletRequestWrapper(request, applicationServlet),
@@ -242,7 +223,7 @@ class CommunicationManager(AbstractCommunicationManager):
 class HttpServletRequestWrapper(IRequest):
     """Concrete wrapper class for L{HttpServletRequest}.
 
-    @see: Request
+    @see: L{IRequest}
     """
 
     def __init__(self, request, applicationServlet):
@@ -294,7 +275,7 @@ class HttpServletRequestWrapper(IRequest):
 class HttpServletResponseWrapper(IResponse):
     """Concrete wrapper class for L{HttpServletResponse}.
 
-    @see: Response
+    @see: L{IResponse}
     """
 
     def __init__(self, response, applicationServlet):
@@ -321,7 +302,7 @@ class HttpServletResponseWrapper(IResponse):
 class HttpSessionWrapper(ISession):
     """Concrete wrapper class for L{HttpSession}.
 
-    @see: Session
+    @see: L{ISession}
     """
 
     def __init__(self, session, applicationServlet):

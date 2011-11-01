@@ -19,39 +19,33 @@ from muntjac.terminal.paintable import IRepaintRequestListener
 
 
 class UserError(IErrorMessage):
-    """C{UserError} is a controlled error occurred in
-    application. User errors are occur in normal usage of the
-    application and guide the user.
+    """C{UserError} is a controlled error occurred in application. User
+    errors are occur in normal usage of the application and guide the user.
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @version @VERSION@
-    @since 3.0
     """
-    # Content mode, where the error contains only plain text.
+
+    #: Content mode, where the error contains only plain text.
     CONTENT_TEXT = 0
 
-    # Content mode, where the error contains preformatted text.
+    #: Content mode, where the error contains preformatted text.
     CONTENT_PREFORMATTED = 1
 
-    # Formatted content mode, where the contents is XML restricted
-    # to the UIDL 1.0 formatting markups.
+    #: Formatted content mode, where the contents is XML restricted
+    #  to the UIDL 1.0 formatting markups.
     CONTENT_UIDL = 2
 
     def __init__(self, message, contentMode=None, errorLevel=None):
-        """Creates a textual error message of level ERROR.
+        """Creates a error message with level and content mode.
 
-        @param textErrorMessage
-                   the text of the error message.
-        ---
-        Creates a error message with level and content mode.
-
-        @param message
+        @param message:
                    the error message.
-        @param contentMode
+        @param contentMode:
                    the content Mode.
-        @param errorLevel
-                   the level of error.
+        @param errorLevel:
+                   the level of error (defaults to Error).
         """
         # Content mode.
         self._mode = self.CONTENT_TEXT

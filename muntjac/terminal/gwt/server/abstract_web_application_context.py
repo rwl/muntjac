@@ -24,8 +24,7 @@ logger = logging.getLogger(__name__)
 
 
 class AbstractWebApplicationContext(IApplicationContext):
-    """Base class for web application contexts (including portlet contexts)
-    that handles the common tasks.
+    """Base class for web application contexts that handles the common tasks.
     """
 
     def __init__(self):
@@ -47,10 +46,10 @@ class AbstractWebApplicationContext(IApplicationContext):
     def startTransaction(self, application, request):
         """Sends a notification that a transaction is starting.
 
-        @param application
+        @param application:
                    The application associated with the transaction.
-        @param request
-                   the HTTP or portlet request that triggered the transaction.
+        @param request:
+                   the HTTP request that triggered the transaction.
         """
         for listener in self.listeners:
             listener.transactionStart(application, request)
@@ -59,10 +58,10 @@ class AbstractWebApplicationContext(IApplicationContext):
     def endTransaction(self, application, request):
         """Sends a notification that a transaction has ended.
 
-        @param application
+        @param application:
                    The application associated with the transaction.
-        @param request
-                   the HTTP or portlet request that triggered the transaction.
+        @param request:
+                   the HTTP request that triggered the transaction.
         """
         exceptions = None
         for listener in self.listeners:
@@ -84,12 +83,12 @@ class AbstractWebApplicationContext(IApplicationContext):
 
 
     def valueBound(self, arg0):
-        """@see: HttpSessionBindingListener.valueBound()"""
+        """@see: L{HttpSessionBindingListener.valueBound}"""
         pass  # We are not interested in bindings
 
 
     def valueUnbound(self, event):
-        """@see: HttpSessionBindingListener.valueUnbound()"""
+        """@see: L{HttpSessionBindingListener.valueUnbound}"""
         # If we are going to be unbound from the session, the session
         # must be closing.
         try:
@@ -112,8 +111,6 @@ class AbstractWebApplicationContext(IApplicationContext):
         Because application context is related to the http session and server
         maintains one session per browser-instance, each context has exactly
         one web browser associated with it.
-
-        @return
         """
         return self.browser
 

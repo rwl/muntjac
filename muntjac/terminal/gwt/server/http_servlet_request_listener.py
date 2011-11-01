@@ -20,33 +20,23 @@ class IHttpServletRequestListener(object):
     of request start and end by terminal.
 
     Interface can be used for several helper tasks including:
-    <ul>
-    <li>Opening and closing database connections
-    <li>Implementing L{ThreadLocal}
-    <li>Setting/Getting L{Cookie}
-    </ul>
+
+      - Opening and closing database connections
+      - Implementing L{ThreadLocal}
+      - Setting/Getting L{Cookie}
 
     Alternatives for implementing similar features are are Servlet
-    L{Filter}s and L{TransactionListener}s in Vaadin.
-
-    @since 6.2
-    @see: PortletRequestListener
+    L{Filter}s and L{TransactionListener}s in Muntjac.
     """
 
     def onRequestStart(self, request, response):
         """This method is called before L{Terminal} applies the
         request to Application.
-
-        @param request
-        @param response
         """
         raise NotImplementedError
 
 
     def onRequestEnd(self, request, response):
         """This method is called at the end of each request.
-
-        @param request
-        @param response
         """
         raise NotImplementedError
