@@ -36,7 +36,6 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
 
     @author: IT Mill Ltd
     @version @VERSION@
-    @since 3.0
     """
 
     def __init__(self):
@@ -76,7 +75,7 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
         """Notifies all contained components that the container is attached
         to a window.
 
-        @see: com.vaadin.ui.Component#attach()
+        @see: L{IComponent.attach}
         """
         super(AbstractComponentContainer, self).attach()
 
@@ -88,7 +87,7 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
         """Notifies all contained components that the container is detached
         from a window.
 
-        @see: com.vaadin.ui.Component#detach()
+        @see: L{IComponent.detach}
         """
         # Events
         super(AbstractComponentContainer, self).detach()
@@ -141,7 +140,7 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
         the addComponent methods after the component have been added to
         this container.
 
-        @param component
+        @param component:
                    the component that has been added to this container.
         """
         self.fireEvent( ComponentAttachEvent(self, component) )
@@ -152,7 +151,7 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
         the removeComponent methods after the component have been removed
         from this container.
 
-        @param component
+        @param component:
                    the component that has been removed from this container.
         """
         self.fireEvent( ComponentDetachEvent(self, component) )
@@ -189,7 +188,7 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
         extending classes must implement component list maintenance and call
         this method before component list maintenance.
 
-        @see: com.vaadin.ui.IComponentContainer#removeComponent(Component)
+        @see: L{IComponentContainer.removeComponent}
         """
         if c.getParent() == self:
             c.setParent(None)

@@ -45,74 +45,72 @@ class AbstractField(AbstractComponent, field.IField,
             prop.IReadOnlyStatusChangeListener):
     """Abstract field component for implementing buffered property editors.
     The field may hold an internal value, or it may be connected to any data
-    source that implements the L{com.vaadin.data.IProperty}interface.
-    C{AbstractField} implements that interface itself, too, so
-    accessing the IProperty value represented by it is straightforward.
+    source that implements the L{IProperty}interface. C{AbstractField}
+    implements that interface itself, too, so accessing the IProperty value
+    represented by it is straightforward.
 
-    AbstractField also provides the L{com.vaadin.data.Buffered}
-    interface for buffering the data source value. By default the IField is
-    in write through-mode and L{#setWriteThrough(boolean)}should be
-    called to enable buffering.
+    AbstractField also provides the L{IBuffered} interface for buffering the
+    data source value. By default the IField is in write through-mode and
+    L{setWriteThrough}should be called to enable buffering.
 
-    The class also supports L{com.vaadin.data.Validator validators} to
+    The class also supports L{validators<IValidator>} to
     make sure the value contained in the field is valid.
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @version @VERSION@
-    @since 3.0
     """
 
     def __init__(self):
         super(AbstractField, self).__init__()
 
-        # Value of the abstract field.
+        #: Value of the abstract field.
         self._value = None
 
-        # Connected data-source.
+        #: Connected data-source.
         self._dataSource = None
 
-        # The list of validators.
+        #: The list of validators.
         self._validators = None
 
-        # Auto commit mode.
+        #: Auto commit mode.
         self._writeThroughMode = True
 
-        # Reads the value from data-source, when it is not modified.
+        #: Reads the value from data-source, when it is not modified.
         self._readThroughMode = True
 
-        # Is the field modified but not committed.
+        #: Is the field modified but not committed.
         self._modified = False
 
-        # Should value change event propagation from property data source
-        # to listeners of the field be suppressed. This is used internally
-        # while the field makes changes to the property value.
+        #: Should value change event propagation from property data source
+        #  to listeners of the field be suppressed. This is used internally
+        #  while the field makes changes to the property value.
         self._suppressValueChangePropagation = False
 
-        # Current source exception.
+        #: Current source exception.
         self._currentBufferedSourceException = None
 
-        # Are the invalid values allowed in fields ?
+        #: Are the invalid values allowed in fields ?
         self._invalidAllowed = True
 
-        # Are the invalid values committed ?
+        #: Are the invalid values committed ?
         self._invalidCommitted = False
 
-        # The tab order number of this field.
+        #: The tab order number of this field.
         self._tabIndex = 0
 
-        # Required field.
+        #: Required field.
         self._required = False
 
-        # The error message for the exception that is thrown when the field
-        # is required but empty.
+        #: The error message for the exception that is thrown when the field
+        #  is required but empty.
         self._requiredError = ''
 
-        # Is automatic validation enabled.
+        #: Is automatic validation enabled.
         self._validationVisible = True
 
-        # Keeps track of the Actions added to this component; the actual
-        # handling/notifying is delegated, usually to the containing window.
+        #: Keeps track of the Actions added to this component; the actual
+        #  handling/notifying is delegated, usually to the containing window.
         self._actionManager = None
 
 
@@ -155,7 +153,7 @@ class AbstractField(AbstractComponent, field.IField,
         """Changes the readonly state and throw read-only status change
         events.
 
-        @see: com.vaadin.ui.Component#setReadOnly(boolean)
+        @see: L{IComponent.setReadOnly}
         """
         super(AbstractField, self).setReadOnly(readOnly)
         self.fireReadOnlyStatusChange()
@@ -164,7 +162,7 @@ class AbstractField(AbstractComponent, field.IField,
     def isInvalidCommitted(self):
         """Tests if the invalid data is committed to datasource.
 
-        @see: com.vaadin.data.BufferedValidatable#isInvalidCommitted()
+        @see: L{BufferedValidatable.isInvalidCommitted}
         """
         return self._invalidCommitted
 
@@ -172,7 +170,7 @@ class AbstractField(AbstractComponent, field.IField,
     def setInvalidCommitted(self, isCommitted):
         """Sets if the invalid data should be committed to datasource.
 
-        @see: muntjac.data.BufferedValidatable#setInvalidCommitted(boolean)
+        @see: L{BufferedValidatable.setInvalidCommitted}
         """
         self._invalidCommitted = isCommitted
 
@@ -353,12 +351,12 @@ class AbstractField(AbstractComponent, field.IField,
     def setValue(self, newValue, repaintIsNotNeeded=False):
         """Sets the value of the field.
 
-        @param newValue
+        @param newValue:
                    the New value of the field.
-        @param repaintIsNotNeeded
+        @param repaintIsNotNeeded:
                    True iff caller is sure that repaint is not needed.
-        @raise property.ReadOnlyException
-        @raise property.ConversionException
+        @raise ReadOnlyException
+        @raise ConversionException
         """
         if ((newValue is None and self._value is not None)
                 or (newValue is not None
@@ -444,7 +442,7 @@ class AbstractField(AbstractComponent, field.IField,
         now need to override this method to do housekeeping similar to
         discard().
 
-        @param newDataSource
+        @param newDataSource:
                    the new data source property.
         """
         # Saves the old value
@@ -511,7 +509,7 @@ class AbstractField(AbstractComponent, field.IField,
         """Adds a new validator for the field's value. All validators added
         to a field are checked each time the its value changes.
 
-        @param validator
+        @param validator:
                    the new validator to be added.
         """
         if self._validators is None:
@@ -535,7 +533,7 @@ class AbstractField(AbstractComponent, field.IField,
     def removeValidator(self, validator):
         """Removes the validator from the field.
 
-        @param validator
+        @param validator:
                    the validator to remove.
         """
         if self._validators is not None:
@@ -581,7 +579,7 @@ class AbstractField(AbstractComponent, field.IField,
         EmptyValueException with the error message set with
         setRequiredError().
 
-        @see: com.vaadin.data.IValidatable#validate()
+        @see: L{IValidatable.validate}
         """
         if self.isEmpty():
             if self.isRequired():
@@ -635,7 +633,7 @@ class AbstractField(AbstractComponent, field.IField,
         immediately.
 
         @return: true iff the invalid values are allowed.
-        @see: com.vaadin.data.IValidatable#isInvalidAllowed()
+        @see: L{IValidatable.isInvalidAllowed}
         """
         return self._invalidAllowed
 
@@ -651,7 +649,7 @@ class AbstractField(AbstractComponent, field.IField,
         allow invalid values. The validators are automatically copied to the
         field when the datasource is set.
 
-        @see: com.vaadin.data.IValidatable#setInvalidAllowed(boolean)
+        @see: L{IValidatable.setInvalidAllowed}
         """
         self._invalidAllowed = invalidAllowed
 
@@ -661,7 +659,7 @@ class AbstractField(AbstractComponent, field.IField,
         message thrown by the superclasses (that is the component error
         message), validation errors and buffered source errors.
 
-        @see: com.vaadin.ui.AbstractComponent#getErrorMessage()
+        @see: L{AbstractComponent.getErrorMessage}
         """
         # Check validation errors only if automatic validation is enabled.
         # Empty, required fields will generate a validation error containing
@@ -741,7 +739,7 @@ class AbstractField(AbstractComponent, field.IField,
         """React to read only status changes of the property by
         requesting a repaint.
 
-        @see: property.IReadOnlyStatusChangeListener
+        @see: L{IReadOnlyStatusChangeListener}
         """
         self.requestRepaint()
 
@@ -760,7 +758,7 @@ class AbstractField(AbstractComponent, field.IField,
         Changes are not forwarded to the listeners of the field during
         internal operations of the field to avoid duplicate notifications.
 
-        @param event
+        @param event:
                    the value change event telling the data source
                    contents have changed.
         """
@@ -785,11 +783,10 @@ class AbstractField(AbstractComponent, field.IField,
         This returns most suitable field type for editing property of
         given type.
 
-        @param propertyType
+        @param propertyType:
                    the Type of the property, that needs to be edited.
         @deprecated use e.g.
-                L{DefaultFieldFactory#createFieldByPropertyType(Class)}
-                instead
+                L{DefaultFieldFactory.createFieldByPropertyType} instead
         """
         warn('use createFieldByPropertyType() instead', DeprecationWarning)
 
@@ -809,12 +806,12 @@ class AbstractField(AbstractComponent, field.IField,
 
 
     def setInternalValue(self, newValue):
-        """Sets the internal field value. This is purely used by
-        AbstractField to change the internal IField value. It does not
-        trigger valuechange events. It can be overridden by the inheriting
-        classes to update all dependent variables.
+        """Sets the internal field value. This is purely used by AbstractField
+        to change the internal IField value. It does not trigger valuechange
+        events. It can be overridden by the inheriting classes to update all
+        dependent variables.
 
-        @param newValue
+        @param newValue:
                    the new value to be set.
         """
         self._value = newValue
@@ -825,7 +822,7 @@ class AbstractField(AbstractComponent, field.IField,
     def attach(self):
         """Notifies the component that it is connected to an application.
 
-        @see: com.vaadin.ui.Component#attach()
+        @see: L{IComponent.attach}
         """
         super(AbstractField, self).attach()
         if self._actionManager is not None:
@@ -850,8 +847,7 @@ class AbstractField(AbstractComponent, field.IField,
         On the other hand, for the non-required fields isValid() == true
         if the field isEmpty() regardless of any attached validators.
 
-        @return: C{True} if the field is required .otherwise
-                C{False}.
+        @return: C{True} if the field is required, otherwise C{False}.
         """
         return self._required
 
@@ -868,7 +864,7 @@ class AbstractField(AbstractComponent, field.IField,
         On the other hand, for the non-required fields isValid() == true if
         the field isEmpty() regardless of any attached validators.
 
-        @param required
+        @param required:
                    Is the field required.
         """
         self._required = required
@@ -882,9 +878,8 @@ class AbstractField(AbstractComponent, field.IField,
         to "". Even in those cases isValid() returns false for empty
         required fields.
 
-        @param requiredMessage
-                   Message to be shown when this field is required, but
-                   empty.
+        @param requiredMessage:
+                   Message to be shown when this field is required, but empty.
         """
         self._requiredError = requiredMessage
         self.requestRepaint()
@@ -926,7 +921,7 @@ class AbstractField(AbstractComponent, field.IField,
         validation is turned off, isValid() and validate() methods still
         work, but one must show the validation in their own code.
 
-        @param validateAutomatically
+        @param validateAutomatically:
                    True, if automatic validation is enabled.
         """
         if self._validationVisible != validateAutomatically:
@@ -974,31 +969,20 @@ class FocusShortcut(ShortcutListener):
 
     def __init__(self, *args):
         """Creates a keyboard shortcut for focusing the given
-        L{Focusable} using the shorthand notation defined in
-        L{ShortcutAction}.
+        L{IFocusable} using either the shorthand notation defined in
+        L{ShortcutAction}, or the given key code.
 
-        @param focusable
-                   to focused when the shortcut is invoked
-        @param shorthandCaption
-                   caption with keycode and modifiers indicated
-        ---
-        Creates a keyboard shortcut for focusing the given
-        L{Focusable}.
-
-        @param focusable
-                   to focused when the shortcut is invoked
-        @param keyCode
-                   keycode that invokes the shortcut
-        @param modifiers
-                   modifiers required to invoke the shortcut
-        ---
-        Creates a keyboard shortcut for focusing the given
-        L{Focusable}.
-
-        @param focusable
-                   to focused when the shortcut is invoked
-        @param keyCode
-                   keycode that invokes the shortcut
+        @param args: tuple of the form
+            - (focusable, shorthandCaption)
+              1. to b efocused when the shortcut is invoked
+              2. caption with keycode and modifiers indicated
+            - (focusable, keyCode, modifiers)
+              1. to be focused when the shortcut is invoked
+              2. keycode that invokes the shortcut
+              3. modifiers required to invoke the shortcut
+            - (focusable, keyCode)
+              1. to focused when the shortcut is invoked
+              2. keycode that invokes the shortcut
         """
         self.focusable = None
 
@@ -1030,13 +1014,12 @@ class IReadOnlyStatusChangeEvent(ComponentEvent, prop.IProperty,
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @version @VERSION@
-    @since 3.0
     """
 
     def __init__(self, source):
         """New instance of text change event.
 
-        @param source
+        @param source:
                    the Source of the event.
         """
         super(IReadOnlyStatusChangeEvent, self).__init__(source)

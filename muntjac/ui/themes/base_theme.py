@@ -16,10 +16,10 @@
 
 
 class BaseTheme(object):
-    """The Base theme is the foundation for all Vaadin themes. Although
+    """The Base theme is the foundation for all Muntjac themes. Although
     it is not necessary to use it as the starting point for all other
     themes, it is heavily encouraged, since it abstracts and hides away
-    many necessary style properties that the Vaadin terminal expects and
+    many necessary style properties that the Muntjac terminal expects and
     needs.
 
     When creating your own theme, either extend this class and specify

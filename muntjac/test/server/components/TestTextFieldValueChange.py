@@ -53,7 +53,7 @@ class TestTextFieldValueChange(
         property, but don't fire value change events twice if value has only
         changed once.
 
-        TODO make test field type agnostic (eg. combobox)
+        TODO: make test field type agnostic (eg. combobox)
         """
         prop = ObjectProperty('')
         self.getField().setPropertyDataSource(prop)
@@ -86,7 +86,7 @@ class TestTextFieldValueChange(
         committed, the value should not propagate similar to
         L{#testValueChangeEventPropagationWithReadThrough()}
 
-        TODO make test field type agnostic (eg. combobox)
+        TODO: make test field type agnostic (eg. combobox)
         """
         initialValue = 'initial'
         prop = ObjectProperty(initialValue)
@@ -135,7 +135,7 @@ class TestTextFieldValueChange(
         """Value change events from property should not propagate if read
         through is false. Execpt when the property is being set.
 
-        TODO make test field type agnostic (eg. combobox)
+        TODO: make test field type agnostic (eg. combobox)
         """
         initialValue = 'initial'
         prop = ObjectProperty(initialValue)

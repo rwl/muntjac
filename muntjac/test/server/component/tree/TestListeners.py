@@ -58,11 +58,6 @@ class TestListeners(TestCase, IExpandListener, ICollapseListener):
     def createTree(self, rootItems, children, expand):
         """Creates a tree with "rootItems" roots, each with "children"
         children, each with 1 child.
-
-        @param rootItems
-        @param children
-        @param expand
-        @return
         """
         tree = Tree()
 

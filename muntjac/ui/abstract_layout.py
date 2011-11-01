@@ -28,7 +28,6 @@ class AbstractLayout(AbstractComponentContainer, ILayout, IMarginHandler):
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @version @VERSION@
-    @since 5.0
     """
 
     _CLICK_EVENT = EventId.LAYOUT_CLICK
@@ -83,7 +82,7 @@ class AbstractLayout(AbstractComponentContainer, ILayout, IMarginHandler):
         implement L{LayoutClickNotifier}, and can be overridden
         for custom click event firing.
 
-        @param parameters
+        @param parameters:
                    The parameters received from the client side
                    implementation
         """

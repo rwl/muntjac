@@ -29,10 +29,9 @@ class AbstractTestFieldValueChange(TestCase):
 
     Does not check all cases (e.g. properties that do not implement
     L{ValueChangeNotifier}).
-     *
-    Subclasses should implement L{#setValue()} and call
-    C{super.setValue(AbstractField)}. Also, subclasses should
-    typically override L{#setValue(AbstractField)} to set the field
+
+    Subclasses should implement L{#setValue()} and call super C{setValue}.
+    Also, subclasses should typically override L{setValue} to set the field
     value via C{changeVariables()}.
     """
 

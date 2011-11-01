@@ -22,7 +22,6 @@ from muntjac.terminal.sizeable import ISizeable
 
 from muntjac.event.layout_events import \
     LayoutClickEvent, ILayoutClickListener, ILayoutClickNotifier
-from muntjac.ui.abstract_component import AbstractComponent
 
 
 class AbsoluteLayout(AbstractLayout, ILayoutClickNotifier):
@@ -38,10 +37,10 @@ class AbsoluteLayout(AbstractLayout, ILayoutClickNotifier):
         """Creates an AbsoluteLayout with full size."""
         super(AbsoluteLayout, self).__init__()
 
-        # The components in the layout
+        #: The components in the layout
         self._components = set()
 
-        # Maps each component to a position
+        #: Maps each component to a position
         self._componentToCoordinates = dict()
 
         self.setSizeFull()
@@ -56,7 +55,7 @@ class AbsoluteLayout(AbstractLayout, ILayoutClickNotifier):
 
     def getComponentCount(self):
         """Gets the number of contained components. Consistent with
-        the iterator returned by L{#getComponentIterator()}.
+        the iterator returned by L{getComponentIterator}.
 
         @return: the number of contained components
         """
@@ -82,9 +81,9 @@ class AbsoluteLayout(AbstractLayout, ILayoutClickNotifier):
         identifiers: "top","left","right" and "bottom" can be used to
         specify the position.
 
-        @param c
+        @param c:
                    The component to add to the layout
-        @param cssPosition
+        @param cssPosition:
                    The css position string
         """
         # Create position instance and add it to componentToCoordinates
@@ -117,10 +116,10 @@ class AbsoluteLayout(AbstractLayout, ILayoutClickNotifier):
 
 
     def getPosition(self, component):
-        """Gets the position of a component in the layout. Returns null
+        """Gets the position of a component in the layout. Returns C{None}
         if component is not attached to the layout.
 
-        @param component
+        @param component:
                    The component which position is needed
         @return: An instance of ComponentPosition containing the position
                 of the component, or null if the component is not enclosed
@@ -195,9 +194,7 @@ class ComponentPosition(object):
         """Sets the position attributes using CSS syntax. Attributes not
         included in the string are reset to their unset states.
 
-        C{<pre>
-        setCSSString("top:10px;left:20%;z-index:16;");
-        </pre>}
+        C{setCSSString("top:10px;left:20%;z-index:16;")}
 
         @param css
         """
@@ -255,7 +252,7 @@ class ComponentPosition(object):
         """Parses a string and checks if a unit is found. If a unit
         is not found from the string the unit pixels is used.
 
-        @param string
+        @param string:
                    The string to parse the unit from
         @return: The found unit
         """
@@ -297,9 +294,9 @@ class ComponentPosition(object):
         """Sets the 'top' attribute; distance from the top of the
         component to the top edge of the layout.
 
-        @param topValue
+        @param topValue:
                    The value of the 'top' attribute
-        @param topUnits
+        @param topUnits:
                    The unit of the 'top' attribute. See UNIT_SYMBOLS
                    for a description of the available units.
         """
@@ -312,9 +309,9 @@ class ComponentPosition(object):
         """Sets the 'right' attribute; distance from the right of the
         component to the right edge of the layout.
 
-        @param rightValue
+        @param rightValue:
                    The value of the 'right' attribute
-        @param rightUnits
+        @param rightUnits:
                    The unit of the 'right' attribute. See UNIT_SYMBOLS
                    for a description of the available units.
         """
@@ -327,9 +324,9 @@ class ComponentPosition(object):
         """Sets the 'bottom' attribute; distance from the bottom of the
         component to the bottom edge of the layout.
 
-        @param bottomValue
+        @param bottomValue:
                    The value of the 'bottom' attribute
-        @param units
+        @param units:
                    The unit of the 'bottom' attribute. See UNIT_SYMBOLS
                    for a description of the available units.
         """
@@ -342,9 +339,9 @@ class ComponentPosition(object):
         """Sets the 'left' attribute; distance from the left of the
         component to the left edge of the layout.
 
-        @param leftValue
+        @param leftValue:
                    The value of the 'left' attribute
-        @param units
+        @param units:
                    The unit of the 'left' attribute. See UNIT_SYMBOLS
                    for a description of the available units.
         """
@@ -356,7 +353,7 @@ class ComponentPosition(object):
     def setZIndex(self, zIndex):
         """Sets the 'z-index' attribute; the visual stacking order
 
-        @param zIndex
+        @param zIndex:
                    The z-index for the component.
         """
         self._zIndex = zIndex
@@ -367,7 +364,7 @@ class ComponentPosition(object):
         """Sets the value of the 'top' attribute; distance from the top
         of the component to the top edge of the layout.
 
-        @param topValue
+        @param topValue:
                    The value of the 'left' attribute
         """
         self._topValue = topValue
@@ -377,7 +374,7 @@ class ComponentPosition(object):
     def getTopValue(self):
         """Gets the 'top' attributes value in current units.
 
-        @see: #getTopUnits()
+        @see: L{getTopUnits}
         @return: The value of the 'top' attribute, null if not set
         """
         return self._topValue
@@ -387,7 +384,7 @@ class ComponentPosition(object):
         """Gets the 'right' attributes value in current units.
 
         @return: The value of the 'right' attribute, null if not set
-        @see: #getRightUnits()
+        @see: L{getRightUnits}
         """
         return self._rightValue
 
@@ -397,9 +394,9 @@ class ComponentPosition(object):
         of the component to the right edge of the layout). Currently
         active units are maintained.
 
-        @param rightValue
+        @param rightValue:
                    The value of the 'right' attribute
-        @see: #setRightUnits(int)
+        @see: L{setRightUnits}
         """
         self._rightValue = rightValue
         self._layout.requestRepaint()
@@ -409,7 +406,7 @@ class ComponentPosition(object):
         """Gets the 'bottom' attributes value using current units.
 
         @return: The value of the 'bottom' attribute, null if not set
-        @see: #getBottomUnits()
+        @see: L{getBottomUnits}
         """
         return self._bottomValue
 
@@ -419,9 +416,9 @@ class ComponentPosition(object):
         of the component to the bottom edge of the layout). Currently
         active units are maintained.
 
-        @param bottomValue
+        @param bottomValue:
                    The value of the 'bottom' attribute
-        @see: #setBottomUnits(int)
+        @see: L{setBottomUnits}
         """
         self._bottomValue = bottomValue
         self._layout.requestRepaint()
@@ -431,7 +428,7 @@ class ComponentPosition(object):
         """Gets the 'left' attributes value using current units.
 
         @return: The value of the 'left' attribute, null if not set
-        @see: #getLeftUnits()
+        @see: L{getLeftUnits}
         """
         return self._leftValue
 
@@ -441,9 +438,9 @@ class ComponentPosition(object):
         the component to the left edge of the layout). Currently active
         units are maintained.
 
-        @param leftValue
+        @param leftValue:
                    The value of the 'left' CSS-attribute
-        @see: #setLeftUnits(int)
+        @see: L{setLeftUnits}
         """
         self._leftValue = leftValue
         self._layout.requestRepaint()
@@ -461,7 +458,7 @@ class ComponentPosition(object):
     def setTopUnits(self, topUnits):
         """Sets the unit for the 'top' attribute
 
-        @param topUnits
+        @param topUnits:
                    See L{ISizeable} UNIT_SYMBOLS for a description
                    of the available units.
         """
@@ -481,7 +478,7 @@ class ComponentPosition(object):
     def setRightUnits(self, rightUnits):
         """Sets the unit for the 'right' attribute
 
-        @param rightUnits
+        @param rightUnits:
                    See L{ISizeable} UNIT_SYMBOLS for a description
                    of the available units.
         """
@@ -521,7 +518,7 @@ class ComponentPosition(object):
     def setLeftUnits(self, leftUnits):
         """Sets the unit for the 'left' attribute
 
-        @param leftUnits
+        @param leftUnits:
                    See L{ISizeable} UNIT_SYMBOLS for a description
                    of the available units.
         """

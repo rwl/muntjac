@@ -21,8 +21,6 @@ from muntjac.terminal.gwt.client.event_id import EventId
 
 from muntjac.event.layout_events import \
     ILayoutClickNotifier, ILayoutClickListener, LayoutClickEvent
-from muntjac.ui.abstract_component_container import AbstractComponentContainer
-from muntjac.ui.abstract_component import AbstractComponent
 
 
 class AbstractOrderedLayout(AbstractLayout, IAlignmentHandler,
@@ -49,16 +47,12 @@ class AbstractOrderedLayout(AbstractLayout, IAlignmentHandler,
 
     def addComponent(self, c, index=None):
         """Add a component into this container. The component is added
-        to the right or under the previous component.
+        to the right or under the previous component or into the indexed
+        position in this container.
 
-        @param c
+        @param c:
                    the component to be added.
-        ---
-        Adds a component into indexed position in this container.
-
-        @param c
-                   the component to be added.
-        @param index
+        @param index:
                    the Index of the component position. The components
                    currently in and after the position are shifted
                    forwards.
@@ -81,7 +75,7 @@ class AbstractOrderedLayout(AbstractLayout, IAlignmentHandler,
         """Adds a component into this container. The component is
         added to the left or on top of the other components.
 
-        @param c the component to be added.
+        @param c: the component to be added.
         """
         self.components.addFirst(c)
         try:
@@ -95,7 +89,7 @@ class AbstractOrderedLayout(AbstractLayout, IAlignmentHandler,
     def removeComponent(self, c):
         """Removes the component from this container.
 
-        @param c the component to be removed.
+        @param c: the component to be removed.
         """
         if c in self.components:
             self.components.remove(c)
@@ -118,7 +112,7 @@ class AbstractOrderedLayout(AbstractLayout, IAlignmentHandler,
 
     def getComponentCount(self):
         """Gets the number of contained components. Consistent with
-        the iterator returned by L{#getComponentIterator()}.
+        the iterator returned by L{getComponentIterator}.
 
         @return: the number of contained components
         """
@@ -128,9 +122,9 @@ class AbstractOrderedLayout(AbstractLayout, IAlignmentHandler,
     def paintContent(self, target):
         """Paints the content of this component.
 
-        @param target
+        @param target:
                    the Paint Event.
-        @raise PaintException
+        @raise PaintException:
                     if the paint operation failed.
         """
         super(AbstractOrderedLayout, self).paintContent(target)
@@ -189,12 +183,11 @@ class AbstractOrderedLayout(AbstractLayout, IAlignmentHandler,
                 verticalAlignment=None):
         """Sets the component alignment using a short hand string notation.
 
-        @deprecated Replaced by
-                    L{#setComponentAlignment(Component, Alignment)}
+        @deprecated: Replaced by L{setComponentAlignment}
 
-        @param component
+        @param component:
                    A child component in this layout
-        @param alignment
+        @param alignment:
                    A short hand notation described in L{AlignmentUtils}
         """
         if verticalAlignment is not None:
@@ -236,12 +229,10 @@ class AbstractOrderedLayout(AbstractLayout, IAlignmentHandler,
         don't consume all available space.
 
         Example how to distribute 1:3 (33%) for component1 and
-        2:3 (67%) for component2 :
+        2:3 (67%) for component2::
 
-        C{
-        layout.setExpandRatio(component1, 1);<br>
-        layout.setExpandRatio(component2, 2);
-        }
+          layout.setExpandRatio(component1, 1)
+          layout.setExpandRatio(component2, 2)
 
         If no ratios have been set, the excess space is distributed
         evenly among all components.
@@ -249,12 +240,12 @@ class AbstractOrderedLayout(AbstractLayout, IAlignmentHandler,
         Note, that width or height (depending on orientation) needs
         to be defined for this method to have any effect.
 
-        @see: Sizeable
+        @see: L{ISizeable}
 
-        @param component
+        @param component:
                    the component in this layout which expand ratio
                    is to be set
-        @param ratio
+        @param ratio:
         """
         if component in self.components:
             self._componentToExpandRatio[component] = ratio
@@ -267,9 +258,9 @@ class AbstractOrderedLayout(AbstractLayout, IAlignmentHandler,
     def getExpandRatio(self, component):
         """Returns the expand ratio of given component.
 
-        @param component
+        @param component:
                    which expand ratios is requested
-        @return: expand ratio of given component, 0.0f by default
+        @return: expand ratio of given component, 0.0 by default
         """
         ratio = self._componentToExpandRatio.get(component)
         return 0 if ratio is None else float(ratio)
@@ -301,7 +292,7 @@ class AbstractOrderedLayout(AbstractLayout, IAlignmentHandler,
     def getComponentIndex(self, component):
         """Returns the index of the given component.
 
-        @param component
+        @param component:
                    The component to look up.
         @return: The index of the component or -1 if the component
                 is not a child.
@@ -315,7 +306,7 @@ class AbstractOrderedLayout(AbstractLayout, IAlignmentHandler,
     def getComponent(self, index):
         """Returns the component at the given position.
 
-        @param index
+        @param index:
                    The position of the component.
         @return: The component at the given index.
         @raise IndexError:
