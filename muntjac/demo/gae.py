@@ -10,8 +10,11 @@ from muntjac.terminal.gwt.server.gae_application_servlet import \
 from gaesessions import SessionMiddleware
 
 
-servlet = GaeApplicationServlet(App, debug=True,
-        widgetset='com.vaadin.demo.sampler.gwt.SamplerWidgetSet')
+servlet = GaeApplicationServlet(
+        App,
+        debug=True,
+        widgetset='com.vaadin.demo.sampler.gwt.SamplerWidgetSet'
+)
 
 app = SessionMiddleware(servlet,
         cookie_key=GaeApplicationServlet.SID,

@@ -3,9 +3,9 @@ import sys
 import logging
 import webbrowser
 
-from os.path import join, dirname
-import static
-from paste.urlmap import URLMap
+#from os.path import join, dirname
+#import static
+#from paste.urlmap import URLMap
 
 from optparse import OptionParser
 
@@ -21,8 +21,8 @@ from muntjac.demo.SimpleAddressBook import SimpleAddressBook
 from muntjac.demo.MuntjacTunesLayout import MuntjacTunesLayout
 
 
-def muntjac(applicationClass, host='127.0.0.1', port=8880, nogui=False,
-            debug=False, forever=True, *args, **kw_args):
+def muntjac(applicationClass, host='localhost', port=8880, nogui=False,
+            debug=False, serve=True, forever=True, *args, **kw_args):
 
     level = logging.DEBUG if debug else logging.INFO
 
@@ -34,23 +34,27 @@ def muntjac(applicationClass, host='127.0.0.1', port=8880, nogui=False,
 
     wsgi_app = SessionMiddleware(wsgi_app)  # wrap in middleware
 
-    root = join(dirname(__file__), '..', 'VAADIN')
+#    root = join(dirname(__file__), '..', 'VAADIN')
+#
+#    urlmap = URLMap({})
+#    urlmap['/'] = wsgi_app
+#    urlmap['/VAADIN'] = static.Cling(root)
 
-    urlmap = URLMap({})
-    urlmap['/'] = wsgi_app
-    urlmap['/VAADIN'] = static.Cling(root)
+    url = 'http://%s:%d/' % (host, port)
 
     if nogui == False:
-        webbrowser.open('http://%s:%d/' % (host, port), new=0)
+        webbrowser.open(url, new=0)
 
-    httpd = make_server(host, port, urlmap)
+    httpd = make_server(host, port, wsgi_app)
 
-    if forever:
-        # Respond to requests until process is killed
-        httpd.serve_forever()
-    else:
-        # Serve one request, then exit
-        httpd.handle_request()
+    if serve:
+        print 'Serving at: %s' % url
+        if forever:
+            # Respond to requests until process is killed
+            httpd.serve_forever()
+        else:
+            # Serve one request, then exit
+            httpd.handle_request()
 
 
 def main(args=sys.argv[1:]):

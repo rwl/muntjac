@@ -867,7 +867,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                 # to ensure that no removed components are updated. The
                 # painting after the last burst is handled normally by the
                 # calling method.
-                if bi < len(bursts) - 1:
+                if bi < (len(bursts) - 1):
                     # We will be discarding all changes
                     outWriter = cStringIO()
                     self.paintAfterVariableChanges(request, response,

@@ -9,6 +9,18 @@ class GaeApplicationServlet(ApplicationServlet):
 
     SID = '0ce25c442d1f4fad8fb6eb44f24ff4a5e0df89e07ae97a3f'
 
+    def service(self, request, response):
+
+        session = self.getSession(request, False)
+
+        if (session is not None) and session.is_active():
+            # force session save each request
+            reqs = session.get('reqs', 0)
+            session['reqs'] = reqs + 1
+
+        super(GaeApplicationServlet, self).service(request, response)
+
+
     def getSession(self, request, allowSessionCreation=True):
         if allowSessionCreation:
             return get_current_session()

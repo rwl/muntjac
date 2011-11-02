@@ -19,8 +19,7 @@ starting point of any application that uses Muntjac.
 
 Contains all Muntjac core classes. A Muntjac application is based
 on the L{Application} class and deployed as a servlet
-using L{muntjac.terminal.gwt.server.application_servlet.ApplicationServlet} or
-L{muntjac.terminal.gwt.server.gae_application_servlet.GAEApplicationServlet}
+using L{ApplicationServlet} or L{GaeApplicationServlet}
 (for Google App Engine).
 
 All classes in Muntjac are pickleable unless otherwise noted.

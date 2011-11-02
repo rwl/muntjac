@@ -9,5 +9,5 @@ handlers:
   script: muntjac.demo.gae.py
 #  script: muntjac.demo.gae.app
 
-- url: /VAADIN
+- url: /VAADIN/**
   static_dir: /
