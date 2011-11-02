@@ -5,7 +5,7 @@ included in L{muntjac.ui.abstract_component.AbstractComponent}, all UI
 components automatically support it.
 
 Package Specification
----------------------
+=====================
 
 The core of the event model is the inheritable event class hierarchy, and the
 L{EventRouter} which provide a simple, ubiquitous mechanism to transport events

@@ -781,7 +781,7 @@ class ITab(object):
 
         Note! Currently only supported by TabSheet, not Accordion.
 
-        @param visible:
+        @param closable:
                    true if the end user is allowed to close the tab, false
                    for not allowing to close. Should default to false.
         """
@@ -874,8 +874,7 @@ class ITab(object):
 
         @see: L{AbstractComponent.setComponentError}
 
-        @param error:
-                   message or null if none
+        @return: message or null if none
         """
         raise NotImplementedError
 

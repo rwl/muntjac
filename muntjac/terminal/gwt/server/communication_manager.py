@@ -113,7 +113,7 @@ class CommunicationManager(AbstractCommunicationManager):
         @param window:
                    target window of the UIDL request, can be null if window
                    not found
-        @raise L{IOException}:
+        @raise IOException:
         @raise ServletException:
         """
         self.doHandleUidlRequest(

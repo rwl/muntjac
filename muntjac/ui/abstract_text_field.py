@@ -291,7 +291,7 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
     def setFormat(self, fmt):
         """Gets the value formatter of TextField.
 
-        @param format:
+        @param fmt:
                    the Format used to format the value. Null disables the
                    formatting.
         @deprecated: replaced by L{PropertyFormatter}

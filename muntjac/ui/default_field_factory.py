@@ -115,7 +115,7 @@ class DefaultFieldFactory(IFormFieldFactory, ITableFieldFactory):
           - B{IItem}: L{Form}.
           - B{default field type}: L{TextField}.
 
-        @param type:
+        @param typ:
                    the type of the property
         @return: the most suitable generic L{Field} for given type
         """

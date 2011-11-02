@@ -107,26 +107,26 @@ class ListenerMethod(IEventListener):
         This constructor gets the trigger method as a parameter so it does not
         need to reflect to find it out.
 
-        @param eventType
+        @param eventType:
                    the event type that is listener listens to. All events of
                    this kind (or its subclasses) result in calling the trigger
                    method.
-        @param target
+        @param target:
                    the object instance that contains the trigger method
-        @param method
+        @param method:
                    the trigger method or the name of the trigger method. If
                    the object does not contain the method a C{ValueError} is
                    thrown.
-        @param arguments
+        @param arguments:
                    the arguments to be passed to the trigger method
-        @param eventArgumentIndex
+        @param eventArgumentIndex:
                    An index to the argument list. This index points out the
                    argument that is replaced with the event object before the
                    argument set is passed to the trigger method. If the
                    eventArgumentIndex is negative, the triggering event object
                    will not be passed to the trigger method, though it is still
                    called.
-        @raise: ValueError
+        @raise ValueError:
                     if C{method} is not a member of C{target}
         """
         #: Type of the event that should trigger this listener. Also the subclasses

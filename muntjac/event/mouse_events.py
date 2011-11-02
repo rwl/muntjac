@@ -43,10 +43,10 @@ class ClickEvent(ComponentEvent):
 
     def getButton(self):
         """Returns an identifier describing which mouse button the user pushed.
-        Compare with L{#BUTTON_LEFT}, L{#BUTTON_MIDDLE}, L{#BUTTON_RIGHT} to
+        Compare with L{BUTTON_LEFT}, L{BUTTON_MIDDLE}, L{BUTTON_RIGHT} to
         find out which button it is.
 
-        @return: one of L{#BUTTON_LEFT}, L{#BUTTON_MIDDLE}, L{#BUTTON_RIGHT}.
+        @return: one of L{BUTTON_LEFT}, L{BUTTON_MIDDLE}, L{BUTTON_RIGHT}.
         """
         return self._details.getButton()
 
@@ -135,7 +135,7 @@ class ClickEvent(ComponentEvent):
     def getButtonName(self):
         """Returns a human readable string representing which button has been
         pushed. This is meant for debug purposes only and the string returned
-        could change. Use L{#getButton()} to check which button was pressed.
+        could change. Use L{getButton} to check which button was pressed.
 
         @return: A string representation of which button was pushed.
         """

@@ -649,8 +649,6 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
     def setCursorX(self, cursorX):
         """Sets the current cursor x-position. This is usually handled
         automatically by GridLayout.
-
-        @param cursorX
         """
         self._cursorX = cursorX
 
@@ -670,8 +668,6 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
     def setCursorY(self, cursorY):
         """Sets the current cursor y-position. This is usually handled
         automatically by GridLayout.
-
-        @param cursorY
         """
         self._cursorY = cursorY
 
@@ -714,11 +710,11 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
         """Sets the component alignment using a short hand string notation.
 
         @deprecated: Replaced by L{setComponentAlignment}
-
-        @param component:
-                   A child component in this layout
-        @param alignment:
-                   A short hand notation described in L{AlignmentUtils}
+        @param args: tuple of the form
+            - (component, alignment)
+              1. A child component in this layout
+              2. A short hand notation described in L{AlignmentUtils}
+            - (childComponent, horizontalAlignment, verticalAlignment)
         """
         warn('replaced by setComponentAlignment', DeprecationWarning)
 

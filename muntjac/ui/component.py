@@ -31,7 +31,7 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
     implement the L{ComponentContainer} interface. Such a container is
     the I{parent} of the contained components.
 
-    The L{#getParent()} method allows retrieving the parent component
+    The L{getParent} method allows retrieving the parent component
     of a component. While there is a L{setParent}, you rarely need
     it as you normally add components with the
     L{addComponent()<ComponentContainer.addComponent>} method

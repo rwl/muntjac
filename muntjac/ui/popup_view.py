@@ -27,7 +27,7 @@ class IPopupVisibilityListener(object):
     """
 
     def popupVisibilityChange(self, event):
-        """Pass to L{PopupView#PopupVisibilityEvent} to start listening
+        """Pass to L{PopupView.PopupVisibilityEvent} to start listening
         for popup visibility changes.
 
         @param event: the event

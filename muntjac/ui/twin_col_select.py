@@ -112,7 +112,7 @@ class TwinColSelect(AbstractSelect):
     def setRightColumnCaption(self, rightColumnCaption):
         """Sets the text shown above the right column.
 
-        @param caption: The text to show
+        @param rightColumnCaption: The text to show
         """
         self._rightColumnCaption = rightColumnCaption
         self.requestRepaint()
@@ -129,7 +129,7 @@ class TwinColSelect(AbstractSelect):
     def setLeftColumnCaption(self, leftColumnCaption):
         """Sets the text shown above the left column.
 
-        @param caption: The text to show
+        @param leftColumnCaption: The text to show
         """
         self._leftColumnCaption = leftColumnCaption
         self.requestRepaint()

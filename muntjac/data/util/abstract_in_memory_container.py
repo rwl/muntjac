@@ -63,17 +63,17 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
     and L{SimpleFilterable.removeContainerFilters} calling L{addFilter} and
     L{removeFilters} respectively.
 
-    @param <ITEMIDTYPE>:
-               the class of item identifiers in the container, use object if can
-               be any class
-    @param <PROPERTYIDCLASS>:
-               the class of property identifiers for the items in the container,
-               use Object if can be any class
-    @param <ITEMCLASS>:
-               the (base) class of the Item instances in the container, use
-               L{Item} if unknown
+    <ITEMIDTYPE>:
+    the class of item identifiers in the container, use object if can
+    be any class
 
-    @since 6.6
+    <PROPERTYIDCLASS>:
+    the class of property identifiers for the items in the container,
+    use Object if can be any class
+
+    <ITEMCLASS>:
+    the (base) class of the Item instances in the container, use
+    L{Item} if unknown
     """
 
     def __init__(self):
@@ -274,7 +274,7 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
     def doFilterContainer(self, hasFilters):
         """Filters the data in the container and updates internal data
         structures. This method should reset any internal data structures
-        and then repopulate them so L{.getItemIds} and other methods only
+        and then repopulate them so L{getItemIds} and other methods only
         return the filtered items.
 
         @param hasFilters:
@@ -575,7 +575,7 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
         @param newItemId:
         @param item:
                    new item to add
-        @param filter:
+        @param fltr:
                    true to perform filtering and send event after adding the
                    item, false to skip these operations for batch inserts - if
                    false, caller needs to make sure these operations are
@@ -606,7 +606,7 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
         @param newItemId:
         @param item:
                    new item to add
-        @param filter:
+        @param fltr:
                    true to perform filtering and send event after adding the
                    item, false to skip these operations for batch inserts - if
                    false, caller needs to make sure these operations are
@@ -643,7 +643,7 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
         @param newItemId:
         @param item:
                    new item to add
-        @param filter:
+        @param fltr:
                    true to perform filtering and send event after adding the
                    item, false to skip these operations for batch inserts - if
                    false, caller needs to make sure these operations are
@@ -680,7 +680,7 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
         Unless subclasses specify otherwise, the default notification indicates
         a full refresh.
 
-        @param postion:
+        @param position:
                    position of the added item in the view (if visible)
         @param itemId:
                    id of the added item
@@ -697,7 +697,7 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
         Unless subclasses specify otherwise, the default notification indicates
         a full refresh.
 
-        @param postion:
+        @param position:
                    position of the removed item in the view prior to removal
                    (if was visible)
         @param itemId:
@@ -731,8 +731,6 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
         """Internal helper method to set the internal list of filtered item
         identifiers. Should not be used outside this class except for
         implementing clone(), may disappear from future versions.
-
-        @param filteredItemIds
         """
         self._filteredItemIds = filteredItemIds
 

@@ -28,21 +28,19 @@ class BaseTheme(object):
 
     All theme class files should follow the convention of specifying the
     theme name as a string constant C{THEME_NAME}.
-
-    @since 6.3.0
     """
 
     THEME_NAME = 'base'
 
-    # Creates a button that looks like a regular hypertext link but still
-    # acts like a normal button.
+    #: Creates a button that looks like a regular hypertext link but still
+    #  acts like a normal button.
     BUTTON_LINK = 'link'
 
-    # Removes extra decorations from the panel.
+    #: Removes extra decorations from the panel.
     #
     # @deprecated: Base theme does not implement this style, but it is defined
-    #             here since it has been a part of the framework before
-    #             multiple themes were available. Use the constant provided
-    #             by the theme you're using instead, e.g.
-    #             L{Reindeer#PANEL_LIGHT} or L{Runo#PANEL_LIGHT}.
+    #              here since it has been a part of the framework before
+    #              multiple themes were available. Use the constant provided
+    #              by the theme you're using instead, e.g.
+    #              L{Reindeer.PANEL_LIGHT} or L{Runo.PANEL_LIGHT}.
     PANEL_LIGHT = 'light'

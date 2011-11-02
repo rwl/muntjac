@@ -345,8 +345,6 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
     def service(self, request, response):
         """Receives standard HTTP requests from the public service method and
         dispatches them.
-
-        @param transaction the WebWare transaction object
         """
         requestType = self.getRequestType(request)
         if not self.ensureCookiesEnabled(requestType, request, response):
@@ -477,14 +475,13 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
         UIDL requests.
 
         @param requestType:
-                   Type of the request as returned by
-                   L{#getRequestType(HttpServletRequest)}
+                   Type of the request as returned by L{getRequestType}
         @param request:
                    The request from the browser
         @param response:
                    The response to which an error can be written
         @return: false if cookies are disabled, true otherwise
-        @raise IOException
+        @raise IOException:
         """
         if requestType == RequestType.UIDL and not self.isRepaintAll(request):
             # In all other but the first UIDL request a cookie should be
@@ -751,8 +748,8 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
         overridden. Override getNewApplication to create the application
         instance in a custom way.
 
-        @raise L{ServletException}
-        @raise L{MalformedURLException}
+        @raise ServletException:
+        @raise MalformedURLException:
         """
         newApplication = self.getNewApplication(request)
 
@@ -830,8 +827,6 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
     @classmethod
     def getDefaultTheme(cls):
         """Returns the default theme. Must never return C{None}.
-
-        @return
         """
         return cls.DEFAULT_THEME_NAME
 
@@ -929,8 +924,8 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
     def startApplication(self, request, application, webApplicationContext):
         """Starts the application if it is not already running.
 
-        @raise ServletException
-        @raise MalformedURLException
+        @raise ServletException:
+        @raise MalformedURLException:
         """
         if not application.isRunning():
             # Create application
@@ -948,9 +943,9 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
         serve the resource to the client.
 
         @return: true if a file was served and the request has been handled,
-                false otherwise.
-        @raise L{IOException}
-        @raise ServletException
+                 false otherwise.
+        @raise IOException:
+        @raise ServletException:
         """
         pathInfo = self.getPathInfo(request)
         # FIXME: What does 10 refer to?
@@ -1268,12 +1263,9 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
                    the HTTP request.
         @param response:
                    the HTTP response to write to.
-        @param out:
-        @param unhandledParameters:
         @param window:
-        @param terminalType:
-        @param theme:
-        @raise L{IOException}:
+        @param application:
+        @raise IOException:
                     if the writing failed due to input/output error.
         @raise MalformedURLException:
                     if the application is denied access the persistent data
@@ -1408,7 +1400,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
         the div element into which the actual Muntjac application will be
         rendered.
 
-        @raise L{IOException}
+        @raise IOException:
         """
         page.write('<div id=\"' + appId + '\" class=\"' + classNames + '\" ' \
                 + (divStyle if divStyle is not None else '') + '>')
@@ -1425,8 +1417,8 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
         Override this method if you want to add some custom html around
         scripts.
 
-        @raise ServletException
-        @raise L{IOException}
+        @raise ServletException:
+        @raise IOException:
         """
         # request widgetset takes precedence (e.g portlet include)
         requestWidgetset = self.getParameter(request, self.REQUEST_WIDGETSET,
@@ -1591,7 +1583,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
 
         Override this method if you want to add some custom html to the page.
 
-        @raise L{IOException}
+        @raise IOException:
         """
         page.write('\n</head>\n<body scroll=\"auto\" class=\"'
                 + ApplicationConnection.GENERATED_BODY_CLASSNAME
@@ -1604,7 +1596,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
         Override this method if you want to add some custom html to the header
         of the page.
 
-        @raise L{IOException}
+        @raise IOException:
         """
         page.write('<meta http-equiv=\"Content-Type\" '
                 + 'content=\"text/html; charset=utf-8\"/>\n')
@@ -1641,7 +1633,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
         Override this method if you want to add some custom html to the
         very beginning of the page.
 
-        @raise L{IOException}
+        @raise IOException:
         """
         # write html header
         page.write('<!DOCTYPE html PUBLIC \"-//W3C//DTD '
@@ -1725,7 +1717,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
         @raise MalformedURLException:
                     if the application is denied access to the persistent
                     data store represented by the given URL.
-        @raise L{SessionExpiredException}:
+        @raise SessionExpiredException:
         """
         # Ensures that the session is still valid
         session = self.getSession(request, allowSessionCreation)
@@ -1769,7 +1761,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
                    the HTTP response to write to.
         @param application:
                    the application to end.
-        @raise L{IOException}:
+        @raise IOException:
                     if the writing failed due to input/output error.
         """
         logoutUrl = application.getLogoutURL()
@@ -1893,7 +1885,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
                     L{WebApplicationContext} implementation via
                     L{getApplicationContext} method and in that customized
                     implementation return your CommunicationManager in
-                    L{WebApplicationContext#getApplicationManager()}
+                    L{WebApplicationContext.getApplicationManager}
                     method.
         """
         warn("deprecated", DeprecationWarning)
@@ -1936,9 +1928,6 @@ class ParameterHandlerErrorImpl(ParameterHandlerErrorEvent):
     """Implementation of IErrorEvent interface."""
 
     def __init__(self, owner, throwable):
-        """@param owner
-        @param throwable
-        """
         self._owner = owner
         self._throwable = throwable
 
@@ -1978,7 +1967,7 @@ class URIHandlerErrorImpl(URIHandlerErrorEvent):
     def getURIHandler(self):
         """Gets the source URIHandler.
 
-        @see: L{muntjac.terminal.uri_handler.IErrorEvent,getURIHandler()}
+        @see: L{muntjac.terminal.uri_handler.IErrorEvent.getURIHandler}
         """
         return self._owner
 

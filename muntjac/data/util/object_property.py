@@ -28,37 +28,17 @@ class ObjectProperty(AbstractProperty):
     """
 
     def __init__(self, value, typ=None, readOnly=None):
-        """Creates a new instance of ObjectProperty with the given value. The
-        type of the property is automatically initialized to be the type of the
-        given value.
+        """Creates a new instance of ObjectProperty with the given value,
+        type and read-only mode status.
 
-        @param value
-                   the Initial value of the Property.
-        ---
-        Creates a new instance of ObjectProperty with the given value and type.
+        Any value of type Object is accepted, see L{ObjectProperty}.
 
-        Any value of type Object is accepted because, if the type class contains
-        a string constructor, the toString of the value is used to create the new
-        value. See L{#setValue(Object)}.
-
-        @param value
-                   the Initial value of the Property.
-        @param type
-                   the type of the value. The value must be assignable to given
-                   type.
-        ---
-        Creates a new instance of ObjectProperty with the given value, type and
-        read-only mode status.
-
-        Any value of type Object is accepted, see
-        L{#ObjectProperty(Object, Class)}.
-
-        @param value
+        @param value:
                    the Initial value of the property.
-        @param type
+        @param typ:
                    the type of the value. C{value} must be assignable
                    to this type.
-        @param readOnly
+        @param readOnly:
                    Sets the read-only mode.
         """
         super(ObjectProperty, self).__init__()

@@ -742,7 +742,7 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
     def attach(self):
         """Notifies the component that it is connected to an application
 
-        @see: IComponent.attach}
+        @see: L{IComponent.attach}
         """
         super(Form, self).attach()
         self._layout.attach()
@@ -753,7 +753,7 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
     def detach(self):
         """Notifies the component that it is detached from the application.
 
-        @see: IComponent.detach}
+        @see: L{IComponent.detach}
         """
         super(Form, self).detach()
         self._layout.detach()
@@ -973,7 +973,7 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
     def setTabIndex(self, tabIndex):
         """Sets the Tabulator index of this Focusable component.
 
-        @see: IFocusable.setTabIndex}
+        @see: L{IFocusable.setTabIndex}
         """
         super(Form, self).setTabIndex(tabIndex)
         for i in self.getItemPropertyIds():

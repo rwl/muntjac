@@ -26,8 +26,8 @@ class ExpandLayout(OrderedLayout):
     space given to the expanded component will grow/shrink to fill the rest
     of the space available - for instance when re-sizing the window.
 
-    Note that this layout is 100% in both directions by default ({link
-    L{setSizeFull}). Remember to set the units if you want to
+    Note that this layout is 100% in both directions by default
+    (L{setSizeFull}). Remember to set the units if you want to
     specify a fixed size. If the layout fails to show up, check that the
     parent layout is actually giving some space.
 

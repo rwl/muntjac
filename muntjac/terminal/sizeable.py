@@ -92,10 +92,10 @@ class ISizeable(object):
                 - (width, unit)
                   1. the width of the object.
                   2. the unit used for the width. Possible values include
-                     L{#UNITS_PIXELS}, L{#UNITS_POINTS},
-                     L{#UNITS_PICAS}, L{#UNITS_EM}, L{#UNITS_EX},
-                     L{#UNITS_MM}, L{#UNITS_CM}, L{#UNITS_INCH},
-                     L{#UNITS_PERCENTAGE}.
+                     L{UNITS_PIXELS}, L{UNITS_POINTS},
+                     L{UNITS_PICAS}, L{UNITS_EM}, L{UNITS_EX},
+                     L{UNITS_MM}, L{UNITS_CM}, L{UNITS_INCH},
+                     L{UNITS_PERCENTAGE}.
 
         See U{CSS specification
         <http://www.w3.org/TR/REC-CSS2/syndata.html#value-def-length>} for
@@ -128,10 +128,10 @@ class ISizeable(object):
                 - (height, unit)
                   1. the height of the object.
                   2. the unit used for the width. Possible values include
-                     L{#UNITS_PIXELS}, L{#UNITS_POINTS},
-                     L{#UNITS_PICAS}, L{#UNITS_EM}, L{#UNITS_EX},
-                     L{#UNITS_MM}, L{#UNITS_CM}, L{#UNITS_INCH},
-                     L{#UNITS_PERCENTAGE}.
+                     L{UNITS_PIXELS}, L{UNITS_POINTS},
+                     L{UNITS_PICAS}, L{UNITS_EM}, L{UNITS_EX},
+                     L{UNITS_MM}, L{UNITS_CM}, L{UNITS_INCH},
+                     L{UNITS_PERCENTAGE}.
         """
         raise NotImplementedError
 

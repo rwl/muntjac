@@ -498,7 +498,7 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
 
     def getDateFormat(self):
         """Returns a format string used to format date value on client side
-        or null if default formatting from L{IComponent,getLocale} is
+        or null if default formatting from L{IComponent.getLocale} is
         used.
 
         @return: the dateFormat

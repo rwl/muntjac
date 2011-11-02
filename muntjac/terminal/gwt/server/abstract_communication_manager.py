@@ -179,9 +179,9 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
     def doHandleSimpleMultipartFileUpload(self, request, response,
                 streamVariable, variableName, owner, boundary):
         """Method used to stream content from a multipart request (either
-        from servlet or portlet request) to given StreamVariable
+        from servlet or portlet request) to given StreamVariable.
 
-        @raise L{IOException}
+        @raise IOException:
         """
         # multipart parsing, supports only one file for request, but that is
         # fine for our current terminal
@@ -257,7 +257,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                 variableName, owner, contentLength):
         """Used to stream plain file post (aka XHR2.post(File))
 
-        @raise L{IOException}
+        @raise IOException:
         """
         # These are unknown in filexhr ATM, maybe add to Accept header that
         # is accessible in portlets
@@ -287,8 +287,8 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
     def streamToReceiver(self, inputStream, streamVariable, filename, typ,
                 contentLength):
         """@return: true if the streamvariable has informed that the terminal
-                can forget this variable
-        @raise L{UploadException}:
+                    can forget this variable
+        @raise UploadException:
         """
         if streamVariable is None:
             raise ValueError, 'StreamVariable for the post not found'
@@ -374,7 +374,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
 
 
     def sendUploadResponse(self, request, response):
-        """@raise L{IOException}:
+        """@raise IOException:
         """
         response.setContentType('text/html')
         out = response.getOutputStream()
@@ -401,8 +401,8 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         @param window:
                    target window for the UIDL request, can be null if target
                    not found
-        @raise L{IOException}:
-        @raise L{InvalidUIDLSecurityKeyException}:
+        @raise IOException:
+        @raise InvalidUIDLSecurityKeyException:
         """
         self._requestThemeName = request.getParameter('theme')
 
@@ -483,8 +483,8 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
 
     def paintAfterVariableChanges(self, request, response, callback,
                 repaintAll, outWriter, window, analyzeLayouts):
-        """@raise L{PaintException}
-        @raise L{IOException}
+        """@raise PaintException:
+        @raise IOException:
         """
         if repaintAll:
             self.makeAllPaintablesDirty(window)
@@ -983,7 +983,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         """Reads the request data from the Request and returns it converted
         to an UTF-8 string.
 
-        @raise L{IOException}:
+        @raise IOException:
         """
         requestLength = request.getContentLength()
         if requestLength == 0:
@@ -1308,7 +1308,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                    the response to write to.
         @param application:
                    the Application to end.
-        @raise L{IOException}:
+        @raise IOException:
                     if the writing failed due to input/output error.
         """
         logoutUrl = application.getLogoutURL()
@@ -1493,7 +1493,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         L{DownloadStream} returned by the handler.
 
         If the window is the main window of an application, the (deprecated)
-        L{Application#handleURI(java.net.URL, String)} is called first
+        L{Application.handleURI} is called first
         to handle L{ApplicationResource}s, and the window handler is
         only called if it returns null.
 
@@ -1615,7 +1615,7 @@ class IRequest(object):
         The request content length can be obtained with
         L{getContentLength} without reading the full stream contents.
 
-        @raise L{IOException}
+        @raise IOException:
         """
         raise NotImplementedError
 
@@ -1658,7 +1658,7 @@ class IResponse(object):
     def getOutputStream(self):
         """Gets the output stream to which the response can be written.
 
-        @raise L{IOException}:
+        @raise IOException:
         """
         raise NotImplementedError
 
@@ -1855,7 +1855,7 @@ class SimpleMultiPartInputStream(StringIO):  # FIXME InputStream
 
         @return: -1 if the boundary was matched, else returns the first byte
                 from boundary
-        @raise L{IOException}:
+        @raise IOException:
         """
         self._matchedCount = 0
 
@@ -1882,7 +1882,7 @@ class SimpleMultiPartInputStream(StringIO):  # FIXME InputStream
         """Returns the partly matched boundary string and the byte following
         that.
 
-        @raise L{IOException}:
+        @raise IOException:
         """
         if self._matchedCount == 0:
             # The boundary has been returned, return the buffered byte.

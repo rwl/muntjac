@@ -29,9 +29,9 @@ class NullValidator(IValidator):
     def __init__(self, errorMessage, onlyNullAllowed):
         """Creates a new NullValidator.
 
-        @param errorMessage
+        @param errorMessage:
                    the error message to display on invalidation.
-        @param onlyNullAllowed
+        @param onlyNullAllowed:
                    Are only nulls allowed?
         """
         self._onlyNullAllowed = None
@@ -59,7 +59,7 @@ class NullValidator(IValidator):
 
         @param value:
                    the value to validate.
-        @returns C{True} for valid value, otherwise C{False}.
+        @return: C{True} for valid value, otherwise C{False}.
         """
         return value is None if self._onlyNullAllowed else value is not None
 

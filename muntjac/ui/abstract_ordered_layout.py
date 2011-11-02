@@ -185,7 +185,7 @@ class AbstractOrderedLayout(AbstractLayout, IAlignmentHandler,
 
         @deprecated: Replaced by L{setComponentAlignment}
 
-        @param component:
+        @param childComponent:
                    A child component in this layout
         @param alignment:
                    A short hand notation described in L{AlignmentUtils}

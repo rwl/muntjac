@@ -140,9 +140,9 @@ class ITransactionListener(object):
         to check that the request is associated with the application you are
         interested in. This can be done looking at the application parameter.
 
-        @param applcation:
-                   the Application object.
+        @param application:
+                   the application object.
         @param transactionData:
-                   the Data identifying the transaction.
+                   the data identifying the transaction.
         """
         raise NotImplementedError

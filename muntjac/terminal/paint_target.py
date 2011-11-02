@@ -126,14 +126,12 @@ class IPaintTarget(object):
         implementations that reserve a lot of memory this may be a critical
         issue.
 
-        @param owner:
-                   the ReceiverOwner that can track the progress of streaming
-                   to the given StreamVariable
-        @param name:
-                   an identifying name for the StreamVariable
-        @param value:
-                   the StreamVariable to paint
-
+        @param args: tuple of the form
+            - (owner, name, value)
+              1. the ReceiverOwner that can track the progress of streaming
+                 to the given StreamVariable
+              2. an identifying name for the StreamVariable
+              3. the StreamVariable to paint
         @raise PaintException:
                     if the paint operation failed.
         """

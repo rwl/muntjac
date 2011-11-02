@@ -31,7 +31,7 @@ class IItem(object):
         the IItem. If the IItem does not contain the Property, C{None} is
         returned.
 
-        @param id:
+        @param idd:
                    identifier of the Property to get
         @return: the Property with the given ID or C{None}
         """
@@ -52,9 +52,9 @@ class IItem(object):
 
         This functionality is optional.
 
-        @param id:
+        @param idd:
                    ID of the new Property
-        @param property
+        @param prop:
                    the Property to be added and associated with the id
         @return: C{True} if the operation succeeded, C{False}
                 if not
@@ -69,7 +69,7 @@ class IItem(object):
 
         This functionality is optional.
 
-        @param id:
+        @param idd:
                    ID of the Property to be removed
         @return: C{True} if the operation succeeded C{False} if not
         @raise NotImplementedError:

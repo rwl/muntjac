@@ -425,7 +425,7 @@ class AbstractComponent(IComponent, IMethodEventSource):
         for more information on what the description is. This method will
         trigger a L{RepaintRequestEvent}.
 
-        @param description
+        @param description:
                    the new description string for the component.
         """
         self._description = description
@@ -648,7 +648,7 @@ class AbstractComponent(IComponent, IMethodEventSource):
 
     def paintContent(self, target):
         """Paints any needed component-specific things to the given UIDL
-        stream. The more general L{#paint(PaintTarget)} method handles
+        stream. The more general L{paint} method handles
         all general attributes common to all components, and it calls this
         method to paint any component-specific attributes to the UIDL stream.
 
@@ -677,8 +677,6 @@ class AbstractComponent(IComponent, IMethodEventSource):
 
     def fireRequestRepaintEvent(self, alreadyNotified):
         """Fires the repaint request event.
-
-        @param alreadyNotified
         """
         # Notify listeners only once
         if not self._repaintRequestListenersNotified:
@@ -1093,11 +1091,11 @@ class AbstractComponent(IComponent, IMethodEventSource):
 
 class IComponentErrorHandler(object):
     """Handle the component error
-
-    @return: True if the error has been handled False, otherwise
     """
 
     def handleComponentError(self, event):
+        """@return: True if the error has been handled False, otherwise
+        """
         pass
 
 

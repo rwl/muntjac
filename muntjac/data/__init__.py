@@ -18,7 +18,7 @@
 data and data collections to components, and for validating data.
 
 Data binding
-------------
+============
 
 The package contains a three-tiered structure for typed data
 objects and collections of them:
@@ -34,13 +34,13 @@ objects and collections of them:
       information.
 
 Buffering
----------
+=========
 
 A L{IBuffered} implementor is able to track and buffer changes and commit
 or discard them later.
 
 Validation
-----------
+==========
 
 L{IValidator} implementations are used to validate data, typically the value
 of a L{IField}. One or more L{IValidator} can be added to a L{IValidatable}

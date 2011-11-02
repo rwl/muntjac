@@ -860,7 +860,7 @@ class Application(IUriHandler, ITerminal, IErrorListener):
 
         This is the URL what can be entered to a browser window to start the
         application. Navigating to the application URL shows the main window (
-        L{#getMainWindow()}) of the application. Note that the main window
+        L{getMainWindow}) of the application. Note that the main window
         can also be shown by navigating to the window url (L{Window.getURL}).
 
         @return: the application's URL.
@@ -874,7 +874,7 @@ class Application(IUriHandler, ITerminal, IErrorListener):
         In effect this will cause the application stop returning any windows
         when asked. When the application is closed, its state is removed from
         the session and the browser window is redirected to the application
-        logout url set with L{#setLogoutURL(String)}. If the logout url has not
+        logout url set with L{setLogoutURL}. If the logout url has not
         been set, the browser window is reloaded and the application is
         restarted.
         """
@@ -910,7 +910,7 @@ class Application(IUriHandler, ITerminal, IErrorListener):
         """Tests if the application is running or if it has been finished.
 
         Application starts running when its L{start} method has been
-        called and stops when the L{#close()} is called.
+        called and stops when the L{close} is called.
 
         @return: C{True} if the application is running, C{False} if not.
         """
@@ -1269,8 +1269,8 @@ class Application(IUriHandler, ITerminal, IErrorListener):
         returning L{CustomizedSystemMessages}. To "override" this method,
         re-implement this method in your application (the class that extends
         L{Application}). Even though overriding class methods is not
-        possible in Python, Vaadin selects to call the static method from the
-        subclass instead of the original L{#getSystemMessages()} if such a
+        possible in Python, Muntjac selects to call the static method from the
+        subclass instead of the original L{getSystemMessages} if such a
         method exists.
 
         @return: the SystemMessages for this application

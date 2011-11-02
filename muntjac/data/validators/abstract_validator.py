@@ -24,7 +24,7 @@ class AbstractValidator(IValidator):
 
     To include the value that failed validation in the exception message you
     can use "{0}" in the error message. This will be replaced with the failed
-    value (converted to string using L{#toString()}) or "null" if the value is
+    value (converted to string using L{__str__}) or "null" if the value is
     None.
 
     @author: IT Mill Ltd.

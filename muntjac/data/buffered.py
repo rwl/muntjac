@@ -158,7 +158,7 @@ class SourceException(RuntimeError, IErrorMessage):
 
         @param source:
                    the source object implementing the IBuffered interface.
-        @param causes:
+        @param cause:
                    the original causes for this exception.
         """
         # Source class implementing the buffered interface

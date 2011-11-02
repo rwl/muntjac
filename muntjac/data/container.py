@@ -191,7 +191,7 @@ class IContainer(object):
 
         @param propertyId:
                    ID of the Property
-        @param type:
+        @param typ:
                    Data type of the new Property
         @param defaultValue:
                    The value all created Properties are initialized to

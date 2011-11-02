@@ -195,8 +195,6 @@ class ComponentPosition(object):
         included in the string are reset to their unset states.
 
         C{setCSSString("top:10px;left:20%;z-index:16;")}
-
-        @param css
         """
         self._topValue = self._bottomValue = None
         self._rightValue = self._leftValue = None
@@ -326,7 +324,7 @@ class ComponentPosition(object):
 
         @param bottomValue:
                    The value of the 'bottom' attribute
-        @param units:
+        @param bottomUnits:
                    The unit of the 'bottom' attribute. See UNIT_SYMBOLS
                    for a description of the available units.
         """
@@ -341,7 +339,7 @@ class ComponentPosition(object):
 
         @param leftValue:
                    The value of the 'left' attribute
-        @param units:
+        @param leftUnits:
                    The unit of the 'left' attribute. See UNIT_SYMBOLS
                    for a description of the available units.
         """
@@ -498,7 +496,7 @@ class ComponentPosition(object):
     def setBottomUnits(self, bottomUnits):
         """Sets the unit for the 'bottom' attribute
 
-        @param bottomUnits
+        @param bottomUnits:
                    See L{ISizeable} UNIT_SYMBOLS for a description
                    of the available units.
         """

@@ -23,12 +23,11 @@ class IParameterHandler(object):
 
     What parameters are provided depend on what the L{Terminal} provides
     and if the application is deployed as a servlet. URL GET
-    parameters are typically provided to the L{#handleParameters(Map)}
+    parameters are typically provided to the L{handleParameters}
     method.
 
     A C{IParameterHandler} must be registered to a C{Window} using
-    L{Window#addParameterHandler(IParameterHandler)} to be called when
-    parameters are available.
+    L{Window.addParameterHandler} to be called when parameters are available.
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln

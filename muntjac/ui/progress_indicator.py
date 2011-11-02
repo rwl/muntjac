@@ -116,7 +116,7 @@ class ProgressIndicator(AbstractField, prop.IValueChangeListener,
         ProgressIndicator is a float between 0 and 1.
 
         @return: the Value of the ProgressIndicator.
-        @see: LAbstractField.getValue}
+        @see: L{AbstractField.getValue}
         """
         if self._dataSource is None:
             raise ValueError, 'datasource must be set'

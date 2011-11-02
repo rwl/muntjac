@@ -1240,7 +1240,7 @@ class TargetInSubtree(ClientSideCriterion):
         @param rootId:
                    the item identifier of the parent node or the node to be
                    sought for
-        @param depthToCheck
+        @param depthToCheck:
                    the depth that tree is traversed upwards to seek for the
                    parent, -1 means that the whole structure should be
                    checked

@@ -1007,7 +1007,7 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
         """Tests if an item is selected.
 
         In single select mode testing selection status of the item identified
-        by L{#getNullSelectionItemId()} returns true if the value of the
+        by L{getNullSelectionItemId} returns true if the value of the
         property is null.
 
         @param itemId:
@@ -1032,7 +1032,7 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
         """Selects an item.
 
         In single select mode selecting item identified by
-        L{#getNullSelectionItemId()} sets the value of the property
+        L{getNullSelectionItemId} sets the value of the property
         to null.
 
         @param itemId:
@@ -1298,7 +1298,7 @@ class IFiltering(object):
     def setFilteringMode(self, filteringMode):
         """Sets the option filtering mode.
 
-        @param filteringMode
+        @param filteringMode:
                    the filtering mode to use
         """
         raise NotImplementedError

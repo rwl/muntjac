@@ -56,9 +56,9 @@ class AlignmentUtils(object):
     def setComponentAlignment(cls, parent, component, alignment):
         """Set the alignment for the component using short notation.
 
-        @param parent
-        @param component
-        @param alignment
+        @param parent:
+        @param component:
+        @param alignment:
                    String containing one or two alignment strings. If short
                    notation "r", "t", etc is used valid strings include
                    "r", "rt", "tr", "t". If the longer notation is used the

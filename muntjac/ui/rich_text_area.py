@@ -253,7 +253,7 @@ class RichTextArea(AbstractField):
         @param nullSettingAllowed:
                    Should the null-string representation be always converted
                    to null-values.
-        @see: L{TextField.getNullRepresentation]
+        @see: L{TextField.getNullRepresentation}
         """
         self._nullSettingAllowed = nullSettingAllowed
 
@@ -271,7 +271,7 @@ class RichTextArea(AbstractField):
     def setFormat(self, frmt):
         """Gets the value formatter of TextField.
 
-        @param format:
+        @param frmt:
                    the format used to format the value. Null disables the
                    formatting.
         @deprecated: replaced by L{PropertyFormatter}

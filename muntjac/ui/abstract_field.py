@@ -352,11 +352,11 @@ class AbstractField(AbstractComponent, field.IField,
         """Sets the value of the field.
 
         @param newValue:
-                   the New value of the field.
+                   the new value of the field.
         @param repaintIsNotNeeded:
                    True iff caller is sure that repaint is not needed.
-        @raise ReadOnlyException
-        @raise ConversionException
+        @raise ReadOnlyException:
+        @raise ConversionException:
         """
         if ((newValue is None and self._value is not None)
                 or (newValue is not None
@@ -932,8 +932,6 @@ class AbstractField(AbstractComponent, field.IField,
     def setCurrentBufferedSourceException(self,
                 currentBufferedSourceException):
         """Sets the current buffered source exception.
-
-        @param currentBufferedSourceException
         """
         self._currentBufferedSourceException = currentBufferedSourceException
         self.requestRepaint()

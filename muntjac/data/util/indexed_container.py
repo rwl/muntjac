@@ -112,7 +112,7 @@ class IndexedContainer(AbstractInMemoryContainer,
     def getType(self, propertyId):
         """Gets the type of a IProperty stored in the list.
 
-        @param id:
+        @param propertyId:
                    the ID of the IProperty.
         @return: Type of the requested IProperty
         """
@@ -673,7 +673,7 @@ class IndexedContainerProperty(prop.IProperty, prop.IValueChangeNotifier):
                    the ID of the IItem to connect the new IProperty to.
         @param propertyId:
                    the IProperty ID of the new IProperty.
-        @param host:
+        @param container:
                    the list that contains the IItem to contain the new
                    IProperty.
         """

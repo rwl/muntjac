@@ -253,7 +253,7 @@ class ContainerHierarchicalWrapper(IHierarchical, IContainer,
         @param itemId:
                    the ID of the Item in the container whose child capability
                    is to be set.
-        @param childrenAllowed
+        @param childrenAllowed:
                    the boolean value specifying if the Item can have children
                    or not.
         @return: C{True} if the operation succeeded, C{False} if not
@@ -435,7 +435,7 @@ class ContainerHierarchicalWrapper(IHierarchical, IContainer,
 
         @param propertyId:
                    the ID of the new Property.
-        @param type:
+        @param typ:
                    the Data type of the new Property.
         @param defaultValue:
                    the value all created Properties are initialized to.

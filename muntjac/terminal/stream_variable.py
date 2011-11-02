@@ -117,8 +117,8 @@ class IStreamingEvent(object):
 
 
 class IStreamingStartEvent(IStreamingEvent):
-    """Event passed to L{#uploadStarted(IStreamingStartEvent)} method
-    before the streaming of the content to L{IStreamVariable} starts.
+    """Event passed to L{uploadStarted} method before the streaming of the
+    content to L{IStreamVariable} starts.
     """
 
     def disposeStreamVariable(self):
@@ -143,7 +143,7 @@ class IStreamingEndEvent(IStreamingEvent):
 
 
 class IStreamingErrorEvent(IStreamingEvent):
-    """Event passed to L{#uploadFailed(IStreamingErrorEvent)} method
+    """Event passed to L{uploadFailed} method
     when the streaming ended before the end of the input. The streaming may
     fail due an interruption by [] or due an other unknown exception
     in communication. In the latter case the exception is also passed to

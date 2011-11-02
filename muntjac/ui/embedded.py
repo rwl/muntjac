@@ -330,7 +330,7 @@ class Embedded(AbstractComponent):
           - TYPE_IMAGE
           - TYPE_BROWSER
 
-        @param type: the type to set.
+        @param typ: the type to set.
         """
         if (typ != self.TYPE_OBJECT and typ != self.TYPE_IMAGE
                 and typ != self.TYPE_BROWSER):

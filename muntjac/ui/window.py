@@ -164,7 +164,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
         #: B{Application window only.} Border mode of the Window.
         self._border = self.BORDER_DEFAULT
 
-        #: B[Sub window only}. Top offset in pixels for the sub window
+        #: B{Sub window only}. Top offset in pixels for the sub window
         #  (relative to the parent application window) or -1 if unspecified.
         self._positionY = -1
 
@@ -724,7 +724,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
         The name also determines the URL that can be used for direct access to
         a window. All windows can be accessed through
         C{http://host:port/app/win} where C{http://host:port/app} is
-        the application URL (as returned by L{Application#getURL()} and
+        the application URL (as returned by L{Application.getURL} and
         C{win} is the window name.
 
         This method can only be called before the window is added to an
@@ -747,7 +747,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
         """Sets the user terminal. Used by the terminal adapter, should never
         be called from application code.
 
-        @param type:
+        @param typ:
                    the terminal to set.
         """
         self._terminal = typ
@@ -810,7 +810,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
         also closed on the client-side, but they are not implicitly removed
         from the application.
 
-        To explicitly close a sub-window, use L{#removeWindow(Window)}.
+        To explicitly close a sub-window, use L{removeWindow}.
         To react to a window being closed (after it is closed), register a
         L{ICloseListener}.
         """
@@ -1096,7 +1096,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
         return self._modal
 
 
-    def setResizable(self, resizeability):
+    def setResizable(self, resizable):
         """Sets sub-window resizable. B{Note:} affects sub-windows only.
 
         @param resizable:
@@ -1286,9 +1286,6 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
         a sub window is draggable.
 
         Draggable only applies to sub windows, not to browser level windows.
-
-        @param draggable:
-                   true if the sub window can be dragged by the user
         """
         return self._draggable
 
@@ -1330,7 +1327,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
 
     def removeCloseShortcut(self):
         """Removes the keyboard shortcut previously set with
-        L{#setCloseShortcut(int, int...)}.
+        L{setCloseShortcut}.
         """
         if self.closeShortcut is not None:
             self.removeAction(self.closeShortcut)
@@ -1412,7 +1409,6 @@ class OpenResource(object):
 class CloseEvent(ComponentEvent):
 
     def __init__(self, source):
-        """@param source"""
         super(CloseEvent, self).__init__(source)
 
 
@@ -1615,7 +1611,7 @@ class Notification(object):
     def setPosition(self, position):
         """Sets the position of the notification message.
 
-        @param position
+        @param position:
                    The desired notification position
         """
         self._position = position

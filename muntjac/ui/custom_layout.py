@@ -137,7 +137,7 @@ class CustomLayout(AbstractLayout):
     def getComponent(self, location):
         """Gets the child-component by its location.
 
-        @param location the name of the location where the requested
+        @param location: the name of the location where the requested
                component resides.
         @return: the IComponent in the given location or null if not found.
         """

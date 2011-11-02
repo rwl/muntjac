@@ -119,22 +119,22 @@ class Slider(AbstractField):
         return self._max
 
 
-    def setMax(self, maxx):
+    def setMax(self, maximum):
         """Set the maximum value of the Slider. If the current value of
         the Slider is out of new bounds, the value is set to new minimum.
 
-        @param max: new maximum value of the Slider
+        @param maximum: new maximum value of the Slider
         """
-        self._max = maxx
+        self._max = maximum
 
         try:
-            if float(str( self.getValue() )) > maxx:
-                super(Slider, self).setValue( float(maxx) )
+            if float(str( self.getValue() )) > maximum:
+                super(Slider, self).setValue( float(maximum) )
         except ValueError:  # ClassCastException
             # FIXME: Handle exception
             # Where does ClassCastException come from? Can't see any casts
             # above
-            super(Slider, self).setValue( float(maxx) )
+            super(Slider, self).setValue( float(maximum) )
 
         self.requestRepaint()
 
@@ -147,23 +147,23 @@ class Slider(AbstractField):
         return self._min
 
 
-    def setMin(self, minn):
+    def setMin(self, minimum):
         """Set the minimum value of the Slider. If the current value of
         the Slider is out of new bounds, the value is set to new minimum.
 
-        @param min:
+        @param minimum:
                    New minimum value of the Slider.
         """
-        self._min = minn
+        self._min = minimum
 
         try:
-            if float( str(self.getValue()) ) < minn:
-                super(Slider, self).setValue(float(minn))
+            if float( str(self.getValue()) ) < minimum:
+                super(Slider, self).setValue(float(minimum))
         except ValueError:  # ClassCastException
             # FIXME: Handle exception
             # Where does ClassCastException come from? Can't see any casts
             # above
-            super(Slider, self).setValue(float(minn))
+            super(Slider, self).setValue(float(minimum))
 
         self.requestRepaint()
 
@@ -178,8 +178,6 @@ class Slider(AbstractField):
 
     def setOrientation(self, orientation):
         """Set the orientation of the Slider.
-
-        @param new orientation
         """
         self._orientation = orientation
         self.requestRepaint()
@@ -195,8 +193,6 @@ class Slider(AbstractField):
 
     def setResolution(self, resolution):
         """Set a new resolution for the Slider.
-
-        @param resolution
         """
         if resolution < 0:
             return
@@ -212,7 +208,7 @@ class Slider(AbstractField):
                    (min - max), otherwise throws an exception.
         @param repaintIsNotNeeded:
                    If true, client-side is not requested to repaint itself.
-        @raise ValueOutOfBoundsException
+        @raise ValueOutOfBoundsException:
         """
         v = value
 

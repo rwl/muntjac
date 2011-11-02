@@ -58,11 +58,11 @@ class JsonPaintTarget(IPaintTarget):
     def __init__(self, manager, outWriter, cachingRequired):
         """Creates a new XMLPrintWriter, without automatic line flushing.
 
-        @param variableMap:
         @param manager:
         @param outWriter:
                    A character-output stream.
-        @raise L{PaintException}:
+        @param cachingRequired:
+        @raise PaintException:
                     if the paint operation failed.
         """
         self._manager = manager
@@ -294,7 +294,7 @@ class JsonPaintTarget(IPaintTarget):
     def addText(self, s):
         """Prints XML-escaped text.
 
-        @raise L{PaintException}:
+        @raise PaintException:
                     if the paint operation failed.
         """
         self._tag.addData('\"' + self.escapeJSON(s) + '\"')
@@ -427,7 +427,7 @@ class JsonPaintTarget(IPaintTarget):
                    the Listener for variable changes.
         @param name:
                    the Variable name.
-        @raise L{PaintException}:
+        @raise PaintException:
                     if the paint operation failed.
         """
         self.startTag('uploadstream')
@@ -444,7 +444,7 @@ class JsonPaintTarget(IPaintTarget):
                    the name of the tag.
         @param sectionData:
                    the section data to be printed.
-        @raise L{PaintException}:
+        @raise PaintException:
                     if the paint operation failed.
         """
         self._tag.addData(('{\"' + sectionTagName + '\":\"'
@@ -456,7 +456,7 @@ class JsonPaintTarget(IPaintTarget):
 
         @param xml:
                    the Xml to be added.
-        @raise L{PaintException}:
+        @raise PaintException:
                     if the paint operation failed.
         """
         # Ensure that the target is open
@@ -480,9 +480,8 @@ class JsonPaintTarget(IPaintTarget):
                    the section data.
         @param namespace:
                    the namespace to be added.
-        @raise L{PaintException}:
+        @raise PaintException:
                     if the paint operation failed.
-
         @see: L{IPaintTarget.addXMLSection}
         """
         # Ensure that the target is open
@@ -675,7 +674,7 @@ class JsonTag(object):
 
 
     def addData(self, s):
-        """@param s json string, object or array"""
+        """@param s: json string, object or array"""
         self._children.append(s)
 
 

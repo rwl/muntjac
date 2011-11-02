@@ -46,10 +46,10 @@ class BaseFieldFactory(IFieldFactory):
     def createField(self, *args):
         """Creates the field based on type of data.
 
-        @param type:
-                   the type of data presented in field.
-        @param uiContext:
-                   the context where the Field is presented.
+        @param args: tuple of the form
+            - (type, uiContext)
+              1. the type of data presented in field.
+              2. the context where the Field is presented.
         @see: L{IFieldFactory.createField}
         """
         nargs = len(args)

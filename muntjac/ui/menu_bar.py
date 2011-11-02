@@ -198,7 +198,7 @@ class MenuBar(AbstractComponent):
                    the command for the menu item
         @param itemToAddBefore:
                    the item that will be after the new item
-        @raise IllegalArgumentException
+        @raise ValueError:
         """
         if caption is None:
             raise ValueError, 'caption cannot be null'
@@ -366,7 +366,7 @@ class MenuItem(object):
         command associated with it. Icon and command can be null, but a
         caption must be given.
 
-        @param text:
+        @param caption:
                    The text associated with the command
         @param command:
                    The command to be fired
@@ -768,7 +768,7 @@ class MenuItem(object):
 
     def setChecked(self, checked):
         """Sets the checked state of the item. Only used if the item is
-        checkable (indicated by L{#isCheckable()}). The checked state is
+        checkable (indicated by L{isCheckable}). The checked state is
         indicated in the UI with the item, if the item is checkable.
 
         An item is not checked by default.

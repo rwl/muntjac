@@ -176,7 +176,7 @@ class CssLayout(AbstractLayout, ILayoutClickNotifier):
         child rendering. Previous styles are not cleared, but overridden.
 
         Note that one most often achieves better code style, by separating
-        styling to theme (with custom theme and L{#addStyleName(String)}.
+        styling to theme (with custom theme and L{addStyleName}.
         With own custom styles it is also very easy to break browser
         compatibility.
 

@@ -33,7 +33,7 @@ class DefaultItemSorter(IItemSorter):
         comparing C{Property} values. Uses the default C{Comparator}
         for comparing C{Property} values if propertyValueComparator is None.
 
-        @param propertyValueComparator
+        @param propertyValueComparator:
                    The comparator to use when comparing individual
                    C{Property} values
         """

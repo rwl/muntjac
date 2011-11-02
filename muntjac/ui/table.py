@@ -110,8 +110,8 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     #  B{This is the default behavior.}
     COLUMN_HEADER_MODE_EXPLICIT_DEFAULTS_ID = 2
 
-    #: Row caption mode: The row headers are hidden. B{This is the
-    #  default mode.}
+    #: Row caption mode: The row headers are hidden.
+    #  B{This is the default mode.}
     ROW_HEADER_MODE_HIDDEN = -1
 
     #: Row caption mode: Items Id-objects toString is used as row caption.
@@ -380,7 +380,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
         The headers match the property id:s given my the set visible column
         headers. The table must be set in either L{COLUMN_HEADER_MODE_EXPLICIT}
-        or L{#COLUMN_HEADER_MODE_EXPLICIT_DEFAULTS_ID} mode to show the
+        or L{COLUMN_HEADER_MODE_EXPLICIT_DEFAULTS_ID} mode to show the
         headers. In the defaults mode any nulls in the headers array are
         replaced with id.toString() outputs when rendering.
 
@@ -463,7 +463,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         """Gets the array of column alignments.
 
         The items in the array must match the properties identified by
-        L{#getVisibleColumns()}. The possible values for the alignments
+        L{getVisibleColumns}. The possible values for the alignments
         include:
 
           - L{ALIGN_LEFT}: Left alignment
@@ -1361,7 +1361,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
         @see: L{getPropertyValue}
 
-        @param oldVisibleComponents:
+        @param component:
                    a set of components that should be unregistered.
         """
         component.setParent(None)
@@ -1438,14 +1438,14 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         """Adds the new row to table and fill the visible cells (except
         generated columns) with given values.
 
-        @param cells:
-                   the Object array that is used for filling the visible
-                   cells new row. The types must be settable to visible
-                   column property types.
-        @param itemId:
-                   the Id the new row. If null, a new id is automatically
-                   assigned. If given, the table cant already have a item
-                   with given id.
+        @param args: tuple of the form
+            - (cells, itemId)
+              1. the Object array that is used for filling the visible
+                 cells new row. The types must be settable to visible
+                 column property types.
+              2. the Id the new row. If null, a new id is automatically
+                 assigned. If given, the table cant already have a item
+                 with given id.
         @return: Returns item id for the new row. Returns null if operation
                  fails.
         """
@@ -1547,11 +1547,6 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
     def getItemIdsInRange(self, itemId, length):
         """Gets items ids from a range of key values
-
-        @param startRowKey:
-                   The start key
-        @param endRowKey:
-                   The end key
         """
         ids = set()
         for _ in range(length):
@@ -2309,7 +2304,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                    the Id of the row (same as item Id).
         @param colId:
                    the Id of the column.
-        @param property:
+        @param prop:
                    the Property to be presented.
         @return: Object either formatted value or IComponent for field.
         @see: L{setTableFieldFactory}
@@ -2493,7 +2488,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
               2. the class of the property.
               3. the default value given for all existing items.
             - (propertyId, type, defaultValue, columnHeader, columnIcon,
-              columnAlignment)
+            columnAlignment)
               1. the Id of the proprty
               2. the class of the property
               3. the default value given for all existing items
@@ -2502,7 +2497,6 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
               5. the Icon of the column. If icon is not needed, this should
                  be set null.
               6. the Alignment of the column. Null implies align left.
-
         @raise NotImplementedError:
                     if the operation is not supported.
         @see: L{IContainer.addContainerProperty}
@@ -2558,7 +2552,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         Also note that getVisibleColumns() will return the generated columns,
         while getContainerPropertyIds() will not.
 
-        @param id:
+        @param idd:
                    the id of the column to be added
         @param generatedColumn:
                    the L{IColumnGenerator} to use for this column

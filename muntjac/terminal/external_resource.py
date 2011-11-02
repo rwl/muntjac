@@ -32,9 +32,9 @@ class ExternalResource(IResource):
         """Creates a new download component for downloading directly from
         given URL.
 
-        @param sourceURL
+        @param sourceURL:
                    the source URL.
-        @param mimeType
+        @param mimeType:
                    the MIME Type
         """
         # Url of the download.

@@ -43,7 +43,7 @@ class IMethodEventSource(object):
                    the object instance who owns the activation method.
         @param method:
                    the activation method or the name of the activation method.
-        @raise ValueError
+        @raise ValueError:
                     unless C{method} has a match in C{object}
         """
         raise NotImplementedError
@@ -61,7 +61,7 @@ class IMethodEventSource(object):
 
         @param eventType:
                    the exact event type the C{object} listens to.
-        @param target:
+        @param obj:
                    the target object that has registered to listen to events
                    of type eventType with one or more methods.
         @param method:

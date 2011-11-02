@@ -61,7 +61,7 @@ class IPaintable(IEventListener):
         identifier should be set before the component is painted for the first
         time and kept the same while visible in the client.
 
-        @param id:
+        @param idd:
                    A short (< 20 chars) alphanumeric id
         """
         raise NotImplementedError

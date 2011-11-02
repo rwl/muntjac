@@ -38,7 +38,7 @@ class IClickListener(object):
 
     def buttonClick(self, event):
         """Called when a L{Button} has been clicked. A reference to
-        the button is given by L{ClickEvent#getButton()}.
+        the button is given by L{ClickEvent.getButton}.
 
         @param event:
                    An event containing information about the click.
@@ -118,7 +118,7 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
     def paintContent(self, target):
         """Paints the content of this component.
 
-        @param event:
+        @param target:
                    the PaintEvent.
         @raise IOException:
                     if the writing failed due to input/output error.

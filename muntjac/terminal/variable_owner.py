@@ -33,11 +33,11 @@ class IVariableOwner(object):
         """Called when one or more variables handled by the implementing
         class are changed.
 
-        @param source
+        @param source:
                    the Source of the variable change. This is the origin
                    of the event. For example in Web Adapter this is the
                    request.
-        @param variables
+        @param variables:
                    the Mapping from variable names to new variable values.
         """
         raise NotImplementedError

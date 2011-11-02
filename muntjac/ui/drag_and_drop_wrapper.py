@@ -198,12 +198,12 @@ class WrapperTargetDetails(TargetDetailsImpl):
 
 
     def verticalDropLocation(self):
-        """@deprecated: use L{#getVerticalDropLocation()} instead"""
+        """@deprecated: use L{getVerticalDropLocation} instead"""
         return self.getVerticalDropLocation()
 
 
     def horizontalDropLocation(self):
-        """@deprecated: use L{#getHorizontalDropLocation()} instead"""
+        """@deprecated: use L{getHorizontalDropLocation} instead"""
         return self.getHorizontalDropLocation()
 
 

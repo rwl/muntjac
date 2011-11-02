@@ -26,7 +26,7 @@ class And(ClientSideCriterion):
     """
 
     def __init__(self, *criteria):
-        """@param criteria
+        """@param criteria:
                    criteria of which the And criterion will be composed
         """
         self.criteria = criteria

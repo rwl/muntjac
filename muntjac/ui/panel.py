@@ -157,7 +157,7 @@ class Panel(AbstractComponentContainer, IScrollable,
         """Set the content of the Panel. If null is given as the new content
         then a layout is automatically created and set as the content.
 
-        @param content: The new content
+        @param newContent: The new content
         """
         # If the content is null we create the default content
         if newContent is None:
