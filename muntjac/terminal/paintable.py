@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Defines an interface implemented by all classes that can be painted."""
+
 from muntjac.util import IEventListener, EventObject
 
 

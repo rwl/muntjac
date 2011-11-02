@@ -14,6 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Defines a common base class for the server-side implementations of
+the communication system between the client code and the server side
+components."""
+
 import re
 import uuid
 import logging

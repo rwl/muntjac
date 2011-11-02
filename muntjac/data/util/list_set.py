@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""ListSet is an internal Muntjac class which implements a combination of
+a list and a set."""
+
 
 class ListSet(list):
     """ListSet is an internal Muntjac class which implements a combination of

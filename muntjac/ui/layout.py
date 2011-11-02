@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Defines an extension to the C{IComponentContainer} interface which adds the
+layouting control to the elements in the container."""
+
 from muntjac.ui.component_container import IComponentContainer
 
 from muntjac.terminal.gwt.client.ui.v_margin_info import VMarginInfo

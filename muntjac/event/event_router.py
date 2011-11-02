@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Class implementing the inheritable event listening model."""
+
 from muntjac.event.method_event_source import IMethodEventSource
 from muntjac.event.listener_method import ListenerMethod
 

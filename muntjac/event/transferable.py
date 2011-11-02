@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Wraps the data that is to be imported into another component."""
+
 
 class ITransferable(object):
     """ITransferable wraps the data that is to be imported into another

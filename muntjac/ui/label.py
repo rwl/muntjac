@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Defines a component for showing non-editable short texts."""
+
 try:
     from cStringIO import StringIO
 except ImportError, e:

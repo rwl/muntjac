@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Defines a servlet that handles all communication between the client and
+the server."""
+
 import re
 import logging
 import mimetypes
@@ -23,14 +26,12 @@ from time import time
 from warnings import warn
 
 from urlparse import urljoin
-from os.path import join, exists, getmtime, dirname
+from os.path import exists, getmtime
 
 try:
     from StringIO import StringIO
 except ImportError, e:
     from StringIO import StringIO
-
-import muntjac
 
 from muntjac.util import clsname
 from muntjac.application import Application

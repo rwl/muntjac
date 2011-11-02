@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Defines a container component with freely designed layout and style."""
+
 from muntjac.ui.abstract_layout import AbstractLayout
 from muntjac.ui.component import IComponent
 

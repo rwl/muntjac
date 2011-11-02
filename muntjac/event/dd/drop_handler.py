@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Contains the actual business logic for drag and drop operations."""
+
 
 class IDropHandler(object):
     """DropHandlers contain the actual business logic for drag and drop

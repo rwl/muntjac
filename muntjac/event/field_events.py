@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Interface for adding and removing C{FocusEvent} listeners."""
+
 from muntjac.terminal.gwt.client.event_id import EventId
 from muntjac.event.component_event_listener import IComponentEventListener
 from muntjac.ui.component import Event as ComponentEvent

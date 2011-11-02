@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Allows you to chain (compose) many validators to validate one field."""
+
 from muntjac.data.validators.abstract_validator import AbstractValidator
 from muntjac.data.validator import InvalidValueException
 

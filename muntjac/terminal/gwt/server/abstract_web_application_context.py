@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Defines a base class for web application contexts that handles the common
+tasks."""
+
 import logging
 
 from muntjac.service.application_context import IApplicationContext

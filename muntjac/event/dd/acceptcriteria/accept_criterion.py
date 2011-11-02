@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Criterion that can be used create policy to accept/discard dragged
+content."""
+
 
 class IAcceptCriterion(object):
     """Criterion that can be used create policy to accept/discard dragged

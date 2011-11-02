@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Defines a text field that supports multi-line editing."""
+
 from muntjac.ui.abstract_text_field import AbstractTextField
 from muntjac.data.property import IProperty
 

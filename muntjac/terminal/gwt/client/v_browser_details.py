@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Defines a class that parses the user agent string from the browser and
+provides information about the browser."""
+
 import re
 
 

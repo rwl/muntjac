@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Defines an extension to the C{IComponent} interface which adds to it the
+capacity to contain other components."""
+
 from muntjac.ui.component import IComponent, Event
 
 

@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Abstract container class that handles common functionality for
+in-memory containers."""
+
 from muntjac.data.util.default_item_sorter import DefaultItemSorter
 
 from muntjac.data.container import \

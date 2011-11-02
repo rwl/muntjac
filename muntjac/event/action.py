@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Implements the action framework."""
+
 
 class Action(object):
     """Implements the action framework. This class contains subinterfaces for

@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Defines a component with two lists: left side for available items
+and right side for selected items."""
+
 from muntjac.ui.abstract_select import AbstractSelect
 
 from muntjac.terminal.gwt.client.ui.v_twin_col_select import VTwinColSelect

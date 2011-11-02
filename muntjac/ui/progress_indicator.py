@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Defines a component that shows user state of a process."""
+
 from muntjac.data.util.object_property import ObjectProperty
 from muntjac.ui.abstract_field import AbstractField
 

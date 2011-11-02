@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Used for validating properties that do or do not allow null values."""
+
 from muntjac.data.validator import IValidator, InvalidValueException
 
 

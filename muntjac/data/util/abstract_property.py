@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Abstract base class for property implementations."""
+
 from muntjac.data import property as prop
 from muntjac.util import EventObject
 

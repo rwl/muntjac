@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Defines a component container, that can contain two components which are
+split by divider element."""
+
 from muntjac.ui.abstract_split_panel import AbstractSplitPanel
 
 

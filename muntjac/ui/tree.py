@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Used to select an item (or multiple items) from a hierarchical set of
+items."""
+
 from collections import deque
 
 from muntjac.util import clsname

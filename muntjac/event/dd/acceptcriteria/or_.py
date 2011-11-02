@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""A compound criterion that accepts the drag if any of its criterion
+accepts it."""
+
 from muntjac.event.dd.acceptcriteria.client_side_criterion import \
     ClientSideCriterion
 

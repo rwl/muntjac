@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Defines a text editor component."""
+
 from warnings import warn
 
 from muntjac.ui.abstract_text_field import AbstractTextField

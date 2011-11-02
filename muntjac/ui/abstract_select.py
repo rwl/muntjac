@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Defines a class representing a selection of items the user has selected
+in a UI."""
+
 from muntjac.ui.abstract_field import AbstractField
 from muntjac.terminal.resource import IResource
 from muntjac.terminal.key_mapper import KeyMapper

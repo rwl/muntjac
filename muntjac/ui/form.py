@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Provides an easy way of creating and managing sets of fields."""
+
 from warnings import warn
 
 from muntjac.data.item import IEditor, IItem

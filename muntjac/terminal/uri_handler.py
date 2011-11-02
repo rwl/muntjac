@@ -18,7 +18,7 @@ from muntjac.terminal.terminal import IErrorEvent as ITerminalErrorEvent
 
 
 class IUriHandler(object):
-    """A IUriHandler is used for handling URI:s requested by the user and can
+    """A IUriHandler is used for handling URIs requested by the user and can
     optionally provide a L{DownloadStream}. If a L{DownloadStream}
     is returned by L{handleURI}, the stream is sent to the client.
 

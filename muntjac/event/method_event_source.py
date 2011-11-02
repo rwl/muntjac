@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Interface for classes supporting registration of methods as event
+receivers."""
+
 
 class IMethodEventSource(object):
     """Interface for classes supporting registration of methods as event

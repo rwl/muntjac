@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Click event fired by a C{IComponent} implementing C{IContainer}
+interface."""
+
 from muntjac.event.mouse_events import ClickEvent
 
 

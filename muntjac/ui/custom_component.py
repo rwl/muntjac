@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Defines a simple implementation of IComponent interface for creation
+of new UI components by composition of existing components."""
+
 from warnings import warn
 
 from muntjac.util import fullname

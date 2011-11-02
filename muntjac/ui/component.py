@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Defines the top-level interface that is and must be implemented by
+all Muntjac components."""
+
 from muntjac.terminal.variable_owner import IVariableOwner
 from muntjac.terminal.sizeable import ISizeable
 from muntjac.terminal.paintable import IPaintable
@@ -22,7 +25,7 @@ from muntjac.util import EventObject, IEventListener
 
 class IComponent(IPaintable, IVariableOwner, ISizeable):
     """C{IComponent} is the top-level interface that is and must be
-    implemented by all Vaadin components. C{IComponent} is paired with
+    implemented by all Muntjac components. C{IComponent} is paired with
     L{AbstractComponent}, which provides a default implementation for
     all the methods defined in this interface.
 

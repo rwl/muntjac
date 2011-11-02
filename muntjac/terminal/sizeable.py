@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Defines an interface to be implemented by components wishing to display
+some object that may be dynamically resized."""
+
 
 class ISizeable(object):
     """Interface to be implemented by components wishing to display some

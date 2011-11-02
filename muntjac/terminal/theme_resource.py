@@ -14,11 +14,13 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""A named theme dependent resource."""
+
 from muntjac.terminal.resource import IResource
 
 
 class ThemeResource(IResource):
-    """C{ThemeResource} is a named theme dependant resource
+    """C{ThemeResource} is a named theme dependent resource
     provided and managed by a theme. The actual resource contents are
     dynamically resolved to comply with the used theme by the terminal
     adapter. This is commonly used to provide static images, flash,

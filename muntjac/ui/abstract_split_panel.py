@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Defines a base class for a component container that can contain two
+components."""
+
 from muntjac.ui.vertical_layout import VerticalLayout
 from muntjac.ui.abstract_layout import AbstractLayout
 from muntjac.terminal.gwt.client.mouse_event_details import MouseEventDetails

@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Processes changes and paints for single application instance."""
+
 import uuid
 
 from warnings import warn

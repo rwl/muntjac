@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""An item comparator which is compatible with the ISortable interface."""
+
 
 class IItemSorter(object):  # FIXME: Comparator, Cloneable, Serializable
     """An item comparator which is compatible with the L{ISortable} interface.

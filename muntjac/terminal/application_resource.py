@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Interface implemented by classes wishing to provide application
+resources."""
+
 from muntjac.terminal.resource import IResource
 
 

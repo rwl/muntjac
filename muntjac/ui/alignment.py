@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Defines a class containing information about alignment of a component."""
+
 from muntjac.terminal.gwt.client.ui.alignment_info import Bits
 
 

@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""String validator for e-mail addresses."""
+
 from muntjac.data.validators.regexp_validator import RegexpValidator
 
 

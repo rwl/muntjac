@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Defines an interface implemented by all visual objects that can be
+scrolled."""
+
 
 class IScrollable(object):
     """This interface is implemented by all visual objects that can be

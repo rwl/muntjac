@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Class for holding information about a mouse click event."""
+
 from muntjac.terminal.gwt.client.mouse_event_details import MouseEventDetails
 from muntjac.event.component_event_listener import IComponentEventListener
 from muntjac.ui.component import Event as ComponentEvent

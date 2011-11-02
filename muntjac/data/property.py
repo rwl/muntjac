@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""A simple data object that contains one typed value."""
+
 
 class IProperty(object):
     """The C{IProperty} is a simple data object that contains one typed value.

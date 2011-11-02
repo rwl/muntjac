@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""A wrapper class for adding external hierarchy to containers not
+implementing the IHierarchical interface."""
+
 from muntjac.data.container import \
     (IContainer, IHierarchical, IItemSetChangeListener, IItemSetChangeNotifier,
      IPropertySetChangeListener, IPropertySetChangeNotifier)

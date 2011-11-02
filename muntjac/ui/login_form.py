@@ -65,7 +65,7 @@ _ON_LOGIN_METHOD = getattr(ILoginListener, 'onLogin')
 
 
 class LoginForm(CustomComponent):
-    """LoginForm is a Vaadin component to handle common problem among Ajax
+    """LoginForm is a Muntjac component to handle common problem among Ajax
     applications: browsers password managers don't fill dynamically created
     forms like all those UI elements created by Muntjac.
 

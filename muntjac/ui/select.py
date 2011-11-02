@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Defines a class representing a selection of items the user has selected
+in a UI."""
+
 from warnings import warn
 
 from muntjac.event import field_events

@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Defines a class that can figure out mime-types and icons related to
+files."""
+
 from os.path import isdir
 
 from muntjac.terminal.theme_resource import ThemeResource

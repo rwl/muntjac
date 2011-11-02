@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Helper class to store and transfer mouse event details."""
+
 #from com.google.gwt.user.client.Event import Event
 #from muntjac.terminal.gwt.client.Util import Util
 

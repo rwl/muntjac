@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Defines a component container, which shows the subcomponents in the order
+of their addition in specified orientation."""
+
 from warnings import warn
 
 from muntjac.ui.abstract_ordered_layout import AbstractOrderedLayout

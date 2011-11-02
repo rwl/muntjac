@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Parent class for Transferable implementations that have a Muntjac
+container as a data source."""
+
 from muntjac.event.transferable_impl import TransferableImpl
 from muntjac.data.container import IViewer
 

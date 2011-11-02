@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""A simple data object containing one typed value."""
+
 from muntjac.data.util.abstract_property import AbstractProperty
 from muntjac.data.property import ReadOnlyException, ConversionException
 

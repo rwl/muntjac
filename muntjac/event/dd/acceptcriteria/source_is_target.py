@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""A criterion that ensures the drag source is the same as drop target."""
+
 from muntjac.event.transferable_impl import TransferableImpl
 
 from muntjac.event.dd.acceptcriteria.client_side_criterion import \

@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Defines a layout that will give one of it's components as much space as
+possible, while still showing the other components in the layout."""
+
 from warnings import warn
 
 from muntjac.ui.ordered_layout import OrderedLayout

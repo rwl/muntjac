@@ -14,13 +14,15 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""For resources fetched from location specified by URLs."""
+
 from muntjac.service.file_type_resolver import FileTypeResolver
 from muntjac.terminal.resource import IResource
 
 
 class ExternalResource(IResource):
     """C{ExternalResource} implements source for resources fetched
-    from location specified by URL:s. The resources are fetched directly by
+    from location specified by URLs. The resources are fetched directly by
     the client terminal and are not fetched trough the terminal adapter.
 
     @author: IT Mill Ltd.

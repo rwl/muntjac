@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Exception for cases where a container does not support a specific
+type of filters."""
 
 class UnsupportedFilterException(RuntimeError):
     """Exception for cases where a container does not support a specific

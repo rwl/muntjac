@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Defines the default implementation of the ILayout interface."""
+
 from muntjac.ui.layout import ILayout, IMarginHandler, MarginInfo
 from muntjac.ui.abstract_component_container import AbstractComponentContainer
 from muntjac.terminal.gwt.client.mouse_event_details import MouseEventDetails

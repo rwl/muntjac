@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Defines an interface that provides information about the user's terminal.
+"""
 
 class ITerminal(object):
     """An interface that provides information about the user's terminal.
@@ -23,7 +25,6 @@ class ITerminal(object):
     @author: IT Mill Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
-    @since 3.0
     """
 
     def getDefaultTheme(self):

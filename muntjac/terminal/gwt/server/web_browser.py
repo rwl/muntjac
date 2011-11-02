@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Defines a class that provides information about the web browser the user
+is using."""
+
 from time import time
 from datetime import date
 

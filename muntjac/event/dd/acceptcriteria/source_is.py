@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Client side criteria that checks if the drag source is one of the given
+components."""
+
 from muntjac.event.transferable_impl import TransferableImpl
 
 from muntjac.event.dd.acceptcriteria.client_side_criterion import \

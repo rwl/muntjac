@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""A specialized container whose contents can be accessed like it was a
+tree-like structure."""
+
 from muntjac.data.container import IContainer, IHierarchical
 from muntjac.data.util.indexed_container import IndexedContainer
 from muntjac.data.util.abstract_container import AbstractContainer

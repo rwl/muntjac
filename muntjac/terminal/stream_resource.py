@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""A resource provided to the client directly by the application."""
+
 from muntjac.service.file_type_resolver import FileTypeResolver
 from muntjac.terminal.application_resource import IApplicationResource
 from muntjac.terminal.download_stream import DownloadStream

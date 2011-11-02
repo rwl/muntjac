@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""For combining multiple error messages together."""
+
 import sys
 
 from muntjac.terminal.error_message import IErrorMessage

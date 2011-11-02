@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Defines a simple drop-down select."""
+
 from muntjac.ui.abstract_select import AbstractSelect
 from muntjac.data.container import IContainer
 

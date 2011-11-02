@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Interface that implements a method for validating an object."""
+
 from muntjac.terminal.error_message import IErrorMessage
 from muntjac.terminal.paintable import IRepaintRequestListener
 
