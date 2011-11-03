@@ -3,7 +3,10 @@ from gaesessions import get_current_session
 
 from muntjac.terminal.gwt.server.application_servlet import ApplicationServlet
 
-import logging
+from muntjac.terminal.gwt.server.abstract_application_servlet import RequestType
+
+from muntjac.util import totalseconds
+
 
 class GaeApplicationServlet(ApplicationServlet):
 
@@ -11,12 +14,15 @@ class GaeApplicationServlet(ApplicationServlet):
 
     def service(self, request, response):
 
-        session = self.getSession(request, False)
+        requestType = self.getRequestType(request)
 
-        if (session is not None) and session.is_active():
-            # force session save each request
-            reqs = session.get('reqs', 0)
-            session['reqs'] = reqs + 1
+        if requestType == RequestType.UIDL:
+            session = self.getSession(request, False)
+
+            if (session is not None) and session.is_active():
+                # force session save each request
+                reqs = session.get('uidl_reqs', 0)
+                session['uidl_reqs'] = reqs + 1
 
         super(GaeApplicationServlet, self).service(request, response)
 
@@ -38,9 +44,7 @@ class GaeApplicationServlet(ApplicationServlet):
 
 
     def getSessionId(self, request):
-        sid = request.cookies().get('DgU00')
-        #sid = get_current_session().sid
-        logging.getLogger(__name__).info("COOKIE: " + sid )
+        sid = get_current_session().sid
         return sid
 
 
@@ -54,7 +58,7 @@ class GaeApplicationServlet(ApplicationServlet):
 
     def getMaxInactiveInterval(self, session):
         if session.lifetime is not None:
-            return int( session.lifetime.total_seconds() )
+            return int( totalseconds(session.lifetime) )
         else:
             return self._timeout
 
