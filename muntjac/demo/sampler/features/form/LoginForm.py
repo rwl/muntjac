@@ -16,7 +16,7 @@ class LoginForm(Feature):
 
 
     def getDescription(self):
-        return ('Using normal Vaadin components to build a login form is '
+        return ('Using normal Muntjac components to build a login form is '
             'sometimes sufficient, but in many cases you\'ll want the '
             'browser to remember the credentials later on. Using the '
             'LoginForm helps in that case. You can override methods from '

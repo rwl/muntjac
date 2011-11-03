@@ -20,7 +20,7 @@ from unittest import TestCase
 from muntjac.util import clsname, getSuperClass
 from muntjac.ui.component import IComponent
 
-#from muntjac.test.VaadinClasses import VaadinClasses
+#from muntjac.test.MuntjacClasses import MuntjacClasses
 
 
 class AbstractListenerMethodsTest(TestCase):
@@ -33,7 +33,7 @@ class AbstractListenerMethodsTest(TestCase):
 #    @classmethod
 #    def findAllListenerMethods(cls):
 #        classes = set()
-#        for c in VaadinClasses.getAllServerSideClasses():
+#        for c in MuntjacClasses.getAllServerSideClasses():
 #            while c is not None and clsname(c).startswith('com.vaadin.'):
 #                classes.add(c)
 #                c = getSuperClass(c)

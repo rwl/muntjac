@@ -145,7 +145,7 @@ class SamplerWindow(Window):
 
         self._app = app
 
-        self._TITLE = 'Vaadin Sampler'
+        self._TITLE = 'Muntjac Sampler'
 
         self._EMPTY_THEME_ICON = \
                 ThemeResource('../sampler/sampler/icon-empty.png')

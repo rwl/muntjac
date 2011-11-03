@@ -18,8 +18,8 @@ class DragDropHtml5FromDesktop(Feature):
     def getDescription(self):
         return ('On browsers supporting HTML5 style drag and drop several '
             'data flovours can be dropped from desktop applications to '
-            'Vaadin application. Firefox from version 3.6 even support '
-            'dragging files from the client file system to a Vaadin '
+            'Muntjac application. Firefox from version 3.6 even support '
+            'dragging files from the client file system to a Muntjac '
             'application. With Firefox, try dropping an image file from '
             'the desktop to the drop box, else you must retain to dragging '
             'text from your favorite word processor. ')

@@ -1,5 +1,5 @@
-"""Provides several fully functional Vaadin example applications. These
-highlight certain aspects of the Vaadin and how it can be
+"""Provides several fully functional Muntjac example applications. These
+highlight certain aspects of the Muntjac and how it can be
 used to produce simple, elegant yet powerful user interface driven
 applications.
 

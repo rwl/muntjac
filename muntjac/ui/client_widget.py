@@ -64,7 +64,7 @@ class ClientWidget(object):
         # helpful if the end users have slow connections and especially if
         # they have high latency in their network. The
         # L{CustomWidgetMapGenerator} is an abstract generator
-        # implementation for easy customization. Vaadin package also
+        # implementation for easy customization. Muntjac package also
         # includes L{LazyWidgetMapGenerator} that makes as many
         # widgets lazily loaded as possible.
 

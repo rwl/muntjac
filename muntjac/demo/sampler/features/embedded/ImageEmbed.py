@@ -22,7 +22,7 @@ class ImageEmbed(Feature):
     def getDescription(self):
         return ('Add images to your applications using the Embedded '
             'component. You can use all the different Resource types '
-            'Vaadin offers. ThemeResource is usually the easiest choice.')
+            'Muntjac offers. ThemeResource is usually the easiest choice.')
 
 
     def getRelatedAPI(self):

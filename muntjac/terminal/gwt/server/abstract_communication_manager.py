@@ -746,7 +746,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                 canonicalName = clsname(class1)
 
                 if canonicalName.startswith('muntjac.ui'):
-                    # use Vaadin package names  FIXME: Python client side
+                    # use Muntjac package names  FIXME: Python client side
                     canonicalName = 'com.vaadin.ui.' + class1.__name__
                 elif canonicalName.startswith('muntjac.demo.sampler'):
                     canonicalName = 'com.vaadin.demo.sampler.' + class1.__name__
@@ -1583,7 +1583,7 @@ class IRequest(object):
         """Gets a L{Session} wrapper implementation representing the
         session for which this request was sent.
 
-        Multiple Vaadin applications can be associated with a single session.
+        Multiple Muntjac applications can be associated with a single session.
 
         @return: Session
         """

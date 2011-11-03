@@ -346,10 +346,9 @@ class MenuBar(AbstractComponent):
 
 
 class ICommand(object):
-    """This interface contains the layer for menu commands of the
-    L{com.vaadin.ui.MenuBar} class. It's method will fire when the user
-    clicks on the containing L{com.vaadin.ui.MenuBar.MenuItem}. The
-    selected item is given as an argument.
+    """This interface contains the layer for menu commands of the L{MenuBar}
+    class. It's method will fire when the user clicks on the containing
+    L{MenuItem}. The selected item is given as an argument.
     """
 
     def menuSelected(self, selectedItem):

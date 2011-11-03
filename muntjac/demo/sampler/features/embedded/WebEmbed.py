@@ -20,7 +20,7 @@ class WebEmbed(Feature):
     def getDescription(self):
         return ('Web pages can be embedded, allowing easy integration to '
             'older systems. Synchronization and messaging between web pages '
-            'and Vaadin apps can be accomplished with Vaadin JS APIs. Just '
+            'and Muntjac apps can be accomplished with Muntjac JS APIs. Just '
             'use Embedded.TYPE_BROWSER')
 
 

@@ -39,7 +39,7 @@ class AbstractComponent(IComponent, IMethodEventSource):
     """An abstract class that defines default implementation for the
     L{IComponent} interface. Basic UI components that are not derived
     from an external component can inherit this class to easily qualify as
-    Vaadin components. Most components in Vaadin do just that.
+    Muntjac components. Most components in Muntjac do just that.
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln

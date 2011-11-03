@@ -450,7 +450,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
             if self.handleURI(applicationManager, window, request, response):
                 return
 
-            # Send initial AJAX page that kickstarts a Vaadin application
+            # Send initial AJAX page that kickstarts a Muntjac application
             self.writeAjaxPage(request, response, window, application)
 
         except SessionExpiredException, e:
@@ -1019,7 +1019,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
 
             # The browser is allowed to cache for 1 hour without checking if
             # the file has changed. This forces browsers to fetch a new version
-            # when the Vaadin version is updated. This will cause more requests
+            # when the Muntjac version is updated. This will cause more requests
             # to the servlet than without this but for high volume sites the
             # static files should never be served through the servlet. The
             # cache timeout can be configured by setting the resourceCacheTime
@@ -1246,7 +1246,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
 
     def writeAjaxPage(self, request, response, window, application):
         """This method writes the html host page (aka kickstart page) that
-        starts the actual Vaadin application.
+        starts the actual Muntjac application.
 
         If one needs to override parts of the host page, it is suggested
         that one overrides on of several submethods which are called by
@@ -1256,7 +1256,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
           - L{writeAjaxPageHtmlHeadStart}
           - L{writeAjaxPageHtmlHeader}
           - L{writeAjaxPageHtmlBodyStart}
-          - L{writeAjaxPageHtmlVaadinScripts}
+          - L{writeAjaxPageHtmlMuntjacScripts}
           - L{writeAjaxPageHtmlMainDiv}
           - L{writeAjaxPageHtmlBodyEnd}
 
@@ -1284,7 +1284,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
         page = StringIO()
 
         if window.getCaption() is None:
-            title = 'Vaadin 6'
+            title = 'Muntjac 6'
         else:
             title = window.getCaption()
 
@@ -1319,7 +1319,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
 
         appId = appId + '-' + str(hashCode)
 
-        self.writeAjaxPageHtmlVaadinScripts(window, themeName, application,
+        self.writeAjaxPageHtmlMuntjacScripts(window, themeName, application,
                 page, appUrl, themeUri, appId, request)
 
         # - Add classnames;
@@ -1410,7 +1410,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
         page.write('<noscript>' + self.getNoScriptMessage() + '</noscript>')
 
 
-    def writeAjaxPageHtmlVaadinScripts(self, window, themeName, application,
+    def writeAjaxPageHtmlMuntjacScripts(self, window, themeName, application,
                 page, appUrl, themeUri, appId, request):
         """Method to write the script part of the page which loads needed
         Muntjac scripts and themes.

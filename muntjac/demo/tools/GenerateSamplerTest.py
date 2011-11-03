@@ -36,13 +36,13 @@ class Command(TestRow):
             + self._value + '</td>\n' + '</tr>\n')
 
 
-class WaitForVaadinCommand(Command):
+class WaitForMuntjacCommand(Command):
 
     def __init__(self):
-        super(WaitForVaadinCommand, self).__init__('waitForVaadin', '', '')
+        super(WaitForMuntjacCommand, self).__init__('waitForMuntjac', '', '')
 
 
-class VaadinTestBenchTest(object):
+class MuntjacTestBenchTest(object):
 
     _header = ('<?xml version=\"1.0\" encoding=\"UTF-8\"?>'
         + '<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">'
@@ -88,7 +88,7 @@ class GenerateSamplerTest(object):
 
     @classmethod
     def main(cls):
-        cls._test = VaadinTestBenchTest('sampler-all-samples')
+        cls._test = MuntjacTestBenchTest('sampler-all-samples')
         cls._test.addCmd('openAndWait', '/', '')
         cls._test.addComment('Open sampler from demo page')
         cls._test.addCmd('mouseClickAndWait', '//div[@id=\'sampler\']/a/strong', '96,14')

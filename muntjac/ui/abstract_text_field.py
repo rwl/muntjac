@@ -545,7 +545,7 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
         situations. The value is updated only when the client side terminal
         communicates to TextField, like on L{ValueChangeEvent}s and
         L{TextChangeEvent}s. This may change later if a deep push
-        integration is built to Vaadin.
+        integration is built to Muntjac.
 
         @return: the cursor position
         """

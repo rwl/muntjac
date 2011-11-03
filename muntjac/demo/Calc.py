@@ -5,7 +5,7 @@ from muntjac.ui.button import IClickListener
 
 
 class Calc(Application, IClickListener):
-    """A simple calculator using Vaadin."""
+    """A simple calculator using Muntjac."""
 
     def __init__(self):
         super(Calc, self).__init__()

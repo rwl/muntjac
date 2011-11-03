@@ -7,7 +7,7 @@ from muntjac.terminal.gwt.server.web_browser import WebBrowser
 class BrowserInformation(Feature):
 
     def getDescription(self):
-        return ('Browser differences are mostly hidden by Vaadin but in some '
+        return ('Browser differences are mostly hidden by Muntjac but in some '
             'cases it is valuable to get information on the browser the user '
             'is using. In themes special CSS rules are used but it is also '
             'possible to get information about the browser in the application '

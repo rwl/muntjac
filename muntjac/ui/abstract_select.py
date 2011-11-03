@@ -492,7 +492,7 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
     # Gets the number of items in the container.
     #
     # @return: the Number of items in the container.
-    # @see: com.vaadin.data.IContainer#size()
+    # @see: L{IContainer.size}
     def size(self):
         return len(self.items)
 

@@ -149,7 +149,7 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
         extending classes must implement component list maintenance and call
         this method after component list maintenance.
 
-        @see: com.vaadin.ui.IComponentContainer#addComponent(Component)
+        @see: L{IComponentContainer.addComponent}
         """
         if isinstance(c, IComponentContainer):
             # Make sure we're not adding the component

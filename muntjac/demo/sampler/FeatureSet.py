@@ -610,7 +610,7 @@ class Dates(FeatureSet):
                 ('The DateField component can be used to produce various '
                  'date and time input fields with different resolutions. '
                  'The date and time format used with this component is '
-                 'reported to Vaadin by the browser.'),
+                 'reported to Muntjac by the browser.'),
                 [DatePopup(),
                  DatePopupInputPrompt(),
                  DatePopupKeyboardNavigation(),

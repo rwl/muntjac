@@ -97,7 +97,7 @@ class ComponentSizeValidator(object):
     @classmethod
     def printServerError(cls, msg, attributes, widthError, errorStream):
         err = StringIO()
-        err.write('Vaadin DEBUG\n')
+        err.write('Muntjac DEBUG\n')
 
         indent = str()
         if attributes is not None:

@@ -236,7 +236,7 @@ class Embedded(AbstractComponent):
             self._mimeType = mimeType
             if 'application/x-shockwave-flash' == mimeType:
                 # Automatically add wmode transparent as we use lots of
-                # floating layers in Vaadin. If developers need better flash
+                # floating layers in Muntjac. If developers need better flash
                 # performance, they can override this value programmatically
                 # back to "window" (the defautl).
                 if self.getParameter('wmode') is None:

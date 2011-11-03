@@ -16,7 +16,7 @@ class PopupViewContentsExample(VerticalLayout):  # FIXME: only works once
 
         # Create the content for the popup
         content = Label('This is a simple Label component inside the popup. '
-                'You can place any Vaadin components here.')
+                'You can place any Muntjac components here.')
 
         # The PopupView popup will be as large as needed by the content
         content.setWidth('300px')

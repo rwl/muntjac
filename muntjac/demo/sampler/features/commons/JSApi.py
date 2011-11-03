@@ -16,7 +16,7 @@ class JSApi(Feature):
 
 
     def getDescription(self):
-        return ('<p>You can inject JavaScript in a Vaadin application page'
+        return ('<p>You can inject JavaScript in a Muntjac application page'
             + ' using the server-side JavaScript API.'
             + ' This is especially useful for integration with '
             + 'third-party libraries and components.</p>')

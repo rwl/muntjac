@@ -1,4 +1,4 @@
-"""Provides interfaces and classes in Vaadin.
+"""Provides interfaces and classes in Muntjac.
 
 Package Specification
 =====================

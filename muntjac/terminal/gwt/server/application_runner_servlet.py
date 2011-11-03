@@ -81,9 +81,9 @@ class ApplicationRunnerServlet(AbstractApplicationServlet):
         """Parses application runner URIs.
 
         If request URL is e.g.
-        http://localhost:8080/vaadin/run/muntjac.demo.calc.Calc then
+        http://localhost:8080/muntjac/run/muntjac.demo.calc.Calc then
 
-          - context=vaadin
+          - context=muntjac
           - Runner servlet=run
           - Muntjac application=muntjac.demo.calc.Calc
 

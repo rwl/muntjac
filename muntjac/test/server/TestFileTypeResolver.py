@@ -80,13 +80,13 @@ class TestFileTypeResolver(TestCase):
 
     def testCustomMimeType(self):
         self.assertEquals(FileTypeResolver.DEFAULT_MIME_TYPE,
-                FileTypeResolver.getMIMEType('vaadin.foo'))
+                FileTypeResolver.getMIMEType('muntjac.foo'))
 
-        FileTypeResolver.addExtension('foo', 'Vaadin Foo/Bar')
-        FileTypeResolver.addExtension('FOO2', 'Vaadin Foo/Bar2')
+        FileTypeResolver.addExtension('foo', 'Muntjac Foo/Bar')
+        FileTypeResolver.addExtension('FOO2', 'Muntjac Foo/Bar2')
 
-        self.assertEquals('Vaadin Foo/Bar',
-                FileTypeResolver.getMIMEType('vaadin.foo'))
+        self.assertEquals('Muntjac Foo/Bar',
+                FileTypeResolver.getMIMEType('muntjac.foo'))
 
-        self.assertEquals('Vaadin Foo/Bar2',
-                FileTypeResolver.getMIMEType('vaadin.Foo2'))
+        self.assertEquals('Muntjac Foo/Bar2',
+                FileTypeResolver.getMIMEType('muntjac.Foo2'))

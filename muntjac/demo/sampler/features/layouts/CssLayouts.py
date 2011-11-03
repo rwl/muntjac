@@ -21,7 +21,7 @@ class CssLayouts(Feature):
 
 
     def getDescription(self):
-        return ('Most commonly developers using Vaadin don\'t want to think '
+        return ('Most commonly developers using Muntjac don\'t want to think '
             'of the browser environment at all. With the flexible layout '
             'API found from Grid, Horizontal and Vertical layouts, developers '
             'can build almost anything with plain Java. But sometimes '
@@ -30,7 +30,7 @@ class CssLayouts(Feature):
             'places its contained components into a C{DIV} element. '
             'It has a simple DOM structure and it leaves all the power to the '
             'CSS designer\'s hands. While having a very narrow feature set, '
-            'CssLayout is the fastest layout to render in Vaadin.')
+            'CssLayout is the fastest layout to render in Muntjac.')
 
 
     def getRelatedAPI(self):

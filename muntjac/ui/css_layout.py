@@ -54,7 +54,7 @@ class CssLayout(AbstractLayout, ILayoutClickNotifier):
     other layouts the size of component is calculated relatively to the "slot"
     given by layout.
 
-    Also note that client side framework in Vaadin modifies inline style
+    Also note that client side framework in Muntjac modifies inline style
     properties width and height. This happens on each update to component. If
     one wants to set component sizes with CSS, component must have undefined
     size on server side (which is not the default for all components) and the

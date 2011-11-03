@@ -38,7 +38,7 @@ class IDragSource(IComponent):
         on it.
 
         For example Tree converts item identifiers to generated string keys for
-        the client side. Vaadin developer don't and can't know anything about
+        the client side. Muntjac developer don't and can't know anything about
         these generated keys, only about item identifiers. When tree node is
         dragged client puts that key to L{Transferable}s client side
         counterpart. In L{Tree.getTransferable} the key is converted

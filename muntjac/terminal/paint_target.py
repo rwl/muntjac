@@ -111,9 +111,9 @@ class IPaintTarget(object):
         side as URLs, where the client side implementation can do an http
         post request.
 
-        The urls in UIDL message may use Vaadin specific protocol. Before
+        The urls in UIDL message may use Muntjac specific protocol. Before
         actually using the urls on the client side, they should be passed via
-        L{ApplicationConnection.translateVaadinUri}.
+        L{ApplicationConnection.translateMuntjacUri}.
 
         Note that in current terminal implementation StreamVariables are
         cleaned from the terminal only when:

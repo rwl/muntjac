@@ -536,11 +536,11 @@ class CustomizedSystemMessages(SystemMessages):
 
 class Application(IUriHandler, ITerminal, IErrorListener):
     """Base class required for all Muntjac applications. This class provides
-    all the basic services required by Vaadin. These services allow external
+    all the basic services required by Muntjac. These services allow external
     discovery and manipulation of the user, L{com.vaadin.ui.Window windows} and
     themes, and starting and stopping the application.
 
-    As mentioned, all Vaadin applications must inherit this class. However,
+    As mentioned, all Muntjac applications must inherit this class. However,
     this is almost all of what one needs to do to create a fully functional
     application. The only thing a class inheriting the C{Application}
     needs to do is implement the C{init} method where it creates the
@@ -886,7 +886,7 @@ class Application(IUriHandler, ITerminal, IErrorListener):
     def start(self, applicationUrl, applicationProperties, context):
         """Starts the application on the given URL.
 
-        This method is called by Vaadin framework when a user navigates to the
+        This method is called by Muntjac framework when a user navigates to the
         application. After this call the application corresponds to the given
         URL and it will return windows when asked for them. There is no need to
         call this method directly.

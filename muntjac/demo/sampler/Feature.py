@@ -132,7 +132,7 @@ class Feature(object):
 
 
     def getSinceVersion(self):
-        """Returns the Vaadin version number in which this feature was added
+        """Returns the Muntjac version number in which this feature was added
         to Sampler. Usually features should only be added in major and minor
         version, not in maintenance versions.
 

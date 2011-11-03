@@ -52,7 +52,7 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
     fields with selections is given.
 
     C{Form} provides customizable editor for classes implementing
-    L{com.vaadin.data.IItem} interface. Also the form itself implements
+    L{IItem} interface. Also the form itself implements
     this interface for easier connectivity to other items. To use the form as
     editor for an item, just connect the item to form with
     L{Form.setItemDataSource}. If only a part of the item needs to

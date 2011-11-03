@@ -23,16 +23,16 @@ class MuntjacTunesLayout(Application):
         # contain any logic. Otherwise it would be more practical to
         # separate parts of the UI into different classes and methods.
 
-        # Main (browser) window, needed in all Vaadin applications
+        # Main (browser) window, needed in all Muntjac applications
         rootLayout = VerticalLayout()
-        root = Window('VaadinTunes', rootLayout)
+        root = Window('MuntjacTunes', rootLayout)
 
         # We'll attach the window to the browser view already here, so
         # we won't forget it later.
         self.setMainWindow(root)
 
         root.showNotification(('This is an example of how you can do layouts '
-                'in Vaadin.<br/>It is not a working sound player.'),
+                'in Muntjac.<br/>It is not a working sound player.'),
                 Notification.TYPE_HUMANIZED_MESSAGE)
 
         # Our root window contains one VerticalLayout, let's make
@@ -176,8 +176,8 @@ class MuntjacTunesLayout(Application):
         music.setWidth('100%')
 
         store = Label('Store')
-        vaadinTunesStore = NativeButton('VaadinTunes Store')
-        vaadinTunesStore.setWidth('100%')
+        muntjacTunesStore = NativeButton('MuntjacTunes Store')
+        muntjacTunesStore.setWidth('100%')
         purchased = NativeButton('Purchased')
         purchased.setWidth('100%')
 
@@ -191,7 +191,7 @@ class MuntjacTunesLayout(Application):
         selections.addComponent(library)
         selections.addComponent(music)
         selections.addComponent(store)
-        selections.addComponent(vaadinTunesStore)
+        selections.addComponent(muntjacTunesStore)
         selections.addComponent(purchased)
         selections.addComponent(playlists)
         selections.addComponent(genius)

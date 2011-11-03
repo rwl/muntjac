@@ -27,7 +27,7 @@ class JSApiExample(VerticalLayout):
         script = TextArea()
         script.setWidth('100%')
         script.setRows(3)
-        script.setValue('alert(\"Hello Vaadin\");')
+        script.setValue('alert(\"Hello Muntjac\");')
         self.addComponent(script)
 
         self.addComponent(Button('Run script', RunListener(self, script)))
@@ -36,7 +36,7 @@ class JSApiExample(VerticalLayout):
         self.addComponent(sync)
 
         self.addComponent(Label('For advanced client side programmers '
-                'Vaadin offers a simple method which can be used to force '
+                'Muntjac offers a simple method which can be used to force '
                 'the client to synchronize with the server. This may be '
                 'needed for example if another part of a mashup changes '
                 'things on server.'))

@@ -109,7 +109,7 @@ class Worker1(threading.Thread):
             except self.InterruptedException, e:
                 print str(e)
 
-            # All modifications to Vaadin components should be synchronized
+            # All modifications to Muntjac components should be synchronized
             # over application instance. For normal requests this is done
             # by the servlet. Here we are changing the application state
             # via a separate thread.
