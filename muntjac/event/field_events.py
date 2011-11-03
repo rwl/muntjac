@@ -42,10 +42,6 @@ class IFocusNotifier(object):
             super(IFocusNotifier, self).addListener(listener, iface)
 
 
-    def addFocusListener(self, listener):
-        self.addListener(listener, IFocusListener)
-
-
     def removeListener(self, listener, iface):
         """Removes a C{IFocusListener} from the Component.
 
@@ -55,10 +51,6 @@ class IFocusNotifier(object):
             raise NotImplementedError
         else:
             super(IFocusNotifier, self).removeListener(listener, iface)
-
-
-    def removeFocusListener(self, listener):
-        self.removeListener(listener, IFocusListener)
 
 
 class IBlurNotifier(object):
@@ -82,10 +74,6 @@ class IBlurNotifier(object):
             super(IBlurNotifier, self).addListener(listener, iface)
 
 
-    def addBlurListener(self, listener):
-        self.addListener(listener, IBlurListener)
-
-
     def removeListener(self, listener, iface):
         """Removes a C{IBlurListener} from the Component.
 
@@ -95,10 +83,6 @@ class IBlurNotifier(object):
             raise NotImplementedError
         else:
             super(IBlurNotifier, self).removeListener(listener, iface)
-
-
-    def removeBlurListener(self, listener):
-        self.removeListener(listener, IBlurListener)
 
 
 class FocusEvent(ComponentEvent):
@@ -234,16 +218,8 @@ class ITextChangeNotifier(object):
             super(ITextChangeNotifier, self).addListener(listener, iface)
 
 
-    def addTextChangeListener(self, listener):
-        self.addListener(listener, ITextChangeListener)
-
-
     def removeListener(self, listener, iface):
         if iface == ITextChangeListener:
             raise NotImplementedError
         else:
             super(ITextChangeNotifier, self).removeListener(listener, iface)
-
-
-    def removeTextChangeListener(self, listener):
-        self.removeListener(listener, ITextChangeListener)

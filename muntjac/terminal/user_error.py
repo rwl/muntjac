@@ -75,19 +75,11 @@ class UserError(IErrorMessage):
             super(UserError, self).addListener(listener, iface)
 
 
-    def addRepaintRequestListener(self, listener):
-        self.addListener(listener, IRepaintRequestListener)
-
-
     def removeListener(self, listener, iface):
         if iface == IRepaintRequestListener:
             pass
         else:
             super(UserError, self).removeListener(listener, iface)
-
-
-    def removeRepaintRequestListener(self, listener):
-        self.removeListener(listener, IRepaintRequestListener)
 
 
     def requestRepaint(self):

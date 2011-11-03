@@ -3056,26 +3056,6 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
             super(Table, self).addListener(listener, iface)
 
 
-    def addColumnReorderListener(self, listener):
-        self.addListener(listener, IColumnReorderListener)
-
-
-    def addColumnResizeListener(self, listener):
-        self.addListener(listener, IColumnResizeListener)
-
-
-    def addFooterClickListener(self, listener):
-        self.addListener(listener, IFooterClickListener)
-
-
-    def addHeaderClickListener(self, listener):
-        self.addListener(listener, IHeaderClickListener)
-
-
-    def addItemClickListener(self, listener):
-        self.addListener(listener, IItemClickListener)
-
-
     def removeListener(self, listener, iface):
         """Removes a listener from the Table.
 
@@ -3104,26 +3084,6 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                     ItemClickEvent, listener)
         else:
             super(Table, self).removeListener(listener, iface)
-
-
-    def removeColumnReorderListener(self, listener):
-        self.removeListener(listener, IColumnReorderListener)
-
-
-    def removeColumnResizeListener(self, listener):
-        self.removeListener(listener, IColumnResizeListener)
-
-
-    def removeFooterClickListener(self, listener):
-        self.removeListener(listener, IFooterClickListener)
-
-
-    def removeHeaderClickListener(self, listener):
-        self.removeListener(listener, IHeaderClickListener)
-
-
-    def removeItemClickListener(self, listener):
-        self.removeListener(listener, IItemClickListener)
 
 
     def setEnabled(self, enabled):

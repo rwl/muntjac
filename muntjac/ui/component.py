@@ -649,10 +649,6 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
             super(IComponent, self).addListener(listener, iface)
 
 
-    def addComponentListener(self, listener):
-        self.addListener(listener, IListener)
-
-
     def removeListener(self, listener, iface):
         """Removes a previously registered component event listener from this
         component.
@@ -665,10 +661,6 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
             raise NotImplementedError
         else:
             super(IComponent, self).removeListener(listener, iface)
-
-
-    def removeComponentListener(self, listener):
-        self.removeListener(listener, IListener)
 
 
 class Event(EventObject):

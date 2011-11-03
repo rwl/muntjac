@@ -112,10 +112,6 @@ class IComponentContainer(IComponent):
             super(IComponentContainer, self).addListener(listener, iface)
 
 
-    def addComponentAttachListener(self, listener):
-        self.addListener(listener, IComponentAttachListener)
-
-
     def removeListener(self, listener, iface):
         """Stops the listening component attach/detach events.
 
@@ -126,10 +122,6 @@ class IComponentContainer(IComponent):
             raise NotImplementedError
         else:
             super(IComponentContainer, self).removeListener(listener, iface)
-
-
-    def removeComponentAttachListener(self, listener):
-        self.removeListener(listener, IComponentAttachListener)
 
 
 class IComponentAttachListener(object):

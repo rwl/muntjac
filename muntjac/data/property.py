@@ -270,10 +270,6 @@ class IValueChangeNotifier(object):
             super(IValueChangeNotifier, self).addListener(listener, iface)
 
 
-    def addValueChangeListener(self, listener):
-        self.addListener(listener, IValueChangeListener)
-
-
     def removeListener(self, listener, iface):
         """Removes a previously registered value change listener.
 
@@ -284,10 +280,6 @@ class IValueChangeNotifier(object):
             raise NotImplementedError
         else:
             super(IValueChangeNotifier, self).removelistener(listener, iface)
-
-
-    def removeValueChangeListener(self, listener):
-        self.removeListener(listener, IValueChangeListener)
 
 
 class IReadOnlyStatusChangeEvent(object):
@@ -350,10 +342,6 @@ class IReadOnlyStatusChangeNotifier(object):
                     iface)
 
 
-    def addReadOnlyStatusChangeListener(self, listener):
-        self.addListener(listener, IReadOnlyStatusChangeListener)
-
-
     def removeListener(self, listener, iface):
         """Removes a previously registered read-only status change listener.
 
@@ -365,7 +353,3 @@ class IReadOnlyStatusChangeNotifier(object):
         else:
             super(IReadOnlyStatusChangeNotifier, self).removeListener(listener,
                     iface)
-
-
-    def removeReadOnlyStatusChangeListener(self, listener):
-        self.removeListener(listener, IReadOnlyStatusChangeListener)

@@ -392,10 +392,6 @@ class Embedded(AbstractComponent):
             super(Embedded, self).addListener(listener, iface)
 
 
-    def addClickListener(self, listener):
-        self.addListener(listener, IClickListener)
-
-
     def removeListener(self, listener, iface):
         """Remove a click listener from the component. The listener should
         earlier have been added using L{addListener}.
@@ -407,10 +403,6 @@ class Embedded(AbstractComponent):
             self.withdrawListener(self._CLICK_EVENT, ClickEvent, listener)
         else:
             super(Embedded, self).removeListener(listener, iface)
-
-
-    def removeClickListener(self, listener):
-        self.removeListener(listener, IClickListener)
 
 
     def changeVariables(self, source, variables):

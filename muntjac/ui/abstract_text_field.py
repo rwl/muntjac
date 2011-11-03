@@ -443,18 +443,6 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
             super(AbstractTextField, self).addListener(listener, iface)
 
 
-    def addBlurListener(self, listener):
-        self.addListener(listener, IBlurListener)
-
-
-    def addFocusListener(self, listener):
-        self.addListener(listener, IFocusListener)
-
-
-    def addTextChangeListener(self, listener):
-        self.addListener(listener, ITextChangeListener)
-
-
     def removeListener(self, listener, iface):
         if iface == IBlurListener:
             self.withdrawListener(BlurEvent.EVENT_ID, BlurEvent, listener)
@@ -467,18 +455,6 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
                     TextChangeEvent, listener)
         else:
             super(AbstractTextField, self).addListener(listener, iface)
-
-
-    def removeBlurListener(self, listener):
-        self.removeListener(listener, IBlurListener)
-
-
-    def removeFocusListener(self, listener):
-        self.removeListener(listener, IFocusListener)
-
-
-    def removeTextChangeListener(self, listener):
-        self.removeListener(listener, ITextChangeListener)
 
 
     def setTextChangeTimeout(self, timeout):

@@ -915,22 +915,6 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
             super(Window, self).addListener(listener, iface)
 
 
-    def addBlurListener(self, listener):
-        self.addListener(listener, IBlurListener)
-
-
-    def addCloseListener(self, listener):
-        self.addListener(listener, ICloseListener)
-
-
-    def addFocusListener(self, listener):
-        self.addListener(listener, IFocusListener)
-
-
-    def addResizeListener(self, listener):
-        self.addListener(listener, IResizeListener)
-
-
     def removeListener(self, listener, iface):
         """Removes the close/resize from the window.
 
@@ -953,22 +937,6 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
 
         else:
             super(Window, self).removeListener(listener, iface)
-
-
-    def removeBlurListener(self, listener):
-        self.removeListener(listener, IBlurListener)
-
-
-    def removeCloseListener(self, listener):
-        self.removeListener(listener, ICloseListener)
-
-
-    def removeFocusListener(self, listener):
-        self.removeListener(listener, IFocusListener)
-
-
-    def removeResizeListener(self, listener):
-        self.removeListener(listener, IResizeListener)
 
 
     def fireClose(self):

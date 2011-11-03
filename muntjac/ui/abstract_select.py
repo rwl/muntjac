@@ -1098,14 +1098,6 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
             super(AbstractSelect, self).addListener(listener, iface)
 
 
-    def addItemSetChangeListener(self, listener):
-        self.addListener(listener, container.IItemSetChangeListener)
-
-
-    def addPropertySetChangeListener(self, listener):
-        self.addListener(listener, container.IPropertySetChangeListener)
-
-
     def removeListener(self, listener, iface):
         """Removes a previously registered IProperty and IItemset change
         listener.
@@ -1125,14 +1117,6 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
                     self._propertySetEventListeners = None
         else:
             super(AbstractSelect, self).removeListener(listener, iface)
-
-
-    def removeItemSetChangeListener(self, listener):
-        self.removeListener(listener, container.IItemSetChangeListener)
-
-
-    def removePropertySetChangeListener(self, listener):
-        self.removeListener(listener, container.IPropertySetChangeListener)
 
 
     def getListeners(self, eventType):

@@ -231,17 +231,9 @@ class CssLayout(AbstractLayout, ILayoutClickNotifier):
             super(CssLayout, self).addListener(listener, iface)
 
 
-    def addLayoutClickListener(self, listener):
-        self.addListener(listener, ILayoutClickListener)
-
-
     def removeListener(self, listener, iface):
         if isinstance(listener, ILayoutClickListener):
             self.withdrawListener(self._CLICK_EVENT, LayoutClickEvent,
                     listener)
         else:
             super(CssLayout, self).removeListener(listener, iface)
-
-
-    def removeLayoutClickListener(self, listener):
-        self.removeListener(listener, ILayoutClickListener)

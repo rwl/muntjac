@@ -451,10 +451,6 @@ class Panel(AbstractComponentContainer, IScrollable,
             super(Panel, self).addListener(listener, iface)
 
 
-    def addClickListener(self, listener):
-        self.addListener(listener, IClickListener)
-
-
     def removeListener(self, listener, iface):
         """Remove a click listener from the Panel. The listener should earlier
         have been added using L{addListener}.
@@ -466,10 +462,6 @@ class Panel(AbstractComponentContainer, IScrollable,
             self.withdrawListener(self._CLICK_EVENT, ClickEvent, listener)
         else:
             super(Panel, self).removeListener(listener, iface)
-
-
-    def removeClickListener(self, listener):
-        self.removeListener(listener, IClickListener)
 
 
     def fireClick(self, parameters):

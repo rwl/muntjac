@@ -700,14 +700,6 @@ class AbstractField(AbstractComponent, field.IField,
             super(AbstractField, self).addListener(listener, iface)
 
 
-    def addReadOnlyStatusChangeListener(self, listener):
-        self.addListener(listener, prop.IReadOnlyStatusChangeListener)
-
-
-    def addValueChangeListener(self, listener):
-        self.addListener(listener, prop.IValueChangeListener)
-
-
     def removeListener(self, listener, iface):
         # Removes a value change listener from the field.
         if iface == prop.IReadOnlyStatusChangeListener:
@@ -718,14 +710,6 @@ class AbstractField(AbstractComponent, field.IField,
                     _VALUE_CHANGE_METHOD)
         else:
             super(AbstractField, self).removeListener(listener, iface)
-
-
-    def removeReadOnlyStatusChangeListener(self, listener):
-        self.removeListener(listener, prop.IReadOnlyStatusChangeListener)
-
-
-    def removeValueChangeListener(self, listener):
-        self.removeListener(listener, prop.IValueChangeListener)
 
 
     def fireValueChange(self, repaintIsNotNeeded):

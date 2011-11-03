@@ -282,26 +282,6 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
             super(Upload, self).addListener(listener, iface)
 
 
-    def addFailedListener(self, listener):
-        self.addListener(listener, IFailedListener)
-
-
-    def addFinishedListener(self, listener):
-        self.addListener(listener, IFinishedListener)
-
-
-    def addProgressListener(self, listener):
-        self.addListener(listener, IProgressListener)
-
-
-    def addStartedListener(self, listener):
-        self.addListener(listener, IStartedListener)
-
-
-    def addSucceededListener(self, listener):
-        self.addListener(listener, ISucceededListener)
-
-
     def removeListener(self, listener, iface):
         """Removes an event listener.
 
@@ -330,26 +310,6 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
 
         else:
             super(Upload, self).removeListener(listener, iface)
-
-
-    def removeFailedListener(self, listener):
-        self.removeListener(listener, IFailedListener)
-
-
-    def removeFinishedListener(self, listener):
-        self.removeListener(listener, IFinishedListener)
-
-
-    def removeProgressListener(self, listener):
-        self.removeListener(listener, IProgressListener)
-
-
-    def removeStartedListener(self, listener):
-        self.removeListener(listener, IStartedListener)
-
-
-    def removeSucceededListener(self, listener):
-        self.removeListener(listener, ISucceededListener)
 
 
     def fireStarted(self, filename, MIMEType):

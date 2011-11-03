@@ -62,10 +62,6 @@ class ILayoutClickNotifier(object):
             super(ILayoutClickNotifier, self).addListener(listener, iface)
 
 
-    def addLayoutClickListener(self, listener):
-        self.addListener(listener, ILayoutClickListener)
-
-
     def removeListener(self, listener, iface):
         """Removes an LayoutClickListener.
 
@@ -76,10 +72,6 @@ class ILayoutClickNotifier(object):
             raise NotImplementedError
         else:
             super(ILayoutClickNotifier, self).removeListener(listener, iface)
-
-
-    def removeLayoutClickListener(self, listener):
-        self.removeListener(listener, ILayoutClickListener)
 
 
 class LayoutClickEvent(ClickEvent):

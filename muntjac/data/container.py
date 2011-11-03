@@ -847,10 +847,6 @@ class IItemSetChangeNotifier(object):
             super(IItemSetChangeNotifier, self).addListener(listener, iface)
 
 
-    def addItemSetChangeListener(self, listener):
-        self.addListener(listener, IItemSetChangeListener)
-
-
     def removeListener(self, listener, iface):
         """Removes the Item set change listener from the object.
 
@@ -861,10 +857,6 @@ class IItemSetChangeNotifier(object):
             raise NotImplementedError
         else:
             super(IItemSetChangeListener, self).removeListener(listener, iface)
-
-
-    def removeItemSetChangeListener(self, listener):
-        self.removeListener(listener, IItemSetChangeListener)
 
 
 class IPropertySetChangeEvent(object):
@@ -929,10 +921,6 @@ class IPropertySetChangeNotifier(object):
             super(IPropertySetChangeNotifier, self).addListener(listener, iface)
 
 
-    def addPropertySetChangeListener(self, listener):
-        self.addListener(listener, IPropertySetChangeListener)
-
-
     def removeListener(self, listener, iface):
         """Removes a previously registered Property set change listener.
 
@@ -944,7 +932,3 @@ class IPropertySetChangeNotifier(object):
         else:
             super(IPropertySetChangeNotifier, self).removeListener(listener,
                     iface)
-
-
-    def removePropertySetChangeListener(self, listener):
-        self.removeListener(listener, IPropertySetChangeListener)

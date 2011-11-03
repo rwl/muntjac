@@ -263,18 +263,6 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
             super(Button, self).addListener(listener, iface)
 
 
-    def addBlurListener(self, listener):
-        self.addListener(listener, IBlurListener)
-
-
-    def addClickListener(self, listener):
-        self.addListener(listener, IClickListener)
-
-
-    def addFocusListener(self, listener):
-        self.addListener(listener, IFocusListener)
-
-
     def removeListener(self, listener, iface):
         """Removes the button click listener.
 
@@ -292,18 +280,6 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
 
         else:
             super(Button, self).removeListener(listener, iface)
-
-
-    def removeBlurListener(self, listener):
-        self.removeListener(listener, IBlurListener)
-
-
-    def removeClickListener(self, listener):
-        self.removeListener(listener, IClickListener)
-
-
-    def removeFocusListener(self, listener):
-        self.removeListener(listener, IFocusListener)
 
 
     def fireClick(self, details=None):

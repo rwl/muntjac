@@ -324,10 +324,6 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
             super(Label, self).addListener(listener, iface)
 
 
-    def addValueChangeListener(self, listener):
-        self.addListener(listener, prop.IValueChangeListener)
-
-
     def removeListener(self, listener, iface):
         """Removes the value change listener."""
         if isinstance(listener, prop.IValueChangeListener):
@@ -335,10 +331,6 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
                     _VALUE_CHANGE_METHOD)
         else:
             super(Label, self).removeListener(listener, iface)
-
-
-    def removeValueChangeListener(self, listener):
-        self.removeListener(listener, prop.IValueChangeListener)
 
 
     def fireValueChange(self):

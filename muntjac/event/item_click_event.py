@@ -89,10 +89,6 @@ class IItemClickNotifier(object):
             super(IItemClickNotifier, self).addListener(listener, iface)
 
 
-    def addItemClickListener(self, listener):
-        self.addListener(listener, IItemClickListener)
-
-
     def removeListener(self, listener, iface):
         """Removes an ItemClickListener.
 
@@ -103,10 +99,6 @@ class IItemClickNotifier(object):
             raise NotImplementedError
         else:
             super(IItemClickNotifier, self).removeListener(listener, iface)
-
-
-    def removeItemClickListener(self, listener):
-        self.removeListener(listener, IItemClickListener)
 
 
 class IItemClickSource(IItemClickNotifier):

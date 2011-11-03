@@ -264,19 +264,11 @@ class SourceException(RuntimeError, IErrorMessage):
             super(SourceException, self).addListener(listener, iface)
 
 
-    def addRepaintRequestListener(self, listener):
-        self.addListener(listener, IRepaintRequestListener)
-
-
     def removeListener(self, listener, iface):
         if iface == IRepaintRequestListener:
             raise NotImplementedError
         else:
             super(SourceException, self).removelistener(listener, iface)
-
-
-    def removeRepaintRequestListener(self, listener):
-        self.removeListener(listener, IRepaintRequestListener)
 
 
     def requestRepaint(self):

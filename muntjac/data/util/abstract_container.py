@@ -67,14 +67,6 @@ class AbstractContainer(IContainer):
             super(AbstractContainer, self).addListener(listener, iface)
 
 
-    def addItemSetChangeListener(self, listener):
-        self.addListener(listener, IItemSetChangeListener)
-
-
-    def addPropertySetChangeListener(self, listener):
-        self.addListener(listener, IPropertySetChangeListener)
-
-
     def removeListener(self, listener, iface):
         """Implementation of the corresponding method in
         L{IPropertySetChangeNotifier} and L{ItemSetChangeNotifier}, override
@@ -91,14 +83,6 @@ class AbstractContainer(IContainer):
                 self.getPropertySetChangeListeners().remove(listener)
         else:
             super(AbstractContainer, self).removeListener(listener, iface)
-
-
-    def removeItemSetChangeListener(self, listener):
-        self.removeListener(listener, IItemSetChangeListener)
-
-
-    def removePropertySetChangeListener(self, listener):
-        self.removeListener(listener, IPropertySetChangeListener)
 
 
     def fireContainerPropertySetChange(self, event=None):

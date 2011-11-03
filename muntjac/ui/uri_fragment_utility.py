@@ -47,20 +47,12 @@ class UriFragmentUtility(AbstractComponent):
             super(UriFragmentUtility, self).addListener(listener, iface)
 
 
-    def addFragmentChangedListener(self, listener):
-        self.addListener(listener, IFragmentChangedListener)
-
-
     def removeListener(self, listener, iface):
         if iface == IFragmentChangedListener:
             self.withdrawListener(FragmentChangedEvent,
                     listener, _FRAGMENT_CHANGED_METHOD)
         else:
             super(UriFragmentUtility, self).removeListener(listener, iface)
-
-
-    def removeFragmentChangedListener(self, listener):
-        self.removeListener(listener, IFragmentChangedListener)
 
 
     def __init__(self):

@@ -163,10 +163,6 @@ class IPropertySetChangeNotifier(object):
                     iface)
 
 
-    def addPropertySetChangeListener(self, listener):
-        self.addListener(listener, IPropertySetChangeListener)
-
-
     def removeListener(self, listener, iface):
         """Removes a previously registered property set change listener.
 
@@ -178,7 +174,3 @@ class IPropertySetChangeNotifier(object):
         else:
             super(IPropertySetChangeNotifier, self).removeListener(listener,
                     iface)
-
-
-    def removePropertySetChangeListener(self, listener):
-        self.removeListener(listener, IPropertySetChangeListener)

@@ -193,10 +193,6 @@ class LoginForm(CustomComponent):
             super(LoginForm, self).addListener(listener, iface)
 
 
-    def addLoginListener(self, listener):
-        self.addListener(listener, ILoginListener)
-
-
     def removeListener(self, listener, iface):
         """Removes ILoginListener.
         """
@@ -204,10 +200,6 @@ class LoginForm(CustomComponent):
             self.withdrawListener(LoginEvent, listener, _ON_LOGIN_METHOD)
         else:
             super(LoginForm, self).removeListener(listener, iface)
-
-
-    def removeLoginListener(self, listener):
-        self.removeListener(listener, ILoginListener)
 
 
     def setWidth(self, width, unit=None):

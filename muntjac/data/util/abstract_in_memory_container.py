@@ -253,16 +253,8 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
         super(AbstractInMemoryContainer, self).addListener(listener, iface)
 
 
-    def addItemSetChangeListener(self, listener, iface):
-        self.addListener(listener, iface)
-
-
     def removeListener(self, listener, iface):
         super(AbstractInMemoryContainer, self).removeListener(listener, iface)
-
-
-    def removeItemSetChangeListener(self, listener, iface):
-        self.removeListener(listener, iface)
 
 
     def filterAll(self):

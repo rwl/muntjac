@@ -91,10 +91,6 @@ class IPaintable(IEventListener):
             super(IPaintable, self).addListener(listener, iface)
 
 
-    def addRepaintRequestListener(self, listener):
-        self.addListener(listener, IRepaintRequestListener)
-
-
     def removeListener(self, listener, iface):
         """Removes repaint request listener.
 
@@ -105,10 +101,6 @@ class IPaintable(IEventListener):
             raise NotImplementedError
         else:
             super(IPaintable, self).removeListener(listener, iface)
-
-
-    def removeRepaintRequestListener(self, listener):
-        self.removeListener(listener, IRepaintRequestListener)
 
 
     def requestRepaintRequests(self):

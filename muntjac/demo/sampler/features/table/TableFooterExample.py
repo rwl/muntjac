@@ -44,6 +44,6 @@ class TableFooterExample(VerticalLayout):  # FIXME: column sorting
         table.setColumnFooter(ExampleUtil.ORDER_DESCRIPTION_PROPERTY_ID,
                 'Total Price')
         table.setColumnFooter(ExampleUtil.ORDER_ITEMPRICE_PROPERTY_ID,
-                locale.currency(totalSum, grouping=True))
+                locale.currency(totalSum, grouping=True))  # FIXME: babel
 
         self.addComponent(table)

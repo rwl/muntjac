@@ -140,19 +140,11 @@ class InvalidValueException(RuntimeError, IErrorMessage):
             super(InvalidValueException, self).addlistener(listener, iface)
 
 
-    def addRepaintRequestListener(self, listener):
-        self.addListener(listener, IRepaintRequestListener)
-
-
     def removeListener(self, listener, iface):
         if iface == IRepaintRequestListener:
             pass
         else:
             super(InvalidValueException, self).removeListener(listener, iface)
-
-
-    def removeRepaintRequestListener(self, listener):
-        self.removeListener(listener, IRepaintRequestListener)
 
 
     def requestRepaint(self):

@@ -634,10 +634,6 @@ class TabSheet(AbstractComponentContainer):
             super(TabSheet, self).addListener(listener, iface)
 
 
-    def addSelectedTabChangeListener(self, listener):
-        self.addListener(listener, ISelectedTabChangeListener)
-
-
     def removeListener(self, listener, iface):
         """Removes a tab selection listener
 
@@ -655,14 +651,6 @@ class TabSheet(AbstractComponentContainer):
                     listener, _SELECTED_TAB_CHANGE_METHOD)
         else:
             super(TabSheet, self).removeListener(listener, iface)
-
-
-    def removeRepaintRequestListener(self, listener):
-        self.removeListener(listener, IRepaintRequestListener)
-
-
-    def removeSelectedTabChangeListener(self, listener):
-        self.removeListener(listener, ISelectedTabChangeListener)
 
 
     def fireSelectedTabChange(self):
