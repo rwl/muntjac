@@ -68,6 +68,8 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
     @version: @VERSION@
     """
 
+    CLIENT_WIDGET = None #ClientWidget(VForm)
+
     def __init__(self, formLayout=None, fieldFactory=None):
         """Constructs a new form with given L{Layout} and
         L{FormFieldFactory}.

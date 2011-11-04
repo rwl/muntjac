@@ -95,20 +95,23 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
             Button.__init__(self)
             self.setCaption(caption)
         elif nargs == 2:
-            if isinstance(args[1], IClickListener):
-                caption, listener = args
-                Button.__init__(self, caption)
-                self.addListener(listener, IClickListener)
+            if isinstance(args[1], bool):
+                caption, initialState = args
+                self.setCaption(caption)
+                self.setValue(bool(initialState))
+                self.setSwitchMode(True)
             elif isinstance(args[1], IProperty):
                 caption, dataSource = args
                 self.setCaption(caption)
                 self.setSwitchMode(True)
                 self.setPropertyDataSource(dataSource)
             else:
-                caption, initialState = args
-                self.setCaption(caption)
-                self.setValue(bool(initialState))
-                self.setSwitchMode(True)
+                caption, listener = args
+                Button.__init__(self, caption)
+                if isinstance(listener, IClickListener):
+                    self.addListener(listener, IClickListener)
+                else:
+                    self.addCallback(listener, ClickEvent)
         elif nargs == 3:
             caption, target, methodName = args
             Button.__init__(self, caption)
@@ -261,6 +264,23 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
 
         else:
             super(Button, self).addListener(listener, iface)
+
+
+    def addCallback(self, callback, event, *args):
+
+        if event == BlurEvent:
+            self.registerCallback(BlurEvent, callback,
+                    BlurEvent.EVENT_ID, *args)
+
+        elif event == ClickEvent:
+            self.registerCallback(ClickEvent, callback, None, *args)
+
+        elif event == FocusEvent:
+            self.registerCallback(FocusEvent, callback,
+                    FocusEvent.EVENT_ID, *args)
+
+        else:
+            super(Button, self).addCallback(callback, event)
 
 
     def removeListener(self, listener, iface):

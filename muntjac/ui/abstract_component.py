@@ -772,6 +772,42 @@ class AbstractComponent(IComponent, IMethodEventSource):
             raise ValueError, 'invalid number of arguments'
 
 
+    def registerCallback(self, eventType, callback, eventId, *args):
+
+        if hasattr(callback, 'im_self'):
+            target = callback.im_self
+        elif hasattr(callback, 'func_name'):
+            target = None
+        else:
+            raise ValueError('invalid callback: %s' % callback)
+
+
+        if len(args) > 0:
+            arguments = (None,) + args  # assume event always passed first
+            eventArgIdx = 0
+        else:
+            arguments = None
+            eventArgIdx = None
+
+
+        if self._eventRouter is None:
+            self._eventRouter = EventRouter()
+
+        if self._eventIdentifiers is None:
+            self._eventIdentifiers = set()
+
+        if eventId is not None:
+            needRepaint = not self._eventRouter.hasListeners(eventType)
+
+        self._eventRouter.addListener(eventType, target, callback,
+                arguments, eventArgIdx)
+
+        if (eventId is not None) and needRepaint:
+            self._eventIdentifiers.add(eventId)
+            self.requestRepaint()
+
+
+
     def removeListener(self, listener, iface):
         if iface == IListener:
             self.removeListener(ComponentEvent, listener,

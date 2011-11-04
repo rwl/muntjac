@@ -79,7 +79,10 @@ class Calc(Application, IClickListener):
         elif last == '-':
             self._stored -= self._current
         elif last == '/':
-            self._stored /= self._current
+            try:
+                self._stored /= self._current
+            except ZeroDivisionError:
+                pass
         elif last == '*':
             self._stored *= self._current
         elif last == 'C':

@@ -101,7 +101,7 @@ class ListenerMethod(IEventListener):
 
 
     def __init__(self, eventType, target, method, arguments=None,
-                 eventArgumentIndex=None):
+                eventArgumentIndex=None):
         """Constructs a new event listener from a trigger method, it's
         arguments and the argument index specifying which one is replaced with
         the event object when the trigger method is called.
@@ -155,57 +155,61 @@ class ListenerMethod(IEventListener):
         if arguments is None:
             if isinstance(method, basestring):
                 methodName = method
-                methods = target.__class__.getMethods()  # FIXME: getMethods
-                for i in range(len(methods)):
-                    if methods[i].getName() == methodName:
-                        method = methods[i]
 
-                if method is None:
-                    raise ValueError
+                # can't specify a callback function by name, must be method
+                method = getattr(target, methodName)
 
                 self._eventType = eventType
                 self._target = target
-                self._method = method
+                self._method = methodName
                 self._eventArgumentIndex = -1
 
-                params = method.getParameterTypes()
+                params, _, _, _ = inspect.getargspec(method)
 
-                if len(params) == 0:
-                    self._arguments = [None] * 0
-                elif len(params) == 1 and issubclass(eventType, params[0]):
+                if len(params) == 1:  # just "self"
+                    self._arguments = []
+                elif len(params) == 2:
                     self._arguments = [None]
                     self._eventArgumentIndex = 0
                 else:
                     raise ValueError
             else:
-                if not issubclass(target.__class__, method.im_class):
+                if ((target is not None) and
+                        not issubclass(target.__class__, method.im_class)):
                     raise ValueError, ('%s : %s' % (target.__class__,
                             method.im_class))
 
                 self._eventType = eventType
                 self._target = target
 
-                self._method = method.im_func.func_name  # can't pickle unbound method
+                if target is None:  # function
+                    self._method = method
+                else:
+                    # can't pickle unbound method
+                    self._method = method.im_func.func_name
 
                 self._eventArgumentIndex = -1
 
                 params, _, _, _ = inspect.getargspec(method)
-                if len(params) == 1:
+                nparam = len(params)
+
+                if self._target is not None:
+                    # first argument to a method is "self"
+                    nparam = nparam - 1
+
+                if nparam == 0:
                     self._arguments = []
-                elif len(params) == 2:# and issubclass(eventType, params[1]):
+                elif nparam == 1:
                     self._arguments = [None]
                     self._eventArgumentIndex = 0
                 else:
-                    raise ValueError
+                    raise ValueError, 'listener takes too many arguments'
+
         elif eventArgumentIndex is None:
+            # event not be be passed, just arguments
             if isinstance(method, basestring):
                 methodName = method
-                methods = target.__class__.getMethods()  # FIXME: getMethods
-                for i in range(len(methods)):
-                    if methods[i].getName() == methodName:
-                        method = methods[i]
-                if method is None:
-                    raise ValueError
+                method = getattr(target, methodName)
 
                 self._eventType = eventType
                 self._target = target
@@ -213,8 +217,10 @@ class ListenerMethod(IEventListener):
                 self._arguments = arguments
                 self._eventArgumentIndex = -1
             else:
-                if not issubclass(target.__class__, method.im_class):
-                    raise ValueError
+                if ((target is not None) and
+                        not issubclass(target.__class__, method.im_class)):
+                    raise ValueError, ('%s : %s' % (target.__class__,
+                            method.im_class))
 
                 self._eventType = eventType
                 self._target = target
@@ -224,24 +230,12 @@ class ListenerMethod(IEventListener):
         else:
             if isinstance(method, basestring):
                 methodName = method
-                methods = target.__class__.getMethods()  # FIXME: getMethods
-                for i in range(len(methods)):
-                    if methods[i].getName() == methodName:
-                        method = methods[i]
-
-                if method is None:
-                    raise ValueError
+                method = getattr(target, methodName)
 
                 # Checks that the event argument is null
                 if (eventArgumentIndex >= 0
                         and arguments[eventArgumentIndex] is not None):
-                    raise ValueError
-
-                # Checks the event type is supported by the method
-                if (eventArgumentIndex >= 0
-                        and not issubclass(eventType,
-                            method.getParameterTypes()[eventArgumentIndex])):
-                    raise ValueError
+                    raise ValueError, 'event argument not None'
 
                 self._eventType = eventType
                 self._target = target
@@ -249,19 +243,15 @@ class ListenerMethod(IEventListener):
                 self._arguments = arguments
                 self._eventArgumentIndex = eventArgumentIndex
             else:
-                if not issubclass(target.__class__, method.im_class):
-                    raise ValueError
+                if ((target is not None) and
+                        not issubclass(target.__class__, method.im_class)):
+                    raise ValueError, ('%s : %s' % (target.__class__,
+                            method.im_class))
 
                 # Checks that the event argument is null
                 if (eventArgumentIndex >= 0
                         and arguments[eventArgumentIndex] is not None):
-                    raise ValueError
-
-                # Checks the event type is supported by the method
-                if (eventArgumentIndex >= 0
-                        and not issubclass(eventType,
-                            method.getParameterTypes()[eventArgumentIndex])):
-                    raise ValueError
+                    raise ValueError, 'event argument not None'
 
                 self._eventType = eventType
                 self._target = target
@@ -284,23 +274,22 @@ class ListenerMethod(IEventListener):
         # Only send events supported by the method
         if issubclass(event.__class__, self._eventType):
             try:
-
-                m_name = self._method#.im_func.func_name
-                m = getattr(self._target, m_name)
+                if self._target is None:  # function
+                    m = self._method
+                else:
+                    m_name = self._method
+                    m = getattr(self._target, m_name)
 
                 if self._eventArgumentIndex >= 0:
                     if (self._eventArgumentIndex == 0
                             and len(self._arguments) == 1):
                         m(event)
                     else:
-                        arg = [None] * len(self._arguments)
-                        for i in range(len(arg)):
-                            arg[i] = self._arguments[i]
-
+                        arg = list(self._arguments)
                         arg[self._eventArgumentIndex] = event
                         m(*arg)
                 else:
-                    m()
+                    m(*self._arguments)
 
 #            except Exception:  # IllegalAccessException
 #                raise RuntimeError, 'Internal error - please report'
