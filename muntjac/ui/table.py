@@ -3016,7 +3016,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         return self._cellStyleGenerator
 
 
-    def addListener(self, listener, iface):
+    def addListener(self, listener, iface=None):
         """Adds a header click/footer click/column resize/column reorder
         listener which handles the click events when the user clicks on a
         column header cell in the Table.
@@ -3027,63 +3027,81 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         @param listener:
                    The handler which should handle the events.
         """
-        if iface == IColumnReorderListener:
+        if (isinstance(listener, IColumnReorderListener) and
+                (iface is None or iface == IColumnReorderListener)):
             self.registerListener(
                     VScrollTable.COLUMN_REORDER_EVENT_ID,
                     ColumnReorderEvent, listener,
                     COLUMN_REORDER_METHOD)
-        elif iface == IColumnResizeListener:
+
+        if (isinstance(listener, IColumnResizeListener) and
+                (iface is None or iface == IColumnResizeListener)):
             self.registerListener(
                     VScrollTable.COLUMN_RESIZE_EVENT_ID,
                     ColumnResizeEvent, listener,
                     COLUMN_RESIZE_METHOD)
-        elif iface == IFooterClickListener:
+
+        if (isinstance(listener, IFooterClickListener) and
+                (iface is None or iface == IFooterClickListener)):
             self.registerListener(
                     VScrollTable.FOOTER_CLICK_EVENT_ID,
                     FooterClickEvent, listener,
                     FOOTER_CLICK_METHOD)
-        elif iface == IHeaderClickListener:
+
+        if (isinstance(listener, IHeaderClickListener) and
+                (iface is None or iface == IHeaderClickListener)):
             self.registerListener(
                     VScrollTable.HEADER_CLICK_EVENT_ID,
                     HeaderClickEvent, listener,
                     HEADER_CLICK_METHOD)
-        elif iface == IItemClickListener:
+
+        if (isinstance(listener, IItemClickListener) and
+                (iface is None or iface == IItemClickListener)):
             self.registerListener(
                     VScrollTable.ITEM_CLICK_EVENT_ID,
                     ItemClickEvent, listener,
                     ITEM_CLICK_METHOD)
-        else:
-            super(Table, self).addListener(listener, iface)
+
+        super(Table, self).addListener(listener, iface)
 
 
-    def removeListener(self, listener, iface):
+    def removeListener(self, listener, iface=None):
         """Removes a listener from the Table.
 
         @param listener:
                    The listener to remove
         """
-        if iface == IColumnReorderListener:
+        if (isinstance(listener, IColumnReorderListener) and
+                (iface is None or iface == IColumnReorderListener)):
             self.withdrawListener(
                     VScrollTable.COLUMN_REORDER_EVENT_ID,
                     ColumnReorderEvent, listener)
-        elif iface == IColumnResizeListener:
+
+        if (isinstance(listener, IColumnResizeListener) and
+                (iface is None or iface == IColumnResizeListener)):
             self.withdrawListener(
                     VScrollTable.COLUMN_RESIZE_EVENT_ID,
                     ColumnResizeEvent, listener)
-        elif iface == IFooterClickListener:
+
+        if (isinstance(listener, IFooterClickListener) and
+                (iface is None or iface == IFooterClickListener)):
             self.withdrawListener(
                     VScrollTable.FOOTER_CLICK_EVENT_ID,
                     FooterClickEvent, listener)
-        elif iface == IHeaderClickListener:
+
+        if (isinstance(listener, IHeaderClickListener) and
+                (iface is None or iface == IHeaderClickListener)):
             self.withdrawListener(
                     VScrollTable.HEADER_CLICK_EVENT_ID,
                     HeaderClickEvent, listener)
-        elif iface == IItemClickListener:
+
+        if (isinstance(listener, IItemClickListener) and
+                (iface is None or iface == IItemClickListener)):
             self.withdrawListener(
                     VScrollTable.ITEM_CLICK_EVENT_ID,
                     ItemClickEvent, listener)
-        else:
-            super(Table, self).removeListener(listener, iface)
+
+        super(Table, self).removeListener(listener, iface)
 
 
     def setEnabled(self, enabled):

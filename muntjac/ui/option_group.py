@@ -69,24 +69,30 @@ class OptionGroup(AbstractSelect, IBlurNotifier, IFocusNotifier):
             self.fireEvent(BlurEvent(self))
 
 
-    def addListener(self, listener, iface):
-        if isinstance(listener, IBlurListener):
+    def addListener(self, listener, iface=None):
+        if (isinstance(listener, IBlurListener) and
+                (iface is None or iface == IBlurListener)):
             self.registerListener(BlurEvent.EVENT_ID, BlurEvent,
                     listener, IBlurListener.blurMethod)
-        elif iface == IFocusListener:
+
+        if (isinstance(listener, IFocusListener) and
+                (iface is None or iface == IFocusListener)):
             self.registerListener(FocusEvent.EVENT_ID, FocusEvent,
                     listener, IFocusListener.focusMethod)
-        else:
-            super(OptionGroup, self).addListener(listener, iface)
+
+        super(OptionGroup, self).addListener(listener, iface)
 
 
-    def removeListener(self, listener, iface):
-        if iface == IBlurListener:
+    def removeListener(self, listener, iface=None):
+        if (isinstance(listener, IBlurListener) and
+                (iface is None or iface == IBlurListener)):
             self.withdrawListener(BlurEvent.EVENT_ID, BlurEvent, listener)
-        elif iface == IFocusListener:
+
+        if (isinstance(listener, IFocusListener) and
+                (iface is None or iface == IFocusListener)):
             self.withdrawListener(FocusEvent.EVENT_ID, FocusEvent, listener)
-        else:
-            super(OptionGroup, self).removeListener(listener, iface)
+
+        super(OptionGroup, self).removeListener(listener, iface)
 
 
     def setValue(self, newValue, repaintIsNotNeeded=None):

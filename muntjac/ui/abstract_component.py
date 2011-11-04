@@ -704,18 +704,19 @@ class AbstractComponent(IComponent, IMethodEventSource):
                 parent.childRequestedRepaint(alreadyNotified)
 
 
-    def addListener(self, listener, iface):
-        if iface == IListener:
+    def addListener(self, listener, iface=None):
+        if (isinstance(listener, IListener) and
+                (iface is None or iface == IListener)):
             self.registerListener(ComponentEvent, listener,
                     _COMPONENT_EVENT_METHOD)
-        elif iface == IRepaintRequestListener:
+
+        if (isinstance(listener, IRepaintRequestListener) and
+                (iface is None or iface == IRepaintRequestListener)):
             if self._repaintRequestListeners is None:
                 self._repaintRequestListeners = list()
 
             if listener not in self._repaintRequestListeners:
                 self._repaintRequestListeners.append(listener)
-        else:
-            super(AbstractComponent, self).addListener(listener, iface)
 
 
     def registerListener(self, *args):
@@ -808,17 +809,18 @@ class AbstractComponent(IComponent, IMethodEventSource):
 
 
 
-    def removeListener(self, listener, iface):
-        if iface == IListener:
+    def removeListener(self, listener, iface=None):
+        if (isinstance(listener, IListener) and
+                (iface is None or iface == IListener)):
             self.removeListener(ComponentEvent, listener,
                     _COMPONENT_EVENT_METHOD)
-        elif iface == IRepaintRequestListener:
+
+        if (isinstance(listener, IRepaintRequestListener) and
+                (iface is None or iface == IRepaintRequestListener)):
             if self._repaintRequestListeners is not None:
                 self._repaintRequestListeners.remove(listener)
                 if len(self._repaintRequestListeners) == 0:
                     self._repaintRequestListeners = None
-        else:
-            super(AbstractComponent, self).removeListener(listener, iface)
 
 
     def withdrawListener(self, *args):

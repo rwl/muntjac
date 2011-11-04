@@ -111,18 +111,12 @@ class CompositeErrorMessage(IErrorMessage):
             target.endTag('error')
 
 
-    def addListener(self, listener, iface):
-        if iface == IRepaintRequestListener:
-            pass
-        else:
-            super(CompositeErrorMessage, self).addlistener(listener, iface)
+    def addListener(self, listener, iface=None):
+        pass
 
 
-    def removeListener(self, listener, iface):
-        if iface == IRepaintRequestListener:
-            pass
-        else:
-            super(CompositeErrorMessage, self).removeListener(listener, iface)
+    def removeListener(self, listener, iface=None):
+        pass
 
 
     def requestRepaint(self):

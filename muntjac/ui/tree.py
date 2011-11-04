@@ -673,36 +673,46 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
         @param listener:
                    the Listener to be added.
         """
-        if iface == ICollapseListener:
+        if (isinstance(listener, ICollapseListener) and
+                (iface is None or iface == ICollapseListener)):
             self.registerListener(CollapseEvent,
                     listener, COLLAPSE_METHOD)
-        elif iface == IExpandListener:
+
+        if (isinstance(listener, IExpandListener) and
+                (iface is None or iface == IExpandListener)):
             self.registerListener(ExpandEvent,
                     listener, EXPAND_METHOD)
-        elif iface == IItemClickListener:
+
+        if (isinstance(listener, IItemClickListener) and
+                (iface is None or iface == IItemClickListener)):
             self.registerListener(VTree.ITEM_CLICK_EVENT_ID,
                     ItemClickEvent, listener, ITEM_CLICK_METHOD)
-        else:
-            super(Tree, self).addListener(listener, iface)
+
+        super(Tree, self).addListener(listener, iface)
 
 
-    def removeListener(self, listener, iface):
+    def removeListener(self, listener, iface=None):
         """Removes the expand/collapse listener.
 
         @param listener:
                    the Listener to be removed.
         """
-        if iface == ICollapseListener:
+        if (isinstance(listener, ICollapseListener) and
+                (iface is None or iface == ICollapseListener)):
             self.withdrawListener(CollapseEvent,
                     listener, COLLAPSE_METHOD)
-        elif iface == IExpandListener:
+
+        if (isinstance(listener, IExpandListener) and
+                (iface is None or iface == IExpandListener)):
             self.withdrawListener(ExpandEvent,
                     listener, EXPAND_METHOD)
-        elif iface == IItemClickListener:
+
+        if (isinstance(listener, IItemClickListener) and
+                (iface is None or iface == IItemClickListener)):
             self.withdrawListener(VTree.ITEM_CLICK_EVENT_ID,
                     ItemClickEvent, listener)
-        else:
-            super(Tree, self).removeListener(listener, iface)
+
+        super(Tree, self).removeListener(listener, iface)
 
 
     def fireExpandEvent(self, itemId):

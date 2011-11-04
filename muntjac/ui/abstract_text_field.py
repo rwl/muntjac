@@ -427,34 +427,40 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
         return self._textChangeEventMode
 
 
-    def addListener(self, listener, iface):
-        if iface == IBlurListener:
+    def addListener(self, listener, iface=None):
+        if (isinstance(listener, IBlurListener) and
+                (iface is None or iface == IBlurListener)):
             self.registerListener(BlurEvent.EVENT_ID, BlurEvent,
                     listener, IBlurListener.blurMethod)
 
-        elif iface == IFocusListener:
+        if (isinstance(listener, IFocusListener) and
+                (iface is None or iface == IFocusListener)):
             self.registerListener(FocusEvent.EVENT_ID, FocusEvent,
                     listener, IFocusListener.focusMethod)
 
-        elif iface == ITextChangeListener:
+        if (isinstance(listener, ITextChangeListener) and
+                (iface is None or iface == ITextChangeListener)):
             self.registerListener(ITextChangeListener.EVENT_ID,
                     TextChangeEvent, listener, EVENT_METHOD)
-        else:
-            super(AbstractTextField, self).addListener(listener, iface)
+
+        super(AbstractTextField, self).addListener(listener, iface)
 
 
-    def removeListener(self, listener, iface):
-        if iface == IBlurListener:
+    def removeListener(self, listener, iface=None):
+        if (isinstance(listener, IBlurListener) and
+                (iface is None or iface == IBlurListener)):
             self.withdrawListener(BlurEvent.EVENT_ID, BlurEvent, listener)
 
-        elif iface == IFocusListener:
+        if (isinstance(listener, IFocusListener) and
+                (iface is None or iface == IFocusListener)):
             self.withdrawListener(FocusEvent.EVENT_ID, FocusEvent, listener)
 
-        elif iface == ITextChangeListener:
+        if (isinstance(listener, ITextChangeListener) and
+                (iface is None or iface == ITextChangeListener)):
             self.withdrawListener(ITextChangeListener.EVENT_ID,
                     TextChangeEvent, listener)
-        else:
-            super(AbstractTextField, self).addListener(listener, iface)
+
+        super(AbstractTextField, self).addListener(listener, iface)
 
 
     def setTextChangeTimeout(self, timeout):

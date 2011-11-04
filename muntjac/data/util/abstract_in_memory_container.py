@@ -249,11 +249,11 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
                 'if required.')
 
 
-    def addListener(self, listener, iface):
+    def addListener(self, listener, iface=None):
         super(AbstractInMemoryContainer, self).addListener(listener, iface)
 
 
-    def removeListener(self, listener, iface):
+    def removeListener(self, listener, iface=None):
         super(AbstractInMemoryContainer, self).removeListener(listener, iface)
 
 

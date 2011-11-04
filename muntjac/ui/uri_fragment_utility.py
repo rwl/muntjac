@@ -39,20 +39,22 @@ class UriFragmentUtility(AbstractComponent):
     CLIENT_WIDGET = None #ClientWidget(VUriFragmentUtility, LoadStyle.EAGER)
 
 
-    def addListener(self, listener, iface):
-        if iface == IFragmentChangedListener:
+    def addListener(self, listener, iface=None):
+        if (isinstance(listener, IFragmentChangedListener) and
+                (iface is None or iface == IFragmentChangedListener)):
             self.registerListener(FragmentChangedEvent,
                     listener, _FRAGMENT_CHANGED_METHOD)
-        else:
-            super(UriFragmentUtility, self).addListener(listener, iface)
+
+        super(UriFragmentUtility, self).addListener(listener, iface)
 
 
-    def removeListener(self, listener, iface):
-        if iface == IFragmentChangedListener:
+    def removeListener(self, listener, iface=None):
+        if (isinstance(listener, IFragmentChangedListener) and
+                (iface is None or iface == IFragmentChangedListener)):
             self.withdrawListener(FragmentChangedEvent,
                     listener, _FRAGMENT_CHANGED_METHOD)
-        else:
-            super(UriFragmentUtility, self).removeListener(listener, iface)
+
+        super(UriFragmentUtility, self).removeListener(listener, iface)
 
 
     def __init__(self):

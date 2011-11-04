@@ -41,7 +41,7 @@ class Calc(Application, IClickListener):
         for caption in operations:
             # Create a button and use this application for event handling
             button = Button(caption)
-            button.addListener(self, IClickListener)
+            button.addListener(self)
 
             # Add the button to our main layout
             layout.addComponent(button)

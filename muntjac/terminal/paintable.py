@@ -77,7 +77,7 @@ class IPaintable(IEventListener):
         raise NotImplementedError
 
 
-    def addListener(self, listener, iface):
+    def addListener(self, listener, iface=None):
         """Adds repaint request listener. In order to assure that no repaint
         requests are missed, the new repaint listener should paint the
         paintable right after adding itself as listener.
@@ -85,10 +85,11 @@ class IPaintable(IEventListener):
         @param listener:
                    the listener to be added.
         """
-        if iface == IRepaintRequestListener:
+        if (isinstance(listener, IRepaintRequestListener) and
+                (iface is None or iface == IRepaintRequestListener)):
             raise NotImplementedError
-        else:
-            super(IPaintable, self).addListener(listener, iface)
+
+        #super(IPaintable, self).addListener(listener, iface)
 
 
     def removeListener(self, listener, iface):

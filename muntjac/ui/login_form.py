@@ -184,22 +184,24 @@ class LoginForm(CustomComponent):
     _UNDEFINED_WIDTH = '200px'
 
 
-    def addListener(self, listener, iface):
+    def addListener(self, listener, iface=None):
         """Adds ILoginListener to handle login logic.
         """
-        if iface == ILoginListener:
+        if (isinstance(listener, ILoginListener) and
+                (iface is None or iface == ILoginListener)):
             self.registerListener(LoginEvent, listener, _ON_LOGIN_METHOD)
-        else:
-            super(LoginForm, self).addListener(listener, iface)
+
+        super(LoginForm, self).addListener(listener, iface)
 
 
-    def removeListener(self, listener, iface):
+    def removeListener(self, listener, iface=None):
         """Removes ILoginListener.
         """
-        if iface == ILoginListener:
+        if (isinstance(listener, ILoginListener) and
+                (iface is None or iface == ILoginListener)):
             self.withdrawListener(LoginEvent, listener, _ON_LOGIN_METHOD)
-        else:
-            super(LoginForm, self).removeListener(listener, iface)
+
+        super(LoginForm, self).removeListener(listener, iface)
 
 
     def setWidth(self, width, unit=None):

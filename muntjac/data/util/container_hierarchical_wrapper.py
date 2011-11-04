@@ -502,24 +502,25 @@ class ContainerHierarchicalWrapper(IHierarchical, IContainer,
         return len(self._container)
 
 
-    def addListener(self, listener, iface):
-        if issubclass(iface, IItemSetChangeListener):
+    def addListener(self, listener, iface=None):
+        if (isinstance(listener, IItemSetChangeListener) and
+                (iface is None or iface == IItemSetChangeListener)):
             # Registers a new Item set change listener for this Container.
             if isinstance(self._container, IItemSetChangeNotifier):
                 self._container.addListener(PiggybackListener(listener, self),
                         IItemSetChangeListener)
-        elif issubclass(iface, IPropertySetChangeListener):
+
+        if (isinstance(listener, IPropertySetChangeListener) and
+                (iface is None or iface == IPropertySetChangeListener)):
             # Registers a new Property set change listener for this Container.
             if isinstance(self._container, IPropertySetChangeNotifier):
                 self._container.addListener(PiggybackListener(listener, self),
                         IPropertySetChangeListener)
-        else:
-            super(ContainerHierarchicalWrapper, self).addListener(listener,
-                    iface)
 
 
-    def removeListener(self, listener, iface):
-        if issubclass(iface, IItemSetChangeListener):
+    def removeListener(self, listener, iface=None):
+        if (isinstance(listener, IItemSetChangeListener) and
+                (iface is None or iface == IItemSetChangeListener)):
             # Removes a Item set change listener from the object.
             if isinstance(self._container, IItemSetChangeNotifier):
                 self._container.removeListener(
@@ -527,15 +528,13 @@ class ContainerHierarchicalWrapper(IHierarchical, IContainer,
                         IItemSetChangeListener)
 
 
-        elif issubclass(iface, IPropertySetChangeListener):
+        if (isinstance(listener, IPropertySetChangeListener) and
+            (iface is None or iface == IPropertySetChangeListener)):
             # Removes a Property set change listener from the object.
             if isinstance(self._container, IPropertySetChangeNotifier):
                 self._container.removeListener(
                         PiggybackListener(listener, self),
                         IPropertySetChangeListener)
-        else:
-            super(ContainerHierarchicalWrapper, self).removeListener(listener,
-                    iface)
 
 
 class PiggybackListener(IContainer, IPropertySetChangeListener,

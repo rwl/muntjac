@@ -881,7 +881,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
             self.requestRepaint()
 
 
-    def addListener(self, listener, iface):
+    def addListener(self, listener, iface=None):
         """Adds a close/resize/focus/blur listener to the window.
 
         For a sub window the ICloseListener is fired when the user closes it
@@ -900,22 +900,29 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
         @see: L{IFocusNotifier.addListener}
         @see: L{IBlurNotifier.addListener}
         """
-        if iface == IBlurListener:
+        if (isinstance(listener, IBlurListener) and
+                (iface is None or iface == IBlurListener)):
             self.registerListener(BlurEvent.EVENT_ID,
                     BlurEvent, listener, IBlurListener.blurMethod)
-        elif iface == ICloseListener:
+
+        if (isinstance(listener, ICloseListener) and
+                (iface is None or iface == ICloseListener)):
             self.registerListener(CloseEvent,
                     listener, _WINDOW_CLOSE_METHOD)
-        elif iface == IFocusListener:
+
+        if (isinstance(listener, IFocusListener) and
+                (iface is None or iface == IFocusListener)):
             self.registerListener(FocusEvent.EVENT_ID,
                     FocusEvent, listener, IFocusListener.focusMethod)
-        elif iface == IResizeListener:
+
+        if (isinstance(listener, IResizeListener) and
+                (iface is None or iface == IResizeListener)):
             self.registerListener(ResizeEvent, listener, _WINDOW_RESIZE_METHOD)
-        else:
-            super(Window, self).addListener(listener, iface)
+
+        super(Window, self).addListener(listener, iface)
 
 
-    def removeListener(self, listener, iface):
+    def removeListener(self, listener, iface=None):
         """Removes the close/resize from the window.
 
         For more information on CloseListeners see L{ICloseListener}.
@@ -923,20 +930,26 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
         @param listener:
                    the listener to remove.
         """
-        if iface == IBlurListener:
+        if (isinstance(listener, IBlurListener) and
+                (iface is None or iface == IBlurListener)):
             self.withdrawListener(BlurEvent.EVENT_ID,
                     BlurEvent, listener)
-        elif iface == ICloseListener:
+
+        if (isinstance(listener, ICloseListener) and
+                (iface is None or iface == ICloseListener)):
             self.withdrawListener(CloseEvent, listener,
                     _WINDOW_CLOSE_METHOD)
-        elif iface == IFocusListener:
+
+        if (isinstance(listener, IFocusListener) and
+                (iface is None or iface == IFocusListener)):
             self.withdrawListener(FocusEvent.EVENT_ID,
                     FocusEvent, listener)
-        elif iface == IResizeListener:
+
+        if (isinstance(listener, IResizeListener) and
+                (iface is None or iface == IResizeListener)):
             self.withdrawListener(ResizeEvent, listener)
 
-        else:
-            super(Window, self).removeListener(listener, iface)
+        super(Window, self).removeListener(listener, iface)
 
 
     def fireClose(self):

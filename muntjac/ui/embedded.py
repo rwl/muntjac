@@ -375,7 +375,7 @@ class Embedded(AbstractComponent):
             self.requestRepaint()
 
 
-    def addListener(self, listener, iface):
+    def addListener(self, listener, iface=None):
         """Add a click listener to the component. The listener is called
         whenever the user clicks inside the component. Depending on the
         content the event may be blocked and in that case no event is fired.
@@ -385,24 +385,26 @@ class Embedded(AbstractComponent):
         @param listener:
                    The listener to add
         """
-        if iface == IClickListener:
+        if (isinstance(listener, IClickListener) and
+                (iface is None or iface == IClickListener)):
             self.registerListener(self._CLICK_EVENT, ClickEvent,
                     listener, IClickListener.clickMethod)
-        else:
-            super(Embedded, self).addListener(listener, iface)
+
+        super(Embedded, self).addListener(listener, iface)
 
 
-    def removeListener(self, listener, iface):
+    def removeListener(self, listener, iface=None):
         """Remove a click listener from the component. The listener should
         earlier have been added using L{addListener}.
 
         @param listener:
                    The listener to remove
         """
-        if iface == IClickListener:
+        if (isinstance(listener, IClickListener) and
+                (iface is None or iface == IClickListener)):
             self.withdrawListener(self._CLICK_EVENT, ClickEvent, listener)
-        else:
-            super(Embedded, self).removeListener(listener, iface)
+
+        super(Embedded, self).removeListener(listener, iface)
 
 
     def changeVariables(self, source, variables):

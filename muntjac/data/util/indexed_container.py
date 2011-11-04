@@ -29,8 +29,8 @@ from muntjac.data.util.filter.simple_string_filter import \
 from muntjac.data.util.filter.unsupported_filter_exception import \
     UnsupportedFilterException
 
-from muntjac.data.util.abstract_container import BaseItemSetChangeEvent,\
-    AbstractContainer
+from muntjac.data.util.abstract_container import \
+    BaseItemSetChangeEvent, AbstractContainer
 
 from muntjac.data import container
 from muntjac.util import EventObject
@@ -292,26 +292,34 @@ class IndexedContainer(AbstractInMemoryContainer,
         self.addDefaultValues(t)
 
 
-    def addListener(self, listener, iface):
-        if iface == container.IPropertySetChangeListener:
+    def addListener(self, listener, iface=None):
+        if (isinstance(listener, container.IPropertySetChangeListener) and
+                (iface is None or
+                        iface == container.IPropertySetChangeListener)):
             super(IndexedContainer, self).addListener(listener, iface)
-        elif iface == prop.IValueChangeListener:
+
+        if (isinstance(listener, prop.IValueChangeListener) and
+                (iface is None or iface == prop.IValueChangeListener)):
             if self._propertyValueChangeListeners is None:
                 self._propertyValueChangeListeners = list()
 
             self._propertyValueChangeListeners.append(listener)
-        else:
-            super(IndexedContainer, self).addListener(listener, iface)
+
+        super(IndexedContainer, self).addListener(listener, iface)
 
 
-    def removeListener(self, listener, iface):
-        if iface == container.IPropertySetChangeListener:
+    def removeListener(self, listener, iface=None):
+        if (isinstance(listener, container.IPropertySetChangeListener) and
+                (iface is None or
+                        iface == container.IPropertySetChangeListener)):
             super(IndexedContainer, self).removeListener(listener, iface)
-        elif iface == prop.IValueChangeListener:
+
+        if (isinstance(listener, prop.IValueChangeListener) and
+                (iface is None or iface == prop.IValueChangeListener)):
             if self._propertyValueChangeListeners is not None:
                 self._propertyValueChangeListeners.remove(listener)
-        else:
-            super(IndexedContainer, self).removeListener(listener, iface)
+
+        super(IndexedContainer, self).removeListener(listener, iface)
 
 
     def firePropertyValueChange(self, source):
@@ -769,20 +777,18 @@ class IndexedContainerProperty(prop.IProperty, prop.IValueChangeNotifier):
                 and lp._itemId == self._itemId)
 
 
-    def addListener(self, listener, iface):
-        if iface == prop.IValueChangeListener:
+    def addListener(self, listener, iface=None):
+        if (isinstance(listener, prop.IValueChangeListener) and
+                (iface is None or iface == prop.IValueChangeListener)):
             self._container.addSinglePropertyChangeListener(self._propertyId,
                     self._itemId, listener)
-        else:
-            super(IndexedContainerProperty, self).addListener(listener, iface)
 
 
-    def removeListener(self, listener, iface):
-        if iface == prop.IValueChangeListener:
+    def removeListener(self, listener, iface=None):
+        if (isinstance(listener, prop.IValueChangeListener) and
+                (iface is None or iface == prop.IValueChangeListener)):
             self._container.removeSinglePropertyChangeListener(self._propertyId,
                     self._itemId, listener)
-        else:
-            super(IndexedContainerProperty, self).addListener(listener, iface)
 
 
     def getHost(self):

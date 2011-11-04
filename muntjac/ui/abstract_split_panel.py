@@ -333,21 +333,23 @@ class AbstractSplitPanel(AbstractLayout):
         self.fireEvent( SplitterClickEvent(self, mouseDetails) )
 
 
-    def addListener(self, listener, iface):
-        if iface == ISplitterClickListener:
+    def addListener(self, listener, iface=None):
+        if (isinstance(listener, ISplitterClickListener) and
+            (iface is None or iface == ISplitterClickListener)):
             self.registerListener(self._SPLITTER_CLICK_EVENT,
                     SplitterClickEvent, listener,
                     ISplitterClickListener.clickMethod)
-        else:
-            super(AbstractSplitPanel, self).addListener(listener, iface)
+
+        super(AbstractSplitPanel, self).addListener(listener, iface)
 
 
-    def removeListener(self, listener, iface):
-        if iface == ISplitterClickListener:
+    def removeListener(self, listener, iface=None):
+        if (isinstance(listener, ISplitterClickListener) and
+                (iface is None or iface == ISplitterClickListener)):
             self.withdrawListener(self._SPLITTER_CLICK_EVENT,
                     SplitterClickEvent, listener)
-        else:
-            super(AbstractSplitPanel, self).removeListener(listener, iface)
+
+        super(AbstractSplitPanel, self).removeListener(listener, iface)
 
 
 class ISplitterClickListener(IComponentEventListener):

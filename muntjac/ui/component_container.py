@@ -100,28 +100,22 @@ class IComponentContainer(IComponent):
         raise NotImplementedError
 
 
-    def addListener(self, listener, iface):
+    def addListener(self, listener, iface=None):
         """Listens the component attach/detach events.
 
         @param listener:
                    the listener to add.
         """
-        if iface == IComponentAttachListener:
-            raise NotImplementedError
-        else:
-            super(IComponentContainer, self).addListener(listener, iface)
+        raise NotImplementedError
 
 
-    def removeListener(self, listener, iface):
+    def removeListener(self, listener, iface=None):
         """Stops the listening component attach/detach events.
 
         @param listener:
                    the listener to removed.
         """
-        if iface == IComponentAttachListener:
-            raise NotImplementedError
-        else:
-            super(IComponentContainer, self).removeListener(listener, iface)
+        raise NotImplementedError
 
 
 class IComponentAttachListener(object):

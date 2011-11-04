@@ -147,20 +147,22 @@ class AbsoluteLayout(AbstractLayout, ILayoutClickNotifier):
             target.endTag('cc')
 
 
-    def addListener(self, listener, iface):
-        if iface == ILayoutClickListener:
+    def addListener(self, listener, iface=None):
+        if (isinstance(listener, ILayoutClickListener) and
+                (iface is None or iface == ILayoutClickListener)):
             self.registerListener(self._CLICK_EVENT, LayoutClickEvent,
                     listener, ILayoutClickListener.clickMethod)
-        else:
-            super(AbsoluteLayout, self).addListener(listener, iface)
+
+        super(AbsoluteLayout, self).addListener(listener, iface)
 
 
-    def removeListener(self, listener, iface):
-        if iface == ILayoutClickListener:
+    def removeListener(self, listener, iface=None):
+        if (isinstance(listener, ILayoutClickListener) and
+                (iface is None or iface == ILayoutClickListener)):
             self.withdrawListener(self._CLICK_EVENT, LayoutClickEvent,
                     listener)
-        else:
-            super(AbsoluteLayout, self).removeListener(listener, iface)
+
+        super(AbsoluteLayout, self).removeListener(listener, iface)
 
 
 class ComponentPosition(object):

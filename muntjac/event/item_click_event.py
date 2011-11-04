@@ -77,28 +77,22 @@ class IItemClickNotifier(object):
     @see: L{ItemClickEvent}
     """
 
-    def addListener(self, listener, iface):
+    def addListener(self, listener, iface=None):
         """Register a listener to handle L{ItemClickEvent}s.FieldEvents,
 
         @param listener:
                    ItemClickListener to be registered
         """
-        if iface == IItemClickListener:
-            raise NotImplementedError
-        else:
-            super(IItemClickNotifier, self).addListener(listener, iface)
+        raise NotImplementedError
 
 
-    def removeListener(self, listener, iface):
+    def removeListener(self, listener, iface=None):
         """Removes an ItemClickListener.
 
         @param listener:
                    ItemClickListener to be removed
         """
-        if iface == IItemClickListener:
-            raise NotImplementedError
-        else:
-            super(IItemClickNotifier, self).removeListener(listener, iface)
+        raise NotImplementedError
 
 
 class IItemClickSource(IItemClickNotifier):

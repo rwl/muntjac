@@ -150,27 +150,19 @@ class IPropertySetChangeNotifier(object):
     Property set is modified.
     """
 
-    def addListener(self, listener, iface):
+    def addListener(self, listener, iface=None):
         """Registers a new property set change listener for this IItem.
 
         @param listener:
                    The new Listener to be registered.
         """
-        if iface == IPropertySetChangeListener:
-            raise NotImplementedError
-        else:
-            super(IPropertySetChangeNotifier, self).addListener(listener,
-                    iface)
+        raise NotImplementedError
 
 
-    def removeListener(self, listener, iface):
+    def removeListener(self, listener, iface=None):
         """Removes a previously registered property set change listener.
 
         @param listener:
                    Listener to be removed.
         """
-        if iface == IPropertySetChangeListener:
-            raise NotImplementedError
-        else:
-            super(IPropertySetChangeNotifier, self).removeListener(listener,
-                    iface)
+        raise NotImplementedError

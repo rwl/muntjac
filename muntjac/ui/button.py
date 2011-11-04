@@ -241,65 +241,71 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
         return bool
 
     # Button style with no decorations. Looks like a link, acts like a button
-    # @deprecated: use L{BaseTheme#BUTTON_LINK} instead.
+    # @deprecated: use L{BaseTheme.BUTTON_LINK} instead.
     STYLE_LINK = 'link'
 
 
-    def addListener(self, listener, iface):
+    def addListener(self, listener, iface=None):
         """Adds the button click listener.
 
         @param listener:
                    the Listener to be added.
         """
-        if iface == IBlurListener:
+        if (isinstance(listener, IBlurListener) and
+                (iface is None or iface == IBlurListener)):
             self.registerListener(BlurEvent.EVENT_ID, BlurEvent,
                     listener, IBlurListener.blurMethod)
 
-        elif iface == IClickListener:
+        if (isinstance(listener, IClickListener) and
+                (iface is None or iface == IClickListener)):
             self.registerListener(ClickEvent, listener, _BUTTON_CLICK_METHOD)
 
-        elif iface == IFocusListener:
+        if (isinstance(listener, IFocusListener) and
+                (iface is None or iface == IFocusListener)):
             self.registerListener(FocusEvent.EVENT_ID, FocusEvent,
                     listener, IFocusListener.focusMethod)
 
-        else:
-            super(Button, self).addListener(listener, iface)
+        super(Button, self).addListener(listener, iface)
 
 
-    def addCallback(self, callback, event, *args):
+    def addCallback(self, callback, eventType=None, *args):
+        if eventType is None:
+            eventType = callback._eventType  # set by decorator
 
-        if event == BlurEvent:
+        if eventType == BlurEvent:
             self.registerCallback(BlurEvent, callback,
                     BlurEvent.EVENT_ID, *args)
 
-        elif event == ClickEvent:
+        elif eventType == ClickEvent:
             self.registerCallback(ClickEvent, callback, None, *args)
 
-        elif event == FocusEvent:
+        elif eventType == FocusEvent:
             self.registerCallback(FocusEvent, callback,
                     FocusEvent.EVENT_ID, *args)
 
         else:
-            super(Button, self).addCallback(callback, event)
+            super(Button, self).addCallback(callback, eventType)
 
 
-    def removeListener(self, listener, iface):
+    def removeListener(self, listener, iface=None):
         """Removes the button click listener.
 
         @param listener:
                    the Listener to be removed.
         """
-        if iface == IBlurListener:
+        if (isinstance(listener, IBlurListener) and
+                (iface is None or iface == IBlurListener)):
             self.withdrawListener(BlurEvent.EVENT_ID, BlurEvent, listener)
 
-        elif iface == IClickListener:
+        if (isinstance(listener, IClickListener) and
+                (iface is None or iface == IClickListener)):
             self.withdrawListener(ClickEvent, listener, _BUTTON_CLICK_METHOD)
 
-        elif iface == IFocusListener:
+        if (isinstance(listener, IFocusListener) and
+                (iface is None or iface == IFocusListener)):
             self.withdrawListener(FocusEvent.EVENT_ID, FocusEvent, listener)
 
-        else:
-            super(Button, self).removeListener(listener, iface)
+        super(Button, self).removeListener(listener, iface)
 
 
     def fireClick(self, details=None):
@@ -525,3 +531,8 @@ class ClickEvent(ComponentEvent):
             return self._details.isShiftKey()
         else:
             return False
+
+
+def buttonClickCallback(func):
+    func._eventType = ClickEvent
+    return func

@@ -592,7 +592,7 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
         raise NotImplementedError
 
 
-    def addListener(self, listener, iface):
+    def addListener(self, listener, iface=None):
         """Registers a new (generic) component event listener for the
         component::
 
@@ -643,13 +643,10 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
         @see: L{component.Event}
         @see: L{removeListener}
         """
-        if iface == IListener:
-            raise NotImplementedError
-        else:
-            super(IComponent, self).addListener(listener, iface)
+        raise NotImplementedError
 
 
-    def removeListener(self, listener, iface):
+    def removeListener(self, listener, iface=None):
         """Removes a previously registered component event listener from this
         component.
 
@@ -657,10 +654,7 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
                    the listener to be removed.
         @see: L{addListener}
         """
-        if iface == IListener:
-            raise NotImplementedError
-        else:
-            super(IComponent, self).removeListener(listener, iface)
+        raise NotImplementedError
 
 
 class Event(EventObject):

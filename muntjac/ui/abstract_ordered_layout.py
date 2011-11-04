@@ -266,19 +266,21 @@ class AbstractOrderedLayout(AbstractLayout, IAlignmentHandler,
         return 0 if ratio is None else float(ratio)
 
 
-    def addListener(self, listener, iface):
-        if iface == ILayoutClickListener:
+    def addListener(self, listener, iface=None):
+        if (isinstance(listener, ILayoutClickListener) and
+                (iface is None or iface == ILayoutClickListener)):
             self.registerListener(self._CLICK_EVENT, LayoutClickEvent,
                     listener, ILayoutClickListener.clickMethod)
-        else:
-            super(AbstractOrderedLayout, self).addListener(listener, iface)
+
+        super(AbstractOrderedLayout, self).addListener(listener, iface)
 
 
-    def removeListener(self, listener, iface):
-        if iface == ILayoutClickListener:
+    def removeListener(self, listener, iface=None):
+        if (isinstance(listener, ILayoutClickListener) and
+                (iface is None or iface == ILayoutClickListener)):
             self.withdrawListener(self._CLICK_EVENT, LayoutClickEvent, listener)
-        else:
-            super(AbstractOrderedLayout, self).removeListener(listener, iface)
+
+        super(AbstractOrderedLayout, self).removeListener(listener, iface)
 
 
     def getComponentIndex(self, component):

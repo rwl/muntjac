@@ -904,20 +904,22 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
         return None
 
 
-    def addListener(self, listener, iface):
-        if iface == ILayoutClickListener:
+    def addListener(self, listener, iface=None):
+        if (isinstance(listener, ILayoutClickListener) and
+                (iface is None or iface == ILayoutClickListener)):
             self.registerListener(self._CLICK_EVENT, LayoutClickEvent,
                     listener, ILayoutClickListener.clickMethod)
-        else:
-            super(GridLayout, self).addListener(listener, iface)
+
+        super(GridLayout, self).addListener(listener, iface)
 
 
-    def removeListener(self, listener, iface):
-        if iface == ILayoutClickListener:
+    def removeListener(self, listener, iface=None):
+        if (isinstance(listener, ILayoutClickListener) and
+                (iface is None or iface == ILayoutClickListener)):
             self.withdrawListener(self._CLICK_EVENT, LayoutClickEvent,
                     listener)
-        else:
-            super(GridLayout, self).removeListener(listener, iface)
+
+        super(GridLayout, self).removeListener(listener, iface)
 
 
 class Area(object):

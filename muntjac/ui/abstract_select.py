@@ -1077,46 +1077,54 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
         self.firePropertySetChange()
 
 
-    def addListener(self, listener, iface):
+    def addListener(self, listener, iface=None):
         """Adds a new IProperty or IItem set change listener for this
         IContainer.
 
         @see: L{IPropertySetChangeNotifier.addListener}
         @see: L{IItemSetChangeNotifier.addListener}
         """
-        if iface == container.IItemSetChangeListener:
+        if (isinstance(listener, container.IItemSetChangeListener) and
+                (iface is None or iface == container.IItemSetChangeListener)):
             if self._itemSetEventListeners is None:
                 self._itemSetEventListeners = set()
 
             self._itemSetEventListeners.add(listener)
-        elif iface == container.IPropertySetChangeListener:
+
+        if (isinstance(listener, container.IPropertySetChangeListener) and
+                (iface is None or
+                        iface == container.IPropertySetChangeListener)):
             if self._propertySetEventListeners is None:
                 self._propertySetEventListeners = set()
 
             self._propertySetEventListeners.add(listener)
-        else:
-            super(AbstractSelect, self).addListener(listener, iface)
+
+        super(AbstractSelect, self).addListener(listener, iface)
 
 
-    def removeListener(self, listener, iface):
+    def removeListener(self, listener, iface=None):
         """Removes a previously registered IProperty and IItemset change
         listener.
 
         @see: L{IPropertySetChangeNotifier.removeListener}
         @see: L{IItemSetChangeNotifier.removeListener}
         """
-        if iface == container.IItemSetChangeListener:
+        if (isinstance(listener, container.IItemSetChangeListener) and
+                (iface is None or iface == container.IItemSetChangeListener)):
             if self._itemSetEventListeners is not None:
                 self._itemSetEventListeners.remove(listener)
                 if len(self._itemSetEventListeners) == 0:
                     self._itemSetEventListeners = None
-        elif iface == container.IPropertySetChangeListener:
+
+        if (isinstance(listener, container.IPropertySetChangeListener) and
+                (iface is None or
+                        iface == container.IPropertySetChangeListener)):
             if self._propertySetEventListeners is not None:
                 self._propertySetEventListeners.remove(listener)
                 if len(self._propertySetEventListeners) == 0:
                     self._propertySetEventListeners = None
-        else:
-            super(AbstractSelect, self).removeListener(listener, iface)
+
+        super(AbstractSelect, self).removeListener(listener, iface)
 
 
     def getListeners(self, eventType):

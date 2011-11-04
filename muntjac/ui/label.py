@@ -315,22 +315,24 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
             self.requestRepaint()
 
 
-    def addListener(self, listener, iface):
+    def addListener(self, listener, iface=None):
         """Adds the value change listener."""
-        if iface == prop.IValueChangeListener:
+        if (isinstance(listener, prop.IValueChangeListener) and
+                (iface is None or iface == prop.IValueChangeListener)):
             self.registerListener(ValueChangeEvent, listener,
                     _VALUE_CHANGE_METHOD)
-        else:
-            super(Label, self).addListener(listener, iface)
+
+        super(Label, self).addListener(listener, iface)
 
 
-    def removeListener(self, listener, iface):
+    def removeListener(self, listener, iface=None):
         """Removes the value change listener."""
-        if isinstance(listener, prop.IValueChangeListener):
+        if (isinstance(listener, prop.IValueChangeListener) and
+                (iface is None or iface == prop.IValueChangeListener)):
             self.withdrawListener(ValueChangeEvent, listener,
                     _VALUE_CHANGE_METHOD)
-        else:
-            super(Label, self).removeListener(listener, iface)
+
+        super(Label, self).removeListener(listener, iface)
 
 
     def fireValueChange(self):

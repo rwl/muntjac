@@ -51,7 +51,7 @@ class IErrorMessage(IPaintable):
         raise NotImplementedError
 
 
-    def addListener(self, listener, iface):
+    def addListener(self, listener, iface=None):
         """Error messages are unmodifiable and thus listeners are not needed.
         This method should be implemented as empty.
 
@@ -59,13 +59,10 @@ class IErrorMessage(IPaintable):
                    the listener to be added.
         @see: L{IPaintable.addListener}
         """
-        if iface == IRepaintRequestListener:
-            raise NotImplementedError
-        else:
-            super(IErrorMessage, self).addListener(listener, iface)
+        raise NotImplementedError
 
 
-    def removeListener(self, listener, iface):
+    def removeListener(self, listener, iface=None):
         """Error messages are inmodifiable and thus listeners are not needed.
         This method should be implemented as empty.
 
@@ -73,10 +70,7 @@ class IErrorMessage(IPaintable):
                    the listener to be removed.
         @see: L{IPaintable.removeListener}
         """
-        if iface == IRepaintRequestListener:
-            raise NotImplementedError
-        else:
-            super(IErrorMessage, self).removeListener(listener, iface)
+        raise NotImplementedError
 
 
     def requestRepaint(self):

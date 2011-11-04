@@ -295,7 +295,7 @@ class PopupView(AbstractComponentContainer):
             self.setPopupVisible( bool(variables.get('popupVisibility')) )
 
 
-    def addListener(self, listener, iface):
+    def addListener(self, listener, iface=None):
         """Add a listener that is called whenever the visibility of the
         popup is changed.
 
@@ -304,14 +304,15 @@ class PopupView(AbstractComponentContainer):
         @see: L{PopupVisibilityEvent}
         @see: L{removeListener}
         """
-        if iface == IPopupVisibilityListener:
+        if (isinstance(listener, IPopupVisibilityListener) and
+                (iface is None or iface == IPopupVisibilityListener)):
             self.registerListener(PopupVisibilityEvent,
                     listener, _POPUP_VISIBILITY_METHOD)
-        else:
-            super(PopupView, self).addListener(listener, iface)
+
+        super(PopupView, self).addListener(listener, iface)
 
 
-    def removeListener(self, listener, iface):
+    def removeListener(self, listener, iface=None):
         """Removes a previously added listener, so that it no longer receives
         events when the visibility of the popup changes.
 
@@ -319,11 +320,12 @@ class PopupView(AbstractComponentContainer):
         @see: L{IPopupVisibilityListener}
         @see: L{addListener}
         """
-        if iface == IPopupVisibilityListener:
+        if (isinstance(listener, IPopupVisibilityListener) and
+                (iface is None or iface == IPopupVisibilityListener)):
             self.withdrawListener(PopupVisibilityEvent, listener,
                     _POPUP_VISIBILITY_METHOD)
-        else:
-            super(PopupView, self).removeListener(listener, iface)
+
+        super(PopupView, self).removeListener(listener, iface)
 
 
 class PopupVisibilityEvent(ComponentEvent):

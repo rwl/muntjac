@@ -688,28 +688,34 @@ class AbstractField(AbstractComponent, field.IField,
                 self._currentBufferedSourceException])
 
 
-    def addListener(self, listener, iface):
+    def addListener(self, listener, iface=None):
         # Adds a value change listener for the field.
-        if iface == prop.IReadOnlyStatusChangeListener:
+        if (isinstance(listener, prop.IReadOnlyStatusChangeListener) and
+                (iface is None or iface == prop.IReadOnlyStatusChangeListener)):
             self.registerListener(prop.IReadOnlyStatusChangeEvent,
                     listener, _READ_ONLY_STATUS_CHANGE_METHOD)
-        elif iface == prop.IValueChangeListener:
+
+        if (isinstance(listener, prop.IValueChangeListener) and
+                (iface is None or iface == prop.IValueChangeListener)):
             self.registerListener(field.ValueChangeEvent,
                     listener, _VALUE_CHANGE_METHOD)
-        else:
-            super(AbstractField, self).addListener(listener, iface)
+
+        super(AbstractField, self).addListener(listener, iface)
 
 
-    def removeListener(self, listener, iface):
+    def removeListener(self, listener, iface=None):
         # Removes a value change listener from the field.
-        if iface == prop.IReadOnlyStatusChangeListener:
+        if (isinstance(listener, prop.IReadOnlyStatusChangeListener) and
+                (iface is None or iface == prop.IReadOnlyStatusChangeListener)):
             self.withdrawListener(prop.IReadOnlyStatusChangeEvent, listener,
                     _READ_ONLY_STATUS_CHANGE_METHOD)
-        elif iface == prop.IValueChangeListener:
+
+        if (isinstance(listener, prop.IValueChangeListener) and
+                (iface is None or iface == prop.IValueChangeListener)):
             self.withdrawListener(field.ValueChangeEvent, listener,
                     _VALUE_CHANGE_METHOD)
-        else:
-            super(AbstractField, self).removeListener(listener, iface)
+
+        super(AbstractField, self).removeListener(listener, iface)
 
 
     def fireValueChange(self, repaintIsNotNeeded):

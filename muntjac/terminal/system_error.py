@@ -124,18 +124,12 @@ class SystemErr(RuntimeError, IErrorMessage):
         return self._cause
 
 
-    def addListener(self, listener, iface):
-        if iface == IRepaintRequestListener:
-            pass
-        else:
-            super(SystemErr).addListener(listener, iface)
+    def addListener(self, listener, iface=None):
+        pass
 
 
-    def removeListener(self, listener, iface):
-        if iface == IRepaintRequestListener:
-            pass
-        else:
-            super(SystemErr, self).removeListener(listener, iface)
+    def removeListener(self, listener, iface=None):
+        pass
 
 
     def requestRepaint(self):

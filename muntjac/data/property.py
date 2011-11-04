@@ -258,28 +258,22 @@ class IValueChangeNotifier(object):
     @version: @VERSION@
     """
 
-    def addListener(self, listener, iface):
+    def addListener(self, listener, iface=None):
         """Registers a new value change listener for this IProperty.
 
         @param listener:
                    the new Listener to be registered
         """
-        if iface == IValueChangeListener:
-            raise NotImplementedError
-        else:
-            super(IValueChangeNotifier, self).addListener(listener, iface)
+        raise NotImplementedError
 
 
-    def removeListener(self, listener, iface):
+    def removeListener(self, listener, iface=None):
         """Removes a previously registered value change listener.
 
         @param listener:
                    listener to be removed
         """
-        if iface == IValueChangeListener:
-            raise NotImplementedError
-        else:
-            super(IValueChangeNotifier, self).removelistener(listener, iface)
+        raise NotImplementedError
 
 
 class IReadOnlyStatusChangeEvent(object):
@@ -329,27 +323,19 @@ class IReadOnlyStatusChangeNotifier(object):
     @version: @VERSION@
     """
 
-    def addListener(self, listener, iface):
+    def addListener(self, listener, iface=None):
         """Registers a new read-only status change listener for this IProperty.
 
         @param listener:
                    the new Listener to be registered
         """
-        if iface == IReadOnlyStatusChangeListener:
-            raise NotImplementedError
-        else:
-            super(IReadOnlyStatusChangeNotifier, self).addListener(listener,
-                    iface)
+        raise NotImplementedError
 
 
-    def removeListener(self, listener, iface):
+    def removeListener(self, listener, iface=None):
         """Removes a previously registered read-only status change listener.
 
         @param listener:
                    listener to be removed
         """
-        if iface == IReadOnlyStatusChangeListener:
-            raise NotImplementedError
-        else:
-            super(IReadOnlyStatusChangeNotifier, self).removeListener(listener,
-                    iface)
+        raise NotImplementedError

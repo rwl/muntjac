@@ -257,18 +257,12 @@ class SourceException(RuntimeError, IErrorMessage):
         target.endTag('error')
 
 
-    def addListener(self, listener, iface):
-        if iface == IRepaintRequestListener:
-            raise NotImplementedError
-        else:
-            super(SourceException, self).addListener(listener, iface)
+    def addListener(self, listener, iface=None):
+        raise NotImplementedError
 
 
-    def removeListener(self, listener, iface):
-        if iface == IRepaintRequestListener:
-            raise NotImplementedError
-        else:
-            super(SourceException, self).removelistener(listener, iface)
+    def removeListener(self, listener, iface=None):
+        raise NotImplementedError
 
 
     def requestRepaint(self):

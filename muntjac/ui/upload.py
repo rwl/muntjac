@@ -251,65 +251,73 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
         target.addVariable(self, 'action', self.getStreamVariable())
 
 
-    def addListener(self, listener, iface):
+    def addListener(self, listener, iface=None):
         """Adds an event listener.
 
         @param listener:
-                   the Listener to be added.
+                   the listener to be added.
         """
-        if iface == IFailedListener:
+        if (isinstance(listener, IFailedListener) and
+                (iface is None or iface == IFailedListener)):
             self.registerListener(FailedEvent,
                     listener, _UPLOAD_FAILED_METHOD)
 
-        elif iface == IFinishedListener:
+        if (isinstance(listener, IFinishedListener) and
+                (iface is None or iface == IFinishedListener)):
             self.registerListener(FinishedEvent,
                     listener, _UPLOAD_FINISHED_METHOD)
 
-        elif iface == IProgressListener:
+        if (isinstance(listener, IProgressListener) and
+                (iface is None or iface == IProgressListener)):
             if self._progressListeners is None:
                 self._progressListeners = set()
             self._progressListeners.add(listener)
 
-        elif isinstance(listener, IStartedListener):
+        if (isinstance(listener, IStartedListener) and
+                (iface is None or iface == IStartedListener)):
             self.registerListener(StartedEvent,
                     listener, _UPLOAD_STARTED_METHOD)
 
-        elif iface == ISucceededListener:
+        if (isinstance(listener, ISucceededListener) and
+                (iface is None or iface == ISucceededListener)):
             self.registerListener(SucceededEvent,
                     listener, _UPLOAD_SUCCEEDED_METHOD)
 
-        else:
-            super(Upload, self).addListener(listener, iface)
+        super(Upload, self).addListener(listener, iface)
 
 
-    def removeListener(self, listener, iface):
+    def removeListener(self, listener, iface=None):
         """Removes an event listener.
 
         @param listener:
-                   the Listener to be removed.
+                   the listener to be removed.
         """
-        if iface == IFailedListener:
+        if (isinstance(listener, IFailedListener) and
+                (iface is None or iface == IFailedListener)):
             self.withdrawListener(FailedEvent,
                     listener, _UPLOAD_FAILED_METHOD)
 
-        elif iface == IFinishedListener:
+        if (isinstance(listener, IFinishedListener) and
+                (iface is None or iface == IFinishedListener)):
             self.withdrawListener(FinishedEvent,
                     listener, _UPLOAD_FINISHED_METHOD)
 
-        elif iface == IProgressListener:
+        if (isinstance(listener, IProgressListener) and
+                (iface is None or iface == IProgressListener)):
             if self._progressListeners is not None:
                 self._progressListeners.remove(listener)
 
-        elif iface == IStartedListener:
+        if (isinstance(listener, IStartedListener) and
+                (iface is None or iface == IStartedListener)):
             self.withdrawListener(StartedEvent,
                     listener, _UPLOAD_STARTED_METHOD)
 
-        elif iface == ISucceededListener:
+        if (isinstance(listener, ISucceededListener) and
+                (iface is None or iface == ISucceededListener)):
             self.withdrawListener(SucceededEvent,
                     listener, _UPLOAD_SUCCEEDED_METHOD)
 
-        else:
-            super(Upload, self).removeListener(listener, iface)
+        super(Upload, self).removeListener(listener, iface)
 
 
     def fireStarted(self, filename, MIMEType):
