@@ -1,7 +1,5 @@
 
-from muntjac.application import Application
-from muntjac.ui.window import Window
-from muntjac.ui.label import Label
+from muntjac.api import Application, Window, Label
 
 
 class HelloWorld(Application):
@@ -15,9 +13,9 @@ class HelloWorld(Application):
         self.setMainWindow(main)
 
         # "Hello world" text is added to window as a Label component
-        main.addComponent(Label('Hello World!'))
+        main.addComponent( Label('Hello World!') )
 
 
 if __name__ == '__main__':
     from muntjac.main import muntjac
-    muntjac(HelloWorld, nogui=True, forever=True, debug=True)
+    muntjac(HelloWorld, nogui=False)

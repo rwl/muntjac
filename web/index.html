@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Muntjac @version@</title>
+		<link rel="stylesheet" type="text/css" href="css/styles.css" />
+	</head> <!-- /head -->
+	<body>
+
+		<div id="header">
+			<h1>Muntjac</h1>
+			<div id="version">
+				<strong>Version @version@</strong>
+				<a href="README" class="release-notes" title="ReadMe for this Muntjac version">README &raquo;</a>
+			</div>
+		</div> <!-- /header -->
+
+		<div id="subheader">
+			<ul id="menu">
+				<li></li>
+			</ul>
+			<ul id="links">
+              <li><a href="http://groups.google.com/group/muntjac" title="Open groups.google.com/group/muntjac">Discussion Forum &raquo;</a></li>
+			  <li><a href="http://www.github.com/mesori/muntjac/issues" title="Open github.com/mesori/muntjac/issues">Issue Tracker &raquo;</a></li>
+			  <li><a href="http://www.mesori.com/muntjac" title="Open www.mesori.com/muntjac">Muntjac Home &raquo;</a></li>
+            </ul>
+		</div> <!-- /subheader -->
+
+		<div id="content">
+
+			<!-- <h3 class="reasons">Reasons to Choose Muntjac</h3> -->
+
+			<ul id="reasons">
+
+				<li id="programming-model" class="tab">
+					<h4 title="Welcome">Welcome to Muntjac</h4>
+
+					<div class="col2">
+						<h5>Web Application GUI Toolkit</h5>
+						<p>Muntjac is a translation of <a href="">Vaadin</a> to the <a href="http://www.python.org/">Python</a> programming language. It is similar
+						to GUI toolkits for desktop applications, such as <a href="http://www.riverbankcomputing.co.uk/software/pyqt">PyQT</a>,
+						<a href="http://www.wxpython.org/">wxPython</a> and <a href="www.pygtk.org">PyGTK</a>. However, it can be used to create dynamic,
+						browser independent, web applications. There is no need to write HTML, Javascript or RPC code, just server-side Python.</p>
+					</div>
+					<div class="col2">
+					<h5>Code Examples</h5>
+						<ul>
+							<li>
+								<h6>Hello World &ndash; The classic example</h6>
+								<a href="http://github.com/rwl/muntjac/blob/master/muntjac/demo/HelloWorld.py" title="View Source">HelloWorld.py</a> &nbsp;&bull;&nbsp; <a href="HelloWorld" class="demoapp">Run the app &raquo;</a>
+							</li>
+							<li>
+								<h6>Calculator &ndash; Simple logic &amp; event handling</h6>
+								<a href="http://github.com/rwl/muntjac/blob/master/muntjac/demo/Calc.py" title="View Source">Calc.py</a> &nbsp;&bull;&nbsp; <a href="Calc" class="demoapp">Run the app &raquo;</a>
+							</li>
+						</ul>
+					</div>
+
+					<div class="newline col2">
+						<h5>Rich Widget Set</h5>
+						<ul>
+							<li>
+								<h6>Muntjac Tunes &ndash; Flexible styling with CSS</h6>
+								<a href="MuntjacTunes" class="demoapp">Run the app &raquo;</a>
+							</li>
+							<li>
+								<h6>Address Book &ndash; Complex widgets &amp; layouts</h6>
+								<a href="SimpleAddressBook" class="demoapp">Run the app &raquo;</a>
+							</li>
+							<li>
+								<h6>Sampler &ndash; Widget demonstrations</h6>
+								<a href="sampler" class="demoapp">Run the app &raquo;</a>
+							</li>
+						</ul>
+					</div>
+
+					<div class="col2">
+						<h5>Browser Independent</h5>
+						<p>Muntjac supports all of the main browsers without the need for plug-ins to be installed by the end user. All of the components are compatible with:</p>
+						<ul>
+						<li>Internet Explorer 6+</li>
+						<li>Mozilla Firefox 3+</li>
+						<li>Safari 3+</li>
+						<li>Opera 10</li>
+						<li>Google Chrome 4</li>
+						</ul>
+					</div>
+					<!-- <div class="col2">
+						<h5>No plugins required</h5>
+						<p>Muntjac uses javascript on the client-side and does not require any browser plugins to be install by the end user.</p>
+					</div>  -->
+				</li>
+
+				<li id="install" class="tab">
+					<h4 title="Installation">Download &amp; Install</h4>
+
+					<div class="col2">
+						<p>
+						<h5>Python Implementations</h5>
+						<p>Muntjac is written in pure Python and currently does not have any C extensions. It has been tested on:</p>
+						<ul>
+							<li><a href="http://www.python.org/">CPython</a> v2.6,</li>
+							<li><a href="http://www.pypy.org/">PyPy</a> v1.6 and</li>
+							<li><a href="http://ironpython.net/">Iron Python</a> v2.7</li>
+						</ul>
+						</p>
+						<p>It is also possible to run Muntjac applications on <a href="http://code.google.com/appengine/">Google App Engine</a> and
+						<a href="http://www.heroku.com/">Heroku</a>.</p>
+					</div>
+
+					<div class="col2">
+						<h5>Minimal Dependencies</h5>
+						<p>To run Muntjac you must install:</p>
+						<p>
+						<ul>
+							<li><a href="http://pypi.python.org/pypi/Paste">Paste</a> &ndash; WSGI tools</li>
+							<li><a href="http://pypi.python.org/pypi/PasteWebKit">Paste WebKit</a> &ndash; WSGI servlet implementation</li>
+							<li><a href="http://pypi.python.org/pypi/Babel">Babel</a> &ndash; Internationalization utilities</li>
+						</ul>
+						</p>
+						<p>To run the test suite you must also install:</p>
+						<p>
+						<ul>
+							<li><a href="http://pypi.python.org/pypi/Mox">Mox</a> &ndash; Mock object framework</li>
+						</ul>
+						</p>
+						<p>All of these libraries are pure Python and available from the <a href="http://pypi.python.org/pypi/">PyPI</a>.</p>
+					</div>
+
+					<div class="newline col2">
+						<h5>Cheese Shop</h5>
+						<p>Muntjac is available from <a href="http://pypi.python.org/pypi/">PyPI</a> and can be installed with
+						<a href="http://pypi.python.org/pypi/setuptools">setuptools</a>, <a href="http://docs.python.org/distutils/">disutils</a> or
+						<a href="http://pypi.python.org/pypi/pip">pip</a>, for example:
+						<pre>  $ easy_install muntjac</pre>
+						Alternatively, you can <a href="http://pypi.python.org/pypi/muntjac#downloads">download</a> the Muntjac source archive and run the setup file directly:
+						<pre>  $ python setup.py install</pre>
+						Windows users may prefer to <a href="http://pypi.python.org/pypi/muntjac#downloads">download</a> and run the installer.
+						</p>
+					</div>
+
+					<div class="col2">
+						<h5>Source Code</h5>
+						<p>The Muntjac source code is hosted on <a href=http://www.github.com/mesori/muntjac">GitHub</a>. You can checkout the latest developments with:
+						<pre>  $ git clone http://github.com/mesori/muntjac.git</pre>
+						or <a href="http://github.com/rwl/muntjac/zipball/master">download</a> a zip archive.
+						</p>
+					</div>
+
+				</li>
+
+				<li id="community" class="tab">
+					<h4 title="Community">Community &amp; Support</h4>
+					<div class="col2">
+						<h5>Mailing List</h5>
+						<p>The mailing list a good place to ask questions, help others, discuss ideas or just share new projects.</p>
+						<ul><li><a href="http://groups.google.com/group/muntjac">Join the list</a></li></ul>
+					</div>
+					<div class="col2">
+						<h5>Issue Tracker</h5>
+						<p>Issues can be reported through the Muntjac issue tracker to ensure new bugs are not lost.</p>
+						<ul><li><a href="http://github.com/mesori/muntjac/issues">Muntjac bug tracker</a></li></ul>
+					</div>
+				</li>
+
+				<li id="license" class="tab">
+					<h4 title="Open Source">License &amp; Copyright</h4>
+
+					<h5>AGPL / Commercial</h5>
+					<p>Muntjac is currently available under both the GNU Affero General Public License version 3 and a commercial license. Once the development costs have been
+					recouped it we be released under the same Apache Software License 2.0 that is used by Vaadin.</p>
+
+					<div class="col2">
+						<ul>
+							<li><a href="http://www.gnu.org/licenses/agpl-3.0.txt">GNU Affero General Public License</a></li>
+							<!-- <li><a href="">Commercial License</a></li>  -->
+						</ul>
+					</div>
+
+					<!-- <div class="col2">
+						<strong>Buy It Now</strong>
+					</div> -->
+
+				</li>
+
+			</ul>
+		</div> <!-- /content -->
+
+
+		<div id="footer">
+			<span class="slogan"><strong>muntjac <em>:</em></strong><span> <!-- <a href="#top">&uarr; Back to top</a>-->
+		</div> <!-- /footer -->
+
+	</body>
+</html>
