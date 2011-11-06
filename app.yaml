@@ -1,4 +1,4 @@
-application: muntjac-sampler
+application: muntjac-demo
 version: 1
 runtime: python
 api_version: 1
@@ -8,5 +8,12 @@ handlers:
 - url: /VAADIN
   static_dir: VAADIN
 
-- url: /.*
+- url: /(hello|calc|address|tunes|sampler).*
   script: muntjac/demo/gae.py
+
+- url: /
+  static_files: web/index.html
+  upload: web/index.html
+
+- url: /
+  static_dir: web

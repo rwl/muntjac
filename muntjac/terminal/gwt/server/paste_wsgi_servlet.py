@@ -21,13 +21,15 @@ from WebKit.HTTPServlet import HTTPServlet
 
 class PasteWsgiServlet(HTTPServlet):
 
-    def __init__(self, contextRoot=None, timeout=1800):
+    def __init__(self, contextRoot=None, contextPath=None, timeout=1800):
 #        super(PasteWsgiServlet, self).__init__()
 
         if contextRoot is not None:
             self._contextRoot = contextRoot
         else:
             self._contextRoot = join(dirname(muntjac.__file__), '..')
+
+        self._contextPath = contextPath if contextPath is not None else ''  # default web app
 
         self._timeout = timeout
 
@@ -57,7 +59,7 @@ class PasteWsgiServlet(HTTPServlet):
 
     def getContextPath(self, request):
         ## FIXME: implement request.contextPath()
-        return ''  # default web app
+        return self._contextPath
 
 
     def originalContextPath(self, request):

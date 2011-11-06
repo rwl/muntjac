@@ -1,4 +1,6 @@
 
+import warnings
+
 from muntjac.demo.HelloWorld import HelloWorld
 from muntjac.demo.Calc import Calc
 from muntjac.demo.SimpleAddressBook import SimpleAddressBook
@@ -13,6 +15,9 @@ from muntjac.terminal.gwt.server.gae_application_servlet import \
     GaeApplicationServlet
 
 from gaesessions import SessionMiddleware
+
+
+warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 
 def main():
