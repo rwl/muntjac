@@ -261,7 +261,6 @@ ul {
 	}
 
 #sampler {
-	width: 366px;
 	padding-right: 600px;
 	margin: 0 auto;
 	text-align: left;
@@ -273,6 +272,10 @@ ul {
 	font-size: 48px;
 	line-height: normal;
 	margin: 0;
+	}
+
+#content ul#reasons li#sampler.tab h4 {
+	margin: 14px 0 5px;
 	}
 
 #sampler a {
@@ -296,6 +299,7 @@ ul {
 	display: inline-block;
 	zoom: 1;
 	padding: 8px 10px 6px 15px;
+	margin-top: 20px;
 	color: #fff;
 	line-height: normal;
 	background: #00b4f0;
