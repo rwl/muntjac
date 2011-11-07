@@ -21,7 +21,7 @@ from muntjac.demo.SimpleAddressBook import SimpleAddressBook
 from muntjac.demo.MuntjacTunesLayout import MuntjacTunesLayout
 
 
-def muntjac(applicationClass, host='localhost', port=8880, nogui=True,
+def muntjac(applicationClass, host='localhost', port=8880, nogui=False,
             debug=False, serve=True, forever=True, *args, **kw_args):
 
     level = logging.DEBUG if debug else logging.INFO

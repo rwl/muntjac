@@ -18,4 +18,4 @@ class HelloWorld(Application):
 
 if __name__ == '__main__':
     from muntjac.main import muntjac
-    muntjac(HelloWorld, nogui=False)
+    muntjac(HelloWorld, nogui=True)

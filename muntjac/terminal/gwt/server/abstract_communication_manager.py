@@ -1118,39 +1118,39 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
             months = l.months['format']['wide'].values()
             short_months = l.months['format']['abbreviated'].values()
 
-            outWriter.write(str('\"smn\":[\"'
+            outWriter.write(('\"smn\":[\"'
                     + short_months[0] + '\",\"' + short_months[1] + '\",\"'
                     + short_months[2] + '\",\"' + short_months[3] + '\",\"'
                     + short_months[4] + '\",\"' + short_months[5] + '\",\"'
                     + short_months[6] + '\",\"' + short_months[7] + '\",\"'
                     + short_months[8] + '\",\"' + short_months[9] + '\",\"'
                     + short_months[10] + '\",\"' + short_months[11] + '\"'
-                    + '],'))
-            outWriter.write(str('\"mn\":[\"'
+                    + '],').encode('utf-8'))
+            outWriter.write(('\"mn\":[\"'
                     + months[0] + '\",\"' + months[1] + '\",\"'
                     + months[2] + '\",\"' + months[3] + '\",\"'
                     + months[4] + '\",\"' + months[5] + '\",\"'
                     + months[6] + '\",\"' + months[7] + '\",\"'
                     + months[8] + '\",\"' + months[9] + '\",\"'
                     + months[10] + '\",\"' + months[11] + '\"'
-                    + '],'))
+                    + '],').encode('utf-8'))
 
             # Weekday names (both short and full)
             days = l.days['format']['wide'].values()
             short_days = l.days['format']['abbreviated'].values()
 
-            outWriter.write(str('\"sdn\":[\"'
+            outWriter.write(('\"sdn\":[\"'
                     + short_days[0] + '\",\"' + short_days[1] + '\",\"'
                     + short_days[2] + '\",\"' + short_days[3] + '\",\"'
                     + short_days[4] + '\",\"' + short_days[5] + '\",\"'
                     + short_days[6] + '\"'
-                    + '],'))
-            outWriter.write(str('\"dn\":[\"'
+                    + '],').encode('utf-8'))
+            outWriter.write(('\"dn\":[\"'
                     + days[0] + '\",\"' + days[1] + '\",\"'
                     + days[2] + '\",\"' + days[3] + '\",\"'
                     + days[4] + '\",\"' + days[5] + '\",\"'
                     + days[6] + '\"'
-                    + '],'))
+                    + '],').encode('utf-8'))
 
             # First day of week
             # (Babel: 6 = sunday, 0 = monday, Vaadin: 0 = sunday, 1 = monday)
@@ -1166,7 +1166,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                 df = l.date_formats['short'].pattern
                 df += ' '
                 df += l.time_formats['short'].pattern
-                df = str(df)  # convert unicode to string
+                df = df.encode('utf-8')  # convert unicode to string
             except KeyError:
                 logger.warning('Unable to get default date '
                                'pattern for locale ' + str(l))
@@ -1210,7 +1210,8 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
             outWriter.write('\"thc\":' + str(twelve_hour_clock).lower() + ',')
             outWriter.write('\"hmd\":\"' + hour_min_delimiter + '\"')
             if twelve_hour_clock:
-                ampm = [str( l.periods['am'] ), str( l.periods['pm'] )]
+                ampm = [( l.periods['am'] ).encode('utf-8'),
+                        ( l.periods['pm'] ).encode('utf-8')]
                 outWriter.write(',\"ampm\":[\"' + ampm[0] + '\",\"'
                                 + ampm[1] + '\"]')
             outWriter.write('}')
