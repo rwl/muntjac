@@ -284,7 +284,7 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
                     FocusEvent.EVENT_ID, *args)
 
         else:
-            super(Button, self).addCallback(callback, eventType)
+            super(Button, self).addCallback(callback, eventType, *args)
 
 
     def removeListener(self, listener, iface=None):

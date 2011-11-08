@@ -128,6 +128,10 @@ class SystemErr(RuntimeError, IErrorMessage):
         pass
 
 
+    def addCallback(self, callback, eventType=None, *args):
+        pass
+
+
     def removeListener(self, listener, iface=None):
         pass
 

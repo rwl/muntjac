@@ -113,6 +113,18 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
         super(AbstractComponentContainer, self).addListener(listener, iface)
 
 
+    def addCallback(self, callback, eventType=None, *args):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == ComponentAttachEvent:
+            self.registerCallback(ComponentAttachEvent, callback, None, *args)
+
+        else:
+            super(AbstractComponentContainer, self).addCallback(callback,
+                    eventType, *args)
+
+
     def removeListener(self, listener, iface=None):
         if (isinstance(listener, IComponentAttachListener) and
                 (iface is None or iface == IComponentAttachListener)):

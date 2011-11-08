@@ -159,6 +159,10 @@ class IPropertySetChangeNotifier(object):
         raise NotImplementedError
 
 
+    def addCallback(self, callback, eventType=None, *args):
+        raise NotImplementedError
+
+
     def removeListener(self, listener, iface=None):
         """Removes a previously registered property set change listener.
 

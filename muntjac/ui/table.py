@@ -3065,6 +3065,34 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         super(Table, self).addListener(listener, iface)
 
 
+    def addCallback(self, callback, eventType=None, *args):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == ColumnReorderEvent:
+            self.registerCallback(ColumnReorderEvent, callback,
+                    VScrollTable.COLUMN_REORDER_EVENT_ID, *args)
+
+        elif eventType == ColumnResizeEvent:
+            self.registerCallback(ColumnResizeEvent, callback,
+                    VScrollTable.COLUMN_RESIZE_EVENT_ID, *args)
+
+        elif eventType == FooterClickEvent:
+            self.registerCallback(FooterClickEvent, callback,
+                    VScrollTable.FOOTER_CLICK_EVENT_ID, *args)
+
+        elif eventType == HeaderClickEvent:
+            self.registerCallback(HeaderClickEvent, callback,
+                    VScrollTable.HEADER_CLICK_EVENT_ID, *args)
+
+        elif eventType == ItemClickEvent:
+            self.registerCallback(ItemClickEvent, callback,
+                    VScrollTable.ITEM_CLICK_EVENT_ID, *args)
+
+        else:
+            super(Table, self).addCallback(callback, eventType, *args)
+
+
     def removeListener(self, listener, iface=None):
         """Removes a listener from the Table.
 

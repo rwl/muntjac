@@ -393,6 +393,18 @@ class Embedded(AbstractComponent):
         super(Embedded, self).addListener(listener, iface)
 
 
+    def addCallback(self, callback, eventType=None, *args):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == ClickEvent:
+            self.registerCallback(ClickEvent, callback,
+                    self._CLICK_EVENT, *args)
+
+        else:
+            super(Embedded, self).addCallback(callback, eventType, *args)
+
+
     def removeListener(self, listener, iface=None):
         """Remove a click listener from the component. The listener should
         earlier have been added using L{addListener}.

@@ -312,6 +312,16 @@ class PopupView(AbstractComponentContainer):
         super(PopupView, self).addListener(listener, iface)
 
 
+    def addCallback(self, callback, eventType=None, *args):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == PopupVisibilityEvent:
+            self.registerCallback(ClickEvent, callback, None, *args)
+        else:
+            super(PopupView, self).addCallback(callback, eventType, *args)
+
+
     def removeListener(self, listener, iface=None):
         """Removes a previously added listener, so that it no longer receives
         events when the visibility of the popup changes.

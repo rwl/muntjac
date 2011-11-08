@@ -844,6 +844,10 @@ class IItemSetChangeNotifier(object):
         raise NotImplementedError
 
 
+    def addCallback(self, callback, eventType=None, *args):
+        raise NotImplementedError
+
+
     def removeListener(self, listener, iface=None):
         """Removes the Item set change listener from the object.
 
@@ -909,6 +913,10 @@ class IPropertySetChangeNotifier(object):
         @param listener:
                    The new Listener to be registered
         """
+        raise NotImplementedError
+
+
+    def addCallback(self, callback, eventType=None, *args):
         raise NotImplementedError
 
 

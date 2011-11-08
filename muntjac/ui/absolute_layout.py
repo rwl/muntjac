@@ -156,6 +156,17 @@ class AbsoluteLayout(AbstractLayout, ILayoutClickNotifier):
         super(AbsoluteLayout, self).addListener(listener, iface)
 
 
+    def addCallback(self, callback, eventType=None, *args):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == LayoutClickEvent:
+            self.registerCallback(LayoutClickEvent, callback, None, *args)
+
+        else:
+            super(AbsoluteLayout, self).addCallback(callback, eventType, *args)
+
+
     def removeListener(self, listener, iface=None):
         if (isinstance(listener, ILayoutClickListener) and
                 (iface is None or iface == ILayoutClickListener)):

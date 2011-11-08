@@ -671,7 +671,7 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
         """Adds the expand/collapse listener.
 
         @param listener:
-                   the Listener to be added.
+                   the listener to be added.
         """
         if (isinstance(listener, ICollapseListener) and
                 (iface is None or iface == ICollapseListener)):
@@ -691,11 +691,29 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
         super(Tree, self).addListener(listener, iface)
 
 
+    def addCallback(self, callback, eventType=None, *args):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == CollapseEvent:
+            self.registerCallback(CollapseEvent, callback, None, *args)
+
+        elif eventType == ExpandEvent:
+            self.registerCallback(ExpandEvent, callback, None, *args)
+
+        elif eventType == ItemClickEvent:
+            self.registerCallback(ItemClickEvent, callback,
+                    VTree.ITEM_CLICK_EVENT_ID, *args)
+
+        else:
+            super(Tree, self).addCallback(callback, eventType, *args)
+
+
     def removeListener(self, listener, iface=None):
         """Removes the expand/collapse listener.
 
         @param listener:
-                   the Listener to be removed.
+                   the listener to be removed.
         """
         if (isinstance(listener, ICollapseListener) and
                 (iface is None or iface == ICollapseListener)):

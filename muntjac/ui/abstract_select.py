@@ -1089,7 +1089,7 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
             if self._itemSetEventListeners is None:
                 self._itemSetEventListeners = set()
 
-            self._itemSetEventListeners.add(listener)
+            self._itemSetEventListeners.add( (listener, tuple()) )
 
         if (isinstance(listener, container.IPropertySetChangeListener) and
                 (iface is None or
@@ -1097,9 +1097,29 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
             if self._propertySetEventListeners is None:
                 self._propertySetEventListeners = set()
 
-            self._propertySetEventListeners.add(listener)
+            self._propertySetEventListeners.add( (listener, tuple()) )
 
         super(AbstractSelect, self).addListener(listener, iface)
+
+
+    def addCallback(self, callback, eventType=None, *args):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == container.IItemSetChangeEvent:
+            if self._itemSetEventListeners is None:
+                self._itemSetEventListeners = set()
+
+            self._itemSetEventListeners.add( (callback, args) )
+
+        elif eventType == container.IPropertySetChangeEvent:
+            if self._propertySetEventListeners is None:
+                self._propertySetEventListeners = set()
+
+            self._propertySetEventListeners.add( (callback, args) )
+
+        else:
+            super(AbstractSelect, self).addCallback(callback, eventType, *args)
 
 
     def removeListener(self, listener, iface=None):
@@ -1112,7 +1132,10 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
         if (isinstance(listener, container.IItemSetChangeListener) and
                 (iface is None or iface == container.IItemSetChangeListener)):
             if self._itemSetEventListeners is not None:
-                self._itemSetEventListeners.remove(listener)
+                for t in self._itemSetEventListeners.copy():
+                    if t[0] == listener:
+                        self._itemSetEventListeners.remove(t)
+
                 if len(self._itemSetEventListeners) == 0:
                     self._itemSetEventListeners = None
 
@@ -1120,7 +1143,10 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
                 (iface is None or
                         iface == container.IPropertySetChangeListener)):
             if self._propertySetEventListeners is not None:
-                self._propertySetEventListeners.remove(listener)
+                for t in self._propertySetEventListeners.copy():
+                    if t[0] == listener:
+                        self._propertySetEventListeners.remove(t)
+
                 if len(self._propertySetEventListeners) == 0:
                     self._propertySetEventListeners = None
 
@@ -1160,8 +1186,11 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
                 and (len(self._propertySetEventListeners) > 0)):
             event = IPropertySetChangeEvent(self)
             listeners = list(self._propertySetEventListeners)
-            for l in listeners:
-                l.containerPropertySetChange(event)
+            for l, args in listeners:
+                if isinstance(l, container.IPropertySetChangeListener):
+                    l.containerPropertySetChange(event)
+                else:
+                    l(event, *args)
         self.requestRepaint()
 
 
@@ -1171,8 +1200,11 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
                 and (len(self._itemSetEventListeners) > 0)):
             event = IItemSetChangeEvent(self)
             listeners = list(self._itemSetEventListeners)
-            for i in range(len(listeners)):
-                listeners[i].containerItemSetChange(event)
+            for l, args in listeners:
+                if isinstance(l, container.IItemSetChangeListener):
+                    l.containerItemSetChange(event)
+                else:
+                    l(event, *args)
         self.requestRepaint()
 
 

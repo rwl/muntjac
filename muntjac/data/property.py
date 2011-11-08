@@ -267,6 +267,10 @@ class IValueChangeNotifier(object):
         raise NotImplementedError
 
 
+    def addCallback(self, callback, eventType=None, *args):
+        raise NotImplementedError
+
+
     def removeListener(self, listener, iface=None):
         """Removes a previously registered value change listener.
 
@@ -329,6 +333,10 @@ class IReadOnlyStatusChangeNotifier(object):
         @param listener:
                    the new Listener to be registered
         """
+        raise NotImplementedError
+
+
+    def addCallback(self, callback, eventType=None, *args):
         raise NotImplementedError
 
 

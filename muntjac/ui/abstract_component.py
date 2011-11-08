@@ -689,12 +689,15 @@ class AbstractComponent(IComponent, IMethodEventSource):
                 listeners = list(self._repaintRequestListeners)
                 event = RepaintRequestEvent(self)
 
-                for listener in listeners:
+                for listener, args in listeners:
                     if alreadyNotified is None:
                         alreadyNotified = list()
 
                     if listener not in alreadyNotified:
-                        listener.repaintRequested(event)
+                        if isinstance(listener, IRepaintRequestListener):
+                            listener.repaintRequested(event)
+                        else:
+                            listener(event, *args)
                         alreadyNotified.append(listener)
                         self._repaintRequestListenersNotified = True
 
@@ -716,7 +719,26 @@ class AbstractComponent(IComponent, IMethodEventSource):
                 self._repaintRequestListeners = list()
 
             if listener not in self._repaintRequestListeners:
-                self._repaintRequestListeners.append(listener)
+                self._repaintRequestListeners.append( (listener, tuple()) )
+
+
+    def addCallback(self, callback, eventType=None, *args):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == ComponentEvent:
+            self.registerCallback(ComponentEvent, callback, None, *args)
+
+        elif eventType == RepaintRequestEvent:
+            if self._repaintRequestListeners is None:
+                self._repaintRequestListeners = list()
+
+            if (callback, args) not in self._repaintRequestListeners:
+                self._repaintRequestListeners.append( (callback, args) )
+
+        else:
+            super(AbstractComponent, self).addCallback(callback, eventType,
+                    *args)
 
 
     def registerListener(self, *args):
@@ -818,7 +840,9 @@ class AbstractComponent(IComponent, IMethodEventSource):
         if (isinstance(listener, IRepaintRequestListener) and
                 (iface is None or iface == IRepaintRequestListener)):
             if self._repaintRequestListeners is not None:
-                self._repaintRequestListeners.remove(listener)
+                for i, (l, _) in enumerate(self._repaintRequestListeners[:]):
+                    if l == listener:
+                        del self._repaintRequestListeners[i]
                 if len(self._repaintRequestListeners) == 0:
                     self._repaintRequestListeners = None
 

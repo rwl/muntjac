@@ -39,6 +39,10 @@ class IFocusNotifier(object):
         raise NotImplementedError
 
 
+    def addCallback(self, callback, eventType=None, *args):
+        raise NotImplementedError
+
+
     def removeListener(self, listener, iface=None):
         """Removes a C{IFocusListener} from the Component.
 
@@ -62,6 +66,10 @@ class IBlurNotifier(object):
 
         @see: L{IBlurListener}
         """
+        raise NotImplementedError
+
+
+    def addCallback(self, callback, eventType=None, *args):
         raise NotImplementedError
 
 
@@ -200,6 +208,10 @@ class ITextChangeNotifier(object):
     """
 
     def addListener(self, listener, iface=None):
+        raise NotImplementedError
+
+
+    def addCallback(self, callback, eventType=None, *args):
         raise NotImplementedError
 
 

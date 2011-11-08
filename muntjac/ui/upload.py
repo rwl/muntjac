@@ -271,7 +271,7 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
                 (iface is None or iface == IProgressListener)):
             if self._progressListeners is None:
                 self._progressListeners = set()
-            self._progressListeners.add(listener)
+            self._progressListeners.add( (listener, tuple()) )
 
         if (isinstance(listener, IStartedListener) and
                 (iface is None or iface == IStartedListener)):
@@ -284,6 +284,32 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
                     listener, _UPLOAD_SUCCEEDED_METHOD)
 
         super(Upload, self).addListener(listener, iface)
+
+
+    def addCallback(self, callback, eventType=None, *args):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == FailedEvent:
+            self.registerCallback(FailedEvent, callback, None, *args)
+
+        elif eventType == FinishedEvent:
+            self.registerCallback(FinishedEvent, callback, None, *args)
+
+        elif eventType == IProgressListener:  # no progress event
+            if self._progressListeners is None:
+                self._progressListeners = set()
+
+            self._progressListeners.add( (callback, args) )
+
+        elif eventType == StartedEvent:
+            self.registerCallback(StartedEvent, callback, None, *args)
+
+        elif eventType == SucceededEvent:
+            self.registerCallback(SucceededEvent, callback, None, *args)
+
+        else:
+            super(Upload, self).addCallback(callback, eventType, *args)
 
 
     def removeListener(self, listener, iface=None):
@@ -305,7 +331,10 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
         if (isinstance(listener, IProgressListener) and
                 (iface is None or iface == IProgressListener)):
             if self._progressListeners is not None:
-                self._progressListeners.remove(listener)
+                for t in self._progressListeners.copy():
+                    if t[0] == listener:
+                        self._progressListeners.remove(t)
+                        break
 
         if (isinstance(listener, IStartedListener) and
                 (iface is None or iface == IStartedListener)):
@@ -366,8 +395,11 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
         # this is implemented differently than other listeners to
         # maintain backwards compatibility
         if self._progressListeners is not None:
-            for l in self._progressListeners:
-                l.updateProgress(totalBytes, contentLength)
+            for l, args in self._progressListeners:
+                if isinstance(l, IProgressListener):
+                    l.updateProgress(totalBytes, contentLength)
+                else:
+                    l(totalBytes, contentLength, *args)
 
 
     def getReceiver(self):

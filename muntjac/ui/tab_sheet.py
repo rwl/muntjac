@@ -635,6 +635,17 @@ class TabSheet(AbstractComponentContainer):
         super(TabSheet, self).addListener(listener, iface)
 
 
+    def addCallback(self, callback, eventType=None, *args):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == SelectedTabChangeEvent:
+            self.registerCallback(SelectedTabChangeEvent, callback, None,
+                    *args)
+        else:
+            super(TabSheet, self).addCallback(callback, eventType, *args)
+
+
     def removeListener(self, listener, iface=None):
         """Removes a tab selection listener
 

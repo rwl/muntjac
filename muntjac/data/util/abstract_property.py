@@ -79,14 +79,35 @@ class AbstractProperty(prop.IProperty, prop.IValueChangeNotifier,
             if self._readOnlyStatusChangeListeners is None:
                 self._readOnlyStatusChangeListeners = list()
 
-            self._readOnlyStatusChangeListeners.append(listener)
+            self._readOnlyStatusChangeListeners.append( (listener, tuple()) )
 
         if (isinstance(listener, prop.IValueChangeListener) and
                 (iface is None or iface == prop.IValueChangeListener)):
             if self._valueChangeListeners is None:
                 self._valueChangeListeners = list()
 
-            self._valueChangeListeners.append(listener)
+            self._valueChangeListeners.append( (listener, tuple()) )
+
+
+    def addCallback(self, callback, eventType=None, *args):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == prop.IReadOnlyStatusChangeEvent:
+            if self._readOnlyStatusChangeListeners is None:
+                self._readOnlyStatusChangeListeners = list()
+
+            self._readOnlyStatusChangeListeners.append( (callback, args) )
+
+        elif eventType == prop.ValueChangeEvent:
+            if self._valueChangeListeners is None:
+                self._valueChangeListeners = list()
+
+            self._valueChangeListeners.append( (callback, args) )
+
+        else:
+            super(AbstractProperty, self).addCallback(callback, eventType,
+                    *args)
 
 
     def removeListener(self, listener, iface=None):
@@ -98,21 +119,32 @@ class AbstractProperty(prop.IProperty, prop.IValueChangeNotifier,
         if (isinstance(listener, prop.IReadOnlyStatusChangeListener) and
             (iface is None or iface == prop.IReadOnlyStatusChangeListener)):
             if self._readOnlyStatusChangeListeners is not None:
-                self._readOnlyStatusChangeListeners.remove(listener)
+                for i, (l, _) in enumerate(
+                        self._readOnlyStatusChangeListeners[:]):
+                    if listener == l:
+                        del self._readOnlyStatusChangeListeners[i]
+                        break
 
         if (isinstance(listener, prop.IValueChangeListener) and
                 (iface is None or iface == prop.IValueChangeListener)):
             if self._valueChangeListeners is not None:
-                self._valueChangeListeners.remove(listener)
+                for i, (l, _) in enumerate(self._valueChangeListeners[:]):
+                    if listener == l:
+                        del self._valueChangeListeners[i]
+                        break
 
 
     def fireReadOnlyStatusChange(self):
-        """Sends a read only status change event to all registered listeners."""
+        """Sends a read only status change event to all registered listeners.
+        """
         if self._readOnlyStatusChangeListeners is not None:
             l = list(self._readOnlyStatusChangeListeners)
             event = prop.IReadOnlyStatusChangeEvent(self)
-            for listener in l:
-                listener.readOnlyStatusChange(event)
+            for listener, args in l:
+                if isinstance(listener, prop.IReadOnlyStatusChangeListener):
+                    listener.readOnlyStatusChange(event)
+                else:
+                    listener(event, *args)
 
 
     def fireValueChange(self):
@@ -120,8 +152,11 @@ class AbstractProperty(prop.IProperty, prop.IValueChangeNotifier,
         if self._valueChangeListeners is not None:
             l = list(self._valueChangeListeners)
             event = ValueChangeEvent(self)
-            for listener in l:
-                listener.valueChange(event)
+            for listener, args in l:
+                if isinstance(listener, prop.IValueChangeListener):
+                    listener.valueChange(event)
+                else:
+                    listener(event, *args)
 
 
     def getListeners(self, eventType):

@@ -48,6 +48,17 @@ class UriFragmentUtility(AbstractComponent):
         super(UriFragmentUtility, self).addListener(listener, iface)
 
 
+    def addCallback(self, callback, eventType=None, *args):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == FragmentChangedEvent:
+            self.registerCallback(FragmentChangedEvent, callback, None, *args)
+        else:
+            super(UriFragmentUtility, self).addCallback(callback, eventType,
+                    *args)
+
+
     def removeListener(self, listener, iface=None):
         if (isinstance(listener, IFragmentChangedListener) and
                 (iface is None or iface == IFragmentChangedListener)):

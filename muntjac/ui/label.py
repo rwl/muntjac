@@ -325,6 +325,16 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
         super(Label, self).addListener(listener, iface)
 
 
+    def addCallback(self, callback, eventType=None, *args):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == prop.ValueChangeEvent:
+            self.registerCallback(prop.ValueChangeEvent, callback, None, *args)
+        else:
+            super(Label, self).addCallback(callback, eventType, *args)
+
+
     def removeListener(self, listener, iface=None):
         """Removes the value change listener."""
         if (isinstance(listener, prop.IValueChangeListener) and

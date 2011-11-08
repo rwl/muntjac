@@ -703,6 +703,21 @@ class AbstractField(AbstractComponent, field.IField,
         super(AbstractField, self).addListener(listener, iface)
 
 
+    def addCallback(self, callback, eventType=None, *args):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == prop.IReadOnlyStatusChangeEvent:
+            self.registerCallback(prop.IReadOnlyStatusChangeEvent, callback,
+                    None, *args)
+
+        elif eventType == prop.ValueChangeEvent:
+            self.registerCallback(prop.ValueChangeEvent, callback, None, *args)
+
+        else:
+            super(AbstractField, self).addCallback(callback, eventType, *args)
+
+
     def removeListener(self, listener, iface=None):
         # Removes a value change listener from the field.
         if (isinstance(listener, prop.IReadOnlyStatusChangeListener) and

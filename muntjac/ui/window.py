@@ -922,6 +922,28 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
         super(Window, self).addListener(listener, iface)
 
 
+    def addCallback(self, callback, eventType=None, *args):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == BlurEvent:
+            self.registerCallback(BlurEvent, callback,
+                    BlurEvent.EVENT_ID, *args)
+
+        elif eventType == CloseEvent:
+            self.registerCallback(CloseEvent, callback, None, *args)
+
+        elif eventType == FocusEvent:
+            self.registerCallback(FocusEvent, callback,
+                    FocusEvent.EVENT_ID, *args)
+
+        elif eventType == ResizeEvent:
+            self.registerCallback(ResizeEvent, callback, None, *args)
+
+        else:
+            super(Window, self).addCallback(callback, eventType, *args)
+
+
     def removeListener(self, listener, iface=None):
         """Removes the close/resize from the window.
 

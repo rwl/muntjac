@@ -109,6 +109,10 @@ class IComponentContainer(IComponent):
         raise NotImplementedError
 
 
+    def addCallback(self, callback, eventType=None, *args):
+        raise NotImplementedError
+
+
     def removeListener(self, listener, iface=None):
         """Stops the listening component attach/detach events.
 

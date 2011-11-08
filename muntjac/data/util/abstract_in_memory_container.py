@@ -253,6 +253,11 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
         super(AbstractInMemoryContainer, self).addListener(listener, iface)
 
 
+    def addCallback(self, callback, eventType=None, *args):
+        super(AbstractInMemoryContainer, self).addCallback(callback,
+                eventType, *args)
+
+
     def removeListener(self, listener, iface=None):
         super(AbstractInMemoryContainer, self).removeListener(listener, iface)
 

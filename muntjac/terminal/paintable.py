@@ -89,7 +89,13 @@ class IPaintable(IEventListener):
                 (iface is None or iface == IRepaintRequestListener)):
             raise NotImplementedError
 
-        #super(IPaintable, self).addListener(listener, iface)
+
+    def addCallback(self, callback, eventType=None, *args):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == RepaintRequestEvent:
+            raise NotImplementedError
 
 
     def removeListener(self, listener, iface):

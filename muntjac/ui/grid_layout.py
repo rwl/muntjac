@@ -913,6 +913,17 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
         super(GridLayout, self).addListener(listener, iface)
 
 
+    def addCallback(self, callback, eventType=None, *args):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == LayoutClickEvent:
+            self.registerCallback(LayoutClickEvent, callback,
+                    self._CLICK_EVENT, *args)
+        else:
+            super(GridLayout, self).addCallback(callback, eventType, *args)
+
+
     def removeListener(self, listener, iface=None):
         if (isinstance(listener, ILayoutClickListener) and
                 (iface is None or iface == ILayoutClickListener)):

@@ -58,14 +58,35 @@ class AbstractContainer(IContainer):
             if self.getItemSetChangeListeners() is None:
                 self.setItemSetChangeListeners( list() )
 
-            self.getItemSetChangeListeners().append(listener)
+            self.getItemSetChangeListeners().append( (listener, tuple()) )
 
         if (isinstance(listener, IPropertySetChangeListener) and
                 (iface is None or iface == IPropertySetChangeListener)):
             if self.getPropertySetChangeListeners() is None:
-                self.setPropertySetChangeListeners(list())
+                self.setPropertySetChangeListeners( list() )
 
-            self.getPropertySetChangeListeners().append(listener)
+            self.getPropertySetChangeListeners().append( (listener, tuple()) )
+
+
+    def addCallback(self, callback, eventType=None, *args):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == IItemSetChangeEvent:
+            if self.getItemSetChangeListeners() is None:
+                self.setItemSetChangeListeners( list() )
+
+            self.getItemSetChangeListeners().append( (callback, args) )
+
+        elif eventType == IPropertySetChangeEvent:
+            if self.getPropertySetChangeListeners() is None:
+                self.setPropertySetChangeListeners( list() )
+
+            self.getPropertySetChangeListeners().append( (callback, args) )
+
+        else:
+            super(AbstractContainer, self).addCallback(callback, eventType,
+                    args)
 
 
     def removeListener(self, listener, iface=None):
@@ -79,12 +100,19 @@ class AbstractContainer(IContainer):
         if (isinstance(listener, IItemSetChangeListener) and
                 (iface is None or iface == IItemSetChangeListener)):
             if self.getItemSetChangeListeners() is not None:
-                self.getItemSetChangeListeners().remove(listener)
+                for i, (l, _) in enumerate(
+                        self.getItemSetChangeListeners()[:]):
+                    if l == listener:
+                        del self.getItemSetChangeListeners()[i]
+                        break
 
         if (isinstance(listener, IPropertySetChangeListener) and
                 (iface is None or iface == IPropertySetChangeListener)):
             if self.getPropertySetChangeListeners() is not None:
-                self.getPropertySetChangeListeners().remove(listener)
+                for i, (l, _) in enumerate(
+                        self.getPropertySetChangeListeners()[:]):
+                    if l == listener:
+                        del self.getPropertySetChangeListeners()[i]
 
 
     def fireContainerPropertySetChange(self, event=None):
@@ -104,8 +132,11 @@ class AbstractContainer(IContainer):
 
         if self.getPropertySetChangeListeners() is not None:
             l = list(self.getPropertySetChangeListeners())
-            for listener in l:
-                listener.containerPropertySetChange(event)
+            for listener, args in l:
+                if isinstance(listener, IPropertySetChangeListener):
+                    listener.containerPropertySetChange(event)
+                else:
+                    listener(event, *args)
 
 
     def fireItemSetChange(self, event=None):
@@ -122,8 +153,11 @@ class AbstractContainer(IContainer):
 
         if self.getItemSetChangeListeners() is not None:
             l = list(self.getItemSetChangeListeners())
-            for listener in l:
-                listener.containerItemSetChange(event)
+            for listener, args in l:
+                if isinstance(listener, IItemSetChangeListener):
+                    listener.containerItemSetChange(event)
+                else:
+                    listener(event, *args)
 
 
     def setPropertySetChangeListeners(self, propertySetChangeListeners):

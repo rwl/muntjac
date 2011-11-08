@@ -83,6 +83,22 @@ class OptionGroup(AbstractSelect, IBlurNotifier, IFocusNotifier):
         super(OptionGroup, self).addListener(listener, iface)
 
 
+    def addCallback(self, callback, eventType=None, *args):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == BlurEvent:
+            self.registerCallback(BlurEvent, callback,
+                    BlurEvent.EVENT_ID, *args)
+
+        elif eventType == FocusEvent:
+            self.registerCallback(FocusEvent, callback,
+                    FocusEvent.EVENT_ID, *args)
+
+        else:
+            super(OptionGroup, self).addCallback(callback, eventType, *args)
+
+
     def removeListener(self, listener, iface=None):
         if (isinstance(listener, IBlurListener) and
                 (iface is None or iface == IBlurListener)):

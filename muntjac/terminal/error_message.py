@@ -16,7 +16,7 @@
 
 """Interface for rendering error messages to terminal."""
 
-from muntjac.terminal.paintable import IPaintable, IRepaintRequestListener
+from muntjac.terminal.paintable import IPaintable
 
 
 class IErrorMessage(IPaintable):
@@ -59,6 +59,10 @@ class IErrorMessage(IPaintable):
                    the listener to be added.
         @see: L{IPaintable.addListener}
         """
+        raise NotImplementedError
+
+
+    def addCallback(self, callback, eventType=None, *args):
         raise NotImplementedError
 
 

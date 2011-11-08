@@ -775,8 +775,11 @@ class Application(IUriHandler, ITerminal, IErrorListener):
         if self._windowAttachListeners is not None:
             listeners = list(self._windowAttachListeners)
             event = WindowAttachEvent(window)
-            for l in listeners:
-                l.windowAttached(event)
+            for l, args in listeners:
+                if isinstance(l, IWindowAttachListener):
+                    l.windowAttached(event)
+                else:
+                    l(event, args)
 
 
     def removeWindow(self, window):
@@ -813,8 +816,11 @@ class Application(IUriHandler, ITerminal, IErrorListener):
         if self._windowDetachListeners is not None:
             listeners = list(self._windowDetachListeners)
             event = WindowDetachEvent(window)
-            for l in listeners:
-                l.windowDetached(event)
+            for l, args in listeners:
+                if isinstance(l, IWindowDetachListener):
+                    l.windowDetached(event)
+                else:
+                    l(event, *args)
 
 
     def getUser(self):
@@ -853,8 +859,11 @@ class Application(IUriHandler, ITerminal, IErrorListener):
         if self._userChangeListeners is not None:
             listeners = list(self._userChangeListeners)
             event = UserChangeEvent(self, user, prevUser)
-            for l in listeners:
-                l.applicationUserChanged(event)
+            for l, args in listeners:
+                if isinstance(l, IUserChangeListener):
+                    l.applicationUserChanged(event)
+                else:
+                    l(event, *args)
 
 
     def getURL(self):
@@ -1168,23 +1177,49 @@ class Application(IUriHandler, ITerminal, IErrorListener):
             if self._userChangeListeners is None:
                 self._userChangeListeners = list()
 
-            self._userChangeListeners.append(listener)
+            self._userChangeListeners.append( (listener, tuple()) )
 
         if (isinstance(listener, IWindowAttachListener) and
                 (iface is None or iface == IWindowAttachListener)):
             if self._windowAttachListeners is None:
                 self._windowAttachListeners = list()
 
-            self._windowAttachListeners.append(listener)
+            self._windowAttachListeners.append( (listener, tuple()) )
 
         if (isinstance(listener, IWindowDetachListener) and
                 (iface is None or iface == IWindowDetachListener)):
             if self._windowDetachListeners is None:
                 self._windowDetachListeners = list()
 
-            self._windowDetachListeners.append(listener)
+            self._windowDetachListeners.append( (listener, tuple()) )
 
         super(Application, self).addListener(listener, iface)
+
+
+    def addCallback(self, callback, eventType=None, *args):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == UserChangeEvent:
+            if self._userChangeListeners is None:
+                self._userChangeListeners = list()
+
+            self._userChangeListeners.append( (callback, args) )
+
+        elif eventType == WindowAttachEvent:
+            if self._windowAttachListeners is None:
+                self._windowAttachListeners = list()
+
+            self._windowAttachListeners.append( (callback, args) )
+
+        elif eventType == WindowDetachEvent:
+            if self._windowDetachListeners is None:
+                self._windowDetachListeners = list()
+
+            self._windowDetachListeners.append( (callback, args) )
+
+        else:
+            super(Application, self).addCallback(callback, eventType, *args)
 
 
     def removeListener(self, listener, iface=None):
@@ -1197,23 +1232,40 @@ class Application(IUriHandler, ITerminal, IErrorListener):
                 (iface is None or iface == IUserChangeListener)):
             if self._userChangeListeners is None:
                 return
-            self._userChangeListeners.remove(listener)
+
+            for i, (l, _) in enumerate(self._userChangeListeners[:]):
+                if l == listener:
+                    del self._userChangeListeners[i]
+                    break
+
             if len(self._userChangeListeners) == 0:
                 self._userChangeListeners = None
 
         if (isinstance(listener, IWindowAttachListener) and
                 (iface is None or iface == IWindowAttachListener)):
-            if self._windowAttachListeners is not None:
-                self._windowAttachListeners.remove(listener)
-                if len(self._windowAttachListeners) == 0:
-                    self._windowAttachListeners = None
+            if self._windowAttachListeners is None:
+                return
+
+            for i, (l, _) in enumerate(self._windowAttachListeners[:]):
+                if l == listener:
+                    del self._windowAttachListeners[i]
+                    break
+
+            if len(self._windowAttachListeners) == 0:
+                self._windowAttachListeners = None
 
         if (isinstance(listener, IWindowDetachListener) and
                 (iface is None or iface == IWindowDetachListener)):
-            if self._windowDetachListeners is not None:
-                self._windowDetachListeners.remove(listener)
-                if len(self._windowDetachListeners) == 0:
-                    self._windowDetachListeners = None
+            if self._windowDetachListeners is None:
+                return
+
+            for i, (l, _) in enumerate(self._windowDetachListeners[:]):
+                if l == listener:
+                    del self._windowDetachListeners[i]
+                    break
+
+            if len(self._windowDetachListeners) == 0:
+                self._windowDetachListeners = None
 
         super(Application, self).addListener(listener, iface)
 

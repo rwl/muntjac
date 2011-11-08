@@ -21,7 +21,6 @@ import sys
 from muntjac.terminal.system_error import SystemErr
 from muntjac.terminal.error_message import IErrorMessage
 from muntjac.data.validatable import IValidatable
-from muntjac.terminal.paintable import IRepaintRequestListener
 
 
 class IBuffered(object):
@@ -258,6 +257,10 @@ class SourceException(RuntimeError, IErrorMessage):
 
 
     def addListener(self, listener, iface=None):
+        raise NotImplementedError
+
+
+    def addCallback(self, callback, eventType=None, *args):
         raise NotImplementedError
 
 

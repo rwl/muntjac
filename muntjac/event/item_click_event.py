@@ -86,6 +86,10 @@ class IItemClickNotifier(object):
         raise NotImplementedError
 
 
+    def addCallback(self, callback, eventType=None, *args):
+        raise NotImplementedError
+
+
     def removeListener(self, listener, iface=None):
         """Removes an ItemClickListener.
 

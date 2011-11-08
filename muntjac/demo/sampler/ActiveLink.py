@@ -55,6 +55,17 @@ class ActiveLink(Link):
         super(ActiveLink, self).addListener(listener, iface)
 
 
+    def addCallback(self, callback, eventType=None, *args):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == LinkActivatedEvent:
+            self.registerCallback(LinkActivatedEvent, callback, None, *args)
+
+        else:
+            super(ActiveLink, self).addCallback(callback, eventType, *args)
+
+
     def removeListener(self, listener, iface=None):
         """Removes the link activated listener.
 
