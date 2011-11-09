@@ -113,6 +113,7 @@ class AbstractContainer(IContainer):
                         self.getPropertySetChangeListeners()[:]):
                     if l == listener:
                         del self.getPropertySetChangeListeners()[i]
+                        break
 
 
     def removeCallback(self, callback, eventType=None):

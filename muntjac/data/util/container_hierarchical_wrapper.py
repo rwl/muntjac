@@ -503,6 +503,10 @@ class ContainerHierarchicalWrapper(IHierarchical, IContainer,
         return len(self._container)
 
 
+    def __len__(self):
+        return self.size()
+
+
     def addListener(self, listener, iface=None):
         if (isinstance(listener, IItemSetChangeListener) and
                 (iface is None or iface == IItemSetChangeListener)):
