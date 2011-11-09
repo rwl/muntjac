@@ -72,6 +72,10 @@ class ILayoutClickNotifier(object):
         raise NotImplementedError
 
 
+    def removeCallback(self, callback, eventType=None):
+        raise NotImplementedError
+
+
 class LayoutClickEvent(ClickEvent):
     """An event fired when the layout has been clicked. The event contains
     information about the target layout (component) and the child component

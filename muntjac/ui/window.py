@@ -974,6 +974,26 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
         super(Window, self).removeListener(listener, iface)
 
 
+    def removeCallback(self, callback, eventType=None):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == BlurEvent:
+            self.withdrawCallback(BlurEvent, callback, BlurEvent.EVENT_ID)
+
+        elif eventType == CloseEvent:
+            self.withdrawCallback(CloseEvent, callback)
+
+        elif eventType == FocusEvent:
+            self.withdrawCallback(FocusEvent, callback, FocusEvent.EVENT_ID)
+
+        elif eventType == ResizeEvent:
+            self.withdrawCallback(ResizeEvent, callback)
+
+        else:
+            super(Window, self).removeCallback(callback, eventType)
+
+
     def fireClose(self):
         # Method for the resize event.
         self.fireEvent( CloseEvent(self) )

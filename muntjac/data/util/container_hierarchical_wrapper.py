@@ -557,6 +557,27 @@ class ContainerHierarchicalWrapper(IHierarchical, IContainer,
                 self._container.removeListener(pl, IPropertySetChangeListener)
 
 
+    def removeCallback(self, callback, eventType=None):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == IItemSetChangeEvent:
+            # Removes a Item set change listener from the object.
+            if isinstance(self._container, IItemSetChangeNotifier):
+                pl = PiggybackListener(callback, self)
+                self._container.removeListener(pl, IItemSetChangeListener)
+
+        elif eventType == IPropertySetChangeEvent:
+            # Removes a Property set change listener from the object.
+            if isinstance(self._container, IPropertySetChangeNotifier):
+                pl = PiggybackListener(callback, self)
+                self._container.removeListener(pl, IPropertySetChangeListener)
+
+        else:
+            super(ContainerHierarchicalWrapper, self).removeCallback(callback,
+                    eventType)
+
+
 class PiggybackListener(IContainer, IPropertySetChangeListener,
             IItemSetChangeListener):
     """This listener 'piggybacks' on the real listener in order to update the

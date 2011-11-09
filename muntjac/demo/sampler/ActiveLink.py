@@ -85,6 +85,23 @@ class ActiveLink(Link):
         super(ActiveLink, self).removeListener(listener, iface)
 
 
+    def removeCallback(self, callback, eventType=None):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == LinkActivatedEvent:
+            self._listeners.remove(callback)
+
+            super(ActiveLink, self).withdrawListener(ClickEvent, callback,
+                    None)
+
+            if len(self._listeners) == 0:
+                self.requestRepaint()
+
+        else:
+            super(ActiveLink, self).removeCallback(callback, eventType)
+
+
     def fireClick(self, linkOpened):
         """Emits the options change event."""
         self.fireEvent( LinkActivatedEvent(self, linkOpened) )

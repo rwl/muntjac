@@ -338,6 +338,17 @@ class PopupView(AbstractComponentContainer):
         super(PopupView, self).removeListener(listener, iface)
 
 
+    def removeCallback(self, callback, eventType=None):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == PopupVisibilityEvent:
+            self.withdrawCallback(PopupVisibilityEvent, callback)
+
+        else:
+            super(PopupView, self).removeCallback(callback, eventType)
+
+
 class PopupVisibilityEvent(ComponentEvent):
     """This event is received by the PopupVisibilityListeners when the
     visibility of the popup changes. You can get the new visibility directly

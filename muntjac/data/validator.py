@@ -17,7 +17,6 @@
 """Interface that implements a method for validating an object."""
 
 from muntjac.terminal.error_message import IErrorMessage
-from muntjac.terminal.paintable import IRepaintRequestListener
 
 
 class IValidator(object):
@@ -142,6 +141,10 @@ class InvalidValueException(RuntimeError, IErrorMessage):
 
 
     def removeListener(self, listener, iface=None):
+        pass
+
+
+    def removeCallback(self, callback, eventType=None):
         pass
 
 

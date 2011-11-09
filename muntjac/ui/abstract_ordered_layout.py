@@ -295,6 +295,19 @@ class AbstractOrderedLayout(AbstractLayout, IAlignmentHandler,
         super(AbstractOrderedLayout, self).removeListener(listener, iface)
 
 
+    def removeCallback(self, callback, eventType=None):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == LayoutClickEvent:
+            self.withdrawCallback(LayoutClickEvent, callback,
+                    self._CLICK_EVENT)
+
+        else:
+            super(AbstractOrderedLayout, self).removeCallback(callback,
+                    eventType)
+
+
     def getComponentIndex(self, component):
         """Returns the index of the given component.
 

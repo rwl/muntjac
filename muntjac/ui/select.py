@@ -704,6 +704,20 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
         super(Select, self).removeListener(listener, iface)
 
 
+    def removeCallback(self, callback, eventType=None):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == BlurEvent:
+            self.withdrawCallback(BlurEvent, callback, BlurEvent.EVENT_ID)
+
+        elif eventType == FocusEvent:
+            self.withdrawCallback(FocusEvent, callback, FocusEvent.EVENT_ID)
+
+        else:
+            super(Select, self).removeCallback(callback, eventType)
+
+
     def setMultiSelect(self, multiSelect):
         """@deprecated: use L{ListSelect}, L{OptionGroup} or
                     L{TwinColSelect} instead

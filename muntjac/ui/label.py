@@ -345,6 +345,17 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
         super(Label, self).removeListener(listener, iface)
 
 
+    def removeCallback(self, callback, eventType=None):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == prop.ValueChangeEvent:
+            self.withdrawCallback(prop.ValueChangeEvent, callback)
+
+        else:
+            super(Label, self).removeCallback(callback, eventType)
+
+
     def fireValueChange(self):
         """Emits the options change event."""
         # Set the error message

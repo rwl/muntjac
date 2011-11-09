@@ -280,6 +280,10 @@ class IValueChangeNotifier(object):
         raise NotImplementedError
 
 
+    def removeCallback(self, callback, eventType=None):
+        raise NotImplementedError
+
+
 class IReadOnlyStatusChangeEvent(object):
     """An C{Event} object specifying the IProperty whose read-only
     status has been changed.
@@ -346,4 +350,8 @@ class IReadOnlyStatusChangeNotifier(object):
         @param listener:
                    listener to be removed
         """
+        raise NotImplementedError
+
+
+    def removeCallback(self, callback, eventType=None):
         raise NotImplementedError

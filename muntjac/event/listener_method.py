@@ -320,8 +320,12 @@ class ListenerMethod(IEventListener):
         if method is None:
             return self._target == target and eventType == self._eventType
         else:
-            return (self._target == target and eventType == self._eventType
-                    and method.im_func.func_name == self._method)
+            if target is None:  # function
+                return (self._target == target and eventType == self._eventType
+                        and method == self._method)
+            else:
+                return (self._target == target and eventType == self._eventType
+                        and method.im_func.func_name == self._method)
 
 
     def __hash__(self):
@@ -340,20 +344,11 @@ class ListenerMethod(IEventListener):
             return False
 
         # obj is of same class, test it further
-        t = obj
-
-        return (self._eventArgumentIndex == t._eventArgumentIndex
-                and (self._eventType == t._eventType
-                        or (self._eventType != None
-                                and self._eventType == t._eventType))
-                and (self._target == t._target
-                        or (self._target != None
-                                and self._target == t._target))
-                and (self._method == t._method
-                        or (self._method != None
-                                and self._method == t._method))
-                and (self._arguments == t._arguments
-                        or (self._arguments == t._arguments)))  # FIXME: Arrays.equals
+        return (self._eventArgumentIndex == obj._eventArgumentIndex
+                and (self._eventType == obj._eventType)
+                and (self._target == obj._target)
+                and (self._method == obj._method)
+                and (self._arguments == obj._arguments))
 
 
     def isType(self, eventType):
@@ -422,7 +417,7 @@ class MethodException(RuntimeError):
 
 
     def __str__(self):
-        msg = str(super(MethodException, self))
+        msg = super(MethodException, self).__str__()
 
         if self._cause is not None:
             msg += '\nCause: ' + str(self._cause)

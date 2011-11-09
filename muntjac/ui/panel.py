@@ -477,6 +477,17 @@ class Panel(AbstractComponentContainer, IScrollable,
         super(Panel, self).removeListener(listener, iface)
 
 
+    def removeCallback(self, callback, eventType=None):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == ClickEvent:
+            self.withdrawCallback(ClickEvent, callback, self._CLICK_EVENT)
+
+        else:
+            super(Panel, self).removeCallback(callback, eventType)
+
+
     def fireClick(self, parameters):
         """Fire a click event to all click listeners.
 

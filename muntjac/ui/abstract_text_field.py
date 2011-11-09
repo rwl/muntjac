@@ -484,6 +484,24 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
         super(AbstractTextField, self).addListener(listener, iface)
 
 
+    def removeCallback(self, callback, eventType=None):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == BlurEvent:
+            self.withdrawCallback(BlurEvent, callback, BlurEvent.EVENT_ID)
+
+        elif eventType == FocusEvent:
+            self.withdrawCallback(FocusEvent, callback, FocusEvent.EVENT_ID)
+
+        elif eventType == TextChangeEvent:
+            self.withdrawCallback(TextChangeEvent, callback,
+                    ITextChangeListener.EVENT_ID)
+
+        else:
+            super(AbstractTextField, self).removeCallback(callback, eventType)
+
+
     def setTextChangeTimeout(self, timeout):
         """The text change timeout modifies how often text change events
         are communicated to the application when

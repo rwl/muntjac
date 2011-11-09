@@ -122,6 +122,10 @@ class IComponentContainer(IComponent):
         raise NotImplementedError
 
 
+    def removeCallback(self, callback, eventType=None):
+        raise NotImplementedError
+
+
 class IComponentAttachListener(object):
     """IComponent attach listener interface."""
 

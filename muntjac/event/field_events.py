@@ -51,6 +51,10 @@ class IFocusNotifier(object):
         raise NotImplementedError
 
 
+    def removeCallback(self, callback, eventType=None):
+        raise NotImplementedError
+
+
 class IBlurNotifier(object):
     """The interface for adding and removing C{BlurEvent} listeners.
     By implementing this interface a class explicitly announces that it will
@@ -78,6 +82,10 @@ class IBlurNotifier(object):
 
         @see: L{IBlurListener}
         """
+        raise NotImplementedError
+
+
+    def removeCallback(self, callback, eventType=None):
         raise NotImplementedError
 
 
@@ -216,4 +224,8 @@ class ITextChangeNotifier(object):
 
 
     def removeListener(self, listener, iface=None):
+        raise NotImplementedError
+
+
+    def removeCallback(self, callback, eventType=None):
         raise NotImplementedError

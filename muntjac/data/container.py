@@ -857,6 +857,10 @@ class IItemSetChangeNotifier(object):
         raise NotImplementedError
 
 
+    def removeCallback(self, callback, eventType=None):
+        raise NotImplementedError
+
+
 class IPropertySetChangeEvent(object):
     """An C{Event} object specifying the IContainer whose Property set
     has changed.
@@ -926,4 +930,8 @@ class IPropertySetChangeNotifier(object):
         @param listener:
                    Listener to be removed
         """
+        raise NotImplementedError
+
+
+    def removeCallback(self, callback, eventType=None):
         raise NotImplementedError

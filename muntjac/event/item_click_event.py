@@ -99,6 +99,10 @@ class IItemClickNotifier(object):
         raise NotImplementedError
 
 
+    def removeCallback(self, callback, eventType=None):
+        raise NotImplementedError
+
+
 class IItemClickSource(IItemClickNotifier):
     """Components implementing L{Container} interface may support emitting
     L{ItemClickEvent}s.

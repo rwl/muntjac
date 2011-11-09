@@ -19,7 +19,8 @@
 from warnings import warn
 
 from muntjac.terminal.key_mapper import KeyMapper
-from muntjac.terminal.paintable import IRepaintRequestListener
+from muntjac.terminal.paintable import IRepaintRequestListener,\
+    RepaintRequestEvent
 
 from muntjac.ui.component import IComponent, Event as ComponentEvent
 from muntjac.ui.abstract_component_container import AbstractComponentContainer
@@ -666,6 +667,17 @@ class TabSheet(AbstractComponentContainer):
                     listener, _SELECTED_TAB_CHANGE_METHOD)
 
         super(TabSheet, self).removeListener(listener, iface)
+
+
+    def removeCallback(self, callback, eventType=None):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == SelectedTabChangeEvent:
+            self.withdrawCallback(SelectedTabChangeEvent, callback)
+
+        else:
+            super(TabSheet, self).removeCallback(callback, eventType)
 
 
     def fireSelectedTabChange(self):

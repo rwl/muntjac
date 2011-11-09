@@ -59,14 +59,9 @@ class EventRouter(IMethodEventSource):
                         return
         else:
             if isinstance(method, basestring):
-                raise NotImplementedError
-
                 methodName = method
-                methods = target.__class__.getMethods()  ## FIXME: getMethods
-                method = None
-                for i in range(len(methods)):
-                    if methods[i].getName() == methodName:
-                        method = methods[i]
+
+                method = getattr(target, methodName)
 
                 if method is None:
                     raise ValueError()

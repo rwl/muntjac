@@ -170,3 +170,7 @@ class IPropertySetChangeNotifier(object):
                    Listener to be removed.
         """
         raise NotImplementedError
+
+
+    def removeCallback(self, callback, eventType=None):
+        raise NotImplementedError

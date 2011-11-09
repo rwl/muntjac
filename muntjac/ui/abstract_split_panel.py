@@ -364,6 +364,18 @@ class AbstractSplitPanel(AbstractLayout):
         super(AbstractSplitPanel, self).removeListener(listener, iface)
 
 
+    def removeCallback(self, callback, eventType=None):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == SplitterClickEvent:
+            self.withdrawCallback(SplitterClickEvent, callback,
+                    self._SPLITTER_CLICK_EVENT)
+
+        else:
+            super(AbstractSplitPanel, self).removeCallback(callback, eventType)
+
+
 class ISplitterClickListener(IComponentEventListener):
     """C{ISplitterClickListener} interface for listening for
     C{SplitterClickEvent} fired by a C{SplitPanel}.

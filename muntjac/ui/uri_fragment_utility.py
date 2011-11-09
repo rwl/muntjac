@@ -68,6 +68,17 @@ class UriFragmentUtility(AbstractComponent):
         super(UriFragmentUtility, self).removeListener(listener, iface)
 
 
+    def removeCallback(self, callback, eventType=None):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == FragmentChangedEvent:
+            self.withdrawCallback(FragmentChangedEvent, callback)
+
+        else:
+            super(UriFragmentUtility, self).removeCallback(callback, eventType)
+
+
     def __init__(self):
         super(UriFragmentUtility, self).__init__()
 

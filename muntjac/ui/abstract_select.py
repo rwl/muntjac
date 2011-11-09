@@ -1153,6 +1153,32 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
         super(AbstractSelect, self).removeListener(listener, iface)
 
 
+    def removeCallback(self, callback, eventType=None):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == container.IItemSetChangeEvent:
+            if self._itemSetEventListeners is not None:
+                for t in self._itemSetEventListeners.copy():
+                    if t[0] == callback:
+                        self._itemSetEventListeners.remove(t)
+
+                if len(self._itemSetEventListeners) == 0:
+                    self._itemSetEventListeners = None
+
+        elif eventType == container.IPropertySetChangeEvent:
+            if self._propertySetEventListeners is not None:
+                for t in self._propertySetEventListeners.copy():
+                    if t[0] == callback:
+                        self._propertySetEventListeners.remove(t)
+
+                if len(self._propertySetEventListeners) == 0:
+                    self._propertySetEventListeners = None
+
+        else:
+            super(AbstractSelect, self).removeCallback(callback, eventType)
+
+
     def getListeners(self, eventType):
         if issubclass(eventType, container.IItemSetChangeEvent):
             if self._itemSetEventListeners is None:

@@ -830,11 +830,10 @@ class AbstractComponent(IComponent, IMethodEventSource):
             self.requestRepaint()
 
 
-
     def removeListener(self, listener, iface=None):
         if (isinstance(listener, IListener) and
                 (iface is None or iface == IListener)):
-            self.removeListener(ComponentEvent, listener,
+            self.withdrawListener(ComponentEvent, listener,
                     _COMPONENT_EVENT_METHOD)
 
         if (isinstance(listener, IRepaintRequestListener) and
@@ -843,8 +842,29 @@ class AbstractComponent(IComponent, IMethodEventSource):
                 for i, (l, _) in enumerate(self._repaintRequestListeners[:]):
                     if l == listener:
                         del self._repaintRequestListeners[i]
+
                 if len(self._repaintRequestListeners) == 0:
                     self._repaintRequestListeners = None
+
+
+    def removeCallback(self, callback, eventType=None):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == ComponentEvent:
+            self.withdrawCallback(ComponentEvent, callback)
+
+        elif eventType == RepaintRequestEvent:
+            if self._repaintRequestListeners is not None:
+                for i, (l, _) in enumerate(self._repaintRequestListeners[:]):
+                    if l == callback:
+                        del self._repaintRequestListeners[i]
+
+                if len(self._repaintRequestListeners) == 0:
+                    self._repaintRequestListeners = None
+
+        else:
+            super(AbstractComponent, self).removeCallback(callback, eventType)
 
 
     def withdrawListener(self, *args):
@@ -908,6 +928,24 @@ class AbstractComponent(IComponent, IMethodEventSource):
                                 method)
         else:
             raise ValueError, 'invalid number of arguments'
+
+
+    def withdrawCallback(self, eventType, callback, eventId=None):
+        if self._eventRouter is not None:
+
+            if hasattr(callback, 'im_self'):  # method
+                target = callback.im_self
+            elif hasattr(callback, 'func_name'):  # function
+                target = None
+            else:
+                raise ValueError('invalid callback: %s' % callback)
+
+            self._eventRouter.removeListener(eventType, target, callback)
+
+            if (eventId is not None and
+                    not self._eventRouter.hasListeners(eventType)):
+                self._eventIdentifiers.remove(eventId)
+                self.requestRepaint()
 
 
     def changeVariables(self, source, variables):

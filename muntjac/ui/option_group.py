@@ -111,6 +111,20 @@ class OptionGroup(AbstractSelect, IBlurNotifier, IFocusNotifier):
         super(OptionGroup, self).removeListener(listener, iface)
 
 
+    def removeCallback(self, callback, eventType=None):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == BlurEvent:
+            self.withdrawCallback(BlurEvent, callback, BlurEvent.EVENT_ID)
+
+        elif eventType == FocusEvent:
+            self.withdrawCallback(FocusEvent, callback, FocusEvent.EVENT_ID)
+
+        else:
+            super(OptionGroup, self).removeCallback(callback, eventType)
+
+
     def setValue(self, newValue, repaintIsNotNeeded=None):
         if repaintIsNotNeeded is not None and repaintIsNotNeeded is True:
             # Check that value from changeVariables() doesn't contain unallowed

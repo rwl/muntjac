@@ -3132,6 +3132,34 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         super(Table, self).removeListener(listener, iface)
 
 
+    def removeCallback(self, callback, eventType=None):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == ColumnReorderEvent:
+            self.withdrawCallback(ColumnReorderEvent, callback,
+                    VScrollTable.COLUMN_REORDER_EVENT_ID)
+
+        elif eventType == ColumnResizeEvent:
+            self.withdrawCallback(ColumnResizeEvent, callback,
+                    VScrollTable.COLUMN_RESIZE_EVENT_ID)
+
+        elif eventType == FooterClickEvent:
+            self.withdrawCallback(FooterClickEvent, callback,
+                    VScrollTable.FOOTER_CLICK_EVENT_ID)
+
+        elif eventType == HeaderClickEvent:
+            self.withdrawCallback(HeaderClickEvent, callback,
+                    VScrollTable.HEADER_CLICK_EVENT_ID)
+
+        elif eventType == ItemClickEvent:
+            self.withdrawCallback(ItemClickEvent, callback,
+                    VScrollTable.ITEM_CLICK_EVENT_ID)
+
+        else:
+            super(Table, self).removeCallback(callback, eventType)
+
+
     def setEnabled(self, enabled):
         # Virtually identical to AbstractCompoenentContainer.setEnabled();
         super(Table, self).setEnabled(enabled)

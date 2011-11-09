@@ -134,6 +134,29 @@ class AbstractProperty(prop.IProperty, prop.IValueChangeNotifier,
                         break
 
 
+    def removeCallback(self, callback, eventType=None):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == prop.IReadOnlyStatusChangeEvent:
+            if self._readOnlyStatusChangeListeners is not None:
+                for i, (l, _) in enumerate(
+                        self._readOnlyStatusChangeListeners[:]):
+                    if callback == l:
+                        del self._readOnlyStatusChangeListeners[i]
+                        break
+
+        elif eventType == prop.ValueChangeEvent:
+            if self._valueChangeListeners is not None:
+                for i, (l, _) in enumerate(self._valueChangeListeners[:]):
+                    if callback == l:
+                        del self._valueChangeListeners[i]
+                        break
+
+        else:
+            super(AbstractProperty, self).removeCallback(callback, eventType)
+
+
     def fireReadOnlyStatusChange(self):
         """Sends a read only status change event to all registered listeners.
         """

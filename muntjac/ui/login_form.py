@@ -214,6 +214,17 @@ class LoginForm(CustomComponent):
         super(LoginForm, self).removeListener(listener, iface)
 
 
+    def removeCallback(self, callback, eventType=None):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == LoginEvent:
+            self.withdrawCallback(LoginEvent, callback)
+
+        else:
+            super(LoginForm, self).removeCallback(callback, eventType)
+
+
     def setWidth(self, width, unit=None):
         if unit is not None:
             super(LoginForm, self).setWidth(width, unit)

@@ -80,6 +80,10 @@ class UserError(IErrorMessage):
         pass
 
 
+    def removeCallback(self, callback, eventType=None):
+        pass
+
+
     def requestRepaint(self):
         pass
 

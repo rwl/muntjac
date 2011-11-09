@@ -733,6 +733,24 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
         super(Tree, self).removeListener(listener, iface)
 
 
+    def removeCallback(self, callback, eventType=None):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == CollapseEvent:
+            self.withdrawCallback(CollapseEvent, callback)
+
+        elif eventType == ExpandEvent:
+            self.withdrawCallback(ExpandEvent, callback)
+
+        elif eventType == ItemClickEvent:
+            self.withdrawCallback(ItemClickEvent, callback,
+                    VTree.ITEM_CLICK_EVENT_ID)
+
+        else:
+            super(Tree, self).removeCallback(callback, eventType)
+
+
     def fireExpandEvent(self, itemId):
         """Emits the expand event.
 

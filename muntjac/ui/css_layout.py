@@ -250,3 +250,15 @@ class CssLayout(AbstractLayout, ILayoutClickNotifier):
                     listener)
 
         super(CssLayout, self).removeListener(listener, iface)
+
+
+    def removeCallback(self, callback, eventType=None):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == LayoutClickEvent:
+            self.withdrawCallback(LayoutClickEvent, callback,
+                    self._CLICK_EVENT)
+
+        else:
+            super(CssLayout, self).removeCallback(callback, eventType)

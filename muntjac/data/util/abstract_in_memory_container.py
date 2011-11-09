@@ -262,6 +262,11 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
         super(AbstractInMemoryContainer, self).removeListener(listener, iface)
 
 
+    def removeCallback(self, callback, eventType=None):
+        super(AbstractInMemoryContainer, self).removeCallback(callback,
+                eventType)
+
+
     def filterAll(self):
         """Filter the view to recreate the visible item list from the
         unfiltered items, and send a notification if the set of visible

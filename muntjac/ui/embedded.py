@@ -419,6 +419,17 @@ class Embedded(AbstractComponent):
         super(Embedded, self).removeListener(listener, iface)
 
 
+    def removeCallback(self, callback, eventType=None):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == ClickEvent:
+            self.withdrawCallback(ClickEvent, callback, self._CLICK_EVENT)
+
+        else:
+            super(Embedded, self).removeCallback(callback, eventType)
+
+
     def changeVariables(self, source, variables):
         super(Embedded, self).changeVariables(source, variables)
         if self._CLICK_EVENT in variables:

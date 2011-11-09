@@ -933,6 +933,18 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
         super(GridLayout, self).removeListener(listener, iface)
 
 
+    def removeCallback(self, callback, eventType=None):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == LayoutClickEvent:
+            self.withdrawCallback(LayoutClickEvent, callback,
+                    self._CLICK_EVENT)
+
+        else:
+            super(GridLayout, self).removeCallback(callback, eventType)
+
+
 class Area(object):
     """This class defines an area on a grid. An Area is defined by the cells
     of its upper left corner (column1,row1) and lower right corner

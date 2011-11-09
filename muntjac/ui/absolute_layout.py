@@ -161,7 +161,8 @@ class AbsoluteLayout(AbstractLayout, ILayoutClickNotifier):
             eventType = callback._eventType
 
         if eventType == LayoutClickEvent:
-            self.registerCallback(LayoutClickEvent, callback, None, *args)
+            self.registerCallback(LayoutClickEvent, callback,
+                    self._CLICK_EVENT, *args)
 
         else:
             super(AbsoluteLayout, self).addCallback(callback, eventType, *args)
@@ -174,6 +175,18 @@ class AbsoluteLayout(AbstractLayout, ILayoutClickNotifier):
                     listener)
 
         super(AbsoluteLayout, self).removeListener(listener, iface)
+
+
+    def removeCallback(self, callback, eventType=None):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == LayoutClickEvent:
+            self.withdrawCallback(LayoutClickEvent, callback,
+                    self._CLICK_EVENT)
+
+        else:
+            super(AbsoluteLayout, self).removeCallback(callback, eventType)
 
 
 class ComponentPosition(object):

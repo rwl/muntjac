@@ -733,6 +733,20 @@ class AbstractField(AbstractComponent, field.IField,
         super(AbstractField, self).removeListener(listener, iface)
 
 
+    def removeCallback(self, callback, eventType=None):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == prop.IReadOnlyStatusChangeEvent:
+            self.withdrawCallback(prop.IReadOnlyStatusChangeEvent, callback)
+
+        elif eventType == prop.ValueChangeEvent:
+            self.withdrawCallback(prop.ValueChangeEvent, callback)
+
+        else:
+            super(AbstractField, self).removeCallback(callback, eventType)
+
+
     def fireValueChange(self, repaintIsNotNeeded):
         """Emits the value change event. The value contained in the
         field is validated before the event is created.

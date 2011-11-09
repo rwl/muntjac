@@ -268,6 +268,10 @@ class SourceException(RuntimeError, IErrorMessage):
         raise NotImplementedError
 
 
+    def removeCallback(self, callback, eventType=None):
+        raise NotImplementedError
+
+
     def requestRepaint(self):
         raise NotImplementedError
 

@@ -345,6 +345,25 @@ class IndexedContainer(AbstractInMemoryContainer,
         super(IndexedContainer, self).removeListener(listener, iface)
 
 
+    def removeCallback(self, callback, eventType=None):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == container.IPropertySetChangeEvent:
+            super(IndexedContainer, self).removecallback(callback, eventType)
+
+        elif eventType == prop.ValueChangeEvent:
+            if self._propertyValueChangeListeners is not None:
+                for i, (l, _) in enumerate(
+                        self._propertyValueChangeListeners[:]):
+                    if l == callback:
+                        del self._propertyValueChangeListeners[i]
+                        break
+
+        else:
+            super(IndexedContainer, self).removeCallback(callback, eventType)
+
+
     def firePropertyValueChange(self, source):
         """Sends a IProperty value change event to all interested listeners.
 
@@ -834,6 +853,18 @@ class IndexedContainerProperty(prop.IProperty, prop.IValueChangeNotifier):
                 (iface is None or iface == prop.IValueChangeListener)):
             self._container.removeSinglePropertyChangeListener(self._propertyId,
                     self._itemId, listener)
+
+
+    def removeCallback(self, callback, eventType=None):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == prop.ValueChangeEvent:
+            self._container.removeSinglePropertyChangeListener(self._propertyId,
+                    self._itemId, callback)
+
+        else:
+            super(IndexedContainer, self).removeCallback(callback, eventType)
 
 
     def getHost(self):

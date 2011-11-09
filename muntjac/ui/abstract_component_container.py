@@ -120,6 +120,9 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
         if eventType == ComponentAttachEvent:
             self.registerCallback(ComponentAttachEvent, callback, None, *args)
 
+        elif eventType == ComponentDetachEvent:
+            self.registerCallback(ComponentDetachEvent, callback, None, *args)
+
         else:
             super(AbstractComponentContainer, self).addCallback(callback,
                     eventType, *args)
@@ -137,6 +140,21 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
                     _COMPONENT_DETACHED_METHOD)
 
         super(AbstractComponentContainer, self).removeListener(listener, iface)
+
+
+    def removeCallback(self, callback, eventType=None):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == ComponentAttachEvent:
+            self.withdrawCallback(ComponentAttachEvent, callback)
+
+        elif eventType == ComponentDetachEvent:
+            self.withdrawCallback(ComponentDetachEvent, callback)
+
+        else:
+            super(AbstractComponentContainer, self).removeCallback(callback,
+                    eventType)
 
 
     def fireComponentAttachEvent(self, component):

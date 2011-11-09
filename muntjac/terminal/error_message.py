@@ -77,6 +77,10 @@ class IErrorMessage(IPaintable):
         raise NotImplementedError
 
 
+    def removeCallback(self, callback, eventType=None):
+        raise NotImplementedError
+
+
     def requestRepaint(self):
         """Error messages are inmodifiable and thus listeners are not needed.
         This method should be implemented as empty.

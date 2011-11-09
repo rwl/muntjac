@@ -115,6 +115,29 @@ class AbstractContainer(IContainer):
                         del self.getPropertySetChangeListeners()[i]
 
 
+    def removeCallback(self, callback, eventType=None):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == IItemSetChangeEvent:
+            if self.getItemSetChangeListeners() is not None:
+                for i, (l, _) in enumerate(
+                        self.getItemSetChangeListeners()[:]):
+                    if l == callback:
+                        del self.getItemSetChangeListeners()[i]
+                        break
+
+        elif eventType == IPropertySetChangeEvent:
+            if self.getPropertySetChangeListeners() is not None:
+                for i, (l, _) in enumerate(
+                        self.getPropertySetChangeListeners()[:]):
+                    if l == callback:
+                        del self.getPropertySetChangeListeners()[i]
+
+        else:
+            super(AbstractContainer, self).removeCallback(callback, eventType)
+
+
     def fireContainerPropertySetChange(self, event=None):
         """Sends a simple Property set change event to all interested
         listeners.

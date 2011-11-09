@@ -661,6 +661,10 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
         raise NotImplementedError
 
 
+    def removeCallback(self, callback, eventType=None):
+        raise NotImplementedError
+
+
 class Event(EventObject):
     """Superclass of all component originated events.
 

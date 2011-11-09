@@ -349,6 +349,33 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
         super(Upload, self).removeListener(listener, iface)
 
 
+    def removeCallback(self, callback, eventType=None):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == FailedEvent:
+            self.withdrawCallback(FailedEvent, callback)
+
+        elif eventType == FinishedEvent:
+            self.withdrawCallback(FinishedEvent, callback)
+
+        elif eventType == IProgressListener:  # no progress event
+            if self._progressListeners is not None:
+                for t in self._progressListeners.copy():
+                    if t[0] == callback:
+                        self._progressListeners.remove(t)
+                        break
+
+        elif eventType == StartedEvent:
+            self.withdrawCallback(StartedEvent, callback)
+
+        elif eventType == SucceededEvent:
+            self.withdrawCallback(SucceededEvent, callback)
+
+        else:
+            super(Upload, self).removeCallback(callback, eventType)
+
+
     def fireStarted(self, filename, MIMEType):
         """Emit upload received event.
         """

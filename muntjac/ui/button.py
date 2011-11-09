@@ -308,6 +308,23 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
         super(Button, self).removeListener(listener, iface)
 
 
+    def removeCallback(self, callback, eventType=None):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == BlurEvent:
+            self.withdrawCallback(BlurEvent, callback, BlurEvent.EVENT_ID)
+
+        elif eventType == ClickEvent:
+            self.withdrawCallback(ClickEvent, callback)
+
+        elif eventType == FocusEvent:
+            self.withdrawCallback(FocusEvent, callback, FocusEvent.EVENT_ID)
+
+        else:
+            super(Button, self).removeCallback(callback, eventType)
+
+
     def fireClick(self, details=None):
         """Fires a click event to all listeners.
 

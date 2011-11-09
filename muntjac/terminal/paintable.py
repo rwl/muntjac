@@ -110,6 +110,14 @@ class IPaintable(IEventListener):
             super(IPaintable, self).removeListener(listener, iface)
 
 
+    def removeCallback(self, callback, eventType=None):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == RepaintRequestEvent:
+            raise NotImplementedError
+
+
     def requestRepaintRequests(self):
         """Request sending of repaint events on any further visible changes.
         Normally the paintable only send up to one repaint request for

@@ -573,6 +573,20 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
         super(DateField, self).removeListener(listener, iface)
 
 
+    def removeCallback(self, callback, eventType=None):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if eventType == BlurEvent:
+            self.withdrawCallback(BlurEvent, callback, BlurEvent.EVENT_ID)
+
+        elif eventType == FocusEvent:
+            self.withdrawCallback(FocusEvent, callback, FocusEvent.EVENT_ID)
+
+        else:
+            super(DateField, self).removeCallback(callback, eventType)
+
+
     def isShowISOWeekNumbers(self):
         """Checks whether ISO 8601 week numbers are shown in the date
         selector.
