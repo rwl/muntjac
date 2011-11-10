@@ -3028,35 +3028,35 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                    The handler which should handle the events.
         """
         if (isinstance(listener, IColumnReorderListener) and
-                (iface is None or iface == IColumnReorderListener)):
+                (iface is None or issubclass(iface, IColumnReorderListener))):
             self.registerListener(
                     VScrollTable.COLUMN_REORDER_EVENT_ID,
                     ColumnReorderEvent, listener,
                     COLUMN_REORDER_METHOD)
 
         if (isinstance(listener, IColumnResizeListener) and
-                (iface is None or iface == IColumnResizeListener)):
+                (iface is None or issubclass(iface, IColumnResizeListener))):
             self.registerListener(
                     VScrollTable.COLUMN_RESIZE_EVENT_ID,
                     ColumnResizeEvent, listener,
                     COLUMN_RESIZE_METHOD)
 
         if (isinstance(listener, IFooterClickListener) and
-                (iface is None or iface == IFooterClickListener)):
+                (iface is None or issubclass(iface, IFooterClickListener))):
             self.registerListener(
                     VScrollTable.FOOTER_CLICK_EVENT_ID,
                     FooterClickEvent, listener,
                     FOOTER_CLICK_METHOD)
 
         if (isinstance(listener, IHeaderClickListener) and
-                (iface is None or iface == IHeaderClickListener)):
+                (iface is None or issubclass(iface, IHeaderClickListener))):
             self.registerListener(
                     VScrollTable.HEADER_CLICK_EVENT_ID,
                     HeaderClickEvent, listener,
                     HEADER_CLICK_METHOD)
 
         if (isinstance(listener, IItemClickListener) and
-                (iface is None or iface == IItemClickListener)):
+                (iface is None or issubclass(iface, IItemClickListener))):
             self.registerListener(
                     VScrollTable.ITEM_CLICK_EVENT_ID,
                     ItemClickEvent, listener,
@@ -3069,23 +3069,23 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == ColumnReorderEvent:
+        if issubclass(eventType, ColumnReorderEvent):
             self.registerCallback(ColumnReorderEvent, callback,
                     VScrollTable.COLUMN_REORDER_EVENT_ID, *args)
 
-        elif eventType == ColumnResizeEvent:
+        elif issubclass(eventType, ColumnResizeEvent):
             self.registerCallback(ColumnResizeEvent, callback,
                     VScrollTable.COLUMN_RESIZE_EVENT_ID, *args)
 
-        elif eventType == FooterClickEvent:
+        elif issubclass(eventType, FooterClickEvent):
             self.registerCallback(FooterClickEvent, callback,
                     VScrollTable.FOOTER_CLICK_EVENT_ID, *args)
 
-        elif eventType == HeaderClickEvent:
+        elif issubclass(eventType, HeaderClickEvent):
             self.registerCallback(HeaderClickEvent, callback,
                     VScrollTable.HEADER_CLICK_EVENT_ID, *args)
 
-        elif eventType == ItemClickEvent:
+        elif issubclass(eventType, ItemClickEvent):
             self.registerCallback(ItemClickEvent, callback,
                     VScrollTable.ITEM_CLICK_EVENT_ID, *args)
 
@@ -3100,31 +3100,31 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                    The listener to remove
         """
         if (isinstance(listener, IColumnReorderListener) and
-                (iface is None or iface == IColumnReorderListener)):
+                (iface is None or issubclass(iface, IColumnReorderListener))):
             self.withdrawListener(
                     VScrollTable.COLUMN_REORDER_EVENT_ID,
                     ColumnReorderEvent, listener)
 
         if (isinstance(listener, IColumnResizeListener) and
-                (iface is None or iface == IColumnResizeListener)):
+                (iface is None or issubclass(iface, IColumnResizeListener))):
             self.withdrawListener(
                     VScrollTable.COLUMN_RESIZE_EVENT_ID,
                     ColumnResizeEvent, listener)
 
         if (isinstance(listener, IFooterClickListener) and
-                (iface is None or iface == IFooterClickListener)):
+                (iface is None or issubclass(iface, IFooterClickListener))):
             self.withdrawListener(
                     VScrollTable.FOOTER_CLICK_EVENT_ID,
                     FooterClickEvent, listener)
 
         if (isinstance(listener, IHeaderClickListener) and
-                (iface is None or iface == IHeaderClickListener)):
+                (iface is None or issubclass(iface, IHeaderClickListener))):
             self.withdrawListener(
                     VScrollTable.HEADER_CLICK_EVENT_ID,
                     HeaderClickEvent, listener)
 
         if (isinstance(listener, IItemClickListener) and
-                (iface is None or iface == IItemClickListener)):
+                (iface is None or issubclass(iface, IItemClickListener))):
             self.withdrawListener(
                     VScrollTable.ITEM_CLICK_EVENT_ID,
                     ItemClickEvent, listener)
@@ -3136,23 +3136,23 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == ColumnReorderEvent:
+        if issubclass(eventType, ColumnReorderEvent):
             self.withdrawCallback(ColumnReorderEvent, callback,
                     VScrollTable.COLUMN_REORDER_EVENT_ID)
 
-        elif eventType == ColumnResizeEvent:
+        elif issubclass(eventType, ColumnResizeEvent):
             self.withdrawCallback(ColumnResizeEvent, callback,
                     VScrollTable.COLUMN_RESIZE_EVENT_ID)
 
-        elif eventType == FooterClickEvent:
+        elif issubclass(eventType, FooterClickEvent):
             self.withdrawCallback(FooterClickEvent, callback,
                     VScrollTable.FOOTER_CLICK_EVENT_ID)
 
-        elif eventType == HeaderClickEvent:
+        elif issubclass(eventType, HeaderClickEvent):
             self.withdrawCallback(HeaderClickEvent, callback,
                     VScrollTable.HEADER_CLICK_EVENT_ID)
 
-        elif eventType == ItemClickEvent:
+        elif issubclass(eventType, ItemClickEvent):
             self.withdrawCallback(ItemClickEvent, callback,
                     VScrollTable.ITEM_CLICK_EVENT_ID)
 

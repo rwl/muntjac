@@ -906,7 +906,7 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
 
     def addListener(self, listener, iface=None):
         if (isinstance(listener, ILayoutClickListener) and
-                (iface is None or iface == ILayoutClickListener)):
+                (iface is None or issubclass(iface, ILayoutClickListener))):
             self.registerListener(self._CLICK_EVENT, LayoutClickEvent,
                     listener, ILayoutClickListener.clickMethod)
 
@@ -917,7 +917,7 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == LayoutClickEvent:
+        if issubclass(eventType, LayoutClickEvent):
             self.registerCallback(LayoutClickEvent, callback,
                     self._CLICK_EVENT, *args)
         else:
@@ -926,7 +926,7 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
 
     def removeListener(self, listener, iface=None):
         if (isinstance(listener, ILayoutClickListener) and
-                (iface is None or iface == ILayoutClickListener)):
+                (iface is None or issubclass(iface, ILayoutClickListener))):
             self.withdrawListener(self._CLICK_EVENT, LayoutClickEvent,
                     listener)
 
@@ -937,7 +937,7 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == LayoutClickEvent:
+        if issubclass(eventType, LayoutClickEvent):
             self.withdrawCallback(LayoutClickEvent, callback,
                     self._CLICK_EVENT)
 

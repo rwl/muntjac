@@ -318,7 +318,8 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
     def addListener(self, listener, iface=None):
         """Adds the value change listener."""
         if (isinstance(listener, prop.IValueChangeListener) and
-                (iface is None or iface == prop.IValueChangeListener)):
+                (iface is None or
+                        issubclass(iface, prop.IValueChangeListener))):
             self.registerListener(ValueChangeEvent, listener,
                     _VALUE_CHANGE_METHOD)
 
@@ -329,7 +330,7 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == prop.ValueChangeEvent:
+        if issubclass(eventType, prop.ValueChangeEvent):
             self.registerCallback(prop.ValueChangeEvent, callback, None, *args)
         else:
             super(Label, self).addCallback(callback, eventType, *args)
@@ -338,7 +339,8 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
     def removeListener(self, listener, iface=None):
         """Removes the value change listener."""
         if (isinstance(listener, prop.IValueChangeListener) and
-                (iface is None or iface == prop.IValueChangeListener)):
+                (iface is None or
+                        issubclass(iface, prop.IValueChangeListener))):
             self.withdrawListener(ValueChangeEvent, listener,
                     _VALUE_CHANGE_METHOD)
 
@@ -349,17 +351,16 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == prop.ValueChangeEvent:
+        if issubclass(eventType, prop.ValueChangeEvent):
             self.withdrawCallback(prop.ValueChangeEvent, callback)
-
         else:
             super(Label, self).removeCallback(callback, eventType)
 
 
     def fireValueChange(self):
         """Emits the options change event."""
-        # Set the error message
-        self.fireEvent( ValueChangeEvent(self) )
+        event = ValueChangeEvent(self)
+        self.fireEvent(event)
         self.requestRepaint()
 
 
@@ -390,10 +391,11 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
             thisValue = self.stripTags(str(self))
         else:
             thisValue = str(self)
-        if isinstance(other, Label) \
+
+        if (isinstance(other, Label)
                 and (other.getContentMode() == self.CONTENT_XML
                      or other.getContentMode() == self.CONTENT_UIDL
-                     or other.getContentMode() == self.CONTENT_XHTML):
+                     or other.getContentMode() == self.CONTENT_XHTML)):
             otherValue = self.stripTags(str(other))
         else:
             otherValue = str(other)
@@ -404,8 +406,7 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
     def stripTags(self, xml):
         """Strips the tags from the XML.
 
-        @param xml:
-                   the String containing a XML snippet.
+        @param xml: the string containing a XML snippet.
         @return: the original XML without tags.
         """
         res = StringIO()

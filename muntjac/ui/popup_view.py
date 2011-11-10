@@ -305,7 +305,7 @@ class PopupView(AbstractComponentContainer):
         @see: L{removeListener}
         """
         if (isinstance(listener, IPopupVisibilityListener) and
-                (iface is None or iface == IPopupVisibilityListener)):
+                (iface is None or issubclass(iface, IPopupVisibilityListener))):
             self.registerListener(PopupVisibilityEvent,
                     listener, _POPUP_VISIBILITY_METHOD)
 
@@ -316,7 +316,7 @@ class PopupView(AbstractComponentContainer):
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == PopupVisibilityEvent:
+        if issubclass(eventType, PopupVisibilityEvent):
             self.registerCallback(ClickEvent, callback, None, *args)
         else:
             super(PopupView, self).addCallback(callback, eventType, *args)
@@ -331,7 +331,7 @@ class PopupView(AbstractComponentContainer):
         @see: L{addListener}
         """
         if (isinstance(listener, IPopupVisibilityListener) and
-                (iface is None or iface == IPopupVisibilityListener)):
+                (iface is None or issubclass(iface, IPopupVisibilityListener))):
             self.withdrawListener(PopupVisibilityEvent, listener,
                     _POPUP_VISIBILITY_METHOD)
 
@@ -342,9 +342,8 @@ class PopupView(AbstractComponentContainer):
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == PopupVisibilityEvent:
+        if issubclass(eventType, PopupVisibilityEvent):
             self.withdrawCallback(PopupVisibilityEvent, callback)
-
         else:
             super(PopupView, self).removeCallback(callback, eventType)
 

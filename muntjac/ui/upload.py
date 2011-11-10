@@ -180,7 +180,9 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
 
         #: ProgressListeners to which information about progress
         #  is sent during upload
-        self._progressListeners = None
+        self._progressListeners = set()
+
+        self._progressCallbacks = dict()
 
         self._interrupted = False
 
@@ -258,28 +260,26 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
                    the listener to be added.
         """
         if (isinstance(listener, IFailedListener) and
-                (iface is None or iface == IFailedListener)):
+                (iface is None or issubclass(iface, IFailedListener))):
             self.registerListener(FailedEvent,
                     listener, _UPLOAD_FAILED_METHOD)
 
         if (isinstance(listener, IFinishedListener) and
-                (iface is None or iface == IFinishedListener)):
+                (iface is None or issubclass(iface, IFinishedListener))):
             self.registerListener(FinishedEvent,
                     listener, _UPLOAD_FINISHED_METHOD)
 
         if (isinstance(listener, IProgressListener) and
-                (iface is None or iface == IProgressListener)):
-            if self._progressListeners is None:
-                self._progressListeners = set()
-            self._progressListeners.add( (listener, tuple()) )
+                (iface is None or issubclass(iface, IProgressListener))):
+            self._progressListeners.add(listener)
 
         if (isinstance(listener, IStartedListener) and
-                (iface is None or iface == IStartedListener)):
+                (iface is None or issubclass(iface, IStartedListener))):
             self.registerListener(StartedEvent,
                     listener, _UPLOAD_STARTED_METHOD)
 
         if (isinstance(listener, ISucceededListener) and
-                (iface is None or iface == ISucceededListener)):
+                (iface is None or issubclass(iface, ISucceededListener))):
             self.registerListener(SucceededEvent,
                     listener, _UPLOAD_SUCCEEDED_METHOD)
 
@@ -290,22 +290,19 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == FailedEvent:
+        if issubclass(eventType, FailedEvent):
             self.registerCallback(FailedEvent, callback, None, *args)
 
-        elif eventType == FinishedEvent:
+        elif issubclass(eventType, FinishedEvent):
             self.registerCallback(FinishedEvent, callback, None, *args)
 
-        elif eventType == IProgressListener:  # no progress event
-            if self._progressListeners is None:
-                self._progressListeners = set()
+        elif issubclass(eventType, IProgressListener):  # no progress event
+            self._progressCallbacks[callback] = args
 
-            self._progressListeners.add( (callback, args) )
-
-        elif eventType == StartedEvent:
+        elif issubclass(eventType, StartedEvent):
             self.registerCallback(StartedEvent, callback, None, *args)
 
-        elif eventType == SucceededEvent:
+        elif issubclass(eventType, SucceededEvent):
             self.registerCallback(SucceededEvent, callback, None, *args)
 
         else:
@@ -319,30 +316,27 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
                    the listener to be removed.
         """
         if (isinstance(listener, IFailedListener) and
-                (iface is None or iface == IFailedListener)):
+                (iface is None or issubclass(iface, IFailedListener))):
             self.withdrawListener(FailedEvent,
                     listener, _UPLOAD_FAILED_METHOD)
 
         if (isinstance(listener, IFinishedListener) and
-                (iface is None or iface == IFinishedListener)):
+                (iface is None or issubclass(iface, IFinishedListener))):
             self.withdrawListener(FinishedEvent,
                     listener, _UPLOAD_FINISHED_METHOD)
 
         if (isinstance(listener, IProgressListener) and
-                (iface is None or iface == IProgressListener)):
-            if self._progressListeners is not None:
-                for t in self._progressListeners.copy():
-                    if t[0] == listener:
-                        self._progressListeners.remove(t)
-                        break
+                (iface is None or issubclass(iface, IProgressListener))):
+            if listener in self._progressListeners:
+                self._progressListeners.remove(listener)
 
         if (isinstance(listener, IStartedListener) and
-                (iface is None or iface == IStartedListener)):
+                (iface is None or issubclass(iface, IStartedListener))):
             self.withdrawListener(StartedEvent,
                     listener, _UPLOAD_STARTED_METHOD)
 
         if (isinstance(listener, ISucceededListener) and
-                (iface is None or iface == ISucceededListener)):
+                (iface is None or issubclass(iface, ISucceededListener))):
             self.withdrawListener(SucceededEvent,
                     listener, _UPLOAD_SUCCEEDED_METHOD)
 
@@ -353,23 +347,20 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == FailedEvent:
+        if issubclass(eventType, FailedEvent):
             self.withdrawCallback(FailedEvent, callback)
 
-        elif eventType == FinishedEvent:
+        elif issubclass(eventType, FinishedEvent):
             self.withdrawCallback(FinishedEvent, callback)
 
-        elif eventType == IProgressListener:  # no progress event
-            if self._progressListeners is not None:
-                for t in self._progressListeners.copy():
-                    if t[0] == callback:
-                        self._progressListeners.remove(t)
-                        break
+        elif issubclass(eventType, IProgressListener):  # no progress event
+            if callback in self._progressCallbacks:
+                del self._progressListeners[callback]
 
-        elif eventType == StartedEvent:
+        elif issubclass(eventType, StartedEvent):
             self.withdrawCallback(StartedEvent, callback)
 
-        elif eventType == SucceededEvent:
+        elif issubclass(eventType, SucceededEvent):
             self.withdrawCallback(SucceededEvent, callback)
 
         else:
@@ -421,12 +412,11 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
         """
         # this is implemented differently than other listeners to
         # maintain backwards compatibility
-        if self._progressListeners is not None:
-            for l, args in self._progressListeners:
-                if isinstance(l, IProgressListener):
-                    l.updateProgress(totalBytes, contentLength)
-                else:
-                    l(totalBytes, contentLength, *args)
+        for l in self._progressListeners:
+            l.updateProgress(totalBytes, contentLength)
+
+        for callback, args in self._progressCallbacks.iteritems():
+            callback(totalBytes, contentLength, *args)
 
 
     def getReceiver(self):
@@ -543,11 +533,10 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
         """
         warn('replaced with addListener/removeListener', DeprecationWarning)
 
-        if (self._progressListeners is None
-                or len(self._progressListeners) == 0):
+        if len(self._progressListeners) == 0:
             return None
         else:
-            return self._progressListeners.next()
+            return iter(self._progressListeners).next()
 
 
     def getButtonCaption(self):
@@ -616,12 +605,16 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
 
     def getListeners(self, eventType):
         if issubclass(eventType, IStreamingEvent):
-            if self._progressListeners is None:
-                return list()
-            else:
-                return list(self._progressListeners)
+            return list(self._progressListeners)
 
         return super(Upload, self).getListeners(eventType)
+
+
+    def getCallbacks(self, eventType):
+        if issubclass(eventType, IStreamingEvent):
+            return dict(self._progressCallbacks)
+
+        return super(Upload, self).getCallbacks(eventType)
 
 
 class InnerStreamVariable(IStreamVariable):

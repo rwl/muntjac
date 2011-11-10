@@ -445,7 +445,7 @@ class Panel(AbstractComponentContainer, IScrollable,
                    The listener to add
         """
         if (isinstance(listener, IClickListener) and
-                (iface is None or iface == IClickListener)):
+                (iface is None or issubclass(iface, IClickListener))):
             self.registerListener(self._CLICK_EVENT, ClickEvent,
                     listener, IClickListener.clickMethod)
 
@@ -456,7 +456,7 @@ class Panel(AbstractComponentContainer, IScrollable,
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == ClickEvent:
+        if issubclass(eventType, ClickEvent):
             self.registerCallback(ClickEvent, callback,
                     self._CLICK_EVENT, *args)
         else:
@@ -471,7 +471,7 @@ class Panel(AbstractComponentContainer, IScrollable,
                    The listener to remove
         """
         if (isinstance(listener, IClickListener) and
-                (iface is None or iface == IClickListener)):
+                (iface is None or issubclass(iface, IClickListener))):
             self.withdrawListener(self._CLICK_EVENT, ClickEvent, listener)
 
         super(Panel, self).removeListener(listener, iface)
@@ -481,9 +481,8 @@ class Panel(AbstractComponentContainer, IScrollable,
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == ClickEvent:
+        if issubclass(eventType, ClickEvent):
             self.withdrawCallback(ClickEvent, callback, self._CLICK_EVENT)
-
         else:
             super(Panel, self).removeCallback(callback, eventType)
 
@@ -494,8 +493,8 @@ class Panel(AbstractComponentContainer, IScrollable,
         @param parameters:
                    The raw "value" of the variable change from the client side
         """
-        mouseDetails = MouseEventDetails.deSerialize(
-                parameters.get('mouseDetails'))
+        params = parameters.get('mouseDetails')
+        mouseDetails = MouseEventDetails.deSerialize(params)
         self.fireEvent( ClickEvent(self, mouseDetails) )
 
 
@@ -509,5 +508,8 @@ class Panel(AbstractComponentContainer, IScrollable,
 
 
     def focus(self):
-        """Moves keyboard focus to the component. @see: L{IFocusable.focus}"""
+        """Moves keyboard focus to the component.
+
+        @see: L{IFocusable.focus}
+        """
         super(Panel, self).focus()

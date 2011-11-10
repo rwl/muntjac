@@ -629,7 +629,8 @@ class TabSheet(AbstractComponentContainer):
                    the Listener to be added.
         """
         if (isinstance(listener, ISelectedTabChangeListener) and
-                (iface is None or iface == ISelectedTabChangeListener)):
+                (iface is None or
+                        issubclass(iface, ISelectedTabChangeListener))):
             self.registerListener(SelectedTabChangeEvent,
                     listener, _SELECTED_TAB_CHANGE_METHOD)
 
@@ -640,7 +641,7 @@ class TabSheet(AbstractComponentContainer):
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == SelectedTabChangeEvent:
+        if issubclass(eventType, SelectedTabChangeEvent):
             self.registerCallback(SelectedTabChangeEvent, callback, None,
                     *args)
         else:
@@ -654,7 +655,7 @@ class TabSheet(AbstractComponentContainer):
                    the Listener to be removed.
         """
         if (isinstance(listener, IRepaintRequestListener) and
-                (iface is None or iface == IRepaintRequestListener)):
+                (iface is None or issubclass(iface, IRepaintRequestListener))):
             super(TabSheet, self).removeListener(listener, iface)
             if isinstance(listener, CommunicationManager):
                 # clean the paintedTabs here instead of detach to avoid subtree
@@ -662,7 +663,8 @@ class TabSheet(AbstractComponentContainer):
                 self._paintedTabs.clear()
 
         if (isinstance(listener, ISelectedTabChangeListener) and
-                (iface is None or iface == ISelectedTabChangeListener)):
+                (iface is None or
+                        issubclass(iface, ISelectedTabChangeListener))):
             self.withdrawListener(SelectedTabChangeEvent,
                     listener, _SELECTED_TAB_CHANGE_METHOD)
 
@@ -673,16 +675,16 @@ class TabSheet(AbstractComponentContainer):
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == SelectedTabChangeEvent:
+        if issubclass(eventType, SelectedTabChangeEvent):
             self.withdrawCallback(SelectedTabChangeEvent, callback)
-
         else:
             super(TabSheet, self).removeCallback(callback, eventType)
 
 
     def fireSelectedTabChange(self):
         """Sends an event that the currently selected tab has changed."""
-        self.fireEvent( SelectedTabChangeEvent(self) )
+        event = SelectedTabChangeEvent(self)
+        self.fireEvent(event)
 
 
     def setCloseHandler(self, handler):
@@ -716,8 +718,7 @@ class TabSheet(AbstractComponentContainer):
     def getTabPosition(self, tab):
         """Gets the position of the tab
 
-        @param tab:
-                   The tab
+        @param tab: The tab
         """
         try:
             return self._components.index( tab.getComponent() )

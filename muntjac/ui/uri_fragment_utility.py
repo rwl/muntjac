@@ -41,7 +41,7 @@ class UriFragmentUtility(AbstractComponent):
 
     def addListener(self, listener, iface=None):
         if (isinstance(listener, IFragmentChangedListener) and
-                (iface is None or iface == IFragmentChangedListener)):
+                (iface is None or issubclass(iface, IFragmentChangedListener))):
             self.registerListener(FragmentChangedEvent,
                     listener, _FRAGMENT_CHANGED_METHOD)
 
@@ -52,16 +52,16 @@ class UriFragmentUtility(AbstractComponent):
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == FragmentChangedEvent:
+        if issubclass(eventType, FragmentChangedEvent):
             self.registerCallback(FragmentChangedEvent, callback, None, *args)
         else:
-            super(UriFragmentUtility, self).addCallback(callback, eventType,
-                    *args)
+            super(UriFragmentUtility, self).addCallback(callback,
+                    eventType, *args)
 
 
     def removeListener(self, listener, iface=None):
         if (isinstance(listener, IFragmentChangedListener) and
-                (iface is None or iface == IFragmentChangedListener)):
+                (iface is None or issubclass(iface, IFragmentChangedListener))):
             self.withdrawListener(FragmentChangedEvent,
                     listener, _FRAGMENT_CHANGED_METHOD)
 
@@ -72,9 +72,8 @@ class UriFragmentUtility(AbstractComponent):
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == FragmentChangedEvent:
+        if issubclass(eventType, FragmentChangedEvent):
             self.withdrawCallback(FragmentChangedEvent, callback)
-
         else:
             super(UriFragmentUtility, self).removeCallback(callback, eventType)
 

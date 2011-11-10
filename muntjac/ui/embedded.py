@@ -386,7 +386,7 @@ class Embedded(AbstractComponent):
                    The listener to add
         """
         if (isinstance(listener, IClickListener) and
-                (iface is None or iface == IClickListener)):
+                (iface is None or issubclass(iface, IClickListener))):
             self.registerListener(self._CLICK_EVENT, ClickEvent,
                     listener, IClickListener.clickMethod)
 
@@ -397,10 +397,9 @@ class Embedded(AbstractComponent):
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == ClickEvent:
+        if issubclass(eventType, ClickEvent):
             self.registerCallback(ClickEvent, callback,
                     self._CLICK_EVENT, *args)
-
         else:
             super(Embedded, self).addCallback(callback, eventType, *args)
 
@@ -413,7 +412,7 @@ class Embedded(AbstractComponent):
                    The listener to remove
         """
         if (isinstance(listener, IClickListener) and
-                (iface is None or iface == IClickListener)):
+                (iface is None or issubclass(iface, IClickListener))):
             self.withdrawListener(self._CLICK_EVENT, ClickEvent, listener)
 
         super(Embedded, self).removeListener(listener, iface)
@@ -423,15 +422,15 @@ class Embedded(AbstractComponent):
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == ClickEvent:
+        if issubclass(eventType, ClickEvent):
             self.withdrawCallback(ClickEvent, callback, self._CLICK_EVENT)
-
         else:
             super(Embedded, self).removeCallback(callback, eventType)
 
 
     def changeVariables(self, source, variables):
         super(Embedded, self).changeVariables(source, variables)
+
         if self._CLICK_EVENT in variables:
             self.fireClick(variables.get(self._CLICK_EVENT))
 

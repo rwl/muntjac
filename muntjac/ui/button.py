@@ -252,16 +252,16 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
                    the Listener to be added.
         """
         if (isinstance(listener, IBlurListener) and
-                (iface is None or iface == IBlurListener)):
+                (iface is None or issubclass(iface, IBlurListener))):
             self.registerListener(BlurEvent.EVENT_ID, BlurEvent,
                     listener, IBlurListener.blurMethod)
 
         if (isinstance(listener, IClickListener) and
-                (iface is None or iface == IClickListener)):
+                (iface is None or issubclass(iface, IClickListener))):
             self.registerListener(ClickEvent, listener, _BUTTON_CLICK_METHOD)
 
         if (isinstance(listener, IFocusListener) and
-                (iface is None or iface == IFocusListener)):
+                (iface is None or issubclass(iface, IFocusListener))):
             self.registerListener(FocusEvent.EVENT_ID, FocusEvent,
                     listener, IFocusListener.focusMethod)
 
@@ -272,17 +272,16 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
         if eventType is None:
             eventType = callback._eventType  # set by decorator
 
-        if eventType == BlurEvent:
+        if issubclass(eventType, BlurEvent):
             self.registerCallback(BlurEvent, callback,
                     BlurEvent.EVENT_ID, *args)
 
-        elif eventType == ClickEvent:
+        elif issubclass(eventType, ClickEvent):
             self.registerCallback(ClickEvent, callback, None, *args)
 
-        elif eventType == FocusEvent:
+        elif issubclass(eventType, FocusEvent):
             self.registerCallback(FocusEvent, callback,
                     FocusEvent.EVENT_ID, *args)
-
         else:
             super(Button, self).addCallback(callback, eventType, *args)
 
@@ -294,15 +293,15 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
                    the Listener to be removed.
         """
         if (isinstance(listener, IBlurListener) and
-                (iface is None or iface == IBlurListener)):
+                (iface is None or issubclass(iface, IBlurListener))):
             self.withdrawListener(BlurEvent.EVENT_ID, BlurEvent, listener)
 
         if (isinstance(listener, IClickListener) and
-                (iface is None or iface == IClickListener)):
+                (iface is None or issubclass(iface, IClickListener))):
             self.withdrawListener(ClickEvent, listener, _BUTTON_CLICK_METHOD)
 
         if (isinstance(listener, IFocusListener) and
-                (iface is None or iface == IFocusListener)):
+                (iface is None or issubclass(iface, IFocusListener))):
             self.withdrawListener(FocusEvent.EVENT_ID, FocusEvent, listener)
 
         super(Button, self).removeListener(listener, iface)
@@ -312,13 +311,13 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == BlurEvent:
+        if issubclass(eventType, BlurEvent):
             self.withdrawCallback(BlurEvent, callback, BlurEvent.EVENT_ID)
 
-        elif eventType == ClickEvent:
+        elif issubclass(eventType, ClickEvent):
             self.withdrawCallback(ClickEvent, callback)
 
-        elif eventType == FocusEvent:
+        elif issubclass(eventType, FocusEvent):
             self.withdrawCallback(FocusEvent, callback, FocusEvent.EVENT_ID)
 
         else:

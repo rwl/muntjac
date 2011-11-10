@@ -188,7 +188,7 @@ class LoginForm(CustomComponent):
         """Adds ILoginListener to handle login logic.
         """
         if (isinstance(listener, ILoginListener) and
-                (iface is None or iface == ILoginListener)):
+                (iface is None or issubclass(iface, ILoginListener))):
             self.registerListener(LoginEvent, listener, _ON_LOGIN_METHOD)
 
         super(LoginForm, self).addListener(listener, iface)
@@ -198,7 +198,7 @@ class LoginForm(CustomComponent):
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == LoginEvent:
+        if issubclass(eventType, LoginEvent):
             self.registerCallback(LoginEvent, callback, None, *args)
         else:
             super(LoginForm, self).addCallback(callback, eventType, *args)
@@ -208,7 +208,7 @@ class LoginForm(CustomComponent):
         """Removes ILoginListener.
         """
         if (isinstance(listener, ILoginListener) and
-                (iface is None or iface == ILoginListener)):
+                (iface is None or issubclass(iface, ILoginListener))):
             self.withdrawListener(LoginEvent, listener, _ON_LOGIN_METHOD)
 
         super(LoginForm, self).removeListener(listener, iface)
@@ -218,9 +218,8 @@ class LoginForm(CustomComponent):
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == LoginEvent:
+        if issubclass(eventType, LoginEvent):
             self.withdrawCallback(LoginEvent, callback)
-
         else:
             super(LoginForm, self).removeCallback(callback, eventType)
 

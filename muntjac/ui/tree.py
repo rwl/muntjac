@@ -674,17 +674,17 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
                    the listener to be added.
         """
         if (isinstance(listener, ICollapseListener) and
-                (iface is None or iface == ICollapseListener)):
+                (iface is None or issubclass(iface, ICollapseListener))):
             self.registerListener(CollapseEvent,
                     listener, COLLAPSE_METHOD)
 
         if (isinstance(listener, IExpandListener) and
-                (iface is None or iface == IExpandListener)):
+                (iface is None or issubclass(iface, IExpandListener))):
             self.registerListener(ExpandEvent,
                     listener, EXPAND_METHOD)
 
         if (isinstance(listener, IItemClickListener) and
-                (iface is None or iface == IItemClickListener)):
+                (iface is None or issubclass(iface, IItemClickListener))):
             self.registerListener(VTree.ITEM_CLICK_EVENT_ID,
                     ItemClickEvent, listener, ITEM_CLICK_METHOD)
 
@@ -695,13 +695,13 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == CollapseEvent:
+        if issubclass(eventType, CollapseEvent):
             self.registerCallback(CollapseEvent, callback, None, *args)
 
-        elif eventType == ExpandEvent:
+        elif issubclass(eventType, ExpandEvent):
             self.registerCallback(ExpandEvent, callback, None, *args)
 
-        elif eventType == ItemClickEvent:
+        elif issubclass(eventType, ItemClickEvent):
             self.registerCallback(ItemClickEvent, callback,
                     VTree.ITEM_CLICK_EVENT_ID, *args)
 
@@ -716,17 +716,17 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
                    the listener to be removed.
         """
         if (isinstance(listener, ICollapseListener) and
-                (iface is None or iface == ICollapseListener)):
+                (iface is None or issubclass(iface, ICollapseListener))):
             self.withdrawListener(CollapseEvent,
                     listener, COLLAPSE_METHOD)
 
         if (isinstance(listener, IExpandListener) and
-                (iface is None or iface == IExpandListener)):
+                (iface is None or issubclass(iface, IExpandListener))):
             self.withdrawListener(ExpandEvent,
                     listener, EXPAND_METHOD)
 
         if (isinstance(listener, IItemClickListener) and
-                (iface is None or iface == IItemClickListener)):
+                (iface is None or issubclass(iface, IItemClickListener))):
             self.withdrawListener(VTree.ITEM_CLICK_EVENT_ID,
                     ItemClickEvent, listener)
 
@@ -737,13 +737,13 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == CollapseEvent:
+        if issubclass(eventType, CollapseEvent):
             self.withdrawCallback(CollapseEvent, callback)
 
-        elif eventType == ExpandEvent:
+        elif issubclass(eventType, ExpandEvent):
             self.withdrawCallback(ExpandEvent, callback)
 
-        elif eventType == ItemClickEvent:
+        elif issubclass(eventType, ItemClickEvent):
             self.withdrawCallback(ItemClickEvent, callback,
                     VTree.ITEM_CLICK_EVENT_ID)
 
@@ -757,7 +757,8 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
         @param itemId:
                    the item id.
         """
-        self.fireEvent( ExpandEvent(self, itemId) )
+        event = ExpandEvent(self, itemId)
+        self.fireEvent(event)
 
 
     def fireCollapseEvent(self, itemId):
@@ -766,7 +767,8 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
         @param itemId:
                    the item id.
         """
-        self.fireEvent( CollapseEvent(self, itemId) )
+        event = CollapseEvent(self, itemId)
+        self.fireEvent(event)
 
 
     def addActionHandler(self, actionHandler):
@@ -778,6 +780,7 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
             if self._actionHandlers is None:
                 self._actionHandlers = list()
                 self._actionMapper = KeyMapper()
+
             if actionHandler not in self._actionHandlers:
                 self._actionHandlers.append(actionHandler)
                 self.requestRepaint()
@@ -791,9 +794,11 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
         if (self._actionHandlers is not None
                 and actionHandler in self._actionHandlers):
             self._actionHandlers.remove(actionHandler)
+
             if len(self._actionHandlers) > 0:
                 self._actionHandlers = None
                 self._actionMapper = None
+
             self.requestRepaint()
 
 

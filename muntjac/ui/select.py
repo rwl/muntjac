@@ -664,12 +664,12 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
 
     def addListener(self, listener, iface=None):
         if (isinstance(listener, IBlurListener) and
-                (iface is None or iface == IBlurListener)):
+                (iface is None or issubclass(iface, IBlurListener))):
             self.registerListener(BlurEvent.EVENT_ID,
                     BlurEvent, listener, IBlurListener.blurMethod)
 
         if (isinstance(listener, IFocusListener) and
-                (iface is None or iface == IFocusListener)):
+                (iface is None or issubclass(iface, IFocusListener))):
             self.registerListener(FocusEvent.EVENT_ID,
                     FocusEvent, listener, IFocusListener.focusMethod)
 
@@ -680,25 +680,24 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == BlurEvent:
+        if issubclass(eventType, BlurEvent):
             self.registerCallback(BlurEvent, callback,
                     BlurEvent.EVENT_ID, *args)
 
-        elif eventType == FocusEvent:
+        elif issubclass(eventType, FocusEvent):
             self.registerCallback(FocusEvent, callback,
                     FocusEvent.EVENT_ID, *args)
-
         else:
             super(Select, self).addCallback(callback, eventType, *args)
 
 
     def removeListener(self, listener, iface=None):
         if (isinstance(listener, IBlurListener) and
-                (iface is None or iface == IBlurListener)):
+                (iface is None or issubclass(iface, IBlurListener))):
             self.withdrawListener(BlurEvent.EVENT_ID, BlurEvent, listener)
 
         if (isinstance(listener, IFocusListener) and
-                (iface is None or iface == IFocusListener)):
+                (iface is None or issubclass(iface, IFocusListener))):
             self.withdrawListener(FocusEvent.EVENT_ID, FocusEvent, listener)
 
         super(Select, self).removeListener(listener, iface)
@@ -708,10 +707,10 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == BlurEvent:
+        if issubclass(eventType, BlurEvent):
             self.withdrawCallback(BlurEvent, callback, BlurEvent.EVENT_ID)
 
-        elif eventType == FocusEvent:
+        elif issubclass(eventType, FocusEvent):
             self.withdrawCallback(FocusEvent, callback, FocusEvent.EVENT_ID)
 
         else:
