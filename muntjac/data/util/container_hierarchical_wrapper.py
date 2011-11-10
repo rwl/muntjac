@@ -509,14 +509,15 @@ class ContainerHierarchicalWrapper(IHierarchical, IContainer,
 
     def addListener(self, listener, iface=None):
         if (isinstance(listener, IItemSetChangeListener) and
-                (iface is None or iface == IItemSetChangeListener)):
+                (iface is None or issubclass(iface, IItemSetChangeListener))):
             # Registers a new Item set change listener for this Container.
             if isinstance(self._container, IItemSetChangeNotifier):
                 pl = PiggybackListener(listener, self)
                 self._container.addListener(pl, IItemSetChangeListener)
 
         if (isinstance(listener, IPropertySetChangeListener) and
-                (iface is None or iface == IPropertySetChangeListener)):
+                (iface is None or
+                        issubclass(iface, IPropertySetChangeListener))):
             # Registers a new Property set change listener for this Container.
             if isinstance(self._container, IPropertySetChangeNotifier):
                 pl = PiggybackListener(listener, self)
@@ -527,13 +528,13 @@ class ContainerHierarchicalWrapper(IHierarchical, IContainer,
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == IItemSetChangeEvent:
+        if issubclass(eventType, IItemSetChangeEvent):
             # Registers a new Item set change listener for this Container.
             if isinstance(self._container, IItemSetChangeNotifier):
                 pl = PiggybackListener(callback, self, *args)
                 self._container.addListener(pl, IItemSetChangeListener)
 
-        elif eventType == IPropertySetChangeEvent:
+        elif issubclass(eventType, IPropertySetChangeEvent):
             # Registers a new Property set change listener for this Container.
             if isinstance(self._container, IPropertySetChangeNotifier):
                 pl = PiggybackListener(callback, self, *args)
@@ -546,7 +547,7 @@ class ContainerHierarchicalWrapper(IHierarchical, IContainer,
 
     def removeListener(self, listener, iface=None):
         if (isinstance(listener, IItemSetChangeListener) and
-                (iface is None or iface == IItemSetChangeListener)):
+                (iface is None or issubclass(iface, IItemSetChangeListener))):
             # Removes a Item set change listener from the object.
             if isinstance(self._container, IItemSetChangeNotifier):
                 pl = PiggybackListener(listener, self)
@@ -554,7 +555,7 @@ class ContainerHierarchicalWrapper(IHierarchical, IContainer,
 
 
         if (isinstance(listener, IPropertySetChangeListener) and
-            (iface is None or iface == IPropertySetChangeListener)):
+            (iface is None or issubclass(iface, IPropertySetChangeListener))):
             # Removes a Property set change listener from the object.
             if isinstance(self._container, IPropertySetChangeNotifier):
                 pl = PiggybackListener(listener, self)
@@ -565,13 +566,13 @@ class ContainerHierarchicalWrapper(IHierarchical, IContainer,
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == IItemSetChangeEvent:
+        if issubclass(eventType, IItemSetChangeEvent):
             # Removes a Item set change listener from the object.
             if isinstance(self._container, IItemSetChangeNotifier):
                 pl = PiggybackListener(callback, self)
                 self._container.removeListener(pl, IItemSetChangeListener)
 
-        elif eventType == IPropertySetChangeEvent:
+        elif issubclass(eventType, IPropertySetChangeEvent):
             # Removes a Property set change listener from the object.
             if isinstance(self._container, IPropertySetChangeNotifier):
                 pl = PiggybackListener(callback, self)

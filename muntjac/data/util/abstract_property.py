@@ -31,14 +31,19 @@ class AbstractProperty(prop.IProperty, prop.IValueChangeNotifier,
     def __init__(self):
         #: List of listeners who are interested in the read-only status
         #  changes of the IProperty
-        self._readOnlyStatusChangeListeners = None
+        self._readOnlyStatusChangeListeners = list()
 
         #: List of listeners who are interested in the value changes of
         #  the IProperty
-        self._valueChangeListeners = None
+        self._valueChangeListeners = list()
 
         #: Is the IProperty read-only?
         self._readOnly = None
+
+        self._readOnlyStatusChangeCallbacks = dict()
+
+        self._valueChangeCallbacks = dict()
+
 
 
     def isReadOnly(self):
@@ -75,39 +80,31 @@ class AbstractProperty(prop.IProperty, prop.IValueChangeNotifier,
                    the new Listener to be registered.
         """
         if (isinstance(listener, prop.IReadOnlyStatusChangeListener) and
-                (iface is None or iface == prop.IReadOnlyStatusChangeListener)):
-            if self._readOnlyStatusChangeListeners is None:
-                self._readOnlyStatusChangeListeners = list()
+                (iface is None or
+                        issubclass(iface, prop.IReadOnlyStatusChangeListener))):
 
-            self._readOnlyStatusChangeListeners.append( (listener, tuple()) )
+            self._readOnlyStatusChangeListeners.append(listener)
 
         if (isinstance(listener, prop.IValueChangeListener) and
-                (iface is None or iface == prop.IValueChangeListener)):
-            if self._valueChangeListeners is None:
-                self._valueChangeListeners = list()
+                (iface is None or
+                        issubclass(iface, prop.IValueChangeListener))):
 
-            self._valueChangeListeners.append( (listener, tuple()) )
+            self._valueChangeListeners.append(listener)
 
 
     def addCallback(self, callback, eventType=None, *args):
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == prop.IReadOnlyStatusChangeEvent:
-            if self._readOnlyStatusChangeListeners is None:
-                self._readOnlyStatusChangeListeners = list()
+        if issubclass(eventType, prop.IReadOnlyStatusChangeEvent):
+            self._readOnlyStatusChangeCallbacks[callback] = args
 
-            self._readOnlyStatusChangeListeners.append( (callback, args) )
-
-        elif eventType == prop.ValueChangeEvent:
-            if self._valueChangeListeners is None:
-                self._valueChangeListeners = list()
-
-            self._valueChangeListeners.append( (callback, args) )
+        elif issubclass(eventType, prop.ValueChangeEvent):
+            self._valueChangeCallbacks[callback] = args
 
         else:
-            super(AbstractProperty, self).addCallback(callback, eventType,
-                    *args)
+            super(AbstractProperty, self).addCallback(callback,
+                    eventType, *args)
 
 
     def removeListener(self, listener, iface=None):
@@ -117,41 +114,29 @@ class AbstractProperty(prop.IProperty, prop.IValueChangeNotifier,
                    the listener to be removed.
         """
         if (isinstance(listener, prop.IReadOnlyStatusChangeListener) and
-            (iface is None or iface == prop.IReadOnlyStatusChangeListener)):
-            if self._readOnlyStatusChangeListeners is not None:
-                for i, (l, _) in enumerate(
-                        self._readOnlyStatusChangeListeners[:]):
-                    if listener == l:
-                        del self._readOnlyStatusChangeListeners[i]
-                        break
+                (iface is None or
+                        issubclass(iface, prop.IReadOnlyStatusChangeListener))):
+            if listener in self._readOnlyStatusChangeListeners:
+                self._readOnlyStatusChangeListeners.remove(listener)
 
         if (isinstance(listener, prop.IValueChangeListener) and
-                (iface is None or iface == prop.IValueChangeListener)):
-            if self._valueChangeListeners is not None:
-                for i, (l, _) in enumerate(self._valueChangeListeners[:]):
-                    if listener == l:
-                        del self._valueChangeListeners[i]
-                        break
+                (iface is None or
+                        issubclass(iface, prop.IValueChangeListener))):
+            if listener in self._valueChangeListeners:
+                self._valueChangeListeners.remove(listener)
 
 
     def removeCallback(self, callback, eventType=None):
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == prop.IReadOnlyStatusChangeEvent:
-            if self._readOnlyStatusChangeListeners is not None:
-                for i, (l, _) in enumerate(
-                        self._readOnlyStatusChangeListeners[:]):
-                    if callback == l:
-                        del self._readOnlyStatusChangeListeners[i]
-                        break
+        if issubclass(eventType, prop.IReadOnlyStatusChangeEvent):
+            if callback in self._readOnlyStatusChangeCallbacks:
+                del self._readOnlyStatusChangeCallbacks[callback]
 
-        elif eventType == prop.ValueChangeEvent:
-            if self._valueChangeListeners is not None:
-                for i, (l, _) in enumerate(self._valueChangeListeners[:]):
-                    if callback == l:
-                        del self._valueChangeListeners[i]
-                        break
+        elif issubclass(eventType, prop.ValueChangeEvent):
+            if callback in self._valueChangeCallbacks:
+                del self._valueChangeCallbacks[callback]
 
         else:
             super(AbstractProperty, self).removeCallback(callback, eventType)
@@ -160,40 +145,42 @@ class AbstractProperty(prop.IProperty, prop.IValueChangeNotifier,
     def fireReadOnlyStatusChange(self):
         """Sends a read only status change event to all registered listeners.
         """
-        if self._readOnlyStatusChangeListeners is not None:
-            l = list(self._readOnlyStatusChangeListeners)
-            event = prop.IReadOnlyStatusChangeEvent(self)
-            for listener, args in l:
-                if isinstance(listener, prop.IReadOnlyStatusChangeListener):
-                    listener.readOnlyStatusChange(event)
-                else:
-                    listener(event, *args)
+        event = prop.IReadOnlyStatusChangeEvent(self)
+        for listener in self._readOnlyStatusChangeListeners:
+            listener.readOnlyStatusChange(event)
+
+        for callback, args in self._readOnlyStatusChangeCallbacks.iteritems():
+            callback(event, *args)
 
 
     def fireValueChange(self):
         """Sends a value change event to all registered listeners."""
-        if self._valueChangeListeners is not None:
-            l = list(self._valueChangeListeners)
-            event = ValueChangeEvent(self)
-            for listener, args in l:
-                if isinstance(listener, prop.IValueChangeListener):
-                    listener.valueChange(event)
-                else:
-                    listener(event, *args)
+        event = ValueChangeEvent(self)
+        for listener in self._valueChangeListeners:
+            listener.valueChange(event)
+
+        for callback, args in self._valueChangeCallbacks.iteritems():
+            callback(event, *args)
 
 
     def getListeners(self, eventType):
         if issubclass(eventType, ValueChangeEvent):
-            if self._valueChangeListeners is None:
-                return list()
-            else:
-                return list(self._valueChangeListeners)
+            return list(self._valueChangeListeners)
+
         elif issubclass(eventType, prop.IReadOnlyStatusChangeEvent):
-            if self._readOnlyStatusChangeListeners is None:
-                return list()
-            else:
-                return list(self._readOnlyStatusChangeListeners)
+            return list(self._readOnlyStatusChangeListeners)
+
         return list()
+
+
+    def getCallbacks(self, eventType):
+        if issubclass(eventType, ValueChangeEvent):
+            return dict(self._valueChangeCallbacks)
+
+        elif issubclass(eventType, prop.IReadOnlyStatusChangeEvent):
+            return dict(self._readOnlyStatusChangeCallbacks)
+
+        return dict()
 
 
 class IReadOnlyStatusChangeEvent(EventObject, prop.IProperty,

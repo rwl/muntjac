@@ -130,10 +130,14 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
         self._itemIconPropertyId = None
 
         #: List of property set change event listeners.
-        self._propertySetEventListeners = None
+        self._propertySetEventListeners = set()
 
         #: List of item set change event listeners.
-        self._itemSetEventListeners = None
+        self._itemSetEventListeners = set()
+
+        self._propertySetEventCallbacks = dict()
+
+        self._itemSetEventCallbacks = dict()
 
         #: IItem id that represents null selection of this select.
         #
@@ -1085,19 +1089,16 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
         @see: L{IItemSetChangeNotifier.addListener}
         """
         if (isinstance(listener, container.IItemSetChangeListener) and
-                (iface is None or iface == container.IItemSetChangeListener)):
-            if self._itemSetEventListeners is None:
-                self._itemSetEventListeners = set()
+                (iface is None or
+                        issubclass(iface, container.IItemSetChangeListener))):
 
-            self._itemSetEventListeners.add( (listener, tuple()) )
+            self._itemSetEventListeners.add(listener)
 
         if (isinstance(listener, container.IPropertySetChangeListener) and
                 (iface is None or
-                        iface == container.IPropertySetChangeListener)):
-            if self._propertySetEventListeners is None:
-                self._propertySetEventListeners = set()
+                    issubclass(iface, container.IPropertySetChangeListener))):
 
-            self._propertySetEventListeners.add( (listener, tuple()) )
+            self._propertySetEventListeners.add(listener)
 
         super(AbstractSelect, self).addListener(listener, iface)
 
@@ -1107,16 +1108,12 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
             eventType = callback._eventType
 
         if eventType == container.IItemSetChangeEvent:
-            if self._itemSetEventListeners is None:
-                self._itemSetEventListeners = set()
 
-            self._itemSetEventListeners.add( (callback, args) )
+            self._itemSetEventCallbacks[callback] = args
 
         elif eventType == container.IPropertySetChangeEvent:
-            if self._propertySetEventListeners is None:
-                self._propertySetEventListeners = set()
 
-            self._propertySetEventListeners.add( (callback, args) )
+            self._propertySetEventCallbacks[callback] = args
 
         else:
             super(AbstractSelect, self).addCallback(callback, eventType, *args)
@@ -1131,24 +1128,14 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
         """
         if (isinstance(listener, container.IItemSetChangeListener) and
                 (iface is None or iface == container.IItemSetChangeListener)):
-            if self._itemSetEventListeners is not None:
-                for t in self._itemSetEventListeners.copy():
-                    if t[0] == listener:
-                        self._itemSetEventListeners.remove(t)
-
-                if len(self._itemSetEventListeners) == 0:
-                    self._itemSetEventListeners = None
+            if listener in self._itemSetEventListeners:
+                self._itemSetEventListeners.remove(listener)
 
         if (isinstance(listener, container.IPropertySetChangeListener) and
                 (iface is None or
                         iface == container.IPropertySetChangeListener)):
-            if self._propertySetEventListeners is not None:
-                for t in self._propertySetEventListeners.copy():
-                    if t[0] == listener:
-                        self._propertySetEventListeners.remove(t)
-
-                if len(self._propertySetEventListeners) == 0:
-                    self._propertySetEventListeners = None
+            if listener in self._propertySetEventListeners:
+                self._propertySetEventListeners.remove(listener)
 
         super(AbstractSelect, self).removeListener(listener, iface)
 
@@ -1157,23 +1144,13 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == container.IItemSetChangeEvent:
-            if self._itemSetEventListeners is not None:
-                for t in self._itemSetEventListeners.copy():
-                    if t[0] == callback:
-                        self._itemSetEventListeners.remove(t)
-
-                if len(self._itemSetEventListeners) == 0:
-                    self._itemSetEventListeners = None
+        if issubclass(eventType, container.IItemSetChangeEvent):
+            if callback in self._itemSetEventCallbacks:
+                del self._itemSetEventCallbacks[callback]
 
         elif eventType == container.IPropertySetChangeEvent:
-            if self._propertySetEventListeners is not None:
-                for t in self._propertySetEventListeners.copy():
-                    if t[0] == callback:
-                        self._propertySetEventListeners.remove(t)
-
-                if len(self._propertySetEventListeners) == 0:
-                    self._propertySetEventListeners = None
+            if callback in self._propertySetEventCallbacks:
+                del self._propertySetEventCallbacks[callback]
 
         else:
             super(AbstractSelect, self).removeCallback(callback, eventType)
@@ -1181,15 +1158,10 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
 
     def getListeners(self, eventType):
         if issubclass(eventType, container.IItemSetChangeEvent):
-            if self._itemSetEventListeners is None:
-                return set()
-            else:
-                return set(self._itemSetEventListeners)
+            return set(self._itemSetEventListeners)
+
         elif issubclass(eventType, container.IPropertySetChangeEvent):
-            if self._propertySetEventListeners is None:
-                return set()
-            else:
-                return set(self._propertySetEventListeners)
+            return set(self._propertySetEventListeners)
 
         return super(AbstractSelect, self).getListeners(eventType)
 
@@ -1208,29 +1180,27 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
 
     def firePropertySetChange(self):
         """Fires the property set change event."""
-        if ((self._propertySetEventListeners is not None)
-                and (len(self._propertySetEventListeners) > 0)):
-            event = IPropertySetChangeEvent(self)
-            listeners = list(self._propertySetEventListeners)
-            for l, args in listeners:
-                if isinstance(l, container.IPropertySetChangeListener):
-                    l.containerPropertySetChange(event)
-                else:
-                    l(event, *args)
+        event = IPropertySetChangeEvent(self)
+
+        for l in self._propertySetEventListeners:
+            l.containerPropertySetChange(event)
+
+        for callback, args in self._propertySetEventCallbacks.iteritems():
+            callback(event, *args)
+
         self.requestRepaint()
 
 
     def fireItemSetChange(self):
         """Fires the item set change event."""
-        if ((self._itemSetEventListeners is not None)
-                and (len(self._itemSetEventListeners) > 0)):
-            event = IItemSetChangeEvent(self)
-            listeners = list(self._itemSetEventListeners)
-            for l, args in listeners:
-                if isinstance(l, container.IItemSetChangeListener):
-                    l.containerItemSetChange(event)
-                else:
-                    l(event, *args)
+        event = IItemSetChangeEvent(self)
+
+        for l in self._itemSetEventListeners:
+            l.containerItemSetChange(event)
+
+        for callback, args in self._itemSetEventCallbacks.iteritems():
+            callback(event, *args)
+
         self.requestRepaint()
 
 

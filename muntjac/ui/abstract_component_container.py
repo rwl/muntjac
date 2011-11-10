@@ -101,12 +101,12 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
 
     def addListener(self, listener, iface=None):
         if (isinstance(listener, IComponentAttachListener) and
-                (iface is None or iface == IComponentAttachListener)):
+                (iface is None or issubclass(iface, IComponentAttachListener))):
             self.registerListener(ComponentAttachEvent, listener,
                     _COMPONENT_ATTACHED_METHOD)
 
         if (isinstance(listener, IComponentDetachListener) and
-                (iface is None or iface == IComponentDetachListener)):
+                (iface is None or issubclass(iface, IComponentDetachListener))):
             self.registerListener(ComponentDetachEvent, listener,
                     _COMPONENT_DETACHED_METHOD)
 
@@ -117,10 +117,10 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == ComponentAttachEvent:
+        if issubclass(eventType, ComponentAttachEvent):
             self.registerCallback(ComponentAttachEvent, callback, None, *args)
 
-        elif eventType == ComponentDetachEvent:
+        elif issubclass(eventType, ComponentDetachEvent):
             self.registerCallback(ComponentDetachEvent, callback, None, *args)
 
         else:
@@ -130,12 +130,12 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
 
     def removeListener(self, listener, iface=None):
         if (isinstance(listener, IComponentAttachListener) and
-                (iface is None or iface == IComponentAttachListener)):
+                (iface is None or issubclass(iface, IComponentAttachListener))):
             self.withdrawListener(ComponentAttachEvent, listener,
                     _COMPONENT_ATTACHED_METHOD)
 
         if (isinstance(listener, IComponentDetachListener) and
-                (iface is None or iface == IComponentDetachListener)):
+                (iface is None or issubclass(iface, IComponentDetachListener))):
             self.withdrawListener(ComponentDetachEvent, listener,
                     _COMPONENT_DETACHED_METHOD)
 
@@ -146,10 +146,10 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == ComponentAttachEvent:
+        if issubclass(eventType, ComponentAttachEvent):
             self.withdrawCallback(ComponentAttachEvent, callback)
 
-        elif eventType == ComponentDetachEvent:
+        elif issubclass(eventType, ComponentDetachEvent):
             self.withdrawCallback(ComponentDetachEvent, callback)
 
         else:
@@ -165,7 +165,8 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
         @param component:
                    the component that has been added to this container.
         """
-        self.fireEvent( ComponentAttachEvent(self, component) )
+        event = ComponentAttachEvent(self, component)
+        self.fireEvent(event)
 
 
     def fireComponentDetachEvent(self, component):
@@ -176,7 +177,8 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
         @param component:
                    the component that has been removed from this container.
         """
-        self.fireEvent( ComponentDetachEvent(self, component) )
+        event = ComponentDetachEvent(self, component)
+        self.fireEvent(event)
 
 
     def addComponent(self, c):

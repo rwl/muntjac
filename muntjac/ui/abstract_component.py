@@ -101,7 +101,9 @@ class AbstractComponent(IComponent, IMethodEventSource):
         self._delayedFocus = None
 
         #: List of repaint request listeners or null if not listened at all.
-        self._repaintRequestListeners = None
+        self._repaintRequestListeners = list()
+
+        self._repaintRequestCallbacks = dict()
 
         #: Are all the repaint listeners notified about recent changes ?
         self._repaintRequestListenersNotified = False
@@ -683,23 +685,25 @@ class AbstractComponent(IComponent, IMethodEventSource):
         # Notify listeners only once
         if not self._repaintRequestListenersNotified:
             # Notify the listeners
-            if (self._repaintRequestListeners is not None
-                    and len(self._repaintRequestListeners) > 0):
+            event = RepaintRequestEvent(self)
 
-                listeners = list(self._repaintRequestListeners)
-                event = RepaintRequestEvent(self)
+            for listener in self._repaintRequestListeners:
+                if alreadyNotified is None:
+                    alreadyNotified = list()
 
-                for listener, args in listeners:
-                    if alreadyNotified is None:
-                        alreadyNotified = list()
+                if listener not in alreadyNotified:
+                    listener.repaintRequested(event)
+                    alreadyNotified.append(listener)
+                    self._repaintRequestListenersNotified = True
 
-                    if listener not in alreadyNotified:
-                        if isinstance(listener, IRepaintRequestListener):
-                            listener.repaintRequested(event)
-                        else:
-                            listener(event, *args)
-                        alreadyNotified.append(listener)
-                        self._repaintRequestListenersNotified = True
+            for callback, args in self._repaintRequestCallbacks.iteritems():
+                if alreadyNotified is None:
+                    alreadyNotified = list()
+
+                if callback not in alreadyNotified:
+                    callback(event, *args)
+                    alreadyNotified.append(callback)
+                    self._repaintRequestListenersNotified = True
 
             # Notify the parent
             parent = self.getParent()
@@ -709,36 +713,29 @@ class AbstractComponent(IComponent, IMethodEventSource):
 
     def addListener(self, listener, iface=None):
         if (isinstance(listener, IListener) and
-                (iface is None or iface == IListener)):
+                (iface is None or issubclass(iface, IListener))):
             self.registerListener(ComponentEvent, listener,
                     _COMPONENT_EVENT_METHOD)
 
         if (isinstance(listener, IRepaintRequestListener) and
-                (iface is None or iface == IRepaintRequestListener)):
-            if self._repaintRequestListeners is None:
-                self._repaintRequestListeners = list()
-
+                (iface is None or issubclass(iface, IRepaintRequestListener))):
             if listener not in self._repaintRequestListeners:
-                self._repaintRequestListeners.append( (listener, tuple()) )
+                self._repaintRequestListeners.append(listener)
 
 
     def addCallback(self, callback, eventType=None, *args):
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == ComponentEvent:
+        if issubclass(eventType, ComponentEvent):
             self.registerCallback(ComponentEvent, callback, None, *args)
 
-        elif eventType == RepaintRequestEvent:
-            if self._repaintRequestListeners is None:
-                self._repaintRequestListeners = list()
-
-            if (callback, args) not in self._repaintRequestListeners:
-                self._repaintRequestListeners.append( (callback, args) )
+        elif issubclass(eventType, RepaintRequestEvent):
+            self._repaintRequestCallbacks[callback] = args
 
         else:
-            super(AbstractComponent, self).addCallback(callback, eventType,
-                    *args)
+            super(AbstractComponent, self).addCallback(callback,
+                    eventType, *args)
 
 
     def registerListener(self, *args):
@@ -832,19 +829,14 @@ class AbstractComponent(IComponent, IMethodEventSource):
 
     def removeListener(self, listener, iface=None):
         if (isinstance(listener, IListener) and
-                (iface is None or iface == IListener)):
+                (iface is None or issubclass(iface, IListener))):
             self.withdrawListener(ComponentEvent, listener,
                     _COMPONENT_EVENT_METHOD)
 
         if (isinstance(listener, IRepaintRequestListener) and
-                (iface is None or iface == IRepaintRequestListener)):
-            if self._repaintRequestListeners is not None:
-                for i, (l, _) in enumerate(self._repaintRequestListeners[:]):
-                    if l == listener:
-                        del self._repaintRequestListeners[i]
-
-                if len(self._repaintRequestListeners) == 0:
-                    self._repaintRequestListeners = None
+                (iface is None or issubclass(iface, IRepaintRequestListener))):
+            if listener in self._repaintRequestListeners:
+                self._repaintRequestListeners.remove(listener)
 
 
     def removeCallback(self, callback, eventType=None):
@@ -855,14 +847,8 @@ class AbstractComponent(IComponent, IMethodEventSource):
             self.withdrawCallback(ComponentEvent, callback)
 
         elif eventType == RepaintRequestEvent:
-            if self._repaintRequestListeners is not None:
-                for i, (l, _) in enumerate(self._repaintRequestListeners[:]):
-                    if l == callback:
-                        del self._repaintRequestListeners[i]
-
-                if len(self._repaintRequestListeners) == 0:
-                    self._repaintRequestListeners = None
-
+            if callback in self._repaintRequestCallbacks:
+                del self._repaintRequestCallbacks[callback]
         else:
             super(AbstractComponent, self).removeCallback(callback, eventType)
 
@@ -972,14 +958,11 @@ class AbstractComponent(IComponent, IMethodEventSource):
         @param eventType:
                    The type of event to return listeners for.
         @return: A collection with all registered listeners. Empty if no
-                listeners are found.
+                 listeners are found.
         """
         if issubclass(eventType, RepaintRequestEvent):
             # RepaintRequestListeners are not stored in eventRouter
-            if self._repaintRequestListeners is None:
-                return list()
-            else:
-                return self._repaintRequestListeners
+            return list(self._repaintRequestListeners)
 
         if self._eventRouter is None:
             return list()
@@ -1001,14 +984,16 @@ class AbstractComponent(IComponent, IMethodEventSource):
         """Emits the component event. It is transmitted to all registered
         listeners interested in such events.
         """
-        self.fireEvent( ComponentEvent(self) )
+        event = ComponentEvent(self)
+        self.fireEvent(event)
 
 
     def fireComponentErrorEvent(self):
         """Emits the component error event. It is transmitted to all
         registered listeners interested in such events.
         """
-        self.fireEvent( component.ErrorEvent(self.getComponentError(), self) )
+        event = component.ErrorEvent(self.getComponentError(), self)
+        self.fireEvent(event)
 
 
     def setData(self, data):

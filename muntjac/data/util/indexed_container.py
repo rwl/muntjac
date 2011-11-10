@@ -76,7 +76,9 @@ class IndexedContainer(AbstractInMemoryContainer,
 
         #: List of all IProperty value change event listeners listening all
         #  the properties.
-        self._propertyValueChangeListeners = None
+        self._propertyValueChangeListeners = list()
+
+        self._propertyValueChangeCallbacks = dict()
 
         #: Data structure containing all listeners interested in changes to
         #  single Properties. The data structure is a hashtable mapping
@@ -295,15 +297,14 @@ class IndexedContainer(AbstractInMemoryContainer,
     def addListener(self, listener, iface=None):
         if (isinstance(listener, container.IPropertySetChangeListener) and
                 (iface is None or
-                        iface == container.IPropertySetChangeListener)):
+                    issubclass(iface, container.IPropertySetChangeListener))):
             super(IndexedContainer, self).addListener(listener, iface)
 
         if (isinstance(listener, prop.IValueChangeListener) and
-                (iface is None or iface == prop.IValueChangeListener)):
-            if self._propertyValueChangeListeners is None:
-                self._propertyValueChangeListeners = list()
+                (iface is None or
+                        issubclass(iface, prop.IValueChangeListener))):
 
-            self._propertyValueChangeListeners.append( (listener, tuple()) )
+            self._propertyValueChangeListeners.append(listener)
 
         super(IndexedContainer, self).addListener(listener, iface)
 
@@ -312,35 +313,29 @@ class IndexedContainer(AbstractInMemoryContainer,
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == container.IPropertySetChangeEvent:
-            super(IndexedContainer, self).addCallback(callback, eventType,
-                    *args)
+        if issubclass(eventType, container.IPropertySetChangeEvent):
+            super(IndexedContainer, self).addCallback(callback,
+                    eventType, *args)
 
-        elif eventType == prop.ValueChangeEvent:
-            if self._propertyValueChangeListeners is None:
-                self._propertyValueChangeListeners = list()
-
-            self._propertyValueChangeListeners.append( (callback, args) )
+        elif issubclass(eventType, prop.ValueChangeEvent):
+            self._propertyValueChangeCallbacks[callback] = args
 
         else:
-            super(IndexedContainer, self).addCallback(callback, eventType,
-                    *args)
+            super(IndexedContainer, self).addCallback(callback,
+                    eventType, *args)
 
 
     def removeListener(self, listener, iface=None):
         if (isinstance(listener, container.IPropertySetChangeListener) and
                 (iface is None or
-                        iface == container.IPropertySetChangeListener)):
+                    issubclass(iface, container.IPropertySetChangeListener))):
             super(IndexedContainer, self).removeListener(listener, iface)
 
         if (isinstance(listener, prop.IValueChangeListener) and
-                (iface is None or iface == prop.IValueChangeListener)):
-            if self._propertyValueChangeListeners is not None:
-                for i, (l, _) in enumerate(
-                        self._propertyValueChangeListeners[:]):
-                    if l == listener:
-                        del self._propertyValueChangeListeners[i]
-                        break
+                (iface is None or
+                        issubclass(iface, prop.IValueChangeListener))):
+            if listener in self._propertyValueChangeListeners:
+                self._propertyValueChangeListeners.remove(listener)
 
         super(IndexedContainer, self).removeListener(listener, iface)
 
@@ -349,16 +344,12 @@ class IndexedContainer(AbstractInMemoryContainer,
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == container.IPropertySetChangeEvent:
+        if issubclass(eventType, container.IPropertySetChangeEvent):
             super(IndexedContainer, self).removecallback(callback, eventType)
 
-        elif eventType == prop.ValueChangeEvent:
-            if self._propertyValueChangeListeners is not None:
-                for i, (l, _) in enumerate(
-                        self._propertyValueChangeListeners[:]):
-                    if l == callback:
-                        del self._propertyValueChangeListeners[i]
-                        break
+        elif issubclass(eventType, prop.ValueChangeEvent):
+            if callback in self._propertyValueChangeCallbacks:
+                del self._propertyValueChangeCallbacks[callback]
 
         else:
             super(IndexedContainer, self).removeCallback(callback, eventType)
@@ -371,40 +362,37 @@ class IndexedContainer(AbstractInMemoryContainer,
                    the IndexedContainerProperty object.
         """
         # Sends event to listeners listening all value changes
-        if self._propertyValueChangeListeners is not None:
-            l = list(self._propertyValueChangeListeners)
-            event = PropertyValueChangeEvent(source)
-            for listener, args in l:
-                if isinstance(listener, prop.IValueChangeListener):
-                    listener.valueChange(event)
-                else:
-                    listener(event, *args)
+        event = PropertyValueChangeEvent(source)
+        for listener in self._propertyValueChangeListeners:
+            listener.valueChange(event)
+
+        for callback, args in self._propertyValueChangeCallbacks.iteritems():
+            callback(event, *args)
 
         # Sends event to single property value change listeners
-        if self._singlePropertyValueChangeListeners is not None:
+        propertySetToListenerListMap = \
+            self._singlePropertyValueChangeListeners.get(source._propertyId)
 
-            propertySetToListenerListMap = \
-                self._singlePropertyValueChangeListeners.get(source._propertyId)
-
-            if propertySetToListenerListMap is not None:
-                listenerList = propertySetToListenerListMap.get(source._itemId)
-                if listenerList is not None:
-                    event = PropertyValueChangeEvent(source)
-                    listeners = list(listenerList)
-                    for l, args in listeners:
-                        if isinstance(l, prop.IValueChangeListener):
-                            l.valueChange(event)
-                        else:
-                            l(event, *args)
+        if propertySetToListenerListMap is not None:
+            listenerList = propertySetToListenerListMap.get(source._itemId)
+            if listenerList is not None:
+                event = PropertyValueChangeEvent(source)
+                for l in listenerList:
+                    l.valueChange(event)
 
 
     def getListeners(self, eventType):
         if issubclass(eventType, prop.ValueChangeEvent):
-            if self._propertyValueChangeListeners is None:
-                return list()
-            else:
-                return list(self._propertyValueChangeListeners)
+            return list(self._propertyValueChangeListeners)
+
         return super(IndexedContainer, self).getListeners(eventType)
+
+
+    def getCallbacks(self, eventType):
+        if issubclass(eventType, prop.ValueChangeEvent):
+            return dict(self._propertyValueChangeCallbacks)
+
+        return super(IndexedContainer, self).getCallbacks(eventType)
 
 
     def fireItemAdded(self, position, itemId, item):
@@ -471,11 +459,8 @@ class IndexedContainer(AbstractInMemoryContainer,
             if propertySetToListenerListMap is not None:
                 listenerList = propertySetToListenerListMap.get(itemId)
 
-                if listenerList is not None:
-                    for i, (ll, _) in enumerate(listenerList):
-                        if ll == listener:
-                            del listenerList[i]
-                            break
+                if listenerList is not None and listener in listenerList:
+                    listenerList.remove(listener)
 
                     if len(listenerList) == 0:
                         if itemId in propertySetToListenerListMap:

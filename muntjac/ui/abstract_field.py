@@ -691,12 +691,14 @@ class AbstractField(AbstractComponent, field.IField,
     def addListener(self, listener, iface=None):
         # Adds a value change listener for the field.
         if (isinstance(listener, prop.IReadOnlyStatusChangeListener) and
-                (iface is None or iface == prop.IReadOnlyStatusChangeListener)):
+                (iface is None or
+                        issubclass(iface, prop.IReadOnlyStatusChangeListener))):
             self.registerListener(prop.IReadOnlyStatusChangeEvent,
                     listener, _READ_ONLY_STATUS_CHANGE_METHOD)
 
         if (isinstance(listener, prop.IValueChangeListener) and
-                (iface is None or iface == prop.IValueChangeListener)):
+                (iface is None or
+                        issubclass(iface, prop.IValueChangeListener))):
             self.registerListener(field.ValueChangeEvent,
                     listener, _VALUE_CHANGE_METHOD)
 
@@ -707,11 +709,11 @@ class AbstractField(AbstractComponent, field.IField,
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == prop.IReadOnlyStatusChangeEvent:
+        if issubclass(eventType, prop.IReadOnlyStatusChangeEvent):
             self.registerCallback(prop.IReadOnlyStatusChangeEvent, callback,
                     None, *args)
 
-        elif eventType == prop.ValueChangeEvent:
+        elif issubclass(eventType, prop.ValueChangeEvent):
             self.registerCallback(prop.ValueChangeEvent, callback, None, *args)
 
         else:
@@ -721,12 +723,14 @@ class AbstractField(AbstractComponent, field.IField,
     def removeListener(self, listener, iface=None):
         # Removes a value change listener from the field.
         if (isinstance(listener, prop.IReadOnlyStatusChangeListener) and
-                (iface is None or iface == prop.IReadOnlyStatusChangeListener)):
+                (iface is None or
+                        issubclass(iface, prop.IReadOnlyStatusChangeListener))):
             self.withdrawListener(prop.IReadOnlyStatusChangeEvent, listener,
                     _READ_ONLY_STATUS_CHANGE_METHOD)
 
         if (isinstance(listener, prop.IValueChangeListener) and
-                (iface is None or iface == prop.IValueChangeListener)):
+                (iface is None or
+                        issubclass(iface, prop.IValueChangeListener))):
             self.withdrawListener(field.ValueChangeEvent, listener,
                     _VALUE_CHANGE_METHOD)
 
@@ -737,10 +741,10 @@ class AbstractField(AbstractComponent, field.IField,
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == prop.IReadOnlyStatusChangeEvent:
+        if issubclass(eventType, prop.IReadOnlyStatusChangeEvent):
             self.withdrawCallback(prop.IReadOnlyStatusChangeEvent, callback)
 
-        elif eventType == prop.ValueChangeEvent:
+        elif issubclass(eventType, prop.ValueChangeEvent):
             self.withdrawCallback(prop.ValueChangeEvent, callback)
 
         else:
@@ -751,7 +755,9 @@ class AbstractField(AbstractComponent, field.IField,
         """Emits the value change event. The value contained in the
         field is validated before the event is created.
         """
-        self.fireEvent( field.ValueChangeEvent(self) )
+        event = field.ValueChangeEvent(self)
+        self.fireEvent(event)
+
         if not repaintIsNotNeeded:
             self.requestRepaint()
 
@@ -769,7 +775,8 @@ class AbstractField(AbstractComponent, field.IField,
         """Emits the read-only status change event. The value contained
         in the field is validated before the event is created.
         """
-        self.fireEvent( IReadOnlyStatusChangeEvent(self) )
+        event = IReadOnlyStatusChangeEvent(self)
+        self.fireEvent(event)
 
 
     def valueChange(self, event):

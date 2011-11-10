@@ -335,7 +335,7 @@ class AbstractSplitPanel(AbstractLayout):
 
     def addListener(self, listener, iface=None):
         if (isinstance(listener, ISplitterClickListener) and
-            (iface is None or iface == ISplitterClickListener)):
+            (iface is None or issubclass(iface, ISplitterClickListener))):
             self.registerListener(self._SPLITTER_CLICK_EVENT,
                     SplitterClickEvent, listener,
                     ISplitterClickListener.clickMethod)
@@ -347,7 +347,7 @@ class AbstractSplitPanel(AbstractLayout):
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == SplitterClickEvent:
+        if issubclass(eventType, SplitterClickEvent):
             self.registerCallback(SplitterClickEvent, callback, None, *args)
 
         else:
@@ -357,7 +357,7 @@ class AbstractSplitPanel(AbstractLayout):
 
     def removeListener(self, listener, iface=None):
         if (isinstance(listener, ISplitterClickListener) and
-                (iface is None or iface == ISplitterClickListener)):
+                (iface is None or issubclass(iface, ISplitterClickListener))):
             self.withdrawListener(self._SPLITTER_CLICK_EVENT,
                     SplitterClickEvent, listener)
 
@@ -368,7 +368,7 @@ class AbstractSplitPanel(AbstractLayout):
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == SplitterClickEvent:
+        if issubclass(eventType, SplitterClickEvent):
             self.withdrawCallback(SplitterClickEvent, callback,
                     self._SPLITTER_CLICK_EVENT)
 

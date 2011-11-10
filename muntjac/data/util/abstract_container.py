@@ -39,10 +39,14 @@ class AbstractContainer(IContainer):
 
     def __init__(self):
         #: List of all Property set change event listeners.
-        self._propertySetChangeListeners = None
+        self._propertySetChangeListeners = list()
 
         #: List of all container Item set change event listeners.
-        self._itemSetChangeListeners = None
+        self._itemSetChangeListeners = list()
+
+        self._propertySetChangeCallbacks = dict()
+
+        self._itemSetChangeCallbacks = dict()
 
 
     def addListener(self, listener, iface=None):
@@ -54,39 +58,30 @@ class AbstractContainer(IContainer):
         @see: L{IItemSetChangeNotifier.addListener}
         """
         if (isinstance(listener, IItemSetChangeListener) and
-                (iface is None or iface == IItemSetChangeListener)):
-            if self.getItemSetChangeListeners() is None:
-                self.setItemSetChangeListeners( list() )
+                (iface is None or issubclass(iface, IItemSetChangeListener))):
 
-            self.getItemSetChangeListeners().append( (listener, tuple()) )
+            self.getItemSetChangeListeners().append(listener)
 
         if (isinstance(listener, IPropertySetChangeListener) and
-                (iface is None or iface == IPropertySetChangeListener)):
-            if self.getPropertySetChangeListeners() is None:
-                self.setPropertySetChangeListeners( list() )
+                (iface is None or
+                        issubclass(iface, IPropertySetChangeListener))):
 
-            self.getPropertySetChangeListeners().append( (listener, tuple()) )
+            self.getPropertySetChangeListeners().append(listener)
 
 
     def addCallback(self, callback, eventType=None, *args):
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == IItemSetChangeEvent:
-            if self.getItemSetChangeListeners() is None:
-                self.setItemSetChangeListeners( list() )
+        if issubclass(eventType, IItemSetChangeEvent):
+            self._itemSetChangeCallbacks[callback] = args
 
-            self.getItemSetChangeListeners().append( (callback, args) )
-
-        elif eventType == IPropertySetChangeEvent:
-            if self.getPropertySetChangeListeners() is None:
-                self.setPropertySetChangeListeners( list() )
-
-            self.getPropertySetChangeListeners().append( (callback, args) )
+        elif issubclass(eventType, IPropertySetChangeEvent):
+            self._propertySetChangeCallbacks[callback] = args
 
         else:
-            super(AbstractContainer, self).addCallback(callback, eventType,
-                    args)
+            super(AbstractContainer, self).addCallback(callback,
+                    eventType, args)
 
 
     def removeListener(self, listener, iface=None):
@@ -98,42 +93,28 @@ class AbstractContainer(IContainer):
         @see: L{ItemSetChangeNotifier.removeListener}
         """
         if (isinstance(listener, IItemSetChangeListener) and
-                (iface is None or iface == IItemSetChangeListener)):
-            if self.getItemSetChangeListeners() is not None:
-                for i, (l, _) in enumerate(
-                        self.getItemSetChangeListeners()[:]):
-                    if l == listener:
-                        del self.getItemSetChangeListeners()[i]
-                        break
+                (iface is None or issubclass(iface, IItemSetChangeListener))):
+            if listener in self.getItemSetChangeListeners():
+                self.getItemSetChangeListeners().remove(listener)
 
         if (isinstance(listener, IPropertySetChangeListener) and
-                (iface is None or iface == IPropertySetChangeListener)):
-            if self.getPropertySetChangeListeners() is not None:
-                for i, (l, _) in enumerate(
-                        self.getPropertySetChangeListeners()[:]):
-                    if l == listener:
-                        del self.getPropertySetChangeListeners()[i]
-                        break
+                (iface is None or
+                        issubclass(iface, IPropertySetChangeListener))):
+            if listener in self.getPropertySetChangeListeners():
+                self.getPropertySetChangeListeners().remove(listener)
 
 
     def removeCallback(self, callback, eventType=None):
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == IItemSetChangeEvent:
-            if self.getItemSetChangeListeners() is not None:
-                for i, (l, _) in enumerate(
-                        self.getItemSetChangeListeners()[:]):
-                    if l == callback:
-                        del self.getItemSetChangeListeners()[i]
-                        break
+        if (issubclass(eventType, IItemSetChangeEvent) and
+                callback in self._itemSetChangeCallbacks):
+            del self._itemSetChangeCallbacks[callback]
 
-        elif eventType == IPropertySetChangeEvent:
-            if self.getPropertySetChangeListeners() is not None:
-                for i, (l, _) in enumerate(
-                        self.getPropertySetChangeListeners()[:]):
-                    if l == callback:
-                        del self.getPropertySetChangeListeners()[i]
+        elif (issubclass(eventType, IPropertySetChangeEvent) and
+                callback in self._propertySetChangeCallbacks):
+            del self._propertySetChangeCallbacks[callback]
 
         else:
             super(AbstractContainer, self).removeCallback(callback, eventType)
@@ -154,13 +135,11 @@ class AbstractContainer(IContainer):
         if event is None:
             event = BasePropertySetChangeEvent(self)
 
-        if self.getPropertySetChangeListeners() is not None:
-            l = list(self.getPropertySetChangeListeners())
-            for listener, args in l:
-                if isinstance(listener, IPropertySetChangeListener):
-                    listener.containerPropertySetChange(event)
-                else:
-                    listener(event, *args)
+        for listener in self.getPropertySetChangeListeners():
+            listener.containerPropertySetChange(event)
+
+        for callback, args in self._propertySetChangeCallbacks.iteritems():
+            callback(event, *args)
 
 
     def fireItemSetChange(self, event=None):
@@ -175,13 +154,11 @@ class AbstractContainer(IContainer):
         if event is None:
             event = BaseItemSetChangeEvent(self)
 
-        if self.getItemSetChangeListeners() is not None:
-            l = list(self.getItemSetChangeListeners())
-            for listener, args in l:
-                if isinstance(listener, IItemSetChangeListener):
-                    listener.containerItemSetChange(event)
-                else:
-                    listener(event, *args)
+        for listener in self.getItemSetChangeListeners():
+            listener.containerItemSetChange(event)
+
+        for callback, args in self._itemSetChangeCallbacks.iteritems():
+            callback(event, *args)
 
 
     def setPropertySetChangeListeners(self, propertySetChangeListeners):
@@ -212,18 +189,22 @@ class AbstractContainer(IContainer):
 
     def getListeners(self, eventType):
         if issubclass(eventType, IPropertySetChangeEvent):
-            if self._propertySetChangeListeners is None:
-                return list()
-            else:
-                return list(self._propertySetChangeListeners)
+            return list(self._propertySetChangeListeners)
 
         elif issubclass(eventType, IItemSetChangeEvent):
-            if self._itemSetChangeListeners is None:
-                return list()
-            else:
-                return list(self._itemSetChangeListeners)
+            return list(self._itemSetChangeListeners)
 
-        return list
+        return list()
+
+
+    def getCallbacks(self, eventType):
+        if issubclass(eventType, IPropertySetChangeEvent):
+            return dict(self._propertySetChangeCallbacks)
+
+        elif issubclass(eventType, IItemSetChangeEvent):
+            return dict(self._itemSetChangeCallbacks)
+
+        return dict()
 
 
 class BasePropertySetChangeEvent(EventObject, IContainer,

@@ -38,10 +38,10 @@ from muntjac.terminal.gwt.server.abstract_application_servlet import \
 # from org.easymock.EasyMock.replay import (replay,)
 
 
-class TestAbstractApplicationServletStaticFilesLocation(TestCase):
+class TestStaticFilesLocation(TestCase):
 
     def setUp(self):
-        super(TestAbstractApplicationServletStaticFilesLocation, self).setUp()
+        super(TestStaticFilesLocation, self).setUp()
 
         self._servlet = ApplicationServlet()
 
@@ -155,7 +155,7 @@ class TestAbstractApplicationServletStaticFilesLocation(TestCase):
         return request
 
 
-class DummyServletConfig(ServletConfig):
+class DummyServletConfig(object):
     # public DummyServletConfig(Map<String,String> initParameters, )
 
     def getInitParameter(self, name):

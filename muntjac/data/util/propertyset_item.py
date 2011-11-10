@@ -20,14 +20,14 @@ from muntjac.util import EventObject
 
 
 class PropertysetItem(IItem, IPropertySetChangeNotifier):  # Cloneable
-    """Class for handling a set of identified Properties. The elements contained in
-    a </code>MapItem</code> can be referenced using locally unique identifiers.
-    The class supports listeners who are interested in changes to the Property
-    set managed by the class.
+    """Class for handling a set of identified Properties. The elements
+    contained in a C{MapItem} can be referenced using locally unique
+    identifiers. The class supports listeners who are interested in changes
+    to the Property set managed by the class.
 
-    @author IT Mill Ltd.
-    @version @VERSION@
-    @since 3.0
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
+    @version: @VERSION@
     """
 
     def __init__(self):
@@ -38,17 +38,18 @@ class PropertysetItem(IItem, IPropertySetChangeNotifier):  # Cloneable
         self._list = list()
 
         # List of property set modification listeners.
-        self._propertySetChangeListeners = None
+        self._propertySetChangeListeners = list()
+
+        self._propertySetChangeCallbacks = dict()
 
 
     def getItemProperty(self, idd):
-        """Gets the Property corresponding to the given Property ID stored in the
-        Item. If the Item does not contain the Property, <code>null</code> is
+        """Gets the Property corresponding to the given Property ID stored in
+        the Item. If the Item does not contain the Property, C{None} is
         returned.
 
-        @param id
-                   the identifier of the Property to get.
-        @return the Property with the given ID or <code>null</code>
+        @param idd: the identifier of the Property to get.
+        @return: the Property with the given ID or C{None}
         """
         return self._map[idd]
 
@@ -56,75 +57,72 @@ class PropertysetItem(IItem, IPropertySetChangeNotifier):  # Cloneable
     def getItemPropertyIds(self):
         """Gets the collection of IDs of all Properties stored in the Item.
 
-        @return unmodifiable collection containing IDs of the Properties stored
-                the Item
+        @return: unmodifiable collection containing IDs of the Properties
+                 stored the Item
         """
         return list(self._list)
 
 
     def removeItemProperty(self, idd):
-        """Removes the Property identified by ID from the Item. This functionality
-        is optional. If the method is not implemented, the method always returns
-        <code>false</code>.
+        """Removes the Property identified by ID from the Item. This
+        functionality is optional. If the method is not implemented, the
+        method always returns C{False}.
 
-        @param id
-                   the ID of the Property to be removed.
-        @return <code>true</code> if the operation succeeded <code>false</code>
-                if not
+        @param idd: the ID of the Property to be removed.
+        @return: C{True} if the operation succeeded C{False} if not
         """
         # Cant remove missing properties
-        if self._map.remove(idd) is None:
+        if idd not in self._map:
             return False
+
+        del self._map[idd]
+
         self._list.remove(idd)
+
         # Send change events
         self.fireItemPropertySetChange()
+
         return True
 
 
     def addItemProperty(self, idd, prop):
         """Tries to add a new Property into the Item.
 
-        @param id
+        @param id:
                    the ID of the new Property.
-        @param property
+        @param property:
                    the Property to be added and associated with the id.
-        @return <code>true</code> if the operation succeeded, <code>false</code>
-                if not
+        @return: C{True} if the operation succeeded, C{False} if not
         """
         # Null ids are not accepted
         if idd is None:
-            raise self.NullPointerException('Item property id can not be null')
+            raise ValueError, 'Item property id can not be null'
+
         # Cant add a property twice
         if idd in self._map:
             return False
+
         # Put the property to map
-        self._map.put(idd, property)
-        self._list.add(idd)
+        self._map[idd] = property
+        self._list.append(idd)
+
         # Send event
         self.fireItemPropertySetChange()
+
         return True
 
 
-    def toString(self):
-        """Gets the <code>String</code> representation of the contents of the Item.
+    def __str__(self):
+        """Gets the string representation of the contents of the Item.
         The format of the string is a space separated catenation of the
-        <code>String</code> representations of the Properties contained by the
-        Item.
+        string representations of the Properties contained by the Item.
 
-        @return <code>String</code> representation of the Item contents
+        @return: String representation of the Item contents
         """
-        # Notifiers
         retValue = ''
-        _0 = True
-        i = self.getItemPropertyIds()
-        while True:
-            if _0 is True:
-                _0 = False
-            if not i.hasNext():
-                break
-            propertyId = i.next()
-            retValue += str(self.getItemProperty(propertyId))
-            if i.hasNext():
+        for i, propertyId in enumerate(self.getItemPropertyIds()):
+            retValue += str( self.getItemProperty(propertyId) )
+            if i < len(self.getItemPropertyIds()) - 1:
                 retValue += ' '
         return retValue
 
@@ -132,118 +130,107 @@ class PropertysetItem(IItem, IPropertySetChangeNotifier):  # Cloneable
     def addListener(self, listener):
         """Registers a new property set change listener for this Item.
 
-        @param listener
-                   the new Listener to be registered.
+        @param listener: the new Listener to be registered.
         """
-        if self._propertySetChangeListeners is None:
-            self._propertySetChangeListeners = list()
         self._propertySetChangeListeners.add(listener)
+
 
     def removeListener(self, listener):
         """Removes a previously registered property set change listener.
 
-        @param listener
-                   the Listener to be removed.
+        @param listener: the Listener to be removed.
         """
-        if self._propertySetChangeListeners is not None:
+        if listener in self._propertySetChangeListeners:
             self._propertySetChangeListeners.remove(listener)
+
 
     def fireItemPropertySetChange(self):
         """Sends a Property set change event to all interested listeners."""
-        if self._propertySetChangeListeners is not None:
-            l = list(self._propertySetChangeListeners)
-            event = PropertysetItem.PropertySetChangeEvent(self)
-            _0 = True
-            i = 0
-            while True:
-                if _0 is True:
-                    _0 = False
-                else:
-                    i += 1
-                if not (i < len(l)):
-                    break
-                l[i].itemPropertySetChange(event)
+        event = PropertySetChangeEvent(self)
+        for listener in self._propertySetChangeListeners:
+            listener.itemPropertySetChange(event)
+
 
     def getListeners(self, eventType):
         if issubclass(eventType, PropertySetChangeEvent):
-            if self._propertySetChangeListeners is None:
-                return list()
-            else:
-                return list(self._propertySetChangeListeners)
+            return list(self._propertySetChangeListeners)
         return list()
 
 
     def clone(self):
         """Creates and returns a copy of this object.
-        <p>
-        The method <code>clone</code> performs a shallow copy of the
-        <code>PropertysetItem</code>.
-        </p>
-        <p>
-        Note : All arrays are considered to implement the interface Cloneable.
-        Otherwise, this method creates a new instance of the class of this object
-        and initializes all its fields with exactly the contents of the
-        corresponding fields of this object, as if by assignment, the contents of
-        the fields are not themselves cloned. Thus, this method performs a
-        "shallow copy" of this object, not a "deep copy" operation.
-        </p>
 
-        @throws CloneNotSupportedException
+        The method C{clone} performs a shallow copy of the C{PropertysetItem}.
+
+        Note: All arrays are considered to implement the interface Cloneable.
+        Otherwise, this method creates a new instance of the class of this
+        object and initializes all its fields with exactly the contents of the
+        corresponding fields of this object, as if by assignment, the contents
+        of the fields are not themselves cloned. Thus, this method performs a
+        "shallow copy" of this object, not a "deep copy" operation.
+
+        @raise CloneNotSupportedException:
                     if the object's class does not support the Cloneable
                     interface.
-
-        @see java.lang.Object#clone()
         """
-        # (non-Javadoc)
-        #
-        # @see java.lang.Object#equals(java.lang.Object)
-
         npsi = PropertysetItem()
-        npsi.list = self._list.clone() if self._list is not None else None
-        npsi.propertySetChangeListeners = self._propertySetChangeListeners.clone() if self._propertySetChangeListeners is not None else None
-        npsi.map = self._map.clone()
+        npsi.list = list(self._list) if self._list is not None else None
+        npsi.propertySetChangeListeners = list(self._propertySetChangeListeners)
+        npsi.map = self._map.copy()
         return npsi
 
-    def equals(self, obj):
-        # (non-Javadoc)
-        #
-        # @see java.lang.Object#hashCode()
 
+    def __eq__(self, obj):
         if (obj is None) or (not isinstance(obj, PropertysetItem)):
             return False
+
         other = obj
-        if other.list != self._list:
-            if other.list is None:
+        if other._list != self._list:
+            if other._list is None:
                 return False
-            if not (other.list == self._list):
+            if not (other._list == self._list):
                 return False
-        if other.map != self._map:
-            if other.map is None:
+
+        if other._map != self._map:
+            if other._map is None:
                 return False
-            if not (other.map == self._map):
+            if other._map != self._map:
                 return False
-        if other.propertySetChangeListeners != self._propertySetChangeListeners:
-            thisEmpty = (self._propertySetChangeListeners is None) or self._propertySetChangeListeners.isEmpty()
-            otherEmpty = (other.propertySetChangeListeners is None) or other.propertySetChangeListeners.isEmpty()
+
+        if other._propertySetChangeListeners != self._propertySetChangeListeners:
+            thisEmpty = ((self._propertySetChangeListeners is None)
+                    or len(self._propertySetChangeListeners) == 0)
+
+            otherEmpty = ((other.propertySetChangeListeners is None)
+                    or len(other.propertySetChangeListeners) == 0)
+
             if thisEmpty and otherEmpty:
                 return True
+
             if otherEmpty:
                 return False
-            if not (other.propertySetChangeListeners == self._propertySetChangeListeners):
+
+            if (other.propertySetChangeListeners !=
+                    self._propertySetChangeListeners):
                 return False
+
         return True
 
-    def hashCode(self):
-        return ((0 if self._list is None else self._list.hashCode()) ^ (0 if self._map is None else self._map.hashCode())) ^ (0 if (self._propertySetChangeListeners is None) or self._propertySetChangeListeners.isEmpty() else self._propertySetChangeListeners.hashCode())
+
+    def __hash__(self):
+        return (((0 if self._list is None else hash(self._list))
+                ^ (0 if self._map is None else hash(self._map)))
+                ^ (0 if (self._propertySetChangeListeners is None)
+                        or (len(self._propertySetChangeListeners) == 0)
+                        else hash(self._propertySetChangeListeners)))
 
 
 class PropertySetChangeEvent(EventObject, IItem, IPropertySetChangeEvent):
-    """An <code>event</code> object specifying an Item whose Property set has
+    """An C{event} object specifying an Item whose Property set has
     changed.
 
-    @author IT Mill Ltd.
-    @version @VERSION@
-    @since 3.0
+    @author: IT Mill Ltd.
+    @version: @VERSION@
     """
 
     def __init__(self, source):
@@ -253,6 +240,6 @@ class PropertySetChangeEvent(EventObject, IItem, IPropertySetChangeEvent):
     def getItem(self):
         """Gets the Item whose Property set has changed.
 
-        @return source object of the event as an <code>Item</code>
+        @return: source object of the event as an C{Item}
         """
         return self.getSource()

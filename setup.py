@@ -38,7 +38,7 @@ setup(name="muntjac",
       include_package_data=True,
       packages=find_packages(),
       tests_require=["Mox"],
-      test_suite="muntjac.test",
+      test_suite="muntjac.test.suite.main",
       zip_safe=True,
       **kwds)
 

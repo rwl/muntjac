@@ -43,7 +43,7 @@ class ActiveLink(Link):
                    the Listener to be added.
         """
         if (isinstance(listener, ILinkActivatedListener) and
-                (iface is None or iface == ILinkActivatedListener)):
+                (iface is None or issubclass(iface, ILinkActivatedListener))):
             self._listeners.add(listener)
 
             super(ActiveLink, self).registerListener(LinkActivatedEvent,
@@ -59,9 +59,8 @@ class ActiveLink(Link):
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == LinkActivatedEvent:
+        if issubclass(eventType, LinkActivatedEvent):
             self.registerCallback(LinkActivatedEvent, callback, None, *args)
-
         else:
             super(ActiveLink, self).addCallback(callback, eventType, *args)
 
@@ -89,7 +88,7 @@ class ActiveLink(Link):
         if eventType is None:
             eventType = callback._eventType
 
-        if eventType == LinkActivatedEvent:
+        if issubclass(eventType, LinkActivatedEvent):
             self._listeners.remove(callback)
 
             super(ActiveLink, self).withdrawListener(ClickEvent, callback,
@@ -97,14 +96,14 @@ class ActiveLink(Link):
 
             if len(self._listeners) == 0:
                 self.requestRepaint()
-
         else:
             super(ActiveLink, self).removeCallback(callback, eventType)
 
 
     def fireClick(self, linkOpened):
         """Emits the options change event."""
-        self.fireEvent( LinkActivatedEvent(self, linkOpened) )
+        event = LinkActivatedEvent(self, linkOpened)
+        self.fireEvent(event)
 
 
     def paintContent(self, target):
@@ -116,7 +115,7 @@ class ActiveLink(Link):
 
     def changeVariables(self, source, variables):
         super(ActiveLink, self).changeVariables(source, variables)
-        if not self.isReadOnly() and 'activated' in variables:
+        if not self.isReadOnly() and ('activated' in variables):
             activated = variables.get('activated')
             opened = variables.get('opened')
             if (activated is not None and bool(activated)
