@@ -14,8 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.test.server.data.util.filter.AbstractFilterTest import \
-    AbstractFilterTest, TestItem, NullProperty
+from muntjac.test.server.data.util.filter.abstract_filter_test \
+    import AbstractFilterTest, TestItem, NullProperty
 
 from muntjac.data.util.filter.simple_string_filter import SimpleStringFilter
 
@@ -42,46 +42,46 @@ class SimpleStringFilterTest(AbstractFilterTest):
 
 
     def testStartsWithCaseSensitive(self):
-        self.assertTrue(self.passes(self.PROPERTY1, 'ab', False, True))
-        self.assertTrue(self.passes(self.PROPERTY1, '', False, True))
+        self.assertTrue( self.passes(self.PROPERTY1, 'ab', False, True) )
+        self.assertTrue( self.passes(self.PROPERTY1, '', False, True) )
 
-        self.assertFalse(self.passes(self.PROPERTY2, 'ab', False, True))
-        self.assertFalse(self.passes(self.PROPERTY1, 'AB', False, True))
+        self.assertFalse( self.passes(self.PROPERTY2, 'ab', False, True) )
+        self.assertFalse( self.passes(self.PROPERTY1, 'AB', False, True) )
 
 
     def testStartsWithCaseInsensitive(self):
-        self.assertTrue(self.passes(self.PROPERTY1, 'AB', True, True))
-        self.assertTrue(self.passes(self.PROPERTY2, 'te', True, True))
-        self.assertFalse(self.passes(self.PROPERTY2, 'AB', True, True))
+        self.assertTrue( self.passes(self.PROPERTY1, 'AB', True, True) )
+        self.assertTrue( self.passes(self.PROPERTY2, 'te', True, True) )
+        self.assertFalse( self.passes(self.PROPERTY2, 'AB', True, True) )
 
 
     def testContainsCaseSensitive(self):
-        self.assertTrue(self.passes(self.PROPERTY1, 'ab', False, False))
-        self.assertTrue(self.passes(self.PROPERTY1, 'abcde', False, False))
-        self.assertTrue(self.passes(self.PROPERTY1, 'cd', False, False))
-        self.assertTrue(self.passes(self.PROPERTY1, 'e', False, False))
-        self.assertTrue(self.passes(self.PROPERTY1, '', False, False))
+        self.assertTrue( self.passes(self.PROPERTY1, 'ab', False, False) )
+        self.assertTrue( self.passes(self.PROPERTY1, 'abcde', False, False) )
+        self.assertTrue( self.passes(self.PROPERTY1, 'cd', False, False) )
+        self.assertTrue( self.passes(self.PROPERTY1, 'e', False, False) )
+        self.assertTrue( self.passes(self.PROPERTY1, '', False, False) )
 
-        self.assertFalse(self.passes(self.PROPERTY2, 'ab', False, False))
-        self.assertFalse(self.passes(self.PROPERTY1, 'es', False, False))
+        self.assertFalse( self.passes(self.PROPERTY2, 'ab', False, False) )
+        self.assertFalse( self.passes(self.PROPERTY1, 'es', False, False) )
 
 
     def testContainsCaseInsensitive(self):
-        self.assertTrue(self.passes(self.PROPERTY1, 'AB', True, False))
-        self.assertTrue(self.passes(self.PROPERTY1, 'aBcDe', True, False))
-        self.assertTrue(self.passes(self.PROPERTY1, 'CD', True, False))
-        self.assertTrue(self.passes(self.PROPERTY1, '', True, False))
+        self.assertTrue( self.passes(self.PROPERTY1, 'AB', True, False) )
+        self.assertTrue( self.passes(self.PROPERTY1, 'aBcDe', True, False) )
+        self.assertTrue( self.passes(self.PROPERTY1, 'CD', True, False) )
+        self.assertTrue( self.passes(self.PROPERTY1, '', True, False) )
 
-        self.assertTrue(self.passes(self.PROPERTY2, 'es', True, False))
+        self.assertTrue( self.passes(self.PROPERTY2, 'es', True, False) )
 
-        self.assertFalse(self.passes(self.PROPERTY2, 'ab', True, False))
+        self.assertFalse( self.passes(self.PROPERTY2, 'ab', True, False) )
 
 
     def testAppliesToProperty(self):
         fltr = self.f(self.PROPERTY1, 'ab', False, True)
-        self.assertTrue(fltr.appliesToProperty(self.PROPERTY1))
-        self.assertFalse(fltr.appliesToProperty(self.PROPERTY2))
-        self.assertFalse(fltr.appliesToProperty('other'))
+        self.assertTrue( fltr.appliesToProperty(self.PROPERTY1) )
+        self.assertFalse( fltr.appliesToProperty(self.PROPERTY2) )
+        self.assertFalse( fltr.appliesToProperty('other') )
 
 
     def testEqualsHashCode(self):
@@ -132,11 +132,11 @@ class SimpleStringFilterTest(AbstractFilterTest):
 
 
     def testNonExistentProperty(self):
-        self.assertFalse(self.passes('other1', 'ab', False, True))
+        self.assertFalse( self.passes('other1', 'ab', False, True) )
 
 
     def testNullValueForProperty(self):
         item = self.createTestItem()
         item.addItemProperty('other1', NullProperty())
-        self.assertFalse(self.f('other1', 'ab', False,
-                True).passesFilter(None, item))
+        self.assertFalse( self.f('other1', 'ab', False,
+                True).passesFilter(None, item) )

@@ -122,7 +122,7 @@ class ListSet(list):
 
 
     def clear(self):
-        super(ListSet, self).clear()
+        del self[:]
         self._itemSet.clear()
 
 

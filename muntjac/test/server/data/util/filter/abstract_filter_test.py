@@ -31,6 +31,8 @@ class AbstractFilterTest(TestCase):
 class TestItem(PropertysetItem):
 
     def __init__(self, value1, value2):
+        super(TestItem, self).__init__()
+
         self.addItemProperty(AbstractFilterTest.PROPERTY1,
                 ObjectProperty(value1))
         self.addItemProperty(AbstractFilterTest.PROPERTY2,
@@ -78,7 +80,7 @@ class SameItemFilter(IFilter):
 
 
     def __eq__(self, obj):
-        if (obj is None) or (not (self.__class__ == obj.__class__)):
+        if (obj is None) or (self.__class__ != obj.__class__):
             return False
 
         other = obj

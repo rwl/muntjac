@@ -51,13 +51,13 @@ class PropertysetItem(IItem, IPropertySetChangeNotifier):  # Cloneable
         @param idd: the identifier of the Property to get.
         @return: the Property with the given ID or C{None}
         """
-        return self._map[idd]
+        return self._map.get(idd)
 
 
     def getItemPropertyIds(self):
         """Gets the collection of IDs of all Properties stored in the Item.
 
-        @return: unmodifiable collection containing IDs of the Properties
+        @return: collection containing IDs of the Properties
                  stored the Item
         """
         return list(self._list)
@@ -234,7 +234,7 @@ class PropertySetChangeEvent(EventObject, IItem, IPropertySetChangeEvent):
     """
 
     def __init__(self, source):
-        super(PropertySetChangeEvent, self)(source)
+        super(PropertySetChangeEvent, self).__init__(source)
 
 
     def getItem(self):

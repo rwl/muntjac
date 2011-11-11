@@ -56,8 +56,9 @@ class SimpleStringFilter(IFilter):
         if self.onlyMatchPrefix:
             if not value.startswith(self.filterString):
                 return False
-        elif self.filterString not in value:
-            return False
+        else:
+            if self.filterString not in value:
+                return False
 
         return True
 
@@ -70,22 +71,22 @@ class SimpleStringFilter(IFilter):
         # Only ones of the objects of the same class can be equal
         if not isinstance(obj, SimpleStringFilter):
             return False
-        o = obj
+
         # Checks the properties one by one
-        if (self.propertyId != o.propertyId
-                and o.propertyId is not None
-                and o.propertyId != self.propertyId):
+        if (self.propertyId != obj.propertyId
+                and obj.propertyId is not None
+                and obj.propertyId != self.propertyId):
             return False
 
-        if (self.filterString != o.filterString
-                and o.filterString is not None
-                and not (o.filterString == self.filterString)):
+        if (self.filterString != obj.filterString
+                and obj.filterString is not None
+                and obj.filterString != self.filterString):
             return False
 
-        if self.ignoreCase != o.ignoreCase:
+        if self.ignoreCase != obj.ignoreCase:
             return False
 
-        if self.onlyMatchPrefix != o.onlyMatchPrefix:
+        if self.onlyMatchPrefix != obj.onlyMatchPrefix:
             return False
 
         return True
