@@ -21,10 +21,12 @@ from muntjac.ui.tree import IExpandListener, ICollapseListener, Tree
 class TestTreeListeners(TestCase, IExpandListener, ICollapseListener):
 
     def setUp(self):
+        TestCase.setUp(self)
+
         self._expandCalled = 0
-        self._collapseCalled = None
-        self._lastExpanded = None
-        self._lastCollapsed = None
+        self._collapseCalled = 0
+        self._lastExpanded = 0
+        self._lastCollapsed = 0
 
 
     def testExpandListener(self):

@@ -383,7 +383,7 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
         return None
 
 
-    def getType(self, propertyId):
+    def getType(self, propertyId=None):
         """Returns the type of the property. C{getValue} and
         C{setValue} methods must be compatible with this type:
         one can safely cast C{getValue} to given type and pass

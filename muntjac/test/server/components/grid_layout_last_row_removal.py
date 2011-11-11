@@ -32,8 +32,8 @@ class TestGridLayoutLastRowRemoval(TestCase):
             grid.removeRow(0)
         except ValueError:
             # Removing the last row should not throw a ValueError
-            self.fail(('removeRow(0) threw an ValueError '
-                    'when removing the last row'))
+            self.fail('removeRow(0) threw an ValueError '
+                    'when removing the last row')
 
         # The column amount should be preserved
         self.assertEquals(2, grid.getColumns())

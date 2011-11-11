@@ -33,5 +33,5 @@ class TestComboBoxValueChange(
 
     def setValue(self, field):
         variables = dict()
-        variables['selected'] = 'myvalue'
+        variables['selected'] = ['myvalue']
         field.changeVariables(field, variables)

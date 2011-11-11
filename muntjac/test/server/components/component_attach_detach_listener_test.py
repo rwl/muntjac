@@ -69,28 +69,28 @@ class ComponentAttachDetachListenerTest(TestCase):
         self._componentPosition = None
 
         self._olayout = HorizontalLayout()
-        self._olayout.addListener(MyAttachListener(self),
-                IComponentAttachListener)
-        self._olayout.addListener(MyDetachListener(self),
-                IComponentDetachListener)
+        listener = MyAttachListener(self)
+        self._olayout.addListener(listener, IComponentAttachListener)
+        listener = MyDetachListener(self)
+        self._olayout.addListener(listener, IComponentDetachListener)
 
         self._gridlayout = GridLayout()
-        self._gridlayout.addListener(MyAttachListener(self),
-                IComponentAttachListener)
-        self._gridlayout.addListener(MyDetachListener(self),
-                IComponentDetachListener)
+        listener = MyAttachListener(self)
+        self._gridlayout.addListener(listener, IComponentAttachListener)
+        listener = MyDetachListener(self)
+        self._gridlayout.addListener(listener, IComponentDetachListener)
 
         self._absolutelayout = AbsoluteLayout()
-        self._absolutelayout.addListener(MyAttachListener(self),
-                IComponentAttachListener)
-        self._absolutelayout.addListener(MyDetachListener(self),
-                IComponentDetachListener)
+        listener = MyAttachListener(self)
+        self._absolutelayout.addListener(listener, IComponentAttachListener)
+        listener = MyDetachListener(self)
+        self._absolutelayout.addListener(listener, IComponentDetachListener)
 
         self._csslayout = CssLayout()
-        self._csslayout.addListener(MyAttachListener(self),
-                IComponentAttachListener)
-        self._csslayout.addListener(MyDetachListener(self),
-                IComponentDetachListener)
+        listener = MyAttachListener(self)
+        self._csslayout.addListener(listener, IComponentAttachListener)
+        listener = MyDetachListener(self)
+        self._csslayout.addListener(listener, IComponentDetachListener)
 
 
     def testOrderedLayoutAttachListener(self):

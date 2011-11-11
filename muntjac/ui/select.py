@@ -146,9 +146,9 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
         if self.isMultiSelect():
             selectedKeys = [None] * len(self.getValue())
         elif self.getValue() is None and self.getNullSelectionItemId() is None:
-            selectedKeys = [None] * 0
+            selectedKeys = []
         else:
-            selectedKeys = [None] * 1
+            selectedKeys = [None]
 
         target.addAttribute('pagelength', self.pageLength)
 
@@ -213,11 +213,11 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
                     target.addAttribute('icon', icon)
 
                 target.addAttribute('caption', caption)
-                if idd is not None and idd == self.getNullSelectionItemId():
+                if (idd is not None) and idd == self.getNullSelectionItemId():
                     target.addAttribute('nullselection', True)
 
                 target.addAttribute('key', key)
-                if self.isSelected(idd) and keyIndex < len(selectedKeys):
+                if self.isSelected(idd) and (keyIndex < len(selectedKeys)):
                     target.addAttribute('selected', True)
                     selectedKeys[keyIndex] = key
                     keyIndex += 1
@@ -548,13 +548,13 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
             if self.isMultiSelect():
                 # Multiselect mode
 
-                # TODO Optimize by adding repaintNotNeeded when applicable
+                # TODO: Optimize by adding repaintNotNeeded when applicable
 
                 # Converts the key-array to id-set
                 s = list()
                 for i in range(len(ka)):
                     idd = self.itemIdMapper.get(ka[i])
-                    if idd is not None and self.containsId(idd):
+                    if (idd is not None) and self.containsId(idd):
                         s.append(idd)
 
                 # Limits the deselection to the set of visible items
@@ -562,24 +562,28 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
                 visible = self.getVisibleItemIds()
                 if visible is not None:
                     newsel = self.getValue()
+
                     if newsel is None:
                         newsel = set()
                     else:
                         newsel = set(newsel)
+
                     newsel = newsel.difference(visible)
                     newsel = newsel.union(s)
+
                     self.setValue(newsel, True)
             else:
                 # Single select mode
                 if len(ka) == 0:
-
                     # Allows deselection only if the deselected item is visible
                     current = self.getValue()
                     visible = self.getVisibleItemIds()
+
                     if (visible is not None) and (current in visible):
                         self.setValue(None, True)
                 else:
                     idd = self.itemIdMapper.get(ka[0])
+
                     if ((idd is not None)
                             and (idd == self.getNullSelectionItemId())):
                         self.setValue(None, True)

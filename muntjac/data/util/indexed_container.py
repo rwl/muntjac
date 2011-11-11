@@ -85,9 +85,9 @@ class IndexedContainer(AbstractInMemoryContainer,
         #  IProperty IDs to a hashtable that maps IItem IDs to a linked list
         #  of listeners listening IProperty identified by given IProperty ID
         #  and IItem ID.
-        self._singlePropertyValueChangeListeners = None
+        self._singlePropertyValueChangeListeners = dict()
 
-        self._defaultPropertyValues = None
+        self._defaultPropertyValues = dict()
 
         self._nextGeneratedItemId = 1
 

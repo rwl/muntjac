@@ -36,6 +36,8 @@ class AbstractTestFieldValueChange(TestCase):
     """
 
     def setUp(self, field):
+        TestCase.setUp(self)
+
         self._field = field
         self.mox = mox.Mox()
         self._listener = self.mox.CreateMock(IValueChangeListener)

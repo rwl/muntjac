@@ -61,6 +61,7 @@ class ComboBox(Select):
     def setMultiSelect(self, multiSelect):
         if multiSelect and not self.isMultiSelect():
             raise NotImplementedError, 'Multiselect not supported'
+
         super(ComboBox, self).setMultiSelect(multiSelect)
 
 

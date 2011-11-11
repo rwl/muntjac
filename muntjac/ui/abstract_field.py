@@ -253,7 +253,7 @@ class AbstractField(AbstractComponent, field.IField,
             # If the new value differs from the previous one
             if ((newValue is None and self._value is not None)
                     or (newValue is not None
-                        and not (newValue == self._value))):
+                        and (newValue != self._value))):
                 self.setInternalValue(newValue)
                 self.fireValueChange(False)
 
@@ -361,8 +361,7 @@ class AbstractField(AbstractComponent, field.IField,
         @raise ConversionException:
         """
         if ((newValue is None and self._value is not None)
-                or (newValue is not None
-                    and not (newValue == self._value))):
+                or (newValue is not None and newValue != self._value)):
 
             # Read only fields can not be changed
             if self.isReadOnly():
@@ -500,8 +499,7 @@ class AbstractField(AbstractComponent, field.IField,
 
         # Fires value change if the value has changed
         if ((self._value != oldValue)
-                and (self._value is not None
-                     and not (self._value == oldValue))
+                and (self._value is not None and self._value != oldValue)
                 or (self._value is None)):
 
             self.fireValueChange(False)
