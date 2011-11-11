@@ -53,17 +53,17 @@ class AbstractContainerTest(TestCase):
 
         # getItem
         if checkGetItemNull:
-            self.assertEquals(container.getItem(itemIdNotInSet) , None)
+            self.assertIsNone(container.getItem(itemIdNotInSet))
 
-        self.assertNotEquals(container.getItem(itemIdInSet), None)
+        self.assertIsNotNone(container.getItem(itemIdInSet))
 
         # getContainerProperty
         for propId in container.getContainerPropertyIds():
             if checkGetItemNull:
-                self.assertNone(container.getContainerProperty(itemIdNotInSet,
-                        propId), None)
-            self.assertNotEquals(container.getContainerProperty(itemIdInSet,
-                    propId), None)
+                self.assertIsNone(container.getContainerProperty(itemIdNotInSet,
+                        propId))
+            self.assertIsNotNone(container.getContainerProperty(itemIdInSet,
+                    propId))
 
         if indexed is not None:
             # firstItemId
@@ -102,7 +102,7 @@ class AbstractContainerTest(TestCase):
     ID_NUMBER = 'idNumber'
 
 
-    def testBasicContainerOperations(self, container):
+    def _testBasicContainerOperations(self, container):
         self.initializeContainer(container)
         # Basic container
         self.validateContainer(container, self.sampleData[0],
@@ -110,11 +110,11 @@ class AbstractContainerTest(TestCase):
                 'abc', True, len(self.sampleData))
 
 
-    def testContainerOrdered(self, container):
+    def _testContainerOrdered(self, container):
         idd = container.addItem()
-        self.assertNotNull(idd)
+        self.assertIsNotNone(idd)
         item = container.getItem(idd)
-        self.assertNotEquals(item , None)
+        self.assertIsNotNone(item)
 
         self.assertEquals(idd, container.firstItemId())
         self.assertEquals(idd, container.lastItemId())
@@ -130,8 +130,8 @@ class AbstractContainerTest(TestCase):
         # Add a new item before the first
         # addItemAfter
         newFirstId = container.addItemAfter(None)
-        self.assertNotEquals(newFirstId, None)
-        self.assertNotEquals(container.getItem(newFirstId), None)
+        self.assertIsNotNone(newFirstId)
+        self.assertIsNotNone(container.getItem(newFirstId))
 
         # isFirstId
         self.assertTrue(container.isFirstId(newFirstId))
@@ -143,19 +143,19 @@ class AbstractContainerTest(TestCase):
 
         # nextItemId
         self.assertEquals(idd, container.nextItemId(newFirstId))
-        self.assertEquals(container.nextItemId(idd), None)
-        self.assertEquals(container.nextItemId('not-in-container'), None)
+        self.assertIsNone(container.nextItemId(idd))
+        self.assertIsNone(container.nextItemId('not-in-container'))
 
         # prevItemId
         self.assertEquals(newFirstId, container.prevItemId(idd))
-        self.assertEquals(container.prevItemId(newFirstId), None)
-        self.assertEquals(container.prevItemId('not-in-container'), None)
+        self.assertIsNone(container.prevItemId(newFirstId))
+        self.assertIsNone(container.prevItemId('not-in-container'))
 
         # addItemAfter(Object)
         newSecondItemId = container.addItemAfter(newFirstId)
         # order is now: newFirstId, newSecondItemId, idd
-        self.assertNotEquals(newSecondItemId, None)
-        self.assertNotEquals(container.getItem(newSecondItemId), None)
+        self.assertIsNotNone(newSecondItemId)
+        self.assertIsNotNone(container.getItem(newSecondItemId))
         self.assertEquals(idd, container.nextItemId(newSecondItemId))
         self.assertEquals(newFirstId, container.prevItemId(newSecondItemId))
 
@@ -163,22 +163,22 @@ class AbstractContainerTest(TestCase):
         fourthId = 'id of the fourth item'
         fourth = container.addItemAfter(newFirstId, fourthId)
         # order is now: newFirstId, fourthId, newSecondItemId, id
-        self.assertNotEquals(fourth, None)
+        self.assertIsNotNone(fourth)
         self.assertEquals(fourth, container.getItem(fourthId))
         self.assertEquals(newSecondItemId, container.nextItemId(fourthId))
         self.assertEquals(newFirstId, container.prevItemId(fourthId))
 
         # addItemAfter(Object,Object)
-        fifthId = self.Object()
+        fifthId = object()
         fifth = container.addItemAfter(None, fifthId)
         # order is now: fifthId, newFirstId, fourthId, newSecondItemId, id
-        self.assertNotEquals(fifth, None)
+        self.assertIsNotNone(fifth)
         self.assertEquals(fifth, container.getItem(fifthId))
         self.assertEquals(newFirstId, container.nextItemId(fifthId))
-        self.assertEquals(container.prevItemId(fifthId), None)
+        self.assertIsNotNone(container.prevItemId(fifthId))
 
 
-    def testContainerIndexed(self, container, itemId, itemPosition,
+    def _testContainerIndexed(self, container, itemId, itemPosition,
                 testAddEmptyItemAt, newItemId, testAddItemAtWithId):
         self.initializeContainer(container)
 
@@ -257,7 +257,7 @@ class AbstractContainerTest(TestCase):
             self.assertFalse(container.containsId(newItemId))
 
 
-    def testContainerFiltering(self, container):
+    def _testContainerFiltering(self, container):
         self.initializeContainer(container)
 
         # Filter by "contains ab"
@@ -294,7 +294,7 @@ class AbstractContainerTest(TestCase):
         return True
 
 
-    def testContainerSortingAndFiltering(self, sortable):
+    def _testContainerSortingAndFiltering(self, sortable):
         filterable = sortable
 
         self.initializeContainer(sortable)
@@ -317,7 +317,7 @@ class AbstractContainerTest(TestCase):
                 self.isFilteredOutItemNull(), 20)
 
 
-    def testContainerSorting(self, container):
+    def _testContainerSorting(self, container):
         sortable = container
 
         self.initializeContainer(container)

@@ -23,7 +23,7 @@ from muntjac.data.util.indexed_container import IndexedContainer
 class PerformanceTestIndexedContainer(TestCase):
 
     _REPEATS = 10
-    _ITEMS = 50000
+    _ITEMS = 1000
     _ADD_ITEM_FAIL_THRESHOLD = 200
     # TODO should improve performance of these methods
     _ADD_ITEM_AT_FAIL_THRESHOLD = 5000
@@ -39,7 +39,7 @@ class PerformanceTestIndexedContainer(TestCase):
             start = 1000 * time.time()
             for _ in range(self._ITEMS):
                 c.addItem()
-            times.append(1000 * time.time() - start)
+            times.append((1000 * time.time()) - start)
         self.checkMedian(self._ITEMS, times, 'IndexedContainer.addItem()',
                 self._ADD_ITEM_FAIL_THRESHOLD)
 
@@ -51,7 +51,7 @@ class PerformanceTestIndexedContainer(TestCase):
             start = 1000 * time.time()
             for _ in range(self._ITEMS):
                 c.addItemAt(0)
-            times.append(1000 * time.time() - start)
+            times.append((1000 * time.time()) - start)
         self.checkMedian(self._ITEMS, times, 'IndexedContainer.addItemAt()',
                 self._ADD_ITEM_AT_FAIL_THRESHOLD)
 
@@ -65,7 +65,7 @@ class PerformanceTestIndexedContainer(TestCase):
             start = 1000 * time.time()
             for _ in range(self._ITEMS):
                 c.addItemAfter(initialId)
-            times.append(1000 * time.time() - start)
+            times.append((1000 * time.time()) - start)
         self.checkMedian(self._ITEMS, times, 'IndexedContainer.addItemAfter()',
                 self._ADD_ITEM_AFTER_FAIL_THRESHOLD)
 
@@ -79,31 +79,32 @@ class PerformanceTestIndexedContainer(TestCase):
             start = 1000 * time.time()
             for _ in range(self._ITEMS):
                 c.addItemAfter(c.lastItemId())
-            times.append(1000 * time.time() - start)
+            times.append((1000 * time.time()) - start)
         self.checkMedian(self._ITEMS / 3, times,
                 'IndexedContainer.addItemAfter(lastId)',
                 self._ADD_ITEM_AFTER_LAST_FAIL_THRESHOLD)
 
 
     def testAddItemsConstructorPerformance(self):
-        items = list(50000)
+        items = list()
         for _ in range(self._ITEMS):
-            items.append(self.Object())
+            items.append(object())
 
         times = set()
         for _ in range(self._REPEATS):
             start = 1000 * time.time()
             IndexedContainer(items)
-            times.append(1000 * time.time() - start)
+            times.add((1000 * time.time()) - start)
         self.checkMedian(self._ITEMS, times, 'IndexedContainer(Collection)',
                 self._ADD_ITEMS_CONSTRUCTOR_FAIL_THRESHOLD)
 
 
     def checkMedian(self, items, times, methodName, threshold):
         median = self.median(times)
-        print methodName + ' timings (ms) for ' + items + ' items: ' + times
-        self.assertTrue(median <= threshold, (methodName +
-            ' too slow, median time ' + median + 'ms for ' + items + ' items'))
+        print '%s timings (ms) for %d items: %s' % (methodName, items, times)
+        self.assertTrue(median <= threshold,
+            '%s too slow, median time %.2fms for %s items' %
+            (methodName, median, items))
 
 
     def median(self, times):

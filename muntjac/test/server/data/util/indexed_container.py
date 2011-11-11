@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from muntjac.test.server.data.util.abstract_container_test \
+    import ItemSetChangeCounter
+
 from muntjac.test.server.data.util.abstract_in_memory_container_test \
     import AbstractInMemoryContainerTest
 
@@ -23,33 +26,39 @@ from muntjac.data.util.indexed_container import IndexedContainer
 class TestIndexedContainer(AbstractInMemoryContainerTest):
 
     def testBasicOperations(self):
-        self.testBasicContainerOperations(IndexedContainer())
+        c = IndexedContainer()
+        self._testBasicContainerOperations(c)
 
 
     def testFiltering(self):
-        self.testContainerFiltering(IndexedContainer())
+        c = IndexedContainer()
+        self._testContainerFiltering(c)
 
 
     def testSorting(self):
-        self.testContainerSorting(IndexedContainer())
+        c = IndexedContainer()
+        self._testContainerSorting(c)
 
 
     def testSortingAndFiltering(self):
-        self.testContainerSortingAndFiltering(IndexedContainer())
+        c = IndexedContainer()
+        self._testContainerSortingAndFiltering(c)
 
 
     def testContainerOrdered(self):
-        self.testContainerOrdered(IndexedContainer())
+        c = IndexedContainer()
+        self._testContainerOrdered(c)
 
 
     def testContainerIndexed(self):
-        self.testContainerIndexed(IndexedContainer(), self.sampleData[2], 2,
-                True, 'newItemId', True)
+        c = IndexedContainer()
+        self._testContainerIndexed(c, self.sampleData[2], 2, True,
+                'newItemId', True)
 
 
     def testItemSetChangeListeners(self):
         container = IndexedContainer()
-        counter = self.ItemSetChangeCounter()
+        counter = ItemSetChangeCounter()
         container.addListener(counter)
 
         id1 = 'id1'
@@ -119,7 +128,7 @@ class TestIndexedContainer(AbstractInMemoryContainerTest):
 
     def testAddRemoveContainerFilter(self):
         container = IndexedContainer()
-        counter = self.ItemSetChangeCounter()
+        counter = ItemSetChangeCounter()
         container.addListener(counter)
 
         # simply adding or removing container filters should cause events
@@ -141,7 +150,7 @@ class TestIndexedContainer(AbstractInMemoryContainerTest):
     # here concentrating on listeners
     def testItemSetChangeListenersFiltering(self):
         container = IndexedContainer()
-        counter = self.ItemSetChangeCounter()
+        counter = ItemSetChangeCounter()
         container.addListener(counter)
 
         counter.reset()

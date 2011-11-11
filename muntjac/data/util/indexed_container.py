@@ -659,7 +659,7 @@ class IndexedContainerItem(IItem):
 
         li = obj
 
-        return self.getHost() == li.getHost() and self._itemId == li.itemId
+        return self.getHost() == li.getHost() and self._itemId == li._itemId
 
 
     def getHost(self):
@@ -763,7 +763,7 @@ class IndexedContainerProperty(prop.IProperty, prop.IValueChangeNotifier):
 
         # update the container filtering if this property is being filtered
         if self._container.isPropertyFiltered(self._propertyId):
-            self.filterAll()
+            self._container.filterAll()
 
         self._container.firePropertyValueChange(self)
 
