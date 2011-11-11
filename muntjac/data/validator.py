@@ -18,6 +18,9 @@
 
 from muntjac.terminal.error_message import IErrorMessage
 
+from muntjac.terminal.gwt.server.abstract_application_servlet \
+    import AbstractApplicationServlet
+
 
 class IValidator(object):
     """Interface that implements a method for validating if an L{object} is
@@ -64,6 +67,10 @@ class IValidator(object):
 
 class InvalidValueException(RuntimeError, IErrorMessage):
     """Exception that is thrown by a L{IValidator} when a value is invalid.
+
+    The default implementation of InvalidValueException does not support HTML
+    in error messages. To enable HTML support, override L{getHtmlMessage} and
+    use the subclass in validators.
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
@@ -121,7 +128,7 @@ class InvalidValueException(RuntimeError, IErrorMessage):
         target.addAttribute('level', 'error')
 
         # Error message
-        message = self.message #getLocalizedMessage()
+        message = self.getHtmlMessage()
         if message is not None:
             target.addText(message)
 
@@ -130,6 +137,14 @@ class InvalidValueException(RuntimeError, IErrorMessage):
             self._causes[i].paint(target)
 
         target.endTag('error')
+
+
+    def getHtmlMessage(self):
+        """Returns the message of the error in HTML.
+
+        Note that this API may change in future versions.
+        """
+        return AbstractApplicationServlet.safeEscapeForHtml(self.message)
 
 
     def addListener(self, listener, iface=None):

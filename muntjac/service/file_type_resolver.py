@@ -132,6 +132,9 @@ class FileTypeResolver(object):
              'audio/x-pn-realaudio                            ra rm ram,'
              'audio/x-scpls                                   pls,'
              'audio/x-wav                                     wav,'
+             'audio/ogg                                       ogg,'
+             'audio/mp4                                       m4a,'
+             'audio/x-aac                                     aac,'
              'image/bitmap                                    bmp,'
              'image/gif                                       gif,'
              'image/ief                                       ief,'
@@ -188,6 +191,8 @@ class FileTypeResolver(object):
              'video/x-ms-asf                                  asf asx,'
              'video/x-msvideo                                 avi,'
              'video/x-sgi-movie                               movie,'
+             'video/ogg                                       ogv,'
+             'video/mp4                                       mp4,'
              'x-world/x-vrml                                  vrm vrml wrl')
 
 
@@ -254,11 +259,11 @@ class FileTypeResolver(object):
                    the file or name of the file whose icon is requested.
         @return: the icon corresponding to the given file
         """
-        return cls.getIconByMineType(cls.getMIMEType(file_or_filename))
+        return cls.getIconByMimeType(cls.getMIMEType(file_or_filename))
 
 
     @classmethod
-    def getIconByMineType(cls, mimeType):
+    def getIconByMimeType(cls, mimeType):
         icon = cls._MIMEToIconMap.get(mimeType)
         if icon is not None:
             return icon

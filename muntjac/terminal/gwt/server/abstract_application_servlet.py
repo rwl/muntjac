@@ -991,6 +991,17 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
             self.setStatus(response, 404, msg)
             return
 
+        # security check: do not permit navigation out of the VAADIN
+        # directory
+        if not self.isAllowedVAADINResourceUrl(request, resourceUrl):
+            msg = ("Requested resource ["
+                + filename
+                + "] not accessible in the VAADIN directory or "
+                + "access to it is forbidden.")
+            logger.info(msg)
+            self.setStatus(response, 403, msg)
+            return
+
         # Find the modification timestamp
         lastModifiedTime = 0
         try:
@@ -1031,6 +1042,28 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
         fd = open(resourceUrl, 'rb')
         self.write(response, fd.read())
         fd.close()
+
+
+    def isAllowedVAADINResourceUrl(self, request, resourceUrl):
+        """Check whether a URL obtained from a classloader refers to a valid
+        static resource in the directory VAADIN.
+
+        Warning: Overriding of this method is not recommended, but is possible
+        to support non-default classloaders or servers that may produce URLs
+        different from the normal ones. The method prototype may change in the
+        future. Care should be taken not to expose class files or other
+        resources outside the VAADIN directory if the method is overridden.
+        """
+        # Check that the URL is in a VAADIN directory and does not contain
+        # "/../"
+        if ("/VAADIN/" not in self.getUrlPath(resourceUrl)
+                or "/../" in self.getUrlPath(resourceUrl)):
+            logger.info("Blocked attempt to access file: " + resourceUrl)
+            return False
+
+            logger.fine("Accepted access to a file using a class loader: "
+                    + resourceUrl)
+            return True
 
 
     def browserHasNewestVersion(self, request, resourceLastModifiedTimestamp):
@@ -1186,8 +1219,8 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
 
 
     def getWebApplicationsStaticFileLocation(self, request):
-        """The default method to fetch static files location. This method
-        does not check for request attribute
+        """The default method to fetch static files location (URL). This
+        method does not check for request attribute
         C{REQUEST_VAADIN_STATIC_FILE_PATH}.
         """
         # if property is defined in configurations, use that
@@ -1904,6 +1937,9 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
 
         @return: a safe string to be added inside an html tag
         """
+        if unsafe is None:
+            return None
+
         safe = StringIO()
         for c in unsafe:
             if cls.isSafe(ord(c)):
@@ -1912,8 +1948,10 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
                 safe.write('&#')
                 safe.write(ord(c))
                 safe.write(';')
+
         result = safe.getvalue()
         safe.close()
+
         return result
 
 

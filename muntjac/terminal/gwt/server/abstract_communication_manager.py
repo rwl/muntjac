@@ -121,6 +121,8 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
 
     VAR_ARRAYITEM_SEPARATOR = u'\u001c'
 
+    VAR_ESCAPE_CHARACTER = u'\u001b'
+
     _MAX_BUFFER_SIZE = 64 * 1024
 
     # Same as in apache commons file upload library that was previously used.
@@ -133,6 +135,8 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
     _LF = '\n'
     _CRLF = '\r\n'
     _UTF8 = 'UTF8'
+
+    _GET_PARAM_HIGHLIGHT_COMPONENT = "highlightComponent"
 
 
     def __init__(self, application):
@@ -169,6 +173,8 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
 
         self._typeToKey = dict()
         self._nextTypeKey = 0
+
+        self._highLightedPaintable = None
 
 
     def getApplication(self):
@@ -426,6 +432,11 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
             analyzeLayouts = request.getParameter(
                     self._GET_PARAM_ANALYZE_LAYOUTS) is not None
 
+            param = request.getParameter(self._GET_PARAM_HIGHLIGHT_COMPONENT)
+            if param != None:
+                pid = request.getParameter(self._GET_PARAM_HIGHLIGHT_COMPONENT)
+                highLightedPaintable = self._idPaintableMap.get(pid)
+                self.highlightPaintable(highLightedPaintable)
 
         outWriter = out
 
@@ -483,6 +494,62 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         # Finds the window within the application
         #outWriter.close()
         self._requestThemeName = None
+
+
+    def highlightPaintable(self, highLightedPaintable2):
+        sb = StringIO()
+        sb.write("*** Debug details of a component:  *** \n")
+        sb.write("Type: ")
+        sb.write(clsname(highLightedPaintable2))
+        if isinstance(highLightedPaintable2, AbstractComponent):
+            component = highLightedPaintable2
+            sb.write("\nId:")
+            idd = paintableIdMap.get(component)
+            sb.write(idd if idd is not None else 'null')
+            if component.getCaption() is not None:
+                sb.write("\nCaption:")
+                sb.write(component.getCaption())
+
+            printHighlightedComponentHierarchy(sb, component)
+
+        logger.info(sb.getvalue())
+        sb.close()
+
+
+    def printHighlightedComponentHierarchy(self, sb, component):
+        h = list()
+        h.append(component)
+        parent = component.getParent()
+        while parent is not None:
+            h.insert(0, parent)
+            parent = parent.getParent()
+
+        sb.write("\nComponent hierarchy:\n")
+        application2 = component.getApplication()
+        sb.write(clsname(application2))
+        sb.write(".")
+        sb.write(application2.__class__.__name__)
+        sb.write("(")
+        sb.write(application2.__class__.__name__);
+        sb.write(".java")
+        sb.write(":1)")
+        l = 1
+        for component2 in h:
+            sb.write("\n")
+            for _ in range(l):
+                sb.write("  ")
+            l += 1
+            componentClass = component2.__class__
+            topClass = componentClass
+            #while topClass.getEnclosingClass() != None:
+            #    topClass = topClass.getEnclosingClass()
+
+            sb.write(clsname(componentClass))
+            sb.write(".")
+            sb.write(componentClass.__name__);
+            sb.write("(")
+            sb.write(topClass.__name__)
+            sb.write(".java:1)")
 
 
     def paintAfterVariableChanges(self, request, response, callback,
@@ -670,6 +737,13 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                             first = False
                         invalidLayout.reportErrors(outWriter, self, stderr)
                 outWriter.write(']')
+
+            if self._highLightedPaintable is not None:
+                outWriter.write(", \"hl\":\"")
+                idd = self._paintableIdMap.get(self._highLightedPaintable)
+                outWriter.write(idd if idd is not None else 'null')
+                outWriter.write("\"")
+                self._highLightedPaintable = None
 
         ci = None
         try:
@@ -926,7 +1000,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                                                   variable[self._VAR_VALUE])
 
                 try:
-                    owner.changeVariables(source, m)
+                    self.changeVariables(source, owner, m)
 
                     # Special-case of closing browser-level windows:
                     # track browser-windows currently open in client
@@ -968,6 +1042,10 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
             i += 1
 
         return success
+
+
+    def changeVariables(self, source, owner, m):
+        owner.changeVariables(source, m)
 
 
     def getVariableOwner(self, string):
@@ -1037,7 +1115,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
             self._VTYPE_ARRAY: lambda s: self.convertArray(s),
             self._VTYPE_MAP: lambda s: self.convertMap(s),
             self._VTYPE_STRINGARRAY: lambda s: self.convertStringArray(s),
-            self._VTYPE_STRING: lambda s: s,
+            self._VTYPE_STRING: lambda s: self.decodeVariableValue(s),
             self._VTYPE_INTEGER: lambda s: int(s),
             self._VTYPE_LONG: lambda s: long(s),
             self._VTYPE_FLOAT: lambda s: float(s),
@@ -1060,8 +1138,11 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
             key = parts[i]
             if len(key) > 0:
                 variabletype = key[0]
-                value = self.convertVariableValue(variabletype, parts[i + 1])
-                mapp[ key[1:] ] = value
+                # decode encoded separators
+                decodedValue = self.decodeVariableValue(parts[i + 1])
+                decodedKey = self.decodeVariableValue(key[1:])
+                value = self.convertVariableValue(variabletype, decodedValue)
+                mapp[decodedKey] = value
             i += 2
         return mapp
 
@@ -1070,14 +1151,16 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         # need to return delimiters and filter them out; otherwise empty
         # strings are lost
         # an extra empty delimiter at the end is automatically eliminated
-        splitter = re.compile('(\\' + self.VAR_ARRAYITEM_SEPARATOR+ '+)')
+        arrayItemSeparator = self.VAR_ARRAYITEM_SEPARATOR
+        splitter = re.compile('(\\' + arrayItemSeparator + '+)')
 
         tokens = list()
-        prevToken = self.VAR_ARRAYITEM_SEPARATOR
+        prevToken = arrayItemSeparator
         for token in splitter.split(strValue):
-            if self.VAR_ARRAYITEM_SEPARATOR != token:
-                tokens.append(token)
-            elif self.VAR_ARRAYITEM_SEPARATOR == prevToken:
+            if arrayItemSeparator != token:
+                # decode encoded separators
+                tokens.append(self.decodeVariableValue(token))
+            elif arrayItemSeparator == prevToken:
                 tokens.append('')
             prevToken = token
 
@@ -1098,6 +1181,54 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
             values[i] = self.convertVariableValue(variableType, string[1:])
 
         return values
+
+
+    def decodeVariableValue(self, encodedValue):
+        """Decode encoded burst, record, field and array item separator
+        characters in a variable value String received from the client.
+        This protects from separator injection attacks.
+
+        @param encodedValue: value to decode
+        @return: decoded value
+        """
+        result = StringIO()
+        iterator = iter(encodedValue)
+        character = iterator.next()
+        while True:
+            try:
+                if self._VAR_ESCAPE_CHARACTER == character:
+                    character = iterator.next()
+                    if character == self._VAR_ESCAPE_CHARACTER + 0x30:
+                        # escaped escape character
+                        result.write(self._VAR_ESCAPE_CHARACTER)
+
+                    elif character == self._VAR_BURST_SEPARATOR + 0x30:
+                        pass
+                    elif character == self._VAR_RECORD_SEPARATOR + 0x30:
+                        pass
+                    elif character == self._VAR_FIELD_SEPARATOR + 0x30:
+                        pass
+                    elif character == self._VAR_ARRAYITEM_SEPARATOR + 0x30:
+                        # +0x30 makes these letters for easier reading
+                        result.write(character - 0x30)
+                    else:
+                        # other escaped character - probably a client-server
+                        # version mismatch
+                        raise ValueError("Invalid escaped character from the "
+                                "client - check that the widgetset and server "
+                                "versions match")
+                else:
+                    # not a special character - add it to the result as is
+                    result.write(character)
+
+                character = iterator.next()
+
+            except StopIteration:
+                break
+
+        r = result.getvalue()
+        result.close()
+        return r
 
 
     def printLocaleDeclarations(self, outWriter):
