@@ -13,6 +13,7 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+from muntjac.ui.abstract_component import AbstractComponent
 
 """Defines a common base class for the server-side implementations of
 the communication system between the client code and the server side
@@ -504,13 +505,13 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         if isinstance(highLightedPaintable2, AbstractComponent):
             component = highLightedPaintable2
             sb.write("\nId:")
-            idd = paintableIdMap.get(component)
+            idd = self._paintableIdMap.get(component)
             sb.write(idd if idd is not None else 'null')
             if component.getCaption() is not None:
                 sb.write("\nCaption:")
                 sb.write(component.getCaption())
 
-            printHighlightedComponentHierarchy(sb, component)
+            self.printHighlightedComponentHierarchy(sb, component)
 
         logger.info(sb.getvalue())
         sb.close()
@@ -1196,21 +1197,22 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         character = iterator.next()
         while True:
             try:
-                if self._VAR_ESCAPE_CHARACTER == character:
+                if self.VAR_ESCAPE_CHARACTER == character:
                     character = iterator.next()
-                    if character == self._VAR_ESCAPE_CHARACTER + 0x30:
+                    if character == chr(ord(self.VAR_ESCAPE_CHARACTER) + 0x30):
                         # escaped escape character
-                        result.write(self._VAR_ESCAPE_CHARACTER)
+                        result.write(self.VAR_ESCAPE_CHARACTER)
 
-                    elif character == self._VAR_BURST_SEPARATOR + 0x30:
+                    elif character == chr(ord(self.VAR_BURST_SEPARATOR) + 0x30):
                         pass
-                    elif character == self._VAR_RECORD_SEPARATOR + 0x30:
+                    elif character == chr(ord(self._VAR_RECORD_SEPARATOR)+0x30):
                         pass
-                    elif character == self._VAR_FIELD_SEPARATOR + 0x30:
+                    elif character == chr(ord(self._VAR_FIELD_SEPARATOR) +0x30):
                         pass
-                    elif character == self._VAR_ARRAYITEM_SEPARATOR + 0x30:
+                    elif (character ==
+                            chr(ord(self.VAR_ARRAYITEM_SEPARATOR) + 0x30)):
                         # +0x30 makes these letters for easier reading
-                        result.write(character - 0x30)
+                        result.write( chr(ord(character) - 0x30) )
                     else:
                         # other escaped character - probably a client-server
                         # version mismatch
