@@ -16,7 +16,7 @@
 
 import sys
 import traceback
-from muntjac.terminal.paintable import IRepaintRequestListener
+from muntjac.terminal.gwt.server.abstract_application_servlet import AbstractApplicationServlet
 
 try:
     from cStringIO import StringIO
@@ -31,6 +31,10 @@ class SystemErr(RuntimeError, IErrorMessage):
     system. The system error can be shown to the user as it implements
     C{IErrorMessage} interface, but contains technical information
     such as stack trace and exception.
+
+    SystemError does not support HTML in error messages or stack traces.
+    If HTML messages are required, use {@link UserError} or a custom
+    implementation of L{ErrorMessage}.
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
@@ -95,7 +99,7 @@ class SystemErr(RuntimeError, IErrorMessage):
         message = self.message
         if message is not None:
             sb.write('<h2>')
-            sb.write(message)
+            sb.write(AbstractApplicationServlet.safeEscapeForHtml(message))
             sb.write('</h2>')
 
         # Paint the exception
@@ -107,7 +111,8 @@ class SystemErr(RuntimeError, IErrorMessage):
                     exc_traceback, file=buff)
 
             sb.write('<pre>')
-            sb.write(buff.getvalue())
+            pre = buff.getvalue()
+            sb.write(AbstractApplicationServlet.safeEscapeForHtml(pre))
             buff.close()
             sb.write('</pre>')
 

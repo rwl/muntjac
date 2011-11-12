@@ -38,8 +38,8 @@ _COMPONENT_EVENT_METHOD = getattr(IListener, 'componentEvent')
 class AbstractComponent(IComponent, IMethodEventSource):
     """An abstract class that defines default implementation for the
     L{IComponent} interface. Basic UI components that are not derived
-    from an external component can inherit this class to easily qualify as
-    Muntjac components. Most components in Muntjac do just that.
+    from an external component can inherit this class to easily qualify
+    as Muntjac components. Most components in Muntjac do just that.
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
@@ -134,30 +134,6 @@ class AbstractComponent(IComponent, IMethodEventSource):
         self._sizePattern = re.compile(self.SIZE_PATTERN)
 
 
-    def getTag(self):
-        """Gets the UIDL tag corresponding to the component.
-
-        Note! In version 6.2 the method for mapping server side components
-        to their client side counterparts was enhanced. This method was made
-        final to intentionally "break" code where it is needed. If your code
-        does not compile due overriding this method, it is very likely that
-        you need to:
-
-          - remove the implementation of getTag
-          - add L{ClientWidget} annotation to your component
-
-        @return: the component's UIDL tag as C{String}
-        @deprecated: tags are no more required for components. Instead of tags
-                     we are now using L{ClientWidget} annotations to map
-                     server side components to client side counterparts.
-                     Generating identifier for component type is delegated to
-                     terminal.
-        @see: L{ClientWidget}
-        """
-        warn('tags are no more required for components', DeprecationWarning)
-        return ''
-
-
     def setDebugId(self, idd):
         self._testingId = idd
 
@@ -211,6 +187,12 @@ class AbstractComponent(IComponent, IMethodEventSource):
             self._styles = list()
 
         del self._styles[:]
+
+        styleParts = re.split(" +", style)
+        for part in styleParts:
+            if len(part) > 0:
+                self._styles.append(part)
+
         self._styles.extend(style.split())
         self.requestRepaint()
 
@@ -230,10 +212,11 @@ class AbstractComponent(IComponent, IMethodEventSource):
 
     def removeStyleName(self, style):
         if self._styles is not None:
-            for s in style.split():
-                if s in self._styles:
-                    self._styles.remove(s)
-                    self.requestRepaint()
+            styleParts = re.split(" +", style)
+            for part in styleParts:
+                if len(part) > 0:
+                    self._styles.remove(part)
+            self.requestRepaint()
 
 
     def getCaption(self):
@@ -372,50 +355,52 @@ class AbstractComponent(IComponent, IMethodEventSource):
 
 
     def getDescription(self):
-        """Gets the component's description. The description can be used
-        to briefly describe the state of the component to the user. The
-        description string may contain certain XML tags:
+        """Gets the component's description, used in tooltips and can be
+        displayed directly in certain other components such as forms. The
+        description can be used to briefly describe the state of the
+        component to the user. The description string may contain certain
+        XML tags::
 
-        <table border=1>
-        <tr>
-        <td width=120><b>Tag</b></td>
-        <td width=120><b>Description</b></td>
-        <td width=120><b>Example</b></td>
-        </tr>
-        <tr>
-        <td>&lt;b></td>
-        <td>bold</td>
-        <td><b>bold text</b></td>
-        </tr>
-        <tr>
-        <td>&lt;i></td>
-        <td>italic</td>
-        <td><i>italic text</i></td>
-        </tr>
-        <tr>
-        <td>&lt;u></td>
-        <td>underlined</td>
-        <td><u>underlined text</u></td>
-        </tr>
-        <tr>
-        <td>&lt;br></td>
-        <td>linebreak</td>
-        <td>N/A</td>
-        </tr>
-        <tr>
-        <td>&lt;ul><br>
-        &lt;li>item1<br>
-        &lt;li>item1<br>
-        &lt;/ul></td>
-        <td>item list</td>
-        <td>
-        <ul>
-        <li>item1
-        <li>item2
-        </ul>
-        </td>
-        </tr>
-        </table>
+            <table border=1>
+            <tr>
+            <td width=120><b>Tag</b></td>
+            <td width=120><b>Description</b></td>
+            <td width=120><b>Example</b></td>
+            </tr>
+            <tr>
+            <td>&lt;b></td>
+            <td>bold</td>
+            <td><b>bold text</b></td>
+            </tr>
+            <tr>
+            <td>&lt;i></td>
+            <td>italic</td>
+            <td><i>italic text</i></td>
+            </tr>
+            <tr>
+            <td>&lt;u></td>
+            <td>underlined</td>
+            <td><u>underlined text</u></td>
+            </tr>
+            <tr>
+            <td>&lt;br></td>
+            <td>linebreak</td>
+            <td>N/A</td>
+            </tr>
+            <tr>
+            <td>&lt;ul><br>
+            &lt;li>item1<br>
+            &lt;li>item1<br>
+            &lt;/ul></td>
+            <td>item list</td>
+            <td>
+            <ul>
+            <li>item1
+            <li>item2
+            </ul>
+            </td>
+            </tr>
+            </table>
 
         These tags may be nested.
 
@@ -428,6 +413,10 @@ class AbstractComponent(IComponent, IMethodEventSource):
         """Sets the component's description. See L{getDescription}
         for more information on what the description is. This method will
         trigger a L{RepaintRequestEvent}.
+
+        The description is displayed as HTML/XHTML in tooltips or directly in
+        certain components so care should be taken to avoid creating the
+        possibility for HTML injection and possibly XSS vulnerabilities.
 
         @param description:
                    the new description string for the component.
@@ -547,7 +536,20 @@ class AbstractComponent(IComponent, IMethodEventSource):
 
 
     def getApplication(self):
-        # Gets the parent application of the component.
+        """Gets the application object to which the component is attached.
+
+        The method will return C{None} if the component is not currently
+        attached to an application. This is often a problem in constructors
+        of regular components and in the initializers of custom composite
+        components. A standard workaround is to move the problematic
+        initialization to L{attach}, as described in the documentation
+        of the method.
+
+        B{This method is not meant to be overridden.}
+
+        @return: the parent application of the component or C{None}.
+        @see: L{attach}
+        """
         if self._parent is None:
             return None
         else:
@@ -559,7 +561,22 @@ class AbstractComponent(IComponent, IMethodEventSource):
 
 
     def paint(self, target):
-        # Paints the component into a UIDL stream.
+        """Paints the Paintable into a UIDL stream. This method creates the
+        UIDL sequence describing it and outputs it to the given UIDL stream.
+
+        It is called when the contents of the component should be painted in
+        response to the component first being shown or having been altered so
+        that its visual representation is changed.
+
+        B{Do not override this to paint your component.} Override
+        L{paintContent} instead.
+
+        @param target:
+                  the target UIDL stream where the component should paint
+                  itself to.
+        @raise PaintException:
+                  if the paint operation failed.
+        """
         tag = target.getTag(self)
         if ((not target.startTag(self, tag))
                 or self._repaintRequestListenersNotified):

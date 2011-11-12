@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.terminal.error_message import IErrorMessage
-from muntjac.terminal.paintable import IRepaintRequestListener
+from muntjac.terminal.gwt.server.abstract_application_servlet import AbstractApplicationServlet
 
 
 class UserError(IErrorMessage):
@@ -36,6 +36,9 @@ class UserError(IErrorMessage):
     #: Formatted content mode, where the contents is XML restricted
     #  to the UIDL 1.0 formatting markups.
     CONTENT_UIDL = 2
+
+    #: Content mode, where the error contains XHTML.
+    CONTENT_XHTML = 3
 
     def __init__(self, message, contentMode=None, errorLevel=None):
         """Creates a error message with level and content mode.
@@ -110,10 +113,13 @@ class UserError(IErrorMessage):
 
         # Paint the message
         if self._mode == self.CONTENT_TEXT:
-            target.addText(self._msg)
+            escaped = AbstractApplicationServlet.safeEscapeForHtml(self._msg)
+            target.addText(escaped)
 
         elif self._mode == self.CONTENT_UIDL:
-            target.addUIDL(self._msg)
+            target.addUIDL("<pre>"
+                    + AbstractApplicationServlet.safeEscapeForHtml(self._msg)
+                    + "</pre>")
 
         elif self._mode == self.CONTENT_PREFORMATTED:
             target.startTag('pre')

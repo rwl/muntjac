@@ -1624,3 +1624,26 @@ class VerticalLocationIs(TargetDetailIs):
 VerticalLocationIs.TOP    = VerticalLocationIs(VerticalDropLocation.TOP)
 VerticalLocationIs.BOTTOM = VerticalLocationIs(VerticalDropLocation.BOTTOM)
 VerticalLocationIs.MIDDLE = VerticalLocationIs(VerticalDropLocation.MIDDLE)
+
+
+class ItemDescriptionGenerator(object):
+    """Implement this interface and pass it to Tree.setItemDescriptionGenerator
+    or Table.setItemDescriptionGenerator to generate mouse over descriptions
+    ("tooltips") for the rows and cells in Table or for the items in Tree.
+    """
+
+    def generateDescription(self, source, itemId, propertyId):
+        """Called by Table when a cell (and row) is painted or a item is
+        painted in Tree
+
+        @param source:
+                     The source of the generator, the Tree or Table the
+                     generator is attached to
+        @param itemId:
+                     The itemId of the painted cell
+        @param propertyId:
+                     The propertyId of the cell, null when getting row
+                     description
+        @return: The description or "tooltip" of the item.
+        """
+        raise NotImplementedError

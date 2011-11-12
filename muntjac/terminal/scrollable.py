@@ -20,7 +20,9 @@ scrolled."""
 
 class IScrollable(object):
     """This interface is implemented by all visual objects that can be
-    scrolled. The unit of scrolling is pixel.
+    scrolled programmatically from the server-side, or for which it is
+    possible to know the scroll position on the server-side.. The unit
+    of scrolling is pixel.
 
     @author: IT Mill Ltd.
     @author: Richard Lincoln
@@ -43,6 +45,11 @@ class IScrollable(object):
 
         Scrolling offset is the number of pixels this scrollable has been
         scrolled right.
+
+        The method only has effect if programmatic scrolling is enabled for
+        the scrollable. Some implementations may require enabling programmatic
+        before this method can be used. See L{setScrollable} for more
+        information.
 
         @param pixelsScrolled:
                    the xOffset.
@@ -67,6 +74,17 @@ class IScrollable(object):
         Scrolling offset is the number of pixels this scrollable has been
         scrolled down.
 
+        The method only has effect if programmatic scrolling is enabled for
+        the scrollable. Some implementations may require enabling programmatic
+        before this method can be used. See L{setScrollable} for more
+        information.
+
+        The scrolling position is limited by the current height of the content
+        area. If the position is below the height, it is scrolled to the
+        bottom. However, if the same response also adds height to the content
+        area, scrolling to bottom only scrolls to the bottom of the previous
+        content area.
+
         @param pixelsScrolled:
                    the yOffset.
         """
@@ -74,21 +92,28 @@ class IScrollable(object):
 
 
     def isScrollable(self):
-        """Is the scrolling enabled.
+        """Is programmatic scrolling enabled.
 
-        Enabling scrolling allows the user to scroll the scrollable view
-        interactively
+        Whether programmatic scrolling with L{setScrollLeft} and
+        L{setScrollTop} is enabled.
 
-        @return: C{True} if the scrolling is allowed, otherwise C{False}.
+        @return: C{True} if the scrolling is enabled, otherwise C{False}.
         """
         raise NotImplementedError
 
 
     def setScrollable(self, isScrollingEnabled):
-        """Enables or disables scrolling..
+        """Enables or disables programmatic scrolling.
 
-        Enabling scrolling allows the user to scroll the scrollable view
-        interactively
+        Enables setting the scroll position with L{setScrollLeft} and
+        L{setScrollTop}. Implementations of the interface may have
+        programmatic scrolling disabled by default, in which case you
+        need to enable it to use the mentioned methods.
+
+        Notice that this does <i>not</i> control whether scroll bars are
+        shown for a scrollable component. That normally happens automatically
+        when the content grows too big for the component, relying on the
+        "overflow: auto" property in CSS.
 
         @param isScrollingEnabled:
                    true if the scrolling is allowed.

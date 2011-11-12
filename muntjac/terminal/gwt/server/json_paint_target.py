@@ -64,8 +64,10 @@ class JsonPaintTarget(IPaintTarget):
         @param outWriter:
                    A character-output stream.
         @param cachingRequired:
+                   True if this is not a full repaint, i.e. caches are to
+                   be used.
         @raise PaintException:
-                    if the paint operation failed.
+                   if the paint operation failed.
         """
         self._manager = manager
 
@@ -606,6 +608,11 @@ class JsonPaintTarget(IPaintTarget):
 
     def getUsedPaintableTypes(self):
         return self._usedPaintableTypes
+
+
+    def isFullRepaint(self):
+        """@see L{PaintTarget.isFullRepaint}"""
+        return not self._cacheEnabled
 
 
 class JsonTag(object):

@@ -26,3 +26,4 @@ class VTextField(object):
     ATTR_TEXTCHANGE_TIMEOUT = 'iet'
     VAR_CURSOR = 'c'
     ATTR_TEXTCHANGE_EVENTMODE = 'iem'
+    ATTR_NO_VALUE_CHANGE_BETWEEN_PAINTS = "nvc"

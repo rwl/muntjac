@@ -51,6 +51,7 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
         self._inputPrompt = None
 
         #: The text content when the last messages to the server was sent.
+        #  Cleared when value is changed.
         self._lastKnownTextContent = None
 
         #: The position of the cursor when the last message to the server
@@ -114,6 +115,15 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
                     str(self.getTextChangeEventMode()))
             target.addAttribute(VTextField.ATTR_TEXTCHANGE_TIMEOUT,
                     self.getTextChangeTimeout())
+
+            if self._lastKnownTextContent is not None:
+                # The field has be repainted for some reason (e.g. caption,
+                # size, stylename), but the value has not been changed since
+                # the last text change event. Let the client side know about
+                # the value the server side knows. Client side may then ignore
+                # the actual value, depending on its state.
+                target.addAttribute(
+                        VTextField.ATTR_NO_VALUE_CHANGE_BETWEEN_PAINTS, True)
 
 
     def getFormattedValue(self):
@@ -375,6 +385,15 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
 
     def setInternalValue(self, newValue):
         if self._changingVariables and not self._textChangeEventPending:
+            # TODO: check for possible (minor?) issue (not tested)
+            #
+            #  -field with e.g. PropertyFormatter.
+            #
+            #  -TextChangeListener and it changes value.
+            #
+            #  -if formatter again changes the value, do we get an extra
+            #   simulated text change event ?
+
             # Fire a "simulated" text change event before value change event
             # if change is coming from the client side.
             #
@@ -398,7 +417,24 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
 
             self.firePendingTextChangeEvent()
 
+        # Reset lastKnownTextContent field on value change. We know the value
+        # now.
+        self._lastKnownTextContent = None
         super(AbstractTextField, self).setInternalValue(newValue)
+
+
+    def setValue(self, newValue):
+        super(AbstractTextField, self).setValue(newValue)
+
+        # Make sure w reset lastKnownTextContent field on value change. The
+        # clearing must happen here as well because TextChangeListener can
+        # revert the original value. Client must respect the value in this
+        # case. AbstractField optimizes value change if the existing value is
+        # reset. Also we need to force repaint if the flag is on.
+
+        if self._lastKnownTextContent is not None:
+            self._lastKnownTextContent = None
+            self.requestRepaint()
 
 
     def handleInputEventTextChange(self, variables):

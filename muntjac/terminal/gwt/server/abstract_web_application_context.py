@@ -18,6 +18,7 @@
 tasks."""
 
 import logging
+import urllib
 
 from muntjac.service.application_context import IApplicationContext
 from muntjac.terminal.gwt.server.web_browser import WebBrowser
@@ -133,7 +134,16 @@ class AbstractWebApplicationContext(IApplicationContext):
         if filename is None:
             return 'app://APP/' + mapKey + '/'
         else:
-            return 'app://APP/' + mapKey + '/' + filename
+            # In case serlet container refuses requests containing
+            # encoded slashes or backslashes in URLs. Application resource URLs
+            # should really be passed in another way than as part of the path
+            # in the future.
+            encodedFileName = self.urlEncode(filename)
+            return "app://APP/" + mapKey + "/" + encodedFileName
+
+
+    def urlEncode(self, filename):
+        return urllib.quote(filename, safe='/\\')
 
 
     def isApplicationResourceURL(self, context, relativeUri):

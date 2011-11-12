@@ -84,10 +84,9 @@ class AbstractField(AbstractComponent, field.IField,
         #: Is the field modified but not committed.
         self._modified = False
 
-        #: Should value change event propagation from property data source
-        #  to listeners of the field be suppressed. This is used internally
-        #  while the field makes changes to the property value.
-        self._suppressValueChangePropagation = False
+        #: Flag to indicate that the field is currently committing its
+        #  value to the datasource.
+        self._committingValueToDataSource = False
 
         #: Current source exception.
         self._currentBufferedSourceException = None
@@ -115,6 +114,8 @@ class AbstractField(AbstractComponent, field.IField,
         #  handling/notifying is delegated, usually to the containing window.
         self._actionManager = None
 
+        self._valueWasModifiedByDataSourceDuringCommit = False
+
 
     def paintContent(self, target):
 
@@ -131,10 +132,25 @@ class AbstractField(AbstractComponent, field.IField,
             target.addAttribute('required', True)
 
         # Hide the error indicator if needed
-        if (self.isRequired() and self.isEmpty()
-                and self.getComponentError() is None
-                and self.getErrorMessage() is not None):
+        if self.shouldHideErrors():
             target.addAttribute('hideErrors', True)
+
+
+
+    def shouldHideErrors(self):
+        """Returns true if the error indicator be hidden when painting the
+        component even when there are errors.
+
+        This is a mostly internal method, but can be overridden in subclasses
+        e.g. if the error indicator should also be shown for empty fields in
+        some cases.
+
+        @return: true to hide the error indicator, false to use the normal
+                 logic to show it when there are errors
+        """
+        return (self.isRequired() and self.isEmpty()
+                and self.getComponentError() == None
+                and self.getErrorMessage() != None)
 
 
     def getType(self):
@@ -186,7 +202,8 @@ class AbstractField(AbstractComponent, field.IField,
                 newValue = self.getValue()
                 try:
                     # Commits the value to datasource.
-                    self._suppressValueChangePropagation = True
+                    self._valueWasModifiedByDataSourceDuringCommit = False
+                    self._committingValueToDataSource = True
                     self._dataSource.setValue(newValue)
 
                 except Exception, e:
@@ -198,7 +215,7 @@ class AbstractField(AbstractComponent, field.IField,
                     # Throws the source exception.
                     raise self._currentBufferedSourceException
                 finally:
-                    self._suppressValueChangePropagation = False
+                    self._committingValueToDataSource = False
 
             else:
                 # An invalid value and we don't allow
@@ -217,7 +234,10 @@ class AbstractField(AbstractComponent, field.IField,
             self._currentBufferedSourceException = None
             repaintNeeded = True
 
-        if repaintNeeded:
+        if self._valueWasModifiedByDataSourceDuringCommit:
+            self._valueWasModifiedByDataSourceDuringCommit = False
+            self.fireValueChange(False)
+        elif repaintNeeded:
             self.requestRepaint()
 
 
@@ -382,13 +402,14 @@ class AbstractField(AbstractComponent, field.IField,
             self.setInternalValue(newValue)
             self._modified = self._dataSource is not None
 
+            self._valueWasModifiedByDataSourceDuringCommit = False
             # In write through mode , try to commit
             if (self.isWriteThrough() and (self._dataSource is not None)
                     and (self.isInvalidCommitted() or self.isValid())):
                 try:
 
                     # Commits the value to datasource
-                    self._suppressValueChangePropagation = True
+                    self._committingValueToDataSource = True
                     self._dataSource.setValue(newValue)
 
                     # The buffer is now unmodified
@@ -403,12 +424,18 @@ class AbstractField(AbstractComponent, field.IField,
                     # Throws the source exception
                     raise self._currentBufferedSourceException
                 finally:
-                    self._suppressValueChangePropagation = False
+                    self._committingValueToDataSource = False
 
             # If successful, remove set the buffering state to be ok
             if self._currentBufferedSourceException is not None:
                 self._currentBufferedSourceException = None
                 self.requestRepaint()
+
+            if self._valueWasModifiedByDataSourceDuringCommit:
+                # Value was modified by datasource. Force repaint even if
+                # repaint was not requested.
+                self._valueWasModifiedByDataSourceDuringCommit = \
+                    repaintIsNotNeeded = False
 
             # Fires the value change
             self.fireValueChange(repaintIsNotNeeded)
@@ -792,6 +819,34 @@ class AbstractField(AbstractComponent, field.IField,
                 and (self.isReadThrough() and not self.isModified())):
             self.setInternalValue( event.getProperty().getValue() )
             self.fireValueChange(False)
+
+        if self.isReadThrough():
+            if self._committingValueToDataSource:
+
+                propertyNotifiesOfTheBufferedValue = \
+                    (event.getProperty().getValue() == self._value
+                        or (self._value is not None
+                            and self._value == event.getProperty().getValue()))
+
+                if not propertyNotifiesOfTheBufferedValue:
+                    # Property (or chained property like PropertyFormatter)
+                    # now reports different value than the one the field has
+                    # just committed to it. In this case we respect the
+                    # property value.
+
+                    # Still, we don't fire value change yet, but instead
+                    # postpone it until "commit" is done. See L{setValue}
+                    # and commit().
+                    self.readValueFromProperty(event)
+                    self._valueWasModifiedByDataSourceDuringCommit = True
+
+            elif not self.isModified():
+                self.readValueFromProperty(event)
+                self.fireValueChange(False)
+
+
+    def readValueFromProperty(self, event):
+        self.setInternalValue(event.getProperty().getValue())
 
 
     def changeVariables(self, source, variables):

@@ -212,3 +212,10 @@ class IPaintTarget(object):
                 paintable.
         """
         raise NotImplementedError
+
+
+    def isFullRepaint(self):
+        """@return true if a full repaint has been requested. E.g. refresh
+        in a browser window or such.
+        """
+        raise NotImplementedError
