@@ -1,334 +1,129 @@
-# -*- coding: utf-8 -*-
-# @ITMillApache2LicenseForJavaFiles@
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.ui.Tree import (Tree,)
-from com.vaadin.ui.treetable.HierarchicalContainerOrderedWrapper import (HierarchicalContainerOrderedWrapper,)
-from com.vaadin.data.Container import (Container,)
-from com.vaadin.terminal.gwt.client.ui.VTreeTable import (VTreeTable,)
-from com.vaadin.ui.Table import (Table,)
-from com.vaadin.data.util.ContainerHierarchicalWrapper import (ContainerHierarchicalWrapper,)
-from com.vaadin.ui.treetable.Collapsible import (Collapsible,)
-from com.vaadin.data.util.HierarchicalContainer import (HierarchicalContainer,)
+# Copyright (C) 2010 IT Mill Ltd.
+# Copyright (C) 2011 Richard Lincoln
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+import logging
+
+from muntjac.ui.tree \
+    import ExpandEvent, IExpandListener, CollapseEvent, ICollapseListener, \
+    COLLAPSE_METHOD, EXPAND_METHOD
+
+from muntjac.ui.treetable.hierarchical_container_ordered_wrapper \
+    import HierarchicalContainerOrderedWrapper
+
+from muntjac.data.container import IOrdered, IHierarchical
+from muntjac.terminal.gwt.client.ui.v_tree_table import VTreeTable
+from muntjac.ui.table import Table
+
+from muntjac.data.util.container_hierarchical_wrapper \
+    import ContainerHierarchicalWrapper
+
+from muntjac.ui.treetable.collapsible import ICollapsible
+from muntjac.data.util.hierarchical_container import HierarchicalContainer
+
 # from com.google.gwt.user.client.ui.Tree import (Tree,)
-# from java.io.Serializable import (Serializable,)
-# from java.util.ArrayList import (ArrayList,)
-# from java.util.Collection import (Collection,)
-# from java.util.Collections import (Collections,)
-# from java.util.HashSet import (HashSet,)
-# from java.util.List import (List,)
-# from java.util.Map import (Map,)
-# from java.util.logging.Logger import (Logger,)
-ExpandEvent = Tree.ExpandEvent
-ExpandListener = Tree.ExpandListener
-CollapseEvent = Tree.CollapseEvent
-CollapseListener = Tree.CollapseListener
-Ordered = Container.Ordered
-Hierarchical = Container.Hierarchical
 
 
-class TreeTable(Table, Hierarchical):
-    """TreeTable extends the {@link Table} component so that it can also visualize a
-    hierarchy of its Items in a similar manner that {@link Tree} does. The tree
-    hierarchy is always displayed in the first actual column of the TreeTable.
-    <p>
-    The TreeTable supports the usual {@link Table} features like lazy loading, so
-    it should be no problem to display lots of items at once. Only required rows
-    and some cache rows are sent to the client.
-    <p>
-    TreeTable supports standard {@link Hierarchical} container interfaces, but
-    also a more fine tuned version - {@link Collapsible}. A container
-    implementing the {@link Collapsible} interface stores the collapsed/expanded
+logger = logging.getLogger(__name__)
+
+
+class TreeTable(Table, IHierarchical):
+    """TreeTable extends the L{Table} component so that it can also visualize
+    a hierarchy of its Items in a similar manner that {@link Tree} does. The
+    tree hierarchy is always displayed in the first actual column of the
+    TreeTable.
+
+    The TreeTable supports the usual {@link Table} features like lazy loading,
+    so it should be no problem to display lots of items at once. Only required
+    rows and some cache rows are sent to the client.
+
+    TreeTable supports standard L{IHierarchical} container interfaces, but
+    also a more fine tuned version - L{ICollapsible}. A container
+    implementing the L{ICollapsible} interface stores the collapsed/expanded
     state internally and can this way scale better on the server side than with
     standard Hierarchical implementations. Developer must however note that
-    {@link Collapsible} containers can not be shared among several users as they
+    L{ICollapsible} containers can not be shared among several users as they
     share UI state in the container.
     """
-    _logger = Logger.getLogger(TreeTable.getName())
 
-    class ContainerStrategy(Serializable):
+    def __init__(self, caption=None, dataSource=None):
+        """Creates a TreeTable instance with optional captions and data source.
 
-        def size(self):
-            pass
-
-        def isNodeOpen(self, itemId):
-            pass
-
-        def getDepth(self, itemId):
-            pass
-
-        def toggleChildVisibility(self, itemId):
-            pass
-
-        def getIdByIndex(self, index):
-            pass
-
-        def indexOfId(self, id):
-            pass
-
-        def nextItemId(self, itemId):
-            pass
-
-        def lastItemId(self):
-            pass
-
-        def prevItemId(self, itemId):
-            pass
-
-        def isLastId(self, itemId):
-            pass
-
-        def getItemIds(self):
-            pass
-
-        def containerItemSetChange(self, event):
-            pass
-
-    def AbstractStrategy(TreeTable_this, *args, **kwargs):
-
-        class AbstractStrategy(ContainerStrategy):
-
-            def getDepth(self, itemId):
-                """Consider adding getDepth to {@link Collapsible}, might help
-                scalability with some container implementations.
-                """
-                depth = 0
-                hierarchicalContainer = TreeTable_this.getContainerDataSource()
-                while not hierarchicalContainer.isRoot(itemId):
-                    depth += 1
-                    itemId = hierarchicalContainer.getParent(itemId)
-                return depth
-
-            def containerItemSetChange(self, event):
-                pass
-
-        return AbstractStrategy(*args, **kwargs)
-
-    def CollapsibleStrategy(TreeTable_this, *args, **kwargs):
-
-        class CollapsibleStrategy(AbstractStrategy):
-            """This strategy is used if current container implements {@link Collapsible}
-            .
-
-            open-collapsed logic diverted to container, otherwise use default
-            implementations.
-            """
-
-            def c(self):
-                return TreeTable_this.getContainerDataSource()
-
-            def toggleChildVisibility(self, itemId):
-                self.c().setCollapsed(itemId, not self.c().isCollapsed(itemId))
-
-            def isNodeOpen(self, itemId):
-                return not self.c().isCollapsed(itemId)
-
-            def size(self):
-                # return TreeTable.super.size();
-                pass
-
-            def getIdByIndex(self, index):
-                # return TreeTable.super.getIdByIndex(index);
-                pass
-
-            def indexOfId(self, id):
-                # return TreeTable.super.indexOfId(id);
-                pass
-
-            def isLastId(self, itemId):
-                # using the default impl
-                # return TreeTable.super.isLastId(itemId);
-                pass
-
-            def lastItemId(self):
-                # using the default impl
-                # return TreeTable.super.lastItemId();
-                pass
-
-            def nextItemId(self, itemId):
-                # return TreeTable.super.nextItemId(itemId);
-                pass
-
-            def prevItemId(self, itemId):
-                # return TreeTable.super.prevItemId(itemId);
-                pass
-
-            def getItemIds(self):
-                # return TreeTable.super.getItemIds();
-                pass
-
-        return CollapsibleStrategy(*args, **kwargs)
-
-    def HierarchicalStrategy(TreeTable_this, *args, **kwargs):
-
-        class HierarchicalStrategy(AbstractStrategy):
-            """Strategy for Hierarchical but not Collapsible container like
-            {@link HierarchicalContainer}.
-
-            Store collapsed/open states internally, fool Table to use preorder when
-            accessing items from container via Ordered/Indexed methods.
-            """
-            _openItems = set()
-
-            def isNodeOpen(self, itemId):
-                return itemId in self._openItems
-
-            def size(self):
-                return len(self.getPreOrder())
-
-            def getItemIds(self):
-                return Collections.unmodifiableCollection(self.getPreOrder())
-
-            def isLastId(self, itemId):
-                if itemId is None:
-                    return False
-                return itemId == self.lastItemId()
-
-            def lastItemId(self):
-                if len(self.getPreOrder()) > 0:
-                    return self.getPreOrder().get(len(self.getPreOrder()) - 1)
-                else:
-                    return None
-
-            def nextItemId(self, itemId):
-                indexOf = self.getPreOrder().index(itemId)
-                if indexOf == -1:
-                    return None
-                indexOf += 1
-                if indexOf == len(self.getPreOrder()):
-                    return None
-                else:
-                    return self.getPreOrder().get(indexOf)
-
-            def prevItemId(self, itemId):
-                indexOf = self.getPreOrder().index(itemId)
-                indexOf -= 1
-                if indexOf < 0:
-                    return None
-                else:
-                    return self.getPreOrder().get(indexOf)
-
-            def toggleChildVisibility(self, itemId):
-                removed = self._openItems.remove(itemId)
-                if not removed:
-                    self._openItems.add(itemId)
-                    TreeTable_this._logger.finest('Item ' + itemId + ' is now expanded')
-                else:
-                    TreeTable_this._logger.finest('Item ' + itemId + ' is now collapsed')
-                self.clearPreorderCache()
-
-            def clearPreorderCache(self):
-                self._preOrder = None
-                # clear preorder cache
-
-            _preOrder = None
-
-            def getPreOrder(self):
-                """Preorder of ids currently visible
-
-                @return
-                """
-                if self._preOrder is None:
-                    self._preOrder = list()
-                    rootItemIds = TreeTable_this.getContainerDataSource().rootItemIds()
-                    for id in rootItemIds:
-                        self._preOrder.add(id)
-                        self.addVisibleChildTree(id)
-                return self._preOrder
-
-            def addVisibleChildTree(self, id):
-                if self.isNodeOpen(id):
-                    children = TreeTable_this.getContainerDataSource().getChildren(id)
-                    if children is not None:
-                        for childId in children:
-                            self._preOrder.add(childId)
-                            self.addVisibleChildTree(childId)
-
-            def indexOfId(self, id):
-                return self.getPreOrder().index(id)
-
-            def getIdByIndex(self, index):
-                return self.getPreOrder().get(index)
-
-            def containerItemSetChange(self, event):
-                # preorder becomes invalid on sort, item additions etc.
-                self.clearPreorderCache()
-                super(HierarchicalStrategy, self).containerItemSetChange(event)
-
-        return HierarchicalStrategy(*args, **kwargs)
-
-    def __init__(self, *args):
-        """Creates an empty TreeTable with a default container.
-        ---
-        Creates an empty TreeTable with a default container.
-
-        @param caption
-                   the caption for the TreeTable
-        ---
-        Creates a TreeTable instance with given captions and data source.
-
-        @param caption
+        @param caption:
                    the caption for the component
-        @param dataSource
+        @param dataSource:
                    the dataSource that is used to list items in the component
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 0:
-            super(TreeTable, self)(None, HierarchicalContainer())
-        elif _1 == 1:
-            caption, = _0
-            self.__init__()
-            self.setCaption(caption)
-        elif _1 == 2:
-            caption, dataSource = _0
-            super(TreeTable, self)(caption, dataSource)
-        else:
-            raise ARGERROR(0, 2)
+        if dataSource is None:
+            dataSource = HierarchicalContainer()
 
-    _cStrategy = None
-    _focusedRowId = None
-    _hierarchyColumnId = None
-    # The item id that was expanded or collapsed during this request. Reset at
-    # the end of paint and only used for determining if a partial or full paint
-    # should be done.
-    # 
-    # Can safely be reset to null whenever a change occurs that would prevent a
-    # partial update from rendering the correct result, e.g. rows added or
-    # removed during an expand operation.
+        super(TreeTable, self)(caption, dataSource)
 
-    _toggledItemId = None
-    _animationsEnabled = None
-    _clearFocusedRowPending = None
+
+        self._cStrategy = None
+        self._focusedRowId = None
+        self._hierarchyColumnId = None
+
+        # The item id that was expanded or collapsed during this request. Reset
+        # at the end of paint and only used for determining if a partial or
+        # full paint should be done.
+        #
+        # Can safely be reset to null whenever a change occurs that would
+        # prevent a partial update from rendering the correct result, e.g. rows
+        # added or removed during an expand operation.
+        self._toggledItemId = None
+        self._animationsEnabled = None
+        self._clearFocusedRowPending = None
+
 
     def getContainerStrategy(self):
         if self._cStrategy is None:
-            if isinstance(self.getContainerDataSource(), Collapsible):
-                self._cStrategy = self.CollapsibleStrategy()
+            if isinstance(self.getContainerDataSource(), ICollapsible):
+                self._cStrategy = CollapsibleStrategy(self)
             else:
-                self._cStrategy = self.HierarchicalStrategy()
+                self._cStrategy = HierarchicalStrategy(self)
         return self._cStrategy
+
 
     def paintRowAttributes(self, target, itemId):
         super(TreeTable, self).paintRowAttributes(target, itemId)
-        target.addAttribute('depth', self.getContainerStrategy().getDepth(itemId))
+        depth = self.getContainerStrategy().getDepth(itemId)
+        target.addAttribute('depth', depth)
         if self.getContainerDataSource().areChildrenAllowed(itemId):
             target.addAttribute('ca', True)
-            target.addAttribute('open', self.getContainerStrategy().isNodeOpen(itemId))
+            isOpen = self.getContainerStrategy().isNodeOpen(itemId)
+            target.addAttribute('open', isOpen)
+
 
     def paintRowIcon(self, target, cells, indexInRowbuffer):
         # always paint if present (in parent only if row headers visible)
         if self.getRowHeaderMode() == self.ROW_HEADER_MODE_HIDDEN:
-            itemIcon = self.getItemIcon(cells[self.CELL_ITEMID][indexInRowbuffer])
+            cell = cells[self.CELL_ITEMID][indexInRowbuffer]
+            itemIcon = self.getItemIcon(cell)
             if itemIcon is not None:
                 target.addAttribute('icon', itemIcon)
         elif cells[self.CELL_ICON][indexInRowbuffer] is not None:
-            target.addAttribute('icon', cells[self.CELL_ICON][indexInRowbuffer])
+            cell = cells[self.CELL_ICON][indexInRowbuffer]
+            target.addAttribute('icon', cell)
+
 
     def changeVariables(self, source, variables):
         super(TreeTable, self).changeVariables(source, variables)
         if 'toggleCollapsed' in variables:
-            object = variables['toggleCollapsed']
-            itemId = self.itemIdMapper.get(object)
+            obj = variables.get('toggleCollapsed')
+            itemId = self.itemIdMapper.get(obj)
             self._toggledItemId = itemId
             self.toggleChildVisibility(itemId)
             if 'selectCollapsed' in variables:
@@ -337,10 +132,11 @@ class TreeTable(Table, Hierarchical):
                 if self.isSelectable():
                     self.select(itemId)
         elif 'focusParent' in variables:
-            key = variables['focusParent']
+            key = variables.get('focusParent')
             refId = self.itemIdMapper.get(key)
             itemId = self.getParent(refId)
             self.focusParent(itemId)
+
 
     def focusParent(self, itemId):
         inView = False
@@ -460,9 +256,9 @@ class TreeTable(Table, Hierarchical):
 
     def setContainerDataSource(self, newDataSource):
         self._cStrategy = None
-        if not isinstance(newDataSource, Hierarchical):
+        if not isinstance(newDataSource, IHierarchical):
             newDataSource = ContainerHierarchicalWrapper(newDataSource)
-        if not isinstance(newDataSource, Ordered):
+        if not isinstance(newDataSource, IOrdered):
             newDataSource = HierarchicalContainerOrderedWrapper(newDataSource)
         super(TreeTable, self).setContainerDataSource(newDataSource)
 
@@ -557,7 +353,7 @@ class TreeTable(Table, Hierarchical):
         """
         return self._hierarchyColumnId
 
-    def addListener(self, *args):
+    def addListener(self, listener, iface=None):
         """Adds an expand listener.
 
         @param listener
@@ -568,45 +364,28 @@ class TreeTable(Table, Hierarchical):
         @param listener
                    the Listener to be added.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            if isinstance(_0[0], CollapseListener):
-                listener, = _0
-                self.addListener(CollapseEvent, listener, CollapseListener.COLLAPSE_METHOD)
-            else:
-                listener, = _0
-                self.addListener(ExpandEvent, listener, ExpandListener.EXPAND_METHOD)
+        if isinstance(listener, ICollapseListener):
+            self.addListener(CollapseEvent, listener, COLLAPSE_METHOD)
         else:
-            raise ARGERROR(1, 1)
+            self.addListener(ExpandEvent, listener, EXPAND_METHOD)
 
-    def removeListener(self, *args):
-        """Removes an expand listener.
 
-        @param listener
-                   the Listener to be removed.
-        ---
-        Removes a collapse listener.
+    def removeListener(self, listener, iface=None):
+        """Removes an expand or collapselistener.
 
-        @param listener
+        @param listener:
                    the Listener to be removed.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            if isinstance(_0[0], CollapseListener):
-                listener, = _0
-                self.removeListener(CollapseEvent, listener, CollapseListener.COLLAPSE_METHOD)
-            else:
-                listener, = _0
-                self.removeListener(ExpandEvent, listener, ExpandListener.EXPAND_METHOD)
+        if isinstance(listener, ICollapseListener):
+            self.removeListener(CollapseEvent, listener, COLLAPSE_METHOD)
         else:
-            raise ARGERROR(1, 1)
+            self.removeListener(ExpandEvent, listener, EXPAND_METHOD)
+
 
     def fireExpandEvent(self, itemId):
         """Emits an expand event.
 
-        @param itemId
+        @param itemId:
                    the item id.
         """
         self.fireEvent(ExpandEvent(self, itemId))
@@ -633,3 +412,246 @@ class TreeTable(Table, Hierarchical):
         """
         self._animationsEnabled = animationsEnabled
         self.requestRepaint()
+
+
+class IContainerStrategy(object):
+
+    def size(self):
+        raise NotImplementedError
+
+    def __len__(self):
+        return self.size()
+
+    def isNodeOpen(self, itemId):
+        raise NotImplementedError
+
+    def getDepth(self, itemId):
+        raise NotImplementedError
+
+    def toggleChildVisibility(self, itemId):
+        raise NotImplementedError
+
+    def getIdByIndex(self, index):
+        raise NotImplementedError
+
+    def indexOfId(self, idd):
+        raise NotImplementedError
+
+    def nextItemId(self, itemId):
+        raise NotImplementedError
+
+    def lastItemId(self):
+        raise NotImplementedError
+
+    def prevItemId(self, itemId):
+        raise NotImplementedError
+
+    def isLastId(self, itemId):
+        raise NotImplementedError
+
+    def getItemIds(self):
+        raise NotImplementedError
+
+    def containerItemSetChange(self, event):
+        raise NotImplementedError
+
+
+class AbstractStrategy(IContainerStrategy):
+
+    def __init__(self, treetable):
+        self._treetable = treetable
+
+
+    def getDepth(self, itemId):
+        """Consider adding getDepth to L{ICollapsible}, might help
+        scalability with some container implementations.
+        """
+        depth = 0
+        hierarchicalContainer = self._treetable.getContainerDataSource()
+        while not hierarchicalContainer.isRoot(itemId):
+            depth += 1
+            itemId = hierarchicalContainer.getParent(itemId)
+        return depth
+
+
+    def containerItemSetChange(self, event):
+        pass
+
+
+class CollapsibleStrategy(AbstractStrategy):
+    """This strategy is used if current container implements L{Collapsible}.
+
+    Open-collapsed logic diverted to container, otherwise use default
+    implementations.
+    """
+
+    def c(self):
+        return self._treetable.getContainerDataSource()
+
+
+    def toggleChildVisibility(self, itemId):
+        self.c().setCollapsed(itemId, not self.c().isCollapsed(itemId))
+
+
+    def isNodeOpen(self, itemId):
+        return not self.c().isCollapsed(itemId)
+
+
+    def size(self):
+        super(TreeTable, self._treetable).size()
+
+
+    def getIdByIndex(self, index):
+        super(TreeTable, self._treetable).getIdByIndex(index)
+
+
+    def indexOfId(self, idd):
+        super(TreeTable, self._treetable).indexOfId(idd)
+
+
+    def isLastId(self, itemId):
+        # using the default impl
+        super(TreeTable, self._treetable).isLastId(itemId)
+
+
+    def lastItemId(self):
+        # using the default impl
+        super(TreeTable, self._treetable).lastItemId()
+
+
+    def nextItemId(self, itemId):
+        super(TreeTable, self._treetable).nextItemId(itemId)
+
+
+    def prevItemId(self, itemId):
+        super(TreeTable, self._treetable).prevItemId(itemId)
+
+
+    def getItemIds(self):
+        super(TreeTable, self._treetable).getItemIds()
+
+
+class HierarchicalStrategy(AbstractStrategy):
+    """Strategy for Hierarchical but not Collapsible container like
+    L{HierarchicalContainer}.
+
+    Store collapsed/open states internally, fool Table to use preorder when
+    accessing items from container via Ordered/Indexed methods.
+    """
+
+    def __init__(self, treetable):
+        self._openItems = set()
+        self._preOrder = None
+
+        super(HierarchicalStrategy, self).__init__(treetable)
+
+
+    def isNodeOpen(self, itemId):
+        return itemId in self._openItems
+
+
+    def size(self):
+        return len(self.getPreOrder())
+
+
+    def getItemIds(self):
+        return list(self.getPreOrder())
+
+
+    def isLastId(self, itemId):
+        if itemId is None:
+            return False
+        return itemId == self.lastItemId()
+
+
+    def lastItemId(self):
+        if len(self.getPreOrder()) > 0:
+            return self.getPreOrder().get(len(self.getPreOrder()) - 1)
+        else:
+            return None
+
+
+    def nextItemId(self, itemId):
+        try:
+            indexOf = self.getPreOrder().index(itemId)
+        except ValueError:
+            return None
+
+        indexOf += 1
+
+        if indexOf == len(self.getPreOrder()):
+            return None
+        else:
+            return self.getPreOrder().get(indexOf)
+
+
+    def prevItemId(self, itemId):
+        try:
+            indexOf = self.getPreOrder().index(itemId)
+        except ValueError:
+            indexOf = -1
+        indexOf -= 1
+        if indexOf < 0:
+            return None
+        else:
+            return self.getPreOrder().get(indexOf)
+
+
+    def toggleChildVisibility(self, itemId):
+        if itemId in self._openItems:
+            self._openItems.remove(itemId)
+            removed = True
+        else:
+            removed = False
+
+        if not removed:
+            self._openItems.add(itemId)
+            logger.debug('Item ' + itemId + ' is now expanded')
+        else:
+            logger.debug('Item ' + itemId + ' is now collapsed')
+
+        self.clearPreorderCache()
+
+
+    def clearPreorderCache(self):
+        self._preOrder = None  # clear preorder cache
+
+
+    def getPreOrder(self):
+        """Preorder of ids currently visible.
+        """
+        if self._preOrder is None:
+            self._preOrder = list()
+            dataSource = self._treetable.getContainerDataSource()
+            rootItemIds = dataSource.rootItemIds()
+            for idd in rootItemIds:
+                self._preOrder.add(idd)
+                self.addVisibleChildTree(idd)
+        return self._preOrder
+
+
+    def addVisibleChildTree(self, idd):
+        if self.isNodeOpen(idd):
+            dataSource = self._treetable.getContainerDataSource()
+            children = dataSource.getChildren(idd)
+            if children is not None:
+                for childId in children:
+                    self._preOrder.add(childId)
+                    self.addVisibleChildTree(childId)
+
+
+    def indexOfId(self, idd):
+        try:
+            return self.getPreOrder().index(idd)
+        except ValueError:
+            return -1
+
+
+    def getIdByIndex(self, index):
+        return self.getPreOrder().get(index)
+
+
+    def containerItemSetChange(self, event):
+        # preorder becomes invalid on sort, item additions etc.
+        self.clearPreorderCache()
+        super(HierarchicalStrategy, self).containerItemSetChange(event)
