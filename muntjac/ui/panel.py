@@ -65,12 +65,12 @@ class Panel(AbstractComponentContainer, IScrollable,
 
         @param args: tuple of the form
             - (content)
-              1. the content for the panel.
+              1. the content for the panel (HTML/XHTML).
             - (caption)
-              1. the caption used in the panel.
+              1. the caption used in the panel (HTML/XHTML).
             - (caption, content)
               1. the caption of the panel.
-              2. the content used in the panel.
+              2. the content used in the panel (HTML/XHTML).
         """
         super(Panel, self).__init__()
 
@@ -113,6 +113,18 @@ class Panel(AbstractComponentContainer, IScrollable,
             self.setCaption(caption)
         else:
             raise ValueError, 'too many arguments'
+
+
+    def setCaption(self, caption):
+        """Sets the caption of the panel.
+
+        Note that the caption is interpreted as HTML/XHTML and therefore care
+        should be taken not to enable HTML injection and XSS attacks using
+        panel captions. This behavior may change in future versions.
+
+        @see L{AbstractComponent.setCaption}
+        """
+        super(Panel, self).setCaption(caption)
 
 
     def getLayout(self):
@@ -318,12 +330,33 @@ class Panel(AbstractComponentContainer, IScrollable,
 
 
     def setScrollable(self, isScrollingEnabled):
+        """Sets the panel as programmatically scrollable.
+
+        Panel is by default not scrollable programmatically with
+        L{setScrollLeft} and L{setScrollTop}, so if you use those methods,
+        you need to enable scrolling with this method. Components that
+        extend Panel may have a different default for the programmatic
+        scrollability.
+
+        @see: L{IScrollable.setScrollable}
+        """
         if self._scrollable != isScrollingEnabled:
             self._scrollable = isScrollingEnabled
             self.requestRepaint()
 
 
     def setScrollLeft(self, pixelsScrolled):
+        """Sets the horizontal scroll position.
+
+        Setting the horizontal scroll position with this method requires that
+        programmatic scrolling of the component has been enabled. For Panel it
+        is disabled by default, so you have to call L{setScrollable}.
+        Components extending Panel may have a different default for
+        programmatic scrollability.
+
+        @see: L{IScrollable.setScrollable}
+        @see: L{setScrollable}
+        """
         if pixelsScrolled < 0:
             raise ValueError, 'Scroll offset must be at least 0'
 
@@ -339,6 +372,17 @@ class Panel(AbstractComponentContainer, IScrollable,
 
 
     def setScrollTop(self, pixelsScrolledDown):
+        """Sets the vertical scroll position.
+
+        Setting the vertical scroll position with this method requires that
+        programmatic scrolling of the component has been enabled. For Panel
+        it is disabled by default, so you have to call L{setScrollable}.
+        Components extending Panel may have a different default for
+        programmatic scrollability.
+
+        @see: L{IScrollable.setScrollTop}
+        @see: L{setScrollable}
+        """
         if pixelsScrolledDown < 0:
             raise ValueError, 'Scroll offset must be at least 0'
         if self._scrollOffsetY != pixelsScrolledDown:

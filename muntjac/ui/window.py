@@ -249,6 +249,8 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
 
         This is always the window itself.
 
+        B{This method is not meant to be overridden.}
+
         @see: L{IComponent.getWindow}
         @return: the window itself
         """
@@ -267,6 +269,8 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
 
         The parent of an application window is always null. The parent of a
         sub window is the application window the sub window is attached to.
+
+        B{This method is not meant to be overridden.}
 
         @return: the parent window
         @see: L{IComponent.getParent}
@@ -540,6 +544,10 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
 
                 if n.getIcon() is not None:
                     target.addAttribute('icon', n.getIcon())
+
+                if not n.isHtmlContentAllowed():
+                    target.addAttribute(
+                            VView.NOTIFICATION_HTML_CONTENT_NOT_ALLOWED, True)
 
                 target.addAttribute('position', n.getPosition())
                 target.addAttribute('delay', n.getDelayMsec())
@@ -1175,6 +1183,9 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
         defined in L{Notification}, for instance
         Notification.TYPE_WARNING_MESSAGE, defaults to "humanized".
 
+        Care should be taken to to avoid XSS vulnerabilities as the caption is
+        rendered as html.
+
         @param args: tuple of the form
              - (caption)
                1. The message
@@ -1190,6 +1201,12 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
               3. The message type
             - (notification)
               1. The notification message to show
+            - (caption, description, type, htmlContentAllowed)
+              1. The message
+              2. The message description
+              3. The message type
+              4. Whether html in the caption and description should be
+                 displayed as html or as plain text
         """
         args = args
         nargs = len(args)
@@ -1210,6 +1227,10 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
         elif nargs == 3:
             caption, description, typ = args
             self.addNotification( Notification(caption, description, typ) )
+        elif nargs == 4:
+            caption, description, typ, htmlContentAllowed = args
+            n = Notification(caption, description, typ, htmlContentAllowed)
+            self.addNotification(n)
         else:
             raise ValueError, 'invalid number of arguments'
 
@@ -1523,6 +1544,9 @@ class Notification(object):
     def __init__(self, *args):
         """Creates a notification message.
 
+        Care should be taken to to avoid XSS vulnerabilities as the caption
+        and description are by default rendered as html.
+
         @param args: tuple of the form
             - (caption)
               1. The message to show
@@ -1536,6 +1560,12 @@ class Notification(object):
               1. The message caption
               2. The message description
               3. The type of message
+            - (caption, description, type, htmlContentAllowed)
+              1. The message caption
+              2. The message description
+              3. The type of message
+              4. Whether html in the caption and description should be
+                 displayed as html or as plain text
         """
         self._caption = None
         self._description = None
@@ -1543,6 +1573,7 @@ class Notification(object):
         self._position = self.POSITION_CENTERED
         self._delayMsec = 0
         self._styleName = None
+        self._htmlContentAllowed = True
 
         nargs = len(args)
         if nargs == 1:
@@ -1561,6 +1592,12 @@ class Notification(object):
             caption, description, typ = args
             self._caption = caption
             self._description = description
+            self.setType(typ)
+        elif nargs == 4:
+            caption, description, typ, htmlContentAllowed = args
+            self._caption = caption
+            self._description = description
+            self._htmlContentAllowed = htmlContentAllowed
             self.setType(typ)
         else:
             raise ValueError, 'invalid number of arguments'
@@ -1692,6 +1729,30 @@ class Notification(object):
         """Gets the style name for the notification message.
         """
         return self._styleName
+
+
+    def setHtmlContentAllowed(self, htmlContentAllowed):
+        """Sets whether html is allowed in the caption and description. If set
+        to true, the texts are passed to the browser as html and the
+        developer is responsible for ensuring no harmful html is used. If set
+        to false, the texts are passed to the browser as plain text.
+
+        @param htmlContentAllowed:
+                     true if the texts are used as html, false if used as plain
+                     text
+        """
+        self._htmlContentAllowed = htmlContentAllowed
+
+
+    def isHtmlContentAllowed(self):
+        """Checks whether caption and description are interpreted as html or
+        plain text.
+
+        @return: true if the texts are used as html, false if used as plain
+                 text
+        @see: L{setHtmlContentAllowed}
+        """
+        return self._htmlContentAllowed
 
 
 class CloseShortcut(ShortcutListener):

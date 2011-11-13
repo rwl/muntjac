@@ -20,6 +20,7 @@ from muntjac.application import Application
 from muntjac.ui.absolute_layout import AbsoluteLayout
 from muntjac.ui.accordion import Accordion
 from muntjac.ui.alignment import Alignment
+from muntjac.ui.audio import Audio
 from muntjac.ui.button import Button
 from muntjac.ui.check_box import CheckBox
 from muntjac.ui.combo_box import ComboBox
@@ -58,9 +59,11 @@ from muntjac.ui.table import Table
 from muntjac.ui.text_area import TextArea
 from muntjac.ui.text_field import TextField
 from muntjac.ui.tree import Tree
+from muntjac.ui.tree_table import TreeTable
 from muntjac.ui.twin_col_select import TwinColSelect
 from muntjac.ui.upload import Upload
 from muntjac.ui.uri_fragment_utility import UriFragmentUtility
 from muntjac.ui.vertical_layout import VerticalLayout
 from muntjac.ui.vertical_split_panel import VerticalSplitPanel
+from muntjac.ui.video import Video
 from muntjac.ui.window import Window

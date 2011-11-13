@@ -247,9 +247,7 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
         self._optionRequest = True
 
         # Hide the error indicator if needed
-        if (self.isRequired() and self.isEmpty()
-                and (self.getComponentError() is None)
-                and (self.getErrorMessage() is not None)):
+        if self.shouldHideErrors():
             target.addAttribute('hideErrors', True)
 
 

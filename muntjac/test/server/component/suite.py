@@ -21,7 +21,7 @@ from component_position import ComponentPosition
 from css_layout_listeners import CssLayoutListeners
 from date_field_listeners import DateFieldListeners
 from embedded_listeners import EmbeddedListeners
-#from empty_tree_table import EmptyTreeTable
+from empty_tree_table import EmptyTreeTable
 from grid_layout_listeners import GridLayoutListeners
 from label_listeners import LabelListeners
 from login_form_listeners import LoginFormListeners
@@ -65,7 +65,7 @@ def suite():
     suite.addTest( unittest.makeSuite(CssLayoutListeners) )
     suite.addTest( unittest.makeSuite(DateFieldListeners) )
     suite.addTest( unittest.makeSuite(EmbeddedListeners) )
-#    suite.addTest( unittest.makeSuite(EmptyTreeTable) )
+    suite.addTest( unittest.makeSuite(EmptyTreeTable) )
     suite.addTest( unittest.makeSuite(GridLayoutListeners) )
     suite.addTest( unittest.makeSuite(LabelListeners) )
     suite.addTest( unittest.makeSuite(LoginFormListeners) )

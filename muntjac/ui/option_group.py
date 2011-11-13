@@ -21,6 +21,8 @@ from muntjac.event.field_events import \
     BlurEvent, IBlurListener, IBlurNotifier, FocusEvent, \
     IFocusListener, IFocusNotifier
 
+from muntjac.terminal.gwt.client.ui.v_option_group import VOptionGroup
+
 
 class OptionGroup(AbstractSelect, IBlurNotifier, IFocusNotifier):
     """Configures select to be used as an option group."""
@@ -29,6 +31,8 @@ class OptionGroup(AbstractSelect, IBlurNotifier, IFocusNotifier):
 
     def __init__(self, *args):
         self._disabledItemIds = set()
+
+        self._htmlContentAllowed = False
 
         args = args
         nargs = len(args)
@@ -50,6 +54,8 @@ class OptionGroup(AbstractSelect, IBlurNotifier, IFocusNotifier):
 
     def paintContent(self, target):
         target.addAttribute('type', 'optiongroup')
+        if self._isHtmlContentAllowed:
+            target.addAttribute(VOptionGroup.HTML_CONTENT_ALLOWED, True)
         super(OptionGroup, self).paintContent(target)
 
 
@@ -190,3 +196,27 @@ class OptionGroup(AbstractSelect, IBlurNotifier, IFocusNotifier):
             return not (itemId in self._disabledItemIds)
 
         return True
+
+
+    def setHtmlContentAllowed(self, htmlContentAllowed):
+        """Sets whether html is allowed in the item captions. If set to true,
+        the captions are passed to the browser as html and the developer is
+        responsible for ensuring no harmful html is used. If set to false, the
+        content is passed to the browser as plain text.
+
+        @param htmlContentAllowed:
+                 true if the captions are used as html, false if used as plain
+                 text
+        """
+        self._htmlContentAllowed = htmlContentAllowed
+        self.requestRepaint()
+
+
+    def isHtmlContentAllowed(self):
+        """Checks whether captions are interpreted as html or plain text.
+
+        @return: true if the captions are used as html, false if used as plain
+                 text
+        @see: L{setHtmlContentAllowed}
+        """
+        return self._htmlContentAllowed

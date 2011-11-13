@@ -25,6 +25,8 @@ from muntjac.data.property import IProperty
 
 from muntjac.terminal.gwt.client.mouse_event_details import MouseEventDetails
 
+from muntjac.terminal.gwt.client.ui.v_button import VButton
+
 from muntjac.event.field_events import \
     (BlurEvent, IBlurListener, IBlurNotifier, FocusEvent,
     IFocusListener, IFocusNotifier)
@@ -85,6 +87,9 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
         super(Button, self).__init__()
 
         self._switchMode = False
+
+        self._disableOnClick = False
+
         self.clickShortcut = None
 
         nargs = len(args)
@@ -137,6 +142,9 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
 
         target.addVariable(self, 'state', self.booleanValue())
 
+        if self.isDisableOnClick():
+            target.addAttribute(VButton.ATTR_DISABLE_ON_CLICK, True)
+
         if self.clickShortcut is not None:
             target.addAttribute('keycode', self.clickShortcut.getKeyCode())
 
@@ -146,6 +154,11 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
         listeners are notified if the button is clicked.
         """
         super(Button, self).changeVariables(source, variables)
+
+        if "disabledOnClick" in variables:
+            # Could be optimized so the button is not repainted because
+            # of this (client side has already disabled the button)
+            self.setEnabled(False)
 
         if not self.isReadOnly() and 'state' in variables:
             # Gets the new and old button states
@@ -374,6 +387,27 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
         if self.clickShortcut is not None:
             self.removeShortcutListener(self.clickShortcut)
             self.clickShortcut = None
+
+
+    def isDisableOnClick(self):
+        """Determines if a button is automatically disabled when clicked. See
+        L{setDisableOnClick} for details.
+
+        @return: true if the button is disabled when clicked, false otherwise
+        """
+        return self._disableOnClick
+
+
+    def setDisableOnClick(self, disableOnClick):
+        """Determines if a button is automatically disabled when clicked. If
+        this is set to true the button will be automatically disabled when
+        clicked, typically to prevent (accidental) extra clicks on a button.
+
+        @param disableOnClick:
+                  true to disable button when it is clicked, false otherwise
+        """
+        self.disableOnClick = disableOnClick
+        self.requestRepaint()
 
 
 class ClickShortcut(ShortcutListener):

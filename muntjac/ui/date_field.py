@@ -113,6 +113,8 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
 
         self._defaultParseErrorMessage = 'Date format not recognized'
 
+        self._timeZone = None
+
         #: Specified smallest modifiable unit.
         self._resolution = self.RESOLUTION_MSEC
 
@@ -209,6 +211,11 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
                 target.addVariable(self, 'year', t)
 
             r += 1
+
+
+    def shouldHideErrors(self):
+        shouldHideErrors = super(DateField, self).shouldHideErrors()
+        return shouldHideErrors and self._uiHasValidDateString
 
 
     def changeVariables(self, source, variables):
@@ -383,6 +390,9 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
         else:
             try:
                 # Try to parse the given string value to Date
+                currentTimeZone = self.getTimeZone()
+                if currentTimeZone is not None:
+                    currentTimeZone  # FIXME: parse according to timezone
                 val = datetime.strptime(str(newValue),
                         locale.nl_langinfo(locale.D_FMT))
                 super(DateField, self).setValue(val, repaintIsNotNeeded)
@@ -478,10 +488,16 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
         # Clone the instance
         timestamp = totalseconds(self._calendar - datetime(1970, 1, 1))
         newCal = datetime.fromtimestamp(timestamp)
+
         # Assigns the current time to calendar.
         currentDate = self.getValue()
         if currentDate is not None:
             newCal = currentDate  # FIXME:.setTime(currentDate)
+
+        currentTimeZone = self.getTimeZone()
+        if currentTimeZone is not None:
+            currentTimeZone  # FIXME: set calendar timezone
+
         return newCal
 
 
@@ -653,6 +669,37 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
         @see: L{handleUnparsableDateString}
         """
         self._defaultParseErrorMessage = parsingErrorMessage
+
+
+    def setTimeZone(self, timeZone):
+        """Sets the time zone used by this date field. The time zone is used
+        to convert the absolute time in a Date object to a logical time
+        displayed in the selector and to convert the select time back to a
+        datetime object.
+
+        If no time zone has been set, the current default time zone returned
+        by C{TimeZone.getDefault()} is used.
+
+        @see L{getTimeZone()}
+        @param timeZone:
+                 the time zone to use for time calculations.
+        """
+        self._timeZone = timeZone
+        self.requestRepaint()
+
+
+    def getTimeZone(self):
+        """Gets the time zone used by this field. The time zone is used to
+        convert the absolute time in a Date object to a logical time displayed
+        in the selector and to convert the select time back to a datetime
+        object.
+
+        If {@code null} is returned, the current default time zone returned by
+        C{TimeZone.getDefault()} is used.
+
+        @return: the current time zone
+        """
+        return self._timeZone
 
 
 class UnparsableDateString(InvalidValueException):

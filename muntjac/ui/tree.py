@@ -95,6 +95,9 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
         #  true partial updates are allowed.
         self._initialPaint = True
 
+        #: Item tooltip generator
+        self._itemDescriptionGenerator = None
+
         self._dragMode = TreeDragMode.NONE
         self._multiSelectMode = MultiSelectMode.DEFAULT
 
@@ -479,6 +482,12 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
                     stylename = self._itemStyleGenerator.getStyle(itemId)
                     if stylename is not None:
                         target.addAttribute('style', stylename)
+
+                if self._itemDescriptionGenerator is not None:
+                    description = self._itemDescriptionGenerator\
+                            .generateDescription(self, itemId, None)
+                    if description is not None and description != "":
+                        target.addAttribute("descr", description)
 
                 # Adds the attributes
                 target.addAttribute('caption', self.getItemCaption(itemId))
@@ -936,6 +945,25 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
             transferable.setData('itemId', self.itemIdMapper.get(obj))
 
         return transferable
+
+
+    def setItemDescriptionGenerator(self, generator):
+        """Set the item description generator which generates tooltips for
+        the tree items
+
+        @param generator:
+                  The generator to use or null to disable
+        """
+        if generator != self._itemDescriptionGenerator:
+            self._itemDescriptionGenerator = generator
+            self.requestRepaint()
+
+
+    def getItemDescriptionGenerator(self):
+        """Get the item description generator which generates tooltips for
+        tree items.
+        """
+        return self._itemDescriptionGenerator
 
 
 class TreeDragMode(object):

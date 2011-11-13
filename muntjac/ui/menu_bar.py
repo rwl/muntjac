@@ -47,6 +47,7 @@ class MenuBar(AbstractComponent):
         self._submenuIcon = None
         self._moreItem = None
         self._openRootOnHover = False
+        self._htmlContentAllowed = False
 
         self.setCollapse(True)
         self.setMoreMenuItem(None)
@@ -60,6 +61,9 @@ class MenuBar(AbstractComponent):
 
         target.addAttribute(VMenuBar.OPEN_ROOT_MENU_ON_HOWER,
                 self._openRootOnHover)
+
+        if self.isHtmlContentAllowed():
+            target.addAttribute(VMenuBar.HTML_CONTENT_ALLOWED, True)
 
         target.startTag('options')
 
@@ -343,6 +347,30 @@ class MenuBar(AbstractComponent):
                  is false
         """
         return self._openRootOnHover
+
+
+    def setHtmlContentAllowed(self, htmlContentAllowed):
+        """Sets whether html is allowed in the item captions. If set to true,
+        the captions are passed to the browser as html and the developer is
+        responsible for ensuring no harmful html is used. If set to false, the
+        content is passed to the browser as plain text.
+
+        @param htmlContentAllowed:
+                 true if the captions are used as html, false if used as plain
+                 text
+        """
+        self._htmlContentAllowed = htmlContentAllowed
+        self.requestRepaint()
+
+
+    def isHtmlContentAllowed(self):
+        """Checks whether item captions are interpreted as html or plain text.
+
+        @return: true if the captions are used as html, false if used as plain
+                 text
+        @see: L{setHtmlContentAllowed}
+        """
+        return self._htmlContentAllowed
 
 
 class ICommand(object):

@@ -15,8 +15,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class VView(object):
+class VFilterSelect(object):
 
-    RESIZE_LAZY = "rL"
-
-    NOTIFICATION_HTML_CONTENT_NOT_ALLOWED = "useplain"
+    ATTR_NO_TEXT_INPUT = "noInput"

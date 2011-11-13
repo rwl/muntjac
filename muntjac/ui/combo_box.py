@@ -19,6 +19,8 @@
 from muntjac.ui.select import Select
 from muntjac.data.container import IContainer
 
+from muntjac.terminal.gwt.client.ui.v_filter_select import VFilterSelect
+
 
 class ComboBox(Select):
     """A filtering dropdown single-select. Suitable for newItemsAllowed, but
@@ -32,6 +34,11 @@ class ComboBox(Select):
 
     def __init__(self, *args):
         self._inputPrompt = None
+
+        #: If text input is not allowed, the ComboBox behaves like a pretty
+        #  NativeSelect - the user can not enter any text and clicking the
+        #  text field opens the drop down with options
+        self._textInputAllowed = True
 
         nargs = len(args)
         if nargs == 0:
@@ -90,3 +97,31 @@ class ComboBox(Select):
             target.addAttribute('prompt', self._inputPrompt)
 
         super(ComboBox, self).paintContent(target)
+
+        if not self._textInputAllowed:
+            target.addAttribute(VFilterSelect.ATTR_NO_TEXT_INPUT, True)
+
+
+    def setTextInputAllowed(self, textInputAllowed):
+        """Sets whether it is possible to input text into the field or whether
+        the field area of the component is just used to show what is selected.
+        By disabling text input, the comboBox will work in the same way as a
+        L{NativeSelect}
+
+        @see L{isTextInputAllowed}
+
+        @param textInputAllowed:
+                 true to allow entering text, false to just show the current
+                 selection
+        """
+        self._textInputAllowed = textInputAllowed
+        self.requestRepaint()
+
+
+    def isTextInputAllowed(self):
+        """Returns true if the user can enter text into the field to either
+        filter the selections or enter a new value if :{isNewItemsAllowed}
+        returns true. If text input is disabled, the comboBox will work in the
+        same way as a L{NativeSelect}.
+        """
+        return self._textInputAllowed

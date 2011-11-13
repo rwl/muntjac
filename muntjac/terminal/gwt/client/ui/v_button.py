@@ -15,8 +15,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class VView(object):
+class VButton(object):
 
-    RESIZE_LAZY = "rL"
-
-    NOTIFICATION_HTML_CONTENT_NOT_ALLOWED = "useplain"
+    ATTR_DISABLE_ON_CLICK = "dc"

@@ -82,3 +82,7 @@ class CheckBox(Button):
                     'mode (consider using a Button)')
 
         super(CheckBox, self).setSwitchMode(True)
+
+
+    def setDisableOnClick(self, disableOnClick):
+        raise NotImplementedError, "CheckBox does not support disable on click"

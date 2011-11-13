@@ -218,6 +218,10 @@ class TabSheet(AbstractComponentContainer):
             - (c, position)
               1. the component to be added onto tab - should not be null.
               2. The position where the tab should be added
+            - (c, caption)
+              1. the component to be added onto tab - should not be null.
+              2. the caption to be set for the component and used rendered
+                 in tab bar
 
         @return: the created L{ITab}
         """
@@ -226,13 +230,17 @@ class TabSheet(AbstractComponentContainer):
             c, = args
             return self.addTab(c, len(self._components))
         elif nargs == 2:
-            c, position = args
-            if c is None:
-                return None
-            elif c in self._tabs:
-                return self._tabs.get(c)
+            if isinstance(args[1], basestring):
+                c, caption = args
+                self.addTab(c, caption, None)
             else:
-                return self.addTab(c, c.getCaption(), c.getIcon(), position)
+                c, position = args
+                if c is None:
+                    return None
+                elif c in self._tabs:
+                    return self._tabs.get(c)
+                else:
+                    return self.addTab(c, c.getCaption(), c.getIcon(), position)
         elif nargs == 3:
             c, caption, icon = args
             return self.addTab(c, caption, icon, len(self._components))

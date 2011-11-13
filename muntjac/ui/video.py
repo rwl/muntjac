@@ -1,20 +1,32 @@
-# -*- coding: utf-8 -*-
-# @ITMillApache2LicenseForJavaFiles@
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.ui.AbstractMedia import (AbstractMedia,)
-from com.vaadin.terminal.gwt.client.ui.VVideo import (VVideo,)
+# Copyright (C) 2010 IT Mill Ltd.
+# Copyright (C) 2011 Richard Lincoln
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+from muntjac.ui.abstract_media import AbstractMedia
+from muntjac.terminal.gwt.client.ui.v_video import VVideo
 
 
 class Video(AbstractMedia):
-    """The Video component translates into an HTML5 &lt;video&gt; element and as
-    such is only supported in browsers that support HTML5 media markup. Browsers
-    that do not support HTML5 display the text or HTML set by calling
-    {@link #setAltText(String)}.
+    """The Video component translates into an HTML5 C{<video>} element and as
+    such is only supported in browsers that support HTML5 media markup.
+    Browsers that do not support HTML5 display the text or HTML set by calling
+    L{setAltText}.
 
-    A flash-player fallback can be implemented by setting HTML content allowed (
-    {@link #setHtmlContentAllowed(boolean)} and calling
-    {@link #setAltText(String)} with the flash player markup. An example of flash
-    fallback can be found at the <a href=
+    A flash-player fallback can be implemented by setting HTML content allowed
+    (L{setHtmlContentAllowed} and calling L{setAltText} with the flash player
+    markup. An example of flash fallback can be found at the <a href=
     "https://developer.mozilla.org/En/Using_audio_and_video_in_Firefox#Using_Flash"
     >Mozilla Developer Network</a>.
 
@@ -23,48 +35,36 @@ class Video(AbstractMedia):
     href="http://en.wikipedia.org/wiki/HTML5_video#Table">wikipedia</a> for a
     table of formats supported by different browsers.
 
-    @author Vaadin Ltd
-    @since 6.7.0
+    @author: Vaadin Ltd
+    @author: Richard Lincoln
     """
-    _poster = None
 
-    def __init__(self, *args):
-        """None
-        ---
-        @param caption
+    CLIENT_WIDGET = None #CLientWidget(VVideo)
+
+    def __init__(self, caption='', source=None):
+        """@param caption:
                    The caption for this video.
-        ---
-        @param caption
-                   The caption for this video.
-        @param source
-                   The Resource containing the video to play.
+        @param source:
+                   The resource containing the video to play.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 0:
-            self.__init__('', None)
-        elif _1 == 1:
-            caption, = _0
-            self.__init__(caption, None)
-        elif _1 == 2:
-            caption, source = _0
-            self.setCaption(caption)
-            self.setSource(source)
-            self.setShowControls(True)
-        else:
-            raise ARGERROR(0, 2)
+        self._poster = None
+
+        self.setCaption(caption)
+        self.setSource(source)
+        self.setShowControls(True)
+
 
     def setPoster(self, poster):
-        """Sets the poster image, which is shown in place of the video before the
-        user presses play.
-
-        @param poster
+        """Sets the poster image, which is shown in place of the video before
+        the user presses play.
         """
         self._poster = poster
+
 
     def getPoster(self):
         """@return The poster image."""
         return self._poster
+
 
     def paintContent(self, target):
         super(Video, self).paintContent(target)

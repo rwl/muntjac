@@ -582,6 +582,7 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
 
             # If the new datasource is null, just set null datasource
             if self._itemDatasource is None:
+                self.requestRepaint()
                 return
 
             # Adds all the properties to this form

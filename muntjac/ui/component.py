@@ -141,14 +141,17 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
 
 
     def removeStyleName(self, style):
-        """Removes the given style name from component.
+        """Removes one or more style names from component. Multiple styles
+        can be specified as a space-separated list of style names.
 
         The parameter must be a valid CSS style name. Only user-defined style
         names added with L{addStyleName} or L{setStyleName} can be removed;
         built-in style names defined in Muntjac or GWT can not be removed.
 
+        This method will trigger a L{RepaintRequestEvent}.
+
         @param style:
-                   the style name to be removed
+                   the style name or style names to be removed
         @see: L{getStyleName}
         @see: L{setStyleName}
         @see: L{addStyleName}

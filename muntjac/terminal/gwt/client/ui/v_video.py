@@ -15,8 +15,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class VView(object):
+class VVideo(object):
 
-    RESIZE_LAZY = "rL"
-
-    NOTIFICATION_HTML_CONTENT_NOT_ALLOWED = "useplain"
+    ATTR_POSTER = "poster"
