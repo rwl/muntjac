@@ -8,7 +8,7 @@ class APIResource(NamedExternalResource):
     specify an API doc baseurl. The name will be set to the class simpleName.
     """
 
-    _VAADIN_BASE = 'http://www.vaadin.com/api'
+    _VAADIN_BASE = 'http://doc.muntiacus.org/api'
     _JAVA_BASE = 'http://java.sun.com/javase/6/docs/api/'
     _SERVLET_BASE = 'http://java.sun.com/products/servlet/2.5/docs/servlet-2_5-mr2'
     _PORTLET_BASE = 'http://developers.sun.com/docs/jscreator/apis/portlet'

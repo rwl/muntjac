@@ -13,9 +13,4 @@ class HelloWorld(Application):
         self.setMainWindow(main)
 
         # "Hello world" text is added to window as a Label component
-        main.addComponent( Label('Hello World!') )
-
-
-if __name__ == '__main__':
-    from muntjac.main import muntjac
-    muntjac(HelloWorld, nogui=True)
+        main.addComponent(Label('Hello World!'))
