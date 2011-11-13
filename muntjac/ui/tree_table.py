@@ -33,8 +33,6 @@ from muntjac.data.util.container_hierarchical_wrapper \
 from muntjac.ui.treetable.collapsible import ICollapsible
 from muntjac.data.util.hierarchical_container import HierarchicalContainer
 
-# from com.google.gwt.user.client.ui.Tree import (Tree,)
-
 
 logger = logging.getLogger(__name__)
 
@@ -141,29 +139,27 @@ class TreeTable(Table, IHierarchical):
     def focusParent(self, itemId):
         inView = False
         inPageId = self.getCurrentPageFirstItemId()
-        _0 = True
+
         i = 0
-        while True:
-            if _0 is True:
-                _0 = False
-            else:
-                i += 1
-            if not (inPageId is not None and i < self.getPageLength()):
-                break
+        while inPageId is not None and i < self.getPageLength():
             if inPageId == itemId:
                 inView = True
                 break
             inPageId = self.nextItemId(inPageId)
-            i += 1
+            i += 1  # TODO: check increment
+
         if not inView:
             self.setCurrentPageFirstItemId(itemId)
+
         # Select the row if it is selectable.
         if self.isSelectable():
             if self.isMultiSelect():
-                self.setValue(Collections.singleton(itemId))
+                self.setValue([itemId])
             else:
                 self.setValue(itemId)
+
         self.setFocusedRow(itemId)
+
 
     def setFocusedRow(self, itemId):
         self._focusedRowId = itemId
@@ -173,86 +169,99 @@ class TreeTable(Table, IHierarchical):
             self._clearFocusedRowPending = True
         self.requestRepaint()
 
+
     def paintContent(self, target):
-        # Override methods for partial row updates and additions when expanding /
-        # collapsing nodes.
+        # Override methods for partial row updates and additions when
+        # expanding / collapsing nodes.
 
         if self._focusedRowId is not None:
-            target.addAttribute('focusedRow', self.itemIdMapper.key(self._focusedRowId))
+            row = self.itemIdMapper.key(self._focusedRowId)
+            target.addAttribute('focusedRow', row)
             self._focusedRowId = None
         elif self._clearFocusedRowPending:
             # Must still inform the client that the focusParent request has
             # been processed
             target.addAttribute('clearFocusPending', True)
             self._clearFocusedRowPending = False
+
         target.addAttribute('animate', self._animationsEnabled)
         if self._hierarchyColumnId is not None:
             visibleColumns2 = self.getVisibleColumns()
-            _0 = True
-            i = 0
-            while True:
-                if _0 is True:
-                    _0 = False
-                else:
-                    i += 1
-                if not (i < len(visibleColumns2)):
+            for i in range(len(visibleColumns2)):
+                obj = visibleColumns2[i]
+                if self._hierarchyColumnId == obj:
+                    ahci = VTreeTable.ATTRIBUTE_HIERARCHY_COLUMN_INDEX
+                    target.addAttribute(ahci, i)
                     break
-                object = visibleColumns2[i]
-                if self._hierarchyColumnId == object:
-                    target.addAttribute(VTreeTable.ATTRIBUTE_HIERARCHY_COLUMN_INDEX, i)
-                    break
+
         super(TreeTable, self).paintContent(target)
         self._toggledItemId = None
+
 
     def isPartialRowUpdate(self):
         return self._toggledItemId is not None
 
+
     def getFirstAddedItemIndex(self):
         return self.indexOfId(self._toggledItemId) + 1
 
+
     def getAddedRowCount(self):
-        return self.countSubNodesRecursively(self.getContainerDataSource(), self._toggledItemId)
+        ds = self.getContainerDataSource()
+        return self.countSubNodesRecursively(ds, self._toggledItemId)
+
 
     def countSubNodesRecursively(self, hc, itemId):
         count = 0
         # we need the number of children for toggledItemId no matter if its
         # collapsed or expanded. Other items' children are only counted if the
         # item is expanded.
-        if (
-            self.getContainerStrategy().isNodeOpen(itemId) or (itemId == self._toggledItemId)
-        ):
+        if (self.getContainerStrategy().isNodeOpen(itemId)
+                or (itemId == self._toggledItemId)):
             children = hc.getChildren(itemId)
             if children is not None:
                 count += len(children) if children is not None else 0
-                for id in children:
-                    count += self.countSubNodesRecursively(hc, id)
+                for idd in children:
+                    count += self.countSubNodesRecursively(hc, idd)
         return count
+
 
     def getFirstUpdatedItemIndex(self):
         return self.indexOfId(self._toggledItemId)
 
+
     def getUpdatedRowCount(self):
         return 1
 
+
     def shouldHideAddedRows(self):
         return not self.getContainerStrategy().isNodeOpen(self._toggledItemId)
+
 
     def toggleChildVisibility(self, itemId):
         self.getContainerStrategy().toggleChildVisibility(itemId)
         # ensure that page still has first item in page, DON'T clear the
         # caches.
-        self.setCurrentPageFirstItemIndex(self.getCurrentPageFirstItemIndex(), False)
+        idx = self.getCurrentPageFirstItemIndex()
+        self.setCurrentPageFirstItemIndex(idx, False)
         self.requestRepaint()
         if self.isCollapsed(itemId):
             self.fireCollapseEvent(itemId)
         else:
             self.fireExpandEvent(itemId)
 
+
     def size(self):
         return len(self.getContainerStrategy())
 
+
+    def __len__(self):
+        return self.size()
+
+
     def getContainerDataSource(self):
         return super(TreeTable, self).getContainerDataSource()
+
 
     def setContainerDataSource(self, newDataSource):
         self._cStrategy = None
@@ -262,6 +271,7 @@ class TreeTable(Table, IHierarchical):
             newDataSource = HierarchicalContainerOrderedWrapper(newDataSource)
         super(TreeTable, self).setContainerDataSource(newDataSource)
 
+
     def containerItemSetChange(self, event):
         # Can't do partial repaints if items are added or removed during the
         # expand/collapse request
@@ -269,105 +279,139 @@ class TreeTable(Table, IHierarchical):
         self.getContainerStrategy().containerItemSetChange(event)
         super(TreeTable, self).containerItemSetChange(event)
 
+
     def getIdByIndex(self, index):
         return self.getContainerStrategy().getIdByIndex(index)
+
 
     def indexOfId(self, itemId):
         return self.getContainerStrategy().indexOfId(itemId)
 
+
     def nextItemId(self, itemId):
         return self.getContainerStrategy().nextItemId(itemId)
+
 
     def lastItemId(self):
         return self.getContainerStrategy().lastItemId()
 
+
     def prevItemId(self, itemId):
         return self.getContainerStrategy().prevItemId(itemId)
+
 
     def isLastId(self, itemId):
         return self.getContainerStrategy().isLastId(itemId)
 
+
     def getItemIds(self):
         return self.getContainerStrategy().getItemIds()
+
 
     def areChildrenAllowed(self, itemId):
         return self.getContainerDataSource().areChildrenAllowed(itemId)
 
+
     def getChildren(self, itemId):
         return self.getContainerDataSource().getChildren(itemId)
+
 
     def getParent(self, itemId):
         return self.getContainerDataSource().getParent(itemId)
 
+
     def hasChildren(self, itemId):
         return self.getContainerDataSource().hasChildren(itemId)
+
 
     def isRoot(self, itemId):
         return self.getContainerDataSource().isRoot(itemId)
 
+
     def rootItemIds(self):
         return self.getContainerDataSource().rootItemIds()
 
+
     def setChildrenAllowed(self, itemId, areChildrenAllowed):
-        return self.getContainerDataSource().setChildrenAllowed(itemId, areChildrenAllowed)
+        return self.getContainerDataSource().setChildrenAllowed(itemId,
+                areChildrenAllowed)
+
 
     def setParent(self, itemId, newParentId):
         return self.getContainerDataSource().setParent(itemId, newParentId)
 
-    def setCollapsed(self, itemId, collapsed):
-        """Sets the Item specified by given identifier collapsed or expanded. If the
-        Item is collapsed, its children is not displayed in for the user.
 
-        @param itemId
+    def setCollapsed(self, itemId, collapsed):
+        """Sets the Item specified by given identifier collapsed or expanded.
+        If the Item is collapsed, its children is not displayed in for the
+        user.
+
+        @param itemId:
                    the identifier of the Item
-        @param collapsed
+        @param collapsed:
                    true if the Item should be collapsed, false if expanded
         """
         if self.isCollapsed(itemId) != collapsed:
             self.toggleChildVisibility(itemId)
 
+
     def isCollapsed(self, itemId):
         """Checks if Item with given identifier is collapsed in the UI.
 
-        <p>
-
-        @param itemId
+        @param itemId:
                    the identifier of the checked Item
-        @return true if the Item with given id is collapsed
-        @see Collapsible#isCollapsed(Object)
+        @return: true if the Item with given id is collapsed
+        @see: L{ICollapsible.isCollapsed}
         """
         return not self.getContainerStrategy().isNodeOpen(itemId)
+
 
     def setHierarchyColumn(self, hierarchyColumnId):
         """Explicitly sets the column in which the TreeTable visualizes the
         hierarchy. If hierarchyColumnId is not set, the hierarchy is visualized
         in the first visible column.
-
-        @param hierarchyColumnId
         """
         self._hierarchyColumnId = hierarchyColumnId
 
+
     def getHierarchyColumnId(self):
-        """@return the identifier of column into which the hierarchy will be
-                visualized or null if the column is not explicitly defined.
+        """@return: the identifier of column into which the hierarchy will be
+        visualized or null if the column is not explicitly defined.
         """
         return self._hierarchyColumnId
 
+
     def addListener(self, listener, iface=None):
-        """Adds an expand listener.
+        """Adds an expand/collapse listener.
 
-        @param listener
-                   the Listener to be added.
-        ---
-        Adds a collapse listener.
-
-        @param listener
+        @param listener:
                    the Listener to be added.
         """
-        if isinstance(listener, ICollapseListener):
-            self.addListener(CollapseEvent, listener, COLLAPSE_METHOD)
+        if (isinstance(listener, ICollapseListener) and
+                (iface is None or issubclass(iface, ICollapseListener))):
+            self.registerListener(CollapseEvent,
+                    listener, COLLAPSE_METHOD)
+
+        if (isinstance(listener, IExpandListener) and
+                (iface is None or issubclass(iface, IExpandListener))):
+            self.registerListener(ExpandEvent,
+                    listener, EXPAND_METHOD)
+
+        super(TreeTable, self).addListener(listener, iface)
+
+
+    def addCallback(self, callback, eventType=None, *args):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if issubclass(eventType, CollapseEvent):
+            self.registerCallback(CollapseEvent, callback, None, *args)
+
+        elif issubclass(eventType, ExpandEvent):
+            self.registerCallback(ExpandEvent, callback, None, *args)
+
         else:
-            self.addListener(ExpandEvent, listener, EXPAND_METHOD)
+            super(TreeTable, self).addCallback(callback, eventType, *args)
 
 
     def removeListener(self, listener, iface=None):
@@ -376,10 +420,31 @@ class TreeTable(Table, IHierarchical):
         @param listener:
                    the Listener to be removed.
         """
-        if isinstance(listener, ICollapseListener):
-            self.removeListener(CollapseEvent, listener, COLLAPSE_METHOD)
+        if (isinstance(listener, ICollapseListener) and
+                (iface is None or issubclass(iface, ICollapseListener))):
+            self.withdrawListener(CollapseEvent,
+                    listener, COLLAPSE_METHOD)
+
+        if (isinstance(listener, IExpandListener) and
+                (iface is None or issubclass(iface, IExpandListener))):
+            self.withdrawListener(ExpandEvent,
+                    listener, EXPAND_METHOD)
+
+        super(TreeTable, self).removeListener(listener, iface)
+
+
+    def removeCallback(self, callback, eventType=None):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if issubclass(eventType, CollapseEvent):
+            self.withdrawCallback(CollapseEvent, callback)
+
+        elif issubclass(eventType, ExpandEvent):
+            self.withdrawCallback(ExpandEvent, callback)
+
         else:
-            self.removeListener(ExpandEvent, listener, EXPAND_METHOD)
+            super(TreeTable, self).removeCallback(callback, eventType)
 
 
     def fireExpandEvent(self, itemId):
@@ -388,19 +453,24 @@ class TreeTable(Table, IHierarchical):
         @param itemId:
                    the item id.
         """
-        self.fireEvent(ExpandEvent(self, itemId))
+        evt = ExpandEvent(self, itemId)
+        self.fireEvent(evt)
+
 
     def fireCollapseEvent(self, itemId):
         """Emits a collapse event.
 
-        @param itemId
+        @param itemId:
                    the item id.
         """
-        self.fireEvent(CollapseEvent(self, itemId))
+        evt = CollapseEvent(self, itemId)
+        self.fireEvent(evt)
+
 
     def isAnimationsEnabled(self):
         """@return true if animations are enabled"""
         return self._animationsEnabled
+
 
     def setAnimationsEnabled(self, animationsEnabled):
         """Animations can be enabled by passing true to this method. Currently

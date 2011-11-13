@@ -1,51 +1,39 @@
-# -*- coding: utf-8 -*-
-# @ITMillApache2LicenseForJavaFiles@
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.data.Container import (Container,)
-# from java.util.Collection import (Collection,)
-# from java.util.Hashtable import (Hashtable,)
-# from java.util.Iterator import (Iterator,)
-# from java.util.LinkedList import (LinkedList,)
+# Copyright (C) 2010 IT Mill Ltd.
+# Copyright (C) 2011 Richard Lincoln
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+from muntjac.data.container \
+    import IOrdered, IItemSetChangeNotifier, IPropertySetChangeNotifier,\
+    IItemSetChangeListener, IPropertySetChangeListener, IItemSetChangeEvent,\
+    IPropertySetChangeEvent
 
 
-class ContainerOrderedWrapper(Container.Ordered, Container.ItemSetChangeNotifier, Container.PropertySetChangeNotifier):
-    """<p>
-    A wrapper class for adding external ordering to containers not implementing
-    the {@link com.vaadin.data.Container.Ordered} interface.
-    </p>
+class ContainerOrderedWrapper(IOrdered, IItemSetChangeNotifier,
+            IPropertySetChangeNotifier):
+    """A wrapper class for adding external ordering to containers not
+    implementing the L{IOrdered} interface.
 
-    <p>
     If the wrapped container is changed directly (that is, not through the
     wrapper), and does not implement Container.ItemSetChangeNotifier and/or
-    Container.PropertySetChangeNotifier the hierarchy information must be updated
-    with the {@link #updateOrderWrapper()} method.
-    </p>
+    PropertySetChangeNotifier the hierarchy information must be updated with
+    the L{updateOrderWrapper} method.
 
-    @author IT Mill Ltd.
-    @version
-    @VERSION@
-    @since 3.0
+    @author: IT Mill Ltd.
+    @author: Richard Lincoln
+    @version: @VERSION@
     """
-    # The wrapped container
-    _container = None
-    # Ordering information, ie. the mapping from Item ID to the next item ID
-    _next = None
-    # Reverse ordering information for convenience and performance reasons.
-    _prev = None
-    # ID of the first Item in the container.
-    _first = None
-    # ID of the last Item in the container.
-    _last = None
-    # Is the wrapped container ordered by itself, ie. does it implement the
-    # Container.Ordered interface by itself? If it does, this class will use
-    # the methods of the underlying container directly.
-
-    _ordered = False
-    # The last known size of the wrapped container. Used to check whether items
-    # have been added or removed to the wrapped container, when the wrapped
-    # container does not send ItemSetChangeEvents.
-
-    _lastKnownSize = -1
 
     def __init__(self, toBeWrapped):
         """Constructs a new ordered wrapper for an existing Container. Works even if
@@ -55,440 +43,458 @@ class ContainerOrderedWrapper(Container.Ordered, Container.ItemSetChangeNotifier
         @param toBeWrapped
                    the container whose contents need to be ordered.
         """
+        #: The wrapped container
         self._container = toBeWrapped
-        self._ordered = isinstance(self._container, Container.Ordered)
+
+        #: Ordering information, ie. the mapping from Item ID to the next
+        #  item ID
+        self._next = None
+
+        #: Reverse ordering information for convenience and performance
+        #  reasons.
+        self._prev = None
+
+        #: ID of the first Item in the container.
+        self._first = None
+
+        #: ID of the last Item in the container.
+        self._last = None
+
+        #: Is the wrapped container ordered by itself, ie. does it implement
+        #  the IOrdered interface by itself? If it does, this class will use
+        #  the methods of the underlying container directly.
+        self._ordered = False
+
+        #: The last known size of the wrapped container. Used to check whether
+        #  items have been added or removed to the wrapped container, when the
+        #  wrapped container does not send ItemSetChangeEvents.
+        self._lastKnownSize = -1
+
+        self._ordered = isinstance(self._container, IOrdered)
+
         # Checks arguments
         if self._container is None:
-            raise self.NullPointerException('Null can not be wrapped')
+            raise ValueError, 'Null can not be wrapped'
+
         # Creates initial order if needed
         self.updateOrderWrapper()
 
-    def removeFromOrderWrapper(self, id):
+
+    def removeFromOrderWrapper(self, idd):
         """Removes the specified Item from the wrapper's internal hierarchy
         structure.
-        <p>
-        Note : The Item is not removed from the underlying Container.
-        </p>
 
-        @param id
+        Note : The Item is not removed from the underlying Container.
+
+        @param idd:
                    the ID of the Item to be removed from the ordering.
         """
-        if id is not None:
-            pid = self._prev[id]
-            nid = self._next[id]
-            if self._first == id:
+        if idd is not None:
+            pid = self._prev.get(idd)
+            nid = self._next.get(idd)
+            if self._first == idd:
                 self._first = nid
-            if self._last == id:
+            if self._last == idd:
                 self._first = pid
             if nid is not None:
-                self._prev.put(nid, pid)
+                self._prev[nid] = pid
             if pid is not None:
-                self._next.put(pid, nid)
-            self._next.remove(id)
-            self._prev.remove(id)
+                self._next[pid] = nid
+            del self._next[idd]
+            del self._prev[idd]
 
-    def addToOrderWrapper(self, *args):
+
+    def addToOrderWrapper(self, idd, previousItemId=None):
         """Registers the specified Item to the last position in the wrapper's
         internal ordering. The underlying container is not modified.
 
-        @param id
+        @param idd
                    the ID of the Item to be added to the ordering.
         ---
         Registers the specified Item after the specified itemId in the wrapper's
         internal ordering. The underlying container is not modified. Given item
-        id must be in the container, or must be null.
+        idd must be in the container, or must be null.
 
-        @param id
+        @param idd
                    the ID of the Item to be added to the ordering.
         @param previousItemId
                    the Id of the previous item.
         """
         # Adds the if to tail
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            id, = _0
+
+        if previousItemId == None:
             if self._last is not None:
-                self._next.put(self._last, id)
-                self._prev.put(id, self._last)
-                self._last = id
+                self._next[self._last] = idd
+                self._prev[idd] = self._last
+                self._last = idd
             else:
-                self._first = self._last = id
-        elif _1 == 2:
-            id, previousItemId = _0
-            if (self._last == previousItemId) or (self._last is None):
-                self.addToOrderWrapper(id)
-            elif previousItemId is None:
-                self._next.put(id, self._first)
-                self._prev.put(self._first, id)
-                self._first = id
-            else:
-                self._prev.put(id, previousItemId)
-                self._next.put(id, self._next[previousItemId])
-                self._prev.put(self._next[previousItemId], id)
-                self._next.put(previousItemId, id)
+                self._first = self._last = idd
         else:
-            raise ARGERROR(1, 2)
+            if (self._last == previousItemId) or (self._last is None):
+                self.addToOrderWrapper(idd)
+            elif previousItemId is None:
+                self._next[idd] = self._first
+                self._prev[self._first] = idd
+                self._first = idd
+            else:
+                self._prev[idd] = previousItemId
+                self._next[idd] = self._next[previousItemId]
+                self._prev[self._next.get(previousItemId)] = idd
+                self._next[previousItemId] = idd
+
 
     def updateOrderWrapper(self):
-        """Updates the wrapper's internal ordering information to include all Items
-        in the underlying container.
-        <p>
-        Note : If the contents of the wrapped container change without the
+        """Updates the wrapper's internal ordering information to include all
+        Items in the underlying container.
+
+        Note: If the contents of the wrapped container change without the
         wrapper's knowledge, this method needs to be called to update the
         ordering information of the Items.
-        </p>
         """
-        # Gets the first item stored in the ordered container Don't add a JavaDoc
-        # comment here, we use the default documentation from implemented
-        # interface.
-
+        # Gets the first item stored in the ordered container.
         if not self._ordered:
             ids = self._container.getItemIds()
             # Recreates ordering if some parts of it are missing
-            if (
-                (((self._next is None) or (self._first is None)) or (self._last is None)) or (self._prev is not None)
-            ):
+            if (self._next is None or self._first is None
+                    or self._last is None or self._prev is not None):
                 self._first = None
                 self._last = None
                 self._next = dict()
                 self._prev = dict()
+
             # Filter out all the missing items
-            l = LinkedList(self._next.keys())
-            _0 = True
-            i = l
-            while True:
-                if _0 is True:
-                    _0 = False
-                if not i.hasNext():
-                    break
-                id = i.next()
-                if not self._container.containsId(id):
-                    self.removeFromOrderWrapper(id)
+            for idd in self._next:
+                if not self._container.containsId(idd):
+                    self.removeFromOrderWrapper(idd)
+
             # Adds missing items
-            _1 = True
-            i = ids
-            while True:
-                if _1 is True:
-                    _1 = False
-                if not i.hasNext():
-                    break
-                id = i.next()
-                if not (id in self._next):
+            for idd in ids:
+                if idd not in self._next:
                     self.addToOrderWrapper(id)
 
-    def firstItemId(self):
-        # Tests if the given item is the first item in the container Don't add a
-        # JavaDoc comment here, we use the default documentation from implemented
-        # interface.
 
+    def firstItemId(self):
+        # Tests if the given item is the first item in the container.
         if self._ordered:
             return self._container.firstItemId()
         return self._first
 
-    def isFirstId(self, itemId):
-        # Tests if the given item is the last item in the container Don't add a
-        # JavaDoc comment here, we use the default documentation from implemented
-        # interface.
 
+    def isFirstId(self, itemId):
+        # Tests if the given item is the last item in the container.
         if self._ordered:
             return self._container.isFirstId(itemId)
         return self._first is not None and self._first == itemId
 
-    def isLastId(self, itemId):
-        # Gets the last item stored in the ordered container Don't add a JavaDoc
-        # comment here, we use the default documentation from implemented
-        # interface.
 
+    def isLastId(self, itemId):
+        # Gets the last item stored in the ordered container.
         if self._ordered:
             return self._container.isLastId(itemId)
         return self._last is not None and self._last == itemId
 
-    def lastItemId(self):
-        # Gets the item that is next from the specified item. Don't add a JavaDoc
-        # comment here, we use the default documentation from implemented
-        # interface.
 
+    def lastItemId(self):
+        # Gets the item that is next from the specified item.
         if self._ordered:
             return self._container.lastItemId()
         return self._last
 
-    def nextItemId(self, itemId):
-        # Gets the item that is previous from the specified item. Don't add a
-        # JavaDoc comment here, we use the default documentation from implemented
-        # interface.
 
+    def nextItemId(self, itemId):
+        # Gets the item that is previous from the specified item.
         if self._ordered:
             return self._container.nextItemId(itemId)
+
         if itemId is None:
             return None
-        return self._next[itemId]
+
+        return self._next.get(itemId)
+
 
     def prevItemId(self, itemId):
         if self._ordered:
             return self._container.prevItemId(itemId)
+
         if itemId is None:
             return None
-        return self._prev[itemId]
 
-    def addContainerProperty(self, propertyId, type, defaultValue):
+        return self._prev.get(itemId)
+
+
+    def addContainerProperty(self, propertyId, typ, defaultValue):
         """Registers a new Property to all Items in the Container.
 
-        @param propertyId
+        @param propertyId:
                    the ID of the new Property.
-        @param type
+        @param typ:
                    the Data type of the new Property.
-        @param defaultValue
+        @param defaultValue:
                    the value all created Properties are initialized to.
-        @return <code>true</code> if the operation succeeded, <code>false</code>
-                if not
+        @return: C{True} if the operation succeeded, C{False} if not
         """
-        return self._container.addContainerProperty(propertyId, type, defaultValue)
+        return self._container.addContainerProperty(propertyId, typ,
+                defaultValue)
 
-    def addItem(self, *args):
-        """Creates a new Item into the Container, assigns it an automatic ID, and
-        adds it to the ordering.
 
-        @return the autogenerated ID of the new Item or <code>null</code> if the
-                operation failed
-        @throws UnsupportedOperationException
-                    if the addItem is not supported.
-        ---
-        Registers a new Item by its ID to the underlying container and to the
-        ordering.
+    def addItem(self, itemId=None):
+        """Creates a new Item into the Container, assigns it an automatic ID,
+        and adds it to the ordering. Alternatively, registers a new Item by
+        its ID to the underlying container and to the ordering.
 
-        @param itemId
+        @param itemId:
                    the ID of the Item to be created.
-        @return the added Item or <code>null</code> if the operation failed
-        @throws UnsupportedOperationException
-                    if the addItem is not supported.
+        @return:
+                   C{None} if the operation failed
+        @raise NotImplementedError:
+                   if the addItem is not supported.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 0:
-            id = self._container.addItem()
-            if not self._ordered and id is not None:
-                self.addToOrderWrapper(id)
-            return id
-        elif _1 == 1:
-            itemId, = _0
+        if itemId is None:
+            idd = self._container.addItem()
+            if not self._ordered and (idd is not None):
+                self.addToOrderWrapper(idd)
+            return idd
+        else:
             item = self._container.addItem(itemId)
-            if not self._ordered and item is not None:
+            if not self._ordered and (item is not None):
                 self.addToOrderWrapper(itemId)
             return item
-        else:
-            raise ARGERROR(0, 1)
+
 
     def removeAllItems(self):
-        """Removes all items from the underlying container and from the ordering.
+        """Removes all items from the underlying container and from the
+        ordering.
 
-        @return <code>true</code> if the operation succeeded, otherwise
-                <code>false</code>
-        @throws UnsupportedOperationException
+        @return: C{True} if the operation succeeded, otherwise C{False}
+        @raise NotImplementedError:
                     if the removeAllItems is not supported.
         """
         success = self._container.removeAllItems()
-        if not self._ordered and success:
+        if (not self._ordered) and success:
             self._first = self._last = None
             self._next.clear()
             self._prev.clear()
         return success
 
-    def removeItem(self, itemId):
-        """Removes an Item specified by the itemId from the underlying container and
-        from the ordering.
 
-        @param itemId
+    def removeItem(self, itemId):
+        """Removes an Item specified by the itemId from the underlying
+        container and from the ordering.
+
+        @param itemId:
                    the ID of the Item to be removed.
-        @return <code>true</code> if the operation succeeded, <code>false</code>
-                if not
-        @throws UnsupportedOperationException
-                    if the removeItem is not supported.
+        @return: C{True} if the operation succeeded, C{False} if not
+        @raise NotImplementedError:
+                   if the removeItem is not supported.
         """
         success = self._container.removeItem(itemId)
         if not self._ordered and success:
             self.removeFromOrderWrapper(itemId)
         return success
 
+
     def removeContainerProperty(self, propertyId):
-        """Removes the specified Property from the underlying container and from the
-        ordering.
-        <p>
-        Note : The Property will be removed from all the Items in the Container.
-        </p>
+        """Removes the specified Property from the underlying container and
+        from the ordering.
 
-        @param propertyId
+        Note: The Property will be removed from all the Items in the Container.
+
+        @param propertyId:
                    the ID of the Property to remove.
-        @return <code>true</code> if the operation succeeded, <code>false</code>
-                if not
-        @throws UnsupportedOperationException
-                    if the removeContainerProperty is not supported.
+        @return: C{True} if the operation succeeded, C{False} if not
+        @raise NotImplementedError:
+                   if the removeContainerProperty is not supported.
         """
-        # Does the container contain the specified Item? Don't add a JavaDoc
-        # comment here, we use the default documentation from implemented
-        # interface.
-
         return self._container.removeContainerProperty(propertyId)
 
-    def containsId(self, itemId):
-        # Gets the specified Item from the container. Don't add a JavaDoc comment
-        # here, we use the default documentation from implemented interface.
 
+    def containsId(self, itemId):
+        # Does the container contain the specified Item?
         return self._container.containsId(itemId)
 
-    def getItem(self, itemId):
-        # Gets the ID's of all Items stored in the Container Don't add a JavaDoc
-        # comment here, we use the default documentation from implemented
-        # interface.
 
+    def getItem(self, itemId):
+        # Gets the specified Item from the container.
         return self._container.getItem(itemId)
 
-    def getItemIds(self):
-        # Gets the Property identified by the given itemId and propertyId from the
-        # Container Don't add a JavaDoc comment here, we use the default
-        # documentation from implemented interface.
 
+    def getItemIds(self):
+        # Gets the ID's of all Items stored in the Container
         return self._container.getItemIds()
 
-    def getContainerProperty(self, itemId, propertyId):
-        # Gets the ID's of all Properties stored in the Container Don't add a
-        # JavaDoc comment here, we use the default documentation from implemented
-        # interface.
 
+    def getContainerProperty(self, itemId, propertyId):
+        # Gets the Property identified by the given itemId and propertyId
+        # from the Container.
         return self._container.getContainerProperty(itemId, propertyId)
 
-    def getContainerPropertyIds(self):
-        # Gets the data type of all Properties identified by the given Property ID.
-        # Don't add a JavaDoc comment here, we use the default documentation from
-        # implemented interface.
 
+    def getContainerPropertyIds(self):
+        # Gets the ID's of all Properties stored in the Container
         return self._container.getContainerPropertyIds()
 
-    def getType(self, propertyId):
-        # Gets the number of Items in the Container. Don't add a JavaDoc comment
-        # here, we use the default documentation from implemented interface.
 
+    def getType(self, propertyId):
+        # Gets the data type of all Properties identified by the given
+        # Property ID.
         return self._container.getType(propertyId)
 
-    def size(self):
-        # Registers a new Item set change listener for this Container. Don't add a
-        # JavaDoc comment here, we use the default documentation from implemented
-        # interface.
 
+    def size(self):
+        # Gets the number of Items in the Container.
         newSize = len(self._container)
-        if (
-            self._lastKnownSize != -1 and newSize != self._lastKnownSize and not isinstance(self._container, Container.ItemSetChangeNotifier)
-        ):
+        if (self._lastKnownSize != -1 and newSize != self._lastKnownSize
+                and not isinstance(self._container, IItemSetChangeNotifier)):
             # Update the internal cache when the size of the container changes
             # and the container is incapable of sending ItemSetChangeEvents
             self.updateOrderWrapper()
         self._lastKnownSize = newSize
         return newSize
 
-    def addListener(self, *args):
-        # Removes a Item set change listener from the object. Don't add a JavaDoc
-        # comment here, we use the default documentation from implemented
-        # interface.
 
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            if isinstance(_0[0], Container.ItemSetChangeListener):
-                listener, = _0
-                if isinstance(self._container, Container.ItemSetChangeNotifier):
-                    self._container.addListener(self.PiggybackListener(listener))
-            else:
-                listener, = _0
-                if isinstance(self._container, Container.PropertySetChangeNotifier):
-                    self._container.addListener(self.PiggybackListener(listener))
+    def __len__(self):
+        return self.size()
+
+
+    def addListener(self, listener, iface=None):
+        if (isinstance(listener, IItemSetChangeListener) and
+                (iface is None or issubclass(iface, IItemSetChangeListener))):
+            # Registers a new Item set change listener for this Container.
+            if isinstance(self._container, IItemSetChangeNotifier):
+                pl = PiggybackListener(listener, self)
+                self._container.addListener(pl, IItemSetChangeListener)
+
+        if (isinstance(listener, IPropertySetChangeListener) and
+                (iface is None or
+                        issubclass(iface, IPropertySetChangeListener))):
+            # Registers a new Property set change listener for this Container.
+            if isinstance(self._container, IPropertySetChangeNotifier):
+                pl = PiggybackListener(listener, self)
+                self._container.addListener(pl, IPropertySetChangeListener)
+
+
+    def addCallback(self, callback, eventType=None, *args):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if issubclass(eventType, IItemSetChangeEvent):
+            # Registers a new Item set change listener for this Container.
+            if isinstance(self._container, IItemSetChangeNotifier):
+                pl = PiggybackListener(callback, self, *args)
+                self._container.addListener(pl, IItemSetChangeListener)
+
+        elif issubclass(eventType, IPropertySetChangeEvent):
+            # Registers a new Property set change listener for this Container.
+            if isinstance(self._container, IPropertySetChangeNotifier):
+                pl = PiggybackListener(callback, self, *args)
+                self._container.addListener(pl, IPropertySetChangeListener)
+
         else:
-            raise ARGERROR(1, 1)
+            super(ContainerOrderedWrapper, self).addCallback(callback,
+                    eventType, *args)
 
-    def removeListener(self, *args):
-        # Registers a new Property set change listener for this Container. Don't
-        # add a JavaDoc comment here, we use the default documentation from
-        # implemented interface.
 
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            if isinstance(_0[0], Container.ItemSetChangeListener):
-                listener, = _0
-                if isinstance(self._container, Container.ItemSetChangeNotifier):
-                    self._container.removeListener(self.PiggybackListener(listener))
-            else:
-                listener, = _0
-                if isinstance(self._container, Container.PropertySetChangeNotifier):
-                    self._container.removeListener(self.PiggybackListener(listener))
+    def removeListener(self, listener, iface=None):
+        if (isinstance(listener, IItemSetChangeListener) and
+                (iface is None or issubclass(iface, IItemSetChangeListener))):
+            # Removes a Item set change listener from the object.
+            if isinstance(self._container, IItemSetChangeNotifier):
+                pl = PiggybackListener(listener, self)
+                self._container.removeListener(pl, IItemSetChangeListener)
+
+
+        if (isinstance(listener, IPropertySetChangeListener) and
+            (iface is None or issubclass(iface, IPropertySetChangeListener))):
+            # Removes a Property set change listener from the object.
+            if isinstance(self._container, IPropertySetChangeNotifier):
+                pl = PiggybackListener(listener, self)
+                self._container.removeListener(pl, IPropertySetChangeListener)
+
+
+    def removeCallback(self, callback, eventType=None):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if issubclass(eventType, IItemSetChangeEvent):
+            # Removes a Item set change listener from the object.
+            if isinstance(self._container, IItemSetChangeNotifier):
+                pl = PiggybackListener(callback, self)
+                self._container.removeListener(pl, IItemSetChangeListener)
+
+        elif issubclass(eventType, IPropertySetChangeEvent):
+            # Removes a Property set change listener from the object.
+            if isinstance(self._container, IPropertySetChangeNotifier):
+                pl = PiggybackListener(callback, self)
+                self._container.removeListener(pl, IPropertySetChangeListener)
+
         else:
-            raise ARGERROR(1, 1)
+            super(ContainerOrderedWrapper, self).removeCallback(callback,
+                    eventType)
 
-    # Removes a Property set change listener from the object. Don't add a
-    # JavaDoc comment here, we use the default documentation from implemented
-    # interface.
 
-    # (non-Javadoc)
-    # 
-    # @see com.vaadin.data.Container.Ordered#addItemAfter(java.lang.Object,
-    # java.lang.Object)
-
-    def addItemAfter(self, *args):
+    def addItemAfter(self, previousItemId, newItemId=None):
         # If the previous item is not in the container, fail
-        # (non-Javadoc)
-        # 
-        # @see com.vaadin.data.Container.Ordered#addItemAfter(java.lang.Object)
 
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            previousItemId, = _0
-            if previousItemId is not None and not self.containsId(previousItemId):
+        if newItemId == None:
+            if ((previousItemId is not None)
+                    and not self.containsId(previousItemId)):
                 return None
+
             # Adds the item to container
-            id = self._container.addItem()
+            idd = self._container.addItem()
+
             # Puts the new item to its correct place
-            if not self._ordered and id is not None:
-                self.addToOrderWrapper(id, previousItemId)
-            return id
-        elif _1 == 2:
-            previousItemId, newItemId = _0
-            if previousItemId is not None and not self.containsId(previousItemId):
+            if not self._ordered and idd is not None:
+                self.addToOrderWrapper(idd, previousItemId)
+
+            return idd
+        else:
+            if ((previousItemId is not None)
+                    and not self.containsId(previousItemId)):
                 return None
+
             # Adds the item to container
             item = self._container.addItem(newItemId)
+
             # Puts the new item to its correct place
             if not self._ordered and item is not None:
                 self.addToOrderWrapper(newItemId, previousItemId)
+
             return item
+
+
+class PiggybackListener(IPropertySetChangeListener, IItemSetChangeListener):
+    """This listener 'piggybacks' on the real listener in order to update the
+    wrapper when needed. It proxies __eq__() and __hash__() to the real
+    listener so that the correct listener gets removed.
+    """
+
+    def __init__(self, realListener, wrapper, *args):
+        self._listener = realListener
+        self._wrapper = wrapper
+        self._args = args
+
+
+    def containerItemSetChange(self, event):
+        self._wrapper.updateOrderWrapper()
+        if isinstance(self._listener, IItemSetChangeListener):
+            self._listener.containerItemSetChange(event)
         else:
-            raise ARGERROR(1, 2)
+            self._listener(event, *self._args)
 
-    # If the previous item is not in the container, fail
 
-    def PiggybackListener(ContainerOrderedWrapper_this, *args, **kwargs):
+    def containerPropertySetChange(self, event):
+        self._wrapper.updateOrderWrapper()
+        if isinstance(self._listener, IPropertySetChangeListener):
+            self._listener.containerPropertySetChange(event)
+        else:
+            self._listener(event, *self._args)
 
-        class PiggybackListener(Container.PropertySetChangeListener, Container.ItemSetChangeListener):
-            """This listener 'piggybacks' on the real listener in order to update the
-            wrapper when needed. It proxies equals() and hashCode() to the real
-            listener so that the correct listener gets removed.
-            """
-            _listener = None
 
-            def __init__(self, realListener):
-                self._listener = realListener
+    def __eq__(self, obj):
+        return ((obj == self._listener)
+                or (obj is not None and obj == self._listener))
 
-            def containerItemSetChange(self, event):
-                ContainerOrderedWrapper_this.updateOrderWrapper()
-                self._listener.containerItemSetChange(event)
 
-            def containerPropertySetChange(self, event):
-                ContainerOrderedWrapper_this.updateOrderWrapper()
-                self._listener.containerPropertySetChange(event)
-
-            def equals(self, obj):
-                return (obj == self._listener) or (obj is not None and obj == self._listener)
-
-            def hashCode(self):
-                return self._listener.hashCode()
-
-        return PiggybackListener(*args, **kwargs)
+    def __hash__(self):
+        return hash(self._listener)
