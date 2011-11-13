@@ -22,3 +22,6 @@ class VScrollTable(object):
     FOOTER_CLICK_EVENT_ID = 'handleFooterClick'
     COLUMN_RESIZE_EVENT_ID = 'columnResize'
     COLUMN_REORDER_EVENT_ID = 'columnReorder'
+
+    ATTRIBUTE_PAGEBUFFER_FIRST = "pb-ft"
+    ATTRIBUTE_PAGEBUFFER_LAST = "pb-l"

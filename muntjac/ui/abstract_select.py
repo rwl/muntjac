@@ -1350,6 +1350,10 @@ class MultiSelectMode(object):
     def values(cls):
         return cls._values[:]
 
+    @classmethod
+    def ordinal(cls, val):
+        return cls._values.index(val)
+
 
 class INewItemHandler(object):
 
