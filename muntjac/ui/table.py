@@ -85,7 +85,8 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
     CELL_HEADER = 1
     CELL_ICON = 2
     CELL_ITEMID = 3
-    CELL_FIRSTCOL = 4
+    CELL_GENERATED_ROW = 4
+    CELL_FIRSTCOL = 5
 
     #: Left column alignment. <b>This is the default behaviour.</b>
     ALIGN_LEFT = 'b'
@@ -266,6 +267,9 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         #: Table cell specific style generator
         self._cellStyleGenerator = None
 
+        #: Table cell specific tooltip generator
+        self._itemDescriptionGenerator = None
+
         #: EXPERIMENTAL feature: will tell the client to re-calculate column
         #  widths if set to true. Currently no setter: extend to enable.
         self.alwaysRecalculateColumnWidths = False
@@ -278,7 +282,13 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
         self._multiSelectMode = MultiSelectMode.DEFAULT
 
+        self._rowCacheInvalidated = False
+
+        self._rowGenerator = None
+
         self._associatedProperties = dict()
+
+        self._painted = False
 
 
         super(Table, self).__init__()
@@ -352,8 +362,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         self._visibleColumns = newVC
 
         # Assures visual refresh
-        self.resetPageBuffer()
-        self.refreshRenderedCells()
+        self.refreshRowCache()
 
 
     def getColumnHeaders(self):
@@ -406,11 +415,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
             except StopIteration:
                 break
 
-        # Assures the visual refresh
-        # FIXME: Is this really needed? Header captions should not
-        # affect content so requestRepaint() should be sufficient.
-        self.resetPageBuffer()
-        self.refreshRenderedCells()
+        self.requestRepaint()
 
 
     def getColumnIcons(self):
@@ -458,8 +463,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
             self._columnIcons[col] = columnIcons[i]
 
         # Assure visual refresh
-        self.resetPageBuffer()
-        self.refreshRenderedCells()
+        self.requestRepaint()
 
 
     def getColumnAlignments(self):
@@ -532,8 +536,8 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
         self._columnAlignments = newCA
 
-        # Assures the visual refresh
-        self.resetPageBuffer()
+        # Assures the visual refresh. No need to reset the page buffer before
+        # as the content has not changed, only the alignments.
         self.refreshRenderedCells()
 
 
@@ -559,6 +563,8 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
             del self._columnWidths[propertyId]
         else:
             self._columnWidths[propertyId] = int(width)
+
+        self.requestRepaint()
 
 
     def setColumnExpandRatio(self, propertyId, expandRatio):
@@ -646,8 +652,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         if (pageLength >= 0) and (self._pageLength != pageLength):
             self._pageLength = pageLength
             # Assures the visual refresh
-            self.resetPageBuffer()
-            self.refreshRenderedCells()
+            self.refreshRowCache()
 
 
     def setCacheRate(self, cacheRate):
@@ -747,8 +752,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
             self._currentPageFirstItemIndex = index
 
         # Assures the visual refresh
-        self.resetPageBuffer()
-        self.refreshRenderedCells()
+        self.refreshRowCache()
 
 
     def indexOfId(self, itemId):
@@ -784,8 +788,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
             self._columnIcons[propertyId] = icon
 
         # Assures the visual refresh
-        self.resetPageBuffer()
-        self.refreshRenderedCells()
+        self.requestRepaint()
 
 
     def getColumnHeader(self, propertyId):
@@ -822,10 +825,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         else:
             self._columnHeaders[propertyId] = header
 
-        # Assures the visual refresh
-        # FIXME: Is this really needed? Header captions should not
-        # affect content so requestRepaint() should be sufficient.
-        self.refreshRenderedCells()
+        self.requestRepaint()
 
 
     def getColumnAlignment(self, propertyId):
@@ -861,11 +861,11 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         if (alignment is None) or (alignment == self.ALIGN_LEFT):
             if propertyId in self._columnAlignments:
                 del self._columnAlignments[propertyId]
-            return
+        else:
+            self._columnAlignments[propertyId] = alignment
 
-        self._columnAlignments[propertyId] = alignment
-
-        # Assures the visual refresh
+        # Assures the visual refresh. No need to reset the page buffer before
+        # as the content has not changed, only the alignments.
         self.refreshRenderedCells()
 
 
@@ -899,8 +899,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
             self._collapsedColumns.remove(propertyId)
 
         # Assures the visual refresh
-        self.resetPageBuffer()
-        self.refreshRenderedCells()
+        self.refreshRowCache()
 
 
     def isColumnCollapsingAllowed(self):
@@ -922,7 +921,8 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         if not collapsingAllowed:
             self._collapsedColumns.clear()
 
-        # Assures the visual refresh
+        # Assures the visual refresh. No need to reset the page buffer before
+        # as the content has not changed, only the alignments.
         self.refreshRenderedCells()
 
 
@@ -934,16 +934,15 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         return self._columnReorderingAllowed
 
 
-    def setColumnReorderingAllowed(self, reorderingAllowed):
+    def setColumnReorderingAllowed(self, columnReorderingAllowed):
         """Sets whether column reordering is allowed or not.
 
-        @param reorderingAllowed:
+        @param columnReorderingAllowed:
                    specifies whether column reordering is allowed.
         """
-        self._columnReorderingAllowed = reorderingAllowed
-
-        # Assures the visual refresh
-        self.refreshRenderedCells()
+        if columnReorderingAllowed != self._columnReorderingAllowed:
+            self._columnReorderingAllowed = columnReorderingAllowed
+            self.requestRepaint()
 
 
     def setColumnOrder(self, columnOrder):
@@ -968,8 +967,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         self._visibleColumns = newOrder
 
         # Assure visual refresh
-        self.resetPageBuffer()
-        self.refreshRenderedCells()
+        self.refreshRowCache()
 
 
     def getCurrentPageFirstItemIndex(self):
@@ -1056,8 +1054,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
         if needsPageBufferReset:
             # Assures the visual refresh
-            self.resetPageBuffer()
-            self.refreshRenderedCells()
+            self.refreshRowCache()
 
 
     def isPageBufferingEnabled(self):
@@ -1119,203 +1116,580 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         @param columnHeaderMode:
                    the new value of property columnHeaderMode.
         """
-        if ((columnHeaderMode >= self.COLUMN_HEADER_MODE_HIDDEN)
+        if (columnHeaderMode != self._columnHeaderMode
+                and columnHeaderMode >= self.COLUMN_HEADER_MODE_HIDDEN
                 and (columnHeaderMode <=
                         self.COLUMN_HEADER_MODE_EXPLICIT_DEFAULTS_ID)):
             self._columnHeaderMode = columnHeaderMode
-
-        # Assures the visual refresh
-        self.refreshRenderedCells()
+            self.requestRepaint()
 
 
     def refreshRenderedCells(self):
-        """Refreshes rendered rows"""
+        """Refreshes the rows in the internal cache. Only if
+        L{resetPageBuffer} is called before this then all values are
+        guaranteed to be recreated.
+        """
         if self.getParent() is None:
             return
 
-        if self._isContentRefreshesEnabled:
+        if not self._isContentRefreshesEnabled:
+            return
 
-            oldListenedProperties = self._listenedProperties
-            oldVisibleComponents = self._visibleComponents
+        # Collects the basic facts about the table page
+        pagelen = self.getPageLength()
+        firstIndex = self.getCurrentPageFirstItemIndex()
+        rows = totalRows = self.size()
+        if (rows > 0) and (firstIndex >= 0):
+            rows -= firstIndex
 
-            # initialize the listener collections
+        if (pagelen > 0) and (pagelen < rows):
+            rows = pagelen
+
+        # If "to be painted next" variables are set, use them
+        if (self._lastToBeRenderedInClient -
+                self._firstToBeRenderedInClient > 0):
+            rows = (self._lastToBeRenderedInClient -
+                        self._firstToBeRenderedInClient) + 1
+
+        if self._firstToBeRenderedInClient >= 0:
+            if self._firstToBeRenderedInClient < totalRows:
+                firstIndex = self._firstToBeRenderedInClient
+            else:
+                firstIndex = totalRows - 1
+        else:
+            # initial load
+            self._firstToBeRenderedInClient = firstIndex
+
+        if totalRows > 0:
+            if (rows + firstIndex) > totalRows:
+                rows = totalRows - firstIndex
+        else:
+            rows = 0
+        # Saves the results to internal buffer
+        self._pageBuffer = self.getVisibleCellsNoCache(firstIndex, rows, True)
+        if rows > 0:
+            self._pageBufferFirstIndex = firstIndex
+        self.setRowCacheInvalidated(True)
+        self.requestRepaint()
+
+
+#
+#
+#            oldListenedProperties = self._listenedProperties
+#            oldVisibleComponents = self._visibleComponents
+#
+#            # initialize the listener collections
+#            self._listenedProperties = set()
+#            self._visibleComponents = set()
+#
+#            colids = self.getVisibleColumns()
+#            cols = len(colids)
+#
+#            cells = [([None] * rows) for _ in range(cols + self.CELL_FIRSTCOL)]
+#            if rows == 0:
+#                self._pageBuffer = cells
+#                self.unregisterPropertiesAndComponents(oldListenedProperties,
+#                        oldVisibleComponents)
+#
+#                # We need to repaint so possible header or footer changes
+#                # are sent to the server
+#                self.requestRepaint()
+#                return
+#
+#            # Gets the first item id
+#            if isinstance(self.items, container.IIndexed):
+#                idd = self.getIdByIndex(firstIndex)
+#            else:
+#                idd = self.firstItemId()
+#                for i in range(firstIndex):
+#                    idd = self.nextItemId(idd)
+#
+#            headmode = self.getRowHeaderMode()
+#            iscomponent = [None] * cols
+#            for i in range(cols):
+#                iscomponent[i] = ((colids[i] in self._columnGenerators)
+#                        or issubclass(self.getType(colids[i]), IComponent))
+#
+#            if (self._pageBuffer is not None
+#                    and len(self._pageBuffer[self.CELL_ITEMID]) > 0):
+#                firstIndexNotInCache = (self._pageBufferFirstIndex
+#                        + len(self._pageBuffer[self.CELL_ITEMID]))
+#            else:
+#                firstIndexNotInCache = -1
+#
+#            # Creates the page contents
+#            filledRows = 0
+#            i = 0
+#            while i < rows and idd is not None:
+#                cells[self.CELL_ITEMID][i] = idd
+#                cells[self.CELL_KEY][i] = self.itemIdMapper.key(idd)
+#                if headmode != self.ROW_HEADER_MODE_HIDDEN:
+#                    if headmode == self.ROW_HEADER_MODE_INDEX:
+#                        cells[self.CELL_HEADER][i] = str(i + firstIndex + 1)
+#                    else:
+#                        cells[self.CELL_HEADER][i] = self.getItemCaption(idd)
+#
+#                    cells[self.CELL_ICON][i] = self.getItemIcon(idd)
+#
+#                if cols > 0:
+#                    for j in range(cols):
+#                        if self.isColumnCollapsed(colids[j]):
+#                            continue
+#
+#                        p = None
+#                        value = ''
+#                        isGenerated = colids[j] in self._columnGenerators
+#
+#                        if not isGenerated:
+#                            p = self.getContainerProperty(idd, colids[j])
+#
+#                        # check in current pageBuffer already has row
+#                        index = firstIndex + i
+#                        if (p is not None) or isGenerated:
+#                            if (index < firstIndexNotInCache
+#                                    and index >= self._pageBufferFirstIndex):
+#                                # we have data already in our cache,
+#                                # recycle it instead of fetching it via
+#                                # getValue/getPropertyValue
+#                                indexInOldBuffer = (index -
+#                                        self._pageBufferFirstIndex)
+#                                a, b = self.CELL_FIRSTCOL + j, indexInOldBuffer
+#                                value = self._pageBuffer[a][b]
+#                                if ((not isGenerated and iscomponent[j])
+#                                    or (not isinstance(value, IComponent))):
+#                                    self.listenProperty(p,
+#                                            oldListenedProperties)
+#
+#                            elif isGenerated:
+#                                cg = self._columnGenerators[colids[j]]
+#                                value = cg.generateCell(self, idd, colids[j])
+#
+#                            elif iscomponent[j]:
+#                                value = p.getValue()
+#                                self.listenProperty(p, oldListenedProperties)
+#
+#                            elif p is not None:
+#                                value = self.getPropertyValue(idd,
+#                                        colids[j], p)
+#                                # If returned value is IComponent (via
+#                                # fieldfactory or overridden
+#                                # getPropertyValue) we excpect it to listen
+#                                # property value changes. Otherwise if
+#                                # property emits value change events, table
+#                                # will start to listen them and refresh
+#                                # content when needed.
+#                                if not isinstance(value, IComponent):
+#                                    self.listenProperty(p,
+#                                            oldListenedProperties)
+#
+#                            else:
+#                                value = self.getPropertyValue(idd,
+#                                        colids[j], None)
+#
+#                        if isinstance(value, IComponent):
+#                            if ((oldVisibleComponents is None)
+#                                    or (not (value in oldVisibleComponents))):
+#                                value.setParent(self)
+#
+#                            self._visibleComponents.add(value)
+#
+#                        cells[self.CELL_FIRSTCOL + j][i] = value
+#
+#                # Gets the next item idd
+#                if isinstance(self.items, container.IIndexed):
+#                    index = firstIndex + i + 1
+#                    if index < totalRows:
+#                        idd = self.getIdByIndex(index)
+#                    else:
+#                        idd = None
+#                else:
+#                    idd = self.nextItemId(idd)
+#
+#                filledRows += 1
+#                i += 1
+#
+#            # Assures that all the rows of the cell-buffer are valid
+#            if filledRows != len(cells[0]):
+#                temp = [[None] * filledRows] * len(cells)
+#                for i in range(len(cells)):
+#                    for j in range(filledRows):
+#                        temp[i][j] = cells[i][j]
+#
+#                cells = temp
+#
+#            self._pageBufferFirstIndex = firstIndex
+#
+#            # Saves the results to internal buffer
+#            self._pageBuffer = cells
+#
+#            self.unregisterPropertiesAndComponents(oldListenedProperties,
+#                    oldVisibleComponents)
+#
+#            self.requestRepaint())
+
+
+    def requestRepaint(self):
+        """Requests that the Table should be repainted as soon as possible.
+
+        Note that a C{Table} does not necessarily repaint its contents when
+        this method has been called. See L{refreshRowCache} for forcing an
+        update of the contents.
+        """
+        # Overridden only for doc-string
+        super(Table, self).requestRepaint()
+
+
+    def removeRowsFromCacheAndFillBottom(self, firstIndex, rows):
+        totalCachedRows = len(self._pageBuffer[self.CELL_ITEMID])
+        totalRows = self.size()
+        firstIndexInPageBuffer = firstIndex - self._pageBufferFirstIndex
+
+        # firstIndexInPageBuffer is the first row to be removed. "rows" rows
+        # after that should be removed. If the page buffer does not contain
+        # that many rows, we only remove the rows that actually are in the page
+        # buffer.
+        if firstIndexInPageBuffer + rows > totalCachedRows:
+            rows = totalCachedRows - firstIndexInPageBuffer
+
+        # Unregister components that will no longer be in the page buffer to
+        # make sure that no components leak.
+        self.unregisterComponentsAndPropertiesInRows(firstIndex, rows)
+
+        # The number of rows that should be in the cache after this operation
+        # is done (pageBuffer currently contains the expanded items).
+        newCachedRowCount = totalCachedRows
+        if newCachedRowCount + self._pageBufferFirstIndex > totalRows:
+            newCachedRowCount = totalRows - self._pageBufferFirstIndex
+
+        # The index at which we should render the first row that does not come
+        # from the previous page buffer.
+        firstAppendedRowInPageBuffer = totalCachedRows - rows
+        firstAppendedRow = \
+                firstAppendedRowInPageBuffer + self._pageBufferFirstIndex
+
+        # Calculate the maximum number of new rows that we can add to the page
+        # buffer. Less than the rows we removed if the container does not
+        # contain that many items afterwards.
+        maxRowsToRender = totalRows - firstAppendedRow
+        rowsToAdd = rows
+        if rowsToAdd > maxRowsToRender:
+            rowsToAdd = maxRowsToRender
+
+        cells = None
+        if rowsToAdd > 0:
+            cells = self.getVisibleCellsNoCache(firstAppendedRow, rowsToAdd,
+                    False)
+
+        # Create the new cache buffer by copying the first rows from the old
+        # buffer, moving the following rows upwards and appending more rows if
+        # applicable.
+        pbl = len(self._pageBuffer)
+        newPageBuffer = [([None] * newCachedRowCount) for _ in range(pbl)]
+        for i in range(pbl):
+            for row in range(firstIndexInPageBuffer):
+                # Copy the first rows
+                newPageBuffer[i][row] = self._pageBuffer[i][row]
+
+            for row in range(firstIndexInPageBuffer,
+                    firstAppendedRowInPageBuffer):
+                # Move the rows that were after the expanded rows
+                newPageBuffer[i][row] = self._pageBuffer[i][row + rows]
+
+            for row in range(firstAppendedRowInPageBuffer, newCachedRowCount):
+                # Add the newly rendered rows. Only used if rowsToAdd > 0
+                # (cells != null)
+                newPageBuffer[i][row] = cells[i][row - firstAppendedRowInPageBuffer]
+
+        self._pageBuffer = newPageBuffer
+
+
+    def getVisibleCellsUpdateCacheRows(self, firstIndex, rows):
+        cells = self.getVisibleCellsNoCache(firstIndex, rows, False)
+        cacheIx = firstIndex - self._pageBufferFirstIndex
+        # update the new rows in the cache.
+        totalCachedRows = len(self._pageBuffer[self.CELL_ITEMID])
+        end = min(cacheIx + rows, totalCachedRows)
+        for ix in range(cacheIx, end):
+            for i in range(len(self._pageBuffer)):
+                self._pageBuffer[i][ix] = cells[i][ix - cacheIx]
+        return cells
+
+
+    def getVisibleCellsInsertIntoCache(self, firstIndex, rows):
+        """@param firstIndex:
+                   The position where new rows should be inserted
+        @param rows:
+                   The maximum number of rows that should be inserted at
+                   position firstIndex. Less rows will be inserted if the
+                   page buffer is too small.
+        """
+        logger.debug(
+                'Insert %d rows at index %d to existing page buffer requested'
+                % (rows, firstIndex))
+
+        # Page buffer must not become larger than pageLength*cacheRate before
+        # or after the current page
+        minPageBufferIndex = (self.getCurrentPageFirstItemIndex()
+                - (self.getPageLength() * self.getCacheRate()))
+        if minPageBufferIndex < 0:
+            minPageBufferIndex = 0
+
+        maxPageBufferIndex = (self.getCurrentPageFirstItemIndex()
+                + (self.getPageLength() * (1 + self.getCacheRate())))
+        maxBufferSize = maxPageBufferIndex - minPageBufferIndex
+
+        if self.getPageLength() == 0:
+            # If pageLength == 0 then all rows should be rendered
+            maxBufferSize = len(self._pageBuffer[0]) + rows
+
+        # Number of rows that were previously cached. This is not necessarily
+        # the same as pageLength if we do not have enough rows in the
+        # container.
+        currentlyCachedRowCount = len(self._pageBuffer[self.CELL_ITEMID])
+
+        # firstIndexInPageBuffer is the offset in pageBuffer where the new rows
+        # will be inserted (firstIndex is the index in the whole table).
+        #
+        # E.g. scrolled down to row 1000: firstIndex==1010,
+        # pageBufferFirstIndex==1000 -> cacheIx==10
+        firstIndexInPageBuffer = firstIndex - self._pageBufferFirstIndex
+
+        # If rows > size available in page buffer
+        if firstIndexInPageBuffer + rows > maxBufferSize:
+            rows = maxBufferSize - firstIndexInPageBuffer
+
+        # "rows" rows will be inserted at firstIndex. Find out how many old
+        # rows fall outside the new buffer so we can unregister components in
+        # the cache.
+
+        # All rows until the insertion point remain, always.
+        firstCacheRowToRemoveInPageBuffer = firstIndexInPageBuffer
+
+        # IF there is space remaining in the buffer after the rows have been
+        # inserted, we can keep more rows.
+
+        numberOfOldRowsAfterInsertedRows = (maxBufferSize
+                - firstIndexInPageBuffer - rows)
+        if numberOfOldRowsAfterInsertedRows > 0:
+            firstCacheRowToRemoveInPageBuffer += \
+                    numberOfOldRowsAfterInsertedRows
+
+        if firstCacheRowToRemoveInPageBuffer <= currentlyCachedRowCount:
+            # Unregister all components that fall beyond the cache limits after
+            # inserting the new rows.
+            self.unregisterComponentsAndPropertiesInRows(
+                    firstCacheRowToRemoveInPageBuffer
+                            + self._pageBufferFirstIndex,
+                    (currentlyCachedRowCount
+                            - firstCacheRowToRemoveInPageBuffer)
+                            + self._pageBufferFirstIndex)
+
+        # Calculate the new cache size
+        newCachedRowCount = currentlyCachedRowCount
+        if (maxBufferSize == 0) or (currentlyCachedRowCount < maxBufferSize):
+            newCachedRowCount = currentlyCachedRowCount + rows
+            if maxBufferSize > 0 and newCachedRowCount > maxBufferSize:
+                newCachedRowCount = maxBufferSize
+
+        # Paint the new rows into a separate buffer
+        cells = self.getVisibleCellsNoCache(firstIndex, rows, False)
+
+        # Create the new cache buffer and fill it with the data from the old
+        # buffer as well as the inserted rows.
+
+        pbl = len(self._pageBuffer)
+        newPageBuffer = [([None] * newCachedRowCount) for _ in range(pbl)]
+
+        for i in range(pbl):
+            for row in range(firstIndexInPageBuffer):
+                # Copy the first rows
+                newPageBuffer[i][row] = self._pageBuffer[i][row]
+
+            for row in range(firstIndexInPageBuffer,
+                    firstIndexInPageBuffer + rows):
+                # Copy the newly created rows
+                newPageBuffer[i][row] = cells[i][row - firstIndexInPageBuffer]
+
+            for row in range(firstIndexInPageBuffer + rows, newCachedRowCount):
+                # Move the old rows down below the newly inserted rows
+                newPageBuffer[i][row] = self._pageBuffer[i][row - rows]
+
+        self._pageBuffer = newPageBuffer
+        logger.debug('Page Buffer now contains '
+                + len(self._pageBuffer[self.CELL_ITEMID]) + ' rows ('
+                + self._pageBufferFirstIndex + '-'
+                + (self._pageBufferFirstIndex
+                        + len(self._pageBuffer[self.CELL_ITEMID]) - 1)
+                + ')')
+        return cells
+
+
+    def getVisibleCellsNoCache(self, firstIndex, rows, replaceListeners):
+        """Render rows with index "firstIndex" to "firstIndex+rows-1" to a new
+        buffer.
+
+        Reuses values from the current page buffer if the rows are found there.
+        """
+        logger.debug('Render visible cells for rows '
+                + firstIndex + '-' + (firstIndex + rows - 1))
+        colids = self.getVisibleColumns()
+        cols = len(colids)
+
+        oldListenedProperties = self._listenedProperties
+        oldVisibleComponents = self._visibleComponents
+
+        if replaceListeners:
+            # initialize the listener collections, this should only be done if
+            # the entire cache is refreshed (through refreshRenderedCells)
             self._listenedProperties = set()
             self._visibleComponents = set()
 
-            # Collects the basic facts about the table page
-            colids = self.getVisibleColumns()
-            cols = len(colids)
-            pagelen = self.getPageLength()
-            firstIndex = self.getCurrentPageFirstItemIndex()
-            rows = totalRows = self.size()
-            if (rows > 0) and (firstIndex >= 0):
-                rows -= firstIndex
-
-            if (pagelen > 0) and (pagelen < rows):
-                rows = pagelen
-
-            # If "to be painted next" variables are set, use them
-            if (self._lastToBeRenderedInClient -
-                    self._firstToBeRenderedInClient > 0):
-                rows = (self._lastToBeRenderedInClient -
-                            self._firstToBeRenderedInClient) + 1
-
-            if self._firstToBeRenderedInClient >= 0:
-                if self._firstToBeRenderedInClient < totalRows:
-                    firstIndex = self._firstToBeRenderedInClient
-                else:
-                    firstIndex = totalRows - 1
-            else:
-                # initial load
-                self._firstToBeRenderedInClient = firstIndex
-
-            if totalRows > 0:
-                if (rows + firstIndex) > totalRows:
-                    rows = totalRows - firstIndex
-            else:
-                rows = 0
-
-            cells = [([None] * rows) for _ in range(cols + self.CELL_FIRSTCOL)]
-            if rows == 0:
-                self._pageBuffer = cells
-                self.unregisterPropertiesAndComponents(oldListenedProperties,
-                        oldVisibleComponents)
-
-                # We need to repaint so possible header or footer changes
-                # are sent to the server
-                self.requestRepaint()
-                return
-
-            # Gets the first item id
-            if isinstance(self.items, container.IIndexed):
-                idd = self.getIdByIndex(firstIndex)
-            else:
-                idd = self.firstItemId()
-                for i in range(firstIndex):
-                    idd = self.nextItemId(idd)
-
-            headmode = self.getRowHeaderMode()
-            iscomponent = [None] * cols
-            for i in range(cols):
-                iscomponent[i] = ((colids[i] in self._columnGenerators)
-                        or issubclass(self.getType(colids[i]), IComponent))
-
-            if (self._pageBuffer is not None
-                    and len(self._pageBuffer[self.CELL_ITEMID]) > 0):
-                firstIndexNotInCache = (self._pageBufferFirstIndex
-                        + len(self._pageBuffer[self.CELL_ITEMID]))
-            else:
-                firstIndexNotInCache = -1
-
-            # Creates the page contents
-            filledRows = 0
-            i = 0
-            while i < rows and idd is not None:
-                cells[self.CELL_ITEMID][i] = idd
-                cells[self.CELL_KEY][i] = self.itemIdMapper.key(idd)
-                if headmode != self.ROW_HEADER_MODE_HIDDEN:
-                    if headmode == self.ROW_HEADER_MODE_INDEX:
-                        cells[self.CELL_HEADER][i] = str(i + firstIndex + 1)
-                    else:
-                        cells[self.CELL_HEADER][i] = self.getItemCaption(idd)
-
-                    cells[self.CELL_ICON][i] = self.getItemIcon(idd)
-
-                if cols > 0:
-                    for j in range(cols):
-                        if self.isColumnCollapsed(colids[j]):
-                            continue
-
-                        p = None
-                        value = ''
-                        isGenerated = colids[j] in self._columnGenerators
-
-                        if not isGenerated:
-                            p = self.getContainerProperty(idd, colids[j])
-
-                        # check in current pageBuffer already has row
-                        index = firstIndex + i
-                        if (p is not None) or isGenerated:
-                            if (index < firstIndexNotInCache
-                                    and index >= self._pageBufferFirstIndex):
-                                # we have data already in our cache,
-                                # recycle it instead of fetching it via
-                                # getValue/getPropertyValue
-                                indexInOldBuffer = (index -
-                                        self._pageBufferFirstIndex)
-                                a, b = self.CELL_FIRSTCOL + j, indexInOldBuffer
-                                value = self._pageBuffer[a][b]
-                                if ((not isGenerated and iscomponent[j])
-                                    or (not isinstance(value, IComponent))):
-                                    self.listenProperty(p,
-                                            oldListenedProperties)
-
-                            elif isGenerated:
-                                cg = self._columnGenerators[colids[j]]
-                                value = cg.generateCell(self, idd, colids[j])
-
-                            elif iscomponent[j]:
-                                value = p.getValue()
-                                self.listenProperty(p, oldListenedProperties)
-
-                            elif p is not None:
-                                value = self.getPropertyValue(idd,
-                                        colids[j], p)
-                                # If returned value is IComponent (via
-                                # fieldfactory or overridden
-                                # getPropertyValue) we excpect it to listen
-                                # property value changes. Otherwise if
-                                # property emits value change events, table
-                                # will start to listen them and refresh
-                                # content when needed.
-                                if not isinstance(value, IComponent):
-                                    self.listenProperty(p,
-                                            oldListenedProperties)
-
-                            else:
-                                value = self.getPropertyValue(idd,
-                                        colids[j], None)
-
-                        if isinstance(value, IComponent):
-                            if ((oldVisibleComponents is None)
-                                    or (not (value in oldVisibleComponents))):
-                                value.setParent(self)
-
-                            self._visibleComponents.add(value)
-
-                        cells[self.CELL_FIRSTCOL + j][i] = value
-
-                # Gets the next item idd
-                if isinstance(self.items, container.IIndexed):
-                    index = firstIndex + i + 1
-                    if index < totalRows:
-                        idd = self.getIdByIndex(index)
-                    else:
-                        idd = None
-                else:
-                    idd = self.nextItemId(idd)
-
-                filledRows += 1
-                i += 1
-
-            # Assures that all the rows of the cell-buffer are valid
-            if filledRows != len(cells[0]):
-                temp = [[None] * filledRows] * len(cells)
-                for i in range(len(cells)):
-                    for j in range(filledRows):
-                        temp[i][j] = cells[i][j]
-
-                cells = temp
-
-            self._pageBufferFirstIndex = firstIndex
-
-            # Saves the results to internal buffer
-            self._pageBuffer = cells
-
+        cells = [([None] * rows) for _ in range(cols + self.CELL_FIRSTCOL)]
+        if rows == 0:
             self.unregisterPropertiesAndComponents(oldListenedProperties,
                     oldVisibleComponents)
+            return cells
 
-            self.requestRepaint()
+        # Gets the first item id
+        if isinstance(self.items, container.IIndexed):
+            idd = self.getIdByIndex(firstIndex)
+        else:
+            idd = self.firstItemId()
+            for i in range(firstIndex):
+                idd = self.nextItemId(idd)
+
+        headmode = self.getRowHeaderMode()
+        iscomponent = [None] * cols
+        for i in range(cols):
+            iscomponent[i] = ((colids[i] in self._columnGenerators)
+                    or issubclass(self.getType(colids[i]), IComponent))
+
+        if (self._pageBuffer is not None
+                and len(self._pageBuffer[self.CELL_ITEMID]) > 0):
+            firstIndexNotInCache = (self._pageBufferFirstIndex
+                    + len(self._pageBuffer[self.CELL_ITEMID]))
+        else:
+            firstIndexNotInCache = -1
+
+        # Creates the page contents
+        filledRows = 0
+        i = 0
+        while i < rows and idd is not None:
+            cells[self.CELL_ITEMID][i] = id
+            cells[self.CELL_KEY][i] = self.itemIdMapper.key(id)
+            if headmode != self.ROW_HEADER_MODE_HIDDEN:
+                if headmode == self.ROW_HEADER_MODE_INDEX:
+                    cells[self.CELL_HEADER][i] = str(i + firstIndex + 1)
+                else:
+                    cells[self.CELL_HEADER][i] = self.getItemCaption(id)
+
+                cells[self.CELL_ICON][i] = self.getItemIcon(id)
+
+            if self._rowGenerator is not None:
+                generatedRow = self._rowGenerator.generateRow(self, id)
+            else:
+                generatedRow =  None
+            cells[self.CELL_GENERATED_ROW][i] = generatedRow
+
+            for j in range(cols):
+                if self.isColumnCollapsed(colids[j]):
+                    continue
+                p = None
+                value = ''
+                isGeneratedRow = generatedRow is not None
+                isGeneratedColumn = colids[j] in self._columnGenerators
+                isGenerated = isGeneratedRow or isGeneratedColumn
+
+                if not isGenerated:
+                    p = self.getContainerProperty(id, colids[j])
+
+                if isGeneratedRow:
+                    if generatedRow.isSpanColumns() and j > 0:
+                        value = None
+                    elif (generatedRow.isSpanColumns() and j == 0
+                            and isinstance(generatedRow.getValue(),IComponent)):
+                        value = generatedRow.getValue()
+                    elif len(generatedRow.getText()) > j:
+                        value = generatedRow.getText()[j]
+                else:
+                    # check in current pageBuffer already has row
+                    index = firstIndex + i
+                    if (p is not None) or isGenerated:
+                        indexInOldBuffer = index - self._pageBufferFirstIndex
+                        if (index < firstIndexNotInCache
+                                and index >= self._pageBufferFirstIndex
+                                and self._pageBuffer[self.CELL_GENERATED_ROW][indexInOldBuffer] is None
+                                and self._pageBuffer[self.CELL_ITEMID][indexInOldBuffer] == id):
+                            # we already have data in our cache,
+                            # recycle it instead of fetching it via
+                            # getValue/getPropertyValue
+                            value = self._pageBuffer[self.CELL_FIRSTCOL + j][indexInOldBuffer]
+                            if (not isGeneratedColumn and iscomponent[j]
+                                    or (not isinstance(value, IComponent))):
+                                self.listenProperty(p, oldListenedProperties)
+                        elif isGeneratedColumn:
+                            cg = self._columnGenerators[colids[j]]
+                            value = cg.generateCell(self, id, colids[j])
+                            if (value is not None
+                                    and not isinstance(value, IComponent)
+                                    and not isinstance(value, basestring)):
+                                # Avoid errors if a generator returns
+                                # something other than a Component or a string
+                                value = str(value)
+                        elif iscomponent[j]:
+                            value = p.getValue()
+                            self.listenProperty(p, oldListenedProperties)
+                        elif p is not None:
+                            value = self.getPropertyValue(id, colids[j], p)
+                            # If returned value is Component (via
+                            # fieldfactory or overridden getPropertyValue)
+                            # we excpect it to listen property value
+                            # changes. Otherwise if property emits value
+                            # change events, table will start to listen
+                            # them and refresh content when needed.
+                            if not isinstance(value, IComponent):
+                                self.listenProperty(p, oldListenedProperties)
+                        else:
+                            value = self.getPropertyValue(id, colids[j], None)
+
+                if isinstance(value, IComponent):
+                    self.registerComponent(value)
+
+                cells[self.CELL_FIRSTCOL + j][i] = value
+
+            # Gets the next item id
+            if isinstance(self.items, container.IIndexed):
+                index = firstIndex + i + 1
+                if index < self.size():
+                    idd = self.getIdByIndex(index)
+                else:
+                    idd = None
+            else:
+                idd = self.nextItemId(idd)
+
+            filledRows += 1
+            i += 1
+
+        # Assures that all the rows of the cell-buffer are valid
+        if filledRows != len(cells[0]):
+            temp = [[None] * filledRows] * len(cells)
+            for i in range(len(cells)):
+                for j in range(filledRows):
+                    temp[i][j] = cells[i][j]
+            cells = temp
+
+        self.unregisterPropertiesAndComponents(oldListenedProperties,
+                oldVisibleComponents)
+
+        return cells
+
+
+    def registerComponent(self, component):
+        logger.debug('Registered ' + component.__class__.__name__
+                + ': ' + component.getCaption())
+        if component.getParent() is not self:
+            component.setParent(self)
+        self._visibleComponents.add(component)
 
 
     def listenProperty(self, p, oldListenedProperties):
@@ -1328,6 +1702,39 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
             # free memory. Essential if table has loads of data and it is
             # used for a long time.
             self._listenedProperties.add(p)
+
+
+    def unregisterComponentsAndPropertiesInRows(self, firstIx, count):
+        """@param firstIx:
+                  Index of the first row to process. Global index, not
+                  relative to page buffer.
+        @param count:
+        """
+        logger.debug("Unregistering components in rows " + firstIx + "-"
+                + (firstIx + count - 1))
+        colids = self.getVisibleColumns()
+        if (self._pageBuffer is not None
+                and len(self._pageBuffer[self.CELL_ITEMID]) > 0):
+            bufSize = len(self._pageBuffer[self.CELL_ITEMID])
+            ix = firstIx - self._pageBufferFirstIndex
+            ix = 0 if ix < 0 else ix
+            if ix < bufSize:
+                count = bufSize - ix if count > bufSize - ix else count
+                for i in range(count):
+                    for c in range(len(colids)):
+                        col = self.CELL_FIRSTCOL + c
+                        cellVal = self._pageBuffer[col][i + ix]
+                        if (isinstance(cellVal, IComponent)
+                                and cellVal in self._visibleComponents):
+                            self._visibleComponents.remove(cellVal)
+                            self.unregisterComponent(cellVal)
+                        else:
+                            r = self._pageBuffer[self.CELL_ITEMID][i + ix]
+                            p = self.getContainerProperty(r, colids[c])
+                            if (isinstance(p, IValueChangeNotifier)
+                                    and p in self._listenedProperties):
+                                self._listenedProperties.remove(p)
+                                p.removeListener(self)
 
 
     def unregisterPropertiesAndComponents(self, oldListenedProperties,
@@ -1367,6 +1774,8 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         @param component:
                    a set of components that should be unregistered.
         """
+        logger.debug("Unregistered " + component.__class__.__name__
+                + ": " + component.getCaption())
         component.setParent(None)
         # Also remove property data sources to unregister listeners keeping
         # the fields in memory.
@@ -1421,7 +1830,8 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
             self._rowCaptionsAreHidden = False
             self.setItemCaptionMode(mode)
 
-        # Assure visual refresh
+        # Assures the visual refresh. No need to reset the page buffer before
+        # as the content has not changed, only the alignments.
         self.refreshRenderedCells()
 
 
@@ -1484,23 +1894,31 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                 item.getItemProperty( availableCols[i] ).setValue(cells[i])
 
             if not isinstance(self.items, container.IItemSetChangeNotifier):
-                self.resetPageBuffer()
-                self.refreshRenderedCells()
+                self.refreshRowCache()
 
             return itemId
         else:
             raise ValueError, 'too many arguments'
 
 
-    # Overriding select behavior
-    def setValue(self, newValue, repaintIsNotNeeded=None):
-        if repaintIsNotNeeded is None:
-            # external selection change, need to truncate pageBuffer
-            self.resetPageBuffer()
-            self.refreshRenderedCells()
-            super(Table, self).setValue(newValue)
-        else:
-            super(Table, self).setValue(newValue, repaintIsNotNeeded)
+    def refreshRowCache(self):
+        """Discards and recreates the internal row cache. Call this if you make
+        changes that affect the rows but the information about the changes are
+        not automatically propagated to the Table.
+
+        Do not call this e.g. if you have updated the data model through a
+        Property. These types of changes are automatically propagated to the
+        Table.
+
+        A typical case when this is needed is if you update a generator (e.g.
+        CellStyleGenerator) and want to ensure that the rows are redrawn with
+        new styles.
+
+        I{Note that calling this method is not cheap so avoid calling it
+        unnecessarily.}
+        """
+        self.resetPageBuffer()
+        self.refreshRenderedCells()
 
 
     def setContainerDataSource(self, newDataSource):
@@ -1694,6 +2112,8 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                         self._reqRowsToPaint = \
                                 self.size() - self._reqFirstRowToPaint
 
+            logger.debug("Client wants rows " + self._reqFirstRowToPaint + "-"
+                    + (self._reqFirstRowToPaint + self._reqRowsToPaint - 1))
             clientNeedsContentRefresh = True
 
         if not self._sortDisabled:
@@ -1881,294 +2301,293 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
             self.requestRepaint()
 
 
-    def paintContent(self, target):
-
-        # The tab ordering number
-        if self.getTabIndex() > 0:
-            target.addAttribute('tabindex', self.getTabIndex())
-
-        if self._dragMode != TableDragMode.NONE:
-            try:
-                idx = TableDragMode.values().index(self._dragMode)
-            except ValueError:
-                idx = -1
-            target.addAttribute('dragmode', idx)
-
-        if self._multiSelectMode != MultiSelectMode.DEFAULT:
-            try:
-                idx = MultiSelectMode.values().index(self._multiSelectMode)
-            except ValueError:
-                idx = -1
-            target.addAttribute('multiselectmode', idx)
-
-        # Initialize temps
-        colids = self.getVisibleColumns()
-        cols = len(colids)
-        first = self.getCurrentPageFirstItemIndex()
-        total = self.size()
-        pagelen = self.getPageLength()
-        colHeadMode = self.getColumnHeaderMode()
-        colheads = colHeadMode != self.COLUMN_HEADER_MODE_HIDDEN
-        cells = self.getVisibleCells()
-        iseditable = self.isEditable()
-
-        if self._reqRowsToPaint >= 0:
-            rows = self._reqRowsToPaint
-        else:
-            rows = len(cells[0])
-
-            if self.alwaysRecalculateColumnWidths:
-                # TODO experimental feature for now: tell the client to
-                # recalculate column widths.
-                # We'll only do this for paints that do not originate from
-                # table scroll/cache requests (i.e when reqRowsToPaint<0)
-                target.addAttribute('recalcWidths', True)
-
-        if ((not self.isNullSelectionAllowed())
-                and (self.getNullSelectionItemId() is not None)
-                and self.containsId(self.getNullSelectionItemId())):
-            total -= 1
-            rows -= 1
-
-        # selection support
-        selectedKeys = list()
-        if self.isMultiSelect():
-            sel = set( self.getValue() )
-            vids = self.getVisibleItemIds()
-            for idd in vids:
-                if idd in sel:
-                    selectedKeys.append( self.itemIdMapper.key(idd) )
-
-        else:
-            value = self.getValue()
-            if value is None:
-                value = self.getNullSelectionItemId()
-            if value is not None:
-                selectedKeys.append( self.itemIdMapper.key(value) )
-
-        # Table attributes
-        if self.isSelectable():
-            if self.isMultiSelect():
-                target.addAttribute('selectmode', 'multi')
-            else:
-                target.addAttribute('selectmode', 'single')
-        else:
-            target.addAttribute('selectmode', 'none')
-
-        if self._cacheRate != self._CACHE_RATE_DEFAULT:
-            target.addAttribute('cr', self._cacheRate)
-
-        target.addAttribute('cols', cols)
-        target.addAttribute('rows', rows)
-
-        if not self.isNullSelectionAllowed():
-            target.addAttribute('nsa', False)
-
-        if self._reqFirstRowToPaint >= 0:
-            target.addAttribute('firstrow', self._reqFirstRowToPaint)
-        else:
-            target.addAttribute('firstrow', self._firstToBeRenderedInClient)
-        target.addAttribute('totalrows', total)
-
-        if pagelen != 0:
-            target.addAttribute('pagelength', pagelen)
-
-        if colheads:
-            target.addAttribute('colheaders', True)
-
-        if self.rowHeadersAreEnabled():
-            target.addAttribute('rowheaders', True)
-
-        target.addAttribute('colfooters', self._columnFootersVisible)
-
-        # Body actions - Actions which has the target null and can be
-        # invoked by right clicking on the table body.
-        actionSet = set()
-        if self._actionHandlers is not None:
-            keys = list()
-            for ah in self._actionHandlers:
-                # Getting actions for the null item, which in this case
-                # means the body item
-                aa = ah.getActions(None, self)
-                if aa is not None:
-                    for ai in range(len(aa)):
-                        key = self._actionMapper.key(aa[ai])
-                        actionSet.add( aa[ai] )
-                        keys.append(key)
-
-            target.addAttribute('alb', keys)
-
-        # Visible column order
-        sortables = self.getSortableContainerPropertyIds()
-        visibleColOrder = list()
-        for columnId in self._visibleColumns:
-            if not self.isColumnCollapsed(columnId):
-                visibleColOrder.append( self._columnIdMap.key(columnId) )
-
-        target.addAttribute('vcolorder', list(visibleColOrder))
-
-        # Rows
-        selectable = self.isSelectable()
-        iscomponent = [None] * len(self._visibleColumns)
-        iscomponentIndex = 0
-        it = iter( self._visibleColumns )
-        while iscomponentIndex < len(iscomponent):
-            try:
-                columnId = it.next()
-                if columnId in self._columnGenerators:
-                    iscomponent[iscomponentIndex] = True
-                else:
-                    colType = self.getType(columnId)
-                    iscomponent[iscomponentIndex] = ((colType is not None)
-                            and issubclass(colType, IComponent))
-                iscomponentIndex += 1
-            except StopIteration:
-                break
-        target.startTag('rows')
-
-        # cells array contains all that are supposed to be visible on client,
-        # but we'll start from the one requested by client
-        start = 0
-        if ((self._reqFirstRowToPaint != -1)
-                and (self._firstToBeRenderedInClient != -1)):
-            start = self._reqFirstRowToPaint - self._firstToBeRenderedInClient
-
-        end = len(cells[0])
-        if self._reqRowsToPaint != -1:
-            end = start + self._reqRowsToPaint
-
-        # sanity check
-        if ((self._lastToBeRenderedInClient != -1)
-                and (self._lastToBeRenderedInClient < end)):
-            end = self._lastToBeRenderedInClient + 1
-
-        if (start > len(cells[self.CELL_ITEMID])) or (start < 0):
-            start = 0
-
-        for indexInRowbuffer in range(start, end):
-            itemId = cells[self.CELL_ITEMID][indexInRowbuffer]
-            if (not self.isNullSelectionAllowed()
-                    and (self.getNullSelectionItemId() is not None)
-                    and (itemId == self.getNullSelectionItemId())):
-                # Remove null selection item if null selection is not allowed
-                continue
-
-            self.paintRow(target, cells, iseditable, actionSet,
-                    iscomponent, indexInRowbuffer, itemId)
-        target.endTag('rows')
-
-        # The select variable is only enabled if selectable
-        if selectable:
-            target.addVariable(self, 'selected', selectedKeys)
-
-        # The cursors are only shown on pageable table
-        if (first != 0) or (self.getPageLength() > 0):
-            target.addVariable(self, 'firstvisible', first)
-
-        # Sorting
-        if isinstance(self.getContainerDataSource(), container.ISortable):
-            target.addVariable(self, 'sortcolumn',
-                    self._columnIdMap.key(self._sortContainerPropertyId))
-            target.addVariable(self, 'sortascending', self._sortAscending)
-
-        # Resets and paints "to be painted next" variables. Also reset
-        # pageBuffer
-        self._reqFirstRowToPaint = -1
-        self._reqRowsToPaint = -1
-        self._containerChangeToBeRendered = False
-        target.addVariable(self, 'reqrows', self._reqRowsToPaint)
-        target.addVariable(self, 'reqfirstrow', self._reqFirstRowToPaint)
-
-        # Actions
-        if len(actionSet) > 0:
-            target.addVariable(self, 'action', '')
-            target.startTag('actions')
-            for a in actionSet:
-                target.startTag('action')
-
-                if a.getCaption() is not None:
-                    target.addAttribute('caption', a.getCaption())
-
-                if a.getIcon() is not None:
-                    target.addAttribute('icon', a.getIcon())
-
-                target.addAttribute('key', self._actionMapper.key(a))
-                target.endTag('action')
-
-            target.endTag('actions')
-
-        if self._columnReorderingAllowed:
-            colorder = [None] * len(self._visibleColumns)
-            i = 0
-            it = iter(self._visibleColumns)
-            while i < len(colorder):
-                try:
-                    colorder[i] = self._columnIdMap.key(it.next())
-                    i += 1
-                except StopIteration:
-                    break
-            target.addVariable(self, 'columnorder', colorder)
-
-        # Available columns
-        if self._columnCollapsingAllowed:
-            ccs = set()
-            for o in self._visibleColumns:
-                if self.isColumnCollapsed(o):
-                    ccs.add(o)
-            collapsedkeys = [None] * len(ccs)
-            nextColumn = 0
-            it = iter( self._visibleColumns )
-            while nextColumn < len(collapsedkeys):
-                columnId = it.next()
-                if self.isColumnCollapsed(columnId):
-                    collapsedkeys[nextColumn] = self._columnIdMap.key(columnId)
-                    nextColumn += 1
-            target.addVariable(self, 'collapsedcolumns', collapsedkeys)
-
-        target.startTag('visiblecolumns')
-        if self.rowHeadersAreEnabled():
-            target.startTag('column')
-            target.addAttribute('cid', self._ROW_HEADER_COLUMN_KEY)
-            self.paintColumnWidth(target, self._ROW_HEADER_FAKE_PROPERTY_ID)
-            target.endTag('column')
-
-        i = 0
-        for columnId in self._visibleColumns:
-            if columnId is not None:
-                target.startTag('column')
-                target.addAttribute('cid', self._columnIdMap.key(columnId))
-                head = self.getColumnHeader(columnId)
-                if head is not None:
-                    target.addAttribute('caption', head)
-                else:
-                    target.addAttribute('caption', '')
-                foot = self.getColumnFooter(columnId)
-                if foot is not None:
-                    target.addAttribute('fcaption', foot)
-                else:
-                    target.addAttribute('fcaption', '')
-                if self.isColumnCollapsed(columnId):
-                    target.addAttribute('collapsed', True)
-
-                if colheads:
-                    if self.getColumnIcon(columnId) is not None:
-                        target.addAttribute('icon',
-                                self.getColumnIcon(columnId))
-
-                    if columnId in sortables:
-                        target.addAttribute('sortable', True)
-
-                if not (self.ALIGN_LEFT == self.getColumnAlignment(columnId)):
-                    target.addAttribute('align',
-                            self.getColumnAlignment(columnId))
-
-                self.paintColumnWidth(target, columnId)
-                target.endTag('column')
-
-        target.endTag('visiblecolumns')
-
-        if self._dropHandler is not None:
-            self._dropHandler.getAcceptCriterion().paint(target)
+#    def paintContent(self, target):
+#        # The tab ordering number
+#        if self.getTabIndex() > 0:
+#            target.addAttribute('tabindex', self.getTabIndex())
+#
+#        if self._dragMode != TableDragMode.NONE:
+#            try:
+#                idx = TableDragMode.values().index(self._dragMode)
+#            except ValueError:
+#                idx = -1
+#            target.addAttribute('dragmode', idx)
+#
+#        if self._multiSelectMode != MultiSelectMode.DEFAULT:
+#            try:
+#                idx = MultiSelectMode.values().index(self._multiSelectMode)
+#            except ValueError:
+#                idx = -1
+#            target.addAttribute('multiselectmode', idx)
+#
+#        # Initialize temps
+#        colids = self.getVisibleColumns()
+#        cols = len(colids)
+#        first = self.getCurrentPageFirstItemIndex()
+#        total = self.size()
+#        pagelen = self.getPageLength()
+#        colHeadMode = self.getColumnHeaderMode()
+#        colheads = colHeadMode != self.COLUMN_HEADER_MODE_HIDDEN
+#        cells = self.getVisibleCells()
+#        iseditable = self.isEditable()
+#
+#        if self._reqRowsToPaint >= 0:
+#            rows = self._reqRowsToPaint
+#        else:
+#            rows = len(cells[0])
+#
+#            if self.alwaysRecalculateColumnWidths:
+#                # TODO experimental feature for now: tell the client to
+#                # recalculate column widths.
+#                # We'll only do this for paints that do not originate from
+#                # table scroll/cache requests (i.e when reqRowsToPaint<0)
+#                target.addAttribute('recalcWidths', True)
+#
+#        if ((not self.isNullSelectionAllowed())
+#                and (self.getNullSelectionItemId() is not None)
+#                and self.containsId(self.getNullSelectionItemId())):
+#            total -= 1
+#            rows -= 1
+#
+#        # selection support
+#        selectedKeys = list()
+#        if self.isMultiSelect():
+#            sel = set( self.getValue() )
+#            vids = self.getVisibleItemIds()
+#            for idd in vids:
+#                if idd in sel:
+#                    selectedKeys.append( self.itemIdMapper.key(idd) )
+#
+#        else:
+#            value = self.getValue()
+#            if value is None:
+#                value = self.getNullSelectionItemId()
+#            if value is not None:
+#                selectedKeys.append( self.itemIdMapper.key(value) )
+#
+#        # Table attributes
+#        if self.isSelectable():
+#            if self.isMultiSelect():
+#                target.addAttribute('selectmode', 'multi')
+#            else:
+#                target.addAttribute('selectmode', 'single')
+#        else:
+#            target.addAttribute('selectmode', 'none')
+#
+#        if self._cacheRate != self._CACHE_RATE_DEFAULT:
+#            target.addAttribute('cr', self._cacheRate)
+#
+#        target.addAttribute('cols', cols)
+#        target.addAttribute('rows', rows)
+#
+#        if not self.isNullSelectionAllowed():
+#            target.addAttribute('nsa', False)
+#
+#        if self._reqFirstRowToPaint >= 0:
+#            target.addAttribute('firstrow', self._reqFirstRowToPaint)
+#        else:
+#            target.addAttribute('firstrow', self._firstToBeRenderedInClient)
+#        target.addAttribute('totalrows', total)
+#
+#        if pagelen != 0:
+#            target.addAttribute('pagelength', pagelen)
+#
+#        if colheads:
+#            target.addAttribute('colheaders', True)
+#
+#        if self.rowHeadersAreEnabled():
+#            target.addAttribute('rowheaders', True)
+#
+#        target.addAttribute('colfooters', self._columnFootersVisible)
+#
+#        # Body actions - Actions which has the target null and can be
+#        # invoked by right clicking on the table body.
+#        actionSet = set()
+#        if self._actionHandlers is not None:
+#            keys = list()
+#            for ah in self._actionHandlers:
+#                # Getting actions for the null item, which in this case
+#                # means the body item
+#                aa = ah.getActions(None, self)
+#                if aa is not None:
+#                    for ai in range(len(aa)):
+#                        key = self._actionMapper.key(aa[ai])
+#                        actionSet.add( aa[ai] )
+#                        keys.append(key)
+#
+#            target.addAttribute('alb', keys)
+#
+#        # Visible column order
+#        sortables = self.getSortableContainerPropertyIds()
+#        visibleColOrder = list()
+#        for columnId in self._visibleColumns:
+#            if not self.isColumnCollapsed(columnId):
+#                visibleColOrder.append( self._columnIdMap.key(columnId) )
+#
+#        target.addAttribute('vcolorder', list(visibleColOrder))
+#
+#        # Rows
+#        selectable = self.isSelectable()
+#        iscomponent = [None] * len(self._visibleColumns)
+#        iscomponentIndex = 0
+#        it = iter( self._visibleColumns )
+#        while iscomponentIndex < len(iscomponent):
+#            try:
+#                columnId = it.next()
+#                if columnId in self._columnGenerators:
+#                    iscomponent[iscomponentIndex] = True
+#                else:
+#                    colType = self.getType(columnId)
+#                    iscomponent[iscomponentIndex] = ((colType is not None)
+#                            and issubclass(colType, IComponent))
+#                iscomponentIndex += 1
+#            except StopIteration:
+#                break
+#        target.startTag('rows')
+#
+#        # cells array contains all that are supposed to be visible on client,
+#        # but we'll start from the one requested by client
+#        start = 0
+#        if ((self._reqFirstRowToPaint != -1)
+#                and (self._firstToBeRenderedInClient != -1)):
+#            start = self._reqFirstRowToPaint - self._firstToBeRenderedInClient
+#
+#        end = len(cells[0])
+#        if self._reqRowsToPaint != -1:
+#            end = start + self._reqRowsToPaint
+#
+#        # sanity check
+#        if ((self._lastToBeRenderedInClient != -1)
+#                and (self._lastToBeRenderedInClient < end)):
+#            end = self._lastToBeRenderedInClient + 1
+#
+#        if (start > len(cells[self.CELL_ITEMID])) or (start < 0):
+#            start = 0
+#
+#        for indexInRowbuffer in range(start, end):
+#            itemId = cells[self.CELL_ITEMID][indexInRowbuffer]
+#            if (not self.isNullSelectionAllowed()
+#                    and (self.getNullSelectionItemId() is not None)
+#                    and (itemId == self.getNullSelectionItemId())):
+#                # Remove null selection item if null selection is not allowed
+#                continue
+#
+#            self.paintRow(target, cells, iseditable, actionSet,
+#                    iscomponent, indexInRowbuffer, itemId)
+#        target.endTag('rows')
+#
+#        # The select variable is only enabled if selectable
+#        if selectable:
+#            target.addVariable(self, 'selected', selectedKeys)
+#
+#        # The cursors are only shown on pageable table
+#        if (first != 0) or (self.getPageLength() > 0):
+#            target.addVariable(self, 'firstvisible', first)
+#
+#        # Sorting
+#        if isinstance(self.getContainerDataSource(), container.ISortable):
+#            target.addVariable(self, 'sortcolumn',
+#                    self._columnIdMap.key(self._sortContainerPropertyId))
+#            target.addVariable(self, 'sortascending', self._sortAscending)
+#
+#        # Resets and paints "to be painted next" variables. Also reset
+#        # pageBuffer
+#        self._reqFirstRowToPaint = -1
+#        self._reqRowsToPaint = -1
+#        self._containerChangeToBeRendered = False
+#        target.addVariable(self, 'reqrows', self._reqRowsToPaint)
+#        target.addVariable(self, 'reqfirstrow', self._reqFirstRowToPaint)
+#
+#        # Actions
+#        if len(actionSet) > 0:
+#            target.addVariable(self, 'action', '')
+#            target.startTag('actions')
+#            for a in actionSet:
+#                target.startTag('action')
+#
+#                if a.getCaption() is not None:
+#                    target.addAttribute('caption', a.getCaption())
+#
+#                if a.getIcon() is not None:
+#                    target.addAttribute('icon', a.getIcon())
+#
+#                target.addAttribute('key', self._actionMapper.key(a))
+#                target.endTag('action')
+#
+#            target.endTag('actions')
+#
+#        if self._columnReorderingAllowed:
+#            colorder = [None] * len(self._visibleColumns)
+#            i = 0
+#            it = iter(self._visibleColumns)
+#            while i < len(colorder):
+#                try:
+#                    colorder[i] = self._columnIdMap.key(it.next())
+#                    i += 1
+#                except StopIteration:
+#                    break
+#            target.addVariable(self, 'columnorder', colorder)
+#
+#        # Available columns
+#        if self._columnCollapsingAllowed:
+#            ccs = set()
+#            for o in self._visibleColumns:
+#                if self.isColumnCollapsed(o):
+#                    ccs.add(o)
+#            collapsedkeys = [None] * len(ccs)
+#            nextColumn = 0
+#            it = iter( self._visibleColumns )
+#            while nextColumn < len(collapsedkeys):
+#                columnId = it.next()
+#                if self.isColumnCollapsed(columnId):
+#                    collapsedkeys[nextColumn] = self._columnIdMap.key(columnId)
+#                    nextColumn += 1
+#            target.addVariable(self, 'collapsedcolumns', collapsedkeys)
+#
+#        target.startTag('visiblecolumns')
+#        if self.rowHeadersAreEnabled():
+#            target.startTag('column')
+#            target.addAttribute('cid', self._ROW_HEADER_COLUMN_KEY)
+#            self.paintColumnWidth(target, self._ROW_HEADER_FAKE_PROPERTY_ID)
+#            target.endTag('column')
+#
+#        i = 0
+#        for columnId in self._visibleColumns:
+#            if columnId is not None:
+#                target.startTag('column')
+#                target.addAttribute('cid', self._columnIdMap.key(columnId))
+#                head = self.getColumnHeader(columnId)
+#                if head is not None:
+#                    target.addAttribute('caption', head)
+#                else:
+#                    target.addAttribute('caption', '')
+#                foot = self.getColumnFooter(columnId)
+#                if foot is not None:
+#                    target.addAttribute('fcaption', foot)
+#                else:
+#                    target.addAttribute('fcaption', '')
+#                if self.isColumnCollapsed(columnId):
+#                    target.addAttribute('collapsed', True)
+#
+#                if colheads:
+#                    if self.getColumnIcon(columnId) is not None:
+#                        target.addAttribute('icon',
+#                                self.getColumnIcon(columnId))
+#
+#                    if columnId in sortables:
+#                        target.addAttribute('sortable', True)
+#
+#                if not (self.ALIGN_LEFT == self.getColumnAlignment(columnId)):
+#                    target.addAttribute('align',
+#                            self.getColumnAlignment(columnId))
+#
+#                self.paintColumnWidth(target, columnId)
+#                target.endTag('column')
+#
+#        target.endTag('visiblecolumns')
+#
+#        if self._dropHandler is not None:
+#            self._dropHandler.getAcceptCriterion().paint(target)
 
 
     def paintColumnWidth(self, target, columnId):
@@ -2207,21 +2626,43 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                     target.addAttribute(('style-'
                             + self._columnIdMap.key(columnId)), cellStyle)
 
-            if ((iscomponent[currentColumn] or iseditable)
+            if ((iscomponent[currentColumn] or iseditable
+                    or cells[self.CELL_GENERATED_ROW][indexInRowbuffer] != None)
                     and isinstance(cells[(self.CELL_FIRSTCOL
                             + currentColumn)][indexInRowbuffer], IComponent)):
                 c = cells[self.CELL_FIRSTCOL + currentColumn][indexInRowbuffer]
                 if c is None:
                     target.addText('')
+                    self.paintCellTooltips(target, itemId, columnId)
                 else:
                     c.paint(target)
             else:
                 target.addText(cells[(self.CELL_FIRSTCOL
                         + currentColumn)][indexInRowbuffer])
+                self.paintCellTooltips(target, itemId, columnId)
 
             currentColumn += 1
 
         target.endTag('tr')
+
+
+    def paintCellTooltips(self, target, itemId, columnId):
+        if self._itemDescriptionGenerator is not None:
+            itemDescription = \
+                self._itemDescriptionGenerator.generateDescription(self,
+                        itemId, columnId)
+            if itemDescription is not None and itemDescription != '':
+                target.addAttribute('descr-' + self._columnIdMap.key(columnId),
+                        itemDescription)
+
+
+    def paintRowTooltips(self, target, itemId):
+        if self._itemDescriptionGenerator is not None:
+            rowDescription = \
+                self._itemDescriptionGenerator.generateDescription(self,
+                        itemId, None)
+            if rowDescription is not None and rowDescription != '':
+                target.addAttribute('rowdescr', rowDescription)
 
 
     def paintRowAttributes(self, *args):
@@ -2238,6 +2679,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
             self.paintRowIcon(target, cells, indexInRowbuffer)
             self.paintRowHeader(target, cells, indexInRowbuffer)
+            self.paintGeneratedRowInfo(target, cells, indexInRowbuffer)
 
             target.addAttribute('key',
                     int( str(cells[self.CELL_KEY][indexInRowbuffer]) ))
@@ -2267,9 +2709,22 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                 if (rowStyle is not None) and (rowStyle != ''):
                     target.addAttribute('rowstyle', rowStyle)
 
+            self.paintRowTooltips(target, itemId)
+
             self.paintRowAttributes(target, itemId)
         else:
             raise ValueError, 'invalid number of arguments'
+
+
+    def paintGeneratedRowInfo(self, target, cells, indexInRowBuffer):
+        generatedRow = cells[self.CELL_GENERATED_ROW][indexInRowBuffer]
+        if generatedRow is not None:
+            target.addAttribute('gen_html',
+                    generatedRow.isHtmlContentAllowed())
+            target.addAttribute('gen_span',
+                    generatedRow.isSpanColumns())
+            target.addAttribute('gen_widget',
+                    isinstance(generatedRow.getValue(), IComponent))
 
 
     def paintRowHeader(self, target, cells, indexInRowbuffer):
@@ -2356,7 +2811,10 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
             if actionHandler not in self._actionHandlers:
                 self._actionHandlers.append(actionHandler)
-                self.requestRepaint()
+                # Assures the visual refresh. No need to reset the page buffer
+                # before as the content has not changed, only the action
+                # handlers.
+                self.refreshRenderedCells()
 
 
     def removeActionHandler(self, actionHandler):
@@ -2371,14 +2829,21 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
             if len(self._actionHandlers) == 0:
                 self._actionHandlers = None
                 self._actionMapper = None
-            self.requestRepaint()
+            # Assures the visual refresh. No need to reset the page buffer
+            # before as the content has not changed, only the action
+            # handlers.
+            self.refreshRenderedCells()
 
 
     def removeAllActionHandlers(self):
         """Removes all action handlers"""
         self._actionHandlers = None
         self._actionMapper = None
-        self.requestRepaint()
+        # Assures the visual refresh. No need to reset the page buffer
+        # before as the content has not changed, only the action
+        # handlers.
+        self.refreshRenderedCells()
+
 
     # Property value change listening support
 
@@ -2401,6 +2866,10 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
 
     def resetPageBuffer(self):
+        """Clears the current page buffer. Call this before
+        L{refreshRenderedCells} to ensure that all content is
+        updated from the properties.
+        """
         self._firstToBeRenderedInClient = -1
         self._lastToBeRenderedInClient = -1
         self._reqFirstRowToPaint = -1
@@ -2457,8 +2926,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
             self._currentPageFirstItemId = nextItemId
 
         if not isinstance(self.items, container.IItemSetChangeNotifier):
-            self.resetPageBuffer()
-            self.refreshRenderedCells()
+            self.refreshRowCache()
 
         return ret
 
@@ -2518,8 +2986,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                     self._visibleColumns.remove(propertyId)
                 return False
             if not isinstance(self.items, container.IPropertySetChangeNotifier):
-                self.resetPageBuffer()
-                self.refreshRenderedCells()
+                self.refreshRowCache()
             return True
         elif nargs == 6:
             (propertyId, typ, defaultValue, columnHeader, columnIcon,
@@ -2572,8 +3039,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
             if idd not in self._visibleColumns:
                 self._visibleColumns.append(idd)
 
-            self.resetPageBuffer()
-            self.refreshRenderedCells()
+            self.refreshRowCache()
 
 
     def getColumnGenerator(self, columnId):
@@ -2599,8 +3065,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
             # container (generator previously overrode this column)
             if columnId not in self.items.getContainerPropertyIds():
                 self._visibleColumns.remove(columnId)
-            self.resetPageBuffer()
-            self.refreshRenderedCells()
+            self.refreshRowCache()
             return True
         else:
             return False
@@ -2655,8 +3120,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         self.setCurrentPageFirstItemIndex(self.getCurrentPageFirstItemIndex(),
                 False)
 
-        self.resetPageBuffer()
-        self.refreshRenderedCells()
+        self.refreshRowCache()
 
 
     def containerPropertySetChange(self, event):
@@ -2764,8 +3228,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
             item = self.items.addItemAfter(previousItemId, newItemId)
 
         if not isinstance(self.items, container.IItemSetChangeNotifier):
-            self.resetPageBuffer()
-            self.refreshRenderedCells()
+            self.refreshRowCache()
 
         return item
 
@@ -2830,8 +3293,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
         self._fieldFactory = fieldFactory
         # Assure visual refresh
-        self.resetPageBuffer()
-        self.refreshRenderedCells()
+        self.refreshRowCache()
 
 
     def isEditable(self):
@@ -2868,8 +3330,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         """
         self._editable = editable
         # Assure visual refresh
-        self.resetPageBuffer()
-        self.refreshRenderedCells()
+        self.refreshRowCache()
 
 
     def sort(self, *args):
@@ -2892,8 +3353,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                 pageIndex = self.getCurrentPageFirstItemIndex()
                 c.sort(propertyId, ascending)
                 self.setCurrentPageFirstItemIndex(pageIndex)
-                self.resetPageBuffer()
-                self.refreshRenderedCells()
+                self.refreshRowCache()
             elif c is not None:
                 raise NotImplementedError, \
                         'Underlying Data does not allow sorting'
@@ -2936,7 +3396,8 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
             self._sortContainerPropertyId = propertyId
             if doSort:
                 self.sort()
-                # Assures the visual refresh
+                # Assures the visual refresh. This should not be necessary as
+                # sort() calls refreshRowCache.
                 self.refreshRenderedCells()
 
 
@@ -2960,7 +3421,9 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
             self._sortAscending = ascending
             if doSort:
                 self.sort()
-        # Assures the visual refresh
+
+        # Assures the visual refresh. This should not be necessary as
+        # sort() calls refreshRowCache
         self.refreshRenderedCells()
 
 
@@ -2987,7 +3450,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         """
         if self._sortDisabled != sortDisabled:
             self._sortDisabled = sortDisabled
-            self.refreshRenderedCells()
+            self.requestRepaint()
 
 
     def setLazyLoading(self, useLazyLoading):
@@ -3008,7 +3471,9 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                    New cell style generator or null to remove generator.
         """
         self._cellStyleGenerator = cellStyleGenerator
-        self.requestRepaint()
+        # Assures the visual refresh. No need to reset the page buffer
+        # before as the content has not changed, only the style generators
+        self.refreshRenderedCells()
 
 
     def getCellStyleGenerator(self):
@@ -3278,9 +3743,30 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         @param visible:
                    Should the footer be visible
         """
-        self._columnFootersVisible = visible
-        # Assures the visual refresh
-        self.refreshRenderedCells()
+        if visible != self._columnFootersVisible:
+            self._columnFootersVisible = visible
+            self.requestRepaint()
+
+
+    def setItemDescriptionGenerator(self, generator):
+        """Set the item description generator which generates tooltips for
+        cells and rows in the Table
+
+        @param generator:
+                   The generator to use or null to disable
+        """
+        if generator != self._itemDescriptionGenerator:
+            self._itemDescriptionGenerator = generator
+            # Assures the visual refresh. No need to reset the page buffer
+            # before as the content has not changed, only the descriptions
+            self.refreshRenderedCells()
+
+
+    def getItemDescriptionGenerator(self):
+        """Get the item description generator which generates tooltips for
+        cells and rows in the Table.
+        """
+        return self._itemDescriptionGenerator
 
 
     def isFooterVisible(self):
@@ -3289,6 +3775,22 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         @return: Returns true if visible else false
         """
         return self._columnFootersVisible
+
+
+    def setRowGenerator(self, generator):
+        """Assigns a row generator to the table. The row generator will be
+        able to replace rows in the table when it is rendered.
+
+        @param generator:
+                   the new row generator
+        """
+        self._rowGenerator = generator
+        self.refreshRowCache()
+
+
+    def getRowGenerator(self):
+        """@return the current row generator"""
+        return self._rowGenerator
 
 
 class TableDragMode(object):
@@ -3332,6 +3834,9 @@ class IColumnGenerator(object):
         @param columnId:
                    the id for the generated column (as specified in
                    addGeneratedColumn)
+        @return: A L{IComponent} that should be rendered in the cell or a
+                 string that should be displayed in the cell. Other return
+                 values are not supported.
         """
         raise NotImplementedError
 
@@ -3625,3 +4130,101 @@ class ColumnReorderEvent(ComponentEvent):
                    The source of the event
         """
         super(ColumnReorderEvent, self).__init__(source)
+
+
+class IRowGenerator(object):
+    """Row generators can be used to replace certain items in a table with a
+    generated string. The generator is called each time the table is
+    rendered, which means that new strings can be generated each time.
+
+    Row generators can be used for e.g. summary rows or grouping of items.
+    """
+
+    def generateRow(self, table, itemId):
+        """Called for every row that is painted in the Table. Returning a
+        GeneratedRow object will cause the row to be painted based on the
+        contents of the GeneratedRow. A generated row is by default styled
+        similarly to a header or footer row.
+
+        The GeneratedRow data object contains the text that should be
+        rendered in the row. The itemId in the container thus works only as a
+        placeholder.
+
+        If GeneratedRow.setSpanColumns(true) is used, there will be one
+        String spanning all columns (use setText("Spanning text")). Otherwise
+        you can define one String per visible column.
+
+        If GeneratedRow.setRenderAsHtml(true) is used, the strings can
+        contain HTML markup, otherwise all strings will be rendered as text
+        (the default).
+
+        A "v-table-generated-row" CSS class is added to all generated rows.
+        For custom styling of a generated row you can combine a RowGenerator
+        with a CellStyleGenerator.
+
+        @param table:
+                   The Table that is being painted
+        @param itemId:
+                   The itemId for the row
+        @return: A GeneratedRow describing how the row should be painted or
+                 null to paint the row with the contents from the container
+        """
+        raise NotImplementedError
+
+
+class GeneratedRow(object):
+
+    def __init__(self, *text):
+        """Creates a new generated row. If only one string is passed in,
+        columns are automatically spanned.
+
+        @param text
+        """
+        self._htmlContentAllowed = False
+        self._spanColumns = False
+        self._text = None
+
+        self.setHtmlContentAllowed(False)
+        self.setSpanColumns((text is None) or (len(text) == 1))
+        self.setText(text)
+
+
+    def setText(self, *text):
+        """Pass one string if spanColumns is used, one string for each visible
+        column otherwise
+        """
+        if (text is None) or (len(text) == 1 and text[0] is None):
+            text = ['']
+        self._text = text
+
+
+    def getText(self):
+        return self._text
+
+
+    def getValue(self):
+        return self.getText()
+
+
+    def isHtmlContentAllowed(self):
+        return self._htmlContentAllowed
+
+
+    def setHtmlContentAllowed(self, htmlContentAllowed):
+        """If set to true, all strings passed to L{setText} will be rendered
+        as HTML.
+
+        @param htmlContentAllowed
+        """
+        self._htmlContentAllowed = htmlContentAllowed
+
+
+    def isSpanColumns(self):
+        return self._spanColumns
+
+
+    def setSpanColumns(self, spanColumns):
+        """If set to true, only one string will be rendered, spanning the
+        entire row.
+        """
+        self._spanColumns = spanColumns
