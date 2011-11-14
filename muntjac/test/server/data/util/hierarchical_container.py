@@ -24,27 +24,27 @@ from muntjac.data.util.hierarchical_container import HierarchicalContainer
 class TestHierarchicalContainer(AbstractHierarchicalContainerTest):
 
     def testBasicOperations(self):
-        self.testBasicContainerOperations(HierarchicalContainer())
+        self._testBasicContainerOperations(HierarchicalContainer())
 
 
     def testFiltering(self):
-        self.testContainerFiltering(HierarchicalContainer())
+        self._testContainerFiltering(HierarchicalContainer())
 
 
     def testSorting(self):
-        self.testContainerSorting(HierarchicalContainer())
+        self._testContainerSorting(HierarchicalContainer())
 
 
     def testOrdered(self):
-        self.testContainerOrdered(HierarchicalContainer())
+        self._testContainerOrdered(HierarchicalContainer())
 
 
     def testHierarchicalSorting(self):
-        self.testHierarchicalSorting(HierarchicalContainer())
+        self._testHierarchicalSorting(HierarchicalContainer())
 
 
     def testSortingAndFiltering(self):
-        self.testContainerSortingAndFiltering(HierarchicalContainer())
+        self._testContainerSortingAndFiltering(HierarchicalContainer())
 
 
     def testRemovingItemsFromFilteredContainer(self):

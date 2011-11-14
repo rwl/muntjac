@@ -230,32 +230,32 @@ class HttpServletRequestWrapper(IRequest):
 
     def __init__(self, request, applicationServlet):
         self._request = request
-        self._servlet = applicationServlet
+        self.servlet = applicationServlet
 
 
     def getAttribute(self, name, default=''):
-        return self._servlet.getParameter(self._request, name, default)
+        return self.servlet.getParameter(self._request, name, default)
 
 
     def getContentLength(self):
-        return self._servlet.getContentLength(self._request)
+        return self.servlet.getContentLength(self._request)
 
 
     def getInputStream(self):
-        return self._servlet.getInputStream(self._request)
+        return self.servlet.getInputStream(self._request)
 
 
     def getParameter(self, name):
-        return self._servlet.getParameter(self._request, name, None)
+        return self.servlet.getParameter(self._request, name, None)
 
 
     def getRequestID(self):
-        return 'RequestURL:' + self._servlet.getRequestUri(self._request)
+        return 'RequestURL:' + self.servlet.getRequestUri(self._request)
 
 
     def getSession(self):
-        session = self._servlet.getSession(self._request)
-        return HttpSessionWrapper(session, self._servlet)
+        session = self.servlet.getSession(self._request)
+        return HttpSessionWrapper(session, self.servlet)
 
 
     def getWrappedRequest(self):
@@ -263,7 +263,7 @@ class HttpServletRequestWrapper(IRequest):
 
 
     def getWrappedServlet(self):
-        return self._servlet
+        return self.servlet
 
 
     def isRunningInPortlet(self):
@@ -271,7 +271,7 @@ class HttpServletRequestWrapper(IRequest):
 
 
     def setAttribute(self, name, o):
-        self._servlet.setParameter(self._request, name, o)
+        self.servlet.setParameter(self._request, name, o)
 
 
 class HttpServletResponseWrapper(IResponse):
@@ -282,11 +282,11 @@ class HttpServletResponseWrapper(IResponse):
 
     def __init__(self, response, applicationServlet):
         self._response = response
-        self._servlet = applicationServlet
+        self.servlet = applicationServlet
 
 
     def getOutputStream(self):
-        return self._servlet.getOutputStream(self._response)
+        return self.servlet.getOutputStream(self._response)
 
 
     def getWrappedResponse(self):
@@ -294,11 +294,11 @@ class HttpServletResponseWrapper(IResponse):
 
 
     def getWrappedServlet(self):
-        return self._servlet
+        return self.servlet
 
 
     def setContentType(self, typ):
-        self._servlet.setHeader(self._response, 'Content-Type', typ)
+        self.servlet.setHeader(self._response, 'Content-Type', typ)
 
 
 class HttpSessionWrapper(ISession):
@@ -309,16 +309,16 @@ class HttpSessionWrapper(ISession):
 
     def __init__(self, session, applicationServlet):
         self._session = session
-        self._servlet = applicationServlet
+        self.servlet = applicationServlet
 
 
     def getAttribute(self, name, default=None):
-        return self._servlet.getSessionAttribute(self._session, name, default)
+        return self.servlet.getSessionAttribute(self._session, name, default)
 
 
     def getMaxInactiveInterval(self):
         """maximum time interval, in seconds, between client accesses"""
-        return self._servlet.getMaxInactiveInterval(self._session)
+        return self.servlet.getMaxInactiveInterval(self._session)
 
 
     def getWrappedSession(self):
@@ -326,35 +326,35 @@ class HttpSessionWrapper(ISession):
 
 
     def getWrappedServlet(self):
-        return self._servlet
+        return self.servlet
 
 
     def isNew(self):
-        return self._servlet.isSessionNew(self._session)
+        return self.servlet.isSessionNew(self._session)
 
 
     def setAttribute(self, name, value):
-        self._servlet.setSessionAttribute(self._session, name, value)
+        self.servlet.setSessionAttribute(self._session, name, value)
 
 
 class AbstractApplicationServletWrapper(ICallback):
 
     def __init__(self, servlet):
-        self._servlet = servlet
+        self.servlet = servlet
 
 
     def criticalNotification(self, request, response, cap, msg,
                 details, outOfSyncURL):
 
-        self._servlet.criticalNotification(request.getWrappedRequest(),
+        self.servlet.criticalNotification(request.getWrappedRequest(),
                 response.getWrappedResponse(), cap, msg, details, outOfSyncURL)
 
 
     def getRequestPathInfo(self, request):
-        return self._servlet.getRequestPathInfo(request.getWrappedRequest())
+        return self.servlet.getRequestPathInfo(request.getWrappedRequest())
 
 
     def getThemeResourceAsStream(self, themeName, resource):
-        return self._servlet.getResourceAsStream(
+        return self.servlet.getResourceAsStream(
                 ('/' + AbstractApplicationServlet.THEME_DIRECTORY_PATH
                 + themeName + '/' + resource))

@@ -298,7 +298,8 @@ class IndexedContainer(AbstractInMemoryContainer,
         if (isinstance(listener, container.IPropertySetChangeListener) and
                 (iface is None or
                     issubclass(iface, container.IPropertySetChangeListener))):
-            super(IndexedContainer, self).addListener(listener, iface)
+            #super(IndexedContainer, self).addListener(listener, iface)
+            pass
 
         if (isinstance(listener, prop.IValueChangeListener) and
                 (iface is None or

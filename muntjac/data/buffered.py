@@ -18,7 +18,7 @@
 
 import sys
 
-from muntjac.terminal.system_error import SystemErr
+from muntjac.terminal.sys_error import SysError
 from muntjac.terminal.error_message import IErrorMessage
 from muntjac.data.validatable import IValidatable
 
@@ -251,7 +251,7 @@ class SourceException(RuntimeError, IErrorMessage):
             if isinstance(self._causes[i], IErrorMessage):
                 self._causes[i].paint(target)
             else:
-                SystemErr(self._causes[i]).paint(target)
+                SysError(self._causes[i]).paint(target)
 
         target.endTag('error')
 

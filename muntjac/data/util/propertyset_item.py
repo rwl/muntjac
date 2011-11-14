@@ -15,7 +15,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from muntjac.data.item import \
-    IItem, IPropertySetChangeEvent, IPropertySetChangeNotifier
+    IItem, IPropertySetChangeEvent, IPropertySetChangeNotifier, \
+    IPropertySetChangeListener
+
 from muntjac.util import EventObject
 
 
@@ -127,21 +129,49 @@ class PropertysetItem(IItem, IPropertySetChangeNotifier):  # Cloneable
         return retValue
 
 
-    def addListener(self, listener):
+    def addListener(self, listener, iface=None):
         """Registers a new property set change listener for this Item.
 
         @param listener: the new Listener to be registered.
         """
-        self._propertySetChangeListeners.add(listener)
+        if (isinstance(listener, IPropertySetChangeListener) and
+            (iface is None or
+                issubclass(iface, IPropertySetChangeListener))):
+            self._propertySetChangeListeners.append(listener)
 
 
-    def removeListener(self, listener):
+    def addCallback(self, callback, eventType=None, *args):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if issubclass(eventType, IPropertySetChangeEvent):
+            self._propertySetChangeCallbacks[callback] = args
+        else:
+            super(PropertysetItem, self).addCallback(callback,
+                    eventType, *args)
+
+
+    def removeListener(self, listener, iface=None):
         """Removes a previously registered property set change listener.
 
         @param listener: the Listener to be removed.
         """
-        if listener in self._propertySetChangeListeners:
-            self._propertySetChangeListeners.remove(listener)
+        if (isinstance(listener, IPropertySetChangeListener) and
+            (iface is None or
+                issubclass(iface, IPropertySetChangeListener))):
+            if listener in self._propertySetChangeListeners:
+                self._propertySetChangeListeners.remove(listener)
+
+
+    def removeCallback(self, callback, eventType=None):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if issubclass(eventType, IPropertySetChangeEvent):
+            if callback in self._propertySetChangeCallbacks:
+                del self._propertySetChangeCallbacks[callback]
+        else:
+            super(PropertysetItem, self).removeCallback(callback, eventType)
 
 
     def fireItemPropertySetChange(self):
@@ -150,11 +180,20 @@ class PropertysetItem(IItem, IPropertySetChangeNotifier):  # Cloneable
         for listener in self._propertySetChangeListeners:
             listener.itemPropertySetChange(event)
 
+        for callback, args in self._propertySetChangeCallbacks.iteritems():
+            callback(event, *args)
+
 
     def getListeners(self, eventType):
-        if issubclass(eventType, PropertySetChangeEvent):
+        if issubclass(eventType, IPropertySetChangeEvent):
             return list(self._propertySetChangeListeners)
         return list()
+
+
+    def getCallbacks(self, eventType):
+        if issubclass(eventType, IPropertySetChangeEvent):
+            return dict(self._propertySetChangeCallbacks)
+        return dict()
 
 
     def clone(self):

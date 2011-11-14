@@ -24,7 +24,7 @@ from warnings import warn
 
 from muntjac.util import EventObject, IEventListener, defaultLocale
 from muntjac.terminal.uri_handler import IUriHandler
-from muntjac.terminal.system_error import SystemErr
+from muntjac.terminal.sys_error import SysError
 from muntjac.terminal.terminal import IErrorListener, ITerminal
 from muntjac.terminal.parameter_handler import IErrorEvent
 from muntjac.terminal.error_message import IErrorMessage
@@ -838,7 +838,7 @@ class Application(IUriHandler, ITerminal, IErrorListener):
             if isinstance(t, IErrorMessage):
                 owner.setComponentError(t)
             else:
-                owner.setComponentError( SystemErr(t) )
+                owner.setComponentError( SysError(t) )
 
         # also print the error on console
         logger.critical('ITerminal error: ' + str(t))

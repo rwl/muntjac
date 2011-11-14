@@ -13,10 +13,6 @@ from util.hierarchical_container import TestHierarchicalContainer
 from util.indexed_container import TestIndexedContainer
 from util.object_property_test import ObjectPropertyTest
 
-from util.filter.and_or_filter_test import AndOrFilterTest
-from util.filter.compare_filter_test import CompareFilterTest
-from util.filter.is_null_filter_test import IsNullFilterTest
-from util.filter.not_filter_test import NotFilterTest
 from util.filter.simple_string_filter_test import SimpleStringFilterTest
 
 
@@ -31,10 +27,6 @@ def suite():
     suite.addTest( unittest.makeSuite(TestIndexedContainer) )
     suite.addTest( unittest.makeSuite(ObjectPropertyTest) )
 
-    suite.addTest( unittest.makeSuite(AndOrFilterTest) )
-    suite.addTest( unittest.makeSuite(CompareFilterTest) )
-    suite.addTest( unittest.makeSuite(IsNullFilterTest) )
-    suite.addTest( unittest.makeSuite(NotFilterTest) )
     suite.addTest( unittest.makeSuite(SimpleStringFilterTest) )
 
     return suite

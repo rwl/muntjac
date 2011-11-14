@@ -24,29 +24,29 @@ class AbstractHierarchicalContainerTest(AbstractContainerTest):
                 expectedLastItemId, itemIdInSet, itemIdNotInSet,
                 checkGetItemNull, expectedSize, expectedRootSize,
                 rootsHaveChildren):
-        """@param container
+        """@param container:
                    The container to validate
-        @param expectedFirstItemId
+        @param expectedFirstItemId:
                    Expected first item id
-        @param expectedLastItemId
+        @param expectedLastItemId:
                    Expected last item id
-        @param itemIdInSet
+        @param itemIdInSet:
                    An item id that is in the container
-        @param itemIdNotInSet
+        @param itemIdNotInSet:
                    An item id that is not in the container
-        @param checkGetItemNull
+        @param checkGetItemNull:
                    true if getItem() should return null for itemIdNotInSet,
                    false to skip the check (container.containsId() is checked
                    in any case)
-        @param expectedSize
+        @param expectedSize:
                    Expected number of items in the container. Not related to
                    hierarchy.
-        @param expectedTraversalSize
+        @param expectedTraversalSize:
                    Expected number of items found when traversing from the
                    roots down to all available nodes.
-        @param expectedRootSize
+        @param expectedRootSize:
                    Expected number of root items
-        @param rootsHaveChildren
+        @param rootsHaveChildren:
                    true if all roots have children, false otherwise (skips
                    some asserts)
         """
@@ -136,7 +136,7 @@ class AbstractHierarchicalContainerTest(AbstractContainerTest):
                     self.validateHierarchy(container, idd, itemId)
 
 
-    def testHierarchicalContainer(self, container):
+    def _testHierarchicalContainer(self, container):
         self.initializeContainer(container)
         packages = 21 + 3
         expectedSize = self.sampleData.length + packages
@@ -146,7 +146,7 @@ class AbstractHierarchicalContainerTest(AbstractContainerTest):
                 'blah', True, expectedSize, 2, True)
 
 
-    def testHierarchicalSorting(self, container):
+    def _testHierarchicalSorting(self, container):
         sortable = container
 
         self.initializeContainer(container)

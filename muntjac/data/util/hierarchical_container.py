@@ -616,7 +616,7 @@ class HierarchicalContainer(IndexedContainer, IHierarchical, IContainer):
                 toBeIncluded |= self.filterIncludingParents(childItemId,
                                                             includedItems)
         if toBeIncluded:
-            includedItems.append(itemId)
+            includedItems.add(itemId)
 
         return toBeIncluded
 

@@ -15,6 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import inspect
+import mox
 
 from unittest import TestCase
 from muntjac.util import clsname, getSuperClass
@@ -70,8 +71,8 @@ class AbstractListenerMethodsTest(TestCase):
         if c is None:
             c = testClass()
 
-#        mockListener1 = EasyMock.createMock(listenerClass)
-#        mockListener2 = EasyMock.createMock(listenerClass)
+#        mockListener1 = mox.CreateMock(listenerClass)
+#        mockListener2 = mox.CreateMock(listenerClass)
         mockListener1 = listenerClass()
         mockListener2 = listenerClass()
 

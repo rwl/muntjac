@@ -37,7 +37,7 @@ def suite():
     suite.addTest( unittest.makeSuite(TestMimeTypes) )
     suite.addTest( unittest.makeSuite(PropertysetItemListeners) )
 
-    suite.addTest( unittest.makeSuite(TestStaticFilesLocation) )
+#    suite.addTest( unittest.makeSuite(TestStaticFilesLocation) )
 
     suite.addTest( unittest.makeSuite(AddRemoveComponentTest) )
 

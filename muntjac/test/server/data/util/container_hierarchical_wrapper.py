@@ -22,28 +22,25 @@ from muntjac.data.util.container_hierarchical_wrapper import \
 
 from muntjac.data.util.indexed_container import IndexedContainer
 
-# from com.vaadin.data.util.IndexedContainer import (IndexedContainer,)
-# from java.util.Collection import (Collection,)
-
 
 class TestContainerHierarchicalWrapper(AbstractHierarchicalContainerTest):
 
     def testBasicOperations(self):
         container = ContainerHierarchicalWrapper(IndexedContainer())
-        self.testBasicContainerOperations(container)
+        self._testBasicContainerOperations(container)
 
 
     def testHierarchicalContainer(self):
         container = ContainerHierarchicalWrapper(IndexedContainer())
-        self.testHierarchicalContainer(container)
+        self._testHierarchicalContainer(container)
 
 
     def testRemoveSubtree(self):
         container = ContainerHierarchicalWrapper(IndexedContainer())
-        self.testRemoveHierarchicalWrapperSubtree(container)
+        self._testRemoveHierarchicalWrapperSubtree(container)
 
 
-    def testRemoveHierarchicalWrapperSubtree(self, container):
+    def _testRemoveHierarchicalWrapperSubtree(self, container):
         self.initializeContainer(container)
 
         # remove root item

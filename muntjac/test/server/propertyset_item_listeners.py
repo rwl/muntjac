@@ -14,8 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from muntjac.test.server.component.abstract_listener_methods_test import \
-    AbstractListenerMethodsTest
+from muntjac.test.server.component import abstract_listener_methods_test
 
 from muntjac.data.util.propertyset_item import PropertysetItem
 
@@ -23,7 +22,8 @@ from muntjac.data.item import \
     IPropertySetChangeEvent, IPropertySetChangeListener
 
 
-class PropertysetItemListeners(AbstractListenerMethodsTest):
+class PropertysetItemListeners(
+            abstract_listener_methods_test.AbstractListenerMethodsTest):
 
     def testPropertySetChangeListenerAddGetRemove(self):
         self._testListenerAddGetRemove(PropertysetItem,

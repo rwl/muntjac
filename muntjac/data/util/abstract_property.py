@@ -164,7 +164,7 @@ class AbstractProperty(prop.IProperty, prop.IValueChangeNotifier,
 
 
     def getListeners(self, eventType):
-        if issubclass(eventType, ValueChangeEvent):
+        if issubclass(eventType, prop.ValueChangeEvent):
             return list(self._valueChangeListeners)
 
         elif issubclass(eventType, prop.IReadOnlyStatusChangeEvent):

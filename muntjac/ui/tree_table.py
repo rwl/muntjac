@@ -67,7 +67,7 @@ class TreeTable(Table, IHierarchical):
         if dataSource is None:
             dataSource = HierarchicalContainer()
 
-        super(TreeTable, self)(caption, dataSource)
+        super(TreeTable, self).__init__(caption, dataSource)
 
 
         self._cStrategy = None
@@ -316,8 +316,11 @@ class TreeTable(Table, IHierarchical):
         return self.getContainerDataSource().getChildren(itemId)
 
 
-    def getParent(self, itemId):
-        return self.getContainerDataSource().getParent(itemId)
+    def getParent(self, itemId=None):
+        if itemId is not None:
+            return self.getContainerDataSource().getParent(itemId)
+        else:
+            super(TreeTable, self).getParent()
 
 
     def hasChildren(self, itemId):

@@ -200,22 +200,23 @@ class AbstractField(AbstractComponent, field.IField,
 
             if self.isInvalidCommitted() or self.isValid():
                 newValue = self.getValue()
-                try:
-                    # Commits the value to datasource.
-                    self._valueWasModifiedByDataSourceDuringCommit = False
-                    self._committingValueToDataSource = True
-                    self._dataSource.setValue(newValue)
+#                try:
 
-                except Exception, e:
-                    # Sets the buffering state.
-                    exception = SourceException(self, e)
-                    self._currentBufferedSourceException = exception
-                    self.requestRepaint()
+                # Commits the value to datasource.
+                self._valueWasModifiedByDataSourceDuringCommit = False
+                self._committingValueToDataSource = True
+                self._dataSource.setValue(newValue)
 
-                    # Throws the source exception.
-                    raise self._currentBufferedSourceException
-                finally:
-                    self._committingValueToDataSource = False
+#                except Exception, e:
+#                    # Sets the buffering state.
+#                    exception = SourceException(self, e)
+#                    self._currentBufferedSourceException = exception
+#                    self.requestRepaint()
+#
+#                    # Throws the source exception.
+#                    raise self._currentBufferedSourceException
+#                finally:
+                self._committingValueToDataSource = False
 
             else:
                 # An invalid value and we don't allow
@@ -815,11 +816,6 @@ class AbstractField(AbstractComponent, field.IField,
                    the value change event telling the data source
                    contents have changed.
         """
-        if (not self._suppressValueChangePropagation
-                and (self.isReadThrough() and not self.isModified())):
-            self.setInternalValue( event.getProperty().getValue() )
-            self.fireValueChange(False)
-
         if self.isReadThrough():
             if self._committingValueToDataSource:
 

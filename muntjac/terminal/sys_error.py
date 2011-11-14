@@ -16,7 +16,6 @@
 
 import sys
 import traceback
-from muntjac.terminal.gwt.server.abstract_application_servlet import AbstractApplicationServlet
 
 try:
     from cStringIO import StringIO
@@ -26,7 +25,7 @@ except ImportError, e:
 from muntjac.terminal.error_message import IErrorMessage
 
 
-class SystemErr(RuntimeError, IErrorMessage):
+class SysError(RuntimeError, IErrorMessage):
     """C{SystemError} is a runtime exception caused by error in
     system. The system error can be shown to the user as it implements
     C{IErrorMessage} interface, but contains technical information
@@ -60,16 +59,16 @@ class SystemErr(RuntimeError, IErrorMessage):
 
         nargs = len(args)
         if nargs == 0:
-            super(SystemErr, self).__init__()
+            super(SysError, self).__init__()
         elif nargs == 1:
             if isinstance(args[0], Exception):
                 self._cause = args[0]
-                super(SystemErr, self).__init__()
+                super(SysError, self).__init__()
             else:
-                super(SystemErr, self).__init__(args[0])
+                super(SysError, self).__init__(args[0])
         elif nargs == 2:
             message, cause = args
-            super(SystemErr, self).__init__(message)
+            super(SysError, self).__init__(message)
             self._cause = cause
         else:
             raise ValueError, ('too many arguments: %d' % nargs)
@@ -95,6 +94,10 @@ class SystemErr(RuntimeError, IErrorMessage):
 
 
     def getHtmlMessage(self):
+
+        from muntjac.terminal.gwt.server.abstract_application_servlet \
+            import AbstractApplicationServlet
+
         sb = StringIO()
         message = self.message
         if message is not None:

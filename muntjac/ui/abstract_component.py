@@ -178,7 +178,7 @@ class AbstractComponent(IComponent, IMethodEventSource):
 
     def setStyleName(self, style):
         # Sets the component's style.
-        if style is None or '' == style:
+        if style is None or style == '':
             self._styles = None
             self.requestRepaint()
             return
@@ -188,17 +188,16 @@ class AbstractComponent(IComponent, IMethodEventSource):
 
         del self._styles[:]
 
-        styleParts = re.split(" +", style)
+        styleParts = style.split()
         for part in styleParts:
             if len(part) > 0:
                 self._styles.append(part)
 
-        self._styles.extend(style.split())
         self.requestRepaint()
 
 
     def addStyleName(self, style):
-        if style is None or '' == style:
+        if style is None or style == '':
             return
 
         if self._styles is None:
@@ -212,7 +211,7 @@ class AbstractComponent(IComponent, IMethodEventSource):
 
     def removeStyleName(self, style):
         if self._styles is not None:
-            styleParts = re.split(" +", style)
+            styleParts = style.split()
             for part in styleParts:
                 if len(part) > 0:
                     self._styles.remove(part)

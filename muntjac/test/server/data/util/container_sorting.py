@@ -161,14 +161,10 @@ class TestContainerSorting(TestCase):
     def verifyOrder(self, ic, idOrder):
         size = len(ic)
         actual = [None] * size
-        i = ic.getItemIds()
-        index = 0
-        while i.hasNext():
-            o = i.next()
-            if o.__class__ == int and idOrder[index].__class__ == str:
+        for index, o in enumerate(ic.getItemIds()):
+            if (o.__class__ == int) and (idOrder[index].__class__ == str):
                 o = self._idToName[o]
             actual[index] = o
-            index += 1
         self.assertArrays(actual, idOrder)
 
 
@@ -179,7 +175,7 @@ class TestContainerSorting(TestCase):
         for i in range(len(actualObjects)):
             actual = actualObjects[i]
             expected = expectedObjects[i]
-            self.assertEquals('Item[' + i + '] does not match', expected, actual)
+            self.assertEquals(expected, actual, 'Item[%d] does not match' % i)
 
 
     def populate(self, ic):

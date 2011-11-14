@@ -17,14 +17,14 @@
 from muntjac.data.util.indexed_container import IndexedContainer
 from muntjac.data.property import ValueChangeEvent, IValueChangeListener
 
-from muntjac.test.server.component.abstract_listener_methods_test import \
-    AbstractListenerMethodsTest
+from muntjac.test.server.component import abstract_listener_methods_test
 
 from muntjac.data.container import \
     IPropertySetChangeEvent, IPropertySetChangeListener
 
 
-class IndexedContainerListeners(AbstractListenerMethodsTest):
+class IndexedContainerListeners(
+            abstract_listener_methods_test.AbstractListenerMethodsTest):
 
     def testValueChangeListenerAddGetRemove(self):
         self._testListenerAddGetRemove(IndexedContainer,

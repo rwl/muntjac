@@ -22,11 +22,11 @@ from muntjac.data.property import \
 
 from muntjac.data.util.object_property import ObjectProperty
 
-from muntjac.test.server.component.abstract_listener_methods_test import \
-    AbstractListenerMethodsTest
+from muntjac.test.server.component import abstract_listener_methods_test
 
 
-class TestAbstractPropertyListeners(AbstractListenerMethodsTest):
+class TestAbstractPropertyListeners(
+            abstract_listener_methods_test.AbstractListenerMethodsTest):
 
     def testValueChangeListenerAddGetRemove(self):
         self._testListenerAddGetRemove(AbstractProperty,
