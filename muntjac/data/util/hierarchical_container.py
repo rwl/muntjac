@@ -228,7 +228,7 @@ class HierarchicalContainer(IndexedContainer, IHierarchical, IContainer):
 
         # Checks that setting parent doesn't result to a loop
         o = newParentId
-        while o is not None and not (o == itemId):
+        while (o is not None) and (o != itemId):
             o = self._parent.get(o)
 
         if o is not None:
@@ -260,7 +260,7 @@ class HierarchicalContainer(IndexedContainer, IHierarchical, IContainer):
             # the filtered version (if includeParentsWhenFiltering==true).
             self.doFilterContainer(self.hasFilters())
 
-        AbstractContainer.fireItemSetChange(self)
+        self.fireItemSetChange()
 
         return True
 
@@ -463,8 +463,8 @@ class HierarchicalContainer(IndexedContainer, IHierarchical, IContainer):
             if children2 is not None:
                 arry = list(children2)
                 for i in range(len(arry)):
-                    removeItemRecursively = removeItemRecursively(container,
-                            arry[i])
+                    removeItemRecursively = self.removeItemRecursively(
+                            container, arry[i])
                     if not removeItemRecursively:
                         success = False
 
@@ -568,7 +568,7 @@ class HierarchicalContainer(IndexedContainer, IHierarchical, IContainer):
         """Adds the given childItemId as a filteredChildren for the
         parentItemId and sets it filteredParent.
         """
-        parentToChildrenList = self._filteredChildren[parentItemId]
+        parentToChildrenList = self._filteredChildren.get(parentItemId)
         if parentToChildrenList is None:
             parentToChildrenList = list()
             self._filteredChildren[parentItemId] = parentToChildrenList
@@ -613,8 +613,8 @@ class HierarchicalContainer(IndexedContainer, IHierarchical, IContainer):
         childList = self._children.get(itemId)
         if childList is not None:
             for childItemId in self._children.get(itemId):
-                toBeIncluded |= self.filterIncludingParents(childItemId,
-                                                            includedItems)
+                toBeIncluded = toBeIncluded or self.filterIncludingParents(
+                        childItemId, includedItems)
         if toBeIncluded:
             includedItems.add(itemId)
 

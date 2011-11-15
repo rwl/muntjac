@@ -747,7 +747,8 @@ class IndexedContainerProperty(prop.IProperty, prop.IValueChangeNotifier):
 
         # Support null values on all types
         if newValue is None:
-            del propertySet[self._propertyId]
+            if self._propertyId in propertySet:
+                del propertySet[self._propertyId]
         elif issubclass(newValue.__class__, self.getType()):
             propertySet[self._propertyId] = newValue
         else:

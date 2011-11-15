@@ -148,22 +148,26 @@ class ContainerHierarchicalWrapper(IHierarchical, IContainer,
         @param itemId:
                    the ID of the item to remove from the hierarchy.
         """
-        oprhanedChildren = self._children.pop( self._children.index(itemId) )
+        oprhanedChildren = self._children.pop(itemId, None)
         if oprhanedChildren is not None:
             for obj in oprhanedChildren:
                 # make orphaned children root nodes
                 self.setParent(obj, None)
 
-        self._roots.remove(itemId)
+        if itemId in self._roots:
+            self._roots.remove(itemId)
+
         p = self._parent.get(itemId)
         if p is not None:
             c = self._children.get(p)
             if c is not None:
                 c.remove(itemId)
 
-        del self._parent[itemId]
+        if itemId in self._parent:
+            del self._parent[itemId]
 
-        self._noChildrenAllowed.remove(itemId)
+        if itemId in self._noChildrenAllowed:
+            self._noChildrenAllowed.remove(itemId)
 
 
     def addToHierarchyWrapper(self, itemId):
@@ -272,7 +276,8 @@ class ContainerHierarchicalWrapper(IHierarchical, IContainer,
 
         # Update status
         if childrenAllowed:
-            self._noChildrenAllowed.remove(itemId)
+            if itemId in self._noChildrenAllowed:
+                self._noChildrenAllowed.remove(itemId)
         else:
             self._noChildrenAllowed.add(itemId)
 
@@ -431,7 +436,8 @@ class ContainerHierarchicalWrapper(IHierarchical, IContainer,
                    the identifier of the Item to be removed
         @return: true if the operation succeeded
         """
-        return HierarchicalContainer.removeItemRecursively(self, itemId)
+        dummy = HierarchicalContainer()
+        return HierarchicalContainer.removeItemRecursively(dummy, self, itemId)
 
 
     def addContainerProperty(self, propertyId, typ, defaultValue):

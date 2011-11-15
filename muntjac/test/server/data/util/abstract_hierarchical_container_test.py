@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import re
+
 from muntjac.test.server.data.util.abstract_container_test import \
     AbstractContainerTest
 
@@ -137,9 +139,9 @@ class AbstractHierarchicalContainerTest(AbstractContainerTest):
 
 
     def _testHierarchicalContainer(self, container):
-        self.initializeContainer(container)
+        self.initializeHierarchicalContainer(container)
         packages = 21 + 3
-        expectedSize = self.sampleData.length + packages
+        expectedSize = len(self.sampleData) + packages
         self.validateHierarchicalContainer(container, 'com',
                 'org.vaadin.test.LastClass',
                 'com.vaadin.terminal.ApplicationResource',
@@ -149,7 +151,7 @@ class AbstractHierarchicalContainerTest(AbstractContainerTest):
     def _testHierarchicalSorting(self, container):
         sortable = container
 
-        self.initializeContainer(container)
+        self.initializeHierarchicalContainer(container)
 
         # Must be able to sort based on PROP1 and PROP2 for this test
         self.assertTrue(self.FULLY_QUALIFIED_NAME in \
@@ -160,7 +162,7 @@ class AbstractHierarchicalContainerTest(AbstractContainerTest):
         sortable.sort([self.FULLY_QUALIFIED_NAME], [True])
 
         packages = 21 + 3
-        expectedSize = self.sampleData.length + packages
+        expectedSize = len(self.sampleData) + packages
         self.validateHierarchicalContainer(container, 'com',
                 'org.vaadin.test.LastClass',
                 'com.vaadin.terminal.ApplicationResource',
@@ -175,7 +177,7 @@ class AbstractHierarchicalContainerTest(AbstractContainerTest):
                 'blah', True, expectedSize, 2, True)
 
 
-    def initializeContainer(self, container):
+    def initializeHierarchicalContainer(self, container):
         container.removeAllItems()
         propertyIds = list(container.getContainerPropertyIds())
         for propertyId in propertyIds:
@@ -191,7 +193,7 @@ class AbstractHierarchicalContainerTest(AbstractContainerTest):
             idd = self.sampleData[i]
 
             # Add path as parent
-            paths = idd.split('\\.')
+            paths = re.split('\\.', idd)
             path = paths[0]
             # Adds "com" and other items multiple times so should return null
             # for all but the first time

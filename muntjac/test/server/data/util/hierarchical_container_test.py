@@ -49,7 +49,7 @@ class TestHierarchicalContainer(AbstractHierarchicalContainerTest):
 
     def testRemovingItemsFromFilteredContainer(self):
         container = HierarchicalContainer()
-        self.initializeContainer(container)
+        self.initializeHierarchicalContainer(container)
         container.setIncludeParentsWhenFiltering(True)
         container.addContainerFilter(self.FULLY_QUALIFIED_NAME, 'ab',
                 False, False)
@@ -60,16 +60,16 @@ class TestHierarchicalContainer(AbstractHierarchicalContainerTest):
         # Parent for the removed item must be null because the item is no
         # longer in the container
         p1 = container.getParent('com.vaadin.ui.TabSheet')
-        self.assertIsNone('Parent should be null, is ' + p1, p1)
+        self.assertIsNone(p1, 'Parent should be null, is ' + str(p1))
 
         container.removeAllItems()
         p1 = container.getParent('com.vaadin.terminal.gwt.client.Focusable')
-        self.assertIsNone('Parent should be null, is ' + p1, p1)
+        self.assertIsNone(p1, 'Parent should be null, is ' + str(p1))
 
 
     def testParentWhenRemovingFilterFromContainer(self):
         container = HierarchicalContainer()
-        self.initializeContainer(container)
+        self.initializeHierarchicalContainer(container)
         container.setIncludeParentsWhenFiltering(True)
         container.addContainerFilter(self.FULLY_QUALIFIED_NAME, 'ab',
                 False, False)
@@ -86,7 +86,7 @@ class TestHierarchicalContainer(AbstractHierarchicalContainerTest):
 
     def testChangeParentInFilteredContainer(self):
         container = HierarchicalContainer()
-        self.initializeContainer(container)
+        self.initializeHierarchicalContainer(container)
         container.setIncludeParentsWhenFiltering(True)
         container.addContainerFilter(self.FULLY_QUALIFIED_NAME, 'Tab',
                 False, False)
@@ -109,10 +109,9 @@ class TestHierarchicalContainer(AbstractHierarchicalContainerTest):
         p1 = container.getParent('com.vaadin.ui.TabSheet')
         self.assertEquals('com', p1)
 
-
     def testHierarchicalFilteringWithParents(self):
         container = HierarchicalContainer()
-        self.initializeContainer(container)
+        self.initializeHierarchicalContainer(container)
         container.setIncludeParentsWhenFiltering(True)
 
         # Filter by "contains ab"
@@ -209,7 +208,7 @@ class TestHierarchicalContainer(AbstractHierarchicalContainerTest):
     def testHierarchicalFilteringWithoutParents(self):
         container = HierarchicalContainer()
 
-        self.initializeContainer(container)
+        self.initializeHierarchicalContainer(container)
         container.setIncludeParentsWhenFiltering(False)
 
         # Filter by "contains ab"

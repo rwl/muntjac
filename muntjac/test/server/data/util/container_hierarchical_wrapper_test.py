@@ -41,13 +41,13 @@ class TestContainerHierarchicalWrapper(AbstractHierarchicalContainerTest):
 
 
     def _testRemoveHierarchicalWrapperSubtree(self, container):
-        self.initializeContainer(container)
+        self.initializeHierarchicalContainer(container)
 
         # remove root item
         container.removeItemRecursively('org')
 
         packages = (21 + 3) - 3
-        expectedSize = (self.sampleData.length + packages) - 1
+        expectedSize = (len(self.sampleData) + packages) - 1
 
         self.validateContainer(container, 'com',
                 'com.vaadin.util.SerializerHelper',
