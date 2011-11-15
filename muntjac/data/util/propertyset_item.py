@@ -92,7 +92,7 @@ class PropertysetItem(IItem, IPropertySetChangeNotifier):  # Cloneable
 
         @param id:
                    the ID of the new Property.
-        @param property:
+        @param prop:
                    the Property to be added and associated with the id.
         @return: C{True} if the operation succeeded, C{False} if not
         """
@@ -105,7 +105,7 @@ class PropertysetItem(IItem, IPropertySetChangeNotifier):  # Cloneable
             return False
 
         # Put the property to map
-        self._map[idd] = property
+        self._map[idd] = prop
         self._list.append(idd)
 
         # Send event

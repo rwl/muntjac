@@ -61,6 +61,10 @@ class NullProperty(IProperty):
         pass  # do nothing
 
 
+    def __str__(self):
+        return ""
+
+
 class SameItemFilter(IFilter):
 
     def __init__(self, item, propertyId=''):
