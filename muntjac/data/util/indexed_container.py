@@ -260,7 +260,6 @@ class IndexedContainer(AbstractInMemoryContainer,
             else:
                 return None
         else:
-
             return self.internalAddItemAfter(previousItemId, newItemId,
                     IndexedContainerItem(newItemId, self), True)
 

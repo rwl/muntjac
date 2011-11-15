@@ -23,7 +23,6 @@ from muntjac.data.container import \
     IIndexed, IItemSetChangeNotifier, ISortable
 
 from muntjac.data.util.abstract_container import AbstractContainer
-from muntjac.data.util.list_set import ListSet
 
 
 class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
@@ -107,7 +106,7 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
 
         #: IContainer interface methods with more specific return class
         #  default implementation, can be overridden
-        self.setAllItemIds( ListSet() )
+        self.setAllItemIds(list())  # FIXME: use ListSet
 
 
     def getItem(self, itemId):
@@ -300,7 +299,7 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
             originalFilteredItemIds = list()
             wasUnfiltered = True
 
-        self.setFilteredItemIds( ListSet() )
+        self.setFilteredItemIds(list())  # FIXME: use ListSet
 
         # Filter
         equal = True
@@ -484,7 +483,8 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
         operation. Typically this method calls L{sorted} on all arrays
         (containing item ids) that need to be sorted.
         """
-        sorted(self.getAllItemIds(), cmp=self.getItemSorter())
+        sortedIds = sorted(self.getAllItemIds(), cmp=self.getItemSorter())
+        self.setAllItemIds(sortedIds)
 
 
     def getSortablePropertyIds(self):
@@ -510,9 +510,9 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
         change notification.
         """
         # Removes all Items
-        self.getAllItemIds().clear()
+        del self.getAllItemIds()[:]
         if self.isFiltered():
-            self.getFilteredItemIds().clear()
+            del self.getFilteredItemIds()[:]
 
 
     def internalRemoveItem(self, itemId):
@@ -530,9 +530,17 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
         if itemId is None:
             return False
 
-        result = self.getAllItemIds().remove(itemId)
+        try:
+            self.getAllItemIds().remove(itemId)
+            result = True
+        except ValueError:
+            result = False
+
         if result and self.isFiltered():
-            self.getFilteredItemIds().remove(itemId)
+            try:
+                self.getFilteredItemIds().remove(itemId)
+            except ValueError:
+                pass
 
         return result
 
@@ -567,7 +575,7 @@ class AbstractInMemoryContainer(AbstractContainer, IItemSetChangeNotifier,
 
         # "filteredList" will be updated in filterAll() which should be invoked
         # by the caller after calling this method.
-        self.getAllItemIds().add(position, itemId)
+        self.getAllItemIds().insert(position, itemId)
         self.registerNewItem(position, itemId, item)
 
         return item

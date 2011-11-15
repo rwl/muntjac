@@ -2,15 +2,15 @@
 import unittest
 
 
-from util.container_hierarchical_wrapper \
+from util.container_hierarchical_wrapper_test \
     import TestContainerHierarchicalWrapper
 
-from util.performance_test_indexed_container \
+from util.indexed_container_performance_test \
     import PerformanceTestIndexedContainer
 
-from util.container_sorting import TestContainerSorting
-from util.hierarchical_container import TestHierarchicalContainer
-from util.indexed_container import TestIndexedContainer
+from util.container_sorting_test import TestContainerSorting
+from util.hierarchical_container_test import TestHierarchicalContainer
+from util.indexed_container_test import TestIndexedContainer
 from util.object_property_test import ObjectPropertyTest
 
 from util.filter.simple_string_filter_test import SimpleStringFilterTest

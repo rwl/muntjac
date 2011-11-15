@@ -175,7 +175,7 @@ class AbstractContainerTest(TestCase):
         self.assertIsNotNone(fifth)
         self.assertEquals(fifth, container.getItem(fifthId))
         self.assertEquals(newFirstId, container.nextItemId(fifthId))
-        self.assertIsNotNone(container.prevItemId(fifthId))
+        self.assertIsNone(container.prevItemId(fifthId))
 
 
     def _testContainerIndexed(self, container, itemId, itemPosition,
@@ -219,8 +219,8 @@ class AbstractContainerTest(TestCase):
             self.assertTrue(container.removeItem(newFirstId))
             self.assertTrue(container.removeItem(newLastId))
 
-            self.assertFalse(('Removing non-existing item should '
-                    'indicate failure'), container.removeItem(addedId))
+            self.assertFalse(container.removeItem(addedId),
+                    'Removing non-existing item should indicate failure')
 
         # addItemAt
         if testAddItemAtWithId:

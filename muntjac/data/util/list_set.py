@@ -43,12 +43,12 @@ class ListSet(list):
         elif nargs == 1:
             if isinstance(args[0], int):
                 initialCapacity, = args
-                super(ListSet, self).__init__(initialCapacity)
-                self._itemSet = set(initialCapacity)
+                super(ListSet, self).__init__()#initialCapacity)
+                self._itemSet = set()#initialCapacity)
             else:
                 c, = args
                 super(ListSet, self).__init__(c)
-                self._itemSet = set(len(c))
+                self._itemSet = set()#len(c))
                 self._itemSet = self._itemSet.union(c)
         else:
             raise ValueError, 'too many arguments'
@@ -59,12 +59,25 @@ class ListSet(list):
         return o in self._itemSet
 
 
+    def __contains__(self, item):
+        return self.contains(item)
+
+
     def containsAll(self, c):
         for cc in c:
             if cc not in self._itemSet:
                 return False
         else:
             return True
+
+
+    def append(self, val):
+        return self.add(val)
+
+
+    def insert(self, idx, val):
+        return self.add(idx, val)
+
 
     # Methods for updating the set when the list is updated.
     def add(self, *args):
@@ -74,17 +87,18 @@ class ListSet(list):
         nargs = len(args)
         if nargs == 1:
             e, = args
-            if e in self:
+            if self.contains(e):
                 # Duplicates are not allowed
                 return False
-            if super(ListSet, self).add(e):
+            if not super(ListSet, self).__contains__(e):
+                super(ListSet, self).append(e)
                 self._itemSet.add(e)
                 return True
             else:
                 return False
         elif nargs == 2:
             index, element = args
-            if element in self:
+            if self.contains(element):
                 # Duplicates are not allowed
                 return
             super(ListSet, self).insert(index, element)
@@ -93,24 +107,30 @@ class ListSet(list):
             raise ValueError, 'invalid number of arguments'
 
 
+    def extend(self, iterable):
+        return self.addAll(iterable)
+
+
     def addAll(self, *args):
         nargs = len(args)
         if nargs == 1:
             c, = args
             modified = False
-            for e in i:
-                if e in self:
+            for e in c:
+                if self.contains(e):
                     continue
+
                 if self.add(e):
                     self._itemSet.add(e)
                     modified = True
+
             return modified
         elif nargs == 2:
             index, c = args
-            self.ensureCapacity(len(self) + len(c))
+            #self.ensureCapacity(len(self) + len(c))
             modified = False
             for e in c:
-                if e in self:
+                if self.contains(e):
                     continue
                 self.add(index, e)
                 index += 1
@@ -126,26 +146,29 @@ class ListSet(list):
         self._itemSet.clear()
 
 
+    def index(self, val):
+        return self.indexOf(val)
+
+
     def indexOf(self, o):
-        if o not in self:
+        if not self.contains(o):
             return -1
         return super(ListSet, self).index(o)
 
 
     def lastIndexOf(self, o):
-        if o not in self:
+        if not self.contains(o):
             return -1
-        return super(ListSet, self).rindex(o)
+        return self[::-1].index(o)
 
 
     def remove(self, o):
         if isinstance(o, int):
             index = o
-            e = super(ListSet, self).remove(index)
+            e = super(ListSet, self).pop(index)
             if e is not None:
                 self._itemSet.remove(e)
             return e
-
         else:
             if super(ListSet, self).remove(o):
                 self._itemSet.remove(o)
@@ -157,8 +180,8 @@ class ListSet(list):
     def removeRange(self, fromIndex, toIndex):
         toRemove = set()
         for idx in range(fromIndex, toIndex):
-            toRemove.add(self.get(idx))
-        super(ListSet, self).removeRange(fromIndex, toIndex)
+            toRemove.add(self[idx])
+        del self[fromIndex:toIndex]
         for r in toRemove:
             self._itemSet.remove(r)
 
@@ -166,7 +189,7 @@ class ListSet(list):
     def set(self, index, element):  #@PydevCodeAnalysisIgnore
         if element in self:
             # Element already exist in the list
-            if self.get(index) == element:
+            if self[index] == element:
                 # At the same position, nothing to be done
                 return element
             else:
@@ -178,9 +201,10 @@ class ListSet(list):
                 # list. So we instead allow duplicates temporarily.
                 self.addDuplicate(element)
 
-        old = super(ListSet, self).set(index, element)
+        old = self[index] = element
         self.removeFromSet(old)
         self._itemSet.add(element)
+
         return old
 
 
@@ -219,6 +243,6 @@ class ListSet(list):
 
 
     def clone(self):
-        v = super(ListSet, self).clone()
-        v.itemSet = set(self._itemSet)
+        v = ListSet(self[:])
+        v._itemSet = set(self._itemSet)
         return v

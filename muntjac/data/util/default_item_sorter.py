@@ -51,7 +51,7 @@ class DefaultItemSorter(IItemSorter):
 
 
     def __call__(self, o1, o2):
-        return self.compare(o1, o1)
+        return self.compare(o1, o2)
 
 
     def compare(self, o1, o2):
@@ -156,7 +156,7 @@ class DefaultPropertyValueComparator(object):
         # Normal non-null comparison
         if o1 is not None and o2 is not None:
             # Assume the objects to be comparable
-            r = (o1 == o2)
+            r = cmp(o1, o2)
         elif o1 == o2:
             # Objects are equal if both are null
             r = 0
