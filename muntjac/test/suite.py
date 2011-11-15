@@ -14,6 +14,7 @@ def suite():
         muntjac.test.server.components.suite.suite(),
         muntjac.test.server.data.suite.suite()
     ])
+    return suite
 
 
 def main():

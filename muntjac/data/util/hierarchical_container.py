@@ -193,7 +193,7 @@ class HierarchicalContainer(IndexedContainer, IHierarchical, IContainer):
             l = self._children.get(oldParentId)
             if l is not None:
                 l.remove(itemId)
-                if len(l) > 0:
+                if len(l) == 0:
                     del self._children[oldParentId]
 
             # Add to be a root
@@ -429,7 +429,8 @@ class HierarchicalContainer(IndexedContainer, IHierarchical, IContainer):
                 # container.
                 del self._filteredParent[itemId]
 
-            self._noChildrenAllowed.remove(itemId)
+            if itemId in self._noChildrenAllowed:
+                self._noChildrenAllowed.remove(itemId)
 
         self.enableAndFireContentsChangeEvents()
 
@@ -613,7 +614,7 @@ class HierarchicalContainer(IndexedContainer, IHierarchical, IContainer):
         childList = self._children.get(itemId)
         if childList is not None:
             for childItemId in self._children.get(itemId):
-                toBeIncluded = toBeIncluded or self.filterIncludingParents(
+                toBeIncluded = toBeIncluded | self.filterIncludingParents(
                         childItemId, includedItems)
         if toBeIncluded:
             includedItems.add(itemId)

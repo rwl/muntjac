@@ -423,18 +423,22 @@ class AbstractTextField(AbstractField, IBlurNotifier, IFocusNotifier,
         super(AbstractTextField, self).setInternalValue(newValue)
 
 
-    def setValue(self, newValue):
-        super(AbstractTextField, self).setValue(newValue)
+    def setValue(self, newValue, repaintIsNotNeeded=None):
+        if repaintIsNotNeeded is not None:
+            super(AbstractTextField, self).setValue(newValue,
+                    repaintIsNotNeeded)
+        else:
+            super(AbstractTextField, self).setValue(newValue)
 
-        # Make sure w reset lastKnownTextContent field on value change. The
-        # clearing must happen here as well because TextChangeListener can
-        # revert the original value. Client must respect the value in this
-        # case. AbstractField optimizes value change if the existing value is
-        # reset. Also we need to force repaint if the flag is on.
+            # Make sure w reset lastKnownTextContent field on value change. The
+            # clearing must happen here as well because TextChangeListener can
+            # revert the original value. Client must respect the value in this
+            # case. AbstractField optimizes value change if the existing value is
+            # reset. Also we need to force repaint if the flag is on.
 
-        if self._lastKnownTextContent is not None:
-            self._lastKnownTextContent = None
-            self.requestRepaint()
+            if self._lastKnownTextContent is not None:
+                self._lastKnownTextContent = None
+                self.requestRepaint()
 
 
     def handleInputEventTextChange(self, variables):
