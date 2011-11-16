@@ -160,15 +160,15 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
             # of this (client side has already disabled the button)
             self.setEnabled(False)
 
-        if not self.isReadOnly() and 'state' in variables:
+        if not self.isReadOnly() and ('state' in variables):
             # Gets the new and old button states
-            newValue = variables.get('state')
-            oldValue = self.getValue()
+            newValue = bool( variables.get('state') )
+            oldValue = bool( self.getValue() )
 
             if self.isSwitchMode():
                 # For switch button, the event is only sent if the
                 # switch state is changed
-                if (newValue is not None and newValue != oldValue
+                if ((newValue is not None) and (newValue != oldValue)
                         and not self.isReadOnly()):
                     self.setValue(newValue)
                     if 'mousedetails' in variables:
@@ -180,7 +180,7 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
                         self.fireClick()
             else:
                 # Only send click event if the button is pushed
-                if bool(newValue):
+                if newValue:
                     if 'mousedetails' in variables:
                         self.fireClick(MouseEventDetails.deSerialize(
                                 variables.get('mousedetails')))
@@ -190,7 +190,7 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
                         self.fireClick()
 
                 # If the button is true for some reason, release it
-                if oldValue is None or bool(oldValue):
+                if (oldValue is None) or oldValue:
                     self.setValue(False)
 
         if FocusEvent.EVENT_ID in variables:
@@ -356,7 +356,7 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
         # Make sure only booleans get through
         if newValue is not None and not isinstance(newValue, bool):
             raise ValueError, (self.__class__.__name__ +
-                    ' only accepts Boolean values')
+                    ' only accepts boolean values')
 
         super(Button, self).setInternalValue(newValue)
 
@@ -463,7 +463,6 @@ class ClickEvent(ComponentEvent):
     @author: Richard Lincoln
     @version: @VERSION@
     """
-    _details = None
 
     def __init__(self, source, details=None):
         """New instance with mouse details
@@ -491,7 +490,7 @@ class ClickEvent(ComponentEvent):
 
         @return: The mouse cursor x position or -1 if unknown
         """
-        if None is not self._details:
+        if self._details is not None:
             return self._details.getClientX()
         else:
             return -1
@@ -503,7 +502,7 @@ class ClickEvent(ComponentEvent):
 
         @return: The mouse cursor y position or -1 if unknown
         """
-        if None is not self._details:
+        if self._details is not None:
             return self._details.getClientY()
         else:
             return -1
@@ -516,7 +515,7 @@ class ClickEvent(ComponentEvent):
         @return: The mouse cursor x position relative to the clicked layout
                  component or -1 if no x coordinate available
         """
-        if None is not self._details:
+        if self._details is not None:
             return self._details.getRelativeX()
         else:
             return -1
@@ -529,7 +528,7 @@ class ClickEvent(ComponentEvent):
         @return: The mouse cursor y position relative to the clicked layout
                  component or -1 if no y coordinate available
         """
-        if None is not self._details:
+        if self._details is not None:
             return self._details.getRelativeY()
         else:
             return -1
@@ -541,7 +540,7 @@ class ClickEvent(ComponentEvent):
         @return: true if Alt was down when the event occured, false
                  otherwise or if unknown
         """
-        if None is not self._details:
+        if self._details is not None:
             return self._details.isAltKey()
         else:
             return False
@@ -553,7 +552,7 @@ class ClickEvent(ComponentEvent):
         @return: true if Ctrl was pressed when the event occured, false
                  otherwise or if unknown
         """
-        if None is not self._details:
+        if self._details is not None:
             return self._details.isCtrlKey()
         else:
             return False
@@ -565,7 +564,7 @@ class ClickEvent(ComponentEvent):
         @return: true if Meta was pressed when the event occurred, false
                  otherwise or if unknown
         """
-        if None is not self._details:
+        if self._details is not None:
             return self._details.isMetaKey()
         else:
             return False
@@ -577,7 +576,7 @@ class ClickEvent(ComponentEvent):
         @return: true if Shift was pressed when the event occurred, false
                  otherwise or if unknown
         """
-        if None is not self._details:
+        if self._details is not None:
             return self._details.isShiftKey()
         else:
             return False

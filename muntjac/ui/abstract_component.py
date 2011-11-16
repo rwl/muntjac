@@ -213,7 +213,7 @@ class AbstractComponent(IComponent, IMethodEventSource):
         if self._styles is not None:
             styleParts = style.split()
             for part in styleParts:
-                if len(part) > 0:
+                if len(part) > 0 and part in self._styles:
                     self._styles.remove(part)
             self.requestRepaint()
 

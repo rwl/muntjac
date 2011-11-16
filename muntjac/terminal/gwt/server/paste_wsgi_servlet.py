@@ -27,7 +27,7 @@ class PasteWsgiServlet(HTTPServlet):
         if contextRoot is not None:
             self._contextRoot = contextRoot
         else:
-            self._contextRoot = join(dirname(muntjac.__file__), '..')
+            self._contextRoot = normpath(join(dirname(muntjac.__file__), '..'))
 
         self._contextPath = contextPath if contextPath is not None else ''  # default web app
 

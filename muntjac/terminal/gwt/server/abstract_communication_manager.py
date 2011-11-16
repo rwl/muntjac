@@ -666,7 +666,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                     return 1
                 return 0
 
-            paintables.sort(cmp=compare)  # FIXME: check sort
+            paintables.sort(cmp=compare)
 
             for p in paintables:
                 # TODO CLEAN
@@ -1121,7 +1121,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
             self._VTYPE_LONG: lambda s: long(s),
             self._VTYPE_FLOAT: lambda s: float(s),
             self._VTYPE_DOUBLE: lambda s: float(s),
-            self._VTYPE_BOOLEAN: lambda s: bool(s),
+            self._VTYPE_BOOLEAN: lambda s: s.lower() == 'true',
             self._VTYPE_PAINTABLE: lambda s: self._idPaintableMap.get(s)
         }.get(variableType)
 
@@ -1192,9 +1192,14 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         @param encodedValue: value to decode
         @return: decoded value
         """
-        result = StringIO()
         iterator = iter(encodedValue)
-        character = iterator.next()
+
+        try:
+            character = iterator.next()
+        except StopIteration:
+            return ''
+
+        result = StringIO()
         while True:
             try:
                 if self.VAR_ESCAPE_CHARACTER == character:

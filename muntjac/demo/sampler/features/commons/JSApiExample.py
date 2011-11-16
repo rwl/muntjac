@@ -31,40 +31,41 @@ class JSApiExample(VerticalLayout):
         self.addComponent(script)
 
         self.addComponent(Button('Run script', RunListener(self, script)))
-        sync = Label("<h3>Force Server Syncronization</h3>",
-                Label.CONTENT_XHTML)
-        self.addComponent(sync)
 
-        self.addComponent(Label('For advanced client side programmers '
-                'Muntjac offers a simple method which can be used to force '
-                'the client to synchronize with the server. This may be '
-                'needed for example if another part of a mashup changes '
-                'things on server.'))
-
-        self._toBeUpdatedFromThread = Label("This Label component will be "
-                "updated by a background thread. Click \"Start "
-                "background thread\" button and start clicking "
-                "on the link below to force "
-                "synchronization.", Label.CONTENT_XHTML)
-        self.addComponent(self._toBeUpdatedFromThread)
-
-        # This label will be show for 10 seconds while the background process
-        # is working
-        self._running.setCaption('Background process is running for 10 '
-                'seconds, click the link below')
-        self._running.setIcon(
-                ThemeResource('../base/common/img/ajax-loader-medium.gif'))
-
-        # Clicking on this button will start a repeating thread that updates
-        # the label value
-        self._startThread = Button('Start background thread',
-                StartListener(self))
-        self.addComponent(self._startThread)
-
-        # This link will make an Ajax request to the server that will respond
-        # with UI changes that have happened since last request
-        self.addComponent(Label("<a href=\"javascript:vaadin.forceSync();\">"
-                "javascript: vaadin.forceSync();</a>", Label.CONTENT_XHTML))
+#        sync = Label("<h3>Force Server Syncronization</h3>",
+#                Label.CONTENT_XHTML)
+#        self.addComponent(sync)
+#
+#        self.addComponent(Label('For advanced client side programmers '
+#                'Muntjac offers a simple method which can be used to force '
+#                'the client to synchronize with the server. This may be '
+#                'needed for example if another part of a mashup changes '
+#                'things on server.'))
+#
+#        self._toBeUpdatedFromThread = Label("This Label component will be "
+#                "updated by a background thread. Click \"Start "
+#                "background thread\" button and start clicking "
+#                "on the link below to force "
+#                "synchronization.", Label.CONTENT_XHTML)
+#        self.addComponent(self._toBeUpdatedFromThread)
+#
+#        # This label will be show for 10 seconds while the background process
+#        # is working
+#        self._running.setCaption('Background process is running for 10 '
+#                'seconds, click the link below')
+#        self._running.setIcon(
+#                ThemeResource('../base/common/img/ajax-loader-medium.gif'))
+#
+#        # Clicking on this button will start a repeating thread that updates
+#        # the label value
+#        self._startThread = Button('Start background thread',
+#                StartListener(self))
+#        self.addComponent(self._startThread)
+#
+#        # This link will make an Ajax request to the server that will respond
+#        # with UI changes that have happened since last request
+#        self.addComponent(Label("<a href=\"javascript:vaadin.forceSync();\">"
+#                "javascript: vaadin.forceSync();</a>", Label.CONTENT_XHTML))
 
 
 class RunListener(IClickListener):

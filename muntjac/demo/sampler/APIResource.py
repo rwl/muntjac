@@ -1,5 +1,6 @@
 
 from muntjac.demo.sampler.NamedExternalResource import NamedExternalResource
+from muntjac.util import clsname
 
 
 class APIResource(NamedExternalResource):
@@ -30,9 +31,10 @@ class APIResource(NamedExternalResource):
     def getJavadocUrl(cls, baseUrl, clazz):
         if not baseUrl.endswith('/'):
             baseUrl += '/'
-        path = clazz.__name__.replace('\\.', '/')
+        #path = clazz.__name__.replace('\\.', '/')
+        path = clsname(clazz)
         path = path.replace('\\$', '.')
-        return baseUrl + path + '.html'
+        return baseUrl + path + '-class.html'
 
     @classmethod
     def resolveBaseUrl(cls, clazz):

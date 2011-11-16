@@ -236,7 +236,7 @@ class Basics(FeatureSet):
                  Icons(),
                  PackageIcons(),
                  Errors(),
-                 ProgressIndicators(),
+#                 ProgressIndicators(),
                  JSApi(),
                  BrowserInformation(),
                  Buttons(),

@@ -994,10 +994,8 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
         # security check: do not permit navigation out of the VAADIN
         # directory
         if not self.isAllowedVAADINResourceUrl(request, resourceUrl):
-            msg = ("Requested resource ["
-                + filename
-                + "] not accessible in the VAADIN directory or "
-                + "access to it is forbidden.")
+            msg = ('Requested resource [%s] not accessible in the VAADIN '
+                   'directory or access to it is forbidden.' % filename)
             logger.info(msg)
             self.setStatus(response, 403, msg)
             return
@@ -1061,9 +1059,9 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
             logger.info("Blocked attempt to access file: " + resourceUrl)
             return False
 
-            logger.fine("Accepted access to a file using a class loader: "
-                    + resourceUrl)
-            return True
+        #logger.info("Accepted access to a file using a class loader: "
+        #        + resourceUrl)
+        return True
 
 
     def browserHasNewestVersion(self, request, resourceLastModifiedTimestamp):

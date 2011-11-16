@@ -1,4 +1,5 @@
 
+from wsgiref.simple_server import make_server
 
 from muntjac.terminal.gwt.server.application_servlet import ApplicationServlet
 
@@ -8,7 +9,7 @@ from muntjac.demo.SimpleAddressBook import SimpleAddressBook
 from muntjac.demo.MuntjacTunesLayout import MuntjacTunesLayout
 from muntjac.demo.sampler.SamplerApplication import SamplerApplication
 
-#from paste.urlmap import URLMap
+from paste.urlmap import URLMap
 
 from paste.session import SessionMiddleware
 
@@ -29,9 +30,13 @@ sampler = ApplicationServlet(SamplerApplication,
         widgetset='com.vaadin.demo.sampler.gwt.SamplerWidgetSet')
 sampler = SessionMiddleware(sampler)
 
-#app = URLMap({})
-#app['/hello'] = hello
-#app['/calc'] = calc
-#app['/address'] = address
-#app['/tunes'] = tunes
-#app['/sampler'] = sampler
+urlmap = URLMap({})
+urlmap['/hello'] = hello
+urlmap['/calc'] = calc
+urlmap['/address'] = address
+urlmap['/tunes'] = tunes
+urlmap['/sampler'] = sampler
+
+
+if __name__ == '__main__':
+    make_server('localhost', 8080, urlmap).serve_forever()
