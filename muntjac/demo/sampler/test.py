@@ -4,8 +4,8 @@ from muntjac.main import muntjac
 from muntjac.application import Application
 from muntjac.ui.window import Window
 
-from muntjac.demo.sampler.features.shortcuts.ShortcutBasicsExample \
-    import ShortcutBasicsExample as Example
+from muntjac.demo.sampler.features.selects.ListSelectMultipleExample \
+    import ListSelectMultipleExample as Example
 
 
 class App(Application):

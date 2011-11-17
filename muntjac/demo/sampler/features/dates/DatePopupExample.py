@@ -1,5 +1,5 @@
 
-import locale
+from babel.dates import format_date
 from datetime import datetime
 
 from muntjac.api import VerticalLayout, PopupDateField
@@ -30,11 +30,10 @@ class DatePopupExample(VerticalLayout, IValueChangeListener):
 
     def valueChange(self, event):
         # Get the new value and format it to the current locale
-        dateFormatter = locale.nl_langinfo(locale.D_FMT)
         value = event.getProperty().getValue()
         if (value is None) or (not isinstance(value, datetime)):
             self.getWindow().showNotification('Invalid date entered')
         else:
-            dateOut = value.strftime(dateFormatter)
+            dateOut = format_date(value).encode('utf-8')
             # Show notification
             self.getWindow().showNotification('Starting date: ' + dateOut)

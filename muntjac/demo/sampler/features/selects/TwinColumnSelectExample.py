@@ -31,5 +31,5 @@ class TwinColumnSelectExample(VerticalLayout, IValueChangeListener):
     # Shows a notification when a selection is made.
     def valueChange(self, event):  # FIXME: not fired
         if not (str(event.getProperty()) == '[]'):
-            self.getWindow().showNotification('Selected cities: '
-                    + str( event.getProperty() ))
+            self.getWindow().showNotification('Selected cities: %s' %
+                    list( event.getProperty().getValue() ))

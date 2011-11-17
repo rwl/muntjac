@@ -20,7 +20,6 @@ the server."""
 import re
 import logging
 import mimetypes
-import locale
 
 from time import time
 from warnings import warn
@@ -933,8 +932,8 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
             applicationUrl = self.getApplicationUrl(request)
 
             # Initial locale comes from the request
-            locale = self.getLocale(request)
-            application.setLocale(locale)
+            lc = self.getLocale(request)
+            application.setLocale(lc)
             application.start(applicationUrl, self._applicationProperties,
                     webApplicationContext)
 

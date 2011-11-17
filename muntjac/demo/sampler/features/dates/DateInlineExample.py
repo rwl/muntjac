@@ -1,6 +1,6 @@
 
-import locale
 from datetime import datetime
+from babel.dates import format_date
 
 from muntjac.api import VerticalLayout, InlineDateField
 from muntjac.data.property import IValueChangeListener
@@ -30,7 +30,6 @@ class DateInlineExample(VerticalLayout, IValueChangeListener):
 
     def valueChange(self, event):
         # Get the new value and format it to the current locale
-        dateFormatter = locale.nl_langinfo(locale.D_FMT)
-        dateOut = event.getProperty().getValue().strftime(dateFormatter)
+        dateOut = format_date(event.getProperty().getValue()).encode('utf-8')
         # Show notification
         self.getWindow().showNotification('Starting date: ' + dateOut)

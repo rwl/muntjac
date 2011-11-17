@@ -56,12 +56,15 @@ def totalseconds(td):
 
 
 def defaultLocale():
-    lang, _ = locale.getdefaultlocale()
+    try:
+        lang, _ = locale.getdefaultlocale()
+    except Exception:
+        lang = None
 
     if lang is not None:
         return Locale.parse(lang)
     else:
-        return Locale('en', 'GB')  # FIXME: define environment variable
+        return Locale.default()
 
 
 class EventObject(object):

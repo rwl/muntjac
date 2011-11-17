@@ -16,9 +16,9 @@
 
 """Defines a date editor component."""
 
-import locale
-
 from datetime import datetime
+
+from babel.dates import format_date
 
 from muntjac.ui.abstract_field import AbstractField
 from muntjac.data.property import IProperty, ConversionException
@@ -202,7 +202,7 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
 
             elif r == self.RESOLUTION_MONTH:
                 if currentDate is not None:
-                    t = calendar.month + 1
+                    t = calendar.month# + 1
                 target.addVariable(self, 'month', t)
 
             elif r == self.RESOLUTION_YEAR:
@@ -242,7 +242,7 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
             # Gets the new date in parts
             # Null values are converted to negative values.
             year  = -1 if variables.get('year')  is None else int(variables.get('year'))      if 'year'  in variables else -1
-            month = -1 if variables.get('month') is None else int(variables.get('month')) - 1 if 'month' in variables else -1
+            month = -1 if variables.get('month') is None else int(variables.get('month'))     if 'month' in variables else -1
             day   = -1 if variables.get('day')   is None else int(variables.get('day'))       if 'day'   in variables else -1
             hour  = -1 if variables.get('hour')  is None else int(variables.get('hour'))      if 'hour'  in variables else -1
             minn  = -1 if variables.get('min')   is None else int(variables.get('min'))       if 'min'   in variables else -1
@@ -393,8 +393,7 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
                 currentTimeZone = self.getTimeZone()
                 if currentTimeZone is not None:
                     currentTimeZone  # FIXME: parse according to timezone
-                val = datetime.strptime(str(newValue),
-                        locale.nl_langinfo(locale.D_FMT))
+                val = format_date(str(newValue)).encode('utf-8')
                 super(DateField, self).setValue(val, repaintIsNotNeeded)
             except ValueError:
                 self._uiHasValidDateString = False

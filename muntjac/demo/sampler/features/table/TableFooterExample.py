@@ -1,6 +1,8 @@
 
 import re
-import locale
+
+from babel.numbers import format_currency
+from muntjac.util import defaultLocale
 
 from muntjac.demo.sampler.ExampleUtil import ExampleUtil
 from muntjac.api import VerticalLayout, Table
@@ -43,7 +45,8 @@ class TableFooterExample(VerticalLayout):  # FIXME: column sorting
         # Add some total sum and description to footer
         table.setColumnFooter(ExampleUtil.ORDER_DESCRIPTION_PROPERTY_ID,
                 'Total Price')
-        table.setColumnFooter(ExampleUtil.ORDER_ITEMPRICE_PROPERTY_ID,
-                locale.currency(totalSum, grouping=True))  # FIXME: babel
+        l = defaultLocale()
+        fc = format_currency(totalSum, currency='USD', locale=l)
+        table.setColumnFooter(ExampleUtil.ORDER_ITEMPRICE_PROPERTY_ID, fc)
 
         self.addComponent(table)

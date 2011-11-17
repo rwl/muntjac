@@ -26,6 +26,6 @@ class ListSelectMultipleExample(VerticalLayout, IValueChangeListener):
         self.addComponent(l)
 
     # Shows a notification when a selection is made.
-    def valueChange(self, event):  # FIXME: not fired
-        self.getWindow().showNotification('Selected cities: '
-                + str(event.getProperty()))
+    def valueChange(self, event):
+        self.getWindow().showNotification('Selected cities: %s' %
+                list(event.getProperty().getValue()))

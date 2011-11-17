@@ -270,7 +270,8 @@ class ValueInput(FeatureSet):
                  TextFields(),
                  Selects(),
                  Sliders(),
-                 Uploads()])
+#                 Uploads()
+                 ])
 
 
 class FormsAndData(FeatureSet):
@@ -486,8 +487,9 @@ class Forms(FeatureSet):
                 'Forms',
                 ('The Form -component provides a convenient way to organize'
                  ' related fields visually.'),
-                [FormBasic(),
-                 FormAdvancedLayout(),
+                [
+#                 FormBasic(),
+#                 FormAdvancedLayout(),
                  LoginForm()])
 
 

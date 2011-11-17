@@ -73,7 +73,7 @@ class ShortcutScopeExample(VerticalLayout):
 
 class NextFieldListener(ShortcutListener):
 
-    def handleAction(self, sender, target):  # FIXME: not fired
+    def handleAction(self, sender, target):
         # The panel is the sender, loop trough content
         for nxt in sender.getComponentIterator():
             # target is the field we're currently in, focus the next

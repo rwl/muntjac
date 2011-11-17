@@ -3,7 +3,6 @@ from muntjac.api import DateField, InlineDateField
 
 from muntjac.demo.sampler.APIResource import APIResource
 from muntjac.demo.sampler.Feature import Feature, Version
-from babel import Locale
 
 
 class DateLocale(Feature):
@@ -25,8 +24,7 @@ class DateLocale(Feature):
     def getRelatedAPI(self):
         return [
             APIResource(DateField),
-            APIResource(InlineDateField),
-            APIResource(Locale)
+            APIResource(InlineDateField)
         ]
 
 

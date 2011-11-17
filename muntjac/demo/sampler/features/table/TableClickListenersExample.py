@@ -1,12 +1,14 @@
 
 import re
-import locale
+
+from babel.numbers import format_currency
 
 from muntjac.demo.sampler.ExampleUtil import ExampleUtil
 
 from muntjac.api import VerticalLayout, Table
 from muntjac.ui.window import Notification
 from muntjac.ui.table import IHeaderClickListener, IFooterClickListener
+from muntjac.util import defaultLocale
 
 
 class TableClickListenersExample(VerticalLayout):
@@ -42,8 +44,9 @@ class TableClickListenersExample(VerticalLayout):
         # Add some total sum and description to footer
         table.setColumnFooter(ExampleUtil.ORDER_DESCRIPTION_PROPERTY_ID,
                 'Total Price')
-        table.setColumnFooter(ExampleUtil.ORDER_ITEMPRICE_PROPERTY_ID,
-                locale.currency(totalSum, grouping=True))
+        l = defaultLocale()
+        fc = format_currency(totalSum, currency='USD', locale=l)
+        table.setColumnFooter(ExampleUtil.ORDER_ITEMPRICE_PROPERTY_ID, fc)
 
         # Add a header click handler
         table.addListener(HeaderListener(self), IHeaderClickListener)

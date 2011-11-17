@@ -46,5 +46,7 @@ class OptionGroupsExample(VerticalLayout, IValueChangeListener):
     # called whenever the value of the component changes, i.e when the user
     # makes a new selection.
     def valueChange(self, event):
-        self.getWindow().showNotification('Selected city: '
-                + str(event.getProperty()))
+        v = event.getProperty().getValue()
+        if isinstance(v, set):
+            v = list(v)
+        self.getWindow().showNotification('Selected city: %s' % v)

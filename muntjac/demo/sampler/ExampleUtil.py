@@ -1,6 +1,8 @@
 
-import locale
 from random import random
+
+from babel.numbers import format_currency
+from muntjac.util import defaultLocale
 
 from muntjac.data.util.indexed_container import IndexedContainer
 from muntjac.data.util.hierarchical_container import HierarchicalContainer
@@ -384,14 +386,18 @@ class ExampleUtil(object):
 
     @classmethod
     def addOrderToContainer(cls, container, description, quantity, price):
+        l = defaultLocale()
         itemId = container.addItem()
         item = container.getItem(itemId)
+
         v = description
         item.getItemProperty(cls.ORDER_DESCRIPTION_PROPERTY_ID).setValue(v)
+
         v = quantity
         item.getItemProperty(cls.ORDER_QUANTITY_PROPERTY_ID).setValue(v)
-        locale.setlocale(locale.LC_ALL, '')
-        v = locale.currency(price)
+
+        v = format_currency(price, currency='USD', locale=l)
         item.getItemProperty(cls.ORDER_UNITPRICE_PROPERTY_ID).setValue(v)
-        v = locale.currency(price * quantity)
+
+        v = format_currency(price * quantity, currency='USD', locale=l)
         item.getItemProperty(cls.ORDER_ITEMPRICE_PROPERTY_ID).setValue(v)
