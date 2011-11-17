@@ -100,11 +100,11 @@ class TableActionHandler(action.IHandler):
     def getActions(self, target, sender):
         return ACTIONS
 
-    def handleAction(self, action, sender, target):
+    def handleAction(self, a, sender, target):
         del self._c._markedRows[target]
-        if action != ACTION_NONE:
+        if a != ACTION_NONE:
             # we're using the cations caption as stylename as well:
-            self._c._markedRows[target] = action.getCaption()
+            self._c._markedRows[target] = a.getCaption()
         # this causes the CellStyleGenerator to return new styles,
         # but table can't automatically know, we must tell it:
         self._c._table.requestRepaint()

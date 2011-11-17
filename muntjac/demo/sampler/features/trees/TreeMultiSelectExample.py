@@ -54,8 +54,8 @@ class TreeMultiSelectExample(VerticalLayout, action.IHandler):
 
 
     # Handle actions
-    def handleAction(self, action, sender, target):
-        if action == self._ACTION_ADD:
+    def handleAction(self, a, sender, target):
+        if a == self._ACTION_ADD:
             # Allow children for the target item
             self._tree.setChildrenAllowed(target, True)
             # Create new item, disallow children, add name, set parent
@@ -66,7 +66,7 @@ class TreeMultiSelectExample(VerticalLayout, action.IHandler):
             item.getItemProperty(ExampleUtil.hw_PROPERTY_NAME).setValue(newItemName)
             self._tree.setParent(itemId, target)
             self._tree.expandItem(target)
-        elif action == self._ACTION_DELETE:
+        elif a == self._ACTION_DELETE:
             parent = self._tree.getParent(target)
             self._tree.removeItem(target)  # FIXME: refresh
             # If the deleted object's parent has no more children, set it's

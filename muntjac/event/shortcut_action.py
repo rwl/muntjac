@@ -113,7 +113,7 @@ class ShortcutAction(Action):
               2. modifier keys
         """
         self._keyCode = None
-        self._modifiers = None
+        self._modifiers = tuple()
 
         args = args
         nargs = len(args)

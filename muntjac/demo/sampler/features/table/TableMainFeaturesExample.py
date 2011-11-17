@@ -100,14 +100,14 @@ class TableActionHandler(action.IHandler):
         else:
             return ACTIONS_UNMARKED
 
-    def handleAction(self, action, sender, target):
-        if ACTION_MARK == action:
+    def handleAction(self, a, sender, target):
+        if ACTION_MARK == a:
             self._c._markedRows.add(target)
             self._c._table.requestRepaint()
-        elif ACTION_UNMARK == action:
+        elif ACTION_UNMARK == a:
             self._c._markedRows.remove(target)
             self._c._table.requestRepaint()
-        elif ACTION_LOG == action:
+        elif ACTION_LOG == a:
             item = self._c._table.getItem(target)
             self.addComponent(Label('Saved: ' + target + ', '
                     + item.getItemProperty(

@@ -376,7 +376,7 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
         if self.clickShortcut is not None:
             self.removeShortcutListener(self.clickShortcut)
 
-        self.clickShortcut = ClickShortcut(self, keyCode, modifiers)
+        self.clickShortcut = ClickShortcut(self, keyCode, *modifiers)
         self.addShortcutListener(self.clickShortcut)
 
 
@@ -437,7 +437,8 @@ class ClickShortcut(ShortcutListener):
         if nargs == 2:
             if isinstance(args[1], int):
                 button, keyCode = args
-                ClickShortcut.__init__(self, button, keyCode, None)
+                super(ClickShortcut, self).__init__(None, keyCode, tuple())
+                self.button = button
             else:
                 button, shorthandCaption = args
                 super(ClickShortcut, self).__init__(shorthandCaption)

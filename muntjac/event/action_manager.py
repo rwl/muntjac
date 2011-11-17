@@ -110,15 +110,15 @@ class ActionManager(action.IHandler, action.INotifier):  #action.IContainer
 
     def paintActions(self, actionTarget, paintTarget):
 
-        actionMapper = None
+        self.actionMapper = None
 
         actions = set()
         if self.actionHandlers is not None:
             for handler in self.actionHandlers:
                 ac = handler.getActions(actionTarget, self.viewer)
                 if ac is not None:
-                    for action in ac:
-                        actions.add(action)
+                    for a in ac:
+                        actions.add(a)
 
         if self.ownActions is not None:
             actions = actions.union(self.ownActions)
@@ -126,15 +126,15 @@ class ActionManager(action.IHandler, action.INotifier):  #action.IContainer
 
         # Must repaint whenever there are actions OR if all actions have
         # been removed but still exist on client side
-        if len(actions) > 0 or self._clientHasActions:
-            actionMapper = KeyMapper()
+        if (len(actions) > 0) or self._clientHasActions:
+            self.actionMapper = KeyMapper()
 
             paintTarget.addVariable(self.viewer, "action", "")
             paintTarget.startTag("actions")
 
             for a in actions:
                 paintTarget.startTag("action")
-                akey = actionMapper.key(a)
+                akey = self.actionMapper.key(a)
                 paintTarget.addAttribute("key", akey);
                 if a.getCaption() is not None:
                     paintTarget.addAttribute("caption", a.getCaption())
@@ -166,10 +166,10 @@ class ActionManager(action.IHandler, action.INotifier):  #action.IContainer
     def handleActions(self, variables, sender):
         if 'action' in variables and self.actionMapper is not None:
             key = variables.get('action')
-            action = self.actionMapper.get(key)
+            a = self.actionMapper.get(key)
             target = variables.get('actiontarget')
-            if action is not None:
-                self.handleAction(action, sender, target)
+            if a is not None:
+                self.handleAction(a, sender, target)
 
 
     def getActions(self, target, sender):
@@ -188,13 +188,13 @@ class ActionManager(action.IHandler, action.INotifier):  #action.IContainer
         return list(actions)
 
 
-    def handleAction(self, action, sender, target):
+    def handleAction(self, a, sender, target):
         if self.actionHandlers is not None:
-            arry = [None] * len(self.actionHandlers)
+            arry = list(self.actionHandlers)
             for handler in arry:
-                handler.handleAction(action, sender, target)
+                handler.handleAction(a, sender, target)
 
-        if (self.ownActions is not None
-                and action in self.ownActions
-                and isinstance(action, action.IListener)):
-            action.handleAction(sender, target)
+        if ((self.ownActions is not None)
+                and (a in self.ownActions)
+                and isinstance(a, action.IListener)):
+            a.handleAction(sender, target)

@@ -96,8 +96,8 @@ class TreeSingleSelectExample(HorizontalLayout, IValueChangeListener,
 
 
     # Handle actions
-    def handleAction(self, action, sender, target):
-        if action == self._ACTION_ADD:
+    def handleAction(self, a, sender, target):
+        if a == self._ACTION_ADD:
             # Allow children for the target item, and expand it
             self._tree.setChildrenAllowed(target, True)
             self._tree.expandItem(target)
@@ -109,7 +109,7 @@ class TreeSingleSelectExample(HorizontalLayout, IValueChangeListener,
             item = self._tree.getItem(itemId)
             name = item.getItemProperty(ExampleUtil.hw_PROPERTY_NAME)
             name.setValue('New Item')
-        elif action == self._ACTION_DELETE:
+        elif a == self._ACTION_DELETE:
             parent = self._tree.getParent(target)
             self._tree.removeItem(target)
             # If the deleted object's parent has no more children, set it's

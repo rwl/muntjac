@@ -54,7 +54,7 @@ class OptionGroup(AbstractSelect, IBlurNotifier, IFocusNotifier):
 
     def paintContent(self, target):
         target.addAttribute('type', 'optiongroup')
-        if self._isHtmlContentAllowed:
+        if self.isHtmlContentAllowed():
             target.addAttribute(VOptionGroup.HTML_CONTENT_ALLOWED, True)
         super(OptionGroup, self).paintContent(target)
 

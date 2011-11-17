@@ -163,11 +163,11 @@ class IHandler(object):
         raise NotImplementedError
 
 
-    def handleAction(self, action, sender, target):
+    def handleAction(self, a, sender, target):
         """Handles an action for the given target. The handler method may just
         discard the action if it's not suitable.
 
-        @param action:
+        @param a:
                    the action to be handled.
         @param sender:
                    the sender of the action. This is most often the action
