@@ -142,4 +142,5 @@ class TableChangeListener(IValueChangeListener):
             self._selected.setValue('No selection')
         else:
             # in singleselect mode the itemId is returned directly
-            self._selected.setValue('Selected: ' + self._c._table.getValue())
+            self._selected.setValue('Selected: %s' %
+                    list(self._c._table.getValue()))

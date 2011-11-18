@@ -8,7 +8,7 @@ from muntjac.demo.sampler.ExampleUtil import ExampleUtil
 from muntjac.api import VerticalLayout, Table
 
 
-class TableFooterExample(VerticalLayout):  # FIXME: column sorting
+class TableFooterExample(VerticalLayout):
 
     def __init__(self):
         super(TableFooterExample, self).__init__()
@@ -46,7 +46,7 @@ class TableFooterExample(VerticalLayout):  # FIXME: column sorting
         table.setColumnFooter(ExampleUtil.ORDER_DESCRIPTION_PROPERTY_ID,
                 'Total Price')
         l = defaultLocale()
-        fc = format_currency(totalSum, currency='USD', locale=l)
+        fc = format_currency(totalSum, currency='USD', locale=l).encode('utf-8')
         table.setColumnFooter(ExampleUtil.ORDER_ITEMPRICE_PROPERTY_ID, fc)
 
         self.addComponent(table)

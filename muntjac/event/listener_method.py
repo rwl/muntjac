@@ -273,7 +273,7 @@ class ListenerMethod(IEventListener):
         """
         # Only send events supported by the method
         if issubclass(event.__class__, self._eventType):
-            try:
+#            try:
                 if self._target is None:  # function
                     m = self._method
                 else:
@@ -291,11 +291,11 @@ class ListenerMethod(IEventListener):
                 else:
                     m(*self._arguments)
 
-#            except Exception:  # IllegalAccessException
-#                raise RuntimeError, 'Internal error - please report'
-            except AttributeError:  # FIXME: InvocationTargetException
-                raise MethodException, ('Invocation of method '
-                        + self._method + ' failed.')
+##            except Exception:  # IllegalAccessException
+##                raise RuntimeError, 'Internal error - please report'
+#            except AttributeError:  # FIXME: InvocationTargetException
+#                raise MethodException, ('Invocation of method '
+#                        + self._method + ' failed.')
 
 
     def matches(self, eventType, target, method=None):

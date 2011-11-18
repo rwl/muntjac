@@ -559,7 +559,7 @@ class IndexedContainer(AbstractInMemoryContainer,
             nc.items = dict()
             for idd in self._items.keys():
                 it = self._items.get(idd)
-                nc.items[id] = it.clone()
+                nc.items[idd] = it.clone()
         return nc
 
 
@@ -820,7 +820,7 @@ class IndexedContainerProperty(prop.IProperty, prop.IValueChangeNotifier):
         if (isinstance(listener, prop.IValueChangeListener) and
                 (iface is None or iface == prop.IValueChangeListener)):
             self._container.addSinglePropertyChangeListener(self._propertyId,
-                    self._itemId, (listener, tuple()))
+                    self._itemId, listener)
 
 
     def addCallback(self, callback, eventType=None, *args):

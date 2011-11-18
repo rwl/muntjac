@@ -45,7 +45,7 @@ class TableClickListenersExample(VerticalLayout):
         table.setColumnFooter(ExampleUtil.ORDER_DESCRIPTION_PROPERTY_ID,
                 'Total Price')
         l = defaultLocale()
-        fc = format_currency(totalSum, currency='USD', locale=l)
+        fc = format_currency(totalSum, currency='USD', locale=l).encode('utf-8')
         table.setColumnFooter(ExampleUtil.ORDER_ITEMPRICE_PROPERTY_ID, fc)
 
         # Add a header click handler

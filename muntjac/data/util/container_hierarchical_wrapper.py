@@ -126,7 +126,7 @@ class ContainerHierarchicalWrapper(IHierarchical, IContainer,
                 for idd in ids:
                     if not (idd in s):
                         self.addToHierarchyWrapper(idd)
-                        s.add(id)
+                        s.add(idd)
 
                 arry = list(self._roots)
                 arry.sort(cmp=basedOnOrderFromWrappedContainer)

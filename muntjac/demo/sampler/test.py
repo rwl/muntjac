@@ -4,8 +4,8 @@ from muntjac.main import muntjac
 from muntjac.application import Application
 from muntjac.ui.window import Window
 
-from muntjac.demo.sampler.features.selects.ListSelectMultipleExample \
-    import ListSelectMultipleExample as Example
+from muntjac.demo.sampler.features.table.TableMainFeaturesExample \
+    import TableMainFeaturesExample as Example
 
 
 class App(Application):

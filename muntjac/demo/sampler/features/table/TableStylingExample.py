@@ -101,7 +101,9 @@ class TableActionHandler(action.IHandler):
         return ACTIONS
 
     def handleAction(self, a, sender, target):
-        del self._c._markedRows[target]
+        if target in self._c._markedRows:
+            del self._c._markedRows[target]
+
         if a != ACTION_NONE:
             # we're using the cations caption as stylename as well:
             self._c._markedRows[target] = a.getCaption()

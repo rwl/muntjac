@@ -396,8 +396,9 @@ class ExampleUtil(object):
         v = quantity
         item.getItemProperty(cls.ORDER_QUANTITY_PROPERTY_ID).setValue(v)
 
-        v = format_currency(price, currency='USD', locale=l)
+        v = format_currency(price, currency='USD', locale=l).encode('utf-8')
         item.getItemProperty(cls.ORDER_UNITPRICE_PROPERTY_ID).setValue(v)
 
         v = format_currency(price * quantity, currency='USD', locale=l)
+        v = v.encode('utf-8')
         item.getItemProperty(cls.ORDER_ITEMPRICE_PROPERTY_ID).setValue(v)

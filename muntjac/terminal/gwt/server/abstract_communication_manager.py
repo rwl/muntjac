@@ -13,7 +13,6 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from muntjac.ui.abstract_component import AbstractComponent
 
 """Defines a common base class for the server-side implementations of
 the communication system between the client code and the server side
@@ -45,6 +44,7 @@ from muntjac.terminal.paintable import IPaintable, IRepaintRequestListener
 from muntjac.terminal.terminal import IErrorEvent as TerminalErrorEvent
 from muntjac.terminal.uri_handler import IErrorEvent as URIHandlerErrorEvent
 
+from muntjac.ui.abstract_component import AbstractComponent
 from muntjac.ui.window import Window
 from muntjac.ui.component import IComponent
 from muntjac.ui.abstract_field import AbstractField

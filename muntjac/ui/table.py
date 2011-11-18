@@ -260,7 +260,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
         self._isContentRefreshesEnabled = True
 
-        self._pageBufferFirstIndex = None
+        self._pageBufferFirstIndex = 0
 
         self._containerChangeToBeRendered = False
 
@@ -896,7 +896,8 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         if collapsed:
             self._collapsedColumns.add(propertyId)
         else:
-            self._collapsedColumns.remove(propertyId)
+            if propertyId in self._collapsedColumns:
+                self._collapsedColumns.remove(propertyId)
 
         # Assures the visual refresh
         self.refreshRowCache()
@@ -1421,18 +1422,18 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         filledRows = 0
         i = 0
         while i < rows and idd is not None:
-            cells[self.CELL_ITEMID][i] = id
-            cells[self.CELL_KEY][i] = self.itemIdMapper.key(id)
+            cells[self.CELL_ITEMID][i] = idd
+            cells[self.CELL_KEY][i] = self.itemIdMapper.key(idd)
             if headmode != self.ROW_HEADER_MODE_HIDDEN:
                 if headmode == self.ROW_HEADER_MODE_INDEX:
                     cells[self.CELL_HEADER][i] = str(i + firstIndex + 1)
                 else:
-                    cells[self.CELL_HEADER][i] = self.getItemCaption(id)
+                    cells[self.CELL_HEADER][i] = self.getItemCaption(idd)
 
-                cells[self.CELL_ICON][i] = self.getItemIcon(id)
+                cells[self.CELL_ICON][i] = self.getItemIcon(idd)
 
             if self._rowGenerator is not None:
-                generatedRow = self._rowGenerator.generateRow(self, id)
+                generatedRow = self._rowGenerator.generateRow(self, idd)
             else:
                 generatedRow =  None
             cells[self.CELL_GENERATED_ROW][i] = generatedRow
@@ -1447,7 +1448,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                 isGenerated = isGeneratedRow or isGeneratedColumn
 
                 if not isGenerated:
-                    p = self.getContainerProperty(id, colids[j])
+                    p = self.getContainerProperty(idd, colids[j])
 
                 if isGeneratedRow:
                     if generatedRow.isSpanColumns() and j > 0:
@@ -1465,7 +1466,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                         if (index < firstIndexNotInCache
                                 and index >= self._pageBufferFirstIndex
                                 and self._pageBuffer[self.CELL_GENERATED_ROW][indexInOldBuffer] is None
-                                and self._pageBuffer[self.CELL_ITEMID][indexInOldBuffer] == id):
+                                and self._pageBuffer[self.CELL_ITEMID][indexInOldBuffer] == idd):
                             # we already have data in our cache,
                             # recycle it instead of fetching it via
                             # getValue/getPropertyValue
@@ -1475,7 +1476,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                                 self.listenProperty(p, oldListenedProperties)
                         elif isGeneratedColumn:
                             cg = self._columnGenerators[colids[j]]
-                            value = cg.generateCell(self, id, colids[j])
+                            value = cg.generateCell(self, idd, colids[j])
                             if (value is not None
                                     and not isinstance(value, IComponent)
                                     and not isinstance(value, basestring)):
@@ -1486,7 +1487,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                             value = p.getValue()
                             self.listenProperty(p, oldListenedProperties)
                         elif p is not None:
-                            value = self.getPropertyValue(id, colids[j], p)
+                            value = self.getPropertyValue(idd, colids[j], p)
                             # If returned value is Component (via
                             # fieldfactory or overridden getPropertyValue)
                             # we excpect it to listen property value
@@ -1496,7 +1497,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                             if not isinstance(value, IComponent):
                                 self.listenProperty(p, oldListenedProperties)
                         else:
-                            value = self.getPropertyValue(id, colids[j], None)
+                            value = self.getPropertyValue(idd, colids[j], None)
 
                 if isinstance(value, IComponent):
                     self.registerComponent(value)
@@ -1844,7 +1845,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         else:
             # first clear all selections that are currently rendered rows (the
             # ones that the client side counterpart is aware of)
-            newValue.removeAll(renderedItemIds)
+            newValue = newValue.difference(renderedItemIds)
 
         # Then add (possibly some of them back) rows that are currently
         # selected on the client side (the ones that the client side is aware
@@ -2444,7 +2445,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                 if self.areColumnHeadersEnabled():
                     if self.getColumnIcon(colId) is not None:
                         target.addAttribute('icon', self.getColumnIcon(colId))
-                    if sortables.contains(colId):
+                    if colId in sortables:
                         target.addAttribute('sortable', True)
 
                 if not (self.ALIGN_LEFT == self.getColumnAlignment(colId)):
@@ -2577,7 +2578,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                 if actions is not None:
                     for action in actions:
                         actionSet.add(action)
-                        keys.add(self._actionMapper.key(action))
+                        keys.append(self._actionMapper.key(action))
 
             target.addAttribute('alb', list(keys))
 
@@ -2632,7 +2633,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
             vids = self.getVisibleItemIds()
             for idd in vids:
                 if idd in sel:
-                    selectedKeys.add(self.itemIdMapper.key(idd))
+                    selectedKeys.append(self.itemIdMapper.key(idd))
         else:
             value = self.getValue()
             if value is None:
@@ -3213,7 +3214,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         # same for collapsed columns
         for idd in self._collapsedColumns:
             if (idd not in containerPropertyIds
-                    or (id in self._columnGenerators)):
+                    or (idd in self._columnGenerators)):
                 self._collapsedColumns.remove()
 
         self.resetPageBuffer()

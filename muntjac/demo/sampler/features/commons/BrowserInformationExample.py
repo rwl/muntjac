@@ -48,11 +48,11 @@ class BrowserInformationExample(VerticalLayout):
 #        dst = webBrowser.getDSTSavings()
 #        # use raw offset to get possible TZ:
 #        tzs = TimeZone.getAvailableIDs(rtzOffset)
-#        for id in tzs:
-#            tz = TimeZone.getTimeZone(id)
+#        for idd in tzs:
+#            tz = TimeZone.getTimeZone(idd)
 #            if dst == tz.getDSTSavings():
 #                # only include zones w/ DST if we know we have DST
-#                caption = id + ' (' + tz.getDisplayName() + ')'
+#                caption = idd + ' (' + tz.getDisplayName() + ')'
 #                timeZones.addItem(caption)
 #                if timeZones.getValue() is None:
 #                    # select first

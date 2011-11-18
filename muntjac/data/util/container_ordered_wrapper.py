@@ -170,7 +170,7 @@ class ContainerOrderedWrapper(IOrdered, IItemSetChangeNotifier,
             # Adds missing items
             for idd in ids:
                 if idd not in self._next:
-                    self.addToOrderWrapper(id)
+                    self.addToOrderWrapper(idd)
 
 
     def firstItemId(self):

@@ -109,7 +109,7 @@ class SimpleAddressBook(Application):
             item = self._contactList.getItem(idd)
             self._contactEditor.setItemDataSource(item)
 
-        self._contactRemovalButton.setVisible(id is not None)
+        self._contactRemovalButton.setVisible(idd is not None)
 
 
     def onFilterChange(self, event, name, text):
