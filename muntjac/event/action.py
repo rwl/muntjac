@@ -42,6 +42,11 @@ class Action(object):
         self._icon = icon
 
 
+    def __eq__(self, other):
+        return ((self._caption == other.getCaption())
+                and (self._icon == other.getIcon()))
+
+
     def getCaption(self):
         """Returns the action's caption.
 

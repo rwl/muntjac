@@ -347,8 +347,7 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
                 itemId = self.itemIdMapper.get(st[0].strip())
                 action = self._actionMapper.get(st[1].strip())
                 if (action is not None
-                        and (itemId is None)
-                        or self.containsId(itemId)
+                        and ((itemId is None) or self.containsId(itemId))
                         and self._actionHandlers is not None):
                     for ah in self._actionHandlers:
                         ah.handleAction(action, self, itemId)

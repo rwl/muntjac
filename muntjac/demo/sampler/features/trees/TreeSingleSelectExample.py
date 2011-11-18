@@ -18,7 +18,6 @@ class TreeSingleSelectExample(HorizontalLayout, IValueChangeListener,
     # Actions for the context menu
     _ACTION_ADD = Action('Add child item')
     _ACTION_DELETE = Action('Delete')
-    _ACTIONS = [_ACTION_ADD, _ACTION_DELETE]
 
     def __init__(self):
         super(TreeSingleSelectExample, self).__init__()
@@ -92,7 +91,7 @@ class TreeSingleSelectExample(HorizontalLayout, IValueChangeListener,
 
     # Returns the set of available actions
     def getActions(self, target, sender):
-        return self._ACTIONS
+        return [self._ACTION_ADD, self._ACTION_DELETE]
 
 
     # Handle actions
