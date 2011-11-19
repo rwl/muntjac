@@ -117,7 +117,7 @@ class RelativeCriterion(ServerSideCriterion):
         sourceLastName = self._example.getLastName(sourceItemId)
         targetLastName = self._example.getLastName(targetItemId)
 
-        if sourceLastName is not None and sourceLastName == targetLastName:
+        if (sourceLastName is not None) and sourceLastName == targetLastName:
             return True
 
         return False

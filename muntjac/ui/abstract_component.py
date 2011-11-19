@@ -120,7 +120,7 @@ class AbstractComponent(IComponent, IMethodEventSource):
 
         self.errorHandler = None
 
-        #ComponentSizeValidator.setCreationLocation(this);
+        #ComponentSizeValidator.setCreationLocation(self)
 
 
     def __getstate__(self):

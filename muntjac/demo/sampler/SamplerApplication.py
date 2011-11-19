@@ -42,7 +42,7 @@ class SamplerApplication(Application):
     _SAMPLER_THEME_NAME = 'sampler'
 
     # used when trying to guess theme location
-    _APP_URL = None
+    _APP_URL = ''
 
 
     def __init__(self):
@@ -63,12 +63,12 @@ class SamplerApplication(Application):
         """Tries to guess theme location.
         """
         # Supports multiple browser windows
-        try:
-            uri = (cls._APP_URL + '../VAADIN/themes/'
-                   + cls._SAMPLER_THEME_NAME + '/')  # FIXME: URI
-            return uri  # FIXME: normalize
-        except Exception, e:
-            print 'Theme location could not be resolved:' + str(e)
+#        try:
+        uri = (cls._APP_URL + '../VAADIN/themes/'
+               + cls._SAMPLER_THEME_NAME + '/')
+        return uri  # FIXME: normalize
+#        except Exception, e:
+#            print 'Theme location could not be resolved:' + str(e)
         return '/VAADIN/themes/' + cls._SAMPLER_THEME_NAME + '/'
 
 

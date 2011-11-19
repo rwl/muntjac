@@ -629,10 +629,11 @@ class DragDrop(FeatureSet):
                 ('Drag\'n\'drop supports dragging data and components to '
                  'other components or items within a component.'),
                 [DragDropTreeSorting(),
-                 DragDropTableTree(),
-                 DragDropServerValidation(),
+#                 DragDropTableTree(),
+#                 DragDropServerValidation(),
                  DragDropRearrangeComponents(),
-                 DragDropHtml5FromDesktop()])
+#                 DragDropHtml5FromDesktop()
+                 ])
 
 # MAIN structure; root is always a FeatureSet that is not shown
 FeatureSet.FEATURES = FeatureSet('', [Basics(), ValueInput(), FormsAndData(),

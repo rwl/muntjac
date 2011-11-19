@@ -20,7 +20,7 @@ class MenuBarCheckableItemsExample(VerticalLayout):
         f.addSeparator()
         # Save on exit is checkable but we do not want any listener to be
         # called when its state changes
-        saveOnExit = f.addItem('Save on exit', None)
+        saveOnExit = f.addItem('Save on exit', menuCommand)
         saveOnExit.setCheckable(True)
         saveOnExit.setChecked(True)
         f.addSeparator()

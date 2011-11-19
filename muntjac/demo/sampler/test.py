@@ -4,8 +4,8 @@ from muntjac.main import muntjac
 from muntjac.application import Application
 from muntjac.ui.window import Window
 
-from muntjac.demo.sampler.features.trees.TreeSingleSelectExample \
-    import TreeSingleSelectExample as Example
+from muntjac.demo.sampler.features.dragndrop.DragDropServerValidationExample \
+    import DragDropServerValidationExample as Example
 
 
 class App(Application):

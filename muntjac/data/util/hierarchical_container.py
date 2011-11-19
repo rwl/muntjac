@@ -423,7 +423,9 @@ class HierarchicalContainer(IndexedContainer, IHierarchical, IContainer):
                             if len(f) == 0:
                                 del self._filteredChildren[parentItemId]
 
-            del self._parent[itemId]
+            if itemId in self._parent:
+                del self._parent[itemId]
+
             if self._filteredParent is not None:
                 # Item id no longer has a parent as the item id is not in the
                 # container.

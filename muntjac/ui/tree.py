@@ -598,7 +598,7 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
 
         @see: L{IHierarchical.getParent}
         """
-        if itemId is None:
+        if itemId is not None:
             return self.items.getParent(itemId)
         else:
             return super(Tree, self).getParent()

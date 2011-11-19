@@ -99,11 +99,11 @@ class Feature(object):
         """
         pkgName, className = fullname(self).rsplit('.', 1)
         canonicalName = pkgName + 'Example' + '.' + className + 'Example'
-        try:
-            classObject = loadClass(canonicalName)
-            return classObject()
-        except Exception:
-            return None
+#        try:
+        classObject = loadClass(canonicalName)
+        return classObject()
+#        except Exception:
+#            return None
 
 
     def getSource(self):

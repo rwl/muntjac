@@ -99,10 +99,10 @@ class ImageDropBox(DragAndDropWrapper, IDropHandler):
                 else:
                     bas = StringIO()
 
-                sv = FileStreamVariable(self, fileName, html5File, bas)
-                html5File.setStreamVariable(sv)
+                    sv = FileStreamVariable(self, fileName, html5File, bas)
+                    html5File.setStreamVariable(sv)
 
-                self._progress.setVisible(True)
+                    self._component._progress.setVisible(True)
         else:
             text = tr.getText()
             if text is not None:
@@ -116,22 +116,9 @@ class ImageDropBox(DragAndDropWrapper, IDropHandler):
     def showFile(self, name, typ, bas):
 
         # resource for serving the file contents
-        class FileStreamSource(StreamSource):
-
-            def __init__(self, bas):
-                self._bas = bas
-
-
-            def getStream(self):
-                if self.bas is not None:
-                    byteArray = self._bas.getvalue()
-                    return StringIO(byteArray)
-                return None
-
-
         streamSource = FileStreamSource(bas)
         resource = StreamResource(streamSource, name,
-                self._component.self.getApplication())
+                self._component.getApplication())
 
         # show the file contents - images only for now
         embedded = Embedded(name, resource)
@@ -153,6 +140,19 @@ class ImageDropBox(DragAndDropWrapper, IDropHandler):
         return AcceptAll.get()
 
 
+class FileStreamSource(StreamSource):
+
+    def __init__(self, bas):
+        self._bas = bas
+
+
+    def getStream(self):
+        if self._bas is not None:
+            byteArray = self._bas.getvalue()
+            return StringIO(byteArray)
+        return None
+
+
 class FileStreamVariable(IStreamVariable):
 
     def __init__(self, component, fileName, html5file, bas):
@@ -161,25 +161,45 @@ class FileStreamVariable(IStreamVariable):
         self._fileName = fileName
         self._bas = bas
 
+
+    def __getstate__(self):
+        result = self.__dict__.copy()
+        del result['_bas']
+        result['_bas_str'] = self._bas.getvalue()
+        return result
+
+
+    def __setstate__(self, d):
+        self.__dict__ = d
+        bas_str = d.get('_bas_str', '')
+        self._bas = StringIO(bas_str)
+
+
     def getOutputStream(self):
         return self._bas
+
 
     def listenProgress(self):
         return False
 
+
     def onProgress(self, event):
         pass
 
+
     def streamingStarted(self, event):
         pass
+
 
     def streamingFinished(self, event):
         self._component._progress.setVisible(False)
         self.showFile(self._fileName,
                 self._html5File.getType(), self._bas)
 
+
     def streamingFailed(self, event):
         self._component._progress.setVisible(False)
+
 
     def isInterrupted(self):
         return False

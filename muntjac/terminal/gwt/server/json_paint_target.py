@@ -409,13 +409,13 @@ class JsonPaintTarget(IPaintTarget):
             self._tag.addVariable( BooleanVariable(owner, name, value) )
         elif isinstance(value, float):
             self._tag.addVariable( DoubleVariable(owner, name, value) )
-#        elif isinstance(value, float):
-#            self._tag.addVariable( FloatVariable(owner, name, value) )
+        #elif isinstance(value, float):
+        #    self._tag.addVariable( FloatVariable(owner, name, value) )
         elif isinstance(value, int):
             self._tag.addVariable( IntVariable(owner, name, value) )
         elif isinstance(value, long):
             self._tag.addVariable( LongVariable(owner, name, value) )
-        elif isinstance(value, str):
+        elif isinstance(value, basestring):
             var = StringVariable(owner, name, self.escapeJSON(value))
             self._tag.addVariable(var)
         elif isinstance(value, list):

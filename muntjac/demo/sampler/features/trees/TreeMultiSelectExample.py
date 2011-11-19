@@ -61,19 +61,18 @@ class TreeMultiSelectExample(VerticalLayout, action.IHandler):
             # Create new item, disallow children, add name, set parent
             itemId = self._tree.addItem()
             self._tree.setChildrenAllowed(itemId, False)
-            newItemName = 'New Item # ' + itemId
+            newItemName = 'New Item # %d' % itemId
             item = self._tree.getItem(itemId)
-            item.getItemProperty(ExampleUtil.hw_PROPERTY_NAME).setValue(newItemName)
+            p = item.getItemProperty(ExampleUtil.hw_PROPERTY_NAME)
+            p.setValue(newItemName)
             self._tree.setParent(itemId, target)
             self._tree.expandItem(target)
         elif a == self._ACTION_DELETE:
             parent = self._tree.getParent(target)
-            self._tree.removeItem(target)  # FIXME: refresh
+            self._tree.removeItem(target)
             # If the deleted object's parent has no more children, set it's
             # childrenallowed property to false
-            if (parent is not None) and \
-                    (self._tree.getChildren(parent) is None  # FIXME: null children
-                     or len(self._tree.getChildren(parent)) == 0):
+            if parent is not None and len(self._tree.getChildren(parent)) == 0:
                 self._tree.setChildrenAllowed(parent, False)
 
 
