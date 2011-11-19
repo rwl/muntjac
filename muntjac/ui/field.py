@@ -1,4 +1,4 @@
-# Copyright (C) 2010 IT Mill Ltd.
+# Copyright (C) 2011 Vaadin Ltd.
 # Copyright (C) 2011 Richard Lincoln
 #
 # This program is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@ from muntjac.ui.component import \
 
 class IField(IBufferedValidatable, prop.IValueChangeNotifier, # IComponent,
             prop.IValueChangeListener, prop.IEditor, IFocusable):
-    """@author: IT Mill Ltd.
+    """@author: Vaadin Ltd.
     @author: Richard Lincoln
     """
 
@@ -86,7 +86,7 @@ class ValueChangeEvent(ComponentEvent, prop.ValueChangeEvent):
     """An C{Event} object specifying the IField whose value has
     been changed.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """

@@ -1,4 +1,4 @@
-# Copyright (C) 2010 IT Mill Ltd.
+# Copyright (C) 2011 Vaadin Ltd.
 # Copyright (C) 2011 Richard Lincoln
 #
 # This program is free software: you can redistribute it and/or modify
@@ -28,7 +28,7 @@ class WebApplicationContext(AbstractWebApplicationContext):
     This is automatically added as a L{HttpSessionBindingListener}
     when added to a L{HttpSession}.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """

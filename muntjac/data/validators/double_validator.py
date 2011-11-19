@@ -1,4 +1,4 @@
-# Copyright (C) 2010 IT Mill Ltd.
+# Copyright (C) 2011 Vaadin Ltd.
 # Copyright (C) 2011 Richard Lincoln
 #
 # This program is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@ class DoubleValidator(AbstractStringValidator):
     """String validator for a double precision floating point number. See
     L{AbstractStringValidator} for more information.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """

@@ -1,4 +1,4 @@
-# Copyright (C) 2010 IT Mill Ltd.
+# Copyright (C) 2011 Vaadin Ltd.
 # Copyright (C) 2011 Richard Lincoln
 #
 # This program is free software: you can redistribute it and/or modify
@@ -42,7 +42,7 @@ class IBuffered(object):
     result in a value that is different than the one stored in the data source,
     even though the object is in read-through mode.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """
@@ -149,7 +149,7 @@ class SourceException(RuntimeError, IErrorMessage):
     buffered object tried to access its data source or if there is a problem
     in processing a data source.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """
@@ -294,7 +294,7 @@ class IBufferedValidatable(IBuffered, IValidatable):
     C{IBuffered} interfaces. The combination of the interfaces defines
     if the invalid data is committed to datasource.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """

@@ -1,4 +1,4 @@
-# Copyright (C) 2010 IT Mill Ltd.
+# Copyright (C) 2011 Vaadin Ltd.
 # Copyright (C) 2011 Richard Lincoln
 #
 # This program is free software: you can redistribute it and/or modify
@@ -33,7 +33,7 @@ from muntjac.terminal.gwt.server.exceptions import \
 class IStartedListener(object):
     """Receives the events when the upload starts.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """
@@ -50,7 +50,7 @@ class IStartedListener(object):
 class IFinishedListener(object):
     """Receives the events when the uploads are ready.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """
@@ -67,7 +67,7 @@ class IFinishedListener(object):
 class IFailedListener(object):
     """Receives events when the uploads are finished, but unsuccessful.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """
@@ -84,7 +84,7 @@ class IFailedListener(object):
 class ISucceededListener(object):
     """Receives events when the uploads are successfully finished.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """
@@ -147,7 +147,7 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
     element, setting size for Upload component is not supported. For some
     browsers setting size may work to some extent.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """
@@ -681,7 +681,7 @@ class IReceiver(object):
     """Interface that must be implemented by the upload receivers to provide
     the Upload component an output stream to write the uploaded data.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """
@@ -705,7 +705,7 @@ class FinishedEvent(ComponentEvent):
     you wish to distinguish between the two cases, use either SucceededEvent
     or FailedEvent, which are both subclasses of the FinishedEvent.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """
@@ -768,7 +768,7 @@ class FailedEvent(FinishedEvent):
     """Upload.FailedEvent event is sent when the upload is received,
     but the reception is interrupted for some reason.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """
@@ -809,7 +809,7 @@ class SucceededEvent(FinishedEvent):
     """Upload.SucceededEvent event is sent when the upload is received
     successfully.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """
@@ -822,7 +822,7 @@ class StartedEvent(ComponentEvent):
     """Upload.StartedEvent event is sent when the upload is started to
     received.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """

@@ -1,4 +1,4 @@
-# Copyright (C) 2010 IT Mill Ltd.
+# Copyright (C) 2011 Vaadin Ltd.
 # Copyright (C) 2011 Richard Lincoln
 #
 # This program is free software: you can redistribute it and/or modify
@@ -103,7 +103,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
     parts only for application windows. These are marked using B{Sub window
     only} and B{Application window only} respectively in the API doc.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """

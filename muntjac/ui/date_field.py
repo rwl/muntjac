@@ -1,4 +1,4 @@
-# Copyright (C) 2010 IT Mill Ltd.
+# Copyright (C) 2011 Vaadin Ltd.
 # Copyright (C) 2011 Richard Lincoln
 #
 # This program is free software: you can redistribute it and/or modify
@@ -43,7 +43,7 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
     A C{DateField} is in write-through mode by default, so
     L{AbstractField.setWriteThrough} must be called to enable buffering.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """

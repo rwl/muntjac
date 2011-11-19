@@ -1,4 +1,4 @@
-# Copyright (C) 2010 IT Mill Ltd.
+# Copyright (C) 2011 Vaadin Ltd.
 # Copyright (C) 2011 Richard Lincoln
 #
 # This program is free software: you can redistribute it and/or modify
@@ -63,7 +63,7 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
     """Tree component. A Tree can be used to select an item (or multiple
     items) from a hierarchical set of items.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """
@@ -993,7 +993,7 @@ class ExpandEvent(ComponentEvent):
     node is to be expanded. it can me used to dynamically fill the sub-nodes
     of the node.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """
@@ -1020,7 +1020,7 @@ class ExpandEvent(ComponentEvent):
 class IExpandListener(object):
     """Expand event listener.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """
@@ -1040,7 +1040,7 @@ EXPAND_METHOD = IExpandListener.nodeExpand
 class CollapseEvent(ComponentEvent):
     """Collapse event
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """
@@ -1067,7 +1067,7 @@ class CollapseEvent(ComponentEvent):
 class ICollapseListener(object):
     """Collapse event listener.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """

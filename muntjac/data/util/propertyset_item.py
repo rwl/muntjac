@@ -1,4 +1,4 @@
-# Copyright (C) 2010 IT Mill Ltd.
+# Copyright (C) 2011 Vaadin Ltd.
 # Copyright (C) 2011 Richard Lincoln
 #
 # This program is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@ class PropertysetItem(IItem, IPropertySetChangeNotifier):  # Cloneable
     identifiers. The class supports listeners who are interested in changes
     to the Property set managed by the class.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """
@@ -268,7 +268,7 @@ class PropertySetChangeEvent(EventObject, IItem, IPropertySetChangeEvent):
     """An C{event} object specifying an Item whose Property set has
     changed.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @version: @VERSION@
     """
 

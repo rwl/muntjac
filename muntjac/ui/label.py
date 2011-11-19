@@ -1,4 +1,4 @@
-# Copyright (C) 2010 IT Mill Ltd.
+# Copyright (C) 2011 Vaadin Ltd.
 # Copyright (C) 2011 Richard Lincoln
 #
 # This program is free software: you can redistribute it and/or modify
@@ -49,7 +49,7 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
     The B{b},B{i},B{u} and B{li} tags can contain all the tags
     in the list recursively.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """

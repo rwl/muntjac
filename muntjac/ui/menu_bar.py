@@ -1,4 +1,4 @@
-# Copyright (C) 2010 IT Mill Ltd.
+# Copyright (C) 2011 Vaadin Ltd.
 # Copyright (C) 2011 Richard Lincoln
 #
 # This program is free software: you can redistribute it and/or modify
@@ -440,7 +440,7 @@ class MenuItem(object):
         group items in a menu, to make it easier for users to find what they
         are looking for in the menu.
 
-        @author: Jouni Koivuviita / IT Mill Ltd.
+        @author: Jouni Koivuviita / Vaadin Ltd.
         """
         item = self.addItem('', None, None)
         item.setSeparator(True)

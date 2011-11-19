@@ -1,4 +1,4 @@
-# Copyright (C) 2010 IT Mill Ltd.
+# Copyright (C) 2011 Vaadin Ltd.
 # Copyright (C) 2011 Richard Lincoln
 #
 # This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@ from muntjac.ui.abstract_field import AbstractField
 class Slider(AbstractField):
     """A component for selecting a numerical value within a range.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     """
 
@@ -343,7 +343,7 @@ class Slider(AbstractField):
 class ValueOutOfBoundsException(Exception):
     """ValueOutOfBoundsException
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     """
 

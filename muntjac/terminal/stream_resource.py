@@ -1,4 +1,4 @@
-# Copyright (C) 2010 IT Mill Ltd.
+# Copyright (C) 2011 Vaadin Ltd.
 # Copyright (C) 2011 Richard Lincoln
 #
 # This program is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@ class StreamResource(IApplicationResource):
     that is most often in the context of the application or window. The
     resource is automatically registered to window in creation.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """
@@ -171,7 +171,7 @@ class StreamResource(IApplicationResource):
 class StreamSource(object):
     """Interface implemented by the source of a StreamResource.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """

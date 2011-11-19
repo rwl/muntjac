@@ -1,4 +1,4 @@
-# Copyright (C) 2010 IT Mill Ltd.
+# Copyright (C) 2011 Vaadin Ltd.
 # Copyright (C) 2011 Richard Lincoln
 #
 # This program is free software: you can redistribute it and/or modify
@@ -45,7 +45,7 @@ class IComponent(IPaintable, IVariableOwner, ISizeable):
     L{attach} is called) when it or one of its parents is attached to
     the main window of the application through its containment hierarchy.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """

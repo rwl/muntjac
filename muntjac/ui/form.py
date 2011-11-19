@@ -1,4 +1,4 @@
-# Copyright (C) 2010 IT Mill Ltd.
+# Copyright (C) 2011 Vaadin Ltd.
 # Copyright (C) 2011 Richard Lincoln
 #
 # This program is free software: you can redistribute it and/or modify
@@ -63,7 +63,7 @@ class Form(AbstractField, IEditor, IBuffered, IItem, IValidatable, INotifier):
     interface, most properties of any class following bean pattern, can be
     accessed trough C{muntjac.data.util.BeanItem}.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """

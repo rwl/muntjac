@@ -1,4 +1,4 @@
-# Copyright (C) 2010 IT Mill Ltd.
+# Copyright (C) 2011 Vaadin Ltd.
 # Copyright (C) 2011 Richard Lincoln
 #
 # This program is free software: you can redistribute it and/or modify
@@ -40,7 +40,7 @@ class ListenerMethod(IEventListener):
     filters out the events that do not match with the given event type and thus
     do not result in calling of the trigger method.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """
@@ -387,7 +387,7 @@ class MethodException(RuntimeError):
     exception. The original exception is wrapped into MethodException instance
     and rethrown by the C{ListenerMethod}.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """

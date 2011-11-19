@@ -1,4 +1,4 @@
-# Copyright (C) 2010 IT Mill Ltd.
+# Copyright (C) 2011 Vaadin Ltd.
 # Copyright (C) 2011 Richard Lincoln
 #
 # This program is free software: you can redistribute it and/or modify
@@ -34,7 +34,7 @@ class ISelectedTabChangeListener(object):
     another tab is selected, including when adding the first tab to a
     tabsheet.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """
@@ -76,7 +76,7 @@ class TabSheet(AbstractComponentContainer):
     The current implementation does not load the tabs to the UI before the
     first time they are shown, but this may change in future releases.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """
@@ -738,7 +738,7 @@ class SelectedTabChangeEvent(ComponentEvent):
     """Selected tab change event. This event is sent when the selected
     (shown) tab in the tab sheet is changed.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """
@@ -1011,7 +1011,7 @@ class ICloseHandler(object):
     """ICloseHandler is used to process tab closing events. Default behavior
     is to remove the tab from the TabSheet.
 
-    @author: Jouni Koivuviita / IT Mill Ltd.
+    @author: Jouni Koivuviita / Vaadin Ltd.
     @author: Richard Lincoln
     """
 

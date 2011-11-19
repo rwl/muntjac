@@ -1,4 +1,4 @@
-# Copyright (C) 2010 IT Mill Ltd.
+# Copyright (C) 2011 Vaadin Ltd.
 # Copyright (C) 2011 Richard Lincoln
 #
 # This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,7 @@ class IFormFieldFactory(object):
     displaying fields). Currently this interface is used by L{Form}, but
     might later be used by some other components for L{Field} generation.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     @see: L{TableFieldFactory}

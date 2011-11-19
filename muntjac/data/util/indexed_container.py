@@ -1,4 +1,4 @@
-# Copyright (C) 2010 IT Mill Ltd.
+# Copyright (C) 2011 Vaadin Ltd.
 # Copyright (C) 2011 Richard Lincoln
 #
 # This program is free software: you can redistribute it and/or modify
@@ -54,7 +54,7 @@ class IndexedContainer(AbstractInMemoryContainer,
       - Sends all needed events on content changes.
 
     @see: L{IContainer}
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """
@@ -693,7 +693,7 @@ class IndexedContainerProperty(prop.IProperty, prop.IValueChangeNotifier):
     """A class implementing the L{IProperty} interface to be contained in
     the L{IndexedContainerItem} contained in the L{IndexedContainer}.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """
@@ -861,7 +861,7 @@ class IndexedContainerProperty(prop.IProperty, prop.IValueChangeNotifier):
 class ItemSetChangeEvent(BaseItemSetChangeEvent):
     """An C{Event} object specifying the list whose IItem set has changed.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """
@@ -884,7 +884,7 @@ class PropertyValueChangeEvent(EventObject, prop.ValueChangeEvent):
     """An C{Event} object specifying the IProperty in a list whose
     value has changed.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """

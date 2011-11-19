@@ -1,4 +1,4 @@
-# Copyright (C) 2010 IT Mill Ltd.
+# Copyright (C) 2011 Vaadin Ltd.
 # Copyright (C) 2011 Richard Lincoln
 #
 # This program is free software: you can redistribute it and/or modify
@@ -58,7 +58,7 @@ class AbstractField(AbstractComponent, field.IField,
     The class also supports L{validators<IValidator>} to
     make sure the value contained in the field is valid.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """
@@ -1086,7 +1086,7 @@ class IReadOnlyStatusChangeEvent(ComponentEvent, prop.IProperty,
     """An C{Event} object specifying the IProperty whose
     read-only status has changed.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """

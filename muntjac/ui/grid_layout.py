@@ -1,4 +1,4 @@
-# Copyright (C) 2010 IT Mill Ltd.
+# Copyright (C) 2011 Vaadin Ltd.
 # Copyright (C) 2011 Richard Lincoln
 #
 # This program is free software: you can redistribute it and/or modify
@@ -48,7 +48,7 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
     L{OverlapsException} is thrown. Adding component with cursor automatically
     extends the grid by increasing the grid height.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """
@@ -950,7 +950,7 @@ class Area(object):
     of its upper left corner (column1,row1) and lower right corner
     (column2, row2).
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """
@@ -1100,7 +1100,7 @@ class OverlapsException(RuntimeError):
     An C{OverlapsException} is thrown when a component already
     exists (even partly) at the same space on a grid with the new component.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """
@@ -1148,7 +1148,7 @@ class OutOfBoundsException(RuntimeError):
     """An C{Exception} object which is thrown when an area
     exceeds the bounds of the grid.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """

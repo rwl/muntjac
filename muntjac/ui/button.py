@@ -1,4 +1,4 @@
-# Copyright (C) 2010 IT Mill Ltd.
+# Copyright (C) 2011 Vaadin Ltd.
 # Copyright (C) 2011 Richard Lincoln
 #
 # This program is free software: you can redistribute it and/or modify
@@ -35,7 +35,7 @@ from muntjac.event.field_events import \
 class IClickListener(object):
     """Interface for listening for a L{ClickEvent} fired by a L{Component}.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """
@@ -56,7 +56,7 @@ _BUTTON_CLICK_METHOD = getattr(IClickListener, "buttonClick")
 class Button(AbstractField, IBlurNotifier, IFocusNotifier):
     """A generic button component.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """
@@ -460,7 +460,7 @@ class ClickShortcut(ShortcutListener):
 class ClickEvent(ComponentEvent):
     """Click event. This event is thrown, when the button is clicked.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """

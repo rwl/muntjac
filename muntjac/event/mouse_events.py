@@ -1,4 +1,4 @@
-# Copyright (C) 2010 IT Mill Ltd.
+# Copyright (C) 2011 Vaadin Ltd.
 # Copyright (C) 2011 Richard Lincoln
 #
 # This program is free software: you can redistribute it and/or modify
@@ -28,7 +28,7 @@ class ClickEvent(ComponentEvent):
     The information available for click events are terminal dependent.
     Correct values for all event details cannot be guaranteed.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @see: L{ClickListener}
     @version: @VERSION@
@@ -148,7 +148,7 @@ class IClickListener(IComponentEventListener):
     """Interface for listening for a L{ClickEvent} fired by a L{Component}.
 
     @see: L{ClickEvent}
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """
@@ -170,7 +170,7 @@ class DoubleClickEvent(ComponentEvent):
     Fired when the user double-clicks on a C{Component}.
 
     @see: L{ClickEvent}
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """
@@ -184,7 +184,7 @@ class IDoubleClickListener(IComponentEventListener):
     L{Component}.
 
     @see: L{DoubleClickEvent}
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """

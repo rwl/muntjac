@@ -1,4 +1,4 @@
-# Copyright (C) 2010 IT Mill Ltd.
+# Copyright (C) 2011 Vaadin Ltd.
 # Copyright (C) 2011 Richard Lincoln
 #
 # This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@ class Action(object):
     action handling and listing, and for action handler registrations and
     unregistration.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """
@@ -88,7 +88,7 @@ class IContainer(object):
     should loop all action handlers registered to it and let them handle the
     action.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """
@@ -149,7 +149,7 @@ class IShortcutNotifier(object):
 class IHandler(object):
     """Interface implemented by classes who wish to handle actions.
 
-    @author: IT Mill Ltd.
+    @author: Vaadin Ltd.
     @author: Richard Lincoln
     @version: @VERSION@
     """
