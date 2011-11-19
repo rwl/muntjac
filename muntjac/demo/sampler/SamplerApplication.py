@@ -594,8 +594,8 @@ class FeatureGrid(Panel, IFeatureList):
                     er = ExternalResource('#' + f.getFragmentName())
                     sample = ActiveLink(f.getName(), er)
                     sample.setIcon(res)
-                    if f.getSinceVersion().isNew():
-                        sample.addStyleName('new')
+#                    if f.getSinceVersion().isNew():
+#                        sample.addStyleName('new')
                     l.addComponent(sample)
                     if (f.getDescription() is not None
                             and f.getDescription() != ''):
