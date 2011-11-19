@@ -2,7 +2,7 @@
 import sys
 import logging
 
-from os.path import join, dirname, normpath
+from os.path import join, dirname
 
 from wsgiref.simple_server import make_server
 
@@ -18,42 +18,34 @@ from muntjac.demo.sampler.SamplerApplication import SamplerApplication
 
 from paste.urlmap import URLMap
 from paste.session import SessionMiddleware
-from paste.fileapp import DirectoryApp, FileApp
+from paste.fileapp import DirectoryApp
 
 
-helloServlet = ApplicationServlet(HelloWorld, contextPath='/hello')
+helloServlet = ApplicationServlet(HelloWorld)
 hello = SessionMiddleware(helloServlet)
 
-calcServlet = ApplicationServlet(Calc, contextPath='/calc')
+calcServlet = ApplicationServlet(Calc)
 calc = SessionMiddleware(calcServlet)
 
-addressServlet = ApplicationServlet(SimpleAddressBook, contextPath='/address')
+addressServlet = ApplicationServlet(SimpleAddressBook)
 address = SessionMiddleware(addressServlet)
 
-tunesServlet = ApplicationServlet(MuntjacTunesLayout, contextPath='/tunes')
+tunesServlet = ApplicationServlet(MuntjacTunesLayout)
 tunes = SessionMiddleware(tunesServlet)
 
 samplerServlet = ApplicationServlet(SamplerApplication,
-        widgetset='com.vaadin.demo.sampler.gwt.SamplerWidgetSet',
-        contextPath='/sampler',
-        contextRoot=normpath( join(dirname(muntjac.__file__), '..') ))
+        widgetset='com.vaadin.demo.sampler.gwt.SamplerWidgetSet')
 sampler = SessionMiddleware(samplerServlet)
 
-
 urlmap = URLMap({})
-urlmap[helloServlet.contextPath] = hello
-urlmap[calcServlet.contextPath] = calc
-urlmap[addressServlet.contextPath] = address
-urlmap[tunesServlet.contextPath] = tunes
-urlmap[samplerServlet.contextPath] = sampler
+urlmap['/hello'] = hello
+urlmap['/calc'] = calc
+urlmap['/address'] = address
+urlmap['/tunes'] = tunes
+urlmap['/sampler'] = sampler
 
-rootapp = FileApp(join(dirname(muntjac.__file__), 'public', 'index.html'))
-cssapp = DirectoryApp(join(dirname(muntjac.__file__), 'public', 'css'))
-imgapp = DirectoryApp(join(dirname(muntjac.__file__), 'public', 'img'))
-
-urlmap['/'] = rootapp
-urlmap['/css'] = cssapp
-urlmap['/img'] = imgapp
+wsapp = DirectoryApp(join(dirname(muntjac.__file__), 'public', 'VAADIN'))
+urlmap['/VAADIN'] = wsapp
 
 
 if __name__ == '__main__':

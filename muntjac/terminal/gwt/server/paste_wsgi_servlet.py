@@ -36,7 +36,7 @@ class PasteWsgiServlet(HTTPServlet):
             root = join(dirname(muntjac.__file__), 'public')
             self.contextRoot = normpath(root)
 
-        self._contextPath = contextPath if contextPath is not None else ''  # default web app
+        self.contextPath = contextPath if contextPath is not None else ''
 
         self._timeout = timeout
 
@@ -66,7 +66,7 @@ class PasteWsgiServlet(HTTPServlet):
 
     def getContextPath(self, request):
         ## FIXME: implement request.contextPath()
-        return self._contextPath
+        return self.contextPath
 
 
     def originalContextPath(self, request):

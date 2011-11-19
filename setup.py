@@ -24,7 +24,7 @@ readme.close()
 changelog.close()
 
 setup(name="Muntjac",
-      version="1.0a10",
+      version="@VERSION@",
       description="Web application GUI toolkit",
       author="Richard Lincoln",
       author_email="r.w.lincoln@gmail.com",

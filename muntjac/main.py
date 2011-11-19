@@ -18,22 +18,17 @@ import sys
 import logging
 import webbrowser
 
-#from os.path import join, dirname
-#import static
-#from paste.urlmap import URLMap
+from os.path import join, dirname
 
 from optparse import OptionParser
 
 from wsgiref.simple_server import make_server
 
 from paste.session import SessionMiddleware
+from paste.fileapp import DirectoryApp, FileApp
 
 from muntjac.terminal.gwt.server.application_servlet import ApplicationServlet
-
-from muntjac.demo.main import \
-    urlmap, \
-    helloServlet, calcServlet, addressServlet, tunesServlet, samplerServlet
-
+from muntjac.demo.main import urlmap
 from muntjac.test.suite import main as test
 
 
@@ -49,12 +44,6 @@ def muntjac(applicationClass, host='localhost', port=8880, nogui=False,
             *args, **kw_args)
 
     wsgi_app = SessionMiddleware(wsgi_app)  # wrap in middleware
-
-#    root = join(dirname(__file__), '..', 'VAADIN')
-#
-#    urlmap = URLMap({})
-#    urlmap['/'] = wsgi_app
-#    urlmap['/VAADIN'] = static.Cling(root)
 
     url = 'http://%s:%d/' % (host, port)
 
@@ -95,7 +84,7 @@ def main(args=sys.argv[1:]):
         help='run in debug mode')
 
     parser.add_option('--contextRoot', default='', type='string',
-        help='Path to VAADIN directory')
+        help='path to VAADIN directory')
 
 
     opts, args = parser.parse_args(args)
@@ -114,12 +103,17 @@ def main(args=sys.argv[1:]):
             parser.print_help()
             sys.exit(2)
 
+        rootapp = FileApp(join(dirname(__file__), 'public', 'index.html'))
+        cssapp = DirectoryApp(join(dirname(__file__), 'public', 'css'))
+        imgapp = DirectoryApp(join(dirname(__file__), 'public', 'img'))
+
+        urlmap['/'] = rootapp
+        urlmap['/css'] = cssapp
+        urlmap['/img'] = imgapp
+
         if opts.contextRoot:
-            helloServlet.contextPath
-            calcServlet.contextPath
-            addressServlet.contextPath
-            tunesServlet.contextPath
-            samplerServlet.contextPath
+            ctxapp = DirectoryApp(join(opts.contextRoot, 'VAADIN'))
+            urlmap['/VAADIN'] = ctxapp
 
         url = 'http://%s:%d/' % (opts.host, opts.port)
 
@@ -133,9 +127,9 @@ def main(args=sys.argv[1:]):
         try:
             httpd.serve_forever()
         except KeyboardInterrupt:
-            print "Exiting"
+            print "\nExiting"
 
-        sys.exit(0)
+    sys.exit(0)
 
 
 if __name__ == '__main__':

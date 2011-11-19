@@ -663,7 +663,6 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
         if newDataSource is None:
             # Note: using wrapped IndexedContainer to match constructor
             # (super creates an IndexedContainer, which is then wrapped).
-            raise NotImplementedError
             newDataSource = ContainerHierarchicalWrapper(IndexedContainer())
 
         # Assure that the data source is ordered by making unordered
