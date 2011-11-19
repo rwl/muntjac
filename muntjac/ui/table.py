@@ -76,7 +76,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     CLIENT_WIDGET = None #ClientWidget(VScrollTable, LoadStyle.EAGER)

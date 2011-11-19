@@ -60,7 +60,7 @@ class AbstractField(AbstractComponent, field.IField,
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     def __init__(self):
@@ -1088,7 +1088,7 @@ class IReadOnlyStatusChangeEvent(ComponentEvent, prop.IProperty,
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     def __init__(self, source):

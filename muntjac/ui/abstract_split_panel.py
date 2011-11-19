@@ -80,7 +80,7 @@ class AbstractSplitPanel(AbstractLayout):
     contain two components. The comopnents are split by a divider element.
 
     @author: Vaadin Ltd.
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     _SPLITTER_CLICK_EVENT = VSplitPanel.SPLITTER_CLICK_EVENT_IDENTIFIER

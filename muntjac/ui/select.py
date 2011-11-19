@@ -40,7 +40,7 @@ class Select(abstract_select.AbstractSelect, abstract_select.IFiltering,
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     CLIENT_WIDGET = None #ClientWidget(VFilterSelect, LoadStyle.LAZY)

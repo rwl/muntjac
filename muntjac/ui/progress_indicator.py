@@ -34,7 +34,7 @@ class ProgressIndicator(AbstractField, prop.IValueChangeListener,
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     CLIENT_WIDGET = None #ClientWidget(VProgressIndicator, LoadStyle.EAGER)

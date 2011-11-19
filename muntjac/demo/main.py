@@ -44,11 +44,10 @@ urlmap['/address'] = address
 urlmap['/tunes'] = tunes
 urlmap['/sampler'] = sampler
 
+wsapp = DirectoryApp(join(dirname(muntjac.__file__), 'public', 'VAADIN'))
+urlmap['/VAADIN'] = wsapp
+
 
 if __name__ == '__main__':
     logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
-
-    wsapp = DirectoryApp(join(dirname(muntjac.__file__), 'public', 'VAADIN'))
-    urlmap['/VAADIN'] = wsapp
-
     make_server('localhost', 8080, urlmap).serve_forever()

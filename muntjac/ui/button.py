@@ -37,7 +37,7 @@ class IClickListener(object):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     def buttonClick(self, event):
@@ -58,7 +58,7 @@ class Button(AbstractField, IBlurNotifier, IFocusNotifier):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     CLIENT_WIDGET = None #ClientWidget(VButton, LoadStyle.EAGER)
@@ -462,7 +462,7 @@ class ClickEvent(ComponentEvent):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     def __init__(self, source, details=None):

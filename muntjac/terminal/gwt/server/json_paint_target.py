@@ -52,7 +52,7 @@ class JsonPaintTarget(IPaintTarget):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     _UIDL_ARG_NAME = 'name'

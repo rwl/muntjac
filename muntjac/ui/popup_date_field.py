@@ -28,7 +28,7 @@ class PopupDateField(DateField):
     @see: L{InlineDateField}
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     def __init__(self, *args):

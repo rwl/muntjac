@@ -35,7 +35,7 @@ class IStartedListener(object):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     def uploadStarted(self, event):
@@ -52,7 +52,7 @@ class IFinishedListener(object):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     def uploadFinished(self, event):
@@ -69,7 +69,7 @@ class IFailedListener(object):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     def uploadFailed(self, event):
@@ -86,7 +86,7 @@ class ISucceededListener(object):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     def uploadSucceeded(self, event):
@@ -149,7 +149,7 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     CLIENT_WIDGET = None #ClientWidget(VUpload, LoadStyle.LAZY)
@@ -683,7 +683,7 @@ class IReceiver(object):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     def receiveUpload(self, filename, mimeType):
@@ -707,7 +707,7 @@ class FinishedEvent(ComponentEvent):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     def __init__(self, source, filename, MIMEType, length):
@@ -770,7 +770,7 @@ class FailedEvent(FinishedEvent):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     def __init__(self, source, filename, MIMEType, length, reason=None):
@@ -811,7 +811,7 @@ class SucceededEvent(FinishedEvent):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     def __init__(self, source, filename, MIMEType, length):
@@ -824,7 +824,7 @@ class StartedEvent(ComponentEvent):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     def __init__(self, source, filename, MIMEType, contentLength):

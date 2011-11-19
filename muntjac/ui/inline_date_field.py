@@ -30,7 +30,7 @@ class InlineDateField(DateField):
     @see: L{PopupDateField}
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     CLIENT_WIDGET = None #ClientWidget(VDateFieldCalendar)

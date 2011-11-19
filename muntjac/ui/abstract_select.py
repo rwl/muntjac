@@ -56,7 +56,7 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     #: IItem caption mode: IItem's ID's C{String} representation

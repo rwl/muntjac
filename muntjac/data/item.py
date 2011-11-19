@@ -25,7 +25,7 @@ class IItem(object):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     def getItemProperty(self, idd):

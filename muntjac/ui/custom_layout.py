@@ -40,7 +40,7 @@ class CustomLayout(AbstractLayout):
     @author: Vaadin Ltd.
     @author: Richard Lincoln
     @author: Duy B. Vo
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     CLIENT_WIDGET = None #ClientWidget(VCustomLayout, LoadStyle.EAGER)

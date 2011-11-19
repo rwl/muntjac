@@ -28,7 +28,7 @@ class IVariableOwner(object):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     def changeVariables(self, source, variables):

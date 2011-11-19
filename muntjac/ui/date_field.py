@@ -45,7 +45,7 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     CLIENT_WIDGET = None #ClientWidget(VPopupCalendar, LoadStyle.EAGER)

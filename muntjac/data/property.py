@@ -35,7 +35,7 @@ class IProperty(object):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     def getValue(self):
@@ -128,7 +128,7 @@ class ReadOnlyException(RuntimeError):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     def __init__(self, msg=None):
@@ -148,7 +148,7 @@ class ConversionException(RuntimeError):
     the IProperty.
 
     @author: Vaadin Ltd.
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     def __init__(self, *args):
@@ -174,7 +174,7 @@ class IViewer(object):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     def setPropertyDataSource(self, newDataSource):
@@ -206,7 +206,7 @@ class IEditor(IViewer):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     """
     pass
 
@@ -217,7 +217,7 @@ class ValueChangeEvent(object):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     def getProperty(self):
@@ -234,7 +234,7 @@ class IValueChangeListener(object):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     def valueChange(self, event):
@@ -254,7 +254,7 @@ class IValueChangeNotifier(object):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     def addListener(self, listener, iface=None):
@@ -289,7 +289,7 @@ class IReadOnlyStatusChangeEvent(object):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     def getProperty(self):
@@ -306,7 +306,7 @@ class IReadOnlyStatusChangeListener(object):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     def readOnlyStatusChange(self, event):
@@ -327,7 +327,7 @@ class IReadOnlyStatusChangeNotifier(object):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     def addListener(self, listener, iface=None):

@@ -28,7 +28,7 @@ class SplitPanel(AbstractSplitPanel):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     @deprecated: Use L{HorizontalSplitPanel} or L{VerticalSplitPanel} instead.
     """
 

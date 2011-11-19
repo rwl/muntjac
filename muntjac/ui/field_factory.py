@@ -24,7 +24,7 @@ class IFieldFactory(IFormFieldFactory, ITableFieldFactory):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     @deprecated: IFieldFactory was split into two lighter interfaces.
                  Use IFormFieldFactory or ITableFieldFactory or both instead.
     """

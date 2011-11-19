@@ -42,7 +42,7 @@ class ListenerMethod(IEventListener):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     def writeObject(self, out):
@@ -389,7 +389,7 @@ class MethodException(RuntimeError):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     def __init__(self, message, cause):

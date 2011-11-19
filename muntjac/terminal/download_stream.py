@@ -21,7 +21,7 @@ class DownloadStream(object):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.0
     """
 
     MAX_CACHETIME = sys.maxint
