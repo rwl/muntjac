@@ -19,7 +19,13 @@ sys_path_install()
 from WebKit.HTTPServlet import HTTPServlet
 
 
+class EndResponseException(Exception):
+    pass
+
+
 class PasteWsgiServlet(HTTPServlet):
+
+    EndResponse = EndResponseException
 
     def __init__(self, contextRoot=None, contextPath=None, timeout=1800):
 #        super(PasteWsgiServlet, self).__init__()
@@ -27,7 +33,8 @@ class PasteWsgiServlet(HTTPServlet):
         if contextRoot is not None:
             self._contextRoot = contextRoot
         else:
-            self._contextRoot = normpath(join(dirname(muntjac.__file__), '..'))
+            #self._contextRoot = normpath(join(dirname(muntjac.__file__), '..'))
+            self._contextRoot = dirname(muntjac.__file__)
 
         self._contextPath = contextPath if contextPath is not None else ''  # default web app
 

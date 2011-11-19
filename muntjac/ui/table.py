@@ -1532,8 +1532,8 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
 
     def registerComponent(self, component):
-        logger.debug('Registered ' + component.__class__.__name__
-                + ': ' + component.getCaption())
+        logger.debug('Registered %s: %s' % (component.__class__.__name__,
+                component.getCaption()))
         if component.getParent() is not self:
             component.setParent(self)
         self._visibleComponents.add(component)

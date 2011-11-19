@@ -5,6 +5,11 @@
 .settings/
 
 VAADIN/
+muntjac/VAADIN/
+Muntjac.egg-info/
+build/
+dist/
+
 paste/
 gaesessions/
 babel/

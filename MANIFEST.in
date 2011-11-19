@@ -5,5 +5,5 @@ include app.yaml
 include conf.ini
 include epydoc.config
 include index.html
-recursive-include static
-recursive-include VAADIN
+recursive-include static *
+recursive-include muntjac/VAADIN *

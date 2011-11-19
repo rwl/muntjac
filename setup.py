@@ -19,12 +19,12 @@ from setuptools import setup, find_packages
 cwd = abspath(dirname(__file__))
 readme = open(join(cwd, "README"))
 changelog = open(join(cwd, "CHANGELOG"))
-kwds = {"long_description": readme.read() + '\n' + changelog.read()}
+kwds = {"long_description": readme.read() + '\n\n' + changelog.read()}
 readme.close()
 changelog.close()
 
 setup(name="Muntjac",
-      version="1.0a1",
+      version="1.0a10",
       description="Web application GUI toolkit",
       author="Richard Lincoln",
       author_email="r.w.lincoln@gmail.com",

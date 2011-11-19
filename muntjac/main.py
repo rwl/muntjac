@@ -29,8 +29,16 @@ from wsgiref.simple_server import make_server
 from paste.session import SessionMiddleware
 
 from muntjac.terminal.gwt.server.application_servlet import ApplicationServlet
-from muntjac.demo.main import urlmap
+from muntjac.demo.main import urlmap, hello, calc, address, tunes, sampler
 from muntjac.test.suite import main as test
+
+DEMO_MAP = {
+    'hello': hello,
+    'calc': calc,
+    'address': address,
+    'tunes': tunes,
+    'sampler': sampler
+}
 
 
 def muntjac(applicationClass, host='localhost', port=8880, nogui=False,
@@ -71,7 +79,8 @@ def muntjac(applicationClass, host='localhost', port=8880, nogui=False,
 
 def main(args=sys.argv[1:]):
 
-    parser = OptionParser(usage='usage: muntjac [options]',
+    parser = OptionParser(
+        usage='usage: muntjac [hello|calc|address|tunes] [options]',
         version='Muntjac Version %s' % '@VERSION@')
 
     parser.add_option('-t', '--test', action='store_true',
@@ -86,26 +95,42 @@ def main(args=sys.argv[1:]):
     parser.add_option('--nogui', action='store_true',
         help='do not open browser window')
 
-    #parser.add_option('--debug', action='store_true',
-    #    help='run in debug mode')
+    parser.add_option('--debug', action='store_true',
+        help='run in debug mode')
 
 
     opts, args = parser.parse_args(args)
 
-    if len(args) > 0:
-        sys.stderr.write('Too many arguments')
-        parser.print_help()
-        sys.exit(2)
+    level = logging.DEBUG if opts.debug else logging.INFO
 
+    logging.basicConfig(stream=sys.stdout, level=level,
+            format='%(levelname)s: %(message)s')
 
     if opts.test:
         test()
     else:
+        nargs = len(args)
+        if nargs > 1:
+            sys.stderr.write('Too many arguments')
+            parser.print_help()
+            sys.exit(2)
+        elif nargs == 0:
+            demo = hello
+        else:
+            demo = DEMO_MAP.get(args[0])
+            if demo is None:
+                sys.stderr.write('Invalid demo name [%s]' % args[0])
+                parser.print_help()
+                sys.exit(2)
+
+        url = 'http://%s:%d/' % (opts.host, opts.port)
+
         if opts.nogui == False:
-            url = 'http://%s:%d/sampler' % (opts.host, opts.port)
             webbrowser.open(url, new=0)
 
-        make_server(opts.host, opts.port, urlmap).serve_forever()
+        print 'Serving at: %s' % url
+
+        make_server(opts.host, opts.port, demo).serve_forever()
 
 
 if __name__ == '__main__':
