@@ -1,15 +1,17 @@
 *.pyc
 
-.project
-.pydevproject
-.settings/
+/.project
+/.pydevproject
+/.settings/
 
-VAADIN/
-muntjac/VAADIN/
-Muntjac.egg-info/
-build/
-dist/
+/VAADIN/
+/muntjac/public/VAADIN/themes/
+/muntjac/public/VAADIN/widgetsets/
+/Muntjac.egg-info/
+/build/
+/dist/
 
-paste/
-gaesessions/
-babel/
+/lib/
+/paste/
+/gaesessions/
+/babel/
