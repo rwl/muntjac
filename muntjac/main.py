@@ -29,11 +29,8 @@ from wsgiref.simple_server import make_server
 from paste.session import SessionMiddleware
 
 from muntjac.terminal.gwt.server.application_servlet import ApplicationServlet
-
-from muntjac.demo.HelloWorld import HelloWorld
-from muntjac.demo.Calc import Calc
-from muntjac.demo.SimpleAddressBook import SimpleAddressBook
-from muntjac.demo.MuntjacTunesLayout import MuntjacTunesLayout
+from muntjac.demo.main import urlmap
+from muntjac.test.suite import main as test
 
 
 def muntjac(applicationClass, host='localhost', port=8880, nogui=False,
@@ -89,8 +86,8 @@ def main(args=sys.argv[1:]):
     parser.add_option('--nogui', action='store_true',
         help='do not open browser window')
 
-    parser.add_option('--debug', action='store_true',
-        help='run in debug mode')
+    #parser.add_option('--debug', action='store_true',
+    #    help='run in debug mode')
 
 
     opts, args = parser.parse_args(args)
@@ -102,19 +99,13 @@ def main(args=sys.argv[1:]):
 
 
     if opts.test:
-        pass
+        test()
     else:
-        host, port, nogui, debug = opts.host, opts.port, opts.nogui, opts.debug
+        if opts.nogui == False:
+            url = 'http://%s:%d/sampler' % (opts.host, opts.port)
+            webbrowser.open(url, new=0)
 
-        muntjac(HelloWorld, host, port, nogui, debug,
-                widgetset='com.vaadin.demo.gwt.HelloWorldWidgetSet')
-
-        muntjac(Calc, host, port, nogui, debug,
-                widgetset='com.vaadin.demo.gwt.CalcWidgetSet')
-
-        muntjac(SimpleAddressBook, host, port, nogui, debug)
-
-        muntjac(MuntjacTunesLayout, host, port, nogui, debug)
+        make_server(opts.host, opts.port, urlmap).serve_forever()
 
 
 if __name__ == '__main__':

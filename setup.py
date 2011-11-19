@@ -37,11 +37,12 @@ setup(name="Muntjac",
             'Programming Language :: Python',
             'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
             'Topic :: Internet :: WWW/HTTP :: WSGI :: Application'],
+      entry_points={"console_scripts": ['muntjac = muntjac.main:main']},
       include_package_data=True,
       packages=find_packages(),
       tests_require=["Mox"],
       test_suite="muntjac.test.suite.main",
-      zip_safe=True,
+      zip_safe=False,
       **kwds)
 
 # python setup.py sdist bdist_egg bdist_wininst bdist_msi upload
