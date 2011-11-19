@@ -112,10 +112,10 @@ class FeatureView(HorizontalLayout):
 
             self._left.addComponent(self._controls)
             self._title.setValue('<span>' + feature.getName() + '</span>')
-            if feature.getSinceVersion().isNew():
-                self._title.addStyleName('new')
-            else:
-                self._title.removeStyleName('new')
+#            if feature.getSinceVersion().isNew():
+#                self._title.addStyleName('new')
+#            else:
+#                self._title.removeStyleName('new')
 
             self._left.addComponent(self.getExampleFor(feature))
 

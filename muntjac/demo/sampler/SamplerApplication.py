@@ -617,8 +617,8 @@ class FeatureGrid(Panel, IFeatureList):
                         except ValueError:
                             idx = -1
                         sample.setDescription(desc[:idx + 1])
-                    if f.getSinceVersion().isNew():
-                        sample.addStyleName('new')
+#                    if f.getSinceVersion().isNew():
+#                        sample.addStyleName('new')
                     sample.setIcon(res)
                     rootSet.addComponent(sample)
         if rootTitle is not None:
@@ -797,8 +797,8 @@ class TreeStyleGenerator(ui_tree.IItemStyleGenerator):
 
     def getStyle(self, itemId):
         f = itemId
-        if f.getSinceVersion().isNew():
-            return 'new'
+#        if f.getSinceVersion().isNew():
+#            return 'new'
         return None
 
 
