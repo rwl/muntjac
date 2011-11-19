@@ -31,10 +31,10 @@ class PasteWsgiServlet(HTTPServlet):
 #        super(PasteWsgiServlet, self).__init__()
 
         if contextRoot is not None:
-            self._contextRoot = contextRoot
+            self.contextRoot = contextRoot
         else:
-            #self._contextRoot = normpath(join(dirname(muntjac.__file__), '..'))
-            self._contextRoot = dirname(muntjac.__file__)
+            root = join(dirname(muntjac.__file__), 'public')
+            self.contextRoot = normpath(root)
 
         self._contextPath = contextPath if contextPath is not None else ''  # default web app
 
@@ -99,20 +99,20 @@ class PasteWsgiServlet(HTTPServlet):
 
     def getResourceAsStream(self, path):
         # FIXME:
-        path = join(self._contextRoot, path.lstrip('/'))
+        path = join(self.contextRoot, path.lstrip('/'))
         stream = open(normpath(path), 'rb')
         return stream
 
 
     def getResource(self, filename):
         # FIXME:
-        path = join(self._contextRoot, filename.lstrip('/'))
+        path = join(self.contextRoot, filename.lstrip('/'))
         return path
 
 
     def getResourcePath(self, session, path):
         # FIXME:
-        return join(self._contextRoot, path.lstrip('/'))
+        return join(self.contextRoot, path.lstrip('/'))
 
     # Request
 

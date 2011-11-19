@@ -1,5 +1,12 @@
 
+import sys
+import logging
+
+from os.path import join, dirname, normpath
+
 from wsgiref.simple_server import make_server
+
+import muntjac
 
 from muntjac.terminal.gwt.server.application_servlet import ApplicationServlet
 
@@ -10,33 +17,45 @@ from muntjac.demo.MuntjacTunesLayout import MuntjacTunesLayout
 from muntjac.demo.sampler.SamplerApplication import SamplerApplication
 
 from paste.urlmap import URLMap
-
 from paste.session import SessionMiddleware
+from paste.fileapp import DirectoryApp, FileApp
 
 
-hello = ApplicationServlet(HelloWorld)
-hello = SessionMiddleware(hello)
+helloServlet = ApplicationServlet(HelloWorld, contextPath='/hello')
+hello = SessionMiddleware(helloServlet)
 
-calc = ApplicationServlet(Calc)
-calc = SessionMiddleware(calc)
+calcServlet = ApplicationServlet(Calc, contextPath='/calc')
+calc = SessionMiddleware(calcServlet)
 
-address = ApplicationServlet(SimpleAddressBook)
-address = SessionMiddleware(address)
+addressServlet = ApplicationServlet(SimpleAddressBook, contextPath='/address')
+address = SessionMiddleware(addressServlet)
 
-tunes = ApplicationServlet(MuntjacTunesLayout)
-tunes = SessionMiddleware(tunes)
+tunesServlet = ApplicationServlet(MuntjacTunesLayout, contextPath='/tunes')
+tunes = SessionMiddleware(tunesServlet)
 
-sampler = ApplicationServlet(SamplerApplication,
-        widgetset='com.vaadin.demo.sampler.gwt.SamplerWidgetSet')
-sampler = SessionMiddleware(sampler)
+samplerServlet = ApplicationServlet(SamplerApplication,
+        widgetset='com.vaadin.demo.sampler.gwt.SamplerWidgetSet',
+        contextPath='/sampler',
+        contextRoot=normpath( join(dirname(muntjac.__file__), '..') ))
+sampler = SessionMiddleware(samplerServlet)
+
 
 urlmap = URLMap({})
-urlmap['/hello'] = hello
-urlmap['/calc'] = calc
-urlmap['/address'] = address
-urlmap['/tunes'] = tunes
-urlmap['/sampler'] = sampler
+urlmap[helloServlet.contextPath] = hello
+urlmap[calcServlet.contextPath] = calc
+urlmap[addressServlet.contextPath] = address
+urlmap[tunesServlet.contextPath] = tunes
+urlmap[samplerServlet.contextPath] = sampler
+
+rootapp = FileApp(join(dirname(muntjac.__file__), 'public', 'index.html'))
+cssapp = DirectoryApp(join(dirname(muntjac.__file__), 'public', 'css'))
+imgapp = DirectoryApp(join(dirname(muntjac.__file__), 'public', 'img'))
+
+urlmap['/'] = rootapp
+urlmap['/css'] = cssapp
+urlmap['/img'] = imgapp
 
 
 if __name__ == '__main__':
+    logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
     make_server('localhost', 8080, urlmap).serve_forever()

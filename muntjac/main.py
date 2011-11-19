@@ -29,16 +29,12 @@ from wsgiref.simple_server import make_server
 from paste.session import SessionMiddleware
 
 from muntjac.terminal.gwt.server.application_servlet import ApplicationServlet
-from muntjac.demo.main import urlmap, hello, calc, address, tunes, sampler
-from muntjac.test.suite import main as test
 
-DEMO_MAP = {
-    'hello': hello,
-    'calc': calc,
-    'address': address,
-    'tunes': tunes,
-    'sampler': sampler
-}
+from muntjac.demo.main import \
+    urlmap, \
+    helloServlet, calcServlet, addressServlet, tunesServlet, samplerServlet
+
+from muntjac.test.suite import main as test
 
 
 def muntjac(applicationClass, host='localhost', port=8880, nogui=False,
@@ -80,7 +76,7 @@ def muntjac(applicationClass, host='localhost', port=8880, nogui=False,
 def main(args=sys.argv[1:]):
 
     parser = OptionParser(
-        usage='usage: muntjac [hello|calc|address|tunes] [options]',
+        usage='usage: muntjac [options]',
         version='Muntjac Version %s' % '@VERSION@')
 
     parser.add_option('-t', '--test', action='store_true',
@@ -92,11 +88,14 @@ def main(args=sys.argv[1:]):
     parser.add_option('--port', default=8080, type='int',
         help='WSGI server port number')
 
-    parser.add_option('--nogui', action='store_true',
+    parser.add_option('--nogui', action='store_true', default=False,
         help='do not open browser window')
 
     parser.add_option('--debug', action='store_true',
         help='run in debug mode')
+
+    parser.add_option('--contextRoot', default='', type='string',
+        help='Path to VAADIN directory')
 
 
     opts, args = parser.parse_args(args)
@@ -110,31 +109,32 @@ def main(args=sys.argv[1:]):
         test()
     else:
         nargs = len(args)
-        if nargs > 1:
+        if nargs > 0:
             sys.stderr.write('Too many arguments')
             parser.print_help()
             sys.exit(2)
-        elif nargs == 0:
-            demo = hello
-        else:
-            demo = DEMO_MAP.get(args[0])
-            if demo is None:
-                sys.stderr.write('Invalid demo name [%s]' % args[0])
-                parser.print_help()
-                sys.exit(2)
+
+        if opts.contextRoot:
+            helloServlet.contextPath
+            calcServlet.contextPath
+            addressServlet.contextPath
+            tunesServlet.contextPath
+            samplerServlet.contextPath
 
         url = 'http://%s:%d/' % (opts.host, opts.port)
 
-        if opts.nogui == False:
+        if not opts.nogui:
             webbrowser.open(url, new=0)
 
         print 'Serving at: %s' % url
 
-        httpd = make_server(opts.host, opts.port, demo)
+        httpd = make_server(opts.host, opts.port, urlmap)
+
         try:
             httpd.serve_forever()
         except KeyboardInterrupt:
             print "Exiting"
+
         sys.exit(0)
 
 
