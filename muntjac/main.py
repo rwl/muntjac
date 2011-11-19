@@ -130,7 +130,12 @@ def main(args=sys.argv[1:]):
 
         print 'Serving at: %s' % url
 
-        make_server(opts.host, opts.port, demo).serve_forever()
+        httpd = make_server(opts.host, opts.port, demo)
+        try:
+            httpd.serve_forever()
+        except KeyboardInterrupt:
+            print "Exiting"
+        sys.exit(0)
 
 
 if __name__ == '__main__':
