@@ -2640,7 +2640,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                 value = self.getNullSelectionItemId()
 
             if value is not None:
-                selectedKeys.add(self.itemIdMapper.key(value))
+                selectedKeys.append(self.itemIdMapper.key(value))
 
         return selectedKeys
 

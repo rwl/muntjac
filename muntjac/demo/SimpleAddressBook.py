@@ -58,12 +58,12 @@ class SimpleAddressBook(Application):
     def initContactAddRemoveButtons(self):
         # New item button
         newItem = Button('+')
-        newItem.addCallback(self.onNew, ClickEvent)
+        newItem.addCallback(onNew, ClickEvent, self)
         self._bottomLeftCorner.addComponent(newItem)
 
         # Remove item button
         self._contactRemovalButton = Button('-')
-        self._contactRemovalButton.addCallback(self.onRemove, ClickEvent)
+        self._contactRemovalButton.addCallback(onRemove, ClickEvent, self)
         self._contactRemovalButton.setVisible(False)
         self._bottomLeftCorner.addComponent(self._contactRemovalButton)
 
@@ -73,8 +73,8 @@ class SimpleAddressBook(Application):
         self._contactList.setVisibleColumns(self._visibleCols)
         self._contactList.setSelectable(True)
         self._contactList.setImmediate(True)
-        self._contactList.addCallback(self.onContactChange,
-                field.ValueChangeEvent)
+        self._contactList.addCallback(onContactChange, field.ValueChangeEvent,
+                self)
         return self._visibleCols
 
 
@@ -86,39 +86,8 @@ class SimpleAddressBook(Application):
             sf.setValue(pn)
             sf.setImmediate(True)
             self._bottomLeftCorner.setExpandRatio(sf, 1)
-            sf.addListener(self.onFilterChange,
-                    property.ValueChangeEvent, pn, sf)
-
-
-    def onNew(self, event):
-        idd = self._contactList.addItem()
-        self._contactList.setValue(idd)
-
-
-    def onRemove(self, event):
-        self._contactList.removeItem( self._contactList.getValue() )
-        self._contactList.select(None)
-
-
-    def onContactChange(self, event):
-        idd = self._contactList.getValue()
-
-        if idd is None:
-            self._contactEditor.setItemDataSource(None)
-        else:
-            item = self._contactList.getItem(idd)
-            self._contactEditor.setItemDataSource(item)
-
-        self._contactRemovalButton.setVisible(idd is not None)
-
-
-    def onFilterChange(self, event, name, text):
-        self._addressBookData.removeContainerFilters(name)
-        if len(str(text)) > 0 and name != str(text):
-            self._addressBookData.addContainerFilter(name, str(text), True, False)
-
-        self.getMainWindow().showNotification("%d matches found" %
-                self._addressBookData.size())
+            sf.addCallback(onFilterChange, property.ValueChangeEvent,
+                    pn, sf, self)
 
 
     @classmethod
@@ -142,6 +111,37 @@ class SimpleAddressBook(Application):
             ic.getContainerProperty(idd, 'Last Name').setValue(lname)
 
         return ic
+
+
+def onNew(event, book):
+    idd = book._contactList.addItem()
+    book._contactList.setValue(idd)
+
+
+def onRemove(event, book):
+    book._contactList.removeItem( book._contactList.getValue() )
+    book._contactList.select(None)
+
+
+def onContactChange(event, book):
+    idd = book._contactList.getValue()
+
+    if idd is None:
+        book._contactEditor.setItemDataSource(None)
+    else:
+        item = book._contactList.getItem(idd)
+        book._contactEditor.setItemDataSource(item)
+
+    book._contactRemovalButton.setVisible(idd is not None)
+
+
+def onFilterChange(event, name, text, book):
+    book._addressBookData.removeContainerFilters(name)
+    if len(str(text)) > 0 and name != str(text):
+        book._addressBookData.addContainerFilter(name, str(text), True, False)
+
+    book.getMainWindow().showNotification("%d matches found" %
+            book._addressBookData.size())
 
 
 if __name__ == '__main__':
