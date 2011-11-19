@@ -17,16 +17,18 @@ from os.path import abspath, dirname, join
 from setuptools import setup, find_packages
 
 cwd = abspath(dirname(__file__))
-f = open(join(cwd, "README"))
-kwds = {"long_description": f.read()}
-f.close()
+readme = open(join(cwd, "README"))
+changelog = open(join(cwd, "CHANGELOG"))
+kwds = {"long_description": readme.read() + '\n' + changelog.read()}
+readme.close()
+changelog.close()
 
-setup(name="muntjac",
+setup(name="Muntjac",
       version="1.0a1",
       description="Web application GUI toolkit",
       author="Richard Lincoln",
       author_email="r.w.lincoln@gmail.com",
-      url="http://pypi.python.org/pypi/muntjac",
+      url="http://www.muntiacus.org/",
       install_requires=["Paste", "PasteWebKit", "Babel"],
       classifiers=['Development Status :: 4 - Beta',
             'Intended Audience :: Developers',

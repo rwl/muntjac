@@ -1,28 +1,18 @@
 Muntjac
 =======
 
-A web application GUI toolkit. Muntjac is a translation of Vaadin to the
-Python programming language. It is akin to PyQT, wxPython, PyGTK etc, but
-can be used to create web applications.
+A web application GUI toolkit.
 
-
-Installation
-------------
-
-Muntjac depend upon:
-
- - Python > v2.5
- - PasteWebKit > v1.0
-
-It can be installed using setuptools::
-
-	$ easy_install muntjac
-
+Muntjac_ is a translation of Vaadin_ to the Python_ programming language. It
+is similar to GUI toolkits for desktop applications, such as PyQT_, wxPython_
+and PyGTK_. However, it can be used to create dynamic, browser independent,
+web applications. There is no need to write HTML, Javascript or RPC code,
+just server-side Python.
 
 Quick Start
 -----------
 
-Define a subclass of ``Application``::
+Define a subclass of Application_::
 
 	class HelloWorld(Application):
 
@@ -32,14 +22,17 @@ Define a subclass of ``Application``::
 
 	        main.addComponent(Label('Hello World!'))
 
-Pass the application class to a servlet and serve:
+Pass the application class to a servlet, wrap the resulting WSGI application
+in session middleware and serve::
 
     wsgi_app = ApplicationServlet(HelloWorld, debug=True)
+
+    wsgi_app = paste.session.SessionMiddleware(wsgi_app)
 
     httpd = wsgiref.simple_server.make_server('localhost', 8080, wsgi_app)
     httpd.serve_forever()
 
-Navigate your browser to: http://localhost:8080/
+Navigate your browser to ``http://localhost:8080/``.
 
 
 License and Copyright
@@ -50,3 +43,11 @@ Copyright (C) 2011 Richard Lincoln
 
 Muntjac is available under either the terms of the GNU Affero General Public
 License or a commercial license.
+
+.. _Muntjac: http://www.muntiacus.org/
+.. _Vaadin: http://www.vaadin.com/
+.. _Python: http://www.python.org/
+.. _PyQt: http://www.riverbankcomputing.co.uk/software/pyqt/
+.. _wxPython: http://www.wxpython.org/
+.. _PyGTK: http://www.pygtk.org/
+.. _Application: http://doc.muntiacus.org/api/muntjac.application.Application-class.html

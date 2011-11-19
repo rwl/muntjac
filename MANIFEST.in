@@ -1,5 +1,9 @@
 include LICENSE
 include README
-include muntjac/terminal/gwt/public/ie6pngfix/blank.gif
+include CHANGELOG
+include app.yaml
+include conf.ini
+include epydoc.config
+include index.html
+recursive-include static
 recursive-include VAADIN
-recursive-include muntjac/test *.ini
