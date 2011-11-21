@@ -23,7 +23,7 @@ import locale
 
 import paste.webkit
 
-from babel import Locale
+from babel.core import Locale, UnknownLocaleError
 
 
 # Copied from paste.webkit.wsgiapp to avoid paste.deploy dependency.
@@ -67,7 +67,10 @@ def defaultLocale():
     if lang is not None:
         return Locale.parse(lang)
     else:
-        return Locale.default()
+        try:
+            return Locale.default()
+        except UnknownLocaleError:
+            return Locale('en', 'US')
 
 
 class EventObject(object):

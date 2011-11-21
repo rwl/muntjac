@@ -12,8 +12,10 @@ handlers:
   script: muntjac/demo/gae.py
 
 - url: /
-  static_files: web/index.html
-  upload: web/index.html
+  static_files: muntjac/public/index.html
+  upload: muntjac/public/index.html
 
 - url: /
-  static_dir: web
+  static_dir: muntjac/public
+
+skip_files: muntjac/public/VAADIN/.*

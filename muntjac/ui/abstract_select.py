@@ -20,8 +20,6 @@
 """Defines a class representing a selection of items the user has selected
 in a UI."""
 
-from collections import Iterable
-
 from muntjac.ui.abstract_field import AbstractField
 from muntjac.terminal.resource import IResource
 from muntjac.terminal.key_mapper import KeyMapper
@@ -461,7 +459,7 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
                 if newValue is None:
                     super(AbstractSelect, self).setValue(set(),
                             repaintIsNotNeeded)
-                elif isinstance(newValue, Iterable):
+                elif hasattr(newValue, '__iter__'):
                     super(AbstractSelect, self).setValue(set(newValue),
                             repaintIsNotNeeded)
 

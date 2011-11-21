@@ -295,7 +295,7 @@ class SamplerWindow(Window):
 
             self.updateFeatureList(self._currentList)
 
-            self.setCaption((f.getName() + ' }> ' if f is not None else '')
+            self.setCaption((f.getName() + ': ' if f is not None else '')
                     + self._TITLE)
 
     # SamplerWindow helpers
@@ -594,8 +594,8 @@ class FeatureGrid(Panel, IFeatureList):
                     er = ExternalResource('#' + f.getFragmentName())
                     sample = ActiveLink(f.getName(), er)
                     sample.setIcon(res)
-                    if f.getSinceVersion().isNew():
-                        sample.addStyleName('new')
+#                    if f.getSinceVersion().isNew():
+#                        sample.addStyleName('new')
                     l.addComponent(sample)
                     if (f.getDescription() is not None
                             and f.getDescription() != ''):
@@ -617,8 +617,8 @@ class FeatureGrid(Panel, IFeatureList):
                         except ValueError:
                             idx = -1
                         sample.setDescription(desc[:idx + 1])
-                    if f.getSinceVersion().isNew():
-                        sample.addStyleName('new')
+#                    if f.getSinceVersion().isNew():
+#                        sample.addStyleName('new')
                     sample.setIcon(res)
                     rootSet.addComponent(sample)
         if rootTitle is not None:
@@ -797,8 +797,8 @@ class TreeStyleGenerator(ui_tree.IItemStyleGenerator):
 
     def getStyle(self, itemId):
         f = itemId
-        if f.getSinceVersion().isNew():
-            return 'new'
+#        if f.getSinceVersion().isNew():
+#            return 'new'
         return None
 
 

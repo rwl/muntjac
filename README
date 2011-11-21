@@ -9,36 +9,12 @@ and PyGTK_. However, it can be used to create dynamic, browser independent,
 web applications. There is no need to write HTML, Javascript or RPC code,
 just server-side Python.
 
-Quick Start
------------
-
-Define a subclass of Application_::
-
-	class HelloWorld(Application):
-
-	    def init(self):
-	        main = Window('Hello window')
-	        self.setMainWindow(main)
-
-	        main.addComponent(Label('Hello World!'))
-
-Pass the application class to a servlet, wrap the resulting WSGI application
-in session middleware and serve::
-
-    wsgi_app = ApplicationServlet(HelloWorld, debug=True)
-
-    wsgi_app = paste.session.SessionMiddleware(wsgi_app)
-
-    httpd = wsgiref.simple_server.make_server('localhost', 8080, wsgi_app)
-    httpd.serve_forever()
-
-Navigate your browser to ``http://localhost:8080/``.
-
 
 License and Copyright
 ---------------------
 
 Copyright (C) 2011 Vaadin Ltd.
+
 Copyright (C) 2011 Richard Lincoln
 
 Muntjac is available under either the terms of the `GNU Affero General Public

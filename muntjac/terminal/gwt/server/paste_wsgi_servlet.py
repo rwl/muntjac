@@ -3,6 +3,11 @@ from urlparse import urlparse
 
 from os.path import join, dirname, normpath
 
+try:
+    from cPickle import UnpicklingError
+except ImportError:
+    from pickle import UnpicklingError
+
 from paste.httpheaders import \
     (ACCEPT_LANGUAGE, SCRIPT_NAME, PATH_INFO, IF_MODIFIED_SINCE,
      USER_AGENT, CONTENT_LENGTH, CONTENT_TYPE)
@@ -208,13 +213,18 @@ class PasteWsgiServlet(HTTPServlet):
     # Session
 
     def getSession(self, request, allowSessionCreation=True):
-        if allowSessionCreation:
-            return request.session()
-        else:
-            if request.transaction().hasSession():
+        try:
+            if allowSessionCreation:
                 return request.session()
             else:
-                return None
+                if request.transaction().hasSession():
+                    return request.session()
+                else:
+                    return None
+        except EOFError:
+            return None
+        except UnpicklingError:
+            return None
 
 
     def invalidateSession(self, request):
@@ -226,16 +236,26 @@ class PasteWsgiServlet(HTTPServlet):
 
 
     def getSessionAttribute(self, session, name, default=None):
-        return session.value(name, default)
+        if session is not None:
+            return session.value(name, default)
+        else:
+            return default
 
 
     def setSessionAttribute(self, session, name, value):
-        session.setValue(name, value)
+        if session is not None:
+            session.setValue(name, value)
 
 
     def getMaxInactiveInterval(self, session):
-        return session.value('timeout', self._timeout)
+        if session is not None:
+            return session.value('timeout', self._timeout)
+        else:
+            return self._timeout
 
 
     def isSessionNew(self, session):
-        return session.isNew()
+        if session is not None:
+            return session.isNew()
+        else:
+            return True

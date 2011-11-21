@@ -11,7 +11,7 @@
 			<h1>Muntjac</h1>
 			<div id="version">
 				<strong>Version @VERSION@</strong>
-				<a href="https://raw.github.com/rwl/muntjac/master/CHANGELOG" class="release-notes" title="ChangeLog for this Muntjac version">CHANGELOG &raquo;</a>
+				<a href="https://raw.github.com/rwl/muntjac/v@VERSION@/CHANGELOG" class="release-notes" title="ChangeLog for this Muntjac version">CHANGELOG &raquo;</a>
 			</div>
 		</div> <!-- /header -->
 
@@ -48,11 +48,13 @@
 						<ul>
 							<li>
 								<h6>Hello World &ndash; The classic example</h6>
-								<a href="https://raw.github.com/rwl/muntjac/master/muntjac/demo/HelloWorld.py" title="View Source">HelloWorld.py</a> &nbsp;&bull;&nbsp; <a href="hello" class="demoapp">Run the app &raquo;</a>
+								<a href="https://github.com/rwl/muntjac/blob/v@VERSION@/muntjac/demo/HelloWorld.py" title="View Source">HelloWorld.py</a> &nbsp;&bull;&nbsp;
+								<a href="hello" class="demoapp">Run the app &raquo;</a> <a href="http://muntjac-demo.appspot.com/hello" class="demoapp">(mirror 1)</a>
 							</li>
 							<li>
 								<h6>Calculator &ndash; Simple logic &amp; event handling</h6>
-								<a href="https://raw.github.com/rwl/muntjac/master/muntjac/demo/Calc.py" title="View Source">Calc.py</a> &nbsp;&bull;&nbsp; <a href="calc" class="demoapp">Run the app &raquo;</a>
+								<a href="https://github.com/rwl/muntjac/blob/v@VERSION@/muntjac/demo/Calc.py" title="View Source">Calc.py</a> &nbsp;&bull;&nbsp;
+								<a href="calc" class="demoapp">Run the app &raquo;</a> <a href="http://muntjac-demo.appspot.com/calc" class="demoapp">(mirror 1)</a>
 							</li>
 						</ul>
 					</div>
@@ -63,15 +65,15 @@
 						<ul>
 							<li>
 								<h6>Sampler &ndash; Core component examples</h6>
-								<a href="sampler" class="demoapp">Run the app &raquo;</a>
+								<a href="sampler" class="demoapp">Run the app &raquo;</a> <a href="http://muntjac-demo.appspot.com/sampler" class="demoapp">(mirror 1)</a>
 							</li>
 							<li>
 								<h6>Simple Address Book</h6>
-								<a href="address" class="demoapp">Run the app &raquo;</a>
+								<a href="address" class="demoapp">Run the app &raquo;</a> <a href="http://muntjac-demo.appspot.com/address" class="demoapp">(mirror 1)</a>
 							</li>
 							<li>
 								<h6>Muntjac Tunes &ndash; CSS styling example</h6>
-								<a href="tunes" class="demoapp">Run the app &raquo;</a>
+								<a href="tunes" class="demoapp">Run the app &raquo;</a> <a href="http://muntjac-demo.appspot.com/tunes" class="demoapp">(mirror 1)</a>
 							</li>
 						</ul>
 					</div>
@@ -168,6 +170,56 @@
 
 				</li>
 
+				<li id="start" class="tab">
+					<h4 title="Quick Start">Quick Start</h4>
+
+					<div class="col2">
+						<h5>Running Locally</h5>
+						<p>Installing Muntjac will create a <tt>muntjac</tt> command on your path. To run the test suite type:</p>
+						<pre>  $ muntjac -t</pre>
+						Otherwise, running the command will start a demo server. To list the available options type:
+						<pre>  $ muntjac -h</pre>
+						<p>
+						<p>
+						<h5>Sampler Widget Set</h5>
+						</p>
+						Muntjac includes only a default widget set as standard. The <a href="sampler">sampler</a> demo requires additional
+						themes and widget sets. To run the <a href="sampler">sampler</a> first <a href="https://github.com/rwl/muntjac/downloads">download</a> both the default
+						and sampler widget sets. Then extract them to the same directory.
+						</p>
+						<p><ul><li><a href="https://github.com/rwl/muntjac/downloads">Muntjac downloads</a></li></ul></p>
+						<p>
+						Then point <tt>muntjac</tt> to the new VAADIN directory using:
+						<pre>  $ muntjac --contextRoot=/path/to/VAADIN/directory</pre>
+						Note that the value is not the VAADIN directory itself, but the parent directory that contains it.
+						</p>
+					</div>
+
+					<div class="col2">
+						<h5>Simple Application</h5>
+						<p>To create a Muntjac application first define a subclass of <a href="http://doc.muntiacus.org/api/muntjac.application.Application-class.html">Application</a>:</p>
+						<pre>
+class HelloWorld(Application):
+
+    def init(self):
+        main = Window('Hello window')
+        self.setMainWindow(main)
+
+        main.addComponent(Label('Hello World!'))</pre>
+						Pass the new class to <a href="http://doc.muntiacus.org/api/muntjac.terminal.gwt.server.application_servlet.ApplicationServlet-class.html">ApplicationServlet</a>,
+						wrap the resulting WSGI application in <a href="http://pythonpaste.org/modules/session.html">Paste</a> session middleware and <a href="http://docs.python.org/library/wsgiref.html#module-wsgiref.simple_server">serve</a>:
+						<pre>
+wsgi_app = ApplicationServlet(HelloWorld, debug=True)
+
+wsgi_app = paste.session.SessionMiddleware(wsgi_app)
+
+httpd = make_server('localhost', 8080, wsgi_app)
+httpd.serve_forever()</pre>
+						Navigate your browser to <a href="http://localhost:8080/"><tt>http://localhost:8080/</tt></a>. For further information please refer to
+						the <a href="sampler">sampler</a> source code views and the <a href="http://doc.muntiacus.org/api" title="Open doc.muntiacus.org/api">API documentation</a>.
+					</div>
+				</li>
+
 				<li id="community" class="tab">
 					<h4 title="Community">Community &amp; Support</h4>
 					<div class="col2">
@@ -192,7 +244,7 @@
 					<div class="col2">
 						<ul>
 							<li><a href="http://www.gnu.org/licenses/agpl-3.0.txt">GNU Affero General Public License</a></li>
-							<!-- <li><a href="">Commercial License</a></li>  -->
+							<li><a href="mailto:r.w.lincoln@gmail.com">Commercial Licensing</a></li>
 						</ul>
 					</div>
 
