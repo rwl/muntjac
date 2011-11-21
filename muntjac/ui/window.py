@@ -13,6 +13,9 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# Note: This is a modified file from Vaadin. For further information on
+#       Vaadin please visit http://www.vaadin.com.
 
 """Defines a component that represents an application (browser native) window
 or a sub window."""
@@ -1136,7 +1139,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
         @param resizable:
                    true if resizability is to be turned on
         """
-        self._resizable = resizeability
+        self._resizable = resizable
         self.requestRepaint()
 
 

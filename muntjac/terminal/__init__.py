@@ -13,6 +13,9 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# Note: This is a modified file from Vaadin. For further information on
+#       Vaadin please visit http://www.vaadin.com.
 
 """Provides classes and interfaces that wrap the terminal-side functionalities
 for the server-side application.

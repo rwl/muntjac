@@ -13,6 +13,9 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# Note: This is a modified file from Vaadin. For further information on
+#       Vaadin please visit http://www.vaadin.com.
 
 """Defines an extension to the C{IComponentContainer} interface which adds the
 layouting control to the elements in the container."""
