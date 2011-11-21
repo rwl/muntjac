@@ -2,6 +2,7 @@ include LICENSE
 include LICENSE_Vaadin
 include README
 include CHANGELOG
+include Makefile
 include app.yaml
 include conf.ini
 include epydoc.config
