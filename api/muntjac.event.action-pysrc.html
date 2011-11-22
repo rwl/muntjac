@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.event.action</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.event-module.html">Package&nbsp;event</a> ::
+        Module&nbsp;action
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.event.action-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="muntjac.event.action-module.html">Module muntjac.event.action</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno">  1</tt>  <tt class="py-line"><tt class="py-comment"># Copyright (C) 2011 Vaadin Ltd.</tt> </tt>
+<a name="L2"></a><tt class="py-lineno">  2</tt>  <tt class="py-line"><tt class="py-comment"># Copyright (C) 2011 Richard Lincoln</tt> </tt>
+<a name="L3"></a><tt class="py-lineno">  3</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L4"></a><tt class="py-lineno">  4</tt>  <tt class="py-line"><tt class="py-comment"># This program is free software: you can redistribute it and/or modify</tt> </tt>
+<a name="L5"></a><tt class="py-lineno">  5</tt>  <tt class="py-line"><tt class="py-comment"># it under the terms of the GNU Affero General Public License as published</tt> </tt>
+<a name="L6"></a><tt class="py-lineno">  6</tt>  <tt class="py-line"><tt class="py-comment"># by the Free Software Foundation, either version 3 of the License, or</tt> </tt>
+<a name="L7"></a><tt class="py-lineno">  7</tt>  <tt class="py-line"><tt class="py-comment"># (at your option) any later version.</tt> </tt>
+<a name="L8"></a><tt class="py-lineno">  8</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line"><tt class="py-comment"># This program is distributed in the hope that it will be useful,</tt> </tt>
+<a name="L10"></a><tt class="py-lineno"> 10</tt>  <tt class="py-line"><tt class="py-comment"># but WITHOUT ANY WARRANTY; without even the implied warranty of</tt> </tt>
+<a name="L11"></a><tt class="py-lineno"> 11</tt>  <tt class="py-line"><tt class="py-comment"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</tt> </tt>
+<a name="L12"></a><tt class="py-lineno"> 12</tt>  <tt class="py-line"><tt class="py-comment"># GNU Affero General Public License for more details.</tt> </tt>
+<a name="L13"></a><tt class="py-lineno"> 13</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L14"></a><tt class="py-lineno"> 14</tt>  <tt class="py-line"><tt class="py-comment"># You should have received a copy of the GNU Affero General Public License</tt> </tt>
+<a name="L15"></a><tt class="py-lineno"> 15</tt>  <tt class="py-line"><tt class="py-comment"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</tt> </tt>
+<a name="L16"></a><tt class="py-lineno"> 16</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L17"></a><tt class="py-lineno"> 17</tt>  <tt class="py-line"><tt class="py-comment"># Note: This is a modified file from Vaadin. For further information on</tt> </tt>
+<a name="L18"></a><tt class="py-lineno"> 18</tt>  <tt class="py-line"><tt class="py-comment">#       Vaadin please visit http://www.vaadin.com.</tt> </tt>
+<a name="L19"></a><tt class="py-lineno"> 19</tt>  <tt class="py-line"> </tt>
+<a name="L20"></a><tt class="py-lineno"> 20</tt>  <tt class="py-line"><tt class="py-docstring">"""Implements the action framework."""</tt> </tt>
+<a name="L21"></a><tt class="py-lineno"> 21</tt>  <tt class="py-line"> </tt>
+<a name="L22"></a><tt class="py-lineno"> 22</tt>  <tt class="py-line"> </tt>
+<a name="Action"></a><div id="Action-def"><a name="L23"></a><tt class="py-lineno"> 23</tt> <a class="py-toggle" href="#" id="Action-toggle" onclick="return toggle('Action');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.event.action.Action-class.html">Action</a><tt class="py-op">(</tt><tt class="py-base-class">object</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Action-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="Action-expanded"><a name="L24"></a><tt class="py-lineno"> 24</tt>  <tt class="py-line">    <tt class="py-docstring">"""Implements the action framework. This class contains subinterfaces for</tt> </tt>
+<a name="L25"></a><tt class="py-lineno"> 25</tt>  <tt class="py-line"><tt class="py-docstring">    action handling and listing, and for action handler registrations and</tt> </tt>
+<a name="L26"></a><tt class="py-lineno"> 26</tt>  <tt class="py-line"><tt class="py-docstring">    unregistration.</tt> </tt>
+<a name="L27"></a><tt class="py-lineno"> 27</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L28"></a><tt class="py-lineno"> 28</tt>  <tt class="py-line"><tt class="py-docstring">    @author: Vaadin Ltd.</tt> </tt>
+<a name="L29"></a><tt class="py-lineno"> 29</tt>  <tt class="py-line"><tt class="py-docstring">    @author: Richard Lincoln</tt> </tt>
+<a name="L30"></a><tt class="py-lineno"> 30</tt>  <tt class="py-line"><tt class="py-docstring">    @version: 1.0.1</tt> </tt>
+<a name="L31"></a><tt class="py-lineno"> 31</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L32"></a><tt class="py-lineno"> 32</tt>  <tt class="py-line"> </tt>
+<a name="Action.__init__"></a><div id="Action.__init__-def"><a name="L33"></a><tt class="py-lineno"> 33</tt> <a class="py-toggle" href="#" id="Action.__init__-toggle" onclick="return toggle('Action.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.event.action.Action-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">caption</tt><tt class="py-op">,</tt> <tt class="py-param">icon</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Action.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Action.__init__-expanded"><a name="L34"></a><tt class="py-lineno"> 34</tt>  <tt class="py-line">        <tt class="py-docstring">"""Constructs a new action with the given caption string and icon.</tt> </tt>
+<a name="L35"></a><tt class="py-lineno"> 35</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L36"></a><tt class="py-lineno"> 36</tt>  <tt class="py-line"><tt class="py-docstring">        @param caption:</tt> </tt>
+<a name="L37"></a><tt class="py-lineno"> 37</tt>  <tt class="py-line"><tt class="py-docstring">                   the caption for the new action.</tt> </tt>
+<a name="L38"></a><tt class="py-lineno"> 38</tt>  <tt class="py-line"><tt class="py-docstring">        @param icon:</tt> </tt>
+<a name="L39"></a><tt class="py-lineno"> 39</tt>  <tt class="py-line"><tt class="py-docstring">                   the icon for the new action.</tt> </tt>
+<a name="L40"></a><tt class="py-lineno"> 40</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L41"></a><tt class="py-lineno"> 41</tt>  <tt class="py-line">        <tt class="py-comment">#: Action title.</tt> </tt>
+<a name="L42"></a><tt class="py-lineno"> 42</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_caption</tt> <tt class="py-op">=</tt> <tt class="py-name">caption</tt> </tt>
+<a name="L43"></a><tt class="py-lineno"> 43</tt>  <tt class="py-line"> </tt>
+<a name="L44"></a><tt class="py-lineno"> 44</tt>  <tt class="py-line">        <tt class="py-comment">#: Action icon.</tt> </tt>
+<a name="L45"></a><tt class="py-lineno"> 45</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_icon</tt> <tt class="py-op">=</tt> <tt class="py-name">icon</tt> </tt>
+</div><a name="L46"></a><tt class="py-lineno"> 46</tt>  <tt class="py-line"> </tt>
+<a name="L47"></a><tt class="py-lineno"> 47</tt>  <tt class="py-line"> </tt>
+<a name="Action.__eq__"></a><div id="Action.__eq__-def"><a name="L48"></a><tt class="py-lineno"> 48</tt> <a class="py-toggle" href="#" id="Action.__eq__-toggle" onclick="return toggle('Action.__eq__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.event.action.Action-class.html#__eq__">__eq__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">other</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Action.__eq__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Action.__eq__-expanded"><a name="L49"></a><tt class="py-lineno"> 49</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_caption</tt> <tt class="py-op">==</tt> <tt class="py-name">other</tt><tt class="py-op">.</tt><tt id="link-0" class="py-name" targets="Method muntjac.event.action.Action.getCaption()=muntjac.event.action.Action-class.html#getCaption,Method muntjac.ui.abstract_component.AbstractComponent.getCaption()=muntjac.ui.abstract_component.AbstractComponent-class.html#getCaption,Method muntjac.ui.component.IComponent.getCaption()=muntjac.ui.component.IComponent-class.html#getCaption,Method muntjac.ui.tab_sheet.ITab.getCaption()=muntjac.ui.tab_sheet.ITab-class.html#getCaption,Method muntjac.ui.tab_sheet.TabSheetTabImpl.getCaption()=muntjac.ui.tab_sheet.TabSheetTabImpl-class.html#getCaption,Method muntjac.ui.window.Notification.getCaption()=muntjac.ui.window.Notification-class.html#getCaption"><a title="muntjac.event.action.Action.getCaption
+muntjac.ui.abstract_component.AbstractComponent.getCaption
+muntjac.ui.component.IComponent.getCaption
+muntjac.ui.tab_sheet.ITab.getCaption
+muntjac.ui.tab_sheet.TabSheetTabImpl.getCaption
+muntjac.ui.window.Notification.getCaption" class="py-name" href="#" onclick="return doclink('link-0', 'getCaption', 'link-0');">getCaption</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L50"></a><tt class="py-lineno"> 50</tt>  <tt class="py-line">                <tt class="py-keyword">and</tt> <tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_icon</tt> <tt class="py-op">==</tt> <tt class="py-name">other</tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Method muntjac.event.action.Action.getIcon()=muntjac.event.action.Action-class.html#getIcon,Class Method muntjac.service.file_type_resolver.FileTypeResolver.getIcon()=muntjac.service.file_type_resolver.FileTypeResolver-class.html#getIcon,Method muntjac.ui.abstract_component.AbstractComponent.getIcon()=muntjac.ui.abstract_component.AbstractComponent-class.html#getIcon,Method muntjac.ui.component.IComponent.getIcon()=muntjac.ui.component.IComponent-class.html#getIcon,Method muntjac.ui.menu_bar.MenuItem.getIcon()=muntjac.ui.menu_bar.MenuItem-class.html#getIcon,Method muntjac.ui.tab_sheet.ITab.getIcon()=muntjac.ui.tab_sheet.ITab-class.html#getIcon,Method muntjac.ui.tab_sheet.TabSheetTabImpl.getIcon()=muntjac.ui.tab_sheet.TabSheetTabImpl-class.html#getIcon,Method muntjac.ui.window.Notification.getIcon()=muntjac.ui.window.Notification-class.html#getIcon"><a title="muntjac.event.action.Action.getIcon
+muntjac.service.file_type_resolver.FileTypeResolver.getIcon
+muntjac.ui.abstract_component.AbstractComponent.getIcon
+muntjac.ui.component.IComponent.getIcon
+muntjac.ui.menu_bar.MenuItem.getIcon
+muntjac.ui.tab_sheet.ITab.getIcon
+muntjac.ui.tab_sheet.TabSheetTabImpl.getIcon
+muntjac.ui.window.Notification.getIcon" class="py-name" href="#" onclick="return doclink('link-1', 'getIcon', 'link-1');">getIcon</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L51"></a><tt class="py-lineno"> 51</tt>  <tt class="py-line"> </tt>
+<a name="L52"></a><tt class="py-lineno"> 52</tt>  <tt class="py-line"> </tt>
+<a name="Action.getCaption"></a><div id="Action.getCaption-def"><a name="L53"></a><tt class="py-lineno"> 53</tt> <a class="py-toggle" href="#" id="Action.getCaption-toggle" onclick="return toggle('Action.getCaption');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.event.action.Action-class.html#getCaption">getCaption</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Action.getCaption-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Action.getCaption-expanded"><a name="L54"></a><tt class="py-lineno"> 54</tt>  <tt class="py-line">        <tt class="py-docstring">"""Returns the action's caption.</tt> </tt>
+<a name="L55"></a><tt class="py-lineno"> 55</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L56"></a><tt class="py-lineno"> 56</tt>  <tt class="py-line"><tt class="py-docstring">        @return: the action's caption as a string.</tt> </tt>
+<a name="L57"></a><tt class="py-lineno"> 57</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L58"></a><tt class="py-lineno"> 58</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_caption</tt> </tt>
+</div><a name="L59"></a><tt class="py-lineno"> 59</tt>  <tt class="py-line"> </tt>
+<a name="L60"></a><tt class="py-lineno"> 60</tt>  <tt class="py-line"> </tt>
+<a name="Action.getIcon"></a><div id="Action.getIcon-def"><a name="L61"></a><tt class="py-lineno"> 61</tt> <a class="py-toggle" href="#" id="Action.getIcon-toggle" onclick="return toggle('Action.getIcon');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.event.action.Action-class.html#getIcon">getIcon</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Action.getIcon-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Action.getIcon-expanded"><a name="L62"></a><tt class="py-lineno"> 62</tt>  <tt class="py-line">        <tt class="py-docstring">"""Returns the action's icon.</tt> </tt>
+<a name="L63"></a><tt class="py-lineno"> 63</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L64"></a><tt class="py-lineno"> 64</tt>  <tt class="py-line"><tt class="py-docstring">        @return: the action's Icon.</tt> </tt>
+<a name="L65"></a><tt class="py-lineno"> 65</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L66"></a><tt class="py-lineno"> 66</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_icon</tt> </tt>
+</div><a name="L67"></a><tt class="py-lineno"> 67</tt>  <tt class="py-line"> </tt>
+<a name="L68"></a><tt class="py-lineno"> 68</tt>  <tt class="py-line"> </tt>
+<a name="Action.setCaption"></a><div id="Action.setCaption-def"><a name="L69"></a><tt class="py-lineno"> 69</tt> <a class="py-toggle" href="#" id="Action.setCaption-toggle" onclick="return toggle('Action.setCaption');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.event.action.Action-class.html#setCaption">setCaption</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">caption</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Action.setCaption-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Action.setCaption-expanded"><a name="L70"></a><tt class="py-lineno"> 70</tt>  <tt class="py-line">        <tt class="py-docstring">"""Sets the caption.</tt> </tt>
+<a name="L71"></a><tt class="py-lineno"> 71</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L72"></a><tt class="py-lineno"> 72</tt>  <tt class="py-line"><tt class="py-docstring">        @param caption:</tt> </tt>
+<a name="L73"></a><tt class="py-lineno"> 73</tt>  <tt class="py-line"><tt class="py-docstring">                   the caption to set.</tt> </tt>
+<a name="L74"></a><tt class="py-lineno"> 74</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L75"></a><tt class="py-lineno"> 75</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_caption</tt> <tt class="py-op">=</tt> <tt class="py-name">caption</tt> </tt>
+</div><a name="L76"></a><tt class="py-lineno"> 76</tt>  <tt class="py-line"> </tt>
+<a name="L77"></a><tt class="py-lineno"> 77</tt>  <tt class="py-line"> </tt>
+<a name="Action.setIcon"></a><div id="Action.setIcon-def"><a name="L78"></a><tt class="py-lineno"> 78</tt> <a class="py-toggle" href="#" id="Action.setIcon-toggle" onclick="return toggle('Action.setIcon');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.event.action.Action-class.html#setIcon">setIcon</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">icon</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Action.setIcon-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Action.setIcon-expanded"><a name="L79"></a><tt class="py-lineno"> 79</tt>  <tt class="py-line">        <tt class="py-docstring">"""Sets the icon.</tt> </tt>
+<a name="L80"></a><tt class="py-lineno"> 80</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L81"></a><tt class="py-lineno"> 81</tt>  <tt class="py-line"><tt class="py-docstring">        @param icon:</tt> </tt>
+<a name="L82"></a><tt class="py-lineno"> 82</tt>  <tt class="py-line"><tt class="py-docstring">                   the icon to set.</tt> </tt>
+<a name="L83"></a><tt class="py-lineno"> 83</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L84"></a><tt class="py-lineno"> 84</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_icon</tt> <tt class="py-op">=</tt> <tt class="py-name">icon</tt> </tt>
+</div></div><a name="L85"></a><tt class="py-lineno"> 85</tt>  <tt class="py-line"> </tt>
+<a name="L86"></a><tt class="py-lineno"> 86</tt>  <tt class="py-line"> </tt>
+<a name="IContainer"></a><div id="IContainer-def"><a name="L87"></a><tt class="py-lineno"> 87</tt> <a class="py-toggle" href="#" id="IContainer-toggle" onclick="return toggle('IContainer');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.event.action.IContainer-class.html">IContainer</a><tt class="py-op">(</tt><tt class="py-base-class">object</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="IContainer-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="IContainer-expanded"><a name="L88"></a><tt class="py-lineno"> 88</tt>  <tt class="py-line">    <tt class="py-docstring">"""Interface implemented by all components where actions can be registered.</tt> </tt>
+<a name="L89"></a><tt class="py-lineno"> 89</tt>  <tt class="py-line"><tt class="py-docstring">    This means that the components lets others to register as action handlers</tt> </tt>
+<a name="L90"></a><tt class="py-lineno"> 90</tt>  <tt class="py-line"><tt class="py-docstring">    to it. When the component receives an action targeting its contents it</tt> </tt>
+<a name="L91"></a><tt class="py-lineno"> 91</tt>  <tt class="py-line"><tt class="py-docstring">    should loop all action handlers registered to it and let them handle the</tt> </tt>
+<a name="L92"></a><tt class="py-lineno"> 92</tt>  <tt class="py-line"><tt class="py-docstring">    action.</tt> </tt>
+<a name="L93"></a><tt class="py-lineno"> 93</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L94"></a><tt class="py-lineno"> 94</tt>  <tt class="py-line"><tt class="py-docstring">    @author: Vaadin Ltd.</tt> </tt>
+<a name="L95"></a><tt class="py-lineno"> 95</tt>  <tt class="py-line"><tt class="py-docstring">    @author: Richard Lincoln</tt> </tt>
+<a name="L96"></a><tt class="py-lineno"> 96</tt>  <tt class="py-line"><tt class="py-docstring">    @version: 1.0.1</tt> </tt>
+<a name="L97"></a><tt class="py-lineno"> 97</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L98"></a><tt class="py-lineno"> 98</tt>  <tt class="py-line"> </tt>
+<a name="IContainer.addActionHandler"></a><div id="IContainer.addActionHandler-def"><a name="L99"></a><tt class="py-lineno"> 99</tt> <a class="py-toggle" href="#" id="IContainer.addActionHandler-toggle" onclick="return toggle('IContainer.addActionHandler');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.event.action.IContainer-class.html#addActionHandler">addActionHandler</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">actionHandler</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="IContainer.addActionHandler-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="IContainer.addActionHandler-expanded"><a name="L100"></a><tt class="py-lineno">100</tt>  <tt class="py-line">        <tt class="py-docstring">"""Registers a new action handler for this container</tt> </tt>
+<a name="L101"></a><tt class="py-lineno">101</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L102"></a><tt class="py-lineno">102</tt>  <tt class="py-line"><tt class="py-docstring">        @param actionHandler:</tt> </tt>
+<a name="L103"></a><tt class="py-lineno">103</tt>  <tt class="py-line"><tt class="py-docstring">                   the new handler to be added.</tt> </tt>
+<a name="L104"></a><tt class="py-lineno">104</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L105"></a><tt class="py-lineno">105</tt>  <tt class="py-line">        <tt class="py-keyword">raise</tt> <tt class="py-name">NotImplementedError</tt> </tt>
+</div><a name="L106"></a><tt class="py-lineno">106</tt>  <tt class="py-line"> </tt>
+<a name="L107"></a><tt class="py-lineno">107</tt>  <tt class="py-line"> </tt>
+<a name="IContainer.removeActionHandler"></a><div id="IContainer.removeActionHandler-def"><a name="L108"></a><tt class="py-lineno">108</tt> <a class="py-toggle" href="#" id="IContainer.removeActionHandler-toggle" onclick="return toggle('IContainer.removeActionHandler');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.event.action.IContainer-class.html#removeActionHandler">removeActionHandler</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">actionHandler</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="IContainer.removeActionHandler-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="IContainer.removeActionHandler-expanded"><a name="L109"></a><tt class="py-lineno">109</tt>  <tt class="py-line">        <tt class="py-docstring">"""Removes a previously registered action handler for the contents of</tt> </tt>
+<a name="L110"></a><tt class="py-lineno">110</tt>  <tt class="py-line"><tt class="py-docstring">        this container.</tt> </tt>
+<a name="L111"></a><tt class="py-lineno">111</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L112"></a><tt class="py-lineno">112</tt>  <tt class="py-line"><tt class="py-docstring">        @param actionHandler:</tt> </tt>
+<a name="L113"></a><tt class="py-lineno">113</tt>  <tt class="py-line"><tt class="py-docstring">                   the handler to be removed.</tt> </tt>
+<a name="L114"></a><tt class="py-lineno">114</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L115"></a><tt class="py-lineno">115</tt>  <tt class="py-line">        <tt class="py-keyword">raise</tt> <tt class="py-name">NotImplementedError</tt> </tt>
+</div></div><a name="L116"></a><tt class="py-lineno">116</tt>  <tt class="py-line"> </tt>
+<a name="L117"></a><tt class="py-lineno">117</tt>  <tt class="py-line"> </tt>
+<a name="IListener"></a><div id="IListener-def"><a name="L118"></a><tt class="py-lineno">118</tt> <a class="py-toggle" href="#" id="IListener-toggle" onclick="return toggle('IListener');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.event.action.IListener-class.html">IListener</a><tt class="py-op">(</tt><tt class="py-base-class">object</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="IListener-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="IListener-expanded"><a name="L119"></a><tt class="py-lineno">119</tt>  <tt class="py-line">    <tt class="py-docstring">"""An Action that implements this interface can be added to an Notifier</tt> </tt>
+<a name="L120"></a><tt class="py-lineno">120</tt>  <tt class="py-line"><tt class="py-docstring">    (or NotifierProxy) via the C{addAction()}-method, which in many cases is</tt> </tt>
+<a name="L121"></a><tt class="py-lineno">121</tt>  <tt class="py-line"><tt class="py-docstring">    easier than implementing the IHandler interface.</tt> </tt>
+<a name="L122"></a><tt class="py-lineno">122</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L123"></a><tt class="py-lineno">123</tt>  <tt class="py-line"> </tt>
+<a name="IListener.handleAction"></a><div id="IListener.handleAction-def"><a name="L124"></a><tt class="py-lineno">124</tt> <a class="py-toggle" href="#" id="IListener.handleAction-toggle" onclick="return toggle('IListener.handleAction');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.event.action.IListener-class.html#handleAction">handleAction</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">sender</tt><tt class="py-op">,</tt> <tt class="py-param">target</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="IListener.handleAction-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="IListener.handleAction-expanded"><a name="L125"></a><tt class="py-lineno">125</tt>  <tt class="py-line">        <tt class="py-keyword">raise</tt> <tt class="py-name">NotImplementedError</tt> </tt>
+</div></div><a name="L126"></a><tt class="py-lineno">126</tt>  <tt class="py-line"> </tt>
+<a name="L127"></a><tt class="py-lineno">127</tt>  <tt class="py-line"> </tt>
+<a name="INotifier"></a><div id="INotifier-def"><a name="L128"></a><tt class="py-lineno">128</tt> <a class="py-toggle" href="#" id="INotifier-toggle" onclick="return toggle('INotifier');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.event.action.INotifier-class.html">INotifier</a><tt class="py-op">(</tt><tt class="py-base-class">IContainer</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="INotifier-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="INotifier-expanded"><a name="L129"></a><tt class="py-lineno">129</tt>  <tt class="py-line">    <tt class="py-docstring">"""Containers implementing this support an easier way of adding single</tt> </tt>
+<a name="L130"></a><tt class="py-lineno">130</tt>  <tt class="py-line"><tt class="py-docstring">    Actions than the more involved IHandler. The added actions must be</tt> </tt>
+<a name="L131"></a><tt class="py-lineno">131</tt>  <tt class="py-line"><tt class="py-docstring">    Listeners, thus handling the action themselves.</tt> </tt>
+<a name="L132"></a><tt class="py-lineno">132</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L133"></a><tt class="py-lineno">133</tt>  <tt class="py-line"> </tt>
+<a name="INotifier.addAction"></a><div id="INotifier.addAction-def"><a name="L134"></a><tt class="py-lineno">134</tt> <a class="py-toggle" href="#" id="INotifier.addAction-toggle" onclick="return toggle('INotifier.addAction');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.event.action.INotifier-class.html#addAction">addAction</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">action</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="INotifier.addAction-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="INotifier.addAction-expanded"><a name="L135"></a><tt class="py-lineno">135</tt>  <tt class="py-line">        <tt class="py-keyword">raise</tt> <tt class="py-name">NotImplementedError</tt> </tt>
+</div><a name="L136"></a><tt class="py-lineno">136</tt>  <tt class="py-line"> </tt>
+<a name="L137"></a><tt class="py-lineno">137</tt>  <tt class="py-line"> </tt>
+<a name="INotifier.removeAction"></a><div id="INotifier.removeAction-def"><a name="L138"></a><tt class="py-lineno">138</tt> <a class="py-toggle" href="#" id="INotifier.removeAction-toggle" onclick="return toggle('INotifier.removeAction');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.event.action.INotifier-class.html#removeAction">removeAction</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">action</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="INotifier.removeAction-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="INotifier.removeAction-expanded"><a name="L139"></a><tt class="py-lineno">139</tt>  <tt class="py-line">        <tt class="py-keyword">raise</tt> <tt class="py-name">NotImplementedError</tt> </tt>
+</div></div><a name="L140"></a><tt class="py-lineno">140</tt>  <tt class="py-line"> </tt>
+<a name="L141"></a><tt class="py-lineno">141</tt>  <tt class="py-line"> </tt>
+<a name="IShortcutNotifier"></a><div id="IShortcutNotifier-def"><a name="L142"></a><tt class="py-lineno">142</tt> <a class="py-toggle" href="#" id="IShortcutNotifier-toggle" onclick="return toggle('IShortcutNotifier');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.event.action.IShortcutNotifier-class.html">IShortcutNotifier</a><tt class="py-op">(</tt><tt class="py-base-class">object</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="IShortcutNotifier-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="IShortcutNotifier-expanded"><a name="L143"></a><tt class="py-lineno">143</tt>  <tt class="py-line"> </tt>
+<a name="IShortcutNotifier.addShortcutListener"></a><div id="IShortcutNotifier.addShortcutListener-def"><a name="L144"></a><tt class="py-lineno">144</tt> <a class="py-toggle" href="#" id="IShortcutNotifier.addShortcutListener-toggle" onclick="return toggle('IShortcutNotifier.addShortcutListener');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.event.action.IShortcutNotifier-class.html#addShortcutListener">addShortcutListener</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">shortcut</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="IShortcutNotifier.addShortcutListener-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="IShortcutNotifier.addShortcutListener-expanded"><a name="L145"></a><tt class="py-lineno">145</tt>  <tt class="py-line">        <tt class="py-keyword">raise</tt> <tt class="py-name">NotImplementedError</tt> </tt>
+</div><a name="L146"></a><tt class="py-lineno">146</tt>  <tt class="py-line"> </tt>
+<a name="L147"></a><tt class="py-lineno">147</tt>  <tt class="py-line"> </tt>
+<a name="IShortcutNotifier.removeShortcutListener"></a><div id="IShortcutNotifier.removeShortcutListener-def"><a name="L148"></a><tt class="py-lineno">148</tt> <a class="py-toggle" href="#" id="IShortcutNotifier.removeShortcutListener-toggle" onclick="return toggle('IShortcutNotifier.removeShortcutListener');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.event.action.IShortcutNotifier-class.html#removeShortcutListener">removeShortcutListener</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">shortcut</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="IShortcutNotifier.removeShortcutListener-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="IShortcutNotifier.removeShortcutListener-expanded"><a name="L149"></a><tt class="py-lineno">149</tt>  <tt class="py-line">        <tt class="py-keyword">raise</tt> <tt class="py-name">NotImplementedError</tt> </tt>
+</div></div><a name="L150"></a><tt class="py-lineno">150</tt>  <tt class="py-line"> </tt>
+<a name="L151"></a><tt class="py-lineno">151</tt>  <tt class="py-line"> </tt>
+<a name="IHandler"></a><div id="IHandler-def"><a name="L152"></a><tt class="py-lineno">152</tt> <a class="py-toggle" href="#" id="IHandler-toggle" onclick="return toggle('IHandler');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.event.action.IHandler-class.html">IHandler</a><tt class="py-op">(</tt><tt class="py-base-class">object</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="IHandler-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="IHandler-expanded"><a name="L153"></a><tt class="py-lineno">153</tt>  <tt class="py-line">    <tt class="py-docstring">"""Interface implemented by classes who wish to handle actions.</tt> </tt>
+<a name="L154"></a><tt class="py-lineno">154</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L155"></a><tt class="py-lineno">155</tt>  <tt class="py-line"><tt class="py-docstring">    @author: Vaadin Ltd.</tt> </tt>
+<a name="L156"></a><tt class="py-lineno">156</tt>  <tt class="py-line"><tt class="py-docstring">    @author: Richard Lincoln</tt> </tt>
+<a name="L157"></a><tt class="py-lineno">157</tt>  <tt class="py-line"><tt class="py-docstring">    @version: 1.0.1</tt> </tt>
+<a name="L158"></a><tt class="py-lineno">158</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L159"></a><tt class="py-lineno">159</tt>  <tt class="py-line"> </tt>
+<a name="IHandler.getActions"></a><div id="IHandler.getActions-def"><a name="L160"></a><tt class="py-lineno">160</tt> <a class="py-toggle" href="#" id="IHandler.getActions-toggle" onclick="return toggle('IHandler.getActions');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.event.action.IHandler-class.html#getActions">getActions</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">target</tt><tt class="py-op">,</tt> <tt class="py-param">sender</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="IHandler.getActions-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="IHandler.getActions-expanded"><a name="L161"></a><tt class="py-lineno">161</tt>  <tt class="py-line">        <tt class="py-docstring">"""Gets the list of actions applicable to this handler.</tt> </tt>
+<a name="L162"></a><tt class="py-lineno">162</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L163"></a><tt class="py-lineno">163</tt>  <tt class="py-line"><tt class="py-docstring">        @param target:</tt> </tt>
+<a name="L164"></a><tt class="py-lineno">164</tt>  <tt class="py-line"><tt class="py-docstring">                   the target handler to list actions for. For item</tt> </tt>
+<a name="L165"></a><tt class="py-lineno">165</tt>  <tt class="py-line"><tt class="py-docstring">                   containers this is the item id.</tt> </tt>
+<a name="L166"></a><tt class="py-lineno">166</tt>  <tt class="py-line"><tt class="py-docstring">        @param sender:</tt> </tt>
+<a name="L167"></a><tt class="py-lineno">167</tt>  <tt class="py-line"><tt class="py-docstring">                   the party that would be sending the actions. Most of this</tt> </tt>
+<a name="L168"></a><tt class="py-lineno">168</tt>  <tt class="py-line"><tt class="py-docstring">                   is the action container.</tt> </tt>
+<a name="L169"></a><tt class="py-lineno">169</tt>  <tt class="py-line"><tt class="py-docstring">        @return: the list of Action</tt> </tt>
+<a name="L170"></a><tt class="py-lineno">170</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L171"></a><tt class="py-lineno">171</tt>  <tt class="py-line">        <tt class="py-keyword">raise</tt> <tt class="py-name">NotImplementedError</tt> </tt>
+</div><a name="L172"></a><tt class="py-lineno">172</tt>  <tt class="py-line"> </tt>
+<a name="L173"></a><tt class="py-lineno">173</tt>  <tt class="py-line"> </tt>
+<a name="IHandler.handleAction"></a><div id="IHandler.handleAction-def"><a name="L174"></a><tt class="py-lineno">174</tt> <a class="py-toggle" href="#" id="IHandler.handleAction-toggle" onclick="return toggle('IHandler.handleAction');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.event.action.IHandler-class.html#handleAction">handleAction</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">a</tt><tt class="py-op">,</tt> <tt class="py-param">sender</tt><tt class="py-op">,</tt> <tt class="py-param">target</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="IHandler.handleAction-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="IHandler.handleAction-expanded"><a name="L175"></a><tt class="py-lineno">175</tt>  <tt class="py-line">        <tt class="py-docstring">"""Handles an action for the given target. The handler method may just</tt> </tt>
+<a name="L176"></a><tt class="py-lineno">176</tt>  <tt class="py-line"><tt class="py-docstring">        discard the action if it's not suitable.</tt> </tt>
+<a name="L177"></a><tt class="py-lineno">177</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L178"></a><tt class="py-lineno">178</tt>  <tt class="py-line"><tt class="py-docstring">        @param a:</tt> </tt>
+<a name="L179"></a><tt class="py-lineno">179</tt>  <tt class="py-line"><tt class="py-docstring">                   the action to be handled.</tt> </tt>
+<a name="L180"></a><tt class="py-lineno">180</tt>  <tt class="py-line"><tt class="py-docstring">        @param sender:</tt> </tt>
+<a name="L181"></a><tt class="py-lineno">181</tt>  <tt class="py-line"><tt class="py-docstring">                   the sender of the action. This is most often the action</tt> </tt>
+<a name="L182"></a><tt class="py-lineno">182</tt>  <tt class="py-line"><tt class="py-docstring">                   container.</tt> </tt>
+<a name="L183"></a><tt class="py-lineno">183</tt>  <tt class="py-line"><tt class="py-docstring">        @param target:</tt> </tt>
+<a name="L184"></a><tt class="py-lineno">184</tt>  <tt class="py-line"><tt class="py-docstring">                   the target of the action. For item containers this is the</tt> </tt>
+<a name="L185"></a><tt class="py-lineno">185</tt>  <tt class="py-line"><tt class="py-docstring">                   item id.</tt> </tt>
+<a name="L186"></a><tt class="py-lineno">186</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L187"></a><tt class="py-lineno">187</tt>  <tt class="py-line">        <tt class="py-keyword">raise</tt> <tt class="py-name">NotImplementedError</tt> </tt>
+</div></div><a name="L188"></a><tt class="py-lineno">188</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:04:10 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

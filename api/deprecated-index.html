@@ -1,0 +1,648 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Deprecation List</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th bgcolor="#70b0f0" class="navbar-select"
+          >&nbsp;&nbsp;&nbsp;Indices&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">&nbsp;</td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="deprecated-index.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<center><b>[
+ <a href="identifier-index.html">Identifiers</a>
+| <a href="deprecated-index.html">Deprecations</a>
+]</b></center><br />
+<h1 class="epydoc"><a name="deprecated">Deprecation List</a></h1>
+<br />
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.application.Application-class.html#getRelativeLocation">muntjac.application.Application.getRelativeLocation</a></b>    <ul class="nomargin">
+      <li>this method is intended to be used by the terminal only. It may be 
+    removed or moved in the future.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.application.Application-class.html#handleURI">muntjac.application.Application.handleURI</a></b>    <ul class="nomargin">
+      <li>this method is called be the terminal implementation only and might be 
+    removed or moved in the future. Instead of overriding this method, add 
+    your <a href="muntjac.terminal.uri_handler.IUriHandler-class.html" 
+    class="link">IUriHandler</a> to a top level <a 
+    href="muntjac.ui.window.Window-class.html" class="link">Window</a> (eg.
+    getMainWindow().addUriHanler(handler) instead.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.data.util.indexed_container.IndexedContainer-class.html#clone">muntjac.data.util.indexed_container.IndexedContainer.clone</a></b>    <ul class="nomargin">
+      <li>cloning support might be removed from IndexedContainer in the future</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.event.item_click_event.IItemClickSource-class.html">muntjac.event.item_click_event.IItemClickSource</a></b>    <ul class="nomargin">
+      <li>Use <code class="link">ItemClickNotifier</code> instead.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.service.application_context.IApplicationContext-class.html#generateApplicationResourceURL">muntjac.service.application_context.IApplicationContext.generateApplicationResourceURL</a></b>    <ul class="nomargin">
+      <li>this method is intended for terminal implementation only and is subject
+    to change/removal from the interface (to <a 
+    href="muntjac.terminal.gwt.server.abstract_communication_manager.AbstractCommunicationManager-class.html"
+    class="link">AbstractCommunicationManager</a>)</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.service.application_context.IApplicationContext-class.html#getURLKey">muntjac.service.application_context.IApplicationContext.getURLKey</a></b>    <ul class="nomargin">
+      <li>this method is intended for terminal implementation only and is subject
+    to change/removal from the interface (to <a 
+    href="muntjac.terminal.gwt.server.abstract_communication_manager.AbstractCommunicationManager-class.html"
+    class="link">AbstractCommunicationManager</a>)</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.service.application_context.IApplicationContext-class.html#isApplicationResourceURL">muntjac.service.application_context.IApplicationContext.isApplicationResourceURL</a></b>    <ul class="nomargin">
+      <li>this method is intended for terminal implementation only and is subject
+    to change/removal from the interface (to <a 
+    href="muntjac.terminal.gwt.server.abstract_communication_manager.AbstractCommunicationManager-class.html"
+    class="link">AbstractCommunicationManager</a>)</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#createCommunicationManager">muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet.createCommunicationManager</a></b>    <ul class="nomargin">
+      <li>Instead of overriding this method, override <a 
+    href="muntjac.terminal.gwt.server.web_application_context.WebApplicationContext-class.html"
+    class="link">WebApplicationContext</a> implementation via <a 
+    href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getApplicationContext"
+    class="link">getApplicationContext</a> method and in that customized 
+    implementation return your CommunicationManager in <a 
+    href="muntjac.terminal.gwt.server.web_application_context.WebApplicationContext-class.html#getApplicationManager"
+    class="link">WebApplicationContext.getApplicationManager</a> method.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.terminal.gwt.server.communication_manager.CommunicationManager-class.html#__init__">muntjac.terminal.gwt.server.communication_manager.CommunicationManager.__init__</a></b>    <ul class="nomargin">
+      <li>use <a 
+    href="muntjac.terminal.gwt.server.communication_manager.CommunicationManager-class.html"
+    class="link">CommunicationManager</a> instead</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.terminal.paint_target.IPaintTarget-class.html#paintReference">muntjac.terminal.paint_target.IPaintTarget.paintReference</a></b>    <ul class="nomargin">
+      <li>use <a 
+    href="muntjac.terminal.paint_target.IPaintTarget-class.html#addAttribute"
+    class="link">addAttribute</a> or <a 
+    href="muntjac.terminal.paint_target.IPaintTarget-class.html#addVariable"
+    class="link">addVariable</a> instead</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.terminal.sizeable.ISizeable-class.html#setHeightUnits">muntjac.terminal.sizeable.ISizeable.setHeightUnits</a></b>    <ul class="nomargin">
+      <li>Consider setting height and unit simultaneously using <a 
+    href="muntjac.terminal.sizeable.ISizeable-class.html#setHeight" 
+    class="link">setHeight</a> or which is less error-prone.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.terminal.sizeable.ISizeable-class.html#setWidthUnits">muntjac.terminal.sizeable.ISizeable.setWidthUnits</a></b>    <ul class="nomargin">
+      <li>Consider setting width and unit simultaneously using <a 
+    href="muntjac.terminal.sizeable.ISizeable-class.html#setWidth" 
+    class="link">setWidth</a>, which is less error-prone.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getStyle">muntjac.ui.abstract_component.AbstractComponent.getStyle</a></b>    <ul class="nomargin">
+      <li>Use getStyleName() instead; renamed for consistency and to indicate 
+    that &quot;style&quot; should not be used to switch client side 
+    implementation, only to style the component.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setStyle">muntjac.ui.abstract_component.AbstractComponent.setStyle</a></b>    <ul class="nomargin">
+      <li>Use setStyleName() instead; renamed for consistency and to indicate 
+    that &quot;style&quot; should not be used to switch client side 
+    implementation, only to style the component.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.abstract_field.AbstractField-class.html#constructField">muntjac.ui.abstract_field.AbstractField.constructField</a></b>    <ul class="nomargin">
+      <li>use e.g. <code 
+    class="link">DefaultFieldFactory.createFieldByPropertyType</code> 
+    instead</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout-class.html#setComponentAlignment">muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.setComponentAlignment</a></b>    <ul class="nomargin">
+      <li>Replaced by <a 
+    href="muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout-class.html#setComponentAlignment"
+    class="link">setComponentAlignment</a></li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.abstract_text_field.AbstractTextField-class.html#getFormat">muntjac.ui.abstract_text_field.AbstractTextField.getFormat</a></b>    <ul class="nomargin">
+      <li>replaced by <code class="link">PropertyFormatter</code></li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.abstract_text_field.AbstractTextField-class.html#getFormattedValue">muntjac.ui.abstract_text_field.AbstractTextField.getFormattedValue</a></b>    <ul class="nomargin">
+      <li></li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.abstract_text_field.AbstractTextField-class.html#setFormat">muntjac.ui.abstract_text_field.AbstractTextField.setFormat</a></b>    <ul class="nomargin">
+      <li>replaced by <code class="link">PropertyFormatter</code></li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.alignment_utils.AlignmentUtils-class.html">muntjac.ui.alignment_utils.AlignmentUtils</a></b>    <ul class="nomargin">
+      <li>replaced by <a href="muntjac.ui.alignment.Alignment-class.html" 
+    class="link">Alignment</a>.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.base_field_factory.BaseFieldFactory-class.html">muntjac.ui.base_field_factory.BaseFieldFactory</a></b>    <ul class="nomargin">
+      <li>use <a 
+    href="muntjac.ui.default_field_factory.DefaultFieldFactory-class.html" 
+    class="link">DefaultFieldFactory</a> or own implementations on <code 
+    class="link">FormFieldFactory</code> or <code 
+    class="link">TableFieldFactory</code> instead.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.button.Button-class.html#isSwitchMode">muntjac.ui.button.Button.isSwitchMode</a></b>    <ul class="nomargin">
+      <li>the <a href="muntjac.ui.check_box.CheckBox-class.html" 
+    class="link">CheckBox</a> component should be used instead of Button in
+    switch mode</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.button.Button-class.html#setSwitchMode">muntjac.ui.button.Button.setSwitchMode</a></b>    <ul class="nomargin">
+      <li>the <a href="muntjac.ui.check_box.CheckBox-class.html" 
+    class="link">CheckBox</a> component should be used instead of Button in
+    switch mode</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.custom_component.CustomComponent-class.html#getComponentType">muntjac.ui.custom_component.CustomComponent.getComponentType</a></b>    <ul class="nomargin">
+      <li>not more useful as the whole tag system has been removed</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.custom_component.CustomComponent-class.html#setComponentType">muntjac.ui.custom_component.CustomComponent.setComponentType</a></b>    <ul class="nomargin">
+      <li>not more useful as the whole tag system has been removed</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.custom_layout.CustomLayout-class.html#setStyle">muntjac.ui.custom_layout.CustomLayout.setStyle</a></b>    <ul class="nomargin">
+      <li>Use <a 
+    href="muntjac.ui.custom_layout.CustomLayout-class.html#setTemplateName"
+    class="link">setTemplateName</a> instead</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.drag_and_drop_wrapper.WrapperTargetDetails-class.html#horizontalDropLocation">muntjac.ui.drag_and_drop_wrapper.WrapperTargetDetails.horizontalDropLocation</a></b>    <ul class="nomargin">
+      <li>use <a 
+    href="muntjac.ui.drag_and_drop_wrapper.WrapperTargetDetails-class.html#getHorizontalDropLocation"
+    class="link">getHorizontalDropLocation</a> instead</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.drag_and_drop_wrapper.WrapperTargetDetails-class.html#verticalDropLocation">muntjac.ui.drag_and_drop_wrapper.WrapperTargetDetails.verticalDropLocation</a></b>    <ul class="nomargin">
+      <li>use <a 
+    href="muntjac.ui.drag_and_drop_wrapper.WrapperTargetDetails-class.html#getVerticalDropLocation"
+    class="link">getVerticalDropLocation</a> instead</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.expand_layout.ExpandLayout-class.html">muntjac.ui.expand_layout.ExpandLayout</a></b>    <ul class="nomargin">
+      <li>Deprecated in favor of the new OrderedLayout</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.field_factory.IFieldFactory-class.html">muntjac.ui.field_factory.IFieldFactory</a></b>    <ul class="nomargin">
+      <li>IFieldFactory was split into two lighter interfaces. Use 
+    IFormFieldFactory or ITableFieldFactory or both instead.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.form.Form-class.html#getFieldFactory">muntjac.ui.form.Form.getFieldFactory</a></b>    <ul class="nomargin">
+      <li>Use <a href="muntjac.ui.form.Form-class.html#getFormFieldFactory" 
+    class="link">getFormFieldFactory</a> instead. Set the FormFieldFactory 
+    using <a href="muntjac.ui.form.Form-class.html#setFormFieldFactory" 
+    class="link">setFormFieldFactory</a>.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.form.Form-class.html#setFieldFactory">muntjac.ui.form.Form.setFieldFactory</a></b>    <ul class="nomargin">
+      <li>use <a href="muntjac.ui.form.Form-class.html#setFormFieldFactory" 
+    class="link">setFormFieldFactory</a> instead</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.grid_layout.Area-class.html#getX1">muntjac.ui.grid_layout.Area.getX1</a></b>    <ul class="nomargin">
+      <li>Use getColumn1() instead.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.grid_layout.Area-class.html#getX2">muntjac.ui.grid_layout.Area.getX2</a></b>    <ul class="nomargin">
+      <li>Use getColumn2() instead.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.grid_layout.Area-class.html#getY1">muntjac.ui.grid_layout.Area.getY1</a></b>    <ul class="nomargin">
+      <li>Use getRow1() instead.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.grid_layout.Area-class.html#getY2">muntjac.ui.grid_layout.Area.getY2</a></b>    <ul class="nomargin">
+      <li>Use getRow2() instead.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.grid_layout.GridLayout-class.html#setComponentAlignment">muntjac.ui.grid_layout.GridLayout.setComponentAlignment</a></b>    <ul class="nomargin">
+      <li>Replaced by <a 
+    href="muntjac.ui.grid_layout.GridLayout-class.html#setComponentAlignment"
+    class="link">setComponentAlignment</a></li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.layout.IAlignmentHandler-class.html#setComponentAlignment">muntjac.ui.layout.IAlignmentHandler.setComponentAlignment</a></b>    <ul class="nomargin">
+      <li>Use <a 
+    href="muntjac.ui.layout.IAlignmentHandler-class.html#setComponentAlignment"
+    class="link">setComponentAlignment</a> instead</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.layout.ISpacingHandler-class.html#isSpacingEnabled">muntjac.ui.layout.ISpacingHandler.isSpacingEnabled</a></b>    <ul class="nomargin">
+      <li>Use <a href="muntjac.ui.layout.ISpacingHandler-class.html#isSpacing" 
+    class="link">isSpacing</a> instead.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.menu_bar.MenuBar-class.html#setCollapse">muntjac.ui.menu_bar.MenuBar.setCollapse</a></b>    <ul class="nomargin">
+      <li>Collapsing is always enabled if the MenuBar has a specified width.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.menu_bar.MenuBar-class.html#setSubmenuIcon">muntjac.ui.menu_bar.MenuBar.setSubmenuIcon</a></b>    <ul class="nomargin">
+      <li>Icon is set in theme, no need to worry about the visual representation 
+    here.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.native_button.NativeButton-class.html#__init__">muntjac.ui.native_button.NativeButton.__init__</a></b>    <ul class="nomargin">
+      <li>use the <a href="muntjac.ui.check_box.CheckBox-class.html" 
+    class="link">CheckBox</a> component instead</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.ordered_layout.OrderedLayout-class.html">muntjac.ui.ordered_layout.OrderedLayout</a></b>    <ul class="nomargin">
+      <li>Replaced by VerticalLayout/HorizontalLayout. For type checking please 
+    not that VerticalLayout/HorizontalLayout do not extend OrderedLayout 
+    but AbstractOrderedLayout (which also OrderedLayout extends).</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.ordered_layout.OrderedLayout-class.html#__init__">muntjac.ui.ordered_layout.OrderedLayout.__init__</a></b>    <ul class="nomargin">
+      <li>Use VerticalLayout/HorizontalLayout instead.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.ordered_layout.OrderedLayout-class.html#setOrientation">muntjac.ui.ordered_layout.OrderedLayout.setOrientation</a></b>    <ul class="nomargin">
+      <li>Use VerticalLayout/HorizontalLayout or define orientation in 
+    constructor instead</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.panel.Panel-class.html#getLayout">muntjac.ui.panel.Panel.getLayout</a></b>    <ul class="nomargin">
+      <li>A Panel can now contain a IComponentContainer which is not necessarily 
+    a ILayout. Use <a href="muntjac.ui.panel.Panel-class.html#getContent" 
+    class="link">getContent</a> instead.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.panel.Panel-class.html#getScrollOffsetX">muntjac.ui.panel.Panel.getScrollOffsetX</a></b>    <ul class="nomargin">
+      <li>use <a href="muntjac.ui.panel.Panel-class.html#getScrollLeft" 
+    class="link">getScrollLeft</a> instead</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.panel.Panel-class.html#getScrollOffsetY">muntjac.ui.panel.Panel.getScrollOffsetY</a></b>    <ul class="nomargin">
+      <li>use <a href="muntjac.ui.panel.Panel-class.html#getScrollTop" 
+    class="link">getScrollTop</a> instead</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.panel.Panel-class.html#setLayout">muntjac.ui.panel.Panel.setLayout</a></b>    <ul class="nomargin">
+      <li>A Panel can now contain a IComponentContainer which is not necessarily 
+    a ILayout. Use <a href="muntjac.ui.panel.Panel-class.html#setContent" 
+    class="link">setContent</a> instead.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.panel.Panel-class.html#setScrollOffsetX">muntjac.ui.panel.Panel.setScrollOffsetX</a></b>    <ul class="nomargin">
+      <li>use setScrollLeft() method instead</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.panel.Panel-class.html#setScrollOffsetY">muntjac.ui.panel.Panel.setScrollOffsetY</a></b>    <ul class="nomargin">
+      <li>use setScrollTop() method instead</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.popup_view.PopupView-class.html#getPopupVisibility">muntjac.ui.popup_view.PopupView.getPopupVisibility</a></b>    <ul class="nomargin">
+      <li>Use <a href="muntjac.ui.popup_view.PopupView-class.html#isPopupVisible"
+    class="link">isPopupVisible</a> instead.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.popup_view.PopupView-class.html#setPopupVisibility">muntjac.ui.popup_view.PopupView.setPopupVisibility</a></b>    <ul class="nomargin">
+      <li>Use <a 
+    href="muntjac.ui.popup_view.PopupView-class.html#setPopupVisible" 
+    class="link">setPopupVisible</a> instead.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.rich_text_area.RichTextArea-class.html#getFormat">muntjac.ui.rich_text_area.RichTextArea.getFormat</a></b>    <ul class="nomargin">
+      <li>replaced by <code class="link">PropertyFormatter</code></li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.rich_text_area.RichTextArea-class.html#getFormattedValue">muntjac.ui.rich_text_area.RichTextArea.getFormattedValue</a></b>    <ul class="nomargin">
+      <li></li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.rich_text_area.RichTextArea-class.html#setFormat">muntjac.ui.rich_text_area.RichTextArea.setFormat</a></b>    <ul class="nomargin">
+      <li>replaced by <code class="link">PropertyFormatter</code></li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.select.Select-class.html#getColumns">muntjac.ui.select.Select.getColumns</a></b>    <ul class="nomargin">
+      <li>see setter function</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.select.Select-class.html#isMultiSelect">muntjac.ui.select.Select.isMultiSelect</a></b>    <ul class="nomargin">
+      <li>use <a href="muntjac.ui.list_select.ListSelect-class.html" 
+    class="link">ListSelect</a>, <a 
+    href="muntjac.ui.option_group.OptionGroup-class.html" 
+    class="link">OptionGroup</a> or <a 
+    href="muntjac.ui.twin_col_select.TwinColSelect-class.html" 
+    class="link">TwinColSelect</a> instead</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.select.Select-class.html#setColumns">muntjac.ui.select.Select.setColumns</a></b>    <ul class="nomargin">
+      <li></li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.select.Select-class.html#setMultiSelect">muntjac.ui.select.Select.setMultiSelect</a></b>    <ul class="nomargin">
+      <li>use <a href="muntjac.ui.list_select.ListSelect-class.html" 
+    class="link">ListSelect</a>, <a 
+    href="muntjac.ui.option_group.OptionGroup-class.html" 
+    class="link">OptionGroup</a> or <a 
+    href="muntjac.ui.twin_col_select.TwinColSelect-class.html" 
+    class="link">TwinColSelect</a> instead</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.slider.Slider-class.html#getHandleSize">muntjac.ui.slider.Slider.getHandleSize</a></b>    <ul class="nomargin">
+      <li>The size is dictated by the current theme.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.slider.Slider-class.html#getSize">muntjac.ui.slider.Slider.getSize</a></b>    <ul class="nomargin">
+      <li>use standard getWidth/getHeight instead</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.slider.Slider-class.html#setHandleSize">muntjac.ui.slider.Slider.setHandleSize</a></b>    <ul class="nomargin">
+      <li>The size is dictated by the current theme.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.slider.Slider-class.html#setSize">muntjac.ui.slider.Slider.setSize</a></b>    <ul class="nomargin">
+      <li>use standard setWidth/setHeight instead</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.split_panel.SplitPanel-class.html">muntjac.ui.split_panel.SplitPanel</a></b>    <ul class="nomargin">
+      <li>Use <a 
+    href="muntjac.ui.horizontal_split_panel.HorizontalSplitPanel-class.html"
+    class="link">HorizontalSplitPanel</a> or <a 
+    href="muntjac.ui.vertical_split_panel.VerticalSplitPanel-class.html" 
+    class="link">VerticalSplitPanel</a> instead.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.tab_sheet.TabSheet-class.html#getTabCaption">muntjac.ui.tab_sheet.TabSheet.getTabCaption</a></b>    <ul class="nomargin">
+      <li>Use <a href="muntjac.ui.tab_sheet.TabSheet-class.html#getTab" 
+    class="link">getTab</a> and <a 
+    href="muntjac.ui.tab_sheet.ITab-class.html#getCaption" 
+    class="link">ITab.getCaption</a> instead.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.tab_sheet.TabSheet-class.html#getTabIcon">muntjac.ui.tab_sheet.TabSheet.getTabIcon</a></b>    <ul class="nomargin">
+      <li>Use <a href="muntjac.ui.tab_sheet.TabSheet-class.html#getTab" 
+    class="link">getTab</a> and <a 
+    href="muntjac.ui.tab_sheet.ITab-class.html#getIcon" 
+    class="link">ITab.getIcon</a> instead.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.tab_sheet.TabSheet-class.html#setTabCaption">muntjac.ui.tab_sheet.TabSheet.setTabCaption</a></b>    <ul class="nomargin">
+      <li>Use <a href="muntjac.ui.tab_sheet.TabSheet-class.html#getTab" 
+    class="link">getTab</a> and <a 
+    href="muntjac.ui.tab_sheet.ITab-class.html#setCaption" 
+    class="link">ITab.setCaption</a> instead.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.tab_sheet.TabSheet-class.html#setTabIcon">muntjac.ui.tab_sheet.TabSheet.setTabIcon</a></b>    <ul class="nomargin">
+      <li>Use <a href="muntjac.ui.tab_sheet.TabSheet-class.html#getTab" 
+    class="link">getTab</a> and <a 
+    href="muntjac.ui.tab_sheet.ITab-class.html#setIcon" 
+    class="link">ITab.setIcon</a> instead.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.table.Table-class.html#getFieldFactory">muntjac.ui.table.Table.getFieldFactory</a></b>    <ul class="nomargin">
+      <li>use <a href="muntjac.ui.table.Table-class.html#getTableFieldFactory" 
+    class="link">getTableFieldFactory</a> instead</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.table.Table-class.html#isPageBufferingEnabled">muntjac.ui.table.Table.isPageBufferingEnabled</a></b>    <ul class="nomargin">
+      <li>functionality is not needed in ajax rendering model</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.table.Table-class.html#refreshCurrentPage">muntjac.ui.table.Table.refreshCurrentPage</a></b>    <ul class="nomargin">
+      <li>should not need to be used</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.table.Table-class.html#setFieldFactory">muntjac.ui.table.Table.setFieldFactory</a></b>    <ul class="nomargin">
+      <li>use <a href="muntjac.ui.table.Table-class.html#setTableFieldFactory" 
+    class="link">setTableFieldFactory()</a> instead</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.table.Table-class.html#setPageBufferingEnabled">muntjac.ui.table.Table.setPageBufferingEnabled</a></b>    <ul class="nomargin">
+      <li>functionality is not needed in ajax rendering model</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.text_field.TextField-class.html#getRows">muntjac.ui.text_field.TextField.getRows</a></b>    <ul class="nomargin">
+      <li>Use <a href="muntjac.ui.text_area.TextArea-class.html" 
+    class="link">TextArea</a> for a multi-line text input.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.text_field.TextField-class.html#isSecret">muntjac.ui.text_field.TextField.isSecret</a></b>    <ul class="nomargin">
+      <li>Use <a href="muntjac.ui.password_field.PasswordField-class.html" 
+    class="link">PasswordField</a> instead for secret text input.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.text_field.TextField-class.html#isWordwrap">muntjac.ui.text_field.TextField.isWordwrap</a></b>    <ul class="nomargin">
+      <li>Use <a href="muntjac.ui.text_area.TextArea-class.html" 
+    class="link">TextArea</a> for a multi-line text input.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.text_field.TextField-class.html#setRows">muntjac.ui.text_field.TextField.setRows</a></b>    <ul class="nomargin">
+      <li>Use <a href="muntjac.ui.text_area.TextArea-class.html" 
+    class="link">TextArea</a> for a multi-line text input.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.text_field.TextField-class.html#setSecret">muntjac.ui.text_field.TextField.setSecret</a></b>    <ul class="nomargin">
+      <li>Use <a href="muntjac.ui.password_field.PasswordField-class.html" 
+    class="link">PasswordField</a> instead for secret text input.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.text_field.TextField-class.html#setWordwrap">muntjac.ui.text_field.TextField.setWordwrap</a></b>    <ul class="nomargin">
+      <li>Use <a href="muntjac.ui.text_area.TextArea-class.html" 
+    class="link">TextArea</a> for a multi-line text input.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.upload.Upload-class.html#getProgressListener">muntjac.ui.upload.Upload.getProgressListener</a></b>    <ul class="nomargin">
+      <li>Replaced with addListener/removeListener</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.upload.Upload-class.html#setProgressListener">muntjac.ui.upload.Upload.setProgressListener</a></b>    <ul class="nomargin">
+      <li>Use addListener(IProgressListener) instead.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.window.Notification-class.html#getMessage">muntjac.ui.window.Notification.getMessage</a></b>    <ul class="nomargin">
+      <li>Use <a href="muntjac.ui.window.Notification-class.html#getDescription" 
+    class="link">getDescription</a> instead.</li>
+    </ul>
+</table></div>
+<div>
+<table width="100%" class="metadata-index" bgcolor="#e0e0e0"><tr><td class="metadata-index"><b>Deprecations in <a href="muntjac.ui.window.Notification-class.html#setMessage">muntjac.ui.window.Notification.setMessage</a></b>    <ul class="nomargin">
+      <li>Use <a href="muntjac.ui.window.Notification-class.html#setDescription" 
+    class="link">setDescription</a> instead.</li>
+    </ul>
+</table></div>
+<br /><!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th bgcolor="#70b0f0" class="navbar-select"
+          >&nbsp;&nbsp;&nbsp;Indices&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:03:55 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

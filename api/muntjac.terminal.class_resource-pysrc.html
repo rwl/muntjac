@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.terminal.class_resource</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.terminal-module.html">Package&nbsp;terminal</a> ::
+        Module&nbsp;class_resource
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.terminal.class_resource-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="muntjac.terminal.class_resource-module.html">Module muntjac.terminal.class_resource</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno">  1</tt>  <tt class="py-line"><tt class="py-comment"># Copyright (C) 2011 Vaadin Ltd.</tt> </tt>
+<a name="L2"></a><tt class="py-lineno">  2</tt>  <tt class="py-line"><tt class="py-comment"># Copyright (C) 2011 Richard Lincoln</tt> </tt>
+<a name="L3"></a><tt class="py-lineno">  3</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L4"></a><tt class="py-lineno">  4</tt>  <tt class="py-line"><tt class="py-comment"># This program is free software: you can redistribute it and/or modify</tt> </tt>
+<a name="L5"></a><tt class="py-lineno">  5</tt>  <tt class="py-line"><tt class="py-comment"># it under the terms of the GNU Affero General Public License as published</tt> </tt>
+<a name="L6"></a><tt class="py-lineno">  6</tt>  <tt class="py-line"><tt class="py-comment"># by the Free Software Foundation, either version 3 of the License, or</tt> </tt>
+<a name="L7"></a><tt class="py-lineno">  7</tt>  <tt class="py-line"><tt class="py-comment"># (at your option) any later version.</tt> </tt>
+<a name="L8"></a><tt class="py-lineno">  8</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line"><tt class="py-comment"># This program is distributed in the hope that it will be useful,</tt> </tt>
+<a name="L10"></a><tt class="py-lineno"> 10</tt>  <tt class="py-line"><tt class="py-comment"># but WITHOUT ANY WARRANTY; without even the implied warranty of</tt> </tt>
+<a name="L11"></a><tt class="py-lineno"> 11</tt>  <tt class="py-line"><tt class="py-comment"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</tt> </tt>
+<a name="L12"></a><tt class="py-lineno"> 12</tt>  <tt class="py-line"><tt class="py-comment"># GNU Affero General Public License for more details.</tt> </tt>
+<a name="L13"></a><tt class="py-lineno"> 13</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L14"></a><tt class="py-lineno"> 14</tt>  <tt class="py-line"><tt class="py-comment"># You should have received a copy of the GNU Affero General Public License</tt> </tt>
+<a name="L15"></a><tt class="py-lineno"> 15</tt>  <tt class="py-line"><tt class="py-comment"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</tt> </tt>
+<a name="L16"></a><tt class="py-lineno"> 16</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L17"></a><tt class="py-lineno"> 17</tt>  <tt class="py-line"><tt class="py-comment"># Note: This is a modified file from Vaadin. For further information on</tt> </tt>
+<a name="L18"></a><tt class="py-lineno"> 18</tt>  <tt class="py-line"><tt class="py-comment">#       Vaadin please visit http://www.vaadin.com.</tt> </tt>
+<a name="L19"></a><tt class="py-lineno"> 19</tt>  <tt class="py-line"> </tt>
+<a name="L20"></a><tt class="py-lineno"> 20</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Package muntjac=muntjac-module.html,Function muntjac.main.muntjac()=muntjac.main-module.html#muntjac"><a title="muntjac
+muntjac.main.muntjac" class="py-name" href="#" onclick="return doclink('link-0', 'muntjac', 'link-0');">muntjac</a></tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Package muntjac.service=muntjac.service-module.html,Method muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet.service()=muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#service,Method muntjac.terminal.gwt.server.gae_application_servlet.GaeApplicationServlet.service()=muntjac.terminal.gwt.server.gae_application_servlet.GaeApplicationServlet-class.html#service,Method muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet.service()=muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#service"><a title="muntjac.service
+muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet.service
+muntjac.terminal.gwt.server.gae_application_servlet.GaeApplicationServlet.service
+muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet.service" class="py-name" href="#" onclick="return doclink('link-1', 'service', 'link-1');">service</a></tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Module muntjac.service.file_type_resolver=muntjac.service.file_type_resolver-module.html"><a title="muntjac.service.file_type_resolver" class="py-name" href="#" onclick="return doclink('link-2', 'file_type_resolver', 'link-2');">file_type_resolver</a></tt> <tt class="py-keyword">import</tt> <tt id="link-3" class="py-name" targets="Class muntjac.service.file_type_resolver.FileTypeResolver=muntjac.service.file_type_resolver.FileTypeResolver-class.html"><a title="muntjac.service.file_type_resolver.FileTypeResolver" class="py-name" href="#" onclick="return doclink('link-3', 'FileTypeResolver', 'link-3');">FileTypeResolver</a></tt> </tt>
+<a name="L21"></a><tt class="py-lineno"> 21</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-4" class="py-name"><a title="muntjac
+muntjac.main.muntjac" class="py-name" href="#" onclick="return doclink('link-4', 'muntjac', 'link-0');">muntjac</a></tt><tt class="py-op">.</tt><tt id="link-5" class="py-name" targets="Package muntjac.terminal=muntjac.terminal-module.html,Module muntjac.terminal.terminal=muntjac.terminal.terminal-module.html"><a title="muntjac.terminal
+muntjac.terminal.terminal" class="py-name" href="#" onclick="return doclink('link-5', 'terminal', 'link-5');">terminal</a></tt><tt class="py-op">.</tt><tt id="link-6" class="py-name" targets="Module muntjac.terminal.application_resource=muntjac.terminal.application_resource-module.html"><a title="muntjac.terminal.application_resource" class="py-name" href="#" onclick="return doclink('link-6', 'application_resource', 'link-6');">application_resource</a></tt> <tt class="py-keyword">import</tt> <tt id="link-7" class="py-name" targets="Class muntjac.terminal.application_resource.IApplicationResource=muntjac.terminal.application_resource.IApplicationResource-class.html"><a title="muntjac.terminal.application_resource.IApplicationResource" class="py-name" href="#" onclick="return doclink('link-7', 'IApplicationResource', 'link-7');">IApplicationResource</a></tt> </tt>
+<a name="L22"></a><tt class="py-lineno"> 22</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-8" class="py-name"><a title="muntjac
+muntjac.main.muntjac" class="py-name" href="#" onclick="return doclink('link-8', 'muntjac', 'link-0');">muntjac</a></tt><tt class="py-op">.</tt><tt id="link-9" class="py-name"><a title="muntjac.terminal
+muntjac.terminal.terminal" class="py-name" href="#" onclick="return doclink('link-9', 'terminal', 'link-5');">terminal</a></tt><tt class="py-op">.</tt><tt id="link-10" class="py-name" targets="Module muntjac.terminal.download_stream=muntjac.terminal.download_stream-module.html"><a title="muntjac.terminal.download_stream" class="py-name" href="#" onclick="return doclink('link-10', 'download_stream', 'link-10');">download_stream</a></tt> <tt class="py-keyword">import</tt> <tt id="link-11" class="py-name" targets="Class muntjac.terminal.download_stream.DownloadStream=muntjac.terminal.download_stream.DownloadStream-class.html"><a title="muntjac.terminal.download_stream.DownloadStream" class="py-name" href="#" onclick="return doclink('link-11', 'DownloadStream', 'link-11');">DownloadStream</a></tt> </tt>
+<a name="L23"></a><tt class="py-lineno"> 23</tt>  <tt class="py-line"> </tt>
+<a name="L24"></a><tt class="py-lineno"> 24</tt>  <tt class="py-line"> </tt>
+<a name="ClassResource"></a><div id="ClassResource-def"><a name="L25"></a><tt class="py-lineno"> 25</tt> <a class="py-toggle" href="#" id="ClassResource-toggle" onclick="return toggle('ClassResource');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.terminal.class_resource.ClassResource-class.html">ClassResource</a><tt class="py-op">(</tt><tt class="py-base-class">IApplicationResource</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ClassResource-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="ClassResource-expanded"><a name="L26"></a><tt class="py-lineno"> 26</tt>  <tt class="py-line">    <tt class="py-docstring">"""C{ClassResource} is a named resource accessed with the</tt> </tt>
+<a name="L27"></a><tt class="py-lineno"> 27</tt>  <tt class="py-line"><tt class="py-docstring">    class loader.</tt> </tt>
+<a name="L28"></a><tt class="py-lineno"> 28</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L29"></a><tt class="py-lineno"> 29</tt>  <tt class="py-line"><tt class="py-docstring">    This can be used to access resources such as icons, files, etc.</tt> </tt>
+<a name="L30"></a><tt class="py-lineno"> 30</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L31"></a><tt class="py-lineno"> 31</tt>  <tt class="py-line"><tt class="py-docstring">    @author: Vaadin Ltd.</tt> </tt>
+<a name="L32"></a><tt class="py-lineno"> 32</tt>  <tt class="py-line"><tt class="py-docstring">    @author: Richard Lincoln</tt> </tt>
+<a name="L33"></a><tt class="py-lineno"> 33</tt>  <tt class="py-line"><tt class="py-docstring">    @version: 1.0.1</tt> </tt>
+<a name="L34"></a><tt class="py-lineno"> 34</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L35"></a><tt class="py-lineno"> 35</tt>  <tt class="py-line"> </tt>
+<a name="ClassResource.__init__"></a><div id="ClassResource.__init__-def"><a name="L36"></a><tt class="py-lineno"> 36</tt> <a class="py-toggle" href="#" id="ClassResource.__init__-toggle" onclick="return toggle('ClassResource.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.class_resource.ClassResource-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-op">*</tt><tt class="py-param">args</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ClassResource.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="ClassResource.__init__-expanded"><a name="L37"></a><tt class="py-lineno"> 37</tt>  <tt class="py-line">        <tt class="py-docstring">"""Creates a new application resource instance. The resource id is</tt> </tt>
+<a name="L38"></a><tt class="py-lineno"> 38</tt>  <tt class="py-line"><tt class="py-docstring">        relative to the location of the application class.</tt> </tt>
+<a name="L39"></a><tt class="py-lineno"> 39</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L40"></a><tt class="py-lineno"> 40</tt>  <tt class="py-line"><tt class="py-docstring">        @param args: tuple of the form</tt> </tt>
+<a name="L41"></a><tt class="py-lineno"> 41</tt>  <tt class="py-line"><tt class="py-docstring">            - (resourceName, application)</tt> </tt>
+<a name="L42"></a><tt class="py-lineno"> 42</tt>  <tt class="py-line"><tt class="py-docstring">              1. the Unique identifier of the resource within the application</tt> </tt>
+<a name="L43"></a><tt class="py-lineno"> 43</tt>  <tt class="py-line"><tt class="py-docstring">              2. the application this resource will be added to</tt> </tt>
+<a name="L44"></a><tt class="py-lineno"> 44</tt>  <tt class="py-line"><tt class="py-docstring">            - (associatedClass, resourceName, application)</tt> </tt>
+<a name="L45"></a><tt class="py-lineno"> 45</tt>  <tt class="py-line"><tt class="py-docstring">              1. the class of the which the resource is associated.</tt> </tt>
+<a name="L46"></a><tt class="py-lineno"> 46</tt>  <tt class="py-line"><tt class="py-docstring">              2. the Unique identifier of the resource within the application</tt> </tt>
+<a name="L47"></a><tt class="py-lineno"> 47</tt>  <tt class="py-line"><tt class="py-docstring">              3. the application this resource will be added to</tt> </tt>
+<a name="L48"></a><tt class="py-lineno"> 48</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L49"></a><tt class="py-lineno"> 49</tt>  <tt class="py-line">        <tt class="py-comment"># Default buffer size for this stream resource.</tt> </tt>
+<a name="L50"></a><tt class="py-lineno"> 50</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_bufferSize</tt> <tt class="py-op">=</tt> <tt class="py-number">0</tt> </tt>
+<a name="L51"></a><tt class="py-lineno"> 51</tt>  <tt class="py-line"> </tt>
+<a name="L52"></a><tt class="py-lineno"> 52</tt>  <tt class="py-line">        <tt class="py-comment"># Default cache time for this stream resource.</tt> </tt>
+<a name="L53"></a><tt class="py-lineno"> 53</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_cacheTime</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-12" class="py-name" targets="Variable muntjac.terminal.application_resource.IApplicationResource.DEFAULT_CACHETIME=muntjac.terminal.application_resource.IApplicationResource-class.html#DEFAULT_CACHETIME,Variable muntjac.terminal.download_stream.DownloadStream.DEFAULT_CACHETIME=muntjac.terminal.download_stream.DownloadStream-class.html#DEFAULT_CACHETIME"><a title="muntjac.terminal.application_resource.IApplicationResource.DEFAULT_CACHETIME
+muntjac.terminal.download_stream.DownloadStream.DEFAULT_CACHETIME" class="py-name" href="#" onclick="return doclink('link-12', 'DEFAULT_CACHETIME', 'link-12');">DEFAULT_CACHETIME</a></tt> </tt>
+<a name="L54"></a><tt class="py-lineno"> 54</tt>  <tt class="py-line"> </tt>
+<a name="L55"></a><tt class="py-lineno"> 55</tt>  <tt class="py-line">        <tt class="py-comment"># Associated class used for indetifying the source of the resource.</tt> </tt>
+<a name="L56"></a><tt class="py-lineno"> 56</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_associatedClass</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L57"></a><tt class="py-lineno"> 57</tt>  <tt class="py-line"> </tt>
+<a name="L58"></a><tt class="py-lineno"> 58</tt>  <tt class="py-line">        <tt class="py-comment"># Name of the resource is relative to the associated class.</tt> </tt>
+<a name="L59"></a><tt class="py-lineno"> 59</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_resourceName</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L60"></a><tt class="py-lineno"> 60</tt>  <tt class="py-line"> </tt>
+<a name="L61"></a><tt class="py-lineno"> 61</tt>  <tt class="py-line">        <tt class="py-comment"># Application used for serving the class.</tt> </tt>
+<a name="L62"></a><tt class="py-lineno"> 62</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_application</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L63"></a><tt class="py-lineno"> 63</tt>  <tt class="py-line"> </tt>
+<a name="L64"></a><tt class="py-lineno"> 64</tt>  <tt class="py-line">        <tt class="py-name">nargs</tt> <tt class="py-op">=</tt> <tt class="py-name">len</tt><tt class="py-op">(</tt><tt class="py-name">args</tt><tt class="py-op">)</tt> </tt>
+<a name="L65"></a><tt class="py-lineno"> 65</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">nargs</tt> <tt class="py-op">==</tt> <tt class="py-number">2</tt><tt class="py-op">:</tt> </tt>
+<a name="L66"></a><tt class="py-lineno"> 66</tt>  <tt class="py-line">            <tt class="py-name">resourceName</tt><tt class="py-op">,</tt> <tt id="link-13" class="py-name" targets="Module muntjac.application=muntjac.application-module.html"><a title="muntjac.application" class="py-name" href="#" onclick="return doclink('link-13', 'application', 'link-13');">application</a></tt> <tt class="py-op">=</tt> <tt class="py-name">args</tt> </tt>
+<a name="L67"></a><tt class="py-lineno"> 67</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_associatedClass</tt> <tt class="py-op">=</tt> <tt id="link-14" class="py-name"><a title="muntjac.application" class="py-name" href="#" onclick="return doclink('link-14', 'application', 'link-13');">application</a></tt><tt class="py-op">.</tt><tt class="py-name">__class__</tt> </tt>
+<a name="L68"></a><tt class="py-lineno"> 68</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_resourceName</tt> <tt class="py-op">=</tt> <tt class="py-name">resourceName</tt> </tt>
+<a name="L69"></a><tt class="py-lineno"> 69</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_application</tt> <tt class="py-op">=</tt> <tt id="link-15" class="py-name"><a title="muntjac.application" class="py-name" href="#" onclick="return doclink('link-15', 'application', 'link-13');">application</a></tt> </tt>
+<a name="L70"></a><tt class="py-lineno"> 70</tt>  <tt class="py-line">            <tt class="py-keyword">if</tt> <tt class="py-name">resourceName</tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L71"></a><tt class="py-lineno"> 71</tt>  <tt class="py-line">                <tt class="py-keyword">raise</tt> <tt class="py-name">ValueError</tt> </tt>
+<a name="L72"></a><tt class="py-lineno"> 72</tt>  <tt class="py-line">            <tt id="link-16" class="py-name"><a title="muntjac.application" class="py-name" href="#" onclick="return doclink('link-16', 'application', 'link-13');">application</a></tt><tt class="py-op">.</tt><tt id="link-17" class="py-name" targets="Method muntjac.application.Application.addResource()=muntjac.application.Application-class.html#addResource"><a title="muntjac.application.Application.addResource" class="py-name" href="#" onclick="return doclink('link-17', 'addResource', 'link-17');">addResource</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> </tt>
+<a name="L73"></a><tt class="py-lineno"> 73</tt>  <tt class="py-line">        <tt class="py-keyword">elif</tt> <tt class="py-name">nargs</tt> <tt class="py-op">==</tt> <tt class="py-number">3</tt><tt class="py-op">:</tt> </tt>
+<a name="L74"></a><tt class="py-lineno"> 74</tt>  <tt class="py-line">            <tt class="py-name">associatedClass</tt><tt class="py-op">,</tt> <tt class="py-name">resourceName</tt><tt class="py-op">,</tt> <tt id="link-18" class="py-name"><a title="muntjac.application" class="py-name" href="#" onclick="return doclink('link-18', 'application', 'link-13');">application</a></tt> <tt class="py-op">=</tt> <tt class="py-name">args</tt> </tt>
+<a name="L75"></a><tt class="py-lineno"> 75</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_associatedClass</tt> <tt class="py-op">=</tt> <tt class="py-name">associatedClass</tt> </tt>
+<a name="L76"></a><tt class="py-lineno"> 76</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_resourceName</tt> <tt class="py-op">=</tt> <tt class="py-name">resourceName</tt> </tt>
+<a name="L77"></a><tt class="py-lineno"> 77</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_application</tt> <tt class="py-op">=</tt> <tt id="link-19" class="py-name"><a title="muntjac.application" class="py-name" href="#" onclick="return doclink('link-19', 'application', 'link-13');">application</a></tt> </tt>
+<a name="L78"></a><tt class="py-lineno"> 78</tt>  <tt class="py-line">            <tt class="py-keyword">if</tt> <tt class="py-op">(</tt><tt class="py-name">resourceName</tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt><tt class="py-op">)</tt> <tt class="py-keyword">or</tt> <tt class="py-op">(</tt><tt class="py-name">associatedClass</tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L79"></a><tt class="py-lineno"> 79</tt>  <tt class="py-line">                <tt class="py-keyword">raise</tt> <tt class="py-name">ValueError</tt> </tt>
+<a name="L80"></a><tt class="py-lineno"> 80</tt>  <tt class="py-line">            <tt id="link-20" class="py-name"><a title="muntjac.application" class="py-name" href="#" onclick="return doclink('link-20', 'application', 'link-13');">application</a></tt><tt class="py-op">.</tt><tt id="link-21" class="py-name"><a title="muntjac.application.Application.addResource" class="py-name" href="#" onclick="return doclink('link-21', 'addResource', 'link-17');">addResource</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> </tt>
+<a name="L81"></a><tt class="py-lineno"> 81</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L82"></a><tt class="py-lineno"> 82</tt>  <tt class="py-line">            <tt class="py-keyword">raise</tt> <tt class="py-name">ValueError</tt><tt class="py-op">,</tt> <tt class="py-string">'invalid number of arguments'</tt> </tt>
+</div><a name="L83"></a><tt class="py-lineno"> 83</tt>  <tt class="py-line"> </tt>
+<a name="L84"></a><tt class="py-lineno"> 84</tt>  <tt class="py-line"> </tt>
+<a name="ClassResource.getMIMEType"></a><div id="ClassResource.getMIMEType-def"><a name="L85"></a><tt class="py-lineno"> 85</tt> <a class="py-toggle" href="#" id="ClassResource.getMIMEType-toggle" onclick="return toggle('ClassResource.getMIMEType');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.class_resource.ClassResource-class.html#getMIMEType">getMIMEType</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ClassResource.getMIMEType-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="ClassResource.getMIMEType-expanded"><a name="L86"></a><tt class="py-lineno"> 86</tt>  <tt class="py-line">        <tt class="py-docstring">"""Gets the MIME type of this resource.</tt> </tt>
+<a name="L87"></a><tt class="py-lineno"> 87</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L88"></a><tt class="py-lineno"> 88</tt>  <tt class="py-line"><tt class="py-docstring">        @see: L{muntjac.terminal.resource.IResource.getMIMEType}</tt> </tt>
+<a name="L89"></a><tt class="py-lineno"> 89</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L90"></a><tt class="py-lineno"> 90</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt id="link-22" class="py-name"><a title="muntjac.service.file_type_resolver.FileTypeResolver" class="py-name" href="#" onclick="return doclink('link-22', 'FileTypeResolver', 'link-3');">FileTypeResolver</a></tt><tt class="py-op">.</tt><tt id="link-23" class="py-name" targets="Class Method muntjac.service.file_type_resolver.FileTypeResolver.getMIMEType()=muntjac.service.file_type_resolver.FileTypeResolver-class.html#getMIMEType,Method muntjac.terminal.class_resource.ClassResource.getMIMEType()=muntjac.terminal.class_resource.ClassResource-class.html#getMIMEType,Method muntjac.terminal.external_resource.ExternalResource.getMIMEType()=muntjac.terminal.external_resource.ExternalResource-class.html#getMIMEType,Method muntjac.terminal.file_resource.FileResource.getMIMEType()=muntjac.terminal.file_resource.FileResource-class.html#getMIMEType,Method muntjac.terminal.resource.IResource.getMIMEType()=muntjac.terminal.resource.IResource-class.html#getMIMEType,Method muntjac.terminal.stream_resource.StreamResource.getMIMEType()=muntjac.terminal.stream_resource.StreamResource-class.html#getMIMEType,Method muntjac.terminal.theme_resource.ThemeResource.getMIMEType()=muntjac.terminal.theme_resource.ThemeResource-class.html#getMIMEType,Method muntjac.ui.login_form.LoginPage.getMIMEType()=muntjac.ui.login_form.LoginPage-class.html#getMIMEType,Method muntjac.ui.upload.FinishedEvent.getMIMEType()=muntjac.ui.upload.FinishedEvent-class.html#getMIMEType,Method muntjac.ui.upload.StartedEvent.getMIMEType()=muntjac.ui.upload.StartedEvent-class.html#getMIMEType"><a title="muntjac.service.file_type_resolver.FileTypeResolver.getMIMEType
+muntjac.terminal.class_resource.ClassResource.getMIMEType
+muntjac.terminal.external_resource.ExternalResource.getMIMEType
+muntjac.terminal.file_resource.FileResource.getMIMEType
+muntjac.terminal.resource.IResource.getMIMEType
+muntjac.terminal.stream_resource.StreamResource.getMIMEType
+muntjac.terminal.theme_resource.ThemeResource.getMIMEType
+muntjac.ui.login_form.LoginPage.getMIMEType
+muntjac.ui.upload.FinishedEvent.getMIMEType
+muntjac.ui.upload.StartedEvent.getMIMEType" class="py-name" href="#" onclick="return doclink('link-23', 'getMIMEType', 'link-23');">getMIMEType</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_resourceName</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L91"></a><tt class="py-lineno"> 91</tt>  <tt class="py-line"> </tt>
+<a name="L92"></a><tt class="py-lineno"> 92</tt>  <tt class="py-line"> </tt>
+<a name="ClassResource.getApplication"></a><div id="ClassResource.getApplication-def"><a name="L93"></a><tt class="py-lineno"> 93</tt> <a class="py-toggle" href="#" id="ClassResource.getApplication-toggle" onclick="return toggle('ClassResource.getApplication');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.class_resource.ClassResource-class.html#getApplication">getApplication</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ClassResource.getApplication-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="ClassResource.getApplication-expanded"><a name="L94"></a><tt class="py-lineno"> 94</tt>  <tt class="py-line">        <tt class="py-docstring">"""Gets the application of this resource.</tt> </tt>
+<a name="L95"></a><tt class="py-lineno"> 95</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L96"></a><tt class="py-lineno"> 96</tt>  <tt class="py-line"><tt class="py-docstring">        @see: L{IApplicationResource.getApplication}</tt> </tt>
+<a name="L97"></a><tt class="py-lineno"> 97</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L98"></a><tt class="py-lineno"> 98</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_application</tt> </tt>
+</div><a name="L99"></a><tt class="py-lineno"> 99</tt>  <tt class="py-line"> </tt>
+<a name="L100"></a><tt class="py-lineno">100</tt>  <tt class="py-line"> </tt>
+<a name="ClassResource.getFilename"></a><div id="ClassResource.getFilename-def"><a name="L101"></a><tt class="py-lineno">101</tt> <a class="py-toggle" href="#" id="ClassResource.getFilename-toggle" onclick="return toggle('ClassResource.getFilename');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.class_resource.ClassResource-class.html#getFilename">getFilename</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ClassResource.getFilename-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="ClassResource.getFilename-expanded"><a name="L102"></a><tt class="py-lineno">102</tt>  <tt class="py-line">        <tt class="py-docstring">"""Gets the virtual filename for this resource.</tt> </tt>
+<a name="L103"></a><tt class="py-lineno">103</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L104"></a><tt class="py-lineno">104</tt>  <tt class="py-line"><tt class="py-docstring">        @return: the file name associated to this resource.</tt> </tt>
+<a name="L105"></a><tt class="py-lineno">105</tt>  <tt class="py-line"><tt class="py-docstring">        @see: L{IApplicationResource.getFilename}</tt> </tt>
+<a name="L106"></a><tt class="py-lineno">106</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L107"></a><tt class="py-lineno">107</tt>  <tt class="py-line">        <tt id="link-24" class="py-name" targets="Method muntjac.data.util.list_set.ListSet.index()=muntjac.data.util.list_set.ListSet-class.html#index"><a title="muntjac.data.util.list_set.ListSet.index" class="py-name" href="#" onclick="return doclink('link-24', 'index', 'link-24');">index</a></tt> <tt class="py-op">=</tt> <tt class="py-number">0</tt> </tt>
+<a name="L108"></a><tt class="py-lineno">108</tt>  <tt class="py-line">        <tt class="py-name">idx</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_resourceName</tt><tt class="py-op">.</tt><tt class="py-name">find</tt><tt class="py-op">(</tt><tt class="py-string">'/'</tt><tt class="py-op">,</tt> <tt id="link-25" class="py-name"><a title="muntjac.data.util.list_set.ListSet.index" class="py-name" href="#" onclick="return doclink('link-25', 'index', 'link-24');">index</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L109"></a><tt class="py-lineno">109</tt>  <tt class="py-line">        <tt class="py-keyword">while</tt> <tt class="py-name">idx</tt> <tt class="py-op">&gt;</tt> <tt class="py-number">0</tt> <tt class="py-keyword">and</tt> <tt class="py-name">idx</tt> <tt class="py-op">+</tt> <tt class="py-number">1</tt> <tt class="py-op">&lt;</tt> <tt class="py-name">len</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_resourceName</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L110"></a><tt class="py-lineno">110</tt>  <tt class="py-line">            <tt id="link-26" class="py-name"><a title="muntjac.data.util.list_set.ListSet.index" class="py-name" href="#" onclick="return doclink('link-26', 'index', 'link-24');">index</a></tt> <tt class="py-op">=</tt> <tt class="py-name">idx</tt> <tt class="py-op">+</tt> <tt class="py-number">1</tt> </tt>
+<a name="L111"></a><tt class="py-lineno">111</tt>  <tt class="py-line">            <tt class="py-name">idx</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_resourceName</tt><tt class="py-op">.</tt><tt class="py-name">find</tt><tt class="py-op">(</tt><tt class="py-string">'/'</tt><tt class="py-op">,</tt> <tt id="link-27" class="py-name"><a title="muntjac.data.util.list_set.ListSet.index" class="py-name" href="#" onclick="return doclink('link-27', 'index', 'link-24');">index</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L112"></a><tt class="py-lineno">112</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_resourceName</tt><tt class="py-op">[</tt><tt id="link-28" class="py-name"><a title="muntjac.data.util.list_set.ListSet.index" class="py-name" href="#" onclick="return doclink('link-28', 'index', 'link-24');">index</a></tt><tt class="py-op">:</tt><tt class="py-op">]</tt> </tt>
+</div><a name="L113"></a><tt class="py-lineno">113</tt>  <tt class="py-line"> </tt>
+<a name="L114"></a><tt class="py-lineno">114</tt>  <tt class="py-line"> </tt>
+<a name="ClassResource.getStream"></a><div id="ClassResource.getStream-def"><a name="L115"></a><tt class="py-lineno">115</tt> <a class="py-toggle" href="#" id="ClassResource.getStream-toggle" onclick="return toggle('ClassResource.getStream');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.class_resource.ClassResource-class.html#getStream">getStream</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ClassResource.getStream-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="ClassResource.getStream-expanded"><a name="L116"></a><tt class="py-lineno">116</tt>  <tt class="py-line">        <tt class="py-docstring">"""Gets resource as stream.</tt> </tt>
+<a name="L117"></a><tt class="py-lineno">117</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L118"></a><tt class="py-lineno">118</tt>  <tt class="py-line"><tt class="py-docstring">        @see: L{IApplicationResource.getStream}</tt> </tt>
+<a name="L119"></a><tt class="py-lineno">119</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L120"></a><tt class="py-lineno">120</tt>  <tt class="py-line">        <tt class="py-name">ds</tt> <tt class="py-op">=</tt> <tt id="link-29" class="py-name"><a title="muntjac.terminal.download_stream.DownloadStream" class="py-name" href="#" onclick="return doclink('link-29', 'DownloadStream', 'link-11');">DownloadStream</a></tt><tt class="py-op">(</tt> </tt>
+<a name="L121"></a><tt class="py-lineno">121</tt>  <tt class="py-line">                <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_associatedClass</tt><tt class="py-op">.</tt><tt id="link-30" class="py-name" targets="Method muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet.getResourceAsStream()=muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getResourceAsStream"><a title="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet.getResourceAsStream" class="py-name" href="#" onclick="return doclink('link-30', 'getResourceAsStream', 'link-30');">getResourceAsStream</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_resourceName</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L122"></a><tt class="py-lineno">122</tt>  <tt class="py-line">                <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-31" class="py-name"><a title="muntjac.service.file_type_resolver.FileTypeResolver.getMIMEType
+muntjac.terminal.class_resource.ClassResource.getMIMEType
+muntjac.terminal.external_resource.ExternalResource.getMIMEType
+muntjac.terminal.file_resource.FileResource.getMIMEType
+muntjac.terminal.resource.IResource.getMIMEType
+muntjac.terminal.stream_resource.StreamResource.getMIMEType
+muntjac.terminal.theme_resource.ThemeResource.getMIMEType
+muntjac.ui.login_form.LoginPage.getMIMEType
+muntjac.ui.upload.FinishedEvent.getMIMEType
+muntjac.ui.upload.StartedEvent.getMIMEType" class="py-name" href="#" onclick="return doclink('link-31', 'getMIMEType', 'link-23');">getMIMEType</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-32" class="py-name" targets="Method muntjac.terminal.application_resource.IApplicationResource.getFilename()=muntjac.terminal.application_resource.IApplicationResource-class.html#getFilename,Method muntjac.terminal.class_resource.ClassResource.getFilename()=muntjac.terminal.class_resource.ClassResource-class.html#getFilename,Method muntjac.terminal.file_resource.FileResource.getFilename()=muntjac.terminal.file_resource.FileResource-class.html#getFilename,Method muntjac.terminal.stream_resource.StreamResource.getFilename()=muntjac.terminal.stream_resource.StreamResource-class.html#getFilename,Method muntjac.ui.login_form.LoginPage.getFilename()=muntjac.ui.login_form.LoginPage-class.html#getFilename,Method muntjac.ui.upload.FinishedEvent.getFilename()=muntjac.ui.upload.FinishedEvent-class.html#getFilename,Method muntjac.ui.upload.StartedEvent.getFilename()=muntjac.ui.upload.StartedEvent-class.html#getFilename"><a title="muntjac.terminal.application_resource.IApplicationResource.getFilename
+muntjac.terminal.class_resource.ClassResource.getFilename
+muntjac.terminal.file_resource.FileResource.getFilename
+muntjac.terminal.stream_resource.StreamResource.getFilename
+muntjac.ui.login_form.LoginPage.getFilename
+muntjac.ui.upload.FinishedEvent.getFilename
+muntjac.ui.upload.StartedEvent.getFilename" class="py-name" href="#" onclick="return doclink('link-32', 'getFilename', 'link-32');">getFilename</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L123"></a><tt class="py-lineno">123</tt>  <tt class="py-line">        <tt class="py-name">ds</tt><tt class="py-op">.</tt><tt id="link-33" class="py-name" targets="Method muntjac.terminal.class_resource.ClassResource.setBufferSize()=muntjac.terminal.class_resource.ClassResource-class.html#setBufferSize,Method muntjac.terminal.download_stream.DownloadStream.setBufferSize()=muntjac.terminal.download_stream.DownloadStream-class.html#setBufferSize,Method muntjac.terminal.file_resource.FileResource.setBufferSize()=muntjac.terminal.file_resource.FileResource-class.html#setBufferSize,Method muntjac.terminal.stream_resource.StreamResource.setBufferSize()=muntjac.terminal.stream_resource.StreamResource-class.html#setBufferSize"><a title="muntjac.terminal.class_resource.ClassResource.setBufferSize
+muntjac.terminal.download_stream.DownloadStream.setBufferSize
+muntjac.terminal.file_resource.FileResource.setBufferSize
+muntjac.terminal.stream_resource.StreamResource.setBufferSize" class="py-name" href="#" onclick="return doclink('link-33', 'setBufferSize', 'link-33');">setBufferSize</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-34" class="py-name" targets="Method muntjac.terminal.application_resource.IApplicationResource.getBufferSize()=muntjac.terminal.application_resource.IApplicationResource-class.html#getBufferSize,Method muntjac.terminal.class_resource.ClassResource.getBufferSize()=muntjac.terminal.class_resource.ClassResource-class.html#getBufferSize,Method muntjac.terminal.download_stream.DownloadStream.getBufferSize()=muntjac.terminal.download_stream.DownloadStream-class.html#getBufferSize,Method muntjac.terminal.file_resource.FileResource.getBufferSize()=muntjac.terminal.file_resource.FileResource-class.html#getBufferSize,Method muntjac.terminal.stream_resource.StreamResource.getBufferSize()=muntjac.terminal.stream_resource.StreamResource-class.html#getBufferSize,Method muntjac.ui.login_form.LoginPage.getBufferSize()=muntjac.ui.login_form.LoginPage-class.html#getBufferSize"><a title="muntjac.terminal.application_resource.IApplicationResource.getBufferSize
+muntjac.terminal.class_resource.ClassResource.getBufferSize
+muntjac.terminal.download_stream.DownloadStream.getBufferSize
+muntjac.terminal.file_resource.FileResource.getBufferSize
+muntjac.terminal.stream_resource.StreamResource.getBufferSize
+muntjac.ui.login_form.LoginPage.getBufferSize" class="py-name" href="#" onclick="return doclink('link-34', 'getBufferSize', 'link-34');">getBufferSize</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L124"></a><tt class="py-lineno">124</tt>  <tt class="py-line">        <tt class="py-name">ds</tt><tt class="py-op">.</tt><tt id="link-35" class="py-name" targets="Method muntjac.terminal.class_resource.ClassResource.setCacheTime()=muntjac.terminal.class_resource.ClassResource-class.html#setCacheTime,Method muntjac.terminal.download_stream.DownloadStream.setCacheTime()=muntjac.terminal.download_stream.DownloadStream-class.html#setCacheTime,Method muntjac.terminal.file_resource.FileResource.setCacheTime()=muntjac.terminal.file_resource.FileResource-class.html#setCacheTime,Method muntjac.terminal.stream_resource.StreamResource.setCacheTime()=muntjac.terminal.stream_resource.StreamResource-class.html#setCacheTime"><a title="muntjac.terminal.class_resource.ClassResource.setCacheTime
+muntjac.terminal.download_stream.DownloadStream.setCacheTime
+muntjac.terminal.file_resource.FileResource.setCacheTime
+muntjac.terminal.stream_resource.StreamResource.setCacheTime" class="py-name" href="#" onclick="return doclink('link-35', 'setCacheTime', 'link-35');">setCacheTime</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_cacheTime</tt><tt class="py-op">)</tt> </tt>
+<a name="L125"></a><tt class="py-lineno">125</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">ds</tt> </tt>
+</div><a name="L126"></a><tt class="py-lineno">126</tt>  <tt class="py-line"> </tt>
+<a name="L127"></a><tt class="py-lineno">127</tt>  <tt class="py-line"> </tt>
+<a name="ClassResource.getBufferSize"></a><div id="ClassResource.getBufferSize-def"><a name="L128"></a><tt class="py-lineno">128</tt> <a class="py-toggle" href="#" id="ClassResource.getBufferSize-toggle" onclick="return toggle('ClassResource.getBufferSize');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.class_resource.ClassResource-class.html#getBufferSize">getBufferSize</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ClassResource.getBufferSize-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="ClassResource.getBufferSize-expanded"><a name="L129"></a><tt class="py-lineno">129</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_bufferSize</tt> </tt>
+</div><a name="L130"></a><tt class="py-lineno">130</tt>  <tt class="py-line"> </tt>
+<a name="L131"></a><tt class="py-lineno">131</tt>  <tt class="py-line"> </tt>
+<a name="ClassResource.setBufferSize"></a><div id="ClassResource.setBufferSize-def"><a name="L132"></a><tt class="py-lineno">132</tt> <a class="py-toggle" href="#" id="ClassResource.setBufferSize-toggle" onclick="return toggle('ClassResource.setBufferSize');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.class_resource.ClassResource-class.html#setBufferSize">setBufferSize</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">bufferSize</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ClassResource.setBufferSize-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="ClassResource.setBufferSize-expanded"><a name="L133"></a><tt class="py-lineno">133</tt>  <tt class="py-line">        <tt class="py-docstring">"""Sets the size of the download buffer used for this resource.</tt> </tt>
+<a name="L134"></a><tt class="py-lineno">134</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L135"></a><tt class="py-lineno">135</tt>  <tt class="py-line"><tt class="py-docstring">        @param bufferSize:</tt> </tt>
+<a name="L136"></a><tt class="py-lineno">136</tt>  <tt class="py-line"><tt class="py-docstring">                   the size of the buffer in bytes.</tt> </tt>
+<a name="L137"></a><tt class="py-lineno">137</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L138"></a><tt class="py-lineno">138</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_bufferSize</tt> <tt class="py-op">=</tt> <tt class="py-name">bufferSize</tt> </tt>
+</div><a name="L139"></a><tt class="py-lineno">139</tt>  <tt class="py-line"> </tt>
+<a name="L140"></a><tt class="py-lineno">140</tt>  <tt class="py-line"> </tt>
+<a name="ClassResource.getCacheTime"></a><div id="ClassResource.getCacheTime-def"><a name="L141"></a><tt class="py-lineno">141</tt> <a class="py-toggle" href="#" id="ClassResource.getCacheTime-toggle" onclick="return toggle('ClassResource.getCacheTime');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.class_resource.ClassResource-class.html#getCacheTime">getCacheTime</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ClassResource.getCacheTime-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="ClassResource.getCacheTime-expanded"><a name="L142"></a><tt class="py-lineno">142</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_cacheTime</tt> </tt>
+</div><a name="L143"></a><tt class="py-lineno">143</tt>  <tt class="py-line"> </tt>
+<a name="L144"></a><tt class="py-lineno">144</tt>  <tt class="py-line"> </tt>
+<a name="ClassResource.setCacheTime"></a><div id="ClassResource.setCacheTime-def"><a name="L145"></a><tt class="py-lineno">145</tt> <a class="py-toggle" href="#" id="ClassResource.setCacheTime-toggle" onclick="return toggle('ClassResource.setCacheTime');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.class_resource.ClassResource-class.html#setCacheTime">setCacheTime</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">cacheTime</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ClassResource.setCacheTime-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="ClassResource.setCacheTime-expanded"><a name="L146"></a><tt class="py-lineno">146</tt>  <tt class="py-line">        <tt class="py-docstring">"""Sets the length of cache expiration time.</tt> </tt>
+<a name="L147"></a><tt class="py-lineno">147</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L148"></a><tt class="py-lineno">148</tt>  <tt class="py-line"><tt class="py-docstring">        This gives the adapter the possibility cache streams sent to the</tt> </tt>
+<a name="L149"></a><tt class="py-lineno">149</tt>  <tt class="py-line"><tt class="py-docstring">        client. The caching may be made in adapter or at the client if the</tt> </tt>
+<a name="L150"></a><tt class="py-lineno">150</tt>  <tt class="py-line"><tt class="py-docstring">        client supports caching. Zero or negative value disables the caching</tt> </tt>
+<a name="L151"></a><tt class="py-lineno">151</tt>  <tt class="py-line"><tt class="py-docstring">        of this stream.</tt> </tt>
+<a name="L152"></a><tt class="py-lineno">152</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L153"></a><tt class="py-lineno">153</tt>  <tt class="py-line"><tt class="py-docstring">        @param cacheTime:</tt> </tt>
+<a name="L154"></a><tt class="py-lineno">154</tt>  <tt class="py-line"><tt class="py-docstring">                   the cache time in milliseconds.</tt> </tt>
+<a name="L155"></a><tt class="py-lineno">155</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L156"></a><tt class="py-lineno">156</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_cacheTime</tt> <tt class="py-op">=</tt> <tt class="py-name">cacheTime</tt> </tt>
+</div></div><a name="L157"></a><tt class="py-lineno">157</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:04:05 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

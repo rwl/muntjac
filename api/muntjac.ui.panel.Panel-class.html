@@ -1,0 +1,2497 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.ui.panel.Panel</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.ui-module.html">Package&nbsp;ui</a> ::
+        <a href="muntjac.ui.panel-module.html">Module&nbsp;panel</a> ::
+        Class&nbsp;Panel
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.ui.panel.Panel-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class Panel</h1><p class="nomargin-top"><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+                             object --+                    
+                                      |                    
+                    <a href="muntjac.util.IEventListener-class.html">util.IEventListener</a> --+                
+                                          |                
+              <a href="muntjac.terminal.paintable.IPaintable-class.html">terminal.paintable.IPaintable</a> --+            
+                                              |            
+                                 object --+   |            
+                                          |   |            
+     <a href="muntjac.terminal.variable_owner.IVariableOwner-class.html">terminal.variable_owner.IVariableOwner</a> --+            
+                                              |            
+                                 object --+   |            
+                                          |   |            
+                <a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a> --+            
+                                              |            
+                           <a href="muntjac.ui.component.IComponent-class.html">component.IComponent</a> --+        
+                                                  |        
+                                     object --+   |        
+                                              |   |        
+   <a href="muntjac.event.method_event_source.IMethodEventSource-class.html">event.method_event_source.IMethodEventSource</a> --+        
+                                                  |        
+               <a href="muntjac.ui.abstract_component.AbstractComponent-class.html">abstract_component.AbstractComponent</a> --+    
+                                                      |    
+                             object --+               |    
+                                      |               |    
+                    <a href="muntjac.util.IEventListener-class.html">util.IEventListener</a> --+           |    
+                                          |           |    
+              <a href="muntjac.terminal.paintable.IPaintable-class.html">terminal.paintable.IPaintable</a> --+       |    
+                                              |       |    
+                                 object --+   |       |    
+                                          |   |       |    
+     <a href="muntjac.terminal.variable_owner.IVariableOwner-class.html">terminal.variable_owner.IVariableOwner</a> --+       |    
+                                              |       |    
+                                 object --+   |       |    
+                                          |   |       |    
+                <a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a> --+       |    
+                                              |       |    
+                           <a href="muntjac.ui.component.IComponent-class.html">component.IComponent</a> --+   |    
+                                                  |   |    
+            <a href="muntjac.ui.component_container.IComponentContainer-class.html">component_container.IComponentContainer</a> --+    
+                                                      |    
+<a href="muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html">abstract_component_container.AbstractComponentContainer</a> --+
+                                                          |
+                                             object --+   |
+                                                      |   |
+                        <a href="muntjac.terminal.scrollable.IScrollable-class.html">terminal.scrollable.IScrollable</a> --+
+                                                          |
+                                             object --+   |
+                                                      |   |
+           <a href="muntjac.ui.component_container.IComponentAttachListener-class.html">component_container.IComponentAttachListener</a> --+
+                                                          |
+                                             object --+   |
+                                                      |   |
+           <a href="muntjac.ui.component_container.IComponentDetachListener-class.html">component_container.IComponentDetachListener</a> --+
+                                                          |
+                                         object --+       |
+                                                  |       |
+                            <a href="muntjac.event.action.IContainer-class.html">event.action.IContainer</a> --+   |
+                                                      |   |
+                                 <a href="muntjac.event.action.INotifier-class.html">event.action.INotifier</a> --+
+                                                          |
+                                 object --+               |
+                                          |               |
+                        <a href="muntjac.util.IEventListener-class.html">util.IEventListener</a> --+           |
+                                              |           |
+                  <a href="muntjac.terminal.paintable.IPaintable-class.html">terminal.paintable.IPaintable</a> --+       |
+                                                  |       |
+                                     object --+   |       |
+                                              |   |       |
+         <a href="muntjac.terminal.variable_owner.IVariableOwner-class.html">terminal.variable_owner.IVariableOwner</a> --+       |
+                                                  |       |
+                                     object --+   |       |
+                                              |   |       |
+                    <a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a> --+       |
+                                                  |       |
+                               <a href="muntjac.ui.component.IComponent-class.html">component.IComponent</a> --+   |
+                                                      |   |
+                                   <a href="muntjac.ui.component.IFocusable-class.html">component.IFocusable</a> --+
+                                                          |
+                                                         <strong class="uidshort">Panel</strong>
+</pre>
+
+<dl><dt>Known Subclasses:</dt>
+<dd>
+      <ul class="subclass-list">
+<li><a href="muntjac.ui.window.Window-class.html">window.Window</a></li>  </ul>
+</dd></dl>
+
+<hr />
+<p>Panel - a simple single component container.</p>
+
+<hr />
+<div class="fields">      <dl><dt>Authors:</dt>
+        <dd>
+          Vaadin Ltd.,
+          Richard Lincoln
+        </dd>
+      </dl>
+      <p><strong>Version:</strong>
+        1.0.1
+      </p>
+</div><!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">*args</span>)</span><br />
+      Creates a new panel with caption and or content.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#setCaption" class="summary-sig-name">setCaption</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">caption</span>)</span><br />
+      Sets the caption of the panel.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.setCaption">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#getLayout" class="summary-sig-name">getLayout</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the current layout of the panel.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.getLayout">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#setLayout" class="summary-sig-name">setLayout</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">newLayout</span>)</span><br />
+      Sets the layout of the panel.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.setLayout">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getContent"></a><span class="summary-sig-name">getContent</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the content of the Panel.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.getContent">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#setContent" class="summary-sig-name">setContent</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">newContent</span>)</span><br />
+      Set the content of the Panel.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.setContent">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="createDefaultContent"></a><span class="summary-sig-name">createDefaultContent</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Create a IComponentContainer which is added by default to the Panel 
+      if user does not specify any content.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.createDefaultContent">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#paintContent" class="summary-sig-name">paintContent</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">target</span>)</span><br />
+      Paints any needed component-specific things to the given UIDL stream.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.paintContent">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#requestRepaintAll" class="summary-sig-name">requestRepaintAll</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Causes a repaint of this component, and all components below it.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.requestRepaintAll">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#addComponent" class="summary-sig-name">addComponent</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">c</span>)</span><br />
+      Adds the component into this container.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.addComponent">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#removeComponent" class="summary-sig-name">removeComponent</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">c</span>)</span><br />
+      Removes the component from this container.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.removeComponent">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#getComponentIterator" class="summary-sig-name">getComponentIterator</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the component container iterator for going through all the 
+      components in the container.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.getComponentIterator">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#changeVariables" class="summary-sig-name">changeVariables</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">source</span>,
+        <span class="summary-sig-arg">variables</span>)</span><br />
+      Called when one or more variables handled by the implementing class 
+      are changed.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.changeVariables">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#getScrollLeft" class="summary-sig-name">getScrollLeft</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets scroll left offset.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.getScrollLeft">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#getScrollOffsetX" class="summary-sig-name">getScrollOffsetX</a>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.getScrollOffsetX">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#getScrollTop" class="summary-sig-name">getScrollTop</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets scroll top offset.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.getScrollTop">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#getScrollOffsetY" class="summary-sig-name">getScrollOffsetY</a>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.getScrollOffsetY">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#isScrollable" class="summary-sig-name">isScrollable</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Is programmatic scrolling enabled.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.isScrollable">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#setScrollable" class="summary-sig-name">setScrollable</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">isScrollingEnabled</span>)</span><br />
+      Sets the panel as programmatically scrollable.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.setScrollable">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#setScrollLeft" class="summary-sig-name">setScrollLeft</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">pixelsScrolled</span>)</span><br />
+      Sets the horizontal scroll position.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.setScrollLeft">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#setScrollOffsetX" class="summary-sig-name">setScrollOffsetX</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">pixels</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.setScrollOffsetX">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#setScrollTop" class="summary-sig-name">setScrollTop</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">pixelsScrolledDown</span>)</span><br />
+      Sets the vertical scroll position.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.setScrollTop">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#setScrollOffsetY" class="summary-sig-name">setScrollOffsetY</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">pixels</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.setScrollOffsetY">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#replaceComponent" class="summary-sig-name">replaceComponent</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">oldComponent</span>,
+        <span class="summary-sig-arg">newComponent</span>)</span><br />
+      Replaces the component in the container with another one without 
+      changing position.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.replaceComponent">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#componentAttachedToContainer" class="summary-sig-name">componentAttachedToContainer</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">event</span>)</span><br />
+      A new component is attached to container.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.componentAttachedToContainer">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#componentDetachedFromContainer" class="summary-sig-name">componentDetachedFromContainer</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">event</span>)</span><br />
+      A component has been detached from container.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.componentDetachedFromContainer">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#attach" class="summary-sig-name">attach</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Notifies the component that it is connected to an application.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.attach">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#detach" class="summary-sig-name">detach</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Notifies the component that it is detached from the application.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.detach">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#removeAllComponents" class="summary-sig-name">removeAllComponents</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Removes all components from this container.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.removeAllComponents">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getActionManager"></a><span class="summary-sig-name">getActionManager</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.getActionManager">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#addAction" class="summary-sig-name">addAction</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">action</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.addAction">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#removeAction" class="summary-sig-name">removeAction</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">action</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.removeAction">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#addActionHandler" class="summary-sig-name">addActionHandler</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">actionHandler</span>)</span><br />
+      Registers a new action handler for this container</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.addActionHandler">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#removeActionHandler" class="summary-sig-name">removeActionHandler</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">actionHandler</span>)</span><br />
+      Removes a previously registered action handler for the contents of 
+      this container.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.removeActionHandler">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="removeAllActionHandlers"></a><span class="summary-sig-name">removeAllActionHandlers</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Removes all action handlers</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.removeAllActionHandlers">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#addListener" class="summary-sig-name">addListener</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">listener</span>,
+        <span class="summary-sig-arg">iface</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Add a click listener to the Panel.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.addListener">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#addCallback" class="summary-sig-name">addCallback</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">callback</span>,
+        <span class="summary-sig-arg">eventType</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">*args</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.addCallback">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#removeListener" class="summary-sig-name">removeListener</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">listener</span>,
+        <span class="summary-sig-arg">iface</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Remove a click listener from the Panel.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.removeListener">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#removeCallback" class="summary-sig-name">removeCallback</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">callback</span>,
+        <span class="summary-sig-arg">eventType</span>=<span class="summary-sig-default">None</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.removeCallback">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#fireClick" class="summary-sig-name">fireClick</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">parameters</span>)</span><br />
+      Fire a click event to all click listeners.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.fireClick">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#getTabIndex" class="summary-sig-name">getTabIndex</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the <i>tabulator index</i> of the <code>IFocusable</code> 
+      component.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.getTabIndex">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#setTabIndex" class="summary-sig-name">setTabIndex</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">tabIndex</span>)</span><br />
+      Sets the <i>tabulator index</i> of the <code>IFocusable</code> 
+      component.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.setTabIndex">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.panel.Panel-class.html#focus" class="summary-sig-name">focus</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Moves keyboard focus to the component.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.focus">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html">abstract_component_container.AbstractComponentContainer</a></code></b>:
+      <code><a href="muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#fireComponentAttachEvent">fireComponentAttachEvent</a></code>,
+      <code><a href="muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#fireComponentDetachEvent">fireComponentDetachEvent</a></code>,
+      <code><a href="muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#getInvalidSizedChildren">getInvalidSizedChildren</a></code>,
+      <code><a href="muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#moveComponentsFrom">moveComponentsFrom</a></code>,
+      <code><a href="muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#repaintChangedChildTrees">repaintChangedChildTrees</a></code>,
+      <code><a href="muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#repaintChildTrees">repaintChildTrees</a></code>,
+      <code><a href="muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#setEnabled">setEnabled</a></code>,
+      <code><a href="muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#setHeight">setHeight</a></code>,
+      <code><a href="muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#setWidth">setWidth</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html">abstract_component.AbstractComponent</a></code></b>:
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#__getstate__">__getstate__</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#__setstate__">__setstate__</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#addStyleName">addStyleName</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#childRequestedRepaint">childRequestedRepaint</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#fireComponentErrorEvent">fireComponentErrorEvent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#fireComponentEvent">fireComponentEvent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#fireEvent">fireEvent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#fireRequestRepaintEvent">fireRequestRepaintEvent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getApplication">getApplication</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getCSSHeight">getCSSHeight</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getCSSWidth">getCSSWidth</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getCaption">getCaption</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getComponentError">getComponentError</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getData">getData</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getDebugId">getDebugId</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getDescription">getDescription</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getErrorHandler">getErrorHandler</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getErrorMessage">getErrorMessage</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getHeight">getHeight</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getHeightUnits">getHeightUnits</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getIcon">getIcon</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getListeners">getListeners</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getLocale">getLocale</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getParent">getParent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getStyle">getStyle</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getStyleName">getStyleName</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getWidth">getWidth</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getWidthUnits">getWidthUnits</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getWindow">getWindow</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#handleError">handleError</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#hasListeners">hasListeners</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#isEnabled">isEnabled</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#isImmediate">isImmediate</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#isReadOnly">isReadOnly</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#isVisible">isVisible</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#paint">paint</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#parseStringSize">parseStringSize</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#registerCallback">registerCallback</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#registerListener">registerListener</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#removeStyleName">removeStyleName</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#requestRepaint">requestRepaint</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#requestRepaintRequests">requestRepaintRequests</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setComponentError">setComponentError</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setData">setData</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setDebugId">setDebugId</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setDescription">setDescription</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setErrorHandler">setErrorHandler</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setHeightUnits">setHeightUnits</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setIcon">setIcon</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setImmediate">setImmediate</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setLocale">setLocale</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setParent">setParent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setReadOnly">setReadOnly</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setSizeFull">setSizeFull</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setSizeUndefined">setSizeUndefined</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setStyle">setStyle</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setStyleName">setStyleName</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setVisible">setVisible</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setWidthUnits">setWidthUnits</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#withdrawCallback">withdrawCallback</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#withdrawListener">withdrawListener</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="CLIENT_WIDGET"></a><span class="summary-name">CLIENT_WIDGET</span> = <code title="None">None</code><br />
+      hash(x)
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_CLICK_EVENT"></a><span class="summary-name">_CLICK_EVENT</span> = <code title="'click'"><code class="variable-quote">'</code><code class="variable-string">click</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="STYLE_LIGHT"></a><span class="summary-name">STYLE_LIGHT</span> = <code title="'light'"><code class="variable-quote">'</code><code class="variable-string">light</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html">abstract_component.AbstractComponent</a></code></b>:
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#SIZE_PATTERN">SIZE_PATTERN</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a></code></b>:
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#SIZE_UNDEFINED">SIZE_UNDEFINED</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_CM">UNITS_CM</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_EM">UNITS_EM</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_EX">UNITS_EX</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_INCH">UNITS_INCH</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_MM">UNITS_MM</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_PERCENTAGE">UNITS_PERCENTAGE</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_PICAS">UNITS_PICAS</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_PIXELS">UNITS_PIXELS</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_POINTS">UNITS_POINTS</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNIT_SYMBOLS">UNIT_SYMBOLS</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== INSTANCE VARIABLES ==================== -->
+<a name="section-InstanceVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_content"></a><span class="summary-name">_content</span><br />
+      Content of the panel.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_scrollOffsetX"></a><span class="summary-name">_scrollOffsetX</span><br />
+      Scroll X position.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_scrollOffsetY"></a><span class="summary-name">_scrollOffsetY</span><br />
+      Scroll Y position.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_scrollable"></a><span class="summary-name">_scrollable</span><br />
+      Scrolling mode.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="actionManager"></a><span class="summary-name">actionManager</span><br />
+      Keeps track of the Actions added to this component, and manages
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_tabIndex"></a><span class="summary-name">_tabIndex</span><br />
+      By default the Panel is not in the normal document focus flow and
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html">abstract_component.AbstractComponent</a></code></b> (private):
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_applicationData" onclick="show_private();">_applicationData</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_caption" onclick="show_private();">_caption</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_componentError" onclick="show_private();">_componentError</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_delayedFocus" onclick="show_private();">_delayedFocus</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_description" onclick="show_private();">_description</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_enabled" onclick="show_private();">_enabled</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_eventIdentifiers" onclick="show_private();">_eventIdentifiers</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_eventRouter" onclick="show_private();">_eventRouter</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_icon" onclick="show_private();">_icon</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_immediate" onclick="show_private();">_immediate</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_locale" onclick="show_private();">_locale</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_parent" onclick="show_private();">_parent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_readOnly" onclick="show_private();">_readOnly</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_repaintRequestListeners" onclick="show_private();">_repaintRequestListeners</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_repaintRequestListenersNotified" onclick="show_private();">_repaintRequestListenersNotified</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_styles" onclick="show_private();">_styles</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_visible" onclick="show_private();">_visible</a></code>
+      </p></div>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Creates a new panel with caption and or content. A VerticalLayout is 
+  used as content by default.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>args</code></strong> - tuple of the form
+          <ul>
+            <li>
+              (content)
+              <ol start="1">
+                <li>
+                  the content for the panel (HTML/XHTML).
+                </li>
+              </ol>
+            </li>
+            <li>
+              (caption)
+              <ol start="1">
+                <li>
+                  the caption used in the panel (HTML/XHTML).
+                </li>
+              </ol>
+            </li>
+            <li>
+              (caption, content)
+              <ol start="1">
+                <li>
+                  the caption of the panel.
+                </li>
+                <li>
+                  the content used in the panel (HTML/XHTML).
+                </li>
+              </ol>
+            </li>
+          </ul></li>
+    </ul></dd>
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setCaption"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setCaption</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">caption</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.setCaption">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the caption of the panel.</p>
+  <p>Note that the caption is interpreted as HTML/XHTML and therefore care 
+  should be taken not to enable HTML injection and XSS attacks using panel 
+  captions. This behavior may change in future versions.</p>
+  <p>@see <code class="link">AbstractComponent.setCaption</code></p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>caption</code></strong> - the new caption string for the component.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.component.IComponent-class.html#setCaption">component.IComponent.setCaption</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getLayout"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getLayout</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.getLayout">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the current layout of the panel.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the Current layout of the panel.</dd>
+  </dl>
+<div class="fields">      <p><strong>Deprecated:</strong>
+        A Panel can now contain a IComponentContainer which is not necessarily 
+    a ILayout. Use <a href="muntjac.ui.panel.Panel-class.html#getContent" 
+    class="link">getContent</a> instead.
+      </p>
+</div></td></tr></table>
+</div>
+<a name="setLayout"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setLayout</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">newLayout</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.setLayout">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the layout of the panel.</p>
+  <p>If given layout is null, a VerticalLayout with margins set is used as 
+  a default.</p>
+  <p>Components from old layout are not moved to new layout by default. Use
+  function in ILayout interface manually.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>newLayout</code></strong> - the New layout of the panel.</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>Deprecated:</strong>
+        A Panel can now contain a IComponentContainer which is not necessarily 
+    a ILayout. Use <a href="muntjac.ui.panel.Panel-class.html#setContent" 
+    class="link">setContent</a> instead.
+      </p>
+</div></td></tr></table>
+</div>
+<a name="setContent"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setContent</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">newContent</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.setContent">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Set the content of the Panel. If null is given as the new content then
+  a layout is automatically created and set as the content.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>newContent</code></strong> - The new content</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="paintContent"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">paintContent</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">target</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.paintContent">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Paints any needed component-specific things to the given UIDL stream. 
+  The more general <a 
+  href="muntjac.ui.abstract_component.AbstractComponent-class.html#paint" 
+  class="link">paint</a> method handles all general attributes common to 
+  all components, and it calls this method to paint any component-specific 
+  attributes to the UIDL stream.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>target</code></strong> - the target UIDL stream where the component should paint itself to</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="muntjac.terminal.paint_exception.PaintException-class.html">PaintException</a></strong></code> - if the paint operation failed.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.abstract_component.AbstractComponent-class.html#paintContent">abstract_component.AbstractComponent.paintContent</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="requestRepaintAll"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">requestRepaintAll</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.requestRepaintAll">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Causes a repaint of this component, and all components below it.</p>
+  <p>This should only be used in special cases, e.g when the state of a 
+  descendant depends on the state of a ancestor.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.ui.component_container.IComponentContainer-class.html#requestRepaintAll">component_container.IComponentContainer.requestRepaintAll</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addComponent"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addComponent</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">c</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.addComponent">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds the component into this container.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>c</code></strong> - the component to be added.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.component_container.IComponentContainer-class.html#addComponent">component_container.IComponentContainer.addComponent</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a 
+        href="muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#addComponent"
+        class="link">AbstractComponentContainer.addComponent</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="removeComponent"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeComponent</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">c</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.removeComponent">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes the component from this container.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>c</code></strong> - The component to be removed.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.component_container.IComponentContainer-class.html#removeComponent">component_container.IComponentContainer.removeComponent</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a 
+        href="muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#removeComponent"
+        class="link">AbstractComponentContainer.removeComponent</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="getComponentIterator"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getComponentIterator</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.getComponentIterator">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the component container iterator for going through all the 
+  components in the container.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the iterator of the components inside the container.</dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.component_container.IComponentContainer-class.html#getComponentIterator">component_container.IComponentContainer.getComponentIterator</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a 
+        href="muntjac.ui.component_container.IComponentContainer-class.html#getComponentIterator"
+        class="link">IComponentContainer.getComponentIterator</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="changeVariables"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">changeVariables</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">source</span>,
+        <span class="sig-arg">variables</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.changeVariables">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Called when one or more variables handled by the implementing class 
+  are changed.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>source</code></strong> - the Source of the variable change. This is the origin of the 
+          event. For example in Web Adapter this is the request.</li>
+        <li><strong class="pname"><code>variables</code></strong> - the Mapping from variable names to new variable values.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.terminal.variable_owner.IVariableOwner-class.html#changeVariables">terminal.variable_owner.IVariableOwner.changeVariables</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <code 
+        class="link">muntjac.terminal.VariableOwner.changeVariables</code>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="getScrollLeft"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getScrollLeft</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.getScrollLeft">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets scroll left offset.</p>
+  <p>Scrolling offset is the number of pixels this scrollable has been 
+  scrolled right.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>Horizontal scrolling position in pixels.</dd>
+    <dt>Overrides:
+        <a href="muntjac.terminal.scrollable.IScrollable-class.html#getScrollLeft">terminal.scrollable.IScrollable.getScrollLeft</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getScrollOffsetX"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getScrollOffsetX</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.getScrollOffsetX">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+  </dl>
+<div class="fields">      <p><strong>Deprecated:</strong>
+        use <a href="muntjac.ui.panel.Panel-class.html#getScrollLeft" 
+    class="link">getScrollLeft</a> instead
+      </p>
+</div></td></tr></table>
+</div>
+<a name="getScrollTop"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getScrollTop</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.getScrollTop">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets scroll top offset.</p>
+  <p>Scrolling offset is the number of pixels this scrollable has been 
+  scrolled down.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>Vertical scrolling position in pixels.</dd>
+    <dt>Overrides:
+        <a href="muntjac.terminal.scrollable.IScrollable-class.html#getScrollTop">terminal.scrollable.IScrollable.getScrollTop</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getScrollOffsetY"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getScrollOffsetY</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.getScrollOffsetY">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+  </dl>
+<div class="fields">      <p><strong>Deprecated:</strong>
+        use <a href="muntjac.ui.panel.Panel-class.html#getScrollTop" 
+    class="link">getScrollTop</a> instead
+      </p>
+</div></td></tr></table>
+</div>
+<a name="isScrollable"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isScrollable</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.isScrollable">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Is programmatic scrolling enabled.</p>
+  <p>Whether programmatic scrolling with <a 
+  href="muntjac.terminal.scrollable.IScrollable-class.html#setScrollLeft" 
+  class="link">setScrollLeft</a> and <a 
+  href="muntjac.terminal.scrollable.IScrollable-class.html#setScrollTop" 
+  class="link">setScrollTop</a> is enabled.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the scrolling is enabled, otherwise 
+          <code>False</code>.</dd>
+    <dt>Overrides:
+        <a href="muntjac.terminal.scrollable.IScrollable-class.html#isScrollable">terminal.scrollable.IScrollable.isScrollable</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setScrollable"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setScrollable</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">isScrollingEnabled</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.setScrollable">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the panel as programmatically scrollable.</p>
+  <p>Panel is by default not scrollable programmatically with <a 
+  href="muntjac.ui.panel.Panel-class.html#setScrollLeft" 
+  class="link">setScrollLeft</a> and <a 
+  href="muntjac.ui.panel.Panel-class.html#setScrollTop" 
+  class="link">setScrollTop</a>, so if you use those methods, you need to 
+  enable scrolling with this method. Components that extend Panel may have 
+  a different default for the programmatic scrollability.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>isScrollingEnabled</code></strong> - true if the scrolling is allowed.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.terminal.scrollable.IScrollable-class.html#setScrollable">terminal.scrollable.IScrollable.setScrollable</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a 
+        href="muntjac.terminal.scrollable.IScrollable-class.html#setScrollable"
+        class="link">IScrollable.setScrollable</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="setScrollLeft"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setScrollLeft</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">pixelsScrolled</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.setScrollLeft">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the horizontal scroll position.</p>
+  <p>Setting the horizontal scroll position with this method requires that 
+  programmatic scrolling of the component has been enabled. For Panel it is
+  disabled by default, so you have to call <a 
+  href="muntjac.ui.panel.Panel-class.html#setScrollable" 
+  class="link">setScrollable</a>. Components extending Panel may have a 
+  different default for programmatic scrollability.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pixelsScrolled</code></strong> - the xOffset.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.terminal.scrollable.IScrollable-class.html#setScrollLeft">terminal.scrollable.IScrollable.setScrollLeft</a>
+    </dt>
+  </dl>
+<div class="fields">      <dl><dt>See Also:</dt>
+        <dd>
+          <a 
+          href="muntjac.terminal.scrollable.IScrollable-class.html#setScrollable"
+          class="link">IScrollable.setScrollable</a>,
+          <a href="muntjac.ui.panel.Panel-class.html#setScrollable" 
+          class="link">setScrollable</a>
+        </dd>
+      </dl>
+</div></td></tr></table>
+</div>
+<a name="setScrollOffsetX"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setScrollOffsetX</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">pixels</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.setScrollOffsetX">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+  </dl>
+<div class="fields">      <p><strong>Deprecated:</strong>
+        use setScrollLeft() method instead
+      </p>
+</div></td></tr></table>
+</div>
+<a name="setScrollTop"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setScrollTop</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">pixelsScrolledDown</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.setScrollTop">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the vertical scroll position.</p>
+  <p>Setting the vertical scroll position with this method requires that 
+  programmatic scrolling of the component has been enabled. For Panel it is
+  disabled by default, so you have to call <a 
+  href="muntjac.ui.panel.Panel-class.html#setScrollable" 
+  class="link">setScrollable</a>. Components extending Panel may have a 
+  different default for programmatic scrollability.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pixelsScrolled</code></strong> - the yOffset.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.terminal.scrollable.IScrollable-class.html#setScrollTop">terminal.scrollable.IScrollable.setScrollTop</a>
+    </dt>
+  </dl>
+<div class="fields">      <dl><dt>See Also:</dt>
+        <dd>
+          <a 
+          href="muntjac.terminal.scrollable.IScrollable-class.html#setScrollTop"
+          class="link">IScrollable.setScrollTop</a>,
+          <a href="muntjac.ui.panel.Panel-class.html#setScrollable" 
+          class="link">setScrollable</a>
+        </dd>
+      </dl>
+</div></td></tr></table>
+</div>
+<a name="setScrollOffsetY"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setScrollOffsetY</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">pixels</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.setScrollOffsetY">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+  </dl>
+<div class="fields">      <p><strong>Deprecated:</strong>
+        use setScrollTop() method instead
+      </p>
+</div></td></tr></table>
+</div>
+<a name="replaceComponent"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">replaceComponent</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">oldComponent</span>,
+        <span class="sig-arg">newComponent</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.replaceComponent">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Replaces the component in the container with another one without 
+  changing position.</p>
+  <p>This method replaces component with another one is such way that the 
+  new component overtakes the position of the old component. If the old 
+  component is not in the container, the new component is added to the 
+  container. If the both component are already in the container, their 
+  positions are swapped. IComponent attach and detach events should be 
+  taken care as with add and remove.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>oldComponent</code></strong> - the old component that will be replaced.</li>
+        <li><strong class="pname"><code>newComponent</code></strong> - the new component to be replaced.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.component_container.IComponentContainer-class.html#replaceComponent">component_container.IComponentContainer.replaceComponent</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="componentAttachedToContainer"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">componentAttachedToContainer</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">event</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.componentAttachedToContainer">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>A new component is attached to container.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>event</code></strong> - the component attach event.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.component_container.IComponentAttachListener-class.html#componentAttachedToContainer">component_container.IComponentAttachListener.componentAttachedToContainer</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a 
+        href="muntjac.ui.component_container.IComponentAttachListener-class.html#componentAttachedToContainer"
+        
+        class="link">IComponentAttachListener.componentAttachedToContainer</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="componentDetachedFromContainer"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">componentDetachedFromContainer</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">event</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.componentDetachedFromContainer">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>A component has been detached from container.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>event</code></strong> - the component detach event.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.component_container.IComponentDetachListener-class.html#componentDetachedFromContainer">component_container.IComponentDetachListener.componentDetachedFromContainer</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a 
+        href="muntjac.ui.component_container.IComponentDetachListener-class.html#componentDetachedFromContainer"
+        
+        class="link">IComponentDetachListener.componentDetachedFromContainer</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="attach"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">attach</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.attach">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Notifies the component that it is connected to an application.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.ui.component.IComponent-class.html#attach">component.IComponent.attach</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a href="muntjac.ui.component.IComponent-class.html#attach" 
+        class="link">IComponent.attach</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="detach"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">detach</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.detach">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Notifies the component that it is detached from the application.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.ui.component.IComponent-class.html#detach">component.IComponent.detach</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a href="muntjac.ui.component.IComponent-class.html#detach" 
+        class="link">IComponent.detach</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="removeAllComponents"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeAllComponents</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.removeAllComponents">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes all components from this container.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.ui.component_container.IComponentContainer-class.html#removeAllComponents">component_container.IComponentContainer.removeAllComponents</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a 
+        href="muntjac.ui.component_container.IComponentContainer-class.html#removeAllComponents"
+        class="link">IComponentContainer.removeAllComponents</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="addAction"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addAction</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">action</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.addAction">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.event.action.INotifier-class.html#addAction">event.action.INotifier.addAction</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeAction"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeAction</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">action</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.removeAction">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.event.action.INotifier-class.html#removeAction">event.action.INotifier.removeAction</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addActionHandler"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addActionHandler</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">actionHandler</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.addActionHandler">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Registers a new action handler for this container</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>actionHandler</code></strong> - the new handler to be added.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.event.action.IContainer-class.html#addActionHandler">event.action.IContainer.addActionHandler</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeActionHandler"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeActionHandler</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">actionHandler</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.removeActionHandler">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes a previously registered action handler for the contents of 
+  this container.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>actionHandler</code></strong> - the handler to be removed.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.event.action.IContainer-class.html#removeActionHandler">event.action.IContainer.removeActionHandler</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addListener"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addListener</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">listener</span>,
+        <span class="sig-arg">iface</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.addListener">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Add a click listener to the Panel. The listener is called whenever the
+  user clicks inside the Panel. Also when the click targets a component 
+  inside the Panel, provided the targeted component does not prevent the 
+  click event from propagating.</p>
+  <p>Use <a href="muntjac.ui.panel.Panel-class.html#removeListener" 
+  class="link">removeListener</a> to remove the listener.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>listener</code></strong> - The listener to add</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>ValueError</strong></code> - unless <code>method</code> has a match in <code>object</code></li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.event.method_event_source.IMethodEventSource-class.html#addListener">event.method_event_source.IMethodEventSource.addListener</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addCallback"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addCallback</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">callback</span>,
+        <span class="sig-arg">eventType</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.addCallback">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.terminal.paintable.IPaintable-class.html#addCallback">terminal.paintable.IPaintable.addCallback</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeListener"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeListener</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">listener</span>,
+        <span class="sig-arg">iface</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.removeListener">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Remove a click listener from the Panel. The listener should earlier 
+  have been added using <a 
+  href="muntjac.ui.panel.Panel-class.html#addListener" 
+  class="link">addListener</a>.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>listener</code></strong> - The listener to remove</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.event.method_event_source.IMethodEventSource-class.html#removeListener">event.method_event_source.IMethodEventSource.removeListener</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeCallback"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeCallback</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">callback</span>,
+        <span class="sig-arg">eventType</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.removeCallback">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.terminal.paintable.IPaintable-class.html#removeCallback">terminal.paintable.IPaintable.removeCallback</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="fireClick"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">fireClick</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">parameters</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.fireClick">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Fire a click event to all click listeners.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>parameters</code></strong> - The raw &quot;value&quot; of the variable change from the client 
+          side</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getTabIndex"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getTabIndex</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.getTabIndex">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the <i>tabulator index</i> of the <code>IFocusable</code> 
+  component.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>tab index set for the <code>IFocusable</code> component</dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.component.IFocusable-class.html#getTabIndex">component.IFocusable.getTabIndex</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setTabIndex"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setTabIndex</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">tabIndex</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.setTabIndex">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the <i>tabulator index</i> of the <code>IFocusable</code> 
+  component. The tab index property is used to specify the order in which 
+  the fields are focused when the user presses the Tab key. Components with
+  a defined tab index are focused sequentially first, and then the 
+  components with no tab index:</p>
+<pre class="literalblock">
+ loginBox = Form()
+ loginBox.setCaption(&quot;Login&quot;)
+ layout.addComponent(loginBox)
+
+ # Create the first field which will be focused
+ username = TextField(&quot;User name&quot;)
+ loginBox.addField(&quot;username&quot;, username)
+
+ # Set focus to the user name
+ username.focus()
+
+ password = TextField(&quot;Password&quot;)
+ loginBox.addField(&quot;password&quot;, password)
+
+ login = Button(&quot;Login&quot;)
+ loginBox.getFooter().addComponent(login)
+
+ # An additional component which natural focus order would
+ # be after the button.
+ remember = CheckBox(&quot;Remember me&quot;)
+ loginBox.getFooter().addComponent(remember)
+
+ username.setTabIndex(1)
+ password.setTabIndex(2)
+ remember.setTabIndex(3)  # Different than natural place
+ login.setTabIndex(4)
+</pre>
+  <p>After all focusable user interface components are done, the browser 
+  can begin again from the component with the smallest tab index, or it can
+  take the focus out of the page, for example, to the location bar.</p>
+  <p>If the tab index is not set (is set to zero), the default tab order is
+  used. The order is somewhat browser-dependent, but generally follows the 
+  HTML structure of the page.</p>
+  <p>A negative value means that the component is completely removed from 
+  the tabulation order and can not be reached by pressing the Tab key at 
+  all.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>tabIndex</code></strong> - the tab order of this component. Indexes usually start from 1. 
+          Zero means that default tab order should be used. A negative 
+          value means that the field should not be included in the tabbing 
+          sequence.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.component.IFocusable-class.html#setTabIndex">component.IFocusable.setTabIndex</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="focus"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">focus</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.panel-pysrc.html#Panel.focus">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Moves keyboard focus to the component.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.ui.component.IFocusable-class.html#focus">component.IFocusable.focus</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a href="muntjac.ui.component.IFocusable-class.html#focus" 
+        class="link">IFocusable.focus</a>
+      </p>
+</div></td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:04:01 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

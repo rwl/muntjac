@@ -1,0 +1,702 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.data.util.abstract_property.AbstractProperty</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.data-module.html">Package&nbsp;data</a> ::
+        <a href="muntjac.data.util-module.html">Package&nbsp;util</a> ::
+        <a href="muntjac.data.util.abstract_property-module.html">Module&nbsp;abstract_property</a> ::
+        Class&nbsp;AbstractProperty
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.data.util.abstract_property.AbstractProperty-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class AbstractProperty</h1><p class="nomargin-top"><span class="codelink"><a href="muntjac.data.util.abstract_property-pysrc.html#AbstractProperty">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+                            object --+    
+                                     |    
+                    <a href="muntjac.data.property.IProperty-class.html">property.IProperty</a> --+
+                                         |
+                            object --+   |
+                                     |   |
+         <a href="muntjac.data.property.IValueChangeNotifier-class.html">property.IValueChangeNotifier</a> --+
+                                         |
+                            object --+   |
+                                     |   |
+<a href="muntjac.data.property.IReadOnlyStatusChangeNotifier-class.html">property.IReadOnlyStatusChangeNotifier</a> --+
+                                         |
+                                        <strong class="uidshort">AbstractProperty</strong>
+</pre>
+
+<dl><dt>Known Subclasses:</dt>
+<dd>
+      <ul class="subclass-list">
+<li><a href="muntjac.data.util.object_property.ObjectProperty-class.html">object_property.ObjectProperty</a></li>  </ul>
+</dd></dl>
+
+<hr />
+<p>Abstract base class for <a 
+  href="muntjac.data.property.IProperty-class.html" 
+  class="link">IProperty</a> implementations.</p>
+  <p>Handles listener management for <code 
+  class="link">ValueChangeListener</code>s and <a 
+  href="muntjac.data.property.IReadOnlyStatusChangeListener-class.html" 
+  class="link">IReadOnlyStatusChangeListener</a>s.</p>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_property.AbstractProperty-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      x.__init__(...) initializes x; see help(type(x)) for signature</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_property-pysrc.html#AbstractProperty.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_property.AbstractProperty-class.html#isReadOnly" class="summary-sig-name">isReadOnly</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Override for additional restrictions on what is considered a 
+      read-only property.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_property-pysrc.html#AbstractProperty.isReadOnly">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_property.AbstractProperty-class.html#setReadOnly" class="summary-sig-name">setReadOnly</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">newStatus</span>)</span><br />
+      Sets the IProperty's read-only mode to the specified status.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_property-pysrc.html#AbstractProperty.setReadOnly">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_property.AbstractProperty-class.html#__str__" class="summary-sig-name">__str__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the value of the <code>IProperty</code> in human readable 
+      textual format.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_property-pysrc.html#AbstractProperty.__str__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_property.AbstractProperty-class.html#addListener" class="summary-sig-name">addListener</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">listener</span>,
+        <span class="summary-sig-arg">iface</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Registers a new read-only status change listener for this IProperty.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_property-pysrc.html#AbstractProperty.addListener">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_property.AbstractProperty-class.html#addCallback" class="summary-sig-name">addCallback</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">callback</span>,
+        <span class="summary-sig-arg">eventType</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">*args</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_property-pysrc.html#AbstractProperty.addCallback">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_property.AbstractProperty-class.html#removeListener" class="summary-sig-name">removeListener</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">listener</span>,
+        <span class="summary-sig-arg">iface</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Removes a previously registered read-only status change listener.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_property-pysrc.html#AbstractProperty.removeListener">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_property.AbstractProperty-class.html#removeCallback" class="summary-sig-name">removeCallback</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">callback</span>,
+        <span class="summary-sig-arg">eventType</span>=<span class="summary-sig-default">None</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_property-pysrc.html#AbstractProperty.removeCallback">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="fireReadOnlyStatusChange"></a><span class="summary-sig-name">fireReadOnlyStatusChange</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Sends a read only status change event to all registered listeners.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_property-pysrc.html#AbstractProperty.fireReadOnlyStatusChange">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="fireValueChange"></a><span class="summary-sig-name">fireValueChange</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Sends a value change event to all registered listeners.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_property-pysrc.html#AbstractProperty.fireValueChange">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getListeners"></a><span class="summary-sig-name">getListeners</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">eventType</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_property-pysrc.html#AbstractProperty.getListeners">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getCallbacks"></a><span class="summary-sig-name">getCallbacks</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">eventType</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_property-pysrc.html#AbstractProperty.getCallbacks">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.data.property.IProperty-class.html">property.IProperty</a></code></b>:
+      <code><a href="muntjac.data.property.IProperty-class.html#getType">getType</a></code>,
+      <code><a href="muntjac.data.property.IProperty-class.html#getValue">getValue</a></code>,
+      <code><a href="muntjac.data.property.IProperty-class.html#setValue">setValue</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== INSTANCE VARIABLES ==================== -->
+<a name="section-InstanceVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_readOnlyStatusChangeListeners"></a><span class="summary-name">_readOnlyStatusChangeListeners</span><br />
+      List of listeners who are interested in the read-only status
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_valueChangeListeners"></a><span class="summary-name">_valueChangeListeners</span><br />
+      List of listeners who are interested in the value changes of
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_readOnly"></a><span class="summary-name">_readOnly</span><br />
+      Is the IProperty read-only?
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_property-pysrc.html#AbstractProperty.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>x.__init__(...) initializes x; see help(type(x)) for signature</p>
+  <dl class="fields">
+    <dt>Overrides:
+        object.__init__
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isReadOnly"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isReadOnly</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_property-pysrc.html#AbstractProperty.isReadOnly">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Override for additional restrictions on what is considered a read-only
+  property.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the IProperty is in read-only mode, 
+          <code>False</code> if it's not</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.property.IProperty-class.html#isReadOnly">property.IProperty.isReadOnly</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setReadOnly"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setReadOnly</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">newStatus</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_property-pysrc.html#AbstractProperty.setReadOnly">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the IProperty's read-only mode to the specified status.</p>
+  <p>This functionality is optional, but all properties must implement the 
+  <code>isReadOnly</code> mode query correctly.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>newStatus</code></strong> - new read-only status of the IProperty</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.property.IProperty-class.html#setReadOnly">property.IProperty.setReadOnly</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="__str__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__str__</span>(<span class="sig-arg">self</span>)</span>
+    <br /><em class="fname">(Informal representation operator)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_property-pysrc.html#AbstractProperty.__str__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the value of the <code>IProperty</code> in human readable 
+  textual format. The return value should be assignable to the 
+  <code>setValue</code> method if the IProperty is not in read-only 
+  mode.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>String representation of the value stored in the IProperty</dd>
+    <dt>Overrides:
+        object.__str__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addListener"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addListener</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">listener</span>,
+        <span class="sig-arg">iface</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_property-pysrc.html#AbstractProperty.addListener">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Registers a new read-only status change listener for this 
+  IProperty.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>listener</code></strong> - the new Listener to be registered.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.property.IReadOnlyStatusChangeNotifier-class.html#addListener">property.IReadOnlyStatusChangeNotifier.addListener</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addCallback"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addCallback</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">callback</span>,
+        <span class="sig-arg">eventType</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_property-pysrc.html#AbstractProperty.addCallback">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.data.property.IReadOnlyStatusChangeNotifier-class.html#addCallback">property.IReadOnlyStatusChangeNotifier.addCallback</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeListener"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeListener</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">listener</span>,
+        <span class="sig-arg">iface</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_property-pysrc.html#AbstractProperty.removeListener">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes a previously registered read-only status change listener.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>listener</code></strong> - the listener to be removed.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.property.IReadOnlyStatusChangeNotifier-class.html#removeListener">property.IReadOnlyStatusChangeNotifier.removeListener</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeCallback"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeCallback</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">callback</span>,
+        <span class="sig-arg">eventType</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_property-pysrc.html#AbstractProperty.removeCallback">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.data.property.IReadOnlyStatusChangeNotifier-class.html#removeCallback">property.IReadOnlyStatusChangeNotifier.removeCallback</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:03:56 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

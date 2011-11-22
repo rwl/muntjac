@@ -1,0 +1,1940 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.ui.tab_sheet.TabSheet</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.ui-module.html">Package&nbsp;ui</a> ::
+        <a href="muntjac.ui.tab_sheet-module.html">Module&nbsp;tab_sheet</a> ::
+        Class&nbsp;TabSheet
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.ui.tab_sheet.TabSheet-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class TabSheet</h1><p class="nomargin-top"><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+                             object --+                    
+                                      |                    
+                    <a href="muntjac.util.IEventListener-class.html">util.IEventListener</a> --+                
+                                          |                
+              <a href="muntjac.terminal.paintable.IPaintable-class.html">terminal.paintable.IPaintable</a> --+            
+                                              |            
+                                 object --+   |            
+                                          |   |            
+     <a href="muntjac.terminal.variable_owner.IVariableOwner-class.html">terminal.variable_owner.IVariableOwner</a> --+            
+                                              |            
+                                 object --+   |            
+                                          |   |            
+                <a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a> --+            
+                                              |            
+                           <a href="muntjac.ui.component.IComponent-class.html">component.IComponent</a> --+        
+                                                  |        
+                                     object --+   |        
+                                              |   |        
+   <a href="muntjac.event.method_event_source.IMethodEventSource-class.html">event.method_event_source.IMethodEventSource</a> --+        
+                                                  |        
+               <a href="muntjac.ui.abstract_component.AbstractComponent-class.html">abstract_component.AbstractComponent</a> --+    
+                                                      |    
+                             object --+               |    
+                                      |               |    
+                    <a href="muntjac.util.IEventListener-class.html">util.IEventListener</a> --+           |    
+                                          |           |    
+              <a href="muntjac.terminal.paintable.IPaintable-class.html">terminal.paintable.IPaintable</a> --+       |    
+                                              |       |    
+                                 object --+   |       |    
+                                          |   |       |    
+     <a href="muntjac.terminal.variable_owner.IVariableOwner-class.html">terminal.variable_owner.IVariableOwner</a> --+       |    
+                                              |       |    
+                                 object --+   |       |    
+                                          |   |       |    
+                <a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a> --+       |    
+                                              |       |    
+                           <a href="muntjac.ui.component.IComponent-class.html">component.IComponent</a> --+   |    
+                                                  |   |    
+            <a href="muntjac.ui.component_container.IComponentContainer-class.html">component_container.IComponentContainer</a> --+    
+                                                      |    
+<a href="muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html">abstract_component_container.AbstractComponentContainer</a> --+
+                                                          |
+                                                         <strong class="uidshort">TabSheet</strong>
+</pre>
+
+<dl><dt>Known Subclasses:</dt>
+<dd>
+      <ul class="subclass-list">
+<li><a href="muntjac.ui.accordion.Accordion-class.html">accordion.Accordion</a></li>  </ul>
+</dd></dl>
+
+<hr />
+<p>TabSheet component.</p>
+  <p>Tabs are typically identified by the component contained on the tab 
+  (see <code class="link">ComponentContainer</code>), and tab metadata 
+  (including caption, icon, visibility, enabledness, closability etc.) is 
+  kept in separate {@link ITab} instances.</p>
+  <p>Tabs added with <a 
+  href="muntjac.ui.tab_sheet.TabSheet-class.html#addComponent" 
+  class="link">addComponent</a> get the caption and the icon of the 
+  component at the time when the component is created, and these are not 
+  automatically updated after tab creation.</p>
+  <p>A tab sheet can have multiple tab selection listeners and one tab 
+  close handler (<a href="muntjac.ui.tab_sheet.ICloseHandler-class.html" 
+  class="link">ICloseHandler</a>), which by default removes the tab from 
+  the TabSheet.</p>
+  <p>The <a href="muntjac.ui.tab_sheet.TabSheet-class.html" 
+  class="link">TabSheet</a> can be styled with the .v-tabsheet, 
+  .v-tabsheet-tabs and .v-tabsheet-content styles. Themes may also have 
+  pre-defined variations of the tab sheet presentation, such as <code 
+  class="link">Reindeer.TABSHEET_BORDERLESS</code>, <code 
+  class="link">Runo.TABSHEET_SMALL</code> and several other styles in <a 
+  href="muntjac.ui.themes.reindeer.Reindeer-class.html" 
+  class="link">Reindeer</a>.</p>
+  <p>The current implementation does not load the tabs to the UI before the
+  first time they are shown, but this may change in future releases.</p>
+
+<hr />
+<div class="fields">      <dl><dt>Authors:</dt>
+        <dd>
+          Vaadin Ltd.,
+          Richard Lincoln
+        </dd>
+      </dl>
+      <p><strong>Version:</strong>
+        1.0.1
+      </p>
+</div><!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.TabSheet-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Constructs a new Tabsheet.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.TabSheet-class.html#getComponentIterator" class="summary-sig-name">getComponentIterator</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the component container iterator for going through all the 
+      components (tab contents).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.getComponentIterator">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.TabSheet-class.html#getComponentCount" class="summary-sig-name">getComponentCount</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the number of contained components (tabs).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.getComponentCount">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.TabSheet-class.html#removeComponent" class="summary-sig-name">removeComponent</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">c</span>)</span><br />
+      Removes a component and its corresponding tab.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.removeComponent">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.TabSheet-class.html#removeTab" class="summary-sig-name">removeTab</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">tab</span>)</span><br />
+      Removes a <a href="muntjac.ui.tab_sheet.ITab-class.html" 
+      class="link">ITab</a> and the component associated with it, as 
+      previously added with <a 
+      href="muntjac.ui.tab_sheet.TabSheet-class.html#addTab" 
+      class="link">addTab</a>, or <a 
+      href="muntjac.ui.tab_sheet.TabSheet-class.html#addComponent" 
+      class="link">addComponent</a>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.removeTab">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.TabSheet-class.html#addComponent" class="summary-sig-name">addComponent</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">c</span>)</span><br />
+      Adds a new tab into TabSheet.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.addComponent">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.TabSheet-class.html#addTab" class="summary-sig-name">addTab</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">*args</span>)</span><br />
+      Adds a new tab into TabSheet.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.addTab">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.TabSheet-class.html#moveComponentsFrom" class="summary-sig-name">moveComponentsFrom</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">source</span>)</span><br />
+      Moves all components from another container to this container.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.moveComponentsFrom">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.TabSheet-class.html#paintContent" class="summary-sig-name">paintContent</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">target</span>)</span><br />
+      Paints the content of this component.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.paintContent">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.TabSheet-class.html#areTabsHidden" class="summary-sig-name">areTabsHidden</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Are the tab selection parts (&quot;tabs&quot;) hidden.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.areTabsHidden">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.TabSheet-class.html#hideTabs" class="summary-sig-name">hideTabs</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">tabsHidden</span>)</span><br />
+      Hides or shows the tab selection parts (&quot;tabs&quot;).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.hideTabs">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.TabSheet-class.html#getTabCaption" class="summary-sig-name">getTabCaption</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">c</span>)</span><br />
+      Gets tab caption.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.getTabCaption">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.TabSheet-class.html#setTabCaption" class="summary-sig-name">setTabCaption</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">c</span>,
+        <span class="summary-sig-arg">caption</span>)</span><br />
+      Sets tab caption.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.setTabCaption">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.TabSheet-class.html#getTabIcon" class="summary-sig-name">getTabIcon</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">c</span>)</span><br />
+      Gets the icon for a tab.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.getTabIcon">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.TabSheet-class.html#setTabIcon" class="summary-sig-name">setTabIcon</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">c</span>,
+        <span class="summary-sig-arg">icon</span>)</span><br />
+      Sets icon for the given component.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.setTabIcon">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.TabSheet-class.html#getTab" class="summary-sig-name">getTab</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">arg</span>)</span><br />
+      Returns the <a href="muntjac.ui.tab_sheet.ITab-class.html" 
+      class="link">ITab</a> (metadata) for a component.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.getTab">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.TabSheet-class.html#setSelectedTab" class="summary-sig-name">setSelectedTab</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">c</span>)</span><br />
+      Sets the selected tab.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.setSelectedTab">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.TabSheet-class.html#updateSelection" class="summary-sig-name">updateSelection</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Checks if the current selection is valid, and updates the selection 
+      if the previously selected component is not visible and enabled.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.updateSelection">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.TabSheet-class.html#getSelectedTab" class="summary-sig-name">getSelectedTab</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the selected tab content component.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.getSelectedTab">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.TabSheet-class.html#changeVariables" class="summary-sig-name">changeVariables</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">source</span>,
+        <span class="summary-sig-arg">variables</span>)</span><br />
+      Called when one or more variables handled by the implementing class 
+      are changed.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.changeVariables">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.TabSheet-class.html#replaceComponent" class="summary-sig-name">replaceComponent</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">oldComponent</span>,
+        <span class="summary-sig-arg">newComponent</span>)</span><br />
+      Replaces a component (tab content) with another.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.replaceComponent">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.TabSheet-class.html#addListener" class="summary-sig-name">addListener</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">listener</span>,
+        <span class="summary-sig-arg">iface</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Adds a tab selection listener</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.addListener">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.TabSheet-class.html#addCallback" class="summary-sig-name">addCallback</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">callback</span>,
+        <span class="summary-sig-arg">eventType</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">*args</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.addCallback">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.TabSheet-class.html#removeListener" class="summary-sig-name">removeListener</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">listener</span>,
+        <span class="summary-sig-arg">iface</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Removes a tab selection listener</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.removeListener">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.TabSheet-class.html#removeCallback" class="summary-sig-name">removeCallback</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">callback</span>,
+        <span class="summary-sig-arg">eventType</span>=<span class="summary-sig-default">None</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.removeCallback">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="fireSelectedTabChange"></a><span class="summary-sig-name">fireSelectedTabChange</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Sends an event that the currently selected tab has changed.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.fireSelectedTabChange">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.TabSheet-class.html#setCloseHandler" class="summary-sig-name">setCloseHandler</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">handler</span>)</span><br />
+      Provide a custom <a 
+      href="muntjac.ui.tab_sheet.ICloseHandler-class.html" 
+      class="link">ICloseHandler</a> for this TabSheet if you wish to 
+      perform some additional tasks when a user clicks on a tabs close 
+      button, e.g.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.setCloseHandler">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.TabSheet-class.html#setTabPosition" class="summary-sig-name">setTabPosition</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">tab</span>,
+        <span class="summary-sig-arg">position</span>)</span><br />
+      Sets the position of the tab.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.setTabPosition">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.TabSheet-class.html#getTabPosition" class="summary-sig-name">getTabPosition</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">tab</span>)</span><br />
+      Gets the position of the tab</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.getTabPosition">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html">abstract_component_container.AbstractComponentContainer</a></code></b>:
+      <code><a href="muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#attach">attach</a></code>,
+      <code><a href="muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#detach">detach</a></code>,
+      <code><a href="muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#fireComponentAttachEvent">fireComponentAttachEvent</a></code>,
+      <code><a href="muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#fireComponentDetachEvent">fireComponentDetachEvent</a></code>,
+      <code><a href="muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#getInvalidSizedChildren">getInvalidSizedChildren</a></code>,
+      <code><a href="muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#removeAllComponents">removeAllComponents</a></code>,
+      <code><a href="muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#repaintChangedChildTrees">repaintChangedChildTrees</a></code>,
+      <code><a href="muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#repaintChildTrees">repaintChildTrees</a></code>,
+      <code><a href="muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#requestRepaintAll">requestRepaintAll</a></code>,
+      <code><a href="muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#setEnabled">setEnabled</a></code>,
+      <code><a href="muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#setHeight">setHeight</a></code>,
+      <code><a href="muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#setWidth">setWidth</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html">abstract_component.AbstractComponent</a></code></b>:
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#__getstate__">__getstate__</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#__setstate__">__setstate__</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#addStyleName">addStyleName</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#childRequestedRepaint">childRequestedRepaint</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#fireComponentErrorEvent">fireComponentErrorEvent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#fireComponentEvent">fireComponentEvent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#fireEvent">fireEvent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#fireRequestRepaintEvent">fireRequestRepaintEvent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#focus">focus</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getApplication">getApplication</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getCSSHeight">getCSSHeight</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getCSSWidth">getCSSWidth</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getCaption">getCaption</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getComponentError">getComponentError</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getData">getData</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getDebugId">getDebugId</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getDescription">getDescription</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getErrorHandler">getErrorHandler</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getErrorMessage">getErrorMessage</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getHeight">getHeight</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getHeightUnits">getHeightUnits</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getIcon">getIcon</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getListeners">getListeners</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getLocale">getLocale</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getParent">getParent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getStyle">getStyle</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getStyleName">getStyleName</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getWidth">getWidth</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getWidthUnits">getWidthUnits</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getWindow">getWindow</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#handleError">handleError</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#hasListeners">hasListeners</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#isEnabled">isEnabled</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#isImmediate">isImmediate</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#isReadOnly">isReadOnly</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#isVisible">isVisible</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#paint">paint</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#parseStringSize">parseStringSize</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#registerCallback">registerCallback</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#registerListener">registerListener</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#removeStyleName">removeStyleName</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#requestRepaint">requestRepaint</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#requestRepaintRequests">requestRepaintRequests</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setCaption">setCaption</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setComponentError">setComponentError</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setData">setData</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setDebugId">setDebugId</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setDescription">setDescription</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setErrorHandler">setErrorHandler</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setHeightUnits">setHeightUnits</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setIcon">setIcon</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setImmediate">setImmediate</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setLocale">setLocale</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setParent">setParent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setReadOnly">setReadOnly</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setSizeFull">setSizeFull</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setSizeUndefined">setSizeUndefined</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setStyle">setStyle</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setStyleName">setStyleName</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setVisible">setVisible</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setWidthUnits">setWidthUnits</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#withdrawCallback">withdrawCallback</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#withdrawListener">withdrawListener</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="CLIENT_WIDGET"></a><span class="summary-name">CLIENT_WIDGET</span> = <code title="None">None</code><br />
+      hash(x)
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html">abstract_component.AbstractComponent</a></code></b>:
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#SIZE_PATTERN">SIZE_PATTERN</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a></code></b>:
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#SIZE_UNDEFINED">SIZE_UNDEFINED</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_CM">UNITS_CM</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_EM">UNITS_EM</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_EX">UNITS_EX</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_INCH">UNITS_INCH</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_MM">UNITS_MM</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_PERCENTAGE">UNITS_PERCENTAGE</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_PICAS">UNITS_PICAS</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_PIXELS">UNITS_PIXELS</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_POINTS">UNITS_POINTS</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNIT_SYMBOLS">UNIT_SYMBOLS</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== INSTANCE VARIABLES ==================== -->
+<a name="section-InstanceVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="muntjac.ui.tab_sheet.TabSheet-class.html#_components" class="summary-name" onclick="show_private();">_components</a><br />
+      List of component tabs (tab contents).
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_tabs"></a><span class="summary-name">_tabs</span><br />
+      Map containing information related to the tabs (caption, icon etc).
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_selected"></a><span class="summary-name">_selected</span><br />
+      Selected tab content component.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_keyMapper"></a><span class="summary-name">_keyMapper</span><br />
+      Mapper between server-side component instances (tab contents) and
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_tabsHidden"></a><span class="summary-name">_tabsHidden</span><br />
+      When true, the tab selection area is not displayed to the user.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_paintedTabs"></a><span class="summary-name">_paintedTabs</span><br />
+      Tabs that have been shown to the user (have been painted as
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_closeHandler"></a><span class="summary-name">_closeHandler</span><br />
+      Handler to be called when a tab is closed.
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html">abstract_component.AbstractComponent</a></code></b> (private):
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_applicationData" onclick="show_private();">_applicationData</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_caption" onclick="show_private();">_caption</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_componentError" onclick="show_private();">_componentError</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_delayedFocus" onclick="show_private();">_delayedFocus</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_description" onclick="show_private();">_description</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_enabled" onclick="show_private();">_enabled</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_eventIdentifiers" onclick="show_private();">_eventIdentifiers</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_eventRouter" onclick="show_private();">_eventRouter</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_icon" onclick="show_private();">_icon</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_immediate" onclick="show_private();">_immediate</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_locale" onclick="show_private();">_locale</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_parent" onclick="show_private();">_parent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_readOnly" onclick="show_private();">_readOnly</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_repaintRequestListeners" onclick="show_private();">_repaintRequestListeners</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_repaintRequestListenersNotified" onclick="show_private();">_repaintRequestListenersNotified</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_styles" onclick="show_private();">_styles</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_visible" onclick="show_private();">_visible</a></code>
+      </p></div>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Constructs a new Tabsheet. Tabsheet is immediate by default, and the 
+  default close handler removes the tab being closed.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getComponentIterator"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getComponentIterator</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.getComponentIterator">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the component container iterator for going through all the 
+  components (tab contents).</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the unmodifiable Iterator of the tab content components</dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.component_container.IComponentContainer-class.html#getComponentIterator">component_container.IComponentContainer.getComponentIterator</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getComponentCount"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getComponentCount</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.getComponentCount">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the number of contained components (tabs). Consistent with the 
+  iterator returned by <a 
+  href="muntjac.ui.tab_sheet.TabSheet-class.html#getComponentIterator" 
+  class="link">getComponentIterator</a>.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the number of contained components</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeComponent"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeComponent</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">c</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.removeComponent">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes a component and its corresponding tab.</p>
+  <p>If the tab was selected, the first eligible (visible and enabled) 
+  remaining tab is selected.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>c</code></strong> - the component to be removed.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.component_container.IComponentContainer-class.html#removeComponent">component_container.IComponentContainer.removeComponent</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeTab"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeTab</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">tab</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.removeTab">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes a <a href="muntjac.ui.tab_sheet.ITab-class.html" 
+  class="link">ITab</a> and the component associated with it, as previously
+  added with <a href="muntjac.ui.tab_sheet.TabSheet-class.html#addTab" 
+  class="link">addTab</a>, or <a 
+  href="muntjac.ui.tab_sheet.TabSheet-class.html#addComponent" 
+  class="link">addComponent</a>.</p>
+  <p>If the tab was selected, the first eligible (visible and enabled) 
+  remaining tab is selected.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>tab</code></strong> - the ITab to remove</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <dl><dt>See Also:</dt>
+        <dd>
+          <a href="muntjac.ui.tab_sheet.TabSheet-class.html#addTab" 
+          class="link">addTab</a>,
+          <a href="muntjac.ui.tab_sheet.TabSheet-class.html#addComponent" 
+          class="link">addComponent</a>,
+          <a 
+          href="muntjac.ui.tab_sheet.TabSheet-class.html#removeComponent" 
+          class="link">removeComponent</a>
+        </dd>
+      </dl>
+</div></td></tr></table>
+</div>
+<a name="addComponent"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addComponent</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">c</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.addComponent">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds a new tab into TabSheet. IComponent caption and icon are copied 
+  to the tab metadata at creation time.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>c</code></strong> - the component to be added.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.component_container.IComponentContainer-class.html#addComponent">component_container.IComponentContainer.addComponent</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a href="muntjac.ui.tab_sheet.TabSheet-class.html#addTab" 
+        class="link">addTab</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="addTab"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addTab</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.addTab">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds a new tab into TabSheet.</p>
+  <p>The first tab added to a tab sheet is automatically selected and a tab
+  selection event is fired.</p>
+  <p>If the component is already present in the tab sheet, changes its 
+  caption and icon and returns the corresponding (old) tab, preserving 
+  other tab metadata.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>args</code></strong> - tuple of the form
+          <ul>
+            <li>
+              (c, caption, icon)
+              <ol start="1">
+                <li>
+                  the component to be added onto tab - should not be null.
+                </li>
+                <li>
+                  the caption to be set for the component and used rendered
+                  in tab bar
+                </li>
+                <li>
+                  the icon to be set for the component and used rendered in
+                  tab bar
+                </li>
+              </ol>
+            </li>
+            <li>
+              (c, caption, icon, position)
+              <ol start="1">
+                <li>
+                  the component to be added onto tab - should not be null.
+                </li>
+                <li>
+                  the caption to be set for the component and used rendered
+                  in tab bar
+                </li>
+                <li>
+                  the icon to be set for the component and used rendered in
+                  tab bar
+                </li>
+                <li>
+                  the position at where the the tab should be added
+                </li>
+              </ol>
+            </li>
+            <li>
+              (c)
+              <ol start="1">
+                <li>
+                  the component to be added onto tab - should not be null.
+                </li>
+              </ol>
+            </li>
+            <li>
+              (c, position)
+              <ol start="1">
+                <li>
+                  the component to be added onto tab - should not be null.
+                </li>
+                <li>
+                  The position where the tab should be added
+                </li>
+              </ol>
+            </li>
+            <li>
+              (c, caption)
+              <ol start="1">
+                <li>
+                  the component to be added onto tab - should not be null.
+                </li>
+                <li>
+                  the caption to be set for the component and used rendered
+                  in tab bar
+                </li>
+              </ol>
+            </li>
+          </ul></li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>the created <a href="muntjac.ui.tab_sheet.ITab-class.html" 
+          class="link">ITab</a></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="moveComponentsFrom"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">moveComponentsFrom</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">source</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.moveComponentsFrom">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Moves all components from another container to this container. The 
+  components are removed from the other container.</p>
+  <p>If the source container is a <a 
+  href="muntjac.ui.tab_sheet.TabSheet-class.html" 
+  class="link">TabSheet</a>, component captions and icons are copied from 
+  it.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>source</code></strong> - the container components are removed from.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.component_container.IComponentContainer-class.html#moveComponentsFrom">component_container.IComponentContainer.moveComponentsFrom</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="paintContent"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">paintContent</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">target</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.paintContent">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Paints the content of this component.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>target</code></strong> - the paint target</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="muntjac.terminal.paint_exception.PaintException-class.html">PaintException</a></strong></code> - if the paint operation failed.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.abstract_component.AbstractComponent-class.html#paintContent">abstract_component.AbstractComponent.paintContent</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="areTabsHidden"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">areTabsHidden</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.areTabsHidden">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Are the tab selection parts (&quot;tabs&quot;) hidden.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true if the tabs are hidden in the UI</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="hideTabs"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">hideTabs</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">tabsHidden</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.hideTabs">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Hides or shows the tab selection parts (&quot;tabs&quot;).</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>tabsHidden</code></strong> - true if the tabs should be hidden</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getTabCaption"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getTabCaption</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">c</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.getTabCaption">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets tab caption. The tab is identified by the tab content 
+  component.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>c</code></strong> - the component in the tab</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>Deprecated:</strong>
+        Use <a href="muntjac.ui.tab_sheet.TabSheet-class.html#getTab" 
+    class="link">getTab</a> and <a 
+    href="muntjac.ui.tab_sheet.ITab-class.html#getCaption" 
+    class="link">ITab.getCaption</a> instead.
+      </p>
+</div></td></tr></table>
+</div>
+<a name="setTabCaption"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setTabCaption</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">c</span>,
+        <span class="sig-arg">caption</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.setTabCaption">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets tab caption. The tab is identified by the tab content 
+  component.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>c</code></strong> - the component in the tab</li>
+        <li><strong class="pname"><code>caption</code></strong> - the caption to set.</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>Deprecated:</strong>
+        Use <a href="muntjac.ui.tab_sheet.TabSheet-class.html#getTab" 
+    class="link">getTab</a> and <a 
+    href="muntjac.ui.tab_sheet.ITab-class.html#setCaption" 
+    class="link">ITab.setCaption</a> instead.
+      </p>
+</div></td></tr></table>
+</div>
+<a name="getTabIcon"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getTabIcon</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">c</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.getTabIcon">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the icon for a tab. The tab is identified by the tab content 
+  component.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>c</code></strong> - the component in the tab</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>Deprecated:</strong>
+        Use <a href="muntjac.ui.tab_sheet.TabSheet-class.html#getTab" 
+    class="link">getTab</a> and <a 
+    href="muntjac.ui.tab_sheet.ITab-class.html#getIcon" 
+    class="link">ITab.getIcon</a> instead.
+      </p>
+</div></td></tr></table>
+</div>
+<a name="setTabIcon"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setTabIcon</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">c</span>,
+        <span class="sig-arg">icon</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.setTabIcon">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets icon for the given component. The tab is identified by the tab 
+  content component.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>c</code></strong> - the component in the tab</li>
+        <li><strong class="pname"><code>icon</code></strong> - the icon to set</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>Deprecated:</strong>
+        Use <a href="muntjac.ui.tab_sheet.TabSheet-class.html#getTab" 
+    class="link">getTab</a> and <a 
+    href="muntjac.ui.tab_sheet.ITab-class.html#setIcon" 
+    class="link">ITab.setIcon</a> instead.
+      </p>
+</div></td></tr></table>
+</div>
+<a name="getTab"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getTab</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">arg</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.getTab">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the <a href="muntjac.ui.tab_sheet.ITab-class.html" 
+  class="link">ITab</a> (metadata) for a component. The <a 
+  href="muntjac.ui.tab_sheet.ITab-class.html" class="link">ITab</a> object 
+  can be used for setting caption,icon, etc for the tab.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>arg</code></strong> - the component or the position of the tab</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setSelectedTab"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setSelectedTab</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">c</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.setSelectedTab">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the selected tab. The tab is identified by the tab content 
+  component.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="updateSelection"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">updateSelection</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.updateSelection">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Checks if the current selection is valid, and updates the selection if
+  the previously selected component is not visible and enabled. The first 
+  visible and enabled tab is selected if the current selection is empty or 
+  invalid.</p>
+  <p>This method does not fire tab change events, but the caller should do 
+  so if appropriate.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true if selection was changed, false otherwise</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getSelectedTab"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getSelectedTab</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.getSelectedTab">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the selected tab content component.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the selected tab contents</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="changeVariables"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">changeVariables</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">source</span>,
+        <span class="sig-arg">variables</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.changeVariables">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Called when one or more variables handled by the implementing class 
+  are changed.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>source</code></strong> - the Source of the variable change. This is the origin of the 
+          event. For example in Web Adapter this is the request.</li>
+        <li><strong class="pname"><code>variables</code></strong> - the Mapping from variable names to new variable values.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.terminal.variable_owner.IVariableOwner-class.html#changeVariables">terminal.variable_owner.IVariableOwner.changeVariables</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="replaceComponent"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">replaceComponent</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">oldComponent</span>,
+        <span class="sig-arg">newComponent</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.replaceComponent">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Replaces a component (tab content) with another. This can be used to 
+  change tab contents or to rearrange tabs. The tab position and some 
+  metadata are preserved when moving components within the same <a 
+  href="muntjac.ui.tab_sheet.TabSheet-class.html" 
+  class="link">TabSheet</a>.</p>
+  <p>If the oldComponent is not present in the tab sheet, the new one is 
+  added at the end.</p>
+  <p>If the oldComponent is already in the tab sheet but the newComponent 
+  isn't, the old tab is replaced with a new one, and the caption and icon 
+  of the old one are copied to the new tab.</p>
+  <p>If both old and new components are present, their positions are 
+  swapped.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>oldComponent</code></strong> - the old component that will be replaced.</li>
+        <li><strong class="pname"><code>newComponent</code></strong> - the new component to be replaced.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.component_container.IComponentContainer-class.html#replaceComponent">component_container.IComponentContainer.replaceComponent</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addListener"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addListener</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">listener</span>,
+        <span class="sig-arg">iface</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.addListener">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds a tab selection listener</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>listener</code></strong> - the Listener to be added.</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>ValueError</strong></code> - unless <code>method</code> has a match in <code>object</code></li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.event.method_event_source.IMethodEventSource-class.html#addListener">event.method_event_source.IMethodEventSource.addListener</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addCallback"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addCallback</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">callback</span>,
+        <span class="sig-arg">eventType</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.addCallback">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.terminal.paintable.IPaintable-class.html#addCallback">terminal.paintable.IPaintable.addCallback</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeListener"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeListener</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">listener</span>,
+        <span class="sig-arg">iface</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.removeListener">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes a tab selection listener</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>listener</code></strong> - the Listener to be removed.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.event.method_event_source.IMethodEventSource-class.html#removeListener">event.method_event_source.IMethodEventSource.removeListener</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeCallback"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeCallback</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">callback</span>,
+        <span class="sig-arg">eventType</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.removeCallback">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.terminal.paintable.IPaintable-class.html#removeCallback">terminal.paintable.IPaintable.removeCallback</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setCloseHandler"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setCloseHandler</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">handler</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.setCloseHandler">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Provide a custom <a 
+  href="muntjac.ui.tab_sheet.ICloseHandler-class.html" 
+  class="link">ICloseHandler</a> for this TabSheet if you wish to perform 
+  some additional tasks when a user clicks on a tabs close button, e.g. 
+  show a confirmation dialogue before removing the tab.</p>
+  <p>To remove the tab, if you provide your own close handler, you must 
+  call <a href="muntjac.ui.tab_sheet.TabSheet-class.html#removeComponent" 
+  class="link">removeComponent</a> yourself.</p>
+  <p>The default ICloseHandler for TabSheet will only remove the tab.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="setTabPosition"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setTabPosition</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">tab</span>,
+        <span class="sig-arg">position</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.setTabPosition">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the position of the tab.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>tab</code></strong> - The tab</li>
+        <li><strong class="pname"><code>position</code></strong> - The new position of the tab</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getTabPosition"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getTabPosition</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">tab</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#TabSheet.getTabPosition">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the position of the tab</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>tab</code></strong> - The tab</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== INSTANCE VARIABLE DETAILS ==================== -->
+<a name="section-InstanceVariableDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Variable Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceVariableDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="_components"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">_components</h3>
+  <p>List of component tabs (tab contents). In addition to being on 
+  this</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:04:02 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

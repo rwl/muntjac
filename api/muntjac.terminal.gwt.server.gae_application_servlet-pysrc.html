@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.terminal.gwt.server.gae_application_servlet</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.terminal-module.html">Package&nbsp;terminal</a> ::
+        <a href="muntjac.terminal.gwt-module.html">Package&nbsp;gwt</a> ::
+        <a href="muntjac.terminal.gwt.server-module.html">Package&nbsp;server</a> ::
+        Module&nbsp;gae_application_servlet
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.terminal.gwt.server.gae_application_servlet-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="muntjac.terminal.gwt.server.gae_application_servlet-module.html">Module muntjac.terminal.gwt.server.gae_application_servlet</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">gaesessions</tt> <tt class="py-keyword">import</tt> <tt class="py-name">get_current_session</tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Package muntjac=muntjac-module.html,Function muntjac.main.muntjac()=muntjac.main-module.html#muntjac"><a title="muntjac
+muntjac.main.muntjac" class="py-name" href="#" onclick="return doclink('link-0', 'muntjac', 'link-0');">muntjac</a></tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Package muntjac.terminal=muntjac.terminal-module.html,Module muntjac.terminal.terminal=muntjac.terminal.terminal-module.html"><a title="muntjac.terminal
+muntjac.terminal.terminal" class="py-name" href="#" onclick="return doclink('link-1', 'terminal', 'link-1');">terminal</a></tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Package muntjac.terminal.gwt=muntjac.terminal.gwt-module.html"><a title="muntjac.terminal.gwt" class="py-name" href="#" onclick="return doclink('link-2', 'gwt', 'link-2');">gwt</a></tt><tt class="py-op">.</tt><tt id="link-3" class="py-name" targets="Package muntjac.terminal.gwt.server=muntjac.terminal.gwt.server-module.html"><a title="muntjac.terminal.gwt.server" class="py-name" href="#" onclick="return doclink('link-3', 'server', 'link-3');">server</a></tt><tt class="py-op">.</tt><tt id="link-4" class="py-name" targets="Module muntjac.terminal.gwt.server.application_servlet=muntjac.terminal.gwt.server.application_servlet-module.html"><a title="muntjac.terminal.gwt.server.application_servlet" class="py-name" href="#" onclick="return doclink('link-4', 'application_servlet', 'link-4');">application_servlet</a></tt> <tt class="py-keyword">import</tt> <tt id="link-5" class="py-name" targets="Class muntjac.terminal.gwt.server.application_servlet.ApplicationServlet=muntjac.terminal.gwt.server.application_servlet.ApplicationServlet-class.html"><a title="muntjac.terminal.gwt.server.application_servlet.ApplicationServlet" class="py-name" href="#" onclick="return doclink('link-5', 'ApplicationServlet', 'link-5');">ApplicationServlet</a></tt> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-6" class="py-name"><a title="muntjac
+muntjac.main.muntjac" class="py-name" href="#" onclick="return doclink('link-6', 'muntjac', 'link-0');">muntjac</a></tt><tt class="py-op">.</tt><tt id="link-7" class="py-name"><a title="muntjac.terminal
+muntjac.terminal.terminal" class="py-name" href="#" onclick="return doclink('link-7', 'terminal', 'link-1');">terminal</a></tt><tt class="py-op">.</tt><tt id="link-8" class="py-name"><a title="muntjac.terminal.gwt" class="py-name" href="#" onclick="return doclink('link-8', 'gwt', 'link-2');">gwt</a></tt><tt class="py-op">.</tt><tt id="link-9" class="py-name"><a title="muntjac.terminal.gwt.server" class="py-name" href="#" onclick="return doclink('link-9', 'server', 'link-3');">server</a></tt><tt class="py-op">.</tt><tt id="link-10" class="py-name" targets="Module muntjac.terminal.gwt.server.abstract_application_servlet=muntjac.terminal.gwt.server.abstract_application_servlet-module.html"><a title="muntjac.terminal.gwt.server.abstract_application_servlet" class="py-name" href="#" onclick="return doclink('link-10', 'abstract_application_servlet', 'link-10');">abstract_application_servlet</a></tt> <tt class="py-keyword">import</tt> <tt id="link-11" class="py-name" targets="Class muntjac.terminal.gwt.server.abstract_application_servlet.RequestType=muntjac.terminal.gwt.server.abstract_application_servlet.RequestType-class.html"><a title="muntjac.terminal.gwt.server.abstract_application_servlet.RequestType" class="py-name" href="#" onclick="return doclink('link-11', 'RequestType', 'link-11');">RequestType</a></tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-12" class="py-name"><a title="muntjac
+muntjac.main.muntjac" class="py-name" href="#" onclick="return doclink('link-12', 'muntjac', 'link-0');">muntjac</a></tt><tt class="py-op">.</tt><tt id="link-13" class="py-name" targets="Package muntjac.data.util=muntjac.data.util-module.html,Module muntjac.util=muntjac.util-module.html"><a title="muntjac.data.util
+muntjac.util" class="py-name" href="#" onclick="return doclink('link-13', 'util', 'link-13');">util</a></tt> <tt class="py-keyword">import</tt> <tt id="link-14" class="py-name" targets="Function muntjac.util.totalseconds()=muntjac.util-module.html#totalseconds"><a title="muntjac.util.totalseconds" class="py-name" href="#" onclick="return doclink('link-14', 'totalseconds', 'link-14');">totalseconds</a></tt> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"> </tt>
+<a name="GaeApplicationServlet"></a><div id="GaeApplicationServlet-def"><a name="L11"></a><tt class="py-lineno">11</tt> <a class="py-toggle" href="#" id="GaeApplicationServlet-toggle" onclick="return toggle('GaeApplicationServlet');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.terminal.gwt.server.gae_application_servlet.GaeApplicationServlet-class.html">GaeApplicationServlet</a><tt class="py-op">(</tt><tt class="py-base-class">ApplicationServlet</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="GaeApplicationServlet-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="GaeApplicationServlet-expanded"><a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line">    <tt id="link-15" class="py-name" targets="Variable muntjac.terminal.gwt.server.gae_application_servlet.GaeApplicationServlet.SID=muntjac.terminal.gwt.server.gae_application_servlet.GaeApplicationServlet-class.html#SID"><a title="muntjac.terminal.gwt.server.gae_application_servlet.GaeApplicationServlet.SID" class="py-name" href="#" onclick="return doclink('link-15', 'SID', 'link-15');">SID</a></tt> <tt class="py-op">=</tt> <tt class="py-string">'0ce25c442d1f4fad8fb6eb44f24ff4a5e0df89e07ae97a3f'</tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"> </tt>
+<a name="GaeApplicationServlet.service"></a><div id="GaeApplicationServlet.service-def"><a name="L15"></a><tt class="py-lineno">15</tt> <a class="py-toggle" href="#" id="GaeApplicationServlet.service-toggle" onclick="return toggle('GaeApplicationServlet.service');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.gwt.server.gae_application_servlet.GaeApplicationServlet-class.html#service">service</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">request</tt><tt class="py-op">,</tt> <tt class="py-param">response</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="GaeApplicationServlet.service-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="GaeApplicationServlet.service-expanded"><a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line">        <tt class="py-name">requestType</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-16" class="py-name" targets="Method muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet.getRequestType()=muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getRequestType,Method muntjac.terminal.gwt.server.drag_and_drop_service.DragAndDropService.getRequestType()=muntjac.terminal.gwt.server.drag_and_drop_service.DragAndDropService-class.html#getRequestType"><a title="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet.getRequestType
+muntjac.terminal.gwt.server.drag_and_drop_service.DragAndDropService.getRequestType" class="py-name" href="#" onclick="return doclink('link-16', 'getRequestType', 'link-16');">getRequestType</a></tt><tt class="py-op">(</tt><tt class="py-name">request</tt><tt class="py-op">)</tt> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">requestType</tt> <tt class="py-op">==</tt> <tt id="link-17" class="py-name"><a title="muntjac.terminal.gwt.server.abstract_application_servlet.RequestType" class="py-name" href="#" onclick="return doclink('link-17', 'RequestType', 'link-11');">RequestType</a></tt><tt class="py-op">.</tt><tt id="link-18" class="py-name" targets="Variable muntjac.terminal.gwt.server.abstract_application_servlet.RequestType.UIDL=muntjac.terminal.gwt.server.abstract_application_servlet.RequestType-class.html#UIDL"><a title="muntjac.terminal.gwt.server.abstract_application_servlet.RequestType.UIDL" class="py-name" href="#" onclick="return doclink('link-18', 'UIDL', 'link-18');">UIDL</a></tt><tt class="py-op">:</tt> </tt>
+<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line">            <tt class="py-name">session</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-19" class="py-name" targets="Method muntjac.terminal.gwt.server.abstract_communication_manager.IRequest.getSession()=muntjac.terminal.gwt.server.abstract_communication_manager.IRequest-class.html#getSession,Method muntjac.terminal.gwt.server.communication_manager.HttpServletRequestWrapper.getSession()=muntjac.terminal.gwt.server.communication_manager.HttpServletRequestWrapper-class.html#getSession,Method muntjac.terminal.gwt.server.gae_application_servlet.GaeApplicationServlet.getSession()=muntjac.terminal.gwt.server.gae_application_servlet.GaeApplicationServlet-class.html#getSession,Method muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet.getSession()=muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getSession"><a title="muntjac.terminal.gwt.server.abstract_communication_manager.IRequest.getSession
+muntjac.terminal.gwt.server.communication_manager.HttpServletRequestWrapper.getSession
+muntjac.terminal.gwt.server.gae_application_servlet.GaeApplicationServlet.getSession
+muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet.getSession" class="py-name" href="#" onclick="return doclink('link-19', 'getSession', 'link-19');">getSession</a></tt><tt class="py-op">(</tt><tt class="py-name">request</tt><tt class="py-op">,</tt> <tt class="py-name">False</tt><tt class="py-op">)</tt> </tt>
+<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line"> </tt>
+<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line">            <tt class="py-keyword">if</tt> <tt class="py-op">(</tt><tt class="py-name">session</tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">)</tt> <tt class="py-keyword">and</tt> <tt class="py-name">session</tt><tt class="py-op">.</tt><tt class="py-name">is_active</tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line">                <tt class="py-comment"># force session save each request</tt> </tt>
+<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line">                <tt class="py-name">reqs</tt> <tt class="py-op">=</tt> <tt class="py-name">session</tt><tt class="py-op">.</tt><tt id="link-20" class="py-name" targets="Class Method muntjac.event.dd.acceptcriteria.accept_all.AcceptAll.get()=muntjac.event.dd.acceptcriteria.accept_all.AcceptAll-class.html#get,Class Method muntjac.event.dd.acceptcriteria.source_is_target.SourceIsTarget.get()=muntjac.event.dd.acceptcriteria.source_is_target.SourceIsTarget-class.html#get,Method muntjac.terminal.key_mapper.KeyMapper.get()=muntjac.terminal.key_mapper.KeyMapper-class.html#get,Class Method muntjac.ui.default_field_factory.DefaultFieldFactory.get()=muntjac.ui.default_field_factory.DefaultFieldFactory-class.html#get,Class Method muntjac.ui.tree.TargetItemAllowsChildren.get()=muntjac.ui.tree.TargetItemAllowsChildren-class.html#get"><a title="muntjac.event.dd.acceptcriteria.accept_all.AcceptAll.get
+muntjac.event.dd.acceptcriteria.source_is_target.SourceIsTarget.get
+muntjac.terminal.key_mapper.KeyMapper.get
+muntjac.ui.default_field_factory.DefaultFieldFactory.get
+muntjac.ui.tree.TargetItemAllowsChildren.get" class="py-name" href="#" onclick="return doclink('link-20', 'get', 'link-20');">get</a></tt><tt class="py-op">(</tt><tt class="py-string">'uidl_reqs'</tt><tt class="py-op">,</tt> <tt class="py-number">0</tt><tt class="py-op">)</tt> </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line">                <tt class="py-name">session</tt><tt class="py-op">[</tt><tt class="py-string">'uidl_reqs'</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">reqs</tt> <tt class="py-op">+</tt> <tt class="py-number">1</tt> </tt>
+<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line"> </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line">        <tt class="py-name">super</tt><tt class="py-op">(</tt><tt id="link-21" class="py-name" targets="Class muntjac.terminal.gwt.server.gae_application_servlet.GaeApplicationServlet=muntjac.terminal.gwt.server.gae_application_servlet.GaeApplicationServlet-class.html"><a title="muntjac.terminal.gwt.server.gae_application_servlet.GaeApplicationServlet" class="py-name" href="#" onclick="return doclink('link-21', 'GaeApplicationServlet', 'link-21');">GaeApplicationServlet</a></tt><tt class="py-op">,</tt> <tt class="py-name">self</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt id="link-22" class="py-name" targets="Package muntjac.service=muntjac.service-module.html,Method muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet.service()=muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#service,Method muntjac.terminal.gwt.server.gae_application_servlet.GaeApplicationServlet.service()=muntjac.terminal.gwt.server.gae_application_servlet.GaeApplicationServlet-class.html#service,Method muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet.service()=muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#service"><a title="muntjac.service
+muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet.service
+muntjac.terminal.gwt.server.gae_application_servlet.GaeApplicationServlet.service
+muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet.service" class="py-name" href="#" onclick="return doclink('link-22', 'service', 'link-22');">service</a></tt><tt class="py-op">(</tt><tt class="py-name">request</tt><tt class="py-op">,</tt> <tt class="py-name">response</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line"> </tt>
+<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line"> </tt>
+<a name="GaeApplicationServlet.getSession"></a><div id="GaeApplicationServlet.getSession-def"><a name="L30"></a><tt class="py-lineno">30</tt> <a class="py-toggle" href="#" id="GaeApplicationServlet.getSession-toggle" onclick="return toggle('GaeApplicationServlet.getSession');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.gwt.server.gae_application_servlet.GaeApplicationServlet-class.html#getSession">getSession</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">request</tt><tt class="py-op">,</tt> <tt class="py-param">allowSessionCreation</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="GaeApplicationServlet.getSession-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="GaeApplicationServlet.getSession-expanded"><a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">allowSessionCreation</tt><tt class="py-op">:</tt> </tt>
+<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">get_current_session</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line">            <tt class="py-name">s</tt> <tt class="py-op">=</tt> <tt class="py-name">get_current_session</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line">            <tt class="py-keyword">if</tt> <tt class="py-name">s</tt><tt class="py-op">.</tt><tt class="py-name">is_active</tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line">                <tt class="py-keyword">return</tt> <tt class="py-name">s</tt> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line">            <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line">                <tt class="py-keyword">return</tt> <tt class="py-name">None</tt> </tt>
+</div><a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line"> </tt>
+<a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line"> </tt>
+<a name="GaeApplicationServlet.invalidateSession"></a><div id="GaeApplicationServlet.invalidateSession-def"><a name="L41"></a><tt class="py-lineno">41</tt> <a class="py-toggle" href="#" id="GaeApplicationServlet.invalidateSession-toggle" onclick="return toggle('GaeApplicationServlet.invalidateSession');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.gwt.server.gae_application_servlet.GaeApplicationServlet-class.html#invalidateSession">invalidateSession</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">request</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="GaeApplicationServlet.invalidateSession-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="GaeApplicationServlet.invalidateSession-expanded"><a name="L42"></a><tt class="py-lineno">42</tt>  <tt class="py-line">        <tt class="py-name">session</tt> <tt class="py-op">=</tt> <tt class="py-name">request</tt><tt class="py-op">.</tt><tt class="py-name">session</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line">        <tt class="py-name">session</tt><tt class="py-op">.</tt><tt class="py-name">terminate</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line"> </tt>
+<a name="L45"></a><tt class="py-lineno">45</tt>  <tt class="py-line"> </tt>
+<a name="GaeApplicationServlet.getSessionId"></a><div id="GaeApplicationServlet.getSessionId-def"><a name="L46"></a><tt class="py-lineno">46</tt> <a class="py-toggle" href="#" id="GaeApplicationServlet.getSessionId-toggle" onclick="return toggle('GaeApplicationServlet.getSessionId');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.gwt.server.gae_application_servlet.GaeApplicationServlet-class.html#getSessionId">getSessionId</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">request</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="GaeApplicationServlet.getSessionId-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="GaeApplicationServlet.getSessionId-expanded"><a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line">        <tt class="py-name">sid</tt> <tt class="py-op">=</tt> <tt class="py-name">get_current_session</tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">sid</tt> </tt>
+<a name="L48"></a><tt class="py-lineno">48</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">sid</tt> </tt>
+</div><a name="L49"></a><tt class="py-lineno">49</tt>  <tt class="py-line"> </tt>
+<a name="L50"></a><tt class="py-lineno">50</tt>  <tt class="py-line"> </tt>
+<a name="GaeApplicationServlet.getSessionAttribute"></a><div id="GaeApplicationServlet.getSessionAttribute-def"><a name="L51"></a><tt class="py-lineno">51</tt> <a class="py-toggle" href="#" id="GaeApplicationServlet.getSessionAttribute-toggle" onclick="return toggle('GaeApplicationServlet.getSessionAttribute');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.gwt.server.gae_application_servlet.GaeApplicationServlet-class.html#getSessionAttribute">getSessionAttribute</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">session</tt><tt class="py-op">,</tt> <tt class="py-param">name</tt><tt class="py-op">,</tt> <tt class="py-param">default</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="GaeApplicationServlet.getSessionAttribute-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="GaeApplicationServlet.getSessionAttribute-expanded"><a name="L52"></a><tt class="py-lineno">52</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">session</tt><tt class="py-op">.</tt><tt id="link-23" class="py-name"><a title="muntjac.event.dd.acceptcriteria.accept_all.AcceptAll.get
+muntjac.event.dd.acceptcriteria.source_is_target.SourceIsTarget.get
+muntjac.terminal.key_mapper.KeyMapper.get
+muntjac.ui.default_field_factory.DefaultFieldFactory.get
+muntjac.ui.tree.TargetItemAllowsChildren.get" class="py-name" href="#" onclick="return doclink('link-23', 'get', 'link-20');">get</a></tt><tt class="py-op">(</tt><tt class="py-name">name</tt><tt class="py-op">,</tt> <tt class="py-name">default</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L53"></a><tt class="py-lineno">53</tt>  <tt class="py-line"> </tt>
+<a name="L54"></a><tt class="py-lineno">54</tt>  <tt class="py-line"> </tt>
+<a name="GaeApplicationServlet.setSessionAttribute"></a><div id="GaeApplicationServlet.setSessionAttribute-def"><a name="L55"></a><tt class="py-lineno">55</tt> <a class="py-toggle" href="#" id="GaeApplicationServlet.setSessionAttribute-toggle" onclick="return toggle('GaeApplicationServlet.setSessionAttribute');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.gwt.server.gae_application_servlet.GaeApplicationServlet-class.html#setSessionAttribute">setSessionAttribute</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">session</tt><tt class="py-op">,</tt> <tt class="py-param">name</tt><tt class="py-op">,</tt> <tt class="py-param">value</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="GaeApplicationServlet.setSessionAttribute-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="GaeApplicationServlet.setSessionAttribute-expanded"><a name="L56"></a><tt class="py-lineno">56</tt>  <tt class="py-line">        <tt class="py-name">session</tt><tt class="py-op">[</tt><tt class="py-name">name</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt id="link-24" class="py-name" targets="Variable muntjac.event.dd.acceptcriteria.client_criterion.ClientCriterion.value=muntjac.event.dd.acceptcriteria.client_criterion.ClientCriterion-class.html#value"><a title="muntjac.event.dd.acceptcriteria.client_criterion.ClientCriterion.value" class="py-name" href="#" onclick="return doclink('link-24', 'value', 'link-24');">value</a></tt> </tt>
+</div><a name="L57"></a><tt class="py-lineno">57</tt>  <tt class="py-line"> </tt>
+<a name="L58"></a><tt class="py-lineno">58</tt>  <tt class="py-line"> </tt>
+<a name="GaeApplicationServlet.getMaxInactiveInterval"></a><div id="GaeApplicationServlet.getMaxInactiveInterval-def"><a name="L59"></a><tt class="py-lineno">59</tt> <a class="py-toggle" href="#" id="GaeApplicationServlet.getMaxInactiveInterval-toggle" onclick="return toggle('GaeApplicationServlet.getMaxInactiveInterval');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.gwt.server.gae_application_servlet.GaeApplicationServlet-class.html#getMaxInactiveInterval">getMaxInactiveInterval</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">session</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="GaeApplicationServlet.getMaxInactiveInterval-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="GaeApplicationServlet.getMaxInactiveInterval-expanded"><a name="L60"></a><tt class="py-lineno">60</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">session</tt><tt class="py-op">.</tt><tt class="py-name">lifetime</tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L61"></a><tt class="py-lineno">61</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">int</tt><tt class="py-op">(</tt> <tt id="link-25" class="py-name"><a title="muntjac.util.totalseconds" class="py-name" href="#" onclick="return doclink('link-25', 'totalseconds', 'link-14');">totalseconds</a></tt><tt class="py-op">(</tt><tt class="py-name">session</tt><tt class="py-op">.</tt><tt class="py-name">lifetime</tt><tt class="py-op">)</tt> <tt class="py-op">)</tt> </tt>
+<a name="L62"></a><tt class="py-lineno">62</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L63"></a><tt class="py-lineno">63</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_timeout</tt> </tt>
+</div><a name="L64"></a><tt class="py-lineno">64</tt>  <tt class="py-line"> </tt>
+<a name="L65"></a><tt class="py-lineno">65</tt>  <tt class="py-line"> </tt>
+<a name="GaeApplicationServlet.isSessionNew"></a><div id="GaeApplicationServlet.isSessionNew-def"><a name="L66"></a><tt class="py-lineno">66</tt> <a class="py-toggle" href="#" id="GaeApplicationServlet.isSessionNew-toggle" onclick="return toggle('GaeApplicationServlet.isSessionNew');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.gwt.server.gae_application_servlet.GaeApplicationServlet-class.html#isSessionNew">isSessionNew</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">session</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="GaeApplicationServlet.isSessionNew-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="GaeApplicationServlet.isSessionNew-expanded"><a name="L67"></a><tt class="py-lineno">67</tt>  <tt class="py-line">        <tt class="py-keyword">raise</tt> <tt class="py-name">NotImplementedError</tt> </tt>
+</div></div><a name="L68"></a><tt class="py-lineno">68</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:04:04 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

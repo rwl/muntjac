@@ -1,0 +1,3287 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.terminal-module.html">Package&nbsp;terminal</a> ::
+        <a href="muntjac.terminal.gwt-module.html">Package&nbsp;gwt</a> ::
+        <a href="muntjac.terminal.gwt.server-module.html">Package&nbsp;server</a> ::
+        <a href="muntjac.terminal.gwt.server.abstract_application_servlet-module.html">Module&nbsp;abstract_application_servlet</a> ::
+        Class&nbsp;AbstractApplicationServlet
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class AbstractApplicationServlet</h1><p class="nomargin-top"><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+                    object --+            
+                             |            
+paste.webkit.wkservlet.Servlet --+        
+                                 |        
+paste.webkit.wkservlet.HTTPServlet --+    
+                                     |    
+   <a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html">paste_wsgi_servlet.PasteWsgiServlet</a> --+
+                                         |
+                            object --+   |
+                                     |   |
+                   <a href="muntjac.terminal.gwt.server.constants.Constants-class.html">constants.Constants</a> --+
+                                         |
+                                        <strong class="uidshort">AbstractApplicationServlet</strong>
+</pre>
+
+<dl><dt>Known Subclasses:</dt>
+<dd>
+      <ul class="subclass-list">
+<li><a href="muntjac.terminal.gwt.server.application_runner_servlet.ApplicationRunnerServlet-class.html">application_runner_servlet.ApplicationRunnerServlet</a></li><li>, <a href="muntjac.terminal.gwt.server.application_servlet.ApplicationServlet-class.html">application_servlet.ApplicationServlet</a></li>  </ul>
+</dd></dl>
+
+<hr />
+<p>Abstract implementation of the ApplicationServlet which handles all 
+  communication between the client and the server.</p>
+  <p>It is possible to extend this class to provide own functionality but 
+  in most cases this is unnecessary.</p>
+
+<hr />
+<div class="fields">      <dl><dt>Authors:</dt>
+        <dd>
+          Vaadin Ltd.,
+          Richard Lincoln
+        </dd>
+      </dl>
+      <p><strong>Version:</strong>
+        1.0.1
+      </p>
+</div><!-- ==================== NESTED CLASSES ==================== -->
+<a name="section-NestedClasses"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Nested Classes</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-NestedClasses"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html">paste_wsgi_servlet.PasteWsgiServlet</a></code></b>:
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.EndResponseException-class.html">EndResponse</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>paste.webkit.wkservlet.Servlet</code></b>:
+      <code><a href="paste.webkit.wkservlet.ReturnIterException-class.html">ReturnIterException</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">productionMode</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">debug</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">widgetset</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">resourceCacheTime</span>=<span class="summary-sig-default">3600</span>,
+        <span class="summary-sig-arg">disableXsrfProtection</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">*args</span>,
+        <span class="summary-sig-arg">**kw_args</span>)</span><br />
+      x.__init__(...) initializes x; see help(type(x)) for signature</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#browserHasNewestVersion" class="summary-sig-name">browserHasNewestVersion</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>,
+        <span class="summary-sig-arg">resourceLastModifiedTimestamp</span>)</span><br />
+      Checks if the browser has an up to date cached version of requested 
+      resource.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.browserHasNewestVersion">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="checkCrossSiteProtection"></a><span class="summary-sig-name">checkCrossSiteProtection</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.checkCrossSiteProtection">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="checkProductionMode"></a><span class="summary-sig-name">checkProductionMode</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Check if the application is in production mode.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.checkProductionMode">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="checkResourceCacheTime"></a><span class="summary-sig-name">checkResourceCacheTime</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.checkResourceCacheTime">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="checkWidgetsetVersion"></a><span class="summary-sig-name">checkWidgetsetVersion</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>)</span><br />
+      Checks that the version reported by the client (widgetset) matches 
+      that of the server.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.checkWidgetsetVersion">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="closeApplication"></a><span class="summary-sig-name">closeApplication</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">application</span>,
+        <span class="summary-sig-arg">session</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.closeApplication">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#createApplication" class="summary-sig-name">createApplication</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>)</span><br />
+      Creates a new application and registers it into WebApplicationContext
+      (aka session).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.createApplication">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#createCommunicationManager" class="summary-sig-name">createCommunicationManager</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">application</span>)</span><br />
+      Override this method if you need to use a specialized communication 
+      mananger implementation.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.createCommunicationManager">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#criticalNotification" class="summary-sig-name">criticalNotification</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>,
+        <span class="summary-sig-arg">response</span>,
+        <span class="summary-sig-arg">caption</span>,
+        <span class="summary-sig-arg">message</span>,
+        <span class="summary-sig-arg">details</span>,
+        <span class="summary-sig-arg">url</span>)</span><br />
+      Send a notification to client's application.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.criticalNotification">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#endApplication" class="summary-sig-name">endApplication</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>,
+        <span class="summary-sig-arg">response</span>,
+        <span class="summary-sig-arg">application</span>)</span><br />
+      Ends the application.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.endApplication">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#ensureCookiesEnabled" class="summary-sig-name">ensureCookiesEnabled</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">requestType</span>,
+        <span class="summary-sig-arg">request</span>,
+        <span class="summary-sig-arg">response</span>)</span><br />
+      Check that cookie support is enabled in the browser.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.ensureCookiesEnabled">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#findApplicationInstance" class="summary-sig-name">findApplicationInstance</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>,
+        <span class="summary-sig-arg">requestType</span>)</span><br />
+      Returns the application instance to be used for the request.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.findApplicationInstance">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getApplicationCSSClassName" class="summary-sig-name">getApplicationCSSClassName</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the application class identifier for use in the application 
+      CSS class name in the root DIV.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.getApplicationCSSClassName">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getApplicationClass"></a><span class="summary-sig-name">getApplicationClass</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.getApplicationClass">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getApplicationContext" class="summary-sig-name">getApplicationContext</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">session</span>)</span><br />
+      Gets the application context from an HttpSession.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.getApplicationContext">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getApplicationOrSystemProperty" class="summary-sig-name">getApplicationOrSystemProperty</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">parameterName</span>,
+        <span class="summary-sig-arg">defaultValue</span>)</span><br />
+      Gets an application or system property value.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.getApplicationOrSystemProperty">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getApplicationProperty" class="summary-sig-name">getApplicationProperty</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">parameterName</span>)</span><br />
+      Gets an application property value.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.getApplicationProperty">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getApplicationUrl" class="summary-sig-name">getApplicationUrl</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>)</span><br />
+      Gets the current application URL from request.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.getApplicationUrl">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getApplicationWindow" class="summary-sig-name">getApplicationWindow</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>,
+        <span class="summary-sig-arg">applicationManager</span>,
+        <span class="summary-sig-arg">application</span>)</span><br />
+      Gets the existing application or create a new one.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.getApplicationWindow">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getExistingApplication" class="summary-sig-name">getExistingApplication</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>,
+        <span class="summary-sig-arg">allowSessionCreation</span>)</span><br />
+      Gets the existing application for given request.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.getExistingApplication">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getNewApplication" class="summary-sig-name">getNewApplication</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>)</span><br />
+      Creates a new application for the given request.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.getNewApplication">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getNoScriptMessage"></a><span class="summary-sig-name">getNoScriptMessage</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns a message printed for browsers without scripting support or 
+      if browsers scripting support is disabled.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.getNoScriptMessage">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getRequestPathInfo" class="summary-sig-name">getRequestPathInfo</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>)</span><br />
+      Returns the path info; note that this _can_ be different than 
+      request.getPathInfo().</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.getRequestPathInfo">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getRequestType"></a><span class="summary-sig-name">getRequestType</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.getRequestType">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getResourceCacheTime" class="summary-sig-name">getResourceCacheTime</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the amount of milliseconds the browser should cache a file.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.getResourceCacheTime">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getResourceLocation" class="summary-sig-name">getResourceLocation</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">theme</span>,
+        <span class="summary-sig-arg">resource</span>)</span><br />
+      Gets relative location of a theme resource.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.getResourceLocation">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getStaticFilesLocation" class="summary-sig-name">getStaticFilesLocation</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>)</span><br />
+      Return the URL from where static files, e.g.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.getStaticFilesLocation">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getSystemMessages"></a><span class="summary-sig-name">getSystemMessages</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Get system messages from the current application class</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.getSystemMessages">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getSystemProperty" class="summary-sig-name">getSystemProperty</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">parameterName</span>)</span><br />
+      Gets an system property value.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.getSystemProperty">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getThemeForWindow"></a><span class="summary-sig-name">getThemeForWindow</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>,
+        <span class="summary-sig-arg">window</span>)</span><br />
+      Returns the theme for given request/window</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.getThemeForWindow">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getThemeUri" class="summary-sig-name">getThemeUri</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">themeName</span>,
+        <span class="summary-sig-arg">request</span>)</span><br />
+      Get the URI for the application theme.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.getThemeUri">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getWebApplicationsStaticFileLocation" class="summary-sig-name">getWebApplicationsStaticFileLocation</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>)</span><br />
+      The default method to fetch static files location (URL).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.getWebApplicationsStaticFileLocation">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#handleDownload" class="summary-sig-name">handleDownload</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">stream</span>,
+        <span class="summary-sig-arg">request</span>,
+        <span class="summary-sig-arg">response</span>)</span><br />
+      Handles the requested URI.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.handleDownload">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="handleServiceException"></a><span class="summary-sig-name">handleServiceException</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>,
+        <span class="summary-sig-arg">response</span>,
+        <span class="summary-sig-arg">application</span>,
+        <span class="summary-sig-arg">e</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.handleServiceException">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="handleServiceSecurityException"></a><span class="summary-sig-name">handleServiceSecurityException</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>,
+        <span class="summary-sig-arg">response</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.handleServiceSecurityException">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="handleServiceSessionExpired"></a><span class="summary-sig-name">handleServiceSessionExpired</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>,
+        <span class="summary-sig-arg">response</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.handleServiceSessionExpired">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#handleURI" class="summary-sig-name">handleURI</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">applicationManager</span>,
+        <span class="summary-sig-arg">window</span>,
+        <span class="summary-sig-arg">request</span>,
+        <span class="summary-sig-arg">response</span>)</span><br />
+      Calls URI handlers for the request.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.handleURI">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#init" class="summary-sig-name">init</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Called by the servlet container to indicate to a servlet that the 
+      servlet is being placed into service.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.init">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#isAllowedVAADINResourceUrl" class="summary-sig-name">isAllowedVAADINResourceUrl</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>,
+        <span class="summary-sig-arg">resourceUrl</span>)</span><br />
+      Check whether a URL obtained from a classloader refers to a valid 
+      static resource in the directory VAADIN.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.isAllowedVAADINResourceUrl">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="isApplicationRequest"></a><span class="summary-sig-name">isApplicationRequest</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.isApplicationRequest">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="isFileUploadRequest"></a><span class="summary-sig-name">isFileUploadRequest</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.isFileUploadRequest">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="isOnUnloadRequest"></a><span class="summary-sig-name">isOnUnloadRequest</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.isOnUnloadRequest">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#isProductionMode" class="summary-sig-name">isProductionMode</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns true if the servlet is running in production mode.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.isProductionMode">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="isRepaintAll"></a><span class="summary-sig-name">isRepaintAll</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.isRepaintAll">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#isStandalone" class="summary-sig-name">isStandalone</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      true if the served application is considered to be the only or main 
+      content of the host page.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.isStandalone">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="isStaticResourceRequest"></a><span class="summary-sig-name">isStaticResourceRequest</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.isStaticResourceRequest">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="isUIDLRequest"></a><span class="summary-sig-name">isUIDLRequest</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.isUIDLRequest">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#redirectToApplication" class="summary-sig-name">redirectToApplication</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>,
+        <span class="summary-sig-arg">response</span>)</span><br />
+      Write a redirect response to the main page of the application.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.redirectToApplication">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#requestCanCreateApplication" class="summary-sig-name">requestCanCreateApplication</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>,
+        <span class="summary-sig-arg">requestType</span>)</span><br />
+      Check if the request should create an application if an existing 
+      application is not found.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.requestCanCreateApplication">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#serveStaticResources" class="summary-sig-name">serveStaticResources</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>,
+        <span class="summary-sig-arg">response</span>)</span><br />
+      Check if this is a request for a static resource and, if it is, serve
+      the resource to the client.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.serveStaticResources">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#serveStaticResourcesInVAADIN" class="summary-sig-name">serveStaticResourcesInVAADIN</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">filename</span>,
+        <span class="summary-sig-arg">request</span>,
+        <span class="summary-sig-arg">response</span>)</span><br />
+      Serve resources from VAADIN directory.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.serveStaticResourcesInVAADIN">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#service" class="summary-sig-name">service</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>,
+        <span class="summary-sig-arg">response</span>)</span><br />
+      Receives standard HTTP requests from the public service method and 
+      dispatches them.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.service">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#setAjaxPageHeaders" class="summary-sig-name">setAjaxPageHeaders</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">response</span>)</span><br />
+      Method to set http request headers for the Muntjac kickstart page.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.setAjaxPageHeaders">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#startApplication" class="summary-sig-name">startApplication</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>,
+        <span class="summary-sig-arg">application</span>,
+        <span class="summary-sig-arg">webApplicationContext</span>)</span><br />
+      Starts the application if it is not already running.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.startApplication">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="updateBrowserProperties"></a><span class="summary-sig-name">updateBrowserProperties</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">browser</span>,
+        <span class="summary-sig-arg">request</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.updateBrowserProperties">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#writeAjaxPage" class="summary-sig-name">writeAjaxPage</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>,
+        <span class="summary-sig-arg">response</span>,
+        <span class="summary-sig-arg">window</span>,
+        <span class="summary-sig-arg">application</span>)</span><br />
+      This method writes the html host page (aka kickstart page) that 
+      starts the actual Muntjac application.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.writeAjaxPage">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#writeAjaxPageHtmlBodyStart" class="summary-sig-name">writeAjaxPageHtmlBodyStart</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">page</span>,
+        <span class="summary-sig-arg">request</span>)</span><br />
+      Method to open the body tag of the html kickstart page.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.writeAjaxPageHtmlBodyStart">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#writeAjaxPageHtmlHeadStart" class="summary-sig-name">writeAjaxPageHtmlHeadStart</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">page</span>,
+        <span class="summary-sig-arg">request</span>)</span><br />
+      Method to write the beginning of the html page.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.writeAjaxPageHtmlHeadStart">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#writeAjaxPageHtmlHeader" class="summary-sig-name">writeAjaxPageHtmlHeader</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">page</span>,
+        <span class="summary-sig-arg">title</span>,
+        <span class="summary-sig-arg">themeUri</span>,
+        <span class="summary-sig-arg">request</span>)</span><br />
+      Method to write the contents of head element in html kickstart page.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.writeAjaxPageHtmlHeader">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#writeAjaxPageHtmlMainDiv" class="summary-sig-name">writeAjaxPageHtmlMainDiv</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">page</span>,
+        <span class="summary-sig-arg">appId</span>,
+        <span class="summary-sig-arg">classNames</span>,
+        <span class="summary-sig-arg">divStyle</span>,
+        <span class="summary-sig-arg">request</span>)</span><br />
+      Method to write the div element into which that actual Muntjac 
+      application is rendered.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.writeAjaxPageHtmlMainDiv">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#writeAjaxPageHtmlMuntjacScripts" class="summary-sig-name">writeAjaxPageHtmlMuntjacScripts</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">window</span>,
+        <span class="summary-sig-arg">themeName</span>,
+        <span class="summary-sig-arg">application</span>,
+        <span class="summary-sig-arg">page</span>,
+        <span class="summary-sig-arg">appUrl</span>,
+        <span class="summary-sig-arg">themeUri</span>,
+        <span class="summary-sig-arg">appId</span>,
+        <span class="summary-sig-arg">request</span>)</span><br />
+      Method to write the script part of the page which loads needed 
+      Muntjac scripts and themes.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.writeAjaxPageHtmlMuntjacScripts">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#writeResponse" class="summary-sig-name">writeResponse</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">response</span>,
+        <span class="summary-sig-arg">contentType</span>,
+        <span class="summary-sig-arg">output</span>)</span><br />
+      Writes the response in <code>output</code> using the contentType 
+      given in <code>contentType</code> to the provided <code 
+      class="link">HttpServletResponse</code></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.writeResponse">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html">paste_wsgi_servlet.PasteWsgiServlet</a></code></b>:
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#awake">awake</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getContentLength">getContentLength</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getContentType">getContentType</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getContextPath">getContextPath</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getHeader">getHeader</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getIfModifiedSince">getIfModifiedSince</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getInputStream">getInputStream</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getLocale">getLocale</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getMaxInactiveInterval">getMaxInactiveInterval</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getOutputStream">getOutputStream</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getParameter">getParameter</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getParameters">getParameters</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getPathInfo">getPathInfo</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getRequestUri">getRequestUri</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getResource">getResource</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getResourceAsStream">getResourceAsStream</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getResourcePath">getResourcePath</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getServerName">getServerName</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getServerPort">getServerPort</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getServletPath">getServletPath</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getSession">getSession</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getSessionAttribute">getSessionAttribute</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getSessionId">getSessionId</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getUrlPath">getUrlPath</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getUserAgent">getUserAgent</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#invalidateSession">invalidateSession</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#isSecure">isSecure</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#isSessionNew">isSessionNew</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#originalContextPath">originalContextPath</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#redirect">redirect</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#respond">respond</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#setHeader">setHeader</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#setParameter">setParameter</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#setSessionAttribute">setSessionAttribute</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#setStatus">setStatus</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#write">write</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>paste.webkit.wkservlet.HTTPServlet</code></b>:
+      <code>notImplemented</code>,
+      <code>respondToHead</code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>paste.webkit.wkservlet.Servlet</code></b>:
+      <code>__call__</code>,
+      <code>canBeReused</code>,
+      <code>canBeThreaded</code>,
+      <code>name</code>,
+      <code>runTransaction</code>,
+      <code>sleep</code>,
+      <code>wsgi_application</code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS METHODS ==================== -->
+<a name="section-ClassMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getDefaultTheme" class="summary-sig-name">getDefaultTheme</a>(<span class="summary-sig-arg">cls</span>)</span><br />
+      Returns the default theme.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.getDefaultTheme">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="isSafe"></a><span class="summary-sig-name">isSafe</span>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">c</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.isSafe">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="removeHeadingOrTrailing"></a><span class="summary-sig-name">removeHeadingOrTrailing</span>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">string</span>,
+        <span class="summary-sig-arg">what</span>)</span><br />
+      Remove any heading or trailing &quot;what&quot; from the 
+      &quot;string&quot;.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.removeHeadingOrTrailing">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#safeEscapeForHtml" class="summary-sig-name">safeEscapeForHtml</a>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">unsafe</span>)</span><br />
+      Escapes characters to html entities.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.safeEscapeForHtml">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#stripSpecialChars" class="summary-sig-name">stripSpecialChars</a>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">themeName</span>)</span><br />
+      A helper method to strip away characters that might somehow be used 
+      for XSS attacks.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.stripSpecialChars">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#REQUEST_APPSTYLE" class="summary-name">REQUEST_APPSTYLE</a> = <code title="''"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></code><br />
+      This request attribute is used to add styles to the main element.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="REQUEST_DEFAULT_THEME"></a><span class="summary-name">REQUEST_DEFAULT_THEME</span> = <code title="''"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></code><br />
+      If set, do not load the default theme but assume that loading it is
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="REQUEST_FRAGMENT"></a><span class="summary-name">REQUEST_FRAGMENT</span> = <code title="''"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></code><br />
+      If the attribute is present in the request, a html fragment will be
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#REQUEST_SHARED_WIDGETSET" class="summary-name">REQUEST_SHARED_WIDGETSET</a> = <code title="''"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></code><br />
+      This request attribute indicates the shared widgetset (e.g.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="REQUEST_VAADIN_STATIC_FILE_PATH"></a><span class="summary-name">REQUEST_VAADIN_STATIC_FILE_PATH</span> = <code title="''"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></code><br />
+      This request attribute forces widgetsets to be loaded from under the
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="REQUEST_WIDGETSET"></a><span class="summary-name">REQUEST_WIDGETSET</span> = <code title="''"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></code><br />
+      This request attribute forces widgetset used; e.g for portlets that 
+      can
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="UPLOAD_URL_PREFIX"></a><span class="summary-name">UPLOAD_URL_PREFIX</span> = <code title="'APP/UPLOAD/'"><code class="variable-quote">'</code><code class="variable-string">APP/UPLOAD/</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#VERSION" class="summary-name">VERSION</a> = <code title="'1.0.1'"><code class="variable-quote">'</code><code class="variable-string">1.0.1</code><code class="variable-quote">'</code></code><br />
+      The version number of this release.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#VERSION_BUILD" class="summary-name">VERSION_BUILD</a> = <code title="''"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></code><br />
+      Build identifier.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#VERSION_MAJOR" class="summary-name">VERSION_MAJOR</a> = <code title="1">1</code><br />
+      Major version number.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#VERSION_MINOR" class="summary-name">VERSION_MINOR</a> = <code title="0">0</code><br />
+      Minor version number.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#VERSION_REVISION" class="summary-name">VERSION_REVISION</a> = <code title="1">1</code><br />
+      Version revision number.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_CHAR_BLACKLIST"></a><span class="summary-name">_CHAR_BLACKLIST</span> = <code title="['&amp;', '&quot;', '\'', '&lt;', '&gt;', '(', ')', ';']"><code class="variable-group">[</code><code class="variable-quote">'</code><code class="variable-string">&amp;</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">&quot;</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">\'</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">&lt;</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">&gt;</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">(</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">)</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">;</code><code class="variable-quote">'</code><code class="variable-group">]</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="digits"></a><span class="summary-name">digits</span> = <code title="['1', '0', '1']"><code class="variable-group">[</code><code class="variable-quote">'</code><code class="variable-string">1</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">0</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">1</code><code class="variable-quote">'</code><code class="variable-group">]</code></code>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>paste.webkit.wkservlet.Servlet</code></b>:
+      <code>__traceback_supplement_hide_vars__</code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html">constants.Constants</a></code></b>:
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#AJAX_UIDL_URI">AJAX_UIDL_URI</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#DEFAULT_BUFFER_SIZE">DEFAULT_BUFFER_SIZE</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#DEFAULT_THEME_CACHETIME">DEFAULT_THEME_CACHETIME</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#DEFAULT_THEME_NAME">DEFAULT_THEME_NAME</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#DEFAULT_WIDGETSET">DEFAULT_WIDGETSET</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#ERROR_NO_WINDOW_FOUND">ERROR_NO_WINDOW_FOUND</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#INVALID_SECURITY_KEY_MSG">INVALID_SECURITY_KEY_MSG</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#MAX_BUFFER_SIZE">MAX_BUFFER_SIZE</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#NOT_PRODUCTION_MODE_INFO">NOT_PRODUCTION_MODE_INFO</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#PARAMETER_VAADIN_RESOURCES">PARAMETER_VAADIN_RESOURCES</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#PARAMETER_WIDGETSET">PARAMETER_WIDGETSET</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#PORTAL_PARAMETER_VAADIN_RESOURCE_PATH">PORTAL_PARAMETER_VAADIN_RESOURCE_PATH</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#PORTAL_PARAMETER_VAADIN_THEME">PORTAL_PARAMETER_VAADIN_THEME</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#PORTAL_PARAMETER_VAADIN_WIDGETSET">PORTAL_PARAMETER_VAADIN_WIDGETSET</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#SERVLET_PARAMETER_DEBUG">SERVLET_PARAMETER_DEBUG</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#SERVLET_PARAMETER_DISABLE_XSRF_PROTECTION">SERVLET_PARAMETER_DISABLE_XSRF_PROTECTION</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#SERVLET_PARAMETER_PRODUCTION_MODE">SERVLET_PARAMETER_PRODUCTION_MODE</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#SERVLET_PARAMETER_RESOURCE_CACHE_TIME">SERVLET_PARAMETER_RESOURCE_CACHE_TIME</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#THEME_DIRECTORY_PATH">THEME_DIRECTORY_PATH</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#URL_PARAMETER_CLOSE_APPLICATION">URL_PARAMETER_CLOSE_APPLICATION</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#URL_PARAMETER_REPAINT_ALL">URL_PARAMETER_REPAINT_ALL</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#URL_PARAMETER_RESTART_APPLICATION">URL_PARAMETER_RESTART_APPLICATION</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#URL_PARAMETER_THEME">URL_PARAMETER_THEME</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#WARNING_RESOURCE_CACHING_TIME_NOT_NUMERIC">WARNING_RESOURCE_CACHING_TIME_NOT_NUMERIC</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#WARNING_XSRF_PROTECTION_DISABLED">WARNING_XSRF_PROTECTION_DISABLED</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#WIDGETSET_DIRECTORY_PATH">WIDGETSET_DIRECTORY_PATH</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#WIDGETSET_MISMATCH_INFO">WIDGETSET_MISMATCH_INFO</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">productionMode</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">debug</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">widgetset</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">resourceCacheTime</span>=<span class="sig-default">3600</span>,
+        <span class="sig-arg">disableXsrfProtection</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">*args</span>,
+        <span class="sig-arg">**kw_args</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>x.__init__(...) initializes x; see help(type(x)) for signature</p>
+  <dl class="fields">
+    <dt>Overrides:
+        object.__init__
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="browserHasNewestVersion"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">browserHasNewestVersion</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">request</span>,
+        <span class="sig-arg">resourceLastModifiedTimestamp</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.browserHasNewestVersion">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Checks if the browser has an up to date cached version of requested 
+  resource. Currently the check is performed using the 
+  &quot;If-Modified-Since&quot; header. Could be expanded if needed.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>request</code></strong> - The HttpServletRequest from the browser.</li>
+        <li><strong class="pname"><code>resourceLastModifiedTimestamp</code></strong> - The timestamp when the resource was last modified. 0 if the last 
+          modification time is unknown.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>true if the If-Modified-Since header tells the cached version in 
+          the browser is up to date, false otherwise</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="createApplication"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">createApplication</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">request</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.createApplication">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Creates a new application and registers it into WebApplicationContext 
+  (aka session). This is not meant to be overridden. Override 
+  getNewApplication to create the application instance in a custom way.</p>
+  <dl class="fields">
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="muntjac.terminal.gwt.server.exceptions.ServletException-class.html">ServletException</a></strong></code></li>
+        <li><code><strong class='fraise'>MalformedURLException</strong></code></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="createCommunicationManager"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">createCommunicationManager</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">application</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.createCommunicationManager">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Override this method if you need to use a specialized communication 
+  mananger implementation.</p>
+  <dl class="fields">
+  </dl>
+<div class="fields">      <p><strong>Deprecated:</strong>
+        Instead of overriding this method, override <a 
+    href="muntjac.terminal.gwt.server.web_application_context.WebApplicationContext-class.html"
+    class="link">WebApplicationContext</a> implementation via <a 
+    href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getApplicationContext"
+    class="link">getApplicationContext</a> method and in that customized 
+    implementation return your CommunicationManager in <a 
+    href="muntjac.terminal.gwt.server.web_application_context.WebApplicationContext-class.html#getApplicationManager"
+    class="link">WebApplicationContext.getApplicationManager</a> method.
+      </p>
+</div></td></tr></table>
+</div>
+<a name="criticalNotification"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">criticalNotification</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">request</span>,
+        <span class="sig-arg">response</span>,
+        <span class="sig-arg">caption</span>,
+        <span class="sig-arg">message</span>,
+        <span class="sig-arg">details</span>,
+        <span class="sig-arg">url</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.criticalNotification">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Send a notification to client's application. Used to notify client of 
+  critical errors, session expiration and more. Server has no knowledge of 
+  what application client refers to.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>request</code></strong> - the HTTP request instance.</li>
+        <li><strong class="pname"><code>response</code></strong> - the HTTP response to write to.</li>
+        <li><strong class="pname"><code>caption</code></strong> - the notification caption</li>
+        <li><strong class="pname"><code>message</code></strong> - to notification body</li>
+        <li><strong class="pname"><code>details</code></strong> - a detail message to show in addition to the message. Currently 
+          shown directly below the message but could be hidden behind a 
+          details drop down in the future. Mainly used to give additional 
+          information not necessarily useful to the end user.</li>
+        <li><strong class="pname"><code>url</code></strong> - url to load when the message is dismissed. Null will reload the 
+          current page.</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>IOException</strong></code> - if the writing failed due to input/output error.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="endApplication"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">endApplication</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">request</span>,
+        <span class="sig-arg">response</span>,
+        <span class="sig-arg">application</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.endApplication">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Ends the application.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>request</code></strong> - the HTTP request.</li>
+        <li><strong class="pname"><code>response</code></strong> - the HTTP response to write to.</li>
+        <li><strong class="pname"><code>application</code></strong> - the application to end.</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>IOException</strong></code> - if the writing failed due to input/output error.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="ensureCookiesEnabled"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">ensureCookiesEnabled</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">requestType</span>,
+        <span class="sig-arg">request</span>,
+        <span class="sig-arg">response</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.ensureCookiesEnabled">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Check that cookie support is enabled in the browser. Only checks UIDL 
+  requests.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>requestType</code></strong> - Type of the request as returned by <a 
+          href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getRequestType"
+          class="link">getRequestType</a></li>
+        <li><strong class="pname"><code>request</code></strong> - The request from the browser</li>
+        <li><strong class="pname"><code>response</code></strong> - The response to which an error can be written</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>false if cookies are disabled, true otherwise</dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>IOException</strong></code></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="findApplicationInstance"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">findApplicationInstance</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">request</span>,
+        <span class="sig-arg">requestType</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.findApplicationInstance">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the application instance to be used for the request. If an 
+  existing instance is not found a new one is created or null is returned 
+  to indicate that the application is not available.</p>
+  <dl class="fields">
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="muntjac.terminal.gwt.server.exceptions.ServletException-class.html">ServletException</a></strong></code></li>
+        <li><code><strong class='fraise'><a href="muntjac.terminal.gwt.server.exceptions.SessionExpiredException-class.html">SessionExpiredException</a></strong></code></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getApplicationCSSClassName"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getApplicationCSSClassName</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.getApplicationCSSClassName">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the application class identifier for use in the application 
+  CSS class name in the root DIV. The application CSS class name is of form
+  &quot;v-app-&quot;+getApplicationCSSClassName().</p>
+  <p>This method should normally not be overridden.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The CSS class name to use in combination with &quot;v-app-&quot;.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getApplicationContext"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getApplicationContext</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">session</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.getApplicationContext">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the application context from an HttpSession. If no context is 
+  currently stored in a session a new context is created and stored in the 
+  session.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>session</code></strong> - the HTTP session.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>the application context for HttpSession.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getApplicationOrSystemProperty"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getApplicationOrSystemProperty</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">parameterName</span>,
+        <span class="sig-arg">defaultValue</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.getApplicationOrSystemProperty">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets an application or system property value.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>parameterName</code></strong> - the Name or the parameter.</li>
+        <li><strong class="pname"><code>defaultValue</code></strong> - the Default to be used.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>String value or default if not found</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getApplicationProperty"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getApplicationProperty</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">parameterName</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.getApplicationProperty">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets an application property value.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>parameterName</code></strong> - the Name or the parameter.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>String value or <code>None</code> if not found</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getApplicationUrl"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getApplicationUrl</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">request</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.getApplicationUrl">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the current application URL from request.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>request</code></strong> - the HTTP request.</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>MalformedURLException</strong></code> - if the application is denied access to the persistent data store 
+        represented by the given URL.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getApplicationWindow"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getApplicationWindow</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">request</span>,
+        <span class="sig-arg">applicationManager</span>,
+        <span class="sig-arg">application</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.getApplicationWindow">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the existing application or create a new one. Get a window within
+  an application based on the requested URI.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>request</code></strong> - the HTTP Request.</li>
+        <li><strong class="pname"><code>application</code></strong> - the Application to query for window.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>Window matching the given URI or null if not found.</dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="muntjac.terminal.gwt.server.exceptions.ServletException-class.html">ServletException</a></strong></code> - if an exception has occurred that interferes with the servlet's 
+        normal operation.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getDefaultTheme"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getDefaultTheme</span>(<span class="sig-arg">cls</span>)</span>
+    <br /><em class="fname">Class Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.getDefaultTheme">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the default theme. Must never return <code>None</code>.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getExistingApplication"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getExistingApplication</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">request</span>,
+        <span class="sig-arg">allowSessionCreation</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.getExistingApplication">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the existing application for given request. Looks for application
+  instance for given request based on the requested URL.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>request</code></strong> - the HTTP request.</li>
+        <li><strong class="pname"><code>allowSessionCreation</code></strong> - true if a session should be created if no session exists, false 
+          if no session should be created</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>Application instance, or null if the URL does not map to valid 
+          application.</dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>MalformedURLException</strong></code> - if the application is denied access to the persistent data store 
+        represented by the given URL.</li>
+        <li><code><strong class='fraise'><a href="muntjac.terminal.gwt.server.exceptions.SessionExpiredException-class.html">SessionExpiredException</a></strong></code></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getNewApplication"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getNewApplication</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">request</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.getNewApplication">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Creates a new application for the given request.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>request</code></strong> - the HTTP request.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>A new Application instance.</dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="muntjac.terminal.gwt.server.exceptions.ServletException-class.html">ServletException</a></strong></code></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getRequestPathInfo"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getRequestPathInfo</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">request</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.getRequestPathInfo">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the path info; note that this _can_ be different than 
+  request.getPathInfo(). Examples where this might be useful:</p>
+  <ul>
+    <li>
+      An application runner servlet that runs different Muntjac 
+      applications based on an identifier.
+    </li>
+    <li>
+      Providing a REST interface in the context root, while serving a 
+      Muntjac UI on a sub-URI using only one servlet (e.g. REST on 
+      http://example.com/foo, UI on http://example.com/foo/vaadin)
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getResourceCacheTime"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getResourceCacheTime</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.getResourceCacheTime">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the amount of milliseconds the browser should cache a file. 
+  Default is 1 hour (3600 ms).</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The amount of milliseconds files are cached in the browser</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getResourceLocation"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getResourceLocation</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">theme</span>,
+        <span class="sig-arg">resource</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.getResourceLocation">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets relative location of a theme resource.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>theme</code></strong> - the Theme name.</li>
+        <li><strong class="pname"><code>resource</code></strong> - the Theme resource.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>External URI specifying the resource</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getStaticFilesLocation"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getStaticFilesLocation</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">request</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.getStaticFilesLocation">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Return the URL from where static files, e.g. the widgetset and the 
+  theme, are served. In a standard configuration the VAADIN folder inside 
+  the returned folder is what is used for widgetsets and themes.</p>
+  <p>The returned folder is usually the same as the context path and 
+  independent of the application.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The location of static resources (should contain the VAADIN 
+          directory). Never ends with a slash (/).</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getSystemProperty"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getSystemProperty</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">parameterName</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.getSystemProperty">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets an system property value.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>parameterName</code></strong> - the Name or the parameter.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>String value or <code>None</code> if not found</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getThemeUri"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getThemeUri</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">themeName</span>,
+        <span class="sig-arg">request</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.getThemeUri">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Get the URI for the application theme.</p>
+  <p>A portal-wide default theme is fetched from the portal shared resource
+  directory (if any), other themes from the portlet.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getWebApplicationsStaticFileLocation"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getWebApplicationsStaticFileLocation</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">request</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.getWebApplicationsStaticFileLocation">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>The default method to fetch static files location (URL). This method 
+  does not check for request attribute 
+  <code>REQUEST_VAADIN_STATIC_FILE_PATH</code>.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="handleDownload"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">handleDownload</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">stream</span>,
+        <span class="sig-arg">request</span>,
+        <span class="sig-arg">response</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.handleDownload">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Handles the requested URI. An application can add handlers to do 
+  special processing, when a certain URI is requested. The handlers are 
+  invoked before any windows URIs are processed and if a DownloadStream is 
+  returned it is sent to the client.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>stream</code></strong> - the download stream.</li>
+        <li><strong class="pname"><code>request</code></strong> - the HTTP request instance.</li>
+        <li><strong class="pname"><code>response</code></strong> - the HTTP response to write to.</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>IOException</strong></code></li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <code class="link">URIHandler</code>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="handleURI"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">handleURI</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">applicationManager</span>,
+        <span class="sig-arg">window</span>,
+        <span class="sig-arg">request</span>,
+        <span class="sig-arg">response</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.handleURI">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Calls URI handlers for the request. If an URI handler returns a 
+  DownloadStream the stream is passed to the client for downloading.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true if an DownloadStream was sent to the client @raise 
+          IOException</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="init"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">init</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.init">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Called by the servlet container to indicate to a servlet that the 
+  servlet is being placed into service.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#init">paste_wsgi_servlet.PasteWsgiServlet.init</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isAllowedVAADINResourceUrl"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isAllowedVAADINResourceUrl</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">request</span>,
+        <span class="sig-arg">resourceUrl</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.isAllowedVAADINResourceUrl">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Check whether a URL obtained from a classloader refers to a valid 
+  static resource in the directory VAADIN.</p>
+  <p>Warning: Overriding of this method is not recommended, but is possible
+  to support non-default classloaders or servers that may produce URLs 
+  different from the normal ones. The method prototype may change in the 
+  future. Care should be taken not to expose class files or other resources
+  outside the VAADIN directory if the method is overridden.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="isProductionMode"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isProductionMode</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.isProductionMode">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns true if the servlet is running in production mode. Production 
+  mode disables all debug facilities.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true if in production mode, false if in debug mode</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isStandalone"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isStandalone</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.isStandalone">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true if the served application is considered to be the only or 
+          main content of the host page. E.g. various embedding solutions 
+          should override this to false.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="redirectToApplication"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">redirectToApplication</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">request</span>,
+        <span class="sig-arg">response</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.redirectToApplication">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Write a redirect response to the main page of the application.</p>
+  <dl class="fields">
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>IOException</strong></code> - if sending the redirect fails due to an input/output error or a bad
+        application URL</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="requestCanCreateApplication"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">requestCanCreateApplication</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">request</span>,
+        <span class="sig-arg">requestType</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.requestCanCreateApplication">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Check if the request should create an application if an existing 
+  application is not found.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true if an application should be created, false otherwise</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="safeEscapeForHtml"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">safeEscapeForHtml</span>(<span class="sig-arg">cls</span>,
+        <span class="sig-arg">unsafe</span>)</span>
+    <br /><em class="fname">Class Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.safeEscapeForHtml">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Escapes characters to html entities. An exception is made for some 
+  &quot;safe characters&quot; to keep the text somewhat readable.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>a safe string to be added inside an html tag</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="serveStaticResources"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">serveStaticResources</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">request</span>,
+        <span class="sig-arg">response</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.serveStaticResources">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Check if this is a request for a static resource and, if it is, serve 
+  the resource to the client.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true if a file was served and the request has been handled, false
+          otherwise.</dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>IOException</strong></code></li>
+        <li><code><strong class='fraise'><a href="muntjac.terminal.gwt.server.exceptions.ServletException-class.html">ServletException</a></strong></code></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="serveStaticResourcesInVAADIN"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">serveStaticResourcesInVAADIN</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">filename</span>,
+        <span class="sig-arg">request</span>,
+        <span class="sig-arg">response</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.serveStaticResourcesInVAADIN">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Serve resources from VAADIN directory.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>filename</code></strong> - The filename to serve. Should always start with /VAADIN/.</li>
+        <li><strong class="pname"><code>request</code></strong></li>
+        <li><strong class="pname"><code>response</code></strong></li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>IOException</strong></code></li>
+        <li><code><strong class='fraise'><a href="muntjac.terminal.gwt.server.exceptions.ServletException-class.html">ServletException</a></strong></code></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="service"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">service</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">request</span>,
+        <span class="sig-arg">response</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.service">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Receives standard HTTP requests from the public service method and 
+  dispatches them.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#service">paste_wsgi_servlet.PasteWsgiServlet.service</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setAjaxPageHeaders"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setAjaxPageHeaders</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">response</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.setAjaxPageHeaders">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to set http request headers for the Muntjac kickstart page.</p>
+  <p>Override this method if you need to customize http headers of the 
+  page.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="startApplication"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">startApplication</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">request</span>,
+        <span class="sig-arg">application</span>,
+        <span class="sig-arg">webApplicationContext</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.startApplication">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Starts the application if it is not already running.</p>
+  <dl class="fields">
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="muntjac.terminal.gwt.server.exceptions.ServletException-class.html">ServletException</a></strong></code></li>
+        <li><code><strong class='fraise'>MalformedURLException</strong></code></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="stripSpecialChars"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">stripSpecialChars</span>(<span class="sig-arg">cls</span>,
+        <span class="sig-arg">themeName</span>)</span>
+    <br /><em class="fname">Class Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.stripSpecialChars">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>A helper method to strip away characters that might somehow be used 
+  for XSS attacks. Leaves at least alphanumeric characters intact. Also 
+  removes eg. ( and ), so values should be safe in javascript too.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeAjaxPage"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeAjaxPage</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">request</span>,
+        <span class="sig-arg">response</span>,
+        <span class="sig-arg">window</span>,
+        <span class="sig-arg">application</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.writeAjaxPage">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method writes the html host page (aka kickstart page) that starts
+  the actual Muntjac application.</p>
+  <p>If one needs to override parts of the host page, it is suggested that 
+  one overrides on of several submethods which are called by this 
+  method:</p>
+  <ul>
+    <li>
+      <a 
+      href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#setAjaxPageHeaders"
+      class="link">setAjaxPageHeaders</a>
+    </li>
+    <li>
+      <a 
+      href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#writeAjaxPageHtmlHeadStart"
+      class="link">writeAjaxPageHtmlHeadStart</a>
+    </li>
+    <li>
+      <a 
+      href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#writeAjaxPageHtmlHeader"
+      class="link">writeAjaxPageHtmlHeader</a>
+    </li>
+    <li>
+      <a 
+      href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#writeAjaxPageHtmlBodyStart"
+      class="link">writeAjaxPageHtmlBodyStart</a>
+    </li>
+    <li>
+      <a 
+      href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#writeAjaxPageHtmlMuntjacScripts"
+      class="link">writeAjaxPageHtmlMuntjacScripts</a>
+    </li>
+    <li>
+      <a 
+      href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#writeAjaxPageHtmlMainDiv"
+      class="link">writeAjaxPageHtmlMainDiv</a>
+    </li>
+    <li>
+      <code class="link">writeAjaxPageHtmlBodyEnd</code>
+    </li>
+  </ul>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>request</code></strong> - the HTTP request.</li>
+        <li><strong class="pname"><code>response</code></strong> - the HTTP response to write to.</li>
+        <li><strong class="pname"><code>window</code></strong></li>
+        <li><strong class="pname"><code>application</code></strong></li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>IOException</strong></code> - if the writing failed due to input/output error.</li>
+        <li><code><strong class='fraise'>MalformedURLException</strong></code> - if the application is denied access the persistent data store 
+        represented by the given URL.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeAjaxPageHtmlBodyStart"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeAjaxPageHtmlBodyStart</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">page</span>,
+        <span class="sig-arg">request</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.writeAjaxPageHtmlBodyStart">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to open the body tag of the html kickstart page.</p>
+  <p>This method is responsible for closing the head tag and opening the 
+  body tag.</p>
+  <p>Override this method if you want to add some custom html to the 
+  page.</p>
+  <dl class="fields">
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>IOException</strong></code></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeAjaxPageHtmlHeadStart"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeAjaxPageHtmlHeadStart</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">page</span>,
+        <span class="sig-arg">request</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.writeAjaxPageHtmlHeadStart">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to write the beginning of the html page.</p>
+  <p>This method is responsible for writing appropriate doc type 
+  declarations and to open html and head tags.</p>
+  <p>Override this method if you want to add some custom html to the very 
+  beginning of the page.</p>
+  <dl class="fields">
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>IOException</strong></code></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeAjaxPageHtmlHeader"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeAjaxPageHtmlHeader</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">page</span>,
+        <span class="sig-arg">title</span>,
+        <span class="sig-arg">themeUri</span>,
+        <span class="sig-arg">request</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.writeAjaxPageHtmlHeader">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to write the contents of head element in html kickstart 
+  page.</p>
+  <p>Override this method if you want to add some custom html to the header
+  of the page.</p>
+  <dl class="fields">
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>IOException</strong></code></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeAjaxPageHtmlMainDiv"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeAjaxPageHtmlMainDiv</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">page</span>,
+        <span class="sig-arg">appId</span>,
+        <span class="sig-arg">classNames</span>,
+        <span class="sig-arg">divStyle</span>,
+        <span class="sig-arg">request</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.writeAjaxPageHtmlMainDiv">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to write the div element into which that actual Muntjac 
+  application is rendered.</p>
+  <p>Override this method if you want to add some custom html around around
+  the div element into which the actual Muntjac application will be 
+  rendered.</p>
+  <dl class="fields">
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>IOException</strong></code></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeAjaxPageHtmlMuntjacScripts"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeAjaxPageHtmlMuntjacScripts</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">window</span>,
+        <span class="sig-arg">themeName</span>,
+        <span class="sig-arg">application</span>,
+        <span class="sig-arg">page</span>,
+        <span class="sig-arg">appUrl</span>,
+        <span class="sig-arg">themeUri</span>,
+        <span class="sig-arg">appId</span>,
+        <span class="sig-arg">request</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.writeAjaxPageHtmlMuntjacScripts">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to write the script part of the page which loads needed Muntjac
+  scripts and themes.</p>
+  <p>Override this method if you want to add some custom html around 
+  scripts.</p>
+  <dl class="fields">
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="muntjac.terminal.gwt.server.exceptions.ServletException-class.html">ServletException</a></strong></code></li>
+        <li><code><strong class='fraise'>IOException</strong></code></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeResponse"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeResponse</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">response</span>,
+        <span class="sig-arg">contentType</span>,
+        <span class="sig-arg">output</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_application_servlet-pysrc.html#AbstractApplicationServlet.writeResponse">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes the response in <code>output</code> using the contentType given
+  in <code>contentType</code> to the provided <code 
+  class="link">HttpServletResponse</code></p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>response</code></strong></li>
+        <li><strong class="pname"><code>contentType</code></strong></li>
+        <li><strong class="pname"><code>output</code></strong> - Output to write (UTF-8 encoded)</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>IOException</strong></code></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== CLASS VARIABLE DETAILS ==================== -->
+<a name="section-ClassVariableDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variable Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariableDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="REQUEST_APPSTYLE"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">REQUEST_APPSTYLE</h3>
+  <p>This request attribute is used to add styles to the main element. 
+  E.g</p>
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="REQUEST_SHARED_WIDGETSET"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">REQUEST_SHARED_WIDGETSET</h3>
+  <p>This request attribute indicates the shared widgetset (e.g. 
+  portal-wide</p>
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="VERSION"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">VERSION</h3>
+  <p>The version number of this release. For example &quot;6.2.0&quot;. 
+  Always in the</p>
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-quote">'</code><code class="variable-string">1.0.1</code><code class="variable-quote">'</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="VERSION_BUILD"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">VERSION_BUILD</h3>
+  <p>Build identifier. For example &quot;nightly-20091123-c9963&quot; 
+  in</p>
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="VERSION_MAJOR"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">VERSION_MAJOR</h3>
+  <p>Major version number. For example 6 in 6.2.0.</p>
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+1
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="VERSION_MINOR"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">VERSION_MINOR</h3>
+  <p>Minor version number. For example 2 in 6.2.0.</p>
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+0
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="VERSION_REVISION"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">VERSION_REVISION</h3>
+  <p>Version revision number. For example 0 in 6.2.0.</p>
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+1
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:03:58 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

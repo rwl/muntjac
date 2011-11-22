@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.data.container.IOrdered</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.data-module.html">Package&nbsp;data</a> ::
+        <a href="muntjac.data.container-module.html">Module&nbsp;container</a> ::
+        Class&nbsp;IOrdered
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.data.container.IOrdered-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class IOrdered</h1><p class="nomargin-top"><span class="codelink"><a href="muntjac.data.container-pysrc.html#IOrdered">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+object --+    
+         |    
+<a href="muntjac.data.container.IContainer-class.html">IContainer</a> --+
+             |
+            <strong class="uidshort">IOrdered</strong>
+</pre>
+
+<dl><dt>Known Subclasses:</dt>
+<dd>
+      <ul class="subclass-list">
+<li><a href="muntjac.data.container.ISortable-class.html">ISortable</a></li><li>, <a href="muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html">util.container_ordered_wrapper.ContainerOrderedWrapper</a></li><li>, <a href="muntjac.ui.treetable.collapsible.ICollapsible-class.html">ui.treetable.collapsible.ICollapsible</a></li><li>, <a href="muntjac.data.container.IIndexed-class.html">IIndexed</a></li>  </ul>
+</dd></dl>
+
+<hr />
+<p>Interface for IContainer classes whose <code class="link">Item</code>s
+  can be traversed in order.</p>
+  <p>If the container is filtered or sorted, the traversal applies to the 
+  filtered and sorted view.</p>
+  <p>The <code>addItemAfter()</code> methods should apply filters to the 
+  added item after inserting it, possibly hiding it immediately. If the 
+  container is being sorted, they may add items at the correct sorted 
+  position instead of the given position. See also <a 
+  href="muntjac.data.container.IFilterable-class.html" 
+  class="link">IFilterable</a> and <a 
+  href="muntjac.data.container.ISortable-class.html" 
+  class="link">ISortable</a> for more information.</p>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.container.IOrdered-class.html#addItemAfter" class="summary-sig-name">addItemAfter</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">previousItemId</span>,
+        <span class="summary-sig-arg">newItemId</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Adds a new item after the given item.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.container-pysrc.html#IOrdered.addItemAfter">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.container.IOrdered-class.html#firstItemId" class="summary-sig-name">firstItemId</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the ID of the first Item in the IContainer.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.container-pysrc.html#IOrdered.firstItemId">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.container.IOrdered-class.html#isFirstId" class="summary-sig-name">isFirstId</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Tests if the Item corresponding to the given Item ID is the first 
+      Item in the IContainer.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.container-pysrc.html#IOrdered.isFirstId">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.container.IOrdered-class.html#isLastId" class="summary-sig-name">isLastId</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Tests if the Item corresponding to the given Item ID is the last Item
+      in the IContainer.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.container-pysrc.html#IOrdered.isLastId">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.container.IOrdered-class.html#lastItemId" class="summary-sig-name">lastItemId</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the ID of the last Item in the IContainer..</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.container-pysrc.html#IOrdered.lastItemId">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.container.IOrdered-class.html#nextItemId" class="summary-sig-name">nextItemId</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Gets the ID of the Item following the Item that corresponds to 
+      <code>itemId</code>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.container-pysrc.html#IOrdered.nextItemId">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.container.IOrdered-class.html#prevItemId" class="summary-sig-name">prevItemId</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Gets the ID of the Item preceding the Item that corresponds to 
+      <code>itemId</code>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.container-pysrc.html#IOrdered.prevItemId">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.data.container.IContainer-class.html">IContainer</a></code></b>:
+      <code><a href="muntjac.data.container.IContainer-class.html#addContainerProperty">addContainerProperty</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#addItem">addItem</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#containsId">containsId</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#getContainerProperty">getContainerProperty</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#getContainerPropertyIds">getContainerPropertyIds</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#getItem">getItem</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#getItemIds">getItemIds</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#getType">getType</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#removeAllItems">removeAllItems</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#removeContainerProperty">removeContainerProperty</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#removeItem">removeItem</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#size">size</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__init__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="addItemAfter"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addItemAfter</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">previousItemId</span>,
+        <span class="sig-arg">newItemId</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.container-pysrc.html#IOrdered.addItemAfter">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds a new item after the given item.</p>
+  <p>Adding an item after null item adds the item as first item of the 
+  ordered container.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>previousItemId</code></strong> - Id of the visible item in ordered container after which to insert
+          the new item.</li>
+        <li><strong class="pname"><code>newItemId</code></strong> - Id of the new item to be added.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>new item or null if the operation fails.</dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>NotImplementedError</strong></code> - if the operation is not supported by the container</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a href="muntjac.data.container.IOrdered-class.html" 
+        class="link">IOrdered</a> for adding items in filtered or sorted 
+        containers
+      </p>
+</div></td></tr></table>
+</div>
+<a name="firstItemId"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">firstItemId</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.container-pysrc.html#IOrdered.firstItemId">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the ID of the first Item in the IContainer.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>ID of the first visible Item in the IContainer</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isFirstId"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isFirstId</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.container-pysrc.html#IOrdered.isFirstId">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tests if the Item corresponding to the given Item ID is the first Item
+  in the IContainer.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - ID of an Item in the IContainer</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the Item is first visible item in the 
+          IContainer, <code>False</code> if not</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isLastId"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isLastId</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.container-pysrc.html#IOrdered.isLastId">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tests if the Item corresponding to the given Item ID is the last Item 
+  in the IContainer.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the Item is last visible item in the 
+          IContainer, <code>False</code> if not</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="lastItemId"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">lastItemId</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.container-pysrc.html#IOrdered.lastItemId">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the ID of the last Item in the IContainer..</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>ID of the last visible Item in the IContainer</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="nextItemId"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">nextItemId</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.container-pysrc.html#IOrdered.nextItemId">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the ID of the Item following the Item that corresponds to 
+  <code>itemId</code>. If the given Item is the last or not found in the 
+  IContainer, <code>None</code> is returned.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - ID of a visible Item in the IContainer</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>ID of the next visible Item or <code>None</code></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="prevItemId"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">prevItemId</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.container-pysrc.html#IOrdered.prevItemId">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the ID of the Item preceding the Item that corresponds to 
+  <code>itemId</code>. If the given Item is the first or not found in the 
+  IContainer, <code>None</code> is returned.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - ID of a visible Item in the IContainer</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>ID of the previous visible Item or <code>None</code></dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:03:56 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

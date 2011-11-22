@@ -1,0 +1,1291 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.messages.SystemMessages</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.messages-module.html">Module&nbsp;messages</a> ::
+        Class&nbsp;SystemMessages
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.messages.SystemMessages-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class SystemMessages</h1><p class="nomargin-top"><span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+object --+
+         |
+        <strong class="uidshort">SystemMessages</strong>
+</pre>
+
+<dl><dt>Known Subclasses:</dt>
+<dd>
+      <ul class="subclass-list">
+<li><a href="muntjac.messages.CustomizedSystemMessages-class.html">CustomizedSystemMessages</a></li>  </ul>
+</dd></dl>
+
+<hr />
+<p>Contains the system messages used to notify the user about various 
+  critical situations that can occur.</p>
+  <p>Customize by overriding the static <code 
+  class="link">Application.getSystemMessages()</code> and returning <a 
+  href="muntjac.messages.CustomizedSystemMessages-class.html" 
+  class="link">CustomizedSystemMessages</a>.</p>
+  <p>The defaults defined in this class are:</p>
+  <ul>
+    <li>
+      <b>sessionExpiredURL</b> = None
+    </li>
+    <li>
+      <b>sessionExpiredNotificationEnabled</b> = True
+    </li>
+    <li>
+      <b>sessionExpiredCaption</b> = &quot;&quot;
+    </li>
+    <li>
+      <b>sessionExpiredMessage</b> = &quot;Take note of any unsaved data, 
+      and &lt;u&gt;click here&lt;/u&gt; to continue.&quot;
+    </li>
+    <li>
+      <b>communicationErrorURL</b> = None
+    </li>
+    <li>
+      <b>communicationErrorNotificationEnabled</b> = True
+    </li>
+    <li>
+      <b>communicationErrorCaption</b> = &quot;Communication problem&quot;
+    </li>
+    <li>
+      <b>communicationErrorMessage</b> = &quot;Take note of any unsaved 
+      data, and &lt;u&gt;click here&lt;/u&gt; to continue.&quot;
+    </li>
+    <li>
+      <b>internalErrorURL</b> = None
+    </li>
+    <li>
+      <b>internalErrorNotificationEnabled</b> = True
+    </li>
+    <li>
+      <b>internalErrorCaption</b> = &quot;Internal error&quot;
+    </li>
+    <li>
+      <b>internalErrorMessage</b> = &quot;Please notify the 
+      administrator.&lt;br/&gt;Take note of any unsaved data, and 
+      &lt;u&gt;click here&lt;/u&gt; to continue.&quot;
+    </li>
+    <li>
+      <b>outOfSyncURL</b> = None
+    </li>
+    <li>
+      <b>outOfSyncNotificationEnabled</b> = True
+    </li>
+    <li>
+      <b>outOfSyncCaption</b> = &quot;Out of sync&quot;
+    </li>
+    <li>
+      <b>outOfSyncMessage</b> = &quot;Something has caused us to be out of 
+      sync with the server.&lt;br/&gt;Take note of any unsaved data, and 
+      &lt;u&gt;click here&lt;/u&gt; to re-sync.&quot;
+    </li>
+    <li>
+      <b>cookiesDisabledURL</b> = None
+    </li>
+    <li>
+      <b>cookiesDisabledNotificationEnabled</b> = True
+    </li>
+    <li>
+      <b>cookiesDisabledCaption</b> = &quot;Cookies disabled&quot;
+    </li>
+    <li>
+      <b>cookiesDisabledMessage</b> = &quot;This application requires 
+      cookies to function.&lt;br/&gt;Please enable cookies in your browser 
+      and &lt;u&gt;click here&lt;/u&gt; to try again.&quot;
+    </li>
+  </ul>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.messages.SystemMessages-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Use <a href="muntjac.messages.CustomizedSystemMessages-class.html" 
+      class="link">CustomizedSystemMessages</a> to customize</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.messages.SystemMessages-class.html#getSessionExpiredURL" class="summary-sig-name">getSessionExpiredURL</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      null to indicate that the application will be restarted after session
+      expired message has been shown.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.getSessionExpiredURL">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.messages.SystemMessages-class.html#isSessionExpiredNotificationEnabled" class="summary-sig-name">isSessionExpiredNotificationEnabled</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      true to show session expiration message.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.isSessionExpiredNotificationEnabled">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.messages.SystemMessages-class.html#getSessionExpiredCaption" class="summary-sig-name">getSessionExpiredCaption</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      &quot;&quot; to show no caption.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.getSessionExpiredCaption">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.messages.SystemMessages-class.html#getSessionExpiredMessage" class="summary-sig-name">getSessionExpiredMessage</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      &quot;Take note of any unsaved data, and &lt;u&gt;click 
+      here&lt;/u&gt; to continue.&quot;</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.getSessionExpiredMessage">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.messages.SystemMessages-class.html#getCommunicationErrorURL" class="summary-sig-name">getCommunicationErrorURL</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      null to reload the application after communication error message.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.getCommunicationErrorURL">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.messages.SystemMessages-class.html#isCommunicationErrorNotificationEnabled" class="summary-sig-name">isCommunicationErrorNotificationEnabled</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      true to show the communication error message.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.isCommunicationErrorNotificationEnabled">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.messages.SystemMessages-class.html#getCommunicationErrorCaption" class="summary-sig-name">getCommunicationErrorCaption</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      &quot;Communication problem&quot;</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.getCommunicationErrorCaption">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.messages.SystemMessages-class.html#getCommunicationErrorMessage" class="summary-sig-name">getCommunicationErrorMessage</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      &quot;Take note of any unsaved data, and &lt;u&gt;click 
+      here&lt;/u&gt; to continue.&quot;</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.getCommunicationErrorMessage">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.messages.SystemMessages-class.html#getAuthenticationErrorURL" class="summary-sig-name">getAuthenticationErrorURL</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      null to reload the application after authentication error message.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.getAuthenticationErrorURL">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.messages.SystemMessages-class.html#isAuthenticationErrorNotificationEnabled" class="summary-sig-name">isAuthenticationErrorNotificationEnabled</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      true to show the authentication error message.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.isAuthenticationErrorNotificationEnabled">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.messages.SystemMessages-class.html#getAuthenticationErrorCaption" class="summary-sig-name">getAuthenticationErrorCaption</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      &quot;Authentication problem&quot;</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.getAuthenticationErrorCaption">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.messages.SystemMessages-class.html#getAuthenticationErrorMessage" class="summary-sig-name">getAuthenticationErrorMessage</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      &quot;Take note of any unsaved data, and &lt;u&gt;click 
+      here&lt;/u&gt; to continue.&quot;</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.getAuthenticationErrorMessage">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.messages.SystemMessages-class.html#getInternalErrorURL" class="summary-sig-name">getInternalErrorURL</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      null to reload the current URL after internal error message has been 
+      shown.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.getInternalErrorURL">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.messages.SystemMessages-class.html#isInternalErrorNotificationEnabled" class="summary-sig-name">isInternalErrorNotificationEnabled</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      true to enable showing of internal error message.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.isInternalErrorNotificationEnabled">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.messages.SystemMessages-class.html#getInternalErrorCaption" class="summary-sig-name">getInternalErrorCaption</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      &quot;Internal error&quot;</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.getInternalErrorCaption">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.messages.SystemMessages-class.html#getInternalErrorMessage" class="summary-sig-name">getInternalErrorMessage</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      &quot;Please notify the administrator.&lt;br/&gt; Take note of any 
+      unsaved data, and &lt;u&gt;click here&lt;/u&gt; to continue.&quot;</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.getInternalErrorMessage">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.messages.SystemMessages-class.html#getOutOfSyncURL" class="summary-sig-name">getOutOfSyncURL</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      null to reload the application after out of sync message.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.getOutOfSyncURL">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.messages.SystemMessages-class.html#isOutOfSyncNotificationEnabled" class="summary-sig-name">isOutOfSyncNotificationEnabled</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      true to enable showing out of sync message</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.isOutOfSyncNotificationEnabled">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.messages.SystemMessages-class.html#getOutOfSyncCaption" class="summary-sig-name">getOutOfSyncCaption</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      &quot;Out of sync&quot;</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.getOutOfSyncCaption">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.messages.SystemMessages-class.html#getOutOfSyncMessage" class="summary-sig-name">getOutOfSyncMessage</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      &quot;Something has caused us to be out of sync with the 
+      server.&lt;br/&gt; Take note of any unsaved data, and &lt;u&gt;click 
+      here&lt;/u&gt; to re-sync.&quot;</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.getOutOfSyncMessage">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.messages.SystemMessages-class.html#getCookiesDisabledURL" class="summary-sig-name">getCookiesDisabledURL</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the URL the user should be redirected to after dismissing the
+      &quot;you have to enable your cookies&quot; message.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.getCookiesDisabledURL">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.messages.SystemMessages-class.html#isCookiesDisabledNotificationEnabled" class="summary-sig-name">isCookiesDisabledNotificationEnabled</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Determines if &quot;cookies disabled&quot; messages should be shown 
+      to the end user or not.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.isCookiesDisabledNotificationEnabled">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.messages.SystemMessages-class.html#getCookiesDisabledCaption" class="summary-sig-name">getCookiesDisabledCaption</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the caption of the message shown to the user when cookies are
+      disabled in the browser.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.getCookiesDisabledCaption">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.messages.SystemMessages-class.html#getCookiesDisabledMessage" class="summary-sig-name">getCookiesDisabledMessage</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the message shown to the user when cookies are disabled in 
+      the browser.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.getCookiesDisabledMessage">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Use <a href="muntjac.messages.CustomizedSystemMessages-class.html" 
+  class="link">CustomizedSystemMessages</a> to customize</p>
+  <dl class="fields">
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getSessionExpiredURL"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getSessionExpiredURL</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.getSessionExpiredURL">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>null to indicate that the application will be restarted after 
+          session expired message has been shown.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isSessionExpiredNotificationEnabled"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isSessionExpiredNotificationEnabled</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.isSessionExpiredNotificationEnabled">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true to show session expiration message.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getSessionExpiredCaption"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getSessionExpiredCaption</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.getSessionExpiredCaption">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>&quot;&quot; to show no caption.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getSessionExpiredMessage"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getSessionExpiredMessage</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.getSessionExpiredMessage">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>&quot;Take note of any unsaved data, and &lt;u&gt;click 
+          here&lt;/u&gt; to continue.&quot;</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getCommunicationErrorURL"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getCommunicationErrorURL</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.getCommunicationErrorURL">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>null to reload the application after communication error message.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isCommunicationErrorNotificationEnabled"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isCommunicationErrorNotificationEnabled</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.isCommunicationErrorNotificationEnabled">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true to show the communication error message.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getCommunicationErrorCaption"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getCommunicationErrorCaption</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.getCommunicationErrorCaption">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>&quot;Communication problem&quot;</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getCommunicationErrorMessage"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getCommunicationErrorMessage</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.getCommunicationErrorMessage">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>&quot;Take note of any unsaved data, and &lt;u&gt;click 
+          here&lt;/u&gt; to continue.&quot;</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getAuthenticationErrorURL"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getAuthenticationErrorURL</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.getAuthenticationErrorURL">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>null to reload the application after authentication error 
+          message.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isAuthenticationErrorNotificationEnabled"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isAuthenticationErrorNotificationEnabled</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.isAuthenticationErrorNotificationEnabled">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true to show the authentication error message.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getAuthenticationErrorCaption"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getAuthenticationErrorCaption</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.getAuthenticationErrorCaption">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>&quot;Authentication problem&quot;</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getAuthenticationErrorMessage"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getAuthenticationErrorMessage</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.getAuthenticationErrorMessage">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>&quot;Take note of any unsaved data, and &lt;u&gt;click 
+          here&lt;/u&gt; to continue.&quot;</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getInternalErrorURL"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getInternalErrorURL</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.getInternalErrorURL">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>null to reload the current URL after internal error message has 
+          been shown.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isInternalErrorNotificationEnabled"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isInternalErrorNotificationEnabled</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.isInternalErrorNotificationEnabled">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true to enable showing of internal error message.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getInternalErrorCaption"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getInternalErrorCaption</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.getInternalErrorCaption">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>&quot;Internal error&quot;</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getInternalErrorMessage"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getInternalErrorMessage</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.getInternalErrorMessage">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>&quot;Please notify the administrator.&lt;br/&gt; Take note of 
+          any unsaved data, and &lt;u&gt;click here&lt;/u&gt; to 
+          continue.&quot;</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getOutOfSyncURL"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getOutOfSyncURL</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.getOutOfSyncURL">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>null to reload the application after out of sync message.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isOutOfSyncNotificationEnabled"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isOutOfSyncNotificationEnabled</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.isOutOfSyncNotificationEnabled">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true to enable showing out of sync message</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getOutOfSyncCaption"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getOutOfSyncCaption</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.getOutOfSyncCaption">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>&quot;Out of sync&quot;</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getOutOfSyncMessage"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getOutOfSyncMessage</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.getOutOfSyncMessage">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>&quot;Something has caused us to be out of sync with the 
+          server.&lt;br/&gt; Take note of any unsaved data, and 
+          &lt;u&gt;click here&lt;/u&gt; to re-sync.&quot;</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getCookiesDisabledURL"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getCookiesDisabledURL</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.getCookiesDisabledURL">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the URL the user should be redirected to after dismissing the 
+  &quot;you have to enable your cookies&quot; message. Typically null.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>A URL the user should be redirected to after dismissing the 
+          message or null to reload the current URL.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isCookiesDisabledNotificationEnabled"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isCookiesDisabledNotificationEnabled</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.isCookiesDisabledNotificationEnabled">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Determines if &quot;cookies disabled&quot; messages should be shown to
+  the end user or not. If the notification is disabled the user will be 
+  immediately redirected to the URL returned by <a 
+  href="muntjac.messages.SystemMessages-class.html#getCookiesDisabledURL" 
+  class="link">getCookiesDisabledURL</a>.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true to show &quot;cookies disabled&quot; messages to the end 
+          user, false to redirect to the given URL directly</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getCookiesDisabledCaption"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getCookiesDisabledCaption</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.getCookiesDisabledCaption">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the caption of the message shown to the user when cookies are 
+  disabled in the browser.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The caption of the &quot;cookies disabled&quot; message</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getCookiesDisabledMessage"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getCookiesDisabledMessage</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.messages-pysrc.html#SystemMessages.getCookiesDisabledMessage">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the message shown to the user when cookies are disabled in the
+  browser.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The &quot;cookies disabled&quot; message</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:03:57 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

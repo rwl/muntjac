@@ -1,0 +1,1728 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.ui.upload.Upload</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.ui-module.html">Package&nbsp;ui</a> ::
+        <a href="muntjac.ui.upload-module.html">Module&nbsp;upload</a> ::
+        Class&nbsp;Upload
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.ui.upload.Upload-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class Upload</h1><p class="nomargin-top"><span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+                          object --+                
+                                   |                
+                 <a href="muntjac.util.IEventListener-class.html">util.IEventListener</a> --+            
+                                       |            
+           <a href="muntjac.terminal.paintable.IPaintable-class.html">terminal.paintable.IPaintable</a> --+        
+                                           |        
+                              object --+   |        
+                                       |   |        
+  <a href="muntjac.terminal.variable_owner.IVariableOwner-class.html">terminal.variable_owner.IVariableOwner</a> --+        
+                                           |        
+                              object --+   |        
+                                       |   |        
+             <a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a> --+        
+                                           |        
+                        <a href="muntjac.ui.component.IComponent-class.html">component.IComponent</a> --+    
+                                               |    
+                                  object --+   |    
+                                           |   |    
+<a href="muntjac.event.method_event_source.IMethodEventSource-class.html">event.method_event_source.IMethodEventSource</a> --+    
+                                               |    
+            <a href="muntjac.ui.abstract_component.AbstractComponent-class.html">abstract_component.AbstractComponent</a> --+
+                                                   |
+                          object --+               |
+                                   |               |
+                 <a href="muntjac.util.IEventListener-class.html">util.IEventListener</a> --+           |
+                                       |           |
+           <a href="muntjac.terminal.paintable.IPaintable-class.html">terminal.paintable.IPaintable</a> --+       |
+                                           |       |
+                              object --+   |       |
+                                       |   |       |
+  <a href="muntjac.terminal.variable_owner.IVariableOwner-class.html">terminal.variable_owner.IVariableOwner</a> --+       |
+                                           |       |
+                              object --+   |       |
+                                       |   |       |
+             <a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a> --+       |
+                                           |       |
+                        <a href="muntjac.ui.component.IComponent-class.html">component.IComponent</a> --+   |
+                                               |   |
+                            <a href="muntjac.ui.component.IFocusable-class.html">component.IFocusable</a> --+
+                                                   |
+                                                  <strong class="uidshort">Upload</strong>
+</pre>
+
+<hr />
+<p>IComponent for uploading files from client to server.</p>
+  <p>The visible component consists of a file name input box and a browse 
+  button and an upload submit button to start uploading.</p>
+  <p>The Upload component needs a StringIO to write the uploaded data. You 
+  need to implement the upload.IReceiver interface and return the output 
+  stream in the receiveUpload() method.</p>
+  <p>You can get an event regarding starting (StartedEvent), progress 
+  (ProgressEvent), and finishing (FinishedEvent) of upload by implementing 
+  IStartedListener, IProgressListener, and IFinishedListener, respectively.
+  The IFinishedListener is called for both failed and succeeded uploads. If
+  you wish to separate between these two cases, you can use 
+  ISucceededListener (SucceededEvenet) and IFailedListener 
+  (FailedEvent).</p>
+  <p>The upload component does not itself show upload progress, but you can
+  use the ProgressIndicator for providing progress feedback by implementing
+  IProgressListener and updating the indicator in updateProgress().</p>
+  <p>Setting upload component immediate initiates the upload as soon as a 
+  file is selected, instead of the common pattern of file selection field 
+  and upload button.</p>
+  <p>Note! Because of browser dependent implementations of &lt;input 
+  type=&quot;file&quot;&gt; element, setting size for Upload component is 
+  not supported. For some browsers setting size may work to some 
+  extent.</p>
+
+<hr />
+<div class="fields">      <dl><dt>Authors:</dt>
+        <dd>
+          Vaadin Ltd.,
+          Richard Lincoln
+        </dd>
+      </dl>
+      <p><strong>Version:</strong>
+        1.0.1
+      </p>
+</div><!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.upload.Upload-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">caption</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">uploadReceiver</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Creates a new instance of Upload.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.upload.Upload-class.html#changeVariables" class="summary-sig-name">changeVariables</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">source</span>,
+        <span class="summary-sig-arg">variables</span>)</span><br />
+      Invoked when the value of a variable has changed.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.changeVariables">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.upload.Upload-class.html#paintContent" class="summary-sig-name">paintContent</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">target</span>)</span><br />
+      Paints the content of this component.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.paintContent">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.upload.Upload-class.html#addListener" class="summary-sig-name">addListener</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">listener</span>,
+        <span class="summary-sig-arg">iface</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Adds an event listener.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.addListener">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.upload.Upload-class.html#addCallback" class="summary-sig-name">addCallback</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">callback</span>,
+        <span class="summary-sig-arg">eventType</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">*args</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.addCallback">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.upload.Upload-class.html#removeListener" class="summary-sig-name">removeListener</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">listener</span>,
+        <span class="summary-sig-arg">iface</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Removes an event listener.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.removeListener">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.upload.Upload-class.html#removeCallback" class="summary-sig-name">removeCallback</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">callback</span>,
+        <span class="summary-sig-arg">eventType</span>=<span class="summary-sig-default">None</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.removeCallback">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="fireStarted"></a><span class="summary-sig-name">fireStarted</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">filename</span>,
+        <span class="summary-sig-arg">MIMEType</span>)</span><br />
+      Emit upload received event.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.fireStarted">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="fireUploadInterrupted"></a><span class="summary-sig-name">fireUploadInterrupted</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">filename</span>,
+        <span class="summary-sig-arg">MIMEType</span>,
+        <span class="summary-sig-arg">length</span>,
+        <span class="summary-sig-arg">e</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Emits the upload failed event.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.fireUploadInterrupted">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="fireNoInputStream"></a><span class="summary-sig-name">fireNoInputStream</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">filename</span>,
+        <span class="summary-sig-arg">MIMEType</span>,
+        <span class="summary-sig-arg">length</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.fireNoInputStream">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="fireNoOutputStream"></a><span class="summary-sig-name">fireNoOutputStream</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">filename</span>,
+        <span class="summary-sig-arg">MIMEType</span>,
+        <span class="summary-sig-arg">length</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.fireNoOutputStream">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="fireUploadSuccess"></a><span class="summary-sig-name">fireUploadSuccess</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">filename</span>,
+        <span class="summary-sig-arg">MIMEType</span>,
+        <span class="summary-sig-arg">length</span>)</span><br />
+      Emits the upload success event.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.fireUploadSuccess">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.upload.Upload-class.html#fireUpdateProgress" class="summary-sig-name">fireUpdateProgress</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">totalBytes</span>,
+        <span class="summary-sig-arg">contentLength</span>)</span><br />
+      Emits the progress event.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.fireUpdateProgress">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.upload.Upload-class.html#getReceiver" class="summary-sig-name">getReceiver</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the current receiver.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.getReceiver">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.upload.Upload-class.html#setReceiver" class="summary-sig-name">setReceiver</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">receiver</span>)</span><br />
+      Sets the receiver.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.setReceiver">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.upload.Upload-class.html#focus" class="summary-sig-name">focus</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Sets the focus for this component if the component is <a 
+      href="muntjac.ui.component.IFocusable-class.html" 
+      class="link">IFocusable</a>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.focus">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.upload.Upload-class.html#getTabIndex" class="summary-sig-name">getTabIndex</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the Tabulator index of this IFocusable component.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.getTabIndex">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.upload.Upload-class.html#setTabIndex" class="summary-sig-name">setTabIndex</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">tabIndex</span>)</span><br />
+      Sets the Tabulator index of this IFocusable component.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.setTabIndex">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.upload.Upload-class.html#startUpload" class="summary-sig-name">startUpload</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Go into upload state.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.startUpload">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.upload.Upload-class.html#interruptUpload" class="summary-sig-name">interruptUpload</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Interrupts the upload currently being received.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.interruptUpload">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.upload.Upload-class.html#endUpload" class="summary-sig-name">endUpload</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Go into state where new uploading can begin.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.endUpload">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="isUploading"></a><span class="summary-sig-name">isUploading</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.isUploading">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.upload.Upload-class.html#getBytesRead" class="summary-sig-name">getBytesRead</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets read bytes of the file currently being uploaded.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.getBytesRead">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.upload.Upload-class.html#getUploadSize" class="summary-sig-name">getUploadSize</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns size of file currently being uploaded.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.getUploadSize">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.upload.Upload-class.html#setProgressListener" class="summary-sig-name">setProgressListener</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">progressListener</span>)</span><br />
+      This method is deprecated, use addListener(IProgressListener) 
+      instead.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.setProgressListener">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.upload.Upload-class.html#getProgressListener" class="summary-sig-name">getProgressListener</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      This method is deprecated.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.getProgressListener">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.upload.Upload-class.html#getButtonCaption" class="summary-sig-name">getButtonCaption</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      String to be rendered into button that fires uploading</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.getButtonCaption">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.upload.Upload-class.html#setButtonCaption" class="summary-sig-name">setButtonCaption</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">buttonCaption</span>)</span><br />
+      In addition to the actual file chooser, upload components have button
+      that starts actual upload progress.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.setButtonCaption">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.upload.Upload-class.html#submitUpload" class="summary-sig-name">submitUpload</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Forces the upload the send selected file to the server.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.submitUpload">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.upload.Upload-class.html#requestRepaint" class="summary-sig-name">requestRepaint</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Requests that the paintable should be repainted as soon as possible.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.requestRepaint">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getStreamVariable"></a><span class="summary-sig-name">getStreamVariable</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.getStreamVariable">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.upload.Upload-class.html#getListeners" class="summary-sig-name">getListeners</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">eventType</span>)</span><br />
+      Returns all listeners that are registered for the given event type or
+      one of its subclasses.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.getListeners">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getCallbacks"></a><span class="summary-sig-name">getCallbacks</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">eventType</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.getCallbacks">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html">abstract_component.AbstractComponent</a></code></b>:
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#__getstate__">__getstate__</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#__setstate__">__setstate__</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#addStyleName">addStyleName</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#attach">attach</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#childRequestedRepaint">childRequestedRepaint</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#detach">detach</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#fireComponentErrorEvent">fireComponentErrorEvent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#fireComponentEvent">fireComponentEvent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#fireEvent">fireEvent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#fireRequestRepaintEvent">fireRequestRepaintEvent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getApplication">getApplication</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getCSSHeight">getCSSHeight</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getCSSWidth">getCSSWidth</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getCaption">getCaption</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getComponentError">getComponentError</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getData">getData</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getDebugId">getDebugId</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getDescription">getDescription</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getErrorHandler">getErrorHandler</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getErrorMessage">getErrorMessage</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getHeight">getHeight</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getHeightUnits">getHeightUnits</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getIcon">getIcon</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getLocale">getLocale</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getParent">getParent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getStyle">getStyle</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getStyleName">getStyleName</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getWidth">getWidth</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getWidthUnits">getWidthUnits</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getWindow">getWindow</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#handleError">handleError</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#hasListeners">hasListeners</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#isEnabled">isEnabled</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#isImmediate">isImmediate</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#isReadOnly">isReadOnly</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#isVisible">isVisible</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#paint">paint</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#parseStringSize">parseStringSize</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#registerCallback">registerCallback</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#registerListener">registerListener</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#removeStyleName">removeStyleName</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#requestRepaintRequests">requestRepaintRequests</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setCaption">setCaption</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setComponentError">setComponentError</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setData">setData</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setDebugId">setDebugId</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setDescription">setDescription</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setEnabled">setEnabled</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setErrorHandler">setErrorHandler</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setHeight">setHeight</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setHeightUnits">setHeightUnits</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setIcon">setIcon</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setImmediate">setImmediate</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setLocale">setLocale</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setParent">setParent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setReadOnly">setReadOnly</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setSizeFull">setSizeFull</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setSizeUndefined">setSizeUndefined</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setStyle">setStyle</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setStyleName">setStyleName</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setVisible">setVisible</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setWidth">setWidth</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setWidthUnits">setWidthUnits</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#withdrawCallback">withdrawCallback</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#withdrawListener">withdrawListener</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="CLIENT_WIDGET"></a><span class="summary-name">CLIENT_WIDGET</span> = <code title="None">None</code><br />
+      hash(x)
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html">abstract_component.AbstractComponent</a></code></b>:
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#SIZE_PATTERN">SIZE_PATTERN</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a></code></b>:
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#SIZE_UNDEFINED">SIZE_UNDEFINED</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_CM">UNITS_CM</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_EM">UNITS_EM</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_EX">UNITS_EX</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_INCH">UNITS_INCH</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_MM">UNITS_MM</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_PERCENTAGE">UNITS_PERCENTAGE</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_PICAS">UNITS_PICAS</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_PIXELS">UNITS_PIXELS</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_POINTS">UNITS_POINTS</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNIT_SYMBOLS">UNIT_SYMBOLS</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== INSTANCE VARIABLES ==================== -->
+<a name="section-InstanceVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_focus"></a><span class="summary-name">_focus</span><br />
+      Should the field be focused on next repaint?
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_tabIndex"></a><span class="summary-name">_tabIndex</span><br />
+      The tab order number of this field.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_receiver"></a><span class="summary-name">_receiver</span><br />
+      The output of the upload is redirected to this receiver.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_progressListeners"></a><span class="summary-name">_progressListeners</span><br />
+      ProgressListeners to which information about progress
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_forceSubmit"></a><span class="summary-name">_forceSubmit</span><br />
+      Flag to indicate that submitting file has been requested.
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html">abstract_component.AbstractComponent</a></code></b> (private):
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_applicationData" onclick="show_private();">_applicationData</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_caption" onclick="show_private();">_caption</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_componentError" onclick="show_private();">_componentError</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_delayedFocus" onclick="show_private();">_delayedFocus</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_description" onclick="show_private();">_description</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_enabled" onclick="show_private();">_enabled</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_eventIdentifiers" onclick="show_private();">_eventIdentifiers</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_eventRouter" onclick="show_private();">_eventRouter</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_icon" onclick="show_private();">_icon</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_immediate" onclick="show_private();">_immediate</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_locale" onclick="show_private();">_locale</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_parent" onclick="show_private();">_parent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_readOnly" onclick="show_private();">_readOnly</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_repaintRequestListeners" onclick="show_private();">_repaintRequestListeners</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_repaintRequestListenersNotified" onclick="show_private();">_repaintRequestListenersNotified</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_styles" onclick="show_private();">_styles</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_visible" onclick="show_private();">_visible</a></code>
+      </p></div>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">caption</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">uploadReceiver</span>=<span class="sig-default">None</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Creates a new instance of Upload.</p>
+  <p>The receiver must be set before performing an upload.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="changeVariables"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">changeVariables</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">source</span>,
+        <span class="sig-arg">variables</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.changeVariables">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Invoked when the value of a variable has changed.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>source</code></strong> - the Source of the variable change. This is the origin of the 
+          event. For example in Web Adapter this is the request.</li>
+        <li><strong class="pname"><code>variables</code></strong> - the Mapping from variable names to new variable values.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.terminal.variable_owner.IVariableOwner-class.html#changeVariables">terminal.variable_owner.IVariableOwner.changeVariables</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a 
+        href="muntjac.ui.abstract_component.AbstractComponent-class.html#changeVariables"
+        class="link">AbstractComponent.changeVariables</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="paintContent"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">paintContent</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">target</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.paintContent">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Paints the content of this component.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>target</code></strong> - Target to paint the content on.</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="muntjac.terminal.paint_exception.PaintException-class.html">PaintException</a></strong></code> - if the paint operation failed.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.abstract_component.AbstractComponent-class.html#paintContent">abstract_component.AbstractComponent.paintContent</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addListener"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addListener</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">listener</span>,
+        <span class="sig-arg">iface</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.addListener">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds an event listener.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>listener</code></strong> - the listener to be added.</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>ValueError</strong></code> - unless <code>method</code> has a match in <code>object</code></li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.event.method_event_source.IMethodEventSource-class.html#addListener">event.method_event_source.IMethodEventSource.addListener</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addCallback"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addCallback</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">callback</span>,
+        <span class="sig-arg">eventType</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.addCallback">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.terminal.paintable.IPaintable-class.html#addCallback">terminal.paintable.IPaintable.addCallback</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeListener"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeListener</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">listener</span>,
+        <span class="sig-arg">iface</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.removeListener">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes an event listener.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>listener</code></strong> - the listener to be removed.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.event.method_event_source.IMethodEventSource-class.html#removeListener">event.method_event_source.IMethodEventSource.removeListener</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeCallback"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeCallback</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">callback</span>,
+        <span class="sig-arg">eventType</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.removeCallback">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.terminal.paintable.IPaintable-class.html#removeCallback">terminal.paintable.IPaintable.removeCallback</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="fireUpdateProgress"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">fireUpdateProgress</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">totalBytes</span>,
+        <span class="sig-arg">contentLength</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.fireUpdateProgress">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Emits the progress event.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>totalBytes</code></strong> - bytes received so far</li>
+        <li><strong class="pname"><code>contentLength</code></strong> - actual size of the file being uploaded, if known</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getReceiver"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getReceiver</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.getReceiver">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the current receiver.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the IStreamVariable.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setReceiver"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setReceiver</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">receiver</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.setReceiver">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the receiver.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>receiver</code></strong> - the receiver to set.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="focus"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">focus</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.focus">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the focus for this component if the component is <a 
+  href="muntjac.ui.component.IFocusable-class.html" 
+  class="link">IFocusable</a>.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.ui.component.IFocusable-class.html#focus">component.IFocusable.focus</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getTabIndex"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getTabIndex</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.getTabIndex">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the Tabulator index of this IFocusable component.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>tab index set for the <code>IFocusable</code> component</dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.component.IFocusable-class.html#getTabIndex">component.IFocusable.getTabIndex</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a href="muntjac.ui.component.IFocusable-class.html#getTabIndex" 
+        class="link">IFocusable.getTabIndex</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="setTabIndex"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setTabIndex</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">tabIndex</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.setTabIndex">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the Tabulator index of this IFocusable component.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>tabIndex</code></strong> - the tab order of this component. Indexes usually start from 1. 
+          Zero means that default tab order should be used. A negative 
+          value means that the field should not be included in the tabbing 
+          sequence.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.component.IFocusable-class.html#setTabIndex">component.IFocusable.setTabIndex</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a href="muntjac.ui.component.IFocusable-class.html#setTabIndex" 
+        class="link">IFocusable.setTabIndex</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="startUpload"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">startUpload</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.startUpload">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Go into upload state. This is to prevent double uploading on same 
+  component.</p>
+  <p>Warning: this is an internal method used by the framework and should 
+  not be used by user of the Upload component. Using it results in the 
+  Upload component going in wrong state and not working. It is currently 
+  public because it is used by another class.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="interruptUpload"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">interruptUpload</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.interruptUpload">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Interrupts the upload currently being received. The interruption will 
+  be done by the receiving tread so this method will return immediately and
+  the actual interrupt will happen a bit later.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="endUpload"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">endUpload</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.endUpload">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Go into state where new uploading can begin.</p>
+  <p>Warning: this is an internal method used by the framework and should 
+  not be used by user of the Upload component.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getBytesRead"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getBytesRead</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.getBytesRead">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets read bytes of the file currently being uploaded.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>bytes</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getUploadSize"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getUploadSize</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.getUploadSize">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns size of file currently being uploaded. Value sane only during 
+  upload.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>size in bytes</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setProgressListener"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setProgressListener</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">progressListener</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.setProgressListener">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method is deprecated, use addListener(IProgressListener) 
+  instead.</p>
+  <dl class="fields">
+  </dl>
+<div class="fields">      <p><strong>Deprecated:</strong>
+        Use addListener(IProgressListener) instead.
+      </p>
+</div></td></tr></table>
+</div>
+<a name="getProgressListener"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getProgressListener</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.getProgressListener">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method is deprecated.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>listener</dd>
+  </dl>
+<div class="fields">      <p><strong>Deprecated:</strong>
+        Replaced with addListener/removeListener
+      </p>
+</div></td></tr></table>
+</div>
+<a name="getButtonCaption"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getButtonCaption</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.getButtonCaption">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>String to be rendered into button that fires uploading</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setButtonCaption"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setButtonCaption</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">buttonCaption</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.setButtonCaption">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>In addition to the actual file chooser, upload components have button 
+  that starts actual upload progress. This method is used to set text in 
+  that button.</p>
+  <p>In case the button text is set to null, the button is hidden. In this 
+  case developer must explicitly initiate the upload process with <a 
+  href="muntjac.ui.upload.Upload-class.html#submitUpload" 
+  class="link">submitUpload</a>.</p>
+  <p>In case the Upload is used in immediate mode using <a 
+  href="muntjac.ui.abstract_component.AbstractComponent-class.html#setImmediate"
+  class="link">setImmediate</a>, the file choose (html input with type 
+  &quot;file&quot;) is hidden and only the button with this text is 
+  shown.</p>
+  <p><b>Note</b> the string given is set as is to the button. HTML 
+  formatting is not stripped. Be sure to properly validate your value 
+  according to your needs.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>buttonCaption</code></strong> - text for upload components button.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="submitUpload"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">submitUpload</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.submitUpload">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Forces the upload the send selected file to the server.</p>
+  <p>In case developer wants to use this feature, he/she will most probably
+  want to hide the uploads internal submit button by setting its caption to
+  null with <a href="muntjac.ui.upload.Upload-class.html#setButtonCaption" 
+  class="link">setButtonCaption</a> method.</p>
+  <p>Note, that the upload runs asynchronous. Developer should use normal 
+  upload listeners to trac the process of upload. If the field is empty 
+  uploaded the file name will be empty string and file length 0 in the 
+  upload finished event.</p>
+  <p>Also note, that the developer should not remove or modify the upload 
+  in the same user transaction where the upload submit is requested. The 
+  upload may safely be hidden or removed once the upload started event is 
+  fired.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="requestRepaint"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">requestRepaint</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.requestRepaint">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Requests that the paintable should be repainted as soon as 
+  possible.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.terminal.paintable.IPaintable-class.html#requestRepaint">terminal.paintable.IPaintable.requestRepaint</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getListeners"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getListeners</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">eventType</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.upload-pysrc.html#Upload.getListeners">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns all listeners that are registered for the given event type or 
+  one of its subclasses.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>eventType</code></strong> - The type of event to return listeners for.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>A collection with all registered listeners. Empty if no listeners
+          are found.</dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getListeners">abstract_component.AbstractComponent.getListeners</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:04:03 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

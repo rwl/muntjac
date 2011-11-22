@@ -1,0 +1,3027 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.data-module.html">Package&nbsp;data</a> ::
+        <a href="muntjac.data.util-module.html">Package&nbsp;util</a> ::
+        <a href="muntjac.data.util.abstract_in_memory_container-module.html">Module&nbsp;abstract_in_memory_container</a> ::
+        Class&nbsp;AbstractInMemoryContainer
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class AbstractInMemoryContainer</h1><p class="nomargin-top"><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+                      object --+        
+                               |        
+            <a href="muntjac.data.container.IContainer-class.html">container.IContainer</a> --+    
+                                   |    
+<a href="muntjac.data.util.abstract_container.AbstractContainer-class.html">abstract_container.AbstractContainer</a> --+
+                                       |
+                          object --+   |
+                                   |   |
+    <a href="muntjac.data.container.IItemSetChangeNotifier-class.html">container.IItemSetChangeNotifier</a> --+
+                                       |
+                  object --+           |
+                           |           |
+        <a href="muntjac.data.container.IContainer-class.html">container.IContainer</a> --+       |
+                               |       |
+              <a href="muntjac.data.container.IOrdered-class.html">container.IOrdered</a> --+   |
+                                   |   |
+                  <a href="muntjac.data.container.IIndexed-class.html">container.IIndexed</a> --+
+                                       |
+                                      <strong class="uidshort">AbstractInMemoryContainer</strong>
+</pre>
+
+<dl><dt>Known Subclasses:</dt>
+<dd>
+      <ul class="subclass-list">
+<li><a href="muntjac.data.util.indexed_container.IndexedContainer-class.html">indexed_container.IndexedContainer</a></li>  </ul>
+</dd></dl>
+
+<hr />
+<p>Abstract <code class="link">IContainer</code> class that handles 
+  common functionality for in-memory containers. Concrete in-memory 
+  container classes can either inherit this class, inherit <a 
+  href="muntjac.data.util.abstract_container.AbstractContainer-class.html" 
+  class="link">AbstractContainer</a>, or implement the <code 
+  class="link">IContainer</code> interface directly.</p>
+  <p>Adding and removing items (if desired) must be implemented in 
+  subclasses by overriding the appropriate add*Item() and remove*Item() and
+  removeAllItems() methods, calling the corresponding <a 
+  href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#internalAddItemAfter"
+  class="link">internalAddItemAfter</a>, <a 
+  href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#internalAddItemAt"
+  class="link">internalAddItemAt</a>, <a 
+  href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#internalAddItemAtEnd"
+  class="link">internalAddItemAtEnd</a>, <a 
+  href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#internalRemoveItem"
+  class="link">internalRemoveItem</a> and <a 
+  href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#internalRemoveAllItems"
+  class="link">internalRemoveAllItems</a> methods.</p>
+  <p>By default, adding and removing container properties is not supported,
+  and subclasses need to implement <a 
+  href="muntjac.data.container.IContainer-class.html#getContainerPropertyIds"
+  class="link">getContainerPropertyIds</a>. Optionally, subclasses can 
+  override <a 
+  href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#addContainerProperty"
+  class="link">addContainerProperty</a> and <a 
+  href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#removeContainerProperty"
+  class="link">removeContainerProperty</a> to implement them.</p>
+  <p>Features:</p>
+  <ul>
+    <li>
+      <a href="muntjac.data.container.IOrdered-class.html" 
+      class="link">IOrdered</a>
+    </li>
+    <li>
+      <a href="muntjac.data.container.IIndexed-class.html" 
+      class="link">IIndexed</a>
+    </li>
+    <li>
+      <code class="link">Filterable</code> and <code 
+      class="link">SimpleFilterable</code> (internal implementation, does 
+      not implement the interface directly)
+    </li>
+    <li>
+      <a href="muntjac.data.container.ISortable-class.html" 
+      class="link">ISortable</a> (internal implementation, does not 
+      implement the interface directly)
+    </li>
+  </ul>
+  <p>To implement <a href="muntjac.data.container.ISortable-class.html" 
+  class="link">ISortable</a>, subclasses need to implement <a 
+  href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#getSortablePropertyIds"
+  class="link">getSortablePropertyIds</a> and call the superclass method <a
+  
+  href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#sortContainer"
+  class="link">sortContainer</a> in the method <code>sort(object[], 
+  bool[])</code>.</p>
+  <p>To implement <a href="muntjac.data.container.IFilterable-class.html" 
+  class="link">IFilterable</a>, subclasses need to implement the methods 
+  <code class="link">Filterable.addContainerFilter</code> (calling <a 
+  href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#addFilter"
+  class="link">addFilter</a>), <code 
+  class="link">Filterable.removeAllContainerFilters</code> (calling <a 
+  href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#removeAllFilters"
+  class="link">removeAllFilters</a>) and <code 
+  class="link">Filterable.removeContainerFilter</code> (calling <a 
+  href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#removeFilter"
+  class="link">removeFilter</a>).</p>
+  <p>To implement <a 
+  href="muntjac.data.container.ISimpleFilterable-class.html" 
+  class="link">ISimpleFilterable</a>, subclasses also need to implement the
+  methods <code class="link">SimpleFilterable.addContainerFilter</code> and
+  <code class="link">SimpleFilterable.removeContainerFilters</code> calling
+  <a 
+  href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#addFilter"
+  class="link">addFilter</a> and <a 
+  href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#removeFilters"
+  class="link">removeFilters</a> respectively.</p>
+  <p>&lt;ITEMIDTYPE&gt;: the class of item identifiers in the container, 
+  use object if can be any class</p>
+  <p>&lt;PROPERTYIDCLASS&gt;: the class of property identifiers for the 
+  items in the container, use Object if can be any class</p>
+  <p>&lt;ITEMCLASS&gt;: the (base) class of the Item instances in the 
+  container, use <code class="link">Item</code> if unknown</p>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Constructor for an abstract in-memory container.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="__len__"></a><span class="summary-sig-name">__len__</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.__len__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#addCallback" class="summary-sig-name">addCallback</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">callback</span>,
+        <span class="summary-sig-arg">eventType</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">*args</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.addCallback">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#addContainerProperty" class="summary-sig-name">addContainerProperty</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">propertyId</span>,
+        <span class="summary-sig-arg">typ</span>,
+        <span class="summary-sig-arg">defaultValue</span>)</span><br />
+      Adds a new Property to all Items in the IContainer.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.addContainerProperty">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#addFilter" class="summary-sig-name">addFilter</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">fltr</span>)</span><br />
+      Adds a container filter and re-filter the view.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.addFilter">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#addItem" class="summary-sig-name">addItem</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Creates a new Item with the given ID in the IContainer.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.addItem">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#addItemAfter" class="summary-sig-name">addItemAfter</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">previousItemId</span>,
+        <span class="summary-sig-arg">newItemId</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Adds a new item after the given item.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.addItemAfter">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#addItemAt" class="summary-sig-name">addItemAt</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">index</span>,
+        <span class="summary-sig-arg">newItemId</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Adds a new item at given index (in the filtered view).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.addItemAt">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#addListener" class="summary-sig-name">addListener</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">listener</span>,
+        <span class="summary-sig-arg">iface</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Implementation of the corresponding method in <code 
+      class="link">IPropertySetChangeNotifier</code> and <code 
+      class="link">ItemSetChangeNotifier</code>, override and implement the
+      interface to use this.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.addListener">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#containsId" class="summary-sig-name">containsId</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Tests if the IContainer contains the specified Item.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.containsId">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#doFilterContainer" class="summary-sig-name">doFilterContainer</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">hasFilters</span>)</span><br />
+      Filters the data in the container and updates internal data 
+      structures.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.doFilterContainer">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#doSort" class="summary-sig-name">doSort</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Perform the sorting of the data structures in the container.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.doSort">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="filterAll"></a><span class="summary-sig-name">filterAll</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Filter the view to recreate the visible item list from the unfiltered
+      items, and send a notification if the set of visible items changed in
+      any way.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.filterAll">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#fireItemAdded" class="summary-sig-name">fireItemAdded</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">position</span>,
+        <span class="summary-sig-arg">itemId</span>,
+        <span class="summary-sig-arg">item</span>)</span><br />
+      Notify item set change listeners that an item has been added to the 
+      container.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.fireItemAdded">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#fireItemRemoved" class="summary-sig-name">fireItemRemoved</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">position</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Notify item set change listeners that an item has been removed from 
+      the container.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.fireItemRemoved">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#firstItemId" class="summary-sig-name">firstItemId</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the ID of the first Item in the IContainer.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.firstItemId">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#getAllItemIds" class="summary-sig-name">getAllItemIds</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Internal helper method to get the internal list of all item 
+      identifiers.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.getAllItemIds">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#getFilteredItemIds" class="summary-sig-name">getFilteredItemIds</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Internal helper method to get the internal list of filtered item 
+      identifiers.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.getFilteredItemIds">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#getFilters" class="summary-sig-name">getFilters</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the internal collection of filters.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.getFilters">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#getIdByIndex" class="summary-sig-name">getIdByIndex</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">index</span>)</span><br />
+      Gets the ID of an Item by an index number.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.getIdByIndex">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#getItem" class="summary-sig-name">getItem</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Gets the <code class="link">Item</code> with the given Item ID from 
+      the IContainer.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.getItem">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#getItemIds" class="summary-sig-name">getItemIds</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the ID's of all visible (after filtering and sorting) Items 
+      stored in the IContainer.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.getItemIds">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#getItemSorter" class="summary-sig-name">getItemSorter</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the ItemSorter used for comparing items in a sort.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.getItemSorter">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#getSortablePropertyIds" class="summary-sig-name">getSortablePropertyIds</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the sortable property identifiers for the container.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.getSortablePropertyIds">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#getUnfilteredItem" class="summary-sig-name">getUnfilteredItem</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Get an item even if filtered out.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.getUnfilteredItem">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#getVisibleItemIds" class="summary-sig-name">getVisibleItemIds</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the internal list of visible item identifiers after 
+      filtering.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.getVisibleItemIds">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#indexOfId" class="summary-sig-name">indexOfId</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Gets the index of the Item corresponding to the itemId.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.indexOfId">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#internalAddAt" class="summary-sig-name">internalAddAt</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">position</span>,
+        <span class="summary-sig-arg">itemId</span>,
+        <span class="summary-sig-arg">item</span>)</span><br />
+      Adds the bean to all internal data structures at the given position.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.internalAddAt">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#internalAddItemAfter" class="summary-sig-name">internalAddItemAfter</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">previousItemId</span>,
+        <span class="summary-sig-arg">newItemId</span>,
+        <span class="summary-sig-arg">item</span>,
+        <span class="summary-sig-arg">fltr</span>)</span><br />
+      Add an item after a given (visible) item, and perform filtering.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.internalAddItemAfter">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#internalAddItemAt" class="summary-sig-name">internalAddItemAt</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">index</span>,
+        <span class="summary-sig-arg">newItemId</span>,
+        <span class="summary-sig-arg">item</span>,
+        <span class="summary-sig-arg">fltr</span>)</span><br />
+      Add an item at a given (visible after filtering) item index, and 
+      perform filtering.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.internalAddItemAt">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#internalAddItemAtEnd" class="summary-sig-name">internalAddItemAtEnd</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">newItemId</span>,
+        <span class="summary-sig-arg">item</span>,
+        <span class="summary-sig-arg">fltr</span>)</span><br />
+      Add an item at the end of the container, and perform filtering if 
+      necessary.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.internalAddItemAtEnd">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#internalRemoveAllItems" class="summary-sig-name">internalRemoveAllItems</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Removes all items from the internal data structures of this class.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.internalRemoveAllItems">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#internalRemoveItem" class="summary-sig-name">internalRemoveItem</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Removes a single item from the internal data structures of this 
+      class.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.internalRemoveItem">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#isFiltered" class="summary-sig-name">isFiltered</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns true is the container has active filters.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.isFiltered">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#isFirstId" class="summary-sig-name">isFirstId</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Tests if the Item corresponding to the given Item ID is the first 
+      Item in the IContainer.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.isFirstId">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#isLastId" class="summary-sig-name">isLastId</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Tests if the Item corresponding to the given Item ID is the last Item
+      in the IContainer.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.isLastId">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#isPropertyFiltered" class="summary-sig-name">isPropertyFiltered</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">propertyId</span>)</span><br />
+      Checks if there is a filter that applies to a given property.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.isPropertyFiltered">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#lastItemId" class="summary-sig-name">lastItemId</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the ID of the last Item in the IContainer..</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.lastItemId">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#nextItemId" class="summary-sig-name">nextItemId</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Gets the ID of the Item following the Item that corresponds to 
+      <code>itemId</code>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.nextItemId">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#passesFilters" class="summary-sig-name">passesFilters</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Checks if the given itemId passes the filters set for the container.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.passesFilters">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#prevItemId" class="summary-sig-name">prevItemId</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Gets the ID of the Item preceding the Item that corresponds to 
+      <code>itemId</code>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.prevItemId">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#registerNewItem" class="summary-sig-name">registerNewItem</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">position</span>,
+        <span class="summary-sig-arg">itemId</span>,
+        <span class="summary-sig-arg">item</span>)</span><br />
+      Registers a new item as having been added to the container.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.registerNewItem">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#removeAllFilters" class="summary-sig-name">removeAllFilters</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Remove all container filters for all properties and re-filter the 
+      view.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.removeAllFilters">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#removeAllItems" class="summary-sig-name">removeAllItems</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Removes all Items from the IContainer.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.removeAllItems">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#removeCallback" class="summary-sig-name">removeCallback</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">callback</span>,
+        <span class="summary-sig-arg">eventType</span>=<span class="summary-sig-default">None</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.removeCallback">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#removeContainerProperty" class="summary-sig-name">removeContainerProperty</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">propertyId</span>)</span><br />
+      Removes a Property specified by the given Property ID from the 
+      IContainer.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.removeContainerProperty">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#removeFilter" class="summary-sig-name">removeFilter</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">fltr</span>)</span><br />
+      Remove a specific container filter and re-filter the view (if 
+      necessary).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.removeFilter">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#removeFilters" class="summary-sig-name">removeFilters</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">propertyId</span>)</span><br />
+      Remove all container filters for a given property identifier and 
+      re-filter the view.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.removeFilters">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#removeItem" class="summary-sig-name">removeItem</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Removes the Item identified by <code>ItemId</code> from the 
+      IContainer.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.removeItem">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#removeListener" class="summary-sig-name">removeListener</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">listener</span>,
+        <span class="summary-sig-arg">iface</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Implementation of the corresponding method in <code 
+      class="link">IPropertySetChangeNotifier</code> and <code 
+      class="link">ItemSetChangeNotifier</code>, override and implement the
+      interface to use this.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.removeListener">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#setAllItemIds" class="summary-sig-name">setAllItemIds</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">allItemIds</span>)</span><br />
+      Internal helper method to set the internal list of all item 
+      identifiers.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.setAllItemIds">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#setFilteredItemIds" class="summary-sig-name">setFilteredItemIds</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">filteredItemIds</span>)</span><br />
+      Internal helper method to set the internal list of filtered item 
+      identifiers.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.setFilteredItemIds">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#setFilters" class="summary-sig-name">setFilters</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">filters</span>)</span><br />
+      Set the internal collection of filters without performing filtering.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.setFilters">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#setItemSorter" class="summary-sig-name">setItemSorter</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemSorter</span>)</span><br />
+      Sets the ItemSorter used for comparing items in a sort.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.setItemSorter">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#size" class="summary-sig-name">size</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the number of visible Items in the IContainer.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.size">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#sortContainer" class="summary-sig-name">sortContainer</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">propertyId</span>,
+        <span class="summary-sig-arg">ascending</span>)</span><br />
+      Sort base implementation to be used to implement <a 
+      href="muntjac.data.container.ISortable-class.html" 
+      class="link">ISortable</a>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.sortContainer">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.data.util.abstract_container.AbstractContainer-class.html">abstract_container.AbstractContainer</a></code></b>:
+      <code><a href="muntjac.data.util.abstract_container.AbstractContainer-class.html#fireContainerPropertySetChange">fireContainerPropertySetChange</a></code>,
+      <code><a href="muntjac.data.util.abstract_container.AbstractContainer-class.html#fireItemSetChange">fireItemSetChange</a></code>,
+      <code><a href="muntjac.data.util.abstract_container.AbstractContainer-class.html#getCallbacks">getCallbacks</a></code>,
+      <code><a href="muntjac.data.util.abstract_container.AbstractContainer-class.html#getItemSetChangeListeners">getItemSetChangeListeners</a></code>,
+      <code><a href="muntjac.data.util.abstract_container.AbstractContainer-class.html#getListeners">getListeners</a></code>,
+      <code><a href="muntjac.data.util.abstract_container.AbstractContainer-class.html#getPropertySetChangeListeners">getPropertySetChangeListeners</a></code>,
+      <code><a href="muntjac.data.util.abstract_container.AbstractContainer-class.html#setItemSetChangeListeners">setItemSetChangeListeners</a></code>,
+      <code><a href="muntjac.data.util.abstract_container.AbstractContainer-class.html#setPropertySetChangeListeners">setPropertySetChangeListeners</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.data.container.IContainer-class.html">container.IContainer</a></code></b>:
+      <code><a href="muntjac.data.container.IContainer-class.html#getContainerProperty">getContainerProperty</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#getContainerPropertyIds">getContainerPropertyIds</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#getType">getType</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== INSTANCE VARIABLES ==================== -->
+<a name="section-InstanceVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_allItemIds"></a><span class="summary-name">_allItemIds</span><br />
+      An ordered <code class="link">List</code> of all item identifiers in 
+      the container,
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_filteredItemIds"></a><span class="summary-name">_filteredItemIds</span><br />
+      An ordered <code class="link">List</code> of item identifiers in the 
+      container after
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_filters"></a><span class="summary-name">_filters</span><br />
+      Filters that are applied to the container to limit the items visible
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_itemSorter"></a><span class="summary-name">_itemSorter</span><br />
+      The item sorter which is used for sorting the container.
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.data.util.abstract_container.AbstractContainer-class.html">abstract_container.AbstractContainer</a></code></b> (private):
+      <code><a href="muntjac.data.util.abstract_container.AbstractContainer-class.html#_itemSetChangeListeners" onclick="show_private();">_itemSetChangeListeners</a></code>,
+      <code><a href="muntjac.data.util.abstract_container.AbstractContainer-class.html#_propertySetChangeListeners" onclick="show_private();">_propertySetChangeListeners</a></code>
+      </p></div>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Constructor for an abstract in-memory container.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addCallback"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addCallback</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">callback</span>,
+        <span class="sig-arg">eventType</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.addCallback">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.data.container.IItemSetChangeNotifier-class.html#addCallback">container.IItemSetChangeNotifier.addCallback</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addContainerProperty"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addContainerProperty</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">propertyId</span>,
+        <span class="sig-arg">typ</span>,
+        <span class="sig-arg">defaultValue</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.addContainerProperty">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds a new Property to all Items in the IContainer. The Property ID, 
+  data type and default value of the new Property are given as 
+  parameters.</p>
+  <p>This functionality is optional.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>propertyId</code></strong> - ID of the Property</li>
+        <li><strong class="pname"><code>typ</code></strong> - Data type of the new Property</li>
+        <li><strong class="pname"><code>defaultValue</code></strong> - The value all created Properties are initialized to</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the operation succeeded, <code>False</code> 
+          if not</dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>NotImplementedError</strong></code> - if the container does not support explicitly adding container 
+        properties</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IContainer-class.html#addContainerProperty">container.IContainer.addContainerProperty</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addFilter"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addFilter</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">fltr</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.addFilter">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds a container filter and re-filter the view.</p>
+  <p>The filter must implement Filter and its sub-filters (if any) must 
+  also be in-memory filterable.</p>
+  <p>This can be used to implement <code 
+  class="link">Filterable.addContainerFilter</code> and optionally also 
+  <code class="link">SimpleFilterable.addContainerFilter</code> (with <a 
+  href="muntjac.data.util.filter.simple_string_filter.SimpleStringFilter-class.html"
+  class="link">SimpleStringFilter</a>).</p>
+  <p>Note that in some cases, incompatible filters cannot be detected when 
+  added and an <a 
+  href="muntjac.data.util.filter.unsupported_filter_exception.UnsupportedFilterException-class.html"
+  class="link">UnsupportedFilterException</a> may occur when performing 
+  filtering.</p>
+  <dl class="fields">
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="muntjac.data.util.filter.unsupported_filter_exception.UnsupportedFilterException-class.html">UnsupportedFilterException</a></strong></code> - if the filter is detected as not supported by the container</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addItem"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addItem</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.addItem">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Creates a new Item with the given ID in the IContainer. Creates a new 
+  Item into the IContainer, and assign it an automatic ID if itemId is 
+  <code>None</code>.</p>
+  <p>The new Item is returned, and it is ready to have its Properties 
+  modified. Returns <code>None</code> if the operation fails or the 
+  IContainer already contains a Item with the given ID.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - ID of the Item to be created</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>Created new Item, or <code>None</code> in case of a failure</dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>NotImplementedError</strong></code> - if adding an item with an explicit item ID is not supported by the 
+        container</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IContainer-class.html#addItem">container.IContainer.addItem</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addItemAfter"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addItemAfter</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">previousItemId</span>,
+        <span class="sig-arg">newItemId</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.addItemAfter">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds a new item after the given item.</p>
+  <p>Adding an item after null item adds the item as first item of the 
+  ordered container.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>previousItemId</code></strong> - Id of the visible item in ordered container after which to insert
+          the new item.</li>
+        <li><strong class="pname"><code>newItemId</code></strong> - Id of the new item to be added.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>new item or null if the operation fails.</dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>NotImplementedError</strong></code> - if the operation is not supported by the container</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IOrdered-class.html#addItemAfter">container.IOrdered.addItemAfter</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addItemAt"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addItemAt</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">index</span>,
+        <span class="sig-arg">newItemId</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.addItemAt">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds a new item at given index (in the filtered view).</p>
+  <p>The indices of the item currently in the given position and all the 
+  following items are incremented.</p>
+  <p>This method should apply filters to the added item after inserting it,
+  possibly hiding it immediately. If the container is being sorted, the 
+  item may be added at the correct sorted position instead of the given 
+  position. See <a href="muntjac.data.container.IIndexed-class.html" 
+  class="link">IIndexed</a>, <a 
+  href="muntjac.data.container.IOrdered-class.html" 
+  class="link">IOrdered</a>, <a 
+  href="muntjac.data.container.IFilterable-class.html" 
+  class="link">IFilterable</a> and <a 
+  href="muntjac.data.container.ISortable-class.html" 
+  class="link">ISortable</a> for more information.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>index</code></strong> - Index (in the filtered and sorted view) at which to add the new 
+          item.</li>
+        <li><strong class="pname"><code>newItemId</code></strong> - Id of the new item to be added.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>new <code class="link">Item</code> or null if the operation 
+          fails.</dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>NotImplementedError</strong></code> - if the operation is not supported by the container</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IIndexed-class.html#addItemAt">container.IIndexed.addItemAt</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addListener"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addListener</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">listener</span>,
+        <span class="sig-arg">iface</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.addListener">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Implementation of the corresponding method in <code 
+  class="link">IPropertySetChangeNotifier</code> and <code 
+  class="link">ItemSetChangeNotifier</code>, override and implement the 
+  interface to use this.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>listener</code></strong> - listener to be added</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IItemSetChangeNotifier-class.html#addListener">container.IItemSetChangeNotifier.addListener</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="containsId"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">containsId</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.containsId">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tests if the IContainer contains the specified Item.</p>
+  <p>Filtering can hide items so that they will not be visible through the 
+  container API, and this method should respect visibility of items (i.e. 
+  only indicate visible items as being in the container) if feasible for 
+  the container.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - ID the of Item to be tested</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>boolean indicating if the IContainer holds the specified Item</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IContainer-class.html#containsId">container.IContainer.containsId</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="doFilterContainer"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">doFilterContainer</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">hasFilters</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.doFilterContainer">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Filters the data in the container and updates internal data 
+  structures. This method should reset any internal data structures and 
+  then repopulate them so <a 
+  href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#getItemIds"
+  class="link">getItemIds</a> and other methods only return the filtered 
+  items.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>hasFilters</code></strong> - true if filters has been set for the container, false otherwise</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>true if the item set has changed as a result of the filtering</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="doSort"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">doSort</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.doSort">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Perform the sorting of the data structures in the container. This is 
+  invoked when the <code>itemSorter</code> has been prepared for the sort 
+  operation. Typically this method calls <code class="link">sorted</code> 
+  on all arrays (containing item ids) that need to be sorted.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="fireItemAdded"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">fireItemAdded</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">position</span>,
+        <span class="sig-arg">itemId</span>,
+        <span class="sig-arg">item</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.fireItemAdded">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Notify item set change listeners that an item has been added to the 
+  container.</p>
+  <p>Unless subclasses specify otherwise, the default notification 
+  indicates a full refresh.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>position</code></strong> - position of the added item in the view (if visible)</li>
+        <li><strong class="pname"><code>itemId</code></strong> - id of the added item</li>
+        <li><strong class="pname"><code>item</code></strong> - the added item</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="fireItemRemoved"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">fireItemRemoved</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">position</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.fireItemRemoved">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Notify item set change listeners that an item has been removed from 
+  the container.</p>
+  <p>Unless subclasses specify otherwise, the default notification 
+  indicates a full refresh.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>position</code></strong> - position of the removed item in the view prior to removal (if was
+          visible)</li>
+        <li><strong class="pname"><code>itemId</code></strong> - id of the removed item, of type <code class="link">object</code> 
+          to satisfy <code class="link">IContainer.removeItem</code> API</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="firstItemId"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">firstItemId</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.firstItemId">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the ID of the first Item in the IContainer.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>ID of the first visible Item in the IContainer</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IOrdered-class.html#firstItemId">container.IOrdered.firstItemId</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getAllItemIds"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getAllItemIds</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.getAllItemIds">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Internal helper method to get the internal list of all item 
+  identifiers. Avoid using this method outside this class, may disappear in
+  future versions.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>List&lt;ITEMIDTYPE&gt;</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getFilteredItemIds"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getFilteredItemIds</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.getFilteredItemIds">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Internal helper method to get the internal list of filtered item 
+  identifiers. Should not be used outside this class except for 
+  implementing clone(), may disappear from future versions - use <a 
+  href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#getVisibleItemIds"
+  class="link">getVisibleItemIds</a> in other contexts.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>List&lt;ITEMIDTYPE&gt;</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getFilters"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getFilters</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.getFilters">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the internal collection of filters. The returned collection 
+  should not be modified by callers outside this class.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>Set&lt;Filter&gt;</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getIdByIndex"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getIdByIndex</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">index</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.getIdByIndex">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the ID of an Item by an index number.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>index</code></strong> - Index of the requested id in (the filtered and sorted view of) 
+          the IContainer</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>ID of the Item in the given index</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IIndexed-class.html#getIdByIndex">container.IIndexed.getIdByIndex</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getItem"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getItem</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.getItem">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the <code class="link">Item</code> with the given Item ID from 
+  the IContainer. If the IContainer does not contain the requested Item, 
+  <code>None</code> is returned.</p>
+  <p>Containers should not return Items that are filtered out.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - ID of the <code class="link">Item</code> to retrieve</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>the <code class="link">Item</code> with the given ID or 
+          <code>None</code> if the Item is not found in the IContainer</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IContainer-class.html#getItem">container.IContainer.getItem</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getItemIds"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getItemIds</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.getItemIds">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the ID's of all visible (after filtering and sorting) Items 
+  stored in the IContainer. The ID's cannot be modified through the 
+  returned collection.</p>
+  <p>If the container is <a 
+  href="muntjac.data.container.IOrdered-class.html" 
+  class="link">IOrdered</a>, the collection returned by this method should 
+  follow that order. If the container is <a 
+  href="muntjac.data.container.ISortable-class.html" 
+  class="link">ISortable</a>, the items should be in the sorted order.</p>
+  <p>Calling this method for large lazy containers can be an expensive 
+  operation and should be avoided when practical.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>unmodifiable collection of Item IDs</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IContainer-class.html#getItemIds">container.IContainer.getItemIds</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getItemSorter"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getItemSorter</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.getItemSorter">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the ItemSorter used for comparing items in a sort. See <a 
+  href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#setItemSorter"
+  class="link">setItemSorter</a> for more information.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The ItemSorter used for comparing two items in a sort.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getSortablePropertyIds"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getSortablePropertyIds</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.getSortablePropertyIds">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the sortable property identifiers for the container. Can be 
+  used to implement <a 
+  href="muntjac.data.container.ISortable-class.html#getSortableContainerPropertyIds"
+  class="link">ISortable.getSortableContainerPropertyIds</a>.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getUnfilteredItem"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getUnfilteredItem</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.getUnfilteredItem">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Get an item even if filtered out.</p>
+  <p>For internal use only.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getVisibleItemIds"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getVisibleItemIds</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.getVisibleItemIds">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the internal list of visible item identifiers after 
+  filtering.</p>
+  <p>For internal use only.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="indexOfId"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">indexOfId</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.indexOfId">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the index of the Item corresponding to the itemId. The following 
+  is <code>True</code> for the returned index: 0 &lt;= index &lt; size(), 
+  or index = -1 if there is no visible item with that id in the 
+  container.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - ID of an Item in the IContainer</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>index of the Item, or -1 if (the filtered and sorted view of) the
+          IContainer does not include the Item</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IIndexed-class.html#indexOfId">container.IIndexed.indexOfId</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="internalAddAt"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">internalAddAt</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">position</span>,
+        <span class="sig-arg">itemId</span>,
+        <span class="sig-arg">item</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.internalAddAt">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds the bean to all internal data structures at the given position. 
+  Fails if an item with itemId is already in the container. Returns a the 
+  item if it was added successfully, null otherwise.</p>
+  <p>Caller should initiate filtering after calling this method.</p>
+  <p>For internal use only - subclasses should use <a 
+  href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#internalAddItemAtEnd"
+  class="link">internalAddItemAtEnd</a>, <a 
+  href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#internalAddItemAt"
+  class="link">internalAddItemAt</a> and <a 
+  href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#internalAddItemAfter"
+  class="link">internalAddItemAfter</a> instead.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>position</code></strong> - The position at which the item should be inserted in the 
+          unfiltered collection of items</li>
+        <li><strong class="pname"><code>itemId</code></strong> - The item identifier for the item to insert</li>
+        <li><strong class="pname"><code>item</code></strong> - The item to insert</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>ITEMCLASS if the item was added successfully, null otherwise</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="internalAddItemAfter"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">internalAddItemAfter</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">previousItemId</span>,
+        <span class="sig-arg">newItemId</span>,
+        <span class="sig-arg">item</span>,
+        <span class="sig-arg">fltr</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.internalAddItemAfter">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Add an item after a given (visible) item, and perform filtering. An 
+  event is fired if the filtered view changes.</p>
+  <p>The new item is added at the beginning if previousItemId is null.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>previousItemId</code></strong> - item id of a visible item after which to add the new item, or 
+          null to add at the beginning</li>
+        <li><strong class="pname"><code>newItemId</code></strong></li>
+        <li><strong class="pname"><code>item</code></strong> - new item to add</li>
+        <li><strong class="pname"><code>fltr</code></strong> - true to perform filtering and send event after adding the item, 
+          false to skip these operations for batch inserts - if false, 
+          caller needs to make sure these operations are performed at the 
+          end of the batch</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>item added or null if no item was added</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="internalAddItemAt"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">internalAddItemAt</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">index</span>,
+        <span class="sig-arg">newItemId</span>,
+        <span class="sig-arg">item</span>,
+        <span class="sig-arg">fltr</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.internalAddItemAt">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Add an item at a given (visible after filtering) item index, and 
+  perform filtering. An event is fired if the filtered view changes.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>index</code></strong> - position where to add the item (visible/view index)</li>
+        <li><strong class="pname"><code>newItemId</code></strong></li>
+        <li><strong class="pname"><code>item</code></strong> - new item to add</li>
+        <li><strong class="pname"><code>fltr</code></strong> - true to perform filtering and send event after adding the item, 
+          false to skip these operations for batch inserts - if false, 
+          caller needs to make sure these operations are performed at the 
+          end of the batch</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>item added or null if no item was added</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="internalAddItemAtEnd"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">internalAddItemAtEnd</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">newItemId</span>,
+        <span class="sig-arg">item</span>,
+        <span class="sig-arg">fltr</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.internalAddItemAtEnd">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Add an item at the end of the container, and perform filtering if 
+  necessary. An event is fired if the filtered view changes.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>newItemId</code></strong></li>
+        <li><strong class="pname"><code>item</code></strong> - new item to add</li>
+        <li><strong class="pname"><code>fltr</code></strong> - true to perform filtering and send event after adding the item, 
+          false to skip these operations for batch inserts - if false, 
+          caller needs to make sure these operations are performed at the 
+          end of the batch</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>item added or null if no item was added</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="internalRemoveAllItems"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">internalRemoveAllItems</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.internalRemoveAllItems">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes all items from the internal data structures of this class. 
+  This can be used to implement <a 
+  href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#removeAllItems"
+  class="link">removeAllItems</a> in subclasses.</p>
+  <p>No notification is sent, the caller has to fire a suitable item set 
+  change notification.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="internalRemoveItem"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">internalRemoveItem</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.internalRemoveItem">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes a single item from the internal data structures of this class.
+  This can be used to implement <a 
+  href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#removeItem"
+  class="link">removeItem</a> in subclasses.</p>
+  <p>No notification is sent, the caller has to fire a suitable item set 
+  change notification.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - the identifier of the item to remove</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>true if an item was successfully removed, false if failed to 
+          remove or no such item</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isFiltered"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isFiltered</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.isFiltered">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns true is the container has active filters.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true if the container is currently filtered</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isFirstId"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isFirstId</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.isFirstId">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tests if the Item corresponding to the given Item ID is the first Item
+  in the IContainer.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - ID of an Item in the IContainer</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the Item is first visible item in the 
+          IContainer, <code>False</code> if not</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IOrdered-class.html#isFirstId">container.IOrdered.isFirstId</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isLastId"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isLastId</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.isLastId">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tests if the Item corresponding to the given Item ID is the last Item 
+  in the IContainer.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the Item is last visible item in the 
+          IContainer, <code>False</code> if not</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IOrdered-class.html#isLastId">container.IOrdered.isLastId</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isPropertyFiltered"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isPropertyFiltered</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">propertyId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.isPropertyFiltered">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Checks if there is a filter that applies to a given property.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true if there is an active filter for the property</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="lastItemId"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">lastItemId</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.lastItemId">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the ID of the last Item in the IContainer..</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>ID of the last visible Item in the IContainer</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IOrdered-class.html#lastItemId">container.IOrdered.lastItemId</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="nextItemId"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">nextItemId</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.nextItemId">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the ID of the Item following the Item that corresponds to 
+  <code>itemId</code>. If the given Item is the last or not found in the 
+  IContainer, <code>None</code> is returned.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - ID of a visible Item in the IContainer</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>ID of the next visible Item or <code>None</code></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IOrdered-class.html#nextItemId">container.IOrdered.nextItemId</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="passesFilters"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">passesFilters</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.passesFilters">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Checks if the given itemId passes the filters set for the container. 
+  The caller should make sure the itemId exists in the container. For 
+  non-existing itemIds the behaviour is undefined.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - An itemId that exists in the container.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>true if the itemId passes all filters or no filters are set, 
+          false otherwise.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="prevItemId"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">prevItemId</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.prevItemId">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the ID of the Item preceding the Item that corresponds to 
+  <code>itemId</code>. If the given Item is the first or not found in the 
+  IContainer, <code>None</code> is returned.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - ID of a visible Item in the IContainer</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>ID of the previous visible Item or <code>None</code></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IOrdered-class.html#prevItemId">container.IOrdered.prevItemId</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="registerNewItem"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">registerNewItem</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">position</span>,
+        <span class="sig-arg">itemId</span>,
+        <span class="sig-arg">item</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.registerNewItem">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Registers a new item as having been added to the container. This can 
+  involve storing the item or any relevant information about it in internal
+  container-specific collections if necessary, as well as registering 
+  listeners etc.</p>
+  <p>The full identifier list in <a 
+  href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html"
+  class="link">AbstractInMemoryContainer</a> has already been updated to 
+  reflect the new item when this method is called.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeAllFilters"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeAllFilters</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.removeAllFilters">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Remove all container filters for all properties and re-filter the 
+  view.</p>
+  <p>This can be used to implement <code 
+  class="link">Filterable.removeAllContainerFilters</code>.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeAllItems"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeAllItems</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.removeAllItems">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes all Items from the IContainer.</p>
+  <p>Note that Property ID and type information is preserved. This 
+  functionality is optional.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the operation succeeded, <code>False</code> 
+          if not</dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>NotImplementedError</strong></code> - if the container does not support removing all items</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IContainer-class.html#removeAllItems">container.IContainer.removeAllItems</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeCallback"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeCallback</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">callback</span>,
+        <span class="sig-arg">eventType</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.removeCallback">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.data.container.IItemSetChangeNotifier-class.html#removeCallback">container.IItemSetChangeNotifier.removeCallback</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeContainerProperty"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeContainerProperty</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">propertyId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.removeContainerProperty">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes a Property specified by the given Property ID from the 
+  IContainer. Note that the Property will be removed from all Items in the 
+  IContainer.</p>
+  <p>This functionality is optional.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>propertyId</code></strong> - ID of the Property to remove</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the operation succeeded, <code>False</code> 
+          if not</dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>NotImplementedError</strong></code> - if the container does not support removing container properties</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IContainer-class.html#removeContainerProperty">container.IContainer.removeContainerProperty</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeFilter"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeFilter</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">fltr</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.removeFilter">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Remove a specific container filter and re-filter the view (if 
+  necessary).</p>
+  <p>This can be used to implement <code 
+  class="link">Filterable.removeContainerFilter</code>.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeFilters"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeFilters</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">propertyId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.removeFilters">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Remove all container filters for a given property identifier and 
+  re-filter the view. This also removes filters applying to multiple 
+  properties including the one identified by propertyId.</p>
+  <p>This can be used to implement <code 
+  class="link">Filterable.removeContainerFilters</code>.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>Collection&lt;Filter&gt; removed filters</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeItem"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeItem</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.removeItem">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes the Item identified by <code>ItemId</code> from the 
+  IContainer.</p>
+  <p>Containers that support filtering should also allow removing an item 
+  that is currently filtered out.</p>
+  <p>This functionality is optional.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - ID of the Item to remove</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the operation succeeded, <code>False</code> 
+          if not</dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>NotImplementedError</strong></code> - if the container does not support removing individual items</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IContainer-class.html#removeItem">container.IContainer.removeItem</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeListener"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeListener</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">listener</span>,
+        <span class="sig-arg">iface</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.removeListener">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Implementation of the corresponding method in <code 
+  class="link">IPropertySetChangeNotifier</code> and <code 
+  class="link">ItemSetChangeNotifier</code>, override and implement the 
+  interface to use this.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>listener</code></strong> - listener to be removed</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IItemSetChangeNotifier-class.html#removeListener">container.IItemSetChangeNotifier.removeListener</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setAllItemIds"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setAllItemIds</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">allItemIds</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.setAllItemIds">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Internal helper method to set the internal list of all item 
+  identifiers. Should not be used outside this class except for 
+  implementing clone(), may disappear from future versions.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="setFilteredItemIds"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setFilteredItemIds</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">filteredItemIds</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.setFilteredItemIds">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Internal helper method to set the internal list of filtered item 
+  identifiers. Should not be used outside this class except for 
+  implementing clone(), may disappear from future versions.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="setFilters"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setFilters</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">filters</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.setFilters">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Set the internal collection of filters without performing 
+  filtering.</p>
+  <p>This method is mostly for internal use, use <a 
+  href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#addFilter"
+  class="link">addFilter</a> and <code>remove*Filter*</code> (which also 
+  re-filter the container) instead when possible.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="setItemSorter"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setItemSorter</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemSorter</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.setItemSorter">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the ItemSorter used for comparing items in a sort. The <code 
+  class="link">ItemSorter.compare</code> method is called with item ids to 
+  perform the sorting. A default ItemSorter is used if this is not 
+  explicitly set.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemSorter</code></strong> - The ItemSorter used for comparing two items in a sort (not null).</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="size"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">size</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.size">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the number of visible Items in the IContainer.</p>
+  <p>Filtering can hide items so that they will not be visible through the 
+  container API.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>number of Items in the IContainer</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IContainer-class.html#size">container.IContainer.size</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="sortContainer"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">sortContainer</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">propertyId</span>,
+        <span class="sig-arg">ascending</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.abstract_in_memory_container-pysrc.html#AbstractInMemoryContainer.sortContainer">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sort base implementation to be used to implement <a 
+  href="muntjac.data.container.ISortable-class.html" 
+  class="link">ISortable</a>.</p>
+  <p>Subclasses should call this from a public <code 
+  class="link">sort</code> method when implementing ISortable.</p>
+  <dl class="fields">
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a href="muntjac.data.container.ISortable-class.html#sort" 
+        class="link">ISortable.sort</a>
+      </p>
+</div></td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:03:56 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

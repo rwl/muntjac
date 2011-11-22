@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.data.container.IFilterable</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.data-module.html">Package&nbsp;data</a> ::
+        <a href="muntjac.data.container-module.html">Module&nbsp;container</a> ::
+        Class&nbsp;IFilterable
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.data.container.IFilterable-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class IFilterable</h1><p class="nomargin-top"><span class="codelink"><a href="muntjac.data.container-pysrc.html#IFilterable">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+object --+    
+         |    
+<a href="muntjac.data.container.IContainer-class.html">IContainer</a> --+
+             |
+            <strong class="uidshort">IFilterable</strong>
+</pre>
+
+<dl><dt>Known Subclasses:</dt>
+<dd>
+      <ul class="subclass-list">
+<li><a href="muntjac.data.util.indexed_container.IndexedContainer-class.html">util.indexed_container.IndexedContainer</a></li>  </ul>
+</dd></dl>
+
+<hr />
+<p>Interface that is implemented by containers which allow reducing their
+  visible contents based on a set of filters.</p>
+  <p>When a set of filters are set, only items that match all the filters 
+  are included in the visible contents of the container. Still new items 
+  that do not match filters can be added to the container. Multiple filters
+  can be added and the container remembers the state of the filters. When 
+  multiple filters are added, all filters must match for an item to be 
+  visible in the container.</p>
+  <p>When an <a href="muntjac.data.container.IOrdered-class.html" 
+  class="link">IOrdered</a> or <a 
+  href="muntjac.data.container.IIndexed-class.html" 
+  class="link">IIndexed</a> container is filtered, all operations of these 
+  interfaces should only use the filtered and sorted contents and the 
+  filtered indices to the container. Indices or item identifiers in the 
+  public API refer to the visible view unless otherwise stated. However, 
+  the <code>addItem*()</code> methods may add items that will be filtered 
+  out after addition or moved to another position based on sorting.</p>
+  <p>How filtering is performed when a <a 
+  href="muntjac.data.container.IHierarchical-class.html" 
+  class="link">IHierarchical</a> container implements <a 
+  href="muntjac.data.container.IFilterable-class.html" 
+  class="link">IFilterable</a> is implementation specific and should be 
+  documented in the implementing class.</p>
+  <p>Adding items (if supported) to a filtered <a 
+  href="muntjac.data.container.IOrdered-class.html" 
+  class="link">IOrdered</a> or <a 
+  href="muntjac.data.container.IIndexed-class.html" 
+  class="link">IIndexed</a> container should insert them immediately after 
+  the indicated visible item. However, the unfiltered position of items 
+  added at index 0, at index <a 
+  href="muntjac.data.container.IContainer-class.html#size" 
+  class="link">IContainer.size</a> or at an undefined position is up to the
+  implementation.</p>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.container.IFilterable-class.html#addContainerFilter" class="summary-sig-name">addContainerFilter</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">fltr</span>)</span><br />
+      Adds a filter for the container.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.container-pysrc.html#IFilterable.addContainerFilter">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="removeAllContainerFilters"></a><span class="summary-sig-name">removeAllContainerFilters</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Remove all active filters from the container.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.container-pysrc.html#IFilterable.removeAllContainerFilters">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.container.IFilterable-class.html#removeContainerFilter" class="summary-sig-name">removeContainerFilter</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">fltr</span>)</span><br />
+      Removes a filter from the container.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.container-pysrc.html#IFilterable.removeContainerFilter">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.data.container.IContainer-class.html">IContainer</a></code></b>:
+      <code><a href="muntjac.data.container.IContainer-class.html#addContainerProperty">addContainerProperty</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#addItem">addItem</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#containsId">containsId</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#getContainerProperty">getContainerProperty</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#getContainerPropertyIds">getContainerPropertyIds</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#getItem">getItem</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#getItemIds">getItemIds</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#getType">getType</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#removeAllItems">removeAllItems</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#removeContainerProperty">removeContainerProperty</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#removeItem">removeItem</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#size">size</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__init__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="addContainerFilter"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addContainerFilter</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">fltr</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.container-pysrc.html#IFilterable.addContainerFilter">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds a filter for the container.</p>
+  <p>If a container has multiple filters, only items accepted by all 
+  filters are visible.</p>
+  <dl class="fields">
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="muntjac.data.util.filter.unsupported_filter_exception.UnsupportedFilterException-class.html">UnsupportedFilterException</a></strong></code> - if the filter is not supported by the container</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeContainerFilter"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeContainerFilter</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">fltr</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.container-pysrc.html#IFilterable.removeContainerFilter">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes a filter from the container.</p>
+  <p>This requires that the <code>__eq__</code> method considers the 
+  filters as equivalent (same instance or properly implemented 
+  <code>__eq__</code> method).</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:03:56 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

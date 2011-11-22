@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.data.container.IIndexed</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.data-module.html">Package&nbsp;data</a> ::
+        <a href="muntjac.data.container-module.html">Module&nbsp;container</a> ::
+        Class&nbsp;IIndexed
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.data.container.IIndexed-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class IIndexed</h1><p class="nomargin-top"><span class="codelink"><a href="muntjac.data.container-pysrc.html#IIndexed">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+object --+        
+         |        
+<a href="muntjac.data.container.IContainer-class.html">IContainer</a> --+    
+             |    
+      <a href="muntjac.data.container.IOrdered-class.html">IOrdered</a> --+
+                 |
+                <strong class="uidshort">IIndexed</strong>
+</pre>
+
+<dl><dt>Known Subclasses:</dt>
+<dd>
+      <ul class="subclass-list">
+<li><a href="muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html">util.abstract_in_memory_container.AbstractInMemoryContainer</a></li>  </ul>
+</dd></dl>
+
+<hr />
+<p>Interface for IContainer classes whose <code class="link">Item</code>s
+  can be accessed by their position in the container.</p>
+  <p>If the container is filtered or sorted, all indices refer to the 
+  filtered and sorted view. However, the <code>addItemAt()</code> methods 
+  may add items that will be filtered out after addition or moved to 
+  another position based on sorting.</p>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.container.IIndexed-class.html#addItemAt" class="summary-sig-name">addItemAt</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">index</span>,
+        <span class="summary-sig-arg">newItemId</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Adds a new item at given index (in the filtered view).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.container-pysrc.html#IIndexed.addItemAt">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.container.IIndexed-class.html#getIdByIndex" class="summary-sig-name">getIdByIndex</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">index</span>)</span><br />
+      Gets the ID of an Item by an index number.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.container-pysrc.html#IIndexed.getIdByIndex">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.container.IIndexed-class.html#indexOfId" class="summary-sig-name">indexOfId</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Gets the index of the Item corresponding to the itemId.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.container-pysrc.html#IIndexed.indexOfId">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.data.container.IOrdered-class.html">IOrdered</a></code></b>:
+      <code><a href="muntjac.data.container.IOrdered-class.html#addItemAfter">addItemAfter</a></code>,
+      <code><a href="muntjac.data.container.IOrdered-class.html#firstItemId">firstItemId</a></code>,
+      <code><a href="muntjac.data.container.IOrdered-class.html#isFirstId">isFirstId</a></code>,
+      <code><a href="muntjac.data.container.IOrdered-class.html#isLastId">isLastId</a></code>,
+      <code><a href="muntjac.data.container.IOrdered-class.html#lastItemId">lastItemId</a></code>,
+      <code><a href="muntjac.data.container.IOrdered-class.html#nextItemId">nextItemId</a></code>,
+      <code><a href="muntjac.data.container.IOrdered-class.html#prevItemId">prevItemId</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.data.container.IContainer-class.html">IContainer</a></code></b>:
+      <code><a href="muntjac.data.container.IContainer-class.html#addContainerProperty">addContainerProperty</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#addItem">addItem</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#containsId">containsId</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#getContainerProperty">getContainerProperty</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#getContainerPropertyIds">getContainerPropertyIds</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#getItem">getItem</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#getItemIds">getItemIds</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#getType">getType</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#removeAllItems">removeAllItems</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#removeContainerProperty">removeContainerProperty</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#removeItem">removeItem</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#size">size</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__init__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="addItemAt"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addItemAt</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">index</span>,
+        <span class="sig-arg">newItemId</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.container-pysrc.html#IIndexed.addItemAt">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds a new item at given index (in the filtered view).</p>
+  <p>The indices of the item currently in the given position and all the 
+  following items are incremented.</p>
+  <p>This method should apply filters to the added item after inserting it,
+  possibly hiding it immediately. If the container is being sorted, the 
+  item may be added at the correct sorted position instead of the given 
+  position. See <a href="muntjac.data.container.IIndexed-class.html" 
+  class="link">IIndexed</a>, <a 
+  href="muntjac.data.container.IOrdered-class.html" 
+  class="link">IOrdered</a>, <a 
+  href="muntjac.data.container.IFilterable-class.html" 
+  class="link">IFilterable</a> and <a 
+  href="muntjac.data.container.ISortable-class.html" 
+  class="link">ISortable</a> for more information.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>index</code></strong> - Index (in the filtered and sorted view) at which to add the new 
+          item.</li>
+        <li><strong class="pname"><code>newItemId</code></strong> - Id of the new item to be added.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>new <code class="link">Item</code> or null if the operation 
+          fails.</dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>NotImplementedError</strong></code> - if the operation is not supported by the container</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getIdByIndex"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getIdByIndex</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">index</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.container-pysrc.html#IIndexed.getIdByIndex">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the ID of an Item by an index number.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>index</code></strong> - Index of the requested id in (the filtered and sorted view of) 
+          the IContainer</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>ID of the Item in the given index</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="indexOfId"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">indexOfId</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.container-pysrc.html#IIndexed.indexOfId">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the index of the Item corresponding to the itemId. The following 
+  is <code>True</code> for the returned index: 0 &lt;= index &lt; size(), 
+  or index = -1 if there is no visible item with that id in the 
+  container.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - ID of an Item in the IContainer</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>index of the Item, or -1 if (the filtered and sorted view of) the
+          IContainer does not include the Item</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:03:56 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

@@ -1,0 +1,1895 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.ui.component.IComponent</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.ui-module.html">Package&nbsp;ui</a> ::
+        <a href="muntjac.ui.component-module.html">Module&nbsp;component</a> ::
+        Class&nbsp;IComponent
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.ui.component.IComponent-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class IComponent</h1><p class="nomargin-top"><span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+                        object --+        
+                                 |        
+               <a href="muntjac.util.IEventListener-class.html">util.IEventListener</a> --+    
+                                     |    
+         <a href="muntjac.terminal.paintable.IPaintable-class.html">terminal.paintable.IPaintable</a> --+
+                                         |
+                            object --+   |
+                                     |   |
+<a href="muntjac.terminal.variable_owner.IVariableOwner-class.html">terminal.variable_owner.IVariableOwner</a> --+
+                                         |
+                            object --+   |
+                                     |   |
+           <a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a> --+
+                                         |
+                                        <strong class="uidshort">IComponent</strong>
+</pre>
+
+<dl><dt>Known Subclasses:</dt>
+<dd>
+      <ul class="subclass-list">
+<li><a href="muntjac.event.dd.drop_target.IDropTarget-class.html">event.dd.drop_target.IDropTarget</a></li><li>, <a href="muntjac.event.dd.drag_source.IDragSource-class.html">event.dd.drag_source.IDragSource</a></li><li>, <a href="muntjac.ui.abstract_component.AbstractComponent-class.html">abstract_component.AbstractComponent</a></li><li>, <a href="muntjac.ui.component_container.IComponentContainer-class.html">component_container.IComponentContainer</a></li><li>, <a href="muntjac.ui.component.IFocusable-class.html">IFocusable</a></li>  </ul>
+</dd></dl>
+
+<hr />
+<p><code>IComponent</code> is the top-level interface that is and must be
+  implemented by all Muntjac components. <code>IComponent</code> is paired 
+  with <a href="muntjac.ui.abstract_component.AbstractComponent-class.html"
+  class="link">AbstractComponent</a>, which provides a default 
+  implementation for all the methods defined in this interface.</p>
+  <p>Components are laid out in the user interface hierarchically. The 
+  layout is managed by layout components, or more generally by components 
+  that implement the <code class="link">ComponentContainer</code> 
+  interface. Such a container is the <i>parent</i> of the contained 
+  components.</p>
+  <p>The <a href="muntjac.ui.component.IComponent-class.html#getParent" 
+  class="link">getParent</a> method allows retrieving the parent component 
+  of a component. While there is a <a 
+  href="muntjac.ui.component.IComponent-class.html#setParent" 
+  class="link">setParent</a>, you rarely need it as you normally add 
+  components with the <code class="link">addComponent()</code> method of 
+  the layout or other <code>ComponentContainer</code>, which automatically 
+  sets the parent.</p>
+  <p>A component becomes <i>attached</i> to an application (and the <a 
+  href="muntjac.ui.component.IComponent-class.html#attach" 
+  class="link">attach</a> is called) when it or one of its parents is 
+  attached to the main window of the application through its containment 
+  hierarchy.</p>
+
+<hr />
+<div class="fields">      <dl><dt>Authors:</dt>
+        <dd>
+          Vaadin Ltd.,
+          Richard Lincoln
+        </dd>
+      </dl>
+      <p><strong>Version:</strong>
+        1.0.1
+      </p>
+</div><!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.component.IComponent-class.html#getStyleName" class="summary-sig-name">getStyleName</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets all user-defined CSS style names of a component.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.getStyleName">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.component.IComponent-class.html#setStyleName" class="summary-sig-name">setStyleName</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">style</span>)</span><br />
+      Sets one or more user-defined style names of the component, replacing
+      any previous user-defined styles.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.setStyleName">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.component.IComponent-class.html#addStyleName" class="summary-sig-name">addStyleName</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">style</span>)</span><br />
+      Adds a style name to component.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.addStyleName">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.component.IComponent-class.html#removeStyleName" class="summary-sig-name">removeStyleName</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">style</span>)</span><br />
+      Removes one or more style names from component.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.removeStyleName">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.component.IComponent-class.html#isEnabled" class="summary-sig-name">isEnabled</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Tests whether the component is enabled or not.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.isEnabled">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.component.IComponent-class.html#setEnabled" class="summary-sig-name">setEnabled</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">enabled</span>)</span><br />
+      Enables or disables the component.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.setEnabled">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.component.IComponent-class.html#isVisible" class="summary-sig-name">isVisible</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Tests the <i>visibility</i> property of the component.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.isVisible">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.component.IComponent-class.html#setVisible" class="summary-sig-name">setVisible</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">visible</span>)</span><br />
+      Sets the visibility of the component.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.setVisible">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.component.IComponent-class.html#getParent" class="summary-sig-name">getParent</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the parent component of the component.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.getParent">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.component.IComponent-class.html#setParent" class="summary-sig-name">setParent</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">parent</span>)</span><br />
+      Sets the parent component of the component.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.setParent">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.component.IComponent-class.html#isReadOnly" class="summary-sig-name">isReadOnly</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Tests whether the component is in the read-only mode.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.isReadOnly">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.component.IComponent-class.html#setReadOnly" class="summary-sig-name">setReadOnly</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">readOnly</span>)</span><br />
+      Sets the read-only mode of the component to the specified mode.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.setReadOnly">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.component.IComponent-class.html#getCaption" class="summary-sig-name">getCaption</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the caption of the component.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.getCaption">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.component.IComponent-class.html#setCaption" class="summary-sig-name">setCaption</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">caption</span>)</span><br />
+      Sets the caption of the component.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.setCaption">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.component.IComponent-class.html#getIcon" class="summary-sig-name">getIcon</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the icon resource of the component.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.getIcon">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.component.IComponent-class.html#setIcon" class="summary-sig-name">setIcon</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">icon</span>)</span><br />
+      Sets the icon of the component.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.setIcon">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.component.IComponent-class.html#getWindow" class="summary-sig-name">getWindow</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the parent window of the component.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.getWindow">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.component.IComponent-class.html#getApplication" class="summary-sig-name">getApplication</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the application object to which the component is attached.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.getApplication">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.component.IComponent-class.html#attach" class="summary-sig-name">attach</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Notifies the component that it is connected to an application.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.attach">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.component.IComponent-class.html#detach" class="summary-sig-name">detach</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Notifies the component that it is detached from the application.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.detach">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.component.IComponent-class.html#getLocale" class="summary-sig-name">getLocale</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the locale of the component.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.getLocale">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.component.IComponent-class.html#childRequestedRepaint" class="summary-sig-name">childRequestedRepaint</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">alreadyNotified</span>)</span><br />
+      The child components of the component must call this method when they
+      need repainting.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.childRequestedRepaint">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.component.IComponent-class.html#addListener" class="summary-sig-name">addListener</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">listener</span>,
+        <span class="summary-sig-arg">iface</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Registers a new (generic) component event listener for the component:</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.addListener">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.component.IComponent-class.html#addCallback" class="summary-sig-name">addCallback</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">callback</span>,
+        <span class="summary-sig-arg">eventType</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">*args</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.addCallback">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.component.IComponent-class.html#removeListener" class="summary-sig-name">removeListener</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">listener</span>,
+        <span class="summary-sig-arg">iface</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Removes a previously registered component event listener from this 
+      component.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.removeListener">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.component.IComponent-class.html#removeCallback" class="summary-sig-name">removeCallback</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">callback</span>,
+        <span class="summary-sig-arg">eventType</span>=<span class="summary-sig-default">None</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.removeCallback">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.terminal.paintable.IPaintable-class.html">terminal.paintable.IPaintable</a></code></b>:
+      <code><a href="muntjac.terminal.paintable.IPaintable-class.html#getDebugId">getDebugId</a></code>,
+      <code><a href="muntjac.terminal.paintable.IPaintable-class.html#paint">paint</a></code>,
+      <code><a href="muntjac.terminal.paintable.IPaintable-class.html#requestRepaint">requestRepaint</a></code>,
+      <code><a href="muntjac.terminal.paintable.IPaintable-class.html#requestRepaintRequests">requestRepaintRequests</a></code>,
+      <code><a href="muntjac.terminal.paintable.IPaintable-class.html#setDebugId">setDebugId</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.terminal.variable_owner.IVariableOwner-class.html">terminal.variable_owner.IVariableOwner</a></code></b>:
+      <code><a href="muntjac.terminal.variable_owner.IVariableOwner-class.html#changeVariables">changeVariables</a></code>,
+      <code><a href="muntjac.terminal.variable_owner.IVariableOwner-class.html#isImmediate">isImmediate</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a></code></b>:
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#getHeight">getHeight</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#getHeightUnits">getHeightUnits</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#getWidth">getWidth</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#getWidthUnits">getWidthUnits</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#setHeight">setHeight</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#setHeightUnits">setHeightUnits</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#setSizeFull">setSizeFull</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#setSizeUndefined">setSizeUndefined</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#setWidth">setWidth</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#setWidthUnits">setWidthUnits</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__init__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a></code></b>:
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#SIZE_UNDEFINED">SIZE_UNDEFINED</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_CM">UNITS_CM</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_EM">UNITS_EM</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_EX">UNITS_EX</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_INCH">UNITS_INCH</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_MM">UNITS_MM</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_PERCENTAGE">UNITS_PERCENTAGE</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_PICAS">UNITS_PICAS</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_PIXELS">UNITS_PIXELS</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_POINTS">UNITS_POINTS</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNIT_SYMBOLS">UNIT_SYMBOLS</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="getStyleName"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getStyleName</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.getStyleName">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets all user-defined CSS style names of a component. If the component
+  has multiple style names defined, the return string is a space-separated 
+  list of style names. Built-in style names defined in Muntjac or GWT are 
+  not returned.</p>
+  <p>The style names are returned only in the basic form in which they were
+  added; each user-defined style name shows as two CSS style class names in
+  the rendered HTML: one as it was given and one prefixed with the 
+  component-specific style name. Only the former is returned.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the style name or a space-separated list of user-defined style 
+          names of the component</dd>
+  </dl>
+<div class="fields">      <dl><dt>See Also:</dt>
+        <dd>
+          <a href="muntjac.ui.component.IComponent-class.html#setStyleName"
+          class="link">setStyleName</a>,
+          <a href="muntjac.ui.component.IComponent-class.html#addStyleName"
+          class="link">addStyleName</a>,
+          <a 
+          href="muntjac.ui.component.IComponent-class.html#removeStyleName"
+          class="link">removeStyleName</a>
+        </dd>
+      </dl>
+</div></td></tr></table>
+</div>
+<a name="setStyleName"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setStyleName</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">style</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.setStyleName">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets one or more user-defined style names of the component, replacing 
+  any previous user-defined styles. Multiple styles can be specified as a 
+  space-separated list of style names. The style names must be valid CSS 
+  class names and should not conflict with any built-in style names in 
+  Muntjac or GWT:</p>
+<pre class="literalblock">
+ label = new Label(&quot;This text has a lot of style&quot;)
+ label.setStyleName(&quot;myonestyle myotherstyle&quot;)
+</pre>
+  <p>Each style name will occur in two versions: one as specified and one 
+  that is prefixed with the style name of the component. For example, if 
+  you have a <code>Button</code> component and give it 
+  &quot;<code>mystyle</code>&quot; style, the component will have both 
+  &quot;<code>mystyle</code>&quot; and 
+  &quot;<code>v-button-mystyle</code>&quot; styles. You could then style 
+  the component either with:</p>
+<pre class="literalblock">
+ .myonestyle {background: blue;}
+</pre>
+  <p>or:</p>
+<pre class="literalblock">
+ .v-button-myonestyle {background: blue;}
+</pre>
+  <p>It is normally a good practice to use <a 
+  href="muntjac.ui.abstract_component.AbstractComponent-class.html#addStyleName"
+  class="link">addStyleName</a> rather than this setter, as different 
+  software abstraction layers can then add their own styles without 
+  accidentally removing those defined in other layers.</p>
+  <p>This method will trigger a <a 
+  href="muntjac.terminal.paintable.RepaintRequestEvent-class.html" 
+  class="link">RepaintRequestEvent</a>.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>style</code></strong> - the new style or styles of the component as a space-separated 
+          list</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <dl><dt>See Also:</dt>
+        <dd>
+          <a href="muntjac.ui.component.IComponent-class.html#getStyleName"
+          class="link">getStyleName</a>,
+          <a href="muntjac.ui.component.IComponent-class.html#addStyleName"
+          class="link">addStyleName</a>,
+          <a 
+          href="muntjac.ui.component.IComponent-class.html#removeStyleName"
+          class="link">removeStyleName</a>
+        </dd>
+      </dl>
+</div></td></tr></table>
+</div>
+<a name="addStyleName"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addStyleName</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">style</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.addStyleName">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds a style name to component. The style name will be rendered as a 
+  HTML class name, which can be used in a CSS definition:</p>
+<pre class="literalblock">
+ label = new Label(&quot;This text has style&quot;)
+ label.addStyleName(&quot;mystyle&quot;)
+</pre>
+  <p>Each style name will occur in two versions: one as specified and one 
+  that is prefixed wil the style name of the component. For example, if you
+  have a <code>Button</code> component and give it 
+  &quot;<code>mystyle</code>&quot; style, the component will have both 
+  &quot;<code>mystyle</code>&quot; and 
+  &quot;<code>v-button-mystyle</code>&quot; styles. You could then style 
+  the component either with:</p>
+<pre class="literalblock">
+ .mystyle {font-style: italic;}
+</pre>
+  <p>or:</p>
+<pre class="literalblock">
+ .v-button-mystyle {font-style: italic;}
+</pre>
+  <p>This method will trigger a <a 
+  href="muntjac.terminal.paintable.RepaintRequestEvent-class.html" 
+  class="link">RepaintRequestEvent</a>.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>style</code></strong> - the new style to be added to the component</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <dl><dt>See Also:</dt>
+        <dd>
+          <a href="muntjac.ui.component.IComponent-class.html#getStyleName"
+          class="link">getStyleName</a>,
+          <a href="muntjac.ui.component.IComponent-class.html#setStyleName"
+          class="link">setStyleName</a>,
+          <a 
+          href="muntjac.ui.component.IComponent-class.html#removeStyleName"
+          class="link">removeStyleName</a>
+        </dd>
+      </dl>
+</div></td></tr></table>
+</div>
+<a name="removeStyleName"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeStyleName</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">style</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.removeStyleName">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes one or more style names from component. Multiple styles can be
+  specified as a space-separated list of style names.</p>
+  <p>The parameter must be a valid CSS style name. Only user-defined style 
+  names added with <a 
+  href="muntjac.ui.abstract_component.AbstractComponent-class.html#addStyleName"
+  class="link">addStyleName</a> or <a 
+  href="muntjac.ui.abstract_component.AbstractComponent-class.html#setStyleName"
+  class="link">setStyleName</a> can be removed; built-in style names 
+  defined in Muntjac or GWT can not be removed.</p>
+  <p>This method will trigger a <a 
+  href="muntjac.terminal.paintable.RepaintRequestEvent-class.html" 
+  class="link">RepaintRequestEvent</a>.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>style</code></strong> - the style name or style names to be removed</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <dl><dt>See Also:</dt>
+        <dd>
+          <a href="muntjac.ui.component.IComponent-class.html#getStyleName"
+          class="link">getStyleName</a>,
+          <a href="muntjac.ui.component.IComponent-class.html#setStyleName"
+          class="link">setStyleName</a>,
+          <a href="muntjac.ui.component.IComponent-class.html#addStyleName"
+          class="link">addStyleName</a>
+        </dd>
+      </dl>
+</div></td></tr></table>
+</div>
+<a name="isEnabled"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isEnabled</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.isEnabled">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tests whether the component is enabled or not. A user can not interact
+  with disabled components. Disabled components are rendered in a style 
+  that indicates the status, usually in gray color. Children of a disabled 
+  component are also disabled. Components are enabled by default.</p>
+  <p>As a security feature, all variable change events for disabled 
+  components are blocked on the server-side.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the component and its parent are enabled, 
+          <code>False</code> otherwise.</dd>
+    <dt>Overrides:
+        <a href="muntjac.terminal.variable_owner.IVariableOwner-class.html#isEnabled">terminal.variable_owner.IVariableOwner.isEnabled</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a 
+        href="muntjac.terminal.variable_owner.IVariableOwner-class.html#isEnabled"
+        class="link">IVariableOwner.isEnabled</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="setEnabled"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setEnabled</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">enabled</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.setEnabled">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Enables or disables the component. The user can not interact disabled 
+  components, which are shown with a style that indicates the status, 
+  usually shaded in light gray color. Components are enabled by default. 
+  Children of a disabled component are automatically disabled; if a child 
+  component is explicitly set as disabled, changes in the disabled status 
+  of its parents do not change its status:</p>
+<pre class="literalblock">
+ enabled = new Button(&quot;Enabled&quot;)
+ enabled.setEnabled(True)  # the default
+ layout.addComponent(enabled)
+
+ disabled = Button(&quot;Disabled&quot;)
+ disabled.setEnabled(False)
+ layout.addComponent(disabled)
+</pre>
+  <p>This method will trigger a <a 
+  href="muntjac.terminal.paintable.RepaintRequestEvent-class.html" 
+  class="link">RepaintRequestEvent</a> for the component and, if it is a 
+  <code class="link">ComponentContainer</code>, for all its children 
+  recursively.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>enabled</code></strong> - a boolean value specifying if the component should be enabled or 
+          not</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isVisible"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isVisible</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.isVisible">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tests the <i>visibility</i> property of the component.</p>
+  <p>Visible components are drawn in the user interface, while invisible 
+  ones are not. The effect is not merely a cosmetic CSS change, but the 
+  entire HTML element will be empty. Making a component invisible through 
+  this property can alter the positioning of other components.</p>
+  <p>A component is visible only if all its parents are also visible. 
+  Notice that if a child component is explicitly set as invisible, changes 
+  in the visibility status of its parents do not change its status.</p>
+  <p>This method does not check whether the component is attached (see <a 
+  href="muntjac.ui.abstract_component.AbstractComponent-class.html#attach" 
+  class="link">attach</a>). The component and all its parents may be 
+  considered &quot;visible&quot;, but not necessarily attached to 
+  application. To test if component will actually be drawn, check both its 
+  visibility and that <a 
+  href="muntjac.ui.abstract_component.AbstractComponent-class.html#getApplication"
+  class="link">getApplication</a> does not return <code>None</code>.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the component is visible in the user 
+          interface, <code>False</code> if not</dd>
+  </dl>
+<div class="fields">      <dl><dt>See Also:</dt>
+        <dd>
+          <a href="muntjac.ui.component.IComponent-class.html#setVisible" 
+          class="link">setVisible</a>,
+          <a href="muntjac.ui.component.IComponent-class.html#attach" 
+          class="link">attach</a>
+        </dd>
+      </dl>
+</div></td></tr></table>
+</div>
+<a name="setVisible"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setVisible</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">visible</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.setVisible">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the visibility of the component.</p>
+  <p>Visible components are drawn in the user interface, while invisible 
+  ones are not. The effect is not merely a cosmetic CSS change, but the 
+  entire HTML element will be empty:</p>
+<pre class="literalblock">
+ readonly = TextField(&quot;Read-Only&quot;)
+ readonly.setValue(&quot;You can't see this!&quot;)
+ readonly.setVisible(False)
+ layout.addComponent(readonly)
+</pre>
+  <p>A component is visible only if all of its parents are also visible. If
+  a component is explicitly set to be invisible, changes in the visibility 
+  of its parents will not change the visibility of the component.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>visible</code></strong> - the boolean value specifying if the component should be visible 
+          after the call or not.</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a href="muntjac.ui.component.IComponent-class.html#isVisible" 
+        class="link">isVisible</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="getParent"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getParent</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.getParent">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the parent component of the component.</p>
+  <p>Components can be nested but a component can have only one parent. A 
+  component that contains other components, that is, can be a parent, 
+  should usually inherit the <code class="link">ComponentContainer</code> 
+  interface.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the parent component</dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a href="muntjac.ui.component.IComponent-class.html#setParent" 
+        class="link">setParent</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="setParent"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setParent</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">parent</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.setParent">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the parent component of the component.</p>
+  <p>This method automatically calls <a 
+  href="muntjac.ui.abstract_component.AbstractComponent-class.html#attach" 
+  class="link">attach</a> if the parent becomes attached to the 
+  application, regardless of whether it was attached previously. 
+  Conversely, if the parent is <code>None</code> and the component is 
+  attached to the application, <a 
+  href="muntjac.ui.abstract_component.AbstractComponent-class.html#detach" 
+  class="link">detach</a> is called for the component.</p>
+  <p>This method is rarely called directly. The <code 
+  class="link">ComponentContainer.addComponent</code> method is normally 
+  used for adding components to a container and it will call this method 
+  implicitly.</p>
+  <p>It is not possible to change the parent without first setting the 
+  parent to <code>None</code>.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>parent</code></strong> - the parent component</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>ValueError</strong></code> - if a parent is given even though the component already has a parent</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isReadOnly"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isReadOnly</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.isReadOnly">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tests whether the component is in the read-only mode. The user can not
+  change the value of a read-only component. As only <a 
+  href="muntjac.ui.field.IField-class.html" class="link">IField</a> 
+  components normally have a value that can be input or changed by the 
+  user, this is mostly relevant only to field components, though not 
+  restricted to them.</p>
+  <p>Notice that the read-only mode only affects whether the user can 
+  change the <i>value</i> of the component; it is possible to, for example,
+  scroll a read-only table.</p>
+  <p>The read-only status affects only the user; the value can still be 
+  changed programmatically, for example, with <code 
+  class="link">IProperty.setValue</code>.</p>
+  <p>The method will return <code>True</code> if the component or any of 
+  its parents is in the read-only mode.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the component or any of its parents is in 
+          read-only mode, <code>False</code> if not.</dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a href="muntjac.ui.component.IComponent-class.html#setReadOnly" 
+        class="link">setReadOnly</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="setReadOnly"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setReadOnly</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">readOnly</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.setReadOnly">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the read-only mode of the component to the specified mode. The 
+  user can not change the value of a read-only component.</p>
+  <p>As only <a href="muntjac.ui.field.IField-class.html" 
+  class="link">IField</a> components normally have a value that can be 
+  input or changed by the user, this is mostly relevant only to field 
+  components, though not restricted to them.</p>
+  <p>Notice that the read-only mode only affects whether the user can 
+  change the <i>value</i> of the component; it is possible to, for example,
+  scroll a read-only table.</p>
+  <p>The read-only status affects only the user; the value can still be 
+  changed programmatically, for example, with <code 
+  class="link">IProperty.setValue</code>.</p>
+  <p>This method will trigger a <a 
+  href="muntjac.terminal.paintable.RepaintRequestEvent-class.html" 
+  class="link">RepaintRequestEvent</a>.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>readOnly</code></strong> - a boolean value specifying whether the component is put read-only
+          mode or not</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getCaption"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getCaption</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.getCaption">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the caption of the component.</p>
+  <p>See <a 
+  href="muntjac.ui.abstract_component.AbstractComponent-class.html#setCaption"
+  class="link">setCaption</a> for a detailed description of the 
+  caption.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the caption of the component or <code>null</code> if the caption 
+          is not set.</dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a href="muntjac.ui.component.IComponent-class.html#setCaption" 
+        class="link">setCaption</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="setCaption"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setCaption</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">caption</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.setCaption">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the caption of the component.</p>
+  <p>A <i>caption</i> is an explanatory textual label accompanying a user 
+  interface component, usually shown above, left of, or inside the 
+  component. <i>Icon</i> (see <a 
+  href="muntjac.ui.component.IComponent-class.html#setIcon" 
+  class="link">setIcon</a> is closely related to caption and is usually 
+  displayed horizontally before or after it, depending on the component and
+  the containing layout.</p>
+  <p>The caption can usually also be given as the first parameter to a 
+  constructor, though some components do not support it:</p>
+<pre class="literalblock">
+ area = new RichTextArea()
+ area.setCaption(&quot;You can edit stuff here&quot;)
+ area.setValue(&quot;&lt;h1&gt;Helpful Heading&lt;/h1&gt;&quot;
+       + &quot;&lt;p&gt;All this is for you to edit.&lt;/p&gt;&quot;)
+</pre>
+  <p>The contents of a caption are automatically quoted, so no raw XHTML 
+  can be rendered in a caption. The validity of the used character 
+  encoding, usually UTF-8, is not checked.</p>
+  <p>The caption of a component is, by default, managed and displayed by 
+  the layout component or component container in which the component is 
+  placed. For example, the <a 
+  href="muntjac.ui.vertical_layout.VerticalLayout-class.html" 
+  class="link">VerticalLayout</a> component shows the captions left-aligned
+  above the contained components, while the <a 
+  href="muntjac.ui.form_layout.FormLayout-class.html" 
+  class="link">FormLayout</a> component shows the captions on the left side
+  of the vertically laid components, with the captions and their associated
+  components left-aligned in their own columns. The <a 
+  href="muntjac.ui.custom_component.CustomComponent-class.html" 
+  class="link">CustomComponent</a> does not manage the caption of its 
+  composition root, so if the root component has a caption, it will not be 
+  rendered. Some components, such as <a 
+  href="muntjac.ui.button.Button-class.html" class="link">Button</a> and <a
+  href="muntjac.ui.panel.Panel-class.html" class="link">Panel</a>, manage 
+  the caption themselves and display it inside the component.</p>
+  <p>This method will trigger a <a 
+  href="muntjac.terminal.paintable.RepaintRequestEvent-class.html" 
+  class="link">RepaintRequestEvent</a>. A reimplementation should call the 
+  superclass implementation.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>caption</code></strong> - the new caption for the component. If the caption is 
+          <code>None</code>, no caption is shown and it does not normally 
+          take any space</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getIcon"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getIcon</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.getIcon">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the icon resource of the component.</p>
+  <p>See <a 
+  href="muntjac.ui.abstract_component.AbstractComponent-class.html#setIcon"
+  class="link">setIcon</a> for a detailed description of the icon.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the icon resource of the component or <code>None</code> if the 
+          component has no icon</dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a href="muntjac.ui.component.IComponent-class.html#setIcon" 
+        class="link">setIcon</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="setIcon"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setIcon</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">icon</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.setIcon">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the icon of the component.</p>
+  <p>An icon is an explanatory graphical label accompanying a user 
+  interface component, usually shown above, left of, or inside the 
+  component. Icon is closely related to caption (see <a 
+  href="muntjac.ui.component.IComponent-class.html#setCaption" 
+  class="link">setCaption</a>) and is usually displayed horizontally before
+  or after it, depending on the component and the containing layout.</p>
+  <p>The image is loaded by the browser from a resource, typically a <a 
+  href="muntjac.terminal.theme_resource.ThemeResource-class.html" 
+  class="link">ThemeResource</a>:</p>
+<pre class="literalblock">
+ # IComponent with an icon from a custom theme
+ name = TextField(&quot;Name&quot;)
+ name.setIcon(ThemeResource(&quot;icons/user.png&quot;))
+ layout.addComponent(name)
+
+ # IComponent with an icon from another theme ('runo')
+ ok = Button(&quot;OK&quot;)
+ ok.setIcon(ThemeResource(&quot;../runo/icons/16/ok.png&quot;))
+ layout.addComponent(ok)
+</pre>
+  <p>The icon of a component is, by default, managed and displayed by the 
+  layout component or component container in which the component is placed.
+  For example, the <a 
+  href="muntjac.ui.vertical_layout.VerticalLayout-class.html" 
+  class="link">VerticalLayout</a> component shows the icons left-aligned 
+  above the contained components, while the <a 
+  href="muntjac.ui.form_layout.FormLayout-class.html" 
+  class="link">FormLayout</a> component shows the icons on the left side of
+  the vertically laid components, with the icons and their associated 
+  components left-aligned in their own columns. The <a 
+  href="muntjac.ui.custom_component.CustomComponent-class.html" 
+  class="link">CustomComponent</a> does not manage the icon of its 
+  composition root, so if the root component has an icon, it will not be 
+  rendered.</p>
+  <p>An icon will be rendered inside an HTML element that has the 
+  <code>v-icon</code> CSS style class. The containing layout may enclose an
+  icon and a caption inside elements related to the caption, such as 
+  <code>v-caption</code> .</p>
+  <p>This method will trigger a <a 
+  href="muntjac.terminal.paintable.RepaintRequestEvent-class.html" 
+  class="link">RepaintRequestEvent</a>.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>icon</code></strong> - the icon of the component. If null, no icon is shown and it does 
+          not normally take any space.</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <dl><dt>See Also:</dt>
+        <dd>
+          <a href="muntjac.ui.component.IComponent-class.html#getIcon" 
+          class="link">getIcon</a>,
+          <a href="muntjac.ui.component.IComponent-class.html#setCaption" 
+          class="link">setCaption</a>
+        </dd>
+      </dl>
+</div></td></tr></table>
+</div>
+<a name="getWindow"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getWindow</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.getWindow">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the parent window of the component.</p>
+  <p>If the component is not attached to a window through a component 
+  containment hierarchy, <code>None</code> is returned.</p>
+  <p>The window can be either an application-level window or a sub-window. 
+  If the component is itself a window, it returns a reference to itself, 
+  not to its containing window (of a sub-window).</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the parent window of the component or <code>None</code> if it is 
+          not attached to a window or is itself a window</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getApplication"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getApplication</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.getApplication">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the application object to which the component is attached.</p>
+  <p>The method will return <code>None</code> if the component is not 
+  currently attached to an application. This is often a problem in 
+  constructors of regular components and in the initializers of custom 
+  composite components. A standard workaround is to move the problematic 
+  initialization to <a 
+  href="muntjac.ui.component.IComponent-class.html#attach" 
+  class="link">attach</a>, as described in the documentation of the 
+  method.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the parent application of the component or <code>None</code>.</dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a href="muntjac.ui.component.IComponent-class.html#attach" 
+        class="link">attach</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="attach"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">attach</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.attach">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Notifies the component that it is connected to an application.</p>
+  <p>The caller of this method is <a 
+  href="muntjac.ui.abstract_component.AbstractComponent-class.html#setParent"
+  class="link">setParent</a> if the parent is itself already attached to 
+  the application. If not, the parent will call the <a 
+  href="muntjac.ui.abstract_component.AbstractComponent-class.html#attach" 
+  class="link">attach</a> for all its children when it is attached to the 
+  application. This method is always called before the component is painted
+  for the first time.</p>
+  <p>Reimplementing the <code>attach()</code> method is useful for tasks 
+  that need to get a reference to the parent, window, or application object
+  with the <a 
+  href="muntjac.ui.abstract_component.AbstractComponent-class.html#getParent"
+  class="link">getParent</a>, <a 
+  href="muntjac.ui.abstract_component.AbstractComponent-class.html#getWindow"
+  class="link">getWindow</a>, and <a 
+  href="muntjac.ui.abstract_component.AbstractComponent-class.html#getApplication"
+  class="link">getApplication</a> methods. A component does not yet know 
+  these objects in the constructor, so in such case, the methods will 
+  return <code>None</code>. For example, the following is invalid:</p>
+<pre class="literalblock">
+ class AttachExample(CustomComponent):
+     def __init__(self):
+         # ERROR: We can't access the application object yet.
+         r = ClassResource(&quot;smiley.jpg&quot;, getApplication())
+         image = Embedded(&quot;Image:&quot;, r)
+         setCompositionRoot(image)
+</pre>
+  <p>Adding a component to an application triggers calling the <a 
+  href="muntjac.ui.abstract_component.AbstractComponent-class.html#attach" 
+  class="link">attach</a> method for the component. Correspondingly, 
+  removing a component from a container triggers calling the <a 
+  href="muntjac.ui.abstract_component.AbstractComponent-class.html#detach" 
+  class="link">detach</a> method. If the parent of an added component is 
+  already connected to the application, the <code>attach()</code> is called
+  immediately from <a 
+  href="muntjac.ui.abstract_component.AbstractComponent-class.html#setParent"
+  class="link">setParent</a>:</p>
+<pre class="literalblock">
+ class AttachExample(CustomComponent):
+     def __init__(self):
+         pass
+
+     def attach(self):
+         super(AttachExample, self).attach()  # must call
+
+         # Now we know who ultimately owns us.
+         r = ClassResource(&quot;smiley.jpg&quot;, self.getApplication())
+         image = Embedded(&quot;Image&quot;, r)
+         self.setCompositionRoot(image)
+</pre>
+  <p>The attachment logic is implemented in <a 
+  href="muntjac.ui.abstract_component.AbstractComponent-class.html" 
+  class="link">AbstractComponent</a>.</p>
+  <dl class="fields">
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a href="muntjac.ui.component.IComponent-class.html#getApplication"
+        class="link">getApplication</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="detach"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">detach</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.detach">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Notifies the component that it is detached from the application.</p>
+  <p>The <a 
+  href="muntjac.ui.abstract_component.AbstractComponent-class.html#getApplication"
+  class="link">getApplication</a> and <a 
+  href="muntjac.ui.abstract_component.AbstractComponent-class.html#getWindow"
+  class="link">getWindow</a> methods might return <code>None</code> after 
+  this method is called.</p>
+  <p>The caller of this method is <a 
+  href="muntjac.ui.abstract_component.AbstractComponent-class.html#setParent"
+  class="link">setParent</a> if the parent is in the application. When the 
+  parent is detached from the application it is its response to call <a 
+  href="muntjac.ui.abstract_component.AbstractComponent-class.html#detach" 
+  class="link">detach</a> for all the children and to detach itself from 
+  the terminal.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getLocale"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getLocale</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.getLocale">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the locale of the component.</p>
+  <p>If a component does not have a locale set, the locale of its parent is
+  returned, and so on. Eventually, if no parent has locale set, the locale 
+  of the application is returned. If the application does not have a locale
+  set, it is determined by <code>getDefaultLocale()</code>.</p>
+  <p>As the component must be attached before its locale can be acquired, 
+  using this method in the internationalization of component captions, etc.
+  is generally not feasible. For such use case, we recommend using an 
+  otherwise acquired reference to the application locale.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>Locale of this component or <code>null</code> if the component 
+          and none of its parents has a locale set and the component is not
+          yet attached to an application.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="childRequestedRepaint"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">childRequestedRepaint</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">alreadyNotified</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.childRequestedRepaint">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>The child components of the component must call this method when they 
+  need repainting. The call must be made even in the case in which the 
+  children sent the repaint request themselves.</p>
+  <p>A repaint request is ignored if the component is invisible.</p>
+  <p>This method is called automatically by <a 
+  href="muntjac.ui.abstract_component.AbstractComponent-class.html" 
+  class="link">AbstractComponent</a>, which also provides a default 
+  implementation of it. As this is a somewhat internal feature, it is 
+  rarely necessary to reimplement this or call it explicitly.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>alreadyNotified</code></strong> - the collection of repaint request listeners that have been 
+          already notified by the child. This component should not 
+          re-notify the listed listeners again. The container given as 
+          parameter must be modifiable as the component might modify it and
+          pass it forward. A <code>None</code> parameter is interpreted as 
+          an empty collection.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addListener"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addListener</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">listener</span>,
+        <span class="sig-arg">iface</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.addListener">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Registers a new (generic) component event listener for the 
+  component:</p>
+<pre class="literalblock">
+ class Listening(CustomComponent, IListener):
+
+     # Stored for determining the source of an event
+     ok = None
+
+     status = None  # For displaying info about the event
+
+     def __init__(self):
+         layout = VerticalLayout()
+
+         # Some miscellaneous component
+         name = TextField(&quot;Say it all here&quot;)
+         name.addListener(self)
+         name.setImmediate(true)
+         layout.addComponent(name)
+
+         # Handle button clicks as generic events instead
+         # of Button.ClickEvent events
+         ok = new Button(&quot;OK&quot;)
+         ok.addListener(self)
+         layout.addComponent(ok)
+
+         # For displaying information about an event
+         status = new Label(&quot;&quot;)
+         layout.addComponent(status)
+
+         setCompositionRoot(layout)
+
+
+     def componentEvent(event):
+         # Act according to the source of the event
+         if (event.getSource() == ok):
+             getWindow().showNotification(&quot;Click!&quot;)
+
+         status.setValue(&quot;Event from &quot; +
+                 event.getSource().__class__.__name__
+                 + &quot;: &quot; + event.__class__.__name__)
+
+
+ listening = Listening()
+ layout.addComponent(listening)
+</pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>listener</code></strong> - the new IListener to be registered.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.terminal.paintable.IPaintable-class.html#addListener">terminal.paintable.IPaintable.addListener</a>
+    </dt>
+  </dl>
+<div class="fields">      <dl><dt>See Also:</dt>
+        <dd>
+          <a href="muntjac.ui.component.Event-class.html" 
+          class="link">component.Event</a>,
+          <a 
+          href="muntjac.ui.component.IComponent-class.html#removeListener" 
+          class="link">removeListener</a>
+        </dd>
+      </dl>
+</div></td></tr></table>
+</div>
+<a name="addCallback"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addCallback</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">callback</span>,
+        <span class="sig-arg">eventType</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.addCallback">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.terminal.paintable.IPaintable-class.html#addCallback">terminal.paintable.IPaintable.addCallback</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeListener"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeListener</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">listener</span>,
+        <span class="sig-arg">iface</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.removeListener">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes a previously registered component event listener from this 
+  component.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>listener</code></strong> - the listener to be removed.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.terminal.paintable.IPaintable-class.html#removeListener">terminal.paintable.IPaintable.removeListener</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a href="muntjac.ui.component.IComponent-class.html#addListener" 
+        class="link">addListener</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="removeCallback"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeCallback</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">callback</span>,
+        <span class="sig-arg">eventType</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.component-pysrc.html#IComponent.removeCallback">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.terminal.paintable.IPaintable-class.html#removeCallback">terminal.paintable.IPaintable.removeCallback</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:04:00 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

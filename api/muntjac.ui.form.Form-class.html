@@ -1,0 +1,3427 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.ui.form.Form</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.ui-module.html">Package&nbsp;ui</a> ::
+        <a href="muntjac.ui.form-module.html">Module&nbsp;form</a> ::
+        Class&nbsp;Form
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.ui.form.Form-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class Form</h1><p class="nomargin-top"><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+                            object --+                    
+                                     |                    
+                   <a href="muntjac.util.IEventListener-class.html">util.IEventListener</a> --+                
+                                         |                
+             <a href="muntjac.terminal.paintable.IPaintable-class.html">terminal.paintable.IPaintable</a> --+            
+                                             |            
+                                object --+   |            
+                                         |   |            
+    <a href="muntjac.terminal.variable_owner.IVariableOwner-class.html">terminal.variable_owner.IVariableOwner</a> --+            
+                                             |            
+                                object --+   |            
+                                         |   |            
+               <a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a> --+            
+                                             |            
+                          <a href="muntjac.ui.component.IComponent-class.html">component.IComponent</a> --+        
+                                                 |        
+                                    object --+   |        
+                                             |   |        
+  <a href="muntjac.event.method_event_source.IMethodEventSource-class.html">event.method_event_source.IMethodEventSource</a> --+        
+                                                 |        
+              <a href="muntjac.ui.abstract_component.AbstractComponent-class.html">abstract_component.AbstractComponent</a> --+    
+                                                     |    
+                                object --+           |    
+                                         |           |    
+                   <a href="muntjac.data.buffered.IBuffered-class.html">data.buffered.IBuffered</a> --+       |    
+                                             |       |    
+                                object --+   |       |    
+                                         |   |       |    
+             <a href="muntjac.data.validatable.IValidatable-class.html">data.validatable.IValidatable</a> --+       |    
+                                             |       |    
+            <a href="muntjac.data.buffered.IBufferedValidatable-class.html">data.buffered.IBufferedValidatable</a> --+   |    
+                                                 |   |    
+                                    object --+   |   |    
+                                             |   |   |    
+            <a href="muntjac.data.property.IValueChangeNotifier-class.html">data.property.IValueChangeNotifier</a> --+   |    
+                                                 |   |    
+                                    object --+   |   |    
+                                             |   |   |    
+            <a href="muntjac.data.property.IValueChangeListener-class.html">data.property.IValueChangeListener</a> --+   |    
+                                                 |   |    
+                                object --+       |   |    
+                                         |       |   |    
+                     <a href="muntjac.data.property.IViewer-class.html">data.property.IViewer</a> --+   |   |    
+                                             |   |   |    
+                         <a href="muntjac.data.property.IEditor-class.html">data.property.IEditor</a> --+   |    
+                                                 |   |    
+                        object --+               |   |    
+                                 |               |   |    
+               <a href="muntjac.util.IEventListener-class.html">util.IEventListener</a> --+           |   |    
+                                     |           |   |    
+         <a href="muntjac.terminal.paintable.IPaintable-class.html">terminal.paintable.IPaintable</a> --+       |   |    
+                                         |       |   |    
+                            object --+   |       |   |    
+                                     |   |       |   |    
+<a href="muntjac.terminal.variable_owner.IVariableOwner-class.html">terminal.variable_owner.IVariableOwner</a> --+       |   |    
+                                         |       |   |    
+                            object --+   |       |   |    
+                                     |   |       |   |    
+           <a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a> --+       |   |    
+                                         |       |   |    
+                      <a href="muntjac.ui.component.IComponent-class.html">component.IComponent</a> --+   |   |    
+                                             |   |   |    
+                          <a href="muntjac.ui.component.IFocusable-class.html">component.IFocusable</a> --+   |    
+                                                 |   |    
+                                      <a href="muntjac.ui.field.IField-class.html">field.IField</a> --+    
+                                                     |    
+                                        object --+   |    
+                                                 |   |    
+                    <a href="muntjac.event.action.IShortcutNotifier-class.html">event.action.IShortcutNotifier</a> --+    
+                                                     |    
+                                        object --+   |    
+                                                 |   |    
+       <a href="muntjac.data.property.IReadOnlyStatusChangeNotifier-class.html">data.property.IReadOnlyStatusChangeNotifier</a> --+    
+                                                     |    
+                                        object --+   |    
+                                                 |   |    
+       <a href="muntjac.data.property.IReadOnlyStatusChangeListener-class.html">data.property.IReadOnlyStatusChangeListener</a> --+    
+                                                     |    
+                          <a href="muntjac.ui.abstract_field.AbstractField-class.html">abstract_field.AbstractField</a> --+
+                                                         |
+                                        object --+       |
+                                                 |       |
+                                 <a href="muntjac.data.item.IViewer-class.html">data.item.IViewer</a> --+   |
+                                                     |   |
+                                     <a href="muntjac.data.item.IEditor-class.html">data.item.IEditor</a> --+
+                                                         |
+                                            object --+   |
+                                                     |   |
+                               <a href="muntjac.data.buffered.IBuffered-class.html">data.buffered.IBuffered</a> --+
+                                                         |
+                                            object --+   |
+                                                     |   |
+                                       <a href="muntjac.data.item.IItem-class.html">data.item.IItem</a> --+
+                                                         |
+                                            object --+   |
+                                                     |   |
+                         <a href="muntjac.data.validatable.IValidatable-class.html">data.validatable.IValidatable</a> --+
+                                                         |
+                                        object --+       |
+                                                 |       |
+                           <a href="muntjac.event.action.IContainer-class.html">event.action.IContainer</a> --+   |
+                                                     |   |
+                                <a href="muntjac.event.action.INotifier-class.html">event.action.INotifier</a> --+
+                                                         |
+                                                        <strong class="uidshort">Form</strong>
+</pre>
+
+<hr />
+<p>Form component provides easy way of creating and managing sets 
+  fields.</p>
+  <p><code>Form</code> is a container for fields implementing <a 
+  href="muntjac.ui.field.IField-class.html" class="link">IField</a> 
+  interface. It provides support for any layouts and provides buffering 
+  interface for easy connection of commit and discard buttons. All the form
+  fields can be customized by adding validators, setting captions and 
+  icons, setting immediateness, etc. Also direct mechanism for replacing 
+  existing fields with selections is given.</p>
+  <p><code>Form</code> provides customizable editor for classes 
+  implementing <a href="muntjac.data.item.IItem-class.html" 
+  class="link">IItem</a> interface. Also the form itself implements this 
+  interface for easier connectivity to other items. To use the form as 
+  editor for an item, just connect the item to form with <a 
+  href="muntjac.ui.form.Form-class.html#setItemDataSource" 
+  class="link">Form.setItemDataSource</a>. If only a part of the item needs
+  to be edited, <a href="muntjac.ui.form.Form-class.html#setItemDataSource"
+  class="link">Form.setItemDataSource</a> can be used instead. After the 
+  item has been connected to the form, the automatically created fields can
+  be customized and new fields can be added. If you need to connect a class
+  that does not implement <a href="muntjac.data.item.IItem-class.html" 
+  class="link">IItem</a> interface, most properties of any class following 
+  bean pattern, can be accessed trough 
+  <code>muntjac.data.util.BeanItem</code>.</p>
+
+<hr />
+<div class="fields">      <dl><dt>Authors:</dt>
+        <dd>
+          Vaadin Ltd.,
+          Richard Lincoln
+        </dd>
+      </dl>
+      <p><strong>Version:</strong>
+        1.0.1
+      </p>
+</div><!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">formLayout</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">fieldFactory</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Constructs a new form with given <code class="link">Layout</code> and
+      <code class="link">FormFieldFactory</code>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#paintContent" class="summary-sig-name">paintContent</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">target</span>)</span><br />
+      Paints any needed component-specific things to the given UIDL stream.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.paintContent">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#changeVariables" class="summary-sig-name">changeVariables</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">source</span>,
+        <span class="summary-sig-arg">variables</span>)</span><br />
+      Called when one or more variables handled by the implementing class 
+      are changed.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.changeVariables">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#getErrorMessage" class="summary-sig-name">getErrorMessage</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      The error message of a Form is the error of the first field with a 
+      non-empty error.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.getErrorMessage">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#setValidationVisibleOnCommit" class="summary-sig-name">setValidationVisibleOnCommit</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">makeVisible</span>)</span><br />
+      Controls the making validation visible implicitly on commit.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.setValidationVisibleOnCommit">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#isValidationVisibleOnCommit" class="summary-sig-name">isValidationVisibleOnCommit</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Is validation made automatically visible on commit?</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.isValidationVisibleOnCommit">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#commit" class="summary-sig-name">commit</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Updates all changes since the previous commit to the data source.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.commit">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#discard" class="summary-sig-name">discard</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Discards all changes since last commit.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.discard">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#isModified" class="summary-sig-name">isModified</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Tests if the value stored in the object has been modified since it 
+      was last updated from the data source.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.isModified">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#isReadThrough" class="summary-sig-name">isReadThrough</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Tests if the object is in read-through mode.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.isReadThrough">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#isWriteThrough" class="summary-sig-name">isWriteThrough</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Tests if the object is in write-through mode.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.isWriteThrough">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#setReadThrough" class="summary-sig-name">setReadThrough</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">readThrough</span>)</span><br />
+      Sets the object's read-through mode to the specified status.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.setReadThrough">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#setWriteThrough" class="summary-sig-name">setWriteThrough</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">writeThrough</span>)</span><br />
+      Sets the object's write-through mode to the specified status.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.setWriteThrough">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#addItemProperty" class="summary-sig-name">addItemProperty</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">idd</span>,
+        <span class="summary-sig-arg">prop</span>)</span><br />
+      Adds a new property to form and create corresponding field.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.addItemProperty">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#addField" class="summary-sig-name">addField</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">propertyId</span>,
+        <span class="summary-sig-arg">field</span>)</span><br />
+      Registers the field with the form and adds the field to the form 
+      layout.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.addField">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#registerField" class="summary-sig-name">registerField</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">propertyId</span>,
+        <span class="summary-sig-arg">field</span>)</span><br />
+      Register the field with the form.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.registerField">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#attachField" class="summary-sig-name">attachField</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">propertyId</span>,
+        <span class="summary-sig-arg">field</span>)</span><br />
+      Adds the field to the form layout.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.attachField">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#getItemProperty" class="summary-sig-name">getItemProperty</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">idd</span>)</span><br />
+      The property identified by the property id.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.getItemProperty">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#getField" class="summary-sig-name">getField</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">propertyId</span>)</span><br />
+      Gets the field identified by the propertyid.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.getField">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#getItemPropertyIds" class="summary-sig-name">getItemPropertyIds</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the collection of IDs of all Properties stored in the IItem.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.getItemPropertyIds">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#removeItemProperty" class="summary-sig-name">removeItemProperty</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">idd</span>)</span><br />
+      Removes the property and corresponding field from the form.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.removeItemProperty">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#detachField" class="summary-sig-name">detachField</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">field</span>)</span><br />
+      Called when a form field is detached from a Form.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.detachField">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#removeAllProperties" class="summary-sig-name">removeAllProperties</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Removes all properties and fields from the form.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.removeAllProperties">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#getItemDataSource" class="summary-sig-name">getItemDataSource</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the IItem serving as the data source of the viewer.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.getItemDataSource">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#setItemDataSource" class="summary-sig-name">setItemDataSource</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">newDataSource</span>,
+        <span class="summary-sig-arg">propertyIds</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Set the item datasource for the form, but limit the form contents to 
+      specified properties of the item.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.setItemDataSource">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#getLayout" class="summary-sig-name">getLayout</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the layout of the form.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.getLayout">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#setLayout" class="summary-sig-name">setLayout</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">newLayout</span>)</span><br />
+      Sets the layout of the form.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.setLayout">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#replaceWithSelect" class="summary-sig-name">replaceWithSelect</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">propertyId</span>,
+        <span class="summary-sig-arg">values</span>,
+        <span class="summary-sig-arg">descriptions</span>)</span><br />
+      Sets the form field to be selectable from static list of changes.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.replaceWithSelect">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#attach" class="summary-sig-name">attach</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Notifies the component that it is connected to an application</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.attach">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#detach" class="summary-sig-name">detach</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Notifies the component that it is detached from the application.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.detach">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#isValid" class="summary-sig-name">isValid</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Tests the current value of the object against all registered 
+      validators</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.isValid">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#validate" class="summary-sig-name">validate</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Checks the validity of the validatable.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.validate">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#isInvalidAllowed" class="summary-sig-name">isInvalidAllowed</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Checks the validabtable object accept invalid values.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.isInvalidAllowed">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#setInvalidAllowed" class="summary-sig-name">setInvalidAllowed</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">invalidValueAllowed</span>)</span><br />
+      Should the validabtable object accept invalid values.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.setInvalidAllowed">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#setReadOnly" class="summary-sig-name">setReadOnly</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">readOnly</span>)</span><br />
+      Sets the component's to read-only mode to the specified state.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.setReadOnly">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#setFieldFactory" class="summary-sig-name">setFieldFactory</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">fieldFactory</span>)</span><br />
+      Sets the field factory of Form.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.setFieldFactory">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#setFormFieldFactory" class="summary-sig-name">setFormFieldFactory</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">fieldFactory</span>)</span><br />
+      Sets the field factory used by this Form to genarate Fields for 
+      properties.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.setFormFieldFactory">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#getFormFieldFactory" class="summary-sig-name">getFormFieldFactory</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Get the field factory of the form.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.getFormFieldFactory">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#getFieldFactory" class="summary-sig-name">getFieldFactory</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Get the field factory of the form.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.getFieldFactory">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#getType" class="summary-sig-name">getType</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the field type.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.getType">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#setInternalValue" class="summary-sig-name">setInternalValue</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">newValue</span>)</span><br />
+      Sets the internal value.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.setInternalValue">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#getFirstFocusableField" class="summary-sig-name">getFirstFocusableField</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the first focusable field in form.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.getFirstFocusableField">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#setFormDataSource" class="summary-sig-name">setFormDataSource</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data</span>,
+        <span class="summary-sig-arg">properties</span>)</span><br />
+      Updates the internal form datasource.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.setFormDataSource">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#getVisibleItemProperties" class="summary-sig-name">getVisibleItemProperties</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the visibleProperties.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.getVisibleItemProperties">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#setVisibleItemProperties" class="summary-sig-name">setVisibleItemProperties</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">visibleProperties</span>)</span><br />
+      Sets the visibleProperties.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.setVisibleItemProperties">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#focus" class="summary-sig-name">focus</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Focuses the first field in the form.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.focus">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#setTabIndex" class="summary-sig-name">setTabIndex</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">tabIndex</span>)</span><br />
+      Sets the Tabulator index of this Focusable component.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.setTabIndex">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#setImmediate" class="summary-sig-name">setImmediate</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">immediate</span>)</span><br />
+      Setting the form to be immediate also sets all the fields of the form
+      to the same state.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.setImmediate">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#isEmpty" class="summary-sig-name">isEmpty</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Form is empty if all of its fields are empty.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.isEmpty">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#addValidator" class="summary-sig-name">addValidator</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">validator</span>)</span><br />
+      Adding validators directly to form is not supported.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.addValidator">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#getFooter" class="summary-sig-name">getFooter</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns a layout that is rendered below normal form contents.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.getFooter">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#setFooter" class="summary-sig-name">setFooter</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">newFormFooter</span>)</span><br />
+      Sets the layout that is rendered below normal form contents.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.setFooter">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#setEnabled" class="summary-sig-name">setEnabled</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">enabled</span>)</span><br />
+      Enables or disables the component.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.setEnabled">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#getOwnActionManager" class="summary-sig-name">getOwnActionManager</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the <a 
+      href="muntjac.event.action_manager.ActionManager-class.html" 
+      class="link">ActionManager</a> responsible for handling <a 
+      href="muntjac.event.action.Action-class.html" 
+      class="link">Action</a>s added to this Form.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.getOwnActionManager">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#addActionHandler" class="summary-sig-name">addActionHandler</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">actionHandler</span>)</span><br />
+      Registers a new action handler for this container</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.addActionHandler">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#removeActionHandler" class="summary-sig-name">removeActionHandler</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">actionHandler</span>)</span><br />
+      Removes a previously registered action handler for the contents of 
+      this container.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.removeActionHandler">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="removeAllActionHandlers"></a><span class="summary-sig-name">removeAllActionHandlers</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Removes all action handlers</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.removeAllActionHandlers">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#addAction" class="summary-sig-name">addAction</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">action</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.addAction">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.form.Form-class.html#removeAction" class="summary-sig-name">removeAction</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">action</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.removeAction">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_field.AbstractField-class.html">abstract_field.AbstractField</a></code></b>:
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#__str__">__str__</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#addCallback">addCallback</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#addListener">addListener</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#addShortcutListener">addShortcutListener</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#fireReadOnlyStatusChange">fireReadOnlyStatusChange</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#fireValueChange">fireValueChange</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#getActionManager">getActionManager</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#getPropertyDataSource">getPropertyDataSource</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#getRequiredError">getRequiredError</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#getTabIndex">getTabIndex</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#getValidators">getValidators</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#getValue">getValue</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#isInvalidCommitted">isInvalidCommitted</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#isReadOnly">isReadOnly</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#isRequired">isRequired</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#isValidationVisible">isValidationVisible</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#readOnlyStatusChange">readOnlyStatusChange</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#readValueFromProperty">readValueFromProperty</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#removeCallback">removeCallback</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#removeListener">removeListener</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#removeShortcutListener">removeShortcutListener</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#removeValidator">removeValidator</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setCurrentBufferedSourceException">setCurrentBufferedSourceException</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setInvalidCommitted">setInvalidCommitted</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setPropertyDataSource">setPropertyDataSource</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setRequired">setRequired</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setRequiredError">setRequiredError</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setValidationVisible">setValidationVisible</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setValue">setValue</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#shouldHideErrors">shouldHideErrors</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#valueChange">valueChange</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html">abstract_component.AbstractComponent</a></code></b>:
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#__getstate__">__getstate__</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#__setstate__">__setstate__</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#addStyleName">addStyleName</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#childRequestedRepaint">childRequestedRepaint</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#fireComponentErrorEvent">fireComponentErrorEvent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#fireComponentEvent">fireComponentEvent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#fireEvent">fireEvent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#fireRequestRepaintEvent">fireRequestRepaintEvent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getApplication">getApplication</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getCSSHeight">getCSSHeight</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getCSSWidth">getCSSWidth</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getCaption">getCaption</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getComponentError">getComponentError</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getData">getData</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getDebugId">getDebugId</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getDescription">getDescription</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getErrorHandler">getErrorHandler</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getHeight">getHeight</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getHeightUnits">getHeightUnits</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getIcon">getIcon</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getListeners">getListeners</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getLocale">getLocale</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getParent">getParent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getStyle">getStyle</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getStyleName">getStyleName</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getWidth">getWidth</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getWidthUnits">getWidthUnits</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getWindow">getWindow</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#handleError">handleError</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#hasListeners">hasListeners</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#isEnabled">isEnabled</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#isImmediate">isImmediate</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#isVisible">isVisible</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#paint">paint</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#parseStringSize">parseStringSize</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#registerCallback">registerCallback</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#registerListener">registerListener</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#removeStyleName">removeStyleName</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#requestRepaint">requestRepaint</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#requestRepaintRequests">requestRepaintRequests</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setCaption">setCaption</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setComponentError">setComponentError</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setData">setData</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setDebugId">setDebugId</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setDescription">setDescription</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setErrorHandler">setErrorHandler</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setHeight">setHeight</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setHeightUnits">setHeightUnits</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setIcon">setIcon</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setLocale">setLocale</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setParent">setParent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setSizeFull">setSizeFull</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setSizeUndefined">setSizeUndefined</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setStyle">setStyle</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setStyleName">setStyleName</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setVisible">setVisible</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setWidth">setWidth</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setWidthUnits">setWidthUnits</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#withdrawCallback">withdrawCallback</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#withdrawListener">withdrawListener</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS METHODS ==================== -->
+<a name="section-ClassMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_field.AbstractField-class.html">abstract_field.AbstractField</a></code></b>:
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#constructField">constructField</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="CLIENT_WIDGET"></a><span class="summary-name">CLIENT_WIDGET</span> = <code title="None">None</code><br />
+      hash(x)
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html">abstract_component.AbstractComponent</a></code></b>:
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#SIZE_PATTERN">SIZE_PATTERN</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a></code></b>:
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#SIZE_UNDEFINED">SIZE_UNDEFINED</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_CM">UNITS_CM</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_EM">UNITS_EM</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_EX">UNITS_EX</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_INCH">UNITS_INCH</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_MM">UNITS_MM</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_PERCENTAGE">UNITS_PERCENTAGE</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_PICAS">UNITS_PICAS</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_PIXELS">UNITS_PIXELS</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_POINTS">UNITS_POINTS</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNIT_SYMBOLS">UNIT_SYMBOLS</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== INSTANCE VARIABLES ==================== -->
+<a name="section-InstanceVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_layout"></a><span class="summary-name">_layout</span><br />
+      Layout of the form.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_itemDatasource"></a><span class="summary-name">_itemDatasource</span><br />
+      IItem connected to this form as datasource.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_propertyIds"></a><span class="summary-name">_propertyIds</span><br />
+      Ordered list of property ids in this editor.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_currentBufferedSourceException"></a><span class="summary-name">_currentBufferedSourceException</span><br />
+      Current buffered source exception.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_writeThrough"></a><span class="summary-name">_writeThrough</span><br />
+      Is the form in write trough mode.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_readThrough"></a><span class="summary-name">_readThrough</span><br />
+      Is the form in read trough mode.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_fields"></a><span class="summary-name">_fields</span><br />
+      Mapping from propertyName to corresponding field.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_ownProperties"></a><span class="summary-name">_ownProperties</span><br />
+      Form may act as an IItem, its own properties are stored here.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_fieldFactory"></a><span class="summary-name">_fieldFactory</span><br />
+      IField factory for this form.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_visibleItemProperties"></a><span class="summary-name">_visibleItemProperties</span><br />
+      Visible item properties.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_fieldValueChangeListener"></a><span class="summary-name">_fieldValueChangeListener</span><br />
+      Form needs to repaint itself if child fields value changes due
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_validationVisibleOnCommit"></a><span class="summary-name">_validationVisibleOnCommit</span><br />
+      If this is true, commit implicitly calls setValidationVisible(true).
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_ownActionManager"></a><span class="summary-name">_ownActionManager</span><br />
+      Keeps track of the Actions added to this component, and manages the
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_field.AbstractField-class.html">abstract_field.AbstractField</a></code></b> (private):
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_actionManager" onclick="show_private();">_actionManager</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_committingValueToDataSource" onclick="show_private();">_committingValueToDataSource</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_dataSource" onclick="show_private();">_dataSource</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_invalidAllowed" onclick="show_private();">_invalidAllowed</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_invalidCommitted" onclick="show_private();">_invalidCommitted</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_modified" onclick="show_private();">_modified</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_readThroughMode" onclick="show_private();">_readThroughMode</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_required" onclick="show_private();">_required</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_requiredError" onclick="show_private();">_requiredError</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_tabIndex" onclick="show_private();">_tabIndex</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_validationVisible" onclick="show_private();">_validationVisible</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_validators" onclick="show_private();">_validators</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_value" onclick="show_private();">_value</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_writeThroughMode" onclick="show_private();">_writeThroughMode</a></code>
+      </p></div>
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html">abstract_component.AbstractComponent</a></code></b> (private):
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_applicationData" onclick="show_private();">_applicationData</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_caption" onclick="show_private();">_caption</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_componentError" onclick="show_private();">_componentError</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_delayedFocus" onclick="show_private();">_delayedFocus</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_description" onclick="show_private();">_description</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_enabled" onclick="show_private();">_enabled</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_eventIdentifiers" onclick="show_private();">_eventIdentifiers</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_eventRouter" onclick="show_private();">_eventRouter</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_icon" onclick="show_private();">_icon</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_immediate" onclick="show_private();">_immediate</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_locale" onclick="show_private();">_locale</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_parent" onclick="show_private();">_parent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_readOnly" onclick="show_private();">_readOnly</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_repaintRequestListeners" onclick="show_private();">_repaintRequestListeners</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_repaintRequestListenersNotified" onclick="show_private();">_repaintRequestListenersNotified</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_styles" onclick="show_private();">_styles</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_visible" onclick="show_private();">_visible</a></code>
+      </p></div>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">formLayout</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">fieldFactory</span>=<span class="sig-default">None</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Constructs a new form with given <code class="link">Layout</code> and 
+  <code class="link">FormFieldFactory</code>.</p>
+  <p>By default the form uses <a 
+  href="muntjac.ui.form_layout.FormLayout-class.html" 
+  class="link">FormLayout</a>.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>formLayout</code></strong> - the layout of the form.</li>
+        <li><strong class="pname"><code>fieldFactory</code></strong> - the IFieldFactory of the form.</li>
+    </ul></dd>
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="paintContent"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">paintContent</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">target</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.paintContent">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Paints any needed component-specific things to the given UIDL stream. 
+  The more general <a 
+  href="muntjac.ui.abstract_component.AbstractComponent-class.html#paint" 
+  class="link">paint</a> method handles all general attributes common to 
+  all components, and it calls this method to paint any component-specific 
+  attributes to the UIDL stream.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>target</code></strong> - the target UIDL stream where the component should paint itself to</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="muntjac.terminal.paint_exception.PaintException-class.html">PaintException</a></strong></code> - if the paint operation failed.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.abstract_component.AbstractComponent-class.html#paintContent">abstract_component.AbstractComponent.paintContent</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="changeVariables"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">changeVariables</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">source</span>,
+        <span class="sig-arg">variables</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.changeVariables">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Called when one or more variables handled by the implementing class 
+  are changed.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>source</code></strong> - the Source of the variable change. This is the origin of the 
+          event. For example in Web Adapter this is the request.</li>
+        <li><strong class="pname"><code>variables</code></strong> - the Mapping from variable names to new variable values.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.terminal.variable_owner.IVariableOwner-class.html#changeVariables">terminal.variable_owner.IVariableOwner.changeVariables</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getErrorMessage"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getErrorMessage</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.getErrorMessage">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>The error message of a Form is the error of the first field with a 
+  non-empty error.</p>
+  <p>Empty error messages of the contained fields are skipped, because an 
+  empty error indicator would be confusing to the user, especially if there
+  are errors that have something to display. This is also the reason why 
+  the calculation of the error message is separate from validation, because
+  validation fails also on empty errors.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>ErrorMessage containing the description of the error state of the
+          component or null, if the component contains no errors. Extending
+          classes should override this method if they support other error 
+          message types such as validation errors or buffering errors. The 
+          returned error message contains information about all the errors.</dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getErrorMessage">abstract_component.AbstractComponent.getErrorMessage</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setValidationVisibleOnCommit"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setValidationVisibleOnCommit</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">makeVisible</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.setValidationVisibleOnCommit">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Controls the making validation visible implicitly on commit.</p>
+  <p>Having commit() call setValidationVisible(True) implicitly is the 
+  default behaviour. You can disable the implicit setting by setting this 
+  property as false.</p>
+  <p>It is useful, because you usually want to start with the form free of 
+  errors and only display them after the user clicks Ok. You can disable 
+  the implicit setting by setting this property as false.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>makeVisible</code></strong> - If true (default), validation is made visible when commit() is 
+          called. If false, the visibility is left as it is.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isValidationVisibleOnCommit"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isValidationVisibleOnCommit</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.isValidationVisibleOnCommit">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Is validation made automatically visible on commit?</p>
+  <p>See setValidationVisibleOnCommit().</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true if validation is made automatically visible on commit.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="commit"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">commit</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.commit">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Updates all changes since the previous commit to the data source. The 
+  value stored in the object will always be updated into the data source 
+  when <code>commit</code> is called.</p>
+  <dl class="fields">
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="muntjac.data.buffered.SourceException-class.html">SourceException</a></strong></code> - if the operation fails because of an exception is thrown by the 
+        data source. The cause is included in the exception.</li>
+        <li><code><strong class='fraise'><a href="muntjac.data.validator.InvalidValueException-class.html">InvalidValueException</a></strong></code> - if the operation fails because validation is enabled and the values
+        do not validate</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.buffered.IBuffered-class.html#commit">data.buffered.IBuffered.commit</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="discard"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">discard</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.discard">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Discards all changes since last commit. The object updates its value 
+  from the data source.</p>
+  <dl class="fields">
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="muntjac.data.buffered.SourceException-class.html">SourceException</a></strong></code> - if the operation fails because of an exception is thrown by the 
+        data source. The cause is included in the exception.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.buffered.IBuffered-class.html#discard">data.buffered.IBuffered.discard</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isModified"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isModified</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.isModified">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tests if the value stored in the object has been modified since it was
+  last updated from the data source.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the value in the object has been modified 
+          since the last data source update, <code>False</code> if not.</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.buffered.IBuffered-class.html#isModified">data.buffered.IBuffered.isModified</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isReadThrough"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isReadThrough</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.isReadThrough">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tests if the object is in read-through mode. If the object is in 
+  read-through mode, retrieving its value will result in the value being 
+  first updated from the data source to the object.</p>
+  <p>The only exception to this rule is that when the object is not in 
+  write-through mode and it's buffer contains a modified value, the value 
+  retrieved from the object will be the locally modified value in the 
+  buffer which may differ from the value in the data source.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the object is in read-through mode, 
+          <code>False</code> if it's not.</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.buffered.IBuffered-class.html#isReadThrough">data.buffered.IBuffered.isReadThrough</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isWriteThrough"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isWriteThrough</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.isWriteThrough">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tests if the object is in write-through mode. If the object is in 
+  write-through mode, all modifications to it will result in 
+  <code>commit</code> being called after the modification.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the object is in write-through mode, 
+          <code>False</code> if it's not.</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.buffered.IBuffered-class.html#isWriteThrough">data.buffered.IBuffered.isWriteThrough</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setReadThrough"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setReadThrough</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">readThrough</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.setReadThrough">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the object's read-through mode to the specified status. When 
+  switching read-through mode on, the object's value is updated from the 
+  data source.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>readThrough</code></strong> - Boolean value to indicate if the object should be in read-through
+          mode after the call.</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="muntjac.data.buffered.SourceException-class.html">SourceException</a></strong></code> - If the operation fails because of an exception is thrown by the 
+        data source. The cause is included in the exception.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.buffered.IBuffered-class.html#setReadThrough">data.buffered.IBuffered.setReadThrough</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setWriteThrough"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setWriteThrough</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">writeThrough</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.setWriteThrough">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the object's write-through mode to the specified status. When 
+  switching the write-through mode on, the <code>commit</code> operation 
+  will be performed.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>writeThrough</code></strong> - Boolean value to indicate if the object should be in 
+          write-through mode after the call.</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="muntjac.data.buffered.SourceException-class.html">SourceException</a></strong></code> - If the operation fails because of an exception is thrown by the 
+        data source.</li>
+        <li><code><strong class='fraise'><a href="muntjac.data.validator.InvalidValueException-class.html">InvalidValueException</a></strong></code> - If the implicit commit operation fails because of a validation 
+        error.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.buffered.IBuffered-class.html#setWriteThrough">data.buffered.IBuffered.setWriteThrough</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addItemProperty"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addItemProperty</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">idd</span>,
+        <span class="sig-arg">prop</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.addItemProperty">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds a new property to form and create corresponding field.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>idd</code></strong> - ID of the new Property</li>
+        <li><strong class="pname"><code>prop</code></strong> - the Property to be added and associated with the id</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the operation succeeded, <code>False</code> 
+          if not</dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>NotImplementedError</strong></code> - if the operation is not supported.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.item.IItem-class.html#addItemProperty">data.item.IItem.addItemProperty</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a href="muntjac.data.item.IItem-class.html#addItemProperty" 
+        class="link">IItem.addItemProperty</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="addField"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addField</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">propertyId</span>,
+        <span class="sig-arg">field</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.addField">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Registers the field with the form and adds the field to the form 
+  layout.</p>
+  <p>The property id must not be already used in the form.</p>
+  <p>This field is added to the layout using the <a 
+  href="muntjac.ui.form.Form-class.html#attachField" 
+  class="link">attachField</a> method.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>propertyId</code></strong> - the Property id the the field.</li>
+        <li><strong class="pname"><code>field</code></strong> - the field which should be added to the form.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="registerField"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">registerField</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">propertyId</span>,
+        <span class="sig-arg">field</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.registerField">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Register the field with the form. All registered fields are validated 
+  when the form is validated and also committed when the form is 
+  committed.</p>
+  <p>The property id must not be already used in the form.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>propertyId</code></strong> - the Property id of the field.</li>
+        <li><strong class="pname"><code>field</code></strong> - the IField that should be registered</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="attachField"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">attachField</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">propertyId</span>,
+        <span class="sig-arg">field</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.attachField">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds the field to the form layout.</p>
+  <p>The field is added to the form layout in the default position (the 
+  position used by <code class="link">Layout.addComponent</code>. If the 
+  underlying layout is a <a 
+  href="muntjac.ui.custom_layout.CustomLayout-class.html" 
+  class="link">CustomLayout</a> the field is added to the CustomLayout 
+  location given by the string representation of the property id using <a 
+  href="muntjac.ui.custom_layout.CustomLayout-class.html#addComponent" 
+  class="link">CustomLayout.addComponent</a>.</p>
+  <p>Override this method to control how the fields are added to the 
+  layout.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getItemProperty"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getItemProperty</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">idd</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.getItemProperty">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>The property identified by the property id.</p>
+  <p>The property data source of the field specified with property id is 
+  returned. If there is a (with specified property id) having no data 
+  source, the field is returned instead of the data source.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>idd</code></strong> - identifier of the Property to get</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>the Property with the given ID or <code>None</code></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.item.IItem-class.html#getItemProperty">data.item.IItem.getItemProperty</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a href="muntjac.data.item.IItem-class.html#getItemProperty" 
+        class="link">IItem.getItemProperty</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="getField"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getField</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">propertyId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.getField">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the field identified by the propertyid.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>propertyId</code></strong> - the id of the property.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getItemPropertyIds"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getItemPropertyIds</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.getItemPropertyIds">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the collection of IDs of all Properties stored in the IItem.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>iterable containing IDs of the Properties stored the IItem</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.item.IItem-class.html#getItemPropertyIds">data.item.IItem.getItemPropertyIds</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeItemProperty"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeItemProperty</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">idd</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.removeItemProperty">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes the property and corresponding field from the form.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>idd</code></strong> - ID of the Property to be removed</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the operation succeeded <code>False</code> 
+          if not</dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>NotImplementedError</strong></code> - if the operation is not supported.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.item.IItem-class.html#removeItemProperty">data.item.IItem.removeItemProperty</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a href="muntjac.data.item.IItem-class.html#removeItemProperty" 
+        class="link">IItem.removeItemProperty</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="detachField"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">detachField</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">field</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.detachField">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Called when a form field is detached from a Form. Typically when a new
+  IItem is assigned to Form via <a 
+  href="muntjac.ui.form.Form-class.html#setItemDataSource" 
+  class="link">setItemDataSource</a>.</p>
+  <p>Override this method to control how the fields are removed from the 
+  layout.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>field</code></strong> - the field to be detached from the forms layout.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeAllProperties"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeAllProperties</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.removeAllProperties">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes all properties and fields from the form.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the Success of the operation. Removal of all fields succeeded if 
+          (and only if) the return value is <code>True</code>.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getItemDataSource"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getItemDataSource</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.getItemDataSource">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the IItem serving as the data source of the viewer.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>data source IItem</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.item.IViewer-class.html#getItemDataSource">data.item.IViewer.getItemDataSource</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setItemDataSource"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setItemDataSource</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">newDataSource</span>,
+        <span class="sig-arg">propertyIds</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.setItemDataSource">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Set the item datasource for the form, but limit the form contents to 
+  specified properties of the item.</p>
+  <p>Setting item datasource clears any fields, the form might contain and 
+  adds the specified the properties as fields to the form, in the specified
+  order.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>newDataSource</code></strong> - The new data source IItem</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.item.IViewer-class.html#setItemDataSource">data.item.IViewer.setItemDataSource</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <code class="link">Viewer.setItemDataSource</code>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="getLayout"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getLayout</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.getLayout">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the layout of the form.</p>
+  <p>By default form uses <code>OrderedLayout</code> with 
+  <code>form</code>-style.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the Layout of the form.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setLayout"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setLayout</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">newLayout</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.setLayout">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the layout of the form.</p>
+  <p>By default form uses <code>OrderedLayout</code> with 
+  <code>form</code>-style.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>newLayout</code></strong> - the Layout of the form.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="replaceWithSelect"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">replaceWithSelect</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">propertyId</span>,
+        <span class="sig-arg">values</span>,
+        <span class="sig-arg">descriptions</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.replaceWithSelect">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the form field to be selectable from static list of changes.</p>
+  <p>The list values and descriptions are given as array. The value-array 
+  must contain the current value of the field and the lengths of the arrays
+  must match. Null values are not supported.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>propertyId</code></strong> - the id of the property.</li>
+        <li><strong class="pname"><code>values</code></strong></li>
+        <li><strong class="pname"><code>descriptions</code></strong></li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>the select property generated</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="attach"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">attach</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.attach">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Notifies the component that it is connected to an application</p>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.ui.component.IComponent-class.html#attach">component.IComponent.attach</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a href="muntjac.ui.component.IComponent-class.html#attach" 
+        class="link">IComponent.attach</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="detach"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">detach</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.detach">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Notifies the component that it is detached from the application.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.ui.component.IComponent-class.html#detach">component.IComponent.detach</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a href="muntjac.ui.component.IComponent-class.html#detach" 
+        class="link">IComponent.detach</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="isValid"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isValid</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.isValid">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tests the current value of the object against all registered 
+  validators</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><code>True</code> if all registered validators claim that the 
+          current value is valid or if the field is empty and not required,
+          <code>False</code> otherwise.</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.validatable.IValidatable-class.html#isValid">data.validatable.IValidatable.isValid</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a href="muntjac.data.validatable.IValidatable-class.html#isValid" 
+        class="link">IValidatable.isValid</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="validate"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">validate</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.validate">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Checks the validity of the validatable.</p>
+  <dl class="fields">
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="muntjac.data.validator.InvalidValueException-class.html">InvalidValueException</a></strong></code> - if the value is not valid</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.validatable.IValidatable-class.html#validate">data.validatable.IValidatable.validate</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a href="muntjac.data.validatable.IValidatable-class.html#validate"
+        class="link">IValidatable.validate</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="isInvalidAllowed"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isInvalidAllowed</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.isInvalidAllowed">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Checks the validabtable object accept invalid values.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true iff the invalid values are allowed.</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.validatable.IValidatable-class.html#isInvalidAllowed">data.validatable.IValidatable.isInvalidAllowed</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a 
+        href="muntjac.data.validatable.IValidatable-class.html#isInvalidAllowed"
+        class="link">IValidatable.isInvalidAllowed</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="setInvalidAllowed"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setInvalidAllowed</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">invalidValueAllowed</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.setInvalidAllowed">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Should the validabtable object accept invalid values.</p>
+  <dl class="fields">
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>NotImplementedError</strong></code> - if the setInvalidAllowed is not supported.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.validatable.IValidatable-class.html#setInvalidAllowed">data.validatable.IValidatable.setInvalidAllowed</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a 
+        href="muntjac.data.validatable.IValidatable-class.html#setInvalidAllowed"
+        class="link">IValidatable.setInvalidAllowed</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="setReadOnly"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setReadOnly</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">readOnly</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.setReadOnly">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the component's to read-only mode to the specified state.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>readOnly</code></strong> - a boolean value specifying whether the component is put read-only
+          mode or not</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.component.IComponent-class.html#setReadOnly">component.IComponent.setReadOnly</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a href="muntjac.ui.component.IComponent-class.html#setReadOnly" 
+        class="link">IComponent.setReadOnly</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="setFieldFactory"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setFieldFactory</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">fieldFactory</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.setFieldFactory">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the field factory of Form.</p>
+  <p><code>IFieldFactory</code> is used to create fields for form 
+  properties. By default the form uses BaseFieldFactory to create IField 
+  instances.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>fieldFactory</code></strong> - the New factory used to create the fields.</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <dl><dt>See Also:</dt>
+        <dd>
+          <a href="muntjac.ui.field.IField-class.html" 
+          class="link">IField</a>,
+          <code class="link">FormFieldFactory</code>
+        </dd>
+      </dl>
+      <p><strong>Deprecated:</strong>
+        use <a href="muntjac.ui.form.Form-class.html#setFormFieldFactory" 
+    class="link">setFormFieldFactory</a> instead
+      </p>
+</div></td></tr></table>
+</div>
+<a name="setFormFieldFactory"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setFormFieldFactory</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">fieldFactory</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.setFormFieldFactory">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the field factory used by this Form to genarate Fields for 
+  properties.</p>
+  <p><code class="link">FormFieldFactory</code> is used to create fields 
+  for form properties. <a 
+  href="muntjac.ui.default_field_factory.DefaultFieldFactory-class.html" 
+  class="link">DefaultFieldFactory</a> is used by default.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>fieldFactory</code></strong> - the new factory used to create the fields.</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <dl><dt>See Also:</dt>
+        <dd>
+          <a href="muntjac.ui.field.IField-class.html" 
+          class="link">IField</a>,
+          <code class="link">FormFieldFactory</code>
+        </dd>
+      </dl>
+</div></td></tr></table>
+</div>
+<a name="getFormFieldFactory"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getFormFieldFactory</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.getFormFieldFactory">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Get the field factory of the form.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the FormFieldFactory Factory used to create the fields.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getFieldFactory"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getFieldFactory</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.getFieldFactory">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Get the field factory of the form.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the IFieldFactory Factory used to create the fields.</dd>
+  </dl>
+<div class="fields">      <p><strong>Deprecated:</strong>
+        Use <a href="muntjac.ui.form.Form-class.html#getFormFieldFactory" 
+    class="link">getFormFieldFactory</a> instead. Set the FormFieldFactory 
+    using <a href="muntjac.ui.form.Form-class.html#setFormFieldFactory" 
+    class="link">setFormFieldFactory</a>.
+      </p>
+</div></td></tr></table>
+</div>
+<a name="getType"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getType</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.getType">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the field type.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.ui.abstract_field.AbstractField-class.html#getType">abstract_field.AbstractField.getType</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a 
+        href="muntjac.ui.abstract_field.AbstractField-class.html#getType" 
+        class="link">AbstractField.getType</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="setInternalValue"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setInternalValue</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">newValue</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.setInternalValue">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the internal value.</p>
+  <p>This is relevant when the Form is used as IField.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>newValue</code></strong> - the new value to be set.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.abstract_field.AbstractField-class.html#setInternalValue">abstract_field.AbstractField.setInternalValue</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a 
+        href="muntjac.ui.abstract_field.AbstractField-class.html#setInternalValue"
+        class="link">AbstractField.setInternalValue</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="getFirstFocusableField"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getFirstFocusableField</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.getFirstFocusableField">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the first focusable field in form. If there are enabled, 
+  non-read-only fields, the first one of them is returned. Otherwise, the 
+  field for the first property (or null if none) is returned.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the IField.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setFormDataSource"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setFormDataSource</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">data</span>,
+        <span class="sig-arg">properties</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.setFormDataSource">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Updates the internal form datasource.</p>
+  <p>Method setFormDataSource.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getVisibleItemProperties"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getVisibleItemProperties</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.getVisibleItemProperties">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the visibleProperties.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the collection of visible IItem properites.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setVisibleItemProperties"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setVisibleItemProperties</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">visibleProperties</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.setVisibleItemProperties">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the visibleProperties.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>visibleProperties</code></strong> - the visibleProperties to set.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="focus"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">focus</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.focus">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Focuses the first field in the form.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.ui.component.IFocusable-class.html#focus">component.IFocusable.focus</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a href="muntjac.ui.component.IFocusable-class.html#focus" 
+        class="link">IFocusable.focus</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="setTabIndex"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setTabIndex</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">tabIndex</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.setTabIndex">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the Tabulator index of this Focusable component.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>tabIndex</code></strong> - the tab order of this component. Indexes usually start from 1. 
+          Zero means that default tab order should be used. A negative 
+          value means that the field should not be included in the tabbing 
+          sequence.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.component.IFocusable-class.html#setTabIndex">component.IFocusable.setTabIndex</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a href="muntjac.ui.component.IFocusable-class.html#setTabIndex" 
+        class="link">IFocusable.setTabIndex</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="setImmediate"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setImmediate</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">immediate</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.setImmediate">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Setting the form to be immediate also sets all the fields of the form 
+  to the same state.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>immediate</code></strong> - the boolean value specifying if the component should be in the 
+          immediate mode after the call.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setImmediate">abstract_component.AbstractComponent.setImmediate</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isEmpty"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isEmpty</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.isEmpty">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Form is empty if all of its fields are empty.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.ui.abstract_field.AbstractField-class.html#isEmpty">abstract_field.AbstractField.isEmpty</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addValidator"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addValidator</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">validator</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.addValidator">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adding validators directly to form is not supported.</p>
+  <p>Add the validators to form fields instead.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>validator</code></strong> - the new validator to be added.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.validatable.IValidatable-class.html#addValidator">data.validatable.IValidatable.addValidator</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getFooter"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getFooter</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.getFooter">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns a layout that is rendered below normal form contents. This 
+  area can be used for example to include buttons related to form 
+  contents.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>layout rendered below normal form contents.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setFooter"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setFooter</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">newFormFooter</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.setFooter">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the layout that is rendered below normal form contents.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>newFormFooter</code></strong> - the new Layout</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setEnabled"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setEnabled</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">enabled</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.setEnabled">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Enables or disables the component. The user can not interact disabled 
+  components, which are shown with a style that indicates the status, 
+  usually shaded in light gray color. Components are enabled by default. 
+  Children of a disabled component are automatically disabled; if a child 
+  component is explicitly set as disabled, changes in the disabled status 
+  of its parents do not change its status:</p>
+<pre class="literalblock">
+ enabled = new Button(&quot;Enabled&quot;)
+ enabled.setEnabled(True)  # the default
+ layout.addComponent(enabled)
+
+ disabled = Button(&quot;Disabled&quot;)
+ disabled.setEnabled(False)
+ layout.addComponent(disabled)
+</pre>
+  <p>This method will trigger a <a 
+  href="muntjac.terminal.paintable.RepaintRequestEvent-class.html" 
+  class="link">RepaintRequestEvent</a> for the component and, if it is a 
+  <code class="link">ComponentContainer</code>, for all its children 
+  recursively.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>enabled</code></strong> - a boolean value specifying if the component should be enabled or 
+          not</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.component.IComponent-class.html#setEnabled">component.IComponent.setEnabled</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getOwnActionManager"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getOwnActionManager</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.getOwnActionManager">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the <a 
+  href="muntjac.event.action_manager.ActionManager-class.html" 
+  class="link">ActionManager</a> responsible for handling <a 
+  href="muntjac.event.action.Action-class.html" class="link">Action</a>s 
+  added to this Form.</p>
+  <p>Note that Form has another ActionManager inherited from <a 
+  href="muntjac.ui.abstract_field.AbstractField-class.html" 
+  class="link">AbstractField</a>. The ownActionManager handles Actions 
+  attached to this Form specifically, while the ActionManager in 
+  AbstractField delegates to the containing Window (i.e global 
+  Actions).</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="addActionHandler"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addActionHandler</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">actionHandler</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.addActionHandler">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Registers a new action handler for this container</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>actionHandler</code></strong> - the new handler to be added.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.event.action.IContainer-class.html#addActionHandler">event.action.IContainer.addActionHandler</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeActionHandler"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeActionHandler</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">actionHandler</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.removeActionHandler">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes a previously registered action handler for the contents of 
+  this container.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>actionHandler</code></strong> - the handler to be removed.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.event.action.IContainer-class.html#removeActionHandler">event.action.IContainer.removeActionHandler</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addAction"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addAction</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">action</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.addAction">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.event.action.INotifier-class.html#addAction">event.action.INotifier.addAction</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeAction"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeAction</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">action</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.form-pysrc.html#Form.removeAction">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.event.action.INotifier-class.html#removeAction">event.action.INotifier.removeAction</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:04:00 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

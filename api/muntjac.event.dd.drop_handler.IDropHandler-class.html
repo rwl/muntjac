@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.event.dd.drop_handler.IDropHandler</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.event-module.html">Package&nbsp;event</a> ::
+        <a href="muntjac.event.dd-module.html">Package&nbsp;dd</a> ::
+        <a href="muntjac.event.dd.drop_handler-module.html">Module&nbsp;drop_handler</a> ::
+        Class&nbsp;IDropHandler
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.event.dd.drop_handler.IDropHandler-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class IDropHandler</h1><p class="nomargin-top"><span class="codelink"><a href="muntjac.event.dd.drop_handler-pysrc.html#IDropHandler">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+object --+
+         |
+        <strong class="uidshort">IDropHandler</strong>
+</pre>
+
+<hr />
+<p>DropHandlers contain the actual business logic for drag and drop 
+  operations.</p>
+  <p>The <a 
+  href="muntjac.event.dd.drop_handler.IDropHandler-class.html#drop" 
+  class="link">drop</a> method is used to receive the transferred data and 
+  the <a 
+  href="muntjac.event.dd.drop_handler.IDropHandler-class.html#getAcceptCriterion"
+  class="link">getAcceptCriterion</a> method contains the (possibly client 
+  side verifiable) criterion whether the dragged data will be handled at 
+  all.</p>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.event.dd.drop_handler.IDropHandler-class.html#drop" class="summary-sig-name">drop</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">event</span>)</span><br />
+      Drop method is called when the end user has finished the drag 
+      operation on a <code class="link">DropTarget</code> and <a 
+      href="muntjac.event.dd.drag_and_drop_event.DragAndDropEvent-class.html"
+      class="link">DragAndDropEvent</a> has passed <code 
+      class="link">AcceptCriterion</code> defined by <a 
+      href="muntjac.event.dd.drop_handler.IDropHandler-class.html#getAcceptCriterion"
+      class="link">getAcceptCriterion</a> method.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.event.dd.drop_handler-pysrc.html#IDropHandler.drop">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.event.dd.drop_handler.IDropHandler-class.html#getAcceptCriterion" class="summary-sig-name">getAcceptCriterion</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the <code class="link">AcceptCriterion</code> used to 
+      evaluate whether the <code class="link">Transferable</code> will be 
+      handed over to <a 
+      href="muntjac.event.dd.drop_handler.IDropHandler-class.html#drop" 
+      class="link">IDropHandler.drop</a> method.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.event.dd.drop_handler-pysrc.html#IDropHandler.getAcceptCriterion">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__init__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="drop"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">drop</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">event</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.event.dd.drop_handler-pysrc.html#IDropHandler.drop">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Drop method is called when the end user has finished the drag 
+  operation on a <code class="link">DropTarget</code> and <a 
+  href="muntjac.event.dd.drag_and_drop_event.DragAndDropEvent-class.html" 
+  class="link">DragAndDropEvent</a> has passed <code 
+  class="link">AcceptCriterion</code> defined by <a 
+  href="muntjac.event.dd.drop_handler.IDropHandler-class.html#getAcceptCriterion"
+  class="link">getAcceptCriterion</a> method. The actual business logic of 
+  drag and drop operation is implemented into this method.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>event</code></strong> - the event related to this drop</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getAcceptCriterion"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getAcceptCriterion</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.event.dd.drop_handler-pysrc.html#IDropHandler.getAcceptCriterion">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the <code class="link">AcceptCriterion</code> used to evaluate
+  whether the <code class="link">Transferable</code> will be handed over to
+  <a href="muntjac.event.dd.drop_handler.IDropHandler-class.html#drop" 
+  class="link">IDropHandler.drop</a> method. If client side can't verify 
+  the <code class="link">AcceptCriterion</code>, the same criteria may be 
+  tested also prior to actual drop - during the drag operation.</p>
+  <p>Based on information from <code class="link">AcceptCriterion</code> 
+  components may display some hints for the end user whether the drop will 
+  be accepted or not.</p>
+  <p>Muntjac contains a variety of criteria built in that can be composed 
+  to more complex criterion. If the build in criteria are not enough, 
+  developer can use a <a 
+  href="muntjac.event.dd.acceptcriteria.server_side_criterion.ServerSideCriterion-class.html"
+  class="link">ServerSideCriterion</a> or build own custom criterion with 
+  client side counterpart.</p>
+  <p>If developer wants to handle everything in the <a 
+  href="muntjac.event.dd.drop_handler.IDropHandler-class.html#drop" 
+  class="link">drop</a> method, <a 
+  href="muntjac.event.dd.acceptcriteria.accept_all.AcceptAll-class.html" 
+  class="link">AcceptAll</a> instance can be returned.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the <code class="link">AcceptCriterion</code></dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:03:57 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

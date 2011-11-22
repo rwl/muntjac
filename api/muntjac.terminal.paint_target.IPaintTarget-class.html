@@ -1,0 +1,894 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.terminal.paint_target.IPaintTarget</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.terminal-module.html">Package&nbsp;terminal</a> ::
+        <a href="muntjac.terminal.paint_target-module.html">Module&nbsp;paint_target</a> ::
+        Class&nbsp;IPaintTarget
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.terminal.paint_target.IPaintTarget-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class IPaintTarget</h1><p class="nomargin-top"><span class="codelink"><a href="muntjac.terminal.paint_target-pysrc.html#IPaintTarget">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+object --+
+         |
+        <strong class="uidshort">IPaintTarget</strong>
+</pre>
+
+<dl><dt>Known Subclasses:</dt>
+<dd>
+      <ul class="subclass-list">
+<li><a href="muntjac.terminal.gwt.server.json_paint_target.JsonPaintTarget-class.html">gwt.server.json_paint_target.JsonPaintTarget</a></li>  </ul>
+</dd></dl>
+
+<hr />
+<p>This interface defines the methods for painting XML to the UIDL 
+  stream.</p>
+
+<hr />
+<div class="fields">      <dl><dt>Authors:</dt>
+        <dd>
+          Vaadin Ltd.,
+          Richard Lincoln
+        </dd>
+      </dl>
+      <p><strong>Version:</strong>
+        1.0.1
+      </p>
+</div><!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.paint_target.IPaintTarget-class.html#addAttribute" class="summary-sig-name">addAttribute</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">*args</span>)</span><br />
+      Adds a boolean attribute to component.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.paint_target-pysrc.html#IPaintTarget.addAttribute">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.paint_target.IPaintTarget-class.html#addCharacterData" class="summary-sig-name">addCharacterData</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">text</span>)</span><br />
+      Adds CDATA node to target UIDL-tree.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.paint_target-pysrc.html#IPaintTarget.addCharacterData">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.paint_target.IPaintTarget-class.html#addSection" class="summary-sig-name">addSection</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">sectionTagName</span>,
+        <span class="summary-sig-arg">sectionData</span>)</span><br />
+      Prints single XMLsection.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.paint_target-pysrc.html#IPaintTarget.addSection">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.paint_target.IPaintTarget-class.html#addText" class="summary-sig-name">addText</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">text</span>)</span><br />
+      Adds text node.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.paint_target-pysrc.html#IPaintTarget.addText">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.paint_target.IPaintTarget-class.html#addUIDL" class="summary-sig-name">addUIDL</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">uidl</span>)</span><br />
+      Adds UIDL directly.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.paint_target-pysrc.html#IPaintTarget.addUIDL">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.paint_target.IPaintTarget-class.html#addUploadStreamVariable" class="summary-sig-name">addUploadStreamVariable</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">owner</span>,
+        <span class="summary-sig-arg">name</span>)</span><br />
+      Adds a upload stream type variable.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.paint_target-pysrc.html#IPaintTarget.addUploadStreamVariable">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.paint_target.IPaintTarget-class.html#addVariable" class="summary-sig-name">addVariable</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">*args</span>)</span><br />
+      Adds details about <code class="link">StreamVariable</code> to the 
+      UIDL stream.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.paint_target-pysrc.html#IPaintTarget.addVariable">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.paint_target.IPaintTarget-class.html#addXMLSection" class="summary-sig-name">addXMLSection</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">sectionTagName</span>,
+        <span class="summary-sig-arg">sectionData</span>,
+        <span class="summary-sig-arg">namespace</span>)</span><br />
+      Prints single XML section.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.paint_target-pysrc.html#IPaintTarget.addXMLSection">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.paint_target.IPaintTarget-class.html#endTag" class="summary-sig-name">endTag</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">tagName</span>)</span><br />
+      Prints element end tag.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.paint_target-pysrc.html#IPaintTarget.endTag">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.paint_target.IPaintTarget-class.html#getTag" class="summary-sig-name">getTag</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">paintable</span>)</span><br />
+      Returns:
+      the &quot;tag&quot; string used in communication to present given <a 
+      href="muntjac.terminal.paintable.IPaintable-class.html" 
+      class="link">IPaintable</a> type.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.paint_target-pysrc.html#IPaintTarget.getTag">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.paint_target.IPaintTarget-class.html#isFullRepaint" class="summary-sig-name">isFullRepaint</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      @return true if a full repaint has been requested.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.paint_target-pysrc.html#IPaintTarget.isFullRepaint">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.paint_target.IPaintTarget-class.html#paintReference" class="summary-sig-name">paintReference</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">paintable</span>,
+        <span class="summary-sig-arg">referenceName</span>)</span><br />
+      Paints a component reference as an attribute to current tag.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.paint_target-pysrc.html#IPaintTarget.paintReference">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.paint_target.IPaintTarget-class.html#startTag" class="summary-sig-name">startTag</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">paintable</span>,
+        <span class="summary-sig-arg">tag</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Prints element start tag of a paintable section.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.paint_target-pysrc.html#IPaintTarget.startTag">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__init__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="addAttribute"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addAttribute</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.paint_target-pysrc.html#IPaintTarget.addAttribute">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds a boolean attribute to component. Attributes must be added before
+  any content is written.</p>
+  <dl class="fields">
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="muntjac.terminal.paint_exception.PaintException-class.html">PaintException</a></strong></code> - if the paint operation failed.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addCharacterData"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addCharacterData</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">text</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.paint_target-pysrc.html#IPaintTarget.addCharacterData">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds CDATA node to target UIDL-tree.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>text</code></strong> - the Character data to add</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="muntjac.terminal.paint_exception.PaintException-class.html">PaintException</a></strong></code> - if the paint operation failed.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addSection"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addSection</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">sectionTagName</span>,
+        <span class="sig-arg">sectionData</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.paint_target-pysrc.html#IPaintTarget.addSection">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Prints single XMLsection.</p>
+  <p>Prints full XML section. The section data is escaped from XML tags and
+  surrounded by XML start and end-tags.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>sectionTagName</code></strong> - the name of the tag.</li>
+        <li><strong class="pname"><code>sectionData</code></strong> - the scetion data.</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="muntjac.terminal.paint_exception.PaintException-class.html">PaintException</a></strong></code> - if the paint operation failed.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addText"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addText</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">text</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.paint_target-pysrc.html#IPaintTarget.addText">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds text node. All the contents of the text are XML-escaped.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>text</code></strong> - the Text to add</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="muntjac.terminal.paint_exception.PaintException-class.html">PaintException</a></strong></code> - if the paint operation failed.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addUIDL"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addUIDL</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">uidl</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.paint_target-pysrc.html#IPaintTarget.addUIDL">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds UIDL directly. The UIDL must be valid in accordance with the 
+  UIDL.dtd</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>uidl</code></strong> - the UIDL to be added.</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="muntjac.terminal.paint_exception.PaintException-class.html">PaintException</a></strong></code> - if the paint operation failed.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addUploadStreamVariable"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addUploadStreamVariable</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">owner</span>,
+        <span class="sig-arg">name</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.paint_target-pysrc.html#IPaintTarget.addUploadStreamVariable">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds a upload stream type variable.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>owner</code></strong> - the Listener for variable changes.</li>
+        <li><strong class="pname"><code>name</code></strong> - the Variable name.</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="muntjac.terminal.paint_exception.PaintException-class.html">PaintException</a></strong></code> - if the paint operation failed.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addVariable"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addVariable</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.paint_target-pysrc.html#IPaintTarget.addVariable">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds details about <code class="link">StreamVariable</code> to the 
+  UIDL stream. Eg. in web terminals Receivers are typically rendered for 
+  the client side as URLs, where the client side implementation can do an 
+  http post request.</p>
+  <p>The urls in UIDL message may use Muntjac specific protocol. Before 
+  actually using the urls on the client side, they should be passed via 
+  <code class="link">ApplicationConnection.translateMuntjacUri</code>.</p>
+  <p>Note that in current terminal implementation StreamVariables are 
+  cleaned from the terminal only when:</p>
+  <ul>
+    <li>
+      a StreamVariable with same name replaces an old one
+    </li>
+    <li>
+      the variable owner is no more attached
+    </li>
+    <li>
+      the developer signals this by calling <code 
+      class="link">StreamingStartEvent.disposeStreamVariable</code>
+    </li>
+  </ul>
+  <p>Most commonly a component developer can just ignore this issue, but 
+  with strict memory requirements and lots of StreamVariables 
+  implementations that reserve a lot of memory this may be a critical 
+  issue.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>args</code></strong> - tuple of the form
+          <ul>
+            <li>
+              (owner, name, value)
+              <ol start="1">
+                <li>
+                  the ReceiverOwner that can track the progress of 
+                  streaming to the given StreamVariable
+                </li>
+                <li>
+                  an identifying name for the StreamVariable
+                </li>
+                <li>
+                  the StreamVariable to paint
+                </li>
+              </ol>
+            </li>
+          </ul></li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="muntjac.terminal.paint_exception.PaintException-class.html">PaintException</a></strong></code> - if the paint operation failed.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addXMLSection"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addXMLSection</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">sectionTagName</span>,
+        <span class="sig-arg">sectionData</span>,
+        <span class="sig-arg">namespace</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.paint_target-pysrc.html#IPaintTarget.addXMLSection">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Prints single XML section.</p>
+  <p>Prints full XML section. The section data must be XML and it is 
+  surrounded by XML start and end-tags.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>sectionTagName</code></strong> - the tag name.</li>
+        <li><strong class="pname"><code>sectionData</code></strong> - the section data to be printed.</li>
+        <li><strong class="pname"><code>namespace</code></strong> - the namespace.</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="muntjac.terminal.paint_exception.PaintException-class.html">PaintException</a></strong></code> - if the paint operation failed.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="endTag"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">endTag</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">tagName</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.paint_target-pysrc.html#IPaintTarget.endTag">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Prints element end tag.</p>
+  <p>If the parent tag is closed before every child tag is closed an 
+  PaintException is raised.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>tagName</code></strong> - the name of the end tag.</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="muntjac.terminal.paint_exception.PaintException-class.html">PaintException</a></strong></code> - if the paint operation failed.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getTag"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getTag</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">paintable</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.paint_target-pysrc.html#IPaintTarget.getTag">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the &quot;tag&quot; string used in communication to present given
+          <a href="muntjac.terminal.paintable.IPaintable-class.html" 
+          class="link">IPaintable</a> type. Terminal may define how to 
+          present paintable.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isFullRepaint"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isFullRepaint</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.paint_target-pysrc.html#IPaintTarget.isFullRepaint">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>@return true if a full repaint has been requested. E.g. refresh in a 
+  browser window or such.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="paintReference"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">paintReference</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">paintable</span>,
+        <span class="sig-arg">referenceName</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.paint_target-pysrc.html#IPaintTarget.paintReference">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Paints a component reference as an attribute to current tag. This 
+  method is meant to enable component interactions on client side. With 
+  reference the client side component can communicate directly to other 
+  component.</p>
+  <p>Note! This was experimental api and got replaced by <a 
+  href="muntjac.terminal.gwt.server.json_paint_target.JsonPaintTarget-class.html#addAttribute"
+  class="link">addAttribute</a>.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>paintable</code></strong> - the Paintable to reference</li>
+        <li><strong class="pname"><code>referenceName</code></strong> - @raise PaintException</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>Deprecated:</strong>
+        use <a 
+    href="muntjac.terminal.paint_target.IPaintTarget-class.html#addAttribute"
+    class="link">addAttribute</a> or <a 
+    href="muntjac.terminal.paint_target.IPaintTarget-class.html#addVariable"
+    class="link">addVariable</a> instead
+      </p>
+</div></td></tr></table>
+</div>
+<a name="startTag"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">startTag</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">paintable</span>,
+        <span class="sig-arg">tag</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.paint_target-pysrc.html#IPaintTarget.startTag">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Prints element start tag of a paintable section. Starts a paintable 
+  section using the given tag. The IPaintTarget may implement a caching 
+  scheme, that checks the paintable has actually changed or can a cached 
+  version be used instead. This method should call the startTag method.</p>
+  <p>If the Paintable is found in cache and this function returns true it 
+  may omit the content and close the tag, in which case cached content 
+  should be used.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>paintable</code></strong> - the paintable to start.</li>
+        <li><strong class="pname"><code>tag</code></strong> - the name of the start tag.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><code>True</code> if paintable found in cache, <code>False</code>
+          otherwise.</dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="muntjac.terminal.paint_exception.PaintException-class.html">PaintException</a></strong></code> - if the paint operation failed.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:03:58 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

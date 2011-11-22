@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.ui.layout.ILayout</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.ui-module.html">Package&nbsp;ui</a> ::
+        <a href="muntjac.ui.layout-module.html">Module&nbsp;layout</a> ::
+        Class&nbsp;ILayout
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.ui.layout.ILayout-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class ILayout</h1><p class="nomargin-top"><span class="codelink"><a href="muntjac.ui.layout-pysrc.html#ILayout">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+                        object --+                
+                                 |                
+               <a href="muntjac.util.IEventListener-class.html">util.IEventListener</a> --+            
+                                     |            
+         <a href="muntjac.terminal.paintable.IPaintable-class.html">terminal.paintable.IPaintable</a> --+        
+                                         |        
+                            object --+   |        
+                                     |   |        
+<a href="muntjac.terminal.variable_owner.IVariableOwner-class.html">terminal.variable_owner.IVariableOwner</a> --+        
+                                         |        
+                            object --+   |        
+                                     |   |        
+           <a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a> --+        
+                                         |        
+                      <a href="muntjac.ui.component.IComponent-class.html">component.IComponent</a> --+    
+                                             |    
+       <a href="muntjac.ui.component_container.IComponentContainer-class.html">component_container.IComponentContainer</a> --+
+                                                 |
+                                                <strong class="uidshort">ILayout</strong>
+</pre>
+
+<dl><dt>Known Subclasses:</dt>
+<dd>
+      <ul class="subclass-list">
+<li><a href="muntjac.ui.abstract_layout.AbstractLayout-class.html">abstract_layout.AbstractLayout</a></li>  </ul>
+</dd></dl>
+
+<hr />
+<p>Extension to the <a 
+  href="muntjac.ui.component_container.IComponentContainer-class.html" 
+  class="link">IComponentContainer</a> interface which adds the layouting 
+  control to the elements in the container. This is required by the various
+  layout components to enable them to place other components in specific 
+  locations in the UI.</p>
+
+<hr />
+<div class="fields">      <dl><dt>Authors:</dt>
+        <dd>
+          Vaadin Ltd.,
+          Richard Lincoln
+        </dd>
+      </dl>
+      <p><strong>Version:</strong>
+        1.0.1
+      </p>
+</div><!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.layout.ILayout-class.html#setMargin" class="summary-sig-name">setMargin</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">*args</span>)</span><br />
+      Enable layout margins.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.layout-pysrc.html#ILayout.setMargin">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.component_container.IComponentContainer-class.html">component_container.IComponentContainer</a></code></b>:
+      <code><a href="muntjac.ui.component_container.IComponentContainer-class.html#addCallback">addCallback</a></code>,
+      <code><a href="muntjac.ui.component_container.IComponentContainer-class.html#addComponent">addComponent</a></code>,
+      <code><a href="muntjac.ui.component_container.IComponentContainer-class.html#addListener">addListener</a></code>,
+      <code><a href="muntjac.ui.component_container.IComponentContainer-class.html#getComponentIterator">getComponentIterator</a></code>,
+      <code><a href="muntjac.ui.component_container.IComponentContainer-class.html#moveComponentsFrom">moveComponentsFrom</a></code>,
+      <code><a href="muntjac.ui.component_container.IComponentContainer-class.html#removeAllComponents">removeAllComponents</a></code>,
+      <code><a href="muntjac.ui.component_container.IComponentContainer-class.html#removeCallback">removeCallback</a></code>,
+      <code><a href="muntjac.ui.component_container.IComponentContainer-class.html#removeComponent">removeComponent</a></code>,
+      <code><a href="muntjac.ui.component_container.IComponentContainer-class.html#removeListener">removeListener</a></code>,
+      <code><a href="muntjac.ui.component_container.IComponentContainer-class.html#replaceComponent">replaceComponent</a></code>,
+      <code><a href="muntjac.ui.component_container.IComponentContainer-class.html#requestRepaintAll">requestRepaintAll</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.component.IComponent-class.html">component.IComponent</a></code></b>:
+      <code><a href="muntjac.ui.component.IComponent-class.html#addStyleName">addStyleName</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#attach">attach</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#childRequestedRepaint">childRequestedRepaint</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#detach">detach</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#getApplication">getApplication</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#getCaption">getCaption</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#getIcon">getIcon</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#getLocale">getLocale</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#getParent">getParent</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#getStyleName">getStyleName</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#getWindow">getWindow</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#isEnabled">isEnabled</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#isReadOnly">isReadOnly</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#isVisible">isVisible</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#removeStyleName">removeStyleName</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#setCaption">setCaption</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#setEnabled">setEnabled</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#setIcon">setIcon</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#setParent">setParent</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#setReadOnly">setReadOnly</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#setStyleName">setStyleName</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#setVisible">setVisible</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.terminal.paintable.IPaintable-class.html">terminal.paintable.IPaintable</a></code></b>:
+      <code><a href="muntjac.terminal.paintable.IPaintable-class.html#getDebugId">getDebugId</a></code>,
+      <code><a href="muntjac.terminal.paintable.IPaintable-class.html#paint">paint</a></code>,
+      <code><a href="muntjac.terminal.paintable.IPaintable-class.html#requestRepaint">requestRepaint</a></code>,
+      <code><a href="muntjac.terminal.paintable.IPaintable-class.html#requestRepaintRequests">requestRepaintRequests</a></code>,
+      <code><a href="muntjac.terminal.paintable.IPaintable-class.html#setDebugId">setDebugId</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.terminal.variable_owner.IVariableOwner-class.html">terminal.variable_owner.IVariableOwner</a></code></b>:
+      <code><a href="muntjac.terminal.variable_owner.IVariableOwner-class.html#changeVariables">changeVariables</a></code>,
+      <code><a href="muntjac.terminal.variable_owner.IVariableOwner-class.html#isImmediate">isImmediate</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a></code></b>:
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#getHeight">getHeight</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#getHeightUnits">getHeightUnits</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#getWidth">getWidth</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#getWidthUnits">getWidthUnits</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#setHeight">setHeight</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#setHeightUnits">setHeightUnits</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#setSizeFull">setSizeFull</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#setSizeUndefined">setSizeUndefined</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#setWidth">setWidth</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#setWidthUnits">setWidthUnits</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__init__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a></code></b>:
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#SIZE_UNDEFINED">SIZE_UNDEFINED</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_CM">UNITS_CM</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_EM">UNITS_EM</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_EX">UNITS_EX</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_INCH">UNITS_INCH</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_MM">UNITS_MM</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_PERCENTAGE">UNITS_PERCENTAGE</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_PICAS">UNITS_PICAS</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_PIXELS">UNITS_PIXELS</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_POINTS">UNITS_POINTS</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNIT_SYMBOLS">UNIT_SYMBOLS</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="setMargin"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setMargin</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.layout-pysrc.html#ILayout.setMargin">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Enable layout margins. Affects all four sides of the layout. This will
+  tell the client-side implementation to leave extra space around the 
+  layout. The client-side implementation decides the actual amount, and it 
+  can vary between themes.</p>
+  <p>Alternatively, enable specific layout margins. This will tell the 
+  client-side implementation to leave extra space around the layout in 
+  specified edges, clockwise from top (top, right, bottom, left). The 
+  client-side implementation decides the actual amount, and it can vary 
+  between themes.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>args</code></strong> - tuple of the form
+          <ul>
+            <li>
+              (enabled)
+            </li>
+            <li>
+              (top, right, bottom, left)
+            </li>
+          </ul></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:04:01 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

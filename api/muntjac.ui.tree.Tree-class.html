@@ -1,0 +1,2991 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.ui.tree.Tree</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.ui-module.html">Package&nbsp;ui</a> ::
+        <a href="muntjac.ui.tree-module.html">Module&nbsp;tree</a> ::
+        Class&nbsp;Tree
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.ui.tree.Tree-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class Tree</h1><p class="nomargin-top"><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+                            object --+                        
+                                     |                        
+                   <a href="muntjac.util.IEventListener-class.html">util.IEventListener</a> --+                    
+                                         |                    
+             <a href="muntjac.terminal.paintable.IPaintable-class.html">terminal.paintable.IPaintable</a> --+                
+                                             |                
+                                object --+   |                
+                                         |   |                
+    <a href="muntjac.terminal.variable_owner.IVariableOwner-class.html">terminal.variable_owner.IVariableOwner</a> --+                
+                                             |                
+                                object --+   |                
+                                         |   |                
+               <a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a> --+                
+                                             |                
+                          <a href="muntjac.ui.component.IComponent-class.html">component.IComponent</a> --+            
+                                                 |            
+                                    object --+   |            
+                                             |   |            
+  <a href="muntjac.event.method_event_source.IMethodEventSource-class.html">event.method_event_source.IMethodEventSource</a> --+            
+                                                 |            
+              <a href="muntjac.ui.abstract_component.AbstractComponent-class.html">abstract_component.AbstractComponent</a> --+        
+                                                     |        
+                                object --+           |        
+                                         |           |        
+                   <a href="muntjac.data.buffered.IBuffered-class.html">data.buffered.IBuffered</a> --+       |        
+                                             |       |        
+                                object --+   |       |        
+                                         |   |       |        
+             <a href="muntjac.data.validatable.IValidatable-class.html">data.validatable.IValidatable</a> --+       |        
+                                             |       |        
+            <a href="muntjac.data.buffered.IBufferedValidatable-class.html">data.buffered.IBufferedValidatable</a> --+   |        
+                                                 |   |        
+                                    object --+   |   |        
+                                             |   |   |        
+            <a href="muntjac.data.property.IValueChangeNotifier-class.html">data.property.IValueChangeNotifier</a> --+   |        
+                                                 |   |        
+                                    object --+   |   |        
+                                             |   |   |        
+            <a href="muntjac.data.property.IValueChangeListener-class.html">data.property.IValueChangeListener</a> --+   |        
+                                                 |   |        
+                                object --+       |   |        
+                                         |       |   |        
+                     <a href="muntjac.data.property.IViewer-class.html">data.property.IViewer</a> --+   |   |        
+                                             |   |   |        
+                         <a href="muntjac.data.property.IEditor-class.html">data.property.IEditor</a> --+   |        
+                                                 |   |        
+                        object --+               |   |        
+                                 |               |   |        
+               <a href="muntjac.util.IEventListener-class.html">util.IEventListener</a> --+           |   |        
+                                     |           |   |        
+         <a href="muntjac.terminal.paintable.IPaintable-class.html">terminal.paintable.IPaintable</a> --+       |   |        
+                                         |       |   |        
+                            object --+   |       |   |        
+                                     |   |       |   |        
+<a href="muntjac.terminal.variable_owner.IVariableOwner-class.html">terminal.variable_owner.IVariableOwner</a> --+       |   |        
+                                         |       |   |        
+                            object --+   |       |   |        
+                                     |   |       |   |        
+           <a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a> --+       |   |        
+                                         |       |   |        
+                      <a href="muntjac.ui.component.IComponent-class.html">component.IComponent</a> --+   |   |        
+                                             |   |   |        
+                          <a href="muntjac.ui.component.IFocusable-class.html">component.IFocusable</a> --+   |        
+                                                 |   |        
+                                      <a href="muntjac.ui.field.IField-class.html">field.IField</a> --+        
+                                                     |        
+                                        object --+   |        
+                                                 |   |        
+                    <a href="muntjac.event.action.IShortcutNotifier-class.html">event.action.IShortcutNotifier</a> --+        
+                                                     |        
+                                        object --+   |        
+                                                 |   |        
+       <a href="muntjac.data.property.IReadOnlyStatusChangeNotifier-class.html">data.property.IReadOnlyStatusChangeNotifier</a> --+        
+                                                     |        
+                                        object --+   |        
+                                                 |   |        
+       <a href="muntjac.data.property.IReadOnlyStatusChangeListener-class.html">data.property.IReadOnlyStatusChangeListener</a> --+        
+                                                     |        
+                          <a href="muntjac.ui.abstract_field.AbstractField-class.html">abstract_field.AbstractField</a> --+    
+                                                         |    
+                                            object --+   |    
+                                                     |   |    
+                             <a href="muntjac.data.container.IContainer-class.html">data.container.IContainer</a> --+    
+                                                         |    
+                                            object --+   |    
+                                                     |   |    
+                                <a href="muntjac.data.container.IViewer-class.html">data.container.IViewer</a> --+    
+                                                         |    
+                                            object --+   |    
+                                                     |   |    
+             <a href="muntjac.data.container.IPropertySetChangeListener-class.html">data.container.IPropertySetChangeListener</a> --+    
+                                                         |    
+                                            object --+   |    
+                                                     |   |    
+             <a href="muntjac.data.container.IPropertySetChangeNotifier-class.html">data.container.IPropertySetChangeNotifier</a> --+    
+                                                         |    
+                                            object --+   |    
+                                                     |   |    
+                 <a href="muntjac.data.container.IItemSetChangeNotifier-class.html">data.container.IItemSetChangeNotifier</a> --+    
+                                                         |    
+                                            object --+   |    
+                                                     |   |    
+                 <a href="muntjac.data.container.IItemSetChangeListener-class.html">data.container.IItemSetChangeListener</a> --+    
+                                                         |    
+                            <a href="muntjac.ui.abstract_select.AbstractSelect-class.html">abstract_select.AbstractSelect</a> --+
+                                                             |
+                                            object --+       |
+                                                     |       |
+                             <a href="muntjac.data.container.IContainer-class.html">data.container.IContainer</a> --+   |
+                                                         |   |
+                              <a href="muntjac.data.container.IHierarchical-class.html">data.container.IHierarchical</a> --+
+                                                             |
+                                                object --+   |
+                                                         |   |
+                                   <a href="muntjac.event.action.IContainer-class.html">event.action.IContainer</a> --+
+                                                             |
+                                            object --+       |
+                                                     |       |
+             <a href="muntjac.event.item_click_event.IItemClickNotifier-class.html">event.item_click_event.IItemClickNotifier</a> --+   |
+                                                         |   |
+                   <a href="muntjac.event.item_click_event.IItemClickSource-class.html">event.item_click_event.IItemClickSource</a> --+
+                                                             |
+                                                object --+   |
+                                                         |   |
+                 <a href="muntjac.event.item_click_event.IItemClickNotifier-class.html">event.item_click_event.IItemClickNotifier</a> --+
+                                                             |
+                                    object --+               |
+                                             |               |
+                           <a href="muntjac.util.IEventListener-class.html">util.IEventListener</a> --+           |
+                                                 |           |
+                     <a href="muntjac.terminal.paintable.IPaintable-class.html">terminal.paintable.IPaintable</a> --+       |
+                                                     |       |
+                                        object --+   |       |
+                                                 |   |       |
+            <a href="muntjac.terminal.variable_owner.IVariableOwner-class.html">terminal.variable_owner.IVariableOwner</a> --+       |
+                                                     |       |
+                                        object --+   |       |
+                                                 |   |       |
+                       <a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a> --+       |
+                                                     |       |
+                                  <a href="muntjac.ui.component.IComponent-class.html">component.IComponent</a> --+   |
+                                                         |   |
+                          <a href="muntjac.event.dd.drag_source.IDragSource-class.html">event.dd.drag_source.IDragSource</a> --+
+                                                             |
+                                    object --+               |
+                                             |               |
+                           <a href="muntjac.util.IEventListener-class.html">util.IEventListener</a> --+           |
+                                                 |           |
+                     <a href="muntjac.terminal.paintable.IPaintable-class.html">terminal.paintable.IPaintable</a> --+       |
+                                                     |       |
+                                        object --+   |       |
+                                                 |   |       |
+            <a href="muntjac.terminal.variable_owner.IVariableOwner-class.html">terminal.variable_owner.IVariableOwner</a> --+       |
+                                                     |       |
+                                        object --+   |       |
+                                                 |   |       |
+                       <a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a> --+       |
+                                                     |       |
+                                  <a href="muntjac.ui.component.IComponent-class.html">component.IComponent</a> --+   |
+                                                         |   |
+                          <a href="muntjac.event.dd.drop_target.IDropTarget-class.html">event.dd.drop_target.IDropTarget</a> --+
+                                                             |
+                                                            <strong class="uidshort">Tree</strong>
+</pre>
+
+<hr />
+<p>Tree component. A Tree can be used to select an item (or multiple 
+  items) from a hierarchical set of items.</p>
+
+<hr />
+<div class="fields">      <dl><dt>Authors:</dt>
+        <dd>
+          Vaadin Ltd.,
+          Richard Lincoln
+        </dd>
+      </dl>
+      <p><strong>Version:</strong>
+        1.0.1
+      </p>
+</div><!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">caption</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">dataSource</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Creates a new tree with caption and connect it to a IContainer.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#isExpanded" class="summary-sig-name">isExpanded</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Check is an item is expanded</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.isExpanded">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#expandItem" class="summary-sig-name">expandItem</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>,
+        <span class="summary-sig-arg">sendChildTree</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Expands an item.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.expandItem">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#requestRepaint" class="summary-sig-name">requestRepaint</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Requests that the paintable should be repainted as soon as possible.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.requestRepaint">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="requestPartialRepaint"></a><span class="summary-sig-name">requestPartialRepaint</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.requestPartialRepaint">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#expandItemsRecursively" class="summary-sig-name">expandItemsRecursively</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">startItemId</span>)</span><br />
+      Expands the items recursively</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.expandItemsRecursively">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#collapseItem" class="summary-sig-name">collapseItem</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Collapses an item.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.collapseItem">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#collapseItemsRecursively" class="summary-sig-name">collapseItemsRecursively</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">startItemId</span>)</span><br />
+      Collapses the items recursively.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.collapseItemsRecursively">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#isSelectable" class="summary-sig-name">isSelectable</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the current selectable state.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.isSelectable">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#setSelectable" class="summary-sig-name">setSelectable</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">selectable</span>)</span><br />
+      Sets the selectable state.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.setSelectable">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#setMultiselectMode" class="summary-sig-name">setMultiselectMode</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">mode</span>)</span><br />
+      Sets the behavior of the multiselect mode</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.setMultiselectMode">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#getMultiselectMode" class="summary-sig-name">getMultiselectMode</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the mode the multiselect is in.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.getMultiselectMode">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#changeVariables" class="summary-sig-name">changeVariables</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">source</span>,
+        <span class="summary-sig-arg">variables</span>)</span><br />
+      Invoked when the value of a variable has changed.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.changeVariables">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#handleSelectedItems" class="summary-sig-name">handleSelectedItems</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">variables</span>)</span><br />
+      Handles the selection</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.handleSelectedItems">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#paintContent" class="summary-sig-name">paintContent</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">target</span>)</span><br />
+      Paints any needed component-specific things to the given UIDL stream.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.paintContent">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#areChildrenAllowed" class="summary-sig-name">areChildrenAllowed</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Tests if the Item with given ID can have any children.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.areChildrenAllowed">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#getChildren" class="summary-sig-name">getChildren</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Gets the IDs of all Items that are children of the specified Item.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.getChildren">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#getParent" class="summary-sig-name">getParent</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Gets the ID of the parent Item of the specified Item.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.getParent">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#hasChildren" class="summary-sig-name">hasChildren</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Tests if the Item specified with <code>itemId</code> has child Items.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.hasChildren">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#isRoot" class="summary-sig-name">isRoot</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Tests if the Item specified with <code>itemId</code> is a root Item.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.isRoot">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#rootItemIds" class="summary-sig-name">rootItemIds</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the IDs of all Items in the container that don't have a parent.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.rootItemIds">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#setChildrenAllowed" class="summary-sig-name">setChildrenAllowed</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>,
+        <span class="summary-sig-arg">areChildrenAllowed</span>)</span><br />
+      Sets the given Item's capability to have children.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.setChildrenAllowed">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#setParent" class="summary-sig-name">setParent</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>,
+        <span class="summary-sig-arg">newParentId</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Sets the parent component of the component.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.setParent">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#setContainerDataSource" class="summary-sig-name">setContainerDataSource</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">newDataSource</span>)</span><br />
+      Sets the IContainer that serves as the data source of the viewer.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.setContainerDataSource">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#addListener" class="summary-sig-name">addListener</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">listener</span>,
+        <span class="summary-sig-arg">iface</span>)</span><br />
+      Adds the expand/collapse listener.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.addListener">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#addCallback" class="summary-sig-name">addCallback</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">callback</span>,
+        <span class="summary-sig-arg">eventType</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">*args</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.addCallback">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#removeListener" class="summary-sig-name">removeListener</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">listener</span>,
+        <span class="summary-sig-arg">iface</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Removes the expand/collapse listener.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.removeListener">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#removeCallback" class="summary-sig-name">removeCallback</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">callback</span>,
+        <span class="summary-sig-arg">eventType</span>=<span class="summary-sig-default">None</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.removeCallback">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#fireExpandEvent" class="summary-sig-name">fireExpandEvent</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Emits the expand event.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.fireExpandEvent">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#fireCollapseEvent" class="summary-sig-name">fireCollapseEvent</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Emits collapse event.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.fireCollapseEvent">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#addActionHandler" class="summary-sig-name">addActionHandler</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">actionHandler</span>)</span><br />
+      Adds an action handler.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.addActionHandler">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#removeActionHandler" class="summary-sig-name">removeActionHandler</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">actionHandler</span>)</span><br />
+      Removes an action handler.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.removeActionHandler">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="removeAllActionHandlers"></a><span class="summary-sig-name">removeAllActionHandlers</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Removes all action handlers</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.removeAllActionHandlers">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#getVisibleItemIds" class="summary-sig-name">getVisibleItemIds</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the visible item ids.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.getVisibleItemIds">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#setNullSelectionItemId" class="summary-sig-name">setNullSelectionItemId</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">nullSelectionItemId</span>)</span><br />
+      Tree does not support <code>setNullSelectionItemId</code>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.setNullSelectionItemId">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#setNewItemsAllowed" class="summary-sig-name">setNewItemsAllowed</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">allowNewOptions</span>)</span><br />
+      Adding new items is not supported.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.setNewItemsAllowed">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#setLazyLoading" class="summary-sig-name">setLazyLoading</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">useLazyLoading</span>)</span><br />
+      Tree does not support lazy options loading mode.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.setLazyLoading">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#setItemStyleGenerator" class="summary-sig-name">setItemStyleGenerator</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemStyleGenerator</span>)</span><br />
+      Sets the <a href="muntjac.ui.tree.IItemStyleGenerator-class.html" 
+      class="link">IItemStyleGenerator</a> to be used with this tree.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.setItemStyleGenerator">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#getItemStyleGenerator" class="summary-sig-name">getItemStyleGenerator</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      the current <a href="muntjac.ui.tree.IItemStyleGenerator-class.html" 
+      class="link">IItemStyleGenerator</a> for this tree.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.getItemStyleGenerator">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#removeItem" class="summary-sig-name">removeItem</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Removes the Item identified by <code>ItemId</code> from the 
+      IContainer.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.removeItem">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#getDropHandler" class="summary-sig-name">getDropHandler</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      the drop handler that will receive the dragged data or null if drops 
+      are not currently accepted</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.getDropHandler">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="setDropHandler"></a><span class="summary-sig-name">setDropHandler</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">dropHandler</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.setDropHandler">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#translateDropTargetDetails" class="summary-sig-name">translateDropTargetDetails</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">clientVariables</span>)</span><br />
+      Called before the <a 
+      href="muntjac.event.dd.drag_and_drop_event.DragAndDropEvent-class.html"
+      class="link">DragAndDropEvent</a> is passed to <code 
+      class="link">DropHandler</code>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.translateDropTargetDetails">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="key"></a><span class="summary-sig-name">key</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Helper API for <a href="muntjac.ui.tree.TreeDropCriterion-class.html"
+      class="link">TreeDropCriterion</a></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.key">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="setDragMode"></a><span class="summary-sig-name">setDragMode</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">dragMode</span>)</span><br />
+      Sets the drag mode that controls how Tree behaves as a <a 
+      href="muntjac.event.dd.drag_source.IDragSource-class.html" 
+      class="link">IDragSource</a>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.setDragMode">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#getDragMode" class="summary-sig-name">getDragMode</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      the drag mode that controls how Tree behaves as a <a 
+      href="muntjac.event.dd.drag_source.IDragSource-class.html" 
+      class="link">IDragSource</a>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.getDragMode">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#getTransferable" class="summary-sig-name">getTransferable</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">payload</span>)</span><br />
+      IDragSource may convert data added by client side component to 
+      meaningful values for server side developer or add other data based 
+      on it.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.getTransferable">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tree.Tree-class.html#setItemDescriptionGenerator" class="summary-sig-name">setItemDescriptionGenerator</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">generator</span>)</span><br />
+      Set the item description generator which generates tooltips for the 
+      tree items</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.setItemDescriptionGenerator">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getItemDescriptionGenerator"></a><span class="summary-sig-name">getItemDescriptionGenerator</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Get the item description generator which generates tooltips for tree 
+      items.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.getItemDescriptionGenerator">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html">abstract_select.AbstractSelect</a></code></b>:
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#__len__">__len__</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#addContainerProperty">addContainerProperty</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#addItem">addItem</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#attach">attach</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#containerItemSetChange">containerItemSetChange</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#containerPropertySetChange">containerPropertySetChange</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#containsId">containsId</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#detach">detach</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#fireItemSetChange">fireItemSetChange</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#firePropertySetChange">firePropertySetChange</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#getCaptionChangeListener">getCaptionChangeListener</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#getContainerDataSource">getContainerDataSource</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#getContainerProperty">getContainerProperty</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#getContainerPropertyIds">getContainerPropertyIds</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#getItem">getItem</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#getItemCaption">getItemCaption</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#getItemCaptionMode">getItemCaptionMode</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#getItemCaptionPropertyId">getItemCaptionPropertyId</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#getItemIcon">getItemIcon</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#getItemIconPropertyId">getItemIconPropertyId</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#getItemIds">getItemIds</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#getListeners">getListeners</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#getNewItemHandler">getNewItemHandler</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#getNullSelectionItemId">getNullSelectionItemId</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#getType">getType</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#getValue">getValue</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#isEmpty">isEmpty</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#isMultiSelect">isMultiSelect</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#isNewItemsAllowed">isNewItemsAllowed</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#isNullSelectionAllowed">isNullSelectionAllowed</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#isSelected">isSelected</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#paintItem">paintItem</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#removeAllItems">removeAllItems</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#removeContainerProperty">removeContainerProperty</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#select">select</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#setItemCaption">setItemCaption</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#setItemCaptionMode">setItemCaptionMode</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#setItemCaptionPropertyId">setItemCaptionPropertyId</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#setItemIcon">setItemIcon</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#setItemIconPropertyId">setItemIconPropertyId</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#setMultiSelect">setMultiSelect</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#setNewItemHandler">setNewItemHandler</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#setNullSelectionAllowed">setNullSelectionAllowed</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#setValue">setValue</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#size">size</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#unselect">unselect</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_field.AbstractField-class.html">abstract_field.AbstractField</a></code></b>:
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#__str__">__str__</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#addShortcutListener">addShortcutListener</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#addValidator">addValidator</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#commit">commit</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#discard">discard</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#fireReadOnlyStatusChange">fireReadOnlyStatusChange</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#fireValueChange">fireValueChange</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#focus">focus</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#getActionManager">getActionManager</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#getErrorMessage">getErrorMessage</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#getPropertyDataSource">getPropertyDataSource</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#getRequiredError">getRequiredError</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#getTabIndex">getTabIndex</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#getValidators">getValidators</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#isInvalidAllowed">isInvalidAllowed</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#isInvalidCommitted">isInvalidCommitted</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#isModified">isModified</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#isReadOnly">isReadOnly</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#isReadThrough">isReadThrough</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#isRequired">isRequired</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#isValid">isValid</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#isValidationVisible">isValidationVisible</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#isWriteThrough">isWriteThrough</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#readOnlyStatusChange">readOnlyStatusChange</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#readValueFromProperty">readValueFromProperty</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#removeShortcutListener">removeShortcutListener</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#removeValidator">removeValidator</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setCurrentBufferedSourceException">setCurrentBufferedSourceException</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setInternalValue">setInternalValue</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setInvalidAllowed">setInvalidAllowed</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setInvalidCommitted">setInvalidCommitted</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setPropertyDataSource">setPropertyDataSource</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setReadOnly">setReadOnly</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setReadThrough">setReadThrough</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setRequired">setRequired</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setRequiredError">setRequiredError</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setTabIndex">setTabIndex</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setValidationVisible">setValidationVisible</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setWriteThrough">setWriteThrough</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#shouldHideErrors">shouldHideErrors</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#validate">validate</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#valueChange">valueChange</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html">abstract_component.AbstractComponent</a></code></b>:
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#__getstate__">__getstate__</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#__setstate__">__setstate__</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#addStyleName">addStyleName</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#childRequestedRepaint">childRequestedRepaint</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#fireComponentErrorEvent">fireComponentErrorEvent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#fireComponentEvent">fireComponentEvent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#fireEvent">fireEvent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#fireRequestRepaintEvent">fireRequestRepaintEvent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getApplication">getApplication</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getCSSHeight">getCSSHeight</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getCSSWidth">getCSSWidth</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getCaption">getCaption</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getComponentError">getComponentError</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getData">getData</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getDebugId">getDebugId</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getDescription">getDescription</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getErrorHandler">getErrorHandler</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getHeight">getHeight</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getHeightUnits">getHeightUnits</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getIcon">getIcon</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getLocale">getLocale</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getStyle">getStyle</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getStyleName">getStyleName</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getWidth">getWidth</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getWidthUnits">getWidthUnits</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getWindow">getWindow</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#handleError">handleError</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#hasListeners">hasListeners</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#isEnabled">isEnabled</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#isImmediate">isImmediate</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#isVisible">isVisible</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#paint">paint</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#parseStringSize">parseStringSize</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#registerCallback">registerCallback</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#registerListener">registerListener</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#removeStyleName">removeStyleName</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#requestRepaintRequests">requestRepaintRequests</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setCaption">setCaption</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setComponentError">setComponentError</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setData">setData</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setDebugId">setDebugId</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setDescription">setDescription</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setEnabled">setEnabled</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setErrorHandler">setErrorHandler</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setHeight">setHeight</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setHeightUnits">setHeightUnits</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setIcon">setIcon</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setImmediate">setImmediate</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setLocale">setLocale</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setSizeFull">setSizeFull</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setSizeUndefined">setSizeUndefined</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setStyle">setStyle</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setStyleName">setStyleName</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setVisible">setVisible</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setWidth">setWidth</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setWidthUnits">setWidthUnits</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#withdrawCallback">withdrawCallback</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#withdrawListener">withdrawListener</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS METHODS ==================== -->
+<a name="section-ClassMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_field.AbstractField-class.html">abstract_field.AbstractField</a></code></b>:
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#constructField">constructField</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="CLIENT_WIDGET"></a><span class="summary-name">CLIENT_WIDGET</span> = <code title="None">None</code><br />
+      hash(x)
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html">abstract_select.AbstractSelect</a></code></b>:
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#ITEM_CAPTION_MODE_EXPLICIT">ITEM_CAPTION_MODE_EXPLICIT</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID">ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#ITEM_CAPTION_MODE_ICON_ONLY">ITEM_CAPTION_MODE_ICON_ONLY</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#ITEM_CAPTION_MODE_ID">ITEM_CAPTION_MODE_ID</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#ITEM_CAPTION_MODE_INDEX">ITEM_CAPTION_MODE_INDEX</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#ITEM_CAPTION_MODE_ITEM">ITEM_CAPTION_MODE_ITEM</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#ITEM_CAPTION_MODE_PROPERTY">ITEM_CAPTION_MODE_PROPERTY</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html">abstract_component.AbstractComponent</a></code></b>:
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#SIZE_PATTERN">SIZE_PATTERN</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a></code></b>:
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#SIZE_UNDEFINED">SIZE_UNDEFINED</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_CM">UNITS_CM</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_EM">UNITS_EM</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_EX">UNITS_EX</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_INCH">UNITS_INCH</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_MM">UNITS_MM</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_PERCENTAGE">UNITS_PERCENTAGE</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_PICAS">UNITS_PICAS</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_PIXELS">UNITS_PIXELS</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_POINTS">UNITS_POINTS</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNIT_SYMBOLS">UNIT_SYMBOLS</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== INSTANCE VARIABLES ==================== -->
+<a name="section-InstanceVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_expanded"></a><span class="summary-name">_expanded</span><br />
+      Set of expanded nodes.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_actionHandlers"></a><span class="summary-name">_actionHandlers</span><br />
+      List of action handlers.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_actionMapper"></a><span class="summary-name">_actionMapper</span><br />
+      Action mapper.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_selectable"></a><span class="summary-name">_selectable</span><br />
+      Is the tree selectable on the client side.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_partialUpdate"></a><span class="summary-name">_partialUpdate</span><br />
+      Flag to indicate sub-tree loading
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_expandedItemId"></a><span class="summary-name">_expandedItemId</span><br />
+      Holds a itemId which was recently expanded
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="muntjac.ui.tree.Tree-class.html#_initialPaint" class="summary-name" onclick="show_private();">_initialPaint</a><br />
+      a flag which indicates initial paint.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_itemDescriptionGenerator"></a><span class="summary-name">_itemDescriptionGenerator</span><br />
+      Item tooltip generator
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html">abstract_select.AbstractSelect</a></code></b>:
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#itemIdMapper">itemIdMapper</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#items">items</a></code>
+      </p>
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html">abstract_select.AbstractSelect</a></code></b> (private):
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#_allowNewOptions" onclick="show_private();">_allowNewOptions</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#_captionChangeListener" onclick="show_private();">_captionChangeListener</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#_itemCaptionMode" onclick="show_private();">_itemCaptionMode</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#_itemCaptionPropertyId" onclick="show_private();">_itemCaptionPropertyId</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#_itemCaptions" onclick="show_private();">_itemCaptions</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#_itemIconPropertyId" onclick="show_private();">_itemIconPropertyId</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#_itemIcons" onclick="show_private();">_itemIcons</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#_itemSetEventListeners" onclick="show_private();">_itemSetEventListeners</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#_multiSelect" onclick="show_private();">_multiSelect</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#_nullSelectionItemId" onclick="show_private();">_nullSelectionItemId</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#_propertySetEventListeners" onclick="show_private();">_propertySetEventListeners</a></code>
+      </p></div>
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_field.AbstractField-class.html">abstract_field.AbstractField</a></code></b> (private):
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_actionManager" onclick="show_private();">_actionManager</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_committingValueToDataSource" onclick="show_private();">_committingValueToDataSource</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_currentBufferedSourceException" onclick="show_private();">_currentBufferedSourceException</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_dataSource" onclick="show_private();">_dataSource</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_invalidAllowed" onclick="show_private();">_invalidAllowed</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_invalidCommitted" onclick="show_private();">_invalidCommitted</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_modified" onclick="show_private();">_modified</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_readThroughMode" onclick="show_private();">_readThroughMode</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_required" onclick="show_private();">_required</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_requiredError" onclick="show_private();">_requiredError</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_tabIndex" onclick="show_private();">_tabIndex</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_validationVisible" onclick="show_private();">_validationVisible</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_validators" onclick="show_private();">_validators</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_value" onclick="show_private();">_value</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_writeThroughMode" onclick="show_private();">_writeThroughMode</a></code>
+      </p></div>
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html">abstract_component.AbstractComponent</a></code></b> (private):
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_applicationData" onclick="show_private();">_applicationData</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_caption" onclick="show_private();">_caption</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_componentError" onclick="show_private();">_componentError</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_delayedFocus" onclick="show_private();">_delayedFocus</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_description" onclick="show_private();">_description</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_enabled" onclick="show_private();">_enabled</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_eventIdentifiers" onclick="show_private();">_eventIdentifiers</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_eventRouter" onclick="show_private();">_eventRouter</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_icon" onclick="show_private();">_icon</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_immediate" onclick="show_private();">_immediate</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_locale" onclick="show_private();">_locale</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_parent" onclick="show_private();">_parent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_readOnly" onclick="show_private();">_readOnly</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_repaintRequestListeners" onclick="show_private();">_repaintRequestListeners</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_repaintRequestListenersNotified" onclick="show_private();">_repaintRequestListenersNotified</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_styles" onclick="show_private();">_styles</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_visible" onclick="show_private();">_visible</a></code>
+      </p></div>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">caption</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">dataSource</span>=<span class="sig-default">None</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Creates a new tree with caption and connect it to a IContainer.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>args</code></strong> - tuple of the form
+          <ul>
+            <li>
+              ()
+            </li>
+            <li>
+              (caption)
+              <ol start="1">
+                <li>
+                  the caption of the component.
+                </li>
+              </ol>
+            </li>
+            <li>
+              (caption, dataSource)
+              <ol start="1">
+                <li>
+                  the caption of the component.
+                </li>
+                <li>
+                  the IContainer datasource to be selected from by this 
+                  select.
+                </li>
+              </ol>
+            </li>
+            <li>
+              (caption, options)
+              <ol start="1">
+                <li>
+                  the caption of the component.
+                </li>
+                <li>
+                  the Collection containing the options.
+                </li>
+              </ol>
+            </li>
+          </ul></li>
+    </ul></dd>
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isExpanded"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isExpanded</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.isExpanded">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Check is an item is expanded</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - the item id.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>true iff the item is expanded.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="expandItem"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">expandItem</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>,
+        <span class="sig-arg">sendChildTree</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.expandItem">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Expands an item.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - the item id.</li>
+        <li><strong class="pname"><code>sendChildTree</code></strong> - flag to indicate if client needs subtree or not (may be cached)</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>True iff the expand operation succeeded</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="requestRepaint"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">requestRepaint</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.requestRepaint">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Requests that the paintable should be repainted as soon as 
+  possible.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.terminal.paintable.IPaintable-class.html#requestRepaint">terminal.paintable.IPaintable.requestRepaint</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="expandItemsRecursively"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">expandItemsRecursively</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">startItemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.expandItemsRecursively">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Expands the items recursively</p>
+  <p>Expands all the children recursively starting from an item. Operation 
+  succeeds only if all expandable items are expanded.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>True iff the expand operation succeeded</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="collapseItem"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">collapseItem</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.collapseItem">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Collapses an item.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - the item id.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>True iff the collapse operation succeeded</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="collapseItemsRecursively"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">collapseItemsRecursively</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">startItemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.collapseItemsRecursively">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Collapses the items recursively.</p>
+  <p>Collapse all the children recursively starting from an item. Operation
+  succeeds only if all expandable items are collapsed.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>True iff the collapse operation succeeded</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isSelectable"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isSelectable</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.isSelectable">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the current selectable state. Selectable determines if the a 
+  node can be selected on the client side. Selectable does not affect <a 
+  href="muntjac.ui.abstract_select.AbstractSelect-class.html#setValue" 
+  class="link">setValue</a> or <a 
+  href="muntjac.ui.abstract_select.AbstractSelect-class.html#select" 
+  class="link">select</a>.</p>
+  <p>The tree is selectable by default.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the current selectable state.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setSelectable"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setSelectable</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">selectable</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.setSelectable">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the selectable state. Selectable determines if the a node can be 
+  selected on the client side. Selectable does not affect <a 
+  href="muntjac.ui.abstract_select.AbstractSelect-class.html#setValue" 
+  class="link">setValue</a> or <a 
+  href="muntjac.ui.abstract_select.AbstractSelect-class.html#select" 
+  class="link">select</a>.</p>
+  <p>The tree is selectable by default.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>selectable</code></strong> - The new selectable state.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setMultiselectMode"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setMultiselectMode</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">mode</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.setMultiselectMode">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the behavior of the multiselect mode</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>mode</code></strong> - The mode to set</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getMultiselectMode"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getMultiselectMode</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.getMultiselectMode">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the mode the multiselect is in. The mode controls how 
+  multiselection can be done.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The mode</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="changeVariables"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">changeVariables</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">source</span>,
+        <span class="sig-arg">variables</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.changeVariables">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Invoked when the value of a variable has changed.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>source</code></strong> - the Source of the variable change. This is the origin of the 
+          event. For example in Web Adapter this is the request.</li>
+        <li><strong class="pname"><code>variables</code></strong> - the Mapping from variable names to new variable values.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.terminal.variable_owner.IVariableOwner-class.html#changeVariables">terminal.variable_owner.IVariableOwner.changeVariables</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="handleSelectedItems"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">handleSelectedItems</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">variables</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.handleSelectedItems">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Handles the selection</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>variables</code></strong> - The variables sent to the server from the client</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="paintContent"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">paintContent</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">target</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.paintContent">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Paints any needed component-specific things to the given UIDL 
+  stream.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>target</code></strong> - the Paint Event.</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="muntjac.terminal.paint_exception.PaintException-class.html">PaintException</a></strong></code> - if the paint operation failed.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.abstract_component.AbstractComponent-class.html#paintContent">abstract_component.AbstractComponent.paintContent</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a 
+        href="muntjac.ui.abstract_component.AbstractComponent-class.html#paintContent"
+        class="link">AbstractComponent.paintContent</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="areChildrenAllowed"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">areChildrenAllowed</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.areChildrenAllowed">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tests if the Item with given ID can have any children.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - ID of the Item in the container whose child capability is to be 
+          tested</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the specified Item exists in the IContainer 
+          and it can have children, <code>False</code> if it's not found 
+          from the container or it can't have children.</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IHierarchical-class.html#areChildrenAllowed">data.container.IHierarchical.areChildrenAllowed</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a 
+        href="muntjac.data.container.IHierarchical-class.html#areChildrenAllowed"
+        class="link">IHierarchical.areChildrenAllowed</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="getChildren"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getChildren</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.getChildren">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the IDs of all Items that are children of the specified Item.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - ID of the Item whose children the caller is interested in</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>An iterable containing the IDs of all other Items that are 
+          children in the container hierarchy</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IHierarchical-class.html#getChildren">data.container.IHierarchical.getChildren</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a 
+        href="muntjac.data.container.IHierarchical-class.html#getChildren" 
+        class="link">IHierarchical.getChildren</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="getParent"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getParent</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.getParent">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the ID of the parent Item of the specified Item.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - ID of the Item whose parent the caller wishes to find out.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>the parent component</dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.component.IComponent-class.html#getParent">component.IComponent.getParent</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <code class="link">IHierarchical.getParent</code>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="hasChildren"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">hasChildren</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.hasChildren">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tests if the Item specified with <code>itemId</code> has child 
+  Items.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - ID of the Item to be tested</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the specified Item has children, 
+          <code>False</code> if not (is a leaf)</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IHierarchical-class.html#hasChildren">data.container.IHierarchical.hasChildren</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a 
+        href="muntjac.data.container.IHierarchical-class.html#hasChildren" 
+        class="link">IHierarchical.hasChildren</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="isRoot"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isRoot</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.isRoot">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tests if the Item specified with <code>itemId</code> is a root 
+  Item.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - ID of the Item whose root status is to be tested</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the specified Item is a root, 
+          <code>False</code> if not</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IHierarchical-class.html#isRoot">data.container.IHierarchical.isRoot</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a href="muntjac.data.container.IHierarchical-class.html#isRoot" 
+        class="link">IHierarchical.isRoot</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="rootItemIds"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">rootItemIds</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.rootItemIds">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the IDs of all Items in the container that don't have a 
+  parent.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>An iterable containing IDs of all root elements of the container</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IHierarchical-class.html#rootItemIds">data.container.IHierarchical.rootItemIds</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a 
+        href="muntjac.data.container.IHierarchical-class.html#rootItemIds" 
+        class="link">IHierarchical.rootItemIds</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="setChildrenAllowed"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setChildrenAllowed</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>,
+        <span class="sig-arg">areChildrenAllowed</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.setChildrenAllowed">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the given Item's capability to have children.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - ID of the Item in the container whose child capability is to be 
+          set</li>
+        <li><strong class="pname"><code>areChildrenAllowed</code></strong> - boolean value specifying if the Item can have children or not</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the operation succeeded, <code>False</code> 
+          if not</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IHierarchical-class.html#setChildrenAllowed">data.container.IHierarchical.setChildrenAllowed</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a 
+        href="muntjac.data.container.IHierarchical-class.html#setChildrenAllowed"
+        class="link">IHierarchical.setChildrenAllowed</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="setParent"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setParent</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>,
+        <span class="sig-arg">newParentId</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.setParent">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the parent component of the component.</p>
+  <p>This method automatically calls <a 
+  href="muntjac.ui.abstract_component.AbstractComponent-class.html#attach" 
+  class="link">attach</a> if the parent becomes attached to the 
+  application, regardless of whether it was attached previously. 
+  Conversely, if the parent is <code>None</code> and the component is 
+  attached to the application, <a 
+  href="muntjac.ui.abstract_component.AbstractComponent-class.html#detach" 
+  class="link">detach</a> is called for the component.</p>
+  <p>This method is rarely called directly. The <code 
+  class="link">ComponentContainer.addComponent</code> method is normally 
+  used for adding components to a container and it will call this method 
+  implicitly.</p>
+  <p>It is not possible to change the parent without first setting the 
+  parent to <code>None</code>.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>parent</code></strong> - the parent component</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the operation succeeded, <code>False</code> 
+          if not</dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>ValueError</strong></code> - if a parent is given even though the component already has a parent</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.component.IComponent-class.html#setParent">component.IComponent.setParent</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setContainerDataSource"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setContainerDataSource</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">newDataSource</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.setContainerDataSource">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the IContainer that serves as the data source of the viewer.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>newDataSource</code></strong> - the new data source.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IViewer-class.html#setContainerDataSource">data.container.IViewer.setContainerDataSource</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <code class="link">container.Viewer.setContainerDataSource</code>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="addListener"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addListener</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">listener</span>,
+        <span class="sig-arg">iface</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.addListener">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds the expand/collapse listener.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>listener</code></strong> - the listener to be added.</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>ValueError</strong></code> - unless <code>method</code> has a match in <code>object</code></li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IItemSetChangeNotifier-class.html#addListener">data.container.IItemSetChangeNotifier.addListener</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addCallback"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addCallback</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">callback</span>,
+        <span class="sig-arg">eventType</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.addCallback">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.data.container.IItemSetChangeNotifier-class.html#addCallback">data.container.IItemSetChangeNotifier.addCallback</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeListener"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeListener</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">listener</span>,
+        <span class="sig-arg">iface</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.removeListener">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes the expand/collapse listener.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>listener</code></strong> - the listener to be removed.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IItemSetChangeNotifier-class.html#removeListener">data.container.IItemSetChangeNotifier.removeListener</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeCallback"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeCallback</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">callback</span>,
+        <span class="sig-arg">eventType</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.removeCallback">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.data.container.IItemSetChangeNotifier-class.html#removeCallback">data.container.IItemSetChangeNotifier.removeCallback</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="fireExpandEvent"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">fireExpandEvent</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.fireExpandEvent">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Emits the expand event.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - the item id.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="fireCollapseEvent"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">fireCollapseEvent</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.fireCollapseEvent">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Emits collapse event.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - the item id.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addActionHandler"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addActionHandler</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">actionHandler</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.addActionHandler">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds an action handler.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>actionHandler</code></strong> - the new handler to be added.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.event.action.IContainer-class.html#addActionHandler">event.action.IContainer.addActionHandler</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a 
+        href="muntjac.event.action.IContainer-class.html#addActionHandler" 
+        class="link">IContainer.addActionHandler</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="removeActionHandler"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeActionHandler</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">actionHandler</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.removeActionHandler">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes an action handler.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>actionHandler</code></strong> - the handler to be removed.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.event.action.IContainer-class.html#removeActionHandler">event.action.IContainer.removeActionHandler</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a 
+        href="muntjac.event.action.IContainer-class.html#removeActionHandler"
+        class="link">IContainer.removeActionHandler</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="getVisibleItemIds"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getVisibleItemIds</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.getVisibleItemIds">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the visible item ids.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.ui.abstract_select.AbstractSelect-class.html#getVisibleItemIds">abstract_select.AbstractSelect.getVisibleItemIds</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <code class="link">Select.getVisibleItemIds</code>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="setNullSelectionItemId"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setNullSelectionItemId</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">nullSelectionItemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.setNullSelectionItemId">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tree does not support <code>setNullSelectionItemId</code>.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>nullSelectionItemId</code></strong> - the nullSelectionItemId to set.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.abstract_select.AbstractSelect-class.html#setNullSelectionItemId">abstract_select.AbstractSelect.setNullSelectionItemId</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a 
+        href="muntjac.ui.abstract_select.AbstractSelect-class.html#setNullSelectionItemId"
+        class="link">AbstractSelect.setNullSelectionItemId</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="setNewItemsAllowed"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setNewItemsAllowed</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">allowNewOptions</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.setNewItemsAllowed">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adding new items is not supported.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>allowNewOptions</code></strong> - the New value of property allowNewOptions.</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>NotImplementedError</strong></code> - if set to true.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.abstract_select.AbstractSelect-class.html#setNewItemsAllowed">abstract_select.AbstractSelect.setNewItemsAllowed</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <code class="link">Select.setNewItemsAllowed</code>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="setLazyLoading"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setLazyLoading</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">useLazyLoading</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.setLazyLoading">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tree does not support lazy options loading mode. Setting this true 
+  will throw NotImplementedError.</p>
+  <dl class="fields">
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <code class="link">Select.setLazyLoading</code>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="setItemStyleGenerator"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setItemStyleGenerator</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemStyleGenerator</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.setItemStyleGenerator">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the <a href="muntjac.ui.tree.IItemStyleGenerator-class.html" 
+  class="link">IItemStyleGenerator</a> to be used with this tree.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemStyleGenerator</code></strong> - item style generator or null to remove generator</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getItemStyleGenerator"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getItemStyleGenerator</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.getItemStyleGenerator">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the current <a 
+          href="muntjac.ui.tree.IItemStyleGenerator-class.html" 
+          class="link">IItemStyleGenerator</a> for this tree. 
+          <code>None</code> if <a 
+          href="muntjac.ui.tree.IItemStyleGenerator-class.html" 
+          class="link">IItemStyleGenerator</a> is not set.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeItem"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeItem</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.removeItem">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes the Item identified by <code>ItemId</code> from the 
+  IContainer.</p>
+  <p>Containers that support filtering should also allow removing an item 
+  that is currently filtered out.</p>
+  <p>This functionality is optional.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - ID of the Item to remove</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the operation succeeded, <code>False</code> 
+          if not</dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>NotImplementedError</strong></code> - if the container does not support removing individual items</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IContainer-class.html#removeItem">data.container.IContainer.removeItem</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getDropHandler"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getDropHandler</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.getDropHandler">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the drop handler that will receive the dragged data or null if 
+          drops are not currently accepted</dd>
+    <dt>Overrides:
+        <a href="muntjac.event.dd.drop_target.IDropTarget-class.html#getDropHandler">event.dd.drop_target.IDropTarget.getDropHandler</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="translateDropTargetDetails"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">translateDropTargetDetails</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">clientVariables</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.translateDropTargetDetails">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Called before the <a 
+  href="muntjac.event.dd.drag_and_drop_event.DragAndDropEvent-class.html" 
+  class="link">DragAndDropEvent</a> is passed to <code 
+  class="link">DropHandler</code>. Implementation may for example translate
+  the drop target details provided by the client side (drop target) to 
+  meaningful server side values. If null is returned the terminal 
+  implementation will automatically create a <code 
+  class="link">TargetDetails</code> with raw client side data.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>clientVariables</code></strong> - data passed from the DropTargets client side counterpart.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>A DropTargetDetails object with the translated data or null to 
+          use a default implementation.</dd>
+    <dt>Overrides:
+        <a href="muntjac.event.dd.drop_target.IDropTarget-class.html#translateDropTargetDetails">event.dd.drop_target.IDropTarget.translateDropTargetDetails</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getDragMode"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getDragMode</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.getDragMode">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the drag mode that controls how Tree behaves as a <a 
+          href="muntjac.event.dd.drag_source.IDragSource-class.html" 
+          class="link">IDragSource</a>.</dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a href="muntjac.ui.tree.TreeDragMode-class.html" 
+        class="link">TreeDragMode</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="getTransferable"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getTransferable</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">payload</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.getTransferable">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>IDragSource may convert data added by client side component to 
+  meaningful values for server side developer or add other data based on 
+  it.</p>
+  <p>For example Tree converts item identifiers to generated string keys 
+  for the client side. Muntjac developer don't and can't know anything 
+  about these generated keys, only about item identifiers. When tree node 
+  is dragged client puts that key to <code 
+  class="link">Transferable</code>s client side counterpart. In <code 
+  class="link">Tree.getTransferable</code> the key is converted back to 
+  item identifier that the server side developer can use.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>rawVariables</code></strong> - the data that client side initially included in <code 
+          class="link">Transferable</code>s client side counterpart.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>the <code class="link">Transferable</code> instance that will be 
+          passed to <code class="link">DropHandler</code> (and/or <code 
+          class="link">AcceptCriterion</code>)</dd>
+    <dt>Overrides:
+        <a href="muntjac.event.dd.drag_source.IDragSource-class.html#getTransferable">event.dd.drag_source.IDragSource.getTransferable</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setItemDescriptionGenerator"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setItemDescriptionGenerator</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">generator</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tree-pysrc.html#Tree.setItemDescriptionGenerator">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Set the item description generator which generates tooltips for the 
+  tree items</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>generator</code></strong> - The generator to use or null to disable</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== INSTANCE VARIABLE DETAILS ==================== -->
+<a name="section-InstanceVariableDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Variable Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceVariableDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="_initialPaint"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">_initialPaint</h3>
+  <p>a flag which indicates initial paint. After this flag set</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:04:02 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

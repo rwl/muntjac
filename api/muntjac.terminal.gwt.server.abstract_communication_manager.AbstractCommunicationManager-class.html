@@ -1,0 +1,1970 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.terminal.gwt.server.abstract_communication_manager.AbstractCommunicationManager</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.terminal-module.html">Package&nbsp;terminal</a> ::
+        <a href="muntjac.terminal.gwt-module.html">Package&nbsp;gwt</a> ::
+        <a href="muntjac.terminal.gwt.server-module.html">Package&nbsp;server</a> ::
+        <a href="muntjac.terminal.gwt.server.abstract_communication_manager-module.html">Module&nbsp;abstract_communication_manager</a> ::
+        Class&nbsp;AbstractCommunicationManager
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.terminal.gwt.server.abstract_communication_manager.AbstractCommunicationManager-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class AbstractCommunicationManager</h1><p class="nomargin-top"><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+                   object --+        
+                            |        
+          <a href="muntjac.util.IEventListener-class.html">util.IEventListener</a> --+    
+                                |    
+             <a href="muntjac.terminal.paintable.IPaintable-class.html">paintable.IPaintable</a> --+
+                                    |
+                       object --+   |
+                                |   |
+<a href="muntjac.terminal.paintable.IRepaintRequestListener-class.html">paintable.IRepaintRequestListener</a> --+
+                                    |
+                                   <strong class="uidshort">AbstractCommunicationManager</strong>
+</pre>
+
+<dl><dt>Known Subclasses:</dt>
+<dd>
+      <ul class="subclass-list">
+<li><a href="muntjac.terminal.gwt.server.communication_manager.CommunicationManager-class.html">communication_manager.CommunicationManager</a></li>  </ul>
+</dd></dl>
+
+<hr />
+<p>This is a common base class for the server-side implementations of the
+  communication system between the client code (compiled with GWT into 
+  JavaScript) and the server side components. Its client side counterpart 
+  is <a 
+  href="muntjac.terminal.gwt.client.application_connection.ApplicationConnection-class.html"
+  class="link">ApplicationConnection</a>.</p>
+  <p>A server side component sends its state to the client in a paint 
+  request (see <a href="muntjac.terminal.paintable.IPaintable-class.html" 
+  class="link">IPaintable</a> and <code class="link">PaintTarget</code> on 
+  the server side). The client widget receives these paint requests as 
+  calls to <code 
+  class="link">muntjac.terminal.gwt.client.IPaintable.updateFromUIDL</code>.
+  The client component communicates back to the server by sending a list of
+  variable changes (see <code 
+  class="link">ApplicationConnection.updateVariable</code> and <code 
+  class="link">VariableOwner.changeVariables</code>).</p>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_communication_manager.AbstractCommunicationManager-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">application</span>)</span><br />
+      x.__init__(...) initializes x; see help(type(x)) for signature</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="changeVariables"></a><span class="summary-sig-name">changeVariables</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">source</span>,
+        <span class="summary-sig-arg">owner</span>,
+        <span class="summary-sig-arg">m</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.changeVariables">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="cleanStreamVariable"></a><span class="summary-sig-name">cleanStreamVariable</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">owner</span>,
+        <span class="summary-sig-arg">name</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.cleanStreamVariable">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="closeJsonMessage"></a><span class="summary-sig-name">closeJsonMessage</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">outWriter</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.closeJsonMessage">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="convertArray"></a><span class="summary-sig-name">convertArray</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">strValue</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.convertArray">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="convertMap"></a><span class="summary-sig-name">convertMap</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">strValue</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.convertMap">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="convertStringArray"></a><span class="summary-sig-name">convertStringArray</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">strValue</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.convertStringArray">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="convertVariableValue"></a><span class="summary-sig-name">convertVariableValue</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">variableType</span>,
+        <span class="summary-sig-arg">strValue</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.convertVariableValue">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_communication_manager.AbstractCommunicationManager-class.html#decodeVariableValue" class="summary-sig-name">decodeVariableValue</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">encodedValue</span>)</span><br />
+      Decode encoded burst, record, field and array item separator 
+      characters in a variable value String received from the client.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.decodeVariableValue">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="doGetApplicationWindow"></a><span class="summary-sig-name">doGetApplicationWindow</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>,
+        <span class="summary-sig-arg">callback</span>,
+        <span class="summary-sig-arg">application</span>,
+        <span class="summary-sig-arg">assumedWindow</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.doGetApplicationWindow">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_communication_manager.AbstractCommunicationManager-class.html#doHandleSimpleMultipartFileUpload" class="summary-sig-name">doHandleSimpleMultipartFileUpload</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>,
+        <span class="summary-sig-arg">response</span>,
+        <span class="summary-sig-arg">streamVariable</span>,
+        <span class="summary-sig-arg">variableName</span>,
+        <span class="summary-sig-arg">owner</span>,
+        <span class="summary-sig-arg">boundary</span>)</span><br />
+      Method used to stream content from a multipart request (either from 
+      servlet or portlet request) to given StreamVariable.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.doHandleSimpleMultipartFileUpload">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_communication_manager.AbstractCommunicationManager-class.html#doHandleUidlRequest" class="summary-sig-name">doHandleUidlRequest</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>,
+        <span class="summary-sig-arg">response</span>,
+        <span class="summary-sig-arg">callback</span>,
+        <span class="summary-sig-arg">window</span>)</span><br />
+      Internally process a UIDL request from the client.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.doHandleUidlRequest">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_communication_manager.AbstractCommunicationManager-class.html#doHandleXhrFilePost" class="summary-sig-name">doHandleXhrFilePost</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>,
+        <span class="summary-sig-arg">response</span>,
+        <span class="summary-sig-arg">streamVariable</span>,
+        <span class="summary-sig-arg">variableName</span>,
+        <span class="summary-sig-arg">owner</span>,
+        <span class="summary-sig-arg">contentLength</span>)</span><br />
+      Used to stream plain file post (aka XHR2.post(File))</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.doHandleXhrFilePost">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_communication_manager.AbstractCommunicationManager-class.html#endApplication" class="summary-sig-name">endApplication</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>,
+        <span class="summary-sig-arg">response</span>,
+        <span class="summary-sig-arg">application</span>)</span><br />
+      Ends the Application.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.endApplication">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_communication_manager.AbstractCommunicationManager-class.html#generateLocale" class="summary-sig-name">generateLocale</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">value</span>)</span><br />
+      Constructs a Locale instance to be sent to the client based on a 
+      short locale description string.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.generateLocale">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getApplication"></a><span class="summary-sig-name">getApplication</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.getApplication">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_communication_manager.AbstractCommunicationManager-class.html#getDirtyVisibleComponents" class="summary-sig-name">getDirtyVisibleComponents</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">w</span>)</span><br />
+      Returns dirty components which are in given window.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.getDirtyVisibleComponents">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getDragAndDropService"></a><span class="summary-sig-name">getDragAndDropService</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.getDragAndDropService">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_communication_manager.AbstractCommunicationManager-class.html#getPaintableId" class="summary-sig-name">getPaintableId</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">paintable</span>)</span><br />
+      Gets the IPaintable Id.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.getPaintableId">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_communication_manager.AbstractCommunicationManager-class.html#getRequestPayload" class="summary-sig-name">getRequestPayload</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>)</span><br />
+      Reads the request data from the Request and returns it converted to 
+      an UTF-8 string.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.getRequestPayload">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getRequestTheme"></a><span class="summary-sig-name">getRequestTheme</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.getRequestTheme">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getStreamVariableTargetUrl"></a><span class="summary-sig-name">getStreamVariableTargetUrl</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">owner</span>,
+        <span class="summary-sig-arg">name</span>,
+        <span class="summary-sig-arg">value</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.getStreamVariableTargetUrl">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getTagForType"></a><span class="summary-sig-name">getTagForType</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">class1</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.getTagForType">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getTheme"></a><span class="summary-sig-name">getTheme</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">window</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.getTheme">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getTimeoutInterval"></a><span class="summary-sig-name">getTimeoutInterval</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.getTimeoutInterval">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getVariableOwner"></a><span class="summary-sig-name">getVariableOwner</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">string</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.getVariableOwner">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_communication_manager.AbstractCommunicationManager-class.html#handleChangeVariablesError" class="summary-sig-name">handleChangeVariablesError</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">application</span>,
+        <span class="summary-sig-arg">owner</span>,
+        <span class="summary-sig-arg">e</span>,
+        <span class="summary-sig-arg">m</span>)</span><br />
+      Handles an error (exception) that occurred when processing variable 
+      changes from the client or a failure of a file upload.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.handleChangeVariablesError">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_communication_manager.AbstractCommunicationManager-class.html#handleURI" class="summary-sig-name">handleURI</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">window</span>,
+        <span class="summary-sig-arg">request</span>,
+        <span class="summary-sig-arg">response</span>,
+        <span class="summary-sig-arg">callback</span>)</span><br />
+      Calls the Window URI handler for a request and returns the <a 
+      href="muntjac.terminal.download_stream.DownloadStream-class.html" 
+      class="link">DownloadStream</a> returned by the handler.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.handleURI">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="handleVariableBurst"></a><span class="summary-sig-name">handleVariableBurst</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">source</span>,
+        <span class="summary-sig-arg">app</span>,
+        <span class="summary-sig-arg">success</span>,
+        <span class="summary-sig-arg">burst</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.handleVariableBurst">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_communication_manager.AbstractCommunicationManager-class.html#handleVariables" class="summary-sig-name">handleVariables</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>,
+        <span class="summary-sig-arg">response</span>,
+        <span class="summary-sig-arg">callback</span>,
+        <span class="summary-sig-arg">application2</span>,
+        <span class="summary-sig-arg">window</span>)</span><br />
+      If this method returns false, something was submitted that we did not
+      expect; this is probably due to the client being out-of-sync and 
+      sending variable changes for non-existing pids</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.handleVariables">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="hasPaintableId"></a><span class="summary-sig-name">hasPaintableId</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">paintable</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.hasPaintableId">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="highlightPaintable"></a><span class="summary-sig-name">highlightPaintable</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">highLightedPaintable2</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.highlightPaintable">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="makeAllPaintablesDirty"></a><span class="summary-sig-name">makeAllPaintablesDirty</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">window</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.makeAllPaintablesDirty">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="openJsonMessage"></a><span class="summary-sig-name">openJsonMessage</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">outWriter</span>,
+        <span class="summary-sig-arg">response</span>)</span><br />
+      Writes the opening of JSON message to be sent to client.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.openJsonMessage">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_communication_manager.AbstractCommunicationManager-class.html#paintAfterVariableChanges" class="summary-sig-name">paintAfterVariableChanges</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>,
+        <span class="summary-sig-arg">response</span>,
+        <span class="summary-sig-arg">callback</span>,
+        <span class="summary-sig-arg">repaintAll</span>,
+        <span class="summary-sig-arg">outWriter</span>,
+        <span class="summary-sig-arg">window</span>,
+        <span class="summary-sig-arg">analyzeLayouts</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.paintAfterVariableChanges">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="paintablePainted"></a><span class="summary-sig-name">paintablePainted</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">paintable</span>)</span><br />
+      Internally mark a <a 
+      href="muntjac.terminal.paintable.IPaintable-class.html" 
+      class="link">IPaintable</a> as painted and start collecting new 
+      repaint requests for it.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.paintablePainted">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="printHighlightedComponentHierarchy"></a><span class="summary-sig-name">printHighlightedComponentHierarchy</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">sb</span>,
+        <span class="summary-sig-arg">component</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.printHighlightedComponentHierarchy">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="printLocaleDeclarations"></a><span class="summary-sig-name">printLocaleDeclarations</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">outWriter</span>)</span><br />
+      Prints the queued (pending) locale definitions to a PrintWriter in a 
+      (UIDL) format that can be sent to the client and used there in 
+      formatting dates, times etc.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.printLocaleDeclarations">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_communication_manager.AbstractCommunicationManager-class.html#repaintRequested" class="summary-sig-name">repaintRequested</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">event</span>)</span><br />
+      Receives repaint request events.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.repaintRequested">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_communication_manager.AbstractCommunicationManager-class.html#requireLocale" class="summary-sig-name">requireLocale</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">value</span>)</span><br />
+      Queues a locale to be sent to the client (browser) for date and time 
+      entry etc.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.requireLocale">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_communication_manager.AbstractCommunicationManager-class.html#sendUploadResponse" class="summary-sig-name">sendUploadResponse</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>,
+        <span class="summary-sig-arg">response</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.sendUploadResponse">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_communication_manager.AbstractCommunicationManager-class.html#streamToReceiver" class="summary-sig-name">streamToReceiver</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">inputStream</span>,
+        <span class="summary-sig-arg">streamVariable</span>,
+        <span class="summary-sig-arg">filename</span>,
+        <span class="summary-sig-arg">typ</span>,
+        <span class="summary-sig-arg">contentLength</span>)</span><br />
+      Returns:
+      true if the streamvariable has informed that the terminal can forget 
+      this variable</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.streamToReceiver">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="tryToCloseStream"></a><span class="summary-sig-name">tryToCloseStream</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">out</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.tryToCloseStream">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="unregisterPaintable"></a><span class="summary-sig-name">unregisterPaintable</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">p</span>)</span><br />
+      Called when communication manager stops listening for repaints for 
+      given component.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.unregisterPaintable">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="writeUidlResponce"></a><span class="summary-sig-name">writeUidlResponce</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">callback</span>,
+        <span class="summary-sig-arg">repaintAll</span>,
+        <span class="summary-sig-arg">outWriter</span>,
+        <span class="summary-sig-arg">window</span>,
+        <span class="summary-sig-arg">analyzeLayouts</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.writeUidlResponce">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.terminal.paintable.IPaintable-class.html">paintable.IPaintable</a></code></b>:
+      <code><a href="muntjac.terminal.paintable.IPaintable-class.html#addCallback">addCallback</a></code>,
+      <code><a href="muntjac.terminal.paintable.IPaintable-class.html#addListener">addListener</a></code>,
+      <code><a href="muntjac.terminal.paintable.IPaintable-class.html#getDebugId">getDebugId</a></code>,
+      <code><a href="muntjac.terminal.paintable.IPaintable-class.html#paint">paint</a></code>,
+      <code><a href="muntjac.terminal.paintable.IPaintable-class.html#removeCallback">removeCallback</a></code>,
+      <code><a href="muntjac.terminal.paintable.IPaintable-class.html#removeListener">removeListener</a></code>,
+      <code><a href="muntjac.terminal.paintable.IPaintable-class.html#requestRepaint">requestRepaint</a></code>,
+      <code><a href="muntjac.terminal.paintable.IPaintable-class.html#requestRepaintRequests">requestRepaintRequests</a></code>,
+      <code><a href="muntjac.terminal.paintable.IPaintable-class.html#setDebugId">setDebugId</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS METHODS ==================== -->
+<a name="section-ClassMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="_readLine"></a><span class="summary-sig-name">_readLine</span>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">stream</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager._readLine">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="isChildOf"></a><span class="summary-sig-name">isChildOf</span>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">parent</span>,
+        <span class="summary-sig-arg">child</span>)</span><br />
+      Helper method to test if a component contains another.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.isChildOf">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.abstract_communication_manager.AbstractCommunicationManager-class.html#removePath" class="summary-sig-name">removePath</a>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">filename</span>)</span><br />
+      Removes any possible path information from the filename and returns 
+      the filename.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.removePath">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="VAR_ARRAYITEM_SEPARATOR"></a><span class="summary-name">VAR_ARRAYITEM_SEPARATOR</span> = <code title="u''"><code class="variable-quote">u'</code><code class="variable-string"></code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="VAR_BURST_SEPARATOR"></a><span class="summary-name">VAR_BURST_SEPARATOR</span> = <code title="u''"><code class="variable-quote">u'</code><code class="variable-string"></code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="VAR_ESCAPE_CHARACTER"></a><span class="summary-name">VAR_ESCAPE_CHARACTER</span> = <code title="u''"><code class="variable-quote">u'</code><code class="variable-string"></code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_CRLF"></a><span class="summary-name">_CRLF</span> = <code title="'''\r
+'''"><code class="variable-quote">'</code><code class="variable-string">\r\n</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_DASHDASH"></a><span class="summary-name">_DASHDASH</span> = <code title="'--'"><code class="variable-quote">'</code><code class="variable-string">--</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_GET_PARAM_ANALYZE_LAYOUTS"></a><span class="summary-name">_GET_PARAM_ANALYZE_LAYOUTS</span> = <code title="'analyzeLayouts'"><code class="variable-quote">'</code><code class="variable-string">analyzeLayouts</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_GET_PARAM_HIGHLIGHT_COMPONENT"></a><span class="summary-name">_GET_PARAM_HIGHLIGHT_COMPONENT</span> = <code title="'highlightComponent'"><code class="variable-quote">'</code><code class="variable-string">highlightComponent</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_GET_PARAM_REPAINT_ALL"></a><span class="summary-name">_GET_PARAM_REPAINT_ALL</span> = <code title="'repaintAll'"><code class="variable-quote">'</code><code class="variable-string">repaintAll</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_LF"></a><span class="summary-name">_LF</span> = <code title="'''
+'''"><code class="variable-quote">'</code><code class="variable-string">\n</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_MAX_BUFFER_SIZE"></a><span class="summary-name">_MAX_BUFFER_SIZE</span> = <code title="65536">65536</code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_MAX_UPLOAD_BUFFER_SIZE"></a><span class="summary-name">_MAX_UPLOAD_BUFFER_SIZE</span> = <code title="4096">4096</code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_UTF8"></a><span class="summary-name">_UTF8</span> = <code title="'UTF8'"><code class="variable-quote">'</code><code class="variable-string">UTF8</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_VAR_FIELD_SEPARATOR"></a><span class="summary-name">_VAR_FIELD_SEPARATOR</span> = <code title="u''"><code class="variable-quote">u'</code><code class="variable-string"></code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_VAR_NAME"></a><span class="summary-name">_VAR_NAME</span> = <code title="2">2</code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_VAR_PID"></a><span class="summary-name">_VAR_PID</span> = <code title="1">1</code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_VAR_RECORD_SEPARATOR"></a><span class="summary-name">_VAR_RECORD_SEPARATOR</span> = <code title="u''"><code class="variable-quote">u'</code><code class="variable-string"></code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_VAR_TYPE"></a><span class="summary-name">_VAR_TYPE</span> = <code title="3">3</code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_VAR_VALUE"></a><span class="summary-name">_VAR_VALUE</span> = <code title="0">0</code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_VTYPE_ARRAY"></a><span class="summary-name">_VTYPE_ARRAY</span> = <code title="'a'"><code class="variable-quote">'</code><code class="variable-string">a</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_VTYPE_BOOLEAN"></a><span class="summary-name">_VTYPE_BOOLEAN</span> = <code title="'b'"><code class="variable-quote">'</code><code class="variable-string">b</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_VTYPE_DOUBLE"></a><span class="summary-name">_VTYPE_DOUBLE</span> = <code title="'d'"><code class="variable-quote">'</code><code class="variable-string">d</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_VTYPE_FLOAT"></a><span class="summary-name">_VTYPE_FLOAT</span> = <code title="'f'"><code class="variable-quote">'</code><code class="variable-string">f</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_VTYPE_INTEGER"></a><span class="summary-name">_VTYPE_INTEGER</span> = <code title="'i'"><code class="variable-quote">'</code><code class="variable-string">i</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_VTYPE_LONG"></a><span class="summary-name">_VTYPE_LONG</span> = <code title="'l'"><code class="variable-quote">'</code><code class="variable-string">l</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_VTYPE_MAP"></a><span class="summary-name">_VTYPE_MAP</span> = <code title="'m'"><code class="variable-quote">'</code><code class="variable-string">m</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_VTYPE_PAINTABLE"></a><span class="summary-name">_VTYPE_PAINTABLE</span> = <code title="'p'"><code class="variable-quote">'</code><code class="variable-string">p</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_VTYPE_STRING"></a><span class="summary-name">_VTYPE_STRING</span> = <code title="'s'"><code class="variable-quote">'</code><code class="variable-string">s</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_VTYPE_STRINGARRAY"></a><span class="summary-name">_VTYPE_STRINGARRAY</span> = <code title="'c'"><code class="variable-quote">'</code><code class="variable-string">c</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_WRITE_SECURITY_TOKEN_FLAG"></a><span class="summary-name">_WRITE_SECURITY_TOKEN_FLAG</span> = <code title="'writeSecurityToken'"><code class="variable-quote">'</code><code class="variable-string">writeSecurityToken</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_nextUnusedWindowSuffix"></a><span class="summary-name">_nextUnusedWindowSuffix</span> = <code title="1">1</code>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">application</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>x.__init__(...) initializes x; see help(type(x)) for signature</p>
+  <dl class="fields">
+    <dt>Overrides:
+        object.__init__
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="decodeVariableValue"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">decodeVariableValue</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">encodedValue</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.decodeVariableValue">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Decode encoded burst, record, field and array item separator 
+  characters in a variable value String received from the client. This 
+  protects from separator injection attacks.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>encodedValue</code></strong> - value to decode</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>decoded value</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="doHandleSimpleMultipartFileUpload"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">doHandleSimpleMultipartFileUpload</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">request</span>,
+        <span class="sig-arg">response</span>,
+        <span class="sig-arg">streamVariable</span>,
+        <span class="sig-arg">variableName</span>,
+        <span class="sig-arg">owner</span>,
+        <span class="sig-arg">boundary</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.doHandleSimpleMultipartFileUpload">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method used to stream content from a multipart request (either from 
+  servlet or portlet request) to given StreamVariable.</p>
+  <dl class="fields">
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>IOException</strong></code></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="doHandleUidlRequest"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">doHandleUidlRequest</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">request</span>,
+        <span class="sig-arg">response</span>,
+        <span class="sig-arg">callback</span>,
+        <span class="sig-arg">window</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.doHandleUidlRequest">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Internally process a UIDL request from the client.</p>
+  <p>This method calls <a 
+  href="muntjac.terminal.gwt.server.abstract_communication_manager.AbstractCommunicationManager-class.html#handleVariables"
+  class="link">handleVariables</a> to process any changes to variables by 
+  the client and then repaints affected components using <a 
+  href="muntjac.terminal.gwt.server.abstract_communication_manager.AbstractCommunicationManager-class.html#paintAfterVariableChanges"
+  class="link">paintAfterVariableChanges</a>.</p>
+  <p>Also, some cleanup is done when a request arrives for an application 
+  that has already been closed.</p>
+  <p>The method handleUidlRequest() in subclasses should call this 
+  method.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>request</code></strong></li>
+        <li><strong class="pname"><code>response</code></strong></li>
+        <li><strong class="pname"><code>callback</code></strong></li>
+        <li><strong class="pname"><code>window</code></strong> - target window for the UIDL request, can be null if target not 
+          found</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>IOException</strong></code></li>
+        <li><code><strong class='fraise'><a href="muntjac.terminal.gwt.server.abstract_communication_manager.InvalidUIDLSecurityKeyException-class.html">InvalidUIDLSecurityKeyException</a></strong></code></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="doHandleXhrFilePost"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">doHandleXhrFilePost</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">request</span>,
+        <span class="sig-arg">response</span>,
+        <span class="sig-arg">streamVariable</span>,
+        <span class="sig-arg">variableName</span>,
+        <span class="sig-arg">owner</span>,
+        <span class="sig-arg">contentLength</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.doHandleXhrFilePost">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Used to stream plain file post (aka XHR2.post(File))</p>
+  <dl class="fields">
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>IOException</strong></code></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="endApplication"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">endApplication</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">request</span>,
+        <span class="sig-arg">response</span>,
+        <span class="sig-arg">application</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.endApplication">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Ends the Application.</p>
+  <p>The browser is redirected to the Application logout URL set with <code
+  class="link">Application.setLogoutURL</code>, or to the application URL 
+  if no logout URL is given.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>request</code></strong> - the request instance.</li>
+        <li><strong class="pname"><code>response</code></strong> - the response to write to.</li>
+        <li><strong class="pname"><code>application</code></strong> - the Application to end.</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>IOException</strong></code> - if the writing failed due to input/output error.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="generateLocale"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">generateLocale</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">value</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.generateLocale">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Constructs a Locale instance to be sent to the client based on a short
+  locale description string.</p>
+  <dl class="fields">
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a 
+        href="muntjac.terminal.gwt.server.abstract_communication_manager.AbstractCommunicationManager-class.html#requireLocale"
+        class="link">requireLocale</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="getDirtyVisibleComponents"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getDirtyVisibleComponents</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">w</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.getDirtyVisibleComponents">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns dirty components which are in given window. Components in an 
+  invisible subtrees are omitted.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>w</code></strong> - root window for which dirty components is to be fetched</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getPaintableId"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getPaintableId</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">paintable</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.getPaintableId">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the IPaintable Id. If IPaintable has debug id set it will be used
+  prefixed with &quot;PID_S&quot;. Otherwise a sequenced ID is created.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>paintable</code></strong></li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>the paintable Id.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getRequestPayload"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getRequestPayload</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">request</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.getRequestPayload">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Reads the request data from the Request and returns it converted to an
+  UTF-8 string.</p>
+  <dl class="fields">
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>IOException</strong></code></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="handleChangeVariablesError"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">handleChangeVariablesError</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">application</span>,
+        <span class="sig-arg">owner</span>,
+        <span class="sig-arg">e</span>,
+        <span class="sig-arg">m</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.handleChangeVariablesError">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Handles an error (exception) that occurred when processing variable 
+  changes from the client or a failure of a file upload.</p>
+  <p>For <a href="muntjac.ui.abstract_field.AbstractField-class.html" 
+  class="link">AbstractField</a> components, 
+  <code>AbstractField.handleError()</code> is called. In all other cases 
+  (or if the field does not handle the error), <code 
+  class="link">ErrorListener.terminalError</code> for the application error
+  handler is called.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>application</code></strong></li>
+        <li><strong class="pname"><code>owner</code></strong> - component that the error concerns</li>
+        <li><strong class="pname"><code>e</code></strong> - exception that occurred</li>
+        <li><strong class="pname"><code>m</code></strong> - map from variable names to values</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="handleURI"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">handleURI</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">window</span>,
+        <span class="sig-arg">request</span>,
+        <span class="sig-arg">response</span>,
+        <span class="sig-arg">callback</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.handleURI">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Calls the Window URI handler for a request and returns the <a 
+  href="muntjac.terminal.download_stream.DownloadStream-class.html" 
+  class="link">DownloadStream</a> returned by the handler.</p>
+  <p>If the window is the main window of an application, the (deprecated) 
+  <code class="link">Application.handleURI</code> is called first to handle
+  <code class="link">ApplicationResource</code>s, and the window handler is
+  only called if it returns null.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>window</code></strong> - the target window of the request</li>
+        <li><strong class="pname"><code>request</code></strong> - the request instance</li>
+        <li><strong class="pname"><code>response</code></strong> - the response to write to</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>DownloadStream if the request was handled and further processing 
+          should be suppressed, null otherwise.</dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <code class="link">URIHandler</code>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="handleVariables"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">handleVariables</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">request</span>,
+        <span class="sig-arg">response</span>,
+        <span class="sig-arg">callback</span>,
+        <span class="sig-arg">application2</span>,
+        <span class="sig-arg">window</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.handleVariables">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>If this method returns false, something was submitted that we did not 
+  expect; this is probably due to the client being out-of-sync and sending 
+  variable changes for non-existing pids</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true if successful, false if there was an inconsistency</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="paintAfterVariableChanges"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">paintAfterVariableChanges</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">request</span>,
+        <span class="sig-arg">response</span>,
+        <span class="sig-arg">callback</span>,
+        <span class="sig-arg">repaintAll</span>,
+        <span class="sig-arg">outWriter</span>,
+        <span class="sig-arg">window</span>,
+        <span class="sig-arg">analyzeLayouts</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.paintAfterVariableChanges">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="muntjac.terminal.paint_exception.PaintException-class.html">PaintException</a></strong></code></li>
+        <li><code><strong class='fraise'>IOException</strong></code></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removePath"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removePath</span>(<span class="sig-arg">cls</span>,
+        <span class="sig-arg">filename</span>)</span>
+    <br /><em class="fname">Class Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.removePath">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes any possible path information from the filename and returns 
+  the filename. Separators / and \ are used.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="repaintRequested"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">repaintRequested</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">event</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.repaintRequested">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Receives repaint request events.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>event</code></strong> - the repaint request event specifying the paintable source.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.terminal.paintable.IRepaintRequestListener-class.html#repaintRequested">paintable.IRepaintRequestListener.repaintRequested</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a 
+        href="muntjac.terminal.paintable.IRepaintRequestListener-class.html#repaintRequested"
+        class="link">IRepaintRequestListener.repaintRequested</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="requireLocale"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">requireLocale</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">value</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.requireLocale">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Queues a locale to be sent to the client (browser) for date and time 
+  entry etc. All locale specific information is derived from server-side 
+  Locale instances and sent to the client when needed, eliminating the need
+  to use the Locale class and all the framework behind it on the 
+  client.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="sendUploadResponse"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">sendUploadResponse</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">request</span>,
+        <span class="sig-arg">response</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.sendUploadResponse">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>IOException</strong></code></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="streamToReceiver"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">streamToReceiver</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">inputStream</span>,
+        <span class="sig-arg">streamVariable</span>,
+        <span class="sig-arg">filename</span>,
+        <span class="sig-arg">typ</span>,
+        <span class="sig-arg">contentLength</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.abstract_communication_manager-pysrc.html#AbstractCommunicationManager.streamToReceiver">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true if the streamvariable has informed that the terminal can 
+          forget this variable</dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="muntjac.terminal.gwt.server.exceptions.UploadException-class.html">UploadException</a></strong></code></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:03:58 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

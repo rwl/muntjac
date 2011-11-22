@@ -1,0 +1,887 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.terminal.gwt.client.v_browser_details.VBrowserDetails</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.terminal-module.html">Package&nbsp;terminal</a> ::
+        <a href="muntjac.terminal.gwt-module.html">Package&nbsp;gwt</a> ::
+        <a href="muntjac.terminal.gwt.client-module.html">Package&nbsp;client</a> ::
+        <a href="muntjac.terminal.gwt.client.v_browser_details-module.html">Module&nbsp;v_browser_details</a> ::
+        Class&nbsp;VBrowserDetails
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.terminal.gwt.client.v_browser_details.VBrowserDetails-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class VBrowserDetails</h1><p class="nomargin-top"><span class="codelink"><a href="muntjac.terminal.gwt.client.v_browser_details-pysrc.html#VBrowserDetails">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+object --+
+         |
+        <strong class="uidshort">VBrowserDetails</strong>
+</pre>
+
+<hr />
+<p>Class that parses the user agent string from the browser and provides 
+  information about the browser. Used internally by <code 
+  class="link">BrowserInfo</code> and <a 
+  href="muntjac.terminal.gwt.server.web_browser.WebBrowser-class.html" 
+  class="link">WebBrowser</a>. Should not be used directly.</p>
+
+<hr />
+<div class="fields">      <dl><dt>Authors:</dt>
+        <dd>
+          Vaadin Ltd.,
+          Richard Lincoln
+        </dd>
+      </dl>
+      <p><strong>Version:</strong>
+        1.0.1
+      </p>
+</div><!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.client.v_browser_details.VBrowserDetails-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">userAgent</span>)</span><br />
+      Create an instance based on the given user agent.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.client.v_browser_details-pysrc.html#VBrowserDetails.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="parseVersionString"></a><span class="summary-sig-name">parseVersionString</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">versionString</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.client.v_browser_details-pysrc.html#VBrowserDetails.parseVersionString">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="safeSubstring"></a><span class="summary-sig-name">safeSubstring</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">string</span>,
+        <span class="summary-sig-arg">beginIndex</span>,
+        <span class="summary-sig-arg">endIndex</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.client.v_browser_details-pysrc.html#VBrowserDetails.safeSubstring">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.client.v_browser_details.VBrowserDetails-class.html#isFirefox" class="summary-sig-name">isFirefox</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Tests if the browser is Firefox.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.client.v_browser_details-pysrc.html#VBrowserDetails.isFirefox">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.client.v_browser_details.VBrowserDetails-class.html#isGecko" class="summary-sig-name">isGecko</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Tests if the browser is using the Gecko engine</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.client.v_browser_details-pysrc.html#VBrowserDetails.isGecko">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.client.v_browser_details.VBrowserDetails-class.html#isWebKit" class="summary-sig-name">isWebKit</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Tests if the browser is using the WebKit engine</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.client.v_browser_details-pysrc.html#VBrowserDetails.isWebKit">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.client.v_browser_details.VBrowserDetails-class.html#isPresto" class="summary-sig-name">isPresto</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Tests if the browser is using the Presto engine</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.client.v_browser_details-pysrc.html#VBrowserDetails.isPresto">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.client.v_browser_details.VBrowserDetails-class.html#isSafari" class="summary-sig-name">isSafari</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Tests if the browser is Safari.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.client.v_browser_details-pysrc.html#VBrowserDetails.isSafari">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.client.v_browser_details.VBrowserDetails-class.html#isChrome" class="summary-sig-name">isChrome</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Tests if the browser is Chrome.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.client.v_browser_details-pysrc.html#VBrowserDetails.isChrome">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.client.v_browser_details.VBrowserDetails-class.html#isOpera" class="summary-sig-name">isOpera</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Tests if the browser is Opera.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.client.v_browser_details-pysrc.html#VBrowserDetails.isOpera">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.client.v_browser_details.VBrowserDetails-class.html#isIE" class="summary-sig-name">isIE</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Tests if the browser is Internet Explorer.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.client.v_browser_details-pysrc.html#VBrowserDetails.isIE">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.client.v_browser_details.VBrowserDetails-class.html#getBrowserEngineVersion" class="summary-sig-name">getBrowserEngineVersion</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the version of the browser engine.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.client.v_browser_details-pysrc.html#VBrowserDetails.getBrowserEngineVersion">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.client.v_browser_details.VBrowserDetails-class.html#getBrowserMajorVersion" class="summary-sig-name">getBrowserMajorVersion</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the browser major version e.g., 3 for Firefox 3.5, 4 for 
+      Chrome 4, 8 for Internet Explorer 8.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.client.v_browser_details-pysrc.html#VBrowserDetails.getBrowserMajorVersion">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.client.v_browser_details.VBrowserDetails-class.html#getBrowserMinorVersion" class="summary-sig-name">getBrowserMinorVersion</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the browser minor version e.g., 5 for Firefox 3.5.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.client.v_browser_details-pysrc.html#VBrowserDetails.getBrowserMinorVersion">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.client.v_browser_details.VBrowserDetails-class.html#setIEMode" class="summary-sig-name">setIEMode</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">documentMode</span>)</span><br />
+      Sets the version for IE based on the documentMode.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.client.v_browser_details-pysrc.html#VBrowserDetails.setIEMode">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.client.v_browser_details.VBrowserDetails-class.html#isWindows" class="summary-sig-name">isWindows</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Tests if the browser is run on Windows.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.client.v_browser_details-pysrc.html#VBrowserDetails.isWindows">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.client.v_browser_details.VBrowserDetails-class.html#isMacOSX" class="summary-sig-name">isMacOSX</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Tests if the browser is run on Mac OSX.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.client.v_browser_details-pysrc.html#VBrowserDetails.isMacOSX">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.client.v_browser_details.VBrowserDetails-class.html#isLinux" class="summary-sig-name">isLinux</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Tests if the browser is run on Linux.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.client.v_browser_details-pysrc.html#VBrowserDetails.isLinux">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">userAgent</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.client.v_browser_details-pysrc.html#VBrowserDetails.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Create an instance based on the given user agent.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>userAgent</code></strong> - User agent as provided by the browser.</li>
+    </ul></dd>
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isFirefox"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isFirefox</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.client.v_browser_details-pysrc.html#VBrowserDetails.isFirefox">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tests if the browser is Firefox.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true if it is Firefox, false otherwise</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isGecko"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isGecko</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.client.v_browser_details-pysrc.html#VBrowserDetails.isGecko">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tests if the browser is using the Gecko engine</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true if it is Gecko, false otherwise</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isWebKit"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isWebKit</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.client.v_browser_details-pysrc.html#VBrowserDetails.isWebKit">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tests if the browser is using the WebKit engine</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true if it is WebKit, false otherwise</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isPresto"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isPresto</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.client.v_browser_details-pysrc.html#VBrowserDetails.isPresto">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tests if the browser is using the Presto engine</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true if it is Presto, false otherwise</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isSafari"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isSafari</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.client.v_browser_details-pysrc.html#VBrowserDetails.isSafari">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tests if the browser is Safari.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true if it is Safari, false otherwise</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isChrome"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isChrome</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.client.v_browser_details-pysrc.html#VBrowserDetails.isChrome">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tests if the browser is Chrome.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true if it is Chrome, false otherwise</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isOpera"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isOpera</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.client.v_browser_details-pysrc.html#VBrowserDetails.isOpera">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tests if the browser is Opera.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true if it is Opera, false otherwise</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isIE"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isIE</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.client.v_browser_details-pysrc.html#VBrowserDetails.isIE">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tests if the browser is Internet Explorer.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true if it is Internet Explorer, false otherwise</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getBrowserEngineVersion"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getBrowserEngineVersion</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.client.v_browser_details-pysrc.html#VBrowserDetails.getBrowserEngineVersion">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the version of the browser engine. For WebKit this is an 
+  integer e.g., 532.0. For gecko it is a float e.g., 1.8 or 1.9.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The version of the browser engine</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getBrowserMajorVersion"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getBrowserMajorVersion</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.client.v_browser_details-pysrc.html#VBrowserDetails.getBrowserMajorVersion">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the browser major version e.g., 3 for Firefox 3.5, 4 for 
+  Chrome 4, 8 for Internet Explorer 8.</p>
+  <p>Note that Internet Explorer 8 and newer will return the document mode 
+  so IE8 rendering as IE7 will return 7.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The major version of the browser.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getBrowserMinorVersion"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getBrowserMinorVersion</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.client.v_browser_details-pysrc.html#VBrowserDetails.getBrowserMinorVersion">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the browser minor version e.g., 5 for Firefox 3.5.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The minor version of the browser, or -1 if not known/parsed.</dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        #getBrowserMajorVersion()
+      </p>
+</div></td></tr></table>
+</div>
+<a name="setIEMode"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setIEMode</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">documentMode</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.client.v_browser_details-pysrc.html#VBrowserDetails.setIEMode">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the version for IE based on the documentMode. This is used to 
+  return the correct the correct IE version when the version from the user 
+  agent string and the value of the documentMode property do not match.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>documentMode</code></strong> - The current document mode</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isWindows"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isWindows</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.client.v_browser_details-pysrc.html#VBrowserDetails.isWindows">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tests if the browser is run on Windows.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true if run on Windows, false otherwise</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isMacOSX"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isMacOSX</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.client.v_browser_details-pysrc.html#VBrowserDetails.isMacOSX">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tests if the browser is run on Mac OSX.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true if run on Mac OSX, false otherwise</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isLinux"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isLinux</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.client.v_browser_details-pysrc.html#VBrowserDetails.isLinux">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tests if the browser is run on Linux.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true if run on Linux, false otherwise</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:03:58 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

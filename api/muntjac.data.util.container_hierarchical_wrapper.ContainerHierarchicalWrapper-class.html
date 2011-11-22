@@ -1,0 +1,1775 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.data-module.html">Package&nbsp;data</a> ::
+        <a href="muntjac.data.util-module.html">Package&nbsp;util</a> ::
+        <a href="muntjac.data.util.container_hierarchical_wrapper-module.html">Module&nbsp;container_hierarchical_wrapper</a> ::
+        Class&nbsp;ContainerHierarchicalWrapper
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class ContainerHierarchicalWrapper</h1><p class="nomargin-top"><span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+                      object --+        
+                               |        
+            <a href="muntjac.data.container.IContainer-class.html">container.IContainer</a> --+    
+                                   |    
+             <a href="muntjac.data.container.IHierarchical-class.html">container.IHierarchical</a> --+
+                                       |
+                          object --+   |
+                                   |   |
+                <a href="muntjac.data.container.IContainer-class.html">container.IContainer</a> --+
+                                       |
+                          object --+   |
+                                   |   |
+    <a href="muntjac.data.container.IItemSetChangeNotifier-class.html">container.IItemSetChangeNotifier</a> --+
+                                       |
+                          object --+   |
+                                   |   |
+<a href="muntjac.data.container.IPropertySetChangeNotifier-class.html">container.IPropertySetChangeNotifier</a> --+
+                                       |
+                                      <strong class="uidshort">ContainerHierarchicalWrapper</strong>
+</pre>
+
+<hr />
+<p>A wrapper class for adding external hierarchy to containers not 
+  implementing the <a 
+  href="muntjac.data.container.IHierarchical-class.html" 
+  class="link">IHierarchical</a> interface.</p>
+  <p>If the wrapped container is changed directly (that is, not through the
+  wrapper), and does not implement IItemSetChangeNotifier and/or 
+  IPropertySetChangeNotifier the hierarchy information must be updated with
+  the <a 
+  href="muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#updateHierarchicalWrapper"
+  class="link">updateHierarchicalWrapper</a> method.</p>
+
+<hr />
+<div class="fields">      <dl><dt>Authors:</dt>
+        <dd>
+          Vaadin Ltd.,
+          Richard Lincoln
+        </dd>
+      </dl>
+</div><!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">toBeWrapped</span>)</span><br />
+      Constructs a new hierarchical wrapper for an existing Container.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#updateHierarchicalWrapper" class="summary-sig-name">updateHierarchicalWrapper</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Updates the wrapper's internal hierarchy data to include all Items in
+      the underlying container.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.updateHierarchicalWrapper">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#removeFromHierarchyWrapper" class="summary-sig-name">removeFromHierarchyWrapper</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Removes the specified Item from the wrapper's internal hierarchy 
+      structure.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.removeFromHierarchyWrapper">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#addToHierarchyWrapper" class="summary-sig-name">addToHierarchyWrapper</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Adds the specified Item specified to the internal hierarchy 
+      structure.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.addToHierarchyWrapper">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#areChildrenAllowed" class="summary-sig-name">areChildrenAllowed</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Tests if the Item with given ID can have children.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.areChildrenAllowed">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#getChildren" class="summary-sig-name">getChildren</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Gets the IDs of all Items that are children of the specified Item.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.getChildren">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#getParent" class="summary-sig-name">getParent</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Gets the ID of the parent Item of the specified Item.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.getParent">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#hasChildren" class="summary-sig-name">hasChildren</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Tests if the Item specified with <code>itemId</code> has child Items 
+      or if it is a leaf.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.hasChildren">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#isRoot" class="summary-sig-name">isRoot</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Tests if the Item specified with <code>itemId</code> is a root Item.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.isRoot">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#rootItemIds" class="summary-sig-name">rootItemIds</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the IDs of all Items in the container that don't have a parent.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.rootItemIds">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#setChildrenAllowed" class="summary-sig-name">setChildrenAllowed</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>,
+        <span class="summary-sig-arg">childrenAllowed</span>)</span><br />
+      Sets the given Item's capability to have children.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.setChildrenAllowed">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#setParent" class="summary-sig-name">setParent</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>,
+        <span class="summary-sig-arg">newParentId</span>)</span><br />
+      Sets the parent of an Item.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.setParent">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#addItem" class="summary-sig-name">addItem</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Adds a new Item by its ID to the underlying container and to the 
+      hierarchy.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.addItem">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#removeAllItems" class="summary-sig-name">removeAllItems</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Removes all items from the underlying container and from the 
+      hierarchy.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.removeAllItems">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#removeItem" class="summary-sig-name">removeItem</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Removes an Item specified by the itemId from the underlying container
+      and from the hierarchy.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.removeItem">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#removeItemRecursively" class="summary-sig-name">removeItemRecursively</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Removes the Item identified by given itemId and all its children.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.removeItemRecursively">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#addContainerProperty" class="summary-sig-name">addContainerProperty</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">propertyId</span>,
+        <span class="summary-sig-arg">typ</span>,
+        <span class="summary-sig-arg">defaultValue</span>)</span><br />
+      Adds a new Property to all Items in the Container.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.addContainerProperty">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#removeContainerProperty" class="summary-sig-name">removeContainerProperty</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">propertyId</span>)</span><br />
+      Removes the specified Property from the underlying container and from
+      the hierarchy.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.removeContainerProperty">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#containsId" class="summary-sig-name">containsId</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Tests if the IContainer contains the specified Item.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.containsId">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#getItem" class="summary-sig-name">getItem</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Gets the <code class="link">Item</code> with the given Item ID from 
+      the IContainer.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.getItem">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#getItemIds" class="summary-sig-name">getItemIds</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the ID's of all visible (after filtering and sorting) Items 
+      stored in the IContainer.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.getItemIds">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#getContainerProperty" class="summary-sig-name">getContainerProperty</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>,
+        <span class="summary-sig-arg">propertyId</span>)</span><br />
+      Gets the Property identified by the given itemId and propertyId from 
+      the IContainer.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.getContainerProperty">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#getContainerPropertyIds" class="summary-sig-name">getContainerPropertyIds</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the ID's of all Properties stored in the IContainer.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.getContainerPropertyIds">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#getType" class="summary-sig-name">getType</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">propertyId</span>)</span><br />
+      Gets the data type of all Properties identified by the given Property
+      ID.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.getType">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#size" class="summary-sig-name">size</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the number of visible Items in the IContainer.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.size">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="__len__"></a><span class="summary-sig-name">__len__</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.__len__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#addListener" class="summary-sig-name">addListener</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">listener</span>,
+        <span class="summary-sig-arg">iface</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Adds an Item set change listener for the object.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.addListener">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#addCallback" class="summary-sig-name">addCallback</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">callback</span>,
+        <span class="summary-sig-arg">eventType</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">*args</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.addCallback">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#removeListener" class="summary-sig-name">removeListener</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">listener</span>,
+        <span class="summary-sig-arg">iface</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Removes the Item set change listener from the object.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.removeListener">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#removeCallback" class="summary-sig-name">removeCallback</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">callback</span>,
+        <span class="summary-sig-arg">eventType</span>=<span class="summary-sig-default">None</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.removeCallback">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== INSTANCE VARIABLES ==================== -->
+<a name="section-InstanceVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_container"></a><span class="summary-name">_container</span><br />
+      The wrapped container
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_noChildrenAllowed"></a><span class="summary-name">_noChildrenAllowed</span><br />
+      Set of IDs of those contained Items that can't have children.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_parent"></a><span class="summary-name">_parent</span><br />
+      Mapping from Item ID to parent Item ID
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_children"></a><span class="summary-name">_children</span><br />
+      Mapping from Item ID to a list of child IDs
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_roots"></a><span class="summary-name">_roots</span><br />
+      List that contains all root elements of the container.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_hierarchical"></a><span class="summary-name">_hierarchical</span><br />
+      Is the wrapped container hierarchical by itself ?
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">toBeWrapped</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Constructs a new hierarchical wrapper for an existing Container. Works
+  even if the to-be-wrapped container already implements the 
+  <code>IHierarchical</code> interface.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>toBeWrapped</code></strong> - the container that needs to be accessed hierarchically</li>
+    </ul></dd>
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a 
+        href="muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#updateHierarchicalWrapper"
+        class="link">updateHierarchicalWrapper</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="updateHierarchicalWrapper"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">updateHierarchicalWrapper</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.updateHierarchicalWrapper">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Updates the wrapper's internal hierarchy data to include all Items in 
+  the underlying container. If the contents of the wrapped container change
+  without the wrapper's knowledge, this method needs to be called to update
+  the hierarchy information of the Items.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeFromHierarchyWrapper"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeFromHierarchyWrapper</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.removeFromHierarchyWrapper">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes the specified Item from the wrapper's internal hierarchy 
+  structure.</p>
+  <p>Note : The Item is not removed from the underlying Container.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - the ID of the item to remove from the hierarchy.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addToHierarchyWrapper"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addToHierarchyWrapper</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.addToHierarchyWrapper">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds the specified Item specified to the internal hierarchy structure.
+  The new item is added as a root Item. The underlying container is not 
+  modified.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - the ID of the item to add to the hierarchy.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="areChildrenAllowed"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">areChildrenAllowed</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.areChildrenAllowed">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tests if the Item with given ID can have children.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - ID of the Item in the container whose child capability is to be 
+          tested</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the specified Item exists in the IContainer 
+          and it can have children, <code>False</code> if it's not found 
+          from the container or it can't have children.</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IHierarchical-class.html#areChildrenAllowed">container.IHierarchical.areChildrenAllowed</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getChildren"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getChildren</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.getChildren">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the IDs of all Items that are children of the specified Item. The
+  returned collection is unmodifiable.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - ID of the Item whose children the caller is interested in</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>An iterable containing the IDs of all other Items that are 
+          children in the container hierarchy</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IHierarchical-class.html#getChildren">container.IHierarchical.getChildren</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getParent"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getParent</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.getParent">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the ID of the parent Item of the specified Item.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - ID of the Item whose parent the caller wishes to find out.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>the ID of the parent Item. Will be <code>None</code> if the 
+          specified Item is a root element.</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IHierarchical-class.html#getParent">container.IHierarchical.getParent</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="hasChildren"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">hasChildren</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.hasChildren">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tests if the Item specified with <code>itemId</code> has child Items 
+  or if it is a leaf. The <a 
+  href="muntjac.data.container.IHierarchical-class.html#getChildren" 
+  class="link">getChildren</a> method always returns <code>None</code> for 
+  leaf Items.</p>
+  <p>Note that being a leaf does not imply whether or not an Item is 
+  allowed to have children.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - ID of the Item to be tested</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the specified Item has children, 
+          <code>False</code> if not (is a leaf)</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IHierarchical-class.html#hasChildren">container.IHierarchical.hasChildren</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isRoot"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isRoot</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.isRoot">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tests if the Item specified with <code>itemId</code> is a root Item. 
+  The hierarchical container can have more than one root and must have at 
+  least one unless it is empty. The <a 
+  href="muntjac.data.container.IHierarchical-class.html#getParent" 
+  class="link">getParent</a> method always returns <code>None</code> for 
+  root Items.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - ID of the Item whose root status is to be tested</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the specified Item is a root, 
+          <code>False</code> if not</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IHierarchical-class.html#isRoot">container.IHierarchical.isRoot</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="rootItemIds"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">rootItemIds</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.rootItemIds">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the IDs of all Items in the container that don't have a parent. 
+  Such items are called <code>root</code> Items. The returned collection is
+  unmodifiable.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>An iterable containing IDs of all root elements of the container</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IHierarchical-class.html#rootItemIds">container.IHierarchical.rootItemIds</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setChildrenAllowed"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setChildrenAllowed</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>,
+        <span class="sig-arg">childrenAllowed</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.setChildrenAllowed">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the given Item's capability to have children. If the Item 
+  identified with the itemId already has children and the 
+  areChildrenAllowed is false this method fails and <code>False</code> is 
+  returned; the children must be first explicitly removed with <a 
+  href="muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#setParent"
+  class="link">setParent</a> or <a 
+  href="muntjac.data.container.IContainer-class.html#removeItem" 
+  class="link">IContainer.removeItem</a>.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - the ID of the Item in the container whose child capability is to 
+          be set.</li>
+        <li><strong class="pname"><code>childrenAllowed</code></strong> - the boolean value specifying if the Item can have children or 
+          not.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the operation succeeded, <code>False</code> 
+          if not</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IHierarchical-class.html#setChildrenAllowed">container.IHierarchical.setChildrenAllowed</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setParent"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setParent</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>,
+        <span class="sig-arg">newParentId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.setParent">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the parent of an Item. The new parent item must exist and be able
+  to have children. (<code>canHaveChildren(newParentId) == True</code>). It
+  is also possible to detach a node from the hierarchy (and thus make it 
+  root) by setting the parent <code>None</code>.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - the ID of the item to be set as the child of the Item identified 
+          with newParentId.</li>
+        <li><strong class="pname"><code>newParentId</code></strong> - the ID of the Item that's to be the new parent of the Item 
+          identified with itemId.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the operation succeeded, <code>False</code> 
+          if not</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IHierarchical-class.html#setParent">container.IHierarchical.setParent</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addItem"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addItem</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.addItem">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds a new Item by its ID to the underlying container and to the 
+  hierarchy. Creates a new Item into the Container, assigns it an automatic
+  ID, and adds it to the hierarchy if <code>itemId</code> is 
+  <code>None</code>.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - the ID of the Item to be created.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>the added Item or <code>None</code> if the operation failed.</dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>NotImplementedError</strong></code> - if the addItem is not supported.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IContainer-class.html#addItem">container.IContainer.addItem</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeAllItems"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeAllItems</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.removeAllItems">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes all items from the underlying container and from the 
+  hierarchy.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the operation succeeded, <code>False</code> 
+          if not</dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>NotImplementedError</strong></code> - if the removeAllItems is not supported.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IContainer-class.html#removeAllItems">container.IContainer.removeAllItems</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeItem"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeItem</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.removeItem">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes an Item specified by the itemId from the underlying container 
+  and from the hierarchy.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - the ID of the Item to be removed.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the operation succeeded, <code>False</code> 
+          if not</dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>NotImplementedError</strong></code> - if the removeItem is not supported.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IContainer-class.html#removeItem">container.IContainer.removeItem</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeItemRecursively"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeItemRecursively</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.removeItemRecursively">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes the Item identified by given itemId and all its children.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - the identifier of the Item to be removed</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>true if the operation succeeded</dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a 
+        href="muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#removeItem"
+        class="link">removeItem</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="addContainerProperty"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addContainerProperty</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">propertyId</span>,
+        <span class="sig-arg">typ</span>,
+        <span class="sig-arg">defaultValue</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.addContainerProperty">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds a new Property to all Items in the Container.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>propertyId</code></strong> - the ID of the new Property.</li>
+        <li><strong class="pname"><code>typ</code></strong> - the Data type of the new Property.</li>
+        <li><strong class="pname"><code>defaultValue</code></strong> - the value all created Properties are initialized to.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the operation succeeded, <code>False</code> 
+          if not</dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>NotImplementedError</strong></code> - if the addContainerProperty is not supported.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IContainer-class.html#addContainerProperty">container.IContainer.addContainerProperty</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeContainerProperty"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeContainerProperty</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">propertyId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.removeContainerProperty">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes the specified Property from the underlying container and from 
+  the hierarchy.</p>
+  <p>Note: The Property will be removed from all Items in the 
+  Container.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>propertyId</code></strong> - the ID of the Property to remove.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the operation succeeded, <code>False</code> 
+          if not</dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>NotImplementedError</strong></code> - if the removeContainerProperty is not supported.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IContainer-class.html#removeContainerProperty">container.IContainer.removeContainerProperty</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="containsId"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">containsId</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.containsId">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tests if the IContainer contains the specified Item.</p>
+  <p>Filtering can hide items so that they will not be visible through the 
+  container API, and this method should respect visibility of items (i.e. 
+  only indicate visible items as being in the container) if feasible for 
+  the container.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - ID the of Item to be tested</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>boolean indicating if the IContainer holds the specified Item</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IContainer-class.html#containsId">container.IContainer.containsId</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getItem"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getItem</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.getItem">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the <code class="link">Item</code> with the given Item ID from 
+  the IContainer. If the IContainer does not contain the requested Item, 
+  <code>None</code> is returned.</p>
+  <p>Containers should not return Items that are filtered out.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - ID of the <code class="link">Item</code> to retrieve</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>the <code class="link">Item</code> with the given ID or 
+          <code>None</code> if the Item is not found in the IContainer</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IContainer-class.html#getItem">container.IContainer.getItem</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getItemIds"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getItemIds</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.getItemIds">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the ID's of all visible (after filtering and sorting) Items 
+  stored in the IContainer. The ID's cannot be modified through the 
+  returned collection.</p>
+  <p>If the container is <a 
+  href="muntjac.data.container.IOrdered-class.html" 
+  class="link">IOrdered</a>, the collection returned by this method should 
+  follow that order. If the container is <a 
+  href="muntjac.data.container.ISortable-class.html" 
+  class="link">ISortable</a>, the items should be in the sorted order.</p>
+  <p>Calling this method for large lazy containers can be an expensive 
+  operation and should be avoided when practical.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>unmodifiable collection of Item IDs</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IContainer-class.html#getItemIds">container.IContainer.getItemIds</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getContainerProperty"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getContainerProperty</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>,
+        <span class="sig-arg">propertyId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.getContainerProperty">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the Property identified by the given itemId and propertyId from 
+  the IContainer. If the IContainer does not contain the item or it is 
+  filtered out, or the IContainer does not have the Property, 
+  <code>None</code> is returned.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - ID of the visible Item which contains the Property</li>
+        <li><strong class="pname"><code>propertyId</code></strong> - ID of the Property to retrieve</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>Property with the given ID or <code>None</code></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IContainer-class.html#getContainerProperty">container.IContainer.getContainerProperty</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getContainerPropertyIds"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getContainerPropertyIds</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.getContainerPropertyIds">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the ID's of all Properties stored in the IContainer. The ID's 
+  cannot be modified through the returned collection.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>unmodifiable collection of Property IDs</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IContainer-class.html#getContainerPropertyIds">container.IContainer.getContainerPropertyIds</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getType"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getType</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">propertyId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.getType">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the data type of all Properties identified by the given Property 
+  ID.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>propertyId</code></strong> - ID identifying the Properties</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>data type of the Properties</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IContainer-class.html#getType">container.IContainer.getType</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="size"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">size</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.size">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the number of visible Items in the IContainer.</p>
+  <p>Filtering can hide items so that they will not be visible through the 
+  container API.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>number of Items in the IContainer</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IContainer-class.html#size">container.IContainer.size</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addListener"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addListener</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">listener</span>,
+        <span class="sig-arg">iface</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.addListener">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds an Item set change listener for the object.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>listener</code></strong> - listener to be added</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IPropertySetChangeNotifier-class.html#addListener">container.IPropertySetChangeNotifier.addListener</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addCallback"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addCallback</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">callback</span>,
+        <span class="sig-arg">eventType</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.addCallback">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.data.container.IPropertySetChangeNotifier-class.html#addCallback">container.IPropertySetChangeNotifier.addCallback</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeListener"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeListener</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">listener</span>,
+        <span class="sig-arg">iface</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.removeListener">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes the Item set change listener from the object.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>listener</code></strong> - listener to be removed</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IPropertySetChangeNotifier-class.html#removeListener">container.IPropertySetChangeNotifier.removeListener</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeCallback"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeCallback</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">callback</span>,
+        <span class="sig-arg">eventType</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_hierarchical_wrapper-pysrc.html#ContainerHierarchicalWrapper.removeCallback">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.data.container.IPropertySetChangeNotifier-class.html#removeCallback">container.IPropertySetChangeNotifier.removeCallback</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:03:57 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

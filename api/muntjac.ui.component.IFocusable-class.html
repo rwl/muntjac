@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.ui.component.IFocusable</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.ui-module.html">Package&nbsp;ui</a> ::
+        <a href="muntjac.ui.component-module.html">Module&nbsp;component</a> ::
+        Class&nbsp;IFocusable
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.ui.component.IFocusable-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class IFocusable</h1><p class="nomargin-top"><span class="codelink"><a href="muntjac.ui.component-pysrc.html#IFocusable">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+                        object --+            
+                                 |            
+               <a href="muntjac.util.IEventListener-class.html">util.IEventListener</a> --+        
+                                     |        
+         <a href="muntjac.terminal.paintable.IPaintable-class.html">terminal.paintable.IPaintable</a> --+    
+                                         |    
+                            object --+   |    
+                                     |   |    
+<a href="muntjac.terminal.variable_owner.IVariableOwner-class.html">terminal.variable_owner.IVariableOwner</a> --+    
+                                         |    
+                            object --+   |    
+                                     |   |    
+           <a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a> --+    
+                                         |    
+                                <a href="muntjac.ui.component.IComponent-class.html">IComponent</a> --+
+                                             |
+                                            <strong class="uidshort">IFocusable</strong>
+</pre>
+
+<dl><dt>Known Subclasses:</dt>
+<dd>
+      <ul class="subclass-list">
+<li><a href="muntjac.ui.field.IField-class.html">field.IField</a></li><li>, <a href="muntjac.ui.upload.Upload-class.html">upload.Upload</a></li><li>, <a href="muntjac.ui.panel.Panel-class.html">panel.Panel</a></li>  </ul>
+</dd></dl>
+
+<hr />
+<p>A sub-interface implemented by components that can obtain input focus.
+  This includes all <code class="link">Field</code> components as well as 
+  some other components, such as <a 
+  href="muntjac.ui.upload.Upload-class.html" class="link">Upload</a>.</p>
+  <p>Focus can be set with <a 
+  href="muntjac.ui.component.IFocusable-class.html#focus" 
+  class="link">focus</a>. This interface does not provide an accessor that 
+  would allow finding out the currently focused component; focus 
+  information can be acquired for some (but not all) <code 
+  class="link">Field</code> components through the <a 
+  href="muntjac.event.field_events.IFocusListener-class.html" 
+  class="link">IFocusListener</a> and <a 
+  href="muntjac.event.field_events.IBlurListener-class.html" 
+  class="link">IBlurListener</a> interfaces.</p>
+
+<hr />
+<div class="fields">      <p><strong>See Also:</strong>
+        <code class="link">FieldEvents</code>
+      </p>
+</div><!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.component.IFocusable-class.html#focus" class="summary-sig-name">focus</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Sets the focus to this component:</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.component-pysrc.html#IFocusable.focus">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.component.IFocusable-class.html#getTabIndex" class="summary-sig-name">getTabIndex</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the <i>tabulator index</i> of the <code>IFocusable</code> 
+      component.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.component-pysrc.html#IFocusable.getTabIndex">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.component.IFocusable-class.html#setTabIndex" class="summary-sig-name">setTabIndex</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">tabIndex</span>)</span><br />
+      Sets the <i>tabulator index</i> of the <code>IFocusable</code> 
+      component.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.component-pysrc.html#IFocusable.setTabIndex">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.component.IComponent-class.html">IComponent</a></code></b>:
+      <code><a href="muntjac.ui.component.IComponent-class.html#addCallback">addCallback</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#addListener">addListener</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#addStyleName">addStyleName</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#attach">attach</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#childRequestedRepaint">childRequestedRepaint</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#detach">detach</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#getApplication">getApplication</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#getCaption">getCaption</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#getIcon">getIcon</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#getLocale">getLocale</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#getParent">getParent</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#getStyleName">getStyleName</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#getWindow">getWindow</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#isEnabled">isEnabled</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#isReadOnly">isReadOnly</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#isVisible">isVisible</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#removeCallback">removeCallback</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#removeListener">removeListener</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#removeStyleName">removeStyleName</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#setCaption">setCaption</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#setEnabled">setEnabled</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#setIcon">setIcon</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#setParent">setParent</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#setReadOnly">setReadOnly</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#setStyleName">setStyleName</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#setVisible">setVisible</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.terminal.paintable.IPaintable-class.html">terminal.paintable.IPaintable</a></code></b>:
+      <code><a href="muntjac.terminal.paintable.IPaintable-class.html#getDebugId">getDebugId</a></code>,
+      <code><a href="muntjac.terminal.paintable.IPaintable-class.html#paint">paint</a></code>,
+      <code><a href="muntjac.terminal.paintable.IPaintable-class.html#requestRepaint">requestRepaint</a></code>,
+      <code><a href="muntjac.terminal.paintable.IPaintable-class.html#requestRepaintRequests">requestRepaintRequests</a></code>,
+      <code><a href="muntjac.terminal.paintable.IPaintable-class.html#setDebugId">setDebugId</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.terminal.variable_owner.IVariableOwner-class.html">terminal.variable_owner.IVariableOwner</a></code></b>:
+      <code><a href="muntjac.terminal.variable_owner.IVariableOwner-class.html#changeVariables">changeVariables</a></code>,
+      <code><a href="muntjac.terminal.variable_owner.IVariableOwner-class.html#isImmediate">isImmediate</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a></code></b>:
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#getHeight">getHeight</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#getHeightUnits">getHeightUnits</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#getWidth">getWidth</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#getWidthUnits">getWidthUnits</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#setHeight">setHeight</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#setHeightUnits">setHeightUnits</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#setSizeFull">setSizeFull</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#setSizeUndefined">setSizeUndefined</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#setWidth">setWidth</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#setWidthUnits">setWidthUnits</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__init__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a></code></b>:
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#SIZE_UNDEFINED">SIZE_UNDEFINED</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_CM">UNITS_CM</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_EM">UNITS_EM</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_EX">UNITS_EX</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_INCH">UNITS_INCH</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_MM">UNITS_MM</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_PERCENTAGE">UNITS_PERCENTAGE</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_PICAS">UNITS_PICAS</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_PIXELS">UNITS_PIXELS</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_POINTS">UNITS_POINTS</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNIT_SYMBOLS">UNIT_SYMBOLS</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="focus"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">focus</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.component-pysrc.html#IFocusable.focus">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the focus to this component:</p>
+<pre class="literalblock">
+ loginBox = Form()
+ loginBox.setCaption(&quot;Login&quot;)
+ layout.addComponent(loginBox)
+
+ # Create the first field which will be focused
+ username = TextField(&quot;User name&quot;)
+ loginBox.addField(&quot;username&quot;, username)
+
+ # Set focus to the user name
+ username.focus()
+
+ password = TextField(&quot;Password&quot;)
+ loginBox.addField(&quot;password&quot;, password)
+
+ login = Button(&quot;Login&quot;)
+ loginBox.getFooter().addComponent(login)
+</pre>
+  <p>Notice that this interface does not provide an accessor that would 
+  allow finding out the currently focused component. Focus information can 
+  be acquired for some (but not all) <a 
+  href="muntjac.ui.field.IField-class.html" class="link">IField</a> 
+  components through the <a 
+  href="muntjac.event.field_events.IFocusListener-class.html" 
+  class="link">IFocusListener</a> and <a 
+  href="muntjac.event.field_events.IBlurListener-class.html" 
+  class="link">IBlurListener</a> interfaces.</p>
+  <dl class="fields">
+  </dl>
+<div class="fields">      <dl><dt>See Also:</dt>
+        <dd>
+          <code class="link">FieldEvents</code>,
+          <a href="muntjac.event.field_events.FocusEvent-class.html" 
+          class="link">FocusEvent</a>,
+          <a href="muntjac.event.field_events.IFocusListener-class.html" 
+          class="link">IFocusListener</a>,
+          <a href="muntjac.event.field_events.BlurEvent-class.html" 
+          class="link">BlurEvent</a>,
+          <a href="muntjac.event.field_events.IBlurListener-class.html" 
+          class="link">IBlurListener</a>
+        </dd>
+      </dl>
+</div></td></tr></table>
+</div>
+<a name="getTabIndex"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getTabIndex</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.component-pysrc.html#IFocusable.getTabIndex">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the <i>tabulator index</i> of the <code>IFocusable</code> 
+  component.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>tab index set for the <code>IFocusable</code> component</dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a href="muntjac.ui.component.IFocusable-class.html#setTabIndex" 
+        class="link">setTabIndex</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="setTabIndex"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setTabIndex</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">tabIndex</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.component-pysrc.html#IFocusable.setTabIndex">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the <i>tabulator index</i> of the <code>IFocusable</code> 
+  component. The tab index property is used to specify the order in which 
+  the fields are focused when the user presses the Tab key. Components with
+  a defined tab index are focused sequentially first, and then the 
+  components with no tab index:</p>
+<pre class="literalblock">
+ loginBox = Form()
+ loginBox.setCaption(&quot;Login&quot;)
+ layout.addComponent(loginBox)
+
+ # Create the first field which will be focused
+ username = TextField(&quot;User name&quot;)
+ loginBox.addField(&quot;username&quot;, username)
+
+ # Set focus to the user name
+ username.focus()
+
+ password = TextField(&quot;Password&quot;)
+ loginBox.addField(&quot;password&quot;, password)
+
+ login = Button(&quot;Login&quot;)
+ loginBox.getFooter().addComponent(login)
+
+ # An additional component which natural focus order would
+ # be after the button.
+ remember = CheckBox(&quot;Remember me&quot;)
+ loginBox.getFooter().addComponent(remember)
+
+ username.setTabIndex(1)
+ password.setTabIndex(2)
+ remember.setTabIndex(3)  # Different than natural place
+ login.setTabIndex(4)
+</pre>
+  <p>After all focusable user interface components are done, the browser 
+  can begin again from the component with the smallest tab index, or it can
+  take the focus out of the page, for example, to the location bar.</p>
+  <p>If the tab index is not set (is set to zero), the default tab order is
+  used. The order is somewhat browser-dependent, but generally follows the 
+  HTML structure of the page.</p>
+  <p>A negative value means that the component is completely removed from 
+  the tabulation order and can not be reached by pressing the Tab key at 
+  all.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>tabIndex</code></strong> - the tab order of this component. Indexes usually start from 1. 
+          Zero means that default tab order should be used. A negative 
+          value means that the field should not be included in the tabbing 
+          sequence.</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a href="muntjac.ui.component.IFocusable-class.html#getTabIndex" 
+        class="link">getTabIndex</a>
+      </p>
+</div></td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:04:00 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

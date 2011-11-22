@@ -1,0 +1,1181 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.ui.uri_fragment_utility</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.ui-module.html">Package&nbsp;ui</a> ::
+        Module&nbsp;uri_fragment_utility
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.ui.uri_fragment_utility-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="muntjac.ui.uri_fragment_utility-module.html">Module muntjac.ui.uri_fragment_utility</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno">  1</tt>  <tt class="py-line"><tt class="py-comment"># Copyright (C) 2011 Vaadin Ltd.</tt> </tt>
+<a name="L2"></a><tt class="py-lineno">  2</tt>  <tt class="py-line"><tt class="py-comment"># Copyright (C) 2011 Richard Lincoln</tt> </tt>
+<a name="L3"></a><tt class="py-lineno">  3</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L4"></a><tt class="py-lineno">  4</tt>  <tt class="py-line"><tt class="py-comment"># This program is free software: you can redistribute it and/or modify</tt> </tt>
+<a name="L5"></a><tt class="py-lineno">  5</tt>  <tt class="py-line"><tt class="py-comment"># it under the terms of the GNU Affero General Public License as published</tt> </tt>
+<a name="L6"></a><tt class="py-lineno">  6</tt>  <tt class="py-line"><tt class="py-comment"># by the Free Software Foundation, either version 3 of the License, or</tt> </tt>
+<a name="L7"></a><tt class="py-lineno">  7</tt>  <tt class="py-line"><tt class="py-comment"># (at your option) any later version.</tt> </tt>
+<a name="L8"></a><tt class="py-lineno">  8</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line"><tt class="py-comment"># This program is distributed in the hope that it will be useful,</tt> </tt>
+<a name="L10"></a><tt class="py-lineno"> 10</tt>  <tt class="py-line"><tt class="py-comment"># but WITHOUT ANY WARRANTY; without even the implied warranty of</tt> </tt>
+<a name="L11"></a><tt class="py-lineno"> 11</tt>  <tt class="py-line"><tt class="py-comment"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</tt> </tt>
+<a name="L12"></a><tt class="py-lineno"> 12</tt>  <tt class="py-line"><tt class="py-comment"># GNU Affero General Public License for more details.</tt> </tt>
+<a name="L13"></a><tt class="py-lineno"> 13</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L14"></a><tt class="py-lineno"> 14</tt>  <tt class="py-line"><tt class="py-comment"># You should have received a copy of the GNU Affero General Public License</tt> </tt>
+<a name="L15"></a><tt class="py-lineno"> 15</tt>  <tt class="py-line"><tt class="py-comment"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</tt> </tt>
+<a name="L16"></a><tt class="py-lineno"> 16</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L17"></a><tt class="py-lineno"> 17</tt>  <tt class="py-line"><tt class="py-comment"># Note: This is a modified file from Vaadin. For further information on</tt> </tt>
+<a name="L18"></a><tt class="py-lineno"> 18</tt>  <tt class="py-line"><tt class="py-comment">#       Vaadin please visit http://www.vaadin.com.</tt> </tt>
+<a name="L19"></a><tt class="py-lineno"> 19</tt>  <tt class="py-line"> </tt>
+<a name="L20"></a><tt class="py-lineno"> 20</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Package muntjac=muntjac-module.html,Function muntjac.main.muntjac()=muntjac.main-module.html#muntjac"><a title="muntjac
+muntjac.main.muntjac" class="py-name" href="#" onclick="return doclink('link-0', 'muntjac', 'link-0');">muntjac</a></tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Package muntjac.terminal.gwt.client.ui=muntjac.terminal.gwt.client.ui-module.html,Package muntjac.ui=muntjac.ui-module.html"><a title="muntjac.terminal.gwt.client.ui
+muntjac.ui" class="py-name" href="#" onclick="return doclink('link-1', 'ui', 'link-1');">ui</a></tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Module muntjac.ui.abstract_component=muntjac.ui.abstract_component-module.html"><a title="muntjac.ui.abstract_component" class="py-name" href="#" onclick="return doclink('link-2', 'abstract_component', 'link-2');">abstract_component</a></tt> <tt class="py-keyword">import</tt> <tt id="link-3" class="py-name" targets="Class muntjac.ui.abstract_component.AbstractComponent=muntjac.ui.abstract_component.AbstractComponent-class.html"><a title="muntjac.ui.abstract_component.AbstractComponent" class="py-name" href="#" onclick="return doclink('link-3', 'AbstractComponent', 'link-3');">AbstractComponent</a></tt> </tt>
+<a name="L21"></a><tt class="py-lineno"> 21</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-4" class="py-name"><a title="muntjac
+muntjac.main.muntjac" class="py-name" href="#" onclick="return doclink('link-4', 'muntjac', 'link-0');">muntjac</a></tt><tt class="py-op">.</tt><tt id="link-5" class="py-name"><a title="muntjac.terminal.gwt.client.ui
+muntjac.ui" class="py-name" href="#" onclick="return doclink('link-5', 'ui', 'link-1');">ui</a></tt><tt class="py-op">.</tt><tt id="link-6" class="py-name" targets="Module muntjac.ui.component=muntjac.ui.component-module.html"><a title="muntjac.ui.component" class="py-name" href="#" onclick="return doclink('link-6', 'component', 'link-6');">component</a></tt> <tt class="py-keyword">import</tt> <tt id="link-7" class="py-name" targets="Class muntjac.ui.component.Event=muntjac.ui.component.Event-class.html"><a title="muntjac.ui.component.Event" class="py-name" href="#" onclick="return doclink('link-7', 'Event', 'link-7');">Event</a></tt> <tt class="py-keyword">as</tt> <tt class="py-name">ComponentEvent</tt> </tt>
+<a name="L22"></a><tt class="py-lineno"> 22</tt>  <tt class="py-line"> </tt>
+<a name="L23"></a><tt class="py-lineno"> 23</tt>  <tt class="py-line"> </tt>
+<a name="IFragmentChangedListener"></a><div id="IFragmentChangedListener-def"><a name="L24"></a><tt class="py-lineno"> 24</tt> <a class="py-toggle" href="#" id="IFragmentChangedListener-toggle" onclick="return toggle('IFragmentChangedListener');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.ui.uri_fragment_utility.IFragmentChangedListener-class.html">IFragmentChangedListener</a><tt class="py-op">(</tt><tt class="py-base-class">object</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="IFragmentChangedListener-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="IFragmentChangedListener-expanded"><a name="L25"></a><tt class="py-lineno"> 25</tt>  <tt class="py-line">    <tt class="py-docstring">"""Listener that listens changes in URI fragment."""</tt> </tt>
+<a name="L26"></a><tt class="py-lineno"> 26</tt>  <tt class="py-line"> </tt>
+<a name="IFragmentChangedListener.fragmentChanged"></a><div id="IFragmentChangedListener.fragmentChanged-def"><a name="L27"></a><tt class="py-lineno"> 27</tt> <a class="py-toggle" href="#" id="IFragmentChangedListener.fragmentChanged-toggle" onclick="return toggle('IFragmentChangedListener.fragmentChanged');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.uri_fragment_utility.IFragmentChangedListener-class.html#fragmentChanged">fragmentChanged</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">source</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="IFragmentChangedListener.fragmentChanged-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="IFragmentChangedListener.fragmentChanged-expanded"><a name="L28"></a><tt class="py-lineno"> 28</tt>  <tt class="py-line">        <tt class="py-keyword">raise</tt> <tt class="py-name">NotImplementedError</tt> </tt>
+</div></div><a name="L29"></a><tt class="py-lineno"> 29</tt>  <tt class="py-line"> </tt>
+<a name="L30"></a><tt class="py-lineno"> 30</tt>  <tt class="py-line"> </tt>
+<a name="L31"></a><tt class="py-lineno"> 31</tt>  <tt class="py-line"><tt id="link-8" class="py-name" targets="Function muntjac.ui.uri_fragment_utility._FRAGMENT_CHANGED_METHOD()=muntjac.ui.uri_fragment_utility-module.html#_FRAGMENT_CHANGED_METHOD"><a title="muntjac.ui.uri_fragment_utility._FRAGMENT_CHANGED_METHOD" class="py-name" href="#" onclick="return doclink('link-8', '_FRAGMENT_CHANGED_METHOD', 'link-8');">_FRAGMENT_CHANGED_METHOD</a></tt> <tt class="py-op">=</tt> <tt class="py-name">getattr</tt><tt class="py-op">(</tt><tt id="link-9" class="py-name" targets="Class muntjac.ui.uri_fragment_utility.IFragmentChangedListener=muntjac.ui.uri_fragment_utility.IFragmentChangedListener-class.html"><a title="muntjac.ui.uri_fragment_utility.IFragmentChangedListener" class="py-name" href="#" onclick="return doclink('link-9', 'IFragmentChangedListener', 'link-9');">IFragmentChangedListener</a></tt><tt class="py-op">,</tt> <tt class="py-string">'fragmentChanged'</tt><tt class="py-op">)</tt> </tt>
+<a name="L32"></a><tt class="py-lineno"> 32</tt>  <tt class="py-line"> </tt>
+<a name="L33"></a><tt class="py-lineno"> 33</tt>  <tt class="py-line"> </tt>
+<a name="UriFragmentUtility"></a><div id="UriFragmentUtility-def"><a name="L34"></a><tt class="py-lineno"> 34</tt> <a class="py-toggle" href="#" id="UriFragmentUtility-toggle" onclick="return toggle('UriFragmentUtility');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.ui.uri_fragment_utility.UriFragmentUtility-class.html">UriFragmentUtility</a><tt class="py-op">(</tt><tt class="py-base-class">AbstractComponent</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="UriFragmentUtility-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="UriFragmentUtility-expanded"><a name="L35"></a><tt class="py-lineno"> 35</tt>  <tt class="py-line">    <tt class="py-docstring">"""Experimental web browser dependent component for URI fragment (part</tt> </tt>
+<a name="L36"></a><tt class="py-lineno"> 36</tt>  <tt class="py-line"><tt class="py-docstring">    after hash mark "#") reading and writing.</tt> </tt>
+<a name="L37"></a><tt class="py-lineno"> 37</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L38"></a><tt class="py-lineno"> 38</tt>  <tt class="py-line"><tt class="py-docstring">    Component can be used to workaround common ajax web applications pitfalls:</tt> </tt>
+<a name="L39"></a><tt class="py-lineno"> 39</tt>  <tt class="py-line"><tt class="py-docstring">    bookmarking a program state and back button.</tt> </tt>
+<a name="L40"></a><tt class="py-lineno"> 40</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L41"></a><tt class="py-lineno"> 41</tt>  <tt class="py-line"> </tt>
+<a name="L42"></a><tt class="py-lineno"> 42</tt>  <tt class="py-line">    <tt id="link-10" class="py-name" targets="Variable muntjac.ui.absolute_layout.AbsoluteLayout.CLIENT_WIDGET=muntjac.ui.absolute_layout.AbsoluteLayout-class.html#CLIENT_WIDGET,Variable muntjac.ui.accordion.Accordion.CLIENT_WIDGET=muntjac.ui.accordion.Accordion-class.html#CLIENT_WIDGET,Variable muntjac.ui.audio.Audio.CLIENT_WIDGET=muntjac.ui.audio.Audio-class.html#CLIENT_WIDGET,Variable muntjac.ui.button.Button.CLIENT_WIDGET=muntjac.ui.button.Button-class.html#CLIENT_WIDGET,Variable muntjac.ui.check_box.CheckBox.CLIENT_WIDGET=muntjac.ui.check_box.CheckBox-class.html#CLIENT_WIDGET,Variable muntjac.ui.combo_box.ComboBox.CLIENT_WIDGET=muntjac.ui.combo_box.ComboBox-class.html#CLIENT_WIDGET,Variable muntjac.ui.css_layout.CssLayout.CLIENT_WIDGET=muntjac.ui.css_layout.CssLayout-class.html#CLIENT_WIDGET,Variable muntjac.ui.custom_component.CustomComponent.CLIENT_WIDGET=muntjac.ui.custom_component.CustomComponent-class.html#CLIENT_WIDGET,Variable muntjac.ui.custom_layout.CustomLayout.CLIENT_WIDGET=muntjac.ui.custom_layout.CustomLayout-class.html#CLIENT_WIDGET,Variable muntjac.ui.date_field.DateField.CLIENT_WIDGET=muntjac.ui.date_field.DateField-class.html#CLIENT_WIDGET,Variable muntjac.ui.drag_and_drop_wrapper.DragAndDropWrapper.CLIENT_WIDGET=muntjac.ui.drag_and_drop_wrapper.DragAndDropWrapper-class.html#CLIENT_WIDGET,Variable muntjac.ui.embedded.Embedded.CLIENT_WIDGET=muntjac.ui.embedded.Embedded-class.html#CLIENT_WIDGET,Variable muntjac.ui.form.Form.CLIENT_WIDGET=muntjac.ui.form.Form-class.html#CLIENT_WIDGET,Variable muntjac.ui.form_layout.FormLayout.CLIENT_WIDGET=muntjac.ui.form_layout.FormLayout-class.html#CLIENT_WIDGET,Variable muntjac.ui.grid_layout.GridLayout.CLIENT_WIDGET=muntjac.ui.grid_layout.GridLayout-class.html#CLIENT_WIDGET,Variable muntjac.ui.horizontal_layout.HorizontalLayout.CLIENT_WIDGET=muntjac.ui.horizontal_layout.HorizontalLayout-class.html#CLIENT_WIDGET,Variable muntjac.ui.horizontal_split_panel.HorizontalSplitPanel.CLIENT_WIDGET=muntjac.ui.horizontal_split_panel.HorizontalSplitPanel-class.html#CLIENT_WIDGET,Variable muntjac.ui.inline_date_field.InlineDateField.CLIENT_WIDGET=muntjac.ui.inline_date_field.InlineDateField-class.html#CLIENT_WIDGET,Variable muntjac.ui.label.Label.CLIENT_WIDGET=muntjac.ui.label.Label-class.html#CLIENT_WIDGET,Variable muntjac.ui.link.Link.CLIENT_WIDGET=muntjac.ui.link.Link-class.html#CLIENT_WIDGET,Variable muntjac.ui.list_select.ListSelect.CLIENT_WIDGET=muntjac.ui.list_select.ListSelect-class.html#CLIENT_WIDGET,Variable muntjac.ui.menu_bar.MenuBar.CLIENT_WIDGET=muntjac.ui.menu_bar.MenuBar-class.html#CLIENT_WIDGET,Variable muntjac.ui.native_button.NativeButton.CLIENT_WIDGET=muntjac.ui.native_button.NativeButton-class.html#CLIENT_WIDGET,Variable muntjac.ui.native_select.NativeSelect.CLIENT_WIDGET=muntjac.ui.native_select.NativeSelect-class.html#CLIENT_WIDGET,Variable muntjac.ui.option_group.OptionGroup.CLIENT_WIDGET=muntjac.ui.option_group.OptionGroup-class.html#CLIENT_WIDGET,Variable muntjac.ui.ordered_layout.OrderedLayout.CLIENT_WIDGET=muntjac.ui.ordered_layout.OrderedLayout-class.html#CLIENT_WIDGET,Variable muntjac.ui.panel.Panel.CLIENT_WIDGET=muntjac.ui.panel.Panel-class.html#CLIENT_WIDGET,Variable muntjac.ui.password_field.PasswordField.CLIENT_WIDGET=muntjac.ui.password_field.PasswordField-class.html#CLIENT_WIDGET,Variable muntjac.ui.popup_view.PopupView.CLIENT_WIDGET=muntjac.ui.popup_view.PopupView-class.html#CLIENT_WIDGET,Variable muntjac.ui.progress_indicator.ProgressIndicator.CLIENT_WIDGET=muntjac.ui.progress_indicator.ProgressIndicator-class.html#CLIENT_WIDGET,Variable muntjac.ui.rich_text_area.RichTextArea.CLIENT_WIDGET=muntjac.ui.rich_text_area.RichTextArea-class.html#CLIENT_WIDGET,Variable muntjac.ui.select.Select.CLIENT_WIDGET=muntjac.ui.select.Select-class.html#CLIENT_WIDGET,Variable muntjac.ui.slider.Slider.CLIENT_WIDGET=muntjac.ui.slider.Slider-class.html#CLIENT_WIDGET,Variable muntjac.ui.split_panel.SplitPanel.CLIENT_WIDGET=muntjac.ui.split_panel.SplitPanel-class.html#CLIENT_WIDGET,Variable muntjac.ui.tab_sheet.TabSheet.CLIENT_WIDGET=muntjac.ui.tab_sheet.TabSheet-class.html#CLIENT_WIDGET,Variable muntjac.ui.table.Table.CLIENT_WIDGET=muntjac.ui.table.Table-class.html#CLIENT_WIDGET,Variable muntjac.ui.text_area.TextArea.CLIENT_WIDGET=muntjac.ui.text_area.TextArea-class.html#CLIENT_WIDGET,Variable muntjac.ui.text_field.TextField.CLIENT_WIDGET=muntjac.ui.text_field.TextField-class.html#CLIENT_WIDGET,Variable muntjac.ui.tree.Tree.CLIENT_WIDGET=muntjac.ui.tree.Tree-class.html#CLIENT_WIDGET,Variable muntjac.ui.twin_col_select.TwinColSelect.CLIENT_WIDGET=muntjac.ui.twin_col_select.TwinColSelect-class.html#CLIENT_WIDGET,Variable muntjac.ui.upload.Upload.CLIENT_WIDGET=muntjac.ui.upload.Upload-class.html#CLIENT_WIDGET,Variable muntjac.ui.uri_fragment_utility.UriFragmentUtility.CLIENT_WIDGET=muntjac.ui.uri_fragment_utility.UriFragmentUtility-class.html#CLIENT_WIDGET,Variable muntjac.ui.vertical_layout.VerticalLayout.CLIENT_WIDGET=muntjac.ui.vertical_layout.VerticalLayout-class.html#CLIENT_WIDGET,Variable muntjac.ui.vertical_split_panel.VerticalSplitPanel.CLIENT_WIDGET=muntjac.ui.vertical_split_panel.VerticalSplitPanel-class.html#CLIENT_WIDGET,Variable muntjac.ui.video.Video.CLIENT_WIDGET=muntjac.ui.video.Video-class.html#CLIENT_WIDGET,Variable muntjac.ui.window.Window.CLIENT_WIDGET=muntjac.ui.window.Window-class.html#CLIENT_WIDGET"><a title="muntjac.ui.absolute_layout.AbsoluteLayout.CLIENT_WIDGET
+muntjac.ui.accordion.Accordion.CLIENT_WIDGET
+muntjac.ui.audio.Audio.CLIENT_WIDGET
+muntjac.ui.button.Button.CLIENT_WIDGET
+muntjac.ui.check_box.CheckBox.CLIENT_WIDGET
+muntjac.ui.combo_box.ComboBox.CLIENT_WIDGET
+muntjac.ui.css_layout.CssLayout.CLIENT_WIDGET
+muntjac.ui.custom_component.CustomComponent.CLIENT_WIDGET
+muntjac.ui.custom_layout.CustomLayout.CLIENT_WIDGET
+muntjac.ui.date_field.DateField.CLIENT_WIDGET
+muntjac.ui.drag_and_drop_wrapper.DragAndDropWrapper.CLIENT_WIDGET
+muntjac.ui.embedded.Embedded.CLIENT_WIDGET
+muntjac.ui.form.Form.CLIENT_WIDGET
+muntjac.ui.form_layout.FormLayout.CLIENT_WIDGET
+muntjac.ui.grid_layout.GridLayout.CLIENT_WIDGET
+muntjac.ui.horizontal_layout.HorizontalLayout.CLIENT_WIDGET
+muntjac.ui.horizontal_split_panel.HorizontalSplitPanel.CLIENT_WIDGET
+muntjac.ui.inline_date_field.InlineDateField.CLIENT_WIDGET
+muntjac.ui.label.Label.CLIENT_WIDGET
+muntjac.ui.link.Link.CLIENT_WIDGET
+muntjac.ui.list_select.ListSelect.CLIENT_WIDGET
+muntjac.ui.menu_bar.MenuBar.CLIENT_WIDGET
+muntjac.ui.native_button.NativeButton.CLIENT_WIDGET
+muntjac.ui.native_select.NativeSelect.CLIENT_WIDGET
+muntjac.ui.option_group.OptionGroup.CLIENT_WIDGET
+muntjac.ui.ordered_layout.OrderedLayout.CLIENT_WIDGET
+muntjac.ui.panel.Panel.CLIENT_WIDGET
+muntjac.ui.password_field.PasswordField.CLIENT_WIDGET
+muntjac.ui.popup_view.PopupView.CLIENT_WIDGET
+muntjac.ui.progress_indicator.ProgressIndicator.CLIENT_WIDGET
+muntjac.ui.rich_text_area.RichTextArea.CLIENT_WIDGET
+muntjac.ui.select.Select.CLIENT_WIDGET
+muntjac.ui.slider.Slider.CLIENT_WIDGET
+muntjac.ui.split_panel.SplitPanel.CLIENT_WIDGET
+muntjac.ui.tab_sheet.TabSheet.CLIENT_WIDGET
+muntjac.ui.table.Table.CLIENT_WIDGET
+muntjac.ui.text_area.TextArea.CLIENT_WIDGET
+muntjac.ui.text_field.TextField.CLIENT_WIDGET
+muntjac.ui.tree.Tree.CLIENT_WIDGET
+muntjac.ui.twin_col_select.TwinColSelect.CLIENT_WIDGET
+muntjac.ui.upload.Upload.CLIENT_WIDGET
+muntjac.ui.uri_fragment_utility.UriFragmentUtility.CLIENT_WIDGET
+muntjac.ui.vertical_layout.VerticalLayout.CLIENT_WIDGET
+muntjac.ui.vertical_split_panel.VerticalSplitPanel.CLIENT_WIDGET
+muntjac.ui.video.Video.CLIENT_WIDGET
+muntjac.ui.window.Window.CLIENT_WIDGET" class="py-name" href="#" onclick="return doclink('link-10', 'CLIENT_WIDGET', 'link-10');">CLIENT_WIDGET</a></tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> <tt class="py-comment">#ClientWidget(VUriFragmentUtility, LoadStyle.EAGER)</tt> </tt>
+<a name="L43"></a><tt class="py-lineno"> 43</tt>  <tt class="py-line"> </tt>
+<a name="L44"></a><tt class="py-lineno"> 44</tt>  <tt class="py-line"> </tt>
+<a name="UriFragmentUtility.addListener"></a><div id="UriFragmentUtility.addListener-def"><a name="L45"></a><tt class="py-lineno"> 45</tt> <a class="py-toggle" href="#" id="UriFragmentUtility.addListener-toggle" onclick="return toggle('UriFragmentUtility.addListener');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.uri_fragment_utility.UriFragmentUtility-class.html#addListener">addListener</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">listener</tt><tt class="py-op">,</tt> <tt class="py-param">iface</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="UriFragmentUtility.addListener-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="UriFragmentUtility.addListener-expanded"><a name="L46"></a><tt class="py-lineno"> 46</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-op">(</tt><tt class="py-name">isinstance</tt><tt class="py-op">(</tt><tt class="py-name">listener</tt><tt class="py-op">,</tt> <tt id="link-11" class="py-name"><a title="muntjac.ui.uri_fragment_utility.IFragmentChangedListener" class="py-name" href="#" onclick="return doclink('link-11', 'IFragmentChangedListener', 'link-9');">IFragmentChangedListener</a></tt><tt class="py-op">)</tt> <tt class="py-keyword">and</tt> </tt>
+<a name="L47"></a><tt class="py-lineno"> 47</tt>  <tt class="py-line">                <tt class="py-op">(</tt><tt class="py-name">iface</tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt> <tt class="py-keyword">or</tt> <tt class="py-name">issubclass</tt><tt class="py-op">(</tt><tt class="py-name">iface</tt><tt class="py-op">,</tt> <tt id="link-12" class="py-name"><a title="muntjac.ui.uri_fragment_utility.IFragmentChangedListener" class="py-name" href="#" onclick="return doclink('link-12', 'IFragmentChangedListener', 'link-9');">IFragmentChangedListener</a></tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L48"></a><tt class="py-lineno"> 48</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-13" class="py-name" targets="Method muntjac.ui.abstract_component.AbstractComponent.registerListener()=muntjac.ui.abstract_component.AbstractComponent-class.html#registerListener"><a title="muntjac.ui.abstract_component.AbstractComponent.registerListener" class="py-name" href="#" onclick="return doclink('link-13', 'registerListener', 'link-13');">registerListener</a></tt><tt class="py-op">(</tt><tt id="link-14" class="py-name" targets="Class muntjac.ui.uri_fragment_utility.FragmentChangedEvent=muntjac.ui.uri_fragment_utility.FragmentChangedEvent-class.html"><a title="muntjac.ui.uri_fragment_utility.FragmentChangedEvent" class="py-name" href="#" onclick="return doclink('link-14', 'FragmentChangedEvent', 'link-14');">FragmentChangedEvent</a></tt><tt class="py-op">,</tt> </tt>
+<a name="L49"></a><tt class="py-lineno"> 49</tt>  <tt class="py-line">                    <tt class="py-name">listener</tt><tt class="py-op">,</tt> <tt id="link-15" class="py-name"><a title="muntjac.ui.uri_fragment_utility._FRAGMENT_CHANGED_METHOD" class="py-name" href="#" onclick="return doclink('link-15', '_FRAGMENT_CHANGED_METHOD', 'link-8');">_FRAGMENT_CHANGED_METHOD</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L50"></a><tt class="py-lineno"> 50</tt>  <tt class="py-line"> </tt>
+<a name="L51"></a><tt class="py-lineno"> 51</tt>  <tt class="py-line">        <tt class="py-name">super</tt><tt class="py-op">(</tt><tt id="link-16" class="py-name" targets="Class muntjac.ui.uri_fragment_utility.UriFragmentUtility=muntjac.ui.uri_fragment_utility.UriFragmentUtility-class.html"><a title="muntjac.ui.uri_fragment_utility.UriFragmentUtility" class="py-name" href="#" onclick="return doclink('link-16', 'UriFragmentUtility', 'link-16');">UriFragmentUtility</a></tt><tt class="py-op">,</tt> <tt class="py-name">self</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt id="link-17" class="py-name" targets="Method muntjac.application.Application.addListener()=muntjac.application.Application-class.html#addListener,Method muntjac.data.buffered.SourceException.addListener()=muntjac.data.buffered.SourceException-class.html#addListener,Method muntjac.data.container.IItemSetChangeNotifier.addListener()=muntjac.data.container.IItemSetChangeNotifier-class.html#addListener,Method muntjac.data.container.IPropertySetChangeNotifier.addListener()=muntjac.data.container.IPropertySetChangeNotifier-class.html#addListener,Method muntjac.data.item.IPropertySetChangeNotifier.addListener()=muntjac.data.item.IPropertySetChangeNotifier-class.html#addListener,Method muntjac.data.property.IReadOnlyStatusChangeNotifier.addListener()=muntjac.data.property.IReadOnlyStatusChangeNotifier-class.html#addListener,Method muntjac.data.property.IValueChangeNotifier.addListener()=muntjac.data.property.IValueChangeNotifier-class.html#addListener,Method muntjac.data.util.abstract_container.AbstractContainer.addListener()=muntjac.data.util.abstract_container.AbstractContainer-class.html#addListener,Method muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer.addListener()=muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#addListener,Method muntjac.data.util.abstract_property.AbstractProperty.addListener()=muntjac.data.util.abstract_property.AbstractProperty-class.html#addListener,Method muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper.addListener()=muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#addListener,Method muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper.addListener()=muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#addListener,Method muntjac.data.util.indexed_container.IndexedContainer.addListener()=muntjac.data.util.indexed_container.IndexedContainer-class.html#addListener,Method muntjac.data.util.indexed_container.IndexedContainerProperty.addListener()=muntjac.data.util.indexed_container.IndexedContainerProperty-class.html#addListener,Method muntjac.data.util.propertyset_item.PropertysetItem.addListener()=muntjac.data.util.propertyset_item.PropertysetItem-class.html#addListener,Method muntjac.data.validator.InvalidValueException.addListener()=muntjac.data.validator.InvalidValueException-class.html#addListener,Method muntjac.event.event_router.EventRouter.addListener()=muntjac.event.event_router.EventRouter-class.html#addListener,Method muntjac.event.field_events.IBlurNotifier.addListener()=muntjac.event.field_events.IBlurNotifier-class.html#addListener,Method muntjac.event.field_events.IFocusNotifier.addListener()=muntjac.event.field_events.IFocusNotifier-class.html#addListener,Method muntjac.event.field_events.ITextChangeNotifier.addListener()=muntjac.event.field_events.ITextChangeNotifier-class.html#addListener,Method muntjac.event.item_click_event.IItemClickNotifier.addListener()=muntjac.event.item_click_event.IItemClickNotifier-class.html#addListener,Method muntjac.event.layout_events.ILayoutClickNotifier.addListener()=muntjac.event.layout_events.ILayoutClickNotifier-class.html#addListener,Method muntjac.event.method_event_source.IMethodEventSource.addListener()=muntjac.event.method_event_source.IMethodEventSource-class.html#addListener,Method muntjac.terminal.composite_error_message.CompositeErrorMessage.addListener()=muntjac.terminal.composite_error_message.CompositeErrorMessage-class.html#addListener,Method muntjac.terminal.error_message.IErrorMessage.addListener()=muntjac.terminal.error_message.IErrorMessage-class.html#addListener,Method muntjac.terminal.paintable.IPaintable.addListener()=muntjac.terminal.paintable.IPaintable-class.html#addListener,Method muntjac.terminal.sys_error.SysError.addListener()=muntjac.terminal.sys_error.SysError-class.html#addListener,Method muntjac.terminal.user_error.UserError.addListener()=muntjac.terminal.user_error.UserError-class.html#addListener,Method muntjac.ui.absolute_layout.AbsoluteLayout.addListener()=muntjac.ui.absolute_layout.AbsoluteLayout-class.html#addListener,Method muntjac.ui.abstract_component.AbstractComponent.addListener()=muntjac.ui.abstract_component.AbstractComponent-class.html#addListener,Method muntjac.ui.abstract_component_container.AbstractComponentContainer.addListener()=muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#addListener,Method muntjac.ui.abstract_field.AbstractField.addListener()=muntjac.ui.abstract_field.AbstractField-class.html#addListener,Method muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.addListener()=muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout-class.html#addListener,Method muntjac.ui.abstract_select.AbstractSelect.addListener()=muntjac.ui.abstract_select.AbstractSelect-class.html#addListener,Method muntjac.ui.abstract_split_panel.AbstractSplitPanel.addListener()=muntjac.ui.abstract_split_panel.AbstractSplitPanel-class.html#addListener,Method muntjac.ui.abstract_text_field.AbstractTextField.addListener()=muntjac.ui.abstract_text_field.AbstractTextField-class.html#addListener,Method muntjac.ui.button.Button.addListener()=muntjac.ui.button.Button-class.html#addListener,Method muntjac.ui.component.IComponent.addListener()=muntjac.ui.component.IComponent-class.html#addListener,Method muntjac.ui.component_container.IComponentContainer.addListener()=muntjac.ui.component_container.IComponentContainer-class.html#addListener,Method muntjac.ui.css_layout.CssLayout.addListener()=muntjac.ui.css_layout.CssLayout-class.html#addListener,Method muntjac.ui.date_field.DateField.addListener()=muntjac.ui.date_field.DateField-class.html#addListener,Method muntjac.ui.embedded.Embedded.addListener()=muntjac.ui.embedded.Embedded-class.html#addListener,Method muntjac.ui.grid_layout.GridLayout.addListener()=muntjac.ui.grid_layout.GridLayout-class.html#addListener,Method muntjac.ui.label.Label.addListener()=muntjac.ui.label.Label-class.html#addListener,Method muntjac.ui.login_form.LoginForm.addListener()=muntjac.ui.login_form.LoginForm-class.html#addListener,Method muntjac.ui.option_group.OptionGroup.addListener()=muntjac.ui.option_group.OptionGroup-class.html#addListener,Method muntjac.ui.panel.Panel.addListener()=muntjac.ui.panel.Panel-class.html#addListener,Method muntjac.ui.popup_view.PopupView.addListener()=muntjac.ui.popup_view.PopupView-class.html#addListener,Method muntjac.ui.select.Select.addListener()=muntjac.ui.select.Select-class.html#addListener,Method muntjac.ui.tab_sheet.TabSheet.addListener()=muntjac.ui.tab_sheet.TabSheet-class.html#addListener,Method muntjac.ui.table.Table.addListener()=muntjac.ui.table.Table-class.html#addListener,Method muntjac.ui.tree.Tree.addListener()=muntjac.ui.tree.Tree-class.html#addListener,Method muntjac.ui.tree_table.TreeTable.addListener()=muntjac.ui.tree_table.TreeTable-class.html#addListener,Method muntjac.ui.upload.Upload.addListener()=muntjac.ui.upload.Upload-class.html#addListener,Method muntjac.ui.uri_fragment_utility.UriFragmentUtility.addListener()=muntjac.ui.uri_fragment_utility.UriFragmentUtility-class.html#addListener,Method muntjac.ui.window.Window.addListener()=muntjac.ui.window.Window-class.html#addListener"><a title="muntjac.application.Application.addListener
+muntjac.data.buffered.SourceException.addListener
+muntjac.data.container.IItemSetChangeNotifier.addListener
+muntjac.data.container.IPropertySetChangeNotifier.addListener
+muntjac.data.item.IPropertySetChangeNotifier.addListener
+muntjac.data.property.IReadOnlyStatusChangeNotifier.addListener
+muntjac.data.property.IValueChangeNotifier.addListener
+muntjac.data.util.abstract_container.AbstractContainer.addListener
+muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer.addListener
+muntjac.data.util.abstract_property.AbstractProperty.addListener
+muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper.addListener
+muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper.addListener
+muntjac.data.util.indexed_container.IndexedContainer.addListener
+muntjac.data.util.indexed_container.IndexedContainerProperty.addListener
+muntjac.data.util.propertyset_item.PropertysetItem.addListener
+muntjac.data.validator.InvalidValueException.addListener
+muntjac.event.event_router.EventRouter.addListener
+muntjac.event.field_events.IBlurNotifier.addListener
+muntjac.event.field_events.IFocusNotifier.addListener
+muntjac.event.field_events.ITextChangeNotifier.addListener
+muntjac.event.item_click_event.IItemClickNotifier.addListener
+muntjac.event.layout_events.ILayoutClickNotifier.addListener
+muntjac.event.method_event_source.IMethodEventSource.addListener
+muntjac.terminal.composite_error_message.CompositeErrorMessage.addListener
+muntjac.terminal.error_message.IErrorMessage.addListener
+muntjac.terminal.paintable.IPaintable.addListener
+muntjac.terminal.sys_error.SysError.addListener
+muntjac.terminal.user_error.UserError.addListener
+muntjac.ui.absolute_layout.AbsoluteLayout.addListener
+muntjac.ui.abstract_component.AbstractComponent.addListener
+muntjac.ui.abstract_component_container.AbstractComponentContainer.addListener
+muntjac.ui.abstract_field.AbstractField.addListener
+muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.addListener
+muntjac.ui.abstract_select.AbstractSelect.addListener
+muntjac.ui.abstract_split_panel.AbstractSplitPanel.addListener
+muntjac.ui.abstract_text_field.AbstractTextField.addListener
+muntjac.ui.button.Button.addListener
+muntjac.ui.component.IComponent.addListener
+muntjac.ui.component_container.IComponentContainer.addListener
+muntjac.ui.css_layout.CssLayout.addListener
+muntjac.ui.date_field.DateField.addListener
+muntjac.ui.embedded.Embedded.addListener
+muntjac.ui.grid_layout.GridLayout.addListener
+muntjac.ui.label.Label.addListener
+muntjac.ui.login_form.LoginForm.addListener
+muntjac.ui.option_group.OptionGroup.addListener
+muntjac.ui.panel.Panel.addListener
+muntjac.ui.popup_view.PopupView.addListener
+muntjac.ui.select.Select.addListener
+muntjac.ui.tab_sheet.TabSheet.addListener
+muntjac.ui.table.Table.addListener
+muntjac.ui.tree.Tree.addListener
+muntjac.ui.tree_table.TreeTable.addListener
+muntjac.ui.upload.Upload.addListener
+muntjac.ui.uri_fragment_utility.UriFragmentUtility.addListener
+muntjac.ui.window.Window.addListener" class="py-name" href="#" onclick="return doclink('link-17', 'addListener', 'link-17');">addListener</a></tt><tt class="py-op">(</tt><tt class="py-name">listener</tt><tt class="py-op">,</tt> <tt class="py-name">iface</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L52"></a><tt class="py-lineno"> 52</tt>  <tt class="py-line"> </tt>
+<a name="L53"></a><tt class="py-lineno"> 53</tt>  <tt class="py-line"> </tt>
+<a name="UriFragmentUtility.addCallback"></a><div id="UriFragmentUtility.addCallback-def"><a name="L54"></a><tt class="py-lineno"> 54</tt> <a class="py-toggle" href="#" id="UriFragmentUtility.addCallback-toggle" onclick="return toggle('UriFragmentUtility.addCallback');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.uri_fragment_utility.UriFragmentUtility-class.html#addCallback">addCallback</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">callback</tt><tt class="py-op">,</tt> <tt class="py-param">eventType</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-op">*</tt><tt class="py-param">args</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="UriFragmentUtility.addCallback-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="UriFragmentUtility.addCallback-expanded"><a name="L55"></a><tt class="py-lineno"> 55</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">eventType</tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L56"></a><tt class="py-lineno"> 56</tt>  <tt class="py-line">            <tt class="py-name">eventType</tt> <tt class="py-op">=</tt> <tt class="py-name">callback</tt><tt class="py-op">.</tt><tt class="py-name">_eventType</tt> </tt>
+<a name="L57"></a><tt class="py-lineno"> 57</tt>  <tt class="py-line"> </tt>
+<a name="L58"></a><tt class="py-lineno"> 58</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">issubclass</tt><tt class="py-op">(</tt><tt class="py-name">eventType</tt><tt class="py-op">,</tt> <tt id="link-18" class="py-name"><a title="muntjac.ui.uri_fragment_utility.FragmentChangedEvent" class="py-name" href="#" onclick="return doclink('link-18', 'FragmentChangedEvent', 'link-14');">FragmentChangedEvent</a></tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L59"></a><tt class="py-lineno"> 59</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-19" class="py-name" targets="Method muntjac.ui.abstract_component.AbstractComponent.registerCallback()=muntjac.ui.abstract_component.AbstractComponent-class.html#registerCallback"><a title="muntjac.ui.abstract_component.AbstractComponent.registerCallback" class="py-name" href="#" onclick="return doclink('link-19', 'registerCallback', 'link-19');">registerCallback</a></tt><tt class="py-op">(</tt><tt id="link-20" class="py-name"><a title="muntjac.ui.uri_fragment_utility.FragmentChangedEvent" class="py-name" href="#" onclick="return doclink('link-20', 'FragmentChangedEvent', 'link-14');">FragmentChangedEvent</a></tt><tt class="py-op">,</tt> <tt class="py-name">callback</tt><tt class="py-op">,</tt> <tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-op">*</tt><tt class="py-name">args</tt><tt class="py-op">)</tt> </tt>
+<a name="L60"></a><tt class="py-lineno"> 60</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L61"></a><tt class="py-lineno"> 61</tt>  <tt class="py-line">            <tt class="py-name">super</tt><tt class="py-op">(</tt><tt id="link-21" class="py-name"><a title="muntjac.ui.uri_fragment_utility.UriFragmentUtility" class="py-name" href="#" onclick="return doclink('link-21', 'UriFragmentUtility', 'link-16');">UriFragmentUtility</a></tt><tt class="py-op">,</tt> <tt class="py-name">self</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt id="link-22" class="py-name" targets="Method muntjac.application.Application.addCallback()=muntjac.application.Application-class.html#addCallback,Method muntjac.data.buffered.SourceException.addCallback()=muntjac.data.buffered.SourceException-class.html#addCallback,Method muntjac.data.container.IItemSetChangeNotifier.addCallback()=muntjac.data.container.IItemSetChangeNotifier-class.html#addCallback,Method muntjac.data.container.IPropertySetChangeNotifier.addCallback()=muntjac.data.container.IPropertySetChangeNotifier-class.html#addCallback,Method muntjac.data.item.IPropertySetChangeNotifier.addCallback()=muntjac.data.item.IPropertySetChangeNotifier-class.html#addCallback,Method muntjac.data.property.IReadOnlyStatusChangeNotifier.addCallback()=muntjac.data.property.IReadOnlyStatusChangeNotifier-class.html#addCallback,Method muntjac.data.property.IValueChangeNotifier.addCallback()=muntjac.data.property.IValueChangeNotifier-class.html#addCallback,Method muntjac.data.util.abstract_container.AbstractContainer.addCallback()=muntjac.data.util.abstract_container.AbstractContainer-class.html#addCallback,Method muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer.addCallback()=muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#addCallback,Method muntjac.data.util.abstract_property.AbstractProperty.addCallback()=muntjac.data.util.abstract_property.AbstractProperty-class.html#addCallback,Method muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper.addCallback()=muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#addCallback,Method muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper.addCallback()=muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#addCallback,Method muntjac.data.util.indexed_container.IndexedContainer.addCallback()=muntjac.data.util.indexed_container.IndexedContainer-class.html#addCallback,Method muntjac.data.util.indexed_container.IndexedContainerProperty.addCallback()=muntjac.data.util.indexed_container.IndexedContainerProperty-class.html#addCallback,Method muntjac.data.util.propertyset_item.PropertysetItem.addCallback()=muntjac.data.util.propertyset_item.PropertysetItem-class.html#addCallback,Method muntjac.data.validator.InvalidValueException.addCallback()=muntjac.data.validator.InvalidValueException-class.html#addCallback,Method muntjac.event.field_events.IBlurNotifier.addCallback()=muntjac.event.field_events.IBlurNotifier-class.html#addCallback,Method muntjac.event.field_events.IFocusNotifier.addCallback()=muntjac.event.field_events.IFocusNotifier-class.html#addCallback,Method muntjac.event.field_events.ITextChangeNotifier.addCallback()=muntjac.event.field_events.ITextChangeNotifier-class.html#addCallback,Method muntjac.event.item_click_event.IItemClickNotifier.addCallback()=muntjac.event.item_click_event.IItemClickNotifier-class.html#addCallback,Method muntjac.event.layout_events.ILayoutClickNotifier.addCallback()=muntjac.event.layout_events.ILayoutClickNotifier-class.html#addCallback,Method muntjac.terminal.composite_error_message.CompositeErrorMessage.addCallback()=muntjac.terminal.composite_error_message.CompositeErrorMessage-class.html#addCallback,Method muntjac.terminal.error_message.IErrorMessage.addCallback()=muntjac.terminal.error_message.IErrorMessage-class.html#addCallback,Method muntjac.terminal.paintable.IPaintable.addCallback()=muntjac.terminal.paintable.IPaintable-class.html#addCallback,Method muntjac.terminal.sys_error.SysError.addCallback()=muntjac.terminal.sys_error.SysError-class.html#addCallback,Method muntjac.terminal.user_error.UserError.addCallback()=muntjac.terminal.user_error.UserError-class.html#addCallback,Method muntjac.ui.absolute_layout.AbsoluteLayout.addCallback()=muntjac.ui.absolute_layout.AbsoluteLayout-class.html#addCallback,Method muntjac.ui.abstract_component.AbstractComponent.addCallback()=muntjac.ui.abstract_component.AbstractComponent-class.html#addCallback,Method muntjac.ui.abstract_component_container.AbstractComponentContainer.addCallback()=muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#addCallback,Method muntjac.ui.abstract_field.AbstractField.addCallback()=muntjac.ui.abstract_field.AbstractField-class.html#addCallback,Method muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.addCallback()=muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout-class.html#addCallback,Method muntjac.ui.abstract_select.AbstractSelect.addCallback()=muntjac.ui.abstract_select.AbstractSelect-class.html#addCallback,Method muntjac.ui.abstract_split_panel.AbstractSplitPanel.addCallback()=muntjac.ui.abstract_split_panel.AbstractSplitPanel-class.html#addCallback,Method muntjac.ui.abstract_text_field.AbstractTextField.addCallback()=muntjac.ui.abstract_text_field.AbstractTextField-class.html#addCallback,Method muntjac.ui.button.Button.addCallback()=muntjac.ui.button.Button-class.html#addCallback,Method muntjac.ui.component.IComponent.addCallback()=muntjac.ui.component.IComponent-class.html#addCallback,Method muntjac.ui.component_container.IComponentContainer.addCallback()=muntjac.ui.component_container.IComponentContainer-class.html#addCallback,Method muntjac.ui.css_layout.CssLayout.addCallback()=muntjac.ui.css_layout.CssLayout-class.html#addCallback,Method muntjac.ui.date_field.DateField.addCallback()=muntjac.ui.date_field.DateField-class.html#addCallback,Method muntjac.ui.embedded.Embedded.addCallback()=muntjac.ui.embedded.Embedded-class.html#addCallback,Method muntjac.ui.grid_layout.GridLayout.addCallback()=muntjac.ui.grid_layout.GridLayout-class.html#addCallback,Method muntjac.ui.label.Label.addCallback()=muntjac.ui.label.Label-class.html#addCallback,Method muntjac.ui.login_form.LoginForm.addCallback()=muntjac.ui.login_form.LoginForm-class.html#addCallback,Method muntjac.ui.option_group.OptionGroup.addCallback()=muntjac.ui.option_group.OptionGroup-class.html#addCallback,Method muntjac.ui.panel.Panel.addCallback()=muntjac.ui.panel.Panel-class.html#addCallback,Method muntjac.ui.popup_view.PopupView.addCallback()=muntjac.ui.popup_view.PopupView-class.html#addCallback,Method muntjac.ui.select.Select.addCallback()=muntjac.ui.select.Select-class.html#addCallback,Method muntjac.ui.tab_sheet.TabSheet.addCallback()=muntjac.ui.tab_sheet.TabSheet-class.html#addCallback,Method muntjac.ui.table.Table.addCallback()=muntjac.ui.table.Table-class.html#addCallback,Method muntjac.ui.tree.Tree.addCallback()=muntjac.ui.tree.Tree-class.html#addCallback,Method muntjac.ui.tree_table.TreeTable.addCallback()=muntjac.ui.tree_table.TreeTable-class.html#addCallback,Method muntjac.ui.upload.Upload.addCallback()=muntjac.ui.upload.Upload-class.html#addCallback,Method muntjac.ui.uri_fragment_utility.UriFragmentUtility.addCallback()=muntjac.ui.uri_fragment_utility.UriFragmentUtility-class.html#addCallback,Method muntjac.ui.window.Window.addCallback()=muntjac.ui.window.Window-class.html#addCallback"><a title="muntjac.application.Application.addCallback
+muntjac.data.buffered.SourceException.addCallback
+muntjac.data.container.IItemSetChangeNotifier.addCallback
+muntjac.data.container.IPropertySetChangeNotifier.addCallback
+muntjac.data.item.IPropertySetChangeNotifier.addCallback
+muntjac.data.property.IReadOnlyStatusChangeNotifier.addCallback
+muntjac.data.property.IValueChangeNotifier.addCallback
+muntjac.data.util.abstract_container.AbstractContainer.addCallback
+muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer.addCallback
+muntjac.data.util.abstract_property.AbstractProperty.addCallback
+muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper.addCallback
+muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper.addCallback
+muntjac.data.util.indexed_container.IndexedContainer.addCallback
+muntjac.data.util.indexed_container.IndexedContainerProperty.addCallback
+muntjac.data.util.propertyset_item.PropertysetItem.addCallback
+muntjac.data.validator.InvalidValueException.addCallback
+muntjac.event.field_events.IBlurNotifier.addCallback
+muntjac.event.field_events.IFocusNotifier.addCallback
+muntjac.event.field_events.ITextChangeNotifier.addCallback
+muntjac.event.item_click_event.IItemClickNotifier.addCallback
+muntjac.event.layout_events.ILayoutClickNotifier.addCallback
+muntjac.terminal.composite_error_message.CompositeErrorMessage.addCallback
+muntjac.terminal.error_message.IErrorMessage.addCallback
+muntjac.terminal.paintable.IPaintable.addCallback
+muntjac.terminal.sys_error.SysError.addCallback
+muntjac.terminal.user_error.UserError.addCallback
+muntjac.ui.absolute_layout.AbsoluteLayout.addCallback
+muntjac.ui.abstract_component.AbstractComponent.addCallback
+muntjac.ui.abstract_component_container.AbstractComponentContainer.addCallback
+muntjac.ui.abstract_field.AbstractField.addCallback
+muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.addCallback
+muntjac.ui.abstract_select.AbstractSelect.addCallback
+muntjac.ui.abstract_split_panel.AbstractSplitPanel.addCallback
+muntjac.ui.abstract_text_field.AbstractTextField.addCallback
+muntjac.ui.button.Button.addCallback
+muntjac.ui.component.IComponent.addCallback
+muntjac.ui.component_container.IComponentContainer.addCallback
+muntjac.ui.css_layout.CssLayout.addCallback
+muntjac.ui.date_field.DateField.addCallback
+muntjac.ui.embedded.Embedded.addCallback
+muntjac.ui.grid_layout.GridLayout.addCallback
+muntjac.ui.label.Label.addCallback
+muntjac.ui.login_form.LoginForm.addCallback
+muntjac.ui.option_group.OptionGroup.addCallback
+muntjac.ui.panel.Panel.addCallback
+muntjac.ui.popup_view.PopupView.addCallback
+muntjac.ui.select.Select.addCallback
+muntjac.ui.tab_sheet.TabSheet.addCallback
+muntjac.ui.table.Table.addCallback
+muntjac.ui.tree.Tree.addCallback
+muntjac.ui.tree_table.TreeTable.addCallback
+muntjac.ui.upload.Upload.addCallback
+muntjac.ui.uri_fragment_utility.UriFragmentUtility.addCallback
+muntjac.ui.window.Window.addCallback" class="py-name" href="#" onclick="return doclink('link-22', 'addCallback', 'link-22');">addCallback</a></tt><tt class="py-op">(</tt><tt class="py-name">callback</tt><tt class="py-op">,</tt> </tt>
+<a name="L62"></a><tt class="py-lineno"> 62</tt>  <tt class="py-line">                    <tt class="py-name">eventType</tt><tt class="py-op">,</tt> <tt class="py-op">*</tt><tt class="py-name">args</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L63"></a><tt class="py-lineno"> 63</tt>  <tt class="py-line"> </tt>
+<a name="L64"></a><tt class="py-lineno"> 64</tt>  <tt class="py-line"> </tt>
+<a name="UriFragmentUtility.removeListener"></a><div id="UriFragmentUtility.removeListener-def"><a name="L65"></a><tt class="py-lineno"> 65</tt> <a class="py-toggle" href="#" id="UriFragmentUtility.removeListener-toggle" onclick="return toggle('UriFragmentUtility.removeListener');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.uri_fragment_utility.UriFragmentUtility-class.html#removeListener">removeListener</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">listener</tt><tt class="py-op">,</tt> <tt class="py-param">iface</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="UriFragmentUtility.removeListener-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="UriFragmentUtility.removeListener-expanded"><a name="L66"></a><tt class="py-lineno"> 66</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-op">(</tt><tt class="py-name">isinstance</tt><tt class="py-op">(</tt><tt class="py-name">listener</tt><tt class="py-op">,</tt> <tt id="link-23" class="py-name"><a title="muntjac.ui.uri_fragment_utility.IFragmentChangedListener" class="py-name" href="#" onclick="return doclink('link-23', 'IFragmentChangedListener', 'link-9');">IFragmentChangedListener</a></tt><tt class="py-op">)</tt> <tt class="py-keyword">and</tt> </tt>
+<a name="L67"></a><tt class="py-lineno"> 67</tt>  <tt class="py-line">                <tt class="py-op">(</tt><tt class="py-name">iface</tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt> <tt class="py-keyword">or</tt> <tt class="py-name">issubclass</tt><tt class="py-op">(</tt><tt class="py-name">iface</tt><tt class="py-op">,</tt> <tt id="link-24" class="py-name"><a title="muntjac.ui.uri_fragment_utility.IFragmentChangedListener" class="py-name" href="#" onclick="return doclink('link-24', 'IFragmentChangedListener', 'link-9');">IFragmentChangedListener</a></tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L68"></a><tt class="py-lineno"> 68</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-25" class="py-name" targets="Method muntjac.ui.abstract_component.AbstractComponent.withdrawListener()=muntjac.ui.abstract_component.AbstractComponent-class.html#withdrawListener"><a title="muntjac.ui.abstract_component.AbstractComponent.withdrawListener" class="py-name" href="#" onclick="return doclink('link-25', 'withdrawListener', 'link-25');">withdrawListener</a></tt><tt class="py-op">(</tt><tt id="link-26" class="py-name"><a title="muntjac.ui.uri_fragment_utility.FragmentChangedEvent" class="py-name" href="#" onclick="return doclink('link-26', 'FragmentChangedEvent', 'link-14');">FragmentChangedEvent</a></tt><tt class="py-op">,</tt> </tt>
+<a name="L69"></a><tt class="py-lineno"> 69</tt>  <tt class="py-line">                    <tt class="py-name">listener</tt><tt class="py-op">,</tt> <tt id="link-27" class="py-name"><a title="muntjac.ui.uri_fragment_utility._FRAGMENT_CHANGED_METHOD" class="py-name" href="#" onclick="return doclink('link-27', '_FRAGMENT_CHANGED_METHOD', 'link-8');">_FRAGMENT_CHANGED_METHOD</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L70"></a><tt class="py-lineno"> 70</tt>  <tt class="py-line"> </tt>
+<a name="L71"></a><tt class="py-lineno"> 71</tt>  <tt class="py-line">        <tt class="py-name">super</tt><tt class="py-op">(</tt><tt id="link-28" class="py-name"><a title="muntjac.ui.uri_fragment_utility.UriFragmentUtility" class="py-name" href="#" onclick="return doclink('link-28', 'UriFragmentUtility', 'link-16');">UriFragmentUtility</a></tt><tt class="py-op">,</tt> <tt class="py-name">self</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt id="link-29" class="py-name" targets="Method muntjac.application.Application.removeListener()=muntjac.application.Application-class.html#removeListener,Method muntjac.data.buffered.SourceException.removeListener()=muntjac.data.buffered.SourceException-class.html#removeListener,Method muntjac.data.container.IItemSetChangeNotifier.removeListener()=muntjac.data.container.IItemSetChangeNotifier-class.html#removeListener,Method muntjac.data.container.IPropertySetChangeNotifier.removeListener()=muntjac.data.container.IPropertySetChangeNotifier-class.html#removeListener,Method muntjac.data.item.IPropertySetChangeNotifier.removeListener()=muntjac.data.item.IPropertySetChangeNotifier-class.html#removeListener,Method muntjac.data.property.IReadOnlyStatusChangeNotifier.removeListener()=muntjac.data.property.IReadOnlyStatusChangeNotifier-class.html#removeListener,Method muntjac.data.property.IValueChangeNotifier.removeListener()=muntjac.data.property.IValueChangeNotifier-class.html#removeListener,Method muntjac.data.util.abstract_container.AbstractContainer.removeListener()=muntjac.data.util.abstract_container.AbstractContainer-class.html#removeListener,Method muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer.removeListener()=muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#removeListener,Method muntjac.data.util.abstract_property.AbstractProperty.removeListener()=muntjac.data.util.abstract_property.AbstractProperty-class.html#removeListener,Method muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper.removeListener()=muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#removeListener,Method muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper.removeListener()=muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#removeListener,Method muntjac.data.util.indexed_container.IndexedContainer.removeListener()=muntjac.data.util.indexed_container.IndexedContainer-class.html#removeListener,Method muntjac.data.util.indexed_container.IndexedContainerProperty.removeListener()=muntjac.data.util.indexed_container.IndexedContainerProperty-class.html#removeListener,Method muntjac.data.util.propertyset_item.PropertysetItem.removeListener()=muntjac.data.util.propertyset_item.PropertysetItem-class.html#removeListener,Method muntjac.data.validator.InvalidValueException.removeListener()=muntjac.data.validator.InvalidValueException-class.html#removeListener,Method muntjac.event.event_router.EventRouter.removeListener()=muntjac.event.event_router.EventRouter-class.html#removeListener,Method muntjac.event.field_events.IBlurNotifier.removeListener()=muntjac.event.field_events.IBlurNotifier-class.html#removeListener,Method muntjac.event.field_events.IFocusNotifier.removeListener()=muntjac.event.field_events.IFocusNotifier-class.html#removeListener,Method muntjac.event.field_events.ITextChangeNotifier.removeListener()=muntjac.event.field_events.ITextChangeNotifier-class.html#removeListener,Method muntjac.event.item_click_event.IItemClickNotifier.removeListener()=muntjac.event.item_click_event.IItemClickNotifier-class.html#removeListener,Method muntjac.event.layout_events.ILayoutClickNotifier.removeListener()=muntjac.event.layout_events.ILayoutClickNotifier-class.html#removeListener,Method muntjac.event.method_event_source.IMethodEventSource.removeListener()=muntjac.event.method_event_source.IMethodEventSource-class.html#removeListener,Method muntjac.terminal.composite_error_message.CompositeErrorMessage.removeListener()=muntjac.terminal.composite_error_message.CompositeErrorMessage-class.html#removeListener,Method muntjac.terminal.error_message.IErrorMessage.removeListener()=muntjac.terminal.error_message.IErrorMessage-class.html#removeListener,Method muntjac.terminal.paintable.IPaintable.removeListener()=muntjac.terminal.paintable.IPaintable-class.html#removeListener,Method muntjac.terminal.sys_error.SysError.removeListener()=muntjac.terminal.sys_error.SysError-class.html#removeListener,Method muntjac.terminal.user_error.UserError.removeListener()=muntjac.terminal.user_error.UserError-class.html#removeListener,Method muntjac.ui.absolute_layout.AbsoluteLayout.removeListener()=muntjac.ui.absolute_layout.AbsoluteLayout-class.html#removeListener,Method muntjac.ui.abstract_component.AbstractComponent.removeListener()=muntjac.ui.abstract_component.AbstractComponent-class.html#removeListener,Method muntjac.ui.abstract_component_container.AbstractComponentContainer.removeListener()=muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#removeListener,Method muntjac.ui.abstract_field.AbstractField.removeListener()=muntjac.ui.abstract_field.AbstractField-class.html#removeListener,Method muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.removeListener()=muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout-class.html#removeListener,Method muntjac.ui.abstract_select.AbstractSelect.removeListener()=muntjac.ui.abstract_select.AbstractSelect-class.html#removeListener,Method muntjac.ui.abstract_split_panel.AbstractSplitPanel.removeListener()=muntjac.ui.abstract_split_panel.AbstractSplitPanel-class.html#removeListener,Method muntjac.ui.abstract_text_field.AbstractTextField.removeListener()=muntjac.ui.abstract_text_field.AbstractTextField-class.html#removeListener,Method muntjac.ui.button.Button.removeListener()=muntjac.ui.button.Button-class.html#removeListener,Method muntjac.ui.component.IComponent.removeListener()=muntjac.ui.component.IComponent-class.html#removeListener,Method muntjac.ui.component_container.IComponentContainer.removeListener()=muntjac.ui.component_container.IComponentContainer-class.html#removeListener,Method muntjac.ui.css_layout.CssLayout.removeListener()=muntjac.ui.css_layout.CssLayout-class.html#removeListener,Method muntjac.ui.date_field.DateField.removeListener()=muntjac.ui.date_field.DateField-class.html#removeListener,Method muntjac.ui.embedded.Embedded.removeListener()=muntjac.ui.embedded.Embedded-class.html#removeListener,Method muntjac.ui.grid_layout.GridLayout.removeListener()=muntjac.ui.grid_layout.GridLayout-class.html#removeListener,Method muntjac.ui.label.Label.removeListener()=muntjac.ui.label.Label-class.html#removeListener,Method muntjac.ui.login_form.LoginForm.removeListener()=muntjac.ui.login_form.LoginForm-class.html#removeListener,Method muntjac.ui.option_group.OptionGroup.removeListener()=muntjac.ui.option_group.OptionGroup-class.html#removeListener,Method muntjac.ui.panel.Panel.removeListener()=muntjac.ui.panel.Panel-class.html#removeListener,Method muntjac.ui.popup_view.PopupView.removeListener()=muntjac.ui.popup_view.PopupView-class.html#removeListener,Method muntjac.ui.select.Select.removeListener()=muntjac.ui.select.Select-class.html#removeListener,Method muntjac.ui.tab_sheet.TabSheet.removeListener()=muntjac.ui.tab_sheet.TabSheet-class.html#removeListener,Method muntjac.ui.table.Table.removeListener()=muntjac.ui.table.Table-class.html#removeListener,Method muntjac.ui.tree.Tree.removeListener()=muntjac.ui.tree.Tree-class.html#removeListener,Method muntjac.ui.tree_table.TreeTable.removeListener()=muntjac.ui.tree_table.TreeTable-class.html#removeListener,Method muntjac.ui.upload.Upload.removeListener()=muntjac.ui.upload.Upload-class.html#removeListener,Method muntjac.ui.uri_fragment_utility.UriFragmentUtility.removeListener()=muntjac.ui.uri_fragment_utility.UriFragmentUtility-class.html#removeListener,Method muntjac.ui.window.Window.removeListener()=muntjac.ui.window.Window-class.html#removeListener"><a title="muntjac.application.Application.removeListener
+muntjac.data.buffered.SourceException.removeListener
+muntjac.data.container.IItemSetChangeNotifier.removeListener
+muntjac.data.container.IPropertySetChangeNotifier.removeListener
+muntjac.data.item.IPropertySetChangeNotifier.removeListener
+muntjac.data.property.IReadOnlyStatusChangeNotifier.removeListener
+muntjac.data.property.IValueChangeNotifier.removeListener
+muntjac.data.util.abstract_container.AbstractContainer.removeListener
+muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer.removeListener
+muntjac.data.util.abstract_property.AbstractProperty.removeListener
+muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper.removeListener
+muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper.removeListener
+muntjac.data.util.indexed_container.IndexedContainer.removeListener
+muntjac.data.util.indexed_container.IndexedContainerProperty.removeListener
+muntjac.data.util.propertyset_item.PropertysetItem.removeListener
+muntjac.data.validator.InvalidValueException.removeListener
+muntjac.event.event_router.EventRouter.removeListener
+muntjac.event.field_events.IBlurNotifier.removeListener
+muntjac.event.field_events.IFocusNotifier.removeListener
+muntjac.event.field_events.ITextChangeNotifier.removeListener
+muntjac.event.item_click_event.IItemClickNotifier.removeListener
+muntjac.event.layout_events.ILayoutClickNotifier.removeListener
+muntjac.event.method_event_source.IMethodEventSource.removeListener
+muntjac.terminal.composite_error_message.CompositeErrorMessage.removeListener
+muntjac.terminal.error_message.IErrorMessage.removeListener
+muntjac.terminal.paintable.IPaintable.removeListener
+muntjac.terminal.sys_error.SysError.removeListener
+muntjac.terminal.user_error.UserError.removeListener
+muntjac.ui.absolute_layout.AbsoluteLayout.removeListener
+muntjac.ui.abstract_component.AbstractComponent.removeListener
+muntjac.ui.abstract_component_container.AbstractComponentContainer.removeListener
+muntjac.ui.abstract_field.AbstractField.removeListener
+muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.removeListener
+muntjac.ui.abstract_select.AbstractSelect.removeListener
+muntjac.ui.abstract_split_panel.AbstractSplitPanel.removeListener
+muntjac.ui.abstract_text_field.AbstractTextField.removeListener
+muntjac.ui.button.Button.removeListener
+muntjac.ui.component.IComponent.removeListener
+muntjac.ui.component_container.IComponentContainer.removeListener
+muntjac.ui.css_layout.CssLayout.removeListener
+muntjac.ui.date_field.DateField.removeListener
+muntjac.ui.embedded.Embedded.removeListener
+muntjac.ui.grid_layout.GridLayout.removeListener
+muntjac.ui.label.Label.removeListener
+muntjac.ui.login_form.LoginForm.removeListener
+muntjac.ui.option_group.OptionGroup.removeListener
+muntjac.ui.panel.Panel.removeListener
+muntjac.ui.popup_view.PopupView.removeListener
+muntjac.ui.select.Select.removeListener
+muntjac.ui.tab_sheet.TabSheet.removeListener
+muntjac.ui.table.Table.removeListener
+muntjac.ui.tree.Tree.removeListener
+muntjac.ui.tree_table.TreeTable.removeListener
+muntjac.ui.upload.Upload.removeListener
+muntjac.ui.uri_fragment_utility.UriFragmentUtility.removeListener
+muntjac.ui.window.Window.removeListener" class="py-name" href="#" onclick="return doclink('link-29', 'removeListener', 'link-29');">removeListener</a></tt><tt class="py-op">(</tt><tt class="py-name">listener</tt><tt class="py-op">,</tt> <tt class="py-name">iface</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L72"></a><tt class="py-lineno"> 72</tt>  <tt class="py-line"> </tt>
+<a name="L73"></a><tt class="py-lineno"> 73</tt>  <tt class="py-line"> </tt>
+<a name="UriFragmentUtility.removeCallback"></a><div id="UriFragmentUtility.removeCallback-def"><a name="L74"></a><tt class="py-lineno"> 74</tt> <a class="py-toggle" href="#" id="UriFragmentUtility.removeCallback-toggle" onclick="return toggle('UriFragmentUtility.removeCallback');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.uri_fragment_utility.UriFragmentUtility-class.html#removeCallback">removeCallback</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">callback</tt><tt class="py-op">,</tt> <tt class="py-param">eventType</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="UriFragmentUtility.removeCallback-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="UriFragmentUtility.removeCallback-expanded"><a name="L75"></a><tt class="py-lineno"> 75</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">eventType</tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L76"></a><tt class="py-lineno"> 76</tt>  <tt class="py-line">            <tt class="py-name">eventType</tt> <tt class="py-op">=</tt> <tt class="py-name">callback</tt><tt class="py-op">.</tt><tt class="py-name">_eventType</tt> </tt>
+<a name="L77"></a><tt class="py-lineno"> 77</tt>  <tt class="py-line"> </tt>
+<a name="L78"></a><tt class="py-lineno"> 78</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">issubclass</tt><tt class="py-op">(</tt><tt class="py-name">eventType</tt><tt class="py-op">,</tt> <tt id="link-30" class="py-name"><a title="muntjac.ui.uri_fragment_utility.FragmentChangedEvent" class="py-name" href="#" onclick="return doclink('link-30', 'FragmentChangedEvent', 'link-14');">FragmentChangedEvent</a></tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L79"></a><tt class="py-lineno"> 79</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-31" class="py-name" targets="Method muntjac.ui.abstract_component.AbstractComponent.withdrawCallback()=muntjac.ui.abstract_component.AbstractComponent-class.html#withdrawCallback"><a title="muntjac.ui.abstract_component.AbstractComponent.withdrawCallback" class="py-name" href="#" onclick="return doclink('link-31', 'withdrawCallback', 'link-31');">withdrawCallback</a></tt><tt class="py-op">(</tt><tt id="link-32" class="py-name"><a title="muntjac.ui.uri_fragment_utility.FragmentChangedEvent" class="py-name" href="#" onclick="return doclink('link-32', 'FragmentChangedEvent', 'link-14');">FragmentChangedEvent</a></tt><tt class="py-op">,</tt> <tt class="py-name">callback</tt><tt class="py-op">)</tt> </tt>
+<a name="L80"></a><tt class="py-lineno"> 80</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L81"></a><tt class="py-lineno"> 81</tt>  <tt class="py-line">            <tt class="py-name">super</tt><tt class="py-op">(</tt><tt id="link-33" class="py-name"><a title="muntjac.ui.uri_fragment_utility.UriFragmentUtility" class="py-name" href="#" onclick="return doclink('link-33', 'UriFragmentUtility', 'link-16');">UriFragmentUtility</a></tt><tt class="py-op">,</tt> <tt class="py-name">self</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt id="link-34" class="py-name" targets="Method muntjac.application.Application.removeCallback()=muntjac.application.Application-class.html#removeCallback,Method muntjac.data.buffered.SourceException.removeCallback()=muntjac.data.buffered.SourceException-class.html#removeCallback,Method muntjac.data.container.IItemSetChangeNotifier.removeCallback()=muntjac.data.container.IItemSetChangeNotifier-class.html#removeCallback,Method muntjac.data.container.IPropertySetChangeNotifier.removeCallback()=muntjac.data.container.IPropertySetChangeNotifier-class.html#removeCallback,Method muntjac.data.item.IPropertySetChangeNotifier.removeCallback()=muntjac.data.item.IPropertySetChangeNotifier-class.html#removeCallback,Method muntjac.data.property.IReadOnlyStatusChangeNotifier.removeCallback()=muntjac.data.property.IReadOnlyStatusChangeNotifier-class.html#removeCallback,Method muntjac.data.property.IValueChangeNotifier.removeCallback()=muntjac.data.property.IValueChangeNotifier-class.html#removeCallback,Method muntjac.data.util.abstract_container.AbstractContainer.removeCallback()=muntjac.data.util.abstract_container.AbstractContainer-class.html#removeCallback,Method muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer.removeCallback()=muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#removeCallback,Method muntjac.data.util.abstract_property.AbstractProperty.removeCallback()=muntjac.data.util.abstract_property.AbstractProperty-class.html#removeCallback,Method muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper.removeCallback()=muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#removeCallback,Method muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper.removeCallback()=muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#removeCallback,Method muntjac.data.util.indexed_container.IndexedContainer.removeCallback()=muntjac.data.util.indexed_container.IndexedContainer-class.html#removeCallback,Method muntjac.data.util.indexed_container.IndexedContainerProperty.removeCallback()=muntjac.data.util.indexed_container.IndexedContainerProperty-class.html#removeCallback,Method muntjac.data.util.propertyset_item.PropertysetItem.removeCallback()=muntjac.data.util.propertyset_item.PropertysetItem-class.html#removeCallback,Method muntjac.data.validator.InvalidValueException.removeCallback()=muntjac.data.validator.InvalidValueException-class.html#removeCallback,Method muntjac.event.field_events.IBlurNotifier.removeCallback()=muntjac.event.field_events.IBlurNotifier-class.html#removeCallback,Method muntjac.event.field_events.IFocusNotifier.removeCallback()=muntjac.event.field_events.IFocusNotifier-class.html#removeCallback,Method muntjac.event.field_events.ITextChangeNotifier.removeCallback()=muntjac.event.field_events.ITextChangeNotifier-class.html#removeCallback,Method muntjac.event.item_click_event.IItemClickNotifier.removeCallback()=muntjac.event.item_click_event.IItemClickNotifier-class.html#removeCallback,Method muntjac.event.layout_events.ILayoutClickNotifier.removeCallback()=muntjac.event.layout_events.ILayoutClickNotifier-class.html#removeCallback,Method muntjac.terminal.composite_error_message.CompositeErrorMessage.removeCallback()=muntjac.terminal.composite_error_message.CompositeErrorMessage-class.html#removeCallback,Method muntjac.terminal.error_message.IErrorMessage.removeCallback()=muntjac.terminal.error_message.IErrorMessage-class.html#removeCallback,Method muntjac.terminal.paintable.IPaintable.removeCallback()=muntjac.terminal.paintable.IPaintable-class.html#removeCallback,Method muntjac.terminal.sys_error.SysError.removeCallback()=muntjac.terminal.sys_error.SysError-class.html#removeCallback,Method muntjac.terminal.user_error.UserError.removeCallback()=muntjac.terminal.user_error.UserError-class.html#removeCallback,Method muntjac.ui.absolute_layout.AbsoluteLayout.removeCallback()=muntjac.ui.absolute_layout.AbsoluteLayout-class.html#removeCallback,Method muntjac.ui.abstract_component.AbstractComponent.removeCallback()=muntjac.ui.abstract_component.AbstractComponent-class.html#removeCallback,Method muntjac.ui.abstract_component_container.AbstractComponentContainer.removeCallback()=muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#removeCallback,Method muntjac.ui.abstract_field.AbstractField.removeCallback()=muntjac.ui.abstract_field.AbstractField-class.html#removeCallback,Method muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.removeCallback()=muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout-class.html#removeCallback,Method muntjac.ui.abstract_select.AbstractSelect.removeCallback()=muntjac.ui.abstract_select.AbstractSelect-class.html#removeCallback,Method muntjac.ui.abstract_split_panel.AbstractSplitPanel.removeCallback()=muntjac.ui.abstract_split_panel.AbstractSplitPanel-class.html#removeCallback,Method muntjac.ui.abstract_text_field.AbstractTextField.removeCallback()=muntjac.ui.abstract_text_field.AbstractTextField-class.html#removeCallback,Method muntjac.ui.button.Button.removeCallback()=muntjac.ui.button.Button-class.html#removeCallback,Method muntjac.ui.component.IComponent.removeCallback()=muntjac.ui.component.IComponent-class.html#removeCallback,Method muntjac.ui.component_container.IComponentContainer.removeCallback()=muntjac.ui.component_container.IComponentContainer-class.html#removeCallback,Method muntjac.ui.css_layout.CssLayout.removeCallback()=muntjac.ui.css_layout.CssLayout-class.html#removeCallback,Method muntjac.ui.date_field.DateField.removeCallback()=muntjac.ui.date_field.DateField-class.html#removeCallback,Method muntjac.ui.embedded.Embedded.removeCallback()=muntjac.ui.embedded.Embedded-class.html#removeCallback,Method muntjac.ui.grid_layout.GridLayout.removeCallback()=muntjac.ui.grid_layout.GridLayout-class.html#removeCallback,Method muntjac.ui.label.Label.removeCallback()=muntjac.ui.label.Label-class.html#removeCallback,Method muntjac.ui.login_form.LoginForm.removeCallback()=muntjac.ui.login_form.LoginForm-class.html#removeCallback,Method muntjac.ui.option_group.OptionGroup.removeCallback()=muntjac.ui.option_group.OptionGroup-class.html#removeCallback,Method muntjac.ui.panel.Panel.removeCallback()=muntjac.ui.panel.Panel-class.html#removeCallback,Method muntjac.ui.popup_view.PopupView.removeCallback()=muntjac.ui.popup_view.PopupView-class.html#removeCallback,Method muntjac.ui.select.Select.removeCallback()=muntjac.ui.select.Select-class.html#removeCallback,Method muntjac.ui.tab_sheet.TabSheet.removeCallback()=muntjac.ui.tab_sheet.TabSheet-class.html#removeCallback,Method muntjac.ui.table.Table.removeCallback()=muntjac.ui.table.Table-class.html#removeCallback,Method muntjac.ui.tree.Tree.removeCallback()=muntjac.ui.tree.Tree-class.html#removeCallback,Method muntjac.ui.tree_table.TreeTable.removeCallback()=muntjac.ui.tree_table.TreeTable-class.html#removeCallback,Method muntjac.ui.upload.Upload.removeCallback()=muntjac.ui.upload.Upload-class.html#removeCallback,Method muntjac.ui.uri_fragment_utility.UriFragmentUtility.removeCallback()=muntjac.ui.uri_fragment_utility.UriFragmentUtility-class.html#removeCallback,Method muntjac.ui.window.Window.removeCallback()=muntjac.ui.window.Window-class.html#removeCallback"><a title="muntjac.application.Application.removeCallback
+muntjac.data.buffered.SourceException.removeCallback
+muntjac.data.container.IItemSetChangeNotifier.removeCallback
+muntjac.data.container.IPropertySetChangeNotifier.removeCallback
+muntjac.data.item.IPropertySetChangeNotifier.removeCallback
+muntjac.data.property.IReadOnlyStatusChangeNotifier.removeCallback
+muntjac.data.property.IValueChangeNotifier.removeCallback
+muntjac.data.util.abstract_container.AbstractContainer.removeCallback
+muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer.removeCallback
+muntjac.data.util.abstract_property.AbstractProperty.removeCallback
+muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper.removeCallback
+muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper.removeCallback
+muntjac.data.util.indexed_container.IndexedContainer.removeCallback
+muntjac.data.util.indexed_container.IndexedContainerProperty.removeCallback
+muntjac.data.util.propertyset_item.PropertysetItem.removeCallback
+muntjac.data.validator.InvalidValueException.removeCallback
+muntjac.event.field_events.IBlurNotifier.removeCallback
+muntjac.event.field_events.IFocusNotifier.removeCallback
+muntjac.event.field_events.ITextChangeNotifier.removeCallback
+muntjac.event.item_click_event.IItemClickNotifier.removeCallback
+muntjac.event.layout_events.ILayoutClickNotifier.removeCallback
+muntjac.terminal.composite_error_message.CompositeErrorMessage.removeCallback
+muntjac.terminal.error_message.IErrorMessage.removeCallback
+muntjac.terminal.paintable.IPaintable.removeCallback
+muntjac.terminal.sys_error.SysError.removeCallback
+muntjac.terminal.user_error.UserError.removeCallback
+muntjac.ui.absolute_layout.AbsoluteLayout.removeCallback
+muntjac.ui.abstract_component.AbstractComponent.removeCallback
+muntjac.ui.abstract_component_container.AbstractComponentContainer.removeCallback
+muntjac.ui.abstract_field.AbstractField.removeCallback
+muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.removeCallback
+muntjac.ui.abstract_select.AbstractSelect.removeCallback
+muntjac.ui.abstract_split_panel.AbstractSplitPanel.removeCallback
+muntjac.ui.abstract_text_field.AbstractTextField.removeCallback
+muntjac.ui.button.Button.removeCallback
+muntjac.ui.component.IComponent.removeCallback
+muntjac.ui.component_container.IComponentContainer.removeCallback
+muntjac.ui.css_layout.CssLayout.removeCallback
+muntjac.ui.date_field.DateField.removeCallback
+muntjac.ui.embedded.Embedded.removeCallback
+muntjac.ui.grid_layout.GridLayout.removeCallback
+muntjac.ui.label.Label.removeCallback
+muntjac.ui.login_form.LoginForm.removeCallback
+muntjac.ui.option_group.OptionGroup.removeCallback
+muntjac.ui.panel.Panel.removeCallback
+muntjac.ui.popup_view.PopupView.removeCallback
+muntjac.ui.select.Select.removeCallback
+muntjac.ui.tab_sheet.TabSheet.removeCallback
+muntjac.ui.table.Table.removeCallback
+muntjac.ui.tree.Tree.removeCallback
+muntjac.ui.tree_table.TreeTable.removeCallback
+muntjac.ui.upload.Upload.removeCallback
+muntjac.ui.uri_fragment_utility.UriFragmentUtility.removeCallback
+muntjac.ui.window.Window.removeCallback" class="py-name" href="#" onclick="return doclink('link-34', 'removeCallback', 'link-34');">removeCallback</a></tt><tt class="py-op">(</tt><tt class="py-name">callback</tt><tt class="py-op">,</tt> <tt class="py-name">eventType</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L82"></a><tt class="py-lineno"> 82</tt>  <tt class="py-line"> </tt>
+<a name="L83"></a><tt class="py-lineno"> 83</tt>  <tt class="py-line"> </tt>
+<a name="UriFragmentUtility.__init__"></a><div id="UriFragmentUtility.__init__-def"><a name="L84"></a><tt class="py-lineno"> 84</tt> <a class="py-toggle" href="#" id="UriFragmentUtility.__init__-toggle" onclick="return toggle('UriFragmentUtility.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.uri_fragment_utility.UriFragmentUtility-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="UriFragmentUtility.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="UriFragmentUtility.__init__-expanded"><a name="L85"></a><tt class="py-lineno"> 85</tt>  <tt class="py-line">        <tt class="py-name">super</tt><tt class="py-op">(</tt><tt id="link-35" class="py-name"><a title="muntjac.ui.uri_fragment_utility.UriFragmentUtility" class="py-name" href="#" onclick="return doclink('link-35', 'UriFragmentUtility', 'link-16');">UriFragmentUtility</a></tt><tt class="py-op">,</tt> <tt class="py-name">self</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt id="link-36" class="py-name" targets="Method muntjac.application.Application.__init__()=muntjac.application.Application-class.html#__init__,Method muntjac.application.ApplicationError.__init__()=muntjac.application.ApplicationError-class.html#__init__,Method muntjac.application.UserChangeEvent.__init__()=muntjac.application.UserChangeEvent-class.html#__init__,Method muntjac.application.WindowAttachEvent.__init__()=muntjac.application.WindowAttachEvent-class.html#__init__,Method muntjac.application.WindowDetachEvent.__init__()=muntjac.application.WindowDetachEvent-class.html#__init__,Method muntjac.data.buffered.SourceException.__init__()=muntjac.data.buffered.SourceException-class.html#__init__,Method muntjac.data.property.ConversionException.__init__()=muntjac.data.property.ConversionException-class.html#__init__,Method muntjac.data.property.ReadOnlyException.__init__()=muntjac.data.property.ReadOnlyException-class.html#__init__,Method muntjac.data.util.abstract_container.AbstractContainer.__init__()=muntjac.data.util.abstract_container.AbstractContainer-class.html#__init__,Method muntjac.data.util.abstract_container.BaseItemSetChangeEvent.__init__()=muntjac.data.util.abstract_container.BaseItemSetChangeEvent-class.html#__init__,Method muntjac.data.util.abstract_container.BasePropertySetChangeEvent.__init__()=muntjac.data.util.abstract_container.BasePropertySetChangeEvent-class.html#__init__,Method muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer.__init__()=muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#__init__,Method muntjac.data.util.abstract_property.AbstractProperty.__init__()=muntjac.data.util.abstract_property.AbstractProperty-class.html#__init__,Method muntjac.data.util.abstract_property.IReadOnlyStatusChangeEvent.__init__()=muntjac.data.util.abstract_property.IReadOnlyStatusChangeEvent-class.html#__init__,Method muntjac.data.util.abstract_property.ValueChangeEvent.__init__()=muntjac.data.util.abstract_property.ValueChangeEvent-class.html#__init__,Method muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper.__init__()=muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#__init__,Method muntjac.data.util.container_hierarchical_wrapper.ListedItemsFirstComparator.__init__()=muntjac.data.util.container_hierarchical_wrapper.ListedItemsFirstComparator-class.html#__init__,Method muntjac.data.util.container_hierarchical_wrapper.PiggybackListener.__init__()=muntjac.data.util.container_hierarchical_wrapper.PiggybackListener-class.html#__init__,Method muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper.__init__()=muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#__init__,Method muntjac.data.util.container_ordered_wrapper.PiggybackListener.__init__()=muntjac.data.util.container_ordered_wrapper.PiggybackListener-class.html#__init__,Method muntjac.data.util.default_item_sorter.DefaultItemSorter.__init__()=muntjac.data.util.default_item_sorter.DefaultItemSorter-class.html#__init__,Method muntjac.data.util.filter.simple_string_filter.SimpleStringFilter.__init__()=muntjac.data.util.filter.simple_string_filter.SimpleStringFilter-class.html#__init__,Method muntjac.data.util.filter.unsupported_filter_exception.UnsupportedFilterException.__init__()=muntjac.data.util.filter.unsupported_filter_exception.UnsupportedFilterException-class.html#__init__,Method muntjac.data.util.hierarchical_container.HierarchicalContainer.__init__()=muntjac.data.util.hierarchical_container.HierarchicalContainer-class.html#__init__,Method muntjac.data.util.indexed_container.IndexedContainer.__init__()=muntjac.data.util.indexed_container.IndexedContainer-class.html#__init__,Method muntjac.data.util.indexed_container.IndexedContainerItem.__init__()=muntjac.data.util.indexed_container.IndexedContainerItem-class.html#__init__,Method muntjac.data.util.indexed_container.IndexedContainerProperty.__init__()=muntjac.data.util.indexed_container.IndexedContainerProperty-class.html#__init__,Method muntjac.data.util.indexed_container.ItemSetChangeEvent.__init__()=muntjac.data.util.indexed_container.ItemSetChangeEvent-class.html#__init__,Method muntjac.data.util.indexed_container.PropertyValueChangeEvent.__init__()=muntjac.data.util.indexed_container.PropertyValueChangeEvent-class.html#__init__,Method muntjac.data.util.list_set.ListSet.__init__()=muntjac.data.util.list_set.ListSet-class.html#__init__,Method muntjac.data.util.object_property.ObjectProperty.__init__()=muntjac.data.util.object_property.ObjectProperty-class.html#__init__,Method muntjac.data.util.propertyset_item.PropertySetChangeEvent.__init__()=muntjac.data.util.propertyset_item.PropertySetChangeEvent-class.html#__init__,Method muntjac.data.util.propertyset_item.PropertysetItem.__init__()=muntjac.data.util.propertyset_item.PropertysetItem-class.html#__init__,Method muntjac.data.validator.EmptyValueException.__init__()=muntjac.data.validator.EmptyValueException-class.html#__init__,Method muntjac.data.validator.InvalidValueException.__init__()=muntjac.data.validator.InvalidValueException-class.html#__init__,Method muntjac.data.validators.abstract_string_validator.AbstractStringValidator.__init__()=muntjac.data.validators.abstract_string_validator.AbstractStringValidator-class.html#__init__,Method muntjac.data.validators.abstract_validator.AbstractValidator.__init__()=muntjac.data.validators.abstract_validator.AbstractValidator-class.html#__init__,Method muntjac.data.validators.composite_validator.CompositeValidator.__init__()=muntjac.data.validators.composite_validator.CompositeValidator-class.html#__init__,Method muntjac.data.validators.double_validator.DoubleValidator.__init__()=muntjac.data.validators.double_validator.DoubleValidator-class.html#__init__,Method muntjac.data.validators.email_validator.EmailValidator.__init__()=muntjac.data.validators.email_validator.EmailValidator-class.html#__init__,Method muntjac.data.validators.integer_validator.IntegerValidator.__init__()=muntjac.data.validators.integer_validator.IntegerValidator-class.html#__init__,Method muntjac.data.validators.null_validator.NullValidator.__init__()=muntjac.data.validators.null_validator.NullValidator-class.html#__init__,Method muntjac.data.validators.regexp_validator.RegexpValidator.__init__()=muntjac.data.validators.regexp_validator.RegexpValidator-class.html#__init__,Method muntjac.data.validators.string_length_validator.StringLengthValidator.__init__()=muntjac.data.validators.string_length_validator.StringLengthValidator-class.html#__init__,Method muntjac.event.action.Action.__init__()=muntjac.event.action.Action-class.html#__init__,Method muntjac.event.action_manager.ActionManager.__init__()=muntjac.event.action_manager.ActionManager-class.html#__init__,Method muntjac.event.data_bound_transferable.DataBoundTransferable.__init__()=muntjac.event.data_bound_transferable.DataBoundTransferable-class.html#__init__,Method muntjac.event.dd.acceptcriteria.accept_all.AcceptAll.__init__()=muntjac.event.dd.acceptcriteria.accept_all.AcceptAll-class.html#__init__,Method muntjac.event.dd.acceptcriteria.and_.And.__init__()=muntjac.event.dd.acceptcriteria.and_.And-class.html#__init__,Method muntjac.event.dd.acceptcriteria.contains_data_flavor.ContainsDataFlavor.__init__()=muntjac.event.dd.acceptcriteria.contains_data_flavor.ContainsDataFlavor-class.html#__init__,Method muntjac.event.dd.acceptcriteria.not_.Not.__init__()=muntjac.event.dd.acceptcriteria.not_.Not-class.html#__init__,Method muntjac.event.dd.acceptcriteria.or_.Or.__init__()=muntjac.event.dd.acceptcriteria.or_.Or-class.html#__init__,Method muntjac.event.dd.acceptcriteria.source_is.SourceIs.__init__()=muntjac.event.dd.acceptcriteria.source_is.SourceIs-class.html#__init__,Method muntjac.event.dd.acceptcriteria.source_is_target.SourceIsTarget.__init__()=muntjac.event.dd.acceptcriteria.source_is_target.SourceIsTarget-class.html#__init__,Method muntjac.event.dd.acceptcriteria.target_detail_is.TargetDetailIs.__init__()=muntjac.event.dd.acceptcriteria.target_detail_is.TargetDetailIs-class.html#__init__,Method muntjac.event.dd.drag_and_drop_event.DragAndDropEvent.__init__()=muntjac.event.dd.drag_and_drop_event.DragAndDropEvent-class.html#__init__,Method muntjac.event.dd.target_details_impl.TargetDetailsImpl.__init__()=muntjac.event.dd.target_details_impl.TargetDetailsImpl-class.html#__init__,Method muntjac.event.event_router.EventRouter.__init__()=muntjac.event.event_router.EventRouter-class.html#__init__,Method muntjac.event.field_events.BlurEvent.__init__()=muntjac.event.field_events.BlurEvent-class.html#__init__,Method muntjac.event.field_events.FocusEvent.__init__()=muntjac.event.field_events.FocusEvent-class.html#__init__,Method muntjac.event.field_events.TextChangeEvent.__init__()=muntjac.event.field_events.TextChangeEvent-class.html#__init__,Method muntjac.event.item_click_event.ItemClickEvent.__init__()=muntjac.event.item_click_event.ItemClickEvent-class.html#__init__,Method muntjac.event.layout_events.LayoutClickEvent.__init__()=muntjac.event.layout_events.LayoutClickEvent-class.html#__init__,Method muntjac.event.listener_method.ListenerMethod.__init__()=muntjac.event.listener_method.ListenerMethod-class.html#__init__,Method muntjac.event.listener_method.MethodException.__init__()=muntjac.event.listener_method.MethodException-class.html#__init__,Method muntjac.event.mouse_events.ClickEvent.__init__()=muntjac.event.mouse_events.ClickEvent-class.html#__init__,Method muntjac.event.mouse_events.DoubleClickEvent.__init__()=muntjac.event.mouse_events.DoubleClickEvent-class.html#__init__,Method muntjac.event.shortcut_action.ShortcutAction.__init__()=muntjac.event.shortcut_action.ShortcutAction-class.html#__init__,Method muntjac.event.shortcut_listener.ShortcutListener.__init__()=muntjac.event.shortcut_listener.ShortcutListener-class.html#__init__,Method muntjac.event.transferable_impl.TransferableImpl.__init__()=muntjac.event.transferable_impl.TransferableImpl-class.html#__init__,Method muntjac.messages.SystemMessages.__init__()=muntjac.messages.SystemMessages-class.html#__init__,Method muntjac.terminal.class_resource.ClassResource.__init__()=muntjac.terminal.class_resource.ClassResource-class.html#__init__,Method muntjac.terminal.composite_error_message.CompositeErrorMessage.__init__()=muntjac.terminal.composite_error_message.CompositeErrorMessage-class.html#__init__,Method muntjac.terminal.download_stream.DownloadStream.__init__()=muntjac.terminal.download_stream.DownloadStream-class.html#__init__,Method muntjac.terminal.external_resource.ExternalResource.__init__()=muntjac.terminal.external_resource.ExternalResource-class.html#__init__,Method muntjac.terminal.file_resource.FileResource.__init__()=muntjac.terminal.file_resource.FileResource-class.html#__init__,Method muntjac.terminal.gwt.client.mouse_event_details.MouseEventDetails.__init__()=muntjac.terminal.gwt.client.mouse_event_details.MouseEventDetails-class.html#__init__,Method muntjac.terminal.gwt.client.ui.v_margin_info.VMarginInfo.__init__()=muntjac.terminal.gwt.client.ui.v_margin_info.VMarginInfo-class.html#__init__,Method muntjac.terminal.gwt.client.v_browser_details.VBrowserDetails.__init__()=muntjac.terminal.gwt.client.v_browser_details.VBrowserDetails-class.html#__init__,Method muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet.__init__()=muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#__init__,Method muntjac.terminal.gwt.server.abstract_application_servlet.ParameterHandlerErrorImpl.__init__()=muntjac.terminal.gwt.server.abstract_application_servlet.ParameterHandlerErrorImpl-class.html#__init__,Method muntjac.terminal.gwt.server.abstract_application_servlet.RequestError.__init__()=muntjac.terminal.gwt.server.abstract_application_servlet.RequestError-class.html#__init__,Method muntjac.terminal.gwt.server.abstract_application_servlet.URIHandlerErrorImpl.__init__()=muntjac.terminal.gwt.server.abstract_application_servlet.URIHandlerErrorImpl-class.html#__init__,Method muntjac.terminal.gwt.server.abstract_communication_manager.AbstractCommunicationManager.__init__()=muntjac.terminal.gwt.server.abstract_communication_manager.AbstractCommunicationManager-class.html#__init__,Method muntjac.terminal.gwt.server.abstract_communication_manager.ErrorHandlerErrorEvent.__init__()=muntjac.terminal.gwt.server.abstract_communication_manager.ErrorHandlerErrorEvent-class.html#__init__,Method muntjac.terminal.gwt.server.abstract_communication_manager.InvalidUIDLSecurityKeyException.__init__()=muntjac.terminal.gwt.server.abstract_communication_manager.InvalidUIDLSecurityKeyException-class.html#__init__,Method muntjac.terminal.gwt.server.abstract_communication_manager.OpenWindowCache.__init__()=muntjac.terminal.gwt.server.abstract_communication_manager.OpenWindowCache-class.html#__init__,Method muntjac.terminal.gwt.server.abstract_communication_manager.SimpleMultiPartInputStream.__init__()=muntjac.terminal.gwt.server.abstract_communication_manager.SimpleMultiPartInputStream-class.html#__init__,Method muntjac.terminal.gwt.server.abstract_communication_manager.URIHandlerErrorImpl.__init__()=muntjac.terminal.gwt.server.abstract_communication_manager.URIHandlerErrorImpl-class.html#__init__,Method muntjac.terminal.gwt.server.abstract_communication_manager.UploadInterruptedException.__init__()=muntjac.terminal.gwt.server.abstract_communication_manager.UploadInterruptedException-class.html#__init__,Method muntjac.terminal.gwt.server.abstract_streaming_event.AbstractStreamingEvent.__init__()=muntjac.terminal.gwt.server.abstract_streaming_event.AbstractStreamingEvent-class.html#__init__,Method muntjac.terminal.gwt.server.abstract_web_application_context.AbstractWebApplicationContext.__init__()=muntjac.terminal.gwt.server.abstract_web_application_context.AbstractWebApplicationContext-class.html#__init__,Method muntjac.terminal.gwt.server.application_runner_servlet.URIS.__init__()=muntjac.terminal.gwt.server.application_runner_servlet.URIS-class.html#__init__,Method muntjac.terminal.gwt.server.application_servlet.ApplicationServlet.__init__()=muntjac.terminal.gwt.server.application_servlet.ApplicationServlet-class.html#__init__,Method muntjac.terminal.gwt.server.change_variables_error_event.ChangeVariablesErrorEvent.__init__()=muntjac.terminal.gwt.server.change_variables_error_event.ChangeVariablesErrorEvent-class.html#__init__,Method muntjac.terminal.gwt.server.communication_manager.AbstractApplicationServletWrapper.__init__()=muntjac.terminal.gwt.server.communication_manager.AbstractApplicationServletWrapper-class.html#__init__,Method muntjac.terminal.gwt.server.communication_manager.CommunicationManager.__init__()=muntjac.terminal.gwt.server.communication_manager.CommunicationManager-class.html#__init__,Method muntjac.terminal.gwt.server.communication_manager.HttpServletRequestWrapper.__init__()=muntjac.terminal.gwt.server.communication_manager.HttpServletRequestWrapper-class.html#__init__,Method muntjac.terminal.gwt.server.communication_manager.HttpServletResponseWrapper.__init__()=muntjac.terminal.gwt.server.communication_manager.HttpServletResponseWrapper-class.html#__init__,Method muntjac.terminal.gwt.server.communication_manager.HttpSessionWrapper.__init__()=muntjac.terminal.gwt.server.communication_manager.HttpSessionWrapper-class.html#__init__,Method muntjac.terminal.gwt.server.component_size_validator.ComponentInfo.__init__()=muntjac.terminal.gwt.server.component_size_validator.ComponentInfo-class.html#__init__,Method muntjac.terminal.gwt.server.component_size_validator.FileLocation.__init__()=muntjac.terminal.gwt.server.component_size_validator.FileLocation-class.html#__init__,Method muntjac.terminal.gwt.server.component_size_validator.InvalidLayout.__init__()=muntjac.terminal.gwt.server.component_size_validator.InvalidLayout-class.html#__init__,Method muntjac.terminal.gwt.server.drag_and_drop_service.DragAndDropService.__init__()=muntjac.terminal.gwt.server.drag_and_drop_service.DragAndDropService-class.html#__init__,Method muntjac.terminal.gwt.server.exceptions.SystemMessageException.__init__()=muntjac.terminal.gwt.server.exceptions.SystemMessageException-class.html#__init__,Method muntjac.terminal.gwt.server.exceptions.UploadException.__init__()=muntjac.terminal.gwt.server.exceptions.UploadException-class.html#__init__,Method muntjac.terminal.gwt.server.json_paint_target.ArrayVariable.__init__()=muntjac.terminal.gwt.server.json_paint_target.ArrayVariable-class.html#__init__,Method muntjac.terminal.gwt.server.json_paint_target.BooleanVariable.__init__()=muntjac.terminal.gwt.server.json_paint_target.BooleanVariable-class.html#__init__,Method muntjac.terminal.gwt.server.json_paint_target.DoubleVariable.__init__()=muntjac.terminal.gwt.server.json_paint_target.DoubleVariable-class.html#__init__,Method muntjac.terminal.gwt.server.json_paint_target.FloatVariable.__init__()=muntjac.terminal.gwt.server.json_paint_target.FloatVariable-class.html#__init__,Method muntjac.terminal.gwt.server.json_paint_target.IntVariable.__init__()=muntjac.terminal.gwt.server.json_paint_target.IntVariable-class.html#__init__,Method muntjac.terminal.gwt.server.json_paint_target.JsonPaintTarget.__init__()=muntjac.terminal.gwt.server.json_paint_target.JsonPaintTarget-class.html#__init__,Method muntjac.terminal.gwt.server.json_paint_target.JsonTag.__init__()=muntjac.terminal.gwt.server.json_paint_target.JsonTag-class.html#__init__,Method muntjac.terminal.gwt.server.json_paint_target.LongVariable.__init__()=muntjac.terminal.gwt.server.json_paint_target.LongVariable-class.html#__init__,Method muntjac.terminal.gwt.server.json_paint_target.StringVariable.__init__()=muntjac.terminal.gwt.server.json_paint_target.StringVariable-class.html#__init__,Method muntjac.terminal.gwt.server.paste_deploy_application_servlet.app.__init__()=muntjac.terminal.gwt.server.paste_deploy_application_servlet.app-class.html#__init__,Method muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet.__init__()=muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#__init__,Method muntjac.terminal.gwt.server.streaming_events.StreamingEndEventImpl.__init__()=muntjac.terminal.gwt.server.streaming_events.StreamingEndEventImpl-class.html#__init__,Method muntjac.terminal.gwt.server.streaming_events.StreamingErrorEventImpl.__init__()=muntjac.terminal.gwt.server.streaming_events.StreamingErrorEventImpl-class.html#__init__,Method muntjac.terminal.gwt.server.streaming_events.StreamingProgressEventImpl.__init__()=muntjac.terminal.gwt.server.streaming_events.StreamingProgressEventImpl-class.html#__init__,Method muntjac.terminal.gwt.server.streaming_events.StreamingStartEventImpl.__init__()=muntjac.terminal.gwt.server.streaming_events.StreamingStartEventImpl-class.html#__init__,Method muntjac.terminal.gwt.server.web_application_context.WebApplicationContext.__init__()=muntjac.terminal.gwt.server.web_application_context.WebApplicationContext-class.html#__init__,Method muntjac.terminal.gwt.server.web_browser.WebBrowser.__init__()=muntjac.terminal.gwt.server.web_browser.WebBrowser-class.html#__init__,Method muntjac.terminal.key_mapper.KeyMapper.__init__()=muntjac.terminal.key_mapper.KeyMapper-class.html#__init__,Method muntjac.terminal.paint_exception.PaintException.__init__()=muntjac.terminal.paint_exception.PaintException-class.html#__init__,Method muntjac.terminal.paintable.RepaintRequestEvent.__init__()=muntjac.terminal.paintable.RepaintRequestEvent-class.html#__init__,Method muntjac.terminal.stream_resource.StreamResource.__init__()=muntjac.terminal.stream_resource.StreamResource-class.html#__init__,Method muntjac.terminal.sys_error.SysError.__init__()=muntjac.terminal.sys_error.SysError-class.html#__init__,Method muntjac.terminal.theme_resource.ThemeResource.__init__()=muntjac.terminal.theme_resource.ThemeResource-class.html#__init__,Method muntjac.terminal.user_error.UserError.__init__()=muntjac.terminal.user_error.UserError-class.html#__init__,Method muntjac.ui.absolute_layout.AbsoluteLayout.__init__()=muntjac.ui.absolute_layout.AbsoluteLayout-class.html#__init__,Method muntjac.ui.absolute_layout.ComponentPosition.__init__()=muntjac.ui.absolute_layout.ComponentPosition-class.html#__init__,Method muntjac.ui.abstract_component.AbstractComponent.__init__()=muntjac.ui.abstract_component.AbstractComponent-class.html#__init__,Method muntjac.ui.abstract_component_container.AbstractComponentContainer.__init__()=muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#__init__,Method muntjac.ui.abstract_field.AbstractField.__init__()=muntjac.ui.abstract_field.AbstractField-class.html#__init__,Method muntjac.ui.abstract_field.FocusShortcut.__init__()=muntjac.ui.abstract_field.FocusShortcut-class.html#__init__,Method muntjac.ui.abstract_field.IReadOnlyStatusChangeEvent.__init__()=muntjac.ui.abstract_field.IReadOnlyStatusChangeEvent-class.html#__init__,Method muntjac.ui.abstract_layout.AbstractLayout.__init__()=muntjac.ui.abstract_layout.AbstractLayout-class.html#__init__,Method muntjac.ui.abstract_media.AbstractMedia.__init__()=muntjac.ui.abstract_media.AbstractMedia-class.html#__init__,Method muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.__init__()=muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout-class.html#__init__,Method muntjac.ui.abstract_select.AbstractItemSetCriterion.__init__()=muntjac.ui.abstract_select.AbstractItemSetCriterion-class.html#__init__,Method muntjac.ui.abstract_select.AbstractSelect.__init__()=muntjac.ui.abstract_select.AbstractSelect-class.html#__init__,Method muntjac.ui.abstract_select.AbstractSelectTargetDetails.__init__()=muntjac.ui.abstract_select.AbstractSelectTargetDetails-class.html#__init__,Method muntjac.ui.abstract_select.AcceptItem.__init__()=muntjac.ui.abstract_select.AcceptItem-class.html#__init__,Method muntjac.ui.abstract_select.CaptionChangeListener.__init__()=muntjac.ui.abstract_select.CaptionChangeListener-class.html#__init__,Method muntjac.ui.abstract_select.IItemSetChangeEvent.__init__()=muntjac.ui.abstract_select.IItemSetChangeEvent-class.html#__init__,Method muntjac.ui.abstract_select.IPropertySetChangeEvent.__init__()=muntjac.ui.abstract_select.IPropertySetChangeEvent-class.html#__init__,Method muntjac.ui.abstract_select.TargetItemIs.__init__()=muntjac.ui.abstract_select.TargetItemIs-class.html#__init__,Method muntjac.ui.abstract_select.VerticalLocationIs.__init__()=muntjac.ui.abstract_select.VerticalLocationIs-class.html#__init__,Method muntjac.ui.abstract_split_panel.AbstractSplitPanel.__init__()=muntjac.ui.abstract_split_panel.AbstractSplitPanel-class.html#__init__,Method muntjac.ui.abstract_split_panel.ComponentIterator.__init__()=muntjac.ui.abstract_split_panel.ComponentIterator-class.html#__init__,Method muntjac.ui.abstract_split_panel.SplitterClickEvent.__init__()=muntjac.ui.abstract_split_panel.SplitterClickEvent-class.html#__init__,Method muntjac.ui.abstract_text_field.AbstractTextField.__init__()=muntjac.ui.abstract_text_field.AbstractTextField-class.html#__init__,Method muntjac.ui.abstract_text_field.TextChangeEventImpl.__init__()=muntjac.ui.abstract_text_field.TextChangeEventImpl-class.html#__init__,Method muntjac.ui.alignment.Alignment.__init__()=muntjac.ui.alignment.Alignment-class.html#__init__,Method muntjac.ui.audio.Audio.__init__()=muntjac.ui.audio.Audio-class.html#__init__,Method muntjac.ui.base_field_factory.BaseFieldFactory.__init__()=muntjac.ui.base_field_factory.BaseFieldFactory-class.html#__init__,Method muntjac.ui.button.Button.__init__()=muntjac.ui.button.Button-class.html#__init__,Method muntjac.ui.button.ClickEvent.__init__()=muntjac.ui.button.ClickEvent-class.html#__init__,Method muntjac.ui.button.ClickShortcut.__init__()=muntjac.ui.button.ClickShortcut-class.html#__init__,Method muntjac.ui.check_box.CheckBox.__init__()=muntjac.ui.check_box.CheckBox-class.html#__init__,Method muntjac.ui.client_widget.ClientWidget.__init__()=muntjac.ui.client_widget.ClientWidget-class.html#__init__,Method muntjac.ui.combo_box.ComboBox.__init__()=muntjac.ui.combo_box.ComboBox-class.html#__init__,Method muntjac.ui.component.ErrorEvent.__init__()=muntjac.ui.component.ErrorEvent-class.html#__init__,Method muntjac.ui.component.Event.__init__()=muntjac.ui.component.Event-class.html#__init__,Method muntjac.ui.component_container.ComponentAttachEvent.__init__()=muntjac.ui.component_container.ComponentAttachEvent-class.html#__init__,Method muntjac.ui.component_container.ComponentDetachEvent.__init__()=muntjac.ui.component_container.ComponentDetachEvent-class.html#__init__,Method muntjac.ui.css_layout.CssLayout.__init__()=muntjac.ui.css_layout.CssLayout-class.html#__init__,Method muntjac.ui.custom_component.ComponentIterator.__init__()=muntjac.ui.custom_component.ComponentIterator-class.html#__init__,Method muntjac.ui.custom_component.CustomComponent.__init__()=muntjac.ui.custom_component.CustomComponent-class.html#__init__,Method muntjac.ui.custom_layout.CustomLayout.__init__()=muntjac.ui.custom_layout.CustomLayout-class.html#__init__,Method muntjac.ui.date_field.DateField.__init__()=muntjac.ui.date_field.DateField-class.html#__init__,Method muntjac.ui.date_field.UnparsableDateString.__init__()=muntjac.ui.date_field.UnparsableDateString-class.html#__init__,Method muntjac.ui.drag_and_drop_wrapper.DragAndDropWrapper.__init__()=muntjac.ui.drag_and_drop_wrapper.DragAndDropWrapper-class.html#__init__,Method muntjac.ui.drag_and_drop_wrapper.ProxyReceiver.__init__()=muntjac.ui.drag_and_drop_wrapper.ProxyReceiver-class.html#__init__,Method muntjac.ui.drag_and_drop_wrapper.ReceivingEventWrapper.__init__()=muntjac.ui.drag_and_drop_wrapper.ReceivingEventWrapper-class.html#__init__,Method muntjac.ui.drag_and_drop_wrapper.WrapperTargetDetails.__init__()=muntjac.ui.drag_and_drop_wrapper.WrapperTargetDetails-class.html#__init__,Method muntjac.ui.drag_and_drop_wrapper.WrapperTransferable.__init__()=muntjac.ui.drag_and_drop_wrapper.WrapperTransferable-class.html#__init__,Method muntjac.ui.embedded.Embedded.__init__()=muntjac.ui.embedded.Embedded-class.html#__init__,Method muntjac.ui.expand_layout.ExpandLayout.__init__()=muntjac.ui.expand_layout.ExpandLayout-class.html#__init__,Method muntjac.ui.field.ValueChangeEvent.__init__()=muntjac.ui.field.ValueChangeEvent-class.html#__init__,Method muntjac.ui.form.FieldValueChangeListener.__init__()=muntjac.ui.form.FieldValueChangeListener-class.html#__init__,Method muntjac.ui.form.Form.__init__()=muntjac.ui.form.Form-class.html#__init__,Method muntjac.ui.form_layout.FormLayout.__init__()=muntjac.ui.form_layout.FormLayout-class.html#__init__,Method muntjac.ui.grid_layout.Area.__init__()=muntjac.ui.grid_layout.Area-class.html#__init__,Method muntjac.ui.grid_layout.GridLayout.__init__()=muntjac.ui.grid_layout.GridLayout-class.html#__init__,Method muntjac.ui.grid_layout.OutOfBoundsException.__init__()=muntjac.ui.grid_layout.OutOfBoundsException-class.html#__init__,Method muntjac.ui.grid_layout.OverlapsException.__init__()=muntjac.ui.grid_layout.OverlapsException-class.html#__init__,Method muntjac.ui.horizontal_layout.HorizontalLayout.__init__()=muntjac.ui.horizontal_layout.HorizontalLayout-class.html#__init__,Method muntjac.ui.horizontal_split_panel.HorizontalSplitPanel.__init__()=muntjac.ui.horizontal_split_panel.HorizontalSplitPanel-class.html#__init__,Method muntjac.ui.html5_file.Html5File.__init__()=muntjac.ui.html5_file.Html5File-class.html#__init__,Method muntjac.ui.inline_date_field.InlineDateField.__init__()=muntjac.ui.inline_date_field.InlineDateField-class.html#__init__,Method muntjac.ui.label.Label.__init__()=muntjac.ui.label.Label-class.html#__init__,Method muntjac.ui.label.ValueChangeEvent.__init__()=muntjac.ui.label.ValueChangeEvent-class.html#__init__,Method muntjac.ui.layout.MarginInfo.__init__()=muntjac.ui.layout.MarginInfo-class.html#__init__,Method muntjac.ui.link.Link.__init__()=muntjac.ui.link.Link-class.html#__init__,Method muntjac.ui.list_select.ListSelect.__init__()=muntjac.ui.list_select.ListSelect-class.html#__init__,Method muntjac.ui.login_form.LoginEvent.__init__()=muntjac.ui.login_form.LoginEvent-class.html#__init__,Method muntjac.ui.login_form.LoginForm.__init__()=muntjac.ui.login_form.LoginForm-class.html#__init__,Method muntjac.ui.login_form.LoginPage.__init__()=muntjac.ui.login_form.LoginPage-class.html#__init__,Method muntjac.ui.login_form.ParameterHandler.__init__()=muntjac.ui.login_form.ParameterHandler-class.html#__init__,Method muntjac.ui.login_form.UriHandler.__init__()=muntjac.ui.login_form.UriHandler-class.html#__init__,Method muntjac.ui.menu_bar.MenuBar.__init__()=muntjac.ui.menu_bar.MenuBar-class.html#__init__,Method muntjac.ui.menu_bar.MenuItem.__init__()=muntjac.ui.menu_bar.MenuItem-class.html#__init__,Method muntjac.ui.native_button.NativeButton.__init__()=muntjac.ui.native_button.NativeButton-class.html#__init__,Method muntjac.ui.native_select.NativeSelect.__init__()=muntjac.ui.native_select.NativeSelect-class.html#__init__,Method muntjac.ui.option_group.OptionGroup.__init__()=muntjac.ui.option_group.OptionGroup-class.html#__init__,Method muntjac.ui.ordered_layout.OrderedLayout.__init__()=muntjac.ui.ordered_layout.OrderedLayout-class.html#__init__,Method muntjac.ui.panel.Panel.__init__()=muntjac.ui.panel.Panel-class.html#__init__,Method muntjac.ui.password_field.PasswordField.__init__()=muntjac.ui.password_field.PasswordField-class.html#__init__,Method muntjac.ui.popup_date_field.PopupDateField.__init__()=muntjac.ui.popup_date_field.PopupDateField-class.html#__init__,Method muntjac.ui.popup_view.InnerContent.__init__()=muntjac.ui.popup_view.InnerContent-class.html#__init__,Method muntjac.ui.popup_view.PopupView.__init__()=muntjac.ui.popup_view.PopupView-class.html#__init__,Method muntjac.ui.popup_view.PopupVisibilityEvent.__init__()=muntjac.ui.popup_view.PopupVisibilityEvent-class.html#__init__,Method muntjac.ui.popup_view.SingleComponentIterator.__init__()=muntjac.ui.popup_view.SingleComponentIterator-class.html#__init__,Method muntjac.ui.progress_indicator.ProgressIndicator.__init__()=muntjac.ui.progress_indicator.ProgressIndicator-class.html#__init__,Method muntjac.ui.rich_text_area.RichTextArea.__init__()=muntjac.ui.rich_text_area.RichTextArea-class.html#__init__,Method muntjac.ui.select.Select.__init__()=muntjac.ui.select.Select-class.html#__init__,Method muntjac.ui.slider.Slider.__init__()=muntjac.ui.slider.Slider-class.html#__init__,Method muntjac.ui.slider.ValueOutOfBoundsException.__init__()=muntjac.ui.slider.ValueOutOfBoundsException-class.html#__init__,Method muntjac.ui.split_panel.SplitPanel.__init__()=muntjac.ui.split_panel.SplitPanel-class.html#__init__,Method muntjac.ui.tab_sheet.SelectedTabChangeEvent.__init__()=muntjac.ui.tab_sheet.SelectedTabChangeEvent-class.html#__init__,Method muntjac.ui.tab_sheet.TabSheet.__init__()=muntjac.ui.tab_sheet.TabSheet-class.html#__init__,Method muntjac.ui.tab_sheet.TabSheetTabImpl.__init__()=muntjac.ui.tab_sheet.TabSheetTabImpl-class.html#__init__,Method muntjac.ui.table.ColumnReorderEvent.__init__()=muntjac.ui.table.ColumnReorderEvent-class.html#__init__,Method muntjac.ui.table.ColumnResizeEvent.__init__()=muntjac.ui.table.ColumnResizeEvent-class.html#__init__,Method muntjac.ui.table.FooterClickEvent.__init__()=muntjac.ui.table.FooterClickEvent-class.html#__init__,Method muntjac.ui.table.GeneratedRow.__init__()=muntjac.ui.table.GeneratedRow-class.html#__init__,Method muntjac.ui.table.HeaderClickEvent.__init__()=muntjac.ui.table.HeaderClickEvent-class.html#__init__,Method muntjac.ui.table.Table.__init__()=muntjac.ui.table.Table-class.html#__init__,Method muntjac.ui.table.TableDropCriterion.__init__()=muntjac.ui.table.TableDropCriterion-class.html#__init__,Method muntjac.ui.table.TableTransferable.__init__()=muntjac.ui.table.TableTransferable-class.html#__init__,Method muntjac.ui.text_area.TextArea.__init__()=muntjac.ui.text_area.TextArea-class.html#__init__,Method muntjac.ui.text_field.TextField.__init__()=muntjac.ui.text_field.TextField-class.html#__init__,Method muntjac.ui.tree.CollapseEvent.__init__()=muntjac.ui.tree.CollapseEvent-class.html#__init__,Method muntjac.ui.tree.ExpandEvent.__init__()=muntjac.ui.tree.ExpandEvent-class.html#__init__,Method muntjac.ui.tree.TargetInSubtree.__init__()=muntjac.ui.tree.TargetInSubtree-class.html#__init__,Method muntjac.ui.tree.TargetItemAllowsChildren.__init__()=muntjac.ui.tree.TargetItemAllowsChildren-class.html#__init__,Method muntjac.ui.tree.Tree.__init__()=muntjac.ui.tree.Tree-class.html#__init__,Method muntjac.ui.tree.TreeDropCriterion.__init__()=muntjac.ui.tree.TreeDropCriterion-class.html#__init__,Method muntjac.ui.tree.TreeTargetDetails.__init__()=muntjac.ui.tree.TreeTargetDetails-class.html#__init__,Method muntjac.ui.tree.TreeTransferable.__init__()=muntjac.ui.tree.TreeTransferable-class.html#__init__,Method muntjac.ui.tree_table.AbstractStrategy.__init__()=muntjac.ui.tree_table.AbstractStrategy-class.html#__init__,Method muntjac.ui.tree_table.HierarchicalStrategy.__init__()=muntjac.ui.tree_table.HierarchicalStrategy-class.html#__init__,Method muntjac.ui.tree_table.TreeTable.__init__()=muntjac.ui.tree_table.TreeTable-class.html#__init__,Method muntjac.ui.treetable.hierarchical_container_ordered_wrapper.HierarchicalContainerOrderedWrapper.__init__()=muntjac.ui.treetable.hierarchical_container_ordered_wrapper.HierarchicalContainerOrderedWrapper-class.html#__init__,Method muntjac.ui.twin_col_select.TwinColSelect.__init__()=muntjac.ui.twin_col_select.TwinColSelect-class.html#__init__,Method muntjac.ui.upload.FailedEvent.__init__()=muntjac.ui.upload.FailedEvent-class.html#__init__,Method muntjac.ui.upload.FinishedEvent.__init__()=muntjac.ui.upload.FinishedEvent-class.html#__init__,Method muntjac.ui.upload.InnerStreamVariable.__init__()=muntjac.ui.upload.InnerStreamVariable-class.html#__init__,Method muntjac.ui.upload.NoInputStreamEvent.__init__()=muntjac.ui.upload.NoInputStreamEvent-class.html#__init__,Method muntjac.ui.upload.NoOutputStreamEvent.__init__()=muntjac.ui.upload.NoOutputStreamEvent-class.html#__init__,Method muntjac.ui.upload.StartedEvent.__init__()=muntjac.ui.upload.StartedEvent-class.html#__init__,Method muntjac.ui.upload.SucceededEvent.__init__()=muntjac.ui.upload.SucceededEvent-class.html#__init__,Method muntjac.ui.upload.Upload.__init__()=muntjac.ui.upload.Upload-class.html#__init__,Method muntjac.ui.uri_fragment_utility.FragmentChangedEvent.__init__()=muntjac.ui.uri_fragment_utility.FragmentChangedEvent-class.html#__init__,Method muntjac.ui.uri_fragment_utility.UriFragmentUtility.__init__()=muntjac.ui.uri_fragment_utility.UriFragmentUtility-class.html#__init__,Method muntjac.ui.vertical_layout.VerticalLayout.__init__()=muntjac.ui.vertical_layout.VerticalLayout-class.html#__init__,Method muntjac.ui.vertical_split_panel.VerticalSplitPanel.__init__()=muntjac.ui.vertical_split_panel.VerticalSplitPanel-class.html#__init__,Method muntjac.ui.video.Video.__init__()=muntjac.ui.video.Video-class.html#__init__,Method muntjac.ui.window.CloseEvent.__init__()=muntjac.ui.window.CloseEvent-class.html#__init__,Method muntjac.ui.window.CloseShortcut.__init__()=muntjac.ui.window.CloseShortcut-class.html#__init__,Method muntjac.ui.window.Notification.__init__()=muntjac.ui.window.Notification-class.html#__init__,Method muntjac.ui.window.OpenResource.__init__()=muntjac.ui.window.OpenResource-class.html#__init__,Method muntjac.ui.window.ResizeEvent.__init__()=muntjac.ui.window.ResizeEvent-class.html#__init__,Method muntjac.ui.window.Window.__init__()=muntjac.ui.window.Window-class.html#__init__,Method muntjac.util.EventObject.__init__()=muntjac.util.EventObject-class.html#__init__"><a title="muntjac.application.Application.__init__
+muntjac.application.ApplicationError.__init__
+muntjac.application.UserChangeEvent.__init__
+muntjac.application.WindowAttachEvent.__init__
+muntjac.application.WindowDetachEvent.__init__
+muntjac.data.buffered.SourceException.__init__
+muntjac.data.property.ConversionException.__init__
+muntjac.data.property.ReadOnlyException.__init__
+muntjac.data.util.abstract_container.AbstractContainer.__init__
+muntjac.data.util.abstract_container.BaseItemSetChangeEvent.__init__
+muntjac.data.util.abstract_container.BasePropertySetChangeEvent.__init__
+muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer.__init__
+muntjac.data.util.abstract_property.AbstractProperty.__init__
+muntjac.data.util.abstract_property.IReadOnlyStatusChangeEvent.__init__
+muntjac.data.util.abstract_property.ValueChangeEvent.__init__
+muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper.__init__
+muntjac.data.util.container_hierarchical_wrapper.ListedItemsFirstComparator.__init__
+muntjac.data.util.container_hierarchical_wrapper.PiggybackListener.__init__
+muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper.__init__
+muntjac.data.util.container_ordered_wrapper.PiggybackListener.__init__
+muntjac.data.util.default_item_sorter.DefaultItemSorter.__init__
+muntjac.data.util.filter.simple_string_filter.SimpleStringFilter.__init__
+muntjac.data.util.filter.unsupported_filter_exception.UnsupportedFilterException.__init__
+muntjac.data.util.hierarchical_container.HierarchicalContainer.__init__
+muntjac.data.util.indexed_container.IndexedContainer.__init__
+muntjac.data.util.indexed_container.IndexedContainerItem.__init__
+muntjac.data.util.indexed_container.IndexedContainerProperty.__init__
+muntjac.data.util.indexed_container.ItemSetChangeEvent.__init__
+muntjac.data.util.indexed_container.PropertyValueChangeEvent.__init__
+muntjac.data.util.list_set.ListSet.__init__
+muntjac.data.util.object_property.ObjectProperty.__init__
+muntjac.data.util.propertyset_item.PropertySetChangeEvent.__init__
+muntjac.data.util.propertyset_item.PropertysetItem.__init__
+muntjac.data.validator.EmptyValueException.__init__
+muntjac.data.validator.InvalidValueException.__init__
+muntjac.data.validators.abstract_string_validator.AbstractStringValidator.__init__
+muntjac.data.validators.abstract_validator.AbstractValidator.__init__
+muntjac.data.validators.composite_validator.CompositeValidator.__init__
+muntjac.data.validators.double_validator.DoubleValidator.__init__
+muntjac.data.validators.email_validator.EmailValidator.__init__
+muntjac.data.validators.integer_validator.IntegerValidator.__init__
+muntjac.data.validators.null_validator.NullValidator.__init__
+muntjac.data.validators.regexp_validator.RegexpValidator.__init__
+muntjac.data.validators.string_length_validator.StringLengthValidator.__init__
+muntjac.event.action.Action.__init__
+muntjac.event.action_manager.ActionManager.__init__
+muntjac.event.data_bound_transferable.DataBoundTransferable.__init__
+muntjac.event.dd.acceptcriteria.accept_all.AcceptAll.__init__
+muntjac.event.dd.acceptcriteria.and_.And.__init__
+muntjac.event.dd.acceptcriteria.contains_data_flavor.ContainsDataFlavor.__init__
+muntjac.event.dd.acceptcriteria.not_.Not.__init__
+muntjac.event.dd.acceptcriteria.or_.Or.__init__
+muntjac.event.dd.acceptcriteria.source_is.SourceIs.__init__
+muntjac.event.dd.acceptcriteria.source_is_target.SourceIsTarget.__init__
+muntjac.event.dd.acceptcriteria.target_detail_is.TargetDetailIs.__init__
+muntjac.event.dd.drag_and_drop_event.DragAndDropEvent.__init__
+muntjac.event.dd.target_details_impl.TargetDetailsImpl.__init__
+muntjac.event.event_router.EventRouter.__init__
+muntjac.event.field_events.BlurEvent.__init__
+muntjac.event.field_events.FocusEvent.__init__
+muntjac.event.field_events.TextChangeEvent.__init__
+muntjac.event.item_click_event.ItemClickEvent.__init__
+muntjac.event.layout_events.LayoutClickEvent.__init__
+muntjac.event.listener_method.ListenerMethod.__init__
+muntjac.event.listener_method.MethodException.__init__
+muntjac.event.mouse_events.ClickEvent.__init__
+muntjac.event.mouse_events.DoubleClickEvent.__init__
+muntjac.event.shortcut_action.ShortcutAction.__init__
+muntjac.event.shortcut_listener.ShortcutListener.__init__
+muntjac.event.transferable_impl.TransferableImpl.__init__
+muntjac.messages.SystemMessages.__init__
+muntjac.terminal.class_resource.ClassResource.__init__
+muntjac.terminal.composite_error_message.CompositeErrorMessage.__init__
+muntjac.terminal.download_stream.DownloadStream.__init__
+muntjac.terminal.external_resource.ExternalResource.__init__
+muntjac.terminal.file_resource.FileResource.__init__
+muntjac.terminal.gwt.client.mouse_event_details.MouseEventDetails.__init__
+muntjac.terminal.gwt.client.ui.v_margin_info.VMarginInfo.__init__
+muntjac.terminal.gwt.client.v_browser_details.VBrowserDetails.__init__
+muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet.__init__
+muntjac.terminal.gwt.server.abstract_application_servlet.ParameterHandlerErrorImpl.__init__
+muntjac.terminal.gwt.server.abstract_application_servlet.RequestError.__init__
+muntjac.terminal.gwt.server.abstract_application_servlet.URIHandlerErrorImpl.__init__
+muntjac.terminal.gwt.server.abstract_communication_manager.AbstractCommunicationManager.__init__
+muntjac.terminal.gwt.server.abstract_communication_manager.ErrorHandlerErrorEvent.__init__
+muntjac.terminal.gwt.server.abstract_communication_manager.InvalidUIDLSecurityKeyException.__init__
+muntjac.terminal.gwt.server.abstract_communication_manager.OpenWindowCache.__init__
+muntjac.terminal.gwt.server.abstract_communication_manager.SimpleMultiPartInputStream.__init__
+muntjac.terminal.gwt.server.abstract_communication_manager.URIHandlerErrorImpl.__init__
+muntjac.terminal.gwt.server.abstract_communication_manager.UploadInterruptedException.__init__
+muntjac.terminal.gwt.server.abstract_streaming_event.AbstractStreamingEvent.__init__
+muntjac.terminal.gwt.server.abstract_web_application_context.AbstractWebApplicationContext.__init__
+muntjac.terminal.gwt.server.application_runner_servlet.URIS.__init__
+muntjac.terminal.gwt.server.application_servlet.ApplicationServlet.__init__
+muntjac.terminal.gwt.server.change_variables_error_event.ChangeVariablesErrorEvent.__init__
+muntjac.terminal.gwt.server.communication_manager.AbstractApplicationServletWrapper.__init__
+muntjac.terminal.gwt.server.communication_manager.CommunicationManager.__init__
+muntjac.terminal.gwt.server.communication_manager.HttpServletRequestWrapper.__init__
+muntjac.terminal.gwt.server.communication_manager.HttpServletResponseWrapper.__init__
+muntjac.terminal.gwt.server.communication_manager.HttpSessionWrapper.__init__
+muntjac.terminal.gwt.server.component_size_validator.ComponentInfo.__init__
+muntjac.terminal.gwt.server.component_size_validator.FileLocation.__init__
+muntjac.terminal.gwt.server.component_size_validator.InvalidLayout.__init__
+muntjac.terminal.gwt.server.drag_and_drop_service.DragAndDropService.__init__
+muntjac.terminal.gwt.server.exceptions.SystemMessageException.__init__
+muntjac.terminal.gwt.server.exceptions.UploadException.__init__
+muntjac.terminal.gwt.server.json_paint_target.ArrayVariable.__init__
+muntjac.terminal.gwt.server.json_paint_target.BooleanVariable.__init__
+muntjac.terminal.gwt.server.json_paint_target.DoubleVariable.__init__
+muntjac.terminal.gwt.server.json_paint_target.FloatVariable.__init__
+muntjac.terminal.gwt.server.json_paint_target.IntVariable.__init__
+muntjac.terminal.gwt.server.json_paint_target.JsonPaintTarget.__init__
+muntjac.terminal.gwt.server.json_paint_target.JsonTag.__init__
+muntjac.terminal.gwt.server.json_paint_target.LongVariable.__init__
+muntjac.terminal.gwt.server.json_paint_target.StringVariable.__init__
+muntjac.terminal.gwt.server.paste_deploy_application_servlet.app.__init__
+muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet.__init__
+muntjac.terminal.gwt.server.streaming_events.StreamingEndEventImpl.__init__
+muntjac.terminal.gwt.server.streaming_events.StreamingErrorEventImpl.__init__
+muntjac.terminal.gwt.server.streaming_events.StreamingProgressEventImpl.__init__
+muntjac.terminal.gwt.server.streaming_events.StreamingStartEventImpl.__init__
+muntjac.terminal.gwt.server.web_application_context.WebApplicationContext.__init__
+muntjac.terminal.gwt.server.web_browser.WebBrowser.__init__
+muntjac.terminal.key_mapper.KeyMapper.__init__
+muntjac.terminal.paint_exception.PaintException.__init__
+muntjac.terminal.paintable.RepaintRequestEvent.__init__
+muntjac.terminal.stream_resource.StreamResource.__init__
+muntjac.terminal.sys_error.SysError.__init__
+muntjac.terminal.theme_resource.ThemeResource.__init__
+muntjac.terminal.user_error.UserError.__init__
+muntjac.ui.absolute_layout.AbsoluteLayout.__init__
+muntjac.ui.absolute_layout.ComponentPosition.__init__
+muntjac.ui.abstract_component.AbstractComponent.__init__
+muntjac.ui.abstract_component_container.AbstractComponentContainer.__init__
+muntjac.ui.abstract_field.AbstractField.__init__
+muntjac.ui.abstract_field.FocusShortcut.__init__
+muntjac.ui.abstract_field.IReadOnlyStatusChangeEvent.__init__
+muntjac.ui.abstract_layout.AbstractLayout.__init__
+muntjac.ui.abstract_media.AbstractMedia.__init__
+muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.__init__
+muntjac.ui.abstract_select.AbstractItemSetCriterion.__init__
+muntjac.ui.abstract_select.AbstractSelect.__init__
+muntjac.ui.abstract_select.AbstractSelectTargetDetails.__init__
+muntjac.ui.abstract_select.AcceptItem.__init__
+muntjac.ui.abstract_select.CaptionChangeListener.__init__
+muntjac.ui.abstract_select.IItemSetChangeEvent.__init__
+muntjac.ui.abstract_select.IPropertySetChangeEvent.__init__
+muntjac.ui.abstract_select.TargetItemIs.__init__
+muntjac.ui.abstract_select.VerticalLocationIs.__init__
+muntjac.ui.abstract_split_panel.AbstractSplitPanel.__init__
+muntjac.ui.abstract_split_panel.ComponentIterator.__init__
+muntjac.ui.abstract_split_panel.SplitterClickEvent.__init__
+muntjac.ui.abstract_text_field.AbstractTextField.__init__
+muntjac.ui.abstract_text_field.TextChangeEventImpl.__init__
+muntjac.ui.alignment.Alignment.__init__
+muntjac.ui.audio.Audio.__init__
+muntjac.ui.base_field_factory.BaseFieldFactory.__init__
+muntjac.ui.button.Button.__init__
+muntjac.ui.button.ClickEvent.__init__
+muntjac.ui.button.ClickShortcut.__init__
+muntjac.ui.check_box.CheckBox.__init__
+muntjac.ui.client_widget.ClientWidget.__init__
+muntjac.ui.combo_box.ComboBox.__init__
+muntjac.ui.component.ErrorEvent.__init__
+muntjac.ui.component.Event.__init__
+muntjac.ui.component_container.ComponentAttachEvent.__init__
+muntjac.ui.component_container.ComponentDetachEvent.__init__
+muntjac.ui.css_layout.CssLayout.__init__
+muntjac.ui.custom_component.ComponentIterator.__init__
+muntjac.ui.custom_component.CustomComponent.__init__
+muntjac.ui.custom_layout.CustomLayout.__init__
+muntjac.ui.date_field.DateField.__init__
+muntjac.ui.date_field.UnparsableDateString.__init__
+muntjac.ui.drag_and_drop_wrapper.DragAndDropWrapper.__init__
+muntjac.ui.drag_and_drop_wrapper.ProxyReceiver.__init__
+muntjac.ui.drag_and_drop_wrapper.ReceivingEventWrapper.__init__
+muntjac.ui.drag_and_drop_wrapper.WrapperTargetDetails.__init__
+muntjac.ui.drag_and_drop_wrapper.WrapperTransferable.__init__
+muntjac.ui.embedded.Embedded.__init__
+muntjac.ui.expand_layout.ExpandLayout.__init__
+muntjac.ui.field.ValueChangeEvent.__init__
+muntjac.ui.form.FieldValueChangeListener.__init__
+muntjac.ui.form.Form.__init__
+muntjac.ui.form_layout.FormLayout.__init__
+muntjac.ui.grid_layout.Area.__init__
+muntjac.ui.grid_layout.GridLayout.__init__
+muntjac.ui.grid_layout.OutOfBoundsException.__init__
+muntjac.ui.grid_layout.OverlapsException.__init__
+muntjac.ui.horizontal_layout.HorizontalLayout.__init__
+muntjac.ui.horizontal_split_panel.HorizontalSplitPanel.__init__
+muntjac.ui.html5_file.Html5File.__init__
+muntjac.ui.inline_date_field.InlineDateField.__init__
+muntjac.ui.label.Label.__init__
+muntjac.ui.label.ValueChangeEvent.__init__
+muntjac.ui.layout.MarginInfo.__init__
+muntjac.ui.link.Link.__init__
+muntjac.ui.list_select.ListSelect.__init__
+muntjac.ui.login_form.LoginEvent.__init__
+muntjac.ui.login_form.LoginForm.__init__
+muntjac.ui.login_form.LoginPage.__init__
+muntjac.ui.login_form.ParameterHandler.__init__
+muntjac.ui.login_form.UriHandler.__init__
+muntjac.ui.menu_bar.MenuBar.__init__
+muntjac.ui.menu_bar.MenuItem.__init__
+muntjac.ui.native_button.NativeButton.__init__
+muntjac.ui.native_select.NativeSelect.__init__
+muntjac.ui.option_group.OptionGroup.__init__
+muntjac.ui.ordered_layout.OrderedLayout.__init__
+muntjac.ui.panel.Panel.__init__
+muntjac.ui.password_field.PasswordField.__init__
+muntjac.ui.popup_date_field.PopupDateField.__init__
+muntjac.ui.popup_view.InnerContent.__init__
+muntjac.ui.popup_view.PopupView.__init__
+muntjac.ui.popup_view.PopupVisibilityEvent.__init__
+muntjac.ui.popup_view.SingleComponentIterator.__init__
+muntjac.ui.progress_indicator.ProgressIndicator.__init__
+muntjac.ui.rich_text_area.RichTextArea.__init__
+muntjac.ui.select.Select.__init__
+muntjac.ui.slider.Slider.__init__
+muntjac.ui.slider.ValueOutOfBoundsException.__init__
+muntjac.ui.split_panel.SplitPanel.__init__
+muntjac.ui.tab_sheet.SelectedTabChangeEvent.__init__
+muntjac.ui.tab_sheet.TabSheet.__init__
+muntjac.ui.tab_sheet.TabSheetTabImpl.__init__
+muntjac.ui.table.ColumnReorderEvent.__init__
+muntjac.ui.table.ColumnResizeEvent.__init__
+muntjac.ui.table.FooterClickEvent.__init__
+muntjac.ui.table.GeneratedRow.__init__
+muntjac.ui.table.HeaderClickEvent.__init__
+muntjac.ui.table.Table.__init__
+muntjac.ui.table.TableDropCriterion.__init__
+muntjac.ui.table.TableTransferable.__init__
+muntjac.ui.text_area.TextArea.__init__
+muntjac.ui.text_field.TextField.__init__
+muntjac.ui.tree.CollapseEvent.__init__
+muntjac.ui.tree.ExpandEvent.__init__
+muntjac.ui.tree.TargetInSubtree.__init__
+muntjac.ui.tree.TargetItemAllowsChildren.__init__
+muntjac.ui.tree.Tree.__init__
+muntjac.ui.tree.TreeDropCriterion.__init__
+muntjac.ui.tree.TreeTargetDetails.__init__
+muntjac.ui.tree.TreeTransferable.__init__
+muntjac.ui.tree_table.AbstractStrategy.__init__
+muntjac.ui.tree_table.HierarchicalStrategy.__init__
+muntjac.ui.tree_table.TreeTable.__init__
+muntjac.ui.treetable.hierarchical_container_ordered_wrapper.HierarchicalContainerOrderedWrapper.__init__
+muntjac.ui.twin_col_select.TwinColSelect.__init__
+muntjac.ui.upload.FailedEvent.__init__
+muntjac.ui.upload.FinishedEvent.__init__
+muntjac.ui.upload.InnerStreamVariable.__init__
+muntjac.ui.upload.NoInputStreamEvent.__init__
+muntjac.ui.upload.NoOutputStreamEvent.__init__
+muntjac.ui.upload.StartedEvent.__init__
+muntjac.ui.upload.SucceededEvent.__init__
+muntjac.ui.upload.Upload.__init__
+muntjac.ui.uri_fragment_utility.FragmentChangedEvent.__init__
+muntjac.ui.uri_fragment_utility.UriFragmentUtility.__init__
+muntjac.ui.vertical_layout.VerticalLayout.__init__
+muntjac.ui.vertical_split_panel.VerticalSplitPanel.__init__
+muntjac.ui.video.Video.__init__
+muntjac.ui.window.CloseEvent.__init__
+muntjac.ui.window.CloseShortcut.__init__
+muntjac.ui.window.Notification.__init__
+muntjac.ui.window.OpenResource.__init__
+muntjac.ui.window.ResizeEvent.__init__
+muntjac.ui.window.Window.__init__
+muntjac.util.EventObject.__init__" class="py-name" href="#" onclick="return doclink('link-36', '__init__', 'link-36');">__init__</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L86"></a><tt class="py-lineno"> 86</tt>  <tt class="py-line"> </tt>
+<a name="L87"></a><tt class="py-lineno"> 87</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_fragment</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L88"></a><tt class="py-lineno"> 88</tt>  <tt class="py-line"> </tt>
+<a name="L89"></a><tt class="py-lineno"> 89</tt>  <tt class="py-line">        <tt class="py-comment"># immediate by default</tt> </tt>
+<a name="L90"></a><tt class="py-lineno"> 90</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-37" class="py-name" targets="Method muntjac.ui.abstract_component.AbstractComponent.setImmediate()=muntjac.ui.abstract_component.AbstractComponent-class.html#setImmediate,Method muntjac.ui.button.Button.setImmediate()=muntjac.ui.button.Button-class.html#setImmediate,Method muntjac.ui.form.Form.setImmediate()=muntjac.ui.form.Form-class.html#setImmediate"><a title="muntjac.ui.abstract_component.AbstractComponent.setImmediate
+muntjac.ui.button.Button.setImmediate
+muntjac.ui.form.Form.setImmediate" class="py-name" href="#" onclick="return doclink('link-37', 'setImmediate', 'link-37');">setImmediate</a></tt><tt class="py-op">(</tt><tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L91"></a><tt class="py-lineno"> 91</tt>  <tt class="py-line"> </tt>
+<a name="L92"></a><tt class="py-lineno"> 92</tt>  <tt class="py-line"> </tt>
+<a name="UriFragmentUtility.paintContent"></a><div id="UriFragmentUtility.paintContent-def"><a name="L93"></a><tt class="py-lineno"> 93</tt> <a class="py-toggle" href="#" id="UriFragmentUtility.paintContent-toggle" onclick="return toggle('UriFragmentUtility.paintContent');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.uri_fragment_utility.UriFragmentUtility-class.html#paintContent">paintContent</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">target</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="UriFragmentUtility.paintContent-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="UriFragmentUtility.paintContent-expanded"><a name="L94"></a><tt class="py-lineno"> 94</tt>  <tt class="py-line">        <tt class="py-name">super</tt><tt class="py-op">(</tt><tt id="link-38" class="py-name"><a title="muntjac.ui.uri_fragment_utility.UriFragmentUtility" class="py-name" href="#" onclick="return doclink('link-38', 'UriFragmentUtility', 'link-16');">UriFragmentUtility</a></tt><tt class="py-op">,</tt> <tt class="py-name">self</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt id="link-39" class="py-name" targets="Method muntjac.event.dd.acceptcriteria.and_.And.paintContent()=muntjac.event.dd.acceptcriteria.and_.And-class.html#paintContent,Method muntjac.event.dd.acceptcriteria.client_side_criterion.ClientSideCriterion.paintContent()=muntjac.event.dd.acceptcriteria.client_side_criterion.ClientSideCriterion-class.html#paintContent,Method muntjac.event.dd.acceptcriteria.contains_data_flavor.ContainsDataFlavor.paintContent()=muntjac.event.dd.acceptcriteria.contains_data_flavor.ContainsDataFlavor-class.html#paintContent,Method muntjac.event.dd.acceptcriteria.not_.Not.paintContent()=muntjac.event.dd.acceptcriteria.not_.Not-class.html#paintContent,Method muntjac.event.dd.acceptcriteria.or_.Or.paintContent()=muntjac.event.dd.acceptcriteria.or_.Or-class.html#paintContent,Method muntjac.event.dd.acceptcriteria.server_side_criterion.ServerSideCriterion.paintContent()=muntjac.event.dd.acceptcriteria.server_side_criterion.ServerSideCriterion-class.html#paintContent,Method muntjac.event.dd.acceptcriteria.source_is.SourceIs.paintContent()=muntjac.event.dd.acceptcriteria.source_is.SourceIs-class.html#paintContent,Method muntjac.event.dd.acceptcriteria.target_detail_is.TargetDetailIs.paintContent()=muntjac.event.dd.acceptcriteria.target_detail_is.TargetDetailIs-class.html#paintContent,Method muntjac.ui.absolute_layout.AbsoluteLayout.paintContent()=muntjac.ui.absolute_layout.AbsoluteLayout-class.html#paintContent,Method muntjac.ui.abstract_component.AbstractComponent.paintContent()=muntjac.ui.abstract_component.AbstractComponent-class.html#paintContent,Method muntjac.ui.abstract_field.AbstractField.paintContent()=muntjac.ui.abstract_field.AbstractField-class.html#paintContent,Method muntjac.ui.abstract_layout.AbstractLayout.paintContent()=muntjac.ui.abstract_layout.AbstractLayout-class.html#paintContent,Method muntjac.ui.abstract_media.AbstractMedia.paintContent()=muntjac.ui.abstract_media.AbstractMedia-class.html#paintContent,Method muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.paintContent()=muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout-class.html#paintContent,Method muntjac.ui.abstract_select.AbstractItemSetCriterion.paintContent()=muntjac.ui.abstract_select.AbstractItemSetCriterion-class.html#paintContent,Method muntjac.ui.abstract_select.AbstractSelect.paintContent()=muntjac.ui.abstract_select.AbstractSelect-class.html#paintContent,Method muntjac.ui.abstract_split_panel.AbstractSplitPanel.paintContent()=muntjac.ui.abstract_split_panel.AbstractSplitPanel-class.html#paintContent,Method muntjac.ui.abstract_text_field.AbstractTextField.paintContent()=muntjac.ui.abstract_text_field.AbstractTextField-class.html#paintContent,Method muntjac.ui.button.Button.paintContent()=muntjac.ui.button.Button-class.html#paintContent,Method muntjac.ui.combo_box.ComboBox.paintContent()=muntjac.ui.combo_box.ComboBox-class.html#paintContent,Method muntjac.ui.css_layout.CssLayout.paintContent()=muntjac.ui.css_layout.CssLayout-class.html#paintContent,Method muntjac.ui.custom_component.CustomComponent.paintContent()=muntjac.ui.custom_component.CustomComponent-class.html#paintContent,Method muntjac.ui.custom_layout.CustomLayout.paintContent()=muntjac.ui.custom_layout.CustomLayout-class.html#paintContent,Method muntjac.ui.date_field.DateField.paintContent()=muntjac.ui.date_field.DateField-class.html#paintContent,Method muntjac.ui.drag_and_drop_wrapper.DragAndDropWrapper.paintContent()=muntjac.ui.drag_and_drop_wrapper.DragAndDropWrapper-class.html#paintContent,Method muntjac.ui.embedded.Embedded.paintContent()=muntjac.ui.embedded.Embedded-class.html#paintContent,Method muntjac.ui.form.Form.paintContent()=muntjac.ui.form.Form-class.html#paintContent,Method muntjac.ui.grid_layout.GridLayout.paintContent()=muntjac.ui.grid_layout.GridLayout-class.html#paintContent,Method muntjac.ui.label.Label.paintContent()=muntjac.ui.label.Label-class.html#paintContent,Method muntjac.ui.link.Link.paintContent()=muntjac.ui.link.Link-class.html#paintContent,Method muntjac.ui.list_select.ListSelect.paintContent()=muntjac.ui.list_select.ListSelect-class.html#paintContent,Method muntjac.ui.menu_bar.MenuBar.paintContent()=muntjac.ui.menu_bar.MenuBar-class.html#paintContent,Method muntjac.ui.native_select.NativeSelect.paintContent()=muntjac.ui.native_select.NativeSelect-class.html#paintContent,Method muntjac.ui.option_group.OptionGroup.paintContent()=muntjac.ui.option_group.OptionGroup-class.html#paintContent,Method muntjac.ui.ordered_layout.OrderedLayout.paintContent()=muntjac.ui.ordered_layout.OrderedLayout-class.html#paintContent,Method muntjac.ui.panel.Panel.paintContent()=muntjac.ui.panel.Panel-class.html#paintContent,Method muntjac.ui.popup_date_field.PopupDateField.paintContent()=muntjac.ui.popup_date_field.PopupDateField-class.html#paintContent,Method muntjac.ui.popup_view.PopupView.paintContent()=muntjac.ui.popup_view.PopupView-class.html#paintContent,Method muntjac.ui.progress_indicator.ProgressIndicator.paintContent()=muntjac.ui.progress_indicator.ProgressIndicator-class.html#paintContent,Method muntjac.ui.rich_text_area.RichTextArea.paintContent()=muntjac.ui.rich_text_area.RichTextArea-class.html#paintContent,Method muntjac.ui.select.Select.paintContent()=muntjac.ui.select.Select-class.html#paintContent,Method muntjac.ui.slider.Slider.paintContent()=muntjac.ui.slider.Slider-class.html#paintContent,Method muntjac.ui.split_panel.SplitPanel.paintContent()=muntjac.ui.split_panel.SplitPanel-class.html#paintContent,Method muntjac.ui.tab_sheet.TabSheet.paintContent()=muntjac.ui.tab_sheet.TabSheet-class.html#paintContent,Method muntjac.ui.table.Table.paintContent()=muntjac.ui.table.Table-class.html#paintContent,Method muntjac.ui.text_area.TextArea.paintContent()=muntjac.ui.text_area.TextArea-class.html#paintContent,Method muntjac.ui.text_field.TextField.paintContent()=muntjac.ui.text_field.TextField-class.html#paintContent,Method muntjac.ui.tree.TargetInSubtree.paintContent()=muntjac.ui.tree.TargetInSubtree-class.html#paintContent,Method muntjac.ui.tree.Tree.paintContent()=muntjac.ui.tree.Tree-class.html#paintContent,Method muntjac.ui.tree_table.TreeTable.paintContent()=muntjac.ui.tree_table.TreeTable-class.html#paintContent,Method muntjac.ui.twin_col_select.TwinColSelect.paintContent()=muntjac.ui.twin_col_select.TwinColSelect-class.html#paintContent,Method muntjac.ui.upload.Upload.paintContent()=muntjac.ui.upload.Upload-class.html#paintContent,Method muntjac.ui.uri_fragment_utility.UriFragmentUtility.paintContent()=muntjac.ui.uri_fragment_utility.UriFragmentUtility-class.html#paintContent,Method muntjac.ui.video.Video.paintContent()=muntjac.ui.video.Video-class.html#paintContent,Method muntjac.ui.window.OpenResource.paintContent()=muntjac.ui.window.OpenResource-class.html#paintContent,Method muntjac.ui.window.Window.paintContent()=muntjac.ui.window.Window-class.html#paintContent"><a title="muntjac.event.dd.acceptcriteria.and_.And.paintContent
+muntjac.event.dd.acceptcriteria.client_side_criterion.ClientSideCriterion.paintContent
+muntjac.event.dd.acceptcriteria.contains_data_flavor.ContainsDataFlavor.paintContent
+muntjac.event.dd.acceptcriteria.not_.Not.paintContent
+muntjac.event.dd.acceptcriteria.or_.Or.paintContent
+muntjac.event.dd.acceptcriteria.server_side_criterion.ServerSideCriterion.paintContent
+muntjac.event.dd.acceptcriteria.source_is.SourceIs.paintContent
+muntjac.event.dd.acceptcriteria.target_detail_is.TargetDetailIs.paintContent
+muntjac.ui.absolute_layout.AbsoluteLayout.paintContent
+muntjac.ui.abstract_component.AbstractComponent.paintContent
+muntjac.ui.abstract_field.AbstractField.paintContent
+muntjac.ui.abstract_layout.AbstractLayout.paintContent
+muntjac.ui.abstract_media.AbstractMedia.paintContent
+muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.paintContent
+muntjac.ui.abstract_select.AbstractItemSetCriterion.paintContent
+muntjac.ui.abstract_select.AbstractSelect.paintContent
+muntjac.ui.abstract_split_panel.AbstractSplitPanel.paintContent
+muntjac.ui.abstract_text_field.AbstractTextField.paintContent
+muntjac.ui.button.Button.paintContent
+muntjac.ui.combo_box.ComboBox.paintContent
+muntjac.ui.css_layout.CssLayout.paintContent
+muntjac.ui.custom_component.CustomComponent.paintContent
+muntjac.ui.custom_layout.CustomLayout.paintContent
+muntjac.ui.date_field.DateField.paintContent
+muntjac.ui.drag_and_drop_wrapper.DragAndDropWrapper.paintContent
+muntjac.ui.embedded.Embedded.paintContent
+muntjac.ui.form.Form.paintContent
+muntjac.ui.grid_layout.GridLayout.paintContent
+muntjac.ui.label.Label.paintContent
+muntjac.ui.link.Link.paintContent
+muntjac.ui.list_select.ListSelect.paintContent
+muntjac.ui.menu_bar.MenuBar.paintContent
+muntjac.ui.native_select.NativeSelect.paintContent
+muntjac.ui.option_group.OptionGroup.paintContent
+muntjac.ui.ordered_layout.OrderedLayout.paintContent
+muntjac.ui.panel.Panel.paintContent
+muntjac.ui.popup_date_field.PopupDateField.paintContent
+muntjac.ui.popup_view.PopupView.paintContent
+muntjac.ui.progress_indicator.ProgressIndicator.paintContent
+muntjac.ui.rich_text_area.RichTextArea.paintContent
+muntjac.ui.select.Select.paintContent
+muntjac.ui.slider.Slider.paintContent
+muntjac.ui.split_panel.SplitPanel.paintContent
+muntjac.ui.tab_sheet.TabSheet.paintContent
+muntjac.ui.table.Table.paintContent
+muntjac.ui.text_area.TextArea.paintContent
+muntjac.ui.text_field.TextField.paintContent
+muntjac.ui.tree.TargetInSubtree.paintContent
+muntjac.ui.tree.Tree.paintContent
+muntjac.ui.tree_table.TreeTable.paintContent
+muntjac.ui.twin_col_select.TwinColSelect.paintContent
+muntjac.ui.upload.Upload.paintContent
+muntjac.ui.uri_fragment_utility.UriFragmentUtility.paintContent
+muntjac.ui.video.Video.paintContent
+muntjac.ui.window.OpenResource.paintContent
+muntjac.ui.window.Window.paintContent" class="py-name" href="#" onclick="return doclink('link-39', 'paintContent', 'link-39');">paintContent</a></tt><tt class="py-op">(</tt><tt class="py-name">target</tt><tt class="py-op">)</tt> </tt>
+<a name="L95"></a><tt class="py-lineno"> 95</tt>  <tt class="py-line">        <tt id="link-40" class="py-name" targets="Variable muntjac.event.dd.acceptcriteria.client_criterion.ClientCriterion.value=muntjac.event.dd.acceptcriteria.client_criterion.ClientCriterion-class.html#value"><a title="muntjac.event.dd.acceptcriteria.client_criterion.ClientCriterion.value" class="py-name" href="#" onclick="return doclink('link-40', 'value', 'link-40');">value</a></tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_fragment</tt> <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_fragment</tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt> <tt class="py-keyword">else</tt> <tt class="py-string">''</tt> </tt>
+<a name="L96"></a><tt class="py-lineno"> 96</tt>  <tt class="py-line">        <tt class="py-name">target</tt><tt class="py-op">.</tt><tt id="link-41" class="py-name" targets="Method muntjac.terminal.gwt.server.json_paint_target.JsonPaintTarget.addVariable()=muntjac.terminal.gwt.server.json_paint_target.JsonPaintTarget-class.html#addVariable,Method muntjac.terminal.gwt.server.json_paint_target.JsonTag.addVariable()=muntjac.terminal.gwt.server.json_paint_target.JsonTag-class.html#addVariable,Method muntjac.terminal.paint_target.IPaintTarget.addVariable()=muntjac.terminal.paint_target.IPaintTarget-class.html#addVariable"><a title="muntjac.terminal.gwt.server.json_paint_target.JsonPaintTarget.addVariable
+muntjac.terminal.gwt.server.json_paint_target.JsonTag.addVariable
+muntjac.terminal.paint_target.IPaintTarget.addVariable" class="py-name" href="#" onclick="return doclink('link-41', 'addVariable', 'link-41');">addVariable</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">,</tt> <tt class="py-string">'fragment'</tt><tt class="py-op">,</tt> <tt id="link-42" class="py-name"><a title="muntjac.event.dd.acceptcriteria.client_criterion.ClientCriterion.value" class="py-name" href="#" onclick="return doclink('link-42', 'value', 'link-40');">value</a></tt><tt class="py-op">)</tt> </tt>
+</div><a name="L97"></a><tt class="py-lineno"> 97</tt>  <tt class="py-line"> </tt>
+<a name="L98"></a><tt class="py-lineno"> 98</tt>  <tt class="py-line"> </tt>
+<a name="UriFragmentUtility.changeVariables"></a><div id="UriFragmentUtility.changeVariables-def"><a name="L99"></a><tt class="py-lineno"> 99</tt> <a class="py-toggle" href="#" id="UriFragmentUtility.changeVariables-toggle" onclick="return toggle('UriFragmentUtility.changeVariables');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.uri_fragment_utility.UriFragmentUtility-class.html#changeVariables">changeVariables</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">source</tt><tt class="py-op">,</tt> <tt class="py-param">variables</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="UriFragmentUtility.changeVariables-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="UriFragmentUtility.changeVariables-expanded"><a name="L100"></a><tt class="py-lineno">100</tt>  <tt class="py-line">        <tt class="py-name">super</tt><tt class="py-op">(</tt><tt id="link-43" class="py-name"><a title="muntjac.ui.uri_fragment_utility.UriFragmentUtility" class="py-name" href="#" onclick="return doclink('link-43', 'UriFragmentUtility', 'link-16');">UriFragmentUtility</a></tt><tt class="py-op">,</tt> <tt class="py-name">self</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt id="link-44" class="py-name" targets="Method muntjac.terminal.gwt.server.abstract_communication_manager.AbstractCommunicationManager.changeVariables()=muntjac.terminal.gwt.server.abstract_communication_manager.AbstractCommunicationManager-class.html#changeVariables,Method muntjac.terminal.gwt.server.drag_and_drop_service.DragAndDropService.changeVariables()=muntjac.terminal.gwt.server.drag_and_drop_service.DragAndDropService-class.html#changeVariables,Method muntjac.terminal.variable_owner.IVariableOwner.changeVariables()=muntjac.terminal.variable_owner.IVariableOwner-class.html#changeVariables,Method muntjac.ui.abstract_component.AbstractComponent.changeVariables()=muntjac.ui.abstract_component.AbstractComponent-class.html#changeVariables,Method muntjac.ui.abstract_field.AbstractField.changeVariables()=muntjac.ui.abstract_field.AbstractField-class.html#changeVariables,Method muntjac.ui.abstract_layout.AbstractLayout.changeVariables()=muntjac.ui.abstract_layout.AbstractLayout-class.html#changeVariables,Method muntjac.ui.abstract_select.AbstractSelect.changeVariables()=muntjac.ui.abstract_select.AbstractSelect-class.html#changeVariables,Method muntjac.ui.abstract_split_panel.AbstractSplitPanel.changeVariables()=muntjac.ui.abstract_split_panel.AbstractSplitPanel-class.html#changeVariables,Method muntjac.ui.abstract_text_field.AbstractTextField.changeVariables()=muntjac.ui.abstract_text_field.AbstractTextField-class.html#changeVariables,Method muntjac.ui.button.Button.changeVariables()=muntjac.ui.button.Button-class.html#changeVariables,Method muntjac.ui.date_field.DateField.changeVariables()=muntjac.ui.date_field.DateField-class.html#changeVariables,Method muntjac.ui.embedded.Embedded.changeVariables()=muntjac.ui.embedded.Embedded-class.html#changeVariables,Method muntjac.ui.form.Form.changeVariables()=muntjac.ui.form.Form-class.html#changeVariables,Method muntjac.ui.menu_bar.MenuBar.changeVariables()=muntjac.ui.menu_bar.MenuBar-class.html#changeVariables,Method muntjac.ui.option_group.OptionGroup.changeVariables()=muntjac.ui.option_group.OptionGroup-class.html#changeVariables,Method muntjac.ui.panel.Panel.changeVariables()=muntjac.ui.panel.Panel-class.html#changeVariables,Method muntjac.ui.popup_view.PopupView.changeVariables()=muntjac.ui.popup_view.PopupView-class.html#changeVariables,Method muntjac.ui.rich_text_area.RichTextArea.changeVariables()=muntjac.ui.rich_text_area.RichTextArea-class.html#changeVariables,Method muntjac.ui.select.Select.changeVariables()=muntjac.ui.select.Select-class.html#changeVariables,Method muntjac.ui.slider.Slider.changeVariables()=muntjac.ui.slider.Slider-class.html#changeVariables,Method muntjac.ui.tab_sheet.TabSheet.changeVariables()=muntjac.ui.tab_sheet.TabSheet-class.html#changeVariables,Method muntjac.ui.table.Table.changeVariables()=muntjac.ui.table.Table-class.html#changeVariables,Method muntjac.ui.tree.Tree.changeVariables()=muntjac.ui.tree.Tree-class.html#changeVariables,Method muntjac.ui.tree_table.TreeTable.changeVariables()=muntjac.ui.tree_table.TreeTable-class.html#changeVariables,Method muntjac.ui.upload.Upload.changeVariables()=muntjac.ui.upload.Upload-class.html#changeVariables,Method muntjac.ui.uri_fragment_utility.UriFragmentUtility.changeVariables()=muntjac.ui.uri_fragment_utility.UriFragmentUtility-class.html#changeVariables,Method muntjac.ui.window.Window.changeVariables()=muntjac.ui.window.Window-class.html#changeVariables"><a title="muntjac.terminal.gwt.server.abstract_communication_manager.AbstractCommunicationManager.changeVariables
+muntjac.terminal.gwt.server.drag_and_drop_service.DragAndDropService.changeVariables
+muntjac.terminal.variable_owner.IVariableOwner.changeVariables
+muntjac.ui.abstract_component.AbstractComponent.changeVariables
+muntjac.ui.abstract_field.AbstractField.changeVariables
+muntjac.ui.abstract_layout.AbstractLayout.changeVariables
+muntjac.ui.abstract_select.AbstractSelect.changeVariables
+muntjac.ui.abstract_split_panel.AbstractSplitPanel.changeVariables
+muntjac.ui.abstract_text_field.AbstractTextField.changeVariables
+muntjac.ui.button.Button.changeVariables
+muntjac.ui.date_field.DateField.changeVariables
+muntjac.ui.embedded.Embedded.changeVariables
+muntjac.ui.form.Form.changeVariables
+muntjac.ui.menu_bar.MenuBar.changeVariables
+muntjac.ui.option_group.OptionGroup.changeVariables
+muntjac.ui.panel.Panel.changeVariables
+muntjac.ui.popup_view.PopupView.changeVariables
+muntjac.ui.rich_text_area.RichTextArea.changeVariables
+muntjac.ui.select.Select.changeVariables
+muntjac.ui.slider.Slider.changeVariables
+muntjac.ui.tab_sheet.TabSheet.changeVariables
+muntjac.ui.table.Table.changeVariables
+muntjac.ui.tree.Tree.changeVariables
+muntjac.ui.tree_table.TreeTable.changeVariables
+muntjac.ui.upload.Upload.changeVariables
+muntjac.ui.uri_fragment_utility.UriFragmentUtility.changeVariables
+muntjac.ui.window.Window.changeVariables" class="py-name" href="#" onclick="return doclink('link-44', 'changeVariables', 'link-44');">changeVariables</a></tt><tt class="py-op">(</tt><tt class="py-name">source</tt><tt class="py-op">,</tt> <tt class="py-name">variables</tt><tt class="py-op">)</tt> </tt>
+<a name="L101"></a><tt class="py-lineno">101</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_fragment</tt> <tt class="py-op">=</tt> <tt class="py-name">variables</tt><tt class="py-op">.</tt><tt id="link-45" class="py-name" targets="Class Method muntjac.event.dd.acceptcriteria.accept_all.AcceptAll.get()=muntjac.event.dd.acceptcriteria.accept_all.AcceptAll-class.html#get,Class Method muntjac.event.dd.acceptcriteria.source_is_target.SourceIsTarget.get()=muntjac.event.dd.acceptcriteria.source_is_target.SourceIsTarget-class.html#get,Method muntjac.terminal.key_mapper.KeyMapper.get()=muntjac.terminal.key_mapper.KeyMapper-class.html#get,Class Method muntjac.ui.default_field_factory.DefaultFieldFactory.get()=muntjac.ui.default_field_factory.DefaultFieldFactory-class.html#get,Class Method muntjac.ui.tree.TargetItemAllowsChildren.get()=muntjac.ui.tree.TargetItemAllowsChildren-class.html#get"><a title="muntjac.event.dd.acceptcriteria.accept_all.AcceptAll.get
+muntjac.event.dd.acceptcriteria.source_is_target.SourceIsTarget.get
+muntjac.terminal.key_mapper.KeyMapper.get
+muntjac.ui.default_field_factory.DefaultFieldFactory.get
+muntjac.ui.tree.TargetItemAllowsChildren.get" class="py-name" href="#" onclick="return doclink('link-45', 'get', 'link-45');">get</a></tt><tt class="py-op">(</tt><tt class="py-string">'fragment'</tt><tt class="py-op">)</tt> </tt>
+<a name="L102"></a><tt class="py-lineno">102</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-46" class="py-name" targets="Method muntjac.event.event_router.EventRouter.fireEvent()=muntjac.event.event_router.EventRouter-class.html#fireEvent,Method muntjac.ui.abstract_component.AbstractComponent.fireEvent()=muntjac.ui.abstract_component.AbstractComponent-class.html#fireEvent"><a title="muntjac.event.event_router.EventRouter.fireEvent
+muntjac.ui.abstract_component.AbstractComponent.fireEvent" class="py-name" href="#" onclick="return doclink('link-46', 'fireEvent', 'link-46');">fireEvent</a></tt><tt class="py-op">(</tt> <tt id="link-47" class="py-name"><a title="muntjac.ui.uri_fragment_utility.FragmentChangedEvent" class="py-name" href="#" onclick="return doclink('link-47', 'FragmentChangedEvent', 'link-14');">FragmentChangedEvent</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> <tt class="py-op">)</tt> </tt>
+</div><a name="L103"></a><tt class="py-lineno">103</tt>  <tt class="py-line"> </tt>
+<a name="L104"></a><tt class="py-lineno">104</tt>  <tt class="py-line"> </tt>
+<a name="UriFragmentUtility.getFragment"></a><div id="UriFragmentUtility.getFragment-def"><a name="L105"></a><tt class="py-lineno">105</tt> <a class="py-toggle" href="#" id="UriFragmentUtility.getFragment-toggle" onclick="return toggle('UriFragmentUtility.getFragment');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.uri_fragment_utility.UriFragmentUtility-class.html#getFragment">getFragment</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="UriFragmentUtility.getFragment-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="UriFragmentUtility.getFragment-expanded"><a name="L106"></a><tt class="py-lineno">106</tt>  <tt class="py-line">        <tt class="py-docstring">"""Gets currently set URI fragment.</tt> </tt>
+<a name="L107"></a><tt class="py-lineno">107</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L108"></a><tt class="py-lineno">108</tt>  <tt class="py-line"><tt class="py-docstring">        To listen changes in fragment, hook a L{IFragmentChangedListener}.</tt> </tt>
+<a name="L109"></a><tt class="py-lineno">109</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L110"></a><tt class="py-lineno">110</tt>  <tt class="py-line"><tt class="py-docstring">        Note that initial URI fragment that user used to enter the application</tt> </tt>
+<a name="L111"></a><tt class="py-lineno">111</tt>  <tt class="py-line"><tt class="py-docstring">        will be read after application init. It fires FragmentChangedEvent</tt> </tt>
+<a name="L112"></a><tt class="py-lineno">112</tt>  <tt class="py-line"><tt class="py-docstring">        only if it is not the same as on server side.</tt> </tt>
+<a name="L113"></a><tt class="py-lineno">113</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L114"></a><tt class="py-lineno">114</tt>  <tt class="py-line"><tt class="py-docstring">        @return: the current fragment in browser uri or null if not known</tt> </tt>
+<a name="L115"></a><tt class="py-lineno">115</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L116"></a><tt class="py-lineno">116</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_fragment</tt> </tt>
+</div><a name="L117"></a><tt class="py-lineno">117</tt>  <tt class="py-line"> </tt>
+<a name="L118"></a><tt class="py-lineno">118</tt>  <tt class="py-line"> </tt>
+<a name="UriFragmentUtility.setFragment"></a><div id="UriFragmentUtility.setFragment-def"><a name="L119"></a><tt class="py-lineno">119</tt> <a class="py-toggle" href="#" id="UriFragmentUtility.setFragment-toggle" onclick="return toggle('UriFragmentUtility.setFragment');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.uri_fragment_utility.UriFragmentUtility-class.html#setFragment">setFragment</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">newFragment</tt><tt class="py-op">,</tt> <tt class="py-param">fireEvent</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="UriFragmentUtility.setFragment-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="UriFragmentUtility.setFragment-expanded"><a name="L120"></a><tt class="py-lineno">120</tt>  <tt class="py-line">        <tt class="py-docstring">"""Sets URI fragment. Optionally fires a L{FragmentChangedEvent}</tt> </tt>
+<a name="L121"></a><tt class="py-lineno">121</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L122"></a><tt class="py-lineno">122</tt>  <tt class="py-line"><tt class="py-docstring">        @param newFragment:</tt> </tt>
+<a name="L123"></a><tt class="py-lineno">123</tt>  <tt class="py-line"><tt class="py-docstring">                   id of the new fragment</tt> </tt>
+<a name="L124"></a><tt class="py-lineno">124</tt>  <tt class="py-line"><tt class="py-docstring">        @param fireEvent:</tt> </tt>
+<a name="L125"></a><tt class="py-lineno">125</tt>  <tt class="py-line"><tt class="py-docstring">                   true to fire event</tt> </tt>
+<a name="L126"></a><tt class="py-lineno">126</tt>  <tt class="py-line"><tt class="py-docstring">        @see: L{FragmentChangedEvent}</tt> </tt>
+<a name="L127"></a><tt class="py-lineno">127</tt>  <tt class="py-line"><tt class="py-docstring">        @see: L{IFragmentChangedListener}</tt> </tt>
+<a name="L128"></a><tt class="py-lineno">128</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L129"></a><tt class="py-lineno">129</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-name">newFragment</tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt> <tt class="py-keyword">and</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_fragment</tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">)</tt> </tt>
+<a name="L130"></a><tt class="py-lineno">130</tt>  <tt class="py-line">                <tt class="py-keyword">or</tt> <tt class="py-op">(</tt><tt class="py-name">newFragment</tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt> </tt>
+<a name="L131"></a><tt class="py-lineno">131</tt>  <tt class="py-line">                        <tt class="py-keyword">and</tt> <tt class="py-name">newFragment</tt> <tt class="py-op">!=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_fragment</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L132"></a><tt class="py-lineno">132</tt>  <tt class="py-line">                <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_fragment</tt> <tt class="py-op">=</tt> <tt class="py-name">newFragment</tt> </tt>
+<a name="L133"></a><tt class="py-lineno">133</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt id="link-48" class="py-name"><a title="muntjac.event.event_router.EventRouter.fireEvent
+muntjac.ui.abstract_component.AbstractComponent.fireEvent" class="py-name" href="#" onclick="return doclink('link-48', 'fireEvent', 'link-46');">fireEvent</a></tt><tt class="py-op">:</tt> </tt>
+<a name="L134"></a><tt class="py-lineno">134</tt>  <tt class="py-line">                    <tt id="link-49" class="py-name"><a title="muntjac.event.event_router.EventRouter.fireEvent
+muntjac.ui.abstract_component.AbstractComponent.fireEvent" class="py-name" href="#" onclick="return doclink('link-49', 'fireEvent', 'link-46');">fireEvent</a></tt><tt class="py-op">(</tt> <tt id="link-50" class="py-name"><a title="muntjac.ui.uri_fragment_utility.FragmentChangedEvent" class="py-name" href="#" onclick="return doclink('link-50', 'FragmentChangedEvent', 'link-14');">FragmentChangedEvent</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> <tt class="py-op">)</tt> </tt>
+<a name="L135"></a><tt class="py-lineno">135</tt>  <tt class="py-line"> </tt>
+<a name="L136"></a><tt class="py-lineno">136</tt>  <tt class="py-line">                <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-51" class="py-name" targets="Method muntjac.data.buffered.SourceException.requestRepaint()=muntjac.data.buffered.SourceException-class.html#requestRepaint,Method muntjac.data.validator.InvalidValueException.requestRepaint()=muntjac.data.validator.InvalidValueException-class.html#requestRepaint,Method muntjac.event.action_manager.ActionManager.requestRepaint()=muntjac.event.action_manager.ActionManager-class.html#requestRepaint,Method muntjac.terminal.composite_error_message.CompositeErrorMessage.requestRepaint()=muntjac.terminal.composite_error_message.CompositeErrorMessage-class.html#requestRepaint,Method muntjac.terminal.error_message.IErrorMessage.requestRepaint()=muntjac.terminal.error_message.IErrorMessage-class.html#requestRepaint,Method muntjac.terminal.paintable.IPaintable.requestRepaint()=muntjac.terminal.paintable.IPaintable-class.html#requestRepaint,Method muntjac.terminal.sys_error.SysError.requestRepaint()=muntjac.terminal.sys_error.SysError-class.html#requestRepaint,Method muntjac.terminal.user_error.UserError.requestRepaint()=muntjac.terminal.user_error.UserError-class.html#requestRepaint,Method muntjac.ui.abstract_component.AbstractComponent.requestRepaint()=muntjac.ui.abstract_component.AbstractComponent-class.html#requestRepaint,Method muntjac.ui.select.Select.requestRepaint()=muntjac.ui.select.Select-class.html#requestRepaint,Method muntjac.ui.table.Table.requestRepaint()=muntjac.ui.table.Table-class.html#requestRepaint,Method muntjac.ui.tree.Tree.requestRepaint()=muntjac.ui.tree.Tree-class.html#requestRepaint,Method muntjac.ui.upload.Upload.requestRepaint()=muntjac.ui.upload.Upload-class.html#requestRepaint"><a title="muntjac.data.buffered.SourceException.requestRepaint
+muntjac.data.validator.InvalidValueException.requestRepaint
+muntjac.event.action_manager.ActionManager.requestRepaint
+muntjac.terminal.composite_error_message.CompositeErrorMessage.requestRepaint
+muntjac.terminal.error_message.IErrorMessage.requestRepaint
+muntjac.terminal.paintable.IPaintable.requestRepaint
+muntjac.terminal.sys_error.SysError.requestRepaint
+muntjac.terminal.user_error.UserError.requestRepaint
+muntjac.ui.abstract_component.AbstractComponent.requestRepaint
+muntjac.ui.select.Select.requestRepaint
+muntjac.ui.table.Table.requestRepaint
+muntjac.ui.tree.Tree.requestRepaint
+muntjac.ui.upload.Upload.requestRepaint" class="py-name" href="#" onclick="return doclink('link-51', 'requestRepaint', 'link-51');">requestRepaint</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L137"></a><tt class="py-lineno">137</tt>  <tt class="py-line"> </tt>
+<a name="L138"></a><tt class="py-lineno">138</tt>  <tt class="py-line"> </tt>
+<a name="FragmentChangedEvent"></a><div id="FragmentChangedEvent-def"><a name="L139"></a><tt class="py-lineno">139</tt> <a class="py-toggle" href="#" id="FragmentChangedEvent-toggle" onclick="return toggle('FragmentChangedEvent');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.ui.uri_fragment_utility.FragmentChangedEvent-class.html">FragmentChangedEvent</a><tt class="py-op">(</tt><tt class="py-base-class">ComponentEvent</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="FragmentChangedEvent-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="FragmentChangedEvent-expanded"><a name="L140"></a><tt class="py-lineno">140</tt>  <tt class="py-line">    <tt class="py-docstring">"""Event fired when uri fragment changes."""</tt> </tt>
+<a name="L141"></a><tt class="py-lineno">141</tt>  <tt class="py-line"> </tt>
+<a name="FragmentChangedEvent.__init__"></a><div id="FragmentChangedEvent.__init__-def"><a name="L142"></a><tt class="py-lineno">142</tt> <a class="py-toggle" href="#" id="FragmentChangedEvent.__init__-toggle" onclick="return toggle('FragmentChangedEvent.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.uri_fragment_utility.FragmentChangedEvent-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">source</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="FragmentChangedEvent.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="FragmentChangedEvent.__init__-expanded"><a name="L143"></a><tt class="py-lineno">143</tt>  <tt class="py-line">        <tt class="py-docstring">"""Creates a new instance of UriFragmentReader change event.</tt> </tt>
+<a name="L144"></a><tt class="py-lineno">144</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L145"></a><tt class="py-lineno">145</tt>  <tt class="py-line"><tt class="py-docstring">        @param source:</tt> </tt>
+<a name="L146"></a><tt class="py-lineno">146</tt>  <tt class="py-line"><tt class="py-docstring">                   the Source of the event.</tt> </tt>
+<a name="L147"></a><tt class="py-lineno">147</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L148"></a><tt class="py-lineno">148</tt>  <tt class="py-line">        <tt class="py-name">super</tt><tt class="py-op">(</tt><tt id="link-52" class="py-name"><a title="muntjac.ui.uri_fragment_utility.FragmentChangedEvent" class="py-name" href="#" onclick="return doclink('link-52', 'FragmentChangedEvent', 'link-14');">FragmentChangedEvent</a></tt><tt class="py-op">,</tt> <tt class="py-name">self</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt id="link-53" class="py-name"><a title="muntjac.application.Application.__init__
+muntjac.application.ApplicationError.__init__
+muntjac.application.UserChangeEvent.__init__
+muntjac.application.WindowAttachEvent.__init__
+muntjac.application.WindowDetachEvent.__init__
+muntjac.data.buffered.SourceException.__init__
+muntjac.data.property.ConversionException.__init__
+muntjac.data.property.ReadOnlyException.__init__
+muntjac.data.util.abstract_container.AbstractContainer.__init__
+muntjac.data.util.abstract_container.BaseItemSetChangeEvent.__init__
+muntjac.data.util.abstract_container.BasePropertySetChangeEvent.__init__
+muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer.__init__
+muntjac.data.util.abstract_property.AbstractProperty.__init__
+muntjac.data.util.abstract_property.IReadOnlyStatusChangeEvent.__init__
+muntjac.data.util.abstract_property.ValueChangeEvent.__init__
+muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper.__init__
+muntjac.data.util.container_hierarchical_wrapper.ListedItemsFirstComparator.__init__
+muntjac.data.util.container_hierarchical_wrapper.PiggybackListener.__init__
+muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper.__init__
+muntjac.data.util.container_ordered_wrapper.PiggybackListener.__init__
+muntjac.data.util.default_item_sorter.DefaultItemSorter.__init__
+muntjac.data.util.filter.simple_string_filter.SimpleStringFilter.__init__
+muntjac.data.util.filter.unsupported_filter_exception.UnsupportedFilterException.__init__
+muntjac.data.util.hierarchical_container.HierarchicalContainer.__init__
+muntjac.data.util.indexed_container.IndexedContainer.__init__
+muntjac.data.util.indexed_container.IndexedContainerItem.__init__
+muntjac.data.util.indexed_container.IndexedContainerProperty.__init__
+muntjac.data.util.indexed_container.ItemSetChangeEvent.__init__
+muntjac.data.util.indexed_container.PropertyValueChangeEvent.__init__
+muntjac.data.util.list_set.ListSet.__init__
+muntjac.data.util.object_property.ObjectProperty.__init__
+muntjac.data.util.propertyset_item.PropertySetChangeEvent.__init__
+muntjac.data.util.propertyset_item.PropertysetItem.__init__
+muntjac.data.validator.EmptyValueException.__init__
+muntjac.data.validator.InvalidValueException.__init__
+muntjac.data.validators.abstract_string_validator.AbstractStringValidator.__init__
+muntjac.data.validators.abstract_validator.AbstractValidator.__init__
+muntjac.data.validators.composite_validator.CompositeValidator.__init__
+muntjac.data.validators.double_validator.DoubleValidator.__init__
+muntjac.data.validators.email_validator.EmailValidator.__init__
+muntjac.data.validators.integer_validator.IntegerValidator.__init__
+muntjac.data.validators.null_validator.NullValidator.__init__
+muntjac.data.validators.regexp_validator.RegexpValidator.__init__
+muntjac.data.validators.string_length_validator.StringLengthValidator.__init__
+muntjac.event.action.Action.__init__
+muntjac.event.action_manager.ActionManager.__init__
+muntjac.event.data_bound_transferable.DataBoundTransferable.__init__
+muntjac.event.dd.acceptcriteria.accept_all.AcceptAll.__init__
+muntjac.event.dd.acceptcriteria.and_.And.__init__
+muntjac.event.dd.acceptcriteria.contains_data_flavor.ContainsDataFlavor.__init__
+muntjac.event.dd.acceptcriteria.not_.Not.__init__
+muntjac.event.dd.acceptcriteria.or_.Or.__init__
+muntjac.event.dd.acceptcriteria.source_is.SourceIs.__init__
+muntjac.event.dd.acceptcriteria.source_is_target.SourceIsTarget.__init__
+muntjac.event.dd.acceptcriteria.target_detail_is.TargetDetailIs.__init__
+muntjac.event.dd.drag_and_drop_event.DragAndDropEvent.__init__
+muntjac.event.dd.target_details_impl.TargetDetailsImpl.__init__
+muntjac.event.event_router.EventRouter.__init__
+muntjac.event.field_events.BlurEvent.__init__
+muntjac.event.field_events.FocusEvent.__init__
+muntjac.event.field_events.TextChangeEvent.__init__
+muntjac.event.item_click_event.ItemClickEvent.__init__
+muntjac.event.layout_events.LayoutClickEvent.__init__
+muntjac.event.listener_method.ListenerMethod.__init__
+muntjac.event.listener_method.MethodException.__init__
+muntjac.event.mouse_events.ClickEvent.__init__
+muntjac.event.mouse_events.DoubleClickEvent.__init__
+muntjac.event.shortcut_action.ShortcutAction.__init__
+muntjac.event.shortcut_listener.ShortcutListener.__init__
+muntjac.event.transferable_impl.TransferableImpl.__init__
+muntjac.messages.SystemMessages.__init__
+muntjac.terminal.class_resource.ClassResource.__init__
+muntjac.terminal.composite_error_message.CompositeErrorMessage.__init__
+muntjac.terminal.download_stream.DownloadStream.__init__
+muntjac.terminal.external_resource.ExternalResource.__init__
+muntjac.terminal.file_resource.FileResource.__init__
+muntjac.terminal.gwt.client.mouse_event_details.MouseEventDetails.__init__
+muntjac.terminal.gwt.client.ui.v_margin_info.VMarginInfo.__init__
+muntjac.terminal.gwt.client.v_browser_details.VBrowserDetails.__init__
+muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet.__init__
+muntjac.terminal.gwt.server.abstract_application_servlet.ParameterHandlerErrorImpl.__init__
+muntjac.terminal.gwt.server.abstract_application_servlet.RequestError.__init__
+muntjac.terminal.gwt.server.abstract_application_servlet.URIHandlerErrorImpl.__init__
+muntjac.terminal.gwt.server.abstract_communication_manager.AbstractCommunicationManager.__init__
+muntjac.terminal.gwt.server.abstract_communication_manager.ErrorHandlerErrorEvent.__init__
+muntjac.terminal.gwt.server.abstract_communication_manager.InvalidUIDLSecurityKeyException.__init__
+muntjac.terminal.gwt.server.abstract_communication_manager.OpenWindowCache.__init__
+muntjac.terminal.gwt.server.abstract_communication_manager.SimpleMultiPartInputStream.__init__
+muntjac.terminal.gwt.server.abstract_communication_manager.URIHandlerErrorImpl.__init__
+muntjac.terminal.gwt.server.abstract_communication_manager.UploadInterruptedException.__init__
+muntjac.terminal.gwt.server.abstract_streaming_event.AbstractStreamingEvent.__init__
+muntjac.terminal.gwt.server.abstract_web_application_context.AbstractWebApplicationContext.__init__
+muntjac.terminal.gwt.server.application_runner_servlet.URIS.__init__
+muntjac.terminal.gwt.server.application_servlet.ApplicationServlet.__init__
+muntjac.terminal.gwt.server.change_variables_error_event.ChangeVariablesErrorEvent.__init__
+muntjac.terminal.gwt.server.communication_manager.AbstractApplicationServletWrapper.__init__
+muntjac.terminal.gwt.server.communication_manager.CommunicationManager.__init__
+muntjac.terminal.gwt.server.communication_manager.HttpServletRequestWrapper.__init__
+muntjac.terminal.gwt.server.communication_manager.HttpServletResponseWrapper.__init__
+muntjac.terminal.gwt.server.communication_manager.HttpSessionWrapper.__init__
+muntjac.terminal.gwt.server.component_size_validator.ComponentInfo.__init__
+muntjac.terminal.gwt.server.component_size_validator.FileLocation.__init__
+muntjac.terminal.gwt.server.component_size_validator.InvalidLayout.__init__
+muntjac.terminal.gwt.server.drag_and_drop_service.DragAndDropService.__init__
+muntjac.terminal.gwt.server.exceptions.SystemMessageException.__init__
+muntjac.terminal.gwt.server.exceptions.UploadException.__init__
+muntjac.terminal.gwt.server.json_paint_target.ArrayVariable.__init__
+muntjac.terminal.gwt.server.json_paint_target.BooleanVariable.__init__
+muntjac.terminal.gwt.server.json_paint_target.DoubleVariable.__init__
+muntjac.terminal.gwt.server.json_paint_target.FloatVariable.__init__
+muntjac.terminal.gwt.server.json_paint_target.IntVariable.__init__
+muntjac.terminal.gwt.server.json_paint_target.JsonPaintTarget.__init__
+muntjac.terminal.gwt.server.json_paint_target.JsonTag.__init__
+muntjac.terminal.gwt.server.json_paint_target.LongVariable.__init__
+muntjac.terminal.gwt.server.json_paint_target.StringVariable.__init__
+muntjac.terminal.gwt.server.paste_deploy_application_servlet.app.__init__
+muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet.__init__
+muntjac.terminal.gwt.server.streaming_events.StreamingEndEventImpl.__init__
+muntjac.terminal.gwt.server.streaming_events.StreamingErrorEventImpl.__init__
+muntjac.terminal.gwt.server.streaming_events.StreamingProgressEventImpl.__init__
+muntjac.terminal.gwt.server.streaming_events.StreamingStartEventImpl.__init__
+muntjac.terminal.gwt.server.web_application_context.WebApplicationContext.__init__
+muntjac.terminal.gwt.server.web_browser.WebBrowser.__init__
+muntjac.terminal.key_mapper.KeyMapper.__init__
+muntjac.terminal.paint_exception.PaintException.__init__
+muntjac.terminal.paintable.RepaintRequestEvent.__init__
+muntjac.terminal.stream_resource.StreamResource.__init__
+muntjac.terminal.sys_error.SysError.__init__
+muntjac.terminal.theme_resource.ThemeResource.__init__
+muntjac.terminal.user_error.UserError.__init__
+muntjac.ui.absolute_layout.AbsoluteLayout.__init__
+muntjac.ui.absolute_layout.ComponentPosition.__init__
+muntjac.ui.abstract_component.AbstractComponent.__init__
+muntjac.ui.abstract_component_container.AbstractComponentContainer.__init__
+muntjac.ui.abstract_field.AbstractField.__init__
+muntjac.ui.abstract_field.FocusShortcut.__init__
+muntjac.ui.abstract_field.IReadOnlyStatusChangeEvent.__init__
+muntjac.ui.abstract_layout.AbstractLayout.__init__
+muntjac.ui.abstract_media.AbstractMedia.__init__
+muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.__init__
+muntjac.ui.abstract_select.AbstractItemSetCriterion.__init__
+muntjac.ui.abstract_select.AbstractSelect.__init__
+muntjac.ui.abstract_select.AbstractSelectTargetDetails.__init__
+muntjac.ui.abstract_select.AcceptItem.__init__
+muntjac.ui.abstract_select.CaptionChangeListener.__init__
+muntjac.ui.abstract_select.IItemSetChangeEvent.__init__
+muntjac.ui.abstract_select.IPropertySetChangeEvent.__init__
+muntjac.ui.abstract_select.TargetItemIs.__init__
+muntjac.ui.abstract_select.VerticalLocationIs.__init__
+muntjac.ui.abstract_split_panel.AbstractSplitPanel.__init__
+muntjac.ui.abstract_split_panel.ComponentIterator.__init__
+muntjac.ui.abstract_split_panel.SplitterClickEvent.__init__
+muntjac.ui.abstract_text_field.AbstractTextField.__init__
+muntjac.ui.abstract_text_field.TextChangeEventImpl.__init__
+muntjac.ui.alignment.Alignment.__init__
+muntjac.ui.audio.Audio.__init__
+muntjac.ui.base_field_factory.BaseFieldFactory.__init__
+muntjac.ui.button.Button.__init__
+muntjac.ui.button.ClickEvent.__init__
+muntjac.ui.button.ClickShortcut.__init__
+muntjac.ui.check_box.CheckBox.__init__
+muntjac.ui.client_widget.ClientWidget.__init__
+muntjac.ui.combo_box.ComboBox.__init__
+muntjac.ui.component.ErrorEvent.__init__
+muntjac.ui.component.Event.__init__
+muntjac.ui.component_container.ComponentAttachEvent.__init__
+muntjac.ui.component_container.ComponentDetachEvent.__init__
+muntjac.ui.css_layout.CssLayout.__init__
+muntjac.ui.custom_component.ComponentIterator.__init__
+muntjac.ui.custom_component.CustomComponent.__init__
+muntjac.ui.custom_layout.CustomLayout.__init__
+muntjac.ui.date_field.DateField.__init__
+muntjac.ui.date_field.UnparsableDateString.__init__
+muntjac.ui.drag_and_drop_wrapper.DragAndDropWrapper.__init__
+muntjac.ui.drag_and_drop_wrapper.ProxyReceiver.__init__
+muntjac.ui.drag_and_drop_wrapper.ReceivingEventWrapper.__init__
+muntjac.ui.drag_and_drop_wrapper.WrapperTargetDetails.__init__
+muntjac.ui.drag_and_drop_wrapper.WrapperTransferable.__init__
+muntjac.ui.embedded.Embedded.__init__
+muntjac.ui.expand_layout.ExpandLayout.__init__
+muntjac.ui.field.ValueChangeEvent.__init__
+muntjac.ui.form.FieldValueChangeListener.__init__
+muntjac.ui.form.Form.__init__
+muntjac.ui.form_layout.FormLayout.__init__
+muntjac.ui.grid_layout.Area.__init__
+muntjac.ui.grid_layout.GridLayout.__init__
+muntjac.ui.grid_layout.OutOfBoundsException.__init__
+muntjac.ui.grid_layout.OverlapsException.__init__
+muntjac.ui.horizontal_layout.HorizontalLayout.__init__
+muntjac.ui.horizontal_split_panel.HorizontalSplitPanel.__init__
+muntjac.ui.html5_file.Html5File.__init__
+muntjac.ui.inline_date_field.InlineDateField.__init__
+muntjac.ui.label.Label.__init__
+muntjac.ui.label.ValueChangeEvent.__init__
+muntjac.ui.layout.MarginInfo.__init__
+muntjac.ui.link.Link.__init__
+muntjac.ui.list_select.ListSelect.__init__
+muntjac.ui.login_form.LoginEvent.__init__
+muntjac.ui.login_form.LoginForm.__init__
+muntjac.ui.login_form.LoginPage.__init__
+muntjac.ui.login_form.ParameterHandler.__init__
+muntjac.ui.login_form.UriHandler.__init__
+muntjac.ui.menu_bar.MenuBar.__init__
+muntjac.ui.menu_bar.MenuItem.__init__
+muntjac.ui.native_button.NativeButton.__init__
+muntjac.ui.native_select.NativeSelect.__init__
+muntjac.ui.option_group.OptionGroup.__init__
+muntjac.ui.ordered_layout.OrderedLayout.__init__
+muntjac.ui.panel.Panel.__init__
+muntjac.ui.password_field.PasswordField.__init__
+muntjac.ui.popup_date_field.PopupDateField.__init__
+muntjac.ui.popup_view.InnerContent.__init__
+muntjac.ui.popup_view.PopupView.__init__
+muntjac.ui.popup_view.PopupVisibilityEvent.__init__
+muntjac.ui.popup_view.SingleComponentIterator.__init__
+muntjac.ui.progress_indicator.ProgressIndicator.__init__
+muntjac.ui.rich_text_area.RichTextArea.__init__
+muntjac.ui.select.Select.__init__
+muntjac.ui.slider.Slider.__init__
+muntjac.ui.slider.ValueOutOfBoundsException.__init__
+muntjac.ui.split_panel.SplitPanel.__init__
+muntjac.ui.tab_sheet.SelectedTabChangeEvent.__init__
+muntjac.ui.tab_sheet.TabSheet.__init__
+muntjac.ui.tab_sheet.TabSheetTabImpl.__init__
+muntjac.ui.table.ColumnReorderEvent.__init__
+muntjac.ui.table.ColumnResizeEvent.__init__
+muntjac.ui.table.FooterClickEvent.__init__
+muntjac.ui.table.GeneratedRow.__init__
+muntjac.ui.table.HeaderClickEvent.__init__
+muntjac.ui.table.Table.__init__
+muntjac.ui.table.TableDropCriterion.__init__
+muntjac.ui.table.TableTransferable.__init__
+muntjac.ui.text_area.TextArea.__init__
+muntjac.ui.text_field.TextField.__init__
+muntjac.ui.tree.CollapseEvent.__init__
+muntjac.ui.tree.ExpandEvent.__init__
+muntjac.ui.tree.TargetInSubtree.__init__
+muntjac.ui.tree.TargetItemAllowsChildren.__init__
+muntjac.ui.tree.Tree.__init__
+muntjac.ui.tree.TreeDropCriterion.__init__
+muntjac.ui.tree.TreeTargetDetails.__init__
+muntjac.ui.tree.TreeTransferable.__init__
+muntjac.ui.tree_table.AbstractStrategy.__init__
+muntjac.ui.tree_table.HierarchicalStrategy.__init__
+muntjac.ui.tree_table.TreeTable.__init__
+muntjac.ui.treetable.hierarchical_container_ordered_wrapper.HierarchicalContainerOrderedWrapper.__init__
+muntjac.ui.twin_col_select.TwinColSelect.__init__
+muntjac.ui.upload.FailedEvent.__init__
+muntjac.ui.upload.FinishedEvent.__init__
+muntjac.ui.upload.InnerStreamVariable.__init__
+muntjac.ui.upload.NoInputStreamEvent.__init__
+muntjac.ui.upload.NoOutputStreamEvent.__init__
+muntjac.ui.upload.StartedEvent.__init__
+muntjac.ui.upload.SucceededEvent.__init__
+muntjac.ui.upload.Upload.__init__
+muntjac.ui.uri_fragment_utility.FragmentChangedEvent.__init__
+muntjac.ui.uri_fragment_utility.UriFragmentUtility.__init__
+muntjac.ui.vertical_layout.VerticalLayout.__init__
+muntjac.ui.vertical_split_panel.VerticalSplitPanel.__init__
+muntjac.ui.video.Video.__init__
+muntjac.ui.window.CloseEvent.__init__
+muntjac.ui.window.CloseShortcut.__init__
+muntjac.ui.window.Notification.__init__
+muntjac.ui.window.OpenResource.__init__
+muntjac.ui.window.ResizeEvent.__init__
+muntjac.ui.window.Window.__init__
+muntjac.util.EventObject.__init__" class="py-name" href="#" onclick="return doclink('link-53', '__init__', 'link-36');">__init__</a></tt><tt class="py-op">(</tt><tt class="py-name">source</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L149"></a><tt class="py-lineno">149</tt>  <tt class="py-line"> </tt>
+<a name="L150"></a><tt class="py-lineno">150</tt>  <tt class="py-line"> </tt>
+<a name="FragmentChangedEvent.getUriFragmentUtility"></a><div id="FragmentChangedEvent.getUriFragmentUtility-def"><a name="L151"></a><tt class="py-lineno">151</tt> <a class="py-toggle" href="#" id="FragmentChangedEvent.getUriFragmentUtility-toggle" onclick="return toggle('FragmentChangedEvent.getUriFragmentUtility');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.uri_fragment_utility.FragmentChangedEvent-class.html#getUriFragmentUtility">getUriFragmentUtility</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="FragmentChangedEvent.getUriFragmentUtility-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="FragmentChangedEvent.getUriFragmentUtility-expanded"><a name="L152"></a><tt class="py-lineno">152</tt>  <tt class="py-line">        <tt class="py-docstring">"""Gets the UriFragmentReader where the event occurred.</tt> </tt>
+<a name="L153"></a><tt class="py-lineno">153</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L154"></a><tt class="py-lineno">154</tt>  <tt class="py-line"><tt class="py-docstring">        @return: the Source of the event.</tt> </tt>
+<a name="L155"></a><tt class="py-lineno">155</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L156"></a><tt class="py-lineno">156</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-54" class="py-name" targets="Method muntjac.data.buffered.SourceException.getSource()=muntjac.data.buffered.SourceException-class.html#getSource,Method muntjac.ui.embedded.Embedded.getSource()=muntjac.ui.embedded.Embedded-class.html#getSource,Method muntjac.util.EventObject.getSource()=muntjac.util.EventObject-class.html#getSource"><a title="muntjac.data.buffered.SourceException.getSource
+muntjac.ui.embedded.Embedded.getSource
+muntjac.util.EventObject.getSource" class="py-name" href="#" onclick="return doclink('link-54', 'getSource', 'link-54');">getSource</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L157"></a><tt class="py-lineno">157</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:04:05 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

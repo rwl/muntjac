@@ -1,0 +1,1723 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.data-module.html">Package&nbsp;data</a> ::
+        <a href="muntjac.data.util-module.html">Package&nbsp;util</a> ::
+        <a href="muntjac.data.util.container_ordered_wrapper-module.html">Module&nbsp;container_ordered_wrapper</a> ::
+        Class&nbsp;ContainerOrderedWrapper
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class ContainerOrderedWrapper</h1><p class="nomargin-top"><span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+                      object --+        
+                               |        
+            <a href="muntjac.data.container.IContainer-class.html">container.IContainer</a> --+    
+                                   |    
+                  <a href="muntjac.data.container.IOrdered-class.html">container.IOrdered</a> --+
+                                       |
+                          object --+   |
+                                   |   |
+    <a href="muntjac.data.container.IItemSetChangeNotifier-class.html">container.IItemSetChangeNotifier</a> --+
+                                       |
+                          object --+   |
+                                   |   |
+<a href="muntjac.data.container.IPropertySetChangeNotifier-class.html">container.IPropertySetChangeNotifier</a> --+
+                                       |
+                                      <strong class="uidshort">ContainerOrderedWrapper</strong>
+</pre>
+
+<dl><dt>Known Subclasses:</dt>
+<dd>
+      <ul class="subclass-list">
+<li><a href="muntjac.ui.treetable.hierarchical_container_ordered_wrapper.HierarchicalContainerOrderedWrapper-class.html">ui.treetable.hierarchical_container_ordered_wrapper.HierarchicalContainerOrderedWrapper</a></li>  </ul>
+</dd></dl>
+
+<hr />
+<p>A wrapper class for adding external ordering to containers not 
+  implementing the <a href="muntjac.data.container.IOrdered-class.html" 
+  class="link">IOrdered</a> interface.</p>
+  <p>If the wrapped container is changed directly (that is, not through the
+  wrapper), and does not implement Container.ItemSetChangeNotifier and/or 
+  PropertySetChangeNotifier the hierarchy information must be updated with 
+  the <a 
+  href="muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#updateOrderWrapper"
+  class="link">updateOrderWrapper</a> method.</p>
+
+<hr />
+<div class="fields">      <dl><dt>Authors:</dt>
+        <dd>
+          Vaadin Ltd.,
+          Richard Lincoln
+        </dd>
+      </dl>
+      <p><strong>Version:</strong>
+        1.0.1
+      </p>
+</div><!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">toBeWrapped</span>)</span><br />
+      Constructs a new ordered wrapper for an existing Container.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#removeFromOrderWrapper" class="summary-sig-name">removeFromOrderWrapper</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">idd</span>)</span><br />
+      Removes the specified Item from the wrapper's internal hierarchy 
+      structure.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.removeFromOrderWrapper">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#addToOrderWrapper" class="summary-sig-name">addToOrderWrapper</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">idd</span>,
+        <span class="summary-sig-arg">previousItemId</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Registers the specified Item to the last position in the wrapper's
+internal ordering.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.addToOrderWrapper">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#updateOrderWrapper" class="summary-sig-name">updateOrderWrapper</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Updates the wrapper's internal ordering information to include all 
+      Items in the underlying container.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.updateOrderWrapper">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#firstItemId" class="summary-sig-name">firstItemId</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the ID of the first Item in the IContainer.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.firstItemId">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#isFirstId" class="summary-sig-name">isFirstId</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Tests if the Item corresponding to the given Item ID is the first 
+      Item in the IContainer.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.isFirstId">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#isLastId" class="summary-sig-name">isLastId</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Tests if the Item corresponding to the given Item ID is the last Item
+      in the IContainer.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.isLastId">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#lastItemId" class="summary-sig-name">lastItemId</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the ID of the last Item in the IContainer..</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.lastItemId">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#nextItemId" class="summary-sig-name">nextItemId</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Gets the ID of the Item following the Item that corresponds to 
+      <code>itemId</code>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.nextItemId">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#prevItemId" class="summary-sig-name">prevItemId</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Gets the ID of the Item preceding the Item that corresponds to 
+      <code>itemId</code>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.prevItemId">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#addContainerProperty" class="summary-sig-name">addContainerProperty</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">propertyId</span>,
+        <span class="summary-sig-arg">typ</span>,
+        <span class="summary-sig-arg">defaultValue</span>)</span><br />
+      Registers a new Property to all Items in the Container.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.addContainerProperty">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#addItem" class="summary-sig-name">addItem</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Creates a new Item into the Container, assigns it an automatic ID, 
+      and adds it to the ordering.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.addItem">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#removeAllItems" class="summary-sig-name">removeAllItems</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Removes all items from the underlying container and from the 
+      ordering.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.removeAllItems">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#removeItem" class="summary-sig-name">removeItem</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Removes an Item specified by the itemId from the underlying container
+      and from the ordering.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.removeItem">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#removeContainerProperty" class="summary-sig-name">removeContainerProperty</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">propertyId</span>)</span><br />
+      Removes the specified Property from the underlying container and from
+      the ordering.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.removeContainerProperty">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#containsId" class="summary-sig-name">containsId</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Tests if the IContainer contains the specified Item.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.containsId">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#getItem" class="summary-sig-name">getItem</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>)</span><br />
+      Gets the <code class="link">Item</code> with the given Item ID from 
+      the IContainer.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.getItem">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#getItemIds" class="summary-sig-name">getItemIds</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the ID's of all visible (after filtering and sorting) Items 
+      stored in the IContainer.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.getItemIds">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#getContainerProperty" class="summary-sig-name">getContainerProperty</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemId</span>,
+        <span class="summary-sig-arg">propertyId</span>)</span><br />
+      Gets the Property identified by the given itemId and propertyId from 
+      the IContainer.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.getContainerProperty">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#getContainerPropertyIds" class="summary-sig-name">getContainerPropertyIds</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the ID's of all Properties stored in the IContainer.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.getContainerPropertyIds">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#getType" class="summary-sig-name">getType</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">propertyId</span>)</span><br />
+      Gets the data type of all Properties identified by the given Property
+      ID.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.getType">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#size" class="summary-sig-name">size</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the number of visible Items in the IContainer.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.size">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="__len__"></a><span class="summary-sig-name">__len__</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.__len__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#addListener" class="summary-sig-name">addListener</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">listener</span>,
+        <span class="summary-sig-arg">iface</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Adds an Item set change listener for the object.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.addListener">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#addCallback" class="summary-sig-name">addCallback</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">callback</span>,
+        <span class="summary-sig-arg">eventType</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">*args</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.addCallback">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#removeListener" class="summary-sig-name">removeListener</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">listener</span>,
+        <span class="summary-sig-arg">iface</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Removes the Item set change listener from the object.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.removeListener">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#removeCallback" class="summary-sig-name">removeCallback</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">callback</span>,
+        <span class="summary-sig-arg">eventType</span>=<span class="summary-sig-default">None</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.removeCallback">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#addItemAfter" class="summary-sig-name">addItemAfter</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">previousItemId</span>,
+        <span class="summary-sig-arg">newItemId</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Adds a new item after the given item.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.addItemAfter">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== INSTANCE VARIABLES ==================== -->
+<a name="section-InstanceVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_container"></a><span class="summary-name">_container</span><br />
+      The wrapped container
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#_next" class="summary-name" onclick="show_private();">_next</a><br />
+      Ordering information, ie.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_prev"></a><span class="summary-name">_prev</span><br />
+      Reverse ordering information for convenience and performance
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_first"></a><span class="summary-name">_first</span><br />
+      ID of the first Item in the container.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_last"></a><span class="summary-name">_last</span><br />
+      ID of the last Item in the container.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#_ordered" class="summary-name" onclick="show_private();">_ordered</a><br />
+      Is the wrapped container ordered by itself, ie.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#_lastKnownSize" class="summary-name" onclick="show_private();">_lastKnownSize</a><br />
+      The last known size of the wrapped container.
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">toBeWrapped</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+Constructs a new ordered wrapper for an existing Container. Works even if
+the to-be-wrapped container already implements the Container.Ordered
+interface.
+
+@param toBeWrapped
+           the container whose contents need to be ordered.
+
+</pre>
+  <dl class="fields">
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeFromOrderWrapper"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeFromOrderWrapper</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">idd</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.removeFromOrderWrapper">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes the specified Item from the wrapper's internal hierarchy 
+  structure.</p>
+  <p>Note : The Item is not removed from the underlying Container.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>idd</code></strong> - the ID of the Item to be removed from the ordering.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addToOrderWrapper"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addToOrderWrapper</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">idd</span>,
+        <span class="sig-arg">previousItemId</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.addToOrderWrapper">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+Registers the specified Item to the last position in the wrapper's
+internal ordering. The underlying container is not modified.
+
+@param idd
+           the ID of the Item to be added to the ordering.
+---
+Registers the specified Item after the specified itemId in the wrapper's
+internal ordering. The underlying container is not modified. Given item
+idd must be in the container, or must be null.
+
+@param idd
+           the ID of the Item to be added to the ordering.
+@param previousItemId
+           the Id of the previous item.
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="updateOrderWrapper"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">updateOrderWrapper</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.updateOrderWrapper">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Updates the wrapper's internal ordering information to include all 
+  Items in the underlying container.</p>
+  <p>Note: If the contents of the wrapped container change without the 
+  wrapper's knowledge, this method needs to be called to update the 
+  ordering information of the Items.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="firstItemId"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">firstItemId</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.firstItemId">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the ID of the first Item in the IContainer.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>ID of the first visible Item in the IContainer</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IOrdered-class.html#firstItemId">container.IOrdered.firstItemId</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isFirstId"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isFirstId</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.isFirstId">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tests if the Item corresponding to the given Item ID is the first Item
+  in the IContainer.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - ID of an Item in the IContainer</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the Item is first visible item in the 
+          IContainer, <code>False</code> if not</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IOrdered-class.html#isFirstId">container.IOrdered.isFirstId</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isLastId"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isLastId</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.isLastId">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tests if the Item corresponding to the given Item ID is the last Item 
+  in the IContainer.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the Item is last visible item in the 
+          IContainer, <code>False</code> if not</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IOrdered-class.html#isLastId">container.IOrdered.isLastId</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="lastItemId"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">lastItemId</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.lastItemId">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the ID of the last Item in the IContainer..</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>ID of the last visible Item in the IContainer</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IOrdered-class.html#lastItemId">container.IOrdered.lastItemId</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="nextItemId"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">nextItemId</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.nextItemId">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the ID of the Item following the Item that corresponds to 
+  <code>itemId</code>. If the given Item is the last or not found in the 
+  IContainer, <code>None</code> is returned.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - ID of a visible Item in the IContainer</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>ID of the next visible Item or <code>None</code></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IOrdered-class.html#nextItemId">container.IOrdered.nextItemId</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="prevItemId"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">prevItemId</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.prevItemId">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the ID of the Item preceding the Item that corresponds to 
+  <code>itemId</code>. If the given Item is the first or not found in the 
+  IContainer, <code>None</code> is returned.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - ID of a visible Item in the IContainer</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>ID of the previous visible Item or <code>None</code></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IOrdered-class.html#prevItemId">container.IOrdered.prevItemId</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addContainerProperty"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addContainerProperty</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">propertyId</span>,
+        <span class="sig-arg">typ</span>,
+        <span class="sig-arg">defaultValue</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.addContainerProperty">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Registers a new Property to all Items in the Container.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>propertyId</code></strong> - the ID of the new Property.</li>
+        <li><strong class="pname"><code>typ</code></strong> - the Data type of the new Property.</li>
+        <li><strong class="pname"><code>defaultValue</code></strong> - the value all created Properties are initialized to.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the operation succeeded, <code>False</code> 
+          if not</dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>NotImplementedError</strong></code> - if the container does not support explicitly adding container 
+        properties</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IContainer-class.html#addContainerProperty">container.IContainer.addContainerProperty</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addItem"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addItem</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.addItem">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Creates a new Item into the Container, assigns it an automatic ID, and
+  adds it to the ordering. Alternatively, registers a new Item by its ID to
+  the underlying container and to the ordering.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - the ID of the Item to be created.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><code>None</code> if the operation failed</dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>NotImplementedError</strong></code> - if the addItem is not supported.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IContainer-class.html#addItem">container.IContainer.addItem</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeAllItems"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeAllItems</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.removeAllItems">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes all items from the underlying container and from the 
+  ordering.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the operation succeeded, otherwise 
+          <code>False</code></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>NotImplementedError</strong></code> - if the removeAllItems is not supported.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IContainer-class.html#removeAllItems">container.IContainer.removeAllItems</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeItem"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeItem</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.removeItem">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes an Item specified by the itemId from the underlying container 
+  and from the ordering.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - the ID of the Item to be removed.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the operation succeeded, <code>False</code> 
+          if not</dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>NotImplementedError</strong></code> - if the removeItem is not supported.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IContainer-class.html#removeItem">container.IContainer.removeItem</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeContainerProperty"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeContainerProperty</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">propertyId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.removeContainerProperty">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes the specified Property from the underlying container and from 
+  the ordering.</p>
+  <p>Note: The Property will be removed from all the Items in the 
+  Container.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>propertyId</code></strong> - the ID of the Property to remove.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the operation succeeded, <code>False</code> 
+          if not</dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>NotImplementedError</strong></code> - if the removeContainerProperty is not supported.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IContainer-class.html#removeContainerProperty">container.IContainer.removeContainerProperty</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="containsId"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">containsId</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.containsId">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tests if the IContainer contains the specified Item.</p>
+  <p>Filtering can hide items so that they will not be visible through the 
+  container API, and this method should respect visibility of items (i.e. 
+  only indicate visible items as being in the container) if feasible for 
+  the container.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - ID the of Item to be tested</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>boolean indicating if the IContainer holds the specified Item</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IContainer-class.html#containsId">container.IContainer.containsId</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getItem"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getItem</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.getItem">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the <code class="link">Item</code> with the given Item ID from 
+  the IContainer. If the IContainer does not contain the requested Item, 
+  <code>None</code> is returned.</p>
+  <p>Containers should not return Items that are filtered out.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - ID of the <code class="link">Item</code> to retrieve</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>the <code class="link">Item</code> with the given ID or 
+          <code>None</code> if the Item is not found in the IContainer</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IContainer-class.html#getItem">container.IContainer.getItem</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getItemIds"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getItemIds</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.getItemIds">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the ID's of all visible (after filtering and sorting) Items 
+  stored in the IContainer. The ID's cannot be modified through the 
+  returned collection.</p>
+  <p>If the container is <a 
+  href="muntjac.data.container.IOrdered-class.html" 
+  class="link">IOrdered</a>, the collection returned by this method should 
+  follow that order. If the container is <a 
+  href="muntjac.data.container.ISortable-class.html" 
+  class="link">ISortable</a>, the items should be in the sorted order.</p>
+  <p>Calling this method for large lazy containers can be an expensive 
+  operation and should be avoided when practical.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>unmodifiable collection of Item IDs</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IContainer-class.html#getItemIds">container.IContainer.getItemIds</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getContainerProperty"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getContainerProperty</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemId</span>,
+        <span class="sig-arg">propertyId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.getContainerProperty">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the Property identified by the given itemId and propertyId from 
+  the IContainer. If the IContainer does not contain the item or it is 
+  filtered out, or the IContainer does not have the Property, 
+  <code>None</code> is returned.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>itemId</code></strong> - ID of the visible Item which contains the Property</li>
+        <li><strong class="pname"><code>propertyId</code></strong> - ID of the Property to retrieve</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>Property with the given ID or <code>None</code></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IContainer-class.html#getContainerProperty">container.IContainer.getContainerProperty</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getContainerPropertyIds"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getContainerPropertyIds</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.getContainerPropertyIds">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the ID's of all Properties stored in the IContainer. The ID's 
+  cannot be modified through the returned collection.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>unmodifiable collection of Property IDs</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IContainer-class.html#getContainerPropertyIds">container.IContainer.getContainerPropertyIds</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getType"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getType</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">propertyId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.getType">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the data type of all Properties identified by the given Property 
+  ID.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>propertyId</code></strong> - ID identifying the Properties</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>data type of the Properties</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IContainer-class.html#getType">container.IContainer.getType</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="size"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">size</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.size">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the number of visible Items in the IContainer.</p>
+  <p>Filtering can hide items so that they will not be visible through the 
+  container API.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>number of Items in the IContainer</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IContainer-class.html#size">container.IContainer.size</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addListener"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addListener</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">listener</span>,
+        <span class="sig-arg">iface</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.addListener">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds an Item set change listener for the object.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>listener</code></strong> - listener to be added</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IPropertySetChangeNotifier-class.html#addListener">container.IPropertySetChangeNotifier.addListener</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addCallback"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addCallback</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">callback</span>,
+        <span class="sig-arg">eventType</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.addCallback">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.data.container.IPropertySetChangeNotifier-class.html#addCallback">container.IPropertySetChangeNotifier.addCallback</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeListener"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeListener</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">listener</span>,
+        <span class="sig-arg">iface</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.removeListener">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes the Item set change listener from the object.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>listener</code></strong> - listener to be removed</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IPropertySetChangeNotifier-class.html#removeListener">container.IPropertySetChangeNotifier.removeListener</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeCallback"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeCallback</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">callback</span>,
+        <span class="sig-arg">eventType</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.removeCallback">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.data.container.IPropertySetChangeNotifier-class.html#removeCallback">container.IPropertySetChangeNotifier.removeCallback</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addItemAfter"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addItemAfter</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">previousItemId</span>,
+        <span class="sig-arg">newItemId</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.util.container_ordered_wrapper-pysrc.html#ContainerOrderedWrapper.addItemAfter">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds a new item after the given item.</p>
+  <p>Adding an item after null item adds the item as first item of the 
+  ordered container.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>previousItemId</code></strong> - Id of the visible item in ordered container after which to insert
+          the new item.</li>
+        <li><strong class="pname"><code>newItemId</code></strong> - Id of the new item to be added.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>new item or null if the operation fails.</dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>NotImplementedError</strong></code> - if the operation is not supported by the container</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.container.IOrdered-class.html#addItemAfter">container.IOrdered.addItemAfter</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== INSTANCE VARIABLE DETAILS ==================== -->
+<a name="section-InstanceVariableDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Variable Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceVariableDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="_next"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">_next</h3>
+  <p>Ordering information, ie. the mapping from Item ID to the next</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="_ordered"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">_ordered</h3>
+  <p>Is the wrapped container ordered by itself, ie. does it implement</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="_lastKnownSize"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">_lastKnownSize</h3>
+  <p>The last known size of the wrapped container. Used to check 
+  whether</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:03:57 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

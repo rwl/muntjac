@@ -1,0 +1,1090 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.ui.window.Notification</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.ui-module.html">Package&nbsp;ui</a> ::
+        <a href="muntjac.ui.window-module.html">Module&nbsp;window</a> ::
+        Class&nbsp;Notification
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.ui.window.Notification-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class Notification</h1><p class="nomargin-top"><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Notification">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+object --+
+         |
+        <strong class="uidshort">Notification</strong>
+</pre>
+
+<hr />
+<p>A notification message, used to display temporary messages to the user
+  - for example &quot;Document saved&quot;, or &quot;Save failed&quot;.</p>
+  <p>The notification message can consist of several parts: caption, 
+  description and icon. It is usually used with only caption - one should 
+  be wary of filling the notification with too much information.</p>
+  <p>The notification message tries to be as unobtrusive as possible, while
+  still drawing needed attention. There are several basic types of messages
+  that can be used in different situations:</p>
+  <ul>
+    <li>
+      TYPE_HUMANIZED_MESSAGE fades away quickly as soon as the user uses 
+      the mouse or types something. It can be used to show fairly 
+      unimportant messages, such as feedback that an operation succeeded 
+      (&quot;Document Saved&quot;) - the kind of messages the user ignores 
+      once the application is familiar.
+    </li>
+    <li>
+      TYPE_WARNING_MESSAGE is shown for a short while after the user uses 
+      the mouse or types something. It's default style is also more 
+      noticeable than the humanized message. It can be used for messages 
+      that do not contain a lot of important information, but should be 
+      noticed by the user. Despite the name, it does not have to be a 
+      warning, but can be used instead of the humanized message whenever 
+      you want to make the message a little more noticeable.
+    </li>
+    <li>
+      TYPE_ERROR_MESSAGE requires to user to click it before disappearing, 
+      and can be used for critical messages.
+    </li>
+    <li>
+      TYPE_TRAY_NOTIFICATION is shown for a while in the lower left corner 
+      of the window, and can be used for &quot;convenience 
+      notifications&quot; that do not have to be noticed immediately, and 
+      should not interfere with the current task - for instance to show 
+      &quot;You have a new message in your inbox&quot; while the user is 
+      working in some other area of the application.
+    </li>
+  </ul>
+  <p>In addition to the basic pre-configured types, a Notification can also
+  be configured to show up in a custom position, for a specified time (or 
+  until clicked), and with a custom stylename. An icon can also be 
+  added.</p>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Notification-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">*args</span>)</span><br />
+      Creates a notification message.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Notification.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="setType"></a><span class="summary-sig-name">setType</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">typ</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Notification.setType">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Notification-class.html#getCaption" class="summary-sig-name">getCaption</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the caption part of the notification message.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Notification.getCaption">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Notification-class.html#setCaption" class="summary-sig-name">setCaption</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">caption</span>)</span><br />
+      Sets the caption part of the notification message</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Notification.setCaption">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Notification-class.html#getMessage" class="summary-sig-name">getMessage</a>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Notification.getMessage">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Notification-class.html#setMessage" class="summary-sig-name">setMessage</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">description</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Notification.setMessage">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Notification-class.html#getDescription" class="summary-sig-name">getDescription</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the description part of the notification message.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Notification.getDescription">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="setDescription"></a><span class="summary-sig-name">setDescription</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">description</span>)</span><br />
+      Sets the description part of the notification message.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Notification.setDescription">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Notification-class.html#getPosition" class="summary-sig-name">getPosition</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the position of the notification message.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Notification.getPosition">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Notification-class.html#setPosition" class="summary-sig-name">setPosition</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">position</span>)</span><br />
+      Sets the position of the notification message.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Notification.setPosition">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Notification-class.html#getIcon" class="summary-sig-name">getIcon</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the icon part of the notification message.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Notification.getIcon">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Notification-class.html#setIcon" class="summary-sig-name">setIcon</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">icon</span>)</span><br />
+      Sets the icon part of the notification message.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Notification.setIcon">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Notification-class.html#getDelayMsec" class="summary-sig-name">getDelayMsec</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the delay before the notification disappears.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Notification.getDelayMsec">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Notification-class.html#setDelayMsec" class="summary-sig-name">setDelayMsec</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">delayMsec</span>)</span><br />
+      Sets the delay before the notification disappears.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Notification.setDelayMsec">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Notification-class.html#setStyleName" class="summary-sig-name">setStyleName</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">styleName</span>)</span><br />
+      Sets the style name for the notification message.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Notification.setStyleName">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getStyleName"></a><span class="summary-sig-name">getStyleName</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the style name for the notification message.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Notification.getStyleName">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Notification-class.html#setHtmlContentAllowed" class="summary-sig-name">setHtmlContentAllowed</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">htmlContentAllowed</span>)</span><br />
+      Sets whether html is allowed in the caption and description.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Notification.setHtmlContentAllowed">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Notification-class.html#isHtmlContentAllowed" class="summary-sig-name">isHtmlContentAllowed</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Checks whether caption and description are interpreted as html or 
+      plain text.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Notification.isHtmlContentAllowed">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="TYPE_HUMANIZED_MESSAGE"></a><span class="summary-name">TYPE_HUMANIZED_MESSAGE</span> = <code title="1">1</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="TYPE_WARNING_MESSAGE"></a><span class="summary-name">TYPE_WARNING_MESSAGE</span> = <code title="2">2</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="TYPE_ERROR_MESSAGE"></a><span class="summary-name">TYPE_ERROR_MESSAGE</span> = <code title="3">3</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="TYPE_TRAY_NOTIFICATION"></a><span class="summary-name">TYPE_TRAY_NOTIFICATION</span> = <code title="4">4</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="POSITION_CENTERED"></a><span class="summary-name">POSITION_CENTERED</span> = <code title="1">1</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="POSITION_CENTERED_TOP"></a><span class="summary-name">POSITION_CENTERED_TOP</span> = <code title="2">2</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="POSITION_CENTERED_BOTTOM"></a><span class="summary-name">POSITION_CENTERED_BOTTOM</span> = <code title="3">3</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="POSITION_TOP_LEFT"></a><span class="summary-name">POSITION_TOP_LEFT</span> = <code title="4">4</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="POSITION_TOP_RIGHT"></a><span class="summary-name">POSITION_TOP_RIGHT</span> = <code title="5">5</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="POSITION_BOTTOM_LEFT"></a><span class="summary-name">POSITION_BOTTOM_LEFT</span> = <code title="6">6</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="POSITION_BOTTOM_RIGHT"></a><span class="summary-name">POSITION_BOTTOM_RIGHT</span> = <code title="7">7</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="DELAY_FOREVER"></a><span class="summary-name">DELAY_FOREVER</span> = <code title="-1">-1</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="DELAY_NONE"></a><span class="summary-name">DELAY_NONE</span> = <code title="0">0</code>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Notification.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Creates a notification message.</p>
+  <p>Care should be taken to to avoid XSS vulnerabilities as the caption 
+  and description are by default rendered as html.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>args</code></strong> - tuple of the form
+          <ul>
+            <li>
+              (caption)
+              <ol start="1">
+                <li>
+                  The message to show
+                </li>
+              </ol>
+            </li>
+            <li>
+              (caption, type)
+              <ol start="1">
+                <li>
+                  The message to show
+                </li>
+                <li>
+                  The type of message
+                </li>
+              </ol>
+            </li>
+            <li>
+              (caption, description)
+              <ol start="1">
+                <li>
+                  The message caption
+                </li>
+                <li>
+                  The message description
+                </li>
+              </ol>
+            </li>
+            <li>
+              (caption, description, type)
+              <ol start="1">
+                <li>
+                  The message caption
+                </li>
+                <li>
+                  The message description
+                </li>
+                <li>
+                  The type of message
+                </li>
+              </ol>
+            </li>
+            <li>
+              (caption, description, type, htmlContentAllowed)
+              <ol start="1">
+                <li>
+                  The message caption
+                </li>
+                <li>
+                  The message description
+                </li>
+                <li>
+                  The type of message
+                </li>
+                <li>
+                  Whether html in the caption and description should be 
+                  displayed as html or as plain text
+                </li>
+              </ol>
+            </li>
+          </ul></li>
+    </ul></dd>
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getCaption"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getCaption</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Notification.getCaption">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the caption part of the notification message.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The message caption</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setCaption"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setCaption</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">caption</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Notification.setCaption">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the caption part of the notification message</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>caption</code></strong> - The message caption</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getMessage"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getMessage</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Notification.getMessage">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+  </dl>
+<div class="fields">      <p><strong>Deprecated:</strong>
+        Use <a href="muntjac.ui.window.Notification-class.html#getDescription" 
+    class="link">getDescription</a> instead.
+      </p>
+</div></td></tr></table>
+</div>
+<a name="setMessage"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setMessage</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">description</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Notification.setMessage">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+  </dl>
+<div class="fields">      <p><strong>Deprecated:</strong>
+        Use <a href="muntjac.ui.window.Notification-class.html#setDescription" 
+    class="link">setDescription</a> instead.
+      </p>
+</div></td></tr></table>
+</div>
+<a name="getDescription"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getDescription</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Notification.getDescription">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the description part of the notification message.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The message description.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getPosition"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getPosition</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Notification.getPosition">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the position of the notification message.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The position</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setPosition"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setPosition</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">position</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Notification.setPosition">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the position of the notification message.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>position</code></strong> - The desired notification position</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getIcon"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getIcon</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Notification.getIcon">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the icon part of the notification message.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The message icon</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setIcon"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setIcon</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">icon</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Notification.setIcon">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the icon part of the notification message.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>icon</code></strong> - The desired message icon</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getDelayMsec"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getDelayMsec</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Notification.getDelayMsec">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the delay before the notification disappears.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the delay in msec, -1 indicates the message has to be clicked.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setDelayMsec"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setDelayMsec</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">delayMsec</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Notification.setDelayMsec">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the delay before the notification disappears.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>delayMsec</code></strong> - the desired delay in msec, -1 to require the user to click the 
+          message</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setStyleName"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setStyleName</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">styleName</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Notification.setStyleName">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the style name for the notification message.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>styleName</code></strong> - The desired style name.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setHtmlContentAllowed"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setHtmlContentAllowed</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">htmlContentAllowed</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Notification.setHtmlContentAllowed">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets whether html is allowed in the caption and description. If set to
+  true, the texts are passed to the browser as html and the developer is 
+  responsible for ensuring no harmful html is used. If set to false, the 
+  texts are passed to the browser as plain text.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>htmlContentAllowed</code></strong> - true if the texts are used as html, false if used as plain text</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isHtmlContentAllowed"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isHtmlContentAllowed</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Notification.isHtmlContentAllowed">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Checks whether caption and description are interpreted as html or 
+  plain text.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true if the texts are used as html, false if used as plain text</dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a 
+        href="muntjac.ui.window.Notification-class.html#setHtmlContentAllowed"
+        class="link">setHtmlContentAllowed</a>
+      </p>
+</div></td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:04:03 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

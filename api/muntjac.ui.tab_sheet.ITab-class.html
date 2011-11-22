@@ -1,0 +1,778 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.ui.tab_sheet.ITab</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.ui-module.html">Package&nbsp;ui</a> ::
+        <a href="muntjac.ui.tab_sheet-module.html">Module&nbsp;tab_sheet</a> ::
+        Class&nbsp;ITab
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.ui.tab_sheet.ITab-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class ITab</h1><p class="nomargin-top"><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#ITab">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+object --+
+         |
+        <strong class="uidshort">ITab</strong>
+</pre>
+
+<dl><dt>Known Subclasses:</dt>
+<dd>
+      <ul class="subclass-list">
+<li><a href="muntjac.ui.tab_sheet.TabSheetTabImpl-class.html">TabSheetTabImpl</a></li>  </ul>
+</dd></dl>
+
+<hr />
+<p>ITab meta-data for a component in a <a 
+  href="muntjac.ui.tab_sheet.TabSheet-class.html" 
+  class="link">TabSheet</a>.</p>
+  <p>The meta-data includes the tab caption, icon, visibility and 
+  enabledness, closability, description (tooltip) and an optional component
+  error shown in the tab.</p>
+  <p>Tabs are identified by the component contained on them in most cases, 
+  and the meta-data can be obtained with <a 
+  href="muntjac.ui.tab_sheet.TabSheet-class.html#getTab" 
+  class="link">TabSheet.getTab</a>.</p>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.ITab-class.html#isVisible" class="summary-sig-name">isVisible</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the visible status for the tab.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#ITab.isVisible">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.ITab-class.html#setVisible" class="summary-sig-name">setVisible</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">visible</span>)</span><br />
+      Sets the visible status for the tab.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#ITab.setVisible">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.ITab-class.html#isClosable" class="summary-sig-name">isClosable</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the closability status for the tab.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#ITab.isClosable">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.ITab-class.html#setClosable" class="summary-sig-name">setClosable</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">closable</span>)</span><br />
+      Sets the closability status for the tab.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#ITab.setClosable">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.ITab-class.html#isEnabled" class="summary-sig-name">isEnabled</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the enabled status for the tab.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#ITab.isEnabled">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.ITab-class.html#setEnabled" class="summary-sig-name">setEnabled</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">enabled</span>)</span><br />
+      Sets the enabled status for the tab.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#ITab.setEnabled">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.ITab-class.html#setCaption" class="summary-sig-name">setCaption</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">caption</span>)</span><br />
+      Sets the caption for the tab.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#ITab.setCaption">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getCaption"></a><span class="summary-sig-name">getCaption</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the caption for the tab.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#ITab.getCaption">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getIcon"></a><span class="summary-sig-name">getIcon</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the icon for the tab.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#ITab.getIcon">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.ITab-class.html#setIcon" class="summary-sig-name">setIcon</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">icon</span>)</span><br />
+      Sets the icon for the tab.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#ITab.setIcon">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.ITab-class.html#getDescription" class="summary-sig-name">getDescription</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the description for the tab.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#ITab.getDescription">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.ITab-class.html#setDescription" class="summary-sig-name">setDescription</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">description</span>)</span><br />
+      Sets the description for the tab.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#ITab.setDescription">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.ITab-class.html#setComponentError" class="summary-sig-name">setComponentError</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">componentError</span>)</span><br />
+      Sets an error indicator to be shown in the tab.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#ITab.setComponentError">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.tab_sheet.ITab-class.html#getComponentError" class="summary-sig-name">getComponentError</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the curent error message shown for the tab.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#ITab.getComponentError">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getComponent"></a><span class="summary-sig-name">getComponent</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Get the component related to the ITab</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#ITab.getComponent">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__init__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="isVisible"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isVisible</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#ITab.isVisible">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the visible status for the tab. An invisible tab is not shown 
+  in the tab bar and cannot be selected.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true for visible, false for hidden</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setVisible"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setVisible</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">visible</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#ITab.setVisible">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the visible status for the tab. An invisible tab is not shown in 
+  the tab bar and cannot be selected, selection is changed automatically 
+  when there is an attempt to select an invisible tab.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>visible</code></strong> - true for visible, false for hidden</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isClosable"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isClosable</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#ITab.isClosable">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the closability status for the tab.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true if the tab is allowed to be closed by the end user, false 
+          for not allowing closing</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setClosable"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setClosable</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">closable</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#ITab.setClosable">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the closability status for the tab. A closable tab can be closed 
+  by the user through the user interface. This also controls if a close 
+  button is shown to the user or not.</p>
+  <p>Note! Currently only supported by TabSheet, not Accordion.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>closable</code></strong> - true if the end user is allowed to close the tab, false for not 
+          allowing to close. Should default to false.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isEnabled"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isEnabled</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#ITab.isEnabled">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the enabled status for the tab. A disabled tab is shown as 
+  such in the tab bar and cannot be selected.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true for enabled, false for disabled</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setEnabled"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setEnabled</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">enabled</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#ITab.setEnabled">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the enabled status for the tab. A disabled tab is shown as such 
+  in the tab bar and cannot be selected.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>enabled</code></strong> - true for enabled, false for disabled</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setCaption"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setCaption</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">caption</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#ITab.setCaption">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the caption for the tab.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>caption</code></strong> - the caption to set</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setIcon"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setIcon</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">icon</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#ITab.setIcon">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the icon for the tab.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>icon</code></strong> - the icon to set</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getDescription"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getDescription</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#ITab.getDescription">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the description for the tab. The description can be used to 
+  briefly describe the state of the tab to the user, and is typically shown
+  as a tooltip when hovering over the tab.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the description for the tab</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setDescription"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setDescription</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">description</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#ITab.setDescription">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the description for the tab. The description can be used to 
+  briefly describe the state of the tab to the user, and is typically shown
+  as a tooltip when hovering over the tab.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>description</code></strong> - the new description string for the tab.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setComponentError"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setComponentError</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">componentError</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#ITab.setComponentError">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets an error indicator to be shown in the tab. This can be used e.g. 
+  to communicate to the user that there is a problem in the contents of the
+  tab.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>componentError</code></strong> - error message or null for none</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <code class="link">AbstractComponent.setComponentError</code>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="getComponentError"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getComponentError</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.tab_sheet-pysrc.html#ITab.getComponentError">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the curent error message shown for the tab.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>message or null if none</dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <code class="link">AbstractComponent.setComponentError</code>
+      </p>
+</div></td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:04:02 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

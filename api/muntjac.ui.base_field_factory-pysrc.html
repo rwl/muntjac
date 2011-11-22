@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.ui.base_field_factory</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.ui-module.html">Package&nbsp;ui</a> ::
+        Module&nbsp;base_field_factory
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.ui.base_field_factory-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="muntjac.ui.base_field_factory-module.html">Module muntjac.ui.base_field_factory</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-comment"># Copyright (C) 2011 Vaadin Ltd.</tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-comment"># Copyright (C) 2011 Richard Lincoln</tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-comment"># This program is free software: you can redistribute it and/or modify</tt> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-comment"># it under the terms of the GNU Affero General Public License as published</tt> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-comment"># by the Free Software Foundation, either version 3 of the License, or</tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-comment"># (at your option) any later version.</tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"><tt class="py-comment"># This program is distributed in the hope that it will be useful,</tt> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"><tt class="py-comment"># but WITHOUT ANY WARRANTY; without even the implied warranty of</tt> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"><tt class="py-comment"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</tt> </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"><tt class="py-comment"># GNU Affero General Public License for more details.</tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt class="py-comment"># You should have received a copy of the GNU Affero General Public License</tt> </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"><tt class="py-comment"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</tt> </tt>
+<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"><tt class="py-comment"># Note: This is a modified file from Vaadin. For further information on</tt> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"><tt class="py-comment">#       Vaadin please visit http://www.vaadin.com.</tt> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"> </tt>
+<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">warnings</tt> <tt class="py-keyword">import</tt> <tt class="py-name">warn</tt> </tt>
+<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line"> </tt>
+<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Package muntjac=muntjac-module.html,Function muntjac.main.muntjac()=muntjac.main-module.html#muntjac"><a title="muntjac
+muntjac.main.muntjac" class="py-name" href="#" onclick="return doclink('link-0', 'muntjac', 'link-0');">muntjac</a></tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Package muntjac.terminal.gwt.client.ui=muntjac.terminal.gwt.client.ui-module.html,Package muntjac.ui=muntjac.ui-module.html"><a title="muntjac.terminal.gwt.client.ui
+muntjac.ui" class="py-name" href="#" onclick="return doclink('link-1', 'ui', 'link-1');">ui</a></tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Module muntjac.ui.default_field_factory=muntjac.ui.default_field_factory-module.html"><a title="muntjac.ui.default_field_factory" class="py-name" href="#" onclick="return doclink('link-2', 'default_field_factory', 'link-2');">default_field_factory</a></tt> <tt class="py-keyword">import</tt> <tt id="link-3" class="py-name" targets="Class muntjac.ui.default_field_factory.DefaultFieldFactory=muntjac.ui.default_field_factory.DefaultFieldFactory-class.html"><a title="muntjac.ui.default_field_factory.DefaultFieldFactory" class="py-name" href="#" onclick="return doclink('link-3', 'DefaultFieldFactory', 'link-3');">DefaultFieldFactory</a></tt> </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-4" class="py-name"><a title="muntjac
+muntjac.main.muntjac" class="py-name" href="#" onclick="return doclink('link-4', 'muntjac', 'link-0');">muntjac</a></tt><tt class="py-op">.</tt><tt id="link-5" class="py-name"><a title="muntjac.terminal.gwt.client.ui
+muntjac.ui" class="py-name" href="#" onclick="return doclink('link-5', 'ui', 'link-1');">ui</a></tt><tt class="py-op">.</tt><tt id="link-6" class="py-name" targets="Module muntjac.ui.field_factory=muntjac.ui.field_factory-module.html"><a title="muntjac.ui.field_factory" class="py-name" href="#" onclick="return doclink('link-6', 'field_factory', 'link-6');">field_factory</a></tt> <tt class="py-keyword">import</tt> <tt id="link-7" class="py-name" targets="Class muntjac.ui.field_factory.IFieldFactory=muntjac.ui.field_factory.IFieldFactory-class.html"><a title="muntjac.ui.field_factory.IFieldFactory" class="py-name" href="#" onclick="return doclink('link-7', 'IFieldFactory', 'link-7');">IFieldFactory</a></tt> </tt>
+<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-8" class="py-name"><a title="muntjac
+muntjac.main.muntjac" class="py-name" href="#" onclick="return doclink('link-8', 'muntjac', 'link-0');">muntjac</a></tt><tt class="py-op">.</tt><tt id="link-9" class="py-name" targets="Package muntjac.data=muntjac.data-module.html"><a title="muntjac.data" class="py-name" href="#" onclick="return doclink('link-9', 'data', 'link-9');">data</a></tt><tt class="py-op">.</tt><tt id="link-10" class="py-name" targets="Module muntjac.data.property=muntjac.data.property-module.html"><a title="muntjac.data.property" class="py-name" href="#" onclick="return doclink('link-10', 'property', 'link-10');">property</a></tt> <tt class="py-keyword">import</tt> <tt id="link-11" class="py-name" targets="Class muntjac.data.property.IProperty=muntjac.data.property.IProperty-class.html"><a title="muntjac.data.property.IProperty" class="py-name" href="#" onclick="return doclink('link-11', 'IProperty', 'link-11');">IProperty</a></tt> </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-12" class="py-name"><a title="muntjac
+muntjac.main.muntjac" class="py-name" href="#" onclick="return doclink('link-12', 'muntjac', 'link-0');">muntjac</a></tt><tt class="py-op">.</tt><tt id="link-13" class="py-name"><a title="muntjac.terminal.gwt.client.ui
+muntjac.ui" class="py-name" href="#" onclick="return doclink('link-13', 'ui', 'link-1');">ui</a></tt><tt class="py-op">.</tt><tt id="link-14" class="py-name" targets="Module muntjac.ui.abstract_component=muntjac.ui.abstract_component-module.html"><a title="muntjac.ui.abstract_component" class="py-name" href="#" onclick="return doclink('link-14', 'abstract_component', 'link-14');">abstract_component</a></tt> <tt class="py-keyword">import</tt> <tt id="link-15" class="py-name" targets="Class muntjac.ui.abstract_component.AbstractComponent=muntjac.ui.abstract_component.AbstractComponent-class.html"><a title="muntjac.ui.abstract_component.AbstractComponent" class="py-name" href="#" onclick="return doclink('link-15', 'AbstractComponent', 'link-15');">AbstractComponent</a></tt> </tt>
+<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line"> </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line"> </tt>
+<a name="BaseFieldFactory"></a><div id="BaseFieldFactory-def"><a name="L28"></a><tt class="py-lineno">28</tt> <a class="py-toggle" href="#" id="BaseFieldFactory-toggle" onclick="return toggle('BaseFieldFactory');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.ui.base_field_factory.BaseFieldFactory-class.html">BaseFieldFactory</a><tt class="py-op">(</tt><tt class="py-base-class">IFieldFactory</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="BaseFieldFactory-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="BaseFieldFactory-expanded"><a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line">    <tt class="py-docstring">"""Default implementation of the the following Field types are used</tt> </tt>
+<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line"><tt class="py-docstring">    by default:</tt> </tt>
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line"><tt class="py-docstring">      - B{Boolean}: Button(switchMode:true).</tt> </tt>
+<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line"><tt class="py-docstring">      - B{Date}: DateField(resolution: day).</tt> </tt>
+<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line"><tt class="py-docstring">      - B{Item}: Form.</tt> </tt>
+<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line"><tt class="py-docstring">      - B{default field type}: TextField.</tt> </tt>
+<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line"><tt class="py-docstring">    @author: Vaadin Ltd.</tt> </tt>
+<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line"><tt class="py-docstring">    @author: Richard Lincoln</tt> </tt>
+<a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line"><tt class="py-docstring">    @version: 1.0.1</tt> </tt>
+<a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line"><tt class="py-docstring">    @deprecated: use L{DefaultFieldFactory} or own implementations</tt> </tt>
+<a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line"><tt class="py-docstring">                 on L{FormFieldFactory} or L{TableFieldFactory}</tt> </tt>
+<a name="L42"></a><tt class="py-lineno">42</tt>  <tt class="py-line"><tt class="py-docstring">                 instead.</tt> </tt>
+<a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line"> </tt>
+<a name="BaseFieldFactory.__init__"></a><div id="BaseFieldFactory.__init__-def"><a name="L45"></a><tt class="py-lineno">45</tt> <a class="py-toggle" href="#" id="BaseFieldFactory.__init__-toggle" onclick="return toggle('BaseFieldFactory.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.base_field_factory.BaseFieldFactory-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="BaseFieldFactory.__init__-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="BaseFieldFactory.__init__-expanded"><a name="L46"></a><tt class="py-lineno">46</tt>  <tt class="py-line">        <tt class="py-name">warn</tt><tt class="py-op">(</tt><tt class="py-string">'use DefaultFieldFactory'</tt><tt class="py-op">,</tt> <tt class="py-name">DeprecationWarning</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line"> </tt>
+<a name="L48"></a><tt class="py-lineno">48</tt>  <tt class="py-line"> </tt>
+<a name="BaseFieldFactory.createField"></a><div id="BaseFieldFactory.createField-def"><a name="L49"></a><tt class="py-lineno">49</tt> <a class="py-toggle" href="#" id="BaseFieldFactory.createField-toggle" onclick="return toggle('BaseFieldFactory.createField');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.base_field_factory.BaseFieldFactory-class.html#createField">createField</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-op">*</tt><tt class="py-param">args</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="BaseFieldFactory.createField-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="BaseFieldFactory.createField-expanded"><a name="L50"></a><tt class="py-lineno">50</tt>  <tt class="py-line">        <tt class="py-docstring">"""Creates the field based on type of data.</tt> </tt>
+<a name="L51"></a><tt class="py-lineno">51</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L52"></a><tt class="py-lineno">52</tt>  <tt class="py-line"><tt class="py-docstring">        @param args: tuple of the form</tt> </tt>
+<a name="L53"></a><tt class="py-lineno">53</tt>  <tt class="py-line"><tt class="py-docstring">            - (type, uiContext)</tt> </tt>
+<a name="L54"></a><tt class="py-lineno">54</tt>  <tt class="py-line"><tt class="py-docstring">              1. the type of data presented in field.</tt> </tt>
+<a name="L55"></a><tt class="py-lineno">55</tt>  <tt class="py-line"><tt class="py-docstring">              2. the context where the Field is presented.</tt> </tt>
+<a name="L56"></a><tt class="py-lineno">56</tt>  <tt class="py-line"><tt class="py-docstring">        @see: L{IFieldFactory.createField}</tt> </tt>
+<a name="L57"></a><tt class="py-lineno">57</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L58"></a><tt class="py-lineno">58</tt>  <tt class="py-line">        <tt class="py-name">nargs</tt> <tt class="py-op">=</tt> <tt class="py-name">len</tt><tt class="py-op">(</tt><tt class="py-name">args</tt><tt class="py-op">)</tt> </tt>
+<a name="L59"></a><tt class="py-lineno">59</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">nargs</tt> <tt class="py-op">==</tt> <tt class="py-number">2</tt><tt class="py-op">:</tt> </tt>
+<a name="L60"></a><tt class="py-lineno">60</tt>  <tt class="py-line">            <tt class="py-keyword">if</tt> <tt class="py-name">isinstance</tt><tt class="py-op">(</tt><tt class="py-name">args</tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt id="link-16" class="py-name"><a title="muntjac.data.property.IProperty" class="py-name" href="#" onclick="return doclink('link-16', 'IProperty', 'link-11');">IProperty</a></tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L61"></a><tt class="py-lineno">61</tt>  <tt class="py-line">                <tt class="py-name">prop</tt><tt class="py-op">,</tt> <tt class="py-name">uiContext</tt> <tt class="py-op">=</tt> <tt class="py-name">args</tt> </tt>
+<a name="L62"></a><tt class="py-lineno">62</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt id="link-17" class="py-name"><a title="muntjac.data.property" class="py-name" href="#" onclick="return doclink('link-17', 'property', 'link-10');">property</a></tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L63"></a><tt class="py-lineno">63</tt>  <tt class="py-line">                    <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-18" class="py-name" targets="Method muntjac.ui.base_field_factory.BaseFieldFactory.createField()=muntjac.ui.base_field_factory.BaseFieldFactory-class.html#createField,Method muntjac.ui.default_field_factory.DefaultFieldFactory.createField()=muntjac.ui.default_field_factory.DefaultFieldFactory-class.html#createField,Method muntjac.ui.field_factory.IFieldFactory.createField()=muntjac.ui.field_factory.IFieldFactory-class.html#createField,Method muntjac.ui.form_field_factory.IFormFieldFactory.createField()=muntjac.ui.form_field_factory.IFormFieldFactory-class.html#createField,Method muntjac.ui.table_field_factory.ITableFieldFactory.createField()=muntjac.ui.table_field_factory.ITableFieldFactory-class.html#createField"><a title="muntjac.ui.base_field_factory.BaseFieldFactory.createField
+muntjac.ui.default_field_factory.DefaultFieldFactory.createField
+muntjac.ui.field_factory.IFieldFactory.createField
+muntjac.ui.form_field_factory.IFormFieldFactory.createField
+muntjac.ui.table_field_factory.ITableFieldFactory.createField" class="py-name" href="#" onclick="return doclink('link-18', 'createField', 'link-18');">createField</a></tt><tt class="py-op">(</tt><tt class="py-name">prop</tt><tt class="py-op">.</tt><tt id="link-19" class="py-name" targets="Method muntjac.data.container.IContainer.getType()=muntjac.data.container.IContainer-class.html#getType,Method muntjac.data.property.IProperty.getType()=muntjac.data.property.IProperty-class.html#getType,Method muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper.getType()=muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#getType,Method muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper.getType()=muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#getType,Method muntjac.data.util.indexed_container.IndexedContainer.getType()=muntjac.data.util.indexed_container.IndexedContainer-class.html#getType,Method muntjac.data.util.indexed_container.IndexedContainerProperty.getType()=muntjac.data.util.indexed_container.IndexedContainerProperty-class.html#getType,Method muntjac.data.util.object_property.ObjectProperty.getType()=muntjac.data.util.object_property.ObjectProperty-class.html#getType,Method muntjac.terminal.gwt.client.mouse_event_details.MouseEventDetails.getType()=muntjac.terminal.gwt.client.mouse_event_details.MouseEventDetails-class.html#getType,Method muntjac.ui.abstract_field.AbstractField.getType()=muntjac.ui.abstract_field.AbstractField-class.html#getType,Method muntjac.ui.abstract_select.AbstractSelect.getType()=muntjac.ui.abstract_select.AbstractSelect-class.html#getType,Method muntjac.ui.abstract_text_field.AbstractTextField.getType()=muntjac.ui.abstract_text_field.AbstractTextField-class.html#getType,Method muntjac.ui.button.Button.getType()=muntjac.ui.button.Button-class.html#getType,Method muntjac.ui.date_field.DateField.getType()=muntjac.ui.date_field.DateField-class.html#getType,Method muntjac.ui.embedded.Embedded.getType()=muntjac.ui.embedded.Embedded-class.html#getType,Method muntjac.ui.form.Form.getType()=muntjac.ui.form.Form-class.html#getType,Method muntjac.ui.html5_file.Html5File.getType()=muntjac.ui.html5_file.Html5File-class.html#getType,Method muntjac.ui.label.Label.getType()=muntjac.ui.label.Label-class.html#getType,Method muntjac.ui.progress_indicator.ProgressIndicator.getType()=muntjac.ui.progress_indicator.ProgressIndicator-class.html#getType,Method muntjac.ui.rich_text_area.RichTextArea.getType()=muntjac.ui.rich_text_area.RichTextArea-class.html#getType,Method muntjac.ui.slider.Slider.getType()=muntjac.ui.slider.Slider-class.html#getType"><a title="muntjac.data.container.IContainer.getType
+muntjac.data.property.IProperty.getType
+muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper.getType
+muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper.getType
+muntjac.data.util.indexed_container.IndexedContainer.getType
+muntjac.data.util.indexed_container.IndexedContainerProperty.getType
+muntjac.data.util.object_property.ObjectProperty.getType
+muntjac.terminal.gwt.client.mouse_event_details.MouseEventDetails.getType
+muntjac.ui.abstract_field.AbstractField.getType
+muntjac.ui.abstract_select.AbstractSelect.getType
+muntjac.ui.abstract_text_field.AbstractTextField.getType
+muntjac.ui.button.Button.getType
+muntjac.ui.date_field.DateField.getType
+muntjac.ui.embedded.Embedded.getType
+muntjac.ui.form.Form.getType
+muntjac.ui.html5_file.Html5File.getType
+muntjac.ui.label.Label.getType
+muntjac.ui.progress_indicator.ProgressIndicator.getType
+muntjac.ui.rich_text_area.RichTextArea.getType
+muntjac.ui.slider.Slider.getType" class="py-name" href="#" onclick="return doclink('link-19', 'getType', 'link-19');">getType</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-name">uiContext</tt><tt class="py-op">)</tt> </tt>
+<a name="L64"></a><tt class="py-lineno">64</tt>  <tt class="py-line">                <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L65"></a><tt class="py-lineno">65</tt>  <tt class="py-line">                    <tt class="py-keyword">return</tt> <tt class="py-name">None</tt> </tt>
+<a name="L66"></a><tt class="py-lineno">66</tt>  <tt class="py-line">            <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L67"></a><tt class="py-lineno">67</tt>  <tt class="py-line">                <tt id="link-20" class="py-name" targets="Variable muntjac.service.file_type_resolver.typ=muntjac.service.file_type_resolver-module.html#typ"><a title="muntjac.service.file_type_resolver.typ" class="py-name" href="#" onclick="return doclink('link-20', 'typ', 'link-20');">typ</a></tt><tt class="py-op">,</tt> <tt class="py-name">uiContext</tt> <tt class="py-op">=</tt> <tt class="py-name">args</tt> </tt>
+<a name="L68"></a><tt class="py-lineno">68</tt>  <tt class="py-line">                <tt class="py-keyword">return</tt> <tt id="link-21" class="py-name"><a title="muntjac.ui.default_field_factory.DefaultFieldFactory" class="py-name" href="#" onclick="return doclink('link-21', 'DefaultFieldFactory', 'link-3');">DefaultFieldFactory</a></tt><tt class="py-op">.</tt><tt id="link-22" class="py-name" targets="Class Method muntjac.ui.default_field_factory.DefaultFieldFactory.createFieldByPropertyType()=muntjac.ui.default_field_factory.DefaultFieldFactory-class.html#createFieldByPropertyType"><a title="muntjac.ui.default_field_factory.DefaultFieldFactory.createFieldByPropertyType" class="py-name" href="#" onclick="return doclink('link-22', 'createFieldByPropertyType', 'link-22');">createFieldByPropertyType</a></tt><tt class="py-op">(</tt><tt id="link-23" class="py-name"><a title="muntjac.service.file_type_resolver.typ" class="py-name" href="#" onclick="return doclink('link-23', 'typ', 'link-20');">typ</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L69"></a><tt class="py-lineno">69</tt>  <tt class="py-line">        <tt class="py-keyword">elif</tt> <tt class="py-name">nargs</tt> <tt class="py-op">==</tt> <tt class="py-number">3</tt><tt class="py-op">:</tt> </tt>
+<a name="L70"></a><tt class="py-lineno">70</tt>  <tt class="py-line">            <tt id="link-24" class="py-name" targets="Module muntjac.data.item=muntjac.data.item-module.html"><a title="muntjac.data.item" class="py-name" href="#" onclick="return doclink('link-24', 'item', 'link-24');">item</a></tt><tt class="py-op">,</tt> <tt class="py-name">propertyId</tt><tt class="py-op">,</tt> <tt class="py-name">uiContext</tt> <tt class="py-op">=</tt> <tt class="py-name">args</tt> </tt>
+<a name="L71"></a><tt class="py-lineno">71</tt>  <tt class="py-line">            <tt class="py-keyword">if</tt> <tt id="link-25" class="py-name"><a title="muntjac.data.item" class="py-name" href="#" onclick="return doclink('link-25', 'item', 'link-24');">item</a></tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt> <tt class="py-keyword">and</tt> <tt class="py-name">propertyId</tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L72"></a><tt class="py-lineno">72</tt>  <tt class="py-line">                <tt class="py-name">f</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-26" class="py-name"><a title="muntjac.ui.base_field_factory.BaseFieldFactory.createField
+muntjac.ui.default_field_factory.DefaultFieldFactory.createField
+muntjac.ui.field_factory.IFieldFactory.createField
+muntjac.ui.form_field_factory.IFormFieldFactory.createField
+muntjac.ui.table_field_factory.ITableFieldFactory.createField" class="py-name" href="#" onclick="return doclink('link-26', 'createField', 'link-18');">createField</a></tt><tt class="py-op">(</tt><tt id="link-27" class="py-name"><a title="muntjac.data.item" class="py-name" href="#" onclick="return doclink('link-27', 'item', 'link-24');">item</a></tt><tt class="py-op">.</tt><tt id="link-28" class="py-name" targets="Method muntjac.data.item.IItem.getItemProperty()=muntjac.data.item.IItem-class.html#getItemProperty,Method muntjac.data.util.indexed_container.IndexedContainerItem.getItemProperty()=muntjac.data.util.indexed_container.IndexedContainerItem-class.html#getItemProperty,Method muntjac.data.util.propertyset_item.PropertysetItem.getItemProperty()=muntjac.data.util.propertyset_item.PropertysetItem-class.html#getItemProperty,Method muntjac.ui.form.Form.getItemProperty()=muntjac.ui.form.Form-class.html#getItemProperty"><a title="muntjac.data.item.IItem.getItemProperty
+muntjac.data.util.indexed_container.IndexedContainerItem.getItemProperty
+muntjac.data.util.propertyset_item.PropertysetItem.getItemProperty
+muntjac.ui.form.Form.getItemProperty" class="py-name" href="#" onclick="return doclink('link-28', 'getItemProperty', 'link-28');">getItemProperty</a></tt><tt class="py-op">(</tt><tt class="py-name">propertyId</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L73"></a><tt class="py-lineno">73</tt>  <tt class="py-line">                        <tt class="py-name">uiContext</tt><tt class="py-op">)</tt> </tt>
+<a name="L74"></a><tt class="py-lineno">74</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt class="py-name">isinstance</tt><tt class="py-op">(</tt><tt class="py-name">f</tt><tt class="py-op">,</tt> <tt id="link-29" class="py-name"><a title="muntjac.ui.abstract_component.AbstractComponent" class="py-name" href="#" onclick="return doclink('link-29', 'AbstractComponent', 'link-15');">AbstractComponent</a></tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L75"></a><tt class="py-lineno">75</tt>  <tt class="py-line">                    <tt class="py-name">name</tt> <tt class="py-op">=</tt> <tt id="link-30" class="py-name"><a title="muntjac.ui.default_field_factory.DefaultFieldFactory" class="py-name" href="#" onclick="return doclink('link-30', 'DefaultFieldFactory', 'link-3');">DefaultFieldFactory</a></tt><tt class="py-op">.</tt><tt id="link-31" class="py-name" targets="Class Method muntjac.ui.default_field_factory.DefaultFieldFactory.createCaptionByPropertyId()=muntjac.ui.default_field_factory.DefaultFieldFactory-class.html#createCaptionByPropertyId"><a title="muntjac.ui.default_field_factory.DefaultFieldFactory.createCaptionByPropertyId" class="py-name" href="#" onclick="return doclink('link-31', 'createCaptionByPropertyId', 'link-31');">createCaptionByPropertyId</a></tt><tt class="py-op">(</tt> </tt>
+<a name="L76"></a><tt class="py-lineno">76</tt>  <tt class="py-line">                            <tt class="py-name">propertyId</tt><tt class="py-op">)</tt> </tt>
+<a name="L77"></a><tt class="py-lineno">77</tt>  <tt class="py-line">                    <tt class="py-name">f</tt><tt class="py-op">.</tt><tt id="link-32" class="py-name" targets="Method muntjac.event.action.Action.setCaption()=muntjac.event.action.Action-class.html#setCaption,Method muntjac.ui.abstract_component.AbstractComponent.setCaption()=muntjac.ui.abstract_component.AbstractComponent-class.html#setCaption,Method muntjac.ui.component.IComponent.setCaption()=muntjac.ui.component.IComponent-class.html#setCaption,Method muntjac.ui.field.IField.setCaption()=muntjac.ui.field.IField-class.html#setCaption,Method muntjac.ui.panel.Panel.setCaption()=muntjac.ui.panel.Panel-class.html#setCaption,Method muntjac.ui.tab_sheet.ITab.setCaption()=muntjac.ui.tab_sheet.ITab-class.html#setCaption,Method muntjac.ui.tab_sheet.TabSheetTabImpl.setCaption()=muntjac.ui.tab_sheet.TabSheetTabImpl-class.html#setCaption,Method muntjac.ui.window.Notification.setCaption()=muntjac.ui.window.Notification-class.html#setCaption"><a title="muntjac.event.action.Action.setCaption
+muntjac.ui.abstract_component.AbstractComponent.setCaption
+muntjac.ui.component.IComponent.setCaption
+muntjac.ui.field.IField.setCaption
+muntjac.ui.panel.Panel.setCaption
+muntjac.ui.tab_sheet.ITab.setCaption
+muntjac.ui.tab_sheet.TabSheetTabImpl.setCaption
+muntjac.ui.window.Notification.setCaption" class="py-name" href="#" onclick="return doclink('link-32', 'setCaption', 'link-32');">setCaption</a></tt><tt class="py-op">(</tt><tt class="py-name">name</tt><tt class="py-op">)</tt> </tt>
+<a name="L78"></a><tt class="py-lineno">78</tt>  <tt class="py-line">                <tt class="py-keyword">return</tt> <tt class="py-name">f</tt> </tt>
+<a name="L79"></a><tt class="py-lineno">79</tt>  <tt class="py-line">            <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L80"></a><tt class="py-lineno">80</tt>  <tt class="py-line">                <tt class="py-keyword">return</tt> <tt class="py-name">None</tt> </tt>
+<a name="L81"></a><tt class="py-lineno">81</tt>  <tt class="py-line">        <tt class="py-keyword">elif</tt> <tt class="py-name">nargs</tt> <tt class="py-op">==</tt> <tt class="py-number">4</tt><tt class="py-op">:</tt> </tt>
+<a name="L82"></a><tt class="py-lineno">82</tt>  <tt class="py-line">            <tt id="link-33" class="py-name" targets="Module muntjac.data.container=muntjac.data.container-module.html"><a title="muntjac.data.container" class="py-name" href="#" onclick="return doclink('link-33', 'container', 'link-33');">container</a></tt><tt class="py-op">,</tt> <tt class="py-name">itemId</tt><tt class="py-op">,</tt> <tt class="py-name">propertyId</tt><tt class="py-op">,</tt> <tt class="py-name">uiContext</tt> <tt class="py-op">=</tt> <tt class="py-name">args</tt> </tt>
+<a name="L83"></a><tt class="py-lineno">83</tt>  <tt class="py-line">            <tt class="py-name">prop</tt> <tt class="py-op">=</tt> <tt id="link-34" class="py-name"><a title="muntjac.data.container" class="py-name" href="#" onclick="return doclink('link-34', 'container', 'link-33');">container</a></tt><tt class="py-op">.</tt><tt id="link-35" class="py-name" targets="Method muntjac.data.container.IContainer.getContainerProperty()=muntjac.data.container.IContainer-class.html#getContainerProperty,Method muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper.getContainerProperty()=muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#getContainerProperty,Method muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper.getContainerProperty()=muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#getContainerProperty,Method muntjac.data.util.indexed_container.IndexedContainer.getContainerProperty()=muntjac.data.util.indexed_container.IndexedContainer-class.html#getContainerProperty,Method muntjac.ui.abstract_select.AbstractSelect.getContainerProperty()=muntjac.ui.abstract_select.AbstractSelect-class.html#getContainerProperty"><a title="muntjac.data.container.IContainer.getContainerProperty
+muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper.getContainerProperty
+muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper.getContainerProperty
+muntjac.data.util.indexed_container.IndexedContainer.getContainerProperty
+muntjac.ui.abstract_select.AbstractSelect.getContainerProperty" class="py-name" href="#" onclick="return doclink('link-35', 'getContainerProperty', 'link-35');">getContainerProperty</a></tt><tt class="py-op">(</tt><tt class="py-name">itemId</tt><tt class="py-op">,</tt> <tt class="py-name">propertyId</tt><tt class="py-op">)</tt> </tt>
+<a name="L84"></a><tt class="py-lineno">84</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-36" class="py-name"><a title="muntjac.ui.base_field_factory.BaseFieldFactory.createField
+muntjac.ui.default_field_factory.DefaultFieldFactory.createField
+muntjac.ui.field_factory.IFieldFactory.createField
+muntjac.ui.form_field_factory.IFormFieldFactory.createField
+muntjac.ui.table_field_factory.ITableFieldFactory.createField" class="py-name" href="#" onclick="return doclink('link-36', 'createField', 'link-18');">createField</a></tt><tt class="py-op">(</tt><tt class="py-name">prop</tt><tt class="py-op">,</tt> <tt class="py-name">uiContext</tt><tt class="py-op">)</tt> </tt>
+<a name="L85"></a><tt class="py-lineno">85</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L86"></a><tt class="py-lineno">86</tt>  <tt class="py-line">            <tt class="py-keyword">raise</tt> <tt class="py-name">ValueError</tt><tt class="py-op">,</tt> <tt class="py-string">'invalid number of arguments'</tt> </tt>
+</div></div><a name="L87"></a><tt class="py-lineno">87</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:04:11 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

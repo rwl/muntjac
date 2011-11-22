@@ -1,0 +1,624 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.ui.field.IField</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.ui-module.html">Package&nbsp;ui</a> ::
+        <a href="muntjac.ui.field-module.html">Module&nbsp;field</a> ::
+        Class&nbsp;IField
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.ui.field.IField-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class IField</h1><p class="nomargin-top"><span class="codelink"><a href="muntjac.ui.field-pysrc.html#IField">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+                                object --+        
+                                         |        
+                   <a href="muntjac.data.buffered.IBuffered-class.html">data.buffered.IBuffered</a> --+    
+                                             |    
+                                object --+   |    
+                                         |   |    
+             <a href="muntjac.data.validatable.IValidatable-class.html">data.validatable.IValidatable</a> --+    
+                                             |    
+            <a href="muntjac.data.buffered.IBufferedValidatable-class.html">data.buffered.IBufferedValidatable</a> --+
+                                                 |
+                                    object --+   |
+                                             |   |
+            <a href="muntjac.data.property.IValueChangeNotifier-class.html">data.property.IValueChangeNotifier</a> --+
+                                                 |
+                                    object --+   |
+                                             |   |
+            <a href="muntjac.data.property.IValueChangeListener-class.html">data.property.IValueChangeListener</a> --+
+                                                 |
+                                object --+       |
+                                         |       |
+                     <a href="muntjac.data.property.IViewer-class.html">data.property.IViewer</a> --+   |
+                                             |   |
+                         <a href="muntjac.data.property.IEditor-class.html">data.property.IEditor</a> --+
+                                                 |
+                        object --+               |
+                                 |               |
+               <a href="muntjac.util.IEventListener-class.html">util.IEventListener</a> --+           |
+                                     |           |
+         <a href="muntjac.terminal.paintable.IPaintable-class.html">terminal.paintable.IPaintable</a> --+       |
+                                         |       |
+                            object --+   |       |
+                                     |   |       |
+<a href="muntjac.terminal.variable_owner.IVariableOwner-class.html">terminal.variable_owner.IVariableOwner</a> --+       |
+                                         |       |
+                            object --+   |       |
+                                     |   |       |
+           <a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a> --+       |
+                                         |       |
+                      <a href="muntjac.ui.component.IComponent-class.html">component.IComponent</a> --+   |
+                                             |   |
+                          <a href="muntjac.ui.component.IFocusable-class.html">component.IFocusable</a> --+
+                                                 |
+                                                <strong class="uidshort">IField</strong>
+</pre>
+
+<dl><dt>Known Subclasses:</dt>
+<dd>
+      <ul class="subclass-list">
+<li><a href="muntjac.ui.abstract_field.AbstractField-class.html">abstract_field.AbstractField</a></li>  </ul>
+</dd></dl>
+
+<hr />
+<hr />
+<div class="fields">      <dl><dt>Authors:</dt>
+        <dd>
+          Vaadin Ltd.,
+          Richard Lincoln
+        </dd>
+      </dl>
+</div><!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.field.IField-class.html#setCaption" class="summary-sig-name">setCaption</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">caption</span>)</span><br />
+      Sets the Caption.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.field-pysrc.html#IField.setCaption">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getDescription"></a><span class="summary-sig-name">getDescription</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.field-pysrc.html#IField.getDescription">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="setDescription"></a><span class="summary-sig-name">setDescription</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">caption</span>)</span><br />
+      Sets the Description.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.field-pysrc.html#IField.setDescription">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.field.IField-class.html#isRequired" class="summary-sig-name">isRequired</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Is this field required.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.field-pysrc.html#IField.isRequired">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.field.IField-class.html#setRequired" class="summary-sig-name">setRequired</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">required</span>)</span><br />
+      Sets the field required.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.field-pysrc.html#IField.setRequired">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.field.IField-class.html#setRequiredError" class="summary-sig-name">setRequiredError</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">requiredMessage</span>)</span><br />
+      Sets the error message to be displayed if a required field is empty.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.field-pysrc.html#IField.setRequiredError">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.field.IField-class.html#getRequiredError" class="summary-sig-name">getRequiredError</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the error message that is to be displayed if a required field is
+      empty.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.field-pysrc.html#IField.getRequiredError">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.data.buffered.IBufferedValidatable-class.html">data.buffered.IBufferedValidatable</a></code></b>:
+      <code><a href="muntjac.data.buffered.IBufferedValidatable-class.html#isInvalidCommitted">isInvalidCommitted</a></code>,
+      <code><a href="muntjac.data.buffered.IBufferedValidatable-class.html#setInvalidCommitted">setInvalidCommitted</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.data.buffered.IBuffered-class.html">data.buffered.IBuffered</a></code></b>:
+      <code><a href="muntjac.data.buffered.IBuffered-class.html#commit">commit</a></code>,
+      <code><a href="muntjac.data.buffered.IBuffered-class.html#discard">discard</a></code>,
+      <code><a href="muntjac.data.buffered.IBuffered-class.html#isModified">isModified</a></code>,
+      <code><a href="muntjac.data.buffered.IBuffered-class.html#isReadThrough">isReadThrough</a></code>,
+      <code><a href="muntjac.data.buffered.IBuffered-class.html#isWriteThrough">isWriteThrough</a></code>,
+      <code><a href="muntjac.data.buffered.IBuffered-class.html#setReadThrough">setReadThrough</a></code>,
+      <code><a href="muntjac.data.buffered.IBuffered-class.html#setWriteThrough">setWriteThrough</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.data.validatable.IValidatable-class.html">data.validatable.IValidatable</a></code></b>:
+      <code><a href="muntjac.data.validatable.IValidatable-class.html#addValidator">addValidator</a></code>,
+      <code><a href="muntjac.data.validatable.IValidatable-class.html#getValidators">getValidators</a></code>,
+      <code><a href="muntjac.data.validatable.IValidatable-class.html#isInvalidAllowed">isInvalidAllowed</a></code>,
+      <code><a href="muntjac.data.validatable.IValidatable-class.html#isValid">isValid</a></code>,
+      <code><a href="muntjac.data.validatable.IValidatable-class.html#removeValidator">removeValidator</a></code>,
+      <code><a href="muntjac.data.validatable.IValidatable-class.html#setInvalidAllowed">setInvalidAllowed</a></code>,
+      <code><a href="muntjac.data.validatable.IValidatable-class.html#validate">validate</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.data.property.IValueChangeNotifier-class.html">data.property.IValueChangeNotifier</a></code></b>:
+      <code><a href="muntjac.data.property.IValueChangeNotifier-class.html#addCallback">addCallback</a></code>,
+      <code><a href="muntjac.data.property.IValueChangeNotifier-class.html#addListener">addListener</a></code>,
+      <code><a href="muntjac.data.property.IValueChangeNotifier-class.html#removeCallback">removeCallback</a></code>,
+      <code><a href="muntjac.data.property.IValueChangeNotifier-class.html#removeListener">removeListener</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.data.property.IValueChangeListener-class.html">data.property.IValueChangeListener</a></code></b>:
+      <code><a href="muntjac.data.property.IValueChangeListener-class.html#valueChange">valueChange</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.data.property.IViewer-class.html">data.property.IViewer</a></code></b>:
+      <code><a href="muntjac.data.property.IViewer-class.html#getPropertyDataSource">getPropertyDataSource</a></code>,
+      <code><a href="muntjac.data.property.IViewer-class.html#setPropertyDataSource">setPropertyDataSource</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.component.IFocusable-class.html">component.IFocusable</a></code></b>:
+      <code><a href="muntjac.ui.component.IFocusable-class.html#focus">focus</a></code>,
+      <code><a href="muntjac.ui.component.IFocusable-class.html#getTabIndex">getTabIndex</a></code>,
+      <code><a href="muntjac.ui.component.IFocusable-class.html#setTabIndex">setTabIndex</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.component.IComponent-class.html">component.IComponent</a></code></b>:
+      <code><a href="muntjac.ui.component.IComponent-class.html#addStyleName">addStyleName</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#attach">attach</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#childRequestedRepaint">childRequestedRepaint</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#detach">detach</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#getApplication">getApplication</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#getCaption">getCaption</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#getIcon">getIcon</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#getLocale">getLocale</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#getParent">getParent</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#getStyleName">getStyleName</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#getWindow">getWindow</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#isEnabled">isEnabled</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#isReadOnly">isReadOnly</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#isVisible">isVisible</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#removeStyleName">removeStyleName</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#setEnabled">setEnabled</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#setIcon">setIcon</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#setParent">setParent</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#setReadOnly">setReadOnly</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#setStyleName">setStyleName</a></code>,
+      <code><a href="muntjac.ui.component.IComponent-class.html#setVisible">setVisible</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.terminal.paintable.IPaintable-class.html">terminal.paintable.IPaintable</a></code></b>:
+      <code><a href="muntjac.terminal.paintable.IPaintable-class.html#getDebugId">getDebugId</a></code>,
+      <code><a href="muntjac.terminal.paintable.IPaintable-class.html#paint">paint</a></code>,
+      <code><a href="muntjac.terminal.paintable.IPaintable-class.html#requestRepaint">requestRepaint</a></code>,
+      <code><a href="muntjac.terminal.paintable.IPaintable-class.html#requestRepaintRequests">requestRepaintRequests</a></code>,
+      <code><a href="muntjac.terminal.paintable.IPaintable-class.html#setDebugId">setDebugId</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.terminal.variable_owner.IVariableOwner-class.html">terminal.variable_owner.IVariableOwner</a></code></b>:
+      <code><a href="muntjac.terminal.variable_owner.IVariableOwner-class.html#changeVariables">changeVariables</a></code>,
+      <code><a href="muntjac.terminal.variable_owner.IVariableOwner-class.html#isImmediate">isImmediate</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a></code></b>:
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#getHeight">getHeight</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#getHeightUnits">getHeightUnits</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#getWidth">getWidth</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#getWidthUnits">getWidthUnits</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#setHeight">setHeight</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#setHeightUnits">setHeightUnits</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#setSizeFull">setSizeFull</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#setSizeUndefined">setSizeUndefined</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#setWidth">setWidth</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#setWidthUnits">setWidthUnits</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__init__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a></code></b>:
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#SIZE_UNDEFINED">SIZE_UNDEFINED</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_CM">UNITS_CM</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_EM">UNITS_EM</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_EX">UNITS_EX</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_INCH">UNITS_INCH</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_MM">UNITS_MM</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_PERCENTAGE">UNITS_PERCENTAGE</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_PICAS">UNITS_PICAS</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_PIXELS">UNITS_PIXELS</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_POINTS">UNITS_POINTS</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNIT_SYMBOLS">UNIT_SYMBOLS</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="setCaption"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setCaption</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">caption</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.field-pysrc.html#IField.setCaption">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the Caption.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>caption</code></strong> - the new caption for the component. If the caption is 
+          <code>None</code>, no caption is shown and it does not normally 
+          take any space</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.component.IComponent-class.html#setCaption">component.IComponent.setCaption</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isRequired"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isRequired</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.field-pysrc.html#IField.isRequired">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Is this field required.</p>
+  <p>Required fields must filled by the user.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the field is required, otherwise 
+          <code>False</code>.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setRequired"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setRequired</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">required</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.field-pysrc.html#IField.setRequired">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the field required. Required fields must filled by the user.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>required</code></strong> - Is the field required.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setRequiredError"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setRequiredError</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">requiredMessage</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.field-pysrc.html#IField.setRequiredError">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the error message to be displayed if a required field is 
+  empty.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>requiredMessage</code></strong> - Error message.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getRequiredError"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getRequiredError</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.field-pysrc.html#IField.getRequiredError">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the error message that is to be displayed if a required field is 
+  empty.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>Error message.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:04:00 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

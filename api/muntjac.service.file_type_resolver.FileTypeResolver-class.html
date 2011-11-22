@@ -1,0 +1,668 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.service.file_type_resolver.FileTypeResolver</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.service-module.html">Package&nbsp;service</a> ::
+        <a href="muntjac.service.file_type_resolver-module.html">Module&nbsp;file_type_resolver</a> ::
+        Class&nbsp;FileTypeResolver
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.service.file_type_resolver.FileTypeResolver-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class FileTypeResolver</h1><p class="nomargin-top"><span class="codelink"><a href="muntjac.service.file_type_resolver-pysrc.html#FileTypeResolver">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+object --+
+         |
+        <strong class="uidshort">FileTypeResolver</strong>
+</pre>
+
+<hr />
+<p>Utility class that can figure out mime-types and icons related to 
+  files.</p>
+  <p>Note : The icons are associated purely to mime-types, so a file may 
+  not have a custom icon accessible with this class.</p>
+
+<hr />
+<div class="fields">      <dl><dt>Authors:</dt>
+        <dd>
+          Vaadin Ltd.,
+          Richard Lincoln
+        </dd>
+      </dl>
+      <p><strong>Version:</strong>
+        1.0.1
+      </p>
+</div><!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__init__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS METHODS ==================== -->
+<a name="section-ClassMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.service.file_type_resolver.FileTypeResolver-class.html#getMIMEType" class="summary-sig-name">getMIMEType</a>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">file_or_filename</span>)</span><br />
+      Gets the mime-type of a file.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.service.file_type_resolver-pysrc.html#FileTypeResolver.getMIMEType">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.service.file_type_resolver.FileTypeResolver-class.html#getIcon" class="summary-sig-name">getIcon</a>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">file_or_filename</span>)</span><br />
+      Gets the descriptive icon representing file, based on the filename.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.service.file_type_resolver-pysrc.html#FileTypeResolver.getIcon">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getIconByMimeType"></a><span class="summary-sig-name">getIconByMimeType</span>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">mimeType</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.service.file_type_resolver-pysrc.html#FileTypeResolver.getIconByMimeType">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.service.file_type_resolver.FileTypeResolver-class.html#addExtension" class="summary-sig-name">addExtension</a>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">extension</span>,
+        <span class="summary-sig-arg">MIMEType</span>)</span><br />
+      Adds a mime-type mapping for the given filename extension.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.service.file_type_resolver-pysrc.html#FileTypeResolver.addExtension">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.service.file_type_resolver.FileTypeResolver-class.html#addIcon" class="summary-sig-name">addIcon</a>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">MIMEType</span>,
+        <span class="summary-sig-arg">icon</span>)</span><br />
+      Adds a icon for the given mime-type.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.service.file_type_resolver-pysrc.html#FileTypeResolver.addIcon">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.service.file_type_resolver.FileTypeResolver-class.html#getExtensionToMIMETypeMapping" class="summary-sig-name">getExtensionToMIMETypeMapping</a>(<span class="summary-sig-arg">cls</span>)</span><br />
+      Gets the internal file extension to mime-type mapping.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.service.file_type_resolver-pysrc.html#FileTypeResolver.getExtensionToMIMETypeMapping">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.service.file_type_resolver.FileTypeResolver-class.html#getMIMETypeToIconMapping" class="summary-sig-name">getMIMETypeToIconMapping</a>(<span class="summary-sig-arg">cls</span>)</span><br />
+      Gets the internal mime-type to icon mapping.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.service.file_type_resolver-pysrc.html#FileTypeResolver.getMIMETypeToIconMapping">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="DEFAULT_ICON"></a><span class="summary-name">DEFAULT_ICON</span> = <code title="ThemeResource('../runo/icons/16/document.png')">ThemeResource('../runo/icons/16/document.png')</code><br />
+      Default icon given if no icon is specified for a mime-type.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="DEFAULT_MIME_TYPE"></a><span class="summary-name">DEFAULT_MIME_TYPE</span> = <code title="'application/octet-stream'"><code class="variable-quote">'</code><code class="variable-string">application/octet-stream</code><code class="variable-quote">'</code></code><br />
+      Default mime-type.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="muntjac.service.file_type_resolver.FileTypeResolver-class.html#_initialExtToMIMEMap" class="summary-name" onclick="show_private();">_initialExtToMIMEMap</a> = <code title="'application/cu-seeme                            csm cu,application/ds\
+ptype                             tsp,application/futuresplash        \
+                spl,application/mac-binhex40                        hq\
+x,application/msaccess                            mdb,application/mswo\
+rd                              doc dot,application/octet-stream      \
+                  bin,application/oda                                 \
+oda,application/pdf                                 pdf,application/pg\
+p-signature                       pgp,application/postscript          \
+..."><code class="variable-quote">'</code><code class="variable-string">application/cu-seeme                  </code><code class="variable-ellipsis">...</code></code><br />
+      Initial file extension to mime-type mapping.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="muntjac.service.file_type_resolver.FileTypeResolver-class.html#_extToMIMEMap" class="summary-name" onclick="show_private();">_extToMIMEMap</a> = <code title="{'%': 'application/x-trash',
+ 'aac': 'audio/x-aac',
+ 'ai': 'application/postscript',
+ 'aif': 'audio/x-aiff',
+ 'aifc': 'audio/x-aiff',
+ 'aiff': 'audio/x-aiff',
+ 'asf': 'video/x-ms-asf',
+ 'asx': 'video/x-ms-asf',
+..."><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">%</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">application/x-trash</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">aac</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">audio/x-a</code><code class="variable-ellipsis">...</code></code><br />
+      File extension to MIME type mapping.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_MIMEToIconMap"></a><span class="summary-name">_MIMEToIconMap</span> = <code title="dict()">dict()</code><br />
+      MIME type to Icon mapping.
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="getMIMEType"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getMIMEType</span>(<span class="sig-arg">cls</span>,
+        <span class="sig-arg">file_or_filename</span>)</span>
+    <br /><em class="fname">Class Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.service.file_type_resolver-pysrc.html#FileTypeResolver.getMIMEType">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the mime-type of a file. Currently the mime-type is resolved 
+  based only on the file name extension.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>file_or_filename</code></strong> - the file or name of the file whose mime-type is requested.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>mime-type string</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getIcon"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getIcon</span>(<span class="sig-arg">cls</span>,
+        <span class="sig-arg">file_or_filename</span>)</span>
+    <br /><em class="fname">Class Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.service.file_type_resolver-pysrc.html#FileTypeResolver.getIcon">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the descriptive icon representing file, based on the filename. 
+  First the mime-type for the given filename is resolved, and then the 
+  corresponding icon is fetched from the internal icon storage. If it is 
+  not found the default icon is returned.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>file_or_filename</code></strong> - the file or name of the file whose icon is requested.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>the icon corresponding to the given file</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addExtension"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addExtension</span>(<span class="sig-arg">cls</span>,
+        <span class="sig-arg">extension</span>,
+        <span class="sig-arg">MIMEType</span>)</span>
+    <br /><em class="fname">Class Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.service.file_type_resolver-pysrc.html#FileTypeResolver.addExtension">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds a mime-type mapping for the given filename extension. If the 
+  extension is already in the internal mapping it is overwritten.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>extension</code></strong> - the filename extension to be associated with 
+          <code>MIMEType</code>.</li>
+        <li><strong class="pname"><code>MIMEType</code></strong> - the new mime-type for <code>extension</code>.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addIcon"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addIcon</span>(<span class="sig-arg">cls</span>,
+        <span class="sig-arg">MIMEType</span>,
+        <span class="sig-arg">icon</span>)</span>
+    <br /><em class="fname">Class Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.service.file_type_resolver-pysrc.html#FileTypeResolver.addIcon">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds a icon for the given mime-type. If the mime-type also has a 
+  corresponding icon, it is replaced with the new icon.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>MIMEType</code></strong> - the mime-type whose icon is to be changed.</li>
+        <li><strong class="pname"><code>icon</code></strong> - the new icon to be associated with <code>MIMEType</code>.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getExtensionToMIMETypeMapping"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getExtensionToMIMETypeMapping</span>(<span class="sig-arg">cls</span>)</span>
+    <br /><em class="fname">Class Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.service.file_type_resolver-pysrc.html#FileTypeResolver.getExtensionToMIMETypeMapping">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the internal file extension to mime-type mapping.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>unmodifiable map containing the current file extension to 
+          mime-type mapping</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getMIMETypeToIconMapping"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getMIMETypeToIconMapping</span>(<span class="sig-arg">cls</span>)</span>
+    <br /><em class="fname">Class Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.service.file_type_resolver-pysrc.html#FileTypeResolver.getMIMETypeToIconMapping">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the internal mime-type to icon mapping.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>map containing the current mime-type to icon mapping</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== CLASS VARIABLE DETAILS ==================== -->
+<a name="section-ClassVariableDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variable Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariableDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="_initialExtToMIMEMap"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">_initialExtToMIMEMap</h3>
+  <p>Initial file extension to mime-type mapping.</p>
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-quote">'</code><code class="variable-string">application/cu-seeme                            csm cu,application/ds</code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+<code class="variable-string">ptype                             tsp,application/futuresplash        </code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+<code class="variable-string">                spl,application/mac-binhex40                        hq</code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+<code class="variable-string">x,application/msaccess                            mdb,application/mswo</code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+<code class="variable-string">rd                              doc dot,application/octet-stream      </code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+<code class="variable-string">                  bin,application/oda                                 </code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+<code class="variable-string">oda,application/pdf                                 pdf,application/pg</code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+<code class="variable-string">p-signature                       pgp,application/postscript          </code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+<code class="variable-ellipsis">...</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_extToMIMEMap"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">_extToMIMEMap</h3>
+  <p>File extension to MIME type mapping. All extensions are in lower 
+  case.</p>
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">%</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">application/x-trash</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">aac</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">audio/x-aac</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">ai</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">application/postscript</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">aif</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">audio/x-aiff</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">aifc</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">audio/x-aiff</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">aiff</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">audio/x-aiff</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">asf</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">video/x-ms-asf</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">asx</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">video/x-ms-asf</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+<code class="variable-ellipsis">...</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:03:57 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

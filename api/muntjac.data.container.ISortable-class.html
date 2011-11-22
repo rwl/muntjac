@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.data.container.ISortable</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.data-module.html">Package&nbsp;data</a> ::
+        <a href="muntjac.data.container-module.html">Module&nbsp;container</a> ::
+        Class&nbsp;ISortable
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.data.container.ISortable-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class ISortable</h1><p class="nomargin-top"><span class="codelink"><a href="muntjac.data.container-pysrc.html#ISortable">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+object --+        
+         |        
+<a href="muntjac.data.container.IContainer-class.html">IContainer</a> --+    
+             |    
+      <a href="muntjac.data.container.IOrdered-class.html">IOrdered</a> --+
+                 |
+                <strong class="uidshort">ISortable</strong>
+</pre>
+
+<dl><dt>Known Subclasses:</dt>
+<dd>
+      <ul class="subclass-list">
+<li><a href="muntjac.ui.table.Table-class.html">ui.table.Table</a></li><li>, <a href="muntjac.data.util.indexed_container.IndexedContainer-class.html">util.indexed_container.IndexedContainer</a></li>  </ul>
+</dd></dl>
+
+<hr />
+<p>Interface for IContainer classes whose <code class="link">Item</code>s
+  can be sorted.</p>
+  <p>When an <a href="muntjac.data.container.IOrdered-class.html" 
+  class="link">IOrdered</a> or <a 
+  href="muntjac.data.container.IIndexed-class.html" 
+  class="link">IIndexed</a> container is sorted, all relevant operations of
+  these interfaces should only use the filtered and sorted contents and the
+  filtered indices to the container. Indices or item identifiers in the 
+  public API refer to the visible view unless otherwise stated. However, 
+  the <code>addItem*()</code> methods may add items that will be filtered 
+  out after addition or moved to another position based on sorting.</p>
+  <p>How sorting is performed when a <a 
+  href="muntjac.data.container.IHierarchical-class.html" 
+  class="link">IHierarchical</a> container implements <a 
+  href="muntjac.data.container.ISortable-class.html" 
+  class="link">ISortable</a> is implementation specific and should be 
+  documented in the implementing class. However, the recommended approach 
+  is sorting the roots and the sets of children of each item 
+  separately.</p>
+  <p>Depending on the container type, sorting a container may permanently 
+  change the internal order of items in the container.</p>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.container.ISortable-class.html#getSortableContainerPropertyIds" class="summary-sig-name">getSortableContainerPropertyIds</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the container property IDs which can be used to sort the items.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.container-pysrc.html#ISortable.getSortableContainerPropertyIds">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.data.container.ISortable-class.html#sort" class="summary-sig-name">sort</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">propertyId</span>,
+        <span class="summary-sig-arg">ascending</span>)</span><br />
+      Sort method.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.data.container-pysrc.html#ISortable.sort">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.data.container.IOrdered-class.html">IOrdered</a></code></b>:
+      <code><a href="muntjac.data.container.IOrdered-class.html#addItemAfter">addItemAfter</a></code>,
+      <code><a href="muntjac.data.container.IOrdered-class.html#firstItemId">firstItemId</a></code>,
+      <code><a href="muntjac.data.container.IOrdered-class.html#isFirstId">isFirstId</a></code>,
+      <code><a href="muntjac.data.container.IOrdered-class.html#isLastId">isLastId</a></code>,
+      <code><a href="muntjac.data.container.IOrdered-class.html#lastItemId">lastItemId</a></code>,
+      <code><a href="muntjac.data.container.IOrdered-class.html#nextItemId">nextItemId</a></code>,
+      <code><a href="muntjac.data.container.IOrdered-class.html#prevItemId">prevItemId</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.data.container.IContainer-class.html">IContainer</a></code></b>:
+      <code><a href="muntjac.data.container.IContainer-class.html#addContainerProperty">addContainerProperty</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#addItem">addItem</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#containsId">containsId</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#getContainerProperty">getContainerProperty</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#getContainerPropertyIds">getContainerPropertyIds</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#getItem">getItem</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#getItemIds">getItemIds</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#getType">getType</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#removeAllItems">removeAllItems</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#removeContainerProperty">removeContainerProperty</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#removeItem">removeItem</a></code>,
+      <code><a href="muntjac.data.container.IContainer-class.html#size">size</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__init__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="getSortableContainerPropertyIds"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getSortableContainerPropertyIds</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.container-pysrc.html#ISortable.getSortableContainerPropertyIds">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the container property IDs which can be used to sort the 
+  items.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the IDs of the properties that can be used for sorting the 
+          container</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="sort"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">sort</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">propertyId</span>,
+        <span class="sig-arg">ascending</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.data.container-pysrc.html#ISortable.sort">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sort method.</p>
+  <p>Sorts the container items.</p>
+  <p>Sorting a container can irreversibly change the order of its items or 
+  only change the order temporarily, depending on the container.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>propertyId</code></strong> - Array of container property IDs, whose values are used to sort 
+          the items in container as primary, secondary, ... sorting 
+          criterion. All of the item IDs must be in the collection returned
+          by <a 
+          href="muntjac.data.container.ISortable-class.html#getSortableContainerPropertyIds"
+          class="link">getSortableContainerPropertyIds</a></li>
+        <li><strong class="pname"><code>ascending</code></strong> - Array of sorting order flags corresponding to each property ID 
+          used in sorting. If this array is shorter than propertyId array, 
+          ascending order is assumed for items where the order is not 
+          specified. Use <code>True</code> to sort in ascending order, 
+          <code>False</code> to use descending order.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:03:56 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

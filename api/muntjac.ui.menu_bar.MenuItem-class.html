@@ -1,0 +1,1415 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.ui.menu_bar.MenuItem</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.ui-module.html">Package&nbsp;ui</a> ::
+        <a href="muntjac.ui.menu_bar-module.html">Module&nbsp;menu_bar</a> ::
+        Class&nbsp;MenuItem
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.ui.menu_bar.MenuItem-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class MenuItem</h1><p class="nomargin-top"><span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+object --+
+         |
+        <strong class="uidshort">MenuItem</strong>
+</pre>
+
+<hr />
+<p>A composite class for menu items and sub-menus. You can set commands 
+  to be fired on user click by implementing the <a 
+  href="muntjac.ui.menu_bar.ICommand-class.html" 
+  class="link">menu_bar.ICommand</a> interface. You can also add multiple 
+  MenuItems to a MenuItem and create a sub-menu.</p>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.menu_bar.MenuItem-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">caption</span>,
+        <span class="summary-sig-arg">icon</span>,
+        <span class="summary-sig-arg">command</span>,
+        <span class="summary-sig-arg">menu</span>)</span><br />
+      Constructs a new menu item that can optionally have an icon and a 
+      command associated with it.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.menu_bar.MenuItem-class.html#hasChildren" class="summary-sig-name">hasChildren</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Checks if the item has children (if it is a sub-menu).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.hasChildren">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.menu_bar.MenuItem-class.html#addSeparator" class="summary-sig-name">addSeparator</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Adds a separator to this menu.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.addSeparator">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="addSeparatorBefore"></a><span class="summary-sig-name">addSeparatorBefore</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">itemToAddBefore</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.addSeparatorBefore">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.menu_bar.MenuItem-class.html#addItem" class="summary-sig-name">addItem</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">*args</span>)</span><br />
+      Add a new item inside this item, thus creating a sub-menu.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.addItem">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.menu_bar.MenuItem-class.html#addItemBefore" class="summary-sig-name">addItemBefore</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">caption</span>,
+        <span class="summary-sig-arg">icon</span>,
+        <span class="summary-sig-arg">command</span>,
+        <span class="summary-sig-arg">itemToAddBefore</span>)</span><br />
+      Add an item before some item.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.addItemBefore">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.menu_bar.MenuItem-class.html#getCommand" class="summary-sig-name">getCommand</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      For the associated command.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.getCommand">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.menu_bar.MenuItem-class.html#getIcon" class="summary-sig-name">getIcon</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the objects icon.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.getIcon">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.menu_bar.MenuItem-class.html#getParent" class="summary-sig-name">getParent</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      For the containing item.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.getParent">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.menu_bar.MenuItem-class.html#getChildren" class="summary-sig-name">getChildren</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      This will return the children of this item or null if there are none.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.getChildren">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.menu_bar.MenuItem-class.html#getText" class="summary-sig-name">getText</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the objects text</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.getText">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.menu_bar.MenuItem-class.html#getSize" class="summary-sig-name">getSize</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the number of children.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.getSize">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.menu_bar.MenuItem-class.html#getId" class="summary-sig-name">getId</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Get the unique identifier for this item.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.getId">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.menu_bar.MenuItem-class.html#setCommand" class="summary-sig-name">setCommand</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">command</span>)</span><br />
+      Set the command for this item.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.setCommand">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.menu_bar.MenuItem-class.html#setIcon" class="summary-sig-name">setIcon</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">icon</span>)</span><br />
+      Sets the icon.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.setIcon">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.menu_bar.MenuItem-class.html#setText" class="summary-sig-name">setText</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">text</span>)</span><br />
+      Set the text of this object.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.setText">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.menu_bar.MenuItem-class.html#removeChild" class="summary-sig-name">removeChild</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">item</span>)</span><br />
+      Remove the first occurrence of the item.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.removeChild">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="removeChildren"></a><span class="summary-sig-name">removeChildren</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Empty the list of children items.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.removeChildren">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.menu_bar.MenuItem-class.html#setParent" class="summary-sig-name">setParent</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">parent</span>)</span><br />
+      Set the parent of this item.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.setParent">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="setEnabled"></a><span class="summary-sig-name">setEnabled</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">enabled</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.setEnabled">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="isEnabled"></a><span class="summary-sig-name">isEnabled</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.isEnabled">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="setVisible"></a><span class="summary-sig-name">setVisible</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">visible</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.setVisible">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="isVisible"></a><span class="summary-sig-name">isVisible</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.isVisible">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="setSeparator"></a><span class="summary-sig-name">setSeparator</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">isSeparator</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.setSeparator">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="isSeparator"></a><span class="summary-sig-name">isSeparator</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.isSeparator">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="setStyleName"></a><span class="summary-sig-name">setStyleName</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">styleName</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.setStyleName">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getStyleName"></a><span class="summary-sig-name">getStyleName</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.getStyleName">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.menu_bar.MenuItem-class.html#setDescription" class="summary-sig-name">setDescription</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">description</span>)</span><br />
+      Sets the items's description.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.setDescription">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.menu_bar.MenuItem-class.html#getDescription" class="summary-sig-name">getDescription</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the items's description.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.getDescription">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.menu_bar.MenuItem-class.html#isCheckable" class="summary-sig-name">isCheckable</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the checkable state of the item - whether the item has checked 
+      and unchecked states.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.isCheckable">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.menu_bar.MenuItem-class.html#setCheckable" class="summary-sig-name">setCheckable</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">checkable</span>)</span><br />
+      Sets the checkable state of the item.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.setCheckable">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.menu_bar.MenuItem-class.html#isChecked" class="summary-sig-name">isChecked</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the checked state of the item (checked or unchecked).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.isChecked">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.menu_bar.MenuItem-class.html#setChecked" class="summary-sig-name">setChecked</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">checked</span>)</span><br />
+      Sets the checked state of the item.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.setChecked">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">caption</span>,
+        <span class="sig-arg">icon</span>,
+        <span class="sig-arg">command</span>,
+        <span class="sig-arg">menu</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Constructs a new menu item that can optionally have an icon and a 
+  command associated with it. Icon and command can be null, but a caption 
+  must be given.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>caption</code></strong> - The text associated with the command</li>
+        <li><strong class="pname"><code>command</code></strong> - The command to be fired</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>ValueError</strong></code></li>
+    </ul></dd>
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="hasChildren"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">hasChildren</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.hasChildren">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Checks if the item has children (if it is a sub-menu).</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>True if this item has children</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addSeparator"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addSeparator</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.addSeparator">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds a separator to this menu. A separator is a way to visually group 
+  items in a menu, to make it easier for users to find what they are 
+  looking for in the menu.</p>
+  <dl class="fields">
+  </dl>
+<div class="fields">      <p><strong>Author:</strong>
+        Jouni Koivuviita / Vaadin Ltd.
+      </p>
+</div></td></tr></table>
+</div>
+<a name="addItem"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addItem</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.addItem">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Add a new item inside this item, thus creating a sub-menu. Icon and 
+  command can be null, but a caption must be given.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>args</code></strong> - tuple of the form
+          <ul>
+            <li>
+              (caption, command)
+              <ol start="1">
+                <li>
+                  the text for the menu item
+                </li>
+                <li>
+                  the command for the menu item
+                </li>
+              </ol>
+            </li>
+            <li>
+              (caption, icon, command)
+              <ol start="1">
+                <li>
+                  the text for the menu item
+                </li>
+                <li>
+                  the icon for the menu item
+                </li>
+                <li>
+                  the command for the menu item
+                </li>
+              </ol>
+            </li>
+          </ul></li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>ValueError</strong></code> - If the item is checkable and thus cannot have children.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addItemBefore"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addItemBefore</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">caption</span>,
+        <span class="sig-arg">icon</span>,
+        <span class="sig-arg">command</span>,
+        <span class="sig-arg">itemToAddBefore</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.addItemBefore">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Add an item before some item. If the given item does not exist the 
+  item is added at the end of the menu. Icon and command can be null, but a
+  caption must be given.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>caption</code></strong> - the text for the menu item</li>
+        <li><strong class="pname"><code>icon</code></strong> - the icon for the menu item</li>
+        <li><strong class="pname"><code>command</code></strong> - the command for the menu item</li>
+        <li><strong class="pname"><code>itemToAddBefore</code></strong> - the item that will be after the new item</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>ValueError</strong></code> - If the item is checkable and thus cannot have children.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getCommand"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getCommand</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.getCommand">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>For the associated command.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The associated command, or null if there is none</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getIcon"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getIcon</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.getIcon">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the objects icon.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The icon of the item, null if the item doesn't have an icon</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getParent"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getParent</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.getParent">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>For the containing item. This will return null if the item is in the 
+  top-level menu bar.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The containing <a href="muntjac.ui.menu_bar.MenuItem-class.html" 
+          class="link">menu_bar.MenuItem</a> , or null if there is none</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getChildren"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getChildren</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.getChildren">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This will return the children of this item or null if there are 
+  none.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>List of children items, or null if there are none</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getText"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getText</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.getText">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the objects text</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The text</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getSize"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getSize</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.getSize">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the number of children.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The number of child items</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getId"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getId</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.getId">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Get the unique identifier for this item.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The id of this item</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setCommand"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setCommand</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">command</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.setCommand">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Set the command for this item. Set null to remove.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>command</code></strong> - The MenuCommand of this item</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setIcon"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setIcon</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">icon</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.setIcon">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the icon. Set null to remove.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>icon</code></strong> - The icon for this item</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setText"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setText</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">text</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.setText">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Set the text of this object.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>text</code></strong> - Text for this object</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeChild"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeChild</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">item</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.removeChild">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Remove the first occurrence of the item.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>item</code></strong> - The item to be removed</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setParent"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setParent</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">parent</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.setParent">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Set the parent of this item. This is called by the addItem method.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>parent</code></strong> - The parent item</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setDescription"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setDescription</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">description</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.setDescription">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the items's description. See <a 
+  href="muntjac.ui.menu_bar.MenuItem-class.html#getDescription" 
+  class="link">getDescription</a> for more information on what the 
+  description is. This method will trigger a <a 
+  href="muntjac.terminal.paintable.RepaintRequestEvent-class.html" 
+  class="link">RepaintRequestEvent</a>.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>description</code></strong> - the new description string for the component.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getDescription"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getDescription</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.getDescription">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the items's description. The description can be used to briefly 
+  describe the state of the item to the user. The description string may 
+  contain certain XML tags:</p>
+  <p>&lt;table border=1&gt; &lt;tr&gt; &lt;td 
+  width=120&gt;&lt;b&gt;Tag&lt;/b&gt;&lt;/td&gt; &lt;td 
+  width=120&gt;&lt;b&gt;Description&lt;/b&gt;&lt;/td&gt; &lt;td 
+  width=120&gt;&lt;b&gt;Example&lt;/b&gt;&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt;
+  &lt;td&gt;&amp;lt;b&gt;&lt;/td&gt; &lt;td&gt;bold&lt;/td&gt; 
+  &lt;td&gt;&lt;b&gt;bold text&lt;/b&gt;&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; 
+  &lt;td&gt;&amp;lt;i&gt;&lt;/td&gt; &lt;td&gt;italic&lt;/td&gt; 
+  &lt;td&gt;&lt;i&gt;italic text&lt;/i&gt;&lt;/td&gt; &lt;/tr&gt; 
+  &lt;tr&gt; &lt;td&gt;&amp;lt;u&gt;&lt;/td&gt; 
+  &lt;td&gt;underlined&lt;/td&gt; &lt;td&gt;&lt;u&gt;underlined 
+  text&lt;/u&gt;&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; 
+  &lt;td&gt;&amp;lt;br&gt;&lt;/td&gt; &lt;td&gt;linebreak&lt;/td&gt; 
+  &lt;td&gt;N/A&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; 
+  &lt;td&gt;&amp;lt;ul&gt;&lt;br&gt; &amp;lt;li&gt;item1&lt;br&gt; 
+  &amp;lt;li&gt;item1&lt;br&gt; &amp;lt;/ul&gt;&lt;/td&gt; &lt;td&gt;item 
+  list&lt;/td&gt; &lt;td&gt; &lt;ul&gt; &lt;li&gt;item1 &lt;li&gt;item2 
+  &lt;/ul&gt; &lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;</p>
+  <p>These tags may be nested.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>item's description string</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isCheckable"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isCheckable</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.isCheckable">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the checkable state of the item - whether the item has checked 
+  and unchecked states. If an item is checkable its checked state (as 
+  returned by <a href="muntjac.ui.menu_bar.MenuItem-class.html#isChecked" 
+  class="link">isChecked</a>) is indicated in the UI.</p>
+  <p>An item is not checkable by default.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true if the item is checkable, false otherwise</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setCheckable"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setCheckable</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">checkable</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.setCheckable">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the checkable state of the item. If an item is checkable its 
+  checked state (as returned by <a 
+  href="muntjac.ui.menu_bar.MenuItem-class.html#isChecked" 
+  class="link">isChecked</a>) is indicated in the UI.</p>
+  <p>An item is not checkable by default.</p>
+  <p>Items with sub items cannot be checkable.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>checkable</code></strong> - true if the item should be checkable, false otherwise</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>ValueError</strong></code> - If the item has children</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isChecked"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isChecked</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.isChecked">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the checked state of the item (checked or unchecked). Only used 
+  if the item is checkable (as indicated by <a 
+  href="muntjac.ui.menu_bar.MenuItem-class.html#isCheckable" 
+  class="link">isCheckable</a>). The checked state is indicated in the UI 
+  with the item, if the item is checkable.</p>
+  <p>An item is not checked by default.</p>
+  <p>The CSS style corresponding to the checked state is 
+  &quot;-checked&quot;.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true if the item is checked, false otherwise</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setChecked"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setChecked</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">checked</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.menu_bar-pysrc.html#MenuItem.setChecked">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the checked state of the item. Only used if the item is checkable
+  (indicated by <a 
+  href="muntjac.ui.menu_bar.MenuItem-class.html#isCheckable" 
+  class="link">isCheckable</a>). The checked state is indicated in the UI 
+  with the item, if the item is checkable.</p>
+  <p>An item is not checked by default.</p>
+  <p>The CSS style corresponding to the checked state is 
+  &quot;-checked&quot;.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true if the item is checked, false otherwise</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:04:01 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

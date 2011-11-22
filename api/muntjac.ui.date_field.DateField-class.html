@@ -1,0 +1,2057 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.ui.date_field.DateField</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.ui-module.html">Package&nbsp;ui</a> ::
+        <a href="muntjac.ui.date_field-module.html">Module&nbsp;date_field</a> ::
+        Class&nbsp;DateField
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.ui.date_field.DateField-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class DateField</h1><p class="nomargin-top"><span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+                            object --+                    
+                                     |                    
+                   <a href="muntjac.util.IEventListener-class.html">util.IEventListener</a> --+                
+                                         |                
+             <a href="muntjac.terminal.paintable.IPaintable-class.html">terminal.paintable.IPaintable</a> --+            
+                                             |            
+                                object --+   |            
+                                         |   |            
+    <a href="muntjac.terminal.variable_owner.IVariableOwner-class.html">terminal.variable_owner.IVariableOwner</a> --+            
+                                             |            
+                                object --+   |            
+                                         |   |            
+               <a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a> --+            
+                                             |            
+                          <a href="muntjac.ui.component.IComponent-class.html">component.IComponent</a> --+        
+                                                 |        
+                                    object --+   |        
+                                             |   |        
+  <a href="muntjac.event.method_event_source.IMethodEventSource-class.html">event.method_event_source.IMethodEventSource</a> --+        
+                                                 |        
+              <a href="muntjac.ui.abstract_component.AbstractComponent-class.html">abstract_component.AbstractComponent</a> --+    
+                                                     |    
+                                object --+           |    
+                                         |           |    
+                   <a href="muntjac.data.buffered.IBuffered-class.html">data.buffered.IBuffered</a> --+       |    
+                                             |       |    
+                                object --+   |       |    
+                                         |   |       |    
+             <a href="muntjac.data.validatable.IValidatable-class.html">data.validatable.IValidatable</a> --+       |    
+                                             |       |    
+            <a href="muntjac.data.buffered.IBufferedValidatable-class.html">data.buffered.IBufferedValidatable</a> --+   |    
+                                                 |   |    
+                                    object --+   |   |    
+                                             |   |   |    
+            <a href="muntjac.data.property.IValueChangeNotifier-class.html">data.property.IValueChangeNotifier</a> --+   |    
+                                                 |   |    
+                                    object --+   |   |    
+                                             |   |   |    
+            <a href="muntjac.data.property.IValueChangeListener-class.html">data.property.IValueChangeListener</a> --+   |    
+                                                 |   |    
+                                object --+       |   |    
+                                         |       |   |    
+                     <a href="muntjac.data.property.IViewer-class.html">data.property.IViewer</a> --+   |   |    
+                                             |   |   |    
+                         <a href="muntjac.data.property.IEditor-class.html">data.property.IEditor</a> --+   |    
+                                                 |   |    
+                        object --+               |   |    
+                                 |               |   |    
+               <a href="muntjac.util.IEventListener-class.html">util.IEventListener</a> --+           |   |    
+                                     |           |   |    
+         <a href="muntjac.terminal.paintable.IPaintable-class.html">terminal.paintable.IPaintable</a> --+       |   |    
+                                         |       |   |    
+                            object --+   |       |   |    
+                                     |   |       |   |    
+<a href="muntjac.terminal.variable_owner.IVariableOwner-class.html">terminal.variable_owner.IVariableOwner</a> --+       |   |    
+                                         |       |   |    
+                            object --+   |       |   |    
+                                     |   |       |   |    
+           <a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a> --+       |   |    
+                                         |       |   |    
+                      <a href="muntjac.ui.component.IComponent-class.html">component.IComponent</a> --+   |   |    
+                                             |   |   |    
+                          <a href="muntjac.ui.component.IFocusable-class.html">component.IFocusable</a> --+   |    
+                                                 |   |    
+                                      <a href="muntjac.ui.field.IField-class.html">field.IField</a> --+    
+                                                     |    
+                                        object --+   |    
+                                                 |   |    
+                    <a href="muntjac.event.action.IShortcutNotifier-class.html">event.action.IShortcutNotifier</a> --+    
+                                                     |    
+                                        object --+   |    
+                                                 |   |    
+       <a href="muntjac.data.property.IReadOnlyStatusChangeNotifier-class.html">data.property.IReadOnlyStatusChangeNotifier</a> --+    
+                                                     |    
+                                        object --+   |    
+                                                 |   |    
+       <a href="muntjac.data.property.IReadOnlyStatusChangeListener-class.html">data.property.IReadOnlyStatusChangeListener</a> --+    
+                                                     |    
+                          <a href="muntjac.ui.abstract_field.AbstractField-class.html">abstract_field.AbstractField</a> --+
+                                                         |
+                                            object --+   |
+                                                     |   |
+                      <a href="muntjac.event.field_events.IBlurNotifier-class.html">event.field_events.IBlurNotifier</a> --+
+                                                         |
+                                            object --+   |
+                                                     |   |
+                     <a href="muntjac.event.field_events.IFocusNotifier-class.html">event.field_events.IFocusNotifier</a> --+
+                                                         |
+                                                        <strong class="uidshort">DateField</strong>
+</pre>
+
+<dl><dt>Known Subclasses:</dt>
+<dd>
+      <ul class="subclass-list">
+<li><a href="muntjac.ui.popup_date_field.PopupDateField-class.html">popup_date_field.PopupDateField</a></li><li>, <a href="muntjac.ui.inline_date_field.InlineDateField-class.html">inline_date_field.InlineDateField</a></li>  </ul>
+</dd></dl>
+
+<hr />
+<p>A date editor component that can be bound to any <a 
+  href="muntjac.data.property.IProperty-class.html" 
+  class="link">IProperty</a> that is compatible with 
+  <code>datetime</code>.</p>
+  <p>Since <code>DateField</code> extends <code>AbstractField</code> it 
+  implements the <a href="muntjac.data.buffered.IBuffered-class.html" 
+  class="link">IBuffered</a> interface.</p>
+  <p>A <code>DateField</code> is in write-through mode by default, so <a 
+  href="muntjac.ui.abstract_field.AbstractField-class.html#setWriteThrough"
+  class="link">AbstractField.setWriteThrough</a> must be called to enable 
+  buffering.</p>
+
+<hr />
+<div class="fields">      <dl><dt>Authors:</dt>
+        <dd>
+          Vaadin Ltd.,
+          Richard Lincoln
+        </dd>
+      </dl>
+      <p><strong>Version:</strong>
+        1.0.1
+      </p>
+</div><!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.date_field.DateField-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">*args</span>)</span><br />
+      Constructs an new <code>DateField</code>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.date_field.DateField-class.html#paintContent" class="summary-sig-name">paintContent</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">target</span>)</span><br />
+      Paints any needed component-specific things to the given UIDL stream.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.paintContent">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.date_field.DateField-class.html#shouldHideErrors" class="summary-sig-name">shouldHideErrors</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns true if the error indicator be hidden when painting the 
+      component even when there are errors.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.shouldHideErrors">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.date_field.DateField-class.html#changeVariables" class="summary-sig-name">changeVariables</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">source</span>,
+        <span class="summary-sig-arg">variables</span>)</span><br />
+      Called when one or more variables handled by the implementing class 
+      are changed.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.changeVariables">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.date_field.DateField-class.html#handleUnparsableDateString" class="summary-sig-name">handleUnparsableDateString</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">dateString</span>)</span><br />
+      This method is called to handle a non-empty date string from the 
+      client if the client could not parse it as a <code>datetime</code>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.handleUnparsableDateString">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.date_field.DateField-class.html#getType" class="summary-sig-name">getType</a>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.getType">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.date_field.DateField-class.html#setValue" class="summary-sig-name">setValue</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">newValue</span>,
+        <span class="summary-sig-arg">repaintIsNotNeeded</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Sets the value of the field.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.setValue">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="notifyFormOfValidityChange"></a><span class="summary-sig-name">notifyFormOfValidityChange</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Detects if this field is used in a Form (logically) and if so, 
+      notifies it (by repainting it) that the validity of this field might 
+      have changed.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.notifyFormOfValidityChange">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.date_field.DateField-class.html#setPropertyDataSource" class="summary-sig-name">setPropertyDataSource</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">newDataSource</span>)</span><br />
+      Sets the DateField datasource.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.setPropertyDataSource">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.date_field.DateField-class.html#setInternalValue" class="summary-sig-name">setInternalValue</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">newValue</span>)</span><br />
+      Sets the internal field value.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.setInternalValue">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getResolution"></a><span class="summary-sig-name">getResolution</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the resolution.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.getResolution">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.date_field.DateField-class.html#setResolution" class="summary-sig-name">setResolution</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">resolution</span>)</span><br />
+      Sets the resolution of the <code>DateField</code>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.setResolution">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.date_field.DateField-class.html#getCalendar" class="summary-sig-name">getCalendar</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns new instance calendar used in Date conversions.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.getCalendar">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.date_field.DateField-class.html#setDateFormat" class="summary-sig-name">setDateFormat</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">dateFormat</span>)</span><br />
+      Sets formatting used by some component implementations.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.setDateFormat">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.date_field.DateField-class.html#getDateFormat" class="summary-sig-name">getDateFormat</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns a format string used to format date value on client side or 
+      null if default formatting from <code 
+      class="link">IComponent.getLocale</code> is used.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.getDateFormat">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.date_field.DateField-class.html#setLenient" class="summary-sig-name">setLenient</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">lenient</span>)</span><br />
+      Specifies whether or not date/time interpretation in component is to 
+      be lenient.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.setLenient">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.date_field.DateField-class.html#isLenient" class="summary-sig-name">isLenient</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns whether date/time interpretation is to be lenient.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.isLenient">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.date_field.DateField-class.html#addListener" class="summary-sig-name">addListener</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">listener</span>,
+        <span class="summary-sig-arg">iface</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Registers a new (generic) component event listener for the component:</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.addListener">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.date_field.DateField-class.html#addCallback" class="summary-sig-name">addCallback</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">callback</span>,
+        <span class="summary-sig-arg">eventType</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">*args</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.addCallback">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.date_field.DateField-class.html#removeListener" class="summary-sig-name">removeListener</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">listener</span>,
+        <span class="summary-sig-arg">iface</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Removes a previously registered component event listener from this 
+      component.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.removeListener">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.date_field.DateField-class.html#removeCallback" class="summary-sig-name">removeCallback</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">callback</span>,
+        <span class="summary-sig-arg">eventType</span>=<span class="summary-sig-default">None</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.removeCallback">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.date_field.DateField-class.html#isShowISOWeekNumbers" class="summary-sig-name">isShowISOWeekNumbers</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Checks whether ISO 8601 week numbers are shown in the date selector.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.isShowISOWeekNumbers">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.date_field.DateField-class.html#setShowISOWeekNumbers" class="summary-sig-name">setShowISOWeekNumbers</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">showWeekNumbers</span>)</span><br />
+      Sets the visibility of ISO 8601 week numbers in the date selector.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.setShowISOWeekNumbers">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.date_field.DateField-class.html#isValid" class="summary-sig-name">isValid</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Tests the current value against registered validators if the field is
+      not empty.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.isValid">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.date_field.DateField-class.html#validate" class="summary-sig-name">validate</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Checks the validity of the IValidatable by validating the field with 
+      all attached validators except when the field is empty.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.validate">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.date_field.DateField-class.html#getParseErrorMessage" class="summary-sig-name">getParseErrorMessage</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Return the error message that is shown if the user inputted value 
+      can't be parsed into a datetime object.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.getParseErrorMessage">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.date_field.DateField-class.html#setParseErrorMessage" class="summary-sig-name">setParseErrorMessage</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">parsingErrorMessage</span>)</span><br />
+      Sets the default error message used if the DateField cannot parse the
+      text input by user to a datetime field.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.setParseErrorMessage">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.date_field.DateField-class.html#setTimeZone" class="summary-sig-name">setTimeZone</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">timeZone</span>)</span><br />
+      Sets the time zone used by this date field.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.setTimeZone">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.date_field.DateField-class.html#getTimeZone" class="summary-sig-name">getTimeZone</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the time zone used by this field.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.getTimeZone">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_field.AbstractField-class.html">abstract_field.AbstractField</a></code></b>:
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#__str__">__str__</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#addShortcutListener">addShortcutListener</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#addValidator">addValidator</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#attach">attach</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#commit">commit</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#detach">detach</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#discard">discard</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#fireReadOnlyStatusChange">fireReadOnlyStatusChange</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#fireValueChange">fireValueChange</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#focus">focus</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#getActionManager">getActionManager</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#getErrorMessage">getErrorMessage</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#getPropertyDataSource">getPropertyDataSource</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#getRequiredError">getRequiredError</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#getTabIndex">getTabIndex</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#getValidators">getValidators</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#getValue">getValue</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#isEmpty">isEmpty</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#isInvalidAllowed">isInvalidAllowed</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#isInvalidCommitted">isInvalidCommitted</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#isModified">isModified</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#isReadOnly">isReadOnly</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#isReadThrough">isReadThrough</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#isRequired">isRequired</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#isValidationVisible">isValidationVisible</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#isWriteThrough">isWriteThrough</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#readOnlyStatusChange">readOnlyStatusChange</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#readValueFromProperty">readValueFromProperty</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#removeShortcutListener">removeShortcutListener</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#removeValidator">removeValidator</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setCurrentBufferedSourceException">setCurrentBufferedSourceException</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setInvalidAllowed">setInvalidAllowed</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setInvalidCommitted">setInvalidCommitted</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setReadOnly">setReadOnly</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setReadThrough">setReadThrough</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setRequired">setRequired</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setRequiredError">setRequiredError</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setTabIndex">setTabIndex</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setValidationVisible">setValidationVisible</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setWriteThrough">setWriteThrough</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#valueChange">valueChange</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html">abstract_component.AbstractComponent</a></code></b>:
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#__getstate__">__getstate__</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#__setstate__">__setstate__</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#addStyleName">addStyleName</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#childRequestedRepaint">childRequestedRepaint</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#fireComponentErrorEvent">fireComponentErrorEvent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#fireComponentEvent">fireComponentEvent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#fireEvent">fireEvent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#fireRequestRepaintEvent">fireRequestRepaintEvent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getApplication">getApplication</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getCSSHeight">getCSSHeight</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getCSSWidth">getCSSWidth</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getCaption">getCaption</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getComponentError">getComponentError</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getData">getData</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getDebugId">getDebugId</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getDescription">getDescription</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getErrorHandler">getErrorHandler</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getHeight">getHeight</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getHeightUnits">getHeightUnits</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getIcon">getIcon</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getListeners">getListeners</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getLocale">getLocale</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getParent">getParent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getStyle">getStyle</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getStyleName">getStyleName</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getWidth">getWidth</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getWidthUnits">getWidthUnits</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getWindow">getWindow</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#handleError">handleError</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#hasListeners">hasListeners</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#isEnabled">isEnabled</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#isImmediate">isImmediate</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#isVisible">isVisible</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#paint">paint</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#parseStringSize">parseStringSize</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#registerCallback">registerCallback</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#registerListener">registerListener</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#removeStyleName">removeStyleName</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#requestRepaint">requestRepaint</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#requestRepaintRequests">requestRepaintRequests</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setCaption">setCaption</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setComponentError">setComponentError</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setData">setData</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setDebugId">setDebugId</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setDescription">setDescription</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setEnabled">setEnabled</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setErrorHandler">setErrorHandler</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setHeight">setHeight</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setHeightUnits">setHeightUnits</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setIcon">setIcon</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setImmediate">setImmediate</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setLocale">setLocale</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setParent">setParent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setSizeFull">setSizeFull</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setSizeUndefined">setSizeUndefined</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setStyle">setStyle</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setStyleName">setStyleName</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setVisible">setVisible</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setWidth">setWidth</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setWidthUnits">setWidthUnits</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#withdrawCallback">withdrawCallback</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#withdrawListener">withdrawListener</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS METHODS ==================== -->
+<a name="section-ClassMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_field.AbstractField-class.html">abstract_field.AbstractField</a></code></b>:
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#constructField">constructField</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="CLIENT_WIDGET"></a><span class="summary-name">CLIENT_WIDGET</span> = <code title="None">None</code><br />
+      hash(x)
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="RESOLUTION_MSEC"></a><span class="summary-name">RESOLUTION_MSEC</span> = <code title="0">0</code><br />
+      Resolution identifier: milliseconds.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="RESOLUTION_SEC"></a><span class="summary-name">RESOLUTION_SEC</span> = <code title="1">1</code><br />
+      Resolution identifier: seconds.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="RESOLUTION_MIN"></a><span class="summary-name">RESOLUTION_MIN</span> = <code title="2">2</code><br />
+      Resolution identifier: minutes.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="RESOLUTION_HOUR"></a><span class="summary-name">RESOLUTION_HOUR</span> = <code title="3">3</code><br />
+      Resolution identifier: hours.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="RESOLUTION_DAY"></a><span class="summary-name">RESOLUTION_DAY</span> = <code title="4">4</code><br />
+      Resolution identifier: days.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="RESOLUTION_MONTH"></a><span class="summary-name">RESOLUTION_MONTH</span> = <code title="5">5</code><br />
+      Resolution identifier: months.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="RESOLUTION_YEAR"></a><span class="summary-name">RESOLUTION_YEAR</span> = <code title="6">6</code><br />
+      Resolution identifier: years.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_largestModifiable"></a><span class="summary-name">_largestModifiable</span> = <code title="6">6</code><br />
+      Specified largest modifiable unit.
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html">abstract_component.AbstractComponent</a></code></b>:
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#SIZE_PATTERN">SIZE_PATTERN</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a></code></b>:
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#SIZE_UNDEFINED">SIZE_UNDEFINED</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_CM">UNITS_CM</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_EM">UNITS_EM</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_EX">UNITS_EX</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_INCH">UNITS_INCH</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_MM">UNITS_MM</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_PERCENTAGE">UNITS_PERCENTAGE</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_PICAS">UNITS_PICAS</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_PIXELS">UNITS_PIXELS</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_POINTS">UNITS_POINTS</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNIT_SYMBOLS">UNIT_SYMBOLS</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== INSTANCE VARIABLES ==================== -->
+<a name="section-InstanceVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_calendar"></a><span class="summary-name">_calendar</span><br />
+      The internal calendar to be used in java.utl.Date conversions.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_dateFormat"></a><span class="summary-name">_dateFormat</span><br />
+      Overridden format string
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_uiHasValidDateString"></a><span class="summary-name">_uiHasValidDateString</span><br />
+      Was the last entered string parsable? If this flag is false,
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_showISOWeekNumbers"></a><span class="summary-name">_showISOWeekNumbers</span><br />
+      Determines if week numbers are shown in the date selector.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_resolution"></a><span class="summary-name">_resolution</span><br />
+      Specified smallest modifiable unit.
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_field.AbstractField-class.html">abstract_field.AbstractField</a></code></b> (private):
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_actionManager" onclick="show_private();">_actionManager</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_committingValueToDataSource" onclick="show_private();">_committingValueToDataSource</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_currentBufferedSourceException" onclick="show_private();">_currentBufferedSourceException</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_dataSource" onclick="show_private();">_dataSource</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_invalidAllowed" onclick="show_private();">_invalidAllowed</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_invalidCommitted" onclick="show_private();">_invalidCommitted</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_modified" onclick="show_private();">_modified</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_readThroughMode" onclick="show_private();">_readThroughMode</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_required" onclick="show_private();">_required</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_requiredError" onclick="show_private();">_requiredError</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_tabIndex" onclick="show_private();">_tabIndex</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_validationVisible" onclick="show_private();">_validationVisible</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_validators" onclick="show_private();">_validators</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_value" onclick="show_private();">_value</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_writeThroughMode" onclick="show_private();">_writeThroughMode</a></code>
+      </p></div>
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html">abstract_component.AbstractComponent</a></code></b> (private):
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_applicationData" onclick="show_private();">_applicationData</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_caption" onclick="show_private();">_caption</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_componentError" onclick="show_private();">_componentError</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_delayedFocus" onclick="show_private();">_delayedFocus</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_description" onclick="show_private();">_description</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_enabled" onclick="show_private();">_enabled</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_eventIdentifiers" onclick="show_private();">_eventIdentifiers</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_eventRouter" onclick="show_private();">_eventRouter</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_icon" onclick="show_private();">_icon</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_immediate" onclick="show_private();">_immediate</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_locale" onclick="show_private();">_locale</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_parent" onclick="show_private();">_parent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_readOnly" onclick="show_private();">_readOnly</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_repaintRequestListeners" onclick="show_private();">_repaintRequestListeners</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_repaintRequestListenersNotified" onclick="show_private();">_repaintRequestListenersNotified</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_styles" onclick="show_private();">_styles</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_visible" onclick="show_private();">_visible</a></code>
+      </p></div>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Constructs an new <code>DateField</code>.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>args</code></strong> - tuple of the form
+          <ul>
+            <li>
+              ()
+            </li>
+            <li>
+              (caption)
+              <ol start="1">
+                <li>
+                  the caption of the datefield.
+                </li>
+              </ol>
+            </li>
+            <li>
+              (caption, dataSource)
+              <ol start="1">
+                <li>
+                  the caption string for the editor.
+                </li>
+                <li>
+                  the IProperty to be edited with this editor.
+                </li>
+              </ol>
+            </li>
+            <li>
+              (dataSource)
+              <ol start="1">
+                <li>
+                  the IProperty to be edited with this editor.
+                </li>
+              </ol>
+            </li>
+            <li>
+              (caption, value)
+              <ol start="1">
+                <li>
+                  the caption string for the editor.
+                </li>
+                <li>
+                  the date value.
+                </li>
+              </ol>
+            </li>
+          </ul></li>
+    </ul></dd>
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="paintContent"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">paintContent</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">target</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.paintContent">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Paints any needed component-specific things to the given UIDL stream. 
+  The more general <a 
+  href="muntjac.ui.abstract_component.AbstractComponent-class.html#paint" 
+  class="link">paint</a> method handles all general attributes common to 
+  all components, and it calls this method to paint any component-specific 
+  attributes to the UIDL stream.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>target</code></strong> - the target UIDL stream where the component should paint itself to</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="muntjac.terminal.paint_exception.PaintException-class.html">PaintException</a></strong></code> - if the paint operation failed.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.abstract_component.AbstractComponent-class.html#paintContent">abstract_component.AbstractComponent.paintContent</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="shouldHideErrors"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">shouldHideErrors</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.shouldHideErrors">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns true if the error indicator be hidden when painting the 
+  component even when there are errors.</p>
+  <p>This is a mostly internal method, but can be overridden in subclasses 
+  e.g. if the error indicator should also be shown for empty fields in some
+  cases.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true to hide the error indicator, false to use the normal logic 
+          to show it when there are errors</dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.abstract_field.AbstractField-class.html#shouldHideErrors">abstract_field.AbstractField.shouldHideErrors</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="changeVariables"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">changeVariables</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">source</span>,
+        <span class="sig-arg">variables</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.changeVariables">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Called when one or more variables handled by the implementing class 
+  are changed.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>source</code></strong> - the Source of the variable change. This is the origin of the 
+          event. For example in Web Adapter this is the request.</li>
+        <li><strong class="pname"><code>variables</code></strong> - the Mapping from variable names to new variable values.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.terminal.variable_owner.IVariableOwner-class.html#changeVariables">terminal.variable_owner.IVariableOwner.changeVariables</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="handleUnparsableDateString"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">handleUnparsableDateString</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">dateString</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.handleUnparsableDateString">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method is called to handle a non-empty date string from the 
+  client if the client could not parse it as a <code>datetime</code>.</p>
+  <p>By default, a <code>ConversionException</code> is thrown, and the 
+  current value is not modified.</p>
+  <p>This can be overridden to handle conversions, to return null 
+  (equivalent to empty input), to throw an exception or to fire an 
+  event.</p>
+  <dl class="fields">
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="muntjac.data.property.ConversionException-class.html">ConversionException</a></strong></code> - to keep the old value and indicate an error</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getType"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getType</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.getType">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.ui.abstract_field.AbstractField-class.html#getType">abstract_field.AbstractField.getType</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setValue"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setValue</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">newValue</span>,
+        <span class="sig-arg">repaintIsNotNeeded</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.setValue">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the value of the field.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>newValue</code></strong> - the new value of the field.</li>
+        <li><strong class="pname"><code>repaintIsNotNeeded</code></strong> - True iff caller is sure that repaint is not needed.</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="muntjac.data.property.ReadOnlyException-class.html">ReadOnlyException</a></strong></code></li>
+        <li><code><strong class='fraise'><a href="muntjac.data.property.ConversionException-class.html">ConversionException</a></strong></code></li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.abstract_field.AbstractField-class.html#setValue">abstract_field.AbstractField.setValue</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setPropertyDataSource"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setPropertyDataSource</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">newDataSource</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.setPropertyDataSource">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the DateField datasource. Datasource type must assignable to 
+  Date.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>newDataSource</code></strong> - the new data source property.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.property.IViewer-class.html#setPropertyDataSource">data.property.IViewer.setPropertyDataSource</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <code class="link">Viewer.setPropertyDataSource</code>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="setInternalValue"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setInternalValue</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">newValue</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.setInternalValue">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the internal field value. This is purely used by AbstractField to
+  change the internal IField value. It does not trigger valuechange events.
+  It can be overridden by the inheriting classes to update all dependent 
+  variables.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>newValue</code></strong> - the new value to be set.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.abstract_field.AbstractField-class.html#setInternalValue">abstract_field.AbstractField.setInternalValue</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setResolution"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setResolution</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">resolution</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.setResolution">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the resolution of the <code>DateField</code>.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>resolution</code></strong> - the resolution to set.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getCalendar"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getCalendar</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.getCalendar">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns new instance calendar used in Date conversions.</p>
+  <p>Returns new clone of the calendar object initialized using the the 
+  current date (if available)</p>
+  <p>If this is no calendar is assigned the <code>calendar</code> is 
+  used.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the calendar</dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <code class="link">setCalendar</code>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="setDateFormat"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setDateFormat</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">dateFormat</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.setDateFormat">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets formatting used by some component implementations.</p>
+  <p>By default it is encouraged to used default formatting defined by 
+  Locale.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>dateFormat</code></strong> - the dateFormat to set</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <code class="link">AbstractComponent.setLocale</code>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="getDateFormat"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getDateFormat</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.getDateFormat">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns a format string used to format date value on client side or 
+  null if default formatting from <code 
+  class="link">IComponent.getLocale</code> is used.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the dateFormat</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setLenient"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setLenient</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">lenient</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.setLenient">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Specifies whether or not date/time interpretation in component is to 
+  be lenient.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>lenient</code></strong> - true if the lenient mode is to be turned on; false if it is to be
+          turned off.</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a href="muntjac.ui.date_field.DateField-class.html#isLenient" 
+        class="link">isLenient</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="isLenient"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isLenient</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.isLenient">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns whether date/time interpretation is to be lenient.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true if the interpretation mode of this calendar is lenient; 
+          false otherwise.</dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a href="muntjac.ui.date_field.DateField-class.html#setLenient" 
+        class="link">setLenient</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="addListener"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addListener</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">listener</span>,
+        <span class="sig-arg">iface</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.addListener">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Registers a new (generic) component event listener for the 
+  component:</p>
+<pre class="literalblock">
+ class Listening(CustomComponent, IListener):
+
+     # Stored for determining the source of an event
+     ok = None
+
+     status = None  # For displaying info about the event
+
+     def __init__(self):
+         layout = VerticalLayout()
+
+         # Some miscellaneous component
+         name = TextField(&quot;Say it all here&quot;)
+         name.addListener(self)
+         name.setImmediate(true)
+         layout.addComponent(name)
+
+         # Handle button clicks as generic events instead
+         # of Button.ClickEvent events
+         ok = new Button(&quot;OK&quot;)
+         ok.addListener(self)
+         layout.addComponent(ok)
+
+         # For displaying information about an event
+         status = new Label(&quot;&quot;)
+         layout.addComponent(status)
+
+         setCompositionRoot(layout)
+
+
+     def componentEvent(event):
+         # Act according to the source of the event
+         if (event.getSource() == ok):
+             getWindow().showNotification(&quot;Click!&quot;)
+
+         status.setValue(&quot;Event from &quot; +
+                 event.getSource().__class__.__name__
+                 + &quot;: &quot; + event.__class__.__name__)
+
+
+ listening = Listening()
+ layout.addComponent(listening)
+</pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>listener</code></strong> - the new IListener to be registered.</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>ValueError</strong></code> - unless <code>method</code> has a match in <code>object</code></li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.event.field_events.IFocusNotifier-class.html#addListener">event.field_events.IFocusNotifier.addListener</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addCallback"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addCallback</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">callback</span>,
+        <span class="sig-arg">eventType</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.addCallback">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.event.field_events.IFocusNotifier-class.html#addCallback">event.field_events.IFocusNotifier.addCallback</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeListener"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeListener</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">listener</span>,
+        <span class="sig-arg">iface</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.removeListener">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes a previously registered component event listener from this 
+  component.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>listener</code></strong> - the listener to be removed.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.event.field_events.IFocusNotifier-class.html#removeListener">event.field_events.IFocusNotifier.removeListener</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeCallback"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeCallback</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">callback</span>,
+        <span class="sig-arg">eventType</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.removeCallback">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.event.field_events.IFocusNotifier-class.html#removeCallback">event.field_events.IFocusNotifier.removeCallback</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isShowISOWeekNumbers"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isShowISOWeekNumbers</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.isShowISOWeekNumbers">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Checks whether ISO 8601 week numbers are shown in the date 
+  selector.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>true if week numbers are shown, false otherwise.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setShowISOWeekNumbers"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setShowISOWeekNumbers</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">showWeekNumbers</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.setShowISOWeekNumbers">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the visibility of ISO 8601 week numbers in the date selector. ISO
+  8601 defines that a week always starts with a Monday so the week numbers 
+  are only shown if this is the case.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>showWeekNumbers</code></strong> - true if week numbers should be shown, false otherwise.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isValid"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isValid</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.isValid">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tests the current value against registered validators if the field is 
+  not empty. Note that DateField is considered empty (value == null) and 
+  invalid if it contains text typed in by the user that couldn't be parsed 
+  into a Date value.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><code>True</code> if all registered validators claim that the 
+          current value is valid or if the field is empty and not required,
+          <code>False</code> otherwise.</dd>
+    <dt>Overrides:
+        <a href="muntjac.data.validatable.IValidatable-class.html#isValid">data.validatable.IValidatable.isValid</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a 
+        href="muntjac.ui.abstract_field.AbstractField-class.html#isValid" 
+        class="link">AbstractField.isValid</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="validate"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">validate</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.validate">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Checks the validity of the IValidatable by validating the field with 
+  all attached validators except when the field is empty. An empty field is
+  invalid if it is required and valid otherwise.</p>
+  <p>The &quot;required&quot; validation is a built-in validation feature. 
+  If the field is required, but empty, validation will throw an 
+  EmptyValueException with the error message set with 
+  setRequiredError().</p>
+  <dl class="fields">
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="muntjac.data.validator.InvalidValueException-class.html">InvalidValueException</a></strong></code> - if the value is not valid</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.data.validatable.IValidatable-class.html#validate">data.validatable.IValidatable.validate</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getParseErrorMessage"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getParseErrorMessage</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.getParseErrorMessage">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Return the error message that is shown if the user inputted value 
+  can't be parsed into a datetime object. If <a 
+  href="muntjac.ui.date_field.DateField-class.html#handleUnparsableDateString"
+  class="link">handleUnparsableDateString</a> is overridden and it throws a
+  custom exception, the message returned by <code 
+  class="link">Exception.message</code> will be used instead of the value 
+  returned by this method.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the error message that the DateField uses when it can't parse the
+          textual input from user to a Date object</dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a 
+        href="muntjac.ui.date_field.DateField-class.html#setParseErrorMessage"
+        class="link">setParseErrorMessage</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="setParseErrorMessage"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setParseErrorMessage</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">parsingErrorMessage</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.setParseErrorMessage">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the default error message used if the DateField cannot parse the 
+  text input by user to a datetime field. Note that if the <a 
+  href="muntjac.ui.date_field.DateField-class.html#handleUnparsableDateString"
+  class="link">handleUnparsableDateString</a> method is overridden, the 
+  localized message from its exception is used.</p>
+  <dl class="fields">
+  </dl>
+<div class="fields">      <dl><dt>See Also:</dt>
+        <dd>
+          <a 
+          href="muntjac.ui.date_field.DateField-class.html#getParseErrorMessage"
+          class="link">getParseErrorMessage</a>,
+          <a 
+          href="muntjac.ui.date_field.DateField-class.html#handleUnparsableDateString"
+          class="link">handleUnparsableDateString</a>
+        </dd>
+      </dl>
+</div></td></tr></table>
+</div>
+<a name="setTimeZone"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setTimeZone</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">timeZone</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.setTimeZone">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the time zone used by this date field. The time zone is used to 
+  convert the absolute time in a Date object to a logical time displayed in
+  the selector and to convert the select time back to a datetime 
+  object.</p>
+  <p>If no time zone has been set, the current default time zone returned 
+  by <code>TimeZone.getDefault()</code> is used.</p>
+  <p>@see <a href="muntjac.ui.date_field.DateField-class.html#getTimeZone" 
+  class="link">getTimeZone()</a></p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>timeZone</code></strong> - the time zone to use for time calculations.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getTimeZone"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getTimeZone</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.date_field-pysrc.html#DateField.getTimeZone">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the time zone used by this field. The time zone is used to 
+  convert the absolute time in a Date object to a logical time displayed in
+  the selector and to convert the select time back to a datetime 
+  object.</p>
+  <p>If {@code null} is returned, the current default time zone returned by
+  <code>TimeZone.getDefault()</code> is used.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the current time zone</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:04:00 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

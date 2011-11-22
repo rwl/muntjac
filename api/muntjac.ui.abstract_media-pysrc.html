@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.ui.abstract_media</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.ui-module.html">Package&nbsp;ui</a> ::
+        Module&nbsp;abstract_media
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.ui.abstract_media-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="muntjac.ui.abstract_media-module.html">Module muntjac.ui.abstract_media</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno">  1</tt>  <tt class="py-line"><tt class="py-comment"># Copyright (C) 2011 Vaadin Ltd.</tt> </tt>
+<a name="L2"></a><tt class="py-lineno">  2</tt>  <tt class="py-line"><tt class="py-comment"># Copyright (C) 2011 Richard Lincoln</tt> </tt>
+<a name="L3"></a><tt class="py-lineno">  3</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L4"></a><tt class="py-lineno">  4</tt>  <tt class="py-line"><tt class="py-comment"># This program is free software: you can redistribute it and/or modify</tt> </tt>
+<a name="L5"></a><tt class="py-lineno">  5</tt>  <tt class="py-line"><tt class="py-comment"># it under the terms of the GNU Affero General Public License as published</tt> </tt>
+<a name="L6"></a><tt class="py-lineno">  6</tt>  <tt class="py-line"><tt class="py-comment"># by the Free Software Foundation, either version 3 of the License, or</tt> </tt>
+<a name="L7"></a><tt class="py-lineno">  7</tt>  <tt class="py-line"><tt class="py-comment"># (at your option) any later version.</tt> </tt>
+<a name="L8"></a><tt class="py-lineno">  8</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line"><tt class="py-comment"># This program is distributed in the hope that it will be useful,</tt> </tt>
+<a name="L10"></a><tt class="py-lineno"> 10</tt>  <tt class="py-line"><tt class="py-comment"># but WITHOUT ANY WARRANTY; without even the implied warranty of</tt> </tt>
+<a name="L11"></a><tt class="py-lineno"> 11</tt>  <tt class="py-line"><tt class="py-comment"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</tt> </tt>
+<a name="L12"></a><tt class="py-lineno"> 12</tt>  <tt class="py-line"><tt class="py-comment"># GNU Affero General Public License for more details.</tt> </tt>
+<a name="L13"></a><tt class="py-lineno"> 13</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L14"></a><tt class="py-lineno"> 14</tt>  <tt class="py-line"><tt class="py-comment"># You should have received a copy of the GNU Affero General Public License</tt> </tt>
+<a name="L15"></a><tt class="py-lineno"> 15</tt>  <tt class="py-line"><tt class="py-comment"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</tt> </tt>
+<a name="L16"></a><tt class="py-lineno"> 16</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L17"></a><tt class="py-lineno"> 17</tt>  <tt class="py-line"><tt class="py-comment"># Note: This is a modified file from Vaadin. For further information on</tt> </tt>
+<a name="L18"></a><tt class="py-lineno"> 18</tt>  <tt class="py-line"><tt class="py-comment">#       Vaadin please visit http://www.vaadin.com.</tt> </tt>
+<a name="L19"></a><tt class="py-lineno"> 19</tt>  <tt class="py-line"> </tt>
+<a name="L20"></a><tt class="py-lineno"> 20</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Package muntjac=muntjac-module.html,Function muntjac.main.muntjac()=muntjac.main-module.html#muntjac"><a title="muntjac
+muntjac.main.muntjac" class="py-name" href="#" onclick="return doclink('link-0', 'muntjac', 'link-0');">muntjac</a></tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Package muntjac.terminal.gwt.client.ui=muntjac.terminal.gwt.client.ui-module.html,Package muntjac.ui=muntjac.ui-module.html"><a title="muntjac.terminal.gwt.client.ui
+muntjac.ui" class="py-name" href="#" onclick="return doclink('link-1', 'ui', 'link-1');">ui</a></tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Module muntjac.ui.abstract_component=muntjac.ui.abstract_component-module.html"><a title="muntjac.ui.abstract_component" class="py-name" href="#" onclick="return doclink('link-2', 'abstract_component', 'link-2');">abstract_component</a></tt> <tt class="py-keyword">import</tt> <tt id="link-3" class="py-name" targets="Class muntjac.ui.abstract_component.AbstractComponent=muntjac.ui.abstract_component.AbstractComponent-class.html"><a title="muntjac.ui.abstract_component.AbstractComponent" class="py-name" href="#" onclick="return doclink('link-3', 'AbstractComponent', 'link-3');">AbstractComponent</a></tt> </tt>
+<a name="L21"></a><tt class="py-lineno"> 21</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-4" class="py-name"><a title="muntjac
+muntjac.main.muntjac" class="py-name" href="#" onclick="return doclink('link-4', 'muntjac', 'link-0');">muntjac</a></tt><tt class="py-op">.</tt><tt id="link-5" class="py-name" targets="Package muntjac.terminal=muntjac.terminal-module.html,Module muntjac.terminal.terminal=muntjac.terminal.terminal-module.html"><a title="muntjac.terminal
+muntjac.terminal.terminal" class="py-name" href="#" onclick="return doclink('link-5', 'terminal', 'link-5');">terminal</a></tt><tt class="py-op">.</tt><tt id="link-6" class="py-name" targets="Package muntjac.terminal.gwt=muntjac.terminal.gwt-module.html"><a title="muntjac.terminal.gwt" class="py-name" href="#" onclick="return doclink('link-6', 'gwt', 'link-6');">gwt</a></tt><tt class="py-op">.</tt><tt id="link-7" class="py-name" targets="Package muntjac.terminal.gwt.client=muntjac.terminal.gwt.client-module.html"><a title="muntjac.terminal.gwt.client" class="py-name" href="#" onclick="return doclink('link-7', 'client', 'link-7');">client</a></tt><tt class="py-op">.</tt><tt id="link-8" class="py-name"><a title="muntjac.terminal.gwt.client.ui
+muntjac.ui" class="py-name" href="#" onclick="return doclink('link-8', 'ui', 'link-1');">ui</a></tt><tt class="py-op">.</tt><tt id="link-9" class="py-name" targets="Module muntjac.terminal.gwt.client.ui.v_media_base=muntjac.terminal.gwt.client.ui.v_media_base-module.html"><a title="muntjac.terminal.gwt.client.ui.v_media_base" class="py-name" href="#" onclick="return doclink('link-9', 'v_media_base', 'link-9');">v_media_base</a></tt> <tt class="py-keyword">import</tt> <tt id="link-10" class="py-name" targets="Class muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase=muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase-class.html"><a title="muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase" class="py-name" href="#" onclick="return doclink('link-10', 'VMediaBase', 'link-10');">VMediaBase</a></tt> </tt>
+<a name="L22"></a><tt class="py-lineno"> 22</tt>  <tt class="py-line"> </tt>
+<a name="L23"></a><tt class="py-lineno"> 23</tt>  <tt class="py-line"> </tt>
+<a name="AbstractMedia"></a><div id="AbstractMedia-def"><a name="L24"></a><tt class="py-lineno"> 24</tt> <a class="py-toggle" href="#" id="AbstractMedia-toggle" onclick="return toggle('AbstractMedia');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.ui.abstract_media.AbstractMedia-class.html">AbstractMedia</a><tt class="py-op">(</tt><tt class="py-base-class">AbstractComponent</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AbstractMedia-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="AbstractMedia-expanded"><a name="L25"></a><tt class="py-lineno"> 25</tt>  <tt class="py-line">    <tt class="py-docstring">"""Abstract base class for the HTML5 media components.</tt> </tt>
+<a name="L26"></a><tt class="py-lineno"> 26</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L27"></a><tt class="py-lineno"> 27</tt>  <tt class="py-line"><tt class="py-docstring">    @author: Vaadin Ltd</tt> </tt>
+<a name="L28"></a><tt class="py-lineno"> 28</tt>  <tt class="py-line"><tt class="py-docstring">    @author: Richard Lincoln</tt> </tt>
+<a name="L29"></a><tt class="py-lineno"> 29</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L30"></a><tt class="py-lineno"> 30</tt>  <tt class="py-line"> </tt>
+<a name="AbstractMedia.__init__"></a><div id="AbstractMedia.__init__-def"><a name="L31"></a><tt class="py-lineno"> 31</tt> <a class="py-toggle" href="#" id="AbstractMedia.__init__-toggle" onclick="return toggle('AbstractMedia.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.abstract_media.AbstractMedia-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AbstractMedia.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="AbstractMedia.__init__-expanded"><a name="L32"></a><tt class="py-lineno"> 32</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_sources</tt> <tt class="py-op">=</tt> <tt class="py-name">list</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L33"></a><tt class="py-lineno"> 33</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_showControls</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L34"></a><tt class="py-lineno"> 34</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_altText</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L35"></a><tt class="py-lineno"> 35</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_htmlContentAllowed</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L36"></a><tt class="py-lineno"> 36</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_autoplay</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L37"></a><tt class="py-lineno"> 37</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_muted</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L38"></a><tt class="py-lineno"> 38</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_pause</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L39"></a><tt class="py-lineno"> 39</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_play</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+</div><a name="L40"></a><tt class="py-lineno"> 40</tt>  <tt class="py-line"> </tt>
+<a name="L41"></a><tt class="py-lineno"> 41</tt>  <tt class="py-line"> </tt>
+<a name="AbstractMedia.setSource"></a><div id="AbstractMedia.setSource-def"><a name="L42"></a><tt class="py-lineno"> 42</tt> <a class="py-toggle" href="#" id="AbstractMedia.setSource-toggle" onclick="return toggle('AbstractMedia.setSource');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.abstract_media.AbstractMedia-class.html#setSource">setSource</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">source</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AbstractMedia.setSource-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="AbstractMedia.setSource-expanded"><a name="L43"></a><tt class="py-lineno"> 43</tt>  <tt class="py-line">        <tt class="py-docstring">"""Sets a single media file as the source of the media component.</tt> </tt>
+<a name="L44"></a><tt class="py-lineno"> 44</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L45"></a><tt class="py-lineno"> 45</tt>  <tt class="py-line">        <tt class="py-keyword">del</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_sources</tt><tt class="py-op">[</tt><tt class="py-op">:</tt><tt class="py-op">]</tt> </tt>
+<a name="L46"></a><tt class="py-lineno"> 46</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-11" class="py-name" targets="Method muntjac.ui.abstract_media.AbstractMedia.addSource()=muntjac.ui.abstract_media.AbstractMedia-class.html#addSource"><a title="muntjac.ui.abstract_media.AbstractMedia.addSource" class="py-name" href="#" onclick="return doclink('link-11', 'addSource', 'link-11');">addSource</a></tt><tt class="py-op">(</tt><tt class="py-name">source</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L47"></a><tt class="py-lineno"> 47</tt>  <tt class="py-line"> </tt>
+<a name="L48"></a><tt class="py-lineno"> 48</tt>  <tt class="py-line"> </tt>
+<a name="AbstractMedia.addSource"></a><div id="AbstractMedia.addSource-def"><a name="L49"></a><tt class="py-lineno"> 49</tt> <a class="py-toggle" href="#" id="AbstractMedia.addSource-toggle" onclick="return toggle('AbstractMedia.addSource');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.abstract_media.AbstractMedia-class.html#addSource">addSource</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">source</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AbstractMedia.addSource-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="AbstractMedia.addSource-expanded"><a name="L50"></a><tt class="py-lineno"> 50</tt>  <tt class="py-line">        <tt class="py-docstring">"""Adds an alternative media file to the sources list. Which of the</tt> </tt>
+<a name="L51"></a><tt class="py-lineno"> 51</tt>  <tt class="py-line"><tt class="py-docstring">        sources is used is selected by the browser depending on which file</tt> </tt>
+<a name="L52"></a><tt class="py-lineno"> 52</tt>  <tt class="py-line"><tt class="py-docstring">        formats it supports. See &lt;a</tt> </tt>
+<a name="L53"></a><tt class="py-lineno"> 53</tt>  <tt class="py-line"><tt class="py-docstring">        href="http://en.wikipedia.org/wiki/HTML5_video#Table"&gt;wikipedia&lt;/a&gt;</tt> </tt>
+<a name="L54"></a><tt class="py-lineno"> 54</tt>  <tt class="py-line"><tt class="py-docstring">        for a table of formats supported by different browsers.</tt> </tt>
+<a name="L55"></a><tt class="py-lineno"> 55</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L56"></a><tt class="py-lineno"> 56</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">source</tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L57"></a><tt class="py-lineno"> 57</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_sources</tt><tt class="py-op">.</tt><tt id="link-12" class="py-name" targets="Method muntjac.data.util.list_set.ListSet.append()=muntjac.data.util.list_set.ListSet-class.html#append"><a title="muntjac.data.util.list_set.ListSet.append" class="py-name" href="#" onclick="return doclink('link-12', 'append', 'link-12');">append</a></tt><tt class="py-op">(</tt><tt class="py-name">source</tt><tt class="py-op">)</tt> </tt>
+<a name="L58"></a><tt class="py-lineno"> 58</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-13" class="py-name" targets="Method muntjac.data.buffered.SourceException.requestRepaint()=muntjac.data.buffered.SourceException-class.html#requestRepaint,Method muntjac.data.validator.InvalidValueException.requestRepaint()=muntjac.data.validator.InvalidValueException-class.html#requestRepaint,Method muntjac.event.action_manager.ActionManager.requestRepaint()=muntjac.event.action_manager.ActionManager-class.html#requestRepaint,Method muntjac.terminal.composite_error_message.CompositeErrorMessage.requestRepaint()=muntjac.terminal.composite_error_message.CompositeErrorMessage-class.html#requestRepaint,Method muntjac.terminal.error_message.IErrorMessage.requestRepaint()=muntjac.terminal.error_message.IErrorMessage-class.html#requestRepaint,Method muntjac.terminal.paintable.IPaintable.requestRepaint()=muntjac.terminal.paintable.IPaintable-class.html#requestRepaint,Method muntjac.terminal.sys_error.SysError.requestRepaint()=muntjac.terminal.sys_error.SysError-class.html#requestRepaint,Method muntjac.terminal.user_error.UserError.requestRepaint()=muntjac.terminal.user_error.UserError-class.html#requestRepaint,Method muntjac.ui.abstract_component.AbstractComponent.requestRepaint()=muntjac.ui.abstract_component.AbstractComponent-class.html#requestRepaint,Method muntjac.ui.select.Select.requestRepaint()=muntjac.ui.select.Select-class.html#requestRepaint,Method muntjac.ui.table.Table.requestRepaint()=muntjac.ui.table.Table-class.html#requestRepaint,Method muntjac.ui.tree.Tree.requestRepaint()=muntjac.ui.tree.Tree-class.html#requestRepaint,Method muntjac.ui.upload.Upload.requestRepaint()=muntjac.ui.upload.Upload-class.html#requestRepaint"><a title="muntjac.data.buffered.SourceException.requestRepaint
+muntjac.data.validator.InvalidValueException.requestRepaint
+muntjac.event.action_manager.ActionManager.requestRepaint
+muntjac.terminal.composite_error_message.CompositeErrorMessage.requestRepaint
+muntjac.terminal.error_message.IErrorMessage.requestRepaint
+muntjac.terminal.paintable.IPaintable.requestRepaint
+muntjac.terminal.sys_error.SysError.requestRepaint
+muntjac.terminal.user_error.UserError.requestRepaint
+muntjac.ui.abstract_component.AbstractComponent.requestRepaint
+muntjac.ui.select.Select.requestRepaint
+muntjac.ui.table.Table.requestRepaint
+muntjac.ui.tree.Tree.requestRepaint
+muntjac.ui.upload.Upload.requestRepaint" class="py-name" href="#" onclick="return doclink('link-13', 'requestRepaint', 'link-13');">requestRepaint</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L59"></a><tt class="py-lineno"> 59</tt>  <tt class="py-line"> </tt>
+<a name="L60"></a><tt class="py-lineno"> 60</tt>  <tt class="py-line"> </tt>
+<a name="AbstractMedia.setSources"></a><div id="AbstractMedia.setSources-def"><a name="L61"></a><tt class="py-lineno"> 61</tt> <a class="py-toggle" href="#" id="AbstractMedia.setSources-toggle" onclick="return toggle('AbstractMedia.setSources');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.abstract_media.AbstractMedia-class.html#setSources">setSources</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-op">*</tt><tt class="py-param">sources</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AbstractMedia.setSources-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="AbstractMedia.setSources-expanded"><a name="L62"></a><tt class="py-lineno"> 62</tt>  <tt class="py-line">        <tt class="py-docstring">"""Set multiple sources at once. Which of the sources is used is</tt> </tt>
+<a name="L63"></a><tt class="py-lineno"> 63</tt>  <tt class="py-line"><tt class="py-docstring">        selected by the browser depending on which file formats it supports.</tt> </tt>
+<a name="L64"></a><tt class="py-lineno"> 64</tt>  <tt class="py-line"><tt class="py-docstring">        See &lt;a</tt> </tt>
+<a name="L65"></a><tt class="py-lineno"> 65</tt>  <tt class="py-line"><tt class="py-docstring">        href="http://en.wikipedia.org/wiki/HTML5_video#Table"&gt;wikipedia&lt;/a&gt;</tt> </tt>
+<a name="L66"></a><tt class="py-lineno"> 66</tt>  <tt class="py-line"><tt class="py-docstring">        for a table of formats supported by different browsers.</tt> </tt>
+<a name="L67"></a><tt class="py-lineno"> 67</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L68"></a><tt class="py-lineno"> 68</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_sources</tt><tt class="py-op">.</tt><tt id="link-14" class="py-name" targets="Method muntjac.data.util.list_set.ListSet.extend()=muntjac.data.util.list_set.ListSet-class.html#extend"><a title="muntjac.data.util.list_set.ListSet.extend" class="py-name" href="#" onclick="return doclink('link-14', 'extend', 'link-14');">extend</a></tt><tt class="py-op">(</tt><tt class="py-name">sources</tt><tt class="py-op">)</tt> </tt>
+<a name="L69"></a><tt class="py-lineno"> 69</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-15" class="py-name"><a title="muntjac.data.buffered.SourceException.requestRepaint
+muntjac.data.validator.InvalidValueException.requestRepaint
+muntjac.event.action_manager.ActionManager.requestRepaint
+muntjac.terminal.composite_error_message.CompositeErrorMessage.requestRepaint
+muntjac.terminal.error_message.IErrorMessage.requestRepaint
+muntjac.terminal.paintable.IPaintable.requestRepaint
+muntjac.terminal.sys_error.SysError.requestRepaint
+muntjac.terminal.user_error.UserError.requestRepaint
+muntjac.ui.abstract_component.AbstractComponent.requestRepaint
+muntjac.ui.select.Select.requestRepaint
+muntjac.ui.table.Table.requestRepaint
+muntjac.ui.tree.Tree.requestRepaint
+muntjac.ui.upload.Upload.requestRepaint" class="py-name" href="#" onclick="return doclink('link-15', 'requestRepaint', 'link-13');">requestRepaint</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L70"></a><tt class="py-lineno"> 70</tt>  <tt class="py-line"> </tt>
+<a name="L71"></a><tt class="py-lineno"> 71</tt>  <tt class="py-line"> </tt>
+<a name="AbstractMedia.getSources"></a><div id="AbstractMedia.getSources-def"><a name="L72"></a><tt class="py-lineno"> 72</tt> <a class="py-toggle" href="#" id="AbstractMedia.getSources-toggle" onclick="return toggle('AbstractMedia.getSources');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.abstract_media.AbstractMedia-class.html#getSources">getSources</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AbstractMedia.getSources-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="AbstractMedia.getSources-expanded"><a name="L73"></a><tt class="py-lineno"> 73</tt>  <tt class="py-line">        <tt class="py-docstring">"""@return: The sources pointed to in this media."""</tt> </tt>
+<a name="L74"></a><tt class="py-lineno"> 74</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">list</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_sources</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L75"></a><tt class="py-lineno"> 75</tt>  <tt class="py-line"> </tt>
+<a name="L76"></a><tt class="py-lineno"> 76</tt>  <tt class="py-line"> </tt>
+<a name="AbstractMedia.setShowControls"></a><div id="AbstractMedia.setShowControls-def"><a name="L77"></a><tt class="py-lineno"> 77</tt> <a class="py-toggle" href="#" id="AbstractMedia.setShowControls-toggle" onclick="return toggle('AbstractMedia.setShowControls');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.abstract_media.AbstractMedia-class.html#setShowControls">setShowControls</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">showControls</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AbstractMedia.setShowControls-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="AbstractMedia.setShowControls-expanded"><a name="L78"></a><tt class="py-lineno"> 78</tt>  <tt class="py-line">        <tt class="py-docstring">"""Sets whether or not the browser should show native media controls.</tt> </tt>
+<a name="L79"></a><tt class="py-lineno"> 79</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L80"></a><tt class="py-lineno"> 80</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_showControls</tt> <tt class="py-op">=</tt> <tt class="py-name">showControls</tt> </tt>
+<a name="L81"></a><tt class="py-lineno"> 81</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-16" class="py-name"><a title="muntjac.data.buffered.SourceException.requestRepaint
+muntjac.data.validator.InvalidValueException.requestRepaint
+muntjac.event.action_manager.ActionManager.requestRepaint
+muntjac.terminal.composite_error_message.CompositeErrorMessage.requestRepaint
+muntjac.terminal.error_message.IErrorMessage.requestRepaint
+muntjac.terminal.paintable.IPaintable.requestRepaint
+muntjac.terminal.sys_error.SysError.requestRepaint
+muntjac.terminal.user_error.UserError.requestRepaint
+muntjac.ui.abstract_component.AbstractComponent.requestRepaint
+muntjac.ui.select.Select.requestRepaint
+muntjac.ui.table.Table.requestRepaint
+muntjac.ui.tree.Tree.requestRepaint
+muntjac.ui.upload.Upload.requestRepaint" class="py-name" href="#" onclick="return doclink('link-16', 'requestRepaint', 'link-13');">requestRepaint</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L82"></a><tt class="py-lineno"> 82</tt>  <tt class="py-line"> </tt>
+<a name="L83"></a><tt class="py-lineno"> 83</tt>  <tt class="py-line"> </tt>
+<a name="AbstractMedia.isShowControls"></a><div id="AbstractMedia.isShowControls-def"><a name="L84"></a><tt class="py-lineno"> 84</tt> <a class="py-toggle" href="#" id="AbstractMedia.isShowControls-toggle" onclick="return toggle('AbstractMedia.isShowControls');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.abstract_media.AbstractMedia-class.html#isShowControls">isShowControls</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AbstractMedia.isShowControls-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="AbstractMedia.isShowControls-expanded"><a name="L85"></a><tt class="py-lineno"> 85</tt>  <tt class="py-line">        <tt class="py-docstring">"""@return: true if the browser is to show native media controls."""</tt> </tt>
+<a name="L86"></a><tt class="py-lineno"> 86</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_showControls</tt> </tt>
+</div><a name="L87"></a><tt class="py-lineno"> 87</tt>  <tt class="py-line"> </tt>
+<a name="L88"></a><tt class="py-lineno"> 88</tt>  <tt class="py-line"> </tt>
+<a name="AbstractMedia.setAltText"></a><div id="AbstractMedia.setAltText-def"><a name="L89"></a><tt class="py-lineno"> 89</tt> <a class="py-toggle" href="#" id="AbstractMedia.setAltText-toggle" onclick="return toggle('AbstractMedia.setAltText');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.abstract_media.AbstractMedia-class.html#setAltText">setAltText</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">text</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AbstractMedia.setAltText-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="AbstractMedia.setAltText-expanded"><a name="L90"></a><tt class="py-lineno"> 90</tt>  <tt class="py-line">        <tt class="py-docstring">"""Sets the alternative text to be displayed if the browser does not</tt> </tt>
+<a name="L91"></a><tt class="py-lineno"> 91</tt>  <tt class="py-line"><tt class="py-docstring">        support HTML5. This text is rendered as HTML if</tt> </tt>
+<a name="L92"></a><tt class="py-lineno"> 92</tt>  <tt class="py-line"><tt class="py-docstring">        L{setHtmlContentAllowed} is set to true. With HTML rendering, this</tt> </tt>
+<a name="L93"></a><tt class="py-lineno"> 93</tt>  <tt class="py-line"><tt class="py-docstring">        method can also be used to implement fallback to a flash-based player,</tt> </tt>
+<a name="L94"></a><tt class="py-lineno"> 94</tt>  <tt class="py-line"><tt class="py-docstring">        see the &lt;a href=</tt> </tt>
+<a name="L95"></a><tt class="py-lineno"> 95</tt>  <tt class="py-line"><tt class="py-docstring">        "https://developer.mozilla.org/En/Using_audio_and_video_in_Firefox#Using_Flash"</tt> </tt>
+<a name="L96"></a><tt class="py-lineno"> 96</tt>  <tt class="py-line"><tt class="py-docstring">        &gt;Mozilla Developer Network&lt;/a&gt; for details.</tt> </tt>
+<a name="L97"></a><tt class="py-lineno"> 97</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L98"></a><tt class="py-lineno"> 98</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_altText</tt> <tt class="py-op">=</tt> <tt class="py-name">text</tt> </tt>
+<a name="L99"></a><tt class="py-lineno"> 99</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-17" class="py-name"><a title="muntjac.data.buffered.SourceException.requestRepaint
+muntjac.data.validator.InvalidValueException.requestRepaint
+muntjac.event.action_manager.ActionManager.requestRepaint
+muntjac.terminal.composite_error_message.CompositeErrorMessage.requestRepaint
+muntjac.terminal.error_message.IErrorMessage.requestRepaint
+muntjac.terminal.paintable.IPaintable.requestRepaint
+muntjac.terminal.sys_error.SysError.requestRepaint
+muntjac.terminal.user_error.UserError.requestRepaint
+muntjac.ui.abstract_component.AbstractComponent.requestRepaint
+muntjac.ui.select.Select.requestRepaint
+muntjac.ui.table.Table.requestRepaint
+muntjac.ui.tree.Tree.requestRepaint
+muntjac.ui.upload.Upload.requestRepaint" class="py-name" href="#" onclick="return doclink('link-17', 'requestRepaint', 'link-13');">requestRepaint</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L100"></a><tt class="py-lineno">100</tt>  <tt class="py-line"> </tt>
+<a name="L101"></a><tt class="py-lineno">101</tt>  <tt class="py-line"> </tt>
+<a name="AbstractMedia.getAltText"></a><div id="AbstractMedia.getAltText-def"><a name="L102"></a><tt class="py-lineno">102</tt> <a class="py-toggle" href="#" id="AbstractMedia.getAltText-toggle" onclick="return toggle('AbstractMedia.getAltText');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.abstract_media.AbstractMedia-class.html#getAltText">getAltText</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AbstractMedia.getAltText-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="AbstractMedia.getAltText-expanded"><a name="L103"></a><tt class="py-lineno">103</tt>  <tt class="py-line">        <tt class="py-docstring">"""@return: The text/html that is displayed when a browser doesn't</tt> </tt>
+<a name="L104"></a><tt class="py-lineno">104</tt>  <tt class="py-line"><tt class="py-docstring">        support HTML5.</tt> </tt>
+<a name="L105"></a><tt class="py-lineno">105</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L106"></a><tt class="py-lineno">106</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_altText</tt> </tt>
+</div><a name="L107"></a><tt class="py-lineno">107</tt>  <tt class="py-line"> </tt>
+<a name="L108"></a><tt class="py-lineno">108</tt>  <tt class="py-line"> </tt>
+<a name="AbstractMedia.setHtmlContentAllowed"></a><div id="AbstractMedia.setHtmlContentAllowed-def"><a name="L109"></a><tt class="py-lineno">109</tt> <a class="py-toggle" href="#" id="AbstractMedia.setHtmlContentAllowed-toggle" onclick="return toggle('AbstractMedia.setHtmlContentAllowed');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.abstract_media.AbstractMedia-class.html#setHtmlContentAllowed">setHtmlContentAllowed</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">htmlContentAllowed</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AbstractMedia.setHtmlContentAllowed-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="AbstractMedia.setHtmlContentAllowed-expanded"><a name="L110"></a><tt class="py-lineno">110</tt>  <tt class="py-line">        <tt class="py-docstring">"""Set whether the alternative text (L{setAltText}) is rendered as</tt> </tt>
+<a name="L111"></a><tt class="py-lineno">111</tt>  <tt class="py-line"><tt class="py-docstring">        HTML or not.</tt> </tt>
+<a name="L112"></a><tt class="py-lineno">112</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L113"></a><tt class="py-lineno">113</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_htmlContentAllowed</tt> <tt class="py-op">=</tt> <tt class="py-name">htmlContentAllowed</tt> </tt>
+<a name="L114"></a><tt class="py-lineno">114</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-18" class="py-name"><a title="muntjac.data.buffered.SourceException.requestRepaint
+muntjac.data.validator.InvalidValueException.requestRepaint
+muntjac.event.action_manager.ActionManager.requestRepaint
+muntjac.terminal.composite_error_message.CompositeErrorMessage.requestRepaint
+muntjac.terminal.error_message.IErrorMessage.requestRepaint
+muntjac.terminal.paintable.IPaintable.requestRepaint
+muntjac.terminal.sys_error.SysError.requestRepaint
+muntjac.terminal.user_error.UserError.requestRepaint
+muntjac.ui.abstract_component.AbstractComponent.requestRepaint
+muntjac.ui.select.Select.requestRepaint
+muntjac.ui.table.Table.requestRepaint
+muntjac.ui.tree.Tree.requestRepaint
+muntjac.ui.upload.Upload.requestRepaint" class="py-name" href="#" onclick="return doclink('link-18', 'requestRepaint', 'link-13');">requestRepaint</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L115"></a><tt class="py-lineno">115</tt>  <tt class="py-line"> </tt>
+<a name="L116"></a><tt class="py-lineno">116</tt>  <tt class="py-line"> </tt>
+<a name="AbstractMedia.isHtmlContentAllowed"></a><div id="AbstractMedia.isHtmlContentAllowed-def"><a name="L117"></a><tt class="py-lineno">117</tt> <a class="py-toggle" href="#" id="AbstractMedia.isHtmlContentAllowed-toggle" onclick="return toggle('AbstractMedia.isHtmlContentAllowed');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.abstract_media.AbstractMedia-class.html#isHtmlContentAllowed">isHtmlContentAllowed</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AbstractMedia.isHtmlContentAllowed-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="AbstractMedia.isHtmlContentAllowed-expanded"><a name="L118"></a><tt class="py-lineno">118</tt>  <tt class="py-line">        <tt class="py-docstring">"""@return: true if the alternative text (L{setAltText}) is to be</tt> </tt>
+<a name="L119"></a><tt class="py-lineno">119</tt>  <tt class="py-line"><tt class="py-docstring">        rendered as HTML.</tt> </tt>
+<a name="L120"></a><tt class="py-lineno">120</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L121"></a><tt class="py-lineno">121</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_htmlContentAllowed</tt> </tt>
+</div><a name="L122"></a><tt class="py-lineno">122</tt>  <tt class="py-line"> </tt>
+<a name="L123"></a><tt class="py-lineno">123</tt>  <tt class="py-line"> </tt>
+<a name="AbstractMedia.setAutoplay"></a><div id="AbstractMedia.setAutoplay-def"><a name="L124"></a><tt class="py-lineno">124</tt> <a class="py-toggle" href="#" id="AbstractMedia.setAutoplay-toggle" onclick="return toggle('AbstractMedia.setAutoplay');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.abstract_media.AbstractMedia-class.html#setAutoplay">setAutoplay</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">autoplay</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AbstractMedia.setAutoplay-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="AbstractMedia.setAutoplay-expanded"><a name="L125"></a><tt class="py-lineno">125</tt>  <tt class="py-line">        <tt class="py-docstring">"""Sets whether the media is to automatically start playback when</tt> </tt>
+<a name="L126"></a><tt class="py-lineno">126</tt>  <tt class="py-line"><tt class="py-docstring">        enough data has been loaded.</tt> </tt>
+<a name="L127"></a><tt class="py-lineno">127</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L128"></a><tt class="py-lineno">128</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_autoplay</tt> <tt class="py-op">=</tt> <tt class="py-name">autoplay</tt> </tt>
+<a name="L129"></a><tt class="py-lineno">129</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-19" class="py-name"><a title="muntjac.data.buffered.SourceException.requestRepaint
+muntjac.data.validator.InvalidValueException.requestRepaint
+muntjac.event.action_manager.ActionManager.requestRepaint
+muntjac.terminal.composite_error_message.CompositeErrorMessage.requestRepaint
+muntjac.terminal.error_message.IErrorMessage.requestRepaint
+muntjac.terminal.paintable.IPaintable.requestRepaint
+muntjac.terminal.sys_error.SysError.requestRepaint
+muntjac.terminal.user_error.UserError.requestRepaint
+muntjac.ui.abstract_component.AbstractComponent.requestRepaint
+muntjac.ui.select.Select.requestRepaint
+muntjac.ui.table.Table.requestRepaint
+muntjac.ui.tree.Tree.requestRepaint
+muntjac.ui.upload.Upload.requestRepaint" class="py-name" href="#" onclick="return doclink('link-19', 'requestRepaint', 'link-13');">requestRepaint</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L130"></a><tt class="py-lineno">130</tt>  <tt class="py-line"> </tt>
+<a name="L131"></a><tt class="py-lineno">131</tt>  <tt class="py-line"> </tt>
+<a name="AbstractMedia.isAutoplay"></a><div id="AbstractMedia.isAutoplay-def"><a name="L132"></a><tt class="py-lineno">132</tt> <a class="py-toggle" href="#" id="AbstractMedia.isAutoplay-toggle" onclick="return toggle('AbstractMedia.isAutoplay');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.abstract_media.AbstractMedia-class.html#isAutoplay">isAutoplay</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AbstractMedia.isAutoplay-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="AbstractMedia.isAutoplay-expanded"><a name="L133"></a><tt class="py-lineno">133</tt>  <tt class="py-line">        <tt class="py-docstring">"""@return: true if the media is set to automatically start playback.</tt> </tt>
+<a name="L134"></a><tt class="py-lineno">134</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L135"></a><tt class="py-lineno">135</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_autoplay</tt> </tt>
+</div><a name="L136"></a><tt class="py-lineno">136</tt>  <tt class="py-line"> </tt>
+<a name="L137"></a><tt class="py-lineno">137</tt>  <tt class="py-line"> </tt>
+<a name="AbstractMedia.setMuted"></a><div id="AbstractMedia.setMuted-def"><a name="L138"></a><tt class="py-lineno">138</tt> <a class="py-toggle" href="#" id="AbstractMedia.setMuted-toggle" onclick="return toggle('AbstractMedia.setMuted');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.abstract_media.AbstractMedia-class.html#setMuted">setMuted</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">muted</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AbstractMedia.setMuted-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="AbstractMedia.setMuted-expanded"><a name="L139"></a><tt class="py-lineno">139</tt>  <tt class="py-line">        <tt class="py-docstring">"""Set whether to mute the audio or not.</tt> </tt>
+<a name="L140"></a><tt class="py-lineno">140</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L141"></a><tt class="py-lineno">141</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_muted</tt> <tt class="py-op">=</tt> <tt class="py-name">muted</tt> </tt>
+<a name="L142"></a><tt class="py-lineno">142</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-20" class="py-name"><a title="muntjac.data.buffered.SourceException.requestRepaint
+muntjac.data.validator.InvalidValueException.requestRepaint
+muntjac.event.action_manager.ActionManager.requestRepaint
+muntjac.terminal.composite_error_message.CompositeErrorMessage.requestRepaint
+muntjac.terminal.error_message.IErrorMessage.requestRepaint
+muntjac.terminal.paintable.IPaintable.requestRepaint
+muntjac.terminal.sys_error.SysError.requestRepaint
+muntjac.terminal.user_error.UserError.requestRepaint
+muntjac.ui.abstract_component.AbstractComponent.requestRepaint
+muntjac.ui.select.Select.requestRepaint
+muntjac.ui.table.Table.requestRepaint
+muntjac.ui.tree.Tree.requestRepaint
+muntjac.ui.upload.Upload.requestRepaint" class="py-name" href="#" onclick="return doclink('link-20', 'requestRepaint', 'link-13');">requestRepaint</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L143"></a><tt class="py-lineno">143</tt>  <tt class="py-line"> </tt>
+<a name="L144"></a><tt class="py-lineno">144</tt>  <tt class="py-line"> </tt>
+<a name="AbstractMedia.isMuted"></a><div id="AbstractMedia.isMuted-def"><a name="L145"></a><tt class="py-lineno">145</tt> <a class="py-toggle" href="#" id="AbstractMedia.isMuted-toggle" onclick="return toggle('AbstractMedia.isMuted');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.abstract_media.AbstractMedia-class.html#isMuted">isMuted</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AbstractMedia.isMuted-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="AbstractMedia.isMuted-expanded"><a name="L146"></a><tt class="py-lineno">146</tt>  <tt class="py-line">        <tt class="py-docstring">"""@return: true if the audio is muted."""</tt> </tt>
+<a name="L147"></a><tt class="py-lineno">147</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_muted</tt> </tt>
+</div><a name="L148"></a><tt class="py-lineno">148</tt>  <tt class="py-line"> </tt>
+<a name="L149"></a><tt class="py-lineno">149</tt>  <tt class="py-line"> </tt>
+<a name="AbstractMedia.pause"></a><div id="AbstractMedia.pause-def"><a name="L150"></a><tt class="py-lineno">150</tt> <a class="py-toggle" href="#" id="AbstractMedia.pause-toggle" onclick="return toggle('AbstractMedia.pause');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.abstract_media.AbstractMedia-class.html#pause">pause</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AbstractMedia.pause-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="AbstractMedia.pause-expanded"><a name="L151"></a><tt class="py-lineno">151</tt>  <tt class="py-line">        <tt class="py-docstring">"""Pauses the media."""</tt> </tt>
+<a name="L152"></a><tt class="py-lineno">152</tt>  <tt class="py-line">        <tt class="py-comment"># cancel any possible play command</tt> </tt>
+<a name="L153"></a><tt class="py-lineno">153</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_play</tt> <tt class="py-op">=</tt> <tt class="py-name">False</tt> </tt>
+<a name="L154"></a><tt class="py-lineno">154</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_pause</tt> <tt class="py-op">=</tt> <tt class="py-name">True</tt> </tt>
+<a name="L155"></a><tt class="py-lineno">155</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-21" class="py-name"><a title="muntjac.data.buffered.SourceException.requestRepaint
+muntjac.data.validator.InvalidValueException.requestRepaint
+muntjac.event.action_manager.ActionManager.requestRepaint
+muntjac.terminal.composite_error_message.CompositeErrorMessage.requestRepaint
+muntjac.terminal.error_message.IErrorMessage.requestRepaint
+muntjac.terminal.paintable.IPaintable.requestRepaint
+muntjac.terminal.sys_error.SysError.requestRepaint
+muntjac.terminal.user_error.UserError.requestRepaint
+muntjac.ui.abstract_component.AbstractComponent.requestRepaint
+muntjac.ui.select.Select.requestRepaint
+muntjac.ui.table.Table.requestRepaint
+muntjac.ui.tree.Tree.requestRepaint
+muntjac.ui.upload.Upload.requestRepaint" class="py-name" href="#" onclick="return doclink('link-21', 'requestRepaint', 'link-13');">requestRepaint</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L156"></a><tt class="py-lineno">156</tt>  <tt class="py-line"> </tt>
+<a name="L157"></a><tt class="py-lineno">157</tt>  <tt class="py-line"> </tt>
+<a name="AbstractMedia.play"></a><div id="AbstractMedia.play-def"><a name="L158"></a><tt class="py-lineno">158</tt> <a class="py-toggle" href="#" id="AbstractMedia.play-toggle" onclick="return toggle('AbstractMedia.play');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.abstract_media.AbstractMedia-class.html#play">play</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AbstractMedia.play-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="AbstractMedia.play-expanded"><a name="L159"></a><tt class="py-lineno">159</tt>  <tt class="py-line">        <tt class="py-docstring">"""Starts playback of the media."""</tt> </tt>
+<a name="L160"></a><tt class="py-lineno">160</tt>  <tt class="py-line">        <tt class="py-comment"># cancel any possible pause command.</tt> </tt>
+<a name="L161"></a><tt class="py-lineno">161</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_pause</tt> <tt class="py-op">=</tt> <tt class="py-name">False</tt> </tt>
+<a name="L162"></a><tt class="py-lineno">162</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_play</tt> <tt class="py-op">=</tt> <tt class="py-name">True</tt> </tt>
+<a name="L163"></a><tt class="py-lineno">163</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-22" class="py-name"><a title="muntjac.data.buffered.SourceException.requestRepaint
+muntjac.data.validator.InvalidValueException.requestRepaint
+muntjac.event.action_manager.ActionManager.requestRepaint
+muntjac.terminal.composite_error_message.CompositeErrorMessage.requestRepaint
+muntjac.terminal.error_message.IErrorMessage.requestRepaint
+muntjac.terminal.paintable.IPaintable.requestRepaint
+muntjac.terminal.sys_error.SysError.requestRepaint
+muntjac.terminal.user_error.UserError.requestRepaint
+muntjac.ui.abstract_component.AbstractComponent.requestRepaint
+muntjac.ui.select.Select.requestRepaint
+muntjac.ui.table.Table.requestRepaint
+muntjac.ui.tree.Tree.requestRepaint
+muntjac.ui.upload.Upload.requestRepaint" class="py-name" href="#" onclick="return doclink('link-22', 'requestRepaint', 'link-13');">requestRepaint</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L164"></a><tt class="py-lineno">164</tt>  <tt class="py-line"> </tt>
+<a name="L165"></a><tt class="py-lineno">165</tt>  <tt class="py-line"> </tt>
+<a name="AbstractMedia.paintContent"></a><div id="AbstractMedia.paintContent-def"><a name="L166"></a><tt class="py-lineno">166</tt> <a class="py-toggle" href="#" id="AbstractMedia.paintContent-toggle" onclick="return toggle('AbstractMedia.paintContent');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.abstract_media.AbstractMedia-class.html#paintContent">paintContent</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">target</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AbstractMedia.paintContent-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="AbstractMedia.paintContent-expanded"><a name="L167"></a><tt class="py-lineno">167</tt>  <tt class="py-line">        <tt class="py-name">super</tt><tt class="py-op">(</tt><tt id="link-23" class="py-name" targets="Class muntjac.ui.abstract_media.AbstractMedia=muntjac.ui.abstract_media.AbstractMedia-class.html"><a title="muntjac.ui.abstract_media.AbstractMedia" class="py-name" href="#" onclick="return doclink('link-23', 'AbstractMedia', 'link-23');">AbstractMedia</a></tt><tt class="py-op">,</tt> <tt class="py-name">self</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt id="link-24" class="py-name" targets="Method muntjac.event.dd.acceptcriteria.and_.And.paintContent()=muntjac.event.dd.acceptcriteria.and_.And-class.html#paintContent,Method muntjac.event.dd.acceptcriteria.client_side_criterion.ClientSideCriterion.paintContent()=muntjac.event.dd.acceptcriteria.client_side_criterion.ClientSideCriterion-class.html#paintContent,Method muntjac.event.dd.acceptcriteria.contains_data_flavor.ContainsDataFlavor.paintContent()=muntjac.event.dd.acceptcriteria.contains_data_flavor.ContainsDataFlavor-class.html#paintContent,Method muntjac.event.dd.acceptcriteria.not_.Not.paintContent()=muntjac.event.dd.acceptcriteria.not_.Not-class.html#paintContent,Method muntjac.event.dd.acceptcriteria.or_.Or.paintContent()=muntjac.event.dd.acceptcriteria.or_.Or-class.html#paintContent,Method muntjac.event.dd.acceptcriteria.server_side_criterion.ServerSideCriterion.paintContent()=muntjac.event.dd.acceptcriteria.server_side_criterion.ServerSideCriterion-class.html#paintContent,Method muntjac.event.dd.acceptcriteria.source_is.SourceIs.paintContent()=muntjac.event.dd.acceptcriteria.source_is.SourceIs-class.html#paintContent,Method muntjac.event.dd.acceptcriteria.target_detail_is.TargetDetailIs.paintContent()=muntjac.event.dd.acceptcriteria.target_detail_is.TargetDetailIs-class.html#paintContent,Method muntjac.ui.absolute_layout.AbsoluteLayout.paintContent()=muntjac.ui.absolute_layout.AbsoluteLayout-class.html#paintContent,Method muntjac.ui.abstract_component.AbstractComponent.paintContent()=muntjac.ui.abstract_component.AbstractComponent-class.html#paintContent,Method muntjac.ui.abstract_field.AbstractField.paintContent()=muntjac.ui.abstract_field.AbstractField-class.html#paintContent,Method muntjac.ui.abstract_layout.AbstractLayout.paintContent()=muntjac.ui.abstract_layout.AbstractLayout-class.html#paintContent,Method muntjac.ui.abstract_media.AbstractMedia.paintContent()=muntjac.ui.abstract_media.AbstractMedia-class.html#paintContent,Method muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.paintContent()=muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout-class.html#paintContent,Method muntjac.ui.abstract_select.AbstractItemSetCriterion.paintContent()=muntjac.ui.abstract_select.AbstractItemSetCriterion-class.html#paintContent,Method muntjac.ui.abstract_select.AbstractSelect.paintContent()=muntjac.ui.abstract_select.AbstractSelect-class.html#paintContent,Method muntjac.ui.abstract_split_panel.AbstractSplitPanel.paintContent()=muntjac.ui.abstract_split_panel.AbstractSplitPanel-class.html#paintContent,Method muntjac.ui.abstract_text_field.AbstractTextField.paintContent()=muntjac.ui.abstract_text_field.AbstractTextField-class.html#paintContent,Method muntjac.ui.button.Button.paintContent()=muntjac.ui.button.Button-class.html#paintContent,Method muntjac.ui.combo_box.ComboBox.paintContent()=muntjac.ui.combo_box.ComboBox-class.html#paintContent,Method muntjac.ui.css_layout.CssLayout.paintContent()=muntjac.ui.css_layout.CssLayout-class.html#paintContent,Method muntjac.ui.custom_component.CustomComponent.paintContent()=muntjac.ui.custom_component.CustomComponent-class.html#paintContent,Method muntjac.ui.custom_layout.CustomLayout.paintContent()=muntjac.ui.custom_layout.CustomLayout-class.html#paintContent,Method muntjac.ui.date_field.DateField.paintContent()=muntjac.ui.date_field.DateField-class.html#paintContent,Method muntjac.ui.drag_and_drop_wrapper.DragAndDropWrapper.paintContent()=muntjac.ui.drag_and_drop_wrapper.DragAndDropWrapper-class.html#paintContent,Method muntjac.ui.embedded.Embedded.paintContent()=muntjac.ui.embedded.Embedded-class.html#paintContent,Method muntjac.ui.form.Form.paintContent()=muntjac.ui.form.Form-class.html#paintContent,Method muntjac.ui.grid_layout.GridLayout.paintContent()=muntjac.ui.grid_layout.GridLayout-class.html#paintContent,Method muntjac.ui.label.Label.paintContent()=muntjac.ui.label.Label-class.html#paintContent,Method muntjac.ui.link.Link.paintContent()=muntjac.ui.link.Link-class.html#paintContent,Method muntjac.ui.list_select.ListSelect.paintContent()=muntjac.ui.list_select.ListSelect-class.html#paintContent,Method muntjac.ui.menu_bar.MenuBar.paintContent()=muntjac.ui.menu_bar.MenuBar-class.html#paintContent,Method muntjac.ui.native_select.NativeSelect.paintContent()=muntjac.ui.native_select.NativeSelect-class.html#paintContent,Method muntjac.ui.option_group.OptionGroup.paintContent()=muntjac.ui.option_group.OptionGroup-class.html#paintContent,Method muntjac.ui.ordered_layout.OrderedLayout.paintContent()=muntjac.ui.ordered_layout.OrderedLayout-class.html#paintContent,Method muntjac.ui.panel.Panel.paintContent()=muntjac.ui.panel.Panel-class.html#paintContent,Method muntjac.ui.popup_date_field.PopupDateField.paintContent()=muntjac.ui.popup_date_field.PopupDateField-class.html#paintContent,Method muntjac.ui.popup_view.PopupView.paintContent()=muntjac.ui.popup_view.PopupView-class.html#paintContent,Method muntjac.ui.progress_indicator.ProgressIndicator.paintContent()=muntjac.ui.progress_indicator.ProgressIndicator-class.html#paintContent,Method muntjac.ui.rich_text_area.RichTextArea.paintContent()=muntjac.ui.rich_text_area.RichTextArea-class.html#paintContent,Method muntjac.ui.select.Select.paintContent()=muntjac.ui.select.Select-class.html#paintContent,Method muntjac.ui.slider.Slider.paintContent()=muntjac.ui.slider.Slider-class.html#paintContent,Method muntjac.ui.split_panel.SplitPanel.paintContent()=muntjac.ui.split_panel.SplitPanel-class.html#paintContent,Method muntjac.ui.tab_sheet.TabSheet.paintContent()=muntjac.ui.tab_sheet.TabSheet-class.html#paintContent,Method muntjac.ui.table.Table.paintContent()=muntjac.ui.table.Table-class.html#paintContent,Method muntjac.ui.text_area.TextArea.paintContent()=muntjac.ui.text_area.TextArea-class.html#paintContent,Method muntjac.ui.text_field.TextField.paintContent()=muntjac.ui.text_field.TextField-class.html#paintContent,Method muntjac.ui.tree.TargetInSubtree.paintContent()=muntjac.ui.tree.TargetInSubtree-class.html#paintContent,Method muntjac.ui.tree.Tree.paintContent()=muntjac.ui.tree.Tree-class.html#paintContent,Method muntjac.ui.tree_table.TreeTable.paintContent()=muntjac.ui.tree_table.TreeTable-class.html#paintContent,Method muntjac.ui.twin_col_select.TwinColSelect.paintContent()=muntjac.ui.twin_col_select.TwinColSelect-class.html#paintContent,Method muntjac.ui.upload.Upload.paintContent()=muntjac.ui.upload.Upload-class.html#paintContent,Method muntjac.ui.uri_fragment_utility.UriFragmentUtility.paintContent()=muntjac.ui.uri_fragment_utility.UriFragmentUtility-class.html#paintContent,Method muntjac.ui.video.Video.paintContent()=muntjac.ui.video.Video-class.html#paintContent,Method muntjac.ui.window.OpenResource.paintContent()=muntjac.ui.window.OpenResource-class.html#paintContent,Method muntjac.ui.window.Window.paintContent()=muntjac.ui.window.Window-class.html#paintContent"><a title="muntjac.event.dd.acceptcriteria.and_.And.paintContent
+muntjac.event.dd.acceptcriteria.client_side_criterion.ClientSideCriterion.paintContent
+muntjac.event.dd.acceptcriteria.contains_data_flavor.ContainsDataFlavor.paintContent
+muntjac.event.dd.acceptcriteria.not_.Not.paintContent
+muntjac.event.dd.acceptcriteria.or_.Or.paintContent
+muntjac.event.dd.acceptcriteria.server_side_criterion.ServerSideCriterion.paintContent
+muntjac.event.dd.acceptcriteria.source_is.SourceIs.paintContent
+muntjac.event.dd.acceptcriteria.target_detail_is.TargetDetailIs.paintContent
+muntjac.ui.absolute_layout.AbsoluteLayout.paintContent
+muntjac.ui.abstract_component.AbstractComponent.paintContent
+muntjac.ui.abstract_field.AbstractField.paintContent
+muntjac.ui.abstract_layout.AbstractLayout.paintContent
+muntjac.ui.abstract_media.AbstractMedia.paintContent
+muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.paintContent
+muntjac.ui.abstract_select.AbstractItemSetCriterion.paintContent
+muntjac.ui.abstract_select.AbstractSelect.paintContent
+muntjac.ui.abstract_split_panel.AbstractSplitPanel.paintContent
+muntjac.ui.abstract_text_field.AbstractTextField.paintContent
+muntjac.ui.button.Button.paintContent
+muntjac.ui.combo_box.ComboBox.paintContent
+muntjac.ui.css_layout.CssLayout.paintContent
+muntjac.ui.custom_component.CustomComponent.paintContent
+muntjac.ui.custom_layout.CustomLayout.paintContent
+muntjac.ui.date_field.DateField.paintContent
+muntjac.ui.drag_and_drop_wrapper.DragAndDropWrapper.paintContent
+muntjac.ui.embedded.Embedded.paintContent
+muntjac.ui.form.Form.paintContent
+muntjac.ui.grid_layout.GridLayout.paintContent
+muntjac.ui.label.Label.paintContent
+muntjac.ui.link.Link.paintContent
+muntjac.ui.list_select.ListSelect.paintContent
+muntjac.ui.menu_bar.MenuBar.paintContent
+muntjac.ui.native_select.NativeSelect.paintContent
+muntjac.ui.option_group.OptionGroup.paintContent
+muntjac.ui.ordered_layout.OrderedLayout.paintContent
+muntjac.ui.panel.Panel.paintContent
+muntjac.ui.popup_date_field.PopupDateField.paintContent
+muntjac.ui.popup_view.PopupView.paintContent
+muntjac.ui.progress_indicator.ProgressIndicator.paintContent
+muntjac.ui.rich_text_area.RichTextArea.paintContent
+muntjac.ui.select.Select.paintContent
+muntjac.ui.slider.Slider.paintContent
+muntjac.ui.split_panel.SplitPanel.paintContent
+muntjac.ui.tab_sheet.TabSheet.paintContent
+muntjac.ui.table.Table.paintContent
+muntjac.ui.text_area.TextArea.paintContent
+muntjac.ui.text_field.TextField.paintContent
+muntjac.ui.tree.TargetInSubtree.paintContent
+muntjac.ui.tree.Tree.paintContent
+muntjac.ui.tree_table.TreeTable.paintContent
+muntjac.ui.twin_col_select.TwinColSelect.paintContent
+muntjac.ui.upload.Upload.paintContent
+muntjac.ui.uri_fragment_utility.UriFragmentUtility.paintContent
+muntjac.ui.video.Video.paintContent
+muntjac.ui.window.OpenResource.paintContent
+muntjac.ui.window.Window.paintContent" class="py-name" href="#" onclick="return doclink('link-24', 'paintContent', 'link-24');">paintContent</a></tt><tt class="py-op">(</tt><tt class="py-name">target</tt><tt class="py-op">)</tt> </tt>
+<a name="L168"></a><tt class="py-lineno">168</tt>  <tt class="py-line">        <tt class="py-name">target</tt><tt class="py-op">.</tt><tt id="link-25" class="py-name" targets="Method muntjac.terminal.gwt.server.json_paint_target.JsonPaintTarget.addAttribute()=muntjac.terminal.gwt.server.json_paint_target.JsonPaintTarget-class.html#addAttribute,Method muntjac.terminal.gwt.server.json_paint_target.JsonTag.addAttribute()=muntjac.terminal.gwt.server.json_paint_target.JsonTag-class.html#addAttribute,Method muntjac.terminal.paint_target.IPaintTarget.addAttribute()=muntjac.terminal.paint_target.IPaintTarget-class.html#addAttribute"><a title="muntjac.terminal.gwt.server.json_paint_target.JsonPaintTarget.addAttribute
+muntjac.terminal.gwt.server.json_paint_target.JsonTag.addAttribute
+muntjac.terminal.paint_target.IPaintTarget.addAttribute" class="py-name" href="#" onclick="return doclink('link-25', 'addAttribute', 'link-25');">addAttribute</a></tt><tt class="py-op">(</tt><tt id="link-26" class="py-name"><a title="muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase" class="py-name" href="#" onclick="return doclink('link-26', 'VMediaBase', 'link-10');">VMediaBase</a></tt><tt class="py-op">.</tt><tt id="link-27" class="py-name" targets="Variable muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase.ATTR_CONTROLS=muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase-class.html#ATTR_CONTROLS"><a title="muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase.ATTR_CONTROLS" class="py-name" href="#" onclick="return doclink('link-27', 'ATTR_CONTROLS', 'link-27');">ATTR_CONTROLS</a></tt><tt class="py-op">,</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-28" class="py-name" targets="Method muntjac.ui.abstract_media.AbstractMedia.isShowControls()=muntjac.ui.abstract_media.AbstractMedia-class.html#isShowControls"><a title="muntjac.ui.abstract_media.AbstractMedia.isShowControls" class="py-name" href="#" onclick="return doclink('link-28', 'isShowControls', 'link-28');">isShowControls</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L169"></a><tt class="py-lineno">169</tt>  <tt class="py-line"> </tt>
+<a name="L170"></a><tt class="py-lineno">170</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-29" class="py-name" targets="Method muntjac.ui.abstract_media.AbstractMedia.getAltText()=muntjac.ui.abstract_media.AbstractMedia-class.html#getAltText"><a title="muntjac.ui.abstract_media.AbstractMedia.getAltText" class="py-name" href="#" onclick="return doclink('link-29', 'getAltText', 'link-29');">getAltText</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L171"></a><tt class="py-lineno">171</tt>  <tt class="py-line">            <tt class="py-name">target</tt><tt class="py-op">.</tt><tt id="link-30" class="py-name"><a title="muntjac.terminal.gwt.server.json_paint_target.JsonPaintTarget.addAttribute
+muntjac.terminal.gwt.server.json_paint_target.JsonTag.addAttribute
+muntjac.terminal.paint_target.IPaintTarget.addAttribute" class="py-name" href="#" onclick="return doclink('link-30', 'addAttribute', 'link-25');">addAttribute</a></tt><tt class="py-op">(</tt><tt id="link-31" class="py-name"><a title="muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase" class="py-name" href="#" onclick="return doclink('link-31', 'VMediaBase', 'link-10');">VMediaBase</a></tt><tt class="py-op">.</tt><tt id="link-32" class="py-name" targets="Variable muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase.ATTR_ALT_TEXT=muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase-class.html#ATTR_ALT_TEXT"><a title="muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase.ATTR_ALT_TEXT" class="py-name" href="#" onclick="return doclink('link-32', 'ATTR_ALT_TEXT', 'link-32');">ATTR_ALT_TEXT</a></tt><tt class="py-op">,</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-33" class="py-name"><a title="muntjac.ui.abstract_media.AbstractMedia.getAltText" class="py-name" href="#" onclick="return doclink('link-33', 'getAltText', 'link-29');">getAltText</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L172"></a><tt class="py-lineno">172</tt>  <tt class="py-line"> </tt>
+<a name="L173"></a><tt class="py-lineno">173</tt>  <tt class="py-line">        <tt class="py-name">target</tt><tt class="py-op">.</tt><tt id="link-34" class="py-name"><a title="muntjac.terminal.gwt.server.json_paint_target.JsonPaintTarget.addAttribute
+muntjac.terminal.gwt.server.json_paint_target.JsonTag.addAttribute
+muntjac.terminal.paint_target.IPaintTarget.addAttribute" class="py-name" href="#" onclick="return doclink('link-34', 'addAttribute', 'link-25');">addAttribute</a></tt><tt class="py-op">(</tt><tt id="link-35" class="py-name"><a title="muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase" class="py-name" href="#" onclick="return doclink('link-35', 'VMediaBase', 'link-10');">VMediaBase</a></tt><tt class="py-op">.</tt><tt id="link-36" class="py-name" targets="Variable muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase.ATTR_HTML=muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase-class.html#ATTR_HTML"><a title="muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase.ATTR_HTML" class="py-name" href="#" onclick="return doclink('link-36', 'ATTR_HTML', 'link-36');">ATTR_HTML</a></tt><tt class="py-op">,</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-37" class="py-name" targets="Method muntjac.ui.abstract_media.AbstractMedia.isHtmlContentAllowed()=muntjac.ui.abstract_media.AbstractMedia-class.html#isHtmlContentAllowed,Method muntjac.ui.menu_bar.MenuBar.isHtmlContentAllowed()=muntjac.ui.menu_bar.MenuBar-class.html#isHtmlContentAllowed,Method muntjac.ui.option_group.OptionGroup.isHtmlContentAllowed()=muntjac.ui.option_group.OptionGroup-class.html#isHtmlContentAllowed,Method muntjac.ui.table.GeneratedRow.isHtmlContentAllowed()=muntjac.ui.table.GeneratedRow-class.html#isHtmlContentAllowed,Method muntjac.ui.window.Notification.isHtmlContentAllowed()=muntjac.ui.window.Notification-class.html#isHtmlContentAllowed"><a title="muntjac.ui.abstract_media.AbstractMedia.isHtmlContentAllowed
+muntjac.ui.menu_bar.MenuBar.isHtmlContentAllowed
+muntjac.ui.option_group.OptionGroup.isHtmlContentAllowed
+muntjac.ui.table.GeneratedRow.isHtmlContentAllowed
+muntjac.ui.window.Notification.isHtmlContentAllowed" class="py-name" href="#" onclick="return doclink('link-37', 'isHtmlContentAllowed', 'link-37');">isHtmlContentAllowed</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L174"></a><tt class="py-lineno">174</tt>  <tt class="py-line"> </tt>
+<a name="L175"></a><tt class="py-lineno">175</tt>  <tt class="py-line">        <tt class="py-name">target</tt><tt class="py-op">.</tt><tt id="link-38" class="py-name"><a title="muntjac.terminal.gwt.server.json_paint_target.JsonPaintTarget.addAttribute
+muntjac.terminal.gwt.server.json_paint_target.JsonTag.addAttribute
+muntjac.terminal.paint_target.IPaintTarget.addAttribute" class="py-name" href="#" onclick="return doclink('link-38', 'addAttribute', 'link-25');">addAttribute</a></tt><tt class="py-op">(</tt><tt id="link-39" class="py-name"><a title="muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase" class="py-name" href="#" onclick="return doclink('link-39', 'VMediaBase', 'link-10');">VMediaBase</a></tt><tt class="py-op">.</tt><tt id="link-40" class="py-name" targets="Variable muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase.ATTR_AUTOPLAY=muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase-class.html#ATTR_AUTOPLAY"><a title="muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase.ATTR_AUTOPLAY" class="py-name" href="#" onclick="return doclink('link-40', 'ATTR_AUTOPLAY', 'link-40');">ATTR_AUTOPLAY</a></tt><tt class="py-op">,</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-41" class="py-name" targets="Method muntjac.ui.abstract_media.AbstractMedia.isAutoplay()=muntjac.ui.abstract_media.AbstractMedia-class.html#isAutoplay"><a title="muntjac.ui.abstract_media.AbstractMedia.isAutoplay" class="py-name" href="#" onclick="return doclink('link-41', 'isAutoplay', 'link-41');">isAutoplay</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L176"></a><tt class="py-lineno">176</tt>  <tt class="py-line"> </tt>
+<a name="L177"></a><tt class="py-lineno">177</tt>  <tt class="py-line">        <tt class="py-keyword">for</tt> <tt class="py-name">r</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-42" class="py-name" targets="Method muntjac.ui.abstract_media.AbstractMedia.getSources()=muntjac.ui.abstract_media.AbstractMedia-class.html#getSources"><a title="muntjac.ui.abstract_media.AbstractMedia.getSources" class="py-name" href="#" onclick="return doclink('link-42', 'getSources', 'link-42');">getSources</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L178"></a><tt class="py-lineno">178</tt>  <tt class="py-line">            <tt class="py-name">target</tt><tt class="py-op">.</tt><tt id="link-43" class="py-name" targets="Method muntjac.terminal.gwt.server.json_paint_target.JsonPaintTarget.startTag()=muntjac.terminal.gwt.server.json_paint_target.JsonPaintTarget-class.html#startTag,Method muntjac.terminal.paint_target.IPaintTarget.startTag()=muntjac.terminal.paint_target.IPaintTarget-class.html#startTag"><a title="muntjac.terminal.gwt.server.json_paint_target.JsonPaintTarget.startTag
+muntjac.terminal.paint_target.IPaintTarget.startTag" class="py-name" href="#" onclick="return doclink('link-43', 'startTag', 'link-43');">startTag</a></tt><tt class="py-op">(</tt><tt id="link-44" class="py-name"><a title="muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase" class="py-name" href="#" onclick="return doclink('link-44', 'VMediaBase', 'link-10');">VMediaBase</a></tt><tt class="py-op">.</tt><tt id="link-45" class="py-name" targets="Variable muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase.TAG_SOURCE=muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase-class.html#TAG_SOURCE"><a title="muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase.TAG_SOURCE" class="py-name" href="#" onclick="return doclink('link-45', 'TAG_SOURCE', 'link-45');">TAG_SOURCE</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L179"></a><tt class="py-lineno">179</tt>  <tt class="py-line">            <tt class="py-name">target</tt><tt class="py-op">.</tt><tt id="link-46" class="py-name"><a title="muntjac.terminal.gwt.server.json_paint_target.JsonPaintTarget.addAttribute
+muntjac.terminal.gwt.server.json_paint_target.JsonTag.addAttribute
+muntjac.terminal.paint_target.IPaintTarget.addAttribute" class="py-name" href="#" onclick="return doclink('link-46', 'addAttribute', 'link-25');">addAttribute</a></tt><tt class="py-op">(</tt><tt id="link-47" class="py-name"><a title="muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase" class="py-name" href="#" onclick="return doclink('link-47', 'VMediaBase', 'link-10');">VMediaBase</a></tt><tt class="py-op">.</tt><tt id="link-48" class="py-name" targets="Variable muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase.ATTR_RESOURCE=muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase-class.html#ATTR_RESOURCE"><a title="muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase.ATTR_RESOURCE" class="py-name" href="#" onclick="return doclink('link-48', 'ATTR_RESOURCE', 'link-48');">ATTR_RESOURCE</a></tt><tt class="py-op">,</tt> <tt class="py-name">r</tt><tt class="py-op">)</tt> </tt>
+<a name="L180"></a><tt class="py-lineno">180</tt>  <tt class="py-line">            <tt class="py-name">target</tt><tt class="py-op">.</tt><tt id="link-49" class="py-name"><a title="muntjac.terminal.gwt.server.json_paint_target.JsonPaintTarget.addAttribute
+muntjac.terminal.gwt.server.json_paint_target.JsonTag.addAttribute
+muntjac.terminal.paint_target.IPaintTarget.addAttribute" class="py-name" href="#" onclick="return doclink('link-49', 'addAttribute', 'link-25');">addAttribute</a></tt><tt class="py-op">(</tt><tt id="link-50" class="py-name"><a title="muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase" class="py-name" href="#" onclick="return doclink('link-50', 'VMediaBase', 'link-10');">VMediaBase</a></tt><tt class="py-op">.</tt><tt id="link-51" class="py-name" targets="Variable muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase.ATTR_RESOURCE_TYPE=muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase-class.html#ATTR_RESOURCE_TYPE"><a title="muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase.ATTR_RESOURCE_TYPE" class="py-name" href="#" onclick="return doclink('link-51', 'ATTR_RESOURCE_TYPE', 'link-51');">ATTR_RESOURCE_TYPE</a></tt><tt class="py-op">,</tt> <tt class="py-name">r</tt><tt class="py-op">.</tt><tt id="link-52" class="py-name" targets="Class Method muntjac.service.file_type_resolver.FileTypeResolver.getMIMEType()=muntjac.service.file_type_resolver.FileTypeResolver-class.html#getMIMEType,Method muntjac.terminal.class_resource.ClassResource.getMIMEType()=muntjac.terminal.class_resource.ClassResource-class.html#getMIMEType,Method muntjac.terminal.external_resource.ExternalResource.getMIMEType()=muntjac.terminal.external_resource.ExternalResource-class.html#getMIMEType,Method muntjac.terminal.file_resource.FileResource.getMIMEType()=muntjac.terminal.file_resource.FileResource-class.html#getMIMEType,Method muntjac.terminal.resource.IResource.getMIMEType()=muntjac.terminal.resource.IResource-class.html#getMIMEType,Method muntjac.terminal.stream_resource.StreamResource.getMIMEType()=muntjac.terminal.stream_resource.StreamResource-class.html#getMIMEType,Method muntjac.terminal.theme_resource.ThemeResource.getMIMEType()=muntjac.terminal.theme_resource.ThemeResource-class.html#getMIMEType,Method muntjac.ui.login_form.LoginPage.getMIMEType()=muntjac.ui.login_form.LoginPage-class.html#getMIMEType,Method muntjac.ui.upload.FinishedEvent.getMIMEType()=muntjac.ui.upload.FinishedEvent-class.html#getMIMEType,Method muntjac.ui.upload.StartedEvent.getMIMEType()=muntjac.ui.upload.StartedEvent-class.html#getMIMEType"><a title="muntjac.service.file_type_resolver.FileTypeResolver.getMIMEType
+muntjac.terminal.class_resource.ClassResource.getMIMEType
+muntjac.terminal.external_resource.ExternalResource.getMIMEType
+muntjac.terminal.file_resource.FileResource.getMIMEType
+muntjac.terminal.resource.IResource.getMIMEType
+muntjac.terminal.stream_resource.StreamResource.getMIMEType
+muntjac.terminal.theme_resource.ThemeResource.getMIMEType
+muntjac.ui.login_form.LoginPage.getMIMEType
+muntjac.ui.upload.FinishedEvent.getMIMEType
+muntjac.ui.upload.StartedEvent.getMIMEType" class="py-name" href="#" onclick="return doclink('link-52', 'getMIMEType', 'link-52');">getMIMEType</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L181"></a><tt class="py-lineno">181</tt>  <tt class="py-line">            <tt class="py-name">target</tt><tt class="py-op">.</tt><tt id="link-53" class="py-name" targets="Method muntjac.terminal.gwt.server.json_paint_target.JsonPaintTarget.endTag()=muntjac.terminal.gwt.server.json_paint_target.JsonPaintTarget-class.html#endTag,Method muntjac.terminal.paint_target.IPaintTarget.endTag()=muntjac.terminal.paint_target.IPaintTarget-class.html#endTag"><a title="muntjac.terminal.gwt.server.json_paint_target.JsonPaintTarget.endTag
+muntjac.terminal.paint_target.IPaintTarget.endTag" class="py-name" href="#" onclick="return doclink('link-53', 'endTag', 'link-53');">endTag</a></tt><tt class="py-op">(</tt><tt id="link-54" class="py-name"><a title="muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase" class="py-name" href="#" onclick="return doclink('link-54', 'VMediaBase', 'link-10');">VMediaBase</a></tt><tt class="py-op">.</tt><tt id="link-55" class="py-name"><a title="muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase.TAG_SOURCE" class="py-name" href="#" onclick="return doclink('link-55', 'TAG_SOURCE', 'link-45');">TAG_SOURCE</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L182"></a><tt class="py-lineno">182</tt>  <tt class="py-line"> </tt>
+<a name="L183"></a><tt class="py-lineno">183</tt>  <tt class="py-line">        <tt class="py-name">target</tt><tt class="py-op">.</tt><tt id="link-56" class="py-name"><a title="muntjac.terminal.gwt.server.json_paint_target.JsonPaintTarget.addAttribute
+muntjac.terminal.gwt.server.json_paint_target.JsonTag.addAttribute
+muntjac.terminal.paint_target.IPaintTarget.addAttribute" class="py-name" href="#" onclick="return doclink('link-56', 'addAttribute', 'link-25');">addAttribute</a></tt><tt class="py-op">(</tt><tt id="link-57" class="py-name"><a title="muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase" class="py-name" href="#" onclick="return doclink('link-57', 'VMediaBase', 'link-10');">VMediaBase</a></tt><tt class="py-op">.</tt><tt id="link-58" class="py-name" targets="Variable muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase.ATTR_MUTED=muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase-class.html#ATTR_MUTED"><a title="muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase.ATTR_MUTED" class="py-name" href="#" onclick="return doclink('link-58', 'ATTR_MUTED', 'link-58');">ATTR_MUTED</a></tt><tt class="py-op">,</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-59" class="py-name" targets="Method muntjac.ui.abstract_media.AbstractMedia.isMuted()=muntjac.ui.abstract_media.AbstractMedia-class.html#isMuted"><a title="muntjac.ui.abstract_media.AbstractMedia.isMuted" class="py-name" href="#" onclick="return doclink('link-59', 'isMuted', 'link-59');">isMuted</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L184"></a><tt class="py-lineno">184</tt>  <tt class="py-line"> </tt>
+<a name="L185"></a><tt class="py-lineno">185</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_play</tt><tt class="py-op">:</tt> </tt>
+<a name="L186"></a><tt class="py-lineno">186</tt>  <tt class="py-line">            <tt class="py-name">target</tt><tt class="py-op">.</tt><tt id="link-60" class="py-name"><a title="muntjac.terminal.gwt.server.json_paint_target.JsonPaintTarget.addAttribute
+muntjac.terminal.gwt.server.json_paint_target.JsonTag.addAttribute
+muntjac.terminal.paint_target.IPaintTarget.addAttribute" class="py-name" href="#" onclick="return doclink('link-60', 'addAttribute', 'link-25');">addAttribute</a></tt><tt class="py-op">(</tt><tt id="link-61" class="py-name"><a title="muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase" class="py-name" href="#" onclick="return doclink('link-61', 'VMediaBase', 'link-10');">VMediaBase</a></tt><tt class="py-op">.</tt><tt id="link-62" class="py-name" targets="Variable muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase.ATTR_PLAY=muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase-class.html#ATTR_PLAY"><a title="muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase.ATTR_PLAY" class="py-name" href="#" onclick="return doclink('link-62', 'ATTR_PLAY', 'link-62');">ATTR_PLAY</a></tt><tt class="py-op">,</tt> <tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
+<a name="L187"></a><tt class="py-lineno">187</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_play</tt> <tt class="py-op">=</tt> <tt class="py-name">False</tt> </tt>
+<a name="L188"></a><tt class="py-lineno">188</tt>  <tt class="py-line"> </tt>
+<a name="L189"></a><tt class="py-lineno">189</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_pause</tt><tt class="py-op">:</tt> </tt>
+<a name="L190"></a><tt class="py-lineno">190</tt>  <tt class="py-line">            <tt class="py-name">target</tt><tt class="py-op">.</tt><tt id="link-63" class="py-name"><a title="muntjac.terminal.gwt.server.json_paint_target.JsonPaintTarget.addAttribute
+muntjac.terminal.gwt.server.json_paint_target.JsonTag.addAttribute
+muntjac.terminal.paint_target.IPaintTarget.addAttribute" class="py-name" href="#" onclick="return doclink('link-63', 'addAttribute', 'link-25');">addAttribute</a></tt><tt class="py-op">(</tt><tt id="link-64" class="py-name"><a title="muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase" class="py-name" href="#" onclick="return doclink('link-64', 'VMediaBase', 'link-10');">VMediaBase</a></tt><tt class="py-op">.</tt><tt id="link-65" class="py-name" targets="Variable muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase.ATTR_PAUSE=muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase-class.html#ATTR_PAUSE"><a title="muntjac.terminal.gwt.client.ui.v_media_base.VMediaBase.ATTR_PAUSE" class="py-name" href="#" onclick="return doclink('link-65', 'ATTR_PAUSE', 'link-65');">ATTR_PAUSE</a></tt><tt class="py-op">,</tt> <tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
+<a name="L191"></a><tt class="py-lineno">191</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_pause</tt> <tt class="py-op">=</tt> <tt class="py-name">False</tt> </tt>
+</div></div><a name="L192"></a><tt class="py-lineno">192</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:04:11 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

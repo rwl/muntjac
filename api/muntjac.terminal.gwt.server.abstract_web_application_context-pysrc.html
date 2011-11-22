@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.terminal.gwt.server.abstract_web_application_context</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.terminal-module.html">Package&nbsp;terminal</a> ::
+        <a href="muntjac.terminal.gwt-module.html">Package&nbsp;gwt</a> ::
+        <a href="muntjac.terminal.gwt.server-module.html">Package&nbsp;server</a> ::
+        Module&nbsp;abstract_web_application_context
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.terminal.gwt.server.abstract_web_application_context-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="muntjac.terminal.gwt.server.abstract_web_application_context-module.html">Module muntjac.terminal.gwt.server.abstract_web_application_context</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno">  1</tt>  <tt class="py-line"><tt class="py-comment"># Copyright (C) 2011 Vaadin Ltd.</tt> </tt>
+<a name="L2"></a><tt class="py-lineno">  2</tt>  <tt class="py-line"><tt class="py-comment"># Copyright (C) 2011 Richard Lincoln</tt> </tt>
+<a name="L3"></a><tt class="py-lineno">  3</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L4"></a><tt class="py-lineno">  4</tt>  <tt class="py-line"><tt class="py-comment"># This program is free software: you can redistribute it and/or modify</tt> </tt>
+<a name="L5"></a><tt class="py-lineno">  5</tt>  <tt class="py-line"><tt class="py-comment"># it under the terms of the GNU Affero General Public License as published</tt> </tt>
+<a name="L6"></a><tt class="py-lineno">  6</tt>  <tt class="py-line"><tt class="py-comment"># by the Free Software Foundation, either version 3 of the License, or</tt> </tt>
+<a name="L7"></a><tt class="py-lineno">  7</tt>  <tt class="py-line"><tt class="py-comment"># (at your option) any later version.</tt> </tt>
+<a name="L8"></a><tt class="py-lineno">  8</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line"><tt class="py-comment"># This program is distributed in the hope that it will be useful,</tt> </tt>
+<a name="L10"></a><tt class="py-lineno"> 10</tt>  <tt class="py-line"><tt class="py-comment"># but WITHOUT ANY WARRANTY; without even the implied warranty of</tt> </tt>
+<a name="L11"></a><tt class="py-lineno"> 11</tt>  <tt class="py-line"><tt class="py-comment"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</tt> </tt>
+<a name="L12"></a><tt class="py-lineno"> 12</tt>  <tt class="py-line"><tt class="py-comment"># GNU Affero General Public License for more details.</tt> </tt>
+<a name="L13"></a><tt class="py-lineno"> 13</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L14"></a><tt class="py-lineno"> 14</tt>  <tt class="py-line"><tt class="py-comment"># You should have received a copy of the GNU Affero General Public License</tt> </tt>
+<a name="L15"></a><tt class="py-lineno"> 15</tt>  <tt class="py-line"><tt class="py-comment"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</tt> </tt>
+<a name="L16"></a><tt class="py-lineno"> 16</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L17"></a><tt class="py-lineno"> 17</tt>  <tt class="py-line"><tt class="py-comment"># Note: This is a modified file from Vaadin. For further information on</tt> </tt>
+<a name="L18"></a><tt class="py-lineno"> 18</tt>  <tt class="py-line"><tt class="py-comment">#       Vaadin please visit http://www.vaadin.com.</tt> </tt>
+<a name="L19"></a><tt class="py-lineno"> 19</tt>  <tt class="py-line"> </tt>
+<a name="L20"></a><tt class="py-lineno"> 20</tt>  <tt class="py-line"><tt class="py-docstring">"""Defines a base class for web application contexts that handles the common</tt> </tt>
+<a name="L21"></a><tt class="py-lineno"> 21</tt>  <tt class="py-line"><tt class="py-docstring">tasks."""</tt> </tt>
+<a name="L22"></a><tt class="py-lineno"> 22</tt>  <tt class="py-line"> </tt>
+<a name="L23"></a><tt class="py-lineno"> 23</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">logging</tt> </tt>
+<a name="L24"></a><tt class="py-lineno"> 24</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">urllib</tt> </tt>
+<a name="L25"></a><tt class="py-lineno"> 25</tt>  <tt class="py-line"> </tt>
+<a name="L26"></a><tt class="py-lineno"> 26</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Package muntjac=muntjac-module.html,Function muntjac.main.muntjac()=muntjac.main-module.html#muntjac"><a title="muntjac
+muntjac.main.muntjac" class="py-name" href="#" onclick="return doclink('link-0', 'muntjac', 'link-0');">muntjac</a></tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Package muntjac.service=muntjac.service-module.html,Method muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet.service()=muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#service,Method muntjac.terminal.gwt.server.gae_application_servlet.GaeApplicationServlet.service()=muntjac.terminal.gwt.server.gae_application_servlet.GaeApplicationServlet-class.html#service,Method muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet.service()=muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#service"><a title="muntjac.service
+muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet.service
+muntjac.terminal.gwt.server.gae_application_servlet.GaeApplicationServlet.service
+muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet.service" class="py-name" href="#" onclick="return doclink('link-1', 'service', 'link-1');">service</a></tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Module muntjac.service.application_context=muntjac.service.application_context-module.html"><a title="muntjac.service.application_context" class="py-name" href="#" onclick="return doclink('link-2', 'application_context', 'link-2');">application_context</a></tt> <tt class="py-keyword">import</tt> <tt id="link-3" class="py-name" targets="Class muntjac.service.application_context.IApplicationContext=muntjac.service.application_context.IApplicationContext-class.html"><a title="muntjac.service.application_context.IApplicationContext" class="py-name" href="#" onclick="return doclink('link-3', 'IApplicationContext', 'link-3');">IApplicationContext</a></tt> </tt>
+<a name="L27"></a><tt class="py-lineno"> 27</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-4" class="py-name"><a title="muntjac
+muntjac.main.muntjac" class="py-name" href="#" onclick="return doclink('link-4', 'muntjac', 'link-0');">muntjac</a></tt><tt class="py-op">.</tt><tt id="link-5" class="py-name" targets="Package muntjac.terminal=muntjac.terminal-module.html,Module muntjac.terminal.terminal=muntjac.terminal.terminal-module.html"><a title="muntjac.terminal
+muntjac.terminal.terminal" class="py-name" href="#" onclick="return doclink('link-5', 'terminal', 'link-5');">terminal</a></tt><tt class="py-op">.</tt><tt id="link-6" class="py-name" targets="Package muntjac.terminal.gwt=muntjac.terminal.gwt-module.html"><a title="muntjac.terminal.gwt" class="py-name" href="#" onclick="return doclink('link-6', 'gwt', 'link-6');">gwt</a></tt><tt class="py-op">.</tt><tt id="link-7" class="py-name" targets="Package muntjac.terminal.gwt.server=muntjac.terminal.gwt.server-module.html"><a title="muntjac.terminal.gwt.server" class="py-name" href="#" onclick="return doclink('link-7', 'server', 'link-7');">server</a></tt><tt class="py-op">.</tt><tt id="link-8" class="py-name" targets="Module muntjac.terminal.gwt.server.web_browser=muntjac.terminal.gwt.server.web_browser-module.html"><a title="muntjac.terminal.gwt.server.web_browser" class="py-name" href="#" onclick="return doclink('link-8', 'web_browser', 'link-8');">web_browser</a></tt> <tt class="py-keyword">import</tt> <tt id="link-9" class="py-name" targets="Class muntjac.terminal.gwt.server.web_browser.WebBrowser=muntjac.terminal.gwt.server.web_browser.WebBrowser-class.html"><a title="muntjac.terminal.gwt.server.web_browser.WebBrowser" class="py-name" href="#" onclick="return doclink('link-9', 'WebBrowser', 'link-9');">WebBrowser</a></tt> </tt>
+<a name="L28"></a><tt class="py-lineno"> 28</tt>  <tt class="py-line"> </tt>
+<a name="L29"></a><tt class="py-lineno"> 29</tt>  <tt class="py-line"> </tt>
+<a name="L30"></a><tt class="py-lineno"> 30</tt>  <tt class="py-line"><tt id="link-10" class="py-name" targets="Variable muntjac.application.logger=muntjac.application-module.html#logger,Variable muntjac.event.listener_method.logger=muntjac.event.listener_method-module.html#logger,Variable muntjac.terminal.gwt.server.abstract_application_servlet.logger=muntjac.terminal.gwt.server.abstract_application_servlet-module.html#logger,Variable muntjac.terminal.gwt.server.abstract_communication_manager.logger=muntjac.terminal.gwt.server.abstract_communication_manager-module.html#logger,Variable muntjac.terminal.gwt.server.abstract_web_application_context.logger=muntjac.terminal.gwt.server.abstract_web_application_context-module.html#logger,Variable muntjac.terminal.gwt.server.application_runner_servlet.logger=muntjac.terminal.gwt.server.application_runner_servlet-module.html#logger,Variable muntjac.terminal.gwt.server.component_size_validator.logger=muntjac.terminal.gwt.server.component_size_validator-module.html#logger,Variable muntjac.terminal.gwt.server.drag_and_drop_service.logger=muntjac.terminal.gwt.server.drag_and_drop_service-module.html#logger,Variable muntjac.terminal.gwt.server.json_paint_target.logger=muntjac.terminal.gwt.server.json_paint_target-module.html#logger,Variable muntjac.ui.table.logger=muntjac.ui.table-module.html#logger,Variable muntjac.ui.tree_table.logger=muntjac.ui.tree_table-module.html#logger"><a title="muntjac.application.logger
+muntjac.event.listener_method.logger
+muntjac.terminal.gwt.server.abstract_application_servlet.logger
+muntjac.terminal.gwt.server.abstract_communication_manager.logger
+muntjac.terminal.gwt.server.abstract_web_application_context.logger
+muntjac.terminal.gwt.server.application_runner_servlet.logger
+muntjac.terminal.gwt.server.component_size_validator.logger
+muntjac.terminal.gwt.server.drag_and_drop_service.logger
+muntjac.terminal.gwt.server.json_paint_target.logger
+muntjac.ui.table.logger
+muntjac.ui.tree_table.logger" class="py-name" href="#" onclick="return doclink('link-10', 'logger', 'link-10');">logger</a></tt> <tt class="py-op">=</tt> <tt class="py-name">logging</tt><tt class="py-op">.</tt><tt class="py-name">getLogger</tt><tt class="py-op">(</tt><tt class="py-name">__name__</tt><tt class="py-op">)</tt> </tt>
+<a name="L31"></a><tt class="py-lineno"> 31</tt>  <tt class="py-line"> </tt>
+<a name="L32"></a><tt class="py-lineno"> 32</tt>  <tt class="py-line"> </tt>
+<a name="AbstractWebApplicationContext"></a><div id="AbstractWebApplicationContext-def"><a name="L33"></a><tt class="py-lineno"> 33</tt> <a class="py-toggle" href="#" id="AbstractWebApplicationContext-toggle" onclick="return toggle('AbstractWebApplicationContext');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.terminal.gwt.server.abstract_web_application_context.AbstractWebApplicationContext-class.html">AbstractWebApplicationContext</a><tt class="py-op">(</tt><tt class="py-base-class">IApplicationContext</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AbstractWebApplicationContext-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="AbstractWebApplicationContext-expanded"><a name="L34"></a><tt class="py-lineno"> 34</tt>  <tt class="py-line">    <tt class="py-docstring">"""Base class for web application contexts that handles the common tasks.</tt> </tt>
+<a name="L35"></a><tt class="py-lineno"> 35</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L36"></a><tt class="py-lineno"> 36</tt>  <tt class="py-line"> </tt>
+<a name="AbstractWebApplicationContext.__init__"></a><div id="AbstractWebApplicationContext.__init__-def"><a name="L37"></a><tt class="py-lineno"> 37</tt> <a class="py-toggle" href="#" id="AbstractWebApplicationContext.__init__-toggle" onclick="return toggle('AbstractWebApplicationContext.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.gwt.server.abstract_web_application_context.AbstractWebApplicationContext-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AbstractWebApplicationContext.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="AbstractWebApplicationContext.__init__-expanded"><a name="L38"></a><tt class="py-lineno"> 38</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">listeners</tt> <tt class="py-op">=</tt> <tt class="py-name">list</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L39"></a><tt class="py-lineno"> 39</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">applications</tt> <tt class="py-op">=</tt> <tt id="link-11" class="py-name" targets="Method muntjac.data.util.list_set.ListSet.set()=muntjac.data.util.list_set.ListSet-class.html#set"><a title="muntjac.data.util.list_set.ListSet.set" class="py-name" href="#" onclick="return doclink('link-11', 'set', 'link-11');">set</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L40"></a><tt class="py-lineno"> 40</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">browser</tt> <tt class="py-op">=</tt> <tt id="link-12" class="py-name"><a title="muntjac.terminal.gwt.server.web_browser.WebBrowser" class="py-name" href="#" onclick="return doclink('link-12', 'WebBrowser', 'link-9');">WebBrowser</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L41"></a><tt class="py-lineno"> 41</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">applicationToAjaxAppMgrMap</tt> <tt class="py-op">=</tt> <tt class="py-name">dict</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L42"></a><tt class="py-lineno"> 42</tt>  <tt class="py-line"> </tt>
+<a name="L43"></a><tt class="py-lineno"> 43</tt>  <tt class="py-line"> </tt>
+<a name="AbstractWebApplicationContext.addTransactionListener"></a><div id="AbstractWebApplicationContext.addTransactionListener-def"><a name="L44"></a><tt class="py-lineno"> 44</tt> <a class="py-toggle" href="#" id="AbstractWebApplicationContext.addTransactionListener-toggle" onclick="return toggle('AbstractWebApplicationContext.addTransactionListener');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.gwt.server.abstract_web_application_context.AbstractWebApplicationContext-class.html#addTransactionListener">addTransactionListener</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">listener</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AbstractWebApplicationContext.addTransactionListener-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="AbstractWebApplicationContext.addTransactionListener-expanded"><a name="L45"></a><tt class="py-lineno"> 45</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">listener</tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L46"></a><tt class="py-lineno"> 46</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">listeners</tt><tt class="py-op">.</tt><tt id="link-13" class="py-name" targets="Method muntjac.data.util.list_set.ListSet.append()=muntjac.data.util.list_set.ListSet-class.html#append"><a title="muntjac.data.util.list_set.ListSet.append" class="py-name" href="#" onclick="return doclink('link-13', 'append', 'link-13');">append</a></tt><tt class="py-op">(</tt><tt class="py-name">listener</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L47"></a><tt class="py-lineno"> 47</tt>  <tt class="py-line"> </tt>
+<a name="L48"></a><tt class="py-lineno"> 48</tt>  <tt class="py-line"> </tt>
+<a name="AbstractWebApplicationContext.removeTransactionListener"></a><div id="AbstractWebApplicationContext.removeTransactionListener-def"><a name="L49"></a><tt class="py-lineno"> 49</tt> <a class="py-toggle" href="#" id="AbstractWebApplicationContext.removeTransactionListener-toggle" onclick="return toggle('AbstractWebApplicationContext.removeTransactionListener');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.gwt.server.abstract_web_application_context.AbstractWebApplicationContext-class.html#removeTransactionListener">removeTransactionListener</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">listener</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AbstractWebApplicationContext.removeTransactionListener-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="AbstractWebApplicationContext.removeTransactionListener-expanded"><a name="L50"></a><tt class="py-lineno"> 50</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">listeners</tt><tt class="py-op">.</tt><tt id="link-14" class="py-name" targets="Method muntjac.data.util.list_set.ListSet.remove()=muntjac.data.util.list_set.ListSet-class.html#remove,Method muntjac.terminal.key_mapper.KeyMapper.remove()=muntjac.terminal.key_mapper.KeyMapper-class.html#remove,Method muntjac.ui.abstract_split_panel.ComponentIterator.remove()=muntjac.ui.abstract_split_panel.ComponentIterator-class.html#remove,Method muntjac.ui.custom_component.ComponentIterator.remove()=muntjac.ui.custom_component.ComponentIterator-class.html#remove,Method muntjac.ui.popup_view.SingleComponentIterator.remove()=muntjac.ui.popup_view.SingleComponentIterator-class.html#remove"><a title="muntjac.data.util.list_set.ListSet.remove
+muntjac.terminal.key_mapper.KeyMapper.remove
+muntjac.ui.abstract_split_panel.ComponentIterator.remove
+muntjac.ui.custom_component.ComponentIterator.remove
+muntjac.ui.popup_view.SingleComponentIterator.remove" class="py-name" href="#" onclick="return doclink('link-14', 'remove', 'link-14');">remove</a></tt><tt class="py-op">(</tt><tt class="py-name">listener</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L51"></a><tt class="py-lineno"> 51</tt>  <tt class="py-line"> </tt>
+<a name="L52"></a><tt class="py-lineno"> 52</tt>  <tt class="py-line"> </tt>
+<a name="AbstractWebApplicationContext.startTransaction"></a><div id="AbstractWebApplicationContext.startTransaction-def"><a name="L53"></a><tt class="py-lineno"> 53</tt> <a class="py-toggle" href="#" id="AbstractWebApplicationContext.startTransaction-toggle" onclick="return toggle('AbstractWebApplicationContext.startTransaction');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.gwt.server.abstract_web_application_context.AbstractWebApplicationContext-class.html#startTransaction">startTransaction</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">application</tt><tt class="py-op">,</tt> <tt class="py-param">request</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AbstractWebApplicationContext.startTransaction-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="AbstractWebApplicationContext.startTransaction-expanded"><a name="L54"></a><tt class="py-lineno"> 54</tt>  <tt class="py-line">        <tt class="py-docstring">"""Sends a notification that a transaction is starting.</tt> </tt>
+<a name="L55"></a><tt class="py-lineno"> 55</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L56"></a><tt class="py-lineno"> 56</tt>  <tt class="py-line"><tt class="py-docstring">        @param application:</tt> </tt>
+<a name="L57"></a><tt class="py-lineno"> 57</tt>  <tt class="py-line"><tt class="py-docstring">                   The application associated with the transaction.</tt> </tt>
+<a name="L58"></a><tt class="py-lineno"> 58</tt>  <tt class="py-line"><tt class="py-docstring">        @param request:</tt> </tt>
+<a name="L59"></a><tt class="py-lineno"> 59</tt>  <tt class="py-line"><tt class="py-docstring">                   the HTTP request that triggered the transaction.</tt> </tt>
+<a name="L60"></a><tt class="py-lineno"> 60</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L61"></a><tt class="py-lineno"> 61</tt>  <tt class="py-line">        <tt class="py-keyword">for</tt> <tt class="py-name">listener</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">listeners</tt><tt class="py-op">:</tt> </tt>
+<a name="L62"></a><tt class="py-lineno"> 62</tt>  <tt class="py-line">            <tt class="py-name">listener</tt><tt class="py-op">.</tt><tt id="link-15" class="py-name" targets="Method muntjac.service.application_context.ITransactionListener.transactionStart()=muntjac.service.application_context.ITransactionListener-class.html#transactionStart"><a title="muntjac.service.application_context.ITransactionListener.transactionStart" class="py-name" href="#" onclick="return doclink('link-15', 'transactionStart', 'link-15');">transactionStart</a></tt><tt class="py-op">(</tt><tt id="link-16" class="py-name" targets="Module muntjac.application=muntjac.application-module.html"><a title="muntjac.application" class="py-name" href="#" onclick="return doclink('link-16', 'application', 'link-16');">application</a></tt><tt class="py-op">,</tt> <tt class="py-name">request</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L63"></a><tt class="py-lineno"> 63</tt>  <tt class="py-line"> </tt>
+<a name="L64"></a><tt class="py-lineno"> 64</tt>  <tt class="py-line"> </tt>
+<a name="AbstractWebApplicationContext.endTransaction"></a><div id="AbstractWebApplicationContext.endTransaction-def"><a name="L65"></a><tt class="py-lineno"> 65</tt> <a class="py-toggle" href="#" id="AbstractWebApplicationContext.endTransaction-toggle" onclick="return toggle('AbstractWebApplicationContext.endTransaction');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.gwt.server.abstract_web_application_context.AbstractWebApplicationContext-class.html#endTransaction">endTransaction</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">application</tt><tt class="py-op">,</tt> <tt class="py-param">request</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AbstractWebApplicationContext.endTransaction-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="AbstractWebApplicationContext.endTransaction-expanded"><a name="L66"></a><tt class="py-lineno"> 66</tt>  <tt class="py-line">        <tt class="py-docstring">"""Sends a notification that a transaction has ended.</tt> </tt>
+<a name="L67"></a><tt class="py-lineno"> 67</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L68"></a><tt class="py-lineno"> 68</tt>  <tt class="py-line"><tt class="py-docstring">        @param application:</tt> </tt>
+<a name="L69"></a><tt class="py-lineno"> 69</tt>  <tt class="py-line"><tt class="py-docstring">                   The application associated with the transaction.</tt> </tt>
+<a name="L70"></a><tt class="py-lineno"> 70</tt>  <tt class="py-line"><tt class="py-docstring">        @param request:</tt> </tt>
+<a name="L71"></a><tt class="py-lineno"> 71</tt>  <tt class="py-line"><tt class="py-docstring">                   the HTTP request that triggered the transaction.</tt> </tt>
+<a name="L72"></a><tt class="py-lineno"> 72</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L73"></a><tt class="py-lineno"> 73</tt>  <tt class="py-line">        <tt id="link-17" class="py-name" targets="Module muntjac.terminal.gwt.server.exceptions=muntjac.terminal.gwt.server.exceptions-module.html"><a title="muntjac.terminal.gwt.server.exceptions" class="py-name" href="#" onclick="return doclink('link-17', 'exceptions', 'link-17');">exceptions</a></tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L74"></a><tt class="py-lineno"> 74</tt>  <tt class="py-line">        <tt class="py-keyword">for</tt> <tt class="py-name">listener</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">listeners</tt><tt class="py-op">:</tt> </tt>
+<a name="L75"></a><tt class="py-lineno"> 75</tt>  <tt class="py-line">            <tt class="py-keyword">try</tt><tt class="py-op">:</tt> </tt>
+<a name="L76"></a><tt class="py-lineno"> 76</tt>  <tt class="py-line">                <tt class="py-name">listener</tt><tt class="py-op">.</tt><tt id="link-18" class="py-name" targets="Method muntjac.service.application_context.ITransactionListener.transactionEnd()=muntjac.service.application_context.ITransactionListener-class.html#transactionEnd"><a title="muntjac.service.application_context.ITransactionListener.transactionEnd" class="py-name" href="#" onclick="return doclink('link-18', 'transactionEnd', 'link-18');">transactionEnd</a></tt><tt class="py-op">(</tt><tt id="link-19" class="py-name"><a title="muntjac.application" class="py-name" href="#" onclick="return doclink('link-19', 'application', 'link-16');">application</a></tt><tt class="py-op">,</tt> <tt class="py-name">request</tt><tt class="py-op">)</tt> </tt>
+<a name="L77"></a><tt class="py-lineno"> 77</tt>  <tt class="py-line">            <tt class="py-keyword">except</tt> <tt class="py-name">RuntimeError</tt><tt class="py-op">,</tt> <tt class="py-name">t</tt><tt class="py-op">:</tt> </tt>
+<a name="L78"></a><tt class="py-lineno"> 78</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt id="link-20" class="py-name"><a title="muntjac.terminal.gwt.server.exceptions" class="py-name" href="#" onclick="return doclink('link-20', 'exceptions', 'link-17');">exceptions</a></tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L79"></a><tt class="py-lineno"> 79</tt>  <tt class="py-line">                    <tt id="link-21" class="py-name"><a title="muntjac.terminal.gwt.server.exceptions" class="py-name" href="#" onclick="return doclink('link-21', 'exceptions', 'link-17');">exceptions</a></tt> <tt class="py-op">=</tt> <tt class="py-name">list</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L80"></a><tt class="py-lineno"> 80</tt>  <tt class="py-line">                <tt id="link-22" class="py-name"><a title="muntjac.terminal.gwt.server.exceptions" class="py-name" href="#" onclick="return doclink('link-22', 'exceptions', 'link-17');">exceptions</a></tt><tt class="py-op">.</tt><tt id="link-23" class="py-name"><a title="muntjac.data.util.list_set.ListSet.append" class="py-name" href="#" onclick="return doclink('link-23', 'append', 'link-13');">append</a></tt><tt class="py-op">(</tt><tt class="py-name">t</tt><tt class="py-op">)</tt> </tt>
+<a name="L81"></a><tt class="py-lineno"> 81</tt>  <tt class="py-line"> </tt>
+<a name="L82"></a><tt class="py-lineno"> 82</tt>  <tt class="py-line">        <tt class="py-comment"># If any runtime exceptions occurred, throw a combined exception</tt> </tt>
+<a name="L83"></a><tt class="py-lineno"> 83</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt id="link-24" class="py-name"><a title="muntjac.terminal.gwt.server.exceptions" class="py-name" href="#" onclick="return doclink('link-24', 'exceptions', 'link-17');">exceptions</a></tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L84"></a><tt class="py-lineno"> 84</tt>  <tt class="py-line">            <tt class="py-name">msg</tt> <tt class="py-op">=</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L85"></a><tt class="py-lineno"> 85</tt>  <tt class="py-line">            <tt class="py-keyword">for</tt> <tt class="py-name">e</tt> <tt class="py-keyword">in</tt> <tt id="link-25" class="py-name"><a title="muntjac.terminal.gwt.server.exceptions" class="py-name" href="#" onclick="return doclink('link-25', 'exceptions', 'link-17');">exceptions</a></tt><tt class="py-op">:</tt> </tt>
+<a name="L86"></a><tt class="py-lineno"> 86</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt class="py-name">len</tt><tt class="py-op">(</tt><tt class="py-name">msg</tt><tt class="py-op">)</tt> <tt class="py-op">==</tt> <tt class="py-number">0</tt><tt class="py-op">:</tt> </tt>
+<a name="L87"></a><tt class="py-lineno"> 87</tt>  <tt class="py-line">                    <tt class="py-name">msg</tt> <tt class="py-op">+=</tt> <tt class="py-string">'\n\n--------------------------\n\n'</tt> </tt>
+<a name="L88"></a><tt class="py-lineno"> 88</tt>  <tt class="py-line">                <tt class="py-name">msg</tt> <tt class="py-op">+=</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">e</tt><tt class="py-op">)</tt> <tt class="py-op">+</tt> <tt class="py-string">'\n'</tt> </tt>
+<a name="L89"></a><tt class="py-lineno"> 89</tt>  <tt class="py-line">            <tt class="py-keyword">raise</tt> <tt class="py-name">RuntimeError</tt><tt class="py-op">(</tt><tt class="py-name">msg</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L90"></a><tt class="py-lineno"> 90</tt>  <tt class="py-line"> </tt>
+<a name="L91"></a><tt class="py-lineno"> 91</tt>  <tt class="py-line"> </tt>
+<a name="AbstractWebApplicationContext.valueBound"></a><div id="AbstractWebApplicationContext.valueBound-def"><a name="L92"></a><tt class="py-lineno"> 92</tt> <a class="py-toggle" href="#" id="AbstractWebApplicationContext.valueBound-toggle" onclick="return toggle('AbstractWebApplicationContext.valueBound');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.gwt.server.abstract_web_application_context.AbstractWebApplicationContext-class.html#valueBound">valueBound</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">arg0</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AbstractWebApplicationContext.valueBound-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="AbstractWebApplicationContext.valueBound-expanded"><a name="L93"></a><tt class="py-lineno"> 93</tt>  <tt class="py-line">        <tt class="py-docstring">"""@see: L{HttpSessionBindingListener.valueBound}"""</tt> </tt>
+<a name="L94"></a><tt class="py-lineno"> 94</tt>  <tt class="py-line">        <tt class="py-keyword">pass</tt>  <tt class="py-comment"># We are not interested in bindings</tt> </tt>
+</div><a name="L95"></a><tt class="py-lineno"> 95</tt>  <tt class="py-line"> </tt>
+<a name="L96"></a><tt class="py-lineno"> 96</tt>  <tt class="py-line"> </tt>
+<a name="AbstractWebApplicationContext.valueUnbound"></a><div id="AbstractWebApplicationContext.valueUnbound-def"><a name="L97"></a><tt class="py-lineno"> 97</tt> <a class="py-toggle" href="#" id="AbstractWebApplicationContext.valueUnbound-toggle" onclick="return toggle('AbstractWebApplicationContext.valueUnbound');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.gwt.server.abstract_web_application_context.AbstractWebApplicationContext-class.html#valueUnbound">valueUnbound</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">event</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AbstractWebApplicationContext.valueUnbound-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="AbstractWebApplicationContext.valueUnbound-expanded"><a name="L98"></a><tt class="py-lineno"> 98</tt>  <tt class="py-line">        <tt class="py-docstring">"""@see: L{HttpSessionBindingListener.valueUnbound}"""</tt> </tt>
+<a name="L99"></a><tt class="py-lineno"> 99</tt>  <tt class="py-line">        <tt class="py-comment"># If we are going to be unbound from the session, the session</tt> </tt>
+<a name="L100"></a><tt class="py-lineno">100</tt>  <tt class="py-line">        <tt class="py-comment"># must be closing.</tt> </tt>
+<a name="L101"></a><tt class="py-lineno">101</tt>  <tt class="py-line">        <tt class="py-keyword">try</tt><tt class="py-op">:</tt> </tt>
+<a name="L102"></a><tt class="py-lineno">102</tt>  <tt class="py-line">            <tt class="py-keyword">for</tt> <tt id="link-26" class="py-name" targets="Class muntjac.terminal.gwt.server.paste_deploy_application_servlet.app=muntjac.terminal.gwt.server.paste_deploy_application_servlet.app-class.html"><a title="muntjac.terminal.gwt.server.paste_deploy_application_servlet.app" class="py-name" href="#" onclick="return doclink('link-26', 'app', 'link-26');">app</a></tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">applications</tt><tt class="py-op">:</tt> </tt>
+<a name="L103"></a><tt class="py-lineno">103</tt>  <tt class="py-line">                <tt id="link-27" class="py-name"><a title="muntjac.terminal.gwt.server.paste_deploy_application_servlet.app" class="py-name" href="#" onclick="return doclink('link-27', 'app', 'link-26');">app</a></tt><tt class="py-op">.</tt><tt id="link-28" class="py-name" targets="Method muntjac.application.Application.close()=muntjac.application.Application-class.html#close,Method muntjac.terminal.gwt.server.json_paint_target.JsonPaintTarget.close()=muntjac.terminal.gwt.server.json_paint_target.JsonPaintTarget-class.html#close,Method muntjac.ui.tab_sheet.TabSheetTabImpl.close()=muntjac.ui.tab_sheet.TabSheetTabImpl-class.html#close,Method muntjac.ui.window.Window.close()=muntjac.ui.window.Window-class.html#close"><a title="muntjac.application.Application.close
+muntjac.terminal.gwt.server.json_paint_target.JsonPaintTarget.close
+muntjac.ui.tab_sheet.TabSheetTabImpl.close
+muntjac.ui.window.Window.close" class="py-name" href="#" onclick="return doclink('link-28', 'close', 'link-28');">close</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L104"></a><tt class="py-lineno">104</tt>  <tt class="py-line">                <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-29" class="py-name" targets="Method muntjac.terminal.gwt.server.abstract_web_application_context.AbstractWebApplicationContext.removeApplication()=muntjac.terminal.gwt.server.abstract_web_application_context.AbstractWebApplicationContext-class.html#removeApplication"><a title="muntjac.terminal.gwt.server.abstract_web_application_context.AbstractWebApplicationContext.removeApplication" class="py-name" href="#" onclick="return doclink('link-29', 'removeApplication', 'link-29');">removeApplication</a></tt><tt class="py-op">(</tt><tt id="link-30" class="py-name"><a title="muntjac.terminal.gwt.server.paste_deploy_application_servlet.app" class="py-name" href="#" onclick="return doclink('link-30', 'app', 'link-26');">app</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L105"></a><tt class="py-lineno">105</tt>  <tt class="py-line">        <tt class="py-keyword">except</tt> <tt class="py-name">Exception</tt><tt class="py-op">:</tt> </tt>
+<a name="L106"></a><tt class="py-lineno">106</tt>  <tt class="py-line">            <tt class="py-comment"># This should never happen but is possible with rare</tt> </tt>
+<a name="L107"></a><tt class="py-lineno">107</tt>  <tt class="py-line">            <tt class="py-comment"># configurations (e.g. robustness tests). If you have one</tt> </tt>
+<a name="L108"></a><tt class="py-lineno">108</tt>  <tt class="py-line">            <tt class="py-comment"># thread doing HTTP socket write and another thread trying to</tt> </tt>
+<a name="L109"></a><tt class="py-lineno">109</tt>  <tt class="py-line">            <tt class="py-comment"># remove same application here. Possible if you got e.g. session</tt> </tt>
+<a name="L110"></a><tt class="py-lineno">110</tt>  <tt class="py-line">            <tt class="py-comment"># lifetime 1 min but socket write may take longer than 1 min.</tt> </tt>
+<a name="L111"></a><tt class="py-lineno">111</tt>  <tt class="py-line">            <tt class="py-comment"># FIXME: Handle exception</tt> </tt>
+<a name="L112"></a><tt class="py-lineno">112</tt>  <tt class="py-line">            <tt id="link-31" class="py-name"><a title="muntjac.application.logger
+muntjac.event.listener_method.logger
+muntjac.terminal.gwt.server.abstract_application_servlet.logger
+muntjac.terminal.gwt.server.abstract_communication_manager.logger
+muntjac.terminal.gwt.server.abstract_web_application_context.logger
+muntjac.terminal.gwt.server.application_runner_servlet.logger
+muntjac.terminal.gwt.server.component_size_validator.logger
+muntjac.terminal.gwt.server.drag_and_drop_service.logger
+muntjac.terminal.gwt.server.json_paint_target.logger
+muntjac.ui.table.logger
+muntjac.ui.tree_table.logger" class="py-name" href="#" onclick="return doclink('link-31', 'logger', 'link-10');">logger</a></tt><tt class="py-op">.</tt><tt class="py-name">critical</tt><tt class="py-op">(</tt><tt class="py-string">'Could not remove application, leaking memory.'</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L113"></a><tt class="py-lineno">113</tt>  <tt class="py-line"> </tt>
+<a name="L114"></a><tt class="py-lineno">114</tt>  <tt class="py-line"> </tt>
+<a name="AbstractWebApplicationContext.getBrowser"></a><div id="AbstractWebApplicationContext.getBrowser-def"><a name="L115"></a><tt class="py-lineno">115</tt> <a class="py-toggle" href="#" id="AbstractWebApplicationContext.getBrowser-toggle" onclick="return toggle('AbstractWebApplicationContext.getBrowser');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.gwt.server.abstract_web_application_context.AbstractWebApplicationContext-class.html#getBrowser">getBrowser</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AbstractWebApplicationContext.getBrowser-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="AbstractWebApplicationContext.getBrowser-expanded"><a name="L116"></a><tt class="py-lineno">116</tt>  <tt class="py-line">        <tt class="py-docstring">"""Get the web browser associated with this application context.</tt> </tt>
+<a name="L117"></a><tt class="py-lineno">117</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L118"></a><tt class="py-lineno">118</tt>  <tt class="py-line"><tt class="py-docstring">        Because application context is related to the http session and server</tt> </tt>
+<a name="L119"></a><tt class="py-lineno">119</tt>  <tt class="py-line"><tt class="py-docstring">        maintains one session per browser-instance, each context has exactly</tt> </tt>
+<a name="L120"></a><tt class="py-lineno">120</tt>  <tt class="py-line"><tt class="py-docstring">        one web browser associated with it.</tt> </tt>
+<a name="L121"></a><tt class="py-lineno">121</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L122"></a><tt class="py-lineno">122</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">browser</tt> </tt>
+</div><a name="L123"></a><tt class="py-lineno">123</tt>  <tt class="py-line"> </tt>
+<a name="L124"></a><tt class="py-lineno">124</tt>  <tt class="py-line"> </tt>
+<a name="AbstractWebApplicationContext.getApplications"></a><div id="AbstractWebApplicationContext.getApplications-def"><a name="L125"></a><tt class="py-lineno">125</tt> <a class="py-toggle" href="#" id="AbstractWebApplicationContext.getApplications-toggle" onclick="return toggle('AbstractWebApplicationContext.getApplications');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.gwt.server.abstract_web_application_context.AbstractWebApplicationContext-class.html#getApplications">getApplications</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AbstractWebApplicationContext.getApplications-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="AbstractWebApplicationContext.getApplications-expanded"><a name="L126"></a><tt class="py-lineno">126</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">applications</tt> </tt>
+</div><a name="L127"></a><tt class="py-lineno">127</tt>  <tt class="py-line"> </tt>
+<a name="L128"></a><tt class="py-lineno">128</tt>  <tt class="py-line"> </tt>
+<a name="AbstractWebApplicationContext.removeApplication"></a><div id="AbstractWebApplicationContext.removeApplication-def"><a name="L129"></a><tt class="py-lineno">129</tt> <a class="py-toggle" href="#" id="AbstractWebApplicationContext.removeApplication-toggle" onclick="return toggle('AbstractWebApplicationContext.removeApplication');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.gwt.server.abstract_web_application_context.AbstractWebApplicationContext-class.html#removeApplication">removeApplication</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">application</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AbstractWebApplicationContext.removeApplication-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="AbstractWebApplicationContext.removeApplication-expanded"><a name="L130"></a><tt class="py-lineno">130</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">applications</tt><tt class="py-op">.</tt><tt id="link-32" class="py-name"><a title="muntjac.data.util.list_set.ListSet.remove
+muntjac.terminal.key_mapper.KeyMapper.remove
+muntjac.ui.abstract_split_panel.ComponentIterator.remove
+muntjac.ui.custom_component.ComponentIterator.remove
+muntjac.ui.popup_view.SingleComponentIterator.remove" class="py-name" href="#" onclick="return doclink('link-32', 'remove', 'link-14');">remove</a></tt><tt class="py-op">(</tt><tt id="link-33" class="py-name"><a title="muntjac.application" class="py-name" href="#" onclick="return doclink('link-33', 'application', 'link-16');">application</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L131"></a><tt class="py-lineno">131</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt id="link-34" class="py-name"><a title="muntjac.application" class="py-name" href="#" onclick="return doclink('link-34', 'application', 'link-16');">application</a></tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">applicationToAjaxAppMgrMap</tt><tt class="py-op">:</tt> </tt>
+<a name="L132"></a><tt class="py-lineno">132</tt>  <tt class="py-line">            <tt class="py-keyword">del</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">applicationToAjaxAppMgrMap</tt><tt class="py-op">[</tt><tt id="link-35" class="py-name"><a title="muntjac.application" class="py-name" href="#" onclick="return doclink('link-35', 'application', 'link-16');">application</a></tt><tt class="py-op">]</tt> </tt>
+</div><a name="L133"></a><tt class="py-lineno">133</tt>  <tt class="py-line"> </tt>
+<a name="L134"></a><tt class="py-lineno">134</tt>  <tt class="py-line"> </tt>
+<a name="AbstractWebApplicationContext.generateApplicationResourceURL"></a><div id="AbstractWebApplicationContext.generateApplicationResourceURL-def"><a name="L135"></a><tt class="py-lineno">135</tt> <a class="py-toggle" href="#" id="AbstractWebApplicationContext.generateApplicationResourceURL-toggle" onclick="return toggle('AbstractWebApplicationContext.generateApplicationResourceURL');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.gwt.server.abstract_web_application_context.AbstractWebApplicationContext-class.html#generateApplicationResourceURL">generateApplicationResourceURL</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">resource</tt><tt class="py-op">,</tt> <tt class="py-param">mapKey</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AbstractWebApplicationContext.generateApplicationResourceURL-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="AbstractWebApplicationContext.generateApplicationResourceURL-expanded"><a name="L136"></a><tt class="py-lineno">136</tt>  <tt class="py-line">        <tt class="py-name">filename</tt> <tt class="py-op">=</tt> <tt id="link-36" class="py-name" targets="Module muntjac.terminal.resource=muntjac.terminal.resource-module.html"><a title="muntjac.terminal.resource" class="py-name" href="#" onclick="return doclink('link-36', 'resource', 'link-36');">resource</a></tt><tt class="py-op">.</tt><tt id="link-37" class="py-name" targets="Method muntjac.terminal.application_resource.IApplicationResource.getFilename()=muntjac.terminal.application_resource.IApplicationResource-class.html#getFilename,Method muntjac.terminal.class_resource.ClassResource.getFilename()=muntjac.terminal.class_resource.ClassResource-class.html#getFilename,Method muntjac.terminal.file_resource.FileResource.getFilename()=muntjac.terminal.file_resource.FileResource-class.html#getFilename,Method muntjac.terminal.stream_resource.StreamResource.getFilename()=muntjac.terminal.stream_resource.StreamResource-class.html#getFilename,Method muntjac.ui.login_form.LoginPage.getFilename()=muntjac.ui.login_form.LoginPage-class.html#getFilename,Method muntjac.ui.upload.FinishedEvent.getFilename()=muntjac.ui.upload.FinishedEvent-class.html#getFilename,Method muntjac.ui.upload.StartedEvent.getFilename()=muntjac.ui.upload.StartedEvent-class.html#getFilename"><a title="muntjac.terminal.application_resource.IApplicationResource.getFilename
+muntjac.terminal.class_resource.ClassResource.getFilename
+muntjac.terminal.file_resource.FileResource.getFilename
+muntjac.terminal.stream_resource.StreamResource.getFilename
+muntjac.ui.login_form.LoginPage.getFilename
+muntjac.ui.upload.FinishedEvent.getFilename
+muntjac.ui.upload.StartedEvent.getFilename" class="py-name" href="#" onclick="return doclink('link-37', 'getFilename', 'link-37');">getFilename</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L137"></a><tt class="py-lineno">137</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">filename</tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L138"></a><tt class="py-lineno">138</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-string">'app://APP/'</tt> <tt class="py-op">+</tt> <tt class="py-name">mapKey</tt> <tt class="py-op">+</tt> <tt class="py-string">'/'</tt> </tt>
+<a name="L139"></a><tt class="py-lineno">139</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L140"></a><tt class="py-lineno">140</tt>  <tt class="py-line">            <tt class="py-comment"># In case serlet container refuses requests containing</tt> </tt>
+<a name="L141"></a><tt class="py-lineno">141</tt>  <tt class="py-line">            <tt class="py-comment"># encoded slashes or backslashes in URLs. Application resource URLs</tt> </tt>
+<a name="L142"></a><tt class="py-lineno">142</tt>  <tt class="py-line">            <tt class="py-comment"># should really be passed in another way than as part of the path</tt> </tt>
+<a name="L143"></a><tt class="py-lineno">143</tt>  <tt class="py-line">            <tt class="py-comment"># in the future.</tt> </tt>
+<a name="L144"></a><tt class="py-lineno">144</tt>  <tt class="py-line">            <tt class="py-name">encodedFileName</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-38" class="py-name" targets="Method muntjac.terminal.gwt.server.abstract_web_application_context.AbstractWebApplicationContext.urlEncode()=muntjac.terminal.gwt.server.abstract_web_application_context.AbstractWebApplicationContext-class.html#urlEncode"><a title="muntjac.terminal.gwt.server.abstract_web_application_context.AbstractWebApplicationContext.urlEncode" class="py-name" href="#" onclick="return doclink('link-38', 'urlEncode', 'link-38');">urlEncode</a></tt><tt class="py-op">(</tt><tt class="py-name">filename</tt><tt class="py-op">)</tt> </tt>
+<a name="L145"></a><tt class="py-lineno">145</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-string">"app://APP/"</tt> <tt class="py-op">+</tt> <tt class="py-name">mapKey</tt> <tt class="py-op">+</tt> <tt class="py-string">"/"</tt> <tt class="py-op">+</tt> <tt class="py-name">encodedFileName</tt> </tt>
+</div><a name="L146"></a><tt class="py-lineno">146</tt>  <tt class="py-line"> </tt>
+<a name="L147"></a><tt class="py-lineno">147</tt>  <tt class="py-line"> </tt>
+<a name="AbstractWebApplicationContext.urlEncode"></a><div id="AbstractWebApplicationContext.urlEncode-def"><a name="L148"></a><tt class="py-lineno">148</tt> <a class="py-toggle" href="#" id="AbstractWebApplicationContext.urlEncode-toggle" onclick="return toggle('AbstractWebApplicationContext.urlEncode');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.gwt.server.abstract_web_application_context.AbstractWebApplicationContext-class.html#urlEncode">urlEncode</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">filename</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AbstractWebApplicationContext.urlEncode-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="AbstractWebApplicationContext.urlEncode-expanded"><a name="L149"></a><tt class="py-lineno">149</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">urllib</tt><tt class="py-op">.</tt><tt class="py-name">quote</tt><tt class="py-op">(</tt><tt class="py-name">filename</tt><tt class="py-op">,</tt> <tt class="py-name">safe</tt><tt class="py-op">=</tt><tt class="py-string">'/\\'</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L150"></a><tt class="py-lineno">150</tt>  <tt class="py-line"> </tt>
+<a name="L151"></a><tt class="py-lineno">151</tt>  <tt class="py-line"> </tt>
+<a name="AbstractWebApplicationContext.isApplicationResourceURL"></a><div id="AbstractWebApplicationContext.isApplicationResourceURL-def"><a name="L152"></a><tt class="py-lineno">152</tt> <a class="py-toggle" href="#" id="AbstractWebApplicationContext.isApplicationResourceURL-toggle" onclick="return toggle('AbstractWebApplicationContext.isApplicationResourceURL');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.gwt.server.abstract_web_application_context.AbstractWebApplicationContext-class.html#isApplicationResourceURL">isApplicationResourceURL</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">context</tt><tt class="py-op">,</tt> <tt class="py-param">relativeUri</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AbstractWebApplicationContext.isApplicationResourceURL-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="AbstractWebApplicationContext.isApplicationResourceURL-expanded"><a name="L153"></a><tt class="py-lineno">153</tt>  <tt class="py-line">        <tt class="py-comment"># If the relative uri is null, we are ready</tt> </tt>
+<a name="L154"></a><tt class="py-lineno">154</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">relativeUri</tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L155"></a><tt class="py-lineno">155</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">False</tt> </tt>
+<a name="L156"></a><tt class="py-lineno">156</tt>  <tt class="py-line"> </tt>
+<a name="L157"></a><tt class="py-lineno">157</tt>  <tt class="py-line">        <tt class="py-comment"># Resolves the prefix</tt> </tt>
+<a name="L158"></a><tt class="py-lineno">158</tt>  <tt class="py-line">        <tt class="py-name">prefix</tt> <tt class="py-op">=</tt> <tt class="py-name">relativeUri</tt> </tt>
+<a name="L159"></a><tt class="py-lineno">159</tt>  <tt class="py-line">        <tt id="link-39" class="py-name" targets="Method muntjac.data.util.list_set.ListSet.index()=muntjac.data.util.list_set.ListSet-class.html#index"><a title="muntjac.data.util.list_set.ListSet.index" class="py-name" href="#" onclick="return doclink('link-39', 'index', 'link-39');">index</a></tt> <tt class="py-op">=</tt> <tt class="py-name">relativeUri</tt><tt class="py-op">.</tt><tt class="py-name">find</tt><tt class="py-op">(</tt><tt class="py-string">'/'</tt><tt class="py-op">)</tt> </tt>
+<a name="L160"></a><tt class="py-lineno">160</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt id="link-40" class="py-name"><a title="muntjac.data.util.list_set.ListSet.index" class="py-name" href="#" onclick="return doclink('link-40', 'index', 'link-39');">index</a></tt> <tt class="py-op">&gt;=</tt> <tt class="py-number">0</tt><tt class="py-op">:</tt> </tt>
+<a name="L161"></a><tt class="py-lineno">161</tt>  <tt class="py-line">            <tt class="py-name">prefix</tt> <tt class="py-op">=</tt> <tt class="py-name">relativeUri</tt><tt class="py-op">[</tt><tt class="py-op">:</tt><tt id="link-41" class="py-name"><a title="muntjac.data.util.list_set.ListSet.index" class="py-name" href="#" onclick="return doclink('link-41', 'index', 'link-39');">index</a></tt><tt class="py-op">]</tt> </tt>
+<a name="L162"></a><tt class="py-lineno">162</tt>  <tt class="py-line"> </tt>
+<a name="L163"></a><tt class="py-lineno">163</tt>  <tt class="py-line">        <tt class="py-comment"># Handles the resource requests</tt> </tt>
+<a name="L164"></a><tt class="py-lineno">164</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">prefix</tt> <tt class="py-op">==</tt> <tt class="py-string">'APP'</tt> </tt>
+</div><a name="L165"></a><tt class="py-lineno">165</tt>  <tt class="py-line"> </tt>
+<a name="L166"></a><tt class="py-lineno">166</tt>  <tt class="py-line"> </tt>
+<a name="AbstractWebApplicationContext.getURLKey"></a><div id="AbstractWebApplicationContext.getURLKey-def"><a name="L167"></a><tt class="py-lineno">167</tt> <a class="py-toggle" href="#" id="AbstractWebApplicationContext.getURLKey-toggle" onclick="return toggle('AbstractWebApplicationContext.getURLKey');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.gwt.server.abstract_web_application_context.AbstractWebApplicationContext-class.html#getURLKey">getURLKey</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">context</tt><tt class="py-op">,</tt> <tt class="py-param">relativeUri</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AbstractWebApplicationContext.getURLKey-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="AbstractWebApplicationContext.getURLKey-expanded"><a name="L168"></a><tt class="py-lineno">168</tt>  <tt class="py-line">        <tt id="link-42" class="py-name"><a title="muntjac.data.util.list_set.ListSet.index" class="py-name" href="#" onclick="return doclink('link-42', 'index', 'link-39');">index</a></tt> <tt class="py-op">=</tt> <tt class="py-name">relativeUri</tt><tt class="py-op">.</tt><tt class="py-name">find</tt><tt class="py-op">(</tt><tt class="py-string">'/'</tt><tt class="py-op">)</tt> </tt>
+<a name="L169"></a><tt class="py-lineno">169</tt>  <tt class="py-line">        <tt class="py-name">nxt</tt> <tt class="py-op">=</tt> <tt class="py-name">relativeUri</tt><tt class="py-op">.</tt><tt class="py-name">find</tt><tt class="py-op">(</tt><tt class="py-string">'/'</tt><tt class="py-op">,</tt> <tt id="link-43" class="py-name"><a title="muntjac.data.util.list_set.ListSet.index" class="py-name" href="#" onclick="return doclink('link-43', 'index', 'link-39');">index</a></tt> <tt class="py-op">+</tt> <tt class="py-number">1</tt><tt class="py-op">)</tt> </tt>
+<a name="L170"></a><tt class="py-lineno">170</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">nxt</tt> <tt class="py-op">&lt;</tt> <tt class="py-number">0</tt><tt class="py-op">:</tt> </tt>
+<a name="L171"></a><tt class="py-lineno">171</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">None</tt> </tt>
+<a name="L172"></a><tt class="py-lineno">172</tt>  <tt class="py-line"> </tt>
+<a name="L173"></a><tt class="py-lineno">173</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">relativeUri</tt><tt class="py-op">[</tt><tt id="link-44" class="py-name"><a title="muntjac.data.util.list_set.ListSet.index" class="py-name" href="#" onclick="return doclink('link-44', 'index', 'link-39');">index</a></tt> <tt class="py-op">+</tt> <tt class="py-number">1</tt><tt class="py-op">:</tt><tt class="py-name">nxt</tt><tt class="py-op">]</tt> </tt>
+</div></div><a name="L174"></a><tt class="py-lineno">174</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:04:04 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

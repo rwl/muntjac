@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.ui.accordion</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.ui-module.html">Package&nbsp;ui</a> ::
+        Module&nbsp;accordion
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.ui.accordion-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="muntjac.ui.accordion-module.html">Module muntjac.ui.accordion</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-comment"># Copyright (C) 2011 Vaadin Ltd.</tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-comment"># Copyright (C) 2011 Richard Lincoln</tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-comment"># This program is free software: you can redistribute it and/or modify</tt> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-comment"># it under the terms of the GNU Affero General Public License as published</tt> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-comment"># by the Free Software Foundation, either version 3 of the License, or</tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-comment"># (at your option) any later version.</tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"><tt class="py-comment"># This program is distributed in the hope that it will be useful,</tt> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"><tt class="py-comment"># but WITHOUT ANY WARRANTY; without even the implied warranty of</tt> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"><tt class="py-comment"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</tt> </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"><tt class="py-comment"># GNU Affero General Public License for more details.</tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt class="py-comment"># You should have received a copy of the GNU Affero General Public License</tt> </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"><tt class="py-comment"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</tt> </tt>
+<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"><tt class="py-comment"># Note: This is a modified file from Vaadin. For further information on</tt> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"><tt class="py-comment">#       Vaadin please visit http://www.vaadin.com.</tt> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"> </tt>
+<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line"><tt class="py-docstring">"""Defines a component similar to a TabSheet, but with a vertical orientation.</tt> </tt>
+<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line"> </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Package muntjac=muntjac-module.html,Function muntjac.main.muntjac()=muntjac.main-module.html#muntjac"><a title="muntjac
+muntjac.main.muntjac" class="py-name" href="#" onclick="return doclink('link-0', 'muntjac', 'link-0');">muntjac</a></tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Package muntjac.terminal.gwt.client.ui=muntjac.terminal.gwt.client.ui-module.html,Package muntjac.ui=muntjac.ui-module.html"><a title="muntjac.terminal.gwt.client.ui
+muntjac.ui" class="py-name" href="#" onclick="return doclink('link-1', 'ui', 'link-1');">ui</a></tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Module muntjac.ui.tab_sheet=muntjac.ui.tab_sheet-module.html"><a title="muntjac.ui.tab_sheet" class="py-name" href="#" onclick="return doclink('link-2', 'tab_sheet', 'link-2');">tab_sheet</a></tt> <tt class="py-keyword">import</tt> <tt id="link-3" class="py-name" targets="Class muntjac.ui.tab_sheet.TabSheet=muntjac.ui.tab_sheet.TabSheet-class.html"><a title="muntjac.ui.tab_sheet.TabSheet" class="py-name" href="#" onclick="return doclink('link-3', 'TabSheet', 'link-3');">TabSheet</a></tt> </tt>
+<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line"> </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line"> </tt>
+<a name="Accordion"></a><div id="Accordion-def"><a name="L26"></a><tt class="py-lineno">26</tt> <a class="py-toggle" href="#" id="Accordion-toggle" onclick="return toggle('Accordion');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.ui.accordion.Accordion-class.html">Accordion</a><tt class="py-op">(</tt><tt class="py-base-class">TabSheet</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Accordion-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="Accordion-expanded"><a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line">    <tt class="py-docstring">"""An accordion is a component similar to a L{TabSheet}, but</tt> </tt>
+<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line"><tt class="py-docstring">    with a vertical orientation and the selected component presented</tt> </tt>
+<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line"><tt class="py-docstring">    between tabs.</tt> </tt>
+<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line"><tt class="py-docstring">    Closable tabs are not supported by the accordion.</tt> </tt>
+<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line"><tt class="py-docstring">    The L{Accordion} can be styled with the .v-accordion, .v-accordion-item,</tt> </tt>
+<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line"><tt class="py-docstring">    .v-accordion-item-first and .v-accordion-item-caption styles.</tt> </tt>
+<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line"><tt class="py-docstring">    @see: L{TabSheet}</tt> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line"> </tt>
+<a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line">    <tt id="link-4" class="py-name" targets="Variable muntjac.ui.absolute_layout.AbsoluteLayout.CLIENT_WIDGET=muntjac.ui.absolute_layout.AbsoluteLayout-class.html#CLIENT_WIDGET,Variable muntjac.ui.accordion.Accordion.CLIENT_WIDGET=muntjac.ui.accordion.Accordion-class.html#CLIENT_WIDGET,Variable muntjac.ui.audio.Audio.CLIENT_WIDGET=muntjac.ui.audio.Audio-class.html#CLIENT_WIDGET,Variable muntjac.ui.button.Button.CLIENT_WIDGET=muntjac.ui.button.Button-class.html#CLIENT_WIDGET,Variable muntjac.ui.check_box.CheckBox.CLIENT_WIDGET=muntjac.ui.check_box.CheckBox-class.html#CLIENT_WIDGET,Variable muntjac.ui.combo_box.ComboBox.CLIENT_WIDGET=muntjac.ui.combo_box.ComboBox-class.html#CLIENT_WIDGET,Variable muntjac.ui.css_layout.CssLayout.CLIENT_WIDGET=muntjac.ui.css_layout.CssLayout-class.html#CLIENT_WIDGET,Variable muntjac.ui.custom_component.CustomComponent.CLIENT_WIDGET=muntjac.ui.custom_component.CustomComponent-class.html#CLIENT_WIDGET,Variable muntjac.ui.custom_layout.CustomLayout.CLIENT_WIDGET=muntjac.ui.custom_layout.CustomLayout-class.html#CLIENT_WIDGET,Variable muntjac.ui.date_field.DateField.CLIENT_WIDGET=muntjac.ui.date_field.DateField-class.html#CLIENT_WIDGET,Variable muntjac.ui.drag_and_drop_wrapper.DragAndDropWrapper.CLIENT_WIDGET=muntjac.ui.drag_and_drop_wrapper.DragAndDropWrapper-class.html#CLIENT_WIDGET,Variable muntjac.ui.embedded.Embedded.CLIENT_WIDGET=muntjac.ui.embedded.Embedded-class.html#CLIENT_WIDGET,Variable muntjac.ui.form.Form.CLIENT_WIDGET=muntjac.ui.form.Form-class.html#CLIENT_WIDGET,Variable muntjac.ui.form_layout.FormLayout.CLIENT_WIDGET=muntjac.ui.form_layout.FormLayout-class.html#CLIENT_WIDGET,Variable muntjac.ui.grid_layout.GridLayout.CLIENT_WIDGET=muntjac.ui.grid_layout.GridLayout-class.html#CLIENT_WIDGET,Variable muntjac.ui.horizontal_layout.HorizontalLayout.CLIENT_WIDGET=muntjac.ui.horizontal_layout.HorizontalLayout-class.html#CLIENT_WIDGET,Variable muntjac.ui.horizontal_split_panel.HorizontalSplitPanel.CLIENT_WIDGET=muntjac.ui.horizontal_split_panel.HorizontalSplitPanel-class.html#CLIENT_WIDGET,Variable muntjac.ui.inline_date_field.InlineDateField.CLIENT_WIDGET=muntjac.ui.inline_date_field.InlineDateField-class.html#CLIENT_WIDGET,Variable muntjac.ui.label.Label.CLIENT_WIDGET=muntjac.ui.label.Label-class.html#CLIENT_WIDGET,Variable muntjac.ui.link.Link.CLIENT_WIDGET=muntjac.ui.link.Link-class.html#CLIENT_WIDGET,Variable muntjac.ui.list_select.ListSelect.CLIENT_WIDGET=muntjac.ui.list_select.ListSelect-class.html#CLIENT_WIDGET,Variable muntjac.ui.menu_bar.MenuBar.CLIENT_WIDGET=muntjac.ui.menu_bar.MenuBar-class.html#CLIENT_WIDGET,Variable muntjac.ui.native_button.NativeButton.CLIENT_WIDGET=muntjac.ui.native_button.NativeButton-class.html#CLIENT_WIDGET,Variable muntjac.ui.native_select.NativeSelect.CLIENT_WIDGET=muntjac.ui.native_select.NativeSelect-class.html#CLIENT_WIDGET,Variable muntjac.ui.option_group.OptionGroup.CLIENT_WIDGET=muntjac.ui.option_group.OptionGroup-class.html#CLIENT_WIDGET,Variable muntjac.ui.ordered_layout.OrderedLayout.CLIENT_WIDGET=muntjac.ui.ordered_layout.OrderedLayout-class.html#CLIENT_WIDGET,Variable muntjac.ui.panel.Panel.CLIENT_WIDGET=muntjac.ui.panel.Panel-class.html#CLIENT_WIDGET,Variable muntjac.ui.password_field.PasswordField.CLIENT_WIDGET=muntjac.ui.password_field.PasswordField-class.html#CLIENT_WIDGET,Variable muntjac.ui.popup_view.PopupView.CLIENT_WIDGET=muntjac.ui.popup_view.PopupView-class.html#CLIENT_WIDGET,Variable muntjac.ui.progress_indicator.ProgressIndicator.CLIENT_WIDGET=muntjac.ui.progress_indicator.ProgressIndicator-class.html#CLIENT_WIDGET,Variable muntjac.ui.rich_text_area.RichTextArea.CLIENT_WIDGET=muntjac.ui.rich_text_area.RichTextArea-class.html#CLIENT_WIDGET,Variable muntjac.ui.select.Select.CLIENT_WIDGET=muntjac.ui.select.Select-class.html#CLIENT_WIDGET,Variable muntjac.ui.slider.Slider.CLIENT_WIDGET=muntjac.ui.slider.Slider-class.html#CLIENT_WIDGET,Variable muntjac.ui.split_panel.SplitPanel.CLIENT_WIDGET=muntjac.ui.split_panel.SplitPanel-class.html#CLIENT_WIDGET,Variable muntjac.ui.tab_sheet.TabSheet.CLIENT_WIDGET=muntjac.ui.tab_sheet.TabSheet-class.html#CLIENT_WIDGET,Variable muntjac.ui.table.Table.CLIENT_WIDGET=muntjac.ui.table.Table-class.html#CLIENT_WIDGET,Variable muntjac.ui.text_area.TextArea.CLIENT_WIDGET=muntjac.ui.text_area.TextArea-class.html#CLIENT_WIDGET,Variable muntjac.ui.text_field.TextField.CLIENT_WIDGET=muntjac.ui.text_field.TextField-class.html#CLIENT_WIDGET,Variable muntjac.ui.tree.Tree.CLIENT_WIDGET=muntjac.ui.tree.Tree-class.html#CLIENT_WIDGET,Variable muntjac.ui.twin_col_select.TwinColSelect.CLIENT_WIDGET=muntjac.ui.twin_col_select.TwinColSelect-class.html#CLIENT_WIDGET,Variable muntjac.ui.upload.Upload.CLIENT_WIDGET=muntjac.ui.upload.Upload-class.html#CLIENT_WIDGET,Variable muntjac.ui.uri_fragment_utility.UriFragmentUtility.CLIENT_WIDGET=muntjac.ui.uri_fragment_utility.UriFragmentUtility-class.html#CLIENT_WIDGET,Variable muntjac.ui.vertical_layout.VerticalLayout.CLIENT_WIDGET=muntjac.ui.vertical_layout.VerticalLayout-class.html#CLIENT_WIDGET,Variable muntjac.ui.vertical_split_panel.VerticalSplitPanel.CLIENT_WIDGET=muntjac.ui.vertical_split_panel.VerticalSplitPanel-class.html#CLIENT_WIDGET,Variable muntjac.ui.video.Video.CLIENT_WIDGET=muntjac.ui.video.Video-class.html#CLIENT_WIDGET,Variable muntjac.ui.window.Window.CLIENT_WIDGET=muntjac.ui.window.Window-class.html#CLIENT_WIDGET"><a title="muntjac.ui.absolute_layout.AbsoluteLayout.CLIENT_WIDGET
+muntjac.ui.accordion.Accordion.CLIENT_WIDGET
+muntjac.ui.audio.Audio.CLIENT_WIDGET
+muntjac.ui.button.Button.CLIENT_WIDGET
+muntjac.ui.check_box.CheckBox.CLIENT_WIDGET
+muntjac.ui.combo_box.ComboBox.CLIENT_WIDGET
+muntjac.ui.css_layout.CssLayout.CLIENT_WIDGET
+muntjac.ui.custom_component.CustomComponent.CLIENT_WIDGET
+muntjac.ui.custom_layout.CustomLayout.CLIENT_WIDGET
+muntjac.ui.date_field.DateField.CLIENT_WIDGET
+muntjac.ui.drag_and_drop_wrapper.DragAndDropWrapper.CLIENT_WIDGET
+muntjac.ui.embedded.Embedded.CLIENT_WIDGET
+muntjac.ui.form.Form.CLIENT_WIDGET
+muntjac.ui.form_layout.FormLayout.CLIENT_WIDGET
+muntjac.ui.grid_layout.GridLayout.CLIENT_WIDGET
+muntjac.ui.horizontal_layout.HorizontalLayout.CLIENT_WIDGET
+muntjac.ui.horizontal_split_panel.HorizontalSplitPanel.CLIENT_WIDGET
+muntjac.ui.inline_date_field.InlineDateField.CLIENT_WIDGET
+muntjac.ui.label.Label.CLIENT_WIDGET
+muntjac.ui.link.Link.CLIENT_WIDGET
+muntjac.ui.list_select.ListSelect.CLIENT_WIDGET
+muntjac.ui.menu_bar.MenuBar.CLIENT_WIDGET
+muntjac.ui.native_button.NativeButton.CLIENT_WIDGET
+muntjac.ui.native_select.NativeSelect.CLIENT_WIDGET
+muntjac.ui.option_group.OptionGroup.CLIENT_WIDGET
+muntjac.ui.ordered_layout.OrderedLayout.CLIENT_WIDGET
+muntjac.ui.panel.Panel.CLIENT_WIDGET
+muntjac.ui.password_field.PasswordField.CLIENT_WIDGET
+muntjac.ui.popup_view.PopupView.CLIENT_WIDGET
+muntjac.ui.progress_indicator.ProgressIndicator.CLIENT_WIDGET
+muntjac.ui.rich_text_area.RichTextArea.CLIENT_WIDGET
+muntjac.ui.select.Select.CLIENT_WIDGET
+muntjac.ui.slider.Slider.CLIENT_WIDGET
+muntjac.ui.split_panel.SplitPanel.CLIENT_WIDGET
+muntjac.ui.tab_sheet.TabSheet.CLIENT_WIDGET
+muntjac.ui.table.Table.CLIENT_WIDGET
+muntjac.ui.text_area.TextArea.CLIENT_WIDGET
+muntjac.ui.text_field.TextField.CLIENT_WIDGET
+muntjac.ui.tree.Tree.CLIENT_WIDGET
+muntjac.ui.twin_col_select.TwinColSelect.CLIENT_WIDGET
+muntjac.ui.upload.Upload.CLIENT_WIDGET
+muntjac.ui.uri_fragment_utility.UriFragmentUtility.CLIENT_WIDGET
+muntjac.ui.vertical_layout.VerticalLayout.CLIENT_WIDGET
+muntjac.ui.vertical_split_panel.VerticalSplitPanel.CLIENT_WIDGET
+muntjac.ui.video.Video.CLIENT_WIDGET
+muntjac.ui.window.Window.CLIENT_WIDGET" class="py-name" href="#" onclick="return doclink('link-4', 'CLIENT_WIDGET', 'link-4');">CLIENT_WIDGET</a></tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> <tt class="py-comment">#ClientWidget(VAccordion)</tt> </tt>
+</div><a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:04:05 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

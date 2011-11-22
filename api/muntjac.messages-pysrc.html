@@ -1,0 +1,635 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.messages</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        Module&nbsp;messages
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.messages-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="muntjac.messages-module.html">Module muntjac.messages</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno">  1</tt>  <tt class="py-line"><tt class="py-comment"># Copyright (C) 2011 Vaadin Ltd.</tt> </tt>
+<a name="L2"></a><tt class="py-lineno">  2</tt>  <tt class="py-line"><tt class="py-comment"># Copyright (C) 2011 Richard Lincoln</tt> </tt>
+<a name="L3"></a><tt class="py-lineno">  3</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L4"></a><tt class="py-lineno">  4</tt>  <tt class="py-line"><tt class="py-comment"># This program is free software: you can redistribute it and/or modify</tt> </tt>
+<a name="L5"></a><tt class="py-lineno">  5</tt>  <tt class="py-line"><tt class="py-comment"># it under the terms of the GNU Affero General Public License as published</tt> </tt>
+<a name="L6"></a><tt class="py-lineno">  6</tt>  <tt class="py-line"><tt class="py-comment"># by the Free Software Foundation, either version 3 of the License, or</tt> </tt>
+<a name="L7"></a><tt class="py-lineno">  7</tt>  <tt class="py-line"><tt class="py-comment"># (at your option) any later version.</tt> </tt>
+<a name="L8"></a><tt class="py-lineno">  8</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line"><tt class="py-comment"># This program is distributed in the hope that it will be useful,</tt> </tt>
+<a name="L10"></a><tt class="py-lineno"> 10</tt>  <tt class="py-line"><tt class="py-comment"># but WITHOUT ANY WARRANTY; without even the implied warranty of</tt> </tt>
+<a name="L11"></a><tt class="py-lineno"> 11</tt>  <tt class="py-line"><tt class="py-comment"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</tt> </tt>
+<a name="L12"></a><tt class="py-lineno"> 12</tt>  <tt class="py-line"><tt class="py-comment"># GNU Affero General Public License for more details.</tt> </tt>
+<a name="L13"></a><tt class="py-lineno"> 13</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L14"></a><tt class="py-lineno"> 14</tt>  <tt class="py-line"><tt class="py-comment"># You should have received a copy of the GNU Affero General Public License</tt> </tt>
+<a name="L15"></a><tt class="py-lineno"> 15</tt>  <tt class="py-line"><tt class="py-comment"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</tt> </tt>
+<a name="L16"></a><tt class="py-lineno"> 16</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L17"></a><tt class="py-lineno"> 17</tt>  <tt class="py-line"><tt class="py-comment"># Note: This is a modified file from Vaadin. For further information on</tt> </tt>
+<a name="L18"></a><tt class="py-lineno"> 18</tt>  <tt class="py-line"><tt class="py-comment">#       Vaadin please visit http://www.vaadin.com.</tt> </tt>
+<a name="L19"></a><tt class="py-lineno"> 19</tt>  <tt class="py-line"> </tt>
+<a name="L20"></a><tt class="py-lineno"> 20</tt>  <tt class="py-line"> </tt>
+<a name="SystemMessages"></a><div id="SystemMessages-def"><a name="L21"></a><tt class="py-lineno"> 21</tt> <a class="py-toggle" href="#" id="SystemMessages-toggle" onclick="return toggle('SystemMessages');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.messages.SystemMessages-class.html">SystemMessages</a><tt class="py-op">(</tt><tt class="py-base-class">object</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SystemMessages-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="SystemMessages-expanded"><a name="L22"></a><tt class="py-lineno"> 22</tt>  <tt class="py-line">    <tt class="py-docstring">"""Contains the system messages used to notify the user about various</tt> </tt>
+<a name="L23"></a><tt class="py-lineno"> 23</tt>  <tt class="py-line"><tt class="py-docstring">    critical situations that can occur.</tt> </tt>
+<a name="L24"></a><tt class="py-lineno"> 24</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L25"></a><tt class="py-lineno"> 25</tt>  <tt class="py-line"><tt class="py-docstring">    Customize by overriding the static L{Application.getSystemMessages()} and</tt> </tt>
+<a name="L26"></a><tt class="py-lineno"> 26</tt>  <tt class="py-line"><tt class="py-docstring">    returning L{CustomizedSystemMessages}.</tt> </tt>
+<a name="L27"></a><tt class="py-lineno"> 27</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L28"></a><tt class="py-lineno"> 28</tt>  <tt class="py-line"><tt class="py-docstring">    The defaults defined in this class are:</tt> </tt>
+<a name="L29"></a><tt class="py-lineno"> 29</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L30"></a><tt class="py-lineno"> 30</tt>  <tt class="py-line"><tt class="py-docstring">      - B{sessionExpiredURL} = None</tt> </tt>
+<a name="L31"></a><tt class="py-lineno"> 31</tt>  <tt class="py-line"><tt class="py-docstring">      - B{sessionExpiredNotificationEnabled} = True</tt> </tt>
+<a name="L32"></a><tt class="py-lineno"> 32</tt>  <tt class="py-line"><tt class="py-docstring">      - B{sessionExpiredCaption} = ""</tt> </tt>
+<a name="L33"></a><tt class="py-lineno"> 33</tt>  <tt class="py-line"><tt class="py-docstring">      - B{sessionExpiredMessage} = "Take note of any unsaved data, and &lt;u&gt;click here&lt;/u&gt; to continue."</tt> </tt>
+<a name="L34"></a><tt class="py-lineno"> 34</tt>  <tt class="py-line"><tt class="py-docstring">      - B{communicationErrorURL} = None</tt> </tt>
+<a name="L35"></a><tt class="py-lineno"> 35</tt>  <tt class="py-line"><tt class="py-docstring">      - B{communicationErrorNotificationEnabled} = True</tt> </tt>
+<a name="L36"></a><tt class="py-lineno"> 36</tt>  <tt class="py-line"><tt class="py-docstring">      - B{communicationErrorCaption} = "Communication problem"</tt> </tt>
+<a name="L37"></a><tt class="py-lineno"> 37</tt>  <tt class="py-line"><tt class="py-docstring">      - B{communicationErrorMessage} = "Take note of any unsaved data, and &lt;u&gt;click here&lt;/u&gt; to continue."</tt> </tt>
+<a name="L38"></a><tt class="py-lineno"> 38</tt>  <tt class="py-line"><tt class="py-docstring">      - B{internalErrorURL} = None</tt> </tt>
+<a name="L39"></a><tt class="py-lineno"> 39</tt>  <tt class="py-line"><tt class="py-docstring">      - B{internalErrorNotificationEnabled} = True</tt> </tt>
+<a name="L40"></a><tt class="py-lineno"> 40</tt>  <tt class="py-line"><tt class="py-docstring">      - B{internalErrorCaption} = "Internal error"</tt> </tt>
+<a name="L41"></a><tt class="py-lineno"> 41</tt>  <tt class="py-line"><tt class="py-docstring">      - B{internalErrorMessage} = "Please notify the administrator.&lt;br/&gt;Take note of any unsaved data, and &lt;u&gt;click here&lt;/u&gt; to continue."</tt> </tt>
+<a name="L42"></a><tt class="py-lineno"> 42</tt>  <tt class="py-line"><tt class="py-docstring">      - B{outOfSyncURL} = None</tt> </tt>
+<a name="L43"></a><tt class="py-lineno"> 43</tt>  <tt class="py-line"><tt class="py-docstring">      - B{outOfSyncNotificationEnabled} = True</tt> </tt>
+<a name="L44"></a><tt class="py-lineno"> 44</tt>  <tt class="py-line"><tt class="py-docstring">      - B{outOfSyncCaption} = "Out of sync"</tt> </tt>
+<a name="L45"></a><tt class="py-lineno"> 45</tt>  <tt class="py-line"><tt class="py-docstring">      - B{outOfSyncMessage} = "Something has caused us to be out of sync with the server.&lt;br/&gt;Take note of any unsaved data, and &lt;u&gt;click here&lt;/u&gt; to re-sync."</tt> </tt>
+<a name="L46"></a><tt class="py-lineno"> 46</tt>  <tt class="py-line"><tt class="py-docstring">      - B{cookiesDisabledURL} = None</tt> </tt>
+<a name="L47"></a><tt class="py-lineno"> 47</tt>  <tt class="py-line"><tt class="py-docstring">      - B{cookiesDisabledNotificationEnabled} = True</tt> </tt>
+<a name="L48"></a><tt class="py-lineno"> 48</tt>  <tt class="py-line"><tt class="py-docstring">      - B{cookiesDisabledCaption} = "Cookies disabled"</tt> </tt>
+<a name="L49"></a><tt class="py-lineno"> 49</tt>  <tt class="py-line"><tt class="py-docstring">      - B{cookiesDisabledMessage} = "This application requires cookies to function.&lt;br/&gt;Please enable cookies in your browser and &lt;u&gt;click here&lt;/u&gt; to try again."</tt> </tt>
+<a name="L50"></a><tt class="py-lineno"> 50</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L51"></a><tt class="py-lineno"> 51</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L52"></a><tt class="py-lineno"> 52</tt>  <tt class="py-line"> </tt>
+<a name="SystemMessages.__init__"></a><div id="SystemMessages.__init__-def"><a name="L53"></a><tt class="py-lineno"> 53</tt> <a class="py-toggle" href="#" id="SystemMessages.__init__-toggle" onclick="return toggle('SystemMessages.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.SystemMessages-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SystemMessages.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SystemMessages.__init__-expanded"><a name="L54"></a><tt class="py-lineno"> 54</tt>  <tt class="py-line">        <tt class="py-docstring">"""Use L{CustomizedSystemMessages} to customize"""</tt> </tt>
+<a name="L55"></a><tt class="py-lineno"> 55</tt>  <tt class="py-line"> </tt>
+<a name="L56"></a><tt class="py-lineno"> 56</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">sessionExpiredURL</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L57"></a><tt class="py-lineno"> 57</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">sessionExpiredNotificationEnabled</tt> <tt class="py-op">=</tt> <tt class="py-name">True</tt> </tt>
+<a name="L58"></a><tt class="py-lineno"> 58</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">sessionExpiredCaption</tt> <tt class="py-op">=</tt> <tt class="py-string">'Session Expired'</tt> </tt>
+<a name="L59"></a><tt class="py-lineno"> 59</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">sessionExpiredMessage</tt> <tt class="py-op">=</tt> <tt class="py-string">'Take note of any unsaved data, and &lt;u&gt;click here&lt;/u&gt; to continue.'</tt> </tt>
+<a name="L60"></a><tt class="py-lineno"> 60</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">communicationErrorURL</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L61"></a><tt class="py-lineno"> 61</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">communicationErrorNotificationEnabled</tt> <tt class="py-op">=</tt> <tt class="py-name">True</tt> </tt>
+<a name="L62"></a><tt class="py-lineno"> 62</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">communicationErrorCaption</tt> <tt class="py-op">=</tt> <tt class="py-string">'Communication problem'</tt> </tt>
+<a name="L63"></a><tt class="py-lineno"> 63</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">communicationErrorMessage</tt> <tt class="py-op">=</tt> <tt class="py-string">'Take note of any unsaved data, and &lt;u&gt;click here&lt;/u&gt; to continue.'</tt> </tt>
+<a name="L64"></a><tt class="py-lineno"> 64</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">authenticationErrorURL</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L65"></a><tt class="py-lineno"> 65</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">authenticationErrorNotificationEnabled</tt> <tt class="py-op">=</tt> <tt class="py-name">True</tt> </tt>
+<a name="L66"></a><tt class="py-lineno"> 66</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">authenticationErrorCaption</tt> <tt class="py-op">=</tt> <tt class="py-string">'Authentication problem'</tt> </tt>
+<a name="L67"></a><tt class="py-lineno"> 67</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">authenticationErrorMessage</tt> <tt class="py-op">=</tt> <tt class="py-string">'Take note of any unsaved data, and &lt;u&gt;click here&lt;/u&gt; to continue.'</tt> </tt>
+<a name="L68"></a><tt class="py-lineno"> 68</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">internalErrorURL</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L69"></a><tt class="py-lineno"> 69</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">internalErrorNotificationEnabled</tt> <tt class="py-op">=</tt> <tt class="py-name">True</tt> </tt>
+<a name="L70"></a><tt class="py-lineno"> 70</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">internalErrorCaption</tt> <tt class="py-op">=</tt> <tt class="py-string">'Internal error'</tt> </tt>
+<a name="L71"></a><tt class="py-lineno"> 71</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">internalErrorMessage</tt> <tt class="py-op">=</tt> <tt class="py-string">'Please notify the administrator.&lt;br/&gt;Take note of any unsaved data, and &lt;u&gt;click here&lt;/u&gt; to continue.'</tt> </tt>
+<a name="L72"></a><tt class="py-lineno"> 72</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">outOfSyncURL</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L73"></a><tt class="py-lineno"> 73</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">outOfSyncNotificationEnabled</tt> <tt class="py-op">=</tt> <tt class="py-name">True</tt> </tt>
+<a name="L74"></a><tt class="py-lineno"> 74</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">outOfSyncCaption</tt> <tt class="py-op">=</tt> <tt class="py-string">'Out of sync'</tt> </tt>
+<a name="L75"></a><tt class="py-lineno"> 75</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">outOfSyncMessage</tt> <tt class="py-op">=</tt> <tt class="py-string">'Something has caused us to be out of sync with the server.&lt;br/&gt;Take note of any unsaved data, and &lt;u&gt;click here&lt;/u&gt; to re-sync.'</tt> </tt>
+<a name="L76"></a><tt class="py-lineno"> 76</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">cookiesDisabledURL</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L77"></a><tt class="py-lineno"> 77</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">cookiesDisabledNotificationEnabled</tt> <tt class="py-op">=</tt> <tt class="py-name">True</tt> </tt>
+<a name="L78"></a><tt class="py-lineno"> 78</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">cookiesDisabledCaption</tt> <tt class="py-op">=</tt> <tt class="py-string">'Cookies disabled'</tt> </tt>
+<a name="L79"></a><tt class="py-lineno"> 79</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">cookiesDisabledMessage</tt> <tt class="py-op">=</tt> <tt class="py-string">'This application requires cookies to function.&lt;br/&gt;Please enable cookies in your browser and &lt;u&gt;click here&lt;/u&gt; to try again.'</tt> </tt>
+</div><a name="L80"></a><tt class="py-lineno"> 80</tt>  <tt class="py-line"> </tt>
+<a name="L81"></a><tt class="py-lineno"> 81</tt>  <tt class="py-line"> </tt>
+<a name="SystemMessages.getSessionExpiredURL"></a><div id="SystemMessages.getSessionExpiredURL-def"><a name="L82"></a><tt class="py-lineno"> 82</tt> <a class="py-toggle" href="#" id="SystemMessages.getSessionExpiredURL-toggle" onclick="return toggle('SystemMessages.getSessionExpiredURL');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.SystemMessages-class.html#getSessionExpiredURL">getSessionExpiredURL</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SystemMessages.getSessionExpiredURL-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SystemMessages.getSessionExpiredURL-expanded"><a name="L83"></a><tt class="py-lineno"> 83</tt>  <tt class="py-line">        <tt class="py-docstring">"""@return: null to indicate that the application will be restarted after</tt> </tt>
+<a name="L84"></a><tt class="py-lineno"> 84</tt>  <tt class="py-line"><tt class="py-docstring">                    session expired message has been shown.</tt> </tt>
+<a name="L85"></a><tt class="py-lineno"> 85</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L86"></a><tt class="py-lineno"> 86</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">sessionExpiredURL</tt> </tt>
+</div><a name="L87"></a><tt class="py-lineno"> 87</tt>  <tt class="py-line"> </tt>
+<a name="L88"></a><tt class="py-lineno"> 88</tt>  <tt class="py-line"> </tt>
+<a name="SystemMessages.isSessionExpiredNotificationEnabled"></a><div id="SystemMessages.isSessionExpiredNotificationEnabled-def"><a name="L89"></a><tt class="py-lineno"> 89</tt> <a class="py-toggle" href="#" id="SystemMessages.isSessionExpiredNotificationEnabled-toggle" onclick="return toggle('SystemMessages.isSessionExpiredNotificationEnabled');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.SystemMessages-class.html#isSessionExpiredNotificationEnabled">isSessionExpiredNotificationEnabled</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SystemMessages.isSessionExpiredNotificationEnabled-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SystemMessages.isSessionExpiredNotificationEnabled-expanded"><a name="L90"></a><tt class="py-lineno"> 90</tt>  <tt class="py-line">        <tt class="py-docstring">"""@return: true to show session expiration message."""</tt> </tt>
+<a name="L91"></a><tt class="py-lineno"> 91</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">sessionExpiredNotificationEnabled</tt> </tt>
+</div><a name="L92"></a><tt class="py-lineno"> 92</tt>  <tt class="py-line"> </tt>
+<a name="L93"></a><tt class="py-lineno"> 93</tt>  <tt class="py-line"> </tt>
+<a name="SystemMessages.getSessionExpiredCaption"></a><div id="SystemMessages.getSessionExpiredCaption-def"><a name="L94"></a><tt class="py-lineno"> 94</tt> <a class="py-toggle" href="#" id="SystemMessages.getSessionExpiredCaption-toggle" onclick="return toggle('SystemMessages.getSessionExpiredCaption');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.SystemMessages-class.html#getSessionExpiredCaption">getSessionExpiredCaption</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SystemMessages.getSessionExpiredCaption-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SystemMessages.getSessionExpiredCaption-expanded"><a name="L95"></a><tt class="py-lineno"> 95</tt>  <tt class="py-line">        <tt class="py-docstring">"""@return: "" to show no caption."""</tt> </tt>
+<a name="L96"></a><tt class="py-lineno"> 96</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">sessionExpiredCaption</tt> <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">sessionExpiredNotificationEnabled</tt> <tt class="py-keyword">else</tt> <tt class="py-name">None</tt> </tt>
+</div><a name="L97"></a><tt class="py-lineno"> 97</tt>  <tt class="py-line"> </tt>
+<a name="L98"></a><tt class="py-lineno"> 98</tt>  <tt class="py-line"> </tt>
+<a name="SystemMessages.getSessionExpiredMessage"></a><div id="SystemMessages.getSessionExpiredMessage-def"><a name="L99"></a><tt class="py-lineno"> 99</tt> <a class="py-toggle" href="#" id="SystemMessages.getSessionExpiredMessage-toggle" onclick="return toggle('SystemMessages.getSessionExpiredMessage');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.SystemMessages-class.html#getSessionExpiredMessage">getSessionExpiredMessage</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SystemMessages.getSessionExpiredMessage-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SystemMessages.getSessionExpiredMessage-expanded"><a name="L100"></a><tt class="py-lineno">100</tt>  <tt class="py-line">        <tt class="py-docstring">"""@return: "Take note of any unsaved data, and &lt;u&gt;click here&lt;/u&gt; to continue."</tt> </tt>
+<a name="L101"></a><tt class="py-lineno">101</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L102"></a><tt class="py-lineno">102</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">sessionExpiredMessage</tt> <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">sessionExpiredNotificationEnabled</tt> <tt class="py-keyword">else</tt> <tt class="py-name">None</tt> </tt>
+</div><a name="L103"></a><tt class="py-lineno">103</tt>  <tt class="py-line"> </tt>
+<a name="L104"></a><tt class="py-lineno">104</tt>  <tt class="py-line"> </tt>
+<a name="SystemMessages.getCommunicationErrorURL"></a><div id="SystemMessages.getCommunicationErrorURL-def"><a name="L105"></a><tt class="py-lineno">105</tt> <a class="py-toggle" href="#" id="SystemMessages.getCommunicationErrorURL-toggle" onclick="return toggle('SystemMessages.getCommunicationErrorURL');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.SystemMessages-class.html#getCommunicationErrorURL">getCommunicationErrorURL</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SystemMessages.getCommunicationErrorURL-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SystemMessages.getCommunicationErrorURL-expanded"><a name="L106"></a><tt class="py-lineno">106</tt>  <tt class="py-line">        <tt class="py-docstring">"""@return: null to reload the application after communication error</tt> </tt>
+<a name="L107"></a><tt class="py-lineno">107</tt>  <tt class="py-line"><tt class="py-docstring">                    message.</tt> </tt>
+<a name="L108"></a><tt class="py-lineno">108</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L109"></a><tt class="py-lineno">109</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">communicationErrorURL</tt> </tt>
+</div><a name="L110"></a><tt class="py-lineno">110</tt>  <tt class="py-line"> </tt>
+<a name="L111"></a><tt class="py-lineno">111</tt>  <tt class="py-line"> </tt>
+<a name="SystemMessages.isCommunicationErrorNotificationEnabled"></a><div id="SystemMessages.isCommunicationErrorNotificationEnabled-def"><a name="L112"></a><tt class="py-lineno">112</tt> <a class="py-toggle" href="#" id="SystemMessages.isCommunicationErrorNotificationEnabled-toggle" onclick="return toggle('SystemMessages.isCommunicationErrorNotificationEnabled');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.SystemMessages-class.html#isCommunicationErrorNotificationEnabled">isCommunicationErrorNotificationEnabled</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SystemMessages.isCommunicationErrorNotificationEnabled-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SystemMessages.isCommunicationErrorNotificationEnabled-expanded"><a name="L113"></a><tt class="py-lineno">113</tt>  <tt class="py-line">        <tt class="py-docstring">"""@return: true to show the communication error message."""</tt> </tt>
+<a name="L114"></a><tt class="py-lineno">114</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">communicationErrorNotificationEnabled</tt> </tt>
+</div><a name="L115"></a><tt class="py-lineno">115</tt>  <tt class="py-line"> </tt>
+<a name="L116"></a><tt class="py-lineno">116</tt>  <tt class="py-line"> </tt>
+<a name="SystemMessages.getCommunicationErrorCaption"></a><div id="SystemMessages.getCommunicationErrorCaption-def"><a name="L117"></a><tt class="py-lineno">117</tt> <a class="py-toggle" href="#" id="SystemMessages.getCommunicationErrorCaption-toggle" onclick="return toggle('SystemMessages.getCommunicationErrorCaption');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.SystemMessages-class.html#getCommunicationErrorCaption">getCommunicationErrorCaption</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SystemMessages.getCommunicationErrorCaption-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SystemMessages.getCommunicationErrorCaption-expanded"><a name="L118"></a><tt class="py-lineno">118</tt>  <tt class="py-line">        <tt class="py-docstring">"""@return: "Communication problem\""""</tt> </tt>
+<a name="L119"></a><tt class="py-lineno">119</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">communicationErrorCaption</tt> <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">communicationErrorNotificationEnabled</tt> <tt class="py-keyword">else</tt> <tt class="py-name">None</tt> </tt>
+</div><a name="L120"></a><tt class="py-lineno">120</tt>  <tt class="py-line"> </tt>
+<a name="L121"></a><tt class="py-lineno">121</tt>  <tt class="py-line"> </tt>
+<a name="SystemMessages.getCommunicationErrorMessage"></a><div id="SystemMessages.getCommunicationErrorMessage-def"><a name="L122"></a><tt class="py-lineno">122</tt> <a class="py-toggle" href="#" id="SystemMessages.getCommunicationErrorMessage-toggle" onclick="return toggle('SystemMessages.getCommunicationErrorMessage');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.SystemMessages-class.html#getCommunicationErrorMessage">getCommunicationErrorMessage</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SystemMessages.getCommunicationErrorMessage-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SystemMessages.getCommunicationErrorMessage-expanded"><a name="L123"></a><tt class="py-lineno">123</tt>  <tt class="py-line">        <tt class="py-docstring">"""@return: "Take note of any unsaved data, and &lt;u&gt;click here&lt;/u&gt; to continue."</tt> </tt>
+<a name="L124"></a><tt class="py-lineno">124</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L125"></a><tt class="py-lineno">125</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">communicationErrorMessage</tt> <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">communicationErrorNotificationEnabled</tt> <tt class="py-keyword">else</tt> <tt class="py-name">None</tt> </tt>
+</div><a name="L126"></a><tt class="py-lineno">126</tt>  <tt class="py-line"> </tt>
+<a name="L127"></a><tt class="py-lineno">127</tt>  <tt class="py-line"> </tt>
+<a name="SystemMessages.getAuthenticationErrorURL"></a><div id="SystemMessages.getAuthenticationErrorURL-def"><a name="L128"></a><tt class="py-lineno">128</tt> <a class="py-toggle" href="#" id="SystemMessages.getAuthenticationErrorURL-toggle" onclick="return toggle('SystemMessages.getAuthenticationErrorURL');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.SystemMessages-class.html#getAuthenticationErrorURL">getAuthenticationErrorURL</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SystemMessages.getAuthenticationErrorURL-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SystemMessages.getAuthenticationErrorURL-expanded"><a name="L129"></a><tt class="py-lineno">129</tt>  <tt class="py-line">        <tt class="py-docstring">"""@return: null to reload the application after authentication error</tt> </tt>
+<a name="L130"></a><tt class="py-lineno">130</tt>  <tt class="py-line"><tt class="py-docstring">                    message.</tt> </tt>
+<a name="L131"></a><tt class="py-lineno">131</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L132"></a><tt class="py-lineno">132</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">authenticationErrorURL</tt> </tt>
+</div><a name="L133"></a><tt class="py-lineno">133</tt>  <tt class="py-line"> </tt>
+<a name="L134"></a><tt class="py-lineno">134</tt>  <tt class="py-line"> </tt>
+<a name="SystemMessages.isAuthenticationErrorNotificationEnabled"></a><div id="SystemMessages.isAuthenticationErrorNotificationEnabled-def"><a name="L135"></a><tt class="py-lineno">135</tt> <a class="py-toggle" href="#" id="SystemMessages.isAuthenticationErrorNotificationEnabled-toggle" onclick="return toggle('SystemMessages.isAuthenticationErrorNotificationEnabled');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.SystemMessages-class.html#isAuthenticationErrorNotificationEnabled">isAuthenticationErrorNotificationEnabled</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SystemMessages.isAuthenticationErrorNotificationEnabled-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SystemMessages.isAuthenticationErrorNotificationEnabled-expanded"><a name="L136"></a><tt class="py-lineno">136</tt>  <tt class="py-line">        <tt class="py-docstring">"""@return: true to show the authentication error message."""</tt> </tt>
+<a name="L137"></a><tt class="py-lineno">137</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">authenticationErrorNotificationEnabled</tt> </tt>
+</div><a name="L138"></a><tt class="py-lineno">138</tt>  <tt class="py-line"> </tt>
+<a name="L139"></a><tt class="py-lineno">139</tt>  <tt class="py-line"> </tt>
+<a name="SystemMessages.getAuthenticationErrorCaption"></a><div id="SystemMessages.getAuthenticationErrorCaption-def"><a name="L140"></a><tt class="py-lineno">140</tt> <a class="py-toggle" href="#" id="SystemMessages.getAuthenticationErrorCaption-toggle" onclick="return toggle('SystemMessages.getAuthenticationErrorCaption');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.SystemMessages-class.html#getAuthenticationErrorCaption">getAuthenticationErrorCaption</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SystemMessages.getAuthenticationErrorCaption-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SystemMessages.getAuthenticationErrorCaption-expanded"><a name="L141"></a><tt class="py-lineno">141</tt>  <tt class="py-line">        <tt class="py-docstring">"""@return: "Authentication problem\""""</tt> </tt>
+<a name="L142"></a><tt class="py-lineno">142</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">authenticationErrorCaption</tt> <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">authenticationErrorNotificationEnabled</tt> <tt class="py-keyword">else</tt> <tt class="py-name">None</tt> </tt>
+</div><a name="L143"></a><tt class="py-lineno">143</tt>  <tt class="py-line"> </tt>
+<a name="L144"></a><tt class="py-lineno">144</tt>  <tt class="py-line"> </tt>
+<a name="SystemMessages.getAuthenticationErrorMessage"></a><div id="SystemMessages.getAuthenticationErrorMessage-def"><a name="L145"></a><tt class="py-lineno">145</tt> <a class="py-toggle" href="#" id="SystemMessages.getAuthenticationErrorMessage-toggle" onclick="return toggle('SystemMessages.getAuthenticationErrorMessage');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.SystemMessages-class.html#getAuthenticationErrorMessage">getAuthenticationErrorMessage</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SystemMessages.getAuthenticationErrorMessage-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SystemMessages.getAuthenticationErrorMessage-expanded"><a name="L146"></a><tt class="py-lineno">146</tt>  <tt class="py-line">        <tt class="py-docstring">"""@return:</tt> </tt>
+<a name="L147"></a><tt class="py-lineno">147</tt>  <tt class="py-line"><tt class="py-docstring">                "Take note of any unsaved data, and &lt;u&gt;click here&lt;/u&gt; to continue."</tt> </tt>
+<a name="L148"></a><tt class="py-lineno">148</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L149"></a><tt class="py-lineno">149</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">authenticationErrorMessage</tt> <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">authenticationErrorNotificationEnabled</tt> <tt class="py-keyword">else</tt> <tt class="py-name">None</tt> </tt>
+</div><a name="L150"></a><tt class="py-lineno">150</tt>  <tt class="py-line"> </tt>
+<a name="L151"></a><tt class="py-lineno">151</tt>  <tt class="py-line"> </tt>
+<a name="SystemMessages.getInternalErrorURL"></a><div id="SystemMessages.getInternalErrorURL-def"><a name="L152"></a><tt class="py-lineno">152</tt> <a class="py-toggle" href="#" id="SystemMessages.getInternalErrorURL-toggle" onclick="return toggle('SystemMessages.getInternalErrorURL');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.SystemMessages-class.html#getInternalErrorURL">getInternalErrorURL</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SystemMessages.getInternalErrorURL-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SystemMessages.getInternalErrorURL-expanded"><a name="L153"></a><tt class="py-lineno">153</tt>  <tt class="py-line">        <tt class="py-docstring">"""@return: null to reload the current URL after internal error message</tt> </tt>
+<a name="L154"></a><tt class="py-lineno">154</tt>  <tt class="py-line"><tt class="py-docstring">                    has been shown.</tt> </tt>
+<a name="L155"></a><tt class="py-lineno">155</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L156"></a><tt class="py-lineno">156</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">internalErrorURL</tt> </tt>
+</div><a name="L157"></a><tt class="py-lineno">157</tt>  <tt class="py-line"> </tt>
+<a name="L158"></a><tt class="py-lineno">158</tt>  <tt class="py-line"> </tt>
+<a name="SystemMessages.isInternalErrorNotificationEnabled"></a><div id="SystemMessages.isInternalErrorNotificationEnabled-def"><a name="L159"></a><tt class="py-lineno">159</tt> <a class="py-toggle" href="#" id="SystemMessages.isInternalErrorNotificationEnabled-toggle" onclick="return toggle('SystemMessages.isInternalErrorNotificationEnabled');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.SystemMessages-class.html#isInternalErrorNotificationEnabled">isInternalErrorNotificationEnabled</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SystemMessages.isInternalErrorNotificationEnabled-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SystemMessages.isInternalErrorNotificationEnabled-expanded"><a name="L160"></a><tt class="py-lineno">160</tt>  <tt class="py-line">        <tt class="py-docstring">"""@return: true to enable showing of internal error message."""</tt> </tt>
+<a name="L161"></a><tt class="py-lineno">161</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">internalErrorNotificationEnabled</tt> </tt>
+</div><a name="L162"></a><tt class="py-lineno">162</tt>  <tt class="py-line"> </tt>
+<a name="L163"></a><tt class="py-lineno">163</tt>  <tt class="py-line"> </tt>
+<a name="SystemMessages.getInternalErrorCaption"></a><div id="SystemMessages.getInternalErrorCaption-def"><a name="L164"></a><tt class="py-lineno">164</tt> <a class="py-toggle" href="#" id="SystemMessages.getInternalErrorCaption-toggle" onclick="return toggle('SystemMessages.getInternalErrorCaption');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.SystemMessages-class.html#getInternalErrorCaption">getInternalErrorCaption</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SystemMessages.getInternalErrorCaption-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SystemMessages.getInternalErrorCaption-expanded"><a name="L165"></a><tt class="py-lineno">165</tt>  <tt class="py-line">        <tt class="py-docstring">"""@return: "Internal error\""""</tt> </tt>
+<a name="L166"></a><tt class="py-lineno">166</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">internalErrorCaption</tt> <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">internalErrorNotificationEnabled</tt> <tt class="py-keyword">else</tt> <tt class="py-name">None</tt> </tt>
+</div><a name="L167"></a><tt class="py-lineno">167</tt>  <tt class="py-line"> </tt>
+<a name="L168"></a><tt class="py-lineno">168</tt>  <tt class="py-line"> </tt>
+<a name="SystemMessages.getInternalErrorMessage"></a><div id="SystemMessages.getInternalErrorMessage-def"><a name="L169"></a><tt class="py-lineno">169</tt> <a class="py-toggle" href="#" id="SystemMessages.getInternalErrorMessage-toggle" onclick="return toggle('SystemMessages.getInternalErrorMessage');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.SystemMessages-class.html#getInternalErrorMessage">getInternalErrorMessage</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SystemMessages.getInternalErrorMessage-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SystemMessages.getInternalErrorMessage-expanded"><a name="L170"></a><tt class="py-lineno">170</tt>  <tt class="py-line">        <tt class="py-docstring">"""@return: "Please notify the administrator.&lt;br/&gt;</tt> </tt>
+<a name="L171"></a><tt class="py-lineno">171</tt>  <tt class="py-line"><tt class="py-docstring">                Take note of any unsaved data, and &lt;u&gt;click here&lt;/u&gt; to</tt> </tt>
+<a name="L172"></a><tt class="py-lineno">172</tt>  <tt class="py-line"><tt class="py-docstring">                continue."</tt> </tt>
+<a name="L173"></a><tt class="py-lineno">173</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L174"></a><tt class="py-lineno">174</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">internalErrorMessage</tt> <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">internalErrorNotificationEnabled</tt> <tt class="py-keyword">else</tt> <tt class="py-name">None</tt> </tt>
+</div><a name="L175"></a><tt class="py-lineno">175</tt>  <tt class="py-line"> </tt>
+<a name="L176"></a><tt class="py-lineno">176</tt>  <tt class="py-line"> </tt>
+<a name="SystemMessages.getOutOfSyncURL"></a><div id="SystemMessages.getOutOfSyncURL-def"><a name="L177"></a><tt class="py-lineno">177</tt> <a class="py-toggle" href="#" id="SystemMessages.getOutOfSyncURL-toggle" onclick="return toggle('SystemMessages.getOutOfSyncURL');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.SystemMessages-class.html#getOutOfSyncURL">getOutOfSyncURL</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SystemMessages.getOutOfSyncURL-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SystemMessages.getOutOfSyncURL-expanded"><a name="L178"></a><tt class="py-lineno">178</tt>  <tt class="py-line">        <tt class="py-docstring">"""@return: null to reload the application after out of sync message."""</tt> </tt>
+<a name="L179"></a><tt class="py-lineno">179</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">outOfSyncURL</tt> </tt>
+</div><a name="L180"></a><tt class="py-lineno">180</tt>  <tt class="py-line"> </tt>
+<a name="L181"></a><tt class="py-lineno">181</tt>  <tt class="py-line"> </tt>
+<a name="SystemMessages.isOutOfSyncNotificationEnabled"></a><div id="SystemMessages.isOutOfSyncNotificationEnabled-def"><a name="L182"></a><tt class="py-lineno">182</tt> <a class="py-toggle" href="#" id="SystemMessages.isOutOfSyncNotificationEnabled-toggle" onclick="return toggle('SystemMessages.isOutOfSyncNotificationEnabled');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.SystemMessages-class.html#isOutOfSyncNotificationEnabled">isOutOfSyncNotificationEnabled</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SystemMessages.isOutOfSyncNotificationEnabled-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SystemMessages.isOutOfSyncNotificationEnabled-expanded"><a name="L183"></a><tt class="py-lineno">183</tt>  <tt class="py-line">        <tt class="py-docstring">"""@return: true to enable showing out of sync message"""</tt> </tt>
+<a name="L184"></a><tt class="py-lineno">184</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">outOfSyncNotificationEnabled</tt> </tt>
+</div><a name="L185"></a><tt class="py-lineno">185</tt>  <tt class="py-line"> </tt>
+<a name="L186"></a><tt class="py-lineno">186</tt>  <tt class="py-line"> </tt>
+<a name="SystemMessages.getOutOfSyncCaption"></a><div id="SystemMessages.getOutOfSyncCaption-def"><a name="L187"></a><tt class="py-lineno">187</tt> <a class="py-toggle" href="#" id="SystemMessages.getOutOfSyncCaption-toggle" onclick="return toggle('SystemMessages.getOutOfSyncCaption');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.SystemMessages-class.html#getOutOfSyncCaption">getOutOfSyncCaption</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SystemMessages.getOutOfSyncCaption-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SystemMessages.getOutOfSyncCaption-expanded"><a name="L188"></a><tt class="py-lineno">188</tt>  <tt class="py-line">        <tt class="py-docstring">"""@return: "Out of sync\""""</tt> </tt>
+<a name="L189"></a><tt class="py-lineno">189</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">outOfSyncCaption</tt> <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">outOfSyncNotificationEnabled</tt> <tt class="py-keyword">else</tt> <tt class="py-name">None</tt> </tt>
+</div><a name="L190"></a><tt class="py-lineno">190</tt>  <tt class="py-line"> </tt>
+<a name="L191"></a><tt class="py-lineno">191</tt>  <tt class="py-line"> </tt>
+<a name="SystemMessages.getOutOfSyncMessage"></a><div id="SystemMessages.getOutOfSyncMessage-def"><a name="L192"></a><tt class="py-lineno">192</tt> <a class="py-toggle" href="#" id="SystemMessages.getOutOfSyncMessage-toggle" onclick="return toggle('SystemMessages.getOutOfSyncMessage');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.SystemMessages-class.html#getOutOfSyncMessage">getOutOfSyncMessage</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SystemMessages.getOutOfSyncMessage-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SystemMessages.getOutOfSyncMessage-expanded"><a name="L193"></a><tt class="py-lineno">193</tt>  <tt class="py-line">        <tt class="py-docstring">"""@return: "Something has caused us to be out of sync with the server.&lt;br/&gt;</tt> </tt>
+<a name="L194"></a><tt class="py-lineno">194</tt>  <tt class="py-line"><tt class="py-docstring">                Take note of any unsaved data, and &lt;u&gt;click here&lt;/u&gt; to</tt> </tt>
+<a name="L195"></a><tt class="py-lineno">195</tt>  <tt class="py-line"><tt class="py-docstring">                re-sync."</tt> </tt>
+<a name="L196"></a><tt class="py-lineno">196</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L197"></a><tt class="py-lineno">197</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">outOfSyncMessage</tt> <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">outOfSyncNotificationEnabled</tt> <tt class="py-keyword">else</tt> <tt class="py-name">None</tt> </tt>
+</div><a name="L198"></a><tt class="py-lineno">198</tt>  <tt class="py-line"> </tt>
+<a name="L199"></a><tt class="py-lineno">199</tt>  <tt class="py-line"> </tt>
+<a name="SystemMessages.getCookiesDisabledURL"></a><div id="SystemMessages.getCookiesDisabledURL-def"><a name="L200"></a><tt class="py-lineno">200</tt> <a class="py-toggle" href="#" id="SystemMessages.getCookiesDisabledURL-toggle" onclick="return toggle('SystemMessages.getCookiesDisabledURL');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.SystemMessages-class.html#getCookiesDisabledURL">getCookiesDisabledURL</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SystemMessages.getCookiesDisabledURL-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SystemMessages.getCookiesDisabledURL-expanded"><a name="L201"></a><tt class="py-lineno">201</tt>  <tt class="py-line">        <tt class="py-docstring">"""Returns the URL the user should be redirected to after dismissing the</tt> </tt>
+<a name="L202"></a><tt class="py-lineno">202</tt>  <tt class="py-line"><tt class="py-docstring">        "you have to enable your cookies" message. Typically null.</tt> </tt>
+<a name="L203"></a><tt class="py-lineno">203</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L204"></a><tt class="py-lineno">204</tt>  <tt class="py-line"><tt class="py-docstring">        @return: A URL the user should be redirected to after dismissing the</tt> </tt>
+<a name="L205"></a><tt class="py-lineno">205</tt>  <tt class="py-line"><tt class="py-docstring">                 message or null to reload the current URL.</tt> </tt>
+<a name="L206"></a><tt class="py-lineno">206</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L207"></a><tt class="py-lineno">207</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">cookiesDisabledURL</tt> </tt>
+</div><a name="L208"></a><tt class="py-lineno">208</tt>  <tt class="py-line"> </tt>
+<a name="L209"></a><tt class="py-lineno">209</tt>  <tt class="py-line"> </tt>
+<a name="SystemMessages.isCookiesDisabledNotificationEnabled"></a><div id="SystemMessages.isCookiesDisabledNotificationEnabled-def"><a name="L210"></a><tt class="py-lineno">210</tt> <a class="py-toggle" href="#" id="SystemMessages.isCookiesDisabledNotificationEnabled-toggle" onclick="return toggle('SystemMessages.isCookiesDisabledNotificationEnabled');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.SystemMessages-class.html#isCookiesDisabledNotificationEnabled">isCookiesDisabledNotificationEnabled</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SystemMessages.isCookiesDisabledNotificationEnabled-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SystemMessages.isCookiesDisabledNotificationEnabled-expanded"><a name="L211"></a><tt class="py-lineno">211</tt>  <tt class="py-line">        <tt class="py-docstring">"""Determines if "cookies disabled" messages should be shown to the end</tt> </tt>
+<a name="L212"></a><tt class="py-lineno">212</tt>  <tt class="py-line"><tt class="py-docstring">        user or not. If the notification is disabled the user will be</tt> </tt>
+<a name="L213"></a><tt class="py-lineno">213</tt>  <tt class="py-line"><tt class="py-docstring">        immediately redirected to the URL returned by L{getCookiesDisabledURL}.</tt> </tt>
+<a name="L214"></a><tt class="py-lineno">214</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L215"></a><tt class="py-lineno">215</tt>  <tt class="py-line"><tt class="py-docstring">        @return: true to show "cookies disabled" messages to the end user,</tt> </tt>
+<a name="L216"></a><tt class="py-lineno">216</tt>  <tt class="py-line"><tt class="py-docstring">                 false to redirect to the given URL directly</tt> </tt>
+<a name="L217"></a><tt class="py-lineno">217</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L218"></a><tt class="py-lineno">218</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">cookiesDisabledNotificationEnabled</tt> </tt>
+</div><a name="L219"></a><tt class="py-lineno">219</tt>  <tt class="py-line"> </tt>
+<a name="L220"></a><tt class="py-lineno">220</tt>  <tt class="py-line"> </tt>
+<a name="SystemMessages.getCookiesDisabledCaption"></a><div id="SystemMessages.getCookiesDisabledCaption-def"><a name="L221"></a><tt class="py-lineno">221</tt> <a class="py-toggle" href="#" id="SystemMessages.getCookiesDisabledCaption-toggle" onclick="return toggle('SystemMessages.getCookiesDisabledCaption');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.SystemMessages-class.html#getCookiesDisabledCaption">getCookiesDisabledCaption</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SystemMessages.getCookiesDisabledCaption-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SystemMessages.getCookiesDisabledCaption-expanded"><a name="L222"></a><tt class="py-lineno">222</tt>  <tt class="py-line">        <tt class="py-docstring">"""Returns the caption of the message shown to the user when cookies are</tt> </tt>
+<a name="L223"></a><tt class="py-lineno">223</tt>  <tt class="py-line"><tt class="py-docstring">        disabled in the browser.</tt> </tt>
+<a name="L224"></a><tt class="py-lineno">224</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L225"></a><tt class="py-lineno">225</tt>  <tt class="py-line"><tt class="py-docstring">        @return: The caption of the "cookies disabled" message</tt> </tt>
+<a name="L226"></a><tt class="py-lineno">226</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L227"></a><tt class="py-lineno">227</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">cookiesDisabledCaption</tt> <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">cookiesDisabledNotificationEnabled</tt> <tt class="py-keyword">else</tt> <tt class="py-name">None</tt> </tt>
+</div><a name="L228"></a><tt class="py-lineno">228</tt>  <tt class="py-line"> </tt>
+<a name="L229"></a><tt class="py-lineno">229</tt>  <tt class="py-line"> </tt>
+<a name="SystemMessages.getCookiesDisabledMessage"></a><div id="SystemMessages.getCookiesDisabledMessage-def"><a name="L230"></a><tt class="py-lineno">230</tt> <a class="py-toggle" href="#" id="SystemMessages.getCookiesDisabledMessage-toggle" onclick="return toggle('SystemMessages.getCookiesDisabledMessage');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.SystemMessages-class.html#getCookiesDisabledMessage">getCookiesDisabledMessage</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SystemMessages.getCookiesDisabledMessage-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SystemMessages.getCookiesDisabledMessage-expanded"><a name="L231"></a><tt class="py-lineno">231</tt>  <tt class="py-line">        <tt class="py-docstring">"""Returns the message shown to the user when cookies are disabled in</tt> </tt>
+<a name="L232"></a><tt class="py-lineno">232</tt>  <tt class="py-line"><tt class="py-docstring">        the browser.</tt> </tt>
+<a name="L233"></a><tt class="py-lineno">233</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L234"></a><tt class="py-lineno">234</tt>  <tt class="py-line"><tt class="py-docstring">        @return: The "cookies disabled" message</tt> </tt>
+<a name="L235"></a><tt class="py-lineno">235</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L236"></a><tt class="py-lineno">236</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">cookiesDisabledMessage</tt> <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">cookiesDisabledNotificationEnabled</tt> <tt class="py-keyword">else</tt> <tt class="py-name">None</tt> </tt>
+</div></div><a name="L237"></a><tt class="py-lineno">237</tt>  <tt class="py-line"> </tt>
+<a name="L238"></a><tt class="py-lineno">238</tt>  <tt class="py-line"> </tt>
+<a name="CustomizedSystemMessages"></a><div id="CustomizedSystemMessages-def"><a name="L239"></a><tt class="py-lineno">239</tt> <a class="py-toggle" href="#" id="CustomizedSystemMessages-toggle" onclick="return toggle('CustomizedSystemMessages');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.messages.CustomizedSystemMessages-class.html">CustomizedSystemMessages</a><tt class="py-op">(</tt><tt class="py-base-class">SystemMessages</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="CustomizedSystemMessages-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="CustomizedSystemMessages-expanded"><a name="L240"></a><tt class="py-lineno">240</tt>  <tt class="py-line">    <tt class="py-docstring">"""Contains the system messages used to notify the user about various</tt> </tt>
+<a name="L241"></a><tt class="py-lineno">241</tt>  <tt class="py-line"><tt class="py-docstring">    critical situations that can occur.</tt> </tt>
+<a name="L242"></a><tt class="py-lineno">242</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L243"></a><tt class="py-lineno">243</tt>  <tt class="py-line"><tt class="py-docstring">    Muntjac gets the SystemMessages from your application by calling a static</tt> </tt>
+<a name="L244"></a><tt class="py-lineno">244</tt>  <tt class="py-line"><tt class="py-docstring">    getSystemMessages() method. By default the</tt> </tt>
+<a name="L245"></a><tt class="py-lineno">245</tt>  <tt class="py-line"><tt class="py-docstring">    Application.getSystemMessages() is used. You can customize this by</tt> </tt>
+<a name="L246"></a><tt class="py-lineno">246</tt>  <tt class="py-line"><tt class="py-docstring">    defining a static MyApplication.getSystemMessages() and returning</tt> </tt>
+<a name="L247"></a><tt class="py-lineno">247</tt>  <tt class="py-line"><tt class="py-docstring">    CustomizedSystemMessages. Note that getSystemMessages() is static -</tt> </tt>
+<a name="L248"></a><tt class="py-lineno">248</tt>  <tt class="py-line"><tt class="py-docstring">    changing the system messages will by default change the message for all</tt> </tt>
+<a name="L249"></a><tt class="py-lineno">249</tt>  <tt class="py-line"><tt class="py-docstring">    users of the application.</tt> </tt>
+<a name="L250"></a><tt class="py-lineno">250</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L251"></a><tt class="py-lineno">251</tt>  <tt class="py-line"><tt class="py-docstring">    The default behavior is to show a notification, and restart the</tt> </tt>
+<a name="L252"></a><tt class="py-lineno">252</tt>  <tt class="py-line"><tt class="py-docstring">    application the the user clicks the message.</tt> </tt>
+<a name="L253"></a><tt class="py-lineno">253</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L254"></a><tt class="py-lineno">254</tt>  <tt class="py-line"><tt class="py-docstring">    Instead of restarting the application, you can set a specific URL that</tt> </tt>
+<a name="L255"></a><tt class="py-lineno">255</tt>  <tt class="py-line"><tt class="py-docstring">    the user is taken to.</tt> </tt>
+<a name="L256"></a><tt class="py-lineno">256</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L257"></a><tt class="py-lineno">257</tt>  <tt class="py-line"><tt class="py-docstring">    Setting both caption and message to null will restart the application (or</tt> </tt>
+<a name="L258"></a><tt class="py-lineno">258</tt>  <tt class="py-line"><tt class="py-docstring">    go to the specified URL) without displaying a notification.</tt> </tt>
+<a name="L259"></a><tt class="py-lineno">259</tt>  <tt class="py-line"><tt class="py-docstring">    set*NotificationEnabled(false) will achieve the same thing.</tt> </tt>
+<a name="L260"></a><tt class="py-lineno">260</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L261"></a><tt class="py-lineno">261</tt>  <tt class="py-line"><tt class="py-docstring">    The situations are:</tt> </tt>
+<a name="L262"></a><tt class="py-lineno">262</tt>  <tt class="py-line"><tt class="py-docstring">      - Session expired: the user session has expired, usually due to</tt> </tt>
+<a name="L263"></a><tt class="py-lineno">263</tt>  <tt class="py-line"><tt class="py-docstring">        inactivity.</tt> </tt>
+<a name="L264"></a><tt class="py-lineno">264</tt>  <tt class="py-line"><tt class="py-docstring">      - Communication error: the client failed to contact the server, or the</tt> </tt>
+<a name="L265"></a><tt class="py-lineno">265</tt>  <tt class="py-line"><tt class="py-docstring">        server returned and invalid response.</tt> </tt>
+<a name="L266"></a><tt class="py-lineno">266</tt>  <tt class="py-line"><tt class="py-docstring">      - Internal error: unhandled critical server error (e.g out of memory,</tt> </tt>
+<a name="L267"></a><tt class="py-lineno">267</tt>  <tt class="py-line"><tt class="py-docstring">        database crash)</tt> </tt>
+<a name="L268"></a><tt class="py-lineno">268</tt>  <tt class="py-line"><tt class="py-docstring">      - Out of sync: the client is not in sync with the server. E.g the user</tt> </tt>
+<a name="L269"></a><tt class="py-lineno">269</tt>  <tt class="py-line"><tt class="py-docstring">        opens two windows showing the same application, but the application does</tt> </tt>
+<a name="L270"></a><tt class="py-lineno">270</tt>  <tt class="py-line"><tt class="py-docstring">        not support this and uses the same Window instance. When the user makes</tt> </tt>
+<a name="L271"></a><tt class="py-lineno">271</tt>  <tt class="py-line"><tt class="py-docstring">        changes in one of the windows - the other window is no longer in sync,</tt> </tt>
+<a name="L272"></a><tt class="py-lineno">272</tt>  <tt class="py-line"><tt class="py-docstring">        and (for instance) pressing a button that is no longer present in the UI</tt> </tt>
+<a name="L273"></a><tt class="py-lineno">273</tt>  <tt class="py-line"><tt class="py-docstring">        will cause a out-of-sync -situation.</tt> </tt>
+<a name="L274"></a><tt class="py-lineno">274</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L275"></a><tt class="py-lineno">275</tt>  <tt class="py-line"> </tt>
+<a name="CustomizedSystemMessages.setSessionExpiredURL"></a><div id="CustomizedSystemMessages.setSessionExpiredURL-def"><a name="L276"></a><tt class="py-lineno">276</tt> <a class="py-toggle" href="#" id="CustomizedSystemMessages.setSessionExpiredURL-toggle" onclick="return toggle('CustomizedSystemMessages.setSessionExpiredURL');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.CustomizedSystemMessages-class.html#setSessionExpiredURL">setSessionExpiredURL</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">sessionExpiredURL</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="CustomizedSystemMessages.setSessionExpiredURL-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="CustomizedSystemMessages.setSessionExpiredURL-expanded"><a name="L277"></a><tt class="py-lineno">277</tt>  <tt class="py-line">        <tt class="py-docstring">"""Sets the URL to go to when the session has expired.</tt> </tt>
+<a name="L278"></a><tt class="py-lineno">278</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L279"></a><tt class="py-lineno">279</tt>  <tt class="py-line"><tt class="py-docstring">        @param sessionExpiredURL:</tt> </tt>
+<a name="L280"></a><tt class="py-lineno">280</tt>  <tt class="py-line"><tt class="py-docstring">                   the URL to go to, or null to reload current</tt> </tt>
+<a name="L281"></a><tt class="py-lineno">281</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L282"></a><tt class="py-lineno">282</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">sessionExpiredURL</tt> <tt class="py-op">=</tt> <tt class="py-name">sessionExpiredURL</tt> </tt>
+</div><a name="L283"></a><tt class="py-lineno">283</tt>  <tt class="py-line"> </tt>
+<a name="L284"></a><tt class="py-lineno">284</tt>  <tt class="py-line"> </tt>
+<a name="CustomizedSystemMessages.setSessionExpiredNotificationEnabled"></a><div id="CustomizedSystemMessages.setSessionExpiredNotificationEnabled-def"><a name="L285"></a><tt class="py-lineno">285</tt> <a class="py-toggle" href="#" id="CustomizedSystemMessages.setSessionExpiredNotificationEnabled-toggle" onclick="return toggle('CustomizedSystemMessages.setSessionExpiredNotificationEnabled');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.CustomizedSystemMessages-class.html#setSessionExpiredNotificationEnabled">setSessionExpiredNotificationEnabled</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">sessionExpiredNotificationEnabled</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="CustomizedSystemMessages.setSessionExpiredNotificationEnabled-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="CustomizedSystemMessages.setSessionExpiredNotificationEnabled-expanded"><a name="L286"></a><tt class="py-lineno">286</tt>  <tt class="py-line">        <tt class="py-docstring">"""Enables or disables the notification. If disabled, the set URL (or</tt> </tt>
+<a name="L287"></a><tt class="py-lineno">287</tt>  <tt class="py-line"><tt class="py-docstring">        current) is loaded directly when next transaction between server and</tt> </tt>
+<a name="L288"></a><tt class="py-lineno">288</tt>  <tt class="py-line"><tt class="py-docstring">        client happens.</tt> </tt>
+<a name="L289"></a><tt class="py-lineno">289</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L290"></a><tt class="py-lineno">290</tt>  <tt class="py-line"><tt class="py-docstring">        @param sessionExpiredNotificationEnabled:</tt> </tt>
+<a name="L291"></a><tt class="py-lineno">291</tt>  <tt class="py-line"><tt class="py-docstring">                   true = enabled, false = disabled</tt> </tt>
+<a name="L292"></a><tt class="py-lineno">292</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L293"></a><tt class="py-lineno">293</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">sessionExpiredNotificationEnabled</tt> <tt class="py-op">=</tt> <tt class="py-name">sessionExpiredNotificationEnabled</tt> </tt>
+</div><a name="L294"></a><tt class="py-lineno">294</tt>  <tt class="py-line"> </tt>
+<a name="L295"></a><tt class="py-lineno">295</tt>  <tt class="py-line"> </tt>
+<a name="CustomizedSystemMessages.setSessionExpiredCaption"></a><div id="CustomizedSystemMessages.setSessionExpiredCaption-def"><a name="L296"></a><tt class="py-lineno">296</tt> <a class="py-toggle" href="#" id="CustomizedSystemMessages.setSessionExpiredCaption-toggle" onclick="return toggle('CustomizedSystemMessages.setSessionExpiredCaption');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.CustomizedSystemMessages-class.html#setSessionExpiredCaption">setSessionExpiredCaption</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">sessionExpiredCaption</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="CustomizedSystemMessages.setSessionExpiredCaption-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="CustomizedSystemMessages.setSessionExpiredCaption-expanded"><a name="L297"></a><tt class="py-lineno">297</tt>  <tt class="py-line">        <tt class="py-docstring">"""Sets the caption of the notification. Set to null for no caption. If</tt> </tt>
+<a name="L298"></a><tt class="py-lineno">298</tt>  <tt class="py-line"><tt class="py-docstring">        both caption and message are null, client automatically forwards to</tt> </tt>
+<a name="L299"></a><tt class="py-lineno">299</tt>  <tt class="py-line"><tt class="py-docstring">        sessionExpiredUrl after timeout timer expires. Timer uses value read</tt> </tt>
+<a name="L300"></a><tt class="py-lineno">300</tt>  <tt class="py-line"><tt class="py-docstring">        from HTTPSession.getMaxInactiveInterval()</tt> </tt>
+<a name="L301"></a><tt class="py-lineno">301</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L302"></a><tt class="py-lineno">302</tt>  <tt class="py-line"><tt class="py-docstring">        @param sessionExpiredCaption: the caption</tt> </tt>
+<a name="L303"></a><tt class="py-lineno">303</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L304"></a><tt class="py-lineno">304</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">sessionExpiredCaption</tt> <tt class="py-op">=</tt> <tt class="py-name">sessionExpiredCaption</tt> </tt>
+</div><a name="L305"></a><tt class="py-lineno">305</tt>  <tt class="py-line"> </tt>
+<a name="L306"></a><tt class="py-lineno">306</tt>  <tt class="py-line"> </tt>
+<a name="CustomizedSystemMessages.setSessionExpiredMessage"></a><div id="CustomizedSystemMessages.setSessionExpiredMessage-def"><a name="L307"></a><tt class="py-lineno">307</tt> <a class="py-toggle" href="#" id="CustomizedSystemMessages.setSessionExpiredMessage-toggle" onclick="return toggle('CustomizedSystemMessages.setSessionExpiredMessage');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.CustomizedSystemMessages-class.html#setSessionExpiredMessage">setSessionExpiredMessage</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">sessionExpiredMessage</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="CustomizedSystemMessages.setSessionExpiredMessage-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="CustomizedSystemMessages.setSessionExpiredMessage-expanded"><a name="L308"></a><tt class="py-lineno">308</tt>  <tt class="py-line">        <tt class="py-docstring">"""Sets the message of the notification. Set to null for no message. If</tt> </tt>
+<a name="L309"></a><tt class="py-lineno">309</tt>  <tt class="py-line"><tt class="py-docstring">        both caption and message are null, client automatically forwards to</tt> </tt>
+<a name="L310"></a><tt class="py-lineno">310</tt>  <tt class="py-line"><tt class="py-docstring">        sessionExpiredUrl after timeout timer expires. Timer uses value read</tt> </tt>
+<a name="L311"></a><tt class="py-lineno">311</tt>  <tt class="py-line"><tt class="py-docstring">        from HTTPSession.getMaxInactiveInterval()</tt> </tt>
+<a name="L312"></a><tt class="py-lineno">312</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L313"></a><tt class="py-lineno">313</tt>  <tt class="py-line"><tt class="py-docstring">        @param sessionExpiredMessage: the message</tt> </tt>
+<a name="L314"></a><tt class="py-lineno">314</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L315"></a><tt class="py-lineno">315</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">sessionExpiredMessage</tt> <tt class="py-op">=</tt> <tt class="py-name">sessionExpiredMessage</tt> </tt>
+</div><a name="L316"></a><tt class="py-lineno">316</tt>  <tt class="py-line"> </tt>
+<a name="L317"></a><tt class="py-lineno">317</tt>  <tt class="py-line"> </tt>
+<a name="CustomizedSystemMessages.setAuthenticationErrorURL"></a><div id="CustomizedSystemMessages.setAuthenticationErrorURL-def"><a name="L318"></a><tt class="py-lineno">318</tt> <a class="py-toggle" href="#" id="CustomizedSystemMessages.setAuthenticationErrorURL-toggle" onclick="return toggle('CustomizedSystemMessages.setAuthenticationErrorURL');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.CustomizedSystemMessages-class.html#setAuthenticationErrorURL">setAuthenticationErrorURL</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">authenticationErrorURL</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="CustomizedSystemMessages.setAuthenticationErrorURL-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="CustomizedSystemMessages.setAuthenticationErrorURL-expanded"><a name="L319"></a><tt class="py-lineno">319</tt>  <tt class="py-line">        <tt class="py-docstring">"""Sets the URL to go to when there is a authentication error.</tt> </tt>
+<a name="L320"></a><tt class="py-lineno">320</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L321"></a><tt class="py-lineno">321</tt>  <tt class="py-line"><tt class="py-docstring">        @param authenticationErrorURL:</tt> </tt>
+<a name="L322"></a><tt class="py-lineno">322</tt>  <tt class="py-line"><tt class="py-docstring">                   the URL to go to, or null to reload current</tt> </tt>
+<a name="L323"></a><tt class="py-lineno">323</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L324"></a><tt class="py-lineno">324</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">authenticationErrorURL</tt> <tt class="py-op">=</tt> <tt class="py-name">authenticationErrorURL</tt> </tt>
+</div><a name="L325"></a><tt class="py-lineno">325</tt>  <tt class="py-line"> </tt>
+<a name="L326"></a><tt class="py-lineno">326</tt>  <tt class="py-line"> </tt>
+<a name="CustomizedSystemMessages.setAuthenticationErrorNotificationEnabled"></a><div id="CustomizedSystemMessages.setAuthenticationErrorNotificationEnabled-def"><a name="L327"></a><tt class="py-lineno">327</tt> <a class="py-toggle" href="#" id="CustomizedSystemMessages.setAuthenticationErrorNotificationEnabled-toggle" onclick="return toggle('CustomizedSystemMessages.setAuthenticationErrorNotificationEnabled');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.CustomizedSystemMessages-class.html#setAuthenticationErrorNotificationEnabled">setAuthenticationErrorNotificationEnabled</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">authenticationErrorNotificationEnabled</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="CustomizedSystemMessages.setAuthenticationErrorNotificationEnabled-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="CustomizedSystemMessages.setAuthenticationErrorNotificationEnabled-expanded"><a name="L328"></a><tt class="py-lineno">328</tt>  <tt class="py-line">        <tt class="py-docstring">"""Enables or disables the notification. If disabled, the set URL (or</tt> </tt>
+<a name="L329"></a><tt class="py-lineno">329</tt>  <tt class="py-line"><tt class="py-docstring">        current) is loaded directly.</tt> </tt>
+<a name="L330"></a><tt class="py-lineno">330</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L331"></a><tt class="py-lineno">331</tt>  <tt class="py-line"><tt class="py-docstring">        @param authenticationErrorNotificationEnabled:</tt> </tt>
+<a name="L332"></a><tt class="py-lineno">332</tt>  <tt class="py-line"><tt class="py-docstring">                   true = enabled, false = disabled</tt> </tt>
+<a name="L333"></a><tt class="py-lineno">333</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L334"></a><tt class="py-lineno">334</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">authenticationErrorNotificationEnabled</tt> <tt class="py-op">=</tt> <tt class="py-name">authenticationErrorNotificationEnabled</tt> </tt>
+</div><a name="L335"></a><tt class="py-lineno">335</tt>  <tt class="py-line"> </tt>
+<a name="L336"></a><tt class="py-lineno">336</tt>  <tt class="py-line"> </tt>
+<a name="CustomizedSystemMessages.setAuthenticationErrorCaption"></a><div id="CustomizedSystemMessages.setAuthenticationErrorCaption-def"><a name="L337"></a><tt class="py-lineno">337</tt> <a class="py-toggle" href="#" id="CustomizedSystemMessages.setAuthenticationErrorCaption-toggle" onclick="return toggle('CustomizedSystemMessages.setAuthenticationErrorCaption');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.CustomizedSystemMessages-class.html#setAuthenticationErrorCaption">setAuthenticationErrorCaption</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">authenticationErrorCaption</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="CustomizedSystemMessages.setAuthenticationErrorCaption-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="CustomizedSystemMessages.setAuthenticationErrorCaption-expanded"><a name="L338"></a><tt class="py-lineno">338</tt>  <tt class="py-line">        <tt class="py-docstring">"""Sets the caption of the notification. Set to null for no caption. If</tt> </tt>
+<a name="L339"></a><tt class="py-lineno">339</tt>  <tt class="py-line"><tt class="py-docstring">        both caption and message is null, the notification is disabled;</tt> </tt>
+<a name="L340"></a><tt class="py-lineno">340</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L341"></a><tt class="py-lineno">341</tt>  <tt class="py-line"><tt class="py-docstring">        @param authenticationErrorCaption:</tt> </tt>
+<a name="L342"></a><tt class="py-lineno">342</tt>  <tt class="py-line"><tt class="py-docstring">                   the caption</tt> </tt>
+<a name="L343"></a><tt class="py-lineno">343</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L344"></a><tt class="py-lineno">344</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">authenticationErrorCaption</tt> <tt class="py-op">=</tt> <tt class="py-name">authenticationErrorCaption</tt> </tt>
+</div><a name="L345"></a><tt class="py-lineno">345</tt>  <tt class="py-line"> </tt>
+<a name="L346"></a><tt class="py-lineno">346</tt>  <tt class="py-line"> </tt>
+<a name="CustomizedSystemMessages.setAuthenticationErrorMessage"></a><div id="CustomizedSystemMessages.setAuthenticationErrorMessage-def"><a name="L347"></a><tt class="py-lineno">347</tt> <a class="py-toggle" href="#" id="CustomizedSystemMessages.setAuthenticationErrorMessage-toggle" onclick="return toggle('CustomizedSystemMessages.setAuthenticationErrorMessage');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.CustomizedSystemMessages-class.html#setAuthenticationErrorMessage">setAuthenticationErrorMessage</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">authenticationErrorMessage</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="CustomizedSystemMessages.setAuthenticationErrorMessage-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="CustomizedSystemMessages.setAuthenticationErrorMessage-expanded"><a name="L348"></a><tt class="py-lineno">348</tt>  <tt class="py-line">        <tt class="py-docstring">"""Sets the message of the notification. Set to null for no message. If</tt> </tt>
+<a name="L349"></a><tt class="py-lineno">349</tt>  <tt class="py-line"><tt class="py-docstring">        both caption and message is null, the notification is disabled;</tt> </tt>
+<a name="L350"></a><tt class="py-lineno">350</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L351"></a><tt class="py-lineno">351</tt>  <tt class="py-line"><tt class="py-docstring">        @param authenticationErrorMessage:</tt> </tt>
+<a name="L352"></a><tt class="py-lineno">352</tt>  <tt class="py-line"><tt class="py-docstring">                   the message</tt> </tt>
+<a name="L353"></a><tt class="py-lineno">353</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L354"></a><tt class="py-lineno">354</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">authenticationErrorMessage</tt> <tt class="py-op">=</tt> <tt class="py-name">authenticationErrorMessage</tt> </tt>
+</div><a name="L355"></a><tt class="py-lineno">355</tt>  <tt class="py-line"> </tt>
+<a name="L356"></a><tt class="py-lineno">356</tt>  <tt class="py-line"> </tt>
+<a name="CustomizedSystemMessages.setCommunicationErrorURL"></a><div id="CustomizedSystemMessages.setCommunicationErrorURL-def"><a name="L357"></a><tt class="py-lineno">357</tt> <a class="py-toggle" href="#" id="CustomizedSystemMessages.setCommunicationErrorURL-toggle" onclick="return toggle('CustomizedSystemMessages.setCommunicationErrorURL');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.CustomizedSystemMessages-class.html#setCommunicationErrorURL">setCommunicationErrorURL</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">communicationErrorURL</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="CustomizedSystemMessages.setCommunicationErrorURL-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="CustomizedSystemMessages.setCommunicationErrorURL-expanded"><a name="L358"></a><tt class="py-lineno">358</tt>  <tt class="py-line">        <tt class="py-docstring">"""Sets the URL to go to when there is a communication error.</tt> </tt>
+<a name="L359"></a><tt class="py-lineno">359</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L360"></a><tt class="py-lineno">360</tt>  <tt class="py-line"><tt class="py-docstring">        @param communicationErrorURL:</tt> </tt>
+<a name="L361"></a><tt class="py-lineno">361</tt>  <tt class="py-line"><tt class="py-docstring">                   the URL to go to, or null to reload current</tt> </tt>
+<a name="L362"></a><tt class="py-lineno">362</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L363"></a><tt class="py-lineno">363</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">communicationErrorURL</tt> <tt class="py-op">=</tt> <tt class="py-name">communicationErrorURL</tt> </tt>
+</div><a name="L364"></a><tt class="py-lineno">364</tt>  <tt class="py-line"> </tt>
+<a name="L365"></a><tt class="py-lineno">365</tt>  <tt class="py-line"> </tt>
+<a name="CustomizedSystemMessages.setCommunicationErrorNotificationEnabled"></a><div id="CustomizedSystemMessages.setCommunicationErrorNotificationEnabled-def"><a name="L366"></a><tt class="py-lineno">366</tt> <a class="py-toggle" href="#" id="CustomizedSystemMessages.setCommunicationErrorNotificationEnabled-toggle" onclick="return toggle('CustomizedSystemMessages.setCommunicationErrorNotificationEnabled');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.CustomizedSystemMessages-class.html#setCommunicationErrorNotificationEnabled">setCommunicationErrorNotificationEnabled</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">communicationErrorNotificationEnabled</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="CustomizedSystemMessages.setCommunicationErrorNotificationEnabled-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="CustomizedSystemMessages.setCommunicationErrorNotificationEnabled-expanded"><a name="L367"></a><tt class="py-lineno">367</tt>  <tt class="py-line">        <tt class="py-docstring">"""Enables or disables the notification. If disabled, the set URL (or</tt> </tt>
+<a name="L368"></a><tt class="py-lineno">368</tt>  <tt class="py-line"><tt class="py-docstring">        current) is loaded directly.</tt> </tt>
+<a name="L369"></a><tt class="py-lineno">369</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L370"></a><tt class="py-lineno">370</tt>  <tt class="py-line"><tt class="py-docstring">        @param communicationErrorNotificationEnabled:</tt> </tt>
+<a name="L371"></a><tt class="py-lineno">371</tt>  <tt class="py-line"><tt class="py-docstring">                   true = enabled, false = disabled</tt> </tt>
+<a name="L372"></a><tt class="py-lineno">372</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L373"></a><tt class="py-lineno">373</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">communicationErrorNotificationEnabled</tt> <tt class="py-op">=</tt> <tt class="py-name">communicationErrorNotificationEnabled</tt> </tt>
+</div><a name="L374"></a><tt class="py-lineno">374</tt>  <tt class="py-line"> </tt>
+<a name="L375"></a><tt class="py-lineno">375</tt>  <tt class="py-line"> </tt>
+<a name="CustomizedSystemMessages.setCommunicationErrorCaption"></a><div id="CustomizedSystemMessages.setCommunicationErrorCaption-def"><a name="L376"></a><tt class="py-lineno">376</tt> <a class="py-toggle" href="#" id="CustomizedSystemMessages.setCommunicationErrorCaption-toggle" onclick="return toggle('CustomizedSystemMessages.setCommunicationErrorCaption');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.CustomizedSystemMessages-class.html#setCommunicationErrorCaption">setCommunicationErrorCaption</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">communicationErrorCaption</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="CustomizedSystemMessages.setCommunicationErrorCaption-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="CustomizedSystemMessages.setCommunicationErrorCaption-expanded"><a name="L377"></a><tt class="py-lineno">377</tt>  <tt class="py-line">        <tt class="py-docstring">"""Sets the caption of the notification. Set to null for no caption. If</tt> </tt>
+<a name="L378"></a><tt class="py-lineno">378</tt>  <tt class="py-line"><tt class="py-docstring">        both caption and message is null, the notification is disabled;</tt> </tt>
+<a name="L379"></a><tt class="py-lineno">379</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L380"></a><tt class="py-lineno">380</tt>  <tt class="py-line"><tt class="py-docstring">        @param communicationErrorCaption:</tt> </tt>
+<a name="L381"></a><tt class="py-lineno">381</tt>  <tt class="py-line"><tt class="py-docstring">                   the caption</tt> </tt>
+<a name="L382"></a><tt class="py-lineno">382</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L383"></a><tt class="py-lineno">383</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">communicationErrorCaption</tt> <tt class="py-op">=</tt> <tt class="py-name">communicationErrorCaption</tt> </tt>
+</div><a name="L384"></a><tt class="py-lineno">384</tt>  <tt class="py-line"> </tt>
+<a name="L385"></a><tt class="py-lineno">385</tt>  <tt class="py-line"> </tt>
+<a name="CustomizedSystemMessages.setCommunicationErrorMessage"></a><div id="CustomizedSystemMessages.setCommunicationErrorMessage-def"><a name="L386"></a><tt class="py-lineno">386</tt> <a class="py-toggle" href="#" id="CustomizedSystemMessages.setCommunicationErrorMessage-toggle" onclick="return toggle('CustomizedSystemMessages.setCommunicationErrorMessage');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.CustomizedSystemMessages-class.html#setCommunicationErrorMessage">setCommunicationErrorMessage</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">communicationErrorMessage</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="CustomizedSystemMessages.setCommunicationErrorMessage-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="CustomizedSystemMessages.setCommunicationErrorMessage-expanded"><a name="L387"></a><tt class="py-lineno">387</tt>  <tt class="py-line">        <tt class="py-docstring">"""Sets the message of the notification. Set to null for no message. If</tt> </tt>
+<a name="L388"></a><tt class="py-lineno">388</tt>  <tt class="py-line"><tt class="py-docstring">        both caption and message is null, the notification is disabled;</tt> </tt>
+<a name="L389"></a><tt class="py-lineno">389</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L390"></a><tt class="py-lineno">390</tt>  <tt class="py-line"><tt class="py-docstring">        @param communicationErrorMessage:</tt> </tt>
+<a name="L391"></a><tt class="py-lineno">391</tt>  <tt class="py-line"><tt class="py-docstring">                   the message</tt> </tt>
+<a name="L392"></a><tt class="py-lineno">392</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L393"></a><tt class="py-lineno">393</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">communicationErrorMessage</tt> <tt class="py-op">=</tt> <tt class="py-name">communicationErrorMessage</tt> </tt>
+</div><a name="L394"></a><tt class="py-lineno">394</tt>  <tt class="py-line"> </tt>
+<a name="L395"></a><tt class="py-lineno">395</tt>  <tt class="py-line"> </tt>
+<a name="CustomizedSystemMessages.setInternalErrorURL"></a><div id="CustomizedSystemMessages.setInternalErrorURL-def"><a name="L396"></a><tt class="py-lineno">396</tt> <a class="py-toggle" href="#" id="CustomizedSystemMessages.setInternalErrorURL-toggle" onclick="return toggle('CustomizedSystemMessages.setInternalErrorURL');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.CustomizedSystemMessages-class.html#setInternalErrorURL">setInternalErrorURL</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">internalErrorURL</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="CustomizedSystemMessages.setInternalErrorURL-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="CustomizedSystemMessages.setInternalErrorURL-expanded"><a name="L397"></a><tt class="py-lineno">397</tt>  <tt class="py-line">        <tt class="py-docstring">"""Sets the URL to go to when an internal error occurs.</tt> </tt>
+<a name="L398"></a><tt class="py-lineno">398</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L399"></a><tt class="py-lineno">399</tt>  <tt class="py-line"><tt class="py-docstring">        @param internalErrorURL:</tt> </tt>
+<a name="L400"></a><tt class="py-lineno">400</tt>  <tt class="py-line"><tt class="py-docstring">                   the URL to go to, or null to reload current</tt> </tt>
+<a name="L401"></a><tt class="py-lineno">401</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L402"></a><tt class="py-lineno">402</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">internalErrorURL</tt> <tt class="py-op">=</tt> <tt class="py-name">internalErrorURL</tt> </tt>
+</div><a name="L403"></a><tt class="py-lineno">403</tt>  <tt class="py-line"> </tt>
+<a name="L404"></a><tt class="py-lineno">404</tt>  <tt class="py-line"> </tt>
+<a name="CustomizedSystemMessages.setInternalErrorNotificationEnabled"></a><div id="CustomizedSystemMessages.setInternalErrorNotificationEnabled-def"><a name="L405"></a><tt class="py-lineno">405</tt> <a class="py-toggle" href="#" id="CustomizedSystemMessages.setInternalErrorNotificationEnabled-toggle" onclick="return toggle('CustomizedSystemMessages.setInternalErrorNotificationEnabled');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.CustomizedSystemMessages-class.html#setInternalErrorNotificationEnabled">setInternalErrorNotificationEnabled</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">internalErrorNotificationEnabled</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="CustomizedSystemMessages.setInternalErrorNotificationEnabled-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="CustomizedSystemMessages.setInternalErrorNotificationEnabled-expanded"><a name="L406"></a><tt class="py-lineno">406</tt>  <tt class="py-line">        <tt class="py-docstring">"""Enables or disables the notification. If disabled, the set URL (or</tt> </tt>
+<a name="L407"></a><tt class="py-lineno">407</tt>  <tt class="py-line"><tt class="py-docstring">        current) is loaded directly.</tt> </tt>
+<a name="L408"></a><tt class="py-lineno">408</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L409"></a><tt class="py-lineno">409</tt>  <tt class="py-line"><tt class="py-docstring">        @param internalErrorNotificationEnabled:</tt> </tt>
+<a name="L410"></a><tt class="py-lineno">410</tt>  <tt class="py-line"><tt class="py-docstring">                   true = enabled, false = disabled</tt> </tt>
+<a name="L411"></a><tt class="py-lineno">411</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L412"></a><tt class="py-lineno">412</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">internalErrorNotificationEnabled</tt> <tt class="py-op">=</tt> <tt class="py-name">internalErrorNotificationEnabled</tt> </tt>
+</div><a name="L413"></a><tt class="py-lineno">413</tt>  <tt class="py-line"> </tt>
+<a name="L414"></a><tt class="py-lineno">414</tt>  <tt class="py-line"> </tt>
+<a name="CustomizedSystemMessages.setInternalErrorCaption"></a><div id="CustomizedSystemMessages.setInternalErrorCaption-def"><a name="L415"></a><tt class="py-lineno">415</tt> <a class="py-toggle" href="#" id="CustomizedSystemMessages.setInternalErrorCaption-toggle" onclick="return toggle('CustomizedSystemMessages.setInternalErrorCaption');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.CustomizedSystemMessages-class.html#setInternalErrorCaption">setInternalErrorCaption</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">internalErrorCaption</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="CustomizedSystemMessages.setInternalErrorCaption-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="CustomizedSystemMessages.setInternalErrorCaption-expanded"><a name="L416"></a><tt class="py-lineno">416</tt>  <tt class="py-line">        <tt class="py-docstring">"""Sets the caption of the notification. Set to null for no caption. If</tt> </tt>
+<a name="L417"></a><tt class="py-lineno">417</tt>  <tt class="py-line"><tt class="py-docstring">        both caption and message is null, the notification is disabled;</tt> </tt>
+<a name="L418"></a><tt class="py-lineno">418</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L419"></a><tt class="py-lineno">419</tt>  <tt class="py-line"><tt class="py-docstring">        @param internalErrorCaption:</tt> </tt>
+<a name="L420"></a><tt class="py-lineno">420</tt>  <tt class="py-line"><tt class="py-docstring">                   the caption</tt> </tt>
+<a name="L421"></a><tt class="py-lineno">421</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L422"></a><tt class="py-lineno">422</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">internalErrorCaption</tt> <tt class="py-op">=</tt> <tt class="py-name">internalErrorCaption</tt> </tt>
+</div><a name="L423"></a><tt class="py-lineno">423</tt>  <tt class="py-line"> </tt>
+<a name="L424"></a><tt class="py-lineno">424</tt>  <tt class="py-line"> </tt>
+<a name="CustomizedSystemMessages.setInternalErrorMessage"></a><div id="CustomizedSystemMessages.setInternalErrorMessage-def"><a name="L425"></a><tt class="py-lineno">425</tt> <a class="py-toggle" href="#" id="CustomizedSystemMessages.setInternalErrorMessage-toggle" onclick="return toggle('CustomizedSystemMessages.setInternalErrorMessage');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.CustomizedSystemMessages-class.html#setInternalErrorMessage">setInternalErrorMessage</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">internalErrorMessage</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="CustomizedSystemMessages.setInternalErrorMessage-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="CustomizedSystemMessages.setInternalErrorMessage-expanded"><a name="L426"></a><tt class="py-lineno">426</tt>  <tt class="py-line">        <tt class="py-docstring">"""Sets the message of the notification. Set to null for no message. If</tt> </tt>
+<a name="L427"></a><tt class="py-lineno">427</tt>  <tt class="py-line"><tt class="py-docstring">        both caption and message is null, the notification is disabled;</tt> </tt>
+<a name="L428"></a><tt class="py-lineno">428</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L429"></a><tt class="py-lineno">429</tt>  <tt class="py-line"><tt class="py-docstring">        @param internalErrorMessage:</tt> </tt>
+<a name="L430"></a><tt class="py-lineno">430</tt>  <tt class="py-line"><tt class="py-docstring">                   the message</tt> </tt>
+<a name="L431"></a><tt class="py-lineno">431</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L432"></a><tt class="py-lineno">432</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">internalErrorMessage</tt> <tt class="py-op">=</tt> <tt class="py-name">internalErrorMessage</tt> </tt>
+</div><a name="L433"></a><tt class="py-lineno">433</tt>  <tt class="py-line"> </tt>
+<a name="L434"></a><tt class="py-lineno">434</tt>  <tt class="py-line"> </tt>
+<a name="CustomizedSystemMessages.setOutOfSyncURL"></a><div id="CustomizedSystemMessages.setOutOfSyncURL-def"><a name="L435"></a><tt class="py-lineno">435</tt> <a class="py-toggle" href="#" id="CustomizedSystemMessages.setOutOfSyncURL-toggle" onclick="return toggle('CustomizedSystemMessages.setOutOfSyncURL');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.CustomizedSystemMessages-class.html#setOutOfSyncURL">setOutOfSyncURL</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">outOfSyncURL</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="CustomizedSystemMessages.setOutOfSyncURL-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="CustomizedSystemMessages.setOutOfSyncURL-expanded"><a name="L436"></a><tt class="py-lineno">436</tt>  <tt class="py-line">        <tt class="py-docstring">"""Sets the URL to go to when the client is out-of-sync.</tt> </tt>
+<a name="L437"></a><tt class="py-lineno">437</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L438"></a><tt class="py-lineno">438</tt>  <tt class="py-line"><tt class="py-docstring">        @param outOfSyncURL:</tt> </tt>
+<a name="L439"></a><tt class="py-lineno">439</tt>  <tt class="py-line"><tt class="py-docstring">                   the URL to go to, or null to reload current</tt> </tt>
+<a name="L440"></a><tt class="py-lineno">440</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L441"></a><tt class="py-lineno">441</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">outOfSyncURL</tt> <tt class="py-op">=</tt> <tt class="py-name">outOfSyncURL</tt> </tt>
+</div><a name="L442"></a><tt class="py-lineno">442</tt>  <tt class="py-line"> </tt>
+<a name="L443"></a><tt class="py-lineno">443</tt>  <tt class="py-line"> </tt>
+<a name="CustomizedSystemMessages.setOutOfSyncNotificationEnabled"></a><div id="CustomizedSystemMessages.setOutOfSyncNotificationEnabled-def"><a name="L444"></a><tt class="py-lineno">444</tt> <a class="py-toggle" href="#" id="CustomizedSystemMessages.setOutOfSyncNotificationEnabled-toggle" onclick="return toggle('CustomizedSystemMessages.setOutOfSyncNotificationEnabled');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.CustomizedSystemMessages-class.html#setOutOfSyncNotificationEnabled">setOutOfSyncNotificationEnabled</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">outOfSyncNotificationEnabled</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="CustomizedSystemMessages.setOutOfSyncNotificationEnabled-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="CustomizedSystemMessages.setOutOfSyncNotificationEnabled-expanded"><a name="L445"></a><tt class="py-lineno">445</tt>  <tt class="py-line">        <tt class="py-docstring">"""Enables or disables the notification. If disabled, the set URL (or</tt> </tt>
+<a name="L446"></a><tt class="py-lineno">446</tt>  <tt class="py-line"><tt class="py-docstring">        current) is loaded directly.</tt> </tt>
+<a name="L447"></a><tt class="py-lineno">447</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L448"></a><tt class="py-lineno">448</tt>  <tt class="py-line"><tt class="py-docstring">        @param outOfSyncNotificationEnabled:</tt> </tt>
+<a name="L449"></a><tt class="py-lineno">449</tt>  <tt class="py-line"><tt class="py-docstring">                   true = enabled, false = disabled</tt> </tt>
+<a name="L450"></a><tt class="py-lineno">450</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L451"></a><tt class="py-lineno">451</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">outOfSyncNotificationEnabled</tt> <tt class="py-op">=</tt> <tt class="py-name">outOfSyncNotificationEnabled</tt> </tt>
+</div><a name="L452"></a><tt class="py-lineno">452</tt>  <tt class="py-line"> </tt>
+<a name="L453"></a><tt class="py-lineno">453</tt>  <tt class="py-line"> </tt>
+<a name="CustomizedSystemMessages.setOutOfSyncCaption"></a><div id="CustomizedSystemMessages.setOutOfSyncCaption-def"><a name="L454"></a><tt class="py-lineno">454</tt> <a class="py-toggle" href="#" id="CustomizedSystemMessages.setOutOfSyncCaption-toggle" onclick="return toggle('CustomizedSystemMessages.setOutOfSyncCaption');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.CustomizedSystemMessages-class.html#setOutOfSyncCaption">setOutOfSyncCaption</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">outOfSyncCaption</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="CustomizedSystemMessages.setOutOfSyncCaption-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="CustomizedSystemMessages.setOutOfSyncCaption-expanded"><a name="L455"></a><tt class="py-lineno">455</tt>  <tt class="py-line">        <tt class="py-docstring">"""Sets the caption of the notification. Set to null for no caption. If</tt> </tt>
+<a name="L456"></a><tt class="py-lineno">456</tt>  <tt class="py-line"><tt class="py-docstring">        both caption and message is null, the notification is disabled;</tt> </tt>
+<a name="L457"></a><tt class="py-lineno">457</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L458"></a><tt class="py-lineno">458</tt>  <tt class="py-line"><tt class="py-docstring">        @param outOfSyncCaption:</tt> </tt>
+<a name="L459"></a><tt class="py-lineno">459</tt>  <tt class="py-line"><tt class="py-docstring">                   the caption</tt> </tt>
+<a name="L460"></a><tt class="py-lineno">460</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L461"></a><tt class="py-lineno">461</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">outOfSyncCaption</tt> <tt class="py-op">=</tt> <tt class="py-name">outOfSyncCaption</tt> </tt>
+</div><a name="L462"></a><tt class="py-lineno">462</tt>  <tt class="py-line"> </tt>
+<a name="L463"></a><tt class="py-lineno">463</tt>  <tt class="py-line"> </tt>
+<a name="CustomizedSystemMessages.setOutOfSyncMessage"></a><div id="CustomizedSystemMessages.setOutOfSyncMessage-def"><a name="L464"></a><tt class="py-lineno">464</tt> <a class="py-toggle" href="#" id="CustomizedSystemMessages.setOutOfSyncMessage-toggle" onclick="return toggle('CustomizedSystemMessages.setOutOfSyncMessage');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.CustomizedSystemMessages-class.html#setOutOfSyncMessage">setOutOfSyncMessage</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">outOfSyncMessage</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="CustomizedSystemMessages.setOutOfSyncMessage-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="CustomizedSystemMessages.setOutOfSyncMessage-expanded"><a name="L465"></a><tt class="py-lineno">465</tt>  <tt class="py-line">        <tt class="py-docstring">"""Sets the message of the notification. Set to null for no message. If</tt> </tt>
+<a name="L466"></a><tt class="py-lineno">466</tt>  <tt class="py-line"><tt class="py-docstring">        both caption and message is null, the notification is disabled;</tt> </tt>
+<a name="L467"></a><tt class="py-lineno">467</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L468"></a><tt class="py-lineno">468</tt>  <tt class="py-line"><tt class="py-docstring">        @param outOfSyncMessage:</tt> </tt>
+<a name="L469"></a><tt class="py-lineno">469</tt>  <tt class="py-line"><tt class="py-docstring">                   the message</tt> </tt>
+<a name="L470"></a><tt class="py-lineno">470</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L471"></a><tt class="py-lineno">471</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">outOfSyncMessage</tt> <tt class="py-op">=</tt> <tt class="py-name">outOfSyncMessage</tt> </tt>
+</div><a name="L472"></a><tt class="py-lineno">472</tt>  <tt class="py-line"> </tt>
+<a name="L473"></a><tt class="py-lineno">473</tt>  <tt class="py-line"> </tt>
+<a name="CustomizedSystemMessages.setCookiesDisabledURL"></a><div id="CustomizedSystemMessages.setCookiesDisabledURL-def"><a name="L474"></a><tt class="py-lineno">474</tt> <a class="py-toggle" href="#" id="CustomizedSystemMessages.setCookiesDisabledURL-toggle" onclick="return toggle('CustomizedSystemMessages.setCookiesDisabledURL');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.CustomizedSystemMessages-class.html#setCookiesDisabledURL">setCookiesDisabledURL</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">cookiesDisabledURL</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="CustomizedSystemMessages.setCookiesDisabledURL-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="CustomizedSystemMessages.setCookiesDisabledURL-expanded"><a name="L475"></a><tt class="py-lineno">475</tt>  <tt class="py-line">        <tt class="py-docstring">"""Sets the URL to redirect to when the browser has cookies disabled.</tt> </tt>
+<a name="L476"></a><tt class="py-lineno">476</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L477"></a><tt class="py-lineno">477</tt>  <tt class="py-line"><tt class="py-docstring">        @param cookiesDisabledURL:</tt> </tt>
+<a name="L478"></a><tt class="py-lineno">478</tt>  <tt class="py-line"><tt class="py-docstring">                   the URL to redirect to, or null to reload the current URL</tt> </tt>
+<a name="L479"></a><tt class="py-lineno">479</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L480"></a><tt class="py-lineno">480</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">cookiesDisabledURL</tt> <tt class="py-op">=</tt> <tt class="py-name">cookiesDisabledURL</tt> </tt>
+</div><a name="L481"></a><tt class="py-lineno">481</tt>  <tt class="py-line"> </tt>
+<a name="L482"></a><tt class="py-lineno">482</tt>  <tt class="py-line"> </tt>
+<a name="CustomizedSystemMessages.setCookiesDisabledNotificationEnabled"></a><div id="CustomizedSystemMessages.setCookiesDisabledNotificationEnabled-def"><a name="L483"></a><tt class="py-lineno">483</tt> <a class="py-toggle" href="#" id="CustomizedSystemMessages.setCookiesDisabledNotificationEnabled-toggle" onclick="return toggle('CustomizedSystemMessages.setCookiesDisabledNotificationEnabled');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.CustomizedSystemMessages-class.html#setCookiesDisabledNotificationEnabled">setCookiesDisabledNotificationEnabled</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">cookiesDisabledNotificationEnabled</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="CustomizedSystemMessages.setCookiesDisabledNotificationEnabled-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="CustomizedSystemMessages.setCookiesDisabledNotificationEnabled-expanded"><a name="L484"></a><tt class="py-lineno">484</tt>  <tt class="py-line">        <tt class="py-docstring">"""Enables or disables the notification for "cookies disabled" messages.</tt> </tt>
+<a name="L485"></a><tt class="py-lineno">485</tt>  <tt class="py-line"><tt class="py-docstring">        If disabled, the URL returned by L{getCookiesDisabledURL} is</tt> </tt>
+<a name="L486"></a><tt class="py-lineno">486</tt>  <tt class="py-line"><tt class="py-docstring">        loaded directly.</tt> </tt>
+<a name="L487"></a><tt class="py-lineno">487</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L488"></a><tt class="py-lineno">488</tt>  <tt class="py-line"><tt class="py-docstring">        @param cookiesDisabledNotificationEnabled:</tt> </tt>
+<a name="L489"></a><tt class="py-lineno">489</tt>  <tt class="py-line"><tt class="py-docstring">                   true to enable "cookies disabled" messages, false</tt> </tt>
+<a name="L490"></a><tt class="py-lineno">490</tt>  <tt class="py-line"><tt class="py-docstring">                   otherwise</tt> </tt>
+<a name="L491"></a><tt class="py-lineno">491</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L492"></a><tt class="py-lineno">492</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">cookiesDisabledNotificationEnabled</tt> <tt class="py-op">=</tt> <tt class="py-name">cookiesDisabledNotificationEnabled</tt> </tt>
+</div><a name="L493"></a><tt class="py-lineno">493</tt>  <tt class="py-line"> </tt>
+<a name="L494"></a><tt class="py-lineno">494</tt>  <tt class="py-line"> </tt>
+<a name="CustomizedSystemMessages.setCookiesDisabledCaption"></a><div id="CustomizedSystemMessages.setCookiesDisabledCaption-def"><a name="L495"></a><tt class="py-lineno">495</tt> <a class="py-toggle" href="#" id="CustomizedSystemMessages.setCookiesDisabledCaption-toggle" onclick="return toggle('CustomizedSystemMessages.setCookiesDisabledCaption');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.CustomizedSystemMessages-class.html#setCookiesDisabledCaption">setCookiesDisabledCaption</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">cookiesDisabledCaption</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="CustomizedSystemMessages.setCookiesDisabledCaption-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="CustomizedSystemMessages.setCookiesDisabledCaption-expanded"><a name="L496"></a><tt class="py-lineno">496</tt>  <tt class="py-line">        <tt class="py-docstring">"""Sets the caption of the "cookies disabled" notification. Set to null</tt> </tt>
+<a name="L497"></a><tt class="py-lineno">497</tt>  <tt class="py-line"><tt class="py-docstring">        for no caption. If both caption and message is null, the notification</tt> </tt>
+<a name="L498"></a><tt class="py-lineno">498</tt>  <tt class="py-line"><tt class="py-docstring">        is disabled.</tt> </tt>
+<a name="L499"></a><tt class="py-lineno">499</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L500"></a><tt class="py-lineno">500</tt>  <tt class="py-line"><tt class="py-docstring">        @param cookiesDisabledCaption:</tt> </tt>
+<a name="L501"></a><tt class="py-lineno">501</tt>  <tt class="py-line"><tt class="py-docstring">                   the caption for the "cookies disabled" notification</tt> </tt>
+<a name="L502"></a><tt class="py-lineno">502</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L503"></a><tt class="py-lineno">503</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">cookiesDisabledCaption</tt> <tt class="py-op">=</tt> <tt class="py-name">cookiesDisabledCaption</tt> </tt>
+</div><a name="L504"></a><tt class="py-lineno">504</tt>  <tt class="py-line"> </tt>
+<a name="L505"></a><tt class="py-lineno">505</tt>  <tt class="py-line"> </tt>
+<a name="CustomizedSystemMessages.setCookiesDisabledMessage"></a><div id="CustomizedSystemMessages.setCookiesDisabledMessage-def"><a name="L506"></a><tt class="py-lineno">506</tt> <a class="py-toggle" href="#" id="CustomizedSystemMessages.setCookiesDisabledMessage-toggle" onclick="return toggle('CustomizedSystemMessages.setCookiesDisabledMessage');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.messages.CustomizedSystemMessages-class.html#setCookiesDisabledMessage">setCookiesDisabledMessage</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">cookiesDisabledMessage</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="CustomizedSystemMessages.setCookiesDisabledMessage-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="CustomizedSystemMessages.setCookiesDisabledMessage-expanded"><a name="L507"></a><tt class="py-lineno">507</tt>  <tt class="py-line">        <tt class="py-docstring">"""Sets the message of the "cookies disabled" notification. Set to null</tt> </tt>
+<a name="L508"></a><tt class="py-lineno">508</tt>  <tt class="py-line"><tt class="py-docstring">        for no message. If both caption and message is null, the notification</tt> </tt>
+<a name="L509"></a><tt class="py-lineno">509</tt>  <tt class="py-line"><tt class="py-docstring">        is disabled.</tt> </tt>
+<a name="L510"></a><tt class="py-lineno">510</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L511"></a><tt class="py-lineno">511</tt>  <tt class="py-line"><tt class="py-docstring">        @param cookiesDisabledMessage:</tt> </tt>
+<a name="L512"></a><tt class="py-lineno">512</tt>  <tt class="py-line"><tt class="py-docstring">                   the message for the "cookies disabled" notification</tt> </tt>
+<a name="L513"></a><tt class="py-lineno">513</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L514"></a><tt class="py-lineno">514</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">cookiesDisabledMessage</tt> <tt class="py-op">=</tt> <tt class="py-name">cookiesDisabledMessage</tt> </tt>
+</div></div><a name="L515"></a><tt class="py-lineno">515</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:04:04 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

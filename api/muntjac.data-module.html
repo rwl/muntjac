@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.data</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        Package&nbsp;data
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.data-module.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PACKAGE DESCRIPTION ==================== -->
+<h1 class="epydoc">Package data</h1><p class="nomargin-top"><span class="codelink"><a href="muntjac.data-pysrc.html">source&nbsp;code</a></span></p>
+<p>Contains interfaces for the data layer, mainly for binding typed data 
+  and data collections to components, and for validating data.</p>
+  <h1 class="heading">Data binding</h1>
+    <p>The package contains a three-tiered structure for typed data objects
+    and collections of them:</p>
+    <ul>
+      <li>
+        A <a href="muntjac.data.property.IProperty-class.html" 
+        class="link">IProperty</a> represents a single, typed data value.
+      </li>
+      <li>
+        An <a href="muntjac.data.item.IItem-class.html" 
+        class="link">IItem</a> embodies a set of <i>Properties</i>. A 
+        locally unique (inside the <a 
+        href="muntjac.data.item.IItem-class.html" class="link">IItem</a>) 
+        Property identifier corresponds to each Property inside the Item.
+      </li>
+      <li>
+        A <code class="link">IContainer</code> contains a set of Items, 
+        each corresponding to a locally unique Item identifier. Note that 
+        Container imposes a few restrictions on the data stored in it, see 
+        <code class="link">IContainer</code> for further information.
+      </li>
+    </ul>
+  <h1 class="heading">Buffering</h1>
+    <p>A <a href="muntjac.data.buffered.IBuffered-class.html" 
+    class="link">IBuffered</a> implementor is able to track and buffer 
+    changes and commit or discard them later.</p>
+  <h1 class="heading">Validation</h1>
+    <p><a href="muntjac.data.validator.IValidator-class.html" 
+    class="link">IValidator</a> implementations are used to validate data, 
+    typically the value of a <a href="muntjac.ui.field.IField-class.html" 
+    class="link">IField</a>. One or more <a 
+    href="muntjac.data.validator.IValidator-class.html" 
+    class="link">IValidator</a> can be added to a <a 
+    href="muntjac.data.validatable.IValidatable-class.html" 
+    class="link">IValidatable</a> implementor and then used to validate the
+    value of the Validatable.</p>
+
+<!-- ==================== SUBMODULES ==================== -->
+<a name="section-Submodules"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Submodules</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Submodules"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr><td class="summary">
+  <ul class="nomargin">
+    <li> <strong class="uidlink"><a href="muntjac.data.buffered-module.html">muntjac.data.buffered</a></strong>: <em class="summary">Defines the interface to commit and discard changes to an object.</em>    </li>
+    <li> <strong class="uidlink"><a href="muntjac.data.container-module.html">muntjac.data.container</a></strong>: <em class="summary">A specialized set of identified Items.</em>    </li>
+    <li> <strong class="uidlink"><a href="muntjac.data.item-module.html">muntjac.data.item</a></strong>: <em class="summary">Provides a mechanism for handling a set of Properties.</em>    </li>
+    <li> <strong class="uidlink"><a href="muntjac.data.property-module.html">muntjac.data.property</a></strong>: <em class="summary">A simple data object that contains one typed value.</em>    </li>
+    <li> <strong class="uidlink"><a href="muntjac.data.util-module.html">muntjac.data.util</a></strong>: <em class="summary">Provides implementations of Property, Item and Container 
+        interfaces, and utilities for the data layer.</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="muntjac.data.util.abstract_container-module.html">muntjac.data.util.abstract_container</a></strong>: <em class="summary">Abstract container class that manages event listeners and sending 
+        events to them.</em>    </li>
+    <li> <strong class="uidlink"><a href="muntjac.data.util.abstract_in_memory_container-module.html">muntjac.data.util.abstract_in_memory_container</a></strong>: <em class="summary">Abstract container class that handles common functionality for 
+        in-memory containers.</em>    </li>
+    <li> <strong class="uidlink"><a href="muntjac.data.util.abstract_property-module.html">muntjac.data.util.abstract_property</a></strong>: <em class="summary">Abstract base class for property implementations.</em>    </li>
+    <li> <strong class="uidlink"><a href="muntjac.data.util.container_hierarchical_wrapper-module.html">muntjac.data.util.container_hierarchical_wrapper</a></strong>: <em class="summary">A wrapper class for adding external hierarchy to containers not 
+        implementing the IHierarchical interface.</em>    </li>
+    <li> <strong class="uidlink"><a href="muntjac.data.util.container_ordered_wrapper-module.html">muntjac.data.util.container_ordered_wrapper</a></strong>    </li>
+    <li> <strong class="uidlink"><a href="muntjac.data.util.default_item_sorter-module.html">muntjac.data.util.default_item_sorter</a></strong>: <em class="summary">Provides a default implementation of an IItemSorter.</em>    </li>
+    <li> <strong class="uidlink"><a href="muntjac.data.util.filter-module.html">muntjac.data.util.filter</a></strong>
+    <ul>
+    <li> <strong class="uidlink"><a href="muntjac.data.util.filter.simple_string_filter-module.html">muntjac.data.util.filter.simple_string_filter</a></strong>: <em class="summary">Simple string filter for matching items that start with or contain 
+        a specified string.</em>    </li>
+    <li> <strong class="uidlink"><a href="muntjac.data.util.filter.unsupported_filter_exception-module.html">muntjac.data.util.filter.unsupported_filter_exception</a></strong>: <em class="summary">Exception for cases where a container does not support a specific 
+        type of filters.</em>    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="muntjac.data.util.hierarchical_container-module.html">muntjac.data.util.hierarchical_container</a></strong>: <em class="summary">A specialized container whose contents can be accessed like it was 
+        a tree-like structure.</em>    </li>
+    <li> <strong class="uidlink"><a href="muntjac.data.util.indexed_container-module.html">muntjac.data.util.indexed_container</a></strong>: <em class="summary">An implementation of the IIndexed interface with all important 
+        features.</em>    </li>
+    <li> <strong class="uidlink"><a href="muntjac.data.util.item_sorter-module.html">muntjac.data.util.item_sorter</a></strong>: <em class="summary">An item comparator which is compatible with the ISortable 
+        interface.</em>    </li>
+    <li> <strong class="uidlink"><a href="muntjac.data.util.list_set-module.html">muntjac.data.util.list_set</a></strong>: <em class="summary">ListSet is an internal Muntjac class which implements a combination
+        of a list and a set.</em>    </li>
+    <li> <strong class="uidlink"><a href="muntjac.data.util.object_property-module.html">muntjac.data.util.object_property</a></strong>: <em class="summary">A simple data object containing one typed value.</em>    </li>
+    <li> <strong class="uidlink"><a href="muntjac.data.util.propertyset_item-module.html">muntjac.data.util.propertyset_item</a></strong>    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="muntjac.data.validatable-module.html">muntjac.data.validatable</a></strong>: <em class="summary">Interface for validatable objects.</em>    </li>
+    <li> <strong class="uidlink"><a href="muntjac.data.validator-module.html">muntjac.data.validator</a></strong>: <em class="summary">Interface that implements a method for validating an object.</em>    </li>
+    <li> <strong class="uidlink"><a href="muntjac.data.validators-module.html">muntjac.data.validators</a></strong>: <em class="summary">Provides various <a 
+        href="muntjac.data.validator.IValidator-class.html" 
+        class="link">IValidator</a> implementations.</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="muntjac.data.validators.abstract_string_validator-module.html">muntjac.data.validators.abstract_string_validator</a></strong>: <em class="summary">Validator base class for validating strings.</em>    </li>
+    <li> <strong class="uidlink"><a href="muntjac.data.validators.abstract_validator-module.html">muntjac.data.validators.abstract_validator</a></strong>: <em class="summary">Abstract IValidator implementation that provides a basic IValidator
+        implementation except the isValid method.</em>    </li>
+    <li> <strong class="uidlink"><a href="muntjac.data.validators.composite_validator-module.html">muntjac.data.validators.composite_validator</a></strong>: <em class="summary">Allows you to chain (compose) many validators to validate one 
+        field.</em>    </li>
+    <li> <strong class="uidlink"><a href="muntjac.data.validators.double_validator-module.html">muntjac.data.validators.double_validator</a></strong>: <em class="summary">String validator for a double precision floating point number.</em>    </li>
+    <li> <strong class="uidlink"><a href="muntjac.data.validators.email_validator-module.html">muntjac.data.validators.email_validator</a></strong>: <em class="summary">String validator for e-mail addresses.</em>    </li>
+    <li> <strong class="uidlink"><a href="muntjac.data.validators.integer_validator-module.html">muntjac.data.validators.integer_validator</a></strong>: <em class="summary">String validator for integers.</em>    </li>
+    <li> <strong class="uidlink"><a href="muntjac.data.validators.null_validator-module.html">muntjac.data.validators.null_validator</a></strong>: <em class="summary">Used for validating properties that do or do not allow null values.</em>    </li>
+    <li> <strong class="uidlink"><a href="muntjac.data.validators.regexp_validator-module.html">muntjac.data.validators.regexp_validator</a></strong>: <em class="summary">String validator comparing the string against a regular expression.</em>    </li>
+    <li> <strong class="uidlink"><a href="muntjac.data.validators.string_length_validator-module.html">muntjac.data.validators.string_length_validator</a></strong>: <em class="summary">Used to validate the length of strings.</em>    </li>
+    </ul>
+    </li>
+  </ul></td></tr>
+</table>
+
+<br />
+<!-- ==================== VARIABLES ==================== -->
+<a name="section-Variables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Variables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="__package__"></a><span class="summary-name">__package__</span> = <code title="None">None</code><br />
+      hash(x)
+    </td>
+  </tr>
+</table>
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:03:56 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

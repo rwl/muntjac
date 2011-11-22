@@ -1,0 +1,1035 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.ui.twin_col_select.TwinColSelect</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.ui-module.html">Package&nbsp;ui</a> ::
+        <a href="muntjac.ui.twin_col_select-module.html">Module&nbsp;twin_col_select</a> ::
+        Class&nbsp;TwinColSelect
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.ui.twin_col_select.TwinColSelect-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class TwinColSelect</h1><p class="nomargin-top"><span class="codelink"><a href="muntjac.ui.twin_col_select-pysrc.html#TwinColSelect">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+                            object --+                        
+                                     |                        
+                   <a href="muntjac.util.IEventListener-class.html">util.IEventListener</a> --+                    
+                                         |                    
+             <a href="muntjac.terminal.paintable.IPaintable-class.html">terminal.paintable.IPaintable</a> --+                
+                                             |                
+                                object --+   |                
+                                         |   |                
+    <a href="muntjac.terminal.variable_owner.IVariableOwner-class.html">terminal.variable_owner.IVariableOwner</a> --+                
+                                             |                
+                                object --+   |                
+                                         |   |                
+               <a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a> --+                
+                                             |                
+                          <a href="muntjac.ui.component.IComponent-class.html">component.IComponent</a> --+            
+                                                 |            
+                                    object --+   |            
+                                             |   |            
+  <a href="muntjac.event.method_event_source.IMethodEventSource-class.html">event.method_event_source.IMethodEventSource</a> --+            
+                                                 |            
+              <a href="muntjac.ui.abstract_component.AbstractComponent-class.html">abstract_component.AbstractComponent</a> --+        
+                                                     |        
+                                object --+           |        
+                                         |           |        
+                   <a href="muntjac.data.buffered.IBuffered-class.html">data.buffered.IBuffered</a> --+       |        
+                                             |       |        
+                                object --+   |       |        
+                                         |   |       |        
+             <a href="muntjac.data.validatable.IValidatable-class.html">data.validatable.IValidatable</a> --+       |        
+                                             |       |        
+            <a href="muntjac.data.buffered.IBufferedValidatable-class.html">data.buffered.IBufferedValidatable</a> --+   |        
+                                                 |   |        
+                                    object --+   |   |        
+                                             |   |   |        
+            <a href="muntjac.data.property.IValueChangeNotifier-class.html">data.property.IValueChangeNotifier</a> --+   |        
+                                                 |   |        
+                                    object --+   |   |        
+                                             |   |   |        
+            <a href="muntjac.data.property.IValueChangeListener-class.html">data.property.IValueChangeListener</a> --+   |        
+                                                 |   |        
+                                object --+       |   |        
+                                         |       |   |        
+                     <a href="muntjac.data.property.IViewer-class.html">data.property.IViewer</a> --+   |   |        
+                                             |   |   |        
+                         <a href="muntjac.data.property.IEditor-class.html">data.property.IEditor</a> --+   |        
+                                                 |   |        
+                        object --+               |   |        
+                                 |               |   |        
+               <a href="muntjac.util.IEventListener-class.html">util.IEventListener</a> --+           |   |        
+                                     |           |   |        
+         <a href="muntjac.terminal.paintable.IPaintable-class.html">terminal.paintable.IPaintable</a> --+       |   |        
+                                         |       |   |        
+                            object --+   |       |   |        
+                                     |   |       |   |        
+<a href="muntjac.terminal.variable_owner.IVariableOwner-class.html">terminal.variable_owner.IVariableOwner</a> --+       |   |        
+                                         |       |   |        
+                            object --+   |       |   |        
+                                     |   |       |   |        
+           <a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a> --+       |   |        
+                                         |       |   |        
+                      <a href="muntjac.ui.component.IComponent-class.html">component.IComponent</a> --+   |   |        
+                                             |   |   |        
+                          <a href="muntjac.ui.component.IFocusable-class.html">component.IFocusable</a> --+   |        
+                                                 |   |        
+                                      <a href="muntjac.ui.field.IField-class.html">field.IField</a> --+        
+                                                     |        
+                                        object --+   |        
+                                                 |   |        
+                    <a href="muntjac.event.action.IShortcutNotifier-class.html">event.action.IShortcutNotifier</a> --+        
+                                                     |        
+                                        object --+   |        
+                                                 |   |        
+       <a href="muntjac.data.property.IReadOnlyStatusChangeNotifier-class.html">data.property.IReadOnlyStatusChangeNotifier</a> --+        
+                                                     |        
+                                        object --+   |        
+                                                 |   |        
+       <a href="muntjac.data.property.IReadOnlyStatusChangeListener-class.html">data.property.IReadOnlyStatusChangeListener</a> --+        
+                                                     |        
+                          <a href="muntjac.ui.abstract_field.AbstractField-class.html">abstract_field.AbstractField</a> --+    
+                                                         |    
+                                            object --+   |    
+                                                     |   |    
+                             <a href="muntjac.data.container.IContainer-class.html">data.container.IContainer</a> --+    
+                                                         |    
+                                            object --+   |    
+                                                     |   |    
+                                <a href="muntjac.data.container.IViewer-class.html">data.container.IViewer</a> --+    
+                                                         |    
+                                            object --+   |    
+                                                     |   |    
+             <a href="muntjac.data.container.IPropertySetChangeListener-class.html">data.container.IPropertySetChangeListener</a> --+    
+                                                         |    
+                                            object --+   |    
+                                                     |   |    
+             <a href="muntjac.data.container.IPropertySetChangeNotifier-class.html">data.container.IPropertySetChangeNotifier</a> --+    
+                                                         |    
+                                            object --+   |    
+                                                     |   |    
+                 <a href="muntjac.data.container.IItemSetChangeNotifier-class.html">data.container.IItemSetChangeNotifier</a> --+    
+                                                         |    
+                                            object --+   |    
+                                                     |   |    
+                 <a href="muntjac.data.container.IItemSetChangeListener-class.html">data.container.IItemSetChangeListener</a> --+    
+                                                         |    
+                            <a href="muntjac.ui.abstract_select.AbstractSelect-class.html">abstract_select.AbstractSelect</a> --+
+                                                             |
+                                                            <strong class="uidshort">TwinColSelect</strong>
+</pre>
+
+<hr />
+<p>Multiselect component with two lists: left side for available items 
+  and right side for selected items.</p>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.twin_col_select.TwinColSelect-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">*args</span>)</span><br />
+      Creates an empty Select with caption, that is connected to a 
+      data-source or is filled from a collection of option values.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.twin_col_select-pysrc.html#TwinColSelect.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.twin_col_select.TwinColSelect-class.html#setColumns" class="summary-sig-name">setColumns</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">columns</span>)</span><br />
+      Sets the number of columns in the editor.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.twin_col_select-pysrc.html#TwinColSelect.setColumns">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getColumns"></a><span class="summary-sig-name">getColumns</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.twin_col_select-pysrc.html#TwinColSelect.getColumns">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getRows"></a><span class="summary-sig-name">getRows</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.twin_col_select-pysrc.html#TwinColSelect.getRows">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.twin_col_select.TwinColSelect-class.html#setRows" class="summary-sig-name">setRows</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">rows</span>)</span><br />
+      Sets the number of rows in the editor.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.twin_col_select-pysrc.html#TwinColSelect.setRows">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.twin_col_select.TwinColSelect-class.html#paintContent" class="summary-sig-name">paintContent</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">target</span>)</span><br />
+      Paints the content of this component.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.twin_col_select-pysrc.html#TwinColSelect.paintContent">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.twin_col_select.TwinColSelect-class.html#setRightColumnCaption" class="summary-sig-name">setRightColumnCaption</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">rightColumnCaption</span>)</span><br />
+      Sets the text shown above the right column.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.twin_col_select-pysrc.html#TwinColSelect.setRightColumnCaption">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.twin_col_select.TwinColSelect-class.html#getRightColumnCaption" class="summary-sig-name">getRightColumnCaption</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the text shown above the right column.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.twin_col_select-pysrc.html#TwinColSelect.getRightColumnCaption">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.twin_col_select.TwinColSelect-class.html#setLeftColumnCaption" class="summary-sig-name">setLeftColumnCaption</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">leftColumnCaption</span>)</span><br />
+      Sets the text shown above the left column.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.twin_col_select-pysrc.html#TwinColSelect.setLeftColumnCaption">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.twin_col_select.TwinColSelect-class.html#getLeftColumnCaption" class="summary-sig-name">getLeftColumnCaption</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the text shown above the left column.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.twin_col_select-pysrc.html#TwinColSelect.getLeftColumnCaption">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html">abstract_select.AbstractSelect</a></code></b>:
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#__len__">__len__</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#addCallback">addCallback</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#addContainerProperty">addContainerProperty</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#addItem">addItem</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#addListener">addListener</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#attach">attach</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#changeVariables">changeVariables</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#containerItemSetChange">containerItemSetChange</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#containerPropertySetChange">containerPropertySetChange</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#containsId">containsId</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#detach">detach</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#fireItemSetChange">fireItemSetChange</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#firePropertySetChange">firePropertySetChange</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#getCaptionChangeListener">getCaptionChangeListener</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#getContainerDataSource">getContainerDataSource</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#getContainerProperty">getContainerProperty</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#getContainerPropertyIds">getContainerPropertyIds</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#getItem">getItem</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#getItemCaption">getItemCaption</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#getItemCaptionMode">getItemCaptionMode</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#getItemCaptionPropertyId">getItemCaptionPropertyId</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#getItemIcon">getItemIcon</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#getItemIconPropertyId">getItemIconPropertyId</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#getItemIds">getItemIds</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#getListeners">getListeners</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#getNewItemHandler">getNewItemHandler</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#getNullSelectionItemId">getNullSelectionItemId</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#getType">getType</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#getValue">getValue</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#getVisibleItemIds">getVisibleItemIds</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#isEmpty">isEmpty</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#isMultiSelect">isMultiSelect</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#isNewItemsAllowed">isNewItemsAllowed</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#isNullSelectionAllowed">isNullSelectionAllowed</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#isSelected">isSelected</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#paintItem">paintItem</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#removeAllItems">removeAllItems</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#removeCallback">removeCallback</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#removeContainerProperty">removeContainerProperty</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#removeItem">removeItem</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#removeListener">removeListener</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#select">select</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#setContainerDataSource">setContainerDataSource</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#setItemCaption">setItemCaption</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#setItemCaptionMode">setItemCaptionMode</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#setItemCaptionPropertyId">setItemCaptionPropertyId</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#setItemIcon">setItemIcon</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#setItemIconPropertyId">setItemIconPropertyId</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#setMultiSelect">setMultiSelect</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#setNewItemHandler">setNewItemHandler</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#setNewItemsAllowed">setNewItemsAllowed</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#setNullSelectionAllowed">setNullSelectionAllowed</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#setNullSelectionItemId">setNullSelectionItemId</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#setValue">setValue</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#size">size</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#unselect">unselect</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_field.AbstractField-class.html">abstract_field.AbstractField</a></code></b>:
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#__str__">__str__</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#addShortcutListener">addShortcutListener</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#addValidator">addValidator</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#commit">commit</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#discard">discard</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#fireReadOnlyStatusChange">fireReadOnlyStatusChange</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#fireValueChange">fireValueChange</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#focus">focus</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#getActionManager">getActionManager</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#getErrorMessage">getErrorMessage</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#getPropertyDataSource">getPropertyDataSource</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#getRequiredError">getRequiredError</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#getTabIndex">getTabIndex</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#getValidators">getValidators</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#isInvalidAllowed">isInvalidAllowed</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#isInvalidCommitted">isInvalidCommitted</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#isModified">isModified</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#isReadOnly">isReadOnly</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#isReadThrough">isReadThrough</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#isRequired">isRequired</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#isValid">isValid</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#isValidationVisible">isValidationVisible</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#isWriteThrough">isWriteThrough</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#readOnlyStatusChange">readOnlyStatusChange</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#readValueFromProperty">readValueFromProperty</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#removeShortcutListener">removeShortcutListener</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#removeValidator">removeValidator</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setCurrentBufferedSourceException">setCurrentBufferedSourceException</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setInternalValue">setInternalValue</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setInvalidAllowed">setInvalidAllowed</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setInvalidCommitted">setInvalidCommitted</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setPropertyDataSource">setPropertyDataSource</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setReadOnly">setReadOnly</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setReadThrough">setReadThrough</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setRequired">setRequired</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setRequiredError">setRequiredError</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setTabIndex">setTabIndex</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setValidationVisible">setValidationVisible</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#setWriteThrough">setWriteThrough</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#shouldHideErrors">shouldHideErrors</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#validate">validate</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#valueChange">valueChange</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html">abstract_component.AbstractComponent</a></code></b>:
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#__getstate__">__getstate__</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#__setstate__">__setstate__</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#addStyleName">addStyleName</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#childRequestedRepaint">childRequestedRepaint</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#fireComponentErrorEvent">fireComponentErrorEvent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#fireComponentEvent">fireComponentEvent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#fireEvent">fireEvent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#fireRequestRepaintEvent">fireRequestRepaintEvent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getApplication">getApplication</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getCSSHeight">getCSSHeight</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getCSSWidth">getCSSWidth</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getCaption">getCaption</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getComponentError">getComponentError</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getData">getData</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getDebugId">getDebugId</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getDescription">getDescription</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getErrorHandler">getErrorHandler</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getHeight">getHeight</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getHeightUnits">getHeightUnits</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getIcon">getIcon</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getLocale">getLocale</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getParent">getParent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getStyle">getStyle</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getStyleName">getStyleName</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getWidth">getWidth</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getWidthUnits">getWidthUnits</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getWindow">getWindow</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#handleError">handleError</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#hasListeners">hasListeners</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#isEnabled">isEnabled</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#isImmediate">isImmediate</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#isVisible">isVisible</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#paint">paint</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#parseStringSize">parseStringSize</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#registerCallback">registerCallback</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#registerListener">registerListener</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#removeStyleName">removeStyleName</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#requestRepaint">requestRepaint</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#requestRepaintRequests">requestRepaintRequests</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setCaption">setCaption</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setComponentError">setComponentError</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setData">setData</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setDebugId">setDebugId</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setDescription">setDescription</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setEnabled">setEnabled</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setErrorHandler">setErrorHandler</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setHeight">setHeight</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setHeightUnits">setHeightUnits</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setIcon">setIcon</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setImmediate">setImmediate</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setLocale">setLocale</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setParent">setParent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setSizeFull">setSizeFull</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setSizeUndefined">setSizeUndefined</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setStyle">setStyle</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setStyleName">setStyleName</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setVisible">setVisible</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setWidth">setWidth</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setWidthUnits">setWidthUnits</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#withdrawCallback">withdrawCallback</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#withdrawListener">withdrawListener</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS METHODS ==================== -->
+<a name="section-ClassMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_field.AbstractField-class.html">abstract_field.AbstractField</a></code></b>:
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#constructField">constructField</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="CLIENT_WIDGET"></a><span class="summary-name">CLIENT_WIDGET</span> = <code title="None">None</code><br />
+      hash(x)
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html">abstract_select.AbstractSelect</a></code></b>:
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#ITEM_CAPTION_MODE_EXPLICIT">ITEM_CAPTION_MODE_EXPLICIT</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID">ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#ITEM_CAPTION_MODE_ICON_ONLY">ITEM_CAPTION_MODE_ICON_ONLY</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#ITEM_CAPTION_MODE_ID">ITEM_CAPTION_MODE_ID</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#ITEM_CAPTION_MODE_INDEX">ITEM_CAPTION_MODE_INDEX</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#ITEM_CAPTION_MODE_ITEM">ITEM_CAPTION_MODE_ITEM</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#ITEM_CAPTION_MODE_PROPERTY">ITEM_CAPTION_MODE_PROPERTY</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html">abstract_component.AbstractComponent</a></code></b>:
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#SIZE_PATTERN">SIZE_PATTERN</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a></code></b>:
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#SIZE_UNDEFINED">SIZE_UNDEFINED</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_CM">UNITS_CM</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_EM">UNITS_EM</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_EX">UNITS_EX</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_INCH">UNITS_INCH</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_MM">UNITS_MM</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_PERCENTAGE">UNITS_PERCENTAGE</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_PICAS">UNITS_PICAS</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_PIXELS">UNITS_PIXELS</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_POINTS">UNITS_POINTS</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNIT_SYMBOLS">UNIT_SYMBOLS</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== INSTANCE VARIABLES ==================== -->
+<a name="section-InstanceVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html">abstract_select.AbstractSelect</a></code></b>:
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#itemIdMapper">itemIdMapper</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#items">items</a></code>
+      </p>
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html">abstract_select.AbstractSelect</a></code></b> (private):
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#_allowNewOptions" onclick="show_private();">_allowNewOptions</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#_captionChangeListener" onclick="show_private();">_captionChangeListener</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#_itemCaptionMode" onclick="show_private();">_itemCaptionMode</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#_itemCaptionPropertyId" onclick="show_private();">_itemCaptionPropertyId</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#_itemCaptions" onclick="show_private();">_itemCaptions</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#_itemIconPropertyId" onclick="show_private();">_itemIconPropertyId</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#_itemIcons" onclick="show_private();">_itemIcons</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#_itemSetEventListeners" onclick="show_private();">_itemSetEventListeners</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#_multiSelect" onclick="show_private();">_multiSelect</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#_nullSelectionItemId" onclick="show_private();">_nullSelectionItemId</a></code>,
+      <code><a href="muntjac.ui.abstract_select.AbstractSelect-class.html#_propertySetEventListeners" onclick="show_private();">_propertySetEventListeners</a></code>
+      </p></div>
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_field.AbstractField-class.html">abstract_field.AbstractField</a></code></b> (private):
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_actionManager" onclick="show_private();">_actionManager</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_committingValueToDataSource" onclick="show_private();">_committingValueToDataSource</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_currentBufferedSourceException" onclick="show_private();">_currentBufferedSourceException</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_dataSource" onclick="show_private();">_dataSource</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_invalidAllowed" onclick="show_private();">_invalidAllowed</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_invalidCommitted" onclick="show_private();">_invalidCommitted</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_modified" onclick="show_private();">_modified</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_readThroughMode" onclick="show_private();">_readThroughMode</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_required" onclick="show_private();">_required</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_requiredError" onclick="show_private();">_requiredError</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_tabIndex" onclick="show_private();">_tabIndex</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_validationVisible" onclick="show_private();">_validationVisible</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_validators" onclick="show_private();">_validators</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_value" onclick="show_private();">_value</a></code>,
+      <code><a href="muntjac.ui.abstract_field.AbstractField-class.html#_writeThroughMode" onclick="show_private();">_writeThroughMode</a></code>
+      </p></div>
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html">abstract_component.AbstractComponent</a></code></b> (private):
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_applicationData" onclick="show_private();">_applicationData</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_caption" onclick="show_private();">_caption</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_componentError" onclick="show_private();">_componentError</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_delayedFocus" onclick="show_private();">_delayedFocus</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_description" onclick="show_private();">_description</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_enabled" onclick="show_private();">_enabled</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_eventIdentifiers" onclick="show_private();">_eventIdentifiers</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_eventRouter" onclick="show_private();">_eventRouter</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_icon" onclick="show_private();">_icon</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_immediate" onclick="show_private();">_immediate</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_locale" onclick="show_private();">_locale</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_parent" onclick="show_private();">_parent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_readOnly" onclick="show_private();">_readOnly</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_repaintRequestListeners" onclick="show_private();">_repaintRequestListeners</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_repaintRequestListenersNotified" onclick="show_private();">_repaintRequestListenersNotified</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_styles" onclick="show_private();">_styles</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_visible" onclick="show_private();">_visible</a></code>
+      </p></div>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.twin_col_select-pysrc.html#TwinColSelect.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Creates an empty Select with caption, that is connected to a 
+  data-source or is filled from a collection of option values.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>args</code></strong> - tuple of the form
+          <ul>
+            <li>
+              ()
+            </li>
+            <li>
+              (caption)
+            </li>
+            <li>
+              (caption, dataSource)
+            </li>
+            <li>
+              (caption, options)
+            </li>
+          </ul></li>
+    </ul></dd>
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setColumns"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setColumns</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">columns</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.twin_col_select-pysrc.html#TwinColSelect.setColumns">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the number of columns in the editor. If the number of columns is 
+  set 0, the actual number of displayed columns is determined implicitly by
+  the adapter.</p>
+  <p>The number of columns overrides the value set by setWidth. Only if 
+  columns are set to 0 (default) the width set using <a 
+  href="muntjac.ui.abstract_component.AbstractComponent-class.html#setWidth"
+  class="link">setWidth</a> or <a 
+  href="muntjac.ui.abstract_component.AbstractComponent-class.html#setWidth"
+  class="link">setWidth</a> is used.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>columns</code></strong> - the number of columns to set.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setRows"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setRows</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">rows</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.twin_col_select-pysrc.html#TwinColSelect.setRows">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the number of rows in the editor. If the number of rows is set to
+  0, the actual number of displayed rows is determined implicitly by the 
+  adapter.</p>
+  <p>If a height if set (using <a 
+  href="muntjac.ui.abstract_component.AbstractComponent-class.html#setHeight"
+  class="link">setHeight</a> or <a 
+  href="muntjac.ui.abstract_component.AbstractComponent-class.html#setHeight"
+  class="link">setHeight</a>) it overrides the number of rows. Leave the 
+  height undefined to use this method. This is the opposite of how <a 
+  href="muntjac.ui.twin_col_select.TwinColSelect-class.html#setColumns" 
+  class="link">setColumns</a> work.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>rows</code></strong> - the number of rows to set.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="paintContent"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">paintContent</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">target</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.twin_col_select-pysrc.html#TwinColSelect.paintContent">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Paints the content of this component.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>target</code></strong> - the Paint Event.</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="muntjac.terminal.paint_exception.PaintException-class.html">PaintException</a></strong></code> - if the paint operation failed.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.abstract_component.AbstractComponent-class.html#paintContent">abstract_component.AbstractComponent.paintContent</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setRightColumnCaption"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setRightColumnCaption</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">rightColumnCaption</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.twin_col_select-pysrc.html#TwinColSelect.setRightColumnCaption">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the text shown above the right column.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>rightColumnCaption</code></strong> - The text to show</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getRightColumnCaption"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getRightColumnCaption</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.twin_col_select-pysrc.html#TwinColSelect.getRightColumnCaption">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the text shown above the right column.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The text shown or null if not set.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setLeftColumnCaption"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setLeftColumnCaption</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">leftColumnCaption</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.twin_col_select-pysrc.html#TwinColSelect.setLeftColumnCaption">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the text shown above the left column.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>leftColumnCaption</code></strong> - The text to show</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getLeftColumnCaption"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getLeftColumnCaption</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.twin_col_select-pysrc.html#TwinColSelect.getLeftColumnCaption">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the text shown above the left column.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>The text shown or null if not set.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Nov 22 03:04:03 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>
