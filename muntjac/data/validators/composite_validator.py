@@ -32,7 +32,7 @@ class CompositeValidator(AbstractValidator):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.1
     """
 
     #: The validators are combined with C{AND} clause: validity of

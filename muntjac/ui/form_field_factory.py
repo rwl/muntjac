@@ -26,7 +26,7 @@ class IFormFieldFactory(object):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.1
     @see: L{TableFieldFactory}
     """
 

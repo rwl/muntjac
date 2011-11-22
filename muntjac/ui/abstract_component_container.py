@@ -41,7 +41,7 @@ class AbstractComponentContainer(AbstractComponent, IComponentContainer):
     to easily qualify as a component container.
 
     @author: Vaadin Ltd.
-    @version: @VERSION@
+    @version: 1.0.1
     """
 
     def __init__(self):

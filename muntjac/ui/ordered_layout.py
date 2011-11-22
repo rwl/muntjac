@@ -33,7 +33,7 @@ class OrderedLayout(AbstractOrderedLayout):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.1
     @deprecated: Replaced by VerticalLayout/HorizontalLayout. For type checking
                  please not that VerticalLayout/HorizontalLayout do not extend
                  OrderedLayout but AbstractOrderedLayout (which also

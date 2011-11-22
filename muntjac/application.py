@@ -80,7 +80,7 @@ class Application(IUriHandler, ITerminal, IErrorListener):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.1
     """
 
     #: The default SystemMessages (read-only). Change by overriding
@@ -904,7 +904,7 @@ class UserChangeEvent(EventObject):
     Application user change event sent when the setUser is called to change
     the current user of the application.
 
-    @version: @VERSION@
+    @version: 1.0.1
     """
 
     def __init__(self, source, newUser, prevUser):
@@ -955,7 +955,7 @@ class IUserChangeListener(IEventListener):
     """The C{UserChangeListener} interface for listening application
     user changes.
 
-    @version: @VERSION@
+    @version: 1.0.1
     """
 
     def applicationUserChanged(self, event):

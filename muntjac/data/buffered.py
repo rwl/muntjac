@@ -47,7 +47,7 @@ class IBuffered(object):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.1
     """
 
     def commit(self):
@@ -154,7 +154,7 @@ class SourceException(RuntimeError, IErrorMessage):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.1
     """
 
     def __init__(self, source, cause=None):
@@ -299,7 +299,7 @@ class IBufferedValidatable(IBuffered, IValidatable):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.1
     """
 
     def isInvalidCommitted(self):

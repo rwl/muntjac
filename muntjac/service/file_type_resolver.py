@@ -33,7 +33,7 @@ class FileTypeResolver(object):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.1
     """
 
     #: Default icon given if no icon is specified for a mime-type.

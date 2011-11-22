@@ -27,7 +27,7 @@ class IUriHandler(object):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.1
     """
 
     def handleURI(self, context, relativeUri):

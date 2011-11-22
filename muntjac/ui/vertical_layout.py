@@ -29,7 +29,7 @@ class VerticalLayout(AbstractOrderedLayout):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.1
     """
 
     CLIENT_WIDGET = None #ClientWidget(VVerticalLayout, LoadStyle.EAGER)

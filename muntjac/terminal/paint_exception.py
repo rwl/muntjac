@@ -24,7 +24,7 @@ class PaintException(IOError):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.1
     """
 
     def __init__(self, arg):

@@ -32,7 +32,7 @@ class AbstractLayout(AbstractComponentContainer, ILayout, IMarginHandler):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.1
     """
 
     _CLICK_EVENT = EventId.LAYOUT_CLICK

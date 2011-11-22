@@ -39,7 +39,7 @@ class ISelectedTabChangeListener(object):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.1
     """
 
     def selectedTabChange(self, event):
@@ -81,7 +81,7 @@ class TabSheet(AbstractComponentContainer):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.1
     """
 
     CLIENT_WIDGET = None #ClientWidget(VTabsheet, LoadStyle.EAGER)
@@ -743,7 +743,7 @@ class SelectedTabChangeEvent(ComponentEvent):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.1
     """
 
     def __init__(self, source):
