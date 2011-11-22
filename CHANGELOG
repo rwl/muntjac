@@ -1,7 +1,7 @@
 Changelog
 ---------
 
-1.0.1
+@VERSION@
 
   * Quick start section removed from README and added to the home page.
   * Added links to GAE mirror on home page for demo apps.
