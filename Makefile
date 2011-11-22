@@ -7,24 +7,27 @@ GH_PAGES = gh-pages
 EPYDOC_CONFIG = epydoc.config
 API_OUTPUT = api
 
-VERSION = 1.0.1
+VERSION = 9.9.9.INTERNAL-DEBUG-BUILD
 
-.PHONY: help clean release doc pypi 
+PUSH=0
+
+.PHONY: help clean api pypi dist 
 
 .DEFAULT_GOAL := help
 
 help:
-	@echo "Please use \`make <target>' where <target> is one of"
+	@echo "Use \`make <target> [VERSION=<version>]' where <version> is"
+	@echo "of the form 9.9.9 and <target> is one of"
 	@echo "  help     to display this help message"
 	@echo "  clean    to remove output and auxillary files"
-	@echo "  release  to cut a Muntjac release"
 	@echo "  api      to just update the API docs"
 	@echo "  pypi     to just update the PyPI packages"
+	@echo "  dist     to cut a Muntjac release"
 
 clean:
-	-rm -vrf dist
-	-rm -vrf build
-	-rm -vrf Muntjac.egg-info
+	-rm -rf dist
+	-rm -rf build
+	-rm -rf Muntjac.egg-info
 
 api:
 	git checkout $(GH_PAGES)
@@ -33,16 +36,37 @@ api:
 	epydoc --config=$(EPYDOC_CONFIG)
 	git add $(API_OUTPUT)
 	git commit -m "Updating API documentation to version $(VERSION)."
-	git push $(ORIGIN) $(GH_PAGES)
+	ifeq ($(PUSH), 1)
+		git push $(ORIGIN) $(GH_PAGES)
+	endif
 	git checkout $(MASTER)
 	@echo
 	@echo "Finished generating API documentation for Muntjac v"$(VERSION) 
 
 pypi:
-	python setup.py upload
+	git checkout -b v$(VERSION)
+	find . -type f | xargs sed -i 's/@VERSION@/$(VERSION)/g' *
+	git add -A
+	git commit -m "Setting version to $(VERSION)."
+	ifeq ($(PUSH), 1)
+		git push $(ORIGIN) v$(VERSION)
+	endif
+	python setup.py sdist upload
+	hash python2.7 &> /dev/null
+	if [ $? -eq 0 ]; then
+		python2.7 setup.py bdist_egg upload
+	fi
+	hash python2.6 &> /dev/null
+	if [ $? -eq 0 ]; then
+		python2.6 setup.py bdist_egg upload
+	fi
+	hash python2.5 &> /dev/null
+	if [ $? -eq 0 ]; then
+		python2.5 setup.py bdist_egg upload
+	fi
 	@echo
 	@echo "Finished uploading Muntjac v" $(VERSION) "to PyPI"
 	
-release: api pypi
+dist: api pypi
 	@echo
 	@echo "Finished releasing Muntjac v" $(VERSION)
