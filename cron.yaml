@@ -1,0 +1,4 @@
+cron:
+- description: daily session cleanup
+  url: /muntjac/demo/cleanup_sessions.py
+  schedule: every 24 hours
