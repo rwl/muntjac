@@ -1,4 +1,6 @@
 
+import logging
+
 from urlparse import urlparse
 
 from os.path import join, dirname, normpath
@@ -22,6 +24,9 @@ sys_path_install()
 
 #from paste.webkit.wkservlet import HTTPServlet
 from WebKit.HTTPServlet import HTTPServlet
+
+
+logger = logging.getLogger(__name__)
 
 
 class EndResponseException(Exception):
@@ -221,9 +226,14 @@ class PasteWsgiServlet(HTTPServlet):
                     return request.session()
                 else:
                     return None
-        except EOFError:
+        except EOFError, e:
+            logger.error('Session retrieval error: %s' % e)
             return None
-        except UnpicklingError:
+        except UnpicklingError, e:
+            logger.error('Session retrieval error: %s' % e)
+            return None
+        except ValueError, e:
+            logger.error('Session retrieval error: %s' % e)
             return None
 
 
