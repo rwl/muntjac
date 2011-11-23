@@ -1,4 +1,4 @@
 cron:
 - description: daily session cleanup
-  url: /muntjac/demo/cleanup_sessions.py
+  url: /cleanup_sessions
   schedule: every 24 hours

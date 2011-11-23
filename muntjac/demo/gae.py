@@ -14,38 +14,28 @@ from paste.urlmap import URLMap
 from muntjac.terminal.gwt.server.gae_application_servlet import \
     GaeApplicationServlet
 
-from gaesessions import SessionMiddleware
-
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 
-def main():
-    hello = GaeApplicationServlet(HelloWorld)
-    hello = SessionMiddleware(hello, '0ce25d8fb6eb44f2c442d1f4fa4ff4a5')
+hello = GaeApplicationServlet(HelloWorld)
 
-    calc = GaeApplicationServlet(Calc)
-    calc = SessionMiddleware(calc, 'ce25c4ad8fb6eb44f42d1f4f24ff4a5e')
+calc = GaeApplicationServlet(Calc)
 
-    address = GaeApplicationServlet(SimpleAddressBook)
-    address = SessionMiddleware(address, 'e25c48fb6eb44f242d1f4fad4ff4a5e0')
+address = GaeApplicationServlet(SimpleAddressBook)
 
-    tunes = GaeApplicationServlet(MuntjacTunesLayout)
-    tunes = SessionMiddleware(tunes, '25c4428fb6eb44f2d1f4fad4ff4a5e0d')
+tunes = GaeApplicationServlet(MuntjacTunesLayout)
 
-    sampler = GaeApplicationServlet(SamplerApplication,
-            widgetset='com.vaadin.demo.sampler.gwt.SamplerWidgetSet')
-    sampler = SessionMiddleware(sampler, '5c442d16eb44f24fff4fad8fb4a5e0df')
+sampler = GaeApplicationServlet(SamplerApplication,
+        widgetset='com.vaadin.demo.sampler.gwt.SamplerWidgetSet')
 
-    urlmap = URLMap({})
-    urlmap['/hello'] = hello
-    urlmap['/calc'] = calc
-    urlmap['/address'] = address
-    urlmap['/tunes'] = tunes
-    urlmap['/sampler'] = sampler
-
-    run_wsgi_app(urlmap)
+urlmap = URLMap({})
+urlmap['/hello'] = hello
+urlmap['/calc'] = calc
+urlmap['/address'] = address
+urlmap['/tunes'] = tunes
+urlmap['/sampler'] = sampler
 
 
 if __name__ == "__main__":
-    main()
+    run_wsgi_app(urlmap)
