@@ -65,7 +65,10 @@ def defaultLocale():
         lang = None
 
     if lang is not None:
-        return Locale.parse(lang)
+        try:
+            return Locale.parse(lang)
+        except UnknownLocaleError:
+            pass
     else:
         try:
             return Locale.default()

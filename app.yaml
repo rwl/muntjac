@@ -1,6 +1,6 @@
 application: muntjac-demo
-version: 1
-runtime: python
+version: 1-0-2
+runtime: python27
 api_version: 1
 threadsafe: false
 
@@ -9,7 +9,7 @@ handlers:
   static_dir: VAADIN
 
 - url: /(hello|calc|address|tunes|sampler).*
-  script: muntjac/demo/gae.py
+  script: muntjac.demo.gae.urlmap
 
 - url: /
   static_files: muntjac/public/index.html
@@ -17,5 +17,12 @@ handlers:
 
 - url: /
   static_dir: muntjac/public
+
+- url: /cleanup_sessions
+  script: muntjac/demo/cleanup_sessions.py
+  login: admin
+
+builtins:
+- appstats: on
 
 skip_files: muntjac/public/VAADIN/.*
