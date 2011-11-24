@@ -1,4 +1,6 @@
 
+import logging
+
 import warnings
 
 from muntjac.demo.HelloWorld import HelloWorld
@@ -15,6 +17,7 @@ from muntjac.terminal.gwt.server.gae_application_servlet import \
     GaeApplicationServlet
 
 
+logging.basicConfig(level=logging.DEBUG, format="%(levelname)s: %(message)s")
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 

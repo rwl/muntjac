@@ -3,7 +3,9 @@ Changelog
 
 @VERSION@
 
+  * Upgraded GAE runtime to 2.7 and added Appstats configuration.
   * cron.yaml added to clean up GAE sessions.
+  * Catching UnknownLocaleError exceptions from Babel.
 
 1.0.1
 

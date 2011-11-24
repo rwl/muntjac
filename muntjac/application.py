@@ -844,7 +844,7 @@ class Application(IUriHandler, ITerminal, IErrorListener):
                 owner.setComponentError( SysError(t) )
 
         # also print the error on console
-        logger.critical('ITerminal error: ' + str(t))
+        logger.exception('ITerminal error: ' + str(t))
 
         exc_type, _, exc_traceback = sys.exc_info()
         traceback.print_exception(exc_type, t,

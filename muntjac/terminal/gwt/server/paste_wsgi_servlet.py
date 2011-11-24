@@ -14,7 +14,7 @@ from paste.httpheaders import \
     (ACCEPT_LANGUAGE, SCRIPT_NAME, PATH_INFO, IF_MODIFIED_SINCE,
      USER_AGENT, CONTENT_LENGTH, CONTENT_TYPE)
 
-from babel import Locale
+from babel.core import Locale, UnknownLocaleError
 
 import muntjac
 
@@ -177,7 +177,14 @@ class PasteWsgiServlet(HTTPServlet):
         ## FIXME: implement request.locale()
         tags = ACCEPT_LANGUAGE.parse(request.environ())
         if tags:
-            return Locale.parse(tags[0], sep='-')
+            try:
+                return Locale.parse(tags[0], sep='-')
+            except UnknownLocaleError, e:
+                try:
+                    return Locale.parse(tags[0])
+                except UnknownLocaleError, e:
+                    logger.error('Locale parsing error: %s' % e)
+                    return defaultLocale()
         else:
             return defaultLocale()  # server default
 
@@ -238,11 +245,18 @@ class PasteWsgiServlet(HTTPServlet):
 
 
     def invalidateSession(self, request):
-        request.session().invalidate()
+        try:
+            request.session().invalidate()
+        except Exception, e:
+            logger.error('Session invalidation error: %s' % e)
 
 
     def getSessionId(self, request):
-        return request.sessionId()
+        try:
+            return request.sessionId()
+        except Exception, e:
+            logger.error('Session ID error: %s' % e)
+            return None
 
 
     def getSessionAttribute(self, session, name, default=None):
