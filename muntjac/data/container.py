@@ -56,7 +56,7 @@ class IContainer(object):
     can implement only the ones it needs.
 
     @author: Vaadin Ltd.
-    @version: @VERSION@
+    @version: 1.0.2
     """
 
     def getItem(self, itemId):

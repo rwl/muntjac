@@ -45,7 +45,7 @@ class Panel(AbstractComponentContainer, IScrollable,
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.2
     """
 
     CLIENT_WIDGET = None #ClientWidget(VPanel, LoadStyle.EAGER)

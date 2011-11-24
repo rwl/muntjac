@@ -27,7 +27,7 @@ class Action(object):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.2
     """
 
     def __init__(self, caption, icon=None):
@@ -93,7 +93,7 @@ class IContainer(object):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.2
     """
 
     def addActionHandler(self, actionHandler):
@@ -154,7 +154,7 @@ class IHandler(object):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.2
     """
 
     def getActions(self, target, sender):

@@ -27,7 +27,7 @@ class ITerminal(object):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.2
     """
 
     def getDefaultTheme(self):

@@ -90,7 +90,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.2
     """
 
     #: The version number of this release. For example "6.2.0". Always in the
@@ -112,10 +112,10 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
     VERSION_BUILD = None
 
     #: Initialize version numbers from string replaced by build-script.
-    if '@VERSION@' == '@' + 'VERSION' + '@':
+    if '1.0.2' == '@' + 'VERSION' + '@':
         VERSION = '9.9.9.INTERNAL-DEBUG-BUILD'
     else:
-        VERSION = '@VERSION@'
+        VERSION = '1.0.2'
 
     digits = VERSION.split('.', 4)
     VERSION_MAJOR = int(digits[0])

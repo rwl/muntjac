@@ -53,7 +53,7 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.2
     """
 
     CLIENT_WIDGET = None #ClientWidget(VGridLayout, LoadStyle.EAGER)
@@ -955,7 +955,7 @@ class Area(object):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.2
     """
 
     def __init__(self, component, column1, row1, column2, row2):
@@ -1105,7 +1105,7 @@ class OverlapsException(RuntimeError):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.2
     """
 
     def __init__(self, existingArea):
@@ -1153,7 +1153,7 @@ class OutOfBoundsException(RuntimeError):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.2
     """
 
     def __init__(self, areaOutOfBounds):

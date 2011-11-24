@@ -28,7 +28,7 @@ class NullValidator(IValidator):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.2
     """
 
     def __init__(self, errorMessage, onlyNullAllowed):
