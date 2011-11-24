@@ -1032,7 +1032,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                 # Ignore variable change
                 msg = 'Warning: Ignoring variable change for '
                 if owner is not None:
-                    msg += 'disabled component ' + owner.__class__
+                    msg += 'disabled component ' + str(owner.__class__)
                     caption = owner.getCaption()
                     if caption is not None:
                         msg += ', caption=' + caption

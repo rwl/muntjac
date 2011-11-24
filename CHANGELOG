@@ -3,6 +3,12 @@ Changelog
 
 @VERSION@
 
+  * Catching 1Mb memcache limit errors in session middleware.
+  * Fixed date formatting in Sampler examples.
+  * Fixed infinite loop in handleVariableBurst().
+
+1.0.2
+
   * Added GAE Appstats to configuration.
   * cron.yaml added to clean up GAE sessions.
   * Catching UnknownLocaleError exceptions from Babel.
