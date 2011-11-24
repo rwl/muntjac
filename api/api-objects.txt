@@ -288,8 +288,9 @@ muntjac.terminal.gwt.server.json_paint_target.clsname	muntjac.util-module.html#c
 muntjac.terminal.gwt.server.paste_deploy_application_servlet	muntjac.terminal.gwt.server.paste_deploy_application_servlet-module.html
 muntjac.terminal.gwt.server.paste_wsgi_servlet	muntjac.terminal.gwt.server.paste_wsgi_servlet-module.html
 muntjac.terminal.gwt.server.paste_wsgi_servlet.__package__	muntjac.terminal.gwt.server.paste_wsgi_servlet-module.html#__package__
-muntjac.terminal.gwt.server.paste_wsgi_servlet.defaultLocale	muntjac.util-module.html#defaultLocale
+muntjac.terminal.gwt.server.paste_wsgi_servlet.logger	muntjac.terminal.gwt.server.paste_wsgi_servlet-module.html#logger
 muntjac.terminal.gwt.server.paste_wsgi_servlet.sys_path_install	muntjac.util-module.html#sys_path_install
+muntjac.terminal.gwt.server.paste_wsgi_servlet.defaultLocale	muntjac.util-module.html#defaultLocale
 muntjac.terminal.gwt.server.streaming_events	muntjac.terminal.gwt.server.streaming_events-module.html
 muntjac.terminal.gwt.server.streaming_events.__package__	muntjac.terminal.gwt.server.streaming_events-module.html#__package__
 muntjac.terminal.gwt.server.web_application_context	muntjac.terminal.gwt.server.web_application_context-module.html

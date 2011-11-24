@@ -134,7 +134,7 @@ muntjac.main.muntjac" class="py-name" href="#" onclick="return doclink('link-43'
 muntjac.terminal.terminal" class="py-name" href="#" onclick="return doclink('link-44', 'terminal', 'link-11');">terminal</a></tt><tt class="py-op">.</tt><tt id="link-45" class="py-name" targets="Module muntjac.terminal.paint_exception=muntjac.terminal.paint_exception-module.html"><a title="muntjac.terminal.paint_exception" class="py-name" href="#" onclick="return doclink('link-45', 'paint_exception', 'link-45');">paint_exception</a></tt> <tt class="py-keyword">import</tt> <tt id="link-46" class="py-name" targets="Class muntjac.terminal.paint_exception.PaintException=muntjac.terminal.paint_exception.PaintException-class.html"><a title="muntjac.terminal.paint_exception.PaintException" class="py-name" href="#" onclick="return doclink('link-46', 'PaintException', 'link-46');">PaintException</a></tt> </tt>
 <a name="L45"></a><tt class="py-lineno"> 45</tt>  <tt class="py-line"> </tt>
 <a name="L46"></a><tt class="py-lineno"> 46</tt>  <tt class="py-line"> </tt>
-<a name="L47"></a><tt class="py-lineno"> 47</tt>  <tt class="py-line"><tt id="link-47" class="py-name" targets="Variable muntjac.application.logger=muntjac.application-module.html#logger,Variable muntjac.event.listener_method.logger=muntjac.event.listener_method-module.html#logger,Variable muntjac.terminal.gwt.server.abstract_application_servlet.logger=muntjac.terminal.gwt.server.abstract_application_servlet-module.html#logger,Variable muntjac.terminal.gwt.server.abstract_communication_manager.logger=muntjac.terminal.gwt.server.abstract_communication_manager-module.html#logger,Variable muntjac.terminal.gwt.server.abstract_web_application_context.logger=muntjac.terminal.gwt.server.abstract_web_application_context-module.html#logger,Variable muntjac.terminal.gwt.server.application_runner_servlet.logger=muntjac.terminal.gwt.server.application_runner_servlet-module.html#logger,Variable muntjac.terminal.gwt.server.component_size_validator.logger=muntjac.terminal.gwt.server.component_size_validator-module.html#logger,Variable muntjac.terminal.gwt.server.drag_and_drop_service.logger=muntjac.terminal.gwt.server.drag_and_drop_service-module.html#logger,Variable muntjac.terminal.gwt.server.json_paint_target.logger=muntjac.terminal.gwt.server.json_paint_target-module.html#logger,Variable muntjac.ui.table.logger=muntjac.ui.table-module.html#logger,Variable muntjac.ui.tree_table.logger=muntjac.ui.tree_table-module.html#logger"><a title="muntjac.application.logger
+<a name="L47"></a><tt class="py-lineno"> 47</tt>  <tt class="py-line"><tt id="link-47" class="py-name" targets="Variable muntjac.application.logger=muntjac.application-module.html#logger,Variable muntjac.event.listener_method.logger=muntjac.event.listener_method-module.html#logger,Variable muntjac.terminal.gwt.server.abstract_application_servlet.logger=muntjac.terminal.gwt.server.abstract_application_servlet-module.html#logger,Variable muntjac.terminal.gwt.server.abstract_communication_manager.logger=muntjac.terminal.gwt.server.abstract_communication_manager-module.html#logger,Variable muntjac.terminal.gwt.server.abstract_web_application_context.logger=muntjac.terminal.gwt.server.abstract_web_application_context-module.html#logger,Variable muntjac.terminal.gwt.server.application_runner_servlet.logger=muntjac.terminal.gwt.server.application_runner_servlet-module.html#logger,Variable muntjac.terminal.gwt.server.component_size_validator.logger=muntjac.terminal.gwt.server.component_size_validator-module.html#logger,Variable muntjac.terminal.gwt.server.drag_and_drop_service.logger=muntjac.terminal.gwt.server.drag_and_drop_service-module.html#logger,Variable muntjac.terminal.gwt.server.json_paint_target.logger=muntjac.terminal.gwt.server.json_paint_target-module.html#logger,Variable muntjac.terminal.gwt.server.paste_wsgi_servlet.logger=muntjac.terminal.gwt.server.paste_wsgi_servlet-module.html#logger,Variable muntjac.ui.table.logger=muntjac.ui.table-module.html#logger,Variable muntjac.ui.tree_table.logger=muntjac.ui.tree_table-module.html#logger"><a title="muntjac.application.logger
 muntjac.event.listener_method.logger
 muntjac.terminal.gwt.server.abstract_application_servlet.logger
 muntjac.terminal.gwt.server.abstract_communication_manager.logger
@@ -143,6 +143,7 @@ muntjac.terminal.gwt.server.application_runner_servlet.logger
 muntjac.terminal.gwt.server.component_size_validator.logger
 muntjac.terminal.gwt.server.drag_and_drop_service.logger
 muntjac.terminal.gwt.server.json_paint_target.logger
+muntjac.terminal.gwt.server.paste_wsgi_servlet.logger
 muntjac.ui.table.logger
 muntjac.ui.tree_table.logger" class="py-name" href="#" onclick="return doclink('link-47', 'logger', 'link-47');">logger</a></tt> <tt class="py-op">=</tt> <tt class="py-name">logging</tt><tt class="py-op">.</tt><tt class="py-name">getLogger</tt><tt class="py-op">(</tt><tt class="py-name">__name__</tt><tt class="py-op">)</tt> </tt>
 <a name="JsonPaintTarget"></a><div id="JsonPaintTarget-def"><a name="L48"></a><tt class="py-lineno"> 48</tt>  <tt class="py-line"> </tt>
@@ -155,7 +156,7 @@ muntjac.ui.tree_table.logger" class="py-name" href="#" onclick="return doclink('
 <a name="L55"></a><tt class="py-lineno"> 55</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
 <a name="L56"></a><tt class="py-lineno"> 56</tt>  <tt class="py-line"><tt class="py-docstring">    @author: Vaadin Ltd.</tt> </tt>
 <a name="L57"></a><tt class="py-lineno"> 57</tt>  <tt class="py-line"><tt class="py-docstring">    @author: Richard Lincoln</tt> </tt>
-<a name="L58"></a><tt class="py-lineno"> 58</tt>  <tt class="py-line"><tt class="py-docstring">    @version: 1.0.1</tt> </tt>
+<a name="L58"></a><tt class="py-lineno"> 58</tt>  <tt class="py-line"><tt class="py-docstring">    @version: 1.0.2</tt> </tt>
 <a name="L59"></a><tt class="py-lineno"> 59</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
 <a name="L60"></a><tt class="py-lineno"> 60</tt>  <tt class="py-line"> </tt>
 <a name="L61"></a><tt class="py-lineno"> 61</tt>  <tt class="py-line">    <tt id="link-48" class="py-name" targets="Variable muntjac.terminal.gwt.server.json_paint_target.JsonPaintTarget._UIDL_ARG_NAME=muntjac.terminal.gwt.server.json_paint_target.JsonPaintTarget-class.html#_UIDL_ARG_NAME"><a title="muntjac.terminal.gwt.server.json_paint_target.JsonPaintTarget._UIDL_ARG_NAME" class="py-name" href="#" onclick="return doclink('link-48', '_UIDL_ARG_NAME', 'link-48');">_UIDL_ARG_NAME</a></tt> <tt class="py-op">=</tt> <tt class="py-string">'name'</tt> </tt>
@@ -896,6 +897,7 @@ muntjac.terminal.gwt.server.application_runner_servlet.logger
 muntjac.terminal.gwt.server.component_size_validator.logger
 muntjac.terminal.gwt.server.drag_and_drop_service.logger
 muntjac.terminal.gwt.server.json_paint_target.logger
+muntjac.terminal.gwt.server.paste_wsgi_servlet.logger
 muntjac.ui.table.logger
 muntjac.ui.tree_table.logger" class="py-name" href="#" onclick="return doclink('link-278', 'logger', 'link-47');">logger</a></tt><tt class="py-op">.</tt><tt class="py-name">warning</tt><tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-string">'No superclass of '</tt> </tt>
 <a name="L597"></a><tt class="py-lineno">597</tt>  <tt class="py-line">                            <tt class="py-op">+</tt> <tt id="link-279" class="py-name"><a title="muntjac.util.clsname" class="py-name" href="#" onclick="return doclink('link-279', 'clsname', 'link-5');">clsname</a></tt><tt class="py-op">(</tt><tt id="link-280" class="py-name"><a title="muntjac.terminal.paintable" class="py-name" href="#" onclick="return doclink('link-280', 'paintable', 'link-36');">paintable</a></tt><tt class="py-op">.</tt><tt class="py-name">__class__</tt><tt class="py-op">)</tt> </tt>
@@ -1201,7 +1203,7 @@ expandto(location.href);
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Tue Nov 22 03:08:12 2011
+    Generated by Epydoc 3.0.1 on Thu Nov 24 02:16:35 2011
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
