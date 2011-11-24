@@ -10,6 +10,8 @@ from muntjac.api import VerticalLayout, Table
 
 class TableFooterExample(VerticalLayout):
 
+    CURRENCY_PATTERN = u'([\u00A3\u0024\u20AC])(\d+(?:\.\d{2})?)'
+
     def __init__(self):
         super(TableFooterExample, self).__init__()
 
@@ -23,9 +25,10 @@ class TableFooterExample(VerticalLayout):
             value = item.getItemProperty(
                     ExampleUtil.ORDER_ITEMPRICE_PROPERTY_ID).getValue()
 
-            amount = re.search(u'([\u00A3\u0024\u20AC])(\d+(?:\.\d{2})?)',
-                    str(value)).groups()[1]
-            totalSum += float(amount)
+            match = re.search(self.CURRENCY_PATTERN, str(value))
+            if match is not None:
+                amount = match.groups()[1]
+                totalSum += float(amount)
 
         # Create a table to show the data in
         table = Table('Order table', dataSource)
