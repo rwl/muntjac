@@ -1,7 +1,5 @@
 # Makefile for Muntjac
 
-APPCFG = ~/tmp/google_appengine/appcfg.py
-
 ORIGIN = origin
 MASTER = master
 GH_PAGES = gh-pages
@@ -73,8 +71,3 @@ cookie:
 	@sed -i 's/@COOKIE_KEY@/$(COOKIE_KEY)/g' appengine_config.py
 	@echo
 	@echo "Finished generating cookie key: $(COOKIE_KEY)"
-
-gae:
-	$(APPCFG) upload . --email=r.w.lincoln@gmail.com
-	@echo
-	@echo "Finished uploading to Google AppEngine"
