@@ -18,27 +18,31 @@ from muntjac.terminal.gwt.server.gae_application_servlet import \
 
 
 logging.basicConfig(level=logging.DEBUG, format="%(levelname)s: %(message)s")
+
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 
-hello = GaeApplicationServlet(HelloWorld)
+def main():
+    hello = GaeApplicationServlet(HelloWorld)
 
-calc = GaeApplicationServlet(Calc)
+    calc = GaeApplicationServlet(Calc)
 
-address = GaeApplicationServlet(SimpleAddressBook)
+    address = GaeApplicationServlet(SimpleAddressBook)
 
-tunes = GaeApplicationServlet(MuntjacTunesLayout)
+    tunes = GaeApplicationServlet(MuntjacTunesLayout)
 
-sampler = GaeApplicationServlet(SamplerApplication,
-        widgetset='com.vaadin.demo.sampler.gwt.SamplerWidgetSet')
+    sampler = GaeApplicationServlet(SamplerApplication,
+            widgetset='com.vaadin.demo.sampler.gwt.SamplerWidgetSet')
 
-urlmap = URLMap({})
-urlmap['/hello'] = hello
-urlmap['/calc'] = calc
-urlmap['/address'] = address
-urlmap['/tunes'] = tunes
-urlmap['/sampler'] = sampler
+    urlmap = URLMap({})
+    urlmap['/hello'] = hello
+    urlmap['/calc'] = calc
+    urlmap['/address'] = address
+    urlmap['/tunes'] = tunes
+    urlmap['/sampler'] = sampler
+
+    run_wsgi_app(urlmap)
 
 
 if __name__ == "__main__":
-    run_wsgi_app(urlmap)
+    main()

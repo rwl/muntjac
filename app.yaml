@@ -1,6 +1,6 @@
 application: muntjac-demo
 version: 1-0-2
-runtime: python27
+runtime: python
 api_version: 1
 threadsafe: false
 
@@ -9,7 +9,7 @@ handlers:
   static_dir: VAADIN
 
 - url: /(hello|calc|address|tunes|sampler).*
-  script: muntjac.demo.gae.urlmap
+  script: muntjac/demo/gae.py
 
 - url: /
   static_files: muntjac/public/index.html
