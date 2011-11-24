@@ -20,7 +20,7 @@ class GaeSessionMiddleware(SessionMiddleware):
             try:
                 _tls.current_session.save() # store the session if it was changed
             except ValueError:  # 1Mb memcache limit
-                _tls.current_session.terminate()
+                _tls.current_session.clear()
 
             for ch in _tls.current_session.make_cookie_headers():
                 headers.append(('Set-Cookie', ch))

@@ -4,7 +4,7 @@ Changelog
 @VERSION@
 
   * Catching 1Mb memcache limit errors in session middleware.
-  * Fixed date formatting in Sampler examples.
+  * Fixed date formatting and currency parsing in sampler.
   * Fixed infinite loop in handleVariableBurst().
 
 1.0.2

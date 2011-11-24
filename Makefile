@@ -1,5 +1,7 @@
 # Makefile for Muntjac
 
+APPCFG = ~/tmp/google_appengine/appcfg.py
+
 ORIGIN = origin
 MASTER = master
 GH_PAGES = gh-pages
@@ -38,7 +40,7 @@ api:
 	git checkout $(GH_PAGES)
 	git merge $(MASTER)
 	@echo "Replacing @VERSION@ strings with $(VERSION)"
-	@find ./ -type f -name '*.py' -o -name '*.html' -o -name '*.yaml' -o -name 'CHANGELOG' | xargs sed -i 's/@VERSION@/$(VERSION)/g' 
+	@find ./ -type f -name '*.py' -o -name '*.html' -o -name 'CHANGELOG' | xargs sed -i 's/@VERSION@/$(VERSION)/g' 
 	epydoc --config=$(EPYDOC_CONFIG)
 	git add $(API_OUTPUT)
 	git commit -m "Updating API documentation to version $(VERSION)."
@@ -50,7 +52,7 @@ api:
 pypi:
 	git checkout -b v$(VERSION)
 	@echo "Replacing @VERSION@ strings with $(VERSION)"
-	@find ./ -type f -name '*.py' -o -name '*.html' -o -name '*.yaml' -o -name 'CHANGELOG' | xargs sed -i 's/@VERSION@/$(VERSION)/g'
+	@find ./ -type f -name '*.py' -o -name '*.html' -o -name 'CHANGELOG' | xargs sed -i 's/@VERSION@/$(VERSION)/g'
 	git add -A
 	git commit -m "Setting version to $(VERSION)."
 	if [ $(PUSH) -eq 1 ]; then git push $(ORIGIN) v$(VERSION); fi
@@ -71,3 +73,9 @@ cookie:
 	@sed -i 's/@COOKIE_KEY@/$(COOKIE_KEY)/g' appengine_config.py
 	@echo
 	@echo "Finished generating cookie key: $(COOKIE_KEY)"
+
+gae: cookie
+	@sed -i 's/DEBUG-VERSION/$(VERSION)/g' app.yaml
+	$(APPCFG) upload . --email=r.w.lincoln@gmail.com
+	@echo
+	@echo "Finished uploading version $(VERSION) to Google AppEngine"
