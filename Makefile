@@ -74,8 +74,8 @@ cookie:
 	@echo
 	@echo "Finished generating cookie key: $(COOKIE_KEY)"
 
-gae: cookie
+gae: clean cookie
 	@sed -i 's/DEBUG-VERSION/$(VERSION)/g' app.yaml
-	$(APPCFG) upload . --email=r.w.lincoln@gmail.com
+	$(APPCFG) update . --email=r.w.lincoln@gmail.com
 	@echo
 	@echo "Finished uploading version $(VERSION) to Google AppEngine"
