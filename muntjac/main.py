@@ -69,7 +69,7 @@ def main(args=sys.argv[1:]):
 
     parser = OptionParser(
         usage='usage: muntjac [options]',
-        version='Muntjac Version %s' % '@VERSION@')
+        version='Muntjac Version %s' % '1.0.3')
 
     parser.add_option('-t', '--test', action='store_true',
         help='run tests and exit')

@@ -34,7 +34,7 @@ class ILayout(IComponentContainer):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.3
     """
 
     def setMargin(self, *args):

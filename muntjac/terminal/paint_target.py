@@ -26,7 +26,7 @@ class IPaintTarget(object):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.3
     """
 
     def addSection(self, sectionTagName, sectionData):

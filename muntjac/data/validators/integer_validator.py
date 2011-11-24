@@ -29,7 +29,7 @@ class IntegerValidator(AbstractStringValidator):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.3
     """
 
     def __init__(self, errorMessage):

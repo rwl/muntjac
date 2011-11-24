@@ -68,7 +68,7 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.3
     """
 
     CLIENT_WIDGET = None #ClientWidget(VTree, LoadStyle.EAGER)
@@ -997,7 +997,7 @@ class ExpandEvent(ComponentEvent):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.3
     """
 
     def __init__(self, source, expandedItemId):
@@ -1024,7 +1024,7 @@ class IExpandListener(object):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.3
     """
 
     def nodeExpand(self, event):
@@ -1044,7 +1044,7 @@ class CollapseEvent(ComponentEvent):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.3
     """
 
     def __init__(self, source, collapsedItemId):
@@ -1071,7 +1071,7 @@ class ICollapseListener(object):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.3
     """
 
     def nodeCollapse(self, event):

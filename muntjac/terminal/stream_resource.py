@@ -32,7 +32,7 @@ class StreamResource(IApplicationResource):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.3
     """
 
     def __init__(self, streamSource, filename, application):
@@ -176,7 +176,7 @@ class StreamSource(object):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.3
     """
 
     def getStream(self):

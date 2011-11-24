@@ -29,7 +29,7 @@ class CompositeErrorMessage(IErrorMessage):
     """Class for combining multiple error messages together.
 
     @author: Vaadin Ltd.
-    @version: @VERSION@
+    @version: 1.0.3
     """
 
     def __init__(self, errorMessages):

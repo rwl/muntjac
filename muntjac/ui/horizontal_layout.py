@@ -28,7 +28,7 @@ class HorizontalLayout(AbstractOrderedLayout):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.3
     """
 
     CLIENT_WIDGET = None #ClientWidget(VHorizontalLayout, LoadStyle.EAGER)

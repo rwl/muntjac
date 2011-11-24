@@ -40,7 +40,7 @@ class IValidator(object):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.3
     """
 
     def validate(self, value):
@@ -77,7 +77,7 @@ class InvalidValueException(RuntimeError, IErrorMessage):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.3
     """
 
     def __init__(self, message, causes=None):
@@ -201,7 +201,7 @@ class EmptyValueException(InvalidValueException):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.3
     """
 
     def __init__(self, message):

@@ -40,7 +40,7 @@ class CommunicationManager(AbstractCommunicationManager):
     @see: L{AbstractCommunicationManager}
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.3
     """
 
     def __init__(self, application, applicationServlet=None):
