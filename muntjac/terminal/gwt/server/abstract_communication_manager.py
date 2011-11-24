@@ -1026,6 +1026,7 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                 if (variable[self._VAR_NAME] == 'close'
                         and variable[self._VAR_VALUE] == 'true'):
                     # Silently ignore this
+                    i += 1
                     continue
 
                 # Ignore variable change
@@ -1041,7 +1042,6 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                     success = False
 
                 logger.warning(msg)
-                continue
 
             i += 1
 

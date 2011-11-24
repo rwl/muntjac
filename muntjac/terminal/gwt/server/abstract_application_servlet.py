@@ -244,8 +244,9 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
         that of the server.
         """
         if not (self.VERSION == self.getParameter(request, 'wsver', '')):
-            logger.warning(self.WIDGETSET_MISMATCH_INFO %
-                    (self.VERSION, self.getParameter(request, 'wsver', '')))
+#            logger.warning(self.WIDGETSET_MISMATCH_INFO %
+#                    (self.VERSION, self.getParameter(request, 'wsver', '')))
+            pass  # FIXME: implement Python client side
 
 
     def checkProductionMode(self):
