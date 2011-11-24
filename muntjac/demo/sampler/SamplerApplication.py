@@ -165,7 +165,7 @@ class SamplerWindow(Window):
         self._uriFragmentUtility = UriFragmentUtility()
 
         # breadcrumbs
-        self._breadcrumbs = BreadCrumbs(self._app)
+        self._breadcrumbs = BreadCrumbs(self)
 
         self._previousSample = None
         self._nextSample = None
@@ -312,8 +312,9 @@ class SamplerWindow(Window):
 
         for idd in self._app._allFeatures.getItemIds():
             if isinstance(idd, FeatureSet):
-                self._search.setItemIcon(idd,
-                        ClassResource('folder.gif', self._app))
+                pass  # FIXME: 'SamplerApplication' has no attribute 'getResourceAsStream'
+#                self._search.setItemIcon(idd,
+#                        ClassResource('folder.gif', self._app))
 
         self._search.addListener(SearchListener(self),
                 prop.IValueChangeListener)
@@ -428,10 +429,10 @@ class SamplerWindow(Window):
 
 class BreadCrumbs(CustomComponent, ILinkActivatedListener):
 
-    def __init__(self, app):
+    def __init__(self, window):
         super(BreadCrumbs, self).__init__()
 
-        self._app = app
+        self._window = window
 
         self._layout = HorizontalLayout()
         self._layout.setSpacing(True)
@@ -465,7 +466,7 @@ class BreadCrumbs(CustomComponent, ILinkActivatedListener):
 
     def linkActivated(self, event):
         if not event.isLinkOpened():
-            self._app.getWindow().setFeature(event.getActiveLink().getData())
+            self._window.getWindow().setFeature(event.getActiveLink().getData())
 
 
 class IFeatureList(IComponent):
