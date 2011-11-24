@@ -1,5 +1,5 @@
 application: muntjac-demo
-version: 1-0-2
+version: 1-0-3
 runtime: python
 api_version: 1
 threadsafe: false
