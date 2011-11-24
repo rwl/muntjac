@@ -21,7 +21,7 @@
 
 from datetime import datetime
 
-from babel.dates import format_date
+from babel.dates import parse_date
 
 from muntjac.ui.abstract_field import AbstractField
 from muntjac.data.property import IProperty, ConversionException
@@ -392,11 +392,15 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
             super(DateField, self).setValue(newValue, repaintIsNotNeeded)
         else:
             try:
-                # Try to parse the given string value to Date
+                app = self.getApplication()
+                if app is not None:
+                    l = app.getLocale()
+
+                # Try to parse the given string value to datetime
                 currentTimeZone = self.getTimeZone()
                 if currentTimeZone is not None:
                     currentTimeZone  # FIXME: parse according to timezone
-                val = format_date(str(newValue)).encode('utf-8')
+                val = parse_date(str(newValue), locale=l)
                 super(DateField, self).setValue(val, repaintIsNotNeeded)
             except ValueError:
                 self._uiHasValidDateString = False

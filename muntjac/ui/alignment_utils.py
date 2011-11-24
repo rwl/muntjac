@@ -19,8 +19,6 @@
 
 """Defines a helper class for setting alignments using a short notation."""
 
-from warnings import warn
-
 from muntjac.ui.alignment import Alignment
 from muntjac.ui.layout import IAlignmentHandler
 
@@ -39,7 +37,6 @@ class AlignmentUtils(object):
 
     @deprecated: replaced by L{Alignment}.
     """
-    warn('AlignmentUtils replaced by Alignment', DeprecationWarning)
 
     _horizontalMask = (IAlignmentHandler.ALIGNMENT_LEFT
                 | IAlignmentHandler.ALIGNMENT_HORIZONTAL_CENTER
