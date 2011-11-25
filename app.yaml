@@ -5,6 +5,10 @@ api_version: 1
 threadsafe: false
 
 handlers:
+- url: /cleanup_sessions
+  script: muntjac/demo/cleanup_sessions.py
+  login: admin
+
 - url: /VAADIN
   static_dir: VAADIN
 
@@ -17,10 +21,6 @@ handlers:
 
 - url: /
   static_dir: muntjac/public
-
-- url: /cleanup_sessions
-  script: muntjac/demo/cleanup_sessions.py
-  login: admin
 
 builtins:
 - appstats: on
