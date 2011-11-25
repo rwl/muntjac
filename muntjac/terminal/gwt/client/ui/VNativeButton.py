@@ -1,0 +1,152 @@
+# -*- coding: utf-8 -*-
+# @ITMillApache2LicenseForJavaFiles@
+from com.vaadin.terminal.gwt.client.Paintable import (Paintable,)
+from com.vaadin.terminal.gwt.client.VTooltip import (VTooltip,)
+from com.vaadin.terminal.gwt.client.EventId import (EventId,)
+from com.vaadin.terminal.gwt.client.ui.VButton import (VButton,)
+from com.vaadin.terminal.gwt.client.Util import (Util,)
+from com.vaadin.terminal.gwt.client.EventHelper import (EventHelper,)
+from com.vaadin.terminal.gwt.client.ApplicationConnection import (ApplicationConnection,)
+from com.vaadin.terminal.gwt.client.BrowserInfo import (BrowserInfo,)
+from com.vaadin.terminal.gwt.client.MouseEventDetails import (MouseEventDetails,)
+from com.vaadin.terminal.gwt.client.ui.Icon import (Icon,)
+# from com.google.gwt.dom.client.Element import (Element,)
+
+
+class VNativeButton(Button, Paintable, ClickHandler, FocusHandler, BlurHandler):
+    CLASSNAME = 'v-nativebutton'
+    width = None
+    id = None
+    client = None
+    errorIndicatorElement = None
+    captionElement = DOM.createSpan()
+    icon = None
+    # Helper flag to handle special-case where the button is moved from under
+    # mouse while clicking it. In this case mouse leaves the button without
+    # moving.
+
+    _clickPending = None
+    _focusHandlerRegistration = None
+    _blurHandlerRegistration = None
+    _disableOnClick = False
+
+    def __init__(self):
+        self.setStyleName(self.CLASSNAME)
+        self.getElement().appendChild(self.captionElement)
+        self.captionElement.setClassName(self.getStyleName() + '-caption')
+        self.addClickHandler(self)
+        self.sinkEvents(VTooltip.TOOLTIP_EVENTS)
+        self.sinkEvents(Event.ONMOUSEDOWN)
+        self.sinkEvents(Event.ONMOUSEUP)
+
+    def updateFromUIDL(self, uidl, client):
+        # Ensure correct implementation,
+        # but don't let container manage caption etc.
+        if client.updateComponent(self, uidl, False):
+            return
+        self._disableOnClick = uidl.hasAttribute(VButton.ATTR_DISABLE_ON_CLICK)
+        self._focusHandlerRegistration = EventHelper.updateFocusHandler(self, client, self._focusHandlerRegistration)
+        self._blurHandlerRegistration = EventHelper.updateBlurHandler(self, client, self._blurHandlerRegistration)
+        # Save details
+        self.client = client
+        self.id = uidl.getId()
+        # Set text
+        self.setText(uidl.getStringAttribute('caption'))
+        # handle error
+        if uidl.hasAttribute('error'):
+            if self.errorIndicatorElement is None:
+                self.errorIndicatorElement = DOM.createSpan()
+                self.errorIndicatorElement.setClassName('v-errorindicator')
+            self.getElement().insertBefore(self.errorIndicatorElement, self.captionElement)
+            # Fix for IE6, IE7
+            if BrowserInfo.get().isIE():
+                self.errorIndicatorElement.setInnerText(' ')
+        elif self.errorIndicatorElement is not None:
+            self.getElement().removeChild(self.errorIndicatorElement)
+            self.errorIndicatorElement = None
+        if uidl.hasAttribute('icon'):
+            if self.icon is None:
+                self.icon = Icon(client)
+                self.getElement().insertBefore(self.icon.getElement(), self.captionElement)
+            self.icon.setUri(uidl.getStringAttribute('icon'))
+        elif self.icon is not None:
+            self.getElement().removeChild(self.icon.getElement())
+            self.icon = None
+        if BrowserInfo.get().isIE7():
+            # Workaround for IE7 size calculation issues. Deferred because of
+            # issues with a button with an icon using the reindeer theme
+
+            if self.width == '':
+
+                class _0_(Command):
+
+                    def execute(self):
+                        VNativeButton_this.setWidth('')
+                        VNativeButton_this.setWidth(self.getOffsetWidth() + 'px')
+
+                _0_ = _0_()
+                Scheduler.get().scheduleDeferred(_0_)
+
+    def setText(self, text):
+        self.captionElement.setInnerText(text)
+
+    def onBrowserEvent(self, event):
+        super(VNativeButton, self).onBrowserEvent(event)
+        if DOM.eventGetType(event) == Event.ONLOAD:
+            Util.notifyParentOfSizeChange(self, True)
+        elif (
+            DOM.eventGetType(event) == Event.ONMOUSEDOWN and event.getButton() == Event.BUTTON_LEFT
+        ):
+            self._clickPending = True
+        elif DOM.eventGetType(event) == Event.ONMOUSEMOVE:
+            self._clickPending = False
+        elif DOM.eventGetType(event) == Event.ONMOUSEOUT:
+            if self._clickPending:
+                self.click()
+            self._clickPending = False
+        if self.client is not None:
+            self.client.handleTooltipEvent(event, self)
+
+    def setWidth(self, width):
+        # Workaround for IE7 button size part 1 (#2014)
+        # (non-Javadoc)
+        # 
+        # @see
+        # com.google.gwt.event.dom.client.ClickHandler#onClick(com.google.gwt.event
+        # .dom.client.ClickEvent)
+
+        if BrowserInfo.get().isIE7() and self.width is not None:
+            if self.width == width:
+                return
+            if width is None:
+                width = ''
+        self.width = width
+        super(VNativeButton, self).setWidth(width)
+        # Workaround for IE7 button size part 2 (#2014)
+        if BrowserInfo.get().isIE7():
+            super(VNativeButton, self).setWidth(width)
+
+    def onClick(self, event):
+        if (self.id is None) or (self.client is None):
+            return
+        if BrowserInfo.get().isSafari():
+            VNativeButton_this.setFocus(True)
+        if self._disableOnClick:
+            self.setEnabled(False)
+            self.client.updateVariable(self.id, 'disabledOnClick', True, False)
+        # Add mouse details
+        details = MouseEventDetails(event.getNativeEvent(), self.getElement())
+        self.client.updateVariable(self.id, 'mousedetails', details.serialize(), False)
+        self.client.updateVariable(self.id, 'state', True, True)
+        self._clickPending = False
+
+    def onFocus(self, arg0):
+        self.client.updateVariable(self.id, EventId.FOCUS, '', True)
+
+    def onBlur(self, arg0):
+        self.client.updateVariable(self.id, EventId.BLUR, '', True)
+
+    def setEnabled(self, enabled):
+        if self.isEnabled() != enabled:
+            super(VNativeButton, self).setEnabled(enabled)
+            self.setStyleName(ApplicationConnection.DISABLED_CLASSNAME, not enabled)
