@@ -1076,7 +1076,10 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
             return None
 
         inputStream = request.getInputStream()
-        return inputStream.read()
+        if inputStream is not None:
+            return inputStream.read()
+        else:
+            return None
 
 
     def handleChangeVariablesError(self, application, owner, e, m):

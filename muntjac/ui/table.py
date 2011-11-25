@@ -1535,8 +1535,8 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
 
     def registerComponent(self, component):
-        logger.debug('Registered %s: %s' % (component.__class__.__name__,
-                component.getCaption()))
+        #logger.debug('Registered %s: %s' % (component.__class__.__name__,
+        #        component.getCaption()))
         if component.getParent() is not self:
             component.setParent(self)
         self._visibleComponents.add(component)
@@ -1624,8 +1624,8 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         @param component:
                    a set of components that should be unregistered.
         """
-        logger.debug("Unregistered " + component.__class__.__name__
-                + ": " + component.getCaption())
+        #logger.debug("Unregistered %s: %s" % (component.__class__.__name__,
+        #        component.getCaption()))
         component.setParent(None)
         # Also remove property data sources to unregister listeners keeping
         # the fields in memory.
