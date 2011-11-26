@@ -1,6 +1,12 @@
 
+import os
 import sys
 import logging
+
+try:
+    import cPickle as pickle
+except ImportError:
+    import pickle
 
 from os.path import join, dirname
 
@@ -17,25 +23,39 @@ from muntjac.demo.MuntjacTunesLayout import MuntjacTunesLayout
 from muntjac.demo.sampler.SamplerApplication import SamplerApplication
 
 from paste.urlmap import URLMap
-from paste.session import SessionMiddleware
+from paste.session import SessionMiddleware, FileSession
 from paste.fileapp import DirectoryApp
 
 
-helloServlet = ApplicationServlet(HelloWorld)
-hello = SessionMiddleware(helloServlet)
+class MuntjacFileSession(FileSession):
+    """Overridden to specify pickle protocol."""
 
-calcServlet = ApplicationServlet(Calc)
-calc = SessionMiddleware(calcServlet)
+    def close(self):
+        if self._data is not None:
+            filename = self.filename()
+            exists = os.path.exists(filename)
+            if not self._data:
+                if exists:
+                    os.unlink(filename)
+            else:
+                f = open(filename, 'wb')
+                # select the highest protocol version supported
+                pickle.dump(self._data, f, -1)
+                f.close()
+                if not exists and self.chmod:
+                    os.chmod(filename, self.chmod)
 
-addressServlet = ApplicationServlet(SimpleAddressBook)
-address = SessionMiddleware(addressServlet)
 
-tunesServlet = ApplicationServlet(MuntjacTunesLayout)
-tunes = SessionMiddleware(tunesServlet)
+hello = ApplicationServlet(HelloWorld)
 
-samplerServlet = ApplicationServlet(SamplerApplication,
+calc = ApplicationServlet(Calc)
+
+address = ApplicationServlet(SimpleAddressBook)
+
+tunes = ApplicationServlet(MuntjacTunesLayout)
+
+sampler = ApplicationServlet(SamplerApplication,
         widgetset='com.vaadin.demo.sampler.gwt.SamplerWidgetSet')
-sampler = SessionMiddleware(samplerServlet)
 
 urlmap = URLMap({})
 urlmap['/hello'] = hello
@@ -45,10 +65,16 @@ urlmap['/tunes'] = tunes
 urlmap['/sampler'] = sampler
 
 
-if __name__ == '__main__':
+def main():
     logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
-    wsapp = DirectoryApp(join(dirname(muntjac.__file__), 'public', 'VAADIN'))
+    wsapp = DirectoryApp(join(dirname(muntjac.__file__), '..', 'VAADIN'))
     urlmap['/VAADIN'] = wsapp
 
-    make_server('localhost', 8080, urlmap).serve_forever()
+    url_map = SessionMiddleware(urlmap, session_class=MuntjacFileSession)
+
+    make_server('localhost', 8080, url_map).serve_forever()
+
+
+if __name__ == '__main__':
+    main()

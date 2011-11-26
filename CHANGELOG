@@ -3,6 +3,11 @@ Changelog
 
 @VERSION@
 
+  * Subclassed FileSession to specify pickle protocol.
+  * Implementing transient members and optimising escapeJSON().
+
+1.0.3
+
   * Catching 1Mb memcache limit errors in session middleware.
   * Fixed date formatting and currency parsing in sampler.
   * Fixed infinite loop in handleVariableBurst().

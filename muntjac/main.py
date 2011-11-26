@@ -31,7 +31,7 @@ from paste.session import SessionMiddleware
 from paste.fileapp import DirectoryApp, FileApp
 
 from muntjac.terminal.gwt.server.application_servlet import ApplicationServlet
-from muntjac.demo.main import urlmap
+from muntjac.demo.main import urlmap, MuntjacFileSession
 from muntjac.test.suite import main as test
 
 
@@ -46,7 +46,7 @@ def muntjac(applicationClass, host='localhost', port=8880, nogui=False,
     wsgi_app = ApplicationServlet(applicationClass, debug=debug,
             *args, **kw_args)
 
-    wsgi_app = SessionMiddleware(wsgi_app)  # wrap in middleware
+    wsgi_app = SessionMiddleware(wsgi_app, session_class=MuntjacFileSession)
 
     url = 'http://%s:%d/' % (host, port)
 
@@ -118,6 +118,8 @@ def main(args=sys.argv[1:]):
             ctxapp = DirectoryApp(join(opts.contextRoot, 'VAADIN'))
             urlmap['/VAADIN'] = ctxapp
 
+        app = SessionMiddleware(urlmap, session_class=MuntjacFileSession)
+
         url = 'http://%s:%d/' % (opts.host, opts.port)
 
         if not opts.nogui:
@@ -125,7 +127,7 @@ def main(args=sys.argv[1:]):
 
         print 'Serving at: %s' % url
 
-        httpd = make_server(opts.host, opts.port, urlmap)
+        httpd = make_server(opts.host, opts.port, app)
 
         try:
             httpd.serve_forever()
