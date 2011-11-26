@@ -22,18 +22,19 @@ logging.basicConfig(level=logging.DEBUG, format="%(levelname)s: %(message)s")
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 
+hello = GaeApplicationServlet(HelloWorld)
+
+calc = GaeApplicationServlet(Calc)
+
+address = GaeApplicationServlet(SimpleAddressBook)
+
+tunes = GaeApplicationServlet(MuntjacTunesLayout)
+
+sampler = GaeApplicationServlet(SamplerApplication,
+        widgetset='com.vaadin.demo.sampler.gwt.SamplerWidgetSet')
+
+
 def main():
-    hello = GaeApplicationServlet(HelloWorld)
-
-    calc = GaeApplicationServlet(Calc)
-
-    address = GaeApplicationServlet(SimpleAddressBook)
-
-    tunes = GaeApplicationServlet(MuntjacTunesLayout)
-
-    sampler = GaeApplicationServlet(SamplerApplication,
-            widgetset='com.vaadin.demo.sampler.gwt.SamplerWidgetSet')
-
     urlmap = URLMap({})
     urlmap['/hello'] = hello
     urlmap['/calc'] = calc

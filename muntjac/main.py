@@ -30,8 +30,10 @@ from wsgiref.simple_server import make_server
 from paste.session import SessionMiddleware
 from paste.fileapp import DirectoryApp, FileApp
 
+from muntjac.util import InMemorySession
+
 from muntjac.terminal.gwt.server.application_servlet import ApplicationServlet
-from muntjac.demo.main import urlmap, MuntjacFileSession
+from muntjac.demo.main import urlmap
 from muntjac.test.suite import main as test
 
 
@@ -46,7 +48,7 @@ def muntjac(applicationClass, host='localhost', port=8880, nogui=False,
     wsgi_app = ApplicationServlet(applicationClass, debug=debug,
             *args, **kw_args)
 
-    wsgi_app = SessionMiddleware(wsgi_app, session_class=MuntjacFileSession)
+    wsgi_app = SessionMiddleware(wsgi_app, session_class=InMemorySession)
 
     url = 'http://%s:%d/' % (host, port)
 
@@ -118,7 +120,7 @@ def main(args=sys.argv[1:]):
             ctxapp = DirectoryApp(join(opts.contextRoot, 'VAADIN'))
             urlmap['/VAADIN'] = ctxapp
 
-        app = SessionMiddleware(urlmap, session_class=MuntjacFileSession)
+        app = SessionMiddleware(urlmap, session_class=InMemorySession)
 
         url = 'http://%s:%d/' % (opts.host, opts.port)
 

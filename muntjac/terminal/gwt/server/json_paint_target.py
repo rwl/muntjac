@@ -366,11 +366,7 @@ class JsonPaintTarget(IPaintTarget):
                 else:
                     sb.write( self.escapeJSON(str(key)) )
                 sb.write('\":')
-                if isinstance(mapValue, float) \
-                        or isinstance(mapValue, int) \
-                        or isinstance(mapValue, float) \
-                        or isinstance(mapValue, bool) \
-                        or isinstance(mapValue, Alignment):
+                if isinstance(mapValue, (float, int, float, bool, Alignment)):
                     sb.write( str(mapValue) )
                 else:
                     sb.write('\"')

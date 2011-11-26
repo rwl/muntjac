@@ -131,27 +131,19 @@ class SamplerApplication(Application):
         super(SamplerApplication, self).close()
 
 
+_EMPTY_THEME_ICON = ThemeResource('../sampler/sampler/icon-empty.png')
+_SELECTED_THEME_ICON = ThemeResource('../sampler/sampler/select-bullet.png')
+
+
 class SamplerWindow(Window):
     """The main window for Sampler, contains the full application UI."""
 
-    def detach(self):
-        super(SamplerWindow, self).detach()
-        self._search.setContainerDataSource(None)
-        self._navigationTree.setContainerDataSource(None)
-
+    _TITLE = 'Muntjac Sampler'
 
     def __init__(self, app):
         super(SamplerWindow, self).__init__()
 
         self._app = app
-
-        self._TITLE = 'Muntjac Sampler'
-
-        self._EMPTY_THEME_ICON = \
-                ThemeResource('../sampler/sampler/icon-empty.png')
-
-        self._SELECTED_THEME_ICON = \
-                ThemeResource('../sampler/sampler/select-bullet.png')
 
         self._currentList = FeatureGrid(self._app)
         self._featureView = FeatureView()
@@ -159,8 +151,7 @@ class SamplerWindow(Window):
 
         self._mainSplit = None
         self._navigationTree = None
-        # itmill: UA-658457-6
-        self._webAnalytics = GoogleAnalytics('UA-658457-6', 'none')
+#        self._webAnalytics = GoogleAnalytics('UA-658457-6', 'none')
         # "backbutton"
         self._uriFragmentUtility = UriFragmentUtility()
 
@@ -200,7 +191,7 @@ class SamplerWindow(Window):
         nav.setComponentAlignment(self._breadcrumbs, Alignment.MIDDLE_LEFT)
 
         # invisible analytics -component
-        nav.addComponent(self._webAnalytics)
+#        nav.addComponent(self._webAnalytics)
 
         # "backbutton"
         nav.addComponent(self._uriFragmentUtility)
@@ -259,6 +250,12 @@ class SamplerWindow(Window):
         self.updateFeatureList(self._currentList)
 
 
+    def detach(self):
+        super(SamplerWindow, self).detach()
+        self._search.setContainerDataSource(None)
+        self._navigationTree.setContainerDataSource(None)
+
+
     def removeSubwindows(self):
         wins = self.getChildWindows()
         if None is not wins:
@@ -286,7 +283,7 @@ class SamplerWindow(Window):
             self._currentFeature.setValue(f)
             fragment = f.getFragmentName() if f is not None else ''
 
-            self._webAnalytics.trackPageview(fragment)
+#            self._webAnalytics.trackPageview(fragment)
             self._uriFragmentUtility.setFragment(fragment, False)
             self._breadcrumbs.setPath( self._app.getFullPathFor(f) )
 
@@ -347,10 +344,10 @@ class SamplerWindow(Window):
             self.theme.addItem(idd)
             self.theme.setItemCaption(idd,
                     themeName[:1].upper() + (themeName[1:]) + ' theme')
-            self.theme.setItemIcon(idd, self._EMPTY_THEME_ICON)
+            self.theme.setItemIcon(idd, _EMPTY_THEME_ICON)
         currentWindowTheme = self.getTheme()
         self.theme.setValue(currentWindowTheme)
-        self.theme.setItemIcon(currentWindowTheme, self._SELECTED_THEME_ICON)
+        self.theme.setItemIcon(currentWindowTheme, _SELECTED_THEME_ICON)
 
         self.theme.addListener(ThemeChangeListener(self, self._app),
                 prop.IValueChangeListener)
@@ -695,10 +692,8 @@ class ThemeChangeListener(prop.IValueChangeListener):
         self._window.setTheme(newTheme)
         for themeName in self._app._THEMES:
             idd = self._app._SAMPLER_THEME_NAME + '-' + themeName
-            self._window.theme.setItemIcon(idd,
-                    self._window._EMPTY_THEME_ICON)
-        self._window.theme.setItemIcon(newTheme,
-                self._window._SELECTED_THEME_ICON)
+            self._window.theme.setItemIcon(idd, _EMPTY_THEME_ICON)
+        self._window.theme.setItemIcon(newTheme, _SELECTED_THEME_ICON)
         self._app._currentApplicationTheme = newTheme
 
 
