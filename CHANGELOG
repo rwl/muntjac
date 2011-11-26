@@ -1,7 +1,7 @@
 Changelog
 ---------
 
-@VERSION@
+1.0.4
 
   * Added InMemorySession and FileSession with faster pickle protocol.
   * Implemented transient attributes and optimised JSON escaping.

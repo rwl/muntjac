@@ -34,7 +34,7 @@ class IApplicationResource(IResource):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.4
     """
 
     DEFAULT_CACHETIME = 1000 * 60 * 60 * 24

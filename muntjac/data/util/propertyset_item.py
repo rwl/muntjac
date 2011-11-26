@@ -32,7 +32,7 @@ class PropertysetItem(IItem, IPropertySetChangeNotifier):  # Cloneable
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.4
     """
 
     def __init__(self):
@@ -272,7 +272,7 @@ class PropertySetChangeEvent(EventObject, IItem, IPropertySetChangeEvent):
     changed.
 
     @author: Vaadin Ltd.
-    @version: @VERSION@
+    @version: 1.0.4
     """
 
     def __init__(self, source):

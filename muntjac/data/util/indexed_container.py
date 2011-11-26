@@ -59,7 +59,7 @@ class IndexedContainer(AbstractInMemoryContainer,
     @see: L{IContainer}
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.4
     """
 
     def __init__(self, itemIds=None):
@@ -698,7 +698,7 @@ class IndexedContainerProperty(prop.IProperty, prop.IValueChangeNotifier):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.4
     """
 
     def __init__(self, itemId, propertyId, container):
@@ -866,7 +866,7 @@ class ItemSetChangeEvent(BaseItemSetChangeEvent):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.4
     """
 
     def __init__(self, source, addedItemIndex):
@@ -889,7 +889,7 @@ class PropertyValueChangeEvent(EventObject, prop.ValueChangeEvent):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.4
     """
 
     def __init__(self, source):

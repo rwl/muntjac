@@ -40,7 +40,7 @@ class SysError(RuntimeError, IErrorMessage):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.4
     """
 
     def __init__(self, *args):

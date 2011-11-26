@@ -28,7 +28,7 @@ class Link(AbstractComponent):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.4
     """
 
     CLIENT_WIDGET = None #ClientWidget(VLink, LoadStyle.EAGER)

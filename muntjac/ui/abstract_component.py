@@ -46,7 +46,7 @@ class AbstractComponent(IComponent, IMethodEventSource):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.4
     """
 
     SIZE_PATTERN = '^(-?\\d+(\\.\\d+)?)(%|px|em|ex|in|cm|mm|pt|pc)?$'

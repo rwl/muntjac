@@ -28,7 +28,7 @@ class IErrorMessage(IPaintable):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.0.4
     """
 
     #: Error code for system errors and bugs.
