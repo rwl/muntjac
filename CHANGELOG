@@ -3,8 +3,8 @@ Changelog
 
 @VERSION@
 
-  * Subclassed FileSession to specify pickle protocol.
-  * Implementing transient members and optimising escapeJSON().
+  * Added InMemorySession and FileSession with faster pickle protocol.
+  * Implemented transient attributes and optimised JSON escaping.
 
 1.0.3
 
