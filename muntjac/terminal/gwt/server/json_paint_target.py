@@ -237,6 +237,30 @@ class JsonPaintTarget(IPaintTarget):
         return result
 
 
+    @staticmethod
+    def _default(ch, sb):
+        if ch >= '\u0000' and ch <= '\u001F':
+            ss = hex( int(ch) )
+            sb.write('\\u')
+            for _ in range(4 - len(ss)):
+                sb.write('0')
+            sb.write( ss.upper() )
+        else:
+            sb.write(ch)
+
+
+    _json_map = {
+        '"':  lambda ch, sb: sb.write('\\\"'),
+        '\\': lambda ch, sb: sb.write('\\\\'),
+        '\b': lambda ch, sb: sb.write('\\b'),
+        '\f': lambda ch, sb: sb.write('\\f'),
+        '\n': lambda ch, sb: sb.write('\\n'),
+        '\r': lambda ch, sb: sb.write('\\r'),
+        '\t': lambda ch, sb: sb.write('\\t'),
+        '/' : lambda ch, sb: sb.write('\\/')
+    }
+
+
     @classmethod
     def escapeJSON(cls, s):
         """Escapes the given string so it can safely be used as a JSON string.
@@ -251,29 +275,8 @@ class JsonPaintTarget(IPaintTarget):
 
         sb = StringIO()
 
-        d = {
-            '"':  lambda ch: sb.write('\\\"'),
-            '\\': lambda ch: sb.write('\\\\'),
-            '\b': lambda ch: sb.write('\\b'),
-            '\f': lambda ch: sb.write('\\f'),
-            '\n': lambda ch: sb.write('\\n'),
-            '\r': lambda ch: sb.write('\\r'),
-            '\t': lambda ch: sb.write('\\t'),
-            '/' : lambda ch: sb.write('\\/')
-        }
-
-        def default(ch):
-            if ch >= '\u0000' and ch <= '\u001F':
-                ss = hex( int(ch) )
-                sb.write('\\u')
-                for _ in range(4 - len(ss)):
-                    sb.write('0')
-                sb.write( ss.upper() )
-            else:
-                sb.write(ch)
-
         for c in s:
-            d.get(c, default)(c)
+            cls._json_map.get(c, cls._default)(c, sb)
 
         result = sb.getvalue()
         sb.close()

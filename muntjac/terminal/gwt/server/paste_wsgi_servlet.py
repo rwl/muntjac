@@ -234,13 +234,13 @@ class PasteWsgiServlet(HTTPServlet):
                 else:
                     return None
         except EOFError, e:
-            logger.error('Session retrieval error: %s' % e)
+            logger.exception('Session retrieval error: %s' % str(e))
             return None
         except UnpicklingError, e:
-            logger.error('Session retrieval error: %s' % e)
+            logger.exception('Session retrieval error: %s' % str(e))
             return None
         except ValueError, e:
-            logger.error('Session retrieval error: %s' % e)
+            logger.exception('Session retrieval error: %s' % str(e))
             return None
 
 
