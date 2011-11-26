@@ -148,6 +148,17 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
             raise ValueError, 'too many arguments'
 
 
+    def __getstate__(self):
+        result = self.__dict__.copy()
+        del result['_calendar']
+        return result
+
+
+    def __setstate__(self, d):
+        self.__dict__ = d
+        self._calendar = None
+
+
     def paintContent(self, target):
         # Paints this component.
         super(DateField, self).paintContent(target)

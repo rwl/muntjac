@@ -51,20 +51,34 @@ class RegexpValidator(AbstractStringValidator):
             3. the message to display in case the value does not validate.
         """
         self._pattern = None
+        self._regexp = ''
         self._complete = None
         self._matcher = None
 
         nargs = len(args)
         if nargs == 2:
             regexp, errorMessage = args
+            self._regexp = regexp
             RegexpValidator.__init__(self, regexp, True, errorMessage)
         elif nargs == 3:
             regexp, complete, errorMessage = args
             super(RegexpValidator, self).__init__(errorMessage)
+            self._regexp = regexp
             self._pattern = re.compile(regexp)  # FIXME: check re use
             self._complete = complete
         else:
             raise ValueError, 'invalid number of arguments'
+
+
+    def __getstate__(self):
+        result = self.__dict__.copy()
+        del result['_pattern']
+        return result
+
+
+    def __setstate__(self, d):
+        self.__dict__ = d
+        self._pattern = re.compile(d.get('_regexp'))
 
 
     def isValidString(self, value):

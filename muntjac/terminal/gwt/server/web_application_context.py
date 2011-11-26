@@ -48,6 +48,21 @@ class WebApplicationContext(AbstractWebApplicationContext):
         self._currentRequest = None
 
 
+    def __getstate__(self):
+        result = self.__dict__.copy()
+        del result['session']
+        del result['_reinitializingSession']
+        del result['_currentRequest']
+        return result
+
+
+    def __setstate__(self, d):
+        self.__dict__ = d
+        self.session = None
+        self._reinitializingSession = False
+        self._currentRequest = None
+
+
     def startTransaction(self, application, request):
         self._currentRequest = request
         super(WebApplicationContext, self).startTransaction(application,
