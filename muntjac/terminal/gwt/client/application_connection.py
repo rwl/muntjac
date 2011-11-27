@@ -51,35 +51,6 @@ from muntjac.terminal.gwt.client.browser_info import BrowserInfo
 from muntjac.terminal.gwt.client.ui.dd.v_drag_and_drop_manager import VDragAndDropManager
 from muntjac.terminal.gwt.client.focusable import Focusable
 
-# from com.google.gwt.core.client.GWT import (GWT,)
-# from com.google.gwt.core.client.JavaScriptObject import (JavaScriptObject,)
-# from com.google.gwt.core.client.JsArray import (JsArray,)
-# from com.google.gwt.core.client.JsArrayString import (JsArrayString,)
-# from com.google.gwt.core.client.Scheduler import (Scheduler,)
-# from com.google.gwt.http.client.Request import (Request,)
-# from com.google.gwt.http.client.RequestBuilder import (RequestBuilder,)
-# from com.google.gwt.http.client.RequestCallback import (RequestCallback,)
-# from com.google.gwt.http.client.RequestException import (RequestException,)
-# from com.google.gwt.http.client.Response import (Response,)
-# from com.google.gwt.user.client.Command import (Command,)
-# from com.google.gwt.user.client.DOM import (DOM,)
-# from com.google.gwt.user.client.Element import (Element,)
-# from com.google.gwt.user.client.Event import (Event,)
-# from com.google.gwt.user.client.History import (History,)
-# from com.google.gwt.user.client.Timer import (Timer,)
-# from com.google.gwt.user.client.Window import (Window,)
-# from com.google.gwt.user.client.ui.FocusWidget import (FocusWidget,)
-# from com.google.gwt.user.client.ui.Focusable import (Focusable,)
-# from com.google.gwt.user.client.ui.HasWidgets import (HasWidgets,)
-# from com.google.gwt.user.client.ui.Widget import (Widget,)
-# from java.util.ArrayList import (ArrayList,)
-# from java.util.Date import (Date,)
-# from java.util.HashMap import (HashMap,)
-# from java.util.HashSet import (HashSet,)
-# from java.util.Iterator import (Iterator,)
-# from java.util.Map import (Map,)
-# from java.util.Set import (Set,)
-
 
 class ApplicationConnection(object):
     """This is the client side communication "engine", managing client-server
@@ -184,6 +155,10 @@ class ApplicationConnection(object):
         self._unregistryBag = set()
 
         self._cssWaits = 0
+
+        self._layoutTimer = LayoutTimer(self)
+
+        self._windowName = None
 
         self._view = GWT.create(VView)
 
@@ -585,7 +560,7 @@ class ApplicationConnection(object):
             html.write(details)
             html.write('</I></p>')
             n = VNotification.createNotification(1000 * 60 * 45)
-            n.addEventListener(NotificationRedirect(url))
+            n.addEventListener(NotificationRedirect(url, self))
             n.show(html.getvalue(), VNotification.CENTERED_TOP,
                 VNotification.STYLE_SYSTEM)
             html.close()
@@ -916,7 +891,7 @@ class ApplicationConnection(object):
                         if len(html) != 0:
                             # 45 min
                             n = VNotification.createNotification(1000*60*45)
-                            n.addEventListener(NotificationRedirect(url))
+                            n.addEventListener(NotificationRedirect(url, self))
                             n.show(html, VNotification.CENTERED_TOP,
                                    VNotification.STYLE_SYSTEM)
                         else:
@@ -1213,7 +1188,7 @@ class ApplicationConnection(object):
         self.makeUidlRequest(str(req), '', forceSync)
 
 
-    def updateVariable(self, *args):
+    def updateVariable(self, paintableId, variableName, newValue, immediate):
         """Sends a new value for the given paintables given variable to the
         server.
 
@@ -1221,251 +1196,88 @@ class ApplicationConnection(object):
         immediate is true, the update is sent as soon as possible. If immediate
         is false, the update will be sent along with the next immediate update.
 
-        @param paintableId
+        @param paintableId:
                    the id of the paintable that owns the variable
-        @param variableName
+        @param variableName:
                    the name of the variable
-        @param newValue
+        @param newValue:
                    the new value to be sent
-        @param immediate
-                   true if the update is to be sent as soon as possible
-        ---
-        Sends a new value for the given paintables given variable to the server.
-        <p>
-        The update is actually queued to be sent at a suitable time. If immediate
-        is true, the update is sent as soon as possible. If immediate is false,
-        the update will be sent along with the next immediate update.
-        </p>
-
-        @param paintableId
-                   the id of the paintable that owns the variable
-        @param variableName
-                   the name of the variable
-        @param newValue
-                   the new value to be sent
-        @param immediate
-                   true if the update is to be sent as soon as possible
-        ---
-        Sends a new value for the given paintables given variable to the server.
-        <p>
-        The update is actually queued to be sent at a suitable time. If immediate
-        is true, the update is sent as soon as possible. If immediate is false,
-        the update will be sent along with the next immediate update.
-        </p>
-
-        @param paintableId
-                   the id of the paintable that owns the variable
-        @param variableName
-                   the name of the variable
-        @param newValue
-                   the new value to be sent
-        @param immediate
-                   true if the update is to be sent as soon as possible
-        ---
-        Sends a new value for the given paintables given variable to the server.
-        <p>
-        The update is actually queued to be sent at a suitable time. If immediate
-        is true, the update is sent as soon as possible. If immediate is false,
-        the update will be sent along with the next immediate update.
-        </p>
-
-        @param paintableId
-                   the id of the paintable that owns the variable
-        @param variableName
-                   the name of the variable
-        @param newValue
-                   the new value to be sent
-        @param immediate
-                   true if the update is to be sent as soon as possible
-        ---
-        Sends a new value for the given paintables given variable to the server.
-        <p>
-        The update is actually queued to be sent at a suitable time. If immediate
-        is true, the update is sent as soon as possible. If immediate is false,
-        the update will be sent along with the next immediate update.
-        </p>
-
-        @param paintableId
-                   the id of the paintable that owns the variable
-        @param variableName
-                   the name of the variable
-        @param newValue
-                   the new value to be sent
-        @param immediate
-                   true if the update is to be sent as soon as possible
-        ---
-        Sends a new value for the given paintables given variable to the server.
-        <p>
-        The update is actually queued to be sent at a suitable time. If immediate
-        is true, the update is sent as soon as possible. If immediate is false,
-        the update will be sent along with the next immediate update.
-        </p>
-
-        @param paintableId
-                   the id of the paintable that owns the variable
-        @param variableName
-                   the name of the variable
-        @param newValue
-                   the new value to be sent
-        @param immediate
-                   true if the update is to be sent as soon as possible
-        ---
-        Sends a new value for the given paintables given variable to the server.
-        <p>
-        The update is actually queued to be sent at a suitable time. If immediate
-        is true, the update is sent as soon as possible. If immediate is false,
-        the update will be sent along with the next immediate update.
-        </p>
-
-        @param paintableId
-                   the id of the paintable that owns the variable
-        @param variableName
-                   the name of the variable
-        @param newValue
-                   the new value to be sent
-        @param immediate
-                   true if the update is to be sent as soon as possible
-        ---
-        Sends a new value for the given paintables given variable to the server.
-        <p>
-        The update is actually queued to be sent at a suitable time. If immediate
-        is true, the update is sent as soon as possible. If immediate is false,
-        the update will be sent along with the next immediate update.
-        </p>
-
-        @param paintableId
-                   the id of the paintable that owns the variable
-        @param variableName
-                   the name of the variable
-        @param newValue
-                   the new value to be sent
-        @param immediate
-                   true if the update is to be sent as soon as possible
-        ---
-        Sends a new value for the given paintables given variable to the server.
-
-        The update is actually queued to be sent at a suitable time. If immediate
-        is true, the update is sent as soon as possible. If immediate is false,
-        the update will be sent along with the next immediate update.
-
-        A null array is sent as an empty array.
-
-        @param paintableId
-                   the id of the paintable that owns the variable
-        @param variableName
-                   the name of the variable
-        @param newValue
-                   the new value to be sent
-        @param immediate
-                   true if the update is to be sent as soon as possible
-        ---
-        Sends a new value for the given paintables given variable to the server.
-
-        The update is actually queued to be sent at a suitable time. If immediate
-        is true, the update is sent as soon as possible. If immediate is false,
-        the update will be sent along with the next immediate update. </p>
-
-        A null array is sent as an empty array.
-
-
-        @param paintableId
-                   the id of the paintable that owns the variable
-        @param variableName
-                   the name of the variable
-        @param newValue
-                   the new value to be sent
-        @param immediate
+        @param immediate:
                    true if the update is to be sent as soon as possible
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 4:
-            if isinstance(_0[2], Paintable):
-                paintableId, variableName, newValue, immediate = _0
-                pid = self.getPid(newValue) if newValue is not None else None
-                self.addVariableToQueue(paintableId, variableName, pid, immediate, 'p')
-            elif isinstance(_0[2], boolean):
-                paintableId, variableName, newValue, immediate = _0
-                self.addVariableToQueue(paintableId, variableName, 'true' if newValue else 'false', immediate, 'b')
-            elif isinstance(_0[2], dict):
-                paintableId, variableName, map, immediate = _0
-                buf = str()
-                iterator = map.keys()
-                while iterator.hasNext():
-                    key = iterator.next()
-                    value = map.get(key)
+        if isinstance(newValue, Paintable):
+            pid = self.getPid(newValue) if newValue is not None else None
+            self.addVariableToQueue(paintableId, variableName, pid,
+                    immediate, 'p')
+        elif isinstance(newValue, bool):
+            self.addVariableToQueue(paintableId, variableName,
+                    'true' if newValue else 'false', immediate, 'b')
+        elif isinstance(newValue, dict):
+            buf = str()
+            for i, (key, value) in enumerate(newValue.iteritems()):
+                transportType = self.getTransportType(value)
+                buf += transportType
+                buf += self.escapeVariableValue(key)
+                buf += self.VAR_ARRAYITEM_SEPARATOR
+
+                if transportType == 'p':
+                    buf += self.getPid(value)
+                else:
+                    buf += self.escapeVariableValue(str(value))
+
+                if i < len(newValue) - 1:
+                    buf += self.VAR_ARRAYITEM_SEPARATOR
+
+            self.addVariableToQueue(paintableId, variableName, buf,
+                    immediate, 'm')
+        elif isinstance(newValue, float):
+#            self.addVariableToQueue(paintableId, variableName, '' + newValue, immediate, 'f')
+            self.addVariableToQueue(paintableId, variableName, str(newValue),
+                    immediate, 'd')
+        elif isinstance(newValue, int):
+            self.addVariableToQueue(paintableId, variableName, str(newValue),
+                    immediate, 'i')
+        elif isinstance(newValue, long):
+            self.addVariableToQueue(paintableId, variableName, str(newValue),
+                    immediate, 'l')
+        elif hasattr(newValue, '__iter__') and isinstance(newValue[0], basestring):
+            values = newValue
+            buf = str()
+            if values is not None:
+                for i in range(len(values)):
+                    buf += self.escapeVariableValue(values[i])
+                    # there will be an extra separator at the end to differentiate
+                    # between an empty array and one containing an empty string
+                    # only
+                    buf += self.VAR_ARRAYITEM_SEPARATOR
+
+            self.addVariableToQueue(paintableId, variableName, str(buf),
+                    immediate, 'c')
+        elif isinstance(newValue, basestring):
+            self.addVariableToQueue(paintableId, variableName,
+                    self.escapeVariableValue(newValue), immediate, 's')
+        elif hasattr(newValue, '__iter__'):
+            values = newValue
+            buf = str()
+            if values is not None:
+                for i in range(len(values)):
+                    if i > 0:
+                        buf += self.VAR_ARRAYITEM_SEPARATOR
+                    value = values[i]
                     transportType = self.getTransportType(value)
-                    buf.__add__(transportType)
-                    buf.__add__(self.escapeVariableValue(key))
-                    buf.__add__(self.VAR_ARRAYITEM_SEPARATOR)
+                    # first char tells the type in array
+                    buf += transportType
                     if transportType == 'p':
-                        buf.__add__(self.getPid(value))
+                        buf += self.getPid(value)
                     else:
-                        buf.__add__(self.escapeVariableValue(String.valueOf.valueOf(value)))
-                    if iterator.hasNext():
-                        buf.__add__(self.VAR_ARRAYITEM_SEPARATOR)
-                self.addVariableToQueue(paintableId, variableName, str(buf), immediate, 'm')
-            elif isinstance(_0[2], float):
-                paintableId, variableName, newValue, immediate = _0
-                self.addVariableToQueue(paintableId, variableName, '' + newValue, immediate, 'f')
-                paintableId, variableName, newValue, immediate = _0
-                self.addVariableToQueue(paintableId, variableName, '' + newValue, immediate, 'd')
-            elif isinstance(_0[2], int):
-                paintableId, variableName, newValue, immediate = _0
-                self.addVariableToQueue(paintableId, variableName, '' + newValue, immediate, 'i')
-            elif isinstance(_0[2], long):
-                paintableId, variableName, newValue, immediate = _0
-                self.addVariableToQueue(paintableId, variableName, '' + newValue, immediate, 'l')
-            elif isinstance(_0[2], self.Object):
-                paintableId, variableName, values, immediate = _0
-                buf = str()
-                if values is not None:
-                    _0 = True
-                    i = 0
-                    while True:
-                        if _0 is True:
-                            _0 = False
-                        else:
-                            i += 1
-                        if not (i < values.length):
-                            break
-                        if i > 0:
-                            buf.__add__(self.VAR_ARRAYITEM_SEPARATOR)
-                        value = values[i]
-                        transportType = self.getTransportType(value)
-                        # first char tells the type in array
-                        buf.__add__(transportType)
-                        if transportType == 'p':
-                            buf.__add__(self.getPid(value))
-                        else:
-                            buf.__add__(self.escapeVariableValue(String.valueOf.valueOf(value)))
-                self.addVariableToQueue(paintableId, variableName, str(buf), immediate, 'a')
-            else:
-                paintableId, variableName, newValue, immediate = _0
-                self.addVariableToQueue(paintableId, variableName, self.escapeVariableValue(newValue), immediate, 's')
-                paintableId, variableName, values, immediate = _0
-                buf = str()
-                if values is not None:
-                    _0 = True
-                    i = 0
-                    while True:
-                        if _0 is True:
-                            _0 = False
-                        else:
-                            i += 1
-                        if not (i < values.length):
-                            break
-                        buf.__add__(self.escapeVariableValue(values[i]))
-                        # there will be an extra separator at the end to differentiate
-                        # between an empty array and one containing an empty string
-                        # only
-                        buf.__add__(self.VAR_ARRAYITEM_SEPARATOR)
-                self.addVariableToQueue(paintableId, variableName, str(buf), immediate, 'c')
-        else:
-            raise ARGERROR(4, 4)
+                        buf += self.escapeVariableValue(str(value))
+
+            self.addVariableToQueue(paintableId, variableName, buf,
+                    immediate, 'a')
+
 
     def getTransportType(self, value):
-        if isinstance(value, str):
+        if isinstance(value, basestring):
             return 's'
         elif isinstance(value, Paintable):
             return 'p'
@@ -1473,114 +1285,106 @@ class ApplicationConnection(object):
             return 'b'
         elif isinstance(value, int):
             return 'i'
-        elif isinstance(value, float):
-            return 'f'
+#        elif isinstance(value, float):
+#            return 'f'
         elif isinstance(value, float):
             return 'd'
         elif isinstance(value, long):
             return 'l'
-        elif isinstance(value, self.Enum):
-            return 's'
-            # transported as string representation
+        elif isinstance(value, Enum):
+            return 's'  # transported as string representation
         return 'u'
 
+
     def escapeVariableValue(self, value):
-        """Encode burst, record, field and array item separator characters in a
-        String for transport over the network. This protects from separator
+        """Encode burst, record, field and array item separator characters in
+        a String for transport over the network. This protects from separator
         injection attacks.
 
-        @param value
+        @param value:
                    to encode
-        @return encoded value
+        @return: encoded value
         """
-        result = self.StringBuilder()
-        _0 = True
-        i = 0
-        while True:
-            if _0 is True:
-                _0 = False
+        result = str()
+        for character in value:
+            if character == self.VAR_ESCAPE_CHARACTER:
+                pass
+            if character == self.VAR_BURST_SEPARATOR:
+                pass
+            if character == self.VAR_RECORD_SEPARATOR:
+                pass
+            if character == self.VAR_FIELD_SEPARATOR:
+                pass
+            if character == self.VAR_ARRAYITEM_SEPARATOR:
+                result += self.VAR_ESCAPE_CHARACTER
+                # encode as letters for easier reading
+                result += chr( ord(character) + 48 )
             else:
-                i += 1
-            if not (i < len(value)):
-                break
-            character = value[i]
-            _1 = character
-            _2 = False
-            while True:
-                if _1 == self.VAR_ESCAPE_CHARACTER:
-                    _2 = True
-                if (_2 is True) or (_1 == self.VAR_BURST_SEPARATOR):
-                    _2 = True
-                if (_2 is True) or (_1 == self.VAR_RECORD_SEPARATOR):
-                    _2 = True
-                if (_2 is True) or (_1 == self.VAR_FIELD_SEPARATOR):
-                    _2 = True
-                if (_2 is True) or (_1 == self.VAR_ARRAYITEM_SEPARATOR):
-                    _2 = True
-                    result.append(self.VAR_ESCAPE_CHARACTER)
-                    # encode as letters for easier reading
-                    result.append(character + 48)
-                    break
-                if True:
-                    _2 = True
-                    result.append(character)
-                    break
-                break
-        return str(result)
+                result += character
+
+        return result
+
 
     def updateComponent(self, component, uidl, manageCaption):
         """Update generic component features.
 
-        <h2>Selecting correct implementation</h2>
+        Selecting correct implementation
+        --------------------------------
 
-        <p>
         The implementation of a component depends on many properties, including
         styles, component features, etc. Sometimes the user changes those
         properties after the component has been created. Calling this method in
         the beginning of your updateFromUIDL -method automatically replaces your
         component with more appropriate if the requested implementation changes.
-        </p>
 
-        <h2>Caption, icon, error messages and description</h2>
+        Caption, icon, error messages and description
+        =============================================
 
-        <p>
         Component can delegate management of caption, icon, error messages and
         description to parent layout. This is optional an should be decided by
         component author
-        </p>
 
-        <h2>Component visibility and disabling</h2>
+        Component visibility and disabling
+        ==================================
 
         This method will manage component visibility automatically and if
         component is an instanceof FocusWidget, also handle component disabling
         when needed.
 
-        @param component
+        @param component:
                    Widget to be updated, expected to implement an instance of
                    Paintable
-        @param uidl
+        @param uidl:
                    UIDL to be painted
-        @param manageCaption
+        @param manageCaption:
                    True if you want to delegate caption, icon, description and
                    error message management to parent.
 
-        @return Returns true iff no further painting is needed by caller
+        @return: Returns true iff no further painting is needed by caller
         """
         pid = self.getPid(component.getElement())
         if pid is None:
-            VConsole.error('Trying to update an unregistered component: ' + Util.getSimpleName(component))
+            VConsole.error('Trying to update an unregistered component: '
+                    + Util.getSimpleName(component))
             return True
+
         componentDetail = self._idToPaintableDetail.get(pid)
+
         if componentDetail is None:
-            VConsole.error('ComponentDetail not found for ' + Util.getSimpleName(component) + ' with PID ' + pid + '. This should not happen.')
+            VConsole.error('ComponentDetail not found for '
+                    + Util.getSimpleName(component) + ' with PID '
+                    + pid + '. This should not happen.')
             return True
+
         # If the server request that a cached instance should be used, do
         # nothing
         if uidl.getBooleanAttribute('cached'):
             return True
+
         # register the listened events by the server-side to the event-handler
         # of the component
         componentDetail.registerEventListenersFromUIDL(uidl)
+
         # Visibility
         visible = not uidl.getBooleanAttribute('invisible')
         wasVisible = component.isVisible()
@@ -1592,21 +1396,25 @@ class ApplicationConnection(object):
                 parent = Util.getLayout(component)
                 if parent is not None:
                     parent.updateCaption(component, uidl)
+
         if self._configuration.useDebugIdInDOM() and uidl.getId().startswith('PID_S'):
-            DOM.setElementProperty(component.getElement(), 'id', uidl.getId()[5:])
+            DOM.setElemAttribute(component.getElement(), 'id',
+                    uidl.getId()[5:])
+
         if not visible:
             # component is invisible, delete old size to notify parent, if
             # later make visible
             componentDetail.setOffsetSize(None)
             return True
+
         # Switch to correct implementation if needed
-        if (
-            not self._widgetSet.isCorrectImplementation(component, uidl, self._configuration)
-        ):
+        if not self._widgetSet.isCorrectImplementation(component, uidl,
+                self._configuration):
             w = self._widgetSet.createWidget(uidl, self._configuration)
-            # deferred binding check TODO change isCorrectImplementation to use
+            # deferred binding check
+            # TODO: change isCorrectImplementation to use
             # stored detected class, making this innecessary
-            if w.getClass() != component.getClass():
+            if w.__class__ != component.__class__:
                 parent = Util.getLayout(component)
                 if parent is not None:
                     parent.replaceChildComponent(component, w)
@@ -1614,147 +1422,157 @@ class ApplicationConnection(object):
                     self.registerPaintable(uidl.getId(), w)
                     w.updateFromUIDL(uidl, self)
                     return True
+
         enabled = not uidl.getBooleanAttribute('disabled')
         if uidl.hasAttribute('tabindex') and isinstance(component, Focusable):
             component.setTabIndex(uidl.getIntAttribute('tabindex'))
+
         # Disabled state may affect (override) tabindex so the order must be
         # first setting tabindex, then enabled state.
-
         if isinstance(component, FocusWidget):
             fw = component
             fw.setEnabled(enabled)
+
         styleBuf = str()
         primaryName = component.getStylePrimaryName()
-        styleBuf.__add__(primaryName)
+        styleBuf += primaryName
+
         # first disabling and read-only status
         if not enabled:
-            styleBuf.__add__(' ')
-            styleBuf.__add__(self.DISABLED_CLASSNAME)
+            styleBuf += ' '
+            styleBuf += self.DISABLED_CLASSNAME
+
         if uidl.getBooleanAttribute('readonly'):
-            styleBuf.__add__(' ')
-            styleBuf.__add__('v-readonly')
-        # add additional styles as css classes, prefixed with component default
-        # stylename
+            styleBuf += ' '
+            styleBuf += 'v-readonly'
+
+        # add additional styles as css classes, prefixed with component
+        # default stylename
         if uidl.hasAttribute('style'):
             styles = uidl.getStringAttribute('style').split(' ')
-            _0 = True
-            i = 0
-            while True:
-                if _0 is True:
-                    _0 = False
-                else:
-                    i += 1
-                if not (i < len(styles)):
-                    break
-                styleBuf.__add__(' ')
-                styleBuf.__add__(primaryName)
-                styleBuf.__add__('-')
-                styleBuf.__add__(styles[i])
-                styleBuf.__add__(' ')
-                styleBuf.__add__(styles[i])
+            for i in range(len(styles)):
+                styleBuf += ' '
+                styleBuf += primaryName
+                styleBuf += '-'
+                styleBuf += styles[i]
+                styleBuf += ' '
+                styleBuf += styles[i]
+
         # add modified classname to Fields
         if uidl.hasAttribute('modified') and isinstance(component, Field):
-            styleBuf.__add__(' ')
-            styleBuf.__add__(self._MODIFIED_CLASSNAME)
+            styleBuf += ' '
+            styleBuf += self._MODIFIED_CLASSNAME
+
         tooltipInfo = componentDetail.getTooltipInfo(None)
         # Update tooltip
         if uidl.hasAttribute(self.ATTRIBUTE_DESCRIPTION):
-            tooltipInfo.setTitle(uidl.getStringAttribute(self.ATTRIBUTE_DESCRIPTION))
+            tooltipInfo.setTitle(
+                    uidl.getStringAttribute(self.ATTRIBUTE_DESCRIPTION))
         else:
             tooltipInfo.setTitle(None)
+
         # add error classname to components w/ error
         if uidl.hasAttribute(self.ATTRIBUTE_ERROR):
             tooltipInfo.setErrorUidl(uidl.getErrors())
-            styleBuf.__add__(' ')
-            styleBuf.__add__(primaryName)
-            styleBuf.__add__(self._ERROR_CLASSNAME_EXT)
+            styleBuf += ' '
+            styleBuf += primaryName
+            styleBuf += self._ERROR_CLASSNAME_EXT
         else:
             tooltipInfo.setErrorUidl(None)
+
         # add required style to required components
         if uidl.hasAttribute('required'):
-            styleBuf.__add__(' ')
-            styleBuf.__add__(primaryName)
-            styleBuf.__add__(self._REQUIRED_CLASSNAME_EXT)
+            styleBuf += ' '
+            styleBuf += primaryName
+            styleBuf += self._REQUIRED_CLASSNAME_EXT
+
         # Styles + disabled & readonly
-        component.setStyleName(str(styleBuf))
+        component.setStyleName(styleBuf)
+
         # Set captions
         if manageCaption:
             parent = Util.getLayout(component)
             if parent is not None:
                 parent.updateCaption(component, uidl)
+
         # updateComponentSize need to be after caption update so caption can be
         # taken into account
 
         self.updateComponentSize(componentDetail, uidl)
+
         return False
 
-    def updateComponentSize(self, cd, uidl):
-        # Traverses recursively child widgets until ContainerResizedListener child
-        # widget is found. They will delegate it further if needed.
-        #
-        # @param container
 
+    def updateComponentSize(self, cd, uidl):
         w = uidl.getStringAttribute('width') if uidl.hasAttribute('width') else ''
+
         h = uidl.getStringAttribute('height') if uidl.hasAttribute('height') else ''
+
         relativeWidth = Util.parseRelativeSize(w)
         relativeHeight = Util.parseRelativeSize(h)
+
         # First update maps so they are correct in the setHeight/setWidth calls
         if (relativeHeight >= 0.0) or (relativeWidth >= 0.0):
             # One or both is relative
             relativeSize = FloatSize(relativeWidth, relativeHeight)
             if cd.getRelativeSize() is None and cd.getOffsetSize() is not None:
                 # The component has changed from absolute size to relative size
-                self._relativeSizeChanges.add(cd.getComponent())
+                self._relativeSizeChanges.append(cd.getComponent())
             cd.setRelativeSize(relativeSize)
         elif relativeHeight < 0.0 and relativeWidth < 0.0:
             if cd.getRelativeSize() is not None:
                 # The component has changed from relative size to absolute size
                 self._relativeSizeChanges.add(cd.getComponent())
             cd.setRelativeSize(None)
+
         component = cd.getComponent()
         # Set absolute sizes
         if relativeHeight < 0.0:
             component.setHeight(h)
+
         if relativeWidth < 0.0:
             component.setWidth(w)
+
         # Set relative sizes
         if (relativeHeight >= 0.0) or (relativeWidth >= 0.0):
             # One or both is relative
             self.handleComponentRelativeSize(cd)
 
+
+    # Traverses recursively child widgets until ContainerResizedListener
+    # child widget is found. They will delegate it further if needed.
     _runningLayout = False
 
     def runDescendentsLayout(self, container):
         """Causes a re-calculation/re-layout of all paintables in a container.
-
-        @param container
         """
         if self._runningLayout:
             return
+
         self._runningLayout = True
         self.internalRunDescendentsLayout(container)
         self._runningLayout = False
+
 
     def forceLayout(self):
         """This will cause re-layouting of all components. Mainly used for
         development. Published to JavaScript.
         """
-        set = set()
+        _set = set()
         for cd in self._idToPaintableDetail.values():
-            set.add(cd.getComponent())
-        Util.componentSizeUpdated(set)
+            _set.add(cd.getComponent())
+        Util.componentSizeUpdated(_set)
+
 
     def internalRunDescendentsLayout(self, container):
         # getConsole().log(
-        # "runDescendentsLayout(" + Util.getSimpleName(container) + ")");
+        # "runDescendentsLayout(" + Util.getSimpleName(container) + ")")
         childWidgets = container
-        while childWidgets.hasNext():
-            child = childWidgets.next()
+        for child in childWidgets:
             if isinstance(child, Paintable):
                 if self.handleComponentRelativeSize(child):
                     # Only need to propagate event if "child" has a relative
                     # size
-
                     if isinstance(child, ContainerResizedListener):
                         child.iLayout()
                     if isinstance(child, HasWidgets):
@@ -1764,170 +1582,180 @@ class ApplicationConnection(object):
                 # propagate over non Paintable HasWidgets
                 self.internalRunDescendentsLayout(child)
 
-    def handleComponentRelativeSize(self, *args):
+
+    def handleComponentRelativeSize(self, child):
         """Converts relative sizes into pixel sizes.
 
-        @param child
-        @return true if the child has a relative size
-        ---
-        Converts relative sizes into pixel sizes.
-
-        @param child
-        @return true if the child has a relative size
+        @return: true if the child has a relative size
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            if isinstance(_0[0], ComponentDetail):
-                cd, = _0
-                if cd is None:
-                    return False
-                debugSizes = False
-                relativeSize = cd.getRelativeSize()
-                if relativeSize is None:
-                    return False
-                widget = cd.getComponent()
-                horizontalScrollBar = False
-                verticalScrollBar = False
-                parent = Util.getLayout(widget)
-                # Parent-less components (like sub-windows) are relative to browser
-                # window.
-                if parent is None:
-                    renderSpace = RenderSpace(Window.getClientWidth(), Window.getClientHeight())
-                else:
-                    renderSpace = parent.getAllocatedSpace(widget)
-                if relativeSize.getHeight() >= 0:
-                    if renderSpace is not None:
-                        if renderSpace.getScrollbarSize() > 0:
-                            if relativeSize.getWidth() > 100:
-                                horizontalScrollBar = True
-                            elif relativeSize.getWidth() < 0 and renderSpace.getWidth() > 0:
-                                offsetWidth = widget.getOffsetWidth()
-                                width = renderSpace.getWidth()
-                                if offsetWidth > width:
-                                    horizontalScrollBar = True
-                        height = renderSpace.getHeight()
-                        if horizontalScrollBar:
-                            height -= renderSpace.getScrollbarSize()
-                        if self._validatingLayouts and height <= 0:
-                            self._zeroHeightComponents.add(cd.getComponent())
-                        height = (height * relativeSize.getHeight()) / 100.0
-                        if height < 0:
-                            height = 0
-                        if debugSizes:
-                            VConsole.log('Widget ' + Util.getSimpleName(widget) + '/' + self.getPid(widget.getElement()) + ' relative height ' + relativeSize.getHeight() + '% of ' + renderSpace.getHeight() + 'px (reported by ' + Util.getSimpleName(parent) + '/' + ('?' if parent is None else parent.hashCode()) + ') : ' + height + 'px')
-                        widget.setHeight(height + 'px')
-                    else:
-                        widget.setHeight(relativeSize.getHeight() + '%')
-                        VConsole.error(Util.getLayout(widget).getClass().getName() + ' did not produce allocatedSpace for ' + widget.getClass().getName())
-                if relativeSize.getWidth() >= 0:
-                    if renderSpace is not None:
-                        width = renderSpace.getWidth()
-                        if renderSpace.getScrollbarSize() > 0:
-                            if relativeSize.getHeight() > 100:
-                                verticalScrollBar = True
-                            elif (
-                                relativeSize.getHeight() < 0 and renderSpace.getHeight() > 0 and widget.getOffsetHeight() > renderSpace.getHeight()
-                            ):
-                                verticalScrollBar = True
-                        if verticalScrollBar:
-                            width -= renderSpace.getScrollbarSize()
-                        if self._validatingLayouts and width <= 0:
-                            self._zeroWidthComponents.add(cd.getComponent())
-                        width = (width * relativeSize.getWidth()) / 100.0
-                        if width < 0:
-                            width = 0
-                        if debugSizes:
-                            VConsole.log('Widget ' + Util.getSimpleName(widget) + '/' + self.getPid(widget.getElement()) + ' relative width ' + relativeSize.getWidth() + '% of ' + renderSpace.getWidth() + 'px (reported by ' + Util.getSimpleName(parent) + '/' + ('?' if parent is None else self.getPid(parent)) + ') : ' + width + 'px')
-                        widget.setWidth(width + 'px')
-                    else:
-                        widget.setWidth(relativeSize.getWidth() + '%')
-                        VConsole.error(Util.getLayout(widget).getClass().getName() + ' did not produce allocatedSpace for ' + widget.getClass().getName())
-                return True
+        if isinstance(child, ComponentDetail):
+            cd, = child
+            if cd is None:
+                return False
+            debugSizes = False
+            relativeSize = cd.getRelativeSize()
+            if relativeSize is None:
+                return False
+            widget = cd.getComponent()
+            horizontalScrollBar = False
+            verticalScrollBar = False
+            parent = Util.getLayout(widget)
+            # Parent-less components (like sub-windows) are relative to browser
+            # window.
+            if parent is None:
+                renderSpace = RenderSpace(Window.getClientWidth(),
+                        Window.getClientHeight())
             else:
-                child, = _0
-                return self.handleComponentRelativeSize(self._idToPaintableDetail.get(self.getPid(child.getElement())))
+                renderSpace = parent.getAllocatedSpace(widget)
+            if relativeSize.getHeight() >= 0:
+                if renderSpace is not None:
+                    if renderSpace.getScrollbarSize() > 0:
+                        if relativeSize.getWidth() > 100:
+                            horizontalScrollBar = True
+                        elif (relativeSize.getWidth() < 0
+                                and renderSpace.getWidth() > 0):
+                            offsetWidth = widget.getOffsetWidth()
+                            width = renderSpace.getWidth()
+                            if offsetWidth > width:
+                                horizontalScrollBar = True
+                    height = renderSpace.getHeight()
+                    if horizontalScrollBar:
+                        height -= renderSpace.getScrollbarSize()
+                    if self._validatingLayouts and height <= 0:
+                        self._zeroHeightComponents.add(cd.getComponent())
+                    height = (height * relativeSize.getHeight()) / 100.0
+                    if height < 0:
+                        height = 0
+                    if debugSizes:
+                        VConsole.log('Widget ' + Util.getSimpleName(widget)
+                                + '/' + self.getPid(widget.getElement())
+                                + ' relative height '
+                                + relativeSize.getHeight() + '% of '
+                                + renderSpace.getHeight() + 'px (reported by '
+                                + Util.getSimpleName(parent) + '/'
+                                + ('?' if parent is None else parent.hashCode())
+                                + ') : ' + height + 'px')
+                    widget.setHeight(height + 'px')
+                else:
+                    widget.setHeight(relativeSize.getHeight() + '%')
+                    VConsole.error(Util.getLayout(widget).__class__.__name__
+                            + ' did not produce allocatedSpace for '
+                            + widget.__class__.__name__)
+            if relativeSize.getWidth() >= 0:
+                if renderSpace is not None:
+                    width = renderSpace.getWidth()
+                    if renderSpace.getScrollbarSize() > 0:
+                        if relativeSize.getHeight() > 100:
+                            verticalScrollBar = True
+                        elif (relativeSize.getHeight() < 0
+                              and renderSpace.getHeight() > 0
+                              and widget.getOffsetHeight() > renderSpace.getHeight()):
+                            verticalScrollBar = True
+                    if verticalScrollBar:
+                        width -= renderSpace.getScrollbarSize()
+                    if self._validatingLayouts and width <= 0:
+                        self._zeroWidthComponents.add(cd.getComponent())
+                    width = (width * relativeSize.getWidth()) / 100.0
+                    if width < 0:
+                        width = 0
+                    if debugSizes:
+                        VConsole.log('Widget ' + Util.getSimpleName(widget)
+                                + '/' + self.getPid(widget.getElement())
+                                + ' relative width ' + relativeSize.getWidth()
+                                + '% of ' + renderSpace.getWidth()
+                                + 'px (reported by '
+                                + Util.getSimpleName(parent) + '/'
+                                + ('?' if parent is None else self.getPid(parent))
+                                + ') : ' + width + 'px')
+                    widget.setWidth(width + 'px')
+                else:
+                    widget.setWidth(relativeSize.getWidth() + '%')
+                    VConsole.error(Util.getLayout(widget).__class__.__name__
+                            + ' did not produce allocatedSpace for '
+                            + widget.__class__.__name__)
+            return True
         else:
-            raise ARGERROR(1, 1)
+            pid = self.getPid(child.getElement())
+            return self.handleComponentRelativeSize(
+                    self._idToPaintableDetail.get(pid))
+
 
     def getRelativeSize(self, widget):
         """Gets the specified Paintables relative size (percent).
 
-        @param widget
+        @param widget:
                    the paintable whose size is needed
-        @return the the size if the paintable is relatively sized, -1 otherwise
+        @return:
+                   the the size if the paintable is relatively sized,
+                   -1 otherwise
         """
-        return self._idToPaintableDetail.get(self.getPid(widget.getElement())).getRelativeSize()
+        pid = self.getPid(widget.getElement())
+        return self._idToPaintableDetail.get(pid).getRelativeSize()
+
 
     def getResource(self, name):
         """Gets a recource that has been pre-loaded via UIDL, such as custom
         layouts.
 
-        @param name
+        @param name:
                    identifier of the resource to get
-        @return the resource
+        @return: the resource
         """
-        return self._resourcesMap[name]
+        return self._resourcesMap.get(name)
+
 
     def getContextMenu(self):
         """Singleton method to get instance of app's context menu.
 
-        @return VContextMenu object
+        @return: VContextMenu object
         """
         if self._contextMenu is None:
             self._contextMenu = VContextMenu()
-            DOM.setElementProperty(self._contextMenu.getElement(), 'id', 'PID_VAADIN_CM')
+            DOM.setElemAttribute(self._contextMenu.getElement(),
+                    'id', 'PID_VAADIN_CM')
         return self._contextMenu
 
-    def translateVaadinUri(self, uidlUri):
-        """Translates custom protocols in UIDL URI's to be recognizable by browser.
-        All uri's from UIDL should be routed via this method before giving them
-        to browser due URI's in UIDL may contain custom protocols like theme://.
 
-        @param uidlUri
-                   Vaadin URI from uidl
-        @return translated URI ready for browser
+    def translateVaadinUri(self, uidlUri):
+        """Translates custom protocols in UIDL URI's to be recognizable by
+        browser. All uri's from UIDL should be routed via this method before
+        giving them to browser due URI's in UIDL may contain custom protocols
+        like theme://.
+
+        @param uidlUri:
+                   Muntjac URI from uidl
+        @return: translated URI ready for browser
         """
         if uidlUri is None:
             return None
+
         if uidlUri.startswith('theme://'):
             themeUri = self._configuration.getThemeUri()
             if themeUri is None:
-                VConsole.error('Theme not set: ThemeResource will not be found. (' + uidlUri + ')')
+                VConsole.error('Theme not set: ThemeResource will not be found. ('
+                        + uidlUri + ')')
             uidlUri = themeUri + (uidlUri[7:])
+
         if uidlUri.startswith('app://'):
             uidlUri = self.getAppUri() + (uidlUri[6:])
+
         return uidlUri
+
 
     def getThemeUri(self):
         """Gets the URI for the current theme. Can be used to reference theme
         resources.
 
-        @return URI to the current theme
+        @return: URI to the current theme
         """
         return self._configuration.getThemeUri()
 
-    def NotificationRedirect(ApplicationConnection_this, *args, **kwargs):
-
-        class NotificationRedirect(VNotification.EventListener):
-            """Listens for Notification hide event, and redirects. Used for system
-            messages, such as session expired.
-            """
-            _url = None
-
-            def __init__(self, url):
-                self._url = url
-
-            def notificationHidden(self, event):
-                ApplicationConnection_this.redirect(self._url)
-
-        return NotificationRedirect(*args, **kwargs)
 
     # Extended title handling
 
     def getTooltipTitleInfo(self, titleOwner, key):
-        """Data showed in tooltips are stored centrilized as it may be needed in
-        varios place: caption, layouts, and in owner components themselves.
+        """Data showed in tooltips are stored centrilized as it may be needed
+        in varios place: caption, layouts, and in owner components themselves.
 
         Updating TooltipInfo is done in updateComponent method.
         """
@@ -1939,72 +1767,43 @@ class ApplicationConnection(object):
         else:
             return None
 
-    def handleTooltipEvent(self, *args):
-        """Component may want to delegate Tooltip handling to client. Layouts add
-        Tooltip (description, errors) to caption, but some components may want
-        them to appear one other elements too.
+
+    def handleTooltipEvent(self, event, owner, key=None):
+        """Component may want to delegate Tooltip handling to client. Layouts
+        add Tooltip (description, errors) to caption, but some components may
+        want them to appear one other elements too.
 
         Events wanted by this handler are same as in Tooltip.TOOLTIP_EVENTS
 
-        @param event
-        @param owner
-        ---
-        Component may want to delegate Tooltip handling to client. Layouts add
-        Tooltip (description, errors) to caption, but some components may want
-        them to appear one other elements too.
-
-        Events wanted by this handler are same as in Tooltip.TOOLTIP_EVENTS
-
-        @param event
-        @param owner
-        @param key
-                   the key for tooltip if this is "additional" tooltip, null for
-                   components "main tooltip"
+        @param event:
+        @param owner:
+        @param key:
+                   the key for tooltip if this is "additional" tooltip, null
+                   for components "main tooltip"
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 2:
-            event, owner = _0
-            self._tooltip.handleTooltipEvent(event, owner, None)
-        elif _1 == 3:
-            event, owner, key = _0
-            self._tooltip.handleTooltipEvent(event, owner, key)
-        else:
-            raise ARGERROR(2, 3)
+        self._tooltip.handleTooltipEvent(event, owner, key)
+
 
     def addPngFix(self, el):
-        """Adds PNG-fix conditionally (only for IE6) to the specified IMG -element.
+        """Adds PNG-fix conditionally (only for IE6) to the specified IMG
+        -element.
 
-        @param el
+        @param el:
                    the IMG element to fix
         """
         # Helper to run layout functions triggered by child components with a
         # decent interval.
-
         b = BrowserInfo.get()
         if b.isIE6():
             Util.addPngFix(el)
 
-    class layoutTimer(Timer):
-        _isPending = False
-
-        def schedule(self, delayMillis):
-            if not self._isPending:
-                super(_11_, self).schedule(delayMillis)
-                self._isPending = True
-
-        def run(self):
-            VConsole.log('Running re-layout of ' + ApplicationConnection_this._view.getClass().getName())
-            ApplicationConnection_this.runDescendentsLayout(ApplicationConnection_this._view)
-            self._isPending = False
 
     def requestLayoutPhase(self):
         """Components can call this function to run all layout functions. This is
         usually done, when component knows that its size has changed.
         """
-        self.layoutTimer.schedule(500)
+        self._layoutTimer.schedule(500)
 
-    _windowName = None
 
     def setWindowName(self, newName):
         """Reset the name of the current browser-window. This should reflect the
@@ -2016,88 +1815,97 @@ class ApplicationConnection(object):
         """
         self._windowName = newName
 
+
     def getWindowName(self):
         return self._windowName
+
 
     def getUidlSecurityKey(self):
         return self._uidlSecurityKey
 
-    def captionSizeUpdated(self, component):
-        """Use to notify that the given component's caption has changed; layouts may
-        have to be recalculated.
 
-        @param component
+    def captionSizeUpdated(self, component):
+        """Use to notify that the given component's caption has changed;
+        layouts may have to be recalculated.
+
+        @param component:
                    the Paintable whose caption has changed
         """
         self._componentCaptionSizeChanges.add(component)
 
+
     def getView(self):
         """Gets the main view, a.k.a top-level window.
 
-        @return the main view
+        @return: the main view
         """
         return self._view
 
+
     def registerTooltip(self, paintable, key, tooltip):
         """If component has several tooltips in addition to the one provided by
-        {@link com.vaadin.ui.AbstractComponent}, component can register them with
+        L{muntjac.ui.AbstractComponent}, component can register them with
         this method.
-        <p>
-        Component must also pipe events to
-        {@link #handleTooltipEvent(Event, Paintable, Object)} method.
-        <p>
+
+        Component must also pipe events to L{handleTooltipEvent} method.
+
         This method can also be used to deregister tooltips by using null as
         tooltip
 
-        @param paintable
+        @param paintable:
                    Paintable "owning" this tooltip
-        @param key
+        @param key:
                    key assosiated with given tooltip. Can be any object. For
                    example a related dom element. Same key must be given for
-                   {@link #handleTooltipEvent(Event, Paintable, Object)} method.
-
-        @param tooltip
+                   L{handleTooltipEvent} method.
+        @param tooltip:
                    the TooltipInfo object containing details shown in tooltip,
                    null if deregistering tooltip
         """
         componentDetail = self._idToPaintableDetail.get(self.getPid(paintable))
         componentDetail.putAdditionalTooltip(key, tooltip)
 
-    def getConfiguration(self):
-        """Gets the {@link ApplicationConfiguration} for the current application.
 
-        @see ApplicationConfiguration
-        @return the configuration for this application
+    def getConfiguration(self):
+        """Gets the L{ApplicationConfiguration} for the current application.
+
+        @see: ApplicationConfiguration
+        @return: the configuration for this application
         """
         return self._configuration
 
-    def hasEventListeners(self, paintable, eventIdentifier):
-        """Checks if there is a registered server side listener for the event. The
-        list of events which has server side listeners is updated automatically
-        before the component is updated so the value is correct if called from
-        updatedFromUIDL.
 
-        @param eventIdentifier
+    def hasEventListeners(self, paintable, eventIdentifier):
+        """Checks if there is a registered server side listener for the event.
+        The list of events which has server side listeners is updated
+        automatically before the component is updated so the value is correct
+        if called from updatedFromUIDL.
+
+        @param eventIdentifier:
                    The identifier for the event
-        @return true if at least one listener has been registered on server side
-                for the event identified by eventIdentifier.
+        @return: true if at least one listener has been registered on server
+                 side for the event identified by eventIdentifier.
         """
-        return self._idToPaintableDetail.get(self.getPid(paintable)).hasEventListeners(eventIdentifier)
+        pid = self.getPid(paintable)
+        return self._idToPaintableDetail.get(
+                pid).hasEventListeners(eventIdentifier)
+
 
     @classmethod
     def addGetParameters(cls, uri, extraParams):
-        """Adds the get parameters to the uri and returns the new uri that contains
-        the parameters.
+        """Adds the get parameters to the uri and returns the new uri that
+        contains the parameters.
 
-        @param uri
+        @param uri:
                    The uri to which the parameters should be added.
-        @param extraParams
+        @param extraParams:
                    One or more parameters in the format "a=b" or "c=d&e=f". An
                    empty string is allowed but will not modify the url.
-        @return The modified URI with the get parameters in extraParams added.
+        @return: The modified URI with the get parameters in extraParams added.
         """
         if (extraParams is None) or (len(extraParams) == 0):
             return uri
+
         # RFC 3986: The query component is indicated by the first question
         # mark ("?") character and terminated by a number sign ("#") character
         # or by the end of the URI.
@@ -2108,13 +1916,16 @@ class ApplicationConnection(object):
             fragment = uri[hashPosition:]
             # The full uri before the fragment
             uri = uri[:hashPosition]
+
         if uri.contains('?'):
             uri += '&'
         else:
             uri += '?'
+
         uri += extraParams
         if fragment is not None:
             uri += fragment
+
         return uri
 
 
@@ -2155,6 +1966,20 @@ class UidlRequestCallback(RequestCallback):
             delay = int(response.getHeader('Retry-After'))
             VConsole.log('503, retrying in ' + delay + 'msec')
 
+            class UidlTimer(Timer):
+
+                def __init__(self, uri, payload, synchronous, connection):
+                    super(UidlTimer, self).__init__()
+                    self._uri = uri
+                    self._payload = payload
+                    self._synchronous = synchronous
+                    self._conn = connection
+
+                def run(self):
+                    self._conn._activeRequests -= 1
+                    self._conn.doUidlRequest(self._uri, self._payload,
+                            self._synchronous)
+
             timer = UidlTimer(self._uri, self._payload, self._synchronous,
                     self._conn)
             timer.schedule(delay)
@@ -2189,15 +2014,32 @@ class UidlRequestCallback(RequestCallback):
             ApplicationConfiguration.startNextApplication()
 
 
-class UidlTimer(Timer):
+class NotificationRedirect(VNotification.EventListener):
+    """Listens for Notification hide event, and redirects. Used for system
+    messages, such as session expired.
+    """
 
-    def __init__(self, uri, payload, synchronous, connection):
-        super(UidlTimer, self).__init__()
-        self._uri = uri
-        self._payload = payload
-        self._synchronous = synchronous
-        self._conn = connection
+    def __init__(self, url, conn):
+        self._url = url
+        self._conn = conn
+
+    def notificationHidden(self, event):
+        self._conn.redirect(self._url)
+
+
+class LayoutTimer(Timer):
+
+    def __init__(self, conn):
+        self._isPending = False
+        self._conn = conn
+
+    def schedule(self, delayMillis):
+        if not self._isPending:
+            super(LayoutTimer, self).schedule(delayMillis)
+            self._isPending = True
 
     def run(self):
-        self._conn._activeRequests -= 1
-        self._conn.doUidlRequest(self._uri, self._payload, self._synchronous)
+        VConsole.log('Running re-layout of '
+                + self._conn._view.__class__.__name__)
+        self._conn.runDescendentsLayout(self._conn._view)
+        self._isPending = False
