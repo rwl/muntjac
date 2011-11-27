@@ -8,7 +8,7 @@ from wsgiref.simple_server import make_server
 
 import muntjac
 
-from muntjac.util import InMemorySession
+from muntjac.demo.util import InMemorySession
 
 from muntjac.terminal.gwt.server.application_servlet import ApplicationServlet
 

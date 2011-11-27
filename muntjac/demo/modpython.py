@@ -20,7 +20,7 @@
 """
 
 from paste.session import SessionMiddleware
-from muntjac.util import MuntjacFileSession
+from muntjac.demo.util import MuntjacFileSession
 
 from muntjac.demo.main import hello, calc, address, tunes, sampler
 
