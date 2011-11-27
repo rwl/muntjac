@@ -773,164 +773,189 @@ class ApplicationConnection(object):
             VConsole.log('redirecting to ' + url)
             self.redirect(url)
             return
+
         # Get security key
         if self.UIDL_SECURITY_TOKEN_ID in json:
             self._uidlSecurityKey = json.getString(self.UIDL_SECURITY_TOKEN_ID)
+
         if 'resources' in json:
             resources = json.getValueMap('resources')
             keyArray = resources.getKeyArray()
             l = len(keyArray)
-            _0 = True
-            i = 0
-            while True:
-                if _0 is True:
-                    _0 = False
-                else:
-                    i += 1
-                if not (i < l):
-                    break
+            for i in range(l):
                 key = keyArray.get(i)
-                self._resourcesMap.put(key, resources.getAsString(key))
-        if 'typeMappings' in json:
-            self._configuration.addComponentMappings(json.getValueMap('typeMappings'), self._widgetSet)
+                self._resourcesMap[key] = resources.getAsString(key)
 
-        class c(Command):
+        if 'typeMappings' in json:
+            tm = json.getValueMap('typeMappings')
+            self._configuration.addComponentMappings(tm, self._widgetSet)
+
+        class UidlCommand(Command):
+
+            def __init__(self, jsonText, json, conn):
+                self._jsonText = jsonText
+                self._json = json
+                self._conn = conn
 
             def execute(self):
-                VConsole.dirUIDL(self.json, ApplicationConnection_this._configuration)
+                VConsole.dirUIDL(self.json, self._conn._configuration)
+
                 if 'locales' in self.json:
                     # Store locale data
                     valueMapArray = self.json.getJSValueMapArray('locales')
                     LocaleService.addLocales(valueMapArray)
+
                 repaintAll = False
                 meta = None
-                if 'meta' in self.json:
-                    meta = self.json.getValueMap('meta')
+                if 'meta' in self._json:
+                    meta = self._json.getValueMap('meta')
                     if 'repaintAll' in meta:
                         repaintAll = True
-                        ApplicationConnection_this._view.clear()
-                        ApplicationConnection_this._idToPaintableDetail.clear()
+                        self._conn._view.clear()
+                        self._conn._idToPaintableDetail.clear()
                         if 'invalidLayouts' in meta:
-                            ApplicationConnection_this._validatingLayouts = True
-                            ApplicationConnection_this._zeroWidthComponents = set()
-                            ApplicationConnection_this._zeroHeightComponents = set()
+                            self._conn._validatingLayouts = True
+                            self._conn._zeroWidthComponents = set()
+                            self._conn._zeroHeightComponents = set()
                     if 'timedRedirect' in meta:
                         timedRedirect = meta.getValueMap('timedRedirect')
 
-                        class _9_(Timer):
+                        class UidlTimer(Timer):
 
                             def run(self):
-                                ApplicationConnection_this.redirect(self.timedRedirect.getString('url'))
+                                url = self.timedRedirect.getString('url')
+                                self._conn.redirect(url)
 
-                        _9_ = _9_()
-                        ApplicationConnection_this._redirectTimer = _9_
-                        ApplicationConnection_this._sessionExpirationInterval = timedRedirect.getInt('interval')
-                if ApplicationConnection_this._redirectTimer is not None:
-                    ApplicationConnection_this._redirectTimer.schedule(1000 * ApplicationConnection_this._sessionExpirationInterval)
+                        self._conn._redirectTimer = UidlTimer()
+                        self._conn._sessionExpirationInterval = \
+                                timedRedirect.getInt('interval')
+                if self._conn._redirectTimer is not None:
+                    t = 1000 * self._conn._sessionExpirationInterval
+                    self._conn._redirectTimer.schedule(t)
+
                 # Process changes
                 changes = self.json.getJSValueMapArray('changes')
                 updatedWidgets = list()
-                ApplicationConnection_this._relativeSizeChanges.clear()
-                ApplicationConnection_this._componentCaptionSizeChanges.clear()
+                self._conn._relativeSizeChanges.clear()
+                self._conn._componentCaptionSizeChanges.clear()
+
                 length = len(changes)
-                _0 = True
-                i = 0
-                while True:
-                    if _0 is True:
-                        _0 = False
-                    else:
-                        i += 1
-                    if not (i < length):
-                        break
+                for i in range(length):
                     try:
                         change = changes.get(i)
                         uidl = change.getChildUIDL(0)
                         # TODO optimize
-                        paintable = ApplicationConnection_this.getPaintable(uidl.getId())
+                        paintable = self._conn.getPaintable(uidl.getId())
                         if paintable is not None:
-                            paintable.updateFromUIDL(uidl, ApplicationConnection_this)
+                            paintable.updateFromUIDL(uidl, self._conn)
                             # paintable may have changed during render to
-                            # another
-                            # implementation, use the new one for updated
-                            # widgets map
-                            updatedWidgets.add(ApplicationConnection_this._idToPaintableDetail.get(uidl.getId()).getComponent())
-                        elif (
-                            not (uidl.getTag() == ApplicationConnection_this._configuration.getEncodedWindowTag())
-                        ):
-                            VConsole.error('Received update for ' + uidl.getTag() + ', but there is no such paintable (' + uidl.getId() + ') rendered.')
+                            # another implementation, use the new one for
+                            # updated widgets map
+                            updatedWidgets.add(self._conn._idToPaintableDetail.get(uidl.getId()).getComponent())
+                        elif uidl.getTag() != self._conn._configuration.getEncodedWindowTag():
+                            VConsole.error('Received update for '
+                                    + uidl.getTag() + ', but there is no such paintable ('
+                                    + uidl.getId() + ') rendered.')
                         else:
                             pid = uidl.getId()
-                            if not (pid in ApplicationConnection_this._idToPaintableDetail):
-                                ApplicationConnection_this.registerPaintable(pid, ApplicationConnection_this._view)
+                            if (pid not in self._conn._idToPaintableDetail):
+                                self._conn.registerPaintable(pid,
+                                        self._conn._view)
                             # VView does not call updateComponent so we
                             # register any event listeners here
-                            cd = ApplicationConnection_this._idToPaintableDetail.get(pid)
+                            cd = self._conn._idToPaintableDetail.get(pid)
                             cd.registerEventListenersFromUIDL(uidl)
                             # Finally allow VView to update itself
-                            ApplicationConnection_this._view.updateFromUIDL(uidl, ApplicationConnection_this)
+                            self._conn._view.updateFromUIDL(uidl, self._conn)
                     except BaseException, e:
                         VConsole.error(e)
+
                 if 'dd' in self.json:
                     # response contains data for drag and drop service
-                    VDragAndDropManager.get().handleServerResponse(self.json.getValueMap('dd'))
+                    VDragAndDropManager.get().handleServerResponse(
+                            self.json.getValueMap('dd'))
+
                 # Check which widgets' size has been updated
                 sizeUpdatedWidgets = set()
-                updatedWidgets.addAll(ApplicationConnection_this._relativeSizeChanges)
-                sizeUpdatedWidgets.addAll(ApplicationConnection_this._componentCaptionSizeChanges)
+
+                updatedWidgets.addAll(self._conn._relativeSizeChanges)
+                sizeUpdatedWidgets.addAll(self._conn._componentCaptionSizeChanges)
+
                 for paintable in updatedWidgets:
-                    detail = ApplicationConnection_this._idToPaintableDetail.get(ApplicationConnection_this.getPid(paintable))
+                    detail = self._conn._idToPaintableDetail.get(
+                            self._conn.getPid(paintable))
                     widget = paintable
                     oldSize = detail.getOffsetSize()
-                    newSize = Size(widget.getOffsetWidth(), widget.getOffsetHeight())
-                    if (oldSize is None) or (not (oldSize == newSize)):
+                    newSize = Size(widget.getOffsetWidth(),
+                            widget.getOffsetHeight())
+
+                    if (oldSize is None) or (oldSize != newSize):
                         sizeUpdatedWidgets.add(paintable)
                         detail.setOffsetSize(newSize)
+
                 Util.componentSizeUpdated(sizeUpdatedWidgets)
+
                 if meta is not None:
                     if 'appError' in meta:
                         error = meta.getValueMap('appError')
                         html = ''
-                        if 'caption' in error and error.getString('caption') is not None:
-                            html += '<h1>' + error.getAsString('caption') + '</h1>'
-                        if 'message' in error and error.getString('message') is not None:
-                            html += '<p>' + error.getAsString('message') + '</p>'
+                        if ('caption' in error
+                                and error.getString('caption') is not None):
+                            html += ('<h1>' + error.getAsString('caption')
+                                    + '</h1>')
+
+                        if ('message' in error
+                                and error.getString('message') is not None):
+                            html += ('<p>' + error.getAsString('message')
+                                    + '</p>')
+
                         url = None
                         if 'url' in error:
                             url = error.getString('url')
+
                         if len(html) != 0:
                             # 45 min
-                            n = VNotification.createNotification(1000 * 60 * 45)
-                            n.addEventListener(ApplicationConnection_this.NotificationRedirect(url))
-                            n.show(html, VNotification.CENTERED_TOP, VNotification.STYLE_SYSTEM)
+                            n = VNotification.createNotification(1000*60*45)
+                            n.addEventListener(NotificationRedirect(url))
+                            n.show(html, VNotification.CENTERED_TOP,
+                                   VNotification.STYLE_SYSTEM)
                         else:
-                            ApplicationConnection_this.redirect(url)
-                        ApplicationConnection_this.applicationRunning = False
-                    if ApplicationConnection_this._validatingLayouts:
-                        VConsole.printLayoutProblems(meta, ApplicationConnection_this, ApplicationConnection_this._zeroHeightComponents, ApplicationConnection_this._zeroWidthComponents)
-                        ApplicationConnection_this._zeroHeightComponents = None
-                        ApplicationConnection_this._zeroWidthComponents = None
-                        ApplicationConnection_this._validatingLayouts = False
+                            self._conn.redirect(url)
+                        self._conn.applicationRunning = False
+                    if self._conn._validatingLayouts:
+                        VConsole.printLayoutProblems(meta, self._conn,
+                                self._conn._zeroHeightComponents,
+                                self._conn._zeroWidthComponents)
+                        self._conn._zeroHeightComponents = None
+                        self._conn._zeroWidthComponents = None
+                        self._conn._validatingLayouts = False
+
                 if repaintAll:
                     # idToPaintableDetail is already cleanded at the start of
                     # the changeset handling, bypass cleanup.
-
-                    ApplicationConnection_this._unregistryBag.clear()
+                    self._conn._unregistryBag.clear()
                 else:
-                    ApplicationConnection_this.purgeUnregistryBag()
-                # TODO build profiling for widget impl loading time
-                prosessingTime = Date().getTime() - ApplicationConnection_this.start.getTime()
-                VConsole.log(' Processing time was ' + String.valueOf.valueOf(prosessingTime) + 'ms for ' + len(self.jsonText) + ' characters of JSON')
-                VConsole.log('Referenced paintables: ' + len(ApplicationConnection_this._idToPaintableDetail))
-                ApplicationConnection_this.endRequest()
+                    self._conn.purgeUnregistryBag()
 
+                # TODO build profiling for widget impl loading time
+                prosessingTime = time() - self._conn.start.getTime()
+                VConsole.log(' Processing time was ' + str(prosessingTime)
+                    + 'ms for ' + len(self.jsonText) + ' characters of JSON')
+                VConsole.log('Referenced paintables: '
+                    + len(self._conn._idToPaintableDetail))
+                self._conn.endRequest()
+
+        c = UidlCommand(jsonText, json, self)
         ApplicationConfiguration.runWhenWidgetsLoaded(c)
 
+
     def sendPendingVariableChangesSync(self):
-        """This method assures that all pending variable changes are sent to server.
-        Method uses synchronized xmlhttprequest and does not return before the
-        changes are sent. No UIDL updates are processed and thus UI is left in
-        inconsistent state. This method should be called only when closing
-        windows - normally sendPendingVariableChanges() should be used.
+        """This method assures that all pending variable changes are sent to
+        server. Method uses synchronized xmlhttprequest and does not return
+        before the changes are sent. No UIDL updates are processed and thus
+        UI is left in inconsistent state. This method should be called only
+        when closing windows - normally sendPendingVariableChanges() should
+        be used.
         """
         # Redirect browser, null reloads current page
         if self.applicationRunning:
@@ -939,102 +964,101 @@ class ApplicationConnection(object):
             self._pendingVariableBursts.remove(0)
             self.buildAndSendVariableBurst(nextBurst, True)
 
+
     @classmethod
     def redirect(cls, url):
         JS("""
-    	if (@{{url}}) {
-    		$wnd.location = @{{url}};
-    	} else {
-    		$wnd.location.reload(false);
-    	}
-    """)
+        	if (@{{url}}) {
+        		$wnd.location = @{{url}};
+        	} else {
+        		$wnd.location.reload(false);
+        	}
+        """)
         pass
+
 
     def registerPaintable(self, pid, paintable):
         componentDetail = ComponentDetail(self, pid, paintable)
         self._idToPaintableDetail.put(pid, componentDetail)
         self.setPid(paintable.getElement(), pid)
 
+
     def setPid(self, el, pid):
         JS("""
-    	@{{el}}.tkPid = @{{pid}};
-    """)
+        	@{{el}}.tkPid = @{{pid}};
+        """)
         pass
 
-    def getPid(self, *args):
-        """Gets the paintableId for a specific paintable (a.k.a Vaadin Widget).
-        <p>
+
+    def getPid(self, el):
+        """Gets the paintableId for a specific paintable (a.k.a Muntjac Widget).
+
         The paintableId is used in the UIDL to identify a specific widget
-        instance, effectively linking the widget with it's server side Component.
-        </p>
+        instance, effectively linking the widget with it's server side
+        Component.
 
-        @param paintable
+        @param paintable:
                    the paintable who's id is needed
-        @return the id for the given paintable
+        @return: the id for the given paintable
         ---
-        Gets the paintableId using a DOM element - the element should be the main
-        element for a paintable otherwise no id will be found. Use
-        {@link #getPid(Paintable)} instead whenever possible.
+        Gets the paintableId using a DOM element - the element should be the
+        main element for a paintable otherwise no id will be found. Use
+        L{getPid} instead whenever possible.
 
-        @see #getPid(Paintable)
-        @param el
+        @param el:
                    element of the paintable whose pid is desired
-        @return the pid of the element's paintable, if it's a paintable
+        @return: the pid of the element's paintable, if it's a paintable
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            if isinstance(_0[0], Element):
-                el, = _0
-            else:
-                paintable, = _0
-                return self.getPid(paintable.getElement())
+        if isinstance(el, Paintable):
+            paintable = el
+            return self.getPid(paintable.getElement())
         else:
-            raise ARGERROR(1, 1)
+            JS("""
+                return el.tkPid;
+            """)
 
-    JS("""
-    	return el.tkPid;
-    """)
 
     def getElementByPid(self, pid):
-        """Gets the main element for the paintable with the given id. The revers of
-        {@link #getPid(Element)}.
+        """Gets the main element for the paintable with the given id. The
+        reverse of L{getPid}.
 
-        @param pid
+        @param pid:
                    the pid of the widget whose element is desired
-        @return the element for the paintable corresponding to the pid
+        @return: the element for the paintable corresponding to the pid
         """
         return self.getPaintable(pid).getElement()
 
-    def unregisterPaintable(self, p):
-        """Unregisters the given paintable; always use after removing a paintable.
-        This method does not remove the paintable from the DOM, but marks the
-        paintable so that ApplicationConnection may clean up its references to
-        it. Removing the widget from DOM is component containers responsibility.
 
-        @param p
-                   the paintable to remove
+    def unregisterPaintable(self, p):
+        """Unregisters the given paintable; always use after removing a
+        paintable. This method does not remove the paintable from the DOM,
+        but marks the paintable so that ApplicationConnection may clean up
+        its references to it. Removing the widget from DOM is component
+        containers responsibility.
+
+        @param p: the paintable to remove
         """
         # add to unregistry que
         if p is None:
             VConsole.error('WARN: Trying to unregister null paintable')
             return
-        id = self.getPid(p)
-        if id is None:
+
+        Id = self.getPid(p)
+        if Id is None:
             # Uncomment the following to debug unregistring components. No
             # paintables with null id should end here. At least one exception
             # is our VScrollTableRow, that is hacked to fake it self as a
             # Paintable to build support for sizing easier.
+            if not isinstance(p, VScrollTableRow):
+                VConsole.log("Trying to unregister Paintable not created by Application Connection.");
 
-            # if (!(p instanceof VScrollTableRow)) {
-            # VConsole.log("Trying to unregister Paintable not created by Application Connection.");
-            # }
             if isinstance(p, HasWidgets):
                 self.unregisterChildPaintables(p)
         else:
-            self._unregistryBag.add(id)
+            self._unregistryBag.add(Id)
             if isinstance(p, HasWidgets):
                 self.unregisterChildPaintables(p)
+
 
     def purgeUnregistryBag(self):
         for id in self._unregistryBag:
@@ -1043,37 +1067,36 @@ class ApplicationConnection(object):
                 # this should never happen, but it does :-( See e.g.
                 # com.vaadin.tests.components.accordion.RemoveTabs (with test
                 # script)
-
                 VConsole.error('ApplicationConnetion tried to unregister component (id=' + id + ') that is never registered (or already unregistered)')
                 continue
+
             # check if can be cleaned
             component = componentDetail.getComponent()
             if not component.isAttached():
                 # clean reference from ac to paintable
                 self._idToPaintableDetail.remove(id)
+
             # else NOP : same component has been reattached to another parent
             # or replaced by another component implementation.
-
         self._unregistryBag.clear()
 
-    def unregisterChildPaintables(self, container):
-        """Unregisters a paintable and all it's child paintables recursively. Use
-        when after removing a paintable that contains other paintables. Does not
-        unregister the given container itself. Does not actually remove the
-        paintable from the DOM.
 
-        @see #unregisterPaintable(Paintable)
-        @param container
+    def unregisterChildPaintables(self, container):
+        """Unregisters a paintable and all it's child paintables recursively.
+        Use when after removing a paintable that contains other paintables.
+        Does not unregister the given container itself. Does not actually
+        remove the paintable from the DOM.
+
+        @see: unregisterPaintable
         """
-        it = container
-        while it.hasNext():
-            w = it.next()
+        for w in container:
             if isinstance(w, Paintable):
                 self.unregisterPaintable(w)
             elif isinstance(w, HasWidgets):
                 self.unregisterChildPaintables(w)
 
-    def getPaintable(self, *args):
+
+    def getPaintable(self, value):
         """Returns Paintable element by its id
 
         @param id
@@ -1095,119 +1118,108 @@ class ApplicationConnection(object):
         @param element
                    Root element of the paintable
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            if isinstance(_0[0], Element):
-                element, = _0
-                return self.getPaintable(self.getPid(element))
-            elif isinstance(_0[0], UIDL):
-                uidl, = _0
-                id = uidl.getId()
-                w = self.getPaintable(id)
-                if w is not None:
-                    return w
-                else:
-                    w = self._widgetSet.createWidget(uidl, self._configuration)
-                    self.registerPaintable(id, w)
-                    return w
+        if isinstance(value, basestring):
+            componentDetail = self._idToPaintableDetail.get(value)
+            if componentDetail is None:
+                return None
             else:
-                id, = _0
-                componentDetail = self._idToPaintableDetail.get(id)
-                if componentDetail is None:
-                    return None
-                else:
-                    return componentDetail.getComponent()
+                return componentDetail.getComponent()
+        elif isinstance(value, UIDL):
+            Id = value.getId()
+            w = self.getPaintable(Id)
+            if w is not None:
+                return w
+            else:
+                w = self._widgetSet.createWidget(value, self._configuration)
+                self.registerPaintable(Id, w)
+                return w
         else:
-            raise ARGERROR(1, 1)
+            return self.getPaintable(self.getPid(value))
 
-    def addVariableToQueue(self, paintableId, variableName, encodedValue, immediate, type):
-        id = paintableId + self.VAR_FIELD_SEPARATOR + variableName + self.VAR_FIELD_SEPARATOR + type
-        _0 = True
+
+    def addVariableToQueue(self, paintableId, variableName, encodedValue,
+                immediate, typ):
+        Id = (paintableId + self.VAR_FIELD_SEPARATOR + variableName
+              + self.VAR_FIELD_SEPARATOR + typ)
+
         i = 1
-        while True:
-            if _0 is True:
-                _0 = False
-            else:
-                i += 2
-            if not (i < len(self._pendingVariables)):
+        while i < len(self._pendingVariables):
+            if self._pendingVariables[i] == Id:
+                del self._pendingVariables[i - 1]
+                del self._pendingVariables[i - 1]
                 break
-            if self._pendingVariables[i] == id:
-                self._pendingVariables.remove(i - 1)
-                self._pendingVariables.remove(i - 1)
-                break
-        self._pendingVariables.add(encodedValue)
-        self._pendingVariables.add(id)
+            i += 2
+
+        self._pendingVariables.append(encodedValue)
+        self._pendingVariables.append(Id)
         if immediate:
             self.sendPendingVariableChanges()
 
-    def sendPendingVariableChanges(self):
-        """This method sends currently queued variable changes to server. It is
-        called when immediate variable update must happen.
 
-        To ensure correct order for variable changes (due servers multithreading
-        or network), we always wait for active request to be handler before
-        sending a new one. If there is an active request, we will put varible
-        "burst" to queue that will be purged after current request is handled.
+    def sendPendingVariableChanges(self):
+        """This method sends currently queued variable changes to server. It
+        is called when immediate variable update must happen.
+
+        To ensure correct order for variable changes (due servers
+        multithreading or network), we always wait for active request to be
+        handler before sending a new one. If there is an active request, we
+        will put varible "burst" to queue that will be purged after current
+        request is handled.
         """
         if self.applicationRunning:
             if self.hasActiveRequest():
                 # skip empty queues if there are pending bursts to be sent
-                if (
-                    (len(self._pendingVariables) > 0) or (len(self._pendingVariableBursts) == 0)
-                ):
+                if ((len(self._pendingVariables) > 0)
+                        or (len(self._pendingVariableBursts) == 0)):
                     burst = self._pendingVariables.clone()
                     self._pendingVariableBursts.add(burst)
                     self._pendingVariables.clear()
             else:
                 self.buildAndSendVariableBurst(self._pendingVariables, False)
 
+
     def buildAndSendVariableBurst(self, pendingVariables, forceSync):
         """Build the variable burst and send it to server.
 
-        When sync is forced, we also force sending of all pending variable-bursts
-        at the same time. This is ok as we can assume that DOM will never be
-        updated after this.
+        When sync is forced, we also force sending of all pending
+        variable-bursts at the same time. This is ok as we can assume that
+        DOM will never be updated after this.
 
-        @param pendingVariables
+        @param pendingVariables:
                    Vector of variable changes to send
-        @param forceSync
+        @param forceSync:
                    Should we use synchronous request?
         """
         req = str()
-        while not pendingVariables.isEmpty():
+        while len(pendingVariables) > 0:
             if ApplicationConfiguration.isDebugMode():
                 Util.logVariableBurst(self, pendingVariables)
-            _0 = True
-            i = 0
-            while True:
-                if _0 is True:
-                    _0 = False
-                else:
-                    i += 1
-                if not (i < len(pendingVariables)):
-                    break
+            for i in range(len(pendingVariables)):
                 if i > 0:
                     if i % 2 == 0:
-                        req.__add__(self.VAR_RECORD_SEPARATOR)
+                        req += self.VAR_RECORD_SEPARATOR
                     else:
-                        req.__add__(self.VAR_FIELD_SEPARATOR)
-                req.__add__(pendingVariables[i])
+                        req += self.VAR_FIELD_SEPARATOR
+
+                req += pendingVariables[i]
+
             pendingVariables.clear()
             # Append all the busts to this synchronous request
-            if forceSync and not self._pendingVariableBursts.isEmpty():
+            if forceSync and len(self._pendingVariableBursts) > 0:
                 pendingVariables = self._pendingVariableBursts[0]
-                self._pendingVariableBursts.remove(0)
-                req.__add__(self.VAR_BURST_SEPARATOR)
+                del self._pendingVariableBursts[0]
+                req += self.VAR_BURST_SEPARATOR
+
         self.makeUidlRequest(str(req), '', forceSync)
 
+
     def updateVariable(self, *args):
-        """Sends a new value for the given paintables given variable to the server.
-        <p>
-        The update is actually queued to be sent at a suitable time. If immediate
-        is true, the update is sent as soon as possible. If immediate is false,
-        the update will be sent along with the next immediate update.
-        </p>
+        """Sends a new value for the given paintables given variable to the
+        server.
+
+        The update is actually queued to be sent at a suitable time. If
+        immediate is true, the update is sent as soon as possible. If immediate
+        is false, the update will be sent along with the next immediate update.
 
         @param paintableId
                    the id of the paintable that owns the variable
