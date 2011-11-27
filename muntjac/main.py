@@ -30,7 +30,7 @@ from wsgiref.simple_server import make_server
 from paste.session import SessionMiddleware
 from paste.fileapp import DirectoryApp, FileApp
 
-from muntjac.util import InMemorySession
+from muntjac.demo.util import InMemorySession
 
 from muntjac.terminal.gwt.server.application_servlet import ApplicationServlet
 from muntjac.demo.main import urlmap
