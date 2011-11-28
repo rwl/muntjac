@@ -18,10 +18,15 @@
 #       Vaadin please visit http://www.vaadin.com.
 
 
-class IEventId(object):
+class IFocusable(object):
+    """GWT's HasFocus is way too overkill for just receiving focus in simple
+    components. Muntjac uses this interface in addition to GWT's HasFocus to
+    pass focus requests from server to actual ui widgets in browsers.
 
-    BLUR = 'blur'
+    So in to make your server side focusable component receive focus on client
+    side it must either implement this or HasFocus interface.
+    """
 
-    FOCUS = 'focus'
-
-    LAYOUT_CLICK = 'layout_click'
+    def focus(self):
+        """Sets focus to this widget."""
+        raise NotImplementedError

@@ -17,15 +17,42 @@
 # Note: This is a modified file from Vaadin. For further information on
 #       Vaadin please visit http://www.vaadin.com.
 
+import pygwt as GWT
 
-class IPaintable(object):
-    """An interface used by client-side widgets or paintable parts to
-    receive updates from the corresponding server-side components in the
-    form of L{UIDL}.
+from muntjac.terminal.gwt.client.console import IConsole
 
-    Updates can be sent back to the server using the
-    L{ApplicationConnection.updateVariable} methods.
+
+class NullConsole(IConsole):
+    """Client side console implementation for non-debug mode that discards
+    all messages.
     """
 
-    def updateFromUIDL(self, uidl, client):
+    def dirUIDL(self, u, cnf):
+        pass
+
+
+    def error(self, e_or_msg):
+        if isinstance(e_or_msg, BaseException):
+            e = e_or_msg
+            GWT.log(e.getMessage(), e)
+        else:
+            msg = e_or_msg
+            GWT.log(msg)
+
+
+    def log(self, e_or_msg):
+        if isinstance(e_or_msg, BaseException):
+            e = e_or_msg
+            GWT.log(e.getMessage(), e)
+        else:
+            msg = e_or_msg
+            GWT.log(msg)
+
+
+    def printObject(self, msg):
+        GWT.log(str(msg))
+
+
+    def printLayoutProblems(self, meta, applicationConnection,
+            zeroHeightComponents, zeroWidthComponents):
         pass

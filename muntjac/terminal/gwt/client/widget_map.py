@@ -18,10 +18,21 @@
 #       Vaadin please visit http://www.vaadin.com.
 
 
-class IEventId(object):
+class WidgetMap(object):
 
-    BLUR = 'blur'
+    instmap = dict()
 
-    FOCUS = 'focus'
+    def instantiate(self, classType):
+        return self.instmap[classType].get()
 
-    LAYOUT_CLICK = 'layout_click'
+
+    def getImplementationByServerSideClassName(self, fullyqualifiedName):
+        raise NotImplementedError
+
+
+    def getDeferredLoadedWidgets(self):
+        raise NotImplementedError
+
+
+    def ensureInstantiator(self, classType):
+        raise NotImplementedError

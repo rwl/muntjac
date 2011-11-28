@@ -18,10 +18,16 @@
 #       Vaadin please visit http://www.vaadin.com.
 
 
-class IEventId(object):
+class StyleConstants(object):
 
-    BLUR = 'blur'
+    MARGIN_TOP = 'margin-top'
 
-    FOCUS = 'focus'
+    MARGIN_RIGHT = 'margin-right'
 
-    LAYOUT_CLICK = 'layout_click'
+    MARGIN_BOTTOM = 'margin-bottom'
+
+    MARGIN_LEFT = 'margin-left'
+
+    VERTICAL_SPACING = 'vspacing'
+
+    HORIZONTAL_SPACING = 'hspacing'

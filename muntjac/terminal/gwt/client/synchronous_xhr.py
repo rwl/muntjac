@@ -17,11 +17,22 @@
 # Note: This is a modified file from Vaadin. For further information on
 #       Vaadin please visit http://www.vaadin.com.
 
+from __pyjamas__ import JS
 
-class IEventId(object):
 
-    BLUR = 'blur'
+class SynchronousXHR(XMLHttpRequest):
 
-    FOCUS = 'focus'
+    def __init__(self):
+        pass
 
-    LAYOUT_CLICK = 'layout_click'
+    def synchronousPost(self, uri, requestData):
+        JS("""
+            try {
+                @{{self}}.open("POST", @{{uri}}, false);
+                @{{self}}.setRequestHeader("Content-Type", "text/plain;charset=utf-8");
+                @{{self}}.send(@{{requestData}});
+            } catch (e) {
+               // No errors are managed as @{{self}} is synchronous forceful send that can just fail
+            }
+        """)
+        pass

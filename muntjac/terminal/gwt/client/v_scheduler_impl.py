@@ -18,10 +18,30 @@
 #       Vaadin please visit http://www.vaadin.com.
 
 
-class IEventId(object):
+class VSchedulerImpl(SchedulerImpl):
 
-    BLUR = 'blur'
+    def __init__(self):
+        # Keeps track of if there are deferred commands that are being
+        # executed. 0 == no deferred commands currently in progress, > 0
+        # otherwise.
+        self._deferredCommandTrackers = 0
 
-    FOCUS = 'focus'
 
-    LAYOUT_CLICK = 'layout_click'
+    def scheduleDeferred(self, cmd):
+        self._deferredCommandTrackers += 1
+        super(VSchedulerImpl, self).scheduleDeferred(cmd)
+
+        class VScheduledCommand(ScheduledCommand):
+
+            def __init__(self, scheduler):
+                self._scheduler = scheduler
+
+            def execute(self):
+                self._scheduler._deferredCommandTrackers -= 1
+
+        super(VSchedulerImpl, self).scheduleDeferred(VScheduledCommand(self))
+
+
+    def hasWorkQueued(self):
+        hasWorkQueued = self._deferredCommandTrackers != 0
+        return hasWorkQueued

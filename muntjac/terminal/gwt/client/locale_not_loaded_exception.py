@@ -18,10 +18,7 @@
 #       Vaadin please visit http://www.vaadin.com.
 
 
-class IEventId(object):
+class LocaleNotLoadedException(Exception):
 
-    BLUR = 'blur'
-
-    FOCUS = 'focus'
-
-    LAYOUT_CLICK = 'layout_click'
+    def __init__(self, locale):
+        super(LocaleNotLoadedException, self).__init__(locale)

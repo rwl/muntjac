@@ -17,11 +17,22 @@
 # Note: This is a modified file from Vaadin. For further information on
 #       Vaadin please visit http://www.vaadin.com.
 
+from muntjac.terminal.gwt.client.application_configuration \
+    import ApplicationConfiguration
 
-class IEventId(object):
 
-    BLUR = 'blur'
+class WidgetLoader(RunAsyncCallback):
+    """A helper class used by WidgetMap implementation. Used by the generated
+    code."""
 
-    FOCUS = 'focus'
+    def onFailure(self, reason):
+        ApplicationConfiguration.endWidgetLoading()
 
-    LAYOUT_CLICK = 'layout_click'
+
+    def onSuccess(self):
+        self.addInstantiator()
+        ApplicationConfiguration.endWidgetLoading()
+
+
+    def addInstantiator(self):
+        pass

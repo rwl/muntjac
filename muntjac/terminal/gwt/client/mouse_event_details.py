@@ -19,8 +19,7 @@
 
 """Helper class to store and transfer mouse event details."""
 
-#from com.google.gwt.user.client.Event import Event
-#from muntjac.terminal.gwt.client.Util import Util
+from pyjamas.ui import Event
 
 
 class MouseEventDetails(object):
@@ -130,7 +129,7 @@ class MouseEventDetails(object):
 
 
     def isDoubleClick(self):
-        return self._type == 2 #com.google.gwt.user.client.Event.ONDBLCLICK
+        return self._type == Event.ONDBLCLICK
 
 
     def getButton(self):

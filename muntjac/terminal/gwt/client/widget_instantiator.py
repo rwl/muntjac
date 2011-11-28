@@ -18,10 +18,9 @@
 #       Vaadin please visit http://www.vaadin.com.
 
 
-class IEventId(object):
+class IWidgetInstantiator(object):
+    """A helper class used by WidgetMap implementation. Used by the generated
+    code."""
 
-    BLUR = 'blur'
-
-    FOCUS = 'focus'
-
-    LAYOUT_CLICK = 'layout_click'
+    def get(self):
+        raise NotImplementedError

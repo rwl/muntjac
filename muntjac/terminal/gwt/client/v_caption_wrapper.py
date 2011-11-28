@@ -17,11 +17,27 @@
 # Note: This is a modified file from Vaadin. For further information on
 #       Vaadin please visit http://www.vaadin.com.
 
+from pyjamas.ui.FlowPanel import FlowPanel
 
-class IEventId(object):
+from muntjac.terminal.gwt.client.v_caption import VCaption
 
-    BLUR = 'blur'
 
-    FOCUS = 'focus'
+class VCaptionWrapper(FlowPanel):
 
-    LAYOUT_CLICK = 'layout_click'
+    CLASSNAME = 'v-captionwrapper'
+
+    def __init__(self, toBeWrapped, client):
+        self._caption = VCaption(toBeWrapped, client)
+        self.add(self._caption)
+        self._widget = toBeWrapped
+        self.add(self._widget)
+        self.setStyleName(self.CLASSNAME)
+
+
+    def updateCaption(self, uidl):
+        self._caption.updateCaption(uidl)
+        self.setVisible(not uidl.getBooleanAttribute('invisible'))
+
+
+    def getPaintable(self):
+        return self._widget

@@ -18,10 +18,24 @@
 #       Vaadin please visit http://www.vaadin.com.
 
 
-class IEventId(object):
+class TooltipInfo(object):
 
-    BLUR = 'blur'
+    def __init__(self, tooltip=None):
+        self._title = tooltip
+        self._errorUidl = None
 
-    FOCUS = 'focus'
 
-    LAYOUT_CLICK = 'layout_click'
+    def getTitle(self):
+        return self._title
+
+
+    def setTitle(self, title):
+        self._title = title
+
+
+    def getErrorUidl(self):
+        return self._errorUidl
+
+
+    def setErrorUidl(self, errorUidl):
+        self._errorUidl = errorUidl
