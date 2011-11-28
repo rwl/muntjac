@@ -39,34 +39,6 @@ from muntjac.terminal.gwt.client.uidl import UIDL
 from muntjac.terminal.gwt.client.browser_info import BrowserInfo
 
 
-# from com.google.gwt.core.client.GWT import (GWT,)
-# from com.google.gwt.core.client.Scheduler import (Scheduler,)
-# from com.google.gwt.core.client.Scheduler.ScheduledCommand import (ScheduledCommand,)
-# from com.google.gwt.dom.client.DivElement import (DivElement,)
-# from com.google.gwt.dom.client.Document import (Document,)
-# from com.google.gwt.dom.client.NativeEvent import (NativeEvent,)
-# from com.google.gwt.dom.client.Node import (Node,)
-# from com.google.gwt.dom.client.NodeList import (NodeList,)
-# from com.google.gwt.dom.client.Style import (Style,)
-# from com.google.gwt.dom.client.Touch import (Touch,)
-# from com.google.gwt.user.client.Command import (Command,)
-# from com.google.gwt.user.client.DOM import (DOM,)
-# from com.google.gwt.user.client.Element import (Element,)
-# from com.google.gwt.user.client.Event import (Event,)
-# from com.google.gwt.user.client.EventListener import (EventListener,)
-# from com.google.gwt.user.client.Timer import (Timer,)
-# from com.google.gwt.user.client.Window import (Window,)
-# from com.google.gwt.user.client.ui.HasWidgets import (HasWidgets,)
-# from com.google.gwt.user.client.ui.RootPanel import (RootPanel,)
-# from com.google.gwt.user.client.ui.Widget import (Widget,)
-# from java.util.ArrayList import (ArrayList,)
-# from java.util.HashMap import (HashMap,)
-# from java.util.HashSet import (HashSet,)
-# from java.util.Iterator import (Iterator,)
-# from java.util.Map import (Map,)
-# from java.util.Set import (Set,)
-
-
 class Util(object):
 
     _LAZY_SIZE_CHANGE_TIMEOUT = 400
