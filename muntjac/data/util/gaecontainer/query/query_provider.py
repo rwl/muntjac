@@ -20,7 +20,7 @@
 from muntjac.data.util.gaecontainer.data_provider import IDataProvider
 
 
-class QueryProvider(IDataProvider):
+class IQueryProvider(IDataProvider):
     """Implemented by providers that supports querying.
 
     @author: Johan Selanniemi

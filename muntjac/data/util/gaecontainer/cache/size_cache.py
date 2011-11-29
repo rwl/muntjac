@@ -20,7 +20,7 @@
 from muntjac.data.util.gaecontainer.cache.cache import ICache
 
 
-class SizeCache(ICache):
+class ISizeCache(ICache):
     """Should be implemented by caches that store the amount of entities
     currently existing in the datastore for a given kind.
 
