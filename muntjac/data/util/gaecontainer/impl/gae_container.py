@@ -18,6 +18,7 @@
 #       please visit http://vaadin.com/directory#addon/gaecontainer.
 
 import logging
+
 from muntjac.util import EventObject
 
 from muntjac.data.container \

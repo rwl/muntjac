@@ -20,44 +20,52 @@
 
 class CacheConfig(object):
     """Don't use this class directly use one of its subclasses.
+
     @author: Johan Selanniemi
     @author: Richard Lincoln
     """
-    _lineSize = None
-    _indexLifeTime = None
-    _itemLifeTime = None
-    _cacheFilteredIndexes = None
 
-    def getLineSize(self):
-        return self._lineSize
-
-    def getIndexLifeTime(self):
-        return self._indexLifeTime
-
-    def getItemLifeTime(self):
-        return self._itemLifeTime
-
-    def getCacheFilteredIndexes(self):
-        return self._cacheFilteredIndexes
-
-    def __init__(self, lineSize, indexLifeTime, itemLifeTime, cacheFilteredIndexes):
+    def __init__(self, lineSize, indexLifeTime, itemLifeTime,
+                cacheFilteredIndexes):
         self._lineSize = lineSize
         self._indexLifeTime = indexLifeTime
         self._itemLifeTime = itemLifeTime
         self._cacheFilteredIndexes = cacheFilteredIndexes
 
-    class Builder(object):
-        """Abstract Builder for creating a {@link CacheConfig}
-        @author: Johan Selanniemi
-    @author: Richard Lincoln
-        """
-        lineSize = None
-        indexLifeTime = None
-        itemLifeTime = None
-        cacheFilteredIndexes = None
 
-        def Build(self):
-            """Build the config
-            @return A config with the specified options
-            """
-            pass
+    def getLineSize(self):
+        return self._lineSize
+
+
+    def getIndexLifeTime(self):
+        return self._indexLifeTime
+
+
+    def getItemLifeTime(self):
+        return self._itemLifeTime
+
+
+    def getCacheFilteredIndexes(self):
+        return self._cacheFilteredIndexes
+
+
+class Builder(object):
+    """Abstract Builder for creating a L{CacheConfig}
+
+    @author: Johan Selanniemi
+    @author: Richard Lincoln
+    """
+
+    def __init__(self):
+        self.lineSize = None
+        self.indexLifeTime = None
+        self.itemLifeTime = None
+        self.cacheFilteredIndexes = None
+
+
+    def build(self):
+        """Build the config.
+
+        @return: A config with the specified options
+        """
+        pass
