@@ -17,12 +17,11 @@
 # Note: This is a modified file from Vaadin. For further information on
 #       Vaadin please visit http://www.vaadin.com.
 
-from __pyjamas__ import (POSTINC,)
-from com.vaadin.terminal.gwt.client.VConsole import (VConsole,)
-# from com.google.gwt.user.client.Event.NativePreviewEvent import (NativePreviewEvent,)
-# from com.google.gwt.user.client.Event.NativePreviewHandler import (NativePreviewHandler,)
-# from java.util.ArrayList import (ArrayList,)
-# from java.util.Date import (Date,)
+from __pyjamas__ import JS
+
+from datetime import date as Date
+
+from muntjac.terminal.gwt.client.v_console import VConsole
 
 
 class TouchScrollDelegate(NativePreviewHandler):
@@ -31,78 +30,90 @@ class TouchScrollDelegate(NativePreviewHandler):
     Scrollable elements are provided in the constructor. Users must pass
     touchStart events to this delegate, from there on the delegate takes over
     with an event preview. Other touch events needs to be sunken though.
-    <p>
+
     This is bit similar as Scroller class in GWT expenses example, but ideas
     drawn from iscroll.js project:
-    <ul>
-    <li>uses GWT event mechanism.
-    <li>uses modern CSS trick during scrolling for smoother experience:
-    translate3d and transitions
-    </ul>
-    <p>
+
+      * uses GWT event mechanism.
+      * uses modern CSS trick during scrolling for smoother experience:
+        translate3d and transitions
+
     Scroll event should only happen when the "touch scrolling actually ends".
     Later we might also tune this so that a scroll event happens if user stalls
     her finger long enought.
 
-    TODO static getter for active touch scroll delegate. Components might need to
-    prevent scrolling in some cases. Consider Table with drag and drop, or drag
-    and drop in scrollable area. Optimal implementation might be to start the
-    drag and drop only if user keeps finger down for a moment, otherwise do the
-    scroll. In this case, the draggable component would need to cancel scrolling
-    in a timer after touchstart event and take over from there.
+    TODO: static getter for active touch scroll delegate. Components might need
+    to prevent scrolling in some cases. Consider Table with drag and drop, or
+    drag and drop in scrollable area. Optimal implementation might be to start
+    the drag and drop only if user keeps finger down for a moment, otherwise do
+    the scroll. In this case, the draggable component would need to cancel
+    scrolling in a timer after touchstart event and take over from there.
 
-    TODO support scrolling horizontally
+    TODO: support scrolling horizontally
 
-    TODO cancel if user add second finger to the screen (user expects a gesture).
+    TODO: cancel if user add second finger to the screen (user expects a
+          gesture).
 
-    TODO "scrollbars", see e.g. iscroll.js
+    TODO: "scrollbars", see e.g. iscroll.js
 
-    TODO write an email to sjobs √§t apple dot com and beg for this feature to be
-    built into webkit. Seriously, we should try to lobbying this to webkit folks.
-    This sure ain't our business to implement this with javascript.
+    TODO: write an email to sjobs √§t apple dot com and beg for this feature to
+          be built into webkit. Seriously, we should try to lobbying this to
+          webkit folks.
+          This sure ain't our business to implement this with javascript.
 
-    TODO collect all general touch related constant to better place.
+    TODO: collect all general touch related constant to better place.
 
-    @author Matti Tahvonen, Vaadin Ltd
+    @author: Matti Tahvonen, Vaadin Ltd
     """
+
     _FRICTION = 0.002
     _DECELERATION = 0.002
     _MAX_DURATION = 1500
-    _origX = None
-    _origY = None
-    _scrollableElements = None
-    _scrolledElement = None
-    _origScrollTop = None
-    _handlerRegistration = None
-    _lastClientY = None
-    _pixxelsPerMs = None
-    _transitionPending = False
-    _deltaScrollPos = None
-    _transitionOn = False
-    _finalScrollTop = None
-    _layers = None
-    _moved = None
+
     _activeScrollDelegate = None
 
+    _EVENTS_FOR_SPEED_CALC = 3
+    SIGNIFICANT_MOVE_THRESHOLD = 3
+
     def __init__(self, *elements):
+        self._origX = None
+        self._origY = None
         self._scrollableElements = elements
+        self._scrolledElement = None
+        self._origScrollTop = None
+        self._handlerRegistration = None
+        self._lastClientY = None
+        self._pixxelsPerMs = None
+        self._transitionPending = False
+        self._deltaScrollPos = None
+        self._transitionOn = False
+        self._finalScrollTop = None
+        self._layers = None
+        self._moved = None
+
+        self._yPositions = [None] * self._EVENTS_FOR_SPEED_CALC
+        self._eventTimeStamps = [None] * self._EVENTS_FOR_SPEED_CALC
+        self._nextEvent = 0
+        self._transitionStart = None
+        self._transitionDuration = None
+
 
     @classmethod
     def getActiveScrollDelegate(cls):
         return cls._activeScrollDelegate
 
+
     def isMoved(self):
         """Has user moved the touch.
-
-        @return
         """
         return self._moved
 
+
     def stopScrolling(self):
-        """Forces the scroll delegate to cancels scrolling process. Can be called by
-        users if they e.g. decide to handle touch event by themselves after all
-        (e.g. a pause after touch start before moving touch -> interpreted as
-        long touch/click or drag start).
+        """Forces the scroll delegate to cancels scrolling process. Can be
+        called by users if they e.g. decide to handle touch event by themselves
+        after all (e.g. a pause after touch start before moving touch ->
+        interpreted as long touch/click or drag start).
         """
         self._handlerRegistration.removeHandler()
         self._handlerRegistration = None
@@ -110,6 +121,7 @@ class TouchScrollDelegate(NativePreviewHandler):
             self.moveTransformationToScrolloffset()
         else:
             self._activeScrollDelegate = None
+
 
     def onTouchStart(self, event):
         if self._activeScrollDelegate is None and len(event.getTouches()) == 1:
@@ -119,7 +131,8 @@ class TouchScrollDelegate(NativePreviewHandler):
                 event.stopPropagation()
                 self._handlerRegistration = Event.addNativePreviewHandler(self)
                 self._activeScrollDelegate = self
-                self.hookTransitionEndListener(self._scrolledElement.getFirstChildElement())
+                self.hookTransitionEndListener(
+                        self._scrolledElement.getFirstChildElement())
                 self._origX = touch.getClientX()
                 self._origY = touch.getClientY()
                 self._yPositions[0] = self._origY
@@ -143,17 +156,19 @@ class TouchScrollDelegate(NativePreviewHandler):
             # Touch scroll is currenly on (possibly bouncing). Ignore.
             pass
 
+
     def hookTransitionEndListener(self, element):
         JS("""
-        if(!@{{element}}.hasTransitionEndListener) {
-            var that = @{{self}};
-            @{{element}}.addEventListener("webkitTransitionEnd",function(event){
-                that.@com.vaadin.terminal.gwt.client.ui.TouchScrollDelegate::onTransitionEnd()();
-            },false);
-            @{{element}}.hasTransitionEndListener = true;
-        }
-    """)
+            if(!@{{element}}.hasTransitionEndListener) {
+                var that = @{{self}};
+                @{{element}}.addEventListener("webkitTransitionEnd",function(event){
+                    that.@com.vaadin.terminal.gwt.client.ui.TouchScrollDelegate::onTransitionEnd()();
+                },false);
+                @{{element}}.hasTransitionEndListener = true;
+            }
+        """)
         pass
+
 
     def onTransitionEnd(self):
         if self._finalScrollTop < 0:
@@ -166,21 +181,23 @@ class TouchScrollDelegate(NativePreviewHandler):
             self.moveTransformationToScrolloffset()
         self._transitionOn = False
 
+
     def animateToScrollPosition(self, to, from_):
-        dist = self.Math.abs(to - from_)
+        dist = abs(to - from_)
         time = self.getAnimationTimeForDistance(dist)
         if time <= 0:
             time = 1
             # get animation and transition end event
         self.translateTo(time, -to + self._origScrollTop)
 
+
     def getAnimationTimeForDistance(self, dist):
-        return 350
-        # 350ms seems to work quite fine for all distances
+        return 350  # 350ms seems to work quite fine for all distances
         # if (dist < 0) {
         # dist = -dist;
         # }
         # return MAX_DURATION * dist / (scrolledElement.getClientHeight() * 3);
+
 
     def moveTransformationToScrolloffset(self):
         """Called at the end of scrolling. Moves possible translate values to
@@ -195,12 +212,10 @@ class TouchScrollDelegate(NativePreviewHandler):
         self._handlerRegistration.removeHandler()
         self._handlerRegistration = None
 
-    def detectScrolledElement(self, touch):
-        """Detects if a touch happens on a predefined element and the element has
-        something to scroll.
 
-        @param touch
-        @return
+    def detectScrolledElement(self, touch):
+        """Detects if a touch happens on a predefined element and the element
+        has something to scroll.
         """
         target = touch.getTarget()
         for el in self._scrollableElements:
@@ -208,20 +223,12 @@ class TouchScrollDelegate(NativePreviewHandler):
                 self._scrolledElement = el
                 childNodes = self._scrolledElement.getChildNodes()
                 self._layers = list()
-                _0 = True
-                i = 0
-                while True:
-                    if _0 is True:
-                        _0 = False
-                    else:
-                        i += 1
-                    if not (i < childNodes.getLength()):
-                        break
-                    item = childNodes.getItem(i)
+                for item in childNodes:
                     if item.getNodeType() == Node.ELEMENT_NODE:
                         self._layers.add(item)
                 return True
         return False
+
 
     def onTouchMove(self, event):
         if not self._moved:
@@ -250,17 +257,11 @@ class TouchScrollDelegate(NativePreviewHandler):
             event.preventDefault()
             event.stopPropagation()
 
+
     def quickSetScrollPosition(self, deltaX, deltaY):
         self._deltaScrollPos = deltaY
         self.translateTo(0, -self._deltaScrollPos)
 
-    _EVENTS_FOR_SPEED_CALC = 3
-    SIGNIFICANT_MOVE_THRESHOLD = 3
-    _yPositions = [None] * _EVENTS_FOR_SPEED_CALC
-    _eventTimeStamps = [None] * _EVENTS_FOR_SPEED_CALC
-    _nextEvent = 0
-    _transitionStart = None
-    _transitionDuration = None
 
     def readPositionAndSpeed(self, event):
         """@param event
@@ -269,14 +270,17 @@ class TouchScrollDelegate(NativePreviewHandler):
         now = Date()
         touch = event.getChangedTouches().get(0)
         self._lastClientY = touch.getClientY()
-        eventIndx = POSTINC(globals(), locals(), 'self._nextEvent')
+        eventIndx = self._nextEvent
+        self._nextEvent += 1
         eventIndx = eventIndx % self._EVENTS_FOR_SPEED_CALC
         self._eventTimeStamps[eventIndx] = now
         self._yPositions[eventIndx] = self._lastClientY
         return self.isMovedSignificantly()
 
+
     def isMovedSignificantly(self):
-        return self._moved if self._moved else self.Math.abs(self._origY - self._lastClientY) >= self.SIGNIFICANT_MOVE_THRESHOLD
+        return self._moved if self._moved else abs(self._origY - self._lastClientY) >= self.SIGNIFICANT_MOVE_THRESHOLD
+
 
     def onTouchEnd(self, event):
         if not self._moved:
@@ -334,6 +338,7 @@ class TouchScrollDelegate(NativePreviewHandler):
         translateY = -finalY + self._origScrollTop
         self.translateTo(duration, translateY)
 
+
     def calculateSpeed(self):
         if self._nextEvent < self._EVENTS_FOR_SPEED_CALC:
             VConsole.log('Not enough data for speed calculation')
@@ -350,70 +355,65 @@ class TouchScrollDelegate(NativePreviewHandler):
         # speed as in change of scrolltop == -speedOfTouchPos
         return (firstPos - lastPos) / (lastTs.getTime() - firstTs.getTime())
 
-    def translateTo(self, duration, translateY):
-        """Note positive scrolltop moves layer up, positive translate moves layer
-        down.
 
-        @param duration
-        @param translateY
+    def translateTo(self, duration, translateY):
+        """Note positive scrolltop moves layer up, positive translate moves
+        layer down.
         """
         for el in self._layers:
             style = el.getStyle()
             if duration > 0:
                 style.setProperty('webkitTransitionDuration', duration + 'ms')
-                style.setProperty('webkitTransitionTimingFunction', 'cubic-bezier(0,0,0.25,1)')
-                style.setProperty('webkitTransitionProperty', '-webkit-transform')
+                style.setProperty('webkitTransitionTimingFunction',
+                        'cubic-bezier(0,0,0.25,1)')
+                style.setProperty('webkitTransitionProperty',
+                        '-webkit-transform')
                 self._transitionOn = True
                 self._transitionStart = Date()
                 self._transitionDuration = Date()
             else:
                 style.setProperty('webkitTransitionProperty', 'none')
-            style.setProperty('webkitTransform', 'translate3d(0px,' + translateY + 'px,0px)')
+            style.setProperty('webkitTransform',
+                    'translate3d(0px,' + translateY + 'px,0px)')
+
 
     def getMaxOverScroll(self):
         return self._scrolledElement.getClientHeight() / 4
 
+
     def getMaxFinalY(self):
-        return self._scrolledElement.getScrollHeight() - self._scrolledElement.getClientHeight()
+        return (self._scrolledElement.getScrollHeight()
+                - self._scrolledElement.getClientHeight())
+
 
     def onPreviewNativeEvent(self, event):
         if self._transitionOn:
             # TODO allow starting new events. See issue in onTouchStart
             event.cancel()
             return
+
         typeInt = event.getTypeInt()
-        _0 = typeInt
-        _1 = False
-        while True:
-            if _0 == Event.ONTOUCHMOVE:
-                _1 = True
-                if not event.isCanceled():
-                    self.onTouchMove(event.getNativeEvent())
-                    if self._moved:
-                        event.cancel()
-                break
-            if (_1 is True) or (_0 == Event.ONTOUCHEND):
-                _1 = True
-            if (_1 is True) or (_0 == Event.ONTOUCHCANCEL):
-                _1 = True
-                if not event.isCanceled():
-                    if self._moved:
-                        event.cancel()
-                    self.onTouchEnd(event.getNativeEvent())
-                break
-            if (_1 is True) or (_0 == Event.ONMOUSEMOVE):
-                _1 = True
+        if typeInt == Event.ONTOUCHMOVE:
+            if not event.isCanceled():
+                self.onTouchMove(event.getNativeEvent())
                 if self._moved:
-                    # no debug message, mobile safari generates these for some
-                    # compatibility purposes.
                     event.cancel()
-                break
-            if True:
-                _1 = True
-                VConsole.log('Non touch event:' + event.getNativeEvent().getType())
+        elif typeInt == Event.ONTOUCHEND:
+            pass
+        elif typeInt == Event.ONTOUCHCANCEL:
+            if not event.isCanceled():
+                if self._moved:
+                    event.cancel()
+                self.onTouchEnd(event.getNativeEvent())
+        elif typeInt == Event.ONMOUSEMOVE:
+            if self._moved:
+                # no debug message, mobile safari generates these for some
+                # compatibility purposes.
                 event.cancel()
-                break
-            break
+        else:
+            VConsole.log('Non touch event:' + event.getNativeEvent().getType())
+            event.cancel()
+
 
     def setElements(self, elements):
         self._scrollableElements = elements
