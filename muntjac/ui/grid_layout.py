@@ -213,7 +213,7 @@ class GridLayout(AbstractLayout, IAlignmentHandler, ISpacingHandler,
             # component.setParent(this);
             index = 0
             done = False
-            while not done and index < len(self._areas):
+            while not done and (index < len(self._areas)):
                 existingArea = self._areas[index]
                 if ((existingArea._row1 >= row1
                         and existingArea._column1 > column1)

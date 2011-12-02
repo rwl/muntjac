@@ -130,7 +130,7 @@ class Alignment(object):
 
 
     def __eq__(self, obj):
-        if self == obj:
+        if self is obj:
             return True
 
         if (obj is None) or (obj.__class__ != self.__class__):
