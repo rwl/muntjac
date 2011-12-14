@@ -37,16 +37,19 @@ from muntjac.demo.main import urlmap
 from muntjac.test.suite import main as test
 
 
-def muntjac(applicationClass, host='localhost', port=8880, nogui=False,
-            debug=False, serve=True, forever=True, *args, **kw_args):
+def muntjac(application, host='localhost', port=8880, nogui=False,
+            debug=False, serve=True, forever=True, servletClass=None,
+            *args, **kw_args):
+
+    if servletClass is None:
+        servletClass = ApplicationServlet
 
     level = logging.DEBUG if debug else logging.INFO
 
     logging.basicConfig(stream=sys.stdout, level=level,
             format='%(levelname)s: %(message)s')
 
-    wsgi_app = ApplicationServlet(applicationClass, debug=debug,
-            *args, **kw_args)
+    wsgi_app = servletClass(application, debug=debug, *args, **kw_args)
 
     wsgi_app = SessionMiddleware(wsgi_app, session_class=InMemorySession)
 
