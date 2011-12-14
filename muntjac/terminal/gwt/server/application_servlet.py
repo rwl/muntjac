@@ -85,3 +85,21 @@ class ApplicationServlet(AbstractApplicationServlet):
 
     def getApplicationClass(self):
         return self._applicationClass
+
+
+class SingletonApplicationServlet(AbstractApplicationServlet):
+
+    def __init__(self, applicationObject, *args, **kw_args):
+        super(SingletonApplicationServlet, self).__init__(*args, **kw_args)
+        self._applicationObject = applicationObject
+
+
+    def getNewApplication(self, request):
+        if self._applicationObject is not None:
+            return self._applicationObject
+        else:
+            raise ServletException, "getNewApplication failed"
+
+
+    def getApplicationClass(self):
+        return self._applicationObject.__class__
