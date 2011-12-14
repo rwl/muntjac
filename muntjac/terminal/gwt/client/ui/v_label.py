@@ -23,11 +23,11 @@ from pyjamas.ui.HTML import HTML
 
 from muntjac.terminal.gwt.client.util import Util
 from muntjac.terminal.gwt.client.v_tooltip import VTooltip
-from muntjac.terminal.gwt.client.paintable import Paintable
+from muntjac.terminal.gwt.client.paintable import IPaintable
 from muntjac.terminal.gwt.client.browser_info import BrowserInfo
 
 
-class VLabel(HTML, Paintable):
+class VLabel(HTML, IPaintable):
 
     CLASSNAME = 'v-label'
 
