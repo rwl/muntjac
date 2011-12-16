@@ -54,6 +54,9 @@ from muntjac.terminal.gwt.client.ui.v_embedded import VEmbedded
 from muntjac.terminal.gwt.client.ui.dd.v_drag_and_drop_manager import VDragAndDropManager
 from muntjac.terminal.gwt.client.ui.dd.v_abstract_drop_handler import VAbstractDropHandler
 from muntjac.terminal.gwt.client.focusable import IFocusable
+import math
+from muntjac.terminal.gwt.client.ui.scroll_table.v_scroll_table_body import VScrollTableRow
+from gwt.ui.UIObject import UIObject
 
 
 class VScrollTable(FlowPanel, Table, IFocusable, ActionOwner, VHasDropHandler):
@@ -110,6 +113,8 @@ class VScrollTable(FlowPanel, Table, IFocusable, ActionOwner, VHasDropHandler):
     ALIGN_LEFT = 'b'
     ALIGN_RIGHT = 'e'
     _CHARCODE_SPACE = 32
+
+    _LAZY_COLUMN_ADJUST_TIMEOUT = 300
 
     def __init__(self):
 
@@ -221,6 +226,14 @@ class VScrollTable(FlowPanel, Table, IFocusable, ActionOwner, VHasDropHandler):
         self._serverCacheFirst = -1
         self._serverCacheLast = -1
 
+        self._borderWidth = -1
+        self._containerHeight = None
+        self._contentAreaBorderHeight = -1
+        self._scrollLeft = None
+        self._scrollTop = None
+        self._dropHandler = None
+        self._navKeyDown = None
+        self._multiselectPending = None
 
         self.setMultiSelectMode(self._MULTISELECT_MODE_DEFAULT)
 
@@ -271,7 +284,9 @@ class VScrollTable(FlowPanel, Table, IFocusable, ActionOwner, VHasDropHandler):
         self.add(self._scrollBodyPanel)
         self.add(self._tFoot)
 
-        self._rowRequestHandler = self.RowRequestHandler()
+        self._rowRequestHandler = RowRequestHandler()
+
+        self.lazyAdjustColumnWidths = LazyAdjustColumnWidths()
 
 
     def getTouchScrollDelegate(self):
@@ -1755,104 +1770,6 @@ class VScrollTable(FlowPanel, Table, IFocusable, ActionOwner, VHasDropHandler):
 
         self.setProperTabIndex()
 
-    _LAZY_COLUMN_ADJUST_TIMEOUT = 300
-
-    class lazyAdjustColumnWidths(Timer):
-
-        def run(self):
-            """Check for column widths, and available width, to see if we can fix
-            column widths "optimally". Doing this lazily to avoid expensive
-            calculation when resizing is not yet finished.
-            """
-            if VScrollTable_this._scrollBody is None:
-                # Try again later if we get here before scrollBody has been
-                # initalized
-                VScrollTable_this.triggerLazyColumnAdjustment(False)
-                return
-            headCells = VScrollTable_this.tHead
-            usedMinimumWidth = 0
-            totalExplicitColumnsWidths = 0
-            expandRatioDivider = 0
-            colIndex = 0
-            while headCells.hasNext():
-                hCell = headCells.next()
-                if hCell.isDefinedWidth():
-                    totalExplicitColumnsWidths += hCell.getWidth()
-                    usedMinimumWidth += hCell.getWidth()
-                else:
-                    usedMinimumWidth += hCell.getNaturalColumnWidth(colIndex)
-                    expandRatioDivider += hCell.getExpandRatio()
-                colIndex += 1
-            availW = VScrollTable_this._scrollBody.getAvailableWidth()
-            # Hey IE, are you really sure about this?
-            availW = VScrollTable_this._scrollBody.getAvailableWidth()
-            visibleCellCount = VScrollTable_this.tHead.getVisibleCellCount()
-            availW -= VScrollTable_this._scrollBody.getCellExtraWidth() * visibleCellCount
-            if VScrollTable_this.willHaveScrollbars():
-                availW -= Util.getNativeScrollbarSize()
-            extraSpace = availW - usedMinimumWidth
-            if extraSpace < 0:
-                extraSpace = 0
-            totalUndefinedNaturalWidths = usedMinimumWidth - totalExplicitColumnsWidths
-            # we have some space that can be divided optimally
-            colIndex = 0
-            headCells = VScrollTable_this.tHead
-            checksum = 0
-            while headCells.hasNext():
-                hCell = headCells.next()
-                if not hCell.isDefinedWidth():
-                    w = hCell.getNaturalColumnWidth(colIndex)
-                    if expandRatioDivider > 0:
-                        # divide excess space by expand ratios
-                        newSpace = self.Math.round(w + ((extraSpace * hCell.getExpandRatio()) / expandRatioDivider))
-                    elif totalUndefinedNaturalWidths != 0:
-                        # divide relatively to natural column widths
-                        newSpace = self.Math.round(w + ((extraSpace * w) / totalUndefinedNaturalWidths))
-                    else:
-                        newSpace = w
-                    checksum += newSpace
-                    VScrollTable_this.setColWidth(colIndex, newSpace, False)
-                else:
-                    checksum += hCell.getWidth()
-                colIndex += 1
-            if extraSpace > 0 and checksum != availW:
-                # There might be in some cases a rounding error of 1px when
-                # extra space is divided so if there is one then we give the
-                # first undefined column 1 more pixel
-
-                headCells = VScrollTable_this.tHead
-                colIndex = 0
-                while headCells.hasNext():
-                    hc = headCells.next()
-                    if not hc.isDefinedWidth():
-                        VScrollTable_this.setColWidth(colIndex, (hc.getWidth() + availW) - checksum, False)
-                        break
-                    colIndex += 1
-            if (
-                (VScrollTable_this._height is None) or ('' == VScrollTable_this._height) and VScrollTable_this._totalRows == VScrollTable_this._pageLength
-            ):
-                # fix body height (may vary if lazy loading is offhorizontal
-                # scrollbar appears/disappears)
-                bodyHeight = VScrollTable_this._scrollBody.getRequiredHeight()
-                needsSpaceForHorizontalScrollbar = availW < usedMinimumWidth
-                if needsSpaceForHorizontalScrollbar:
-                    bodyHeight += Util.getNativeScrollbarSize()
-                heightBefore = self.getOffsetHeight()
-                VScrollTable_this._scrollBodyPanel.setHeight(bodyHeight + 'px')
-                if heightBefore != self.getOffsetHeight():
-                    # Util.notifyParentOfSizeChange(VScrollTable.this, false);
-                    pass
-            VScrollTable_this._scrollBody.reLayoutComponents()
-
-            class _18_(Command):
-
-                def execute(self):
-                    Util.runWebkitOverflowAutoFix(VScrollTable_this._scrollBodyPanel.getElement())
-
-            _18_ = _18_()
-            Scheduler.get().scheduleDeferred(_18_)
-            VScrollTable_this.forceRealignColumnHeaders()
-
 
     def forceRealignColumnHeaders(self):
         if BrowserInfo.get().isIE():
@@ -1872,7 +1789,6 @@ class VScrollTable(FlowPanel, Table, IFocusable, ActionOwner, VHasDropHandler):
         self._scrollBodyPanel.setWidth(pixels + 'px')
         self._tFoot.setWidth(pixels + 'px')
 
-    _borderWidth = -1
 
     def getBorderWidth(self):
         """@return border left + border right"""
@@ -1880,62 +1796,66 @@ class VScrollTable(FlowPanel, Table, IFocusable, ActionOwner, VHasDropHandler):
         # size is used.
 
         if self._borderWidth < 0:
-            self._borderWidth = Util.measureHorizontalPaddingAndBorder(self._scrollBodyPanel.getElement(), 2)
+            self._borderWidth = Util.measureHorizontalPaddingAndBorder(
+                    self._scrollBodyPanel.getElement(), 2)
             if self._borderWidth < 0:
                 self._borderWidth = 0
         return self._borderWidth
 
-    _containerHeight = None
 
     def setContainerHeight(self):
         if self._height is not None and not ('' == self._height):
             self._containerHeight = self.getOffsetHeight()
-            self._containerHeight -= self.tHead.getOffsetHeight() if self._showColHeaders else 0
+            self._containerHeight -= \
+                    self.tHead.getOffsetHeight() if self._showColHeaders else 0
             self._containerHeight -= self._tFoot.getOffsetHeight()
             self._containerHeight -= self.getContentAreaBorderHeight()
             if self._containerHeight < 0:
                 self._containerHeight = 0
             self._scrollBodyPanel.setHeight(self._containerHeight + 'px')
 
-    _contentAreaBorderHeight = -1
-    _scrollLeft = None
-    _scrollTop = None
-    _dropHandler = None
-    _navKeyDown = None
-    _multiselectPending = None
 
     def getContentAreaBorderHeight(self):
-        """@return border top + border bottom of the scrollable area of table"""
+        """@return: border top + border bottom of the scrollable area of
+        table"""
         if self._contentAreaBorderHeight < 0:
             if BrowserInfo.get().isIE7() or BrowserInfo.get().isIE6():
-                self._contentAreaBorderHeight = Util.measureVerticalBorder(self._scrollBodyPanel.getElement())
+                self._contentAreaBorderHeight = Util.measureVerticalBorder(
+                        self._scrollBodyPanel.getElement())
             else:
-                DOM.setStyleAttribute(self._scrollBodyPanel.getElement(), 'overflow', 'hidden')
+                DOM.setStyleAttribute(self._scrollBodyPanel.getElement(),
+                        'overflow', 'hidden')
                 oh = self._scrollBodyPanel.getOffsetHeight()
-                ch = self._scrollBodyPanel.getElement().getPropertyInt('clientHeight')
+                ch = self._scrollBodyPanel.getElement().getPropertyInt(
+                        'clientHeight')
                 self._contentAreaBorderHeight = oh - ch
-                DOM.setStyleAttribute(self._scrollBodyPanel.getElement(), 'overflow', 'auto')
+                DOM.setStyleAttribute(self._scrollBodyPanel.getElement(),
+                        'overflow', 'auto')
         return self._contentAreaBorderHeight
 
-    def setHeight(self, height):
-        # Overridden due Table might not survive of visibility change (scroll pos
-        # lost). Example ITabPanel just set contained components invisible and back
-        # when changing tabs.
 
+    def setHeight(self, height):
+        # Overridden due Table might not survive of visibility change (scroll
+        # pos lost). Example ITabPanel just set contained components invisible
+        # and back when changing tabs.
         self._height = height
         super(VScrollTable, self).setHeight(height)
+
         self.setContainerHeight()
+
         if self._initializedAndAttached:
             self.updatePageLength()
+
         if not self._rendering:
             # Webkit may sometimes get an odd rendering bug (white space
             # between header and body), see bug #3875. Running
             # overflow hack here to shake body element a bit.
             Util.runWebkitOverflowAutoFix(self._scrollBodyPanel.getElement())
+
         # setting height may affect wheter the component has scrollbars ->
         # needs scrolling or not
-
         self.setProperTabIndex()
+
 
     def setVisible(self, visible):
         if self.isVisible() != visible:
@@ -1951,31 +1871,38 @@ class VScrollTable(FlowPanel, Table, IFocusable, ActionOwner, VHasDropHandler):
                     _15_ = _15_()
                     Scheduler.get().scheduleDeferred(_15_)
 
+
     def buildCaptionHtmlSnippet(self, uidl):
         """Helper function to build html snippet for column or row headers
 
-        @param uidl
+        @param uidl:
                    possibly with values caption and icon
-        @return html snippet containing possibly an icon + caption text
+        @return: html snippet containing possibly an icon + caption text
         """
         s = uidl.getStringAttribute('caption') if uidl.hasAttribute('caption') else ''
         if uidl.hasAttribute('icon'):
             s = '<img src=\"' + Util.escapeAttribute(self.client.translateVaadinUri(uidl.getStringAttribute('icon'))) + '\" alt=\"icon\" class=\"v-icon\">' + s
         return s
 
+
     def onScroll(self, event):
-        """This method has logic which rows needs to be requested from server when
-        user scrolls
+        """This method has logic which rows needs to be requested from server
+        when user scrolls
         """
         self._scrollLeft = self._scrollBodyPanel.getElement().getScrollLeft()
         self._scrollTop = self._scrollBodyPanel.getScrollPosition()
+
         if not self._initializedAndAttached:
             return
+
         if not self._enabled:
             self._scrollBodyPanel.setScrollPosition(self.measureRowHeightOffset(self._firstRowInViewPort))
             return
+
         self._rowRequestHandler.cancel()
-        if BrowserInfo.get().isSafari() and event is not None and self._scrollTop == 0:
+
+        if (BrowserInfo.get().isSafari() and event is not None
+                and self._scrollTop == 0):
             # due to the webkitoverflowworkaround, top may sometimes report 0
             # for webkit, although it really is not. Expecting to have the
             # correct
@@ -1989,53 +1916,76 @@ class VScrollTable(FlowPanel, Table, IFocusable, ActionOwner, VHasDropHandler):
             _16_ = _16_()
             Scheduler.get().scheduleDeferred(_16_)
             return
+
         # fix headers horizontal scrolling
         self.tHead.setHorizontalScrollPosition(self._scrollLeft)
+
         # fix footers horizontal scrolling
         self._tFoot.setHorizontalScrollPosition(self._scrollLeft)
         self._firstRowInViewPort = self.calcFirstRowInViewPort()
         if self._firstRowInViewPort > self._totalRows - self._pageLength:
             self._firstRowInViewPort = self._totalRows - self._pageLength
-        postLimit = self._firstRowInViewPort + (self._pageLength - 1) + (self._pageLength * self._cache_react_rate)
+
+        postLimit = (self._firstRowInViewPort + (self._pageLength - 1)
+                + (self._pageLength * self._cache_react_rate))
+
         if postLimit > self._totalRows - 1:
             postLimit = self._totalRows - 1
-        preLimit = self._firstRowInViewPort - (self._pageLength * self._cache_react_rate)
+
+        preLimit = (self._firstRowInViewPort
+                - (self._pageLength * self._cache_react_rate))
         if preLimit < 0:
             preLimit = 0
+
         lastRendered = self._scrollBody.getLastRendered()
         firstRendered = self._scrollBody.getFirstRendered()
+
         if postLimit <= lastRendered and preLimit >= firstRendered:
             # remember which firstvisible we requested, in case the server has
             # a differing opinion
             self._lastRequestedFirstvisible = self._firstRowInViewPort
-            self.client.updateVariable(self.paintableId, 'firstvisible', self._firstRowInViewPort, False)
-            return
-            # scrolled withing "non-react area"
-        if (
-            (self._firstRowInViewPort - (self._pageLength * self._cache_rate) > lastRendered) or (self._firstRowInViewPort + self._pageLength + (self._pageLength * self._cache_rate) < firstRendered)
-        ):
+            self.client.updateVariable(self.paintableId, 'firstvisible',
+                    self._firstRowInViewPort, False)
+            return  # scrolled withing "non-react area"
+
+        if ((self._firstRowInViewPort
+                - (self._pageLength * self._cache_rate) > lastRendered)
+                or (self._firstRowInViewPort + self._pageLength
+                        + (self._pageLength * self._cache_rate) < firstRendered)):
             # need a totally new set
-            self._rowRequestHandler.setReqFirstRow(self._firstRowInViewPort - (self._pageLength * self._cache_rate))
+            self._rowRequestHandler.setReqFirstRow(self._firstRowInViewPort
+                    - (self._pageLength * self._cache_rate))
+
             last = (self._firstRowInViewPort + (self._cache_rate * self._pageLength) + self._pageLength) - 1
             if last >= self._totalRows:
                 last = self._totalRows - 1
-            self._rowRequestHandler.setReqRows((last - self._rowRequestHandler.getReqFirstRow()) + 1)
+
+            self._rowRequestHandler.setReqRows((last
+                    - self._rowRequestHandler.getReqFirstRow()) + 1)
             self._rowRequestHandler.deferRowFetch()
             return
+
         if preLimit < firstRendered:
             # need some rows to the beginning of the rendered area
-            self._rowRequestHandler.setReqFirstRow(self._firstRowInViewPort - (self._pageLength * self._cache_rate))
-            self._rowRequestHandler.setReqRows(firstRendered - self._rowRequestHandler.getReqFirstRow())
+            self._rowRequestHandler.setReqFirstRow(self._firstRowInViewPort
+                    - (self._pageLength * self._cache_rate))
+            self._rowRequestHandler.setReqRows(firstRendered
+                    - self._rowRequestHandler.getReqFirstRow())
             self._rowRequestHandler.deferRowFetch()
             return
+
         if postLimit > lastRendered:
             # need some rows to the end of the rendered area
             self._rowRequestHandler.setReqFirstRow(lastRendered + 1)
-            self._rowRequestHandler.setReqRows((self._firstRowInViewPort + self._pageLength + (self._pageLength * self._cache_rate)) - lastRendered)
+            self._rowRequestHandler.setReqRows((self._firstRowInViewPort
+                    + self._pageLength + (self._pageLength * self._cache_rate))
+                            - lastRendered)
             self._rowRequestHandler.deferRowFetch()
 
+
     def calcFirstRowInViewPort(self):
-        return self.Math.ceil(self._scrollTop / self._scrollBody.getRowHeight())
+        return math.ceil(self._scrollTop / self._scrollBody.getRowHeight())
+
 
     def getDropHandler(self):
         return self._dropHandler
@@ -2044,48 +1994,58 @@ class VScrollTable(FlowPanel, Table, IFocusable, ActionOwner, VHasDropHandler):
     def getFocusedRow(self):
         return self._focusedRow
 
+
     def setRowFocus(self, row):
         """Moves the selection head to a specific row
 
-        @param row
+        @param row:
                    The row to where the selection head should move
-        @return Returns true if focus was moved successfully, else false
+        @return: Returns true if focus was moved successfully, else false
         """
         if not self.isSelectable():
             return False
+
         # Remove previous selection
         if self._focusedRow is not None and self._focusedRow != row:
             self._focusedRow.removeStyleName(self.CLASSNAME_SELECTION_FOCUS)
+
         if row is not None:
             # Apply focus style to new selection
             row.addStyleName(self.CLASSNAME_SELECTION_FOCUS)
+
             # Trying to set focus on already focused row
             if row == self._focusedRow:
                 return False
+
             # Set new focused row
             self._focusedRow = row
             self.ensureRowIsVisible(row)
             return True
+
         return False
+
 
     def ensureRowIsVisible(self, row):
         """Ensures that the row is visible
 
-        @param row
+        @param row:
                    The row to ensure is visible
         """
         Util.scrollIntoViewVertically(row.getElement())
 
+
     def handleNavigation(self, keycode, ctrl, shift):
         """Handles the keyboard events handled by the table
 
-        @param event
+        @param event:
                    The keyboard event received
-        @return true iff the navigation event was handled
+        @return: true iff the navigation event was handled
         """
-        if (keycode == KeyCodes.KEY_TAB) or (keycode == KeyCodes.KEY_SHIFT):
+        if ((keycode == KeyboardListener.KEY_TAB)
+                or (keycode == KeyboardListener.KEY_SHIFT)):
             # Do not handle tab key
             return False
+
         # Down navigation
         if not self.isSelectable() and keycode == self.getNavigationDownKey():
             self._scrollBodyPanel.setScrollPosition(self._scrollBodyPanel.getScrollPosition() + self._scrollingVelocity)
@@ -2096,6 +2056,7 @@ class VScrollTable(FlowPanel, Table, IFocusable, ActionOwner, VHasDropHandler):
             elif self.isSingleSelectMode() and not shift and self.moveFocusDown():
                 self.selectFocusedRow(ctrl, shift)
             return True
+
         # Up navigation
         if not self.isSelectable() and keycode == self.getNavigationUpKey():
             self._scrollBodyPanel.setScrollPosition(self._scrollBodyPanel.getScrollPosition() - self._scrollingVelocity)
@@ -2106,6 +2067,7 @@ class VScrollTable(FlowPanel, Table, IFocusable, ActionOwner, VHasDropHandler):
             elif self.isSingleSelectMode() and not shift and self.moveFocusUp():
                 self.selectFocusedRow(ctrl, shift)
             return True
+
         if keycode == self.getNavigationLeftKey():
             # Left navigation
             self._scrollBodyPanel.setHorizontalScrollPosition(self._scrollBodyPanel.getHorizontalScrollPosition() - self._scrollingVelocity)
@@ -2114,6 +2076,7 @@ class VScrollTable(FlowPanel, Table, IFocusable, ActionOwner, VHasDropHandler):
             # Right navigation
             self._scrollBodyPanel.setHorizontalScrollPosition(self._scrollBodyPanel.getHorizontalScrollPosition() + self._scrollingVelocity)
             return True
+
         # Select navigation
         if self.isSelectable() and keycode == self.getNavigationSelectKey():
             if self.isSingleSelectMode():
@@ -2126,6 +2089,7 @@ class VScrollTable(FlowPanel, Table, IFocusable, ActionOwner, VHasDropHandler):
                 self.removeRowFromUnsentSelectionRanges(self._focusedRow)
             self.sendSelectedRows()
             return True
+
         # Page Down navigation
         if keycode == self.getNavigationPageDownKey():
             if self.isSelectable():
@@ -2133,27 +2097,34 @@ class VScrollTable(FlowPanel, Table, IFocusable, ActionOwner, VHasDropHandler):
                 # end of current view. If at the end, scroll down one page
                 # length and keep the selected row in the bottom part of
                 # visible area.
-
                 if not self.isFocusAtTheEndOfTable():
-                    lastVisibleRowInViewPort = self._scrollBody.getRowByRowIndex((self._firstRowInViewPort + self.getFullyVisibleRowCount()) - 1)
-                    if (
-                        lastVisibleRowInViewPort is not None and lastVisibleRowInViewPort != self._focusedRow
-                    ):
+                    lastVisibleRowInViewPort = \
+                        self._scrollBody.getRowByRowIndex(
+                                (self._firstRowInViewPort
+                                        + self.getFullyVisibleRowCount()) - 1)
+
+                    if (lastVisibleRowInViewPort is not None
+                            and lastVisibleRowInViewPort != self._focusedRow):
                         # focused row is not at the end of the table, move
                         # focus and select the last visible row
                         self.setRowFocus(lastVisibleRowInViewPort)
                         self.selectFocusedRow(ctrl, shift)
                         self.sendSelectedRows()
                     else:
-                        indexOfToBeFocused = self._focusedRow.getIndex() + self.getFullyVisibleRowCount()
+                        indexOfToBeFocused = (self._focusedRow.getIndex()
+                                + self.getFullyVisibleRowCount())
+
                         if indexOfToBeFocused >= self._totalRows:
                             indexOfToBeFocused = self._totalRows - 1
-                        toBeFocusedRow = self._scrollBody.getRowByRowIndex(indexOfToBeFocused)
+
+                        toBeFocusedRow = self._scrollBody.getRowByRowIndex(
+                                indexOfToBeFocused)
+
                         if toBeFocusedRow is not None:
                             # if the next focused row is rendered
                             self.setRowFocus(toBeFocusedRow)
                             self.selectFocusedRow(ctrl, shift)
-                            # TODO needs scrollintoview ?
+                            # TODO: needs scrollintoview ?
                             self.sendSelectedRows()
                         else:
                             # scroll down by pixels and return, to wait for
@@ -2165,7 +2136,9 @@ class VScrollTable(FlowPanel, Table, IFocusable, ActionOwner, VHasDropHandler):
             else:
                 # No selections, go page down by scrolling
                 self.scrollByPagelenght(1)
+
             return True
+
         # Page Up navigation
         if keycode == self.getNavigationPageUpKey():
             if self.isSelectable():
@@ -2173,28 +2146,34 @@ class VScrollTable(FlowPanel, Table, IFocusable, ActionOwner, VHasDropHandler):
                 # end of current view. If at the end, scroll down one page
                 # length and keep the selected row in the bottom part of
                 # visible area.
-
                 if not self.isFocusAtTheBeginningOfTable():
-                    firstVisibleRowInViewPort = self._scrollBody.getRowByRowIndex(self._firstRowInViewPort)
-                    if (
-                        firstVisibleRowInViewPort is not None and firstVisibleRowInViewPort != self._focusedRow
-                    ):
+                    firstVisibleRowInViewPort = \
+                            self._scrollBody.getRowByRowIndex(
+                                    self._firstRowInViewPort)
+
+                    if (firstVisibleRowInViewPort is not None
+                            and firstVisibleRowInViewPort != self._focusedRow):
                         # focus is not at the beginning of the table, move
                         # focus and select the first visible row
                         self.setRowFocus(firstVisibleRowInViewPort)
                         self.selectFocusedRow(ctrl, shift)
                         self.sendSelectedRows()
                     else:
-                        indexOfToBeFocused = self._focusedRow.getIndex() - self.getFullyVisibleRowCount()
+                        indexOfToBeFocused = (self._focusedRow.getIndex()
+                                - self.getFullyVisibleRowCount())
+
                         if indexOfToBeFocused < 0:
                             indexOfToBeFocused = 0
-                        toBeFocusedRow = self._scrollBody.getRowByRowIndex(indexOfToBeFocused)
+
+                        toBeFocusedRow = self._scrollBody.getRowByRowIndex(
+                                indexOfToBeFocused)
+
                         if toBeFocusedRow is not None:
                             # if the next focused row
                             # is rendered
                             self.setRowFocus(toBeFocusedRow)
                             self.selectFocusedRow(ctrl, shift)
-                            # TODO needs scrollintoview ?
+                            # TODO: needs scrollintoview ?
                             self.sendSelectedRows()
                         else:
                             # unless waiting for the next rowset already
@@ -2207,12 +2186,15 @@ class VScrollTable(FlowPanel, Table, IFocusable, ActionOwner, VHasDropHandler):
             else:
                 # No selections, go page up by scrolling
                 self.scrollByPagelenght(-1)
+
             return True
+
         # Goto start navigation
         if keycode == self.getNavigationStartKey():
             self._scrollBodyPanel.setScrollPosition(0)
             if self.isSelectable():
-                if self._focusedRow is not None and self._focusedRow.getIndex() == 0:
+                if (self._focusedRow is not None
+                        and self._focusedRow.getIndex() == 0):
                     return False
                 else:
                     rowByRowIndex = self._scrollBody.next()
@@ -2227,13 +2209,18 @@ class VScrollTable(FlowPanel, Table, IFocusable, ActionOwner, VHasDropHandler):
                         self._multiselectPending = shift
                     # first row of table will come in next row fetch
             return True
+
         # Goto end navigation
         if keycode == self.getNavigationEndKey():
-            self._scrollBodyPanel.setScrollPosition(self._scrollBody.getOffsetHeight())
+            self._scrollBodyPanel.setScrollPosition(
+                    self._scrollBody.getOffsetHeight())
+
             if self.isSelectable():
                 lastRendered = self._scrollBody.getLastRendered()
                 if lastRendered + 1 == self._totalRows:
-                    rowByRowIndex = self._scrollBody.getRowByRowIndex(lastRendered)
+                    rowByRowIndex = \
+                            self._scrollBody.getRowByRowIndex(lastRendered)
+
                     if self._focusedRow != rowByRowIndex:
                         self.setRowFocus(rowByRowIndex)
                         self.selectFocusedRow(ctrl, shift)
@@ -2243,25 +2230,26 @@ class VScrollTable(FlowPanel, Table, IFocusable, ActionOwner, VHasDropHandler):
                 else:
                     self._selectLastItemInNextRender = True
                     self._multiselectPending = shift
+
             return True
+
         return False
+
 
     def isFocusAtTheBeginningOfTable(self):
         return self._focusedRow.getIndex() == 0
 
+
     def isFocusAtTheEndOfTable(self):
         return self._focusedRow.getIndex() + 1 >= self._totalRows
 
+
     def getFullyVisibleRowCount(self):
-        return self._scrollBodyPanel.getOffsetHeight() / self._scrollBody.getRowHeight()
+        return (self._scrollBodyPanel.getOffsetHeight()
+                / self._scrollBody.getRowHeight())
+
 
     def scrollByPagelenght(self, i):
-        # (non-Javadoc)
-        #
-        # @see
-        # com.google.gwt.event.dom.client.FocusHandler#onFocus(com.google.gwt.event
-        # .dom.client.FocusEvent)
-
         pixels = i * self._scrollBodyPanel.getOffsetHeight()
         newPixels = self._scrollBodyPanel.getScrollPosition() + pixels
         if newPixels < 0:
@@ -2270,13 +2258,8 @@ class VScrollTable(FlowPanel, Table, IFocusable, ActionOwner, VHasDropHandler):
         # values here)
         self._scrollBodyPanel.setScrollPosition(newPixels)
 
-    def onFocus(self, event):
-        # (non-Javadoc)
-        #
-        # @see
-        # com.google.gwt.event.dom.client.BlurHandler#onBlur(com.google.gwt.event
-        # .dom.client.BlurEvent)
 
+    def onFocus(self, event):
         if self.isFocusable():
             self._hasFocus = True
             # Focus a row if no row is in focus
@@ -2285,9 +2268,11 @@ class VScrollTable(FlowPanel, Table, IFocusable, ActionOwner, VHasDropHandler):
             else:
                 self.setRowFocus(self._focusedRow)
 
+
     def onBlur(self, event):
         self._hasFocus = False
         self._navKeyDown = False
+
         if BrowserInfo.get().isIE():
             # IE sometimes moves focus to a clicked table cell...
             focusedElement = Util.getIEFocusedElement()
@@ -2295,61 +2280,64 @@ class VScrollTable(FlowPanel, Table, IFocusable, ActionOwner, VHasDropHandler):
                 # ..in that case, steal the focus back to the focus handler
                 self.focus()
                 return
+
         if self.isFocusable():
             # Unfocus any row
             self.setRowFocus(None)
 
+
     def removeRowFromUnsentSelectionRanges(self, row):
         """Removes a key from a range if the key is found in a selected range
 
-        @param key
+        @param key:
                    The key to remove
         """
         newRanges = None
-        _0 = True
         iterator = self._selectedRowRanges
-        while True:
-            if _0 is True:
-                _0 = False
-            if not iterator.hasNext():
-                break
+        while iterator.hasNext():
             range = iterator.next()
             if range.inRange(row):
                 # Split the range if given row is in range
                 splitranges = range.split(row)
                 if newRanges is None:
                     newRanges = list()
-                newRanges.addAll(splitranges)
+                newRanges.extend(splitranges)
                 iterator.remove()
+
         if newRanges is not None:
             self._selectedRowRanges.addAll(newRanges)
+
 
     def isFocusable(self):
         """Can the Table be focused?
 
-        @return True if the table can be focused, else false
+        @return: True if the table can be focused, else false
         """
         if self._scrollBody is not None and self._enabled:
-            return not (not self.hasHorizontalScrollbar() and not self.hasVerticalScrollbar() and not self.isSelectable())
+            return not (not self.hasHorizontalScrollbar()
+                    and not self.hasVerticalScrollbar()
+                    and not self.isSelectable())
         return False
 
+
     def hasHorizontalScrollbar(self):
-        return self._scrollBody.getOffsetWidth() > self._scrollBodyPanel.getOffsetWidth()
+        return (self._scrollBody.getOffsetWidth()
+                > self._scrollBodyPanel.getOffsetWidth())
+
 
     def hasVerticalScrollbar(self):
-        # (non-Javadoc)
-        #
-        # @see com.vaadin.terminal.gwt.client.Focusable#focus()
+        return (self._scrollBody.getOffsetHeight()
+                > self._scrollBodyPanel.getOffsetHeight())
 
-        return self._scrollBody.getOffsetHeight() > self._scrollBodyPanel.getOffsetHeight()
 
     def focus(self):
         if self.isFocusable():
             self._scrollBodyPanel.focus()
 
+
     def setProperTabIndex(self):
-        """Sets the proper tabIndex for scrollBodyPanel (the focusable elemen in the
-        component).
+        """Sets the proper tabIndex for scrollBodyPanel (the focusable elemen
+        in the component).
 
         If the component has no explicit tabIndex a zero is given (default
         tabbing order based on dom hierarchy) or -1 if the component does not
@@ -2359,18 +2347,22 @@ class VScrollTable(FlowPanel, Table, IFocusable, ActionOwner, VHasDropHandler):
         """
         storedScrollTop = 0
         storedScrollLeft = 0
+
         if BrowserInfo.get().getOperaVersion() >= 11:
             # Workaround for Opera scroll bug when changing tabIndex (#6222)
             storedScrollTop = self._scrollBodyPanel.getScrollPosition()
             storedScrollLeft = self._scrollBodyPanel.getHorizontalScrollPosition()
+
         if self._tabIndex == 0 and not self.isFocusable():
             self._scrollBodyPanel.setTabIndex(-1)
         else:
             self._scrollBodyPanel.setTabIndex(self._tabIndex)
+
         if BrowserInfo.get().getOperaVersion() >= 11:
             # Workaround for Opera scroll bug when changing tabIndex (#6222)
             self._scrollBodyPanel.setScrollPosition(storedScrollTop)
             self._scrollBodyPanel.setHorizontalScrollPosition(storedScrollLeft)
+
 
     def startScrollingVelocityTimer(self):
         if self._scrollingVelocityTimer is None:
@@ -2384,6 +2376,7 @@ class VScrollTable(FlowPanel, Table, IFocusable, ActionOwner, VHasDropHandler):
             self._scrollingVelocityTimer = _18_
             self._scrollingVelocityTimer.scheduleRepeating(100)
 
+
     def cancelScrollingVelocityTimer(self):
         if self._scrollingVelocityTimer is not None:
             # Remove velocityTimer if it exists and the Table is disabled
@@ -2391,11 +2384,20 @@ class VScrollTable(FlowPanel, Table, IFocusable, ActionOwner, VHasDropHandler):
             self._scrollingVelocityTimer = None
             self._scrollingVelocity = 10
 
+
     def isNavigationKey(self, keyCode):
         """@param keyCode
         @return true if the given keyCode is used by the table for navigation
         """
-        return (((((((keyCode == self.getNavigationUpKey()) or (keyCode == self.getNavigationLeftKey())) or (keyCode == self.getNavigationRightKey())) or (keyCode == self.getNavigationDownKey())) or (keyCode == self.getNavigationPageUpKey())) or (keyCode == self.getNavigationPageDownKey())) or (keyCode == self.getNavigationEndKey())) or (keyCode == self.getNavigationStartKey())
+        return ((keyCode == self.getNavigationUpKey())
+                or (keyCode == self.getNavigationLeftKey())
+                or (keyCode == self.getNavigationRightKey())
+                or (keyCode == self.getNavigationDownKey())
+                or (keyCode == self.getNavigationPageUpKey())
+                or (keyCode == self.getNavigationPageDownKey())
+                or (keyCode == self.getNavigationEndKey())
+                or (keyCode == self.getNavigationStartKey()))
+
 
     def lazyRevertFocusToRow(self, currentlyFocusedRow):
 
@@ -2412,19 +2414,12 @@ class VScrollTable(FlowPanel, Table, IFocusable, ActionOwner, VHasDropHandler):
         _19_ = _19_()
         Scheduler.get().scheduleFinally(_19_)
 
+
     def getActions(self):
         if self._bodyActionKeys is None:
             return []
         actions = [None] * len(self._bodyActionKeys)
-        _0 = True
-        i = 0
-        while True:
-            if _0 is True:
-                _0 = False
-            else:
-                i += 1
-            if not (i < len(actions)):
-                break
+        for i in range(len(actions)):
             actionKey = self._bodyActionKeys[i]
             bodyAction = TreeAction(self, None, actionKey)
             bodyAction.setCaption(self.getActionCaption(actionKey))
@@ -2432,36 +2427,42 @@ class VScrollTable(FlowPanel, Table, IFocusable, ActionOwner, VHasDropHandler):
             actions[i] = bodyAction
         return actions
 
+
     def getClient(self):
         return self.client
+
 
     def getPaintableId(self):
         return self.paintableId
 
+
     @classmethod
     def getPreventTextSelectionIEHack(cls):
-        """Add this to the element mouse down event by using element.setPropertyJSO
-        ("onselectstart",applyDisableTextSelectionIEHack()); Remove it then again
-        when the mouse is depressed in the mouse up event.
+        """Add this to the element mouse down event by using
+        element.setPropertyJSO
+        ("onselectstart",applyDisableTextSelectionIEHack()); Remove it
+        then again when the mouse is depressed in the mouse up event.
 
-        @return Returns the JSO preventing text selection
+        @return: Returns the JSO preventing text selection
         """
         JS("""
             return function(){ return false; };
         """)
         pass
 
+
     def triggerLazyColumnAdjustment(self, now):
         self.lazyAdjustColumnWidths.cancel()
         if now:
             self.lazyAdjustColumnWidths.run()
         else:
-            self.lazyAdjustColumnWidths.schedule(self._LAZY_COLUMN_ADJUST_TIMEOUT)
+            self.lazyAdjustColumnWidths.schedule(
+                    self._LAZY_COLUMN_ADJUST_TIMEOUT)
+
 
     def debug(self, msg):
         if self._enableDebug:
             VConsole.error(msg)
-
 
 
 class SelectionRange(object):
@@ -2738,24 +2739,33 @@ class TableDDDetails(object):
         # public int hashCode() {
         # return overkey;
         # }
-        if isinstance(obj, VScrollTable_this.TableDDDetails):
+        if isinstance(obj, TableDDDetails):
             other = obj
-            return self._dropLocation == other.dropLocation and self._overkey == other.overkey and (self._colkey is not None and self._colkey == other.colkey) or (self._colkey is None and other.colkey is None)
+            return (self._dropLocation == other.dropLocation
+                    and self._overkey == other.overkey
+                    and (self._colkey is not None and self._colkey == other.colkey)
+                    or (self._colkey is None and other.colkey is None))
         return False
 
 
-
 class VScrollTableDropHandler(VAbstractDropHandler):
+
     _ROWSTYLEBASE = 'v-table-row-drag-'
-    _dropDetails = None
-    _lastEmphasized = None
+
+    def __init__(self, st):
+        self._st = st
+
+        _dropDetails = None
+        _lastEmphasized = None
+
 
     def dragEnter(self, drag):
         self.updateDropDetails(drag)
         super(VScrollTableDropHandler, self).dragEnter(drag)
 
+
     def updateDropDetails(self, drag):
-        self._dropDetails = VScrollTable_this.TableDDDetails()
+        self._dropDetails = TableDDDetails()
         elementOver = drag.getElementOver()
         row = Util.findWidget(elementOver, self.getRowClass())
         if row is not None:
@@ -2765,15 +2775,20 @@ class VScrollTableDropHandler(VAbstractDropHandler):
             while element is not None and element.getParentElement() != tr:
                 element = element.getParentElement()
             childIndex = DOM.getChildIndex(tr, element)
-            self._dropDetails.colkey = VScrollTable_this.tHead.getHeaderCell(childIndex).getColKey()
-            self._dropDetails.dropLocation = DDUtil.getVerticalDropLocation(row.getElement(), drag.getCurrentGwtEvent(), 0.2)
-        drag.getDropDetails().put('itemIdOver', self._dropDetails.overkey + '')
-        drag.getDropDetails().put('detail', str(self._dropDetails.dropLocation) if self._dropDetails.dropLocation is not None else None)
+            self._dropDetails.colkey = self._st.tHead.getHeaderCell(
+                    childIndex).getColKey()
+            self._dropDetails.dropLocation = DDUtil.getVerticalDropLocation(
+                    row.getElement(), drag.getCurrentGwtEvent(), 0.2)
+
+        drag.getDropDetails()['itemIdOver'] = str(self._dropDetails.overkey)
+        drag.getDropDetails()['detail'] = str(self._dropDetails.dropLocation) if self._dropDetails.dropLocation is not None else None
+
 
     def getRowClass(self):
         # get the row type this way to make dd work in derived
         # implementations
-        return VScrollTable_this._scrollBody.next().getClass()
+        return self._st._scrollBody.next().__class__
+
 
     def dragOver(self, drag):
         oldDetails = self._dropDetails
@@ -2791,48 +2806,176 @@ class VScrollTableDropHandler(VAbstractDropHandler):
 
             self.validate(cb, drag)
 
+
     def dragLeave(self, drag):
         self.deEmphasis()
         super(VScrollTableDropHandler, self).dragLeave(drag)
+
 
     def drop(self, drag):
         self.deEmphasis()
         return super(VScrollTableDropHandler, self).drop(drag)
 
+
     def deEmphasis(self):
-        UIObject.setStyleName(self.getElement(), VScrollTable_this.CLASSNAME + '-drag', False)
+        UIObject.setStyleName(self.getElement(),
+                self._st.CLASSNAME + '-drag', False)
+
         if self._lastEmphasized is None:
             return
-        for w in VScrollTable_this._scrollBody.renderedRows:
+
+        for w in self._st._scrollBody.renderedRows:
             row = w
-            if (
-                self._lastEmphasized is not None and row.rowKey == self._lastEmphasized.overkey
-            ):
-                stylename = self._ROWSTYLEBASE + str(self._lastEmphasized.dropLocation).toLowerCase()
-                VScrollTableRow.setStyleName(row.getElement(), stylename, False)
+            if (self._lastEmphasized is not None
+                    and row.rowKey == self._lastEmphasized.overkey):
+                stylename = (self._ROWSTYLEBASE
+                        + str(self._lastEmphasized.dropLocation).lower())
+                VScrollTableRow.setStyleName(row.getElement(), stylename,
+                        False)
                 self._lastEmphasized = None
                 return
 
+
     def emphasis(self, details):
-        """TODO needs different drop modes ?? (on cells, on rows), now only
+        """TODO: needs different drop modes ?? (on cells, on rows), now only
         supports rows
         """
         self.deEmphasis()
-        UIObject.setStyleName(self.getElement(), VScrollTable_this.CLASSNAME + '-drag', True)
+        UIObject.setStyleName(self.getElement(), self._st.CLASSNAME + '-drag',
+                True)
+
         # iterate old and new emphasized row
-        for w in VScrollTable_this._scrollBody.renderedRows:
+        for w in self._st._scrollBody.renderedRows:
             row = w
             if details is not None and details.overkey == row.rowKey:
-                stylename = self._ROWSTYLEBASE + str(details.dropLocation).toLowerCase()
+                stylename = (self._ROWSTYLEBASE
+                        + str(details.dropLocation).lower())
                 VScrollTableRow.setStyleName(row.getElement(), stylename, True)
                 self._lastEmphasized = details
                 return
 
+
     def dragAccepted(self, drag):
         self.emphasis(self._dropDetails)
 
+
     def getPaintable(self):
-        return VScrollTable_this
+        return self._st
 
     def getApplicationConnection(self):
-        return VScrollTable_this.client
+        return self._st.client
+
+
+class LazyAdjustColumnWidths(Timer):
+
+    def __init__(self, st):
+        self._st = st
+
+    def run(self):
+        """Check for column widths, and available width, to see if we can fix
+        column widths "optimally". Doing this lazily to avoid expensive
+        calculation when resizing is not yet finished.
+        """
+        if self._st._scrollBody is None:
+            # Try again later if we get here before scrollBody has been
+            # initalized
+            self._st.triggerLazyColumnAdjustment(False)
+            return
+
+        headCells = self._st.tHead
+        usedMinimumWidth = 0
+        totalExplicitColumnsWidths = 0
+        expandRatioDivider = 0
+        colIndex = 0
+
+        while headCells.hasNext():
+            hCell = headCells.next()
+            if hCell.isDefinedWidth():
+                totalExplicitColumnsWidths += hCell.getWidth()
+                usedMinimumWidth += hCell.getWidth()
+            else:
+                usedMinimumWidth += hCell.getNaturalColumnWidth(colIndex)
+                expandRatioDivider += hCell.getExpandRatio()
+            colIndex += 1
+
+        availW = self._st._scrollBody.getAvailableWidth()
+        # Hey IE, are you really sure about this?
+        availW = self._st._scrollBody.getAvailableWidth()
+        visibleCellCount = self._st.tHead.getVisibleCellCount()
+        availW -= self._st._scrollBody.getCellExtraWidth() * visibleCellCount
+
+        if self._st.willHaveScrollbars():
+            availW -= Util.getNativeScrollbarSize()
+
+        extraSpace = availW - usedMinimumWidth
+        if extraSpace < 0:
+            extraSpace = 0
+
+        totalUndefinedNaturalWidths = (usedMinimumWidth
+                - totalExplicitColumnsWidths)
+
+        # we have some space that can be divided optimally
+        colIndex = 0
+        headCells = self._st.tHead
+        checksum = 0
+        while headCells.hasNext():
+            hCell = headCells.next()
+            if not hCell.isDefinedWidth():
+                w = hCell.getNaturalColumnWidth(colIndex)
+                if expandRatioDivider > 0:
+                    # divide excess space by expand ratios
+                    newSpace = round(w
+                            + ((extraSpace * hCell.getExpandRatio())
+                                    / expandRatioDivider))
+                elif totalUndefinedNaturalWidths != 0:
+                    # divide relatively to natural column widths
+                    newSpace = round(w
+                            + ((extraSpace * w) / totalUndefinedNaturalWidths))
+                else:
+                    newSpace = w
+
+                checksum += newSpace
+                self._st.setColWidth(colIndex, newSpace, False)
+            else:
+                checksum += hCell.getWidth()
+
+            colIndex += 1
+
+        if extraSpace > 0 and checksum != availW:
+            # There might be in some cases a rounding error of 1px when
+            # extra space is divided so if there is one then we give the
+            # first undefined column 1 more pixel
+            headCells = self._st.tHead
+            colIndex = 0
+            while headCells.hasNext():
+                hc = headCells.next()
+                if not hc.isDefinedWidth():
+                    self._st.setColWidth(colIndex,
+                            (hc.getWidth() + availW) - checksum, False)
+                    break
+                colIndex += 1
+
+        if ((self._st._height is None) or ('' == self._st._height)
+                and self._st._totalRows == self._st._pageLength):
+            # fix body height (may vary if lazy loading is offhorizontal
+            # scrollbar appears/disappears)
+            bodyHeight = self._st._scrollBody.getRequiredHeight()
+            needsSpaceForHorizontalScrollbar = availW < usedMinimumWidth
+            if needsSpaceForHorizontalScrollbar:
+                bodyHeight += Util.getNativeScrollbarSize()
+            heightBefore = self.getOffsetHeight()
+            self._st._scrollBodyPanel.setHeight(bodyHeight + 'px')
+            if heightBefore != self.getOffsetHeight():
+                # Util.notifyParentOfSizeChange(VScrollTable.this, false);
+                pass
+        self._st._scrollBody.reLayoutComponents()
+
+        class _18_(Command):
+
+            def execute(self):
+                Util.runWebkitOverflowAutoFix(
+                        self._st._scrollBodyPanel.getElement())
+
+        _18_ = _18_()
+        Scheduler.get().scheduleDeferred(_18_)
+        VScrollTable_this.forceRealignColumnHeaders()
