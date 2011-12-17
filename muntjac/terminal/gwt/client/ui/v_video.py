@@ -18,6 +18,60 @@
 #       Vaadin please visit http://www.vaadin.com.
 
 
-class VVideo(object):
+from __pyjamas__ import JS
 
-    ATTR_POSTER = "poster"
+from pyjamas import DOM
+
+from muntjac.terminal.gwt.client.ui.v_media_base import VMediaBase
+from muntjac.terminal.gwt.client.util import Util
+
+
+class VVideo(VMediaBase):
+
+    ATTR_POSTER = 'poster'
+    _CLASSNAME = 'v-video'
+
+    def __init__(self):
+        self._video = DOM.createVideoElement()
+        self.setMediaElement(self._video)
+        self.setStyleName(self._CLASSNAME)
+        self.updateDimensionsWhenMetadataLoaded(self.getElement())
+
+
+    def updateFromUIDL(self, uidl, client):
+        if client.updateComponent(self, uidl, True):
+            return
+        super(VVideo, self).updateFromUIDL(uidl, client)
+        self.setPosterFromUIDL(uidl)
+
+
+    def setPosterFromUIDL(self, uidl):
+        if uidl.hasAttribute(self.ATTR_POSTER):
+            self._video.setPoster(self.client.translateVaadinUri(
+                    uidl.getStringAttribute(self.ATTR_POSTER)))
+
+
+    def updateDimensionsWhenMetadataLoaded(self, el):
+        """Registers a listener that updates the dimensions of the widget when the
+        video metadata has been loaded.
+
+        @param el
+        """
+        JS("""
+              var self = @{{self}};
+              @{{el}}.addEventListener('loadedmetadata', function(e) {
+                  $entry(self.@com.vaadin.terminal.gwt.client.ui.VVideo::updateElementDynamicSize(II)(@{{el}}.videoWidth, @{{el}}.videoHeight));
+              }, false);
+        """)
+        pass
+
+    def updateElementDynamicSize(self, w, h):
+        """Updates the dimensions of the widget.
+        """
+        self._video.getStyle().setWidth(w, 'px')#Unit.PX)
+        self._video.getStyle().setHeight(h, 'px')#Unit.PX)
+        Util.notifyParentOfSizeChange(self, True)
+
+
+    def getDefaultAltHtml(self):
+        return 'Your browser does not support the <code>video</code> element.'

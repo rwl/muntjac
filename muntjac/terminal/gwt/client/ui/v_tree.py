@@ -19,10 +19,12 @@
 
 from __pyjamas__ import JS
 
-from pyjamas import Window
+from pyjamas import DOM, Window
 
 from pyjamas.ui import Event, KeyboardListener
 
+from pyjamas.ui.UIObject import UIObject
+from pyjamas.ui.Widget import Widget
 from pyjamas.ui.FlowPanel import FlowPanel
 from pyjamas.ui.SimplePanel import SimplePanel
 
@@ -1298,7 +1300,8 @@ class TreeNode(SimplePanel, ActionOwner):
     CLASSNAME = 'v-tree-node'
     CLASSNAME_FOCUSED = CLASSNAME + '-focused'
 
-    def __init__(self):
+    def __init__(self, tree):
+        self._tree = tree
 
         self.key = None
         self._actionKeys = None
@@ -1334,19 +1337,28 @@ class TreeNode(SimplePanel, ActionOwner):
 
     def emphasis(self, detail):
         base = 'v-tree-node-drag-'
-        UIObject.setStyleName(self.getElement(), base + 'top', VerticalDropLocation.TOP == detail)
-        UIObject.setStyleName(self.getElement(), base + 'bottom', VerticalDropLocation.BOTTOM == detail)
-        UIObject.setStyleName(self.getElement(), base + 'center', VerticalDropLocation.MIDDLE == detail)
+        UIObject.setStyleName(self.getElement(), base + 'top',
+                VerticalDropLocation.TOP == detail)
+        UIObject.setStyleName(self.getElement(), base + 'bottom',
+                VerticalDropLocation.BOTTOM == detail)
+        UIObject.setStyleName(self.getElement(), base + 'center',
+                VerticalDropLocation.MIDDLE == detail)
         base = 'v-tree-node-caption-drag-'
-        UIObject.setStyleName(self._nodeCaptionDiv, base + 'top', VerticalDropLocation.TOP == detail)
-        UIObject.setStyleName(self._nodeCaptionDiv, base + 'bottom', VerticalDropLocation.BOTTOM == detail)
-        UIObject.setStyleName(self._nodeCaptionDiv, base + 'center', VerticalDropLocation.MIDDLE == detail)
+        UIObject.setStyleName(self._nodeCaptionDiv, base + 'top',
+                VerticalDropLocation.TOP == detail)
+        UIObject.setStyleName(self._nodeCaptionDiv, base + 'bottom',
+                VerticalDropLocation.BOTTOM == detail)
+        UIObject.setStyleName(self._nodeCaptionDiv, base + 'center',
+                VerticalDropLocation.MIDDLE == detail)
+
         # also add classname to "folder node" into which the drag is
         # targeted
+
         folder = None
         # Possible parent of this TreeNode will be stored here
         parentFolder = self.getParentNode()
-        # TODO fix my bugs
+
+        # TODO: fix my bugs
         if self.isLeaf():
             folder = parentFolder
             # note, parent folder may be null if this is root node => no
@@ -1356,79 +1368,88 @@ class TreeNode(SimplePanel, ActionOwner):
                 folder = parentFolder
             else:
                 folder = self
+
             # ensure we remove the dragfolder classname from the previous
             # folder node
             self.setDragFolderStyleName(self, False)
             self.setDragFolderStyleName(parentFolder, False)
+
         if folder is not None:
             self.setDragFolderStyleName(folder, detail is not None)
 
+
     def getParentNode(self):
         parent2 = self.getParent().getParent()
-        if isinstance(parent2, VTree_this.TreeNode):
+        if isinstance(parent2, TreeNode):
             return parent2
         return None
 
+
     def setDragFolderStyleName(self, folder, add):
         if folder is not None:
-            UIObject.setStyleName(folder.getElement(), 'v-tree-node-dragfolder', add)
-            UIObject.setStyleName(folder.nodeCaptionDiv, 'v-tree-node-caption-dragfolder', add)
+            UIObject.setStyleName(folder.getElement(),
+                    'v-tree-node-dragfolder', add)
+            UIObject.setStyleName(folder.nodeCaptionDiv,
+                    'v-tree-node-caption-dragfolder', add)
+
 
     def handleClickSelection(self, ctrl, shift):
         """Handles mouse selection
 
-        @param ctrl
+        @param ctrl:
                    Was the ctrl-key pressed
-        @param shift
+        @param shift:
                    Was the shift-key pressed
-        @return Returns true if event was handled, else false
+        @return: Returns true if event was handled, else false
         """
         # always when clicking an item, focus it
-        # (non-Javadoc)
-        #
-        # @see
-        # com.google.gwt.user.client.ui.Widget#onBrowserEvent(com.google.gwt
-        # .user.client.Event)
+        self._tree.setFocusedNode(self, False)
 
-        VTree_this.setFocusedNode(self, False)
-        if not VTree_this.isIE6OrOpera():
+        if not self._tree.isIE6OrOpera():
             # Ensure that the tree's focus element also gains focus
             # (TreeNodes focus is faked using FocusElementPanel in browsers
             # other than IE6 and Opera).
-
             self.focus()
 
         class command(ScheduledCommand):
 
+            def __init__(self, tree, node):
+                self._tree = tree
+                self._node = node
+
             def execute(self):
-                if (
-                    (VTree_this._multiSelectMode == VTree_this.MULTISELECT_MODE_SIMPLE) or (not VTree_this._isMultiselect)
-                ):
-                    TreeNode_this.toggleSelection()
-                    VTree_this._lastSelection = TreeNode_this
-                elif VTree_this._multiSelectMode == VTree_this.MULTISELECT_MODE_DEFAULT:
+                if ((self._tree._multiSelectMode == self._tree.MULTISELECT_MODE_SIMPLE)
+                        or (not self._tree._isMultiselect)):
+                    self._node.toggleSelection()
+                    self._tree._lastSelection = self._node
+                elif (self._tree._multiSelectMode
+                        == self._tree.MULTISELECT_MODE_DEFAULT):
                     # Handle ctrl+click
-                    if VTree_this._isMultiselect and self.ctrl and not self.shift:
-                        TreeNode_this.toggleSelection()
-                        VTree_this._lastSelection = TreeNode_this
+                    if self._tree._isMultiselect and self.ctrl and not self.shift:
+                        self._node.toggleSelection()
+                        self._tree._lastSelection = self._node
                         # Handle shift+click
-                    elif VTree_this._isMultiselect and not self.ctrl and self.shift:
-                        VTree_this.deselectAll()
-                        VTree_this.selectNodeRange(VTree_this._lastSelection.key, TreeNode_this.key)
-                        VTree_this.sendSelectionToServer()
+                    elif (self._tree._isMultiselect and not self.ctrl
+                            and self.shift):
+                        self._tree.deselectAll()
+                        self._tree.selectNodeRange(
+                                self._tree._lastSelection.key, self._node.key)
+                        self._tree.sendSelectionToServer()
                         # Handle ctrl+shift click
-                    elif VTree_this._isMultiselect and self.ctrl and self.shift:
-                        VTree_this.selectNodeRange(VTree_this._lastSelection.key, TreeNode_this.key)
+                    elif (self._tree._isMultiselect and self.ctrl
+                            and self.shift):
+                        self._tree.selectNodeRange(
+                                self._tree._lastSelection.key, self._node.key)
                         # Handle click
                     else:
-                        # TODO should happen only if this alone not yet
-                        # selected,
-                        # now sending excess server calls
-                        VTree_this.deselectAll()
-                        TreeNode_this.toggleSelection()
-                        VTree_this._lastSelection = TreeNode_this
+                        # TODO: should happen only if this alone not yet
+                        # selected, now sending excess server calls
+                        self._tree.deselectAll()
+                        self._node.toggleSelection()
+                        self._tree._lastSelection = self._node
 
-        if BrowserInfo.get().isWebkit() and not VTree_this._treeHasFocus:
+
+        if BrowserInfo.get().isWebkit() and not self._tree._treeHasFocus:
             # Safari may need to wait for focus. See FocusImplSafari.
             # VConsole.log("Deferring click handling to let webkit gain focus...");
             Scheduler.get().scheduleDeferred(command)
@@ -1436,10 +1457,12 @@ class TreeNode(SimplePanel, ActionOwner):
             command.execute()
         return True
 
+
     def onBrowserEvent(self, event):
         super(TreeNode, self).onBrowserEvent(event)
         type = DOM.eventGetType(event)
         target = DOM.eventGetTarget(event)
+
         if type == Event.ONLOAD and target == self._icon.getElement():
             if self._onloadHandled:
                 return
@@ -1447,39 +1470,47 @@ class TreeNode(SimplePanel, ActionOwner):
                 self.fixWidth()
             self.iconLoaded.trigger()
             self._onloadHandled = True
-        if VTree_this._disabled:
+
+        if self._tree._disabled:
             return
+
         if target == self.nodeCaptionSpan:
-            VTree_this._client.handleTooltipEvent(event, VTree_this, self.key)
-        inCaption = (target == self.nodeCaptionSpan) or (self._icon is not None and target == self._icon.getElement())
-        if (
-            inCaption and VTree_this._client.hasEventListeners(VTree_this, VTree_this.ITEM_CLICK_EVENT_ID) and (type == Event.ONDBLCLICK) or (type == Event.ONMOUSEUP)
-        ):
+            self._tree._client.handleTooltipEvent(event, self._tree, self.key)
+
+        inCaption = ((target == self.nodeCaptionSpan)
+                or (self._icon is not None
+                        and target == self._icon.getElement()))
+        if (inCaption and self._tree._client.hasEventListeners(self._tree,
+                self._tree.ITEM_CLICK_EVENT_ID)
+                        and (type == Event.ONDBLCLICK)
+                        or (type == Event.ONMOUSEUP)):
             self.fireClick(event)
+
         if type == Event.ONCLICK:
             if (self.getElement() == target) or (self._ie6compatnode == target):
                 # state change
                 self.toggleState()
-            elif not VTree_this._readonly and inCaption:
-                if VTree_this._selectable:
+            elif not self._tree._readonly and inCaption:
+                if self._tree._selectable:
                     # caption click = selection change && possible click
                     # event
-                    if (
-                        self.handleClickSelection(event.getCtrlKey() or event.getMetaKey(), event.getShiftKey())
-                    ):
+                    if (self.handleClickSelection(event.getCtrlKey()
+                            or event.getMetaKey(), event.getShiftKey())):
                         event.preventDefault()
                 else:
                     # Not selectable, only focus the node.
-                    VTree_this.setFocusedNode(self)
+                    self._tree.setFocusedNode(self)
+
             event.stopPropagation()
         elif type == Event.ONCONTEXTMENU:
             self.showContextMenu(event)
-        if (VTree_this._dragMode != 0) or (VTree_this._dropHandler is not None):
+
+        if (self._tree._dragMode != 0) or (self._tree._dropHandler is not None):
             if (type == Event.ONMOUSEDOWN) or (type == Event.ONTOUCHSTART):
                 if self._nodeCaptionDiv.isOrHasChild(event.getEventTarget()):
-                    if (
-                        VTree_this._dragMode > 0 and (type == Event.ONTOUCHSTART) or (event.getButton() == NativeEvent.BUTTON_LEFT)
-                    ):
+                    if (self._tree._dragMode > 0
+                            and (type == Event.ONTOUCHSTART)
+                            or (event.getButton() == NativeEvent.BUTTON_LEFT)):
                         self._mouseDownEvent = event
                         # save event for possible
                         # dd operation
@@ -1488,49 +1519,48 @@ class TreeNode(SimplePanel, ActionOwner):
                             # prevent text
                             # selection
                         else:
-                            # FIXME We prevent touch start event to be used
+                            # FIXME: We prevent touch start event to be used
                             # as a scroll start event. Note that we cannot
                             # easily distinguish whether the user wants to
                             # drag or scroll. The same issue is in table
                             # that has scrollable area and has drag and
                             # drop enable. Some kind of timer might be used
                             # to resolve the issue.
-
                             event.stopPropagation()
-            elif (
-                ((type == Event.ONMOUSEMOVE) or (type == Event.ONMOUSEOUT)) or (type == Event.ONTOUCHMOVE)
-            ):
+            elif ((type == Event.ONMOUSEMOVE) or (type == Event.ONMOUSEOUT)
+                    or (type == Event.ONTOUCHMOVE)):
                 if self._mouseDownEvent is not None:
                     # start actual drag on slight move when mouse is down
                     t = VTransferable()
-                    t.setDragSource(VTree_this)
+                    t.setDragSource(self._tree)
                     t.setData('itemId', self.key)
-                    drag = VDragAndDropManager.get().startDrag(t, self._mouseDownEvent, True)
+                    drag = VDragAndDropManager.get().startDrag(t,
+                            self._mouseDownEvent, True)
                     drag.createDragImage(self._nodeCaptionDiv, True)
                     event.stopPropagation()
                     self._mouseDownEvent = None
             elif type == Event.ONMOUSEUP:
                 self._mouseDownEvent = None
+
             if type == Event.ONMOUSEOVER:
                 self._mouseDownEvent = None
-                VTree_this._currentMouseOverKey = self.key
+                self._tree._currentMouseOverKey = self.key
                 event.stopPropagation()
-        elif (
-            type == Event.ONMOUSEDOWN and event.getButton() == NativeEvent.BUTTON_LEFT
-        ):
-            event.preventDefault()
-            # text selection
+
+        elif (type == Event.ONMOUSEDOWN
+                and event.getButton() == NativeEvent.BUTTON_LEFT):
+            event.preventDefault()  # text selection
+
 
     def fireClick(self, evt):
         # Ensure we have focus in tree before sending variables. Otherwise
         # previously modified field may contain dirty variables.
-
-        if not VTree_this._treeHasFocus:
-            if VTree_this.isIE6OrOpera():
-                if VTree_this._focusedNode is None:
-                    VTree_this.getNodeByKey(self.key).setFocused(True)
+        if not self._tree._treeHasFocus:
+            if self._tree.isIE6OrOpera():
+                if self._tree._focusedNode is None:
+                    self._tree.getNodeByKey(self.key).setFocused(True)
                 else:
-                    VTree_this._focusedNode.setFocused(True)
+                    self._tree._focusedNode.setFocused(True)
             else:
                 self.focus()
         details = MouseEventDetails(evt)
@@ -1543,67 +1573,81 @@ class TreeNode(SimplePanel, ActionOwner):
                 # selection event happening after this. In all other cases
                 # we want to send it immediately.
                 sendClickEventNow = True
-                if (
-                    self.details.getButton() == NativeEvent.BUTTON_LEFT and VTree_this._immediate and VTree_this._selectable
-                ):
+                if (self.details.getButton() == NativeEvent.BUTTON_LEFT
+                        and self._tree._immediate and self._tree._selectable):
                     # Probably a selection that will cause a value change
                     # event to be sent
                     sendClickEventNow = False
                     # The exception is that user clicked on the
                     # currently selected row and null selection is not
                     # allowed == no selection event
-                    if (
-                        TreeNode_this.isSelected() and len(VTree_this._selectedIds) == 1 and not VTree_this._isNullSelectionAllowed
-                    ):
+                    if (self._node.isSelected()
+                            and len(self._tree._selectedIds) == 1
+                            and not self._tree._isNullSelectionAllowed):
                         sendClickEventNow = True
-                VTree_this._client.updateVariable(VTree_this._paintableId, 'clickedKey', TreeNode_this.key, False)
-                VTree_this._client.updateVariable(VTree_this._paintableId, 'clickEvent', str(self.details), sendClickEventNow)
 
-        if VTree_this._treeHasFocus:
+                self._tree._client.updateVariable(self._tree._paintableId,
+                        'clickedKey', self._node.key, False)
+                self._tree._client.updateVariable(self._tree._paintableId,
+                        'clickEvent', str(self.details), sendClickEventNow)
+
+        if self._tree._treeHasFocus:
             command.execute()
         else:
             # Webkits need a deferring due to FocusImplSafari uses timeout
             Scheduler.get().scheduleDeferred(command)
 
+
     def toggleSelection(self):
-        if VTree_this._selectable:
-            VTree_this.setSelected(self, not self.isSelected())
+        if self._tree._selectable:
+            self._tree.setSelected(self, not self.isSelected())
+
 
     def toggleState(self):
         self.setState(not self.getState(), True)
+
 
     def constructDom(self):
         self.addStyleName(self.CLASSNAME)
         # workaround for a very weird IE6 issue #1245
         if BrowserInfo.get().isIE6():
             self._ie6compatnode = DOM.createDiv()
-            self.setStyleName(self._ie6compatnode, self.CLASSNAME + '-ie6compatnode')
+            self.setStyleName(self._ie6compatnode,
+                    self.CLASSNAME + '-ie6compatnode')
             DOM.setInnerText(self._ie6compatnode, ' ')
             DOM.appendChild(self.getElement(), self._ie6compatnode)
+
             DOM.sinkEvents(self._ie6compatnode, Event.ONCLICK)
+
         self._nodeCaptionDiv = DOM.createDiv()
-        DOM.setElementProperty(self._nodeCaptionDiv, 'className', self.CLASSNAME + '-caption')
+        DOM.setElemAttribute(self._nodeCaptionDiv, 'className',
+                self.CLASSNAME + '-caption')
         wrapper = DOM.createDiv()
         self.nodeCaptionSpan = DOM.createSpan()
         DOM.sinkEvents(self.nodeCaptionSpan, VTooltip.TOOLTIP_EVENTS)
         DOM.appendChild(self.getElement(), self._nodeCaptionDiv)
         DOM.appendChild(self._nodeCaptionDiv, wrapper)
         DOM.appendChild(wrapper, self.nodeCaptionSpan)
-        if VTree_this.isIE6OrOpera():
+
+        if self._tree.isIE6OrOpera():
             # Focus the caption div of the node to get keyboard navigation
             # to work without scrolling up or down when focusing a node.
-
             self._nodeCaptionDiv.setTabIndex(-1)
+
         self._childNodeContainer = FlowPanel()
         self._childNodeContainer.setStyleName(self.CLASSNAME + '-children')
         self.setWidget(self._childNodeContainer)
 
+
     def updateFromUIDL(self, uidl, client):
         self.setText(uidl.getStringAttribute('caption'))
         self.key = uidl.getStringAttribute('key')
-        VTree_this._keyToNode.put(self.key, self)
+
+        self._tree._keyToNode.put(self.key, self)
+
         if uidl.hasAttribute('al'):
             self._actionKeys = uidl.getStringArrayAttribute('al')
+
         if uidl.getTag() == 'node':
             if uidl.getChildCount() == 0:
                 self._childNodeContainer.setVisible(False)
@@ -1612,36 +1656,50 @@ class TreeNode(SimplePanel, ActionOwner):
                 self._childrenLoaded = True
         else:
             self.addStyleName(self.CLASSNAME + '-leaf')
+
         if uidl.hasAttribute('style'):
-            self.addStyleName(self.CLASSNAME + '-' + uidl.getStringAttribute('style'))
-            Widget.setStyleName(self._nodeCaptionDiv, self.CLASSNAME + '-caption-' + uidl.getStringAttribute('style'), True)
-            self._childNodeContainer.addStyleName(self.CLASSNAME + '-children-' + uidl.getStringAttribute('style'))
+            self.addStyleName(
+                    self.CLASSNAME + '-' + uidl.getStringAttribute('style'))
+            Widget.setStyleName(self._nodeCaptionDiv,
+                    self.CLASSNAME + '-caption-'
+                    + uidl.getStringAttribute('style'), True)
+            self._childNodeContainer.addStyleName(self.CLASSNAME
+                    + '-children-' + uidl.getStringAttribute('style'))
+
         description = uidl.getStringAttribute('descr')
         if description is not None and client is not None:
             # Set tooltip
             info = TooltipInfo(description)
-            client.registerTooltip(VTree_this, self.key, info)
+            client.registerTooltip(self._tree, self.key, info)
         else:
             # Remove possible previous tooltip
-            client.registerTooltip(VTree_this, self.key, None)
+            client.registerTooltip(self._tree, self.key, None)
+
         if uidl.getBooleanAttribute('expanded') and not self.getState():
             self.setState(True, False)
+
         if uidl.getBooleanAttribute('selected'):
             self.setSelected(True)
             # ensure that identifier is in selectedIds array (this may be a
             # partial update)
-            VTree_this._selectedIds.add(self.key)
+            self._tree._selectedIds.add(self.key)
+
         if uidl.hasAttribute('icon'):
             if self._icon is None:
                 self._onloadHandled = False
                 self._icon = Icon(client)
-                DOM.insertBefore(DOM.getFirstChild(self._nodeCaptionDiv), self._icon.getElement(), self.nodeCaptionSpan)
+                DOM.insertBefore(DOM.getFirstChild(self._nodeCaptionDiv),
+                        self._icon.getElement(), self.nodeCaptionSpan)
+
             self._icon.setUri(uidl.getStringAttribute('icon'))
         elif self._icon is not None:
-            DOM.removeChild(DOM.getFirstChild(self._nodeCaptionDiv), self._icon.getElement())
+            DOM.removeChild(DOM.getFirstChild(self._nodeCaptionDiv),
+                    self._icon.getElement())
             self._icon = None
+
         if BrowserInfo.get().isIE6() and self.isAttached():
             self.fixWidth()
+
 
     def isLeaf(self):
         styleNames = self.getStyleName().split(' ')
@@ -1650,30 +1708,42 @@ class TreeNode(SimplePanel, ActionOwner):
                 return True
         return False
 
+
     def setState(self, state, notifyServer):
         if self._open == state:
             return
+
         if state:
             if not self._childrenLoaded and notifyServer:
-                VTree_this._client.updateVariable(VTree_this._paintableId, 'requestChildTree', True, False)
+                self._tree._client.updateVariable(self._tree._paintableId,
+                        'requestChildTree', True, False)
+
             if notifyServer:
-                VTree_this._client.updateVariable(VTree_this._paintableId, 'expand', [self.key], True)
+                self._tree._client.updateVariable(self._tree._paintableId,
+                        'expand', [self.key], True)
+
             self.addStyleName(self.CLASSNAME + '-expanded')
             self._childNodeContainer.setVisible(True)
         else:
             self.removeStyleName(self.CLASSNAME + '-expanded')
             self._childNodeContainer.setVisible(False)
             if notifyServer:
-                VTree_this._client.updateVariable(VTree_this._paintableId, 'collapse', [self.key], True)
+                self._tree._client.updateVariable(self._tree._paintableId,
+                        'collapse', [self.key], True)
+
         self._open = state
-        if not VTree_this._rendering:
-            Util.notifyParentOfSizeChange(VTree_this, False)
+
+        if not self._tree._rendering:
+            Util.notifyParentOfSizeChange(self._tree, False)
+
 
     def getState(self):
         return self._open
 
+
     def setText(self, text):
         DOM.setInnerText(self.nodeCaptionSpan, text)
+
 
     def renderChildNodes(self, i):
         self._childNodeContainer.clear()
@@ -1683,79 +1753,88 @@ class TreeNode(SimplePanel, ActionOwner):
             # actions are in bit weird place, don't mix them with children,
             # but current node's actions
             if 'actions' == childUidl.getTag():
-                VTree_this.updateActionMap(childUidl)
+                self._tree.updateActionMap(childUidl)
                 continue
-            childTree = VTree_this.TreeNode()
+
+            childTree = TreeNode()
             if self._ie6compatnode is not None:
                 self._childNodeContainer.add(childTree)
-            childTree.updateFromUIDL(childUidl, VTree_this._client)
+
+            childTree.updateFromUIDL(childUidl, self._tree._client)
+
             if self._ie6compatnode is None:
                 self._childNodeContainer.add(childTree)
+
             if not i.hasNext():
-                childTree.addStyleDependentName('leaf-last' if childTree.isLeaf() else 'last')
+                childTree.addStyleDependentName(
+                        'leaf-last' if childTree.isLeaf() else 'last')
                 childTree.childNodeContainer.addStyleDependentName('last')
+
         self._childrenLoaded = True
+
 
     def isChildrenLoaded(self):
         return self._childrenLoaded
 
+
     def getChildren(self):
         """Returns the children of the node
 
-        @return A set of tree nodes
+        @return: A set of tree nodes
         """
-        nodes = LinkedList()
+        nodes = list()
+
         if not self.isLeaf() and self.isChildrenLoaded():
             iter = self._childNodeContainer
             while iter.hasNext():
                 node = iter.next()
-                nodes.add(node)
+                nodes.append(node)
+
         return nodes
+
 
     def getActions(self):
         if self._actionKeys is None:
             return []
+
         actions = [None] * len(self._actionKeys)
-        _0 = True
-        i = 0
-        while True:
-            if _0 is True:
-                _0 = False
-            else:
-                i += 1
-            if not (i < len(actions)):
-                break
+        for i in range(len(actions)):
             actionKey = self._actionKeys[i]
-            a = TreeAction(self, String.valueOf.valueOf(self.key), actionKey)
-            a.setCaption(VTree_this.getActionCaption(actionKey))
-            a.setIconUrl(VTree_this.getActionIcon(actionKey))
+            a = TreeAction(self, str(self.key), actionKey)
+            a.setCaption(self._tree.getActionCaption(actionKey))
+            a.setIconUrl(self._tree.getActionIcon(actionKey))
             actions[i] = a
+
         return actions
 
+
     def getClient(self):
-        return VTree_this._client
+        return self._tree._client
+
 
     def getPaintableId(self):
-        return VTree_this._paintableId
+        return self._tree._paintableId
+
 
     def setSelected(self, selected):
-        """Adds/removes Vaadin specific style name. This method ought to be
+        """Adds/removes Muntjac specific style name. This method ought to be
         called only from VTree.
-
-        @param selected
         """
         # add style name to caption dom structure only, not to subtree
-        self.setStyleName(self._nodeCaptionDiv, 'v-tree-node-selected', selected)
+        self.setStyleName(self._nodeCaptionDiv, 'v-tree-node-selected',
+                selected)
+
 
     def isSelected(self):
-        return VTree_this.isSelected(self)
+        return self._tree.isSelected(self)
+
 
     def isGrandParentOf(self, child):
         """Travels up the hierarchy looking for this node
 
-        @param child
+        @param child:
                    The child which grandparent this is or is not
-        @return True if this is a grandparent of the child node
+        @return: True if this is a grandparent of the child node
         """
         currentNode = child
         isGrandParent = False
@@ -1766,58 +1845,57 @@ class TreeNode(SimplePanel, ActionOwner):
                 break
         return isGrandParent
 
+
     def isSibling(self, node):
         return node.getParentNode() == self.getParentNode()
+
 
     def showContextMenu(self, event):
         # We need to fix the width of TreeNodes so that the float in
         # ie6compatNode does not wrap (see ticket #1245)
-
-        if not VTree_this._readonly and not VTree_this._disabled:
+        if not self._tree._readonly and not self._tree._disabled:
             if self._actionKeys is not None:
                 left = event.getClientX()
                 top = event.getClientY()
                 top += Window.getScrollTop()
                 left += Window.getScrollLeft()
-                VTree_this._client.getContextMenu().showAt(self, left, top)
+                self._tree._client.getContextMenu().showAt(self, left, top)
             event.stopPropagation()
             event.preventDefault()
 
-    def fixWidth(self):
-        # (non-Javadoc)
-        #
-        # @see com.google.gwt.user.client.ui.Widget#onAttach()
 
+    def fixWidth(self):
         self._nodeCaptionDiv.getStyle().setProperty('styleFloat', 'left')
         self._nodeCaptionDiv.getStyle().setProperty('display', 'inline')
         self._nodeCaptionDiv.getStyle().setProperty('marginLeft', '0')
-        captionWidth = self._ie6compatnode.getOffsetWidth() + self._nodeCaptionDiv.getOffsetWidth()
+        captionWidth = (self._ie6compatnode.getOffsetWidth()
+                + self._nodeCaptionDiv.getOffsetWidth())
         self.setWidth(captionWidth + 'px')
 
-    def onAttach(self):
-        # (non-Javadoc)
-        #
-        # @see com.google.gwt.user.client.ui.Widget#onDetach()
 
+    def onAttach(self):
         super(TreeNode, self).onAttach()
         if self._ie6compatnode is not None:
             self.fixWidth()
 
-    def onDetach(self):
-        # (non-Javadoc)
-        #
-        # @see com.google.gwt.user.client.ui.UIObject#toString()
 
+    def onDetach(self):
         super(TreeNode, self).onDetach()
-        VTree_this._client.getContextMenu().ensureHidden(self)
+        self._tree._client.getContextMenu().ensureHidden(self)
+
 
     def toString(self):
         return self.nodeCaptionSpan.getInnerText()
 
+
+    def __str__(self):
+        return self.toString()
+
+
     def setFocused(self, focused):
         """Is the node focused?
 
-        @param focused
+        @param focused:
                    True if focused, false if not
         """
         if not self._focused and focused:
@@ -1825,15 +1903,16 @@ class TreeNode(SimplePanel, ActionOwner):
             if BrowserInfo.get().isIE6():
                 self._ie6compatnode.addClassName(self.CLASSNAME_FOCUSED)
             self._focused = focused
-            if VTree_this.isIE6OrOpera():
+            if self._tree.isIE6OrOpera():
                 self._nodeCaptionDiv.focus()
-            VTree_this._treeHasFocus = True
+            self._tree._treeHasFocus = True
         elif self._focused and not focused:
             self._nodeCaptionDiv.removeClassName(self.CLASSNAME_FOCUSED)
             if BrowserInfo.get().isIE6():
                 self._ie6compatnode.removeClassName(self.CLASSNAME_FOCUSED)
             self._focused = focused
-            VTree_this._treeHasFocus = False
+            self._tree._treeHasFocus = False
+
 
     def scrollIntoView(self):
         """Scrolls the caption into view"""
