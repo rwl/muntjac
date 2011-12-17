@@ -17,65 +17,63 @@
 # Note: This is a modified file from Vaadin. For further information on
 #       Vaadin please visit http://www.vaadin.com.
 
-from __pyjamas__ import (ARGERROR,)
-from com.vaadin.terminal.gwt.client.Util import (Util,)
-from com.vaadin.terminal.gwt.client.ui.MenuItem import (MenuItem,)
-from com.vaadin.terminal.gwt.client.ui.VLazyExecutor import (VLazyExecutor,)
-from com.vaadin.terminal.gwt.client.BrowserInfo import (BrowserInfo,)
-from com.vaadin.terminal.gwt.client.ui.SubPartAware import (SubPartAware,)
-from com.vaadin.terminal.gwt.client.ui.VOverlay import (VOverlay,)
-from com.vaadin.terminal.gwt.client.ui.MenuBar import (MenuBar,)
-from com.vaadin.terminal.gwt.client.Focusable import (Focusable,)
-# from com.google.gwt.user.client.ui.MenuBar import (MenuBar,)
-# from com.google.gwt.user.client.ui.MenuItem import (MenuItem,)
+from muntjac.terminal.gwt.client.util import Util
+from muntjac.terminal.gwt.client.ui.menu_item import MenuItem
+from muntjac.terminal.gwt.client.ui.v_lazy_executor import VLazyExecutor
+from muntjac.terminal.gwt.client.browser_info import BrowserInfo
+from muntjac.terminal.gwt.client.ui.sub_part_aware import SubPartAware
+from muntjac.terminal.gwt.client.ui.v_overlay import VOverlay
+from muntjac.terminal.gwt.client.ui.menu_bar import MenuBar
+from muntjac.terminal.gwt.client.focusable import IFocusable
 
 
 class VContextMenu(VOverlay, SubPartAware):
-    _actionOwner = None
-    _menu = CMenuBar()
-    _left = None
-    _top = None
-    _delayedImageLoadExecutioner = 
-    class _1_(ScheduledCommand):
 
-        def execute(self):
-            VContextMenu_this.imagesLoaded()
-
-    _1_ = _1_()
-    VLazyExecutor(100, _1_)
 
     def __init__(self):
-        """This method should be used only by Client object as only one per client
-        should exists. Request an instance via client.getContextMenu();
+        """This method should be used only by Client object as only one per
+        client should exists. Request an instance via client.getContextMenu();
 
-        @param cli
+        @param cli:
                    to be set as an owner of menu
         """
+        self._actionOwner = None
+        self._menu = CMenuBar()
+        self._left = None
+        self._top = None
+
+        class _1_(ScheduledCommand):
+
+            def execute(self):
+                VContextMenu_this.imagesLoaded()
+
+        _1_ = _1_()
+        self._delayedImageLoadExecutioner = VLazyExecutor(100, _1_)
+
         super(VContextMenu, self)(True, False, True)
+
         self.setWidget(self._menu)
         self.setStyleName('v-contextmenu')
+
 
     def imagesLoaded(self):
         if self.isVisible():
             self.show()
 
+
     def setActionOwner(self, ao):
         """Sets the element from which to build menu
-
-        @param ao
         """
         self._actionOwner = ao
 
-    def showAt(self, *args):
-        """Shows context menu at given location IF it contain at least one item.
 
-        @param left
-        @param top
+    def showAt(self, *args):
+        """Shows context menu at given location IF it contain at least one
+        item.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 2:
-            left, top = _0
+        nargs = len(args)
+        if nargs == 2:
+            left, top = args
             actions = self._actionOwner.getActions()
             if (actions is None) or (len(actions) == 0):
                 # Only show if there really are actions
@@ -83,20 +81,13 @@ class VContextMenu(VOverlay, SubPartAware):
             self._left = left
             self._top = top
             self._menu.clearItems()
-            _0 = True
-            i = 0
-            while True:
-                if _0 is True:
-                    _0 = False
-                else:
-                    i += 1
-                if not (i < len(actions)):
-                    break
+            for i in range(len(actions)):
                 a = actions[i]
                 self._menu.addItem(MenuItem(a.getHTML(), True, a))
+
             # Attach onload listeners to all images
             Util.sinkOnloadForImages(self._menu.getElement())
-            VContextMenu_this = self
+#            VContextMenu_this = self
 
             class _2_(self.PositionCallback):
 
@@ -132,82 +123,26 @@ class VContextMenu(VOverlay, SubPartAware):
 
             _2_ = _2_()
             self.setPopupPositionAndShow(_2_)
-        elif _1 == 3:
-            ao, left, top = _0
+        elif nargs == 3:
+            ao, left, top = args
             self.setActionOwner(ao)
             self.showAt(left, top)
         else:
-            raise ARGERROR(2, 3)
+            raise ValueError
 
-    def CMenuBar(VContextMenu_this, *args, **kwargs):
-
-        class CMenuBar(MenuBar, HasFocusHandlers, HasBlurHandlers, HasKeyDownHandlers, HasKeyPressHandlers, Focusable, LoadHandler):
-            """Extend standard Gwt MenuBar to set proper settings and to override
-            onPopupClosed method so that PopupPanel gets closed.
-            """
-
-            def __init__(self):
-                super(CMenuBar, self)(True)
-                self.addDomHandler(self, LoadEvent.getType())
-
-            def onPopupClosed(self, sender, autoClosed):
-                # public void onBrowserEvent(Event event) { // Remove current selection
-                # when mouse leaves if (DOM.eventGetType(event) == Event.ONMOUSEOUT) {
-                # Element to = DOM.eventGetToElement(event); if
-                # (!DOM.isOrHasChild(getElement(), to)) { DOM.setElementProperty(
-                # super.getSelectedItem().getElement(), "className",
-                # super.getSelectedItem().getStylePrimaryName()); } }
-                # 
-                # super.onBrowserEvent(event); }
-
-                super(CMenuBar, self).onPopupClosed(sender, autoClosed)
-                # make focusable, as we don't need access key magic we don't need
-                # to
-                # use FocusImpl.createFocusable
-                self.getElement().setTabIndex(0)
-                self.hide()
-
-            def getItem(self, index):
-                return super(CMenuBar, self).getItems().get(index)
-
-            def addFocusHandler(self, handler):
-                return self.addDomHandler(handler, FocusEvent.getType())
-
-            def addBlurHandler(self, handler):
-                return self.addDomHandler(handler, BlurEvent.getType())
-
-            def addKeyDownHandler(self, handler):
-                return self.addDomHandler(handler, KeyDownEvent.getType())
-
-            def addKeyPressHandler(self, handler):
-                return self.addDomHandler(handler, KeyPressEvent.getType())
-
-            def setFocus(self, focus):
-                if focus:
-                    FocusImpl.getFocusImplForPanel().focus(self.getElement())
-                else:
-                    FocusImpl.getFocusImplForPanel().blur(self.getElement())
-
-            def focus(self):
-                self.setFocus(True)
-
-            def onLoad(self, event):
-                # Handle icon onload events to ensure shadow is resized correctly
-                if BrowserInfo.get().isIE6():
-                    # Ensure PNG transparency works in IE6
-                    Util.doIE6PngFix(Element.as_(event.getNativeEvent().getEventTarget()))
-                VContextMenu_this._delayedImageLoadExecutioner.trigger()
-
-        return CMenuBar(*args, **kwargs)
 
     def getSubPartElement(self, subPart):
         index = int(subPart[6:])
+
         # ApplicationConnection.getConsole().log(
         # "Searching element for selection index " + index);
+
         item = self._menu.getItem(index)
+
         # ApplicationConnection.getConsole().log("Item: " + item);
         # Item refers to the td, which is the parent of the clickable element
         return item.getElement().getFirstChildElement()
+
 
     def getSubPartName(self, subElement):
         if self.getElement().isOrHasChild(subElement):
@@ -215,29 +150,92 @@ class VContextMenu(VOverlay, SubPartAware):
             while e is not None and not (e.getTagName().toLowerCase() == 'tr'):
                 e = e.getParentElement()
                 # ApplicationConnection.getConsole().log("Found row");
+
             parentElement = e.getParentElement()
             rows = parentElement.getRows()
-            _0 = True
-            i = 0
-            while True:
-                if _0 is True:
-                    _0 = False
-                else:
-                    i += 1
-                if not (i < rows.getLength()):
-                    break
+
+            for i in range(rows.getLength()):
                 if rows.getItem(i) == e:
                     # ApplicationConnection.getConsole().log(
                     # "Found index for row" + 1);
                     return 'option' + i
+
             return None
         else:
             return None
 
+
     def ensureHidden(self, actionOwner):
         """Hides context menu if it is currently shown by given action owner.
-
-        @param actionOwner
         """
         if self._actionOwner == actionOwner:
             self.hide()
+
+
+class CMenuBar(MenuBar, IFocusable):
+#    HasFocusHandlers, HasBlurHandlers, HasKeyDownHandlers, HasKeyPressHandlers, LoadHandler):
+    """Extend standard Gwt MenuBar to set proper settings and to override
+    onPopupClosed method so that PopupPanel gets closed.
+    """
+
+    def __init__(self):
+        super(CMenuBar, self).__init__(True)
+        self.addDomHandler(self, LoadEvent.getType())
+
+
+    def onPopupClosed(self, sender, autoClosed):
+        super(CMenuBar, self).onPopupClosed(sender, autoClosed)
+
+        # make focusable, as we don't need access key magic we don't need
+        # to use FocusImpl.createFocusable
+        self.getElement().setTabIndex(0)
+        self.hide()
+
+
+    # public void onBrowserEvent(Event event) { // Remove current selection
+    # when mouse leaves if (DOM.eventGetType(event) == Event.ONMOUSEOUT) {
+    # Element to = DOM.eventGetToElement(event); if
+    # (!DOM.isOrHasChild(getElement(), to)) { DOM.setElementProperty(
+    # super.getSelectedItem().getElement(), "className",
+    # super.getSelectedItem().getStylePrimaryName()); } }
+    #
+    # super.onBrowserEvent(event); }
+
+
+    def getItem(self, index):
+        return super(CMenuBar, self).getItems().get(index)
+
+
+    def addFocusHandler(self, handler):
+        return self.addDomHandler(handler, FocusEvent.getType())
+
+
+    def addBlurHandler(self, handler):
+        return self.addDomHandler(handler, BlurEvent.getType())
+
+
+    def addKeyDownHandler(self, handler):
+        return self.addDomHandler(handler, KeyDownEvent.getType())
+
+
+    def addKeyPressHandler(self, handler):
+        return self.addDomHandler(handler, KeyPressEvent.getType())
+
+
+    def setFocus(self, focus):
+        if focus:
+            FocusImpl.getFocusImplForPanel().focus(self.getElement())
+        else:
+            FocusImpl.getFocusImplForPanel().blur(self.getElement())
+
+
+    def focus(self):
+        self.setFocus(True)
+
+
+    def onLoad(self, event):
+        # Handle icon onload events to ensure shadow is resized correctly
+        if BrowserInfo.get().isIE6():
+            # Ensure PNG transparency works in IE6
+            Util.doIE6PngFix(Element.as_(event.getNativeEvent().getEventTarget()))
+        VContextMenu_this._delayedImageLoadExecutioner.trigger()

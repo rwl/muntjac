@@ -17,30 +17,37 @@
 # Note: This is a modified file from Vaadin. For further information on
 #       Vaadin please visit http://www.vaadin.com.
 
-from com.vaadin.terminal.gwt.client.Container import (Container,)
-from com.vaadin.terminal.gwt.client.RenderSpace import (RenderSpace,)
-from com.vaadin.terminal.gwt.client.Util import (Util,)
-# from java.util.Set import (Set,)
+from pyjamas.ui.SimplePanel import SimplePanel
+
+from muntjac.terminal.gwt.client.container import IContainer
+from muntjac.terminal.gwt.client.render_space import RenderSpace
+from muntjac.terminal.gwt.client.util import Util
 
 
-class VCustomComponent(SimplePanel, Container):
+class VCustomComponent(SimplePanel, IContainer):
+
     _CLASSNAME = 'v-customcomponent'
-    _height = None
-    _client = None
-    _rendering = None
-    _width = None
-    _renderSpace = RenderSpace()
 
     def __init__(self):
+        self._height = None
+        self._client = None
+        self._rendering = None
+        self._width = None
+        self._renderSpace = RenderSpace()
+
         super(VCustomComponent, self)()
         self.setStyleName(self._CLASSNAME)
 
+
     def updateFromUIDL(self, uidl, client):
         self._rendering = True
+
         if client.updateComponent(self, uidl, True):
             self._rendering = False
             return
+
         self._client = client
+
         child = uidl.getChildUIDL(0)
         if child is not None:
             p = client.getPaintable(child)
@@ -50,7 +57,9 @@ class VCustomComponent(SimplePanel, Container):
                     self.clear()
                 self.setWidget(p)
             p.updateFromUIDL(child, client)
+
         updateDynamicSize = self.updateDynamicSize()
+
         if updateDynamicSize:
             VCustomComponent_this = self
 
@@ -64,31 +73,39 @@ class VCustomComponent(SimplePanel, Container):
 
             _0_ = _0_()
             Scheduler.get().scheduleDeferred(_0_)
+
         self._renderSpace.setWidth(self.getElement().getOffsetWidth())
         self._renderSpace.setHeight(self.getElement().getOffsetHeight())
+
         # Needed to update client size if the size of this component has
         # changed and the child uses relative size(s).
-
         client.runDescendentsLayout(self)
         self._rendering = False
 
+
     def updateDynamicSize(self):
         updated = False
+
         if self.isDynamicWidth():
             childWidth = Util.getRequiredWidth(self.getWidget())
             self.getElement().getStyle().setPropertyPx('width', childWidth)
             updated = True
+
         if self.isDynamicHeight():
             childHeight = Util.getRequiredHeight(self.getWidget())
             self.getElement().getStyle().setPropertyPx('height', childHeight)
             updated = True
+
         return updated
+
 
     def isDynamicWidth(self):
         return (self._width is None) or (self._width == '')
 
+
     def isDynamicHeight(self):
         return (self._height is None) or (self._height == '')
+
 
     def hasChildComponent(self, component):
         if self.getWidget() == component:
@@ -96,28 +113,35 @@ class VCustomComponent(SimplePanel, Container):
         else:
             return False
 
+
     def replaceChildComponent(self, oldComponent, newComponent):
         if self.hasChildComponent(oldComponent):
             self.clear()
             self.setWidget(newComponent)
         else:
-            raise self.IllegalStateException()
+            raise ValueError
+
 
     def updateCaption(self, component, uidl):
         # NOP, custom component dont render composition roots caption
         pass
+
 
     def requestLayout(self, child):
         # If a child grows in size, it will not necessarily be calculated
         # correctly unless we remove previous size definitions
         if self.isDynamicWidth():
             self.getElement().getStyle().setProperty('width', '')
+
         if self.isDynamicHeight():
             self.getElement().getStyle().setProperty('height', '')
+
         return not self.updateDynamicSize()
+
 
     def getAllocatedSpace(self, child):
         return self._renderSpace
+
 
     def setHeight(self, height):
         super(VCustomComponent, self).setHeight(height)
@@ -126,6 +150,7 @@ class VCustomComponent(SimplePanel, Container):
             self._height = height
             if not self._rendering:
                 self._client.handleComponentRelativeSize(self.getWidget())
+
 
     def setWidth(self, width):
         super(VCustomComponent, self).setWidth(width)
