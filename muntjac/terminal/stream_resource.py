@@ -171,7 +171,7 @@ class StreamResource(IApplicationResource):
         self._cacheTime = cacheTime
 
 
-class StreamSource(object):
+class IStreamSource(object):
     """Interface implemented by the source of a StreamResource.
 
     @author: Vaadin Ltd.

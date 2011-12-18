@@ -13,7 +13,7 @@ from muntjac.terminal.gwt.server.abstract_web_application_context import \
 from muntjac.ui.window import Notification
 from muntjac.ui.drag_and_drop_wrapper import DragAndDropWrapper
 from muntjac.event.dd.drop_handler import IDropHandler
-from muntjac.terminal.stream_resource import StreamSource, StreamResource
+from muntjac.terminal.stream_resource import IStreamSource, StreamResource
 from muntjac.event.dd.acceptcriteria.accept_all import AcceptAll
 from muntjac.ui.embedded import Embedded
 from muntjac.terminal.stream_variable import IStreamVariable
@@ -140,7 +140,7 @@ class ImageDropBox(DragAndDropWrapper, IDropHandler):
         return AcceptAll.get()
 
 
-class FileStreamSource(StreamSource):
+class FileStreamSource(IStreamSource):
 
     def __init__(self, bas):
         self._bas = bas
