@@ -17,24 +17,15 @@
 # Note: This is a modified file from Vaadin. For further information on
 #       Vaadin please visit http://www.vaadin.com.
 
+from muntjac.ui.component import Event
 
-class IColorSelector(object):
-    """The Interface ColorSelector.
 
-    @author: John Ahlroos
-    """
+class ColorChangeEvent(Event):
 
-    def setColor(self, color):
-        """Sets the color.
+    def __init__(self, source, color):
+        Event.__init__(self, source)
 
-        @param color: the new color
-        """
-        raise NotImplementedError
-
+        self._color = color
 
     def getColor(self):
-        """Gets the color.
-
-        @return: the color
-        """
-        raise NotImplementedError
+        return self._color

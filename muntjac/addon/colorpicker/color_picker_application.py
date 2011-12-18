@@ -17,7 +17,13 @@
 # Note: This is a modified file from Vaadin. For further information on
 #       Vaadin please visit http://www.vaadin.com.
 
+from StringIO import StringIO
+
 from datetime import datetime as Date
+
+from muntjac.util import Color
+
+from muntjac.application import Application
 
 from muntjac.ui.check_box import CheckBox
 from muntjac.terminal.stream_resource import IStreamSource, StreamResource
@@ -31,18 +37,20 @@ from muntjac.ui.button import IClickListener
 from muntjac.ui.alignment import Alignment
 
 from muntjac.addon.colorpicker.color_picker \
-    import ColorPicker, ButtonStyle, ColorChangeListener
+    import ColorPicker, ButtonStyle, IColorChangeListener
 
 
-class ColorPickerApplication(Application, ColorChangeListener):
+class ColorPickerApplication(Application, IColorChangeListener):
     """Testing application for the ColorPicker.
 
-    @author John Ahlroos / ITMill Oy Ltd 2010
+    @author: John Ahlroos / ITMill Oy Ltd 2010
+    @author: Richard Lincoln
     """
 
     _VERSION = '@VERSION@'
 
     def __init__(self):
+        super(ColorPickerApplication, self).__init__()
 
         # The foreground color.
         self._foregroundColor = Color.BLACK  # The currently selected
@@ -74,9 +82,14 @@ class ColorPickerApplication(Application, ColorChangeListener):
 
 
     def setPopupVisibilities(self):
-        self._rgbBox.setEnabled(not (self._rgbVisible and not self._hsvVisible and not self._swaVisible))
-        self._hsvBox.setEnabled(not (not self._rgbVisible and self._hsvVisible and not self._swaVisible))
-        self._swaBox.setEnabled(not (not self._rgbVisible and not self._hsvVisible and self._swaVisible))
+        self._rgbBox.setEnabled(not (self._rgbVisible
+                and not self._hsvVisible and not self._swaVisible))
+
+        self._hsvBox.setEnabled(not (not self._rgbVisible
+                and self._hsvVisible and not self._swaVisible))
+
+        self._swaBox.setEnabled(not (not self._rgbVisible
+                and not self._hsvVisible and self._swaVisible))
 
         self._colorpicker1.setRGBVisibility(self._rgbVisible)
         self._colorpicker2.setRGBVisibility(self._rgbVisible)
@@ -141,69 +154,35 @@ class ColorPickerApplication(Application, ColorChangeListener):
         optPanel.getContent().setMargin(True)
         optPanel.getContent().setSpacing(True)
 
-        class RgbClickListener(IClickListener):
-
-            def buttonClick(self, event):
-                ColorPickerApplication_this._rgbVisible = bool(str(event.getButton().getValue()))
-                ColorPickerApplication_this.setPopupVisibilities()
-
-        _0_ = _0_()
-        self._rgbBox.addListener(_0_)
+        self._rgbBox.addListener(RgbClickListener(self), IClickListener)
         self._rgbBox.setValue(self._rgbVisible)
         self._rgbBox.setImmediate(True)
         optPanel.getContent().addComponent(self._rgbBox)
 
-        class HsvClickListener(IClickListener):
-
-            def buttonClick(self, event):
-                ColorPickerApplication_this._hsvVisible = bool(str(event.getButton().getValue()))
-                ColorPickerApplication_this.setPopupVisibilities()
-
-        _1_ = _1_()
-        self._hsvBox.addListener(_1_)
+        self._hsvBox.addListener(HsvClickListener(self), IClickListener)
         self._hsvBox.setValue(self._hsvVisible)
         self._hsvBox.setImmediate(True)
         optPanel.getContent().addComponent(self._hsvBox)
 
-        class SwaClickListener(IClickListener):
-
-            def buttonClick(self, event):
-                ColorPickerApplication_this._swaVisible = bool(str(event.getButton().getValue()))
-                ColorPickerApplication_this.setPopupVisibilities()
-
-        _2_ = _2_()
-        self._swaBox.addListener(_2_)
+        self._swaBox.addListener(SwaClickListener(self), IClickListener)
         self._swaBox.setValue(self._swaVisible)
         self._swaBox.setImmediate(True)
         optPanel.getContent().addComponent(self._swaBox)
 
-        class HisClickListener(IClickListener):
-
-            def buttonClick(self, event):
-                ColorPickerApplication_this._historyVisible = bool(str(event.getButton().getValue()))
-                ColorPickerApplication_this.setPopupVisibilities()
-
-        _3_ = _3_()
-        self._hisBox.addListener(_3_)
+        self._hisBox.addListener(HisClickListener(self), IClickListener)
         self._hisBox.setValue(self._historyVisible)
         self._hisBox.setImmediate(True)
         optPanel.getContent().addComponent(self._hisBox)
 
-        class TxtClickListener(IClickListener):
-
-            def buttonClick(self, event):
-                ColorPickerApplication_this._txtfieldVisible = bool(str(event.getButton().getValue()))
-                ColorPickerApplication_this.setPopupVisibilities()
-
-        _4_ = _4_()
-        self._txtBox.addListener(_4_)
+        self._txtBox.addListener(TxtClickListener(self), IClickListener)
         self._txtBox.setValue(self._txtfieldVisible)
         self._txtBox.setImmediate(True)
         optPanel.getContent().addComponent(self._txtBox)
 
         layout.addComponent(optPanel)
 
-        panel1 = Panel('Button like colorpicker with current color and CSS code',
+        panel1 = Panel(
+                'Button like colorpicker with current color and CSS code',
                 HorizontalLayout())
         panel1.getContent().setSizeFull()
         panel1.getContent().setMargin(True)
@@ -223,7 +202,8 @@ class ColorPickerApplication(Application, ColorChangeListener):
                 Alignment.MIDDLE_CENTER)
         layout.addComponent(panel1)
 
-        panel2 = Panel('Button like colorpicker with current color and custom caption',
+        panel2 = Panel(
+                'Button like colorpicker with current color and custom caption',
                 HorizontalLayout())
         panel2.getContent().setSizeFull()
         panel2.getContent().setMargin(True)
@@ -244,7 +224,8 @@ class ColorPickerApplication(Application, ColorChangeListener):
                 Alignment.MIDDLE_CENTER)
         layout.addComponent(panel2)
 
-        panel3 = Panel('Color area color picker with caption',
+        panel3 = Panel(
+                'Color area color picker with caption',
                 HorizontalLayout())
         panel3.getContent().setSizeFull()
         panel3.getContent().setMargin(True)
@@ -276,15 +257,15 @@ class ColorPickerApplication(Application, ColorChangeListener):
         """Update display.
 
         @param fg:
-                   the fg
+                   the foreround color
         @param bg:
-                   the bg
+                   the background color
         """
         imagesource = MyImageSource(fg, bg)
-        now = Date()
-        format = SimpleDateFormat('hhmmss')
+        now = Date.now()
+        frmt = '%H%M%S'
         imageresource = StreamResource(imagesource,
-                'myimage' + format.format(now) + '.png', self)
+                'myimage' + now.strftime(frmt) + '.png', self)
         imageresource.setCacheTime(0)
         self._display.setSource(imageresource)
 
@@ -326,6 +307,47 @@ class ColorPickerApplication(Application, ColorChangeListener):
         return self._VERSION
 
 
+class _ColorClickListener(IClickListener):
+
+    def __init__(self, app):
+        self._app = app
+
+
+class RgbClickListener(_ColorClickListener):
+
+    def buttonClick(self, event):
+        self._app._rgbVisible = bool(str(event.getButton().getValue()))
+        self._app.setPopupVisibilities()
+
+
+class HsvClickListener(_ColorClickListener):
+
+    def buttonClick(self, event):
+        self._app._hsvVisible = bool(str(event.getButton().getValue()))
+        self._app.setPopupVisibilities()
+
+
+class SwaClickListener(_ColorClickListener):
+
+    def buttonClick(self, event):
+        self._app._swaVisible = bool(str(event.getButton().getValue()))
+        self._app.setPopupVisibilities()
+
+
+class HisClickListener(_ColorClickListener):
+
+    def buttonClick(self, event):
+        self._app._historyVisible = bool(str(event.getButton().getValue()))
+        self._app.setPopupVisibilities()
+
+
+class TxtClickListener(_ColorClickListener):
+
+    def buttonClick(self, event):
+        self._app._txtfieldVisible = bool(str(event.getButton().getValue()))
+        self._app.setPopupVisibilities()
+
+
 class MyImageSource(IStreamSource):
     """This class is used to represent the preview of the color selection."""
 
@@ -344,26 +366,29 @@ class MyImageSource(IStreamSource):
 
 
     def getStream(self):
-        # Must implement this method that returns the resource as a stream.
+        import Image, ImageDraw  # PIL dependency
 
         # Create an image and draw something on it.
-        image = BufferedImage(270, 270, BufferedImage.TYPE_INT_RGB)
-        drawable = image.getGraphics()
-        drawable.setColor(self._bgColor)
-        drawable.fillRect(0, 0, 270, 270)
-        drawable.setColor(self._fgColor)
-        drawable.fillOval(25, 25, 220, 220)
-        drawable.setColor(java.awt.Color.blue)
-        drawable.drawRect(0, 0, 269, 269)
-        drawable.setColor(java.awt.Color.black)
-        drawable.drawString('r=' + str(self._fgColor.getRed()) + ',g=' + str(self._fgColor.getGreen()) + ',b=' + str(self._fgColor.getBlue()), 50, 100)
-        drawable.drawString('r=' + str(self._bgColor.getRed()) + ',g=' + str(self._bgColor.getGreen()) + ',b=' + str(self._bgColor.getBlue()), 5, 15)
+        image = Image("RGB", (270, 270))
+        drawable = ImageDraw.Draw(image)
+        drawable.rectangle([0, 0, 270, 270], fill=str(self._bgColor))
+        drawable.ellipse([25, 25, 220, 220], fill=str(self._fgColor))
+        drawable.rectangle([0, 0, 269, 269], fill=str(Color.BLUE))
+        drawable.text((50, 100),
+                'r=' + str(self._fgColor.getRed()) +
+                ',g=' + str(self._fgColor.getGreen()) +
+                ',b=' + str(self._fgColor.getBlue()), fill=Color.BLACK)
+        drawable.text((5, 15),
+                'r=' + str(self._bgColor.getRed()) +
+                ',g=' + str(self._bgColor.getGreen()) +
+                ',b=' + str(self._bgColor.getBlue()), fill=Color.BLACK)
+
+        del drawable
 
         try:
             # Write the image to a buffer.
-            self._imagebuffer = ByteArrayOutputStream()
-            ImageIO.write(image, 'png', self._imagebuffer)
-            # Return a stream from the buffer.
-            return ByteArrayInputStream(self._imagebuffer.toByteArray())
+            self._imagebuffer = StringIO()
+            image.save(self._imagebuffer, 'PNG')
+            return self._imagebuffer
         except IOError:
             return None

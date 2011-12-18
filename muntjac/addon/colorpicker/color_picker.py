@@ -17,15 +17,17 @@
 # Note: This is a modified file from Vaadin. For further information on
 #       Vaadin please visit http://www.vaadin.com.
 
+from muntjac.util import Color
+
 from muntjac.ui.abstract_component import AbstractComponent
 from muntjac.ui.window import ICloseListener
 
 from muntjac.addon.colorpicker.color_picker_popup import ColorPickerPopup
-from muntjac.addon.colorpicker.events.color_change_event import ColorChangeEvent
-from muntjac.addon.colorpicker.color_selector import ColorSelector
+from muntjac.addon.colorpicker.color_change_event import ColorChangeEvent
+from muntjac.addon.colorpicker.color_selector import IColorSelector
 
 
-class ColorChangeListener(object):
+class IColorChangeListener(object):
     """The listener interface for receiving colorChange events. The class that
     is interested in processing a colorChange event implements this
     interface, and the object created with that class is registered with a
@@ -40,13 +42,15 @@ class ColorChangeListener(object):
         raise NotImplementedError
 
 
-_COLOR_CHANGE_METHOD = getattr(ColorChangeListener, 'colorChanged')
+_COLOR_CHANGE_METHOD = getattr(IColorChangeListener, 'colorChanged')
 
 
-class ColorPicker(AbstractComponent, ICloseListener, ColorSelector):
-    """Colorpicker
+class ColorPicker(AbstractComponent, ICloseListener, IColorSelector,
+            IColorChangeListener):
+    """ColorPicker
 
-    @author John Ahlroos / ITMill Oy
+    @author: John Ahlroos / ITMill Oy
+    @author: Richard Lincoln
     """
 
     def __init__(self, caption='Colors', initialColor=None):
@@ -88,6 +92,8 @@ class ColorPicker(AbstractComponent, ICloseListener, ColorSelector):
         self.color = initialColor
         self.caption = caption
 
+        super(ColorPicker, self).__init__()
+
 
     def setColor(self, color):
         self.color = color
@@ -115,18 +121,50 @@ class ColorPicker(AbstractComponent, ICloseListener, ColorSelector):
             self._window.setPositionY(y)
 
 
-    def addListener(self, listener):
-        self.addListener(ColorChangeEvent, listener, self._COLOR_CHANGE_METHOD)
+    def addListener(self, listener, iface=None):
+
+        if (isinstance(listener, IColorChangeListener) and
+                (iface is None or issubclass(iface, IColorChangeListener))):
+            self.registerListener(ColorChangeEvent, listener,
+                    _COLOR_CHANGE_METHOD)
+
+        super(ColorPicker, self).addListener(listener, iface)
 
 
-    def removeListener(self, listener):
-        self.removeListener(ColorChangeEvent, listener)
+    def addCallback(self, callback, eventType=None, *args):
+        if eventType is None:
+            eventType = callback._eventType  # set by decorator
+
+        if issubclass(eventType, ColorChangeEvent):
+            self.registerCallback(ColorChangeEvent, callback, None, *args)
+        else:
+            super(ColorPicker, self).addCallback(callback, eventType, *args)
+
+
+    def removeListener(self, listener, iface=None):
+
+        if (isinstance(listener, IColorChangeListener) and
+                (iface is None or issubclass(iface, IColorChangeListener))):
+            self.withdrawListener(ColorChangeEvent, listener)
+
+        super(ColorPicker, self).removeListener(listener, iface)
+
+
+    def removeCallback(self, callback, eventType=None):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if issubclass(eventType, ColorChangeEvent):
+            self.withdrawCallback(ColorChangeEvent, callback)
+
+        else:
+            super(ColorPicker, self).removeCallback(callback, eventType)
 
 
     def paintContent(self, target):
-        target.addAttribute('red', Integer.toHexString(self.color.getRed()))
-        target.addAttribute('green', Integer.toHexString(self.color.getGreen()))
-        target.addAttribute('blue', Integer.toHexString(self.color.getBlue()))
+        target.addAttribute('red', hex(self.color.getRed()))
+        target.addAttribute('green', hex(self.color.getGreen()))
+        target.addAttribute('blue', hex(self.color.getBlue()))
         target.addAttribute('alpha', self.color.getAlpha())
         target.addAttribute('popup', self._popupStatus)
         target.addAttribute('btnstyle', self.buttonStyle)
@@ -146,7 +184,6 @@ class ColorPicker(AbstractComponent, ICloseListener, ColorSelector):
                     self._parent = self._parent.getParent()
 
                 if self._window is None:
-
                     # Create the popup
                     self._window = ColorPickerPopup(self.color)
                     self._window.setCaption(self.caption)
@@ -158,17 +195,8 @@ class ColorPicker(AbstractComponent, ICloseListener, ColorSelector):
                     self._window.setPreviewVisible(self.textfieldVisible)
 
                     self._window.setImmediate(True)
-                    self._window.addListener(self)
-
-                    ColorPicker_this = self
-
-                    class _0_(ColorPicker.ColorChangeListener):
-
-                        def colorChanged(self, event):
-                            ColorPicker_this.colorChanged(event)
-
-                    _0_ = _0_()
-                    self._window.addListener(_0_)
+                    self._window.addListener(self, ICloseListener)
+                    self._window.addListener(self, IColorChangeListener)
 
                     self._window.getHistory().setColor(self.color)
                     self._parent.addWindow(self._window)
