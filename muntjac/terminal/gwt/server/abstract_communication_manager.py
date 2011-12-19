@@ -828,6 +828,8 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
                     canonicalName = 'com.vaadin.ui.' + class1.__name__
                 elif canonicalName.startswith('muntjac.demo.sampler'):
                     canonicalName = 'com.vaadin.demo.sampler.' + class1.__name__
+                elif canonicalName.startswith('muntjac.addon.canvas.canvas'):
+                    canonicalName = 'org.vaadin.hezamu.canvas.' + class1.__name__
                 else:
                     raise ValueError('type mapping name [%s]' % canonicalName)
 
