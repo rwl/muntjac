@@ -3,13 +3,17 @@ from muntjac.api \
     import Application, Window, VerticalLayout, HorizontalLayout, \
     NativeButton, TextField, Alignment, Label
 
-from muntjac.addon.weelayout.wee_layout import WeeLayout, Direction
+from muntjac.ui.button \
+    import IClickListener
+
+from muntjac.addon.weelayout.wee_layout \
+    import WeeLayout, Direction
 
 
 class WeelayoutApplication(Application):
 
     def __init__(self):
-        super(WeeLayout, self).__init__()
+        super(WeelayoutApplication, self).__init__()
 
         self._core = False
         self._vertical = False
@@ -18,7 +22,15 @@ class WeelayoutApplication(Application):
     def init(self):
         mainWindow = Window('Weelayout Application')
         self.setMainWindow(mainWindow)
-        mainWindow.setContent(self.splitRecursive(1))
+
+#        mainWindow.setContent(self.splitRecursive(2))
+#        mainWindow.setContent(self.undefinedWithRelativeSizes())
+#        mainWindow.setContent(self.splitView())
+#        mainWindow.setContent(self.createVertical(1))
+#        mainWindow.setContent(self.createCoreVertical(1))
+#        mainWindow.setContent(self.createHorizontal(1))
+        mainWindow.setContent(self.createCoreHorizontal(1))
+
         self.setTheme('test')
 
 
@@ -73,18 +85,9 @@ class WeelayoutApplication(Application):
     def undefinedWithRelativeSizes(self):
         wl = WeeLayout(Direction.VERTICAL)
         wl.setHeight('100%')
-        wl.addComponent()
 
-
-        class _0_(Button.ClickListener):
-
-            def buttonClick(self, event):
-                event.getButton().setCaption('Long caption' if event.getButton().getCaption() is None else None)
-
-
-        _0_ = _0_()
-        NativeButton('With long caption', _0_)
-#        '100%', '30px', Alignment.TOP_LEFT)
+        wlong = NativeButton('With long caption', LongClickListener())
+        wl.addComponent(wlong, '100%', '30px', Alignment.TOP_LEFT)
 
         b = NativeButton('Two')
         b.addStyleName('test')
@@ -92,33 +95,27 @@ class WeelayoutApplication(Application):
         wl.setSmartRelativeSizes(True)
         return wl
 
+
     def splitView(self):
         wl = WeeLayout(Direction.HORIZONTAL)
         wl.setSizeFull()
-        wl.addComponent()
 
-
-        class _0_(Button.ClickListener):
-
-            def buttonClick(self, event):
-                event.getButton().setWidth('300px')
-
-
-        _0_ = _0_()
-        NativeButton('One', _0_)
-#        '100px', '30px', Alignment.TOP_RIGHT)
+        one = NativeButton('One', OneClickListener())
+        wl.addComponent(one, '100px', '30px', Alignment.TOP_RIGHT)
 
         wl.addComponent(Label(''), '14px', '14px', Alignment.TOP_CENTER)
-        wl.addComponent(NativeButton('Two'), '100%', '100%', Alignment.TOP_CENTER)
-        # wl.setClipping(true);
+        wl.addComponent(NativeButton('Two'), '100%', '100%',
+                Alignment.TOP_CENTER)
+        # wl.setClipping(true)
+
         return wl
 
 
     def createVertical(self, recurse):
         wl = WeeLayout(Direction.VERTICAL)
         wl.setSizeFull()
-        # wl.setWidth("100%");
-        # wl.setHeight("50%");
+        # wl.setWidth("100%")
+        # wl.setHeight("50%")
         wl.addComponent(TextField('Left'), Alignment.TOP_LEFT)
         wl.addComponent(TextField('Center'), Alignment.TOP_CENTER)
         tf = TextField('Right')
@@ -186,3 +183,25 @@ class WeelayoutApplication(Application):
             l.addComponent(createCoreVertical)
             l.setExpandRatio(createCoreVertical, 1)
         return l
+
+
+class LongClickListener(IClickListener):
+
+    def buttonClick(self, event):
+        if event.getButton().getCaption() is None:
+            event.getButton().setCaption('Long caption')
+        else:
+            event.getButton().setCaption(None)
+
+
+class OneClickListener(IClickListener):
+
+    def buttonClick(self, event):
+        event.getButton().setWidth('300px')
+
+
+if __name__ == '__main__':
+    from muntjac.main import muntjac
+    muntjac(WeelayoutApplication, nogui=True, forever=True, debug=True,
+        widgetset='org.vaadin.weelayout.WeelayoutWidgetset',
+        contextRoot='.')

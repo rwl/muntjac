@@ -38,6 +38,8 @@ class Direction(object):
 class WeeLayout(AbstractLayout, ILayoutClickNotifier):
     """Server side component for the VWeeLayout widget."""
 
+    CLIENT_WIDGET = None #ClientWidget(VWeeLayout)
+
     _CLICK_EVENT = EventId.LAYOUT_CLICK
 
     def __init__(self, direction):
@@ -61,6 +63,8 @@ class WeeLayout(AbstractLayout, ILayoutClickNotifier):
         self._clip = False
 
         self._smartRelatives = None
+
+        super(WeeLayout, self).__init__()
 
 
     def addComponent(self, *args):
@@ -289,10 +293,41 @@ class WeeLayout(AbstractLayout, ILayoutClickNotifier):
         self._smartRelatives = smartRelatives
 
 
-    def addListener(self, listener):
-        self.registerListener(self._CLICK_EVENT, LayoutClickEvent, listener,
-                ILayoutClickListener.clickMethod)
+    def addListener(self, listener, iface=None):
+        if (isinstance(listener, ILayoutClickListener) and
+                (iface is None or issubclass(iface, ILayoutClickListener))):
+            self.registerListener(self._CLICK_EVENT, LayoutClickEvent,
+                    listener, ILayoutClickListener.clickMethod)
+
+        super(WeeLayout, self).addListener(listener, iface)
 
 
-    def removeListener(self, listener):
-        self.withdrawListener(self._CLICK_EVENT, LayoutClickEvent, listener)
+    def addCallback(self, callback, eventType=None, *args):
+        if eventType is None:
+            eventType = callback._eventType  # set by decorator
+
+        if issubclass(eventType, LayoutClickEvent):
+            self.registerCallback(LayoutClickEvent, callback,
+                    self._CLICK_EVENT, *args)
+        else:
+            super(WeeLayout, self).addCallback(callback, eventType, *args)
+
+
+    def removeListener(self, listener, iface=None):
+        if (isinstance(listener, ILayoutClickListener) and
+                (iface is None or issubclass(iface, ILayoutClickListener))):
+            self.withdrawListener(self._CLICK_EVENT, LayoutClickEvent,
+                    listener)
+
+        super(WeeLayout, self).addListener(listener, iface)
+
+
+    def removeCallback(self, callback, eventType=None):
+        if eventType is None:
+            eventType = callback._eventType
+
+        if issubclass(eventType, LayoutClickEvent):
+            self.withdrawCallback(LayoutClickEvent, callback,
+                    self._CLICK_EVENT)
+        else:
+            super(WeeLayout, self).removeCallback(callback, eventType)
