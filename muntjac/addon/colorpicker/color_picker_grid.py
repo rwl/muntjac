@@ -36,6 +36,8 @@ class ColorPickerGrid(AbstractComponent, IColorSelector):
     @author: Richard Lincoln
     """
 
+    CLIENT_WIDGET = None #ClientWidget(VColorPickerGrid)
+
     def __init__(self, colors_or_rows=None, cols=None):
         """Instantiates a new color picker grid.
 
@@ -44,6 +46,8 @@ class ColorPickerGrid(AbstractComponent, IColorSelector):
         @param columns
                    the columns
         """
+        super(ColorPickerGrid, self).__init__()
+
         # The x-coordinate.
         self._x = 0
 
@@ -71,7 +75,7 @@ class ColorPickerGrid(AbstractComponent, IColorSelector):
             self._colorGrid = colors
 
             for row in range(self._rows):
-                for col in range(self._cols):
+                for col in range(self._columns):
                     self._changedColors[(row, col)] = self._colorGrid[row][col]
 
             self.requestRepaint()
@@ -91,11 +95,11 @@ class ColorPickerGrid(AbstractComponent, IColorSelector):
                    the new color grid
         """
         self._rows = len(colors)
-        self._columns = colors[0].length
+        self._columns = len(colors[0])
         self._colorGrid = colors
 
         for row in range(self._rows):
-            for col in range(self._cols):
+            for col in range(self._columns):
                 self._changedColors[(row, col)] = self._colorGrid[row][col]
 
         self.requestRepaint()
@@ -206,8 +210,8 @@ class ColorPickerGrid(AbstractComponent, IColorSelector):
                 color = '#' + red + green + blue
 
                 colors[counter] = color
-                XCoords[counter] = str(p.getX())
-                YCoords[counter] = str(p.getY())
+                XCoords[counter] = str(p[0])
+                YCoords[counter] = str(p[1])
                 counter += 1
 
             target.addVariable(self, 'changedColors', colors)

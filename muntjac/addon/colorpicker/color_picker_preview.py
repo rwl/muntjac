@@ -45,6 +45,7 @@ class ColorPickerPreview(CssLayout, IColorSelector, IValueChangeListener):
 
     def __init__(self, color):
         """Instantiates a new color picker preview."""
+        super(ColorPickerPreview, self).__init__()
 
         self.setStyleName('v-colorpicker-preview')
         self.setImmediate(True)

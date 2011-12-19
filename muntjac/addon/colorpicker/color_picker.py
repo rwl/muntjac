@@ -22,7 +22,6 @@ from muntjac.util import Color
 from muntjac.ui.abstract_component import AbstractComponent
 from muntjac.ui.window import ICloseListener
 
-from muntjac.addon.colorpicker.color_picker_popup import ColorPickerPopup
 from muntjac.addon.colorpicker.color_change_event import ColorChangeEvent
 from muntjac.addon.colorpicker.color_selector import IColorSelector
 
@@ -52,6 +51,8 @@ class ColorPicker(AbstractComponent, ICloseListener, IColorSelector,
     @author: John Ahlroos / ITMill Oy
     @author: Richard Lincoln
     """
+
+    CLIENT_WIDGET = None #ClientWidget(VColorPickerButton)
 
     def __init__(self, caption='Colors', initialColor=None):
         """Instantiates a new color picker.
@@ -185,6 +186,10 @@ class ColorPicker(AbstractComponent, ICloseListener, IColorSelector,
 
                 if self._window is None:
                     # Create the popup
+
+                    from muntjac.addon.colorpicker.color_picker_popup \
+                        import ColorPickerPopup
+
                     self._window = ColorPickerPopup(self.color)
                     self._window.setCaption(self.caption)
 

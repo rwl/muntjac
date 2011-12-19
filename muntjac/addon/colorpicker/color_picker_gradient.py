@@ -34,6 +34,8 @@ class ColorPickerGradient(AbstractComponent, IColorSelector):
     @author: Richard Lincoln
     """
 
+    CLIENT_WIDGET = None #ClientWidget(VColorPickerGradient)
+
     def __init__(self, Id, converter):
         """Instantiates a new color picker gradient.
 
@@ -42,11 +44,13 @@ class ColorPickerGradient(AbstractComponent, IColorSelector):
         @param converter:
                    the converter
         """
+        super(ColorPickerGradient, self).__init__()
+
         #: The id.
         self._id = Id
 
         #: The converter.
-        self._converter = None
+        self._converter = converter
 
         #: The foreground color.
         self._color = None

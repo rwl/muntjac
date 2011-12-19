@@ -17,6 +17,9 @@
 # Note: This is a modified file from Vaadin. For further information on
 #       Vaadin please visit http://www.vaadin.com.
 
+import sys
+import traceback
+
 from colorsys import hsv_to_rgb
 
 from muntjac.ui.window import Window
@@ -240,8 +243,8 @@ class ColorPickerPopup(Window, IClickListener, IColorChangeListener,
         buttonsHeight = 30
         previewHeight = 20 if self._rgbPreview.isVisible() else 0
 
-        return (historyHeight + tabsHeight + contentHeight + buttonsHeight
-                + previewHeight + 10 + 'px')
+        return (str(historyHeight + tabsHeight + contentHeight + buttonsHeight
+                + previewHeight + 10) + 'px')
 
 
     def createRGBTab(self, color):
@@ -253,10 +256,8 @@ class ColorPickerPopup(Window, IClickListener, IColorChangeListener,
         rgbLayout.setMargin(False, False, True, False)
         rgbLayout.addComponent(self._rgbPreview)
 
-        rgbConverter = RGBConverter()
-
         # Add the RGB color gradient
-        self._rgbGradient = ColorPickerGradient('rgb-gradient', rgbConverter)
+        self._rgbGradient = ColorPickerGradient('rgb-gradient', RGBConverter())
         self._rgbGradient.setColor(color)
         self._rgbGradient.addListener(self, IColorChangeListener)
         rgbLayout.addComponent(self._rgbGradient)
@@ -323,7 +324,8 @@ class ColorPickerPopup(Window, IClickListener, IColorChangeListener,
         hsvLayout.addComponent(self._hsvPreview)
 
         # Add the hsv gradient
-        self._hsvGradient = ColorPickerGradient('hsv-gradient', HSVConverter)
+        self._hsvGradient = ColorPickerGradient('hsv-gradient',
+                HSVConverter(self))
         self._hsvGradient.setColor(color)
         self._hsvGradient.addListener(self, IColorChangeListener)
         hsvLayout.addComponent(self._hsvGradient)
@@ -477,8 +479,8 @@ class ColorPickerPopup(Window, IClickListener, IColorChangeListener,
             self._hueSlider.setValue(hsv[0] * 360.0)
             self._saturationSlider.setValue(hsv[1] * 100.0)
             self._valueSlider.setValue(hsv[2] * 100.0)
-        except ValueOutOfBoundsException, e:
-            e.printStackTrace()
+        except ValueOutOfBoundsException:
+            traceback.print_exc(file=sys.stdout)
 
         for s in self._selectors:
             if (event.getSource() != s and s is not self
@@ -690,7 +692,7 @@ class HSVConverter(ICoordinates2Color):
             x = c_or_x
             saturation = 1.0 - (y / 220.0)
             value = x / 220.0
-            hue = float(str(c_or_x._hueSlider.getValue())) / 360.0
+            hue = float(str(self._cpp._hueSlider.getValue())) / 360.0
 
             color = Color(*hsv_to_rgb(hue, saturation, value))
             return color

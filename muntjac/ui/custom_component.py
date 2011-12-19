@@ -52,13 +52,14 @@ class CustomComponent(AbstractComponentContainer):
         @param compositionRoot:
                    the root of the composition component tree.
         """
-        super(CustomComponent, self).__init__()
 
         # The root component implementing the custom component.
         self._root = None
 
         # Type of the component.
         self._componentType = None
+
+        super(CustomComponent, self).__init__()
 
         # expand horizontally by default
         self.setWidth(100, self.UNITS_PERCENTAGE)

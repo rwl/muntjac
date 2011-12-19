@@ -57,6 +57,8 @@ class ColorPickerHistory(CustomComponent, IColorSelector,
 
     def __init__(self):
         """Instantiates a new color picker history."""
+        super(ColorPickerHistory, self).__init__()
+
         self.removeStyleName('v-customcomponent')
         self.setStyleName(self._STYLENAME)
 
@@ -68,9 +70,9 @@ class ColorPickerHistory(CustomComponent, IColorSelector,
         self.setCompositionRoot(self._grid)
 
 
-    def setHeight(self, height):
-        super(ColorPickerHistory, self).setHeight(height)
-        self._grid.setHeight(height)
+    def setHeight(self, height, unit=None):
+        super(ColorPickerHistory, self).setHeight(height, unit)
+        self._grid.setHeight(height, unit)
 
 
     def setColor(self, color):
@@ -94,11 +96,11 @@ class ColorPickerHistory(CustomComponent, IColorSelector,
         colorList.insert(0, colorList.pop( colorList.index(color) ))
 
         # Create 2d color map
-        colors = [([None] * self._rows) for _ in self._columns]
+        colors = [([None] * self._columns) for _ in range(self._rows)]
         iterator = iter(colorList)
 
-        for row in self._rows:
-            for col in self._columns:
+        for row in range(self._rows):
+            for col in range(self._columns):
                 try:
                     colors[row][col] = iterator.next()
                 except StopIteration:

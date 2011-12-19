@@ -46,6 +46,8 @@ class ColorPickerSelect(CustomComponent, IColorSelector, IValueChangeListener):
         @param columns
                    the columns
         """
+        super(ColorPickerSelect, self).__init__()
+
         layout = VerticalLayout()
         self.setCompositionRoot(layout)
 
@@ -60,10 +62,8 @@ class ColorPickerSelect(CustomComponent, IColorSelector, IValueChangeListener):
         self._range.setWidth('220px')
         self._range.addListener(self, IValueChangeListener)
 
-        for Id in self.ColorRangePropertyId.values():
+        for Id in ColorRangePropertyId.values():
             self._range.addItem(Id)
-
-        self._range.select(ColorRangePropertyId.ALL)
 
         layout.addComponent(self._range)
 
@@ -72,6 +72,8 @@ class ColorPickerSelect(CustomComponent, IColorSelector, IValueChangeListener):
         self._grid.setHeight('270px')
 
         layout.addComponent(self._grid)
+
+        self._range.select(ColorRangePropertyId.ALL)
 
 
     def createAllColors(self, rows, columns):
@@ -84,7 +86,7 @@ class ColorPickerSelect(CustomComponent, IColorSelector, IValueChangeListener):
 
         @return: the color[][]
         """
-        colors = [([None] * rows) for _ in columns]
+        colors = [([None] * columns) for _ in range(rows)]
 
         for row in range(rows):
             for col in range(columns):
@@ -128,7 +130,7 @@ class ColorPickerSelect(CustomComponent, IColorSelector, IValueChangeListener):
 
         @return: the color[][]
         """
-        colors = [None] * columns
+        colors = [([None] * columns) for _ in range(rows)]
         hsv = color.getHSV()
 
         hue = hsv[0]
@@ -204,6 +206,10 @@ class ColorRangePropertyId(object):
 
     def __str__(self):
         return self._caption
+
+    @classmethod
+    def values(cls):
+        return [cls.ALL, cls.RED, cls.GREEN, cls.BLUE]
 
 
 ColorRangePropertyId.ALL = ColorRangePropertyId('All colors')
