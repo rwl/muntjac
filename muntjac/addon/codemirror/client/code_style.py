@@ -30,17 +30,22 @@ class CodeStyle(object):
     PYTHON = None
     LUA = None
 
-    def __init__(self, Id, parser, css):
+    def __init__(self, name, Id, parser, css):
+        self._name = name
+        self._id = Id
         self._parser = None
         self._css = None
-        self._id = Id
+
         self.setParser(parser)
         self.setCss(css)
+
+    def __str__(self):
+        return self._name
 
     @classmethod
     def byId(cls, Id):
         for s in CodeStyle.values():
-            if s.id == Id:
+            if s.getId() == Id:
                 return s
         return None
 
@@ -66,15 +71,15 @@ class CodeStyle(object):
         return cls._values
 
 
-CodeStyle.TEXT = CodeStyle(1, '\'parsedummy.js\'', 'css/xmlcolors.css')
-CodeStyle.XML = CodeStyle(2, '\'parsexml.js\'', 'css/xmlcolors.css')
-CodeStyle.JAVA = CodeStyle(3, '\'java/parsejava.js\'', 'java/javacolors.css')
-CodeStyle.JAVASCRIPT = CodeStyle(4, '[\'tokenizejavascript.js\',\'parsejavascript.js\']', 'css/jscolors.css')
-CodeStyle.CSS = CodeStyle(5, '\'parsecss.js\'', 'css/csscolors.css')
-CodeStyle.SQL = CodeStyle(6, '\'sql/js/parsesql.js\'', 'sql/css/sqlcolors.css')
-CodeStyle.PHP = CodeStyle(7, '\'php/js/parsephp.js\'', 'php/css/phpcolors.css')
-CodeStyle.PYTHON = CodeStyle(8, '\'python/js/parsepython.js\'', 'python/css/pythoncolors.css')
-CodeStyle.LUA = CodeStyle(9, '\'lua/js/parselua.js\'', 'lua/css/luacolors.css')
+CodeStyle.TEXT = CodeStyle('Text', 1, '\'parsedummy.js\'', 'css/xmlcolors.css')
+CodeStyle.XML = CodeStyle('XML', 2, '\'parsexml.js\'', 'css/xmlcolors.css')
+CodeStyle.JAVA = CodeStyle('Java', 3, '\'java/parsejava.js\'', 'java/javacolors.css')
+CodeStyle.JAVASCRIPT = CodeStyle('JavaScript', 4, '[\'tokenizejavascript.js\',\'parsejavascript.js\']', 'css/jscolors.css')
+CodeStyle.CSS = CodeStyle('CSS', 5, '\'parsecss.js\'', 'css/csscolors.css')
+CodeStyle.SQL = CodeStyle('SQL', 6, '\'sql/js/parsesql.js\'', 'sql/css/sqlcolors.css')
+CodeStyle.PHP = CodeStyle('PHP', 7, '\'php/js/parsephp.js\'', 'php/css/phpcolors.css')
+CodeStyle.PYTHON = CodeStyle('Python', 8, '\'python/js/parsepython.js\'', 'python/css/pythoncolors.css')
+CodeStyle.LUA = CodeStyle('Lua', 9, '\'lua/js/parselua.js\'', 'lua/css/luacolors.css')
 
 CodeStyle._values = [CodeStyle.TEXT, CodeStyle.XML, CodeStyle.JAVA,
         CodeStyle.JAVASCRIPT, CodeStyle.CSS, CodeStyle.SQL, CodeStyle.PHP,

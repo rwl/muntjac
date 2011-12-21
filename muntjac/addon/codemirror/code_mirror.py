@@ -27,12 +27,14 @@ class CodeMirror(TextField):
 
     CLIENT_WIDGET = None #ClientWidget(VCodeMirror)
 
+    TYPE_MAPPING = 'org.vaadin.codemirror.CodeMirror'
+
     def __init__(self, caption, codeStyle=None):
         if codeStyle is None:
             codeStyle = CodeStyle.TEXT
 
         self._codeStyle = None
-        self._showLineNumbers = True
+        self._showLineNumbers = False
 
         super(CodeMirror, self).__init__(caption)
         self.setCodeStyle(codeStyle)

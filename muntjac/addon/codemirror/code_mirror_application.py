@@ -111,4 +111,13 @@ class CopyClickListener(IClickListener):
         self._code2 = code2
 
     def buttonClick(self, event):
-        self.code2.setValue(self.code1.getValue())
+        self._code2.setValue(self._code1.getValue())
+
+
+if __name__ == '__main__':
+    from muntjac.main import muntjac
+    muntjac(CodeMirrorApplication, nogui=True, forever=True, debug=True,
+#            widgetset='org.vaadin.codemirror.CodemirrorWidgetset',
+            widgetset='org.muntiacus.MuntjacWidgetSet',
+#            contextRoot='.'
+            )
