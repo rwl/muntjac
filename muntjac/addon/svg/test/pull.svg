@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+	<script type="text/ecmascript"><![CDATA[
+	var start = new Date();
+	
+	var foo = function(evt) {
+		var elem = document.getElementById("jep");
+		elem.setAttribute('stroke', '#f00');
+		
+		var end = new Date();
+		var tookMs = end.getTime() - start.getTime();
+		
+		parent.updateToVaadin("Message from client to server : Clicked " + tookMs + "since loaded");
+		
+	}
+	]]></script>
+  <path d="M0,87s10-5,20,0s10,5,20,0s10-5,20,0s10,5,20,0s10-5,20,0s10,5,20,0" stroke="#00F" fill="none"/>
+  <circle cx="70" cy="16" r="7" fill="#000"/>
+  <g stroke-linecap="round" stroke-linejoin="round" fill="none" stroke="#000">
+  <path d="M48,34l26-3l3,23l-20,6l8,25" stroke-width="9" stroke="#0C0" id="jep" onclick="foo();" />
+  <path d="M0,34l48,0"/>
+  <path d="M20,75c20,13,50,13,60,12" stroke-width="4"/>
+  <text y="15" font-size="8" stroke="none" fill="#f00">Click the green area.</text>
+  </g>
+</svg>
