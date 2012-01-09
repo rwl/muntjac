@@ -17,7 +17,7 @@
 # Note: This is a modified file from Vaadin. For further information on
 #       Vaadin please visit http://www.vaadin.com.
 
-from muntjac.util import Color
+from muntjac.addon.colorpicker.color import Color
 
 from muntjac.ui.abstract_component import AbstractComponent
 from muntjac.ui.window import ICloseListener
@@ -72,7 +72,7 @@ class ColorPicker(AbstractComponent, ICloseListener, IColorSelector,
         self._window = None
 
         # The window.
-        self._parent = None
+        self._parent_window = None
 
         # The popup status.
         self._popupStatus = False
@@ -163,9 +163,9 @@ class ColorPicker(AbstractComponent, ICloseListener, IColorSelector,
 
 
     def paintContent(self, target):
-        target.addAttribute('red', hex(self.color.getRed()))
-        target.addAttribute('green', hex(self.color.getGreen()))
-        target.addAttribute('blue', hex(self.color.getBlue()))
+        target.addAttribute('red', '%.2x' % self.color.getRed())
+        target.addAttribute('green', '%.2x' % self.color.getGreen())
+        target.addAttribute('blue', '%.2x' % self.color.getBlue())
         target.addAttribute('alpha', self.color.getAlpha())
         target.addAttribute('popup', self._popupStatus)
         target.addAttribute('btnstyle', self.buttonStyle)
@@ -176,13 +176,13 @@ class ColorPicker(AbstractComponent, ICloseListener, IColorSelector,
         if 'popup' in variables:
             openPopup = variables['popup']
             if openPopup and not self.isReadOnly():
-                if self._parent is None:
-                    self._parent = self.getWindow()
+                if self._parent_window is None:
+                    self._parent_window = self.getWindow()
 
                 # Check that the parent is actually a browser
                 # level window and not another sub-window
-                if self._parent.getParent() is not None:
-                    self._parent = self._parent.getParent()
+                if self._parent_window.getParent() is not None:
+                    self._parent_window = self._parent_window.getParent()
 
                 if self._window is None:
                     # Create the popup
@@ -204,7 +204,7 @@ class ColorPicker(AbstractComponent, ICloseListener, IColorSelector,
                     self._window.addListener(self, IColorChangeListener)
 
                     self._window.getHistory().setColor(self.color)
-                    self._parent.addWindow(self._window)
+                    self._parent_window.addWindow(self._window)
                     self._window.setVisible(True)
                     self._window.setPositionX(self._positionX)
                     self._window.setPositionY(self._positionY)
@@ -218,10 +218,10 @@ class ColorPicker(AbstractComponent, ICloseListener, IColorSelector,
                     self._window.setColor(self.color)
                     self._window.getHistory().setColor(self.color)
                     self._window.setVisible(True)
-                    self._parent.addWindow(self._window)
+                    self._parent_window.addWindow(self._window)
             elif self._window is not None:
                 self._window.setVisible(False)
-                self._parent.removeWindow(self._window)
+                self._parent_window.removeWindow(self._window)
 
 
     def windowClose(self, e):

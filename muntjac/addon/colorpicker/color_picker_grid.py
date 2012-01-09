@@ -17,7 +17,7 @@
 # Note: This is a modified file from Vaadin. For further information on
 #       Vaadin please visit http://www.vaadin.com.
 
-from muntjac.util import Color
+from muntjac.addon.colorpicker.color import Color
 
 from muntjac.ui.abstract_component import AbstractComponent
 
@@ -198,14 +198,14 @@ class ColorPickerGrid(AbstractComponent, IColorSelector):
                 if c is None:
                     continue
 
-                red = hex(c.getRed())
-                red = '0' + red if len(red) < 2 else red
+                red = '%.2x' % c.getRed()
+#                red = '0' + red if len(red) < 2 else red
 
-                green = hex(c.getGreen())
-                green = '0' + green if len(green) < 2 else green
+                green = '%.2x' % c.getGreen()
+#                green = '0' + green if len(green) < 2 else green
 
-                blue = hex(c.getBlue())
-                blue = '0' + blue if len(blue) < 2 else blue
+                blue = '%.2x' % c.getBlue()
+#                blue = '0' + blue if len(blue) < 2 else blue
 
                 color = '#' + red + green + blue
 

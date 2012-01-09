@@ -17,7 +17,7 @@
 # Note: This is a modified file from Vaadin. For further information on
 #       Vaadin please visit http://www.vaadin.com.
 
-from muntjac.util import Color
+from muntjac.addon.colorpicker.color import Color
 
 from muntjac.ui.css_layout import CssLayout
 from muntjac.ui.text_field import TextField
@@ -69,14 +69,14 @@ class ColorPickerPreview(CssLayout, IColorSelector, IValueChangeListener):
     def setColor(self, color):
         self._color = color
 
-        red = hex(color.getRed())
-        red = '0' + red if len(red) < 2 else red
+        red = '%.2x' % color.getRed()
+#        red = '0' + red if len(red) < 2 else red
 
-        green = hex(color.getGreen())
-        green = '0' + green if len(green) < 2 else green
+        green = '%.2x' % color.getGreen()
+#        green = '0' + green if len(green) < 2 else green
 
-        blue = hex(color.getBlue())
-        blue = '0' + blue if len(blue) < 2 else blue
+        blue = '%.2x' % color.getBlue()
+#        blue = '0' + blue if len(blue) < 2 else blue
 
         # Unregister listener
         self._field.removeListener(self, IValueChangeListener)
@@ -179,14 +179,14 @@ class ColorPickerPreview(CssLayout, IColorSelector, IValueChangeListener):
 
     def getCss(self, c):
         """Called when the component is refreshing"""
-        red = hex(self._color.getRed())
-        red = '0' + red if len(red) < 2 else red
+        red = '%.2x' % self._color.getRed()
+#        red = '0' + red if len(red) < 2 else red
 
-        green = hex(self._color.getGreen())
-        green = '0' + green if len(green) < 2 else green
+        green = '%.2x' % self._color.getGreen()
+#        green = '0' + green if len(green) < 2 else green
 
-        blue = hex(self._color.getBlue())
-        blue = '0' + blue if len(blue) < 2 else blue
+        blue = '%.2x' % self._color.getBlue()
+#        blue = '0' + blue if len(blue) < 2 else blue
 
         css = 'background: #' + red + green + blue
         return css

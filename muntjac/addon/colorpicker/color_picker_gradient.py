@@ -83,12 +83,12 @@ class ColorPickerGradient(AbstractComponent, IColorSelector):
             target.addAttribute('cursorY', self._y)
 
         if self._backgroundColor is not None:
-            bgRed = hex(self._backgroundColor.getRed())
-            bgRed = '0' + bgRed if len(bgRed) < 2 else bgRed
-            bgGreen = hex(self._backgroundColor.getGreen())
-            bgGreen = '0' + bgGreen if len(bgGreen) < 2 else bgGreen
-            bgBlue = hex(self._backgroundColor.getBlue())
-            bgBlue = '0' + bgBlue if len(bgBlue) < 2 else bgBlue
+            bgRed = '%.2x' % self._backgroundColor.getRed()
+#            bgRed = '0' + bgRed if len(bgRed) < 2 else bgRed
+            bgGreen = '%.2x' % self._backgroundColor.getGreen()
+#            bgGreen = '0' + bgGreen if len(bgGreen) < 2 else bgGreen
+            bgBlue = '%.2x' % self._backgroundColor.getBlue()
+#            bgBlue = '0' + bgBlue if len(bgBlue) < 2 else bgBlue
             target.addAttribute('bgColor', '#' + bgRed + bgGreen + bgBlue)
 
 

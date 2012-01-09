@@ -67,7 +67,7 @@ class Constants(object):
     WIDGETSET_DIRECTORY_PATH = 'VAADIN/widgetsets/'
 
     # Name of the default widget set, used if not specified in INI
-    DEFAULT_WIDGETSET = 'com.vaadin.terminal.gwt.DefaultWidgetSet'
+    DEFAULT_WIDGETSET = 'org.muntiacus.MuntjacWidgetSet'
 
     # Widget set parameter name
     PARAMETER_WIDGETSET = 'widgetset'

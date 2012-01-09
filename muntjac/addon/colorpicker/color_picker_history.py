@@ -19,7 +19,7 @@
 
 from collections import deque
 
-from muntjac.util import Color
+from muntjac.addon.colorpicker.color import Color
 
 from muntjac.ui.custom_component import CustomComponent
 

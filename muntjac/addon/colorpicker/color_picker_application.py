@@ -21,7 +21,7 @@ from StringIO import StringIO
 
 from datetime import datetime as Date
 
-from muntjac.util import Color
+from muntjac.addon.colorpicker.color import Color
 
 from muntjac.application import Application
 
@@ -366,22 +366,22 @@ class MyImageSource(IStreamSource):
 
 
     def getStream(self):
-        import Image, ImageDraw  # PIL dependency
+        from PIL import Image, ImageDraw  # PIL dependency
 
         # Create an image and draw something on it.
-        image = Image("RGB", (270, 270))
+        image = Image.new("RGB", (270, 270))
         drawable = ImageDraw.Draw(image)
-        drawable.rectangle([0, 0, 270, 270], fill=str(self._bgColor))
-        drawable.ellipse([25, 25, 220, 220], fill=str(self._fgColor))
-        drawable.rectangle([0, 0, 269, 269], fill=str(Color.BLUE))
+        drawable.rectangle([0, 0, 270, 270], fill=str(Color.BLUE))
+        drawable.rectangle([1, 1, 268, 268], fill=str(self._bgColor))
+        drawable.ellipse([25, 25, 245, 245], fill=str(self._fgColor))
         drawable.text((50, 100),
                 'r=' + str(self._fgColor.getRed()) +
                 ',g=' + str(self._fgColor.getGreen()) +
-                ',b=' + str(self._fgColor.getBlue()), fill=Color.BLACK)
+                ',b=' + str(self._fgColor.getBlue()), fill=str(Color.BLACK))
         drawable.text((5, 15),
                 'r=' + str(self._bgColor.getRed()) +
                 ',g=' + str(self._bgColor.getGreen()) +
-                ',b=' + str(self._bgColor.getBlue()), fill=Color.BLACK)
+                ',b=' + str(self._bgColor.getBlue()), fill=str(Color.BLACK))
 
         del drawable
 
@@ -392,3 +392,8 @@ class MyImageSource(IStreamSource):
             return self._imagebuffer
         except IOError:
             return None
+
+
+if __name__ == '__main__':
+    from muntjac.main import muntjac
+    muntjac(ColorPickerApplication, nogui=True, forever=True, debug=True)

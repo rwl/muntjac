@@ -1,7 +1,7 @@
 
 from muntjac.api import Application, Window, Label
 
-from muntjac.util import Color
+from muntjac.addon.colorpicker.color import Color
 
 from muntjac.addon.colorpicker.color_picker import ColorPicker
 
@@ -37,5 +37,4 @@ class ColorPickerDemo(Application):
 
 if __name__ == '__main__':
     from muntjac.main import muntjac
-    muntjac(ColorPickerDemo, nogui=True, forever=True, debug=True,
-            widgetset='com.vaadin.addon.colorpicker.gwt.ColorPickerWidgetSet')
+    muntjac(ColorPickerDemo, nogui=True, forever=True, debug=True)

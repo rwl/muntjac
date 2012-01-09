@@ -19,7 +19,7 @@
 
 from colorsys import hsv_to_rgb
 
-from muntjac.util import Color
+from muntjac.addon.colorpicker.color import Color
 
 from muntjac.ui.custom_component import CustomComponent
 from muntjac.ui.vertical_layout import VerticalLayout

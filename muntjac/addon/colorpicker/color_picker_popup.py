@@ -26,7 +26,8 @@ from muntjac.ui.window import Window
 from muntjac.ui.button import IClickListener, Button
 from muntjac.ui.tab_sheet import TabSheet
 from muntjac.ui.vertical_layout import VerticalLayout
-from muntjac.util import Color
+
+from muntjac.addon.colorpicker.color import Color
 
 
 from muntjac.addon.colorpicker.color_picker \
@@ -708,7 +709,7 @@ class RedValueChangeListener(_ColorValueChangeListener):
 
     def valueChange(self, event):
         red = event.getProperty().getValue()
-        newColor = Color(red, self._cpp._selectedColor.getGreen(),
+        newColor = Color(int(red), self._cpp._selectedColor.getGreen(),
                 self._cpp._selectedColor.getBlue())
         self._cpp.setColor(newColor)
 
@@ -717,7 +718,7 @@ class GreenValueChangeListener(_ColorValueChangeListener):
 
     def valueChange(self, event):
         green = event.getProperty().getValue()
-        newColor = Color(self._cpp._selectedColor.getRed(), green,
+        newColor = Color(self._cpp._selectedColor.getRed(), int(green),
                 self._cpp._selectedColor.getBlue())
         self._cpp.setColor(newColor)
 
@@ -727,7 +728,7 @@ class BlueValueChangeListener(_ColorValueChangeListener):
     def valueChange(self, event):
         blue = event.getProperty().getValue()
         newColor = Color(self._cpp._selectedColor.getRed(),
-                self._cpp._selectedColor.getGreen(), blue)
+                self._cpp._selectedColor.getGreen(), int(blue))
         self._cpp.setColor(newColor)
 
 
