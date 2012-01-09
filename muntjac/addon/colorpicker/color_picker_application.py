@@ -316,35 +316,35 @@ class _ColorClickListener(IClickListener):
 class RgbClickListener(_ColorClickListener):
 
     def buttonClick(self, event):
-        self._app._rgbVisible = bool(str(event.getButton().getValue()))
+        self._app._rgbVisible = event.getButton().getValue()
         self._app.setPopupVisibilities()
 
 
 class HsvClickListener(_ColorClickListener):
 
     def buttonClick(self, event):
-        self._app._hsvVisible = bool(str(event.getButton().getValue()))
+        self._app._hsvVisible = event.getButton().getValue()
         self._app.setPopupVisibilities()
 
 
 class SwaClickListener(_ColorClickListener):
 
     def buttonClick(self, event):
-        self._app._swaVisible = bool(str(event.getButton().getValue()))
+        self._app._swaVisible = event.getButton().getValue()
         self._app.setPopupVisibilities()
 
 
 class HisClickListener(_ColorClickListener):
 
     def buttonClick(self, event):
-        self._app._historyVisible = bool(str(event.getButton().getValue()))
+        self._app._historyVisible = event.getButton().getValue()
         self._app.setPopupVisibilities()
 
 
 class TxtClickListener(_ColorClickListener):
 
     def buttonClick(self, event):
-        self._app._txtfieldVisible = bool(str(event.getButton().getValue()))
+        self._app._txtfieldVisible = event.getButton().getValue()
         self._app.setPopupVisibilities()
 
 
