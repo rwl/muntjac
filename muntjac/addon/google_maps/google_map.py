@@ -28,6 +28,9 @@ from muntjac.ui.abstract_component \
 from muntjac.terminal.download_stream \
     import DownloadStream
 
+from muntjac.terminal.application_resource \
+    import IApplicationResource
+
 from muntjac.addon.google_maps.overlay.polygon \
     import Polygon
 
@@ -50,6 +53,10 @@ class MapControl(object):
 class GoogleMap(AbstractComponent):
     """Server side component for the VGoogleMap widget."""
 
+    CLIENT_WIDGET = None  # ClientWidget(VGoogleMap)
+
+    TYPE_MAPPING = 'org.vaadin.hezamu.googlemapwidget.GoogleMap'
+
     def __init__(self, application, apiKey_or_center=None, zoom=None,
                 apiKey=None):
         """Construct a new instance of the map with given parameters.
@@ -64,6 +71,8 @@ class GoogleMap(AbstractComponent):
         @param apiKey:
                    the API key to be used for Google Maps
         """
+        super(GoogleMap, self).__init__()
+
         self._center = None
 
         self._boundsNE = None
@@ -106,7 +115,7 @@ class GoogleMap(AbstractComponent):
         self._apiKey = ''
         self._clientLogLevel = 0
 
-        application.addResource(self.markerResource)
+        application.addResource(self._markerResource)
 
         if apiKey_or_center is None:
             # Greewich Royal Observatory
@@ -128,15 +137,15 @@ class GoogleMap(AbstractComponent):
 
     def paintContent(self, target):
         super(GoogleMap, self).paintContent(target)
-        target.addVariable(self, 'center_lat', self._center.y)
-        target.addVariable(self, 'center_lng', self._center.x)
+        target.addVariable(self, 'center_lat', self._center[1])
+        target.addVariable(self, 'center_lng', self._center[0])
         target.addVariable(self, 'zoom', self._zoom)
         target.addVariable(self, 'swze', self._scrollWheelZoomEnabled)
         target.addAttribute('apikey', self._apiKey)
         target.addAttribute('loglevel', self._clientLogLevel)
 
         for control in self._controls:
-            target.addAttribute(control.name(), True)
+            target.addAttribute(control, True)
 
         # TODO: this feels like a kludge, but unsure how to implement correctly
         if self._clickedMarker is not None:
@@ -157,7 +166,7 @@ class GoogleMap(AbstractComponent):
 
             self._clickedMarker = None
         elif self._markerSource is not None:
-            target.addAttribute('markerRes', self.markerResource)
+            target.addAttribute('markerRes', self._markerResource)
 
         if self._closeInfoWindow:
             target.addAttribute('closeInfoWindow', True)
@@ -175,7 +184,7 @@ class GoogleMap(AbstractComponent):
             for i in range(len(points)):
                 if i > 0:
                     sb.write(' ')
-                sb.write('' + points[i][1] + ',' + points[i][0])
+                sb.write(str(points[i][1]) + ',' + str(points[i][0]))
 
             target.addAttribute('points', sb.getvalue())
             sb.close()
@@ -224,23 +233,23 @@ class GoogleMap(AbstractComponent):
             self.requestRepaint()
 
         moveEvent = False
-        intVar = variables['zoom']
+        intVar = variables.get('zoom')
         if intVar is not None:
             self._zoom = intVar
             moveEvent = True
 
         stringVar = variables.get('center')
-        if stringVar is not None and not (stringVar.trim() == ''):
+        if stringVar is not None and not (stringVar.strip() == ''):
             self._center = GoogleMap.strToLL(stringVar)
             moveEvent = True
 
         stringVar = variables.get('bounds_ne')
-        if stringVar is not None and not (stringVar.trim() == ''):
+        if stringVar is not None and not (stringVar.strip() == ''):
             self._boundsNE = GoogleMap.strToLL(stringVar)
             moveEvent = True
 
         stringVar = variables.get('bounds_sw')
-        if stringVar is not None and not (stringVar.trim() == ''):
+        if stringVar is not None and not (stringVar.strip() == ''):
             self._boundsSW = GoogleMap.strToLL(stringVar)
             moveEvent = True
 
@@ -262,9 +271,9 @@ class GoogleMap(AbstractComponent):
             for mark in markers:
                 if mark.getId() == int(markerID):
 
-                    lat = float(str(variables['markerMovedLat']))
-                    lng = float(str(variables['markerMovedLong']))
-                    mark.getLatLng().setLocation(lng, lat)
+                    lat = float(variables['markerMovedLat'])
+                    lng = float(variables['markerMovedLong'])
+                    mark.setLatLng((lng, lat))
 
                     self.fireMarkerMovedEvent(mark)
                     break
@@ -306,18 +315,27 @@ class GoogleMap(AbstractComponent):
         click events do not propagate if there is not a information window
         opened.
         """
-        if isinstance(listener, MapClickListener):
-            if not self._mapClickListeners.contains(listener):
-                self._mapClickListeners.add(listener)
-        elif isinstance(listener, MapMoveListener):
-            if not self._moveListeners.contains(listener):
-                self._moveListeners.add(listener)
-        elif isinstance(listener, MarkerClickListener):
-            if not self._markerListeners.contains(listener):
-                self._markerListeners.add(listener)
-        else:
-            if not self._markerMovedListeners.contains(listener):
-                self._markerMovedListeners.add(listener)
+        if (isinstance(listener, IMapClickListener) and
+                (iface is None or issubclass(iface, IMapClickListener))):
+            if listener not in self._mapClickListeners.contains():
+                self._mapClickListeners.append(listener)
+        elif (isinstance(listener, IMapMoveListener) and
+                (iface is None or issubclass(iface, IMapMoveListener))):
+            if listener not in self._moveListeners:
+                self._moveListeners.append(listener)
+        elif (isinstance(listener, IMarkerClickListener) and
+                (iface is None or issubclass(iface, IMarkerClickListener))):
+            if listener not in self._markerListeners:
+                self._markerListeners.append(listener)
+        elif (isinstance(listener, IMarkerMovedListener) and
+                (iface is None or issubclass(iface, IMarkerMovedListener))):
+            if listener not in self._markerMovedListeners:
+                self._markerMovedListeners.append(listener)
+
+        super(GoogleMap, self).addListener(listener, iface)
+
+
+    # TODO: add callback support
 
 
     def removeListener(self, listener, iface=None):
@@ -328,18 +346,24 @@ class GoogleMap(AbstractComponent):
                    L{IMarkerMovedListener} or L{IMarkerClickListener}
                    to remove
         """
-        if isinstance(listener, MapClickListener):
-            if self._mapClickListeners.contains(listener):
+        if (isinstance(listener, IMapClickListener) and
+                (iface is None or issubclass(iface, IMapClickListener))):
+            if listener in self._mapClickListeners:
                 self._mapClickListeners.remove(listener)
-        elif isinstance(listener, MapMoveListener):
-            if self._moveListeners.contains(listener):
+        elif (isinstance(listener, IMapMoveListener) and
+                (iface is None or issubclass(iface, IMapMoveListener))):
+            if listener in self._moveListeners:
                 self._moveListeners.remove(listener)
-        elif isinstance(listener, MarkerClickListener):
-            if self._markerListeners.contains(listener):
+        elif (isinstance(listener, IMarkerClickListener) and
+                (iface is None or issubclass(iface, IMarkerClickListener))):
+            if listener in self._markerListeners:
                 self._markerListeners.remove(listener)
-        else:
-            if self._markerMovedListeners.contains(listener):
+        elif (isinstance(listener, IMarkerMovedListener) and
+                (iface is None or issubclass(iface, IMarkerMovedListener))):
+            if listener in self._markerMovedListeners:
                 self._markerMovedListeners.remove(listener)
+
+        super(GoogleMap, self).removeListener(listener, iface)
 
 
     def getCenter(self):
@@ -406,6 +430,7 @@ class GoogleMap(AbstractComponent):
         """Set the L{MarkerSource} for the map.
         """
         self._markerSource = markerSource
+        self._markerResource._markerSource = markerSource
 
 
     def closeInfoWindow(self):
@@ -492,7 +517,7 @@ class GoogleMap(AbstractComponent):
                    Marker to add
         """
         if self._markerSource is None:
-            self._markerSource = BasicMarkerSource()
+            self.setMarkerSource(BasicMarkerSource())
         self._markerSource.addMarker(marker)
         self.requestRepaint()
 
@@ -501,13 +526,14 @@ class GoogleMap(AbstractComponent):
         """Removes the marker from the map
         """
         if self._markerSource is not None:
-            self._markerSource.getMarkers().remove(marker)
-            self.requestRepaint()
+            if marker in self._markerSource.getMarkers():
+                self._markerSource.getMarkers().remove(marker)
+                self.requestRepaint()
 
 
     def removeAllMarkers(self):
         if self._markerSource is not None:
-            self._markerSource.getMarkers().clear()
+            del self._markerSource.getMarkers()[:]
             self.requestRepaint()
 
 
@@ -537,10 +563,10 @@ class GoogleMap(AbstractComponent):
         return False
 
 
-    def addMapType(self, name, minZoom, maxZoom, copyright, tileUrl, isPng,
+    def addMapType(self, name, minZoom, maxZoom, copyright_, tileUrl, isPng,
                 opacity):
-        self._mapTypes.append(CustomMapType(name, minZoom, maxZoom, copyright,
-                tileUrl, isPng, opacity))
+        self._mapTypes.append(CustomMapType(name, minZoom, maxZoom,
+                copyright_, tileUrl, isPng, opacity))
         self._mapTypesChanged = True
         self.requestRepaint()
 
@@ -556,7 +582,7 @@ class GoogleMap(AbstractComponent):
         self.requestRepaint()
 
 
-class MarkerApplicationResource(ApplicationResource):
+class MarkerApplicationResource(IApplicationResource):
 
     def __init__(self, gmap, markerSource):
         self._gmap = gmap
@@ -648,12 +674,12 @@ class IMarkerMovedListener(object):
 
 class CustomMapType(object):
 
-    def __init__(self, name, minZoom, maxZoom, copyright, tileUrl, isPng,
+    def __init__(self, name, minZoom, maxZoom, copyright_, tileUrl, isPng,
                 opacity):
         self._name = name
         self._minZoom = minZoom
         self._maxZoom = maxZoom
-        self._copyright = copyright
+        self._copyright = copyright_
         self._tileUrl = tileUrl
         self._isPng = isPng
         self._opacity = opacity

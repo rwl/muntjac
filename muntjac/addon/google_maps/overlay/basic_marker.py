@@ -17,8 +17,11 @@
 # Note: This is a modified file from Vaadin. For further information on
 #       Vaadin please visit http://www.vaadin.com.
 
-from muntjac.addon.google_maps.overlay.info_window_tab import InfoWindowTab
-from muntjac.addon.google_maps.overlay.marker import IMarker
+from muntjac.addon.google_maps.overlay.info_window_tab \
+    import InfoWindowTab
+
+from muntjac.addon.google_maps.overlay.marker \
+    import IMarker
 
 
 class BasicMarker(IMarker):

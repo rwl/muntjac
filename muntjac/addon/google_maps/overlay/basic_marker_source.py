@@ -19,10 +19,11 @@
 
 try:
     from cStringIO import StringIO
-except:
+except ImportError:
     from StringIO import StringIO
 
-from muntjac.addon.google_maps.overlay.marker_source import IMarkerSource
+from muntjac.addon.google_maps.overlay.marker_source \
+    import IMarkerSource
 
 
 class BasicMarkerSource(IMarkerSource):
@@ -48,26 +49,26 @@ class BasicMarkerSource(IMarkerSource):
 
         for i, marker in enumerate(self._markers):
             markerJSON.write('{\"mid\":\"')
-            markerJSON.write(marker.getId())
+            markerJSON.write(str(marker.getId()))
 
             markerJSON.write('\",\"lat\":')
-            markerJSON.write(marker.getLatLng().y)
+            markerJSON.write(str(marker.getLatLng()[1]))
 
             markerJSON.write(',\"lng\":')
-            markerJSON.write(marker.getLatLng().x)
+            markerJSON.write(str(marker.getLatLng()[0]))
 
             # Escape single and double quotes
             markerJSON.write(',\"title\":\"')
             markerJSON.write(marker.getTitle().replace('\'', "\\'").replace('\"', '\\\\\"'))
 
             markerJSON.write('\",\"visible\":')
-            markerJSON.write(marker.isVisible())
+            markerJSON.write('true' if marker.isVisible() else 'false')
 
             markerJSON.write(',\"info\":')
-            markerJSON.write(marker.getInfoWindowContent() is not None)
+            markerJSON.write('true' if marker.getInfoWindowContent() is not None else 'false')
 
             markerJSON.write(',\"draggable\":')
-            markerJSON.write(marker.isDraggable())
+            markerJSON.write('true' if marker.isDraggable() else 'false')
 
             if marker.getIconUrl() is not None:
                 markerJSON.write(',\"icon\":\"')
@@ -75,16 +76,16 @@ class BasicMarkerSource(IMarkerSource):
 
                 if marker.getIconAnchor() is not None:
                     markerJSON.write(',\"iconAnchorX\":')
-                    markerJSON.write(marker.getIconAnchor().x)
+                    markerJSON.write(str(marker.getIconAnchor()[0]))
 
                     markerJSON.write(',\"iconAnchorY\":')
-                    markerJSON.write(marker.getIconAnchor().y)
+                    markerJSON.write(str(marker.getIconAnchor()[1]))
                 else:
                     markerJSON.write(',\"iconAnchorX\":')
-                    markerJSON.write(marker.getLatLng().x)
+                    markerJSON.write(str(marker.getLatLng()[0]))
 
                     markerJSON.write(',\"iconAnchorY\":')
-                    markerJSON.write(marker.getLatLng().y)
+                    markerJSON.write(str(marker.getLatLng()[1]))
 
             markerJSON.write('}')
 
@@ -92,9 +93,9 @@ class BasicMarkerSource(IMarkerSource):
                 markerJSON.write(',')
 
         try:
-            json = ('[' + markerJSON + ']').encode('utf-8')
+            json = ('[' + markerJSON.getvalue() + ']').encode('utf-8')
         except Exception:
-            json = ('[' + markerJSON + ']').encode()
+            json = ('[' + markerJSON.getvalue() + ']').encode()
 
         markerJSON.close()
 

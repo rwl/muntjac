@@ -43,6 +43,8 @@ from muntjac.addon.google_maps.overlay.polygon \
 class GoogleMapWidgetApp(Application):
 
     def init(self):
+#        super(GoogleMapWidgetApp, self).__init__()
+
         self.setMainWindow(Window('Google Map add-on demo'))
 
         # Create a new map instance centered on the IT Mill offices
@@ -61,8 +63,9 @@ class GoogleMapWidgetApp(Application):
         self._googleMap.addListener(l, IMarkerClickListener)
 
         # Marker with information window pupup
-        self._mark5 = BasicMarker(6L, (22.8, 60.4522), 'Marker 5������\'\"')
-        self._mark5.setInfoWindowContent(self._googleMap, Label('Hello Marker 5!'))
+        self._mark5 = BasicMarker(6L, (22.8, 60.4522), 'Marker 5')
+        self._mark5.setInfoWindowContent(self._googleMap,
+                Label('Hello Marker 5!'))
 
         content = Label('Hello Marker 2!')
         content.setWidth('60px')
@@ -173,9 +176,9 @@ class MarkerMovedListener(_MapListener, IMarkerMovedListener):
 class MapMoveListener(_MapListener, IMapMoveListener):
 
     def mapMoved(self, newZoomLevel, newCenter, boundsNE, boundsSW):
-        self._app.getMainWindow().showNotification('Zoom ' + newZoomLevel
-                + ' center ' + newCenter + ' bounds ' + boundsNE + '/'
-                + boundsSW, Notification.TYPE_TRAY_NOTIFICATION)
+        self._app.getMainWindow().showNotification('Zoom ' + str(newZoomLevel)
+                + ' center ' + str(newCenter) + ' bounds ' + str(boundsNE)
+                + '/' + str(boundsSW), Notification.TYPE_TRAY_NOTIFICATION)
 
 
 class DraggabilityClickListener(_MapListener, IClickListener):
@@ -203,9 +206,9 @@ class RandomizeClickListener(_MapListener, IClickListener):
 class UpdateClickListener(_MapListener, IClickListener):
 
     def buttonClick(self, event):
-        chars = str('.�&��\'\"')
+        chars = str('.*^"\'')
         self._app._mark5.setTitle(self._app._mark5.getTitle()
-                + chars[randint(0, len(chars))])
+                + chars[randint(0, len(chars) - 1)])
         self._app._googleMap.requestRepaint()
 
 
@@ -247,7 +250,7 @@ class ToggleLoggingClickListener(_MapListener, IClickListener):
         else:
             self._app._googleMap.setClientLogLevel(0)
             self._app.getMainWindow().showNotification(
-                    'Client logging enabled',
+                    'Client logging disabled',
                     Notification.TYPE_TRAY_NOTIFICATION)
 
 
@@ -284,9 +287,9 @@ class DrawClickListener(_MapListener, IClickListener):
         # Location of Vaadin Ltd offices
         c = (22.3, 60.4522)
         delta = 0.75
-        corners = [(c.x - delta, c.y + delta), (c.x + delta, c.y + delta),
-                   (c.x + delta, c.y - delta), (c.x - delta, c.y - delta),
-                   (c.x - delta, c.y + delta)]
+        corners = [(c[0] - delta, c[1] + delta), (c[0] + delta, c[1] + delta),
+                   (c[0] + delta, c[1] - delta), (c[0] - delta, c[1] - delta),
+                   (c[0] - delta, c[1] + delta)]
         poly = Polygon(getrandbits(48), corners, '#f04040', 5, 0.8,
                 '#1010ff', 0.2, False)
         self._app._googleMap.addPolyOverlay(poly)
@@ -298,8 +301,13 @@ class RemovePolygonClickListener(_MapListener, IClickListener):
         overlays = self._app._googleMap.getOverlays()
         if len(overlays) > 0:
             self._app._googleMap.removeOverlay(overlays[-1])
-            self.getMainWindow().showNotification('Overlay removed',
+            self._app.getMainWindow().showNotification('Overlay removed',
                     Notification.TYPE_TRAY_NOTIFICATION)
         else:
-            self.getMainWindow().showNotification('No overlays to remove',
+            self._app.getMainWindow().showNotification('No overlays to remove',
                     Notification.TYPE_TRAY_NOTIFICATION)
+
+
+if __name__ == '__main__':
+    from muntjac.main import muntjac
+    muntjac(GoogleMapWidgetApp, nogui=True, forever=True, debug=True)

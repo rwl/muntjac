@@ -17,7 +17,8 @@
 # Note: This is a modified file from Vaadin. For further information on
 #       Vaadin please visit http://www.vaadin.com.
 
-from muntjac.addon.google_maps.overlay.poly_overlay import PolyOverlay
+from muntjac.addon.google_maps.overlay.poly_overlay \
+    import PolyOverlay
 
 
 class Polygon(PolyOverlay):
