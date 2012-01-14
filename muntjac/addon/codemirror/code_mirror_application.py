@@ -16,6 +16,7 @@
 #
 # Note: This is a modified file from Vaadin. For further information on
 #       Vaadin please visit http://www.vaadin.com.
+from muntjac.ui.check_box import CheckBox
 
 from muntjac.api \
     import Application, Window, GridLayout, Select, Button
@@ -26,8 +27,11 @@ from muntjac.data.property \
 from muntjac.ui.button \
     import IClickListener
 
-from muntjac.addon.codemirror.client.code_style \
-    import CodeStyle
+from muntjac.addon.codemirror.client.code_mode \
+    import CodeMode
+
+from muntjac.addon.codemirror.client.code_theme \
+    import CodeTheme
 
 from muntjac.addon.codemirror.code_mirror \
     import CodeMirror
@@ -37,53 +41,81 @@ class CodeMirrorApplication(Application):
 
     _NL = '\n\n'
 
-    _SAMPLE_CODE = ('<xml is=\"fun\"></xml>' + _NL
-            + 'function js(isMoreFun) {alert(\"Yay!\");}' + _NL
-            + 'public void java(String isAlsoCool) {\n\twith(\"Vaadin!\");\n}'
+    _SAMPLE_CODE = ('<xml is="fun"></xml>' + _NL
+            + 'function js(isMoreFun) {alert("Yay!");}' + _NL
+            + 'public void java(String isAlsoCool) {\n\twith("Vaadin!");\n}'
+            + _NL + 'def python(isCooler): print "with Muntjac!"'
             + _NL + 'select * from web where you = i;')
 
     def init(self):
         mainWindow = Window('CodeMirror Sample Application')
 
-        hl = GridLayout(2, 3)
+        hl = GridLayout(2, 5)
         hl.setSpacing(True)
         mainWindow.addComponent(hl)
+
         # #1
-        code = CodeMirror('Your Code', CodeStyle.XML)
+        code = CodeMirror('Your Code', CodeMode.TEXT)
         code.setValue(self._SAMPLE_CODE)
-        code.setWidth('400px')
-        code.setHeight('300px')
+        code.setWidth('500px')
+        code.setHeight('350px')
         hl.addComponent(code)
 
         # #2
-        code2 = CodeMirror('Your Code Too', CodeStyle.XML)
+        code2 = CodeMirror('Your Code Too', CodeMode.PYTHON)
         code2.setValue(self._SAMPLE_CODE)
-        code2.setWidth('400px')
-        code2.setHeight('300px')
+#        code2.setWidth('400px')
+#        code2.setHeight('300px')
         hl.addComponent(code2)
 
-        codeStyle = Select('Select your style')
-        for cs in CodeStyle.values():
-            codeStyle.addItem(cs)
 
-        codeStyle.setNewItemsAllowed(False)
-        codeStyle.setImmediate(True)
-        hl.addComponent(codeStyle)
+        codeMode = Select('Select your mode')
+        for cs in CodeMode.values():
+            codeMode.addItem(cs)
+        codeMode.setNewItemsAllowed(False)
+        codeMode.setNullSelectionAllowed(False)
+        codeMode.setImmediate(True)
+        hl.addComponent(codeMode)
 
-        l = CodeStyleChangeListener(code, codeStyle)
-        codeStyle.addListener(l, IValueChangeListener)
-        codeStyle.setValue(CodeStyle.XML)
+        l = CodeModeChangeListener(code, codeMode)
+        codeMode.addListener(l, IValueChangeListener)
+        codeMode.setValue(CodeMode.TEXT)
 
-        codeStyle = Select('Select your style too')
-        for cs in CodeStyle.values():
-            codeStyle.addItem(cs)
-        codeStyle.setNewItemsAllowed(False)
-        codeStyle.setImmediate(True)
-        hl.addComponent(codeStyle)
+        codeMode = Select('Select your mode too')
+        for cs in CodeMode.values():
+            codeMode.addItem(cs)
+        codeMode.setNewItemsAllowed(False)
+        codeMode.setNullSelectionAllowed(False)
+        codeMode.setImmediate(True)
+        hl.addComponent(codeMode)
 
-        l = CodeStyleChangeListener(code, codeStyle)
-        codeStyle.addListener(l, IValueChangeListener)
-        codeStyle.setValue(CodeStyle.JAVA)
+        l = CodeModeChangeListener(code2, codeMode)
+        codeMode.addListener(l, IValueChangeListener)
+        codeMode.setValue(CodeMode.PYTHON)
+
+
+        codeTheme = Select('Select your theme')
+        for ct in CodeTheme.values():
+            codeTheme.addItem(ct)
+        codeTheme.setNewItemsAllowed(False)
+        codeTheme.setImmediate(True)
+        hl.addComponent(codeTheme)
+
+        l = CodeThemeChangeListener(code, codeTheme)
+        codeTheme.addListener(l, IValueChangeListener)
+        codeTheme.setValue(CodeTheme.DEFAULT)
+
+        codeTheme = Select('Select your theme too')
+        for ct in CodeTheme.values():
+            codeTheme.addItem(ct)
+        codeTheme.setNewItemsAllowed(False)
+        codeTheme.setImmediate(True)
+        hl.addComponent(codeTheme)
+
+        l = CodeThemeChangeListener(code2, codeTheme)
+        codeTheme.addListener(l, IValueChangeListener)
+        codeTheme.setValue(CodeTheme.ECLIPSE)
+
 
         l = CopyClickListener(code, code2)
         hl.addComponent(Button('copy to -->', l))
@@ -91,17 +123,29 @@ class CodeMirrorApplication(Application):
         l = CopyClickListener(code2, code)
         hl.addComponent(Button('<- copy to', l))
 
+
+        l = ShowLineNumbersListener(code)
+        cb = CheckBox("Show line numbers", l)
+        cb.setImmediate(True)
+        hl.addComponent(cb)
+
+        l = ShowLineNumbersListener(code2)
+        cb = CheckBox("Show line numbers", l)
+        cb.setImmediate(True)
+        hl.addComponent(cb)
+
+
         self.setMainWindow(mainWindow)
 
 
-class CodeStyleChangeListener(IValueChangeListener):
+class CodeModeChangeListener(IValueChangeListener):
 
-    def __init__(self, code, codeStyle):
+    def __init__(self, code, codeMode):
         self._code = code
-        self._codeStyle = codeStyle
+        self._codeMode = codeMode
 
     def valueChange(self, event):
-        self._code.setCodeStyle(self._codeStyle.getValue())
+        self._code.setCodeMode(self._codeMode.getValue())
 
 
 class CopyClickListener(IClickListener):
@@ -114,10 +158,25 @@ class CopyClickListener(IClickListener):
         self._code2.setValue(self._code1.getValue())
 
 
+class CodeThemeChangeListener(IValueChangeListener):
+
+    def __init__(self, code, codeTheme):
+        self._code = code
+        self._codeTheme = codeTheme
+
+    def valueChange(self, event):
+        self._code.setCodeTheme(self._codeTheme.getValue())
+
+
+class ShowLineNumbersListener(IClickListener):
+
+    def __init__(self, code):
+        self._code = code
+
+    def buttonClick(self, event):
+        self._code.setShowLineNumbers(event.getButton().booleanValue())
+
+
 if __name__ == '__main__':
     from muntjac.main import muntjac
-    muntjac(CodeMirrorApplication, nogui=True, forever=True, debug=True,
-#            widgetset='org.vaadin.codemirror.CodemirrorWidgetset',
-            widgetset='org.muntiacus.MuntjacWidgetSet',
-#            contextRoot='.'
-            )
+    muntjac(CodeMirrorApplication, nogui=True, forever=True, debug=True)
