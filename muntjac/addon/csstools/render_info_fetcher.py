@@ -29,6 +29,8 @@ class RenderInfoFetcher(Window):
 
     CLIENT_WIDGET = None #ClientWidget(VRenderInfoFetcher)
 
+    TYPE_MAPPING = 'org.vaadin.csstools.RenderInfoFetcher'
+
     def __init__(self, c, cb, *props):
         self._c = c
         self._cb = cb
