@@ -547,7 +547,8 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
             propertyId = self._ROW_HEADER_FAKE_PROPERTY_ID
 
         if width < 0:
-            del self._columnWidths[propertyId]
+            if propertyId in self._columnWidths:
+                del self._columnWidths[propertyId]
         else:
             self._columnWidths[propertyId] = int(width)
 
@@ -585,7 +586,8 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                    the expandRatio used to divide excess space for this column
         """
         if expandRatio < 0:
-            del self._columnWidths[propertyId]
+            if propertyId in self._columnWidths:
+                del self._columnWidths[propertyId]
         else:
             self._columnWidths[propertyId] = float(expandRatio)
 
