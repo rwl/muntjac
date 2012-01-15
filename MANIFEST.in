@@ -1,5 +1,4 @@
 include LICENSE
-include LICENSE_Vaadin
 include README
 include CHANGELOG
 include Makefile
