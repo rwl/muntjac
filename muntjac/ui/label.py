@@ -372,7 +372,7 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
         self.fireValueChange()
 
 
-    def __eq__(self, other):
+    def compareTo(self, other):
         """Compares the Label to other objects.
 
         Labels can be compared to other labels for sorting label contents.
@@ -403,7 +403,7 @@ class Label(AbstractComponent, prop.IProperty, prop.IViewer,
         else:
             otherValue = str(other)
 
-        return thisValue == otherValue
+        return cmp(thisValue, otherValue)
 
 
     def stripTags(self, xml):

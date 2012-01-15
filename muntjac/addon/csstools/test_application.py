@@ -62,7 +62,7 @@ class CssToolsTestApplication(Application):
         grid.setWidth('100%')
         grid.setColumns(6)
         for prop in CssProperty.values():
-            l = Label(prop)#'-')
+            l = Label('-')
             l.setSizeUndefined()
             l.setCaption(str(prop))
             self._props[prop] = l
@@ -87,11 +87,10 @@ class GetCallback(ICallback):
 
     def infoReceived(self, info):
         for prop in CssProperty.values():
-            self._app._props[prop].setValue(info.getProperty(prop))
+            self._app._props[prop].setValue(str(info.getProperty(prop)))
 
 
 if __name__ == '__main__':
     from muntjac.main import muntjac
     muntjac(CssToolsTestApplication, nogui=True, forever=True, debug=True,
-        widgetset='org.vaadin.csstools.CssToolsWidgetset',
-        contextRoot='.')
+            widgetset='org.vaadin.csstools.CssToolsWidgetset')

@@ -57,7 +57,7 @@ class RenderInfo(object):
         from muntjac.addon.csstools.render_info_fetcher \
             import RenderInfoFetcher
 
-        fetcher = RenderInfoFetcher(c, cb, props)
+        fetcher = RenderInfoFetcher(c, cb, *props)
         c.getApplication().getMainWindow().addWindow(fetcher)
 
 
