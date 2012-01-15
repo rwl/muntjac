@@ -36,6 +36,8 @@ class ColorPickerGradient(AbstractComponent, IColorSelector):
 
     CLIENT_WIDGET = None #ClientWidget(VColorPickerGradient)
 
+    TYPE_MAPPING = 'com.vaadin.addon.colorpicker.ColorPickerGradient'
+
     def __init__(self, Id, converter):
         """Instantiates a new color picker gradient.
 

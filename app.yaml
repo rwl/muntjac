@@ -12,7 +12,7 @@ handlers:
 - url: /VAADIN
   static_dir: VAADIN
 
-- url: /(hello|calc|address|tunes|sampler).*
+- url: /(hello|calc|address|tunes|sampler|colorpicker|codemirror|googlemaps).*
   script: muntjac/demo/gae.py
 
 - url: /

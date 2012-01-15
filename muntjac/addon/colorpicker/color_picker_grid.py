@@ -38,6 +38,8 @@ class ColorPickerGrid(AbstractComponent, IColorSelector):
 
     CLIENT_WIDGET = None #ClientWidget(VColorPickerGrid)
 
+    TYPE_MAPPING = 'com.vaadin.addon.colorpicker.ColorPickerGrid'
+
     def __init__(self, colors_or_rows=None, cols=None):
         """Instantiates a new color picker grid.
 

@@ -54,6 +54,8 @@ class ColorPicker(AbstractComponent, ICloseListener, IColorSelector,
 
     CLIENT_WIDGET = None #ClientWidget(VColorPickerButton)
 
+    TYPE_MAPPING = 'com.vaadin.addon.colorpicker.ColorPicker'
+
     def __init__(self, caption='Colors', initialColor=None):
         """Instantiates a new color picker.
 
