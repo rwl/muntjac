@@ -19,6 +19,8 @@
 
 from StringIO import StringIO
 
+from math import pi
+
 from datetime import datetime as Date
 
 from muntjac.addon.colorpicker.color import Color
@@ -26,7 +28,6 @@ from muntjac.addon.colorpicker.color import Color
 from muntjac.application import Application
 
 from muntjac.ui.check_box import CheckBox
-from muntjac.terminal.stream_resource import IStreamSource, StreamResource
 from muntjac.ui.window import Window
 from muntjac.ui.embedded import Embedded
 from muntjac.ui.panel import Panel
@@ -36,8 +37,12 @@ from muntjac.ui.grid_layout import GridLayout
 from muntjac.ui.button import IClickListener
 from muntjac.ui.alignment import Alignment
 
+from muntjac.terminal.stream_resource import IStreamSource, StreamResource
+
 from muntjac.addon.colorpicker.color_picker \
     import ColorPicker, ButtonStyle, IColorChangeListener
+
+from muntjac.addon.canvas.canvas import Canvas
 
 
 class ColorPickerApplication(Application, IColorChangeListener):
@@ -60,6 +65,8 @@ class ColorPickerApplication(Application, IColorChangeListener):
 
         # The display box where the image is rendered.
         self._display = None
+
+        self._mainLayout = None
 
         self._colorpicker1 = None
         self._colorpicker2 = None
@@ -134,12 +141,13 @@ class ColorPickerApplication(Application, IColorChangeListener):
         self.setMainWindow(main)
 
         # Create an instance of the preview and add it to the window
-        self._display = Embedded('Color preview')
+#        self._display = Embedded('Color preview')
+        self._display = Canvas()
         self._display.setWidth('270px')
         self._display.setHeight('270px')
 
         # Add the foreground and background colorpickers to a layout
-        mainLayout = HorizontalLayout()
+        self._mainLayout = mainLayout = HorizontalLayout()
         mainLayout.setMargin(True)
         mainLayout.setSpacing(True)
         main.setContent(mainLayout)
@@ -261,13 +269,27 @@ class ColorPickerApplication(Application, IColorChangeListener):
         @param bg:
                    the background color
         """
-        imagesource = MyImageSource(fg, bg)
-        now = Date.now()
-        frmt = '%H%M%S'
-        imageresource = StreamResource(imagesource,
-                'myimage' + now.strftime(frmt) + '.png', self)
-        imageresource.setCacheTime(0)
-        self._display.setSource(imageresource)
+#        imagesource = MyImageSource(fg, bg)
+#        now = Date.now()
+#        frmt = '%H%M%S'
+#        imageresource = StreamResource(imagesource,
+#                'myimage' + now.strftime(frmt) + '.png', self)
+#        imageresource.setCacheTime(0)
+#        self._display.setSource(imageresource)
+
+        canvas = self._display
+        canvas.saveContext()
+        canvas.clear()
+        canvas.setFillStyle(str(self._backgroundColor))
+        canvas.fillRect(0, 0, 270, 270)
+
+        canvas.saveContext()
+        canvas.setFillStyle(str(self._foregroundColor))
+        canvas.arc(135, 135, 100, 0, 2 * pi, True)
+        canvas.fill()
+        canvas.restoreContext()
+
+        canvas.restoreContext()
 
 
     def colorChanged(self, event):
@@ -300,7 +322,12 @@ class ColorPickerApplication(Application, IColorChangeListener):
         else:
             return
 
+        oldDisplay = self._display
+        self._display = Canvas()
+        self._display.setWidth('270px')
+        self._display.setHeight('270px')
         self.updateDisplay(self._foregroundColor, self._backgroundColor)
+        self._mainLayout.replaceComponent(oldDisplay, self._display)
 
 
     def getVersion(self):
