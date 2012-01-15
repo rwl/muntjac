@@ -25,6 +25,8 @@ class Canvas(AbstractComponent):
 
     CLIENT_WIDGET = None #ClientWidget(VCanvas)
 
+    TYPE_MAPPING = 'org.vaadin.hezamu.canvas.Canvas'
+
     BEVEL = 'BEVEL'
     BUTT = 'BUTT'
     DESTINATION_OVER = 'DESTINATION_OVER'

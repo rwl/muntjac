@@ -43,6 +43,4 @@ class CanvasApp(Application):
 
 if __name__ == '__main__':
     from muntjac.main import muntjac
-    muntjac(CanvasApp, nogui=True, forever=True, debug=True,
-            widgetset='org.vaadin.hezamu.canvas.widgetset.CanvastestWidgetset',
-            contextRoot='.')
+    muntjac(CanvasApp, nogui=True, forever=True, debug=True)
