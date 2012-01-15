@@ -40,6 +40,8 @@ class WeeLayout(AbstractLayout, ILayoutClickNotifier):
 
     CLIENT_WIDGET = None #ClientWidget(VWeeLayout)
 
+    TYPE_MAPPING = 'org.vaadin.weelayout.WeeLayout'
+
     _CLICK_EVENT = EventId.LAYOUT_CLICK
 
     def __init__(self, direction):

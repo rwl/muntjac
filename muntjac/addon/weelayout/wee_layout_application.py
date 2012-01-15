@@ -26,10 +26,10 @@ class WeelayoutApplication(Application):
 #        mainWindow.setContent(self.splitRecursive(2))
 #        mainWindow.setContent(self.undefinedWithRelativeSizes())
 #        mainWindow.setContent(self.splitView())
-#        mainWindow.setContent(self.createVertical(1))
-#        mainWindow.setContent(self.createCoreVertical(1))
-#        mainWindow.setContent(self.createHorizontal(1))
-        mainWindow.setContent(self.createCoreHorizontal(1))
+#        mainWindow.setContent(self.createVertical(2))
+#        mainWindow.setContent(self.createCoreVertical(2))
+#        mainWindow.setContent(self.createHorizontal(2))
+        mainWindow.setContent(self.createCoreHorizontal(2))
 
         self.setTheme('test')
 
@@ -202,6 +202,4 @@ class OneClickListener(IClickListener):
 
 if __name__ == '__main__':
     from muntjac.main import muntjac
-    muntjac(WeelayoutApplication, nogui=True, forever=True, debug=True,
-        widgetset='org.vaadin.weelayout.WeelayoutWidgetset',
-        contextRoot='.')
+    muntjac(WeelayoutApplication, nogui=True, forever=True, debug=True)
