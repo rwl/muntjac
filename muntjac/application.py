@@ -1,5 +1,17 @@
-# @MUNTJAC_COPYRIGHT@
-# @MUNTJAC_LICENSE@
+# Copyright (C) 2012 Vaadin Ltd. 
+# Copyright (C) 2012 Richard Lincoln
+# 
+# Licensed under the Apache License, Version 2.0 (the "License"); 
+# you may not use this file except in compliance with the License. 
+# You may obtain a copy of the License at 
+# 
+#     http://www.apache.org/licenses/LICENSE-2.0 
+# 
+# Unless required by applicable law or agreed to in writing, software 
+# distributed under the License is distributed on an "AS IS" BASIS, 
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+# See the License for the specific language governing permissions and 
+# limitations under the License.
 
 """Defines a base class required for all Muntjac applications."""
 
@@ -65,7 +77,7 @@ class Application(IUriHandler, ITerminal, IErrorListener):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.1.0
     """
 
     #: The default SystemMessages (read-only). Change by overriding
@@ -889,7 +901,7 @@ class UserChangeEvent(EventObject):
     Application user change event sent when the setUser is called to change
     the current user of the application.
 
-    @version: @VERSION@
+    @version: 1.1.0
     """
 
     def __init__(self, source, newUser, prevUser):
@@ -940,7 +952,7 @@ class IUserChangeListener(IEventListener):
     """The C{UserChangeListener} interface for listening application
     user changes.
 
-    @version: @VERSION@
+    @version: 1.1.0
     """
 
     def applicationUserChanged(self, event):

@@ -1,5 +1,17 @@
-# @MUNTJAC_COPYRIGHT@
-# @MUNTJAC_LICENSE@
+# Copyright (C) 2012 Vaadin Ltd. 
+# Copyright (C) 2012 Richard Lincoln
+# 
+# Licensed under the Apache License, Version 2.0 (the "License"); 
+# you may not use this file except in compliance with the License. 
+# You may obtain a copy of the License at 
+# 
+#     http://www.apache.org/licenses/LICENSE-2.0 
+# 
+# Unless required by applicable law or agreed to in writing, software 
+# distributed under the License is distributed on an "AS IS" BASIS, 
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+# See the License for the specific language governing permissions and 
+# limitations under the License.
 
 """Defines a servlet that handles all communication between the client and
 the server."""
@@ -74,7 +86,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.1.0
     """
 
     #: The version number of this release. For example "6.2.0". Always in the
@@ -96,10 +108,10 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
     VERSION_BUILD = None
 
     #: Initialize version numbers from string replaced by build-script.
-    if '@VERSION@' == '@' + 'VERSION' + '@':
+    if '1.1.0' == '@' + 'VERSION' + '@':
         VERSION = '9.9.9.INTERNAL-DEBUG-BUILD'
     else:
-        VERSION = '@VERSION@'
+        VERSION = '1.1.0'
 
     digits = VERSION.split('.', 4)
     VERSION_MAJOR = int(digits[0])
